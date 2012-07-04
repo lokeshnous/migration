@@ -1,0 +1,15 @@
+* text=auto !eol
+jobboard-common/pom.xml -text
+jobboard-common/src/main/java/com/advanceweb/afc/common/App.java -text
+jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
+jobboard-core/pom.xml -text
+jobboard-core/src/main/java/com/advanceweb/afc/CoreApp.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/AppTest.java -text
+jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/data/DataApp.java -text
+jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
+jobboard/pom.xml -text
+jobboard/src/main/java/com/advanceweb/afc/webapp/WebApp.java -text
+jobboard/src/main/webapp/WEB-INF/web.xml -text
+jobboard/src/main/webapp/index.jsp -text
+/pom.xml -text

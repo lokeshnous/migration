@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.advanceweb.afc</groupId>
+    <artifactId>jobboard-root</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>Parent Project for Job boards</name>
+
+    <modules>
+        <module>jobboard-common</module>
+        <module>jobboard-data</module>
+        <module>jobboard-core</module>
+        <module>jobboard</module>
+    </modules>
+</project>
