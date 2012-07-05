@@ -43,7 +43,7 @@ fieldset {
 </style>
 </head>
 <body>
-<form:form method="Post" action="jobseekerregistration.html" 
+<form:form method="Post" action="saveJobSeekerProfile.html" 
 commandName="jobSeekerRegistrationForm" enctype="multipart/form-data">
 	<div id="page-wrap">		
 		<div id="tabs">		
