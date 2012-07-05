@@ -9,7 +9,7 @@
 <body>
 <h1>Welcome to merion matters</h1>
 <ul>
-  <li><a href="jsp/jobseekerregistration.html">JobSeeker Registration Form</a></li>
+  <li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeeker Registration Form</a></li>
 </ul>
 </body>
 </html>

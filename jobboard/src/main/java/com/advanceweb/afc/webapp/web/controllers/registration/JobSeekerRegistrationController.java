@@ -6,12 +6,12 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.registration.ProfileRegistration;
@@ -19,7 +19,7 @@ import com.advanceweb.afc.webapp.web.forms.registration.JobSeekerRegistrationFor
 import com.advanceweb.afc.webapp.web.transformers.TransformJobSeekerRegistration;
 
 @Controller
-@RequestMapping("/jobseekerregistration.html")
+@RequestMapping("/jobseekerregistration")
 public class JobSeekerRegistrationController {
 	
 
@@ -39,13 +39,12 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public String createJobSeekerRegistration(Map model) {
+	@RequestMapping(value="/createJobSeekerProfile",method = RequestMethod.GET)
+	public ModelAndView createJobSeekerRegistration(Map model) {
 		
 		JobSeekerRegistrationForm jobSeekerRegistrationForm = new JobSeekerRegistrationForm();
 		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
-
-		return "jobseekerregistration";
+		return new ModelAndView("jobseekerregistration");
 	}
 
 	/**
@@ -56,8 +55,8 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public String saveJobSeekerRegistration(
+	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST)
+	public ModelAndView saveJobSeekerRegistration(
 			@Valid JobSeekerRegistrationForm jobSeekerRegistrationForm,
 			BindingResult result, Map model) {
 
@@ -73,8 +72,7 @@ public class JobSeekerRegistrationController {
 		profileRegistration.createNewProfile(jobSeekerRegistrationDTO);
 
 		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
-
-		return "registrationsuccess";
+		return new ModelAndView("registrationsuccess");
 	}
 	
 	/**
@@ -85,7 +83,7 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	/*@RequestMapping(value="/editJSProfileSettings",method = RequestMethod.GET)
+	@RequestMapping(value="/editJSProfileSettings",method = RequestMethod.GET)
 	public String editJobSeekerProfileSettings(
 			@Valid JobSeekerRegistrationForm jobSeekerRegistrationForm,
 			BindingResult result, Map model) {
@@ -103,6 +101,6 @@ public class JobSeekerRegistrationController {
 
 		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
 		return "registrationsuccess";
-	}*/
+	}
 
 }
