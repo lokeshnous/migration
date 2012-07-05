@@ -17,7 +17,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.advanceweb.afc" />
+	<context:component-scan base-package="com.advanceweb.afc.jb" />
 	<!-- Database properties -->
 	<context:property-placeholder location="classpath:database.properties" />
 
@@ -40,74 +40,74 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.advanceweb.afc.data.entities.AdmFacility</value>
-				<value>com.advanceweb.afc.data.entities.AdmFacilityGroup</value>
-				<value>com.advanceweb.afc.data.entities.AdmFacilitySystem</value>
-				<value>com.advanceweb.afc.data.entities.AdmPermission</value>
-				<value>com.advanceweb.afc.data.entities.AdmRole</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserFacility</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserFacilityPK</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserFacilityGroup</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserFacilityGroupPK
+				<value>com.advanceweb.afc.jb.data.entities.AdmFacility</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmFacilityGroup</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmFacilitySystem</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmPermission</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmRole</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserFacility</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilityGroup</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilityGroupPK
 				</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserFacilitySystem
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilitySystem
 				</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserFacilitySystemPK
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilitySystemPK
 				</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserRole</value>
-				<value>com.advanceweb.afc.data.entities.AdmUserRolePK</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserRole</value>
+				<value>com.advanceweb.afc.jb.data.entities.AdmUserRolePK</value>
 				<!-- <value>com.advanceweb.afc.data.entities.FacilityJobTmp</value> -->
-				<value>com.advanceweb.afc.data.entities.JpAddon</value>
-				<value>com.advanceweb.afc.data.entities.JpJob</value>
-				<value>com.advanceweb.afc.data.entities.JpJobAddon</value>
-				<value>com.advanceweb.afc.data.entities.JpJobAddonPK</value>
-				<value>com.advanceweb.afc.data.entities.JpJobLocation</value>
-				<value>com.advanceweb.afc.data.entities.JpJobLocationPK</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpAddon</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJob</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJobAddon</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJobAddonPK</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJobLocation</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJobLocationPK</value>
 				<!-- <value>com.advanceweb.afc.data.entities.JpJobLocationBckup</value> -->
-				<value>com.advanceweb.afc.data.entities.JpJobTemp</value>
-				<value>com.advanceweb.afc.data.entities.JpJobType</value>
-				<value>com.advanceweb.afc.data.entities.JpLocation</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJobTemp</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpJobType</value>
+				<value>com.advanceweb.afc.jb.data.entities.JpLocation</value>
 				<!-- <value>com.advanceweb.afc.data.entities.JpLocationBckup</value> -->
-				<value>com.advanceweb.afc.data.entities.JpSource</value>
-				<value>com.advanceweb.afc.data.entities.MetaSearchIndex</value>
-				<value>com.advanceweb.afc.data.entities.MetaSearchInput</value>
-				<value>com.advanceweb.afc.data.entities.MetaSearchParam</value>
-				<value>com.advanceweb.afc.data.entities.MetaSearchQueryHistory
+				<value>com.advanceweb.afc.jb.data.entities.JpSource</value>
+				<value>com.advanceweb.afc.jb.data.entities.MetaSearchIndex</value>
+				<value>com.advanceweb.afc.jb.data.entities.MetaSearchInput</value>
+				<value>com.advanceweb.afc.jb.data.entities.MetaSearchParam</value>
+				<value>com.advanceweb.afc.jb.data.entities.MetaSearchQueryHistory
 				</value>
-				<value>com.advanceweb.afc.data.entities.MetaSearchType</value>
-				<value>com.advanceweb.afc.data.entities.ResBuilderCertification
+				<value>com.advanceweb.afc.jb.data.entities.MetaSearchType</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResBuilderCertification
 				</value>
-				<value>com.advanceweb.afc.data.entities.ResBuilderEdu</value>
-				<value>com.advanceweb.afc.data.entities.ResBuilderEmployment</value>
-				<value>com.advanceweb.afc.data.entities.ResBuilderReference</value>
-				<value>com.advanceweb.afc.data.entities.ResBuilderResume</value>
-				<value>com.advanceweb.afc.data.entities.ResDegreeEdu</value>
-				<value>com.advanceweb.afc.data.entities.ResPrivacy</value>
-				<value>com.advanceweb.afc.data.entities.ResPublishResume</value>
-				<value>com.advanceweb.afc.data.entities.ResPublishResumePriv</value>
-				<value>com.advanceweb.afc.data.entities.ResUploadResume</value>
-				<value>com.advanceweb.afc.data.entities.MerApplication</value>
-				<value>com.advanceweb.afc.data.entities.MerLocation</value>
-				<value>com.advanceweb.afc.data.entities.MerProfileAttrib</value>
-				<value>com.advanceweb.afc.data.entities.MerUser</value>
-				<value>com.advanceweb.afc.data.entities.MerUserApplication</value>
-				<value>com.advanceweb.afc.data.entities.MerUserApplicationPK</value>
-				<value>com.advanceweb.afc.data.entities.MerUserProfile</value>
-				<value>com.advanceweb.afc.data.entities.MerUserProfilePK</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResBuilderEdu</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResBuilderEmployment</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResBuilderReference</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResBuilderResume</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResDegreeEdu</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResPrivacy</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResPublishResume</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResPublishResumePriv</value>
+				<value>com.advanceweb.afc.jb.data.entities.ResUploadResume</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerApplication</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerLocation</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerProfileAttrib</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerUser</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerUserApplication</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerUserApplicationPK</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerUserProfile</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerUserProfilePK</value>
 				<!-- <value>com.advanceweb.afc.data.entities.StgSessionEvent</value> -->
 				<!-- <value>com.advanceweb.afc.data.entities.StgSessioninfo</value> -->
-				<value>com.advanceweb.afc.data.entities.VstClickthrough</value>
-				<value>com.advanceweb.afc.data.entities.VstClickthroughType</value>
-				<value>com.advanceweb.afc.data.entities.VstEventType</value>
-				<value>com.advanceweb.afc.data.entities.VstInfoType</value>
-				<value>com.advanceweb.afc.data.entities.VstSearch</value>
-				<value>com.advanceweb.afc.data.entities.VstSearchResult</value>
-				<value>com.advanceweb.afc.data.entities.VstSearchResultPK</value>
-				<value>com.advanceweb.afc.data.entities.VstSessionEvent</value>
-				<value>com.advanceweb.afc.data.entities.VstSessionEventInfo</value>
-				<value>com.advanceweb.afc.data.entities.VstSessionEventInfoPK
+				<value>com.advanceweb.afc.jb.data.entities.VstClickthrough</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstClickthroughType</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstEventType</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstInfoType</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSearch</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSearchResult</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSearchResultPK</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSessionEvent</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSessionEventInfo</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSessionEventInfoPK
 				</value>
-				<value>com.advanceweb.afc.data.entities.VstSessioninfo</value>
+				<value>com.advanceweb.afc.jb.data.entities.VstSessioninfo</value>
 			</list>
 		</property>
 	</bean>
@@ -122,16 +122,16 @@
 
 
 		<!-- Transformers at delegate layer (web layer) -->
-	<bean id="transformJobSeekerRegistration" class="com.advanceweb.afc.webapp.web.transformers.TransformJobSeekerRegistration" />
+	<bean id="transformJobSeekerRegistration" class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration" />
 	
 	<!-- Invoker service layer from controller -->
-	<bean id="profileRegistration" class="com.advanceweb.afc.registration.JobSeekerRegistration" /> 
+	<bean id="profileRegistration" class="com.advanceweb.afc.jb.registration.JobSeekerRegistration" /> 
 	
 	<!-- DAO's Injection -->
-	<bean id="jobSeekerRegistrationDAO" class="com.advanceweb.afc.data.registration.JobSeekerRegistrationDAOImpl" />
+	<bean id="jobSeekerRegistrationDAO" class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
 	
 	<!-- Conversion Helpers -->
-	<bean id="registrationConversionHelper" class="com.advanceweb.afc.data.common.helpers.RegistrationConversionHelper" />
+	<bean id="registrationConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper" />
 
 
 

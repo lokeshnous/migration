@@ -43,6 +43,13 @@ fieldset {
 </style>
 </head>
 <body>
+
+<!-- <c:url var="viewProfileSettings" value="/viewJobSeekerProfile.html" /> -->
+<a href="viewJobSeekerProfile.html">View Profile Settings</a>
+<%-- <form:form method="Post" action="editJobSeekerProfile.html" 
+commandName="jsProfileSettingsForm">
+
+</form:form> --%>
 <form:form method="Post" action="saveJobSeekerProfile.html" 
 commandName="jobSeekerRegistrationForm" enctype="multipart/form-data">
 	<div id="page-wrap">		
