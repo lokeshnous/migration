@@ -3,6 +3,7 @@ jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/BaseProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CompanyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ContactInformationDTO.java -text
@@ -18,6 +19,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PackageInformationDTO
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/EmailDTO.java -text
@@ -27,6 +29,8 @@ jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobs/Jobs.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobs/JobsService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/activity/JobSeekerActivity.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/activity/JobSeekerActivityService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/AgencyRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/EmployerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/JobSeekerRegistration.java -text
@@ -109,6 +113,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventI
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessioninfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobs/JobsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobs/JobsDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobseeker/activity/JobSeekerActivityDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobseeker/activity/JobSeekerActivityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/AgencyRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/AgencyRegistrationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/EmployerRegistrationDAO.java -text
