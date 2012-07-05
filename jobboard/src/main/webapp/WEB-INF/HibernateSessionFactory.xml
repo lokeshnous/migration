@@ -1,0 +1,138 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.advanceweb.afc" />
+	<!-- Database properties -->
+	<context:property-placeholder location="classpath:database.properties" />
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.advanceweb.afc.data.entities.AdmFacility</value>
+				<value>com.advanceweb.afc.data.entities.AdmFacilityGroup</value>
+				<value>com.advanceweb.afc.data.entities.AdmFacilitySystem</value>
+				<value>com.advanceweb.afc.data.entities.AdmPermission</value>
+				<value>com.advanceweb.afc.data.entities.AdmRole</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserFacility</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserFacilityPK</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserFacilityGroup</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserFacilityGroupPK
+				</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserFacilitySystem
+				</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserFacilitySystemPK
+				</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserRole</value>
+				<value>com.advanceweb.afc.data.entities.AdmUserRolePK</value>
+				<!-- <value>com.advanceweb.afc.data.entities.FacilityJobTmp</value> -->
+				<value>com.advanceweb.afc.data.entities.JpAddon</value>
+				<value>com.advanceweb.afc.data.entities.JpJob</value>
+				<value>com.advanceweb.afc.data.entities.JpJobAddon</value>
+				<value>com.advanceweb.afc.data.entities.JpJobAddonPK</value>
+				<value>com.advanceweb.afc.data.entities.JpJobLocation</value>
+				<value>com.advanceweb.afc.data.entities.JpJobLocationPK</value>
+				<!-- <value>com.advanceweb.afc.data.entities.JpJobLocationBckup</value> -->
+				<value>com.advanceweb.afc.data.entities.JpJobTemp</value>
+				<value>com.advanceweb.afc.data.entities.JpJobType</value>
+				<value>com.advanceweb.afc.data.entities.JpLocation</value>
+				<!-- <value>com.advanceweb.afc.data.entities.JpLocationBckup</value> -->
+				<value>com.advanceweb.afc.data.entities.JpSource</value>
+				<value>com.advanceweb.afc.data.entities.MetaSearchIndex</value>
+				<value>com.advanceweb.afc.data.entities.MetaSearchInput</value>
+				<value>com.advanceweb.afc.data.entities.MetaSearchParam</value>
+				<value>com.advanceweb.afc.data.entities.MetaSearchQueryHistory
+				</value>
+				<value>com.advanceweb.afc.data.entities.MetaSearchType</value>
+				<value>com.advanceweb.afc.data.entities.ResBuilderCertification
+				</value>
+				<value>com.advanceweb.afc.data.entities.ResBuilderEdu</value>
+				<value>com.advanceweb.afc.data.entities.ResBuilderEmployment</value>
+				<value>com.advanceweb.afc.data.entities.ResBuilderReference</value>
+				<value>com.advanceweb.afc.data.entities.ResBuilderResume</value>
+				<value>com.advanceweb.afc.data.entities.ResDegreeEdu</value>
+				<value>com.advanceweb.afc.data.entities.ResPrivacy</value>
+				<value>com.advanceweb.afc.data.entities.ResPublishResume</value>
+				<value>com.advanceweb.afc.data.entities.ResPublishResumePriv</value>
+				<value>com.advanceweb.afc.data.entities.ResUploadResume</value>
+				<value>com.advanceweb.afc.data.entities.MerApplication</value>
+				<value>com.advanceweb.afc.data.entities.MerLocation</value>
+				<value>com.advanceweb.afc.data.entities.MerProfileAttrib</value>
+				<value>com.advanceweb.afc.data.entities.MerUser</value>
+				<value>com.advanceweb.afc.data.entities.MerUserApplication</value>
+				<value>com.advanceweb.afc.data.entities.MerUserApplicationPK</value>
+				<value>com.advanceweb.afc.data.entities.MerUserProfile</value>
+				<value>com.advanceweb.afc.data.entities.MerUserProfilePK</value>
+				<!-- <value>com.advanceweb.afc.data.entities.StgSessionEvent</value> -->
+				<!-- <value>com.advanceweb.afc.data.entities.StgSessioninfo</value> -->
+				<value>com.advanceweb.afc.data.entities.VstClickthrough</value>
+				<value>com.advanceweb.afc.data.entities.VstClickthroughType</value>
+				<value>com.advanceweb.afc.data.entities.VstEventType</value>
+				<value>com.advanceweb.afc.data.entities.VstInfoType</value>
+				<value>com.advanceweb.afc.data.entities.VstSearch</value>
+				<value>com.advanceweb.afc.data.entities.VstSearchResult</value>
+				<value>com.advanceweb.afc.data.entities.VstSearchResultPK</value>
+				<value>com.advanceweb.afc.data.entities.VstSessionEvent</value>
+				<value>com.advanceweb.afc.data.entities.VstSessionEventInfo</value>
+				<value>com.advanceweb.afc.data.entities.VstSessionEventInfoPK
+				</value>
+				<value>com.advanceweb.afc.data.entities.VstSessioninfo</value>
+			</list>
+		</property>
+	</bean>
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+
+		<!-- Transformers at delegate layer (web layer) -->
+	<bean id="transformJobSeekerRegistration" class="com.advanceweb.afc.webapp.web.transformers.TransformJobSeekerRegistration" />
+	
+	<!-- Invoker service layer from controller -->
+	<bean id="profileRegistration" class="com.advanceweb.afc.registration.JobSeekerRegistration" /> 
+	
+	<!-- DAO's Injection -->
+	<bean id="jobSeekerRegistrationDAO" class="com.advanceweb.afc.data.registration.JobSeekerRegistrationDAOImpl" />
+	
+	<!-- Conversion Helpers -->
+	<bean id="registrationConversionHelper" class="com.advanceweb.afc.data.common.helpers.RegistrationConversionHelper" />
+
+
+
+</beans>

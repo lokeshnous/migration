@@ -35,6 +35,12 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+	
+		<dependency>
+			<groupId>com.advanceweb.afc</groupId>
+			<artifactId>jobboard-common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -44,9 +50,22 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.advanceweb.afc</groupId>
-			<artifactId>jobboard-common</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.1.0.RELEASE</version>
+			<scope>compile</scope>
 		</dependency>
+		
+		 <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>3.1.0.RELEASE</version>
+		</dependency> 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.5.0-Final</version>
+		</dependency>
+		
 	</dependencies>
 </project>

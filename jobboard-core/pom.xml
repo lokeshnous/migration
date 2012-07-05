@@ -48,5 +48,10 @@
 			<artifactId>jobboard-common</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.advanceweb.afc</groupId>
+			<artifactId>jobboard-data</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
