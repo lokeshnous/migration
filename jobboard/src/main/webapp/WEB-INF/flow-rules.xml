@@ -14,7 +14,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-
 	<!-- Transformers at delegate layer (web layer) -->
 	<bean id="transformJobSeekerRegistration"
 		class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration" />
@@ -23,15 +22,21 @@
 	<bean id="profileRegistration"
 		class="com.advanceweb.afc.jb.registration.JobSeekerRegistration" />
 	<bean id="createResumeService" class="com.advanceweb.afc.jb.resume.CreateResumeServiceImpl" />
+	<bean id="populateDropdownsService" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsImpl" />
 
 	<!-- DAO's Injection -->
 	<bean id="jobSeekerRegistrationDAO"
 		class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
 	<bean id="createResumeDao" class="com.advanceweb.afc.jb.data.resume.CreateResumeDaoImpl" />
+	<bean id="populateDropdownsDAO" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsDAOImpl" />
 
 	<!-- Conversion Helpers -->
 	<bean id="registrationConversionHelper"
 		class="com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper" />
+	<bean id="dropdownHelper"
+		class="com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper" />
+
+
 
 
 
