@@ -1,0 +1,38 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+	<!-- Transformers at delegate layer (web layer) -->
+	<bean id="transformJobSeekerRegistration"
+		class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration" />
+
+	<!-- Invoker service layer from controller -->
+	<bean id="profileRegistration"
+		class="com.advanceweb.afc.jb.registration.JobSeekerRegistration" />
+	<bean id="createResumeService" class="com.advanceweb.afc.jb.resume.CreateResumeServiceImpl" />
+
+	<!-- DAO's Injection -->
+	<bean id="jobSeekerRegistrationDAO"
+		class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
+	<bean id="createResumeDao" class="com.advanceweb.afc.jb.data.resume.CreateResumeDaoImpl" />
+
+	<!-- Conversion Helpers -->
+	<bean id="registrationConversionHelper"
+		class="com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper" />
+
+
+
+</beans>

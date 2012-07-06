@@ -125,25 +125,6 @@
 	</bean>
 
 
-
-	<!-- Transformers at delegate layer (web layer) -->
-	<bean id="transformJobSeekerRegistration"
-		class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration" />
-
-	<!-- Invoker service layer from controller -->
-	<bean id="profileRegistration"
-		class="com.advanceweb.afc.jb.registration.JobSeekerRegistration" />
-	<bean id="createResumeService" class="com.advanceweb.afc.jb.resume.CreateResumeServiceImpl" />
-
-	<!-- DAO's Injection -->
-	<bean id="jobSeekerRegistrationDAO"
-		class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
-	<bean id="createResumeDao" class="com.advanceweb.afc.jb.data.resume.CreateResumeDaoImpl" />
-
-	<!-- Conversion Helpers -->
-	<bean id="registrationConversionHelper"
-		class="com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper" />
-
-
+	<import resource="flow-rules.xml" />
 
 </beans>
