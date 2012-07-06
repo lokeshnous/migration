@@ -7,8 +7,12 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -t
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/BaseProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CompanyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ContactInformationDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CountryDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CoverLetterDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmployerProfileDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmploymentInfoDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EthenticityDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/GenderDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobsDTO.java -text
@@ -21,6 +25,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionListDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionsDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VeteranStatusDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/EmailDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmail.java -text
@@ -28,6 +34,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmailService.
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/dropdowns/PopulateDropdowns.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/dropdowns/PopulateDropdownsImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobs/Jobs.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobs/JobsService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/activity/JobSeekerActivity.java -text
@@ -46,6 +54,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeService.java -tex
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/SolrAdapter.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/AppTest.java -text
 jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/PopulateDropdownConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/RegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -text
@@ -86,6 +95,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplicati
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplicationPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserProfile.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserProfilePK.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUtility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchIndex.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchInput.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchParam.java -text
@@ -131,7 +141,6 @@ jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/controllers/profilemgmt/JobSeekerProfileManagement.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/CreateResumeController.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/JobSeekerProfileSettingsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/JobSeekerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/CreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/helper/ReadDocFile.java -text

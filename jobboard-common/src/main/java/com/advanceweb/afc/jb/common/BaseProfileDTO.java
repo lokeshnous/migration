@@ -11,8 +11,7 @@ public class BaseProfileDTO extends ProfileDTO {
 	public ContactInformationDTO contactInformationDTO;
 	public AlertsListDTO m_AlertsListDTO;
 	public ContactInformationDTO m_ContactInformationDTO;
-	public SubscriptionListDTO m_SubscriptionListDTO;
-	public SubscriptionListDTO subscriptionListDTO;
+
 
 	public BaseProfileDTO() {
 

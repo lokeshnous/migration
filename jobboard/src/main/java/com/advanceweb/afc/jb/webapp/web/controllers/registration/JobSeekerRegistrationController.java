@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.webapp.web.controllers.registration;
 
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
+import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.dropdowns.PopulateDropdowns;
 import com.advanceweb.afc.jb.registration.ProfileRegistration;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.JobSeekerRegistrationForm;
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration;
@@ -30,6 +33,9 @@ public class JobSeekerRegistrationController {
 
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
+	
+	@Autowired
+	private PopulateDropdowns populateDropdownsService;
 
 	public JobSeekerRegistrationController() {
 	}
@@ -44,6 +50,7 @@ public class JobSeekerRegistrationController {
 	public ModelAndView createJobSeekerRegistration(Map model) {
 		
 		JobSeekerRegistrationForm jobSeekerRegistrationForm = new JobSeekerRegistrationForm();
+		List<CountryDTO> listCountryDTO= populateDropdownsService.getCountryList();
 		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
 		return new ModelAndView("jobseekerregistration");
 	}
