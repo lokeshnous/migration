@@ -67,6 +67,7 @@
 				<value>com.advanceweb.afc.jb.data.entities.JpLocation</value>
 				<!-- <value>com.advanceweb.afc.data.entities.JpLocationBckup</value> -->
 				<value>com.advanceweb.afc.jb.data.entities.JpSource</value>
+				<value>com.advanceweb.afc.jb.data.entities.MerUtility</value>
 				<value>com.advanceweb.afc.jb.data.entities.MetaSearchIndex</value>
 				<value>com.advanceweb.afc.jb.data.entities.MetaSearchInput</value>
 				<value>com.advanceweb.afc.jb.data.entities.MetaSearchParam</value>
