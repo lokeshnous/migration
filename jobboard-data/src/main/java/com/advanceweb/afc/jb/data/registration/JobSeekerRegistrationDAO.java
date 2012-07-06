@@ -34,5 +34,12 @@ public interface JobSeekerRegistrationDAO {
 	 * @param jobSeeker
 	 */
 	public boolean updateJobSeekerDetails(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
+	
+	/**
+	 * To change password
+	 * @param jobSeekerRegistrationDTO
+	 * @return
+	 */
+	public boolean jsChangePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 
 }
