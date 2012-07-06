@@ -7,9 +7,11 @@
 <title>Welcome to merion matters</title>
 </head>
 <body>
-<h1>Welcome to merion matters</h1>
-<ul>
-  <li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeeker Registration Form</a></li>
-</ul>
+	<h1>Welcome to merion matters</h1>
+	<ul>
+		<li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeeker
+				Registration Form</a></li>
+		<li><a href="createResumePopUp.html">Create Resume</a></li>
+	</ul>
 </body>
 </html>
