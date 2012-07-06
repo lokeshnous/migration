@@ -34,5 +34,12 @@ public interface ProfileRegistration {
 	 * @param profileId
 	 */
 	public ProfileDTO viewProfile(long profileId);
+	
+	
+	/**
+	 * 
+	 * @param profileDTO
+	 */
+	public boolean changePassword(ProfileDTO profileDTO);
 
 }

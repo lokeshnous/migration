@@ -58,4 +58,10 @@ public class AgencyRegistration implements ProfileRegistration {
 		return null;
 	}
 
+	@Override
+	public boolean changePassword(ProfileDTO profileDTO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
