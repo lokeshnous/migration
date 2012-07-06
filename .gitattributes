@@ -61,6 +61,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -tex
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Job.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/JobSeeker.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Resume.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/dropdowns/PopulateDropdownsDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/dropdowns/PopulateDropdownsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityGroup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySystem.java -text
