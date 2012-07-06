@@ -28,7 +28,7 @@
 	<bean id="jobSeekerRegistrationDAO"
 		class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
 	<bean id="createResumeDao" class="com.advanceweb.afc.jb.data.resume.CreateResumeDaoImpl" />
-	<bean id="populateDropdownsDAO" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsDAOImpl" />
+	<bean id="populateDropdownsDAO" class="com.advanceweb.afc.jb.data.dropdowns.PopulateDropdownsDAOImpl" />
 
 	<!-- Conversion Helpers -->
 	<bean id="registrationConversionHelper"
