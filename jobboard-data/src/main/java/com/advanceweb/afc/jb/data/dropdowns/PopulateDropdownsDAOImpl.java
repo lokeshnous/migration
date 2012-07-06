@@ -1,4 +1,6 @@
-package com.advanceweb.afc.jb.dropdowns;
+package com.advanceweb.afc.jb.data.dropdowns;
+
+
 
 import java.util.List;
 
