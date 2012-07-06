@@ -37,6 +37,9 @@ public class JobSeekerRegistrationForm {
 	@NotEmpty
 	private String password;
 	private String phone;
+	
+	private String currentPassword;
+	
 	@NotEmpty
 	private String postalCode;
 	@NotEmpty
@@ -45,6 +48,8 @@ public class JobSeekerRegistrationForm {
 	@NotEmpty
 	private String state;
 	private String veteranStatus;
+	
+	private String MobileNo;
 	
 	private CommonsMultipartFile fileData;
 	private String fileName;
@@ -241,6 +246,22 @@ public class JobSeekerRegistrationForm {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getMobileNo() {
+		return MobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		MobileNo = mobileNo;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
 	}
 
 	

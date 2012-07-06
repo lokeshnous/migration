@@ -1,6 +1,4 @@
-package com.advanceweb.afc.jb.webapp.web.controllers.registration;
-
-
+package com.advanceweb.afc.jb.webapp.controllers.profilemgmt;
 
 import java.util.Map;
 
@@ -21,71 +19,30 @@ import com.advanceweb.afc.jb.registration.ProfileRegistration;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.JobSeekerRegistrationForm;
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration;
 
+/**
+ * <code> JobSeekerProfileManagement <code>
+ * @author sasibhushanam
+ * @version 1.0
+ * @since July 2nd, 2012
+ *
+ */
 @Controller
-@RequestMapping("/jobseekerregistration")
-public class JobSeekerRegistrationController {
+@RequestMapping("/jobseekerprofilemgmt")
+public class JobSeekerProfileManagement {
 	
+
 	@Autowired
 	private ProfileRegistration profileRegistration;
 
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
-	public JobSeekerRegistrationController() {
+	public JobSeekerProfileManagement() {
 	}
 
-	/**
-	 * This method is called to display job seeker registration page
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value="/createJobSeekerProfile",method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistration(Map model) {
-		
-		JobSeekerRegistrationForm jobSeekerRegistrationForm = new JobSeekerRegistrationForm();
-		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
-		return new ModelAndView("jobseekerregistration");
-	}
-
-	/**
-	 * This method is called to save employee registration
-	 * 
-	 * @param jobSeekerRegistrationForm
-	 * @param result
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST)
-	public ModelAndView saveJobSeekerRegistration(@Valid JobSeekerRegistrationForm form,
-			BindingResult result) {
-
-		try {
-			
-				if (result.hasErrors()) {
-					return new ModelAndView("jobseekerregistration");
-				}
-		
-				// Transform JobSeeker Registration Form to JobSeekerRegistrationDTO
-				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(form);
-				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(form);
-				JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(form);
-				jsRegistrationDTO.setAddressDTO(addDTO);
-				jsRegistrationDTO.setJobSeekerProfileDTO(jsProfileSettingsDTO);
-				jsRegistrationDTO.setMerUserDTO(userDTO);
-				// Call to service layer
-				profileRegistration.createNewProfile(jsRegistrationDTO);
-		
-//				model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ModelAndView("registrationsuccess");
-	}
 	
 	/**
-	 * This method is called to view/modify job seeker profile settings
+	 * This method is called to view job seeker profile settings
 	 * 
 	 * @param jobSeekerRegistrationForm
 	 * @param result
@@ -96,7 +53,6 @@ public class JobSeekerRegistrationController {
 	public ModelAndView viewJobSeekerProfileSettings(JobSeekerRegistrationForm form,Map model) {
 
 		try {
-
 			// Call to service layer
 			
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(1);
@@ -163,4 +119,5 @@ public class JobSeekerRegistrationController {
 	}
 	
 
+	
 }
