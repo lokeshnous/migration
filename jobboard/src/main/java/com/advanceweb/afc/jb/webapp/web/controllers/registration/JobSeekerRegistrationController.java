@@ -93,7 +93,7 @@ public class JobSeekerRegistrationController {
 		
 				// Transform JobSeeker Registration Form to JobSeekerRegistrationDTO
 				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(form);
+				AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(form.getContactForm());
 				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(form);
 				JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(form);
 				jsRegistrationDTO.setAddressDTO(addDTO);
@@ -148,7 +148,7 @@ public class JobSeekerRegistrationController {
 		
 		try {			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm);
+			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());
 			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(jsRegistrationForm);
 			jsRegistrationDTO.setAddressDTO(addDTO);
 			jsRegistrationDTO.setMerUserDTO(userDTO);

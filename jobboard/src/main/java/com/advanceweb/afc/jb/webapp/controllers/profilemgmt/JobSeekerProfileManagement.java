@@ -79,7 +79,7 @@ public class JobSeekerProfileManagement {
 		
 		try {			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm);
+			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());
 			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(jsRegistrationForm);
 			jsRegistrationDTO.setAddressDTO(addDTO);
 			jsRegistrationDTO.setMerUserDTO(userDTO);

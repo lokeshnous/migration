@@ -73,10 +73,9 @@ public class TransformJobSeekerRegistration {
 	 * @param form
 	 * @return
 	 */
-	public AddressDTO createAddressDTO(JobSeekerRegistrationForm form){
+	public AddressDTO createAddressDTO(ContactInfoForm contactInfoForm){
 		// Address DTO
 		AddressDTO dto = new AddressDTO();
-		ContactInfoForm contactInfoForm = form.getContactForm();
 		
 		dto.setAddress1(contactInfoForm.getAddressLine1());
 		dto.setAddress2(contactInfoForm.getAddressLine2());
