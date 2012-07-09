@@ -7,7 +7,10 @@
 <title>JobSeekerRegistration</title>
 	<link rel="stylesheet" href="../tabs.css" type="text/css" media="screen, projection"/>
 	<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-ui-1.7.custom.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" ></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js" ></script>
+	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
 		$(function() {
 			var $tabs = $('#tabs').tabs();	
@@ -137,7 +140,12 @@ commandName="jobSeekerRegistrationForm" enctype="multipart/form-data">
 		</tr>
 		<tr>
 			<td>Country :</td>
-			<td><form:input path="country" /></td>
+			
+			<td><form:select path="country">
+				<form:option value="0" label="Select" />
+				<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
+				</form:select>
+			</td>
 			<td><FONT color="red">[Mandatory]</FONT></td>
 			<td><FONT color="red"><form:errors path="country" cssClass="error" /></FONT></td>
 		</tr>
