@@ -149,6 +149,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/controllers/profilemgmt/JobS
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/CreateResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/ContactInfoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/JobSeekerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/CertificationsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/CreateResume.java -text
