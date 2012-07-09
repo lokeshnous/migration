@@ -150,7 +150,12 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/CreateResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/JobSeekerRegistrationForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/CertificationsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/CreateResume.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/EducationForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/LanguageForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/ReferenceForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/WorkExpForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/helper/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/transformers/TransformJobSeekerRegistration.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/validators/registration/JobSeekerRegistrationValidation.java -text

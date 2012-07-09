@@ -1,6 +1,15 @@
 package com.advanceweb.afc.jb.webapp.web.forms.resume;
 
+/**
+ * 
+ * @author Sasibhushana
+ *
+ * @Version 1.0
+ * @Since 2nd July, 2012
+ */
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
 
 public class CreateResume {
 	private String resume_name;
@@ -16,7 +25,20 @@ public class CreateResume {
 	private String filename;
 	private CommonsMultipartFile fileData;
 	
-
+	//Creating Resume
+	private String objective;
+	private String skills;
+	private String awards;
+	private String memberships;
+	private String otherDetails;
+	private CertificationsForm certForm;
+	private EducationForm eduForm;
+	private LanguageForm langForm;
+	private ReferenceForm refForm;
+	private WorkExpForm workExpForm;
+	private ContactInfoForm contactInfoForm;
+	//Creating Resume	
+	
 	public String getFilename() {
 		return filename;
 	}
@@ -97,5 +119,71 @@ public class CreateResume {
 	public void setResume_visibility(String resume_visibility) {
 		this.resume_visibility = resume_visibility;
 	}
-
+	public String getObjective() {
+		return objective;
+	}
+	public void setObjective(String objective) {
+		this.objective = objective;
+	}
+	public String getSkills() {
+		return skills;
+	}
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
+	public String getAwards() {
+		return awards;
+	}
+	public void setAwards(String awards) {
+		this.awards = awards;
+	}
+	public String getMemberships() {
+		return memberships;
+	}
+	public void setMemberships(String memberships) {
+		this.memberships = memberships;
+	}
+	public String getOtherDetails() {
+		return otherDetails;
+	}
+	public void setOtherDetails(String otherDetails) {
+		this.otherDetails = otherDetails;
+	}
+	public CertificationsForm getCertForm() {
+		return certForm;
+	}
+	public void setCertForm(CertificationsForm certForm) {
+		this.certForm = certForm;
+	}
+	public EducationForm getEduForm() {
+		return eduForm;
+	}
+	public void setEduForm(EducationForm eduForm) {
+		this.eduForm = eduForm;
+	}
+	public LanguageForm getLangForm() {
+		return langForm;
+	}
+	public void setLangForm(LanguageForm langForm) {
+		this.langForm = langForm;
+	}
+	public ReferenceForm getRefForm() {
+		return refForm;
+	}
+	public void setRefForm(ReferenceForm refForm) {
+		this.refForm = refForm;
+	}
+	public WorkExpForm getWorkExpForm() {
+		return workExpForm;
+	}
+	public void setWorkExpForm(WorkExpForm workExpForm) {
+		this.workExpForm = workExpForm;
+	}
+	public ContactInfoForm getContactInfoForm() {
+		return contactInfoForm;
+	}
+	public void setContactInfoForm(ContactInfoForm contactInfoForm) {
+		this.contactInfoForm = contactInfoForm;
+	}
+		
 }

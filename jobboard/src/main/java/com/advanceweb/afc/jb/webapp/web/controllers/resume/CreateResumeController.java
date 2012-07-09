@@ -184,5 +184,13 @@ public class CreateResumeController {
 
 		return "redirect:/createResumePopUp.html";
 	}
+	
+	public String createResume(@ModelAttribute("createResume")
+	CreateResume createResume, BindingResult result,Model model){
+		
+		
+		return null;
+		
+	}
 
 }

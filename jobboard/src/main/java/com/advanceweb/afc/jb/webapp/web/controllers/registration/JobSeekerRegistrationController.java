@@ -25,6 +25,7 @@ import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.dropdowns.PopulateDropdowns;
 import com.advanceweb.afc.jb.registration.ProfileRegistration;
+import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.JobSeekerRegistrationForm;
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration;
 
@@ -54,11 +55,13 @@ public class JobSeekerRegistrationController {
 	public ModelAndView createJobSeekerRegistration(Map model) {
 		
 		JobSeekerRegistrationForm jobSeekerRegistrationForm = new JobSeekerRegistrationForm();
+		ContactInfoForm contactInfo = new ContactInfoForm();
 		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
 		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
 		List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
 		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
 		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
+		jobSeekerRegistrationForm.setContactForm(contactInfo);
 		
 		model.put("countryList",countryList);
 		model.put("employmentInfoList",empInfoList);
