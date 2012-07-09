@@ -22,15 +22,34 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	/**
-	 * This method is called to retrieve the resume list belonging to a logged
-	 * in jobSeeker
-	 * 
+	 * This method is called to retrieve the resume list belonging to a logged in jobSeeker
 	 * @param jobSeekerId
 	 * @return list of ResumeDTO
 	 */
+	@Override
 	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId) {
 
 		return resumeDao.retrieveAllResumes(jobSeekerId);
+	}
+
+	/**
+	 * This method is called to edit the resume
+	 * @param resumeId
+	 * @return ResumeDTO
+	 */
+	@Override
+	public ResumeDTO editResume(int resumeId) {
+		return resumeDao.editResume(resumeId);
+	}
+
+	/**
+	 * This method is called to delete the resume 
+	 * @param resumeId
+	 * @return delete status
+	 */
+	@Override
+	public boolean deleteResume(int resumeId) {
+		return resumeDao.deleteResume(resumeId);
 	}
 
 }

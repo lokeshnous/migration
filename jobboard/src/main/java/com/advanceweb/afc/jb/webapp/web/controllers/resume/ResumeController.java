@@ -48,5 +48,41 @@ public class ResumeController {
 
 		return "manageResume";
 	}
+	
+	/**
+	 * This method is called to fetch the resume data to edit
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
+	public String editResume(HttpServletRequest request, HttpSession session,
+			Model model, Map<String, Object> map) {
+
+		ResumeDTO resumeDTO = resumeService.editResume(1);
+
+		System.out.println(resumeDTO);
+
+		return "manageResume";
+	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteResume", method = RequestMethod.GET)
+	public String deleteResume(HttpServletRequest request, HttpSession session,
+			Model model, Map<String, Object> map) {
+
+		boolean deleteStatus = resumeService.deleteResume(24);
+		
+		if(deleteStatus){
+			System.out.println("Resume has been deleted succesfully ........");
+		}
+
+		return "manageResume";
+	}
 
 }
