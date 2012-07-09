@@ -8,10 +8,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Page styles -->
+<link type='text/css' href="resources/css/demo.css" rel='stylesheet'
+	media='screen' />
+
+<!-- Contact Form CSS files -->
+<link type='text/css' href="resources/css/basic.css" rel='stylesheet'
+	media='screen' />
+	
+	<script type="text/javascript">
+	function setbg(color)
+	{
+	document.getElementById("styled").style.background=color
+	}
+	</script>
+
 <title>Insert title here</title>
 </head>
 <body>
-	<div style="text-align: center;">
+		<div >
+	
 		<form:form method="post" action="copyPasteResumeSubmit.html"
 			commandName="createResume">
 			<input type="hidden" name="resume_name" value="${createResume.resume_name}"/>
@@ -20,11 +36,12 @@
 			<input type="hidden" name="desired_employment_type" value="${createResume.desired_employment_type}"/>
 			<input type="hidden" name="resume_visibility" value="${createResume.resume_visibility}"/>
 			<input type="hidden" name="work_authorization_US" value="${createResume.work_authorization_US}"/>
+			<div><h3 style="font: bold; color: white;">Copy Paste Resume</h3><br></div>
 			
-			<div  style="text-align: left;">
-				<form:textarea path="resumeText" rows="20" />
+			<div  style="text-align: center;">
+				<form:textarea path="resumeText" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')"  />
 			</div>
-			<div style="text-align: left;">
+			<div style="text-align: center;">
 				<input type="submit" value="create" /><input type="button"
 					value="cancel" />
 			</div>
