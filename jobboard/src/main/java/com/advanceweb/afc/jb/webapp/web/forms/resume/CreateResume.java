@@ -7,6 +7,8 @@ package com.advanceweb.afc.jb.webapp.web.forms.resume;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
+import java.util.List;
+
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
@@ -31,11 +33,11 @@ public class CreateResume {
 	private String awards;
 	private String memberships;
 	private String otherDetails;
-	private CertificationsForm certForm;
-	private EducationForm eduForm;
-	private LanguageForm langForm;
-	private ReferenceForm refForm;
-	private WorkExpForm workExpForm;
+	private List<CertificationsForm> listCertForm;
+	private List<EducationForm> listEduForm;
+	private List<LanguageForm> listLangForm;
+	private List<ReferenceForm> listRefForm;
+	private List<WorkExpForm> listWorkExpForm;
 	private ContactInfoForm contactInfoForm;
 	//Creating Resume	
 	
@@ -149,41 +151,41 @@ public class CreateResume {
 	public void setOtherDetails(String otherDetails) {
 		this.otherDetails = otherDetails;
 	}
-	public CertificationsForm getCertForm() {
-		return certForm;
-	}
-	public void setCertForm(CertificationsForm certForm) {
-		this.certForm = certForm;
-	}
-	public EducationForm getEduForm() {
-		return eduForm;
-	}
-	public void setEduForm(EducationForm eduForm) {
-		this.eduForm = eduForm;
-	}
-	public LanguageForm getLangForm() {
-		return langForm;
-	}
-	public void setLangForm(LanguageForm langForm) {
-		this.langForm = langForm;
-	}
-	public ReferenceForm getRefForm() {
-		return refForm;
-	}
-	public void setRefForm(ReferenceForm refForm) {
-		this.refForm = refForm;
-	}
-	public WorkExpForm getWorkExpForm() {
-		return workExpForm;
-	}
-	public void setWorkExpForm(WorkExpForm workExpForm) {
-		this.workExpForm = workExpForm;
-	}
 	public ContactInfoForm getContactInfoForm() {
 		return contactInfoForm;
 	}
 	public void setContactInfoForm(ContactInfoForm contactInfoForm) {
 		this.contactInfoForm = contactInfoForm;
+	}
+	public List<CertificationsForm> getListCertForm() {
+		return listCertForm;
+	}
+	public void setListCertForm(List<CertificationsForm> listCertForm) {
+		this.listCertForm = listCertForm;
+	}
+	public List<EducationForm> getListEduForm() {
+		return listEduForm;
+	}
+	public void setListEduForm(List<EducationForm> listEduForm) {
+		this.listEduForm = listEduForm;
+	}
+	public List<LanguageForm> getListLangForm() {
+		return listLangForm;
+	}
+	public void setListLangForm(List<LanguageForm> listLangForm) {
+		this.listLangForm = listLangForm;
+	}
+	public List<ReferenceForm> getListRefForm() {
+		return listRefForm;
+	}
+	public void setListRefForm(List<ReferenceForm> listRefForm) {
+		this.listRefForm = listRefForm;
+	}
+	public List<WorkExpForm> getListWorkExpForm() {
+		return listWorkExpForm;
+	}
+	public void setListWorkExpForm(List<WorkExpForm> listWorkExpForm) {
+		this.listWorkExpForm = listWorkExpForm;
 	}
 		
 }
