@@ -10,6 +10,7 @@ import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.data.dropdowns.PopulateDropdownsDAO;
 
 public class PopulateDropdownsImpl implements PopulateDropdowns{
 
