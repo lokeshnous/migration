@@ -29,7 +29,7 @@ public class JobSeekerRegistrationForm {
 	// private String emailId;//security check
 //	@NotEmpty
 //	private String firstName;
-//	private String gender;
+	private String gender;
 	private String imCurrentlyIn;
 //	@NotEmpty
 //	private String lastName;
@@ -190,6 +190,14 @@ public class JobSeekerRegistrationForm {
 
 	public void setContactForm(ContactInfoForm contactForm) {
 		this.contactForm = contactForm;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	
 	
