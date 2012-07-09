@@ -58,7 +58,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Subscription' and e.utilityStaus='1'").list();
+			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Subscriptions' and e.utilityStaus='1'").list();
 			return dropdownHelper.convertMerUtilityToSubscriptionsDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -97,7 +97,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Ethenticity' and e.utilityStaus='1'").list();
+			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Ethnicity' and e.utilityStaus='1'").list();
 			return dropdownHelper.convertMerUtilityToEthenticityDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
