@@ -36,7 +36,12 @@
 	<bean id="dropdownHelper"
 		class="com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper" />
 
-
+	<!-- Resume -->
+	<bean id="resumeService" class="com.advanceweb.afc.jb.resume.ResumeServiceImpl" />
+	
+	<bean id="resumeDao" class="com.advanceweb.afc.jb.data.resume.ResumeDaoImpl"/>
+	
+	<bean id="resumeConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.ResumeConversionHelper"/>
 
 
 
