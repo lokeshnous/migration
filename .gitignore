@@ -1,0 +1,17 @@
+/.metadata
+jobboard-common/.classpath
+jobboard-common/.project
+jobboard-common/.settings
+jobboard-common/target
+jobboard-core/.classpath
+jobboard-core/.project
+jobboard-core/.settings
+jobboard-core/target
+jobboard-data/.classpath
+jobboard-data/.project
+jobboard-data/.settings
+jobboard-data/target
+jobboard/.classpath
+jobboard/.project
+jobboard/.settings
+jobboard/target
