@@ -111,9 +111,9 @@ commandName="jobSeekerRegistrationForm" enctype="multipart/form-data">
 	  <table>
 	  	 <tr>
 			<td>First Name :</td>
-			<td><form:input path="firstName" /></td>
+			<td><form:input path="contactForm.firstName" /></td>
 			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="firstName" cssClass="error" /></FONT></td>
+			<td><FONT color="red"><form:errors path="contactForm.firstName" cssClass="error" /></FONT></td>
 		</tr>
 		<tr>
 			<td>Middle Name :</td>
