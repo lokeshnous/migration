@@ -109,7 +109,7 @@ commandName="jobSeekerRegistrationForm" enctype="multipart/form-data">
 	 	<fieldset style="width:800;">
 	 	<legend class="Header2">Contact Information</legend>
 	  <table>
-	  	 <tr>
+<%-- 	  	 <tr>
 			<td>First Name :</td>
 			<td><form:input path="contactForm.firstName" /></td>
 			<td><FONT color="red">[Mandatory]</FONT></td>
@@ -171,7 +171,7 @@ commandName="jobSeekerRegistrationForm" enctype="multipart/form-data">
 			<td>Phone :</td>
 			<td><form:input path="phone" /></td>
 			<td><FONT color="red"><form:errors path="phone" cssClass="error" /></FONT></td>
-		</tr> 
+		</tr>  --%>
      </table>
      </fieldset>
      </td>
