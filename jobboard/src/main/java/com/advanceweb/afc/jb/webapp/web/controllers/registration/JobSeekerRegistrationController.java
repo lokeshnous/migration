@@ -16,9 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
+import com.advanceweb.afc.jb.common.EthenticityDTO;
+import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.dropdowns.PopulateDropdowns;
 import com.advanceweb.afc.jb.registration.ProfileRegistration;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.JobSeekerRegistrationForm;
@@ -50,7 +54,18 @@ public class JobSeekerRegistrationController {
 	public ModelAndView createJobSeekerRegistration(Map model) {
 		
 		JobSeekerRegistrationForm jobSeekerRegistrationForm = new JobSeekerRegistrationForm();
-		List<CountryDTO> listCountryDTO= populateDropdownsService.getCountryList();
+		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
+		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
+		List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
+		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
+		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
+		
+		model.put("countryList",countryList);
+		model.put("employmentInfoList",empInfoList);
+		model.put("genderList",genderList);
+		model.put("ethnicityList",ethnicityList);
+		model.put("veteranStatusList",veteranStatusList);
+		
 		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
 		return new ModelAndView("jobseekerregistration");
 	}
