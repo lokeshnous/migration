@@ -2,20 +2,34 @@ package com.advanceweb.afc.jb.jobseeker.activity;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.data.jobseeker.activity.JobSeekerActivityDAO;
 
+/**
+ * 
+ * @author sharadk
+ * 
+ */
+@Service("articleService")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSeekerActivityService implements JobSeekerActivity {
 
-	public AppliedJobDTO appliedJobDTO;
+	@Autowired
 	public JobSeekerActivityDAO activityDAO;
 
-	JobSeekerActivityService(){
-		
+	JobSeekerActivityService() {
+
 	}
-	
-	
+
+	/**
+	 * to get list of applied job
+	 */
+
 	@Override
 	public List<AppliedJobDTO> getAppliedJobs(long jobSeekerId) {
 
@@ -23,24 +37,41 @@ public class JobSeekerActivityService implements JobSeekerActivity {
 
 	}
 
+	/**
+	 * delete applied job
+	 */
+
 	@Override
-	public boolean deleteAppliedJobs(long appliedJobId) {
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+	public void deleteAppliedJobs(long appliedJobId) {
 
 		activityDAO.deleteAppliedJobs(appliedJobId);
-		return false;
+
 	}
 
-	
-	
+	/**
+	 * to get list of Saved job
+	 */
+
 	@Override
 	public List<SavedJobDTO> getSavedJobs(long jobSeekerId) {
 		return activityDAO.getSavedJobs(jobSeekerId);
 	}
 
+	/**
+	 * delete Saved job
+	 */
 	@Override
-	public boolean deleteSavedJobs(long savedJobId) {
+	public void deleteSavedJobs(long savedJobId) {
 		activityDAO.deleteSavedJobs(savedJobId);
-		return false;
+	}
+
+	public JobSeekerActivityDAO getActivityDAO() {
+		return activityDAO;
+	}
+
+	public void setActivityDAO(JobSeekerActivityDAO activityDAO) {
+		this.activityDAO = activityDAO;
 	}
 
 }
