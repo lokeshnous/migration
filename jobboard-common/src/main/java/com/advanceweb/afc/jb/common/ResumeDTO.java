@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -28,6 +29,20 @@ public class ResumeDTO implements Serializable{
 	private String fileName;
 	private String isPublished;
 	private Date updateDt;
+	
+	//Creating Resume
+	private String objective;
+	private String skills;
+	private String awards;
+	private String memberships;
+	private String otherDetails;
+	private List<CertificationDTO> listCertDTO;
+	private List<EducationDTO> listEduDTO;
+	private List<LanguageDTO> listLangDTO;
+	private List<ReferenceDTO> listRefDTO;
+	private List<WorkExpDTO> listWorkExpDTO;
+	private ContactInformationDTO contactInfoDTO;
+	//Creating Resume	
 
 	
 	public int getUploadResumeId() {
@@ -126,7 +141,72 @@ public class ResumeDTO implements Serializable{
 	public void setUpdateDt(Date updateDt) {
 		this.updateDt = updateDt;
 	}
-	
+	public String getObjective() {
+		return objective;
+	}
+	public void setObjective(String objective) {
+		this.objective = objective;
+	}
+	public String getSkills() {
+		return skills;
+	}
+	public void setSkills(String skills) {
+		this.skills = skills;
+	}
+	public String getAwards() {
+		return awards;
+	}
+	public void setAwards(String awards) {
+		this.awards = awards;
+	}
+	public String getMemberships() {
+		return memberships;
+	}
+	public void setMemberships(String memberships) {
+		this.memberships = memberships;
+	}
+	public String getOtherDetails() {
+		return otherDetails;
+	}
+	public void setOtherDetails(String otherDetails) {
+		this.otherDetails = otherDetails;
+	}
+	public List<CertificationDTO> getListCertDTO() {
+		return listCertDTO;
+	}
+	public void setListCertDTO(List<CertificationDTO> listCertDTO) {
+		this.listCertDTO = listCertDTO;
+	}
+	public List<EducationDTO> getListEduDTO() {
+		return listEduDTO;
+	}
+	public void setListEduDTO(List<EducationDTO> listEduDTO) {
+		this.listEduDTO = listEduDTO;
+	}
+	public List<LanguageDTO> getListLangDTO() {
+		return listLangDTO;
+	}
+	public void setListLangDTO(List<LanguageDTO> listLangDTO) {
+		this.listLangDTO = listLangDTO;
+	}
+	public List<ReferenceDTO> getListRefDTO() {
+		return listRefDTO;
+	}
+	public void setListRefDTO(List<ReferenceDTO> listRefDTO) {
+		this.listRefDTO = listRefDTO;
+	}
+	public List<WorkExpDTO> getListWorkExpDTO() {
+		return listWorkExpDTO;
+	}
+	public void setListWorkExpDTO(List<WorkExpDTO> listWorkExpDTO) {
+		this.listWorkExpDTO = listWorkExpDTO;
+	}
+	public ContactInformationDTO getContactInfoDTO() {
+		return contactInfoDTO;
+	}
+	public void setContactInfoDTO(ContactInformationDTO contactInfoDTO) {
+		this.contactInfoDTO = contactInfoDTO;
+	}
 	@Override
 	public String toString() {
 		return "ResumeDTO [uploadResumeId=" + uploadResumeId + ", resumeText="
