@@ -1,71 +1,65 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the vst_event_type database table.
  * 
  */
 @Entity
-@Table(name = "vst_event_type")
+@Table(name="vst_event_type")
 public class VstEventType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String description;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "event_type_id", insertable = false, updatable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="event_type_id")
 	private int eventTypeId;
+
+	private String description;
 
 	private String name;
 
-	// bi-directional many-to-one association to VstSessionEvent
-	@OneToMany(mappedBy = "vstEventType")
+	//bi-directional many-to-one association to VstSessionEvent
+	@OneToMany(mappedBy="vstEventType")
 	private List<VstSessionEvent> vstSessionEvents;
 
-	public VstEventType() {
-	}
-
-	public String getDescription() {
-		return description;
-	}
+    public VstEventType() {
+    }
 
 	public int getEventTypeId() {
-		return eventTypeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public List<VstSessionEvent> getVstSessionEvents() {
-		return vstSessionEvents;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+		return this.eventTypeId;
 	}
 
 	public void setEventTypeId(int eventTypeId) {
 		this.eventTypeId = eventTypeId;
 	}
 
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<VstSessionEvent> getVstSessionEvents() {
+		return this.vstSessionEvents;
 	}
 
 	public void setVstSessionEvents(List<VstSessionEvent> vstSessionEvents) {
 		this.vstSessionEvents = vstSessionEvents;
 	}
-
+	
 }

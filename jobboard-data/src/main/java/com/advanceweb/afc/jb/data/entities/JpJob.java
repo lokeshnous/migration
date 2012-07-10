@@ -1,121 +1,87 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the jp_job database table.
  * 
  */
 @Entity
-@Table(name = "jp_job")
+@Table(name="jp_job")
 public class JpJob implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "account_num")
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="job_id")
+	private int jobId;
+
+	@Column(name="account_num")
 	private String accountNum;
 
 	private byte active;
 
-	// bi-directional many-to-one association to AdmFacility
-	@ManyToOne
-	@JoinColumn(name = "facility_id")
-	private AdmFacility admFacility;
-
-	@Column(name = "admin_user_id")
+	@Column(name="admin_user_id")
 	private int adminUserId;
 
-	@Lob()
+    @Lob()
 	private String adtext;
 
-	@Column(name = "apply_online")
+	@Column(name="apply_online")
 	private int applyOnline;
 
-	@Column(name = "blind_ad")
+	@Column(name="blind_ad")
 	private int blindAd;
 
-	@Column(name = "create_dt")
+	@Column(name="create_dt")
 	private Timestamp createDt;
 
-	@Column(name = "create_user_id")
+	@Column(name="create_user_id")
 	private int createUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "delete_dt")
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="delete_dt")
 	private Date deleteDt;
 
 	private String email;
 
-	@Column(name = "email_display")
+	@Column(name="email_display")
 	private String emailDisplay;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "end_dt")
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="end_dt")
 	private Date endDt;
 
 	private String facility;
 
 	private byte featured;
 
-	@Column(name = "featured_ad")
+	@Column(name="featured_ad")
 	private byte featuredAd;
 
 	private String headline;
 
-	@Column(name = "image_path")
+	@Column(name="image_path")
 	private String imagePath;
 
-	@Column(name = "is_international")
+	@Column(name="is_international")
 	private byte isInternational;
 
-	@Column(name = "is_national")
+	@Column(name="is_national")
 	private byte isNational;
 
-	@Column(name = "job_count")
+	@Column(name="job_count")
 	private int jobCount;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "job_id", insertable = false, updatable = false)
-	private int jobId;
-
-	@Column(name = "job_number")
+	@Column(name="job_number")
 	private String jobNumber;
 
 	private String jobtitle;
-
-	// bi-directional many-to-one association to JpJobAddon
-	@OneToMany(mappedBy = "jpJob")
-	private List<JpJobAddon> jpJobAddons;
-
-	// bi-directional many-to-one association to JpJobLocation
-	@OneToMany(mappedBy = "jpJob")
-	private List<JpJobLocation> jpJobLocations;
-
-	// bi-directional many-to-one association to JpJobType
-	@ManyToOne
-	@JoinColumn(name = "job_type_id")
-	private JpJobType jpJobType;
-
-	// bi-directional many-to-one association to JpSource
-	@ManyToOne
-	@JoinColumn(name = "source_id")
-	private JpSource jpSource;
 
 	private String keywords;
 
@@ -123,355 +89,378 @@ public class JpJob implements Serializable {
 
 	private String name;
 
-	@Column(name = "pdf_path")
+	@Column(name="pdf_path")
 	private String pdfPath;
 
-	@Column(name = "position_level")
+	@Column(name="position_level")
 	private String positionLevel;
 
-	@Column(name = "position_type")
+	@Column(name="position_type")
 	private String positionType;
 
-	@Column(name = "practice_setting")
+	@Column(name="practice_setting")
 	private String practiceSetting;
 
-	@Column(name = "publication_id")
+	@Column(name="publication_id")
 	private int publicationId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "start_dt")
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="start_dt")
 	private Date startDt;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_dt")
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="update_dt")
 	private Date updateDt;
 
 	private String url;
 
-	@Column(name = "url_display")
+	@Column(name="url_display")
 	private String urlDisplay;
 
-	public JpJob() {
-	}
+	//bi-directional many-to-one association to JpSource
+    @ManyToOne
+	@JoinColumn(name="source_id", insertable = false, updatable = false)
+	private JpSource jpSource;
 
-	public String getAccountNum() {
-		return accountNum;
-	}
+	//bi-directional many-to-one association to AdmFacility
+    @ManyToOne
+	@JoinColumn(name="facility_id", insertable = false, updatable = false)
+	private AdmFacility admFacility;
 
-	public byte getActive() {
-		return active;
-	}
+	//bi-directional many-to-one association to JpJobType
+    @ManyToOne
+	@JoinColumn(name="job_type_id", insertable = false, updatable = false)
+	private JpJobType jpJobType;
 
-	public AdmFacility getAdmFacility() {
-		return admFacility;
-	}
+	//bi-directional many-to-one association to JpJobAddon
+	@OneToMany(mappedBy="jpJob")
+	private List<JpJobAddon> jpJobAddons;
 
-	public int getAdminUserId() {
-		return adminUserId;
-	}
+	//bi-directional many-to-one association to JpJobLocation
+	@OneToMany(mappedBy="jpJob")
+	private List<JpJobLocation> jpJobLocations;
 
-	public String getAdtext() {
-		return adtext;
-	}
-
-	public int getApplyOnline() {
-		return applyOnline;
-	}
-
-	public int getBlindAd() {
-		return blindAd;
-	}
-
-	public Timestamp getCreateDt() {
-		return createDt;
-	}
-
-	public int getCreateUserId() {
-		return createUserId;
-	}
-
-	public Date getDeleteDt() {
-		return deleteDt;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getEmailDisplay() {
-		return emailDisplay;
-	}
-
-	public Date getEndDt() {
-		return endDt;
-	}
-
-	public String getFacility() {
-		return facility;
-	}
-
-	public byte getFeatured() {
-		return featured;
-	}
-
-	public byte getFeaturedAd() {
-		return featuredAd;
-	}
-
-	public String getHeadline() {
-		return headline;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public byte getIsInternational() {
-		return isInternational;
-	}
-
-	public byte getIsNational() {
-		return isNational;
-	}
-
-	public int getJobCount() {
-		return jobCount;
-	}
+    public JpJob() {
+    }
 
 	public int getJobId() {
-		return jobId;
-	}
-
-	public String getJobNumber() {
-		return jobNumber;
-	}
-
-	public String getJobtitle() {
-		return jobtitle;
-	}
-
-	public List<JpJobAddon> getJpJobAddons() {
-		return jpJobAddons;
-	}
-
-	public List<JpJobLocation> getJpJobLocations() {
-		return jpJobLocations;
-	}
-
-	public JpJobType getJpJobType() {
-		return jpJobType;
-	}
-
-	public JpSource getJpSource() {
-		return jpSource;
-	}
-
-	public String getKeywords() {
-		return keywords;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getPdfPath() {
-		return pdfPath;
-	}
-
-	public String getPositionLevel() {
-		return positionLevel;
-	}
-
-	public String getPositionType() {
-		return positionType;
-	}
-
-	public String getPracticeSetting() {
-		return practiceSetting;
-	}
-
-	public int getPublicationId() {
-		return publicationId;
-	}
-
-	public Date getStartDt() {
-		return startDt;
-	}
-
-	public Date getUpdateDt() {
-		return updateDt;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public String getUrlDisplay() {
-		return urlDisplay;
-	}
-
-	public void setAccountNum(String accountNum) {
-		this.accountNum = accountNum;
-	}
-
-	public void setActive(byte active) {
-		this.active = active;
-	}
-
-	public void setAdmFacility(AdmFacility admFacility) {
-		this.admFacility = admFacility;
-	}
-
-	public void setAdminUserId(int adminUserId) {
-		this.adminUserId = adminUserId;
-	}
-
-	public void setAdtext(String adtext) {
-		this.adtext = adtext;
-	}
-
-	public void setApplyOnline(int applyOnline) {
-		this.applyOnline = applyOnline;
-	}
-
-	public void setBlindAd(int blindAd) {
-		this.blindAd = blindAd;
-	}
-
-	public void setCreateDt(Timestamp createDt) {
-		this.createDt = createDt;
-	}
-
-	public void setCreateUserId(int createUserId) {
-		this.createUserId = createUserId;
-	}
-
-	public void setDeleteDt(Date deleteDt) {
-		this.deleteDt = deleteDt;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setEmailDisplay(String emailDisplay) {
-		this.emailDisplay = emailDisplay;
-	}
-
-	public void setEndDt(Date endDt) {
-		this.endDt = endDt;
-	}
-
-	public void setFacility(String facility) {
-		this.facility = facility;
-	}
-
-	public void setFeatured(byte featured) {
-		this.featured = featured;
-	}
-
-	public void setFeaturedAd(byte featuredAd) {
-		this.featuredAd = featuredAd;
-	}
-
-	public void setHeadline(String headline) {
-		this.headline = headline;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public void setIsInternational(byte isInternational) {
-		this.isInternational = isInternational;
-	}
-
-	public void setIsNational(byte isNational) {
-		this.isNational = isNational;
-	}
-
-	public void setJobCount(int jobCount) {
-		this.jobCount = jobCount;
+		return this.jobId;
 	}
 
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
 
+	public String getAccountNum() {
+		return this.accountNum;
+	}
+
+	public void setAccountNum(String accountNum) {
+		this.accountNum = accountNum;
+	}
+
+	public byte getActive() {
+		return this.active;
+	}
+
+	public void setActive(byte active) {
+		this.active = active;
+	}
+
+	public int getAdminUserId() {
+		return this.adminUserId;
+	}
+
+	public void setAdminUserId(int adminUserId) {
+		this.adminUserId = adminUserId;
+	}
+
+	public String getAdtext() {
+		return this.adtext;
+	}
+
+	public void setAdtext(String adtext) {
+		this.adtext = adtext;
+	}
+
+	public int getApplyOnline() {
+		return this.applyOnline;
+	}
+
+	public void setApplyOnline(int applyOnline) {
+		this.applyOnline = applyOnline;
+	}
+
+	public int getBlindAd() {
+		return this.blindAd;
+	}
+
+	public void setBlindAd(int blindAd) {
+		this.blindAd = blindAd;
+	}
+
+	public Timestamp getCreateDt() {
+		return this.createDt;
+	}
+
+	public void setCreateDt(Timestamp createDt) {
+		this.createDt = createDt;
+	}
+
+	public int getCreateUserId() {
+		return this.createUserId;
+	}
+
+	public void setCreateUserId(int createUserId) {
+		this.createUserId = createUserId;
+	}
+
+	public Date getDeleteDt() {
+		return this.deleteDt;
+	}
+
+	public void setDeleteDt(Date deleteDt) {
+		this.deleteDt = deleteDt;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmailDisplay() {
+		return this.emailDisplay;
+	}
+
+	public void setEmailDisplay(String emailDisplay) {
+		this.emailDisplay = emailDisplay;
+	}
+
+	public Date getEndDt() {
+		return this.endDt;
+	}
+
+	public void setEndDt(Date endDt) {
+		this.endDt = endDt;
+	}
+
+	public String getFacility() {
+		return this.facility;
+	}
+
+	public void setFacility(String facility) {
+		this.facility = facility;
+	}
+
+	public byte getFeatured() {
+		return this.featured;
+	}
+
+	public void setFeatured(byte featured) {
+		this.featured = featured;
+	}
+
+	public byte getFeaturedAd() {
+		return this.featuredAd;
+	}
+
+	public void setFeaturedAd(byte featuredAd) {
+		this.featuredAd = featuredAd;
+	}
+
+	public String getHeadline() {
+		return this.headline;
+	}
+
+	public void setHeadline(String headline) {
+		this.headline = headline;
+	}
+
+	public String getImagePath() {
+		return this.imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public byte getIsInternational() {
+		return this.isInternational;
+	}
+
+	public void setIsInternational(byte isInternational) {
+		this.isInternational = isInternational;
+	}
+
+	public byte getIsNational() {
+		return this.isNational;
+	}
+
+	public void setIsNational(byte isNational) {
+		this.isNational = isNational;
+	}
+
+	public int getJobCount() {
+		return this.jobCount;
+	}
+
+	public void setJobCount(int jobCount) {
+		this.jobCount = jobCount;
+	}
+
+	public String getJobNumber() {
+		return this.jobNumber;
+	}
+
 	public void setJobNumber(String jobNumber) {
 		this.jobNumber = jobNumber;
+	}
+
+	public String getJobtitle() {
+		return this.jobtitle;
 	}
 
 	public void setJobtitle(String jobtitle) {
 		this.jobtitle = jobtitle;
 	}
 
-	public void setJpJobAddons(List<JpJobAddon> jpJobAddons) {
-		this.jpJobAddons = jpJobAddons;
-	}
-
-	public void setJpJobLocations(List<JpJobLocation> jpJobLocations) {
-		this.jpJobLocations = jpJobLocations;
-	}
-
-	public void setJpJobType(JpJobType jpJobType) {
-		this.jpJobType = jpJobType;
-	}
-
-	public void setJpSource(JpSource jpSource) {
-		this.jpSource = jpSource;
+	public String getKeywords() {
+		return this.keywords;
 	}
 
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	}
 
+	public String getLogo() {
+		return this.logo;
+	}
+
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	public String getPdfPath() {
+		return this.pdfPath;
+	}
+
 	public void setPdfPath(String pdfPath) {
 		this.pdfPath = pdfPath;
+	}
+
+	public String getPositionLevel() {
+		return this.positionLevel;
 	}
 
 	public void setPositionLevel(String positionLevel) {
 		this.positionLevel = positionLevel;
 	}
 
+	public String getPositionType() {
+		return this.positionType;
+	}
+
 	public void setPositionType(String positionType) {
 		this.positionType = positionType;
+	}
+
+	public String getPracticeSetting() {
+		return this.practiceSetting;
 	}
 
 	public void setPracticeSetting(String practiceSetting) {
 		this.practiceSetting = practiceSetting;
 	}
 
+	public int getPublicationId() {
+		return this.publicationId;
+	}
+
 	public void setPublicationId(int publicationId) {
 		this.publicationId = publicationId;
+	}
+
+	public Date getStartDt() {
+		return this.startDt;
 	}
 
 	public void setStartDt(Date startDt) {
 		this.startDt = startDt;
 	}
 
+	public Date getUpdateDt() {
+		return this.updateDt;
+	}
+
 	public void setUpdateDt(Date updateDt) {
 		this.updateDt = updateDt;
+	}
+
+	public String getUrl() {
+		return this.url;
 	}
 
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
+	public String getUrlDisplay() {
+		return this.urlDisplay;
+	}
+
 	public void setUrlDisplay(String urlDisplay) {
 		this.urlDisplay = urlDisplay;
 	}
 
+	public JpSource getJpSource() {
+		return this.jpSource;
+	}
+
+	public void setJpSource(JpSource jpSource) {
+		this.jpSource = jpSource;
+	}
+	
+	public AdmFacility getAdmFacility() {
+		return this.admFacility;
+	}
+
+	public void setAdmFacility(AdmFacility admFacility) {
+		this.admFacility = admFacility;
+	}
+	
+	public JpJobType getJpJobType() {
+		return this.jpJobType;
+	}
+
+	public void setJpJobType(JpJobType jpJobType) {
+		this.jpJobType = jpJobType;
+	}
+	
+	public List<JpJobAddon> getJpJobAddons() {
+		return this.jpJobAddons;
+	}
+
+	public void setJpJobAddons(List<JpJobAddon> jpJobAddons) {
+		this.jpJobAddons = jpJobAddons;
+	}
+	
+	public List<JpJobLocation> getJpJobLocations() {
+		return this.jpJobLocations;
+	}
+
+	public void setJpJobLocations(List<JpJobLocation> jpJobLocations) {
+		this.jpJobLocations = jpJobLocations;
+	}
+	
 }

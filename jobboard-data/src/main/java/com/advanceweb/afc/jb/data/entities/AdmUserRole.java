@@ -1,97 +1,90 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the adm_user_role database table.
  * 
  */
 @Entity
-@Table(name = "adm_user_role")
+@Table(name="adm_user_role")
 public class AdmUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	// bi-directional many-to-one association to AdmRole
-	@ManyToOne
-	@JoinColumn(name = "role_id", insertable = false, updatable = false)
-	private AdmRole admRole;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_dt")
-	private Date createDt;
-
-	@Column(name = "create_user_id")
-	private int createUserId;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "delete_dt")
-	private Date deleteDt;
-
-	@Column(name = "delete_user_id")
-	private int deleteUserId;
 
 	@EmbeddedId
 	private AdmUserRolePK id;
 
-	public AdmUserRole() {
-	}
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="create_dt")
+	private Date createDt;
 
-	public AdmRole getAdmRole() {
-		return admRole;
-	}
+	@Column(name="create_user_id")
+	private int createUserId;
 
-	public Date getCreateDt() {
-		return createDt;
-	}
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="delete_dt")
+	private Date deleteDt;
 
-	public int getCreateUserId() {
-		return createUserId;
-	}
+	@Column(name="delete_user_id")
+	private int deleteUserId;
 
-	public Date getDeleteDt() {
-		return deleteDt;
-	}
+	//bi-directional many-to-one association to AdmRole
+    @ManyToOne
+	@JoinColumn(name="role_id", insertable = false, updatable = false)
+	private AdmRole admRole;
 
-	public int getDeleteUserId() {
-		return deleteUserId;
-	}
+    public AdmUserRole() {
+    }
 
 	public AdmUserRolePK getId() {
-		return id;
+		return this.id;
 	}
 
-	public void setAdmRole(AdmRole admRole) {
-		this.admRole = admRole;
+	public void setId(AdmUserRolePK id) {
+		this.id = id;
+	}
+	
+	public Date getCreateDt() {
+		return this.createDt;
 	}
 
 	public void setCreateDt(Date createDt) {
 		this.createDt = createDt;
 	}
 
+	public int getCreateUserId() {
+		return this.createUserId;
+	}
+
 	public void setCreateUserId(int createUserId) {
 		this.createUserId = createUserId;
+	}
+
+	public Date getDeleteDt() {
+		return this.deleteDt;
 	}
 
 	public void setDeleteDt(Date deleteDt) {
 		this.deleteDt = deleteDt;
 	}
 
+	public int getDeleteUserId() {
+		return this.deleteUserId;
+	}
+
 	public void setDeleteUserId(int deleteUserId) {
 		this.deleteUserId = deleteUserId;
 	}
 
-	public void setId(AdmUserRolePK id) {
-		this.id = id;
+	public AdmRole getAdmRole() {
+		return this.admRole;
 	}
 
+	public void setAdmRole(AdmRole admRole) {
+		this.admRole = admRole;
+	}
+	
 }

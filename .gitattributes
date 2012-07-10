@@ -100,13 +100,14 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpLocationBckup.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpSource.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerApplication.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerLocation.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerLookup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerProfileAttrib.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUser.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserAlert.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplication.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplicationPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserProfile.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserProfilePK.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUtility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchIndex.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchInput.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchParam.java -text

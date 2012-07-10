@@ -1,74 +1,74 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the adm_permission database table.
  * 
  */
 @Entity
-@Table(name = "adm_permission")
+@Table(name="adm_permission")
 public class AdmPermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// bi-directional many-to-many association to AdmRole
-	@ManyToMany
-	@JoinTable(name = "adm_role_permission", joinColumns = { @JoinColumn(name = "permission_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
-	private List<AdmRole> admRoles;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="permission_id")
+	private int permissionId;
 
 	private String description;
 
 	private String name;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "permission_id", insertable = false, updatable = false)
-	private int permissionId;
+	//bi-directional many-to-many association to AdmRole
+    @ManyToMany
+	@JoinTable(
+		name="adm_role_permission"
+		, joinColumns={
+			@JoinColumn(name="permission_id", insertable = false, updatable = false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="role_id", insertable = false, updatable = false)
+			}
+		)
+	private List<AdmRole> admRoles;
 
-	public AdmPermission() {
-	}
-
-	public List<AdmRole> getAdmRoles() {
-		return admRoles;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getName() {
-		return name;
-	}
+    public AdmPermission() {
+    }
 
 	public int getPermissionId() {
-		return permissionId;
-	}
-
-	public void setAdmRoles(List<AdmRole> admRoles) {
-		this.admRoles = admRoles;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return this.permissionId;
 	}
 
 	public void setPermissionId(int permissionId) {
 		this.permissionId = permissionId;
 	}
 
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<AdmRole> getAdmRoles() {
+		return this.admRoles;
+	}
+
+	public void setAdmRoles(List<AdmRole> admRoles) {
+		this.admRoles = admRoles;
+	}
+	
 }

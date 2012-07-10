@@ -1,82 +1,76 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the jp_job_type database table.
  * 
  */
 @Entity
-@Table(name = "jp_job_type")
+@Table(name="jp_job_type")
 public class JpJobType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "credit_amt")
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="job_type_id")
+	private int jobTypeId;
+
+	@Column(name="credit_amt")
 	private int creditAmt;
 
 	private String description;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "job_type_id", insertable = false, updatable = false)
-	private int jobTypeId;
-
-	// bi-directional many-to-one association to JpJob
-	@OneToMany(mappedBy = "jpJobType")
-	private List<JpJob> jpJobs;
-
 	private String name;
 
-	public JpJobType() {
-	}
+	//bi-directional many-to-one association to JpJob
+	@OneToMany(mappedBy="jpJobType")
+	private List<JpJob> jpJobs;
 
-	public int getCreditAmt() {
-		return creditAmt;
-	}
-
-	public String getDescription() {
-		return description;
-	}
+    public JpJobType() {
+    }
 
 	public int getJobTypeId() {
-		return jobTypeId;
-	}
-
-	public List<JpJob> getJpJobs() {
-		return jpJobs;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setCreditAmt(int creditAmt) {
-		this.creditAmt = creditAmt;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+		return this.jobTypeId;
 	}
 
 	public void setJobTypeId(int jobTypeId) {
 		this.jobTypeId = jobTypeId;
 	}
 
-	public void setJpJobs(List<JpJob> jpJobs) {
-		this.jpJobs = jpJobs;
+	public int getCreditAmt() {
+		return this.creditAmt;
+	}
+
+	public void setCreditAmt(int creditAmt) {
+		this.creditAmt = creditAmt;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	public List<JpJob> getJpJobs() {
+		return this.jpJobs;
+	}
+
+	public void setJpJobs(List<JpJob> jpJobs) {
+		this.jpJobs = jpJobs;
+	}
+	
 }

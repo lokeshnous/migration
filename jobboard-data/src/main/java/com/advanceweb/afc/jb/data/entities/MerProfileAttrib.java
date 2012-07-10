@@ -1,83 +1,77 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the mer_profile_attrib database table.
  * 
  */
 @Entity
-@Table(name = "mer_profile_attrib")
+@Table(name="mer_profile_attrib")
 public class MerProfileAttrib implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "create_dt")
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="profile_attrib_id")
+	private int profileAttribId;
+
+	@Column(name="create_dt")
 	private Timestamp createDt;
 
 	private String description;
 
-	// bi-directional many-to-one association to MerUserProfile
-	@OneToMany(mappedBy = "merProfileAttrib")
-	private List<MerUserProfile> merUserProfiles;
-
 	private String name;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "profile_attrib_id", insertable = false, updatable = false)
-	private int profileAttribId;
+	//bi-directional many-to-one association to MerUserProfile
+	@OneToMany(mappedBy="merProfileAttrib")
+	private List<MerUserProfile> merUserProfiles;
 
-	public MerProfileAttrib() {
-	}
-
-	public Timestamp getCreateDt() {
-		return createDt;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public List<MerUserProfile> getMerUserProfiles() {
-		return merUserProfiles;
-	}
-
-	public String getName() {
-		return name;
-	}
+    public MerProfileAttrib() {
+    }
 
 	public int getProfileAttribId() {
-		return profileAttribId;
-	}
-
-	public void setCreateDt(Timestamp createDt) {
-		this.createDt = createDt;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setMerUserProfiles(List<MerUserProfile> merUserProfiles) {
-		this.merUserProfiles = merUserProfiles;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return this.profileAttribId;
 	}
 
 	public void setProfileAttribId(int profileAttribId) {
 		this.profileAttribId = profileAttribId;
 	}
 
+	public Timestamp getCreateDt() {
+		return this.createDt;
+	}
+
+	public void setCreateDt(Timestamp createDt) {
+		this.createDt = createDt;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<MerUserProfile> getMerUserProfiles() {
+		return this.merUserProfiles;
+	}
+
+	public void setMerUserProfiles(List<MerUserProfile> merUserProfiles) {
+		this.merUserProfiles = merUserProfiles;
+	}
+	
 }

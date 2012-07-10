@@ -1,112 +1,105 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the meta_search_query_history database table.
  * 
  */
 @Entity
-@Table(name = "meta_search_query_history")
+@Table(name="meta_search_query_history")
 public class MetaSearchQueryHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="search_query_history_id")
+	private int searchQueryHistoryId;
 
 	private byte active;
 
 	private String environment;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "query_change_dt")
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="query_change_dt")
 	private Date queryChangeDt;
 
-	@Column(name = "query_params")
+	@Column(name="query_params")
 	private String queryParams;
 
-	@Column(name = "query_string")
+	@Column(name="query_string")
 	private String queryString;
 
-	@Column(name = "search_index_name")
+	@Column(name="search_index_name")
 	private String searchIndexName;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "search_query_history_id", insertable = false, updatable = false)
-	private int searchQueryHistoryId;
-
-	@Column(name = "search_type_name")
+	@Column(name="search_type_name")
 	private String searchTypeName;
 
-	public MetaSearchQueryHistory() {
+    public MetaSearchQueryHistory() {
+    }
+
+	public int getSearchQueryHistoryId() {
+		return this.searchQueryHistoryId;
+	}
+
+	public void setSearchQueryHistoryId(int searchQueryHistoryId) {
+		this.searchQueryHistoryId = searchQueryHistoryId;
 	}
 
 	public byte getActive() {
-		return active;
-	}
-
-	public String getEnvironment() {
-		return environment;
-	}
-
-	public Date getQueryChangeDt() {
-		return queryChangeDt;
-	}
-
-	public String getQueryParams() {
-		return queryParams;
-	}
-
-	public String getQueryString() {
-		return queryString;
-	}
-
-	public String getSearchIndexName() {
-		return searchIndexName;
-	}
-
-	public int getSearchQueryHistoryId() {
-		return searchQueryHistoryId;
-	}
-
-	public String getSearchTypeName() {
-		return searchTypeName;
+		return this.active;
 	}
 
 	public void setActive(byte active) {
 		this.active = active;
 	}
 
+	public String getEnvironment() {
+		return this.environment;
+	}
+
 	public void setEnvironment(String environment) {
 		this.environment = environment;
+	}
+
+	public Date getQueryChangeDt() {
+		return this.queryChangeDt;
 	}
 
 	public void setQueryChangeDt(Date queryChangeDt) {
 		this.queryChangeDt = queryChangeDt;
 	}
 
+	public String getQueryParams() {
+		return this.queryParams;
+	}
+
 	public void setQueryParams(String queryParams) {
 		this.queryParams = queryParams;
+	}
+
+	public String getQueryString() {
+		return this.queryString;
 	}
 
 	public void setQueryString(String queryString) {
 		this.queryString = queryString;
 	}
 
+	public String getSearchIndexName() {
+		return this.searchIndexName;
+	}
+
 	public void setSearchIndexName(String searchIndexName) {
 		this.searchIndexName = searchIndexName;
 	}
 
-	public void setSearchQueryHistoryId(int searchQueryHistoryId) {
-		this.searchQueryHistoryId = searchQueryHistoryId;
+	public String getSearchTypeName() {
+		return this.searchTypeName;
 	}
 
 	public void setSearchTypeName(String searchTypeName) {

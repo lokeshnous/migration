@@ -1,19 +1,15 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the vst_search_result database table.
  * 
  */
 @Entity
-@Table(name = "vst_search_result")
+@Table(name="vst_search_result")
 public class VstSearchResult implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,36 +18,36 @@ public class VstSearchResult implements Serializable {
 
 	private String result;
 
-	// bi-directional many-to-one association to VstSearch
-	@ManyToOne
-	@JoinColumn(name = "search_id", insertable = false, updatable = false)
+	//bi-directional many-to-one association to VstSearch
+    @ManyToOne
+	@JoinColumn(name="search_id", insertable = false, updatable = false)
 	private VstSearch vstSearch;
 
-	public VstSearchResult() {
-	}
+    public VstSearchResult() {
+    }
 
 	public VstSearchResultPK getId() {
-		return id;
-	}
-
-	public String getResult() {
-		return result;
-	}
-
-	public VstSearch getVstSearch() {
-		return vstSearch;
+		return this.id;
 	}
 
 	public void setId(VstSearchResultPK id) {
 		this.id = id;
+	}
+	
+	public String getResult() {
+		return this.result;
 	}
 
 	public void setResult(String result) {
 		this.result = result;
 	}
 
+	public VstSearch getVstSearch() {
+		return this.vstSearch;
+	}
+
 	public void setVstSearch(VstSearch vstSearch) {
 		this.vstSearch = vstSearch;
 	}
-
+	
 }
