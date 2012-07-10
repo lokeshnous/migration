@@ -17,39 +17,35 @@
 	<!-- Transformers at delegate layer (web layer) -->
 	<bean id="transformJobSeekerRegistration"
 		class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration" />
-	<bean id="transCreateResume" class="com.advanceweb.afc.jb.webapp.web.transformers.TransformCreateResume" />		
+	<bean id="transCreateResume" class="com.advanceweb.afc.jb.webapp.web.transformers.TransformCreateResume" />
 
-	<!-- Invoker service layer from controller-->
+	<!-- Invoker service layer from controller -->
 	<bean id="profileRegistration"
 		class="com.advanceweb.afc.jb.registration.JobSeekerRegistration" />
-	<bean id="createResumeService" class="com.advanceweb.afc.jb.resume.CreateResumeServiceImpl" />
-	<bean id="populateDropdownsService" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsImpl" /> 
+	<bean id="populateDropdownsService" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsImpl" />
 	<bean id="jobSeekerActivity"
-		class="com.advanceweb.afc.jb.jobseeker.activity.JobSeekerActivityService" /> 
+		class="com.advanceweb.afc.jb.jobseeker.activity.JobSeekerActivityService" />
 
 	<!-- DAO's Injection -->
 	<bean id="jobSeekerRegistrationDAO"
 		class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
-	<bean id="createResumeDao" class="com.advanceweb.afc.jb.data.resume.CreateResumeDaoImpl" />
 	<bean id="populateDropdownsDAO"
 		class="com.advanceweb.afc.jb.data.dropdowns.PopulateDropdownsDAOImpl" />
 	<bean id="activityDAO"
-		class="com.advanceweb.afc.jb.data.jobseeker.activity.JobSeekerActivityDAOImpl" />  
+		class="com.advanceweb.afc.jb.data.jobseeker.activity.JobSeekerActivityDAOImpl" />
 
 	<!-- Conversion Helpers -->
-    <bean id="registrationConversionHelper"
+	<bean id="registrationConversionHelper"
 		class="com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper" />
 	<bean id="dropdownHelper"
 		class="com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper" />
-	<bean id="jobSeekerActivityConversionHelper"
-		class="com.advanceweb.afc.jb.data.common.helpers.JobSeekerActivityConversionHelper" />  
+	<bean id="jobSeekerActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSeekerActivityConversionHelper" />
 
 	<!-- Resume -->
 	<bean id="resumeService" class="com.advanceweb.afc.jb.resume.ResumeServiceImpl" />
-	
-	<bean id="resumeDao" class="com.advanceweb.afc.jb.data.resume.ResumeDaoImpl"/>
-	
-	<bean id="resumeConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.ResumeConversionHelper"/>
+	<bean id="resumeDao" class="com.advanceweb.afc.jb.data.resume.ResumeDaoImpl" />
+	<bean id="resumeConversionHelper"
+		class="com.advanceweb.afc.jb.data.common.helpers.ResumeConversionHelper" />
 
 
 
