@@ -16,5 +16,8 @@ public interface ResumeService {
 	public ResumeDTO editResume(int resumeId);
 	public boolean deleteResume(int resumeId);
 	public boolean createResumeBuilder(ResumeDTO resumeDTO);
+
+	public void addCreateResumeCopyPaste(ResumeDTO createResumeDTO);
+	public void addCreateResumeUpload(ResumeDTO createResumeDTO);
 }
 

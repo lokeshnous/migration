@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.resume;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.data.resume.ResumeDao;
@@ -14,8 +16,12 @@ import com.advanceweb.afc.jb.data.resume.ResumeDao;
 
 public class ResumeServiceImpl implements ResumeService {
 
+	
+	public ResumeDTO resumeDTO;
+	
 	@Autowired
-	ResumeDao resumeDao;
+	public ResumeDao resumeDao;
+
 
 	public ResumeServiceImpl() {
 
@@ -51,6 +57,18 @@ public class ResumeServiceImpl implements ResumeService {
 	public boolean deleteResume(int resumeId) {
 		return resumeDao.deleteResume(resumeId);
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void addCreateResumeCopyPaste(ResumeDTO resumeDTO) {
+		resumeDao.saveCreateResumeCopyPaste(resumeDTO);
+		
+	}
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void addCreateResumeUpload(ResumeDTO resumeDTO) {
+		resumeDao.saveCreateResumeUpload(resumeDTO);
+		
+	}
+
 
 	@Override
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {

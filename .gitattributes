@@ -50,8 +50,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/AgencyRegistratio
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/EmployerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/JobSeekerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/ProfileRegistration.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/CreateResumeService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/CreateResumeServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/JobSearch.java -text
