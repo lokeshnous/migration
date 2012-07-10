@@ -16,4 +16,6 @@ public interface ResumeDao {
 	public ResumeDTO editResume(int resumeId);
 	public boolean deleteResume(int resumeId);
 	public boolean createResume(ResumeDTO resumeDTO);
+	public void saveCreateResumeCopyPaste ( ResumeDTO resumeDTO );
+	public void saveCreateResumeUpload (ResumeDTO resumeDTO);
 }

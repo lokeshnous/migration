@@ -145,8 +145,6 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/EmployerRegi
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/EmployerRegistrationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/JobSeekerRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/JobSeekerRegistrationDAOImpl.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/data/resume/CreateResumeDao.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/data/resume/CreateResumeDaoImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/resume/ResumeDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/resume/ResumeDaoImpl.java -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
