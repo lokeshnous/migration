@@ -16,7 +16,7 @@ import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper;
-import com.advanceweb.afc.jb.data.entities.MerUtility;
+import com.advanceweb.afc.jb.data.entities.MerLookup;
 
 
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
@@ -32,7 +32,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Country' and e.utilityStaus='1'").list();
+			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Country' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerUtilityToCountryDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='EmploymentInformation' and e.utilityStaus='1'").list();
+			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='EmploymentInformation' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerUtilityToEmploymentInfoDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Subscriptions' and e.utilityStaus='1'").list();
+			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Subscriptions' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerUtilityToSubscriptionsDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -71,7 +71,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Gender' and e.utilityStaus='1'").list();
+			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Gender' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerUtilityToGenderDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='VeteranStatus' and e.utilityStaus='1'").list();
+			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='VeteranStatus' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerUtilityToVeteranStatusDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -97,7 +97,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 		try {
 			Session session= sessionFactory.openSession();
-			List<MerUtility> merUtilityList = session.createQuery("from MerUtility e where e.utilityCategory='Ethnicity' and e.utilityStaus='1'").list();
+			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Ethnicity' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerUtilityToEthenticityDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
