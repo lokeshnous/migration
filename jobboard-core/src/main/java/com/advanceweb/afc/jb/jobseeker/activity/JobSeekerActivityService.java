@@ -15,7 +15,7 @@ import com.advanceweb.afc.jb.data.jobseeker.activity.JobSeekerActivityDAO;
  * @author sharadk
  * 
  */
-@Service("articleService")
+@Service("activityService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSeekerActivityService implements JobSeekerActivity {
 
