@@ -153,7 +153,6 @@ jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/controllers/profilemgmt/JobSeekerProfileManagement.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration/JobSeekerRegistrationController.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/CreateResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/ContactInfoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/JobSeekerRegistrationForm.java -text
