@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
@@ -89,6 +90,8 @@ public class ResumeController {
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
+		ContactInformationDTO contactInfoDTO = transCreateResume.createContactInfoDTO(createResume.getContactInfoForm());
+		contactInfoDTO.setAddressDTO(addDTO);
 		List<CertificationDTO> listCertDTO = transCreateResume.createCertificationDTO(createResume.getListCertForm());
 		List<ReferenceDTO> listRefDTO = transCreateResume.createReferenceDTO(createResume.getListRefForm());
 		List<WorkExpDTO> listWorkExpDTO = transCreateResume.createWorkExpDTO(createResume.getListWorkExpForm());
@@ -101,7 +104,7 @@ public class ResumeController {
 		resumeDTO.setListLangDTO(listLangDTO);
 		resumeDTO.setListRefDTO(listRefDTO);
 		resumeDTO.setListWorkExpDTO(listWorkExpDTO);
-		
+		boolean binsterted = resumeService.createResumeBuilder(resumeDTO);
 		return null;
 		
 	}

@@ -12,7 +12,7 @@ public class CertificationDTO {
 	private String dateOfReceipt;
 	private String instituteName;
 	private String summary;
-	
+	private int builderCertId;
 	
 	public String getCertificationName() {
 		return certificationName;
@@ -37,6 +37,12 @@ public class CertificationDTO {
 	}
 	public void setSummary(String summary) {
 		this.summary = summary;
+	}
+	public int getBuilderCertId() {
+		return builderCertId;
+	}
+	public void setBuilderCertId(int builderCertId) {
+		this.builderCertId = builderCertId;
 	}
 	
 	

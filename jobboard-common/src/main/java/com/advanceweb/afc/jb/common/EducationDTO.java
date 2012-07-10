@@ -16,7 +16,8 @@ public class EducationDTO {
 	private String degrees;
 	private String Certifications;
 	private String language;
-	
+	private int builderEduId;
+	private EduDegreeDTO eduDegreeDTO;
 	
 	public String getDegreeLvl() {
 		return degreeLvl;
@@ -66,6 +67,19 @@ public class EducationDTO {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+	public int getBuilderEduId() {
+		return builderEduId;
+	}
+	public void setBuilderEduId(int builderEduId) {
+		this.builderEduId = builderEduId;
+	}
+	public EduDegreeDTO getEduDegreeDTO() {
+		return eduDegreeDTO;
+	}
+	public void setEduDegreeDTO(EduDegreeDTO eduDegreeDTO) {
+		this.eduDegreeDTO = eduDegreeDTO;
+	}
+	
 	
 	
 }

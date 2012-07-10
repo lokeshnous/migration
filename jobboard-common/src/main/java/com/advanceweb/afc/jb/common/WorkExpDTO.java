@@ -19,6 +19,7 @@ public class WorkExpDTO {
 	private String annualSalary;
 	private String hrlyPayRate;
 	private String description;
+	private int builderEmpId;
 	
 	public String getJobTitle() {
 		return jobTitle;
@@ -79,6 +80,12 @@ public class WorkExpDTO {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public int getBuilderEmpId() {
+		return builderEmpId;
+	}
+	public void setBuilderEmpId(int builderEmpId) {
+		this.builderEmpId = builderEmpId;
 	}
 	
 	

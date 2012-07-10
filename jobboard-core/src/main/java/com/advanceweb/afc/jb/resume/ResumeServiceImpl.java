@@ -52,4 +52,10 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.deleteResume(resumeId);
 	}
 
+	@Override
+	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
+		
+		return resumeDao.createResume(resumeDTO);
+	}
+
 }

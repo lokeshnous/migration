@@ -13,6 +13,7 @@ public class ReferenceDTO {
 	private String companyName;
 	private String phoneNo;
 	private String email;
+	private int builderRefId;
 	
 	public String getName() {
 		return name;
@@ -43,6 +44,12 @@ public class ReferenceDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getBuilderRefId() {
+		return builderRefId;
+	}
+	public void setBuilderRefId(int builderRefId) {
+		this.builderRefId = builderRefId;
 	}
 	
 	

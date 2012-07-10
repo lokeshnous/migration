@@ -61,6 +61,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeService.java -tex
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/SolrAdapter.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/AppTest.java -text
 jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/JobSeekerActivityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/PopulateDropdownConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/RegistrationConversionHelper.java -text

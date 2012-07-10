@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.resume;
 
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.data.common.helpers.ResumeConversionHelper;
+import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
+import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
+import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
+import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
+import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 
 /**
@@ -82,6 +88,25 @@ public class ResumeDaoImpl implements ResumeDao {
 		ResUploadResume resume = new ResUploadResume();
 		resume.setUploadResumeId(resumeId);
 		session.delete(resume);
+		return true;
+	}
+
+	@Override
+	public boolean createResume(ResumeDTO resumeDTO) {
+		ResBuilderResume builderResume = resumeConversionHelper.transformBuilderResume(resumeDTO);
+		List<ResBuilderCertification> builderCerts = resumeConversionHelper.transformBuilderCertifications(resumeDTO.getListCertDTO());
+		List<ResBuilderEdu> builderEducations = resumeConversionHelper.transformBuilderEducation(resumeDTO.getListEduDTO());
+		List<ResBuilderReference> builderRefs = resumeConversionHelper.transformBuilderReferences(resumeDTO.getListRefDTO());
+		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO());
+		builderResume.setResBuilderCertifications(builderCerts);
+		builderResume.setResBuilderEdus(builderEducations);
+		builderResume.setResBuilderEmployments(builderWorkExp);
+		builderResume.setResBuilderReferences(builderRefs);
+		try {
+			sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}		
 		return true;
 	}
 

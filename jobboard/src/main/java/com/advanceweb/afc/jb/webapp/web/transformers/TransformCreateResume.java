@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.CertificationsForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.CreateResume;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.EducationForm;
@@ -147,6 +149,25 @@ public class TransformCreateResume {
 			dto.setOtherDetails(form.getOtherDetails());
 			dto.setMemberships(form.getMemberships());
 			dto.setSkills(form.getSkills());
+		}
+		
+		return dto;
+	}
+	
+	/**
+	 * Method to convert CreateResume form to Contact Info  dto
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public ContactInformationDTO createContactInfoDTO(ContactInfoForm form){
+		ContactInformationDTO dto = new ContactInformationDTO();
+		if(null!= form){
+			dto.setEmail("");
+			dto.setFirstName(form.getFirstName());
+			dto.setLastName(form.getLastName());
+			dto.setMiddleNameInitial(form.getMiddleName());
 		}
 		
 		return dto;

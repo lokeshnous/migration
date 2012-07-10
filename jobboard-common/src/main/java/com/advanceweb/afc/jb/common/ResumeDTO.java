@@ -14,6 +14,8 @@ public class ResumeDTO implements Serializable{
 	
 	private static final long serialVersionUID = -2200423309708244707L;
 	private int uploadResumeId;
+	private int builderResumeId;
+	private int userId;
 	private String resumeText;
 	private String resume_name;
 	private String desired_job_title;
@@ -41,6 +43,7 @@ public class ResumeDTO implements Serializable{
 	private List<LanguageDTO> listLangDTO;
 	private List<ReferenceDTO> listRefDTO;
 	private List<WorkExpDTO> listWorkExpDTO;
+	private ContactInformationDTO contactInfoDTO;
 	private AddressDTO addDTO;
 	//Creating Resume	
 
@@ -207,6 +210,25 @@ public class ResumeDTO implements Serializable{
 	}
 	public void setAddDTO(AddressDTO addDTO) {
 		this.addDTO = addDTO;
+	}
+	
+	public ContactInformationDTO getContactInfoDTO() {
+		return contactInfoDTO;
+	}
+	public void setContactInfoDTO(ContactInformationDTO contactInfoDTO) {
+		this.contactInfoDTO = contactInfoDTO;
+	}	
+	public int getBuilderResumeId() {
+		return builderResumeId;
+	}
+	public void setBuilderResumeId(int builderResumeId) {
+		this.builderResumeId = builderResumeId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	@Override
 	public String toString() {

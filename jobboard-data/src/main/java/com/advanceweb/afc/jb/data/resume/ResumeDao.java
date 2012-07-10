@@ -15,4 +15,5 @@ public interface ResumeDao {
 	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
 	public ResumeDTO editResume(int resumeId);
 	public boolean deleteResume(int resumeId);
+	public boolean createResume(ResumeDTO resumeDTO);
 }

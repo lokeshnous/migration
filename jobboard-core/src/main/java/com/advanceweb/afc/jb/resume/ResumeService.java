@@ -15,5 +15,6 @@ public interface ResumeService {
 	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
 	public ResumeDTO editResume(int resumeId);
 	public boolean deleteResume(int resumeId);
+	public boolean createResumeBuilder(ResumeDTO resumeDTO);
 }
 

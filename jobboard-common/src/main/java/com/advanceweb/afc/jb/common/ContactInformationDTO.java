@@ -12,14 +12,53 @@ public class ContactInformationDTO {
 	private String lastName;
 	private AddressDTO addressDTO;
 	private String email;
-	public AddressDTO m_AddressDTO;
-
-	public ContactInformationDTO(){
-
-	}
+	
 
 	public void finalize() throws Throwable {
 
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getMiddleNameInitial() {
+		return middleNameInitial;
+	}
+
+	public void setMiddleNameInitial(String middleNameInitial) {
+		this.middleNameInitial = middleNameInitial;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public AddressDTO getAddressDTO() {
+		return addressDTO;
+	}
+
+	public void setAddressDTO(AddressDTO addressDTO) {
+		this.addressDTO = addressDTO;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+	
 
 }
