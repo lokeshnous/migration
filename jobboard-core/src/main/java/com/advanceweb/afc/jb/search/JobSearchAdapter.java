@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.search;
 
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.JobSeekerAdvanceSearchDTO;
 import com.advanceweb.afc.jb.common.XmlResumeParser;
 
 /**
@@ -20,5 +23,6 @@ public class JobSearchAdapter implements JobSearch {
 	public void finalize() throws Throwable {
 
 	}
+
 
 }
