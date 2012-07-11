@@ -75,10 +75,10 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public ResumeDTO editResume(int resumeId) {
 		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class, resumeId);
-//		ResUploadResume resume = (ResUploadResume) session.get(
-//				ResUploadResume.class, resumeId);
-		return resumeConversionHelper
-				.transformResUploadResumeToResumeDTO(resume);
+		ResBuilderResume resumeBuilder = hibernateTemplate.get(ResBuilderResume.class, resume.getUploadResumeId());
+		ResumeDTO dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume);
+		dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto, resumeBuilder);
+		return dto;
 	}
 
 	/**
@@ -241,6 +241,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 //			sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
 			hibernateTemplate.saveOrUpdate(builderResume);
+			System.out.println(builderResume);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}		

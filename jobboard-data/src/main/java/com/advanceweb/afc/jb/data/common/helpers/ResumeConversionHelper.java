@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
-import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
@@ -35,10 +34,160 @@ public class ResumeConversionHelper {
 		resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 		resumeDTO.setResume_name(resume.getResumeName());
 		resumeDTO.setUpdateDt(resume.getUpdateDt());
+		
 		return resumeDTO;
 
 	}
 
+	
+	public ResumeDTO transformResBuilderResumeToResumeDTO(ResumeDTO resumeDTO, ResBuilderResume resumeBuilder){
+		
+//		resumeDTO.setAwards(resumeBuilder.get);
+		resumeDTO.setBuilderResumeId(resumeBuilder.getBuilderResumeId());
+//		resumeDTO.setContactInfoDTO(contactInfoDTO);
+//		resumeDTO.setDesired_employment_type(resumeBuilder.get);
+//		resumeDTO.setDesired_job_title(resumeBuilder.get);
+/*		resumeDTO.setEmploymentType(resumeBuilder.get);
+		resumeDTO.setFileData(fileData);
+		resumeDTO.setFileName(fileName);
+		resumeDTO.setFilePath(filePath);
+		resumeDTO.setFileServer(fileServer);
+		resumeDTO.setIsPublished(isPublished);*/
+		resumeDTO.setListCertDTO(transformResBldResToCertDTO(resumeBuilder));
+		resumeDTO.setListEduDTO(transformResEduRefToEduDTO(resumeBuilder));
+//		resumeDTO.setListLangDTO(listLangDTO);
+		resumeDTO.setListRefDTO(transformResBldRefToRefDTO(resumeBuilder));
+		resumeDTO.setListWorkExpDTO(transformResEmpRefToWorkExpDTO(resumeBuilder));
+//		resumeDTO.setMemberships(resumeBuilder.);
+		resumeDTO.setObjective(resumeBuilder.getJobObjective());
+		resumeDTO.setOtherDetails(resumeBuilder.getOtherInterests());
+		resumeDTO.setResume_name(resumeBuilder.getResumeName());
+//		resumeDTO.setResume_visibility(resumeBuilder.ge);
+//		resumeDTO.setResumeText(resumeText);
+//		resumeDTO.setResumeType(resumeType);
+//		resumeDTO.setSkills(resumeBuilder.ge);
+		resumeDTO.setUpdateDt(resumeBuilder.getUpdateDt());
+//		resumeDTO.setUploadResumeId(resumeBuilder);
+		resumeDTO.setUserId(resumeBuilder.getUserId());
+//		resumeDTO.setWilling_to_relocate(resumeBuilder.getw);
+//		resumeDTO.setWork_authorization_US(work_authorization_US);
+		
+		return null;
+		
+	}
+	
+	
+	public List<CertificationDTO> transformResBldResToCertDTO(ResBuilderResume resumeBuilder){
+		
+		List<CertificationDTO> listCertDTO = new ArrayList<CertificationDTO>();
+		List<ResBuilderCertification> listCerts = resumeBuilder.getResBuilderCertifications();
+		
+		if(null != listCerts){
+			for(ResBuilderCertification entity:listCerts){
+				CertificationDTO dto = new CertificationDTO();
+				dto.setBuilderCertId(entity.getBuilderCertificationId());
+				dto.setCertificationName(entity.getCertificationName());
+				dto.setDateOfReceipt(String.valueOf(entity.getEarnedDt()));
+				dto.setInstituteName(entity.getInstitutionName());
+				dto.setSummary(entity.getDescription());
+				listCertDTO.add(dto);
+			}
+		}
+		
+		return listCertDTO;
+	}
+	
+	
+	public List<ReferenceDTO> transformResBldRefToRefDTO(ResBuilderResume resumeBuilder){
+		
+		List<ReferenceDTO> listRefDTO = new ArrayList<ReferenceDTO>();
+		List<ResBuilderReference> listRefs = resumeBuilder.getResBuilderReferences();
+		
+		if(null != listRefs){
+			for(ResBuilderReference entity:listRefs){
+				ReferenceDTO dto = new ReferenceDTO();
+				dto.setBuilderRefId(entity.getBuilderReferenceId());
+				dto.setCompanyName(entity.getCompanyName());
+				dto.setEmail(entity.getEmail());
+				dto.setJobTitle(entity.getJobTitle());
+				dto.setName(entity.getContactName());
+				dto.setPhoneNo(entity.getWorkPhone());
+				listRefDTO.add(dto);
+			}
+		}
+		
+		return listRefDTO;
+	}
+	
+	
+	public List<EducationDTO> transformResEduRefToEduDTO(ResBuilderResume resumeBuilder){
+		
+		List<EducationDTO> listEduDTO = new ArrayList<EducationDTO>();
+		List<ResBuilderEdu> listEdu = resumeBuilder.getResBuilderEdus();
+		
+		if(null != listEdu){
+			for(ResBuilderEdu entity:listEdu){
+				EducationDTO dto = new EducationDTO();
+				dto.setBuilderEduId(entity.getBuilderEduId());
+//				dto.setCertifications(entity.get);
+//				dto.setDegreeLvl(entity.get);
+//				dto.setDegrees(degrees);
+//				dto.setEduDegreeDTO(eduDegreeDTO);
+				dto.setEndDate(String.valueOf(entity.getEnd_Date()));
+				dto.setFieldOfStudy(entity.getCourseOfStudy());
+				dto.setInstituteName(entity.getInstitutionName());
+				dto.setLanguage(String.valueOf(entity.getLanguageLookupId()));
+				dto.setStartDate(String.valueOf(entity.getStartDate()));
+				
+				listEduDTO.add(dto);
+			}
+		}
+		
+		return listEduDTO;
+	}
+	
+	public EducationDTO transformEduDegreeToEduDTO(EducationDTO eduDTO, ResBuilderEdu entity){
+			
+		if(null != entity.getResDegreeEdu()){
+			ResDegreeEdu eduDegree = entity.getResDegreeEdu();
+			eduDTO.setDegrees(eduDegree.getName());
+			eduDegree.getDegreeEduId();
+			eduDegree.getDescription();
+			;
+		}
+		
+		return eduDTO;
+	}
+	
+	
+	public List<WorkExpDTO> transformResEmpRefToWorkExpDTO(ResBuilderResume resumeBuilder){
+		
+		List<WorkExpDTO> listWorkExpDTO = new ArrayList<WorkExpDTO>();
+		List<ResBuilderEmployment> listEmp = resumeBuilder.getResBuilderEmployments();
+		
+		if(null != listEmp){
+			for(ResBuilderEmployment entity:listEmp){
+				WorkExpDTO dto = new WorkExpDTO();
+				dto.setAnnualSalary(String.valueOf(entity.getAnnualSalLookupId()));
+				dto.setBuilderEmpId(entity.getBuilderEmploymentId());
+				dto.setCurrentCareerLvl(entity.getPositionName());
+//				dto.setDescription(entity.get);
+				dto.setEmployerName(entity.getEmployerName());
+				dto.setEmploymentType(String.valueOf(entity.getEmpTypeLookupId()));
+				dto.setEndDate(String.valueOf(entity.getSeparationDt()));
+				dto.setHrlyPayRate(String.valueOf(entity.getHrPayRateLookupId()));
+				dto.setJobTitle(entity.getJobTitle());
+				dto.setStartDate(String.valueOf(entity.getEmploymentDt()));
+				dto.setYrsAtPostion(String.valueOf(entity.getStillEmployed()));
+				
+				listWorkExpDTO.add(dto);
+			}
+		}
+		
+		return listWorkExpDTO;
+	}
+	
+	
 	/**
 	 * This method transforms ResUploadResume list to ResumeDTO list
 	 * @param resumes
