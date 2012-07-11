@@ -1,8 +1,5 @@
 package com.advanceweb.afc.jb.search;
 
-import java.util.List;
-
-import com.advanceweb.afc.jb.common.JobSeekerAdvanceSearchDTO;
 
 /**
  * @author Rajeshkb
