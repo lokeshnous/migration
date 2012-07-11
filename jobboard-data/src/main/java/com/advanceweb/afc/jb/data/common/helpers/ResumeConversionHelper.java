@@ -90,10 +90,10 @@ public class ResumeConversionHelper {
 			}
 		}
 		
-		builderResume.setCanApplyToJobs(new Integer("0").shortValue());
-		builderResume.setActive(new Integer("0").shortValue());
-		builderResume.setCanApplyToJobs(new Integer("0").shortValue());
-		builderResume.setIsPublished(new Integer("0").shortValue());
+		builderResume.setCanApplyToJobs(Integer.valueOf(0).shortValue());
+		builderResume.setActive(Integer.valueOf(0).shortValue());
+		builderResume.setCanApplyToJobs(Integer.valueOf(0).shortValue());
+		builderResume.setIsPublished(Integer.valueOf(0).shortValue());
 		builderResume.setJobObjective(resumeDTO.getObjective());
 		builderResume.setOtherInterests(resumeDTO.getOtherDetails());
 		builderResume.setPrefixName("");
@@ -139,7 +139,7 @@ public class ResumeConversionHelper {
 				refEntitiy.setBuilderReferenceId(refDTO.getBuilderRefId());
 				refEntitiy.setCompanyName(refDTO.getCompanyName());
 				refEntitiy.setEmail(refDTO.getEmail());
-				refEntitiy.setIsAvailable(new Integer("0").shortValue());
+				refEntitiy.setIsAvailable(Integer.valueOf(0).shortValue());
 				refEntitiy.setJobTitle(refDTO.getJobTitle());
 				refEntitiy.setWorkPhone(refDTO.getPhoneNo());	
 				refEntitiy.setResBuilderResume(builderResume);
