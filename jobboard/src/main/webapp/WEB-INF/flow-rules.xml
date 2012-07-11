@@ -18,25 +18,32 @@
 	<bean id="transformJobSeekerRegistration"
 		class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration" />
 	<bean id="transCreateResume" class="com.advanceweb.afc.jb.webapp.web.transformers.TransformCreateResume" />
+	<bean id="transformJobSeekerSubscription" class="com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerSubscription" />
 
 	<!-- Invoker service layer from controller -->
 	<bean id="profileRegistration"
 		class="com.advanceweb.afc.jb.registration.JobSeekerRegistration" />
 	<bean id="populateDropdownsService" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsImpl" />
-	<bean id="jobSeekerActivity"
+    <bean id="jobSeekerActivity"
 		class="com.advanceweb.afc.jb.jobseeker.activity.JobSeekerActivityService" />
+		<bean id="jobSeekerSubscriptionsService"
+		class="com.advanceweb.afc.jb.jobseeker.subscription.JobSeekerSubscriptionsService" />   
 	<bean id="jobSearchActivity"
 		class="com.advanceweb.afc.jb.jobsearch.JobSearchActivityService" />
+	
 
 	<!-- DAO's Injection -->
 	<bean id="jobSeekerRegistrationDAO"
 		class="com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAOImpl" />
 	<bean id="populateDropdownsDAO"
 		class="com.advanceweb.afc.jb.data.dropdowns.PopulateDropdownsDAOImpl" />
-	<bean id="activityDAO"
+	 <bean id="activityDAO"
 		class="com.advanceweb.afc.jb.data.jobseeker.activity.JobSeekerActivityDAOImpl" />
+		<bean id="jobSeekerSubscriptionsDAO"
+		class="com.advanceweb.afc.jb.data.jobseeker.subscription.JobSeekerSubscriptionsDAOImpl" />   
 	<bean id="jobSearchActivityDAO"
 		class="com.advanceweb.afc.jb.data.jobsearch.JobSearchActivityDAOImpl" />
+	
 
 	<!-- Conversion Helpers -->
 	<bean id="registrationConversionHelper"
@@ -45,6 +52,7 @@
 		class="com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper" />
 	<bean id="jobSeekerActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSeekerActivityConversionHelper" />
 	<bean id="jobSearchActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSearchActivityConversionHelper" />
+	
 
 	<!-- Resume -->
 	<bean id="resumeService" class="com.advanceweb.afc.jb.resume.ResumeServiceImpl" />
@@ -56,5 +64,6 @@
     <bean id="saveSearchService" class="com.advanceweb.afc.jb.search.SaveSearchServiceImpl"/>
     <bean id="saveSearchDAO" class="com.advanceweb.afc.jb.data.search.SaveSearchDAOImpl"/>
     <bean id="saveSearchConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.SaveSearchConversionHelper"/>
+
 
 </beans>

@@ -49,6 +49,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.MerLookup</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttrib</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerUser</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerUserAlerts</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.MerUserAlert</value> -->
 					<value>com.advanceweb.afc.jb.data.entities.MerUserApplication</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerUserApplicationPK</value>
@@ -139,6 +140,6 @@
 		<property name="sessionFactory" ref="sessionFactoryMerionTracker" />
 	</bean>
 
-	<import resource="flow-rules.xml" />
+   <import resource="flow-rules.xml" /> 
 
 </beans>
