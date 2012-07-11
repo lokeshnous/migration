@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
@@ -20,19 +21,24 @@ import com.advanceweb.afc.jb.data.entities.MerLookup;
 
 
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
-	
-	@Autowired
-	private SessionFactory sessionFactory;
-	
+		
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
 	
+	
+	private HibernateTemplate hibernateTemplate;
+	
+	@Autowired
+	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
+	}
+
 	@Override
 	public List<CountryDTO> getCountryList() {
 		
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Country' and e.lookupStatus='1'").list();
+
+			List<MerLookup> merUtilityList = hibernateTemplate.find("from MerLookup e where e.lookupCategory='Country' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerUtilityToCountryDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -44,8 +50,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<EmploymentInfoDTO> getEmployementInfoList() {
 		
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='EmploymentInformation' and e.lookupStatus='1'").list();
+			List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='EmploymentInformation' and e.lookupStatus='1'"); 
 			return dropdownHelper.convertMerUtilityToEmploymentInfoDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -56,9 +61,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<SubscriptionsDTO> getSubscriptionsList() {
 		
-		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Subscriptions' and e.lookupStatus='1'").list();
+		try {			
+			List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='Subscriptions' and e.lookupStatus='1'");  
 			return dropdownHelper.convertMerUtilityToSubscriptionsDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -70,8 +74,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<GenderDTO> getGenderList() {
 
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Gender' and e.lookupStatus='1'").list();
+			List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='Gender' and e.lookupStatus='1'"); 
 			return dropdownHelper.convertMerUtilityToGenderDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -83,8 +86,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<VeteranStatusDTO> getVeteranStatusList() {
 
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='VeteranStatus' and e.lookupStatus='1'").list();
+
+			List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='VeteranStatus' and e.lookupStatus='1'"); 
 			return dropdownHelper.convertMerUtilityToVeteranStatusDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -96,8 +99,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<EthenticityDTO> getEthenticityList() {
 
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merUtilityList = session.createQuery("from MerLookup e where e.lookupCategory='Ethnicity' and e.lookupStatus='1'").list();
+			List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='Ethnicity' and e.lookupStatus='1'"); 
 			return dropdownHelper.convertMerUtilityToEthenticityDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
