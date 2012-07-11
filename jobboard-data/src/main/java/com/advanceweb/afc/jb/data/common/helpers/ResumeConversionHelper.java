@@ -72,7 +72,7 @@ public class ResumeConversionHelper {
 //		resumeDTO.setWilling_to_relocate(resumeBuilder.getw);
 //		resumeDTO.setWork_authorization_US(work_authorization_US);
 		
-		return null;
+		return resumeDTO;
 		
 	}
 	
