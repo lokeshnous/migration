@@ -31,10 +31,10 @@ import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistrat
 public class JobSeekerProfileManagement {
 	
 
-	@Autowired(required=true)
+	@Autowired
 	private ProfileRegistration profileRegistration;
 
-	@Autowired(required=true)
+	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 	
 	/**
