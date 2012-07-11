@@ -33,13 +33,13 @@ import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistrat
 @RequestMapping("/jobseekerregistration")
 public class JobSeekerRegistrationController {
 	
-	@Autowired
+	@Autowired(required=true)
 	private ProfileRegistration profileRegistration;
 
-	@Autowired
+	@Autowired(required=true)
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 	
-	@Autowired
+	@Autowired(required=true)
 	private PopulateDropdowns populateDropdownsService;
 
 	public JobSeekerRegistrationController() {
@@ -118,14 +118,13 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value="/viewJobSeekerProfile",method = RequestMethod.GET)
-	public ModelAndView viewJobSeekerProfileSettings(JobSeekerRegistrationForm form,Map model) {
-
+	public ModelAndView viewJobSeekerProfileSettings(Map model) {
 		try {
 
 			// Call to service layer
 			
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(1);
-			form = transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
+			JobSeekerRegistrationForm form = transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
 
 			model.put("jobseekerregistration", form);
 		} catch (Exception e) {
