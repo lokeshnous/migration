@@ -4,12 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper;
-import com.advanceweb.afc.jb.data.domain.JobSeeker;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
@@ -23,16 +23,14 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
-
+	
+	private HibernateTemplate hibernateTemplate;
+	
 	@Autowired
-	private SessionFactory sessionFactory;
-
-	public JobSeekerRegistrationDAOImpl() {
-
+	public void setHibernateTemplate(SessionFactory sessionFactory) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
-	
-	
 	/**
 	 * This method is called to save Job seeker registration information into
 	 * Database
@@ -48,9 +46,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 						.getMerUserDTO());
 		try {
 			if (merUser != null) {
-				Session session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(merUser);
-
+				hibernateTemplate.saveOrUpdate(merUser);
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -82,8 +78,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 		try {
 			if (jobSeekerId != 0) {
-				Session session= sessionFactory.openSession();
-				MerUser merUser = (MerUser) session.load(MerUser.class, new Long(jobSeekerId).intValue());
+				MerUser merUser = hibernateTemplate.load(MerUser.class, new Long(jobSeekerId).intValue());
 				MerUserDTO merUserDTO = registrationConversionHelper.transformMerUserToMerUserDTO(merUser);
 				jsRegistrationDTO.setMerUserDTO(merUserDTO);
 			}
@@ -106,9 +101,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 						.getMerUserDTO());
 		try {
 			if (merUser != null) {
-				Session session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(merUser);
-
+				hibernateTemplate.saveOrUpdate(merUser);
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -126,8 +119,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 						.getMerUserDTO());
 		try {
 			if (merUser != null) {
-				Session session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(merUser);
+				hibernateTemplate.saveOrUpdate(merUser);
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
