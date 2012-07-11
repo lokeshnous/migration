@@ -31,15 +31,11 @@ import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistrat
 public class JobSeekerProfileManagement {
 	
 
-	@Autowired
+	@Autowired(required=true)
 	private ProfileRegistration profileRegistration;
 
-	@Autowired
+	@Autowired(required=true)
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
-
-	public JobSeekerProfileManagement() {
-	}
-
 	
 	/**
 	 * This method is called to view job seeker profile settings
