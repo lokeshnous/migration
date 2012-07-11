@@ -63,6 +63,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	/**
 	 * implementation of apply job
 	 */
+	@SuppressWarnings("unused")
 	@Override
 	@Transactional(readOnly = true)
 	public void applyJob(long jobId) {
@@ -72,9 +73,12 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 				JpJob jpJob = (JpJob) session.get(JpJob.class,
 						new Long(jobId).intValue());
 
-				// save the job in DB
+				/** 
+				 * save the job in DB
+				 * 
+				 */
 //				Session session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(jpJob);
+//				session.saveOrUpdate(jpJob);
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
