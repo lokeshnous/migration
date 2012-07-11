@@ -165,6 +165,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/search/SaveSearchDAOImpl.
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/controllers/profilemgmt/JobSeekerProfileManagement.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobsearch/JobSearchActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/search/JobSeekerAdvanceSearchController.java -text
