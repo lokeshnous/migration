@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.webapp.web.controllers.resume;
 
+
+import java.util.ArrayList;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -9,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.util.LinkedHashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +27,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.springframework.web.servlet.ModelAndView;
+
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
@@ -34,8 +42,17 @@ import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.resume.ResumeService;
+import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
+import com.advanceweb.afc.jb.webapp.web.forms.resume.CertificationsForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.CreateResume;
+
+import com.advanceweb.afc.jb.webapp.web.forms.resume.EducationForm;
+import com.advanceweb.afc.jb.webapp.web.forms.resume.LanguageForm;
+import com.advanceweb.afc.jb.webapp.web.forms.resume.ReferenceForm;
+import com.advanceweb.afc.jb.webapp.web.forms.resume.WorkExpForm;
+
 import com.advanceweb.afc.jb.webapp.web.helper.ReadDocFile;
+
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformCreateResume;
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration;
 
@@ -47,6 +64,7 @@ import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistrat
  */
 
 @Controller
+@RequestMapping(value="/jobSeekerResume")
 public class ResumeController {
 
 	@Autowired
@@ -79,6 +97,46 @@ public class ResumeController {
 	}
 
 	
+
+	/**
+	 * This method is called to display resume list belonging to a logged in
+	 * jobSeeker
+	 * 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/createResumeBuilder", method = RequestMethod.GET)
+	public ModelAndView getResumes(HttpServletRequest request, HttpSession session, Map model) {
+
+		CreateResume form = new CreateResume();
+		CertificationsForm certForm = new CertificationsForm();
+		EducationForm eduForm = new EducationForm();
+		LanguageForm langForm = new LanguageForm();
+		ReferenceForm refForm = new ReferenceForm();
+		WorkExpForm workExpForm = new WorkExpForm();
+		ContactInfoForm contactInfoForm = new ContactInfoForm();
+		List<CertificationsForm> listCertForm = new ArrayList<CertificationsForm>();
+		List<EducationForm> listEduForm = new ArrayList<EducationForm>();
+		List<LanguageForm> listLangForm = new ArrayList<LanguageForm>();
+		List<ReferenceForm> listRefForm = new ArrayList<ReferenceForm>();
+		List<WorkExpForm> listWorkExpForm = new ArrayList<WorkExpForm>();
+		listCertForm.add(certForm);
+		listEduForm.add(eduForm);
+		listLangForm.add(langForm);
+		listRefForm.add(refForm);
+		listWorkExpForm.add(workExpForm);
+		form.setContactInfoForm(contactInfoForm);
+		form.setListCertForm(listCertForm);
+		form.setListEduForm(listEduForm);
+		form.setListLangForm(listLangForm);
+		form.setListRefForm(listRefForm);
+		form.setListWorkExpForm(listWorkExpForm);
+		model.put("createResumeForm", form);
+		return new ModelAndView("createresumebuilder");
+	}
+	
+	
 	/**
 	 * Called to create resume
 	 * it Contains 
@@ -97,7 +155,8 @@ public class ResumeController {
 	 * @param
 	 * @return
 	 */
-	public String saveResume(@ModelAttribute("saveResume")
+	 @RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST)
+	public String saveResumeBuilder(@ModelAttribute("saveResumeBuilder")
 		CreateResume createResume, BindingResult result,Model model){		
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
@@ -110,7 +169,7 @@ public class ResumeController {
 		List<EducationDTO> listEduDTO = transCreateResume.createEducationDTO(createResume.getListEduForm());
 		List<LanguageDTO> listLangDTO = transCreateResume.createLanguageDTO(createResume.getListLangForm());
 		resumeDTO = transCreateResume.createResumeDTO(resumeDTO, createResume);
-		resumeDTO.setAddDTO(addDTO);
+		resumeDTO.setContactInfoDTO(contactInfoDTO);
 		resumeDTO.setListCertDTO(listCertDTO);
 		resumeDTO.setListEduDTO(listEduDTO);
 		resumeDTO.setListLangDTO(listLangDTO);
@@ -158,6 +217,77 @@ public class ResumeController {
 		return "manageResume";
 	}
 	
+	
+	/**
+	 * This method is called to save work experience
+	 * Ajax call
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/addWorkExp", method = RequestMethod.POST)
+	public String addWorkExp(HttpServletRequest request, HttpSession session,
+			CreateResume createResume, Model model, Map<String, Object> map) {
+		List<WorkExpDTO> listWorkExpDTO = transCreateResume.createWorkExpDTO(createResume.getListWorkExpForm());
+		boolean bCertSaved = resumeService.addWorkExp(listWorkExpDTO);
+		return null;
+	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/addCertifications", method = RequestMethod.POST)
+	public String addCertifications(HttpServletRequest request, HttpSession session,
+			CreateResume createResume, Model model, Map<String, Object> map) {
+		List<CertificationDTO> listCertDTO = transCreateResume.createCertificationDTO(createResume.getListCertForm());
+		boolean bCertSaved = resumeService.addCertifications(listCertDTO);
+		return null;
+	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/addEducationDetails", method = RequestMethod.POST)
+	public String addEducationDetails(HttpServletRequest request, HttpSession session,
+			CreateResume createResume, Model model, Map<String, Object> map) {
+		List<EducationDTO> listEduDTO = transCreateResume.createEducationDTO(createResume.getListEduForm());
+		boolean bCertSaved = resumeService.addEducation(listEduDTO);
+		return null;
+	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/addLanguages", method = RequestMethod.POST)
+	public String addLanguage(HttpServletRequest request, HttpSession session,
+			CreateResume createResume, Model model, Map<String, Object> map) {
+		List<LanguageDTO> listLangDTO = transCreateResume.createLanguageDTO(createResume.getListLangForm());
+		boolean bCertSaved = resumeService.addLanguage(listLangDTO);
+		return null;
+	}
+
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/addReferences", method = RequestMethod.POST)
+	public String addReference(HttpServletRequest request, HttpSession session,
+			CreateResume createResume, Model model, Map<String, Object> map) {
+		List<ReferenceDTO> listRefDTO = transCreateResume.createReferenceDTO(createResume.getListRefForm());
+		boolean bCertSaved = resumeService.addReference(listRefDTO);
+		return null;
+	}
 	
 
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
@@ -306,6 +436,5 @@ public class ResumeController {
 
 		return "redirect:/createResumePopUp.html";
 	}
-
 
 }
