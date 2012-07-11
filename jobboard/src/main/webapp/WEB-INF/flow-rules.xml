@@ -47,6 +47,9 @@
 	<bean id="resumeConversionHelper"
 		class="com.advanceweb.afc.jb.data.common.helpers.ResumeConversionHelper" />
 
-
+    <!-- Save the search-->
+    <bean id="saveSearchService" class="com.advanceweb.afc.jb.search.SaveSearchServiceImpl"/>
+    <bean id="saveSearchDAO" class="com.advanceweb.afc.jb.data.search.SaveSearchDAOImpl"/>
+    <bean id="saveSearchConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.SaveSearchConversionHelper"/>
 
 </beans>
