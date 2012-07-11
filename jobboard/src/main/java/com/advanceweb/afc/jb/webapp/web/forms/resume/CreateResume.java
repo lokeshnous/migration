@@ -39,6 +39,7 @@ public class CreateResume {
 	private List<ReferenceForm> listRefForm;
 	private List<WorkExpForm> listWorkExpForm;
 	private ContactInfoForm contactInfoForm;
+	private int builderResumeId;
 	//Creating Resume	
 	
 	public String getFilename() {
@@ -187,5 +188,12 @@ public class CreateResume {
 	public void setListWorkExpForm(List<WorkExpForm> listWorkExpForm) {
 		this.listWorkExpForm = listWorkExpForm;
 	}
+	public int getBuilderResumeId() {
+		return builderResumeId;
+	}
+	public void setBuilderResumeId(int builderResumeId) {
+		this.builderResumeId = builderResumeId;
+	}
+	
 		
 }

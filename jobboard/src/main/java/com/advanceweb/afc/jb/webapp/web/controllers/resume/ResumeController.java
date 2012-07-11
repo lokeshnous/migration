@@ -437,4 +437,31 @@ public class ResumeController {
 		return "redirect:/createResumePopUp.html";
 	}
 
+	/**
+	 * Called to create resume
+	 * it Contains 
+	 * 		1.Contact information
+	 * 		2.Objective
+	 * 		3.Work Experience
+	 * 		4.Education
+	 * 		5.Certifiation
+	 * 		6.Skills
+	 * 		7.Awards
+	 * 		8.Memberships
+	 * 		9.Other Details
+	 * 		10.References	
+	 * @param createResume
+	 * @param result
+	 * @param
+	 * @return
+	 */
+	 @RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.GET)
+	public String viewResumeBuilder(@ModelAttribute("saveResumeBuilder")
+		CreateResume createResume, BindingResult result,Model model){		
+		 ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
+		return null;
+		
+	}
+	
+	
 }

@@ -163,6 +163,7 @@ public class TransformCreateResume {
 			dto.setOtherDetails(form.getOtherDetails());
 			dto.setMemberships(form.getMemberships());
 			dto.setSkills(form.getSkills());
+			dto.setBuilderResumeId(form.getBuilderResumeId());
 		}
 		
 		return dto;
