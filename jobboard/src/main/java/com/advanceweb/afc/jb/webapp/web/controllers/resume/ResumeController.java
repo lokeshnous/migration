@@ -163,12 +163,12 @@ public class ResumeController {
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
 		ContactInformationDTO contactInfoDTO = transCreateResume.createContactInfoDTO(createResume.getContactInfoForm());
 		contactInfoDTO.setAddressDTO(addDTO);
-		List<CertificationDTO> listCertDTO = transCreateResume.createCertificationDTO(createResume.getListCertForm());
-		List<ReferenceDTO> listRefDTO = transCreateResume.createReferenceDTO(createResume.getListRefForm());
-		List<WorkExpDTO> listWorkExpDTO = transCreateResume.createWorkExpDTO(createResume.getListWorkExpForm());
-		List<EducationDTO> listEduDTO = transCreateResume.createEducationDTO(createResume.getListEduForm());
-		List<LanguageDTO> listLangDTO = transCreateResume.createLanguageDTO(createResume.getListLangForm());
-		resumeDTO = transCreateResume.createResumeDTO(resumeDTO, createResume);
+		List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());
+		List<ReferenceDTO> listRefDTO = transCreateResume.transformReferenceDTO(createResume.getListRefForm());
+		List<WorkExpDTO> listWorkExpDTO = transCreateResume.transformWorkExpDTO(createResume.getListWorkExpForm());
+		List<EducationDTO> listEduDTO = transCreateResume.transformEducationDTO(createResume.getListEduForm());
+		List<LanguageDTO> listLangDTO = transCreateResume.transformLanguageDTO(createResume.getListLangForm());
+		resumeDTO = transCreateResume.transformResumeDTO(resumeDTO, createResume);
 		resumeDTO.setContactInfoDTO(contactInfoDTO);
 		resumeDTO.setListCertDTO(listCertDTO);
 		resumeDTO.setListEduDTO(listEduDTO);
@@ -228,7 +228,7 @@ public class ResumeController {
 	@RequestMapping(value = "/addWorkExp", method = RequestMethod.POST)
 	public String addWorkExp(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<WorkExpDTO> listWorkExpDTO = transCreateResume.createWorkExpDTO(createResume.getListWorkExpForm());
+		List<WorkExpDTO> listWorkExpDTO = transCreateResume.transformWorkExpDTO(createResume.getListWorkExpForm());
 		boolean bCertSaved = resumeService.addWorkExp(listWorkExpDTO);
 		return null;
 	}
@@ -242,7 +242,7 @@ public class ResumeController {
 	@RequestMapping(value = "/addCertifications", method = RequestMethod.POST)
 	public String addCertifications(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<CertificationDTO> listCertDTO = transCreateResume.createCertificationDTO(createResume.getListCertForm());
+		List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());
 		boolean bCertSaved = resumeService.addCertifications(listCertDTO);
 		return null;
 	}
@@ -256,7 +256,7 @@ public class ResumeController {
 	@RequestMapping(value = "/addEducationDetails", method = RequestMethod.POST)
 	public String addEducationDetails(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<EducationDTO> listEduDTO = transCreateResume.createEducationDTO(createResume.getListEduForm());
+		List<EducationDTO> listEduDTO = transCreateResume.transformEducationDTO(createResume.getListEduForm());
 		boolean bCertSaved = resumeService.addEducation(listEduDTO);
 		return null;
 	}
@@ -270,7 +270,7 @@ public class ResumeController {
 	@RequestMapping(value = "/addLanguages", method = RequestMethod.POST)
 	public String addLanguage(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<LanguageDTO> listLangDTO = transCreateResume.createLanguageDTO(createResume.getListLangForm());
+		List<LanguageDTO> listLangDTO = transCreateResume.transformLanguageDTO(createResume.getListLangForm());
 		boolean bCertSaved = resumeService.addLanguage(listLangDTO);
 		return null;
 	}
@@ -284,7 +284,7 @@ public class ResumeController {
 	@RequestMapping(value = "/addReferences", method = RequestMethod.POST)
 	public String addReference(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<ReferenceDTO> listRefDTO = transCreateResume.createReferenceDTO(createResume.getListRefForm());
+		List<ReferenceDTO> listRefDTO = transCreateResume.transformReferenceDTO(createResume.getListRefForm());
 		boolean bCertSaved = resumeService.addReference(listRefDTO);
 		return null;
 	}
@@ -459,6 +459,7 @@ public class ResumeController {
 	public String viewResumeBuilder(@ModelAttribute("saveResumeBuilder")
 		CreateResume createResume, BindingResult result,Model model){		
 		 ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
+		 resumeDTO.getContactInfoDTO();
 		return null;
 		
 	}

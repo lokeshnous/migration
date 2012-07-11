@@ -32,7 +32,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public List<CertificationDTO> createCertificationDTO(List<CertificationsForm> listCertForms){
+	public List<CertificationDTO> transformCertificationDTO(List<CertificationsForm> listCertForms){
 		
 		List<CertificationDTO> listCertDTO = new ArrayList<CertificationDTO>();
 		if(null != listCertForms){
@@ -55,7 +55,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public List<ReferenceDTO> createReferenceDTO(List<ReferenceForm> listRefForms){
+	public List<ReferenceDTO> transformReferenceDTO(List<ReferenceForm> listRefForms){
 		
 		List<ReferenceDTO> listRefDTO = new ArrayList<ReferenceDTO>();
 		if(null != listRefForms){
@@ -79,7 +79,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public List<EducationDTO> createEducationDTO(List<EducationForm> listEduForms){
+	public List<EducationDTO> transformEducationDTO(List<EducationForm> listEduForms){
 		
 		List<EducationDTO> listEduDTO = new ArrayList<EducationDTO>();
 		if(null != listEduForms){
@@ -106,7 +106,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public List<WorkExpDTO> createWorkExpDTO(List<WorkExpForm> listWorkExpForms){
+	public List<WorkExpDTO> transformWorkExpDTO(List<WorkExpForm> listWorkExpForms){
 		
 		List<WorkExpDTO> listWorkExpDTO = new ArrayList<WorkExpDTO>();
 		if(null != listWorkExpForms){
@@ -135,7 +135,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public List<LanguageDTO> createLanguageDTO(List<LanguageForm> listLangForms){
+	public List<LanguageDTO> transformLanguageDTO(List<LanguageForm> listLangForms){
 		
 		List<LanguageDTO> listWorkExpDTO = new ArrayList<LanguageDTO>();
 		if(null != listLangForms){
@@ -155,7 +155,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public ResumeDTO createResumeDTO(ResumeDTO dto, CreateResume form){
+	public ResumeDTO transformResumeDTO(ResumeDTO dto, CreateResume form){
 
 		if(null!= form){
 			dto.setAwards(form.getAwards());
@@ -164,6 +164,25 @@ public class TransformCreateResume {
 			dto.setMemberships(form.getMemberships());
 			dto.setSkills(form.getSkills());
 			dto.setBuilderResumeId(form.getBuilderResumeId());
+		}
+		
+		return dto;
+	}
+	
+	/**
+	 * Method to convert CreateResume form to Contact Info  dto
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public ContactInformationDTO transformContactInfoForm(ContactInfoForm form){
+		ContactInformationDTO dto = new ContactInformationDTO();
+		if(null!= form){
+			dto.setEmail("");
+			dto.setFirstName(form.getFirstName());
+			dto.setLastName(form.getLastName());
+			dto.setMiddleNameInitial(form.getMiddleName());
 		}
 		
 		return dto;
@@ -187,4 +206,5 @@ public class TransformCreateResume {
 		
 		return dto;
 	}
+	
 }
