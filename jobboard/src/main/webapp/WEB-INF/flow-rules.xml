@@ -25,6 +25,8 @@
 	<bean id="populateDropdownsService" class="com.advanceweb.afc.jb.dropdowns.PopulateDropdownsImpl" />
 	<bean id="jobSeekerActivity"
 		class="com.advanceweb.afc.jb.jobseeker.activity.JobSeekerActivityService" />
+	<bean id="jobSearchActivity"
+		class="com.advanceweb.afc.jb.jobsearch.JobSearchActivityService" />
 
 	<!-- DAO's Injection -->
 	<bean id="jobSeekerRegistrationDAO"
@@ -33,6 +35,8 @@
 		class="com.advanceweb.afc.jb.data.dropdowns.PopulateDropdownsDAOImpl" />
 	<bean id="activityDAO"
 		class="com.advanceweb.afc.jb.data.jobseeker.activity.JobSeekerActivityDAOImpl" />
+	<bean id="jobSearchActivityDAO"
+		class="com.advanceweb.afc.jb.data.jobsearch.JobSearchActivityDAOImpl" />
 
 	<!-- Conversion Helpers -->
 	<bean id="registrationConversionHelper"
@@ -40,6 +44,7 @@
 	<bean id="dropdownHelper"
 		class="com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper" />
 	<bean id="jobSeekerActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSeekerActivityConversionHelper" />
+	<bean id="jobSearchActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSearchActivityConversionHelper" />
 
 	<!-- Resume -->
 	<bean id="resumeService" class="com.advanceweb.afc.jb.resume.ResumeServiceImpl" />

@@ -30,19 +30,21 @@ go(url);
 				Registration Form</a></li>
 		<li><a href="createResumePopUp.html">Create Resume</a></li>
 		<li><a href="createResumePopUp.html">Create Resume</a></li>
-
-		<h2>Job Seeker Activity</h2>
+	</ul>
+	<h2>Job Seeker Activity</h2>
+	<ul>
 		<li><a href="viewAppliedJob.html">View Job I've Applied To</a></li>
 		<li><a href="viewSavedJob.html">view My Saved Jobs</a></li>
 		<li><a href="jobSeekerResume/createResumeBuilder.html">Create Resume Builder</a></li>
 		<!-- <li><a href="deleteAppliedJob.html">Delete Applied Jobs</a></li>
 		<li><a href="viewSavedJob.html">Delete Saved Jobs</a></li> -->
-
-<input value="Delete"
-			onclick="javascript:deleteContact('deleteAppliedJob.html?id=13100');"
-			type="button">
-
-		
 	</ul>
+	<input value="Delete"
+		onclick="javascript:deleteContact('deleteAppliedJob.html?id=13100');"
+		type="button">
+	<input value="View Details"
+		onclick="javascript:go('viewJobDetails.html?id=1');" type="button">
+	<input value="Apply"
+		onclick="javascript:go('applyJob.html?id=1');" type="button">
 </body>
 </html>
