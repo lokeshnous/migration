@@ -38,6 +38,16 @@ go(url);
 		<li><a href="jobSeekerResume/createResumeBuilder.html">Create Resume Builder</a></li>
 		<!-- <li><a href="deleteAppliedJob.html">Delete Applied Jobs</a></li>
 		<li><a href="viewSavedJob.html">Delete Saved Jobs</a></li> -->
+
+
+<input value="Delete"
+			onclick="javascript:deleteContact('deleteAppliedJob.html?id=13100');"
+			type="button">
+
+<h2>Job Seeker Subscriptions</h2>
+		<li><a href="modifySubscription.html">Modify Subscriptions</a></li>
+		
+
 	</ul>
 	<input value="Delete"
 		onclick="javascript:deleteContact('deleteAppliedJob.html?id=13100');"
