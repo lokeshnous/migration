@@ -18,7 +18,7 @@ import com.advanceweb.afc.jb.data.resume.ResumeDao;
  * @version 1.0
  * @created Jul 9, 2012
  */
-
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ResumeServiceImpl implements ResumeService {
 
 	
@@ -83,33 +83,34 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addWorkExp(List<WorkExpDTO> listWorkExp) {
 		
-		return false;
+		return resumeDao.addWorkExp(listWorkExp);
 	}
 
 	@Override
-	public boolean addReference(List<ReferenceDTO> listRefExp) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean addReference(List<ReferenceDTO> listRefExp) {		
+		return resumeDao.addReference(listRefExp);
 	}
 
 	@Override
-	public boolean addEducation(List<EducationDTO> listEduExp) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean addEducation(List<EducationDTO> listEduExp) {		
+		return resumeDao.addEducation(listEduExp);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addLanguage(List<LanguageDTO> listLangExp) {
-		// TODO Auto-generated method stub
-		return false;
+		return resumeDao.addLanguage(listLangExp);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addCertifications(List<CertificationDTO> listLangExp) {
-		// TODO Auto-generated method stub
-		return false;
+		return resumeDao.addCertifications(listLangExp);
 	}
 	
 	
