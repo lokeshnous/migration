@@ -97,24 +97,25 @@ public class ResBuilderResume implements Serializable {
 	private int userId;
 
 	//bi-directional many-to-one association to ResBuilderCertification
-	@OneToMany(mappedBy="resBuilderResume")
+	
+	@OneToMany(mappedBy="resBuilderResume", cascade={CascadeType.ALL})
 	private List<ResBuilderCertification> resBuilderCertifications;
 
 	//bi-directional many-to-one association to ResBuilderEdu
-	@OneToMany(mappedBy="resBuilderResume")
+	@OneToMany(mappedBy="resBuilderResume", cascade={CascadeType.ALL})
 	private List<ResBuilderEdu> resBuilderEdus;
 
 	//bi-directional many-to-one association to ResBuilderEmployment
-	@OneToMany(mappedBy="resBuilderResume")
+	@OneToMany(mappedBy="resBuilderResume", cascade={CascadeType.ALL})
 	private List<ResBuilderEmployment> resBuilderEmployments;
 
 	//bi-directional many-to-one association to ResBuilderReference
-	@OneToMany(mappedBy="resBuilderResume")
+	@OneToMany(mappedBy="resBuilderResume", cascade={CascadeType.ALL})
 	private List<ResBuilderReference> resBuilderReferences;
 
 	//bi-directional many-to-one association to ResPublishResume
     @ManyToOne
-	@JoinColumn(name="publish_resume_id", insertable = false, updatable = false)
+	@JoinColumn(name="publish_resume_id")
 	private ResPublishResume resPublishResume;
 
     public ResBuilderResume() {

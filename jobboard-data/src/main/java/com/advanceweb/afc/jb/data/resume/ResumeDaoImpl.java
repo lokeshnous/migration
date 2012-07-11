@@ -9,10 +9,16 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.EducationDTO;
+import com.advanceweb.afc.jb.common.LanguageDTO;
+import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.data.common.helpers.ResumeConversionHelper;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
@@ -35,13 +41,13 @@ import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 public class ResumeDaoImpl implements ResumeDao {
 
 	@Autowired
-	private SessionFactory sessionFactory;
-
-	@Autowired
 	private ResumeConversionHelper resumeConversionHelper;
-
-	public ResumeDaoImpl() {
-
+	
+	private HibernateTemplate hibernateTemplate;
+	
+	@Autowired
+	public void setHibernateTemplate(SessionFactory sessionFactory) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
 	/**
@@ -54,16 +60,9 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId) {
 
-		Session session = sessionFactory.getCurrentSession();
-
-		Query query = session
-				.createQuery("from ResUploadResume where userId = "
-						+ jobSeekerId);
-		List<ResUploadResume> resumes = query.list();
-
-		List<ResumeDTO> resumeDTOList = resumeConversionHelper
-				.transformResUploadResumeListToResumeDTOList(resumes);
-		session.close();
+		
+		List<ResUploadResume> resumes = hibernateTemplate.find("from ResUploadResume where userId = "+ jobSeekerId);
+		List<ResumeDTO> resumeDTOList = resumeConversionHelper.transformResUploadResumeListToResumeDTOList(resumes);
 		return resumeDTOList;
 	}
 
@@ -75,9 +74,9 @@ public class ResumeDaoImpl implements ResumeDao {
 	 */
 	@Override
 	public ResumeDTO editResume(int resumeId) {
-		Session session = sessionFactory.getCurrentSession();
-		ResUploadResume resume = (ResUploadResume) session.get(
-				ResUploadResume.class, resumeId);
+		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class, resumeId);
+//		ResUploadResume resume = (ResUploadResume) session.get(
+//				ResUploadResume.class, resumeId);
 		return resumeConversionHelper
 				.transformResUploadResumeToResumeDTO(resume);
 	}
@@ -90,10 +89,11 @@ public class ResumeDaoImpl implements ResumeDao {
 	 */
 	@Override
 	public boolean deleteResume(int resumeId) {
-		Session session = sessionFactory.getCurrentSession();
+//		Session session = sessionFactory.getCurrentSession();
 		ResUploadResume resume = new ResUploadResume();
 		resume.setUploadResumeId(resumeId);
-		session.delete(resume);
+		hibernateTemplate.delete(resume);
+//		session.delete(resume);
 		return true;
 	}
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
@@ -115,8 +115,9 @@ public class ResumeDaoImpl implements ResumeDao {
 			//em.flush();
 
 			try {
-				session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(resPublishResume);
+				hibernateTemplate.saveOrUpdate(resPublishResume);
+//				session = sessionFactory.getCurrentSession();
+//				session.saveOrUpdate(resPublishResume);
 			} catch (HibernateException e) {
 				e.printStackTrace();
 			}		finally{
@@ -159,10 +160,14 @@ public class ResumeDaoImpl implements ResumeDao {
 			//em.persist(resPublishResumePriv);
 			//em.flush();
 			try {
-				session = sessionFactory.getCurrentSession();
-				session.saveOrUpdate(resPublishResume);
-				session.saveOrUpdate(resPrivacy);
-				session.saveOrUpdate(resPublishResumePriv);
+//				session = sessionFactory.getCurrentSession();
+//				session.saveOrUpdate(resPublishResume);
+//				session.saveOrUpdate(resPrivacy);
+//				session.saveOrUpdate(resPublishResumePriv);
+				hibernateTemplate.saveOrUpdate(resPublishResume);
+				hibernateTemplate.saveOrUpdate(resPrivacy);
+				hibernateTemplate.saveOrUpdate(resPublishResumePriv);
+				
 			} catch (HibernateException e) {
 				e.printStackTrace();
 			}		finally{
@@ -207,39 +212,99 @@ public class ResumeDaoImpl implements ResumeDao {
 		//em.persist(resUploadResume);
 		//em.flush();
 		try {
-			session = sessionFactory.getCurrentSession();
-			session.saveOrUpdate(resPublishResume);
-			session.saveOrUpdate(resUploadResume);
+//			session = sessionFactory.getCurrentSession();
+//			session.saveOrUpdate(resPublishResume);
+//			session.saveOrUpdate(resUploadResume);
+			hibernateTemplate.saveOrUpdate(resPublishResume);
+			hibernateTemplate.saveOrUpdate(resUploadResume);
 			//session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}		finally{
 			//session.close();
 		}
-
-
-
-
-
 	}
 	
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public boolean createResume(ResumeDTO resumeDTO) {
 		ResBuilderResume builderResume = resumeConversionHelper.transformBuilderResume(resumeDTO);
-		List<ResBuilderCertification> builderCerts = resumeConversionHelper.transformBuilderCertifications(resumeDTO.getListCertDTO());
-		List<ResBuilderEdu> builderEducations = resumeConversionHelper.transformBuilderEducation(resumeDTO.getListEduDTO());
-		List<ResBuilderReference> builderRefs = resumeConversionHelper.transformBuilderReferences(resumeDTO.getListRefDTO());
-		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO());
+		List<ResBuilderCertification> builderCerts = resumeConversionHelper.transformBuilderCertifications(resumeDTO.getListCertDTO(), builderResume);
+		List<ResBuilderEdu> builderEducations = resumeConversionHelper.transformBuilderEducation(resumeDTO.getListEduDTO(), builderResume);
+		List<ResBuilderReference> builderRefs = resumeConversionHelper.transformBuilderReferences(resumeDTO.getListRefDTO(), builderResume);
+		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(), builderResume);
 		builderResume.setResBuilderCertifications(builderCerts);
 		builderResume.setResBuilderEdus(builderEducations);
 		builderResume.setResBuilderEmployments(builderWorkExp);
 		builderResume.setResBuilderReferences(builderRefs);
 		try {
-			sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
+//			sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
+			hibernateTemplate.saveOrUpdate(builderResume);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}		
+		return true;
+	}
+
+	@Override
+	public boolean addWorkExp(List<WorkExpDTO> listWorkExp) {
+		//Saving only Work Experience 
+		List<ResBuilderEmployment> listBuilderWorkExp = resumeConversionHelper.transformBuilderWorkExp(listWorkExp, null);
+		try {
+			hibernateTemplate.saveOrUpdateAll(listBuilderWorkExp);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean addReference(List<ReferenceDTO> listRefExp) {
+
+		//Saving only Work Experience 
+		List<ResBuilderReference> listBuilderRef = resumeConversionHelper.transformBuilderReferences(listRefExp, null);
+		try {
+			hibernateTemplate.saveOrUpdateAll(listBuilderRef);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean addEducation(List<EducationDTO> listEduExp) {
+		//Saving only Work Experience 
+		List<ResBuilderEdu> listBuilderEdu = resumeConversionHelper.transformBuilderEducation(listEduExp, null);
+		try {
+			hibernateTemplate.saveOrUpdateAll(listBuilderEdu);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean addLanguage(List<LanguageDTO> listLangExp) {
+		//Saving only Work Experience 
+//		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(listWorkExp, null);
+		try {
+//			hibernateTemplate.saveOrUpdateAll(builderWorkExp);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean addCertifications(List<CertificationDTO> listLangExp) {
+		//Saving only Work Experience 
+		List<ResBuilderCertification> listBuilderCerts = resumeConversionHelper.transformBuilderCertifications(listLangExp, null);
+		try {
+			hibernateTemplate.saveOrUpdateAll(listBuilderCerts);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 

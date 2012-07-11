@@ -5,7 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.EducationDTO;
+import com.advanceweb.afc.jb.common.LanguageDTO;
+import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.data.resume.ResumeDao;
 
 /**
@@ -63,17 +68,50 @@ public class ResumeServiceImpl implements ResumeService {
 		resumeDao.saveCreateResumeCopyPaste(resumeDTO);
 		
 	}
+	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void addCreateResumeUpload(ResumeDTO resumeDTO) {
 		resumeDao.saveCreateResumeUpload(resumeDTO);
 		
 	}
 
-
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
 		
 		return resumeDao.createResume(resumeDTO);
 	}
+
+	@Override
+	public boolean addWorkExp(List<WorkExpDTO> listWorkExp) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean addReference(List<ReferenceDTO> listRefExp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addEducation(List<EducationDTO> listEduExp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addLanguage(List<LanguageDTO> listLangExp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addCertifications(List<CertificationDTO> listLangExp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }

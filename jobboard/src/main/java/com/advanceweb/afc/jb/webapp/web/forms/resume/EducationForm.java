@@ -17,6 +17,7 @@ public class EducationForm {
 	private String degrees;
 	private String Certifications;
 	private String language;
+	private int builderEduId;
 	
 	
 	public String getDegreeLvl() {
@@ -66,6 +67,12 @@ public class EducationForm {
 	}
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+	public int getBuilderEduId() {
+		return builderEduId;
+	}
+	public void setBuilderEduId(int builderEduId) {
+		this.builderEduId = builderEduId;
 	}
 	
 	

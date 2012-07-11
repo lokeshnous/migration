@@ -1,7 +1,13 @@
 package com.advanceweb.afc.jb.resume;
 
 import java.util.List;
+
+import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.EducationDTO;
+import com.advanceweb.afc.jb.common.LanguageDTO;
+import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.WorkExpDTO;
 
 
 /**
@@ -19,5 +25,11 @@ public interface ResumeService {
 
 	public void addCreateResumeCopyPaste(ResumeDTO createResumeDTO);
 	public void addCreateResumeUpload(ResumeDTO createResumeDTO);
+	
+	public boolean addWorkExp(List<WorkExpDTO> listWorkExp);
+	public boolean addReference(List<ReferenceDTO> listRefExp);
+	public boolean addEducation(List<EducationDTO> listEduExp);
+	public boolean addLanguage(List<LanguageDTO> listLangExp);
+	public boolean addCertifications(List<CertificationDTO> listLangExp);
 }
 

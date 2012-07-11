@@ -12,6 +12,7 @@ public class CertificationsForm {
 	private String dateOfReceipt;
 	private String instituteName;
 	private String summary;
+	private int builderCertId;
 	
 	
 	public String getCertificationName() {
@@ -38,6 +39,10 @@ public class CertificationsForm {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	
-	
+	public int getBuilderCertId() {
+		return builderCertId;
+	}
+	public void setBuilderCertId(int builderCertId) {
+		this.builderCertId = builderCertId;
+	}		
 }

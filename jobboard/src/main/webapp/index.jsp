@@ -34,7 +34,7 @@ go(url);
 		<h2>Job Seeker Activity</h2>
 		<li><a href="viewAppliedJob.html">View Job I've Applied To</a></li>
 		<li><a href="viewSavedJob.html">view My Saved Jobs</a></li>
-
+		<li><a href="jobSeekerResume/createResumeBuilder.html">Create Resume Builder</a></li>
 		<!-- <li><a href="deleteAppliedJob.html">Delete Applied Jobs</a></li>
 		<li><a href="viewSavedJob.html">Delete Saved Jobs</a></li> -->
 

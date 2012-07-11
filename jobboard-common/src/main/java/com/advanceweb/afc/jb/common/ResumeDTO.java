@@ -44,7 +44,6 @@ public class ResumeDTO implements Serializable{
 	private List<ReferenceDTO> listRefDTO;
 	private List<WorkExpDTO> listWorkExpDTO;
 	private ContactInformationDTO contactInfoDTO;
-	private AddressDTO addDTO;
 	//Creating Resume	
 
 	
@@ -203,13 +202,6 @@ public class ResumeDTO implements Serializable{
 	}
 	public void setListWorkExpDTO(List<WorkExpDTO> listWorkExpDTO) {
 		this.listWorkExpDTO = listWorkExpDTO;
-	}
-	
-	public AddressDTO getAddDTO() {
-		return addDTO;
-	}
-	public void setAddDTO(AddressDTO addDTO) {
-		this.addDTO = addDTO;
 	}
 	
 	public ContactInformationDTO getContactInfoDTO() {

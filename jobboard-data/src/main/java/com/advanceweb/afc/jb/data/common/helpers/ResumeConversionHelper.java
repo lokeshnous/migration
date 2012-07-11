@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
+import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
@@ -70,21 +71,28 @@ public class ResumeConversionHelper {
 		builderResume.setUserId(resumeDTO.getUserId());
 		builderResume.setBuilderResumeId(resumeDTO.getBuilderResumeId());
 		builderResume.setResumeName(resumeDTO.getResume_name());
-		builderResume.setFirstName(resumeDTO.getContactInfoDTO().getFirstName());
-		builderResume.setLastName(resumeDTO.getContactInfoDTO().getLastName());
-		builderResume.setMiddleName(resumeDTO.getContactInfoDTO().getMiddleNameInitial());
-		builderResume.setStreet(resumeDTO.getAddDTO().getAddress1());		
-		builderResume.setStreet2(resumeDTO.getAddDTO().getAddress2());
-		builderResume.setCity(resumeDTO.getAddDTO().getCity());
-		builderResume.setState(resumeDTO.getAddDTO().getState());
-		builderResume.setCountry(resumeDTO.getAddDTO().getCountry());
-		builderResume.setPostcode(resumeDTO.getAddDTO().getZipCode());
-		builderResume.setPhone(resumeDTO.getAddDTO().getPhone());
-		builderResume.setPhone2(resumeDTO.getAddDTO().getMobileNumber());
+		
+		if(null != resumeDTO.getContactInfoDTO()){
+			builderResume.setFirstName(resumeDTO.getContactInfoDTO().getFirstName());
+			builderResume.setLastName(resumeDTO.getContactInfoDTO().getLastName());
+			builderResume.setMiddleName(resumeDTO.getContactInfoDTO().getMiddleNameInitial());
+			builderResume.setEmail(resumeDTO.getContactInfoDTO().getEmail());	
+		
+			if(null != resumeDTO.getContactInfoDTO().getAddressDTO()){
+				builderResume.setStreet(resumeDTO.getContactInfoDTO().getAddressDTO().getAddress1());		
+				builderResume.setStreet2(resumeDTO.getContactInfoDTO().getAddressDTO().getAddress2());
+				builderResume.setCity(resumeDTO.getContactInfoDTO().getAddressDTO().getCity());
+				builderResume.setState(resumeDTO.getContactInfoDTO().getAddressDTO().getState());
+				builderResume.setCountry(resumeDTO.getContactInfoDTO().getAddressDTO().getCountry());
+				builderResume.setPostcode(resumeDTO.getContactInfoDTO().getAddressDTO().getZipCode());
+				builderResume.setPhone(resumeDTO.getContactInfoDTO().getAddressDTO().getPhone());
+				builderResume.setPhone2(resumeDTO.getContactInfoDTO().getAddressDTO().getMobileNumber());
+			}
+		}
+		
 		builderResume.setCanApplyToJobs(new Integer("0").shortValue());
 		builderResume.setActive(new Integer("0").shortValue());
 		builderResume.setCanApplyToJobs(new Integer("0").shortValue());
-		builderResume.setEmail(resumeDTO.getContactInfoDTO().getEmail());
 		builderResume.setIsPublished(new Integer("0").shortValue());
 		builderResume.setJobObjective(resumeDTO.getObjective());
 		builderResume.setOtherInterests(resumeDTO.getOtherDetails());
@@ -99,15 +107,20 @@ public class ResumeConversionHelper {
 	 * @param resumeDTO
 	 * @return builderResume
 	 */
-	public List<ResBuilderCertification> transformBuilderCertifications(List<CertificationDTO> listCertDTO){
+	public List<ResBuilderCertification> transformBuilderCertifications(List<CertificationDTO> listCertDTO, ResBuilderResume builderResume){
 		List<ResBuilderCertification> listCertEntity = new ArrayList<ResBuilderCertification>();
-		for(CertificationDTO certDTO : listCertDTO){
-			ResBuilderCertification certEntitiy = new ResBuilderCertification();
-			certEntitiy.setBuilderCertificationId(certDTO.getBuilderCertId());
-			certEntitiy.setDescription(certDTO.getSummary());
-			certEntitiy.setEarnedDt(DateUtils.convertStringToSQLDate(certDTO.getDateOfReceipt()));
-			certEntitiy.setExpireDt(null);
-			listCertEntity.add(certEntitiy);
+		if(null != listCertDTO){
+			for(CertificationDTO certDTO : listCertDTO){
+				ResBuilderCertification certEntity = new ResBuilderCertification();
+				certEntity.setBuilderCertificationId(certDTO.getBuilderCertId());
+				certEntity.setDescription(certDTO.getSummary());
+				certEntity.setEarnedDt(DateUtils.convertStringToSQLDate(certDTO.getDateOfReceipt()));
+				certEntity.setExpireDt(null);
+				certEntity.setCertificationName(certDTO.getCertificationName());
+				certEntity.setInstitutionName(certDTO.getInstituteName());
+				certEntity.setResBuilderResume(builderResume);
+				listCertEntity.add(certEntity);
+			}
 		}
 		return listCertEntity;		
 	}
@@ -118,17 +131,20 @@ public class ResumeConversionHelper {
 	 * @param resumeDTO
 	 * @return builderResume
 	 */
-	public List<ResBuilderReference> transformBuilderReferences(List<ReferenceDTO> listRefDTO){
+	public List<ResBuilderReference> transformBuilderReferences(List<ReferenceDTO> listRefDTO, ResBuilderResume builderResume){
 		List<ResBuilderReference> listRefEntity = new ArrayList<ResBuilderReference>();
-		for(ReferenceDTO refDTO : listRefDTO){
-			ResBuilderReference refEntitiy = new ResBuilderReference();
-			refEntitiy.setBuilderReferenceId(refDTO.getBuilderRefId());
-			refEntitiy.setCompanyName(refDTO.getCompanyName());
-			refEntitiy.setEmail(refDTO.getEmail());
-			refEntitiy.setIsAvailable(new Integer("0").shortValue());
-			refEntitiy.setJobTitle(refDTO.getJobTitle());
-			refEntitiy.setWorkPhone(refDTO.getPhoneNo());		
-			listRefEntity.add(refEntitiy);
+		if(null != listRefDTO){
+			for(ReferenceDTO refDTO : listRefDTO){
+				ResBuilderReference refEntitiy = new ResBuilderReference();
+				refEntitiy.setBuilderReferenceId(refDTO.getBuilderRefId());
+				refEntitiy.setCompanyName(refDTO.getCompanyName());
+				refEntitiy.setEmail(refDTO.getEmail());
+				refEntitiy.setIsAvailable(new Integer("0").shortValue());
+				refEntitiy.setJobTitle(refDTO.getJobTitle());
+				refEntitiy.setWorkPhone(refDTO.getPhoneNo());	
+				refEntitiy.setResBuilderResume(builderResume);
+				listRefEntity.add(refEntitiy);
+			}
 		}
 		return listRefEntity;		
 	}
@@ -140,23 +156,28 @@ public class ResumeConversionHelper {
 	 * @param resumeDTO
 	 * @return builderResume
 	 */
-	public List<ResBuilderEdu> transformBuilderEducation(List<EducationDTO> listEduDTO){
+	public List<ResBuilderEdu> transformBuilderEducation(List<EducationDTO> listEduDTO, ResBuilderResume builderResume){
 		List<ResBuilderEdu> listEduEntity = new ArrayList<ResBuilderEdu>();
-		for(EducationDTO eduDTO : listEduDTO){
-			ResBuilderEdu eduEntitiy = new ResBuilderEdu();
-			eduEntitiy.setBuilderEduId(eduDTO.getBuilderEduId());
-			eduEntitiy.setCity("");
-			eduEntitiy.setCompletionDt(DateUtils.convertStringToSQLDate(eduDTO.getEndDate()));
-			eduEntitiy.setCountry("");
-			eduEntitiy.setCourseOfStudy(eduDTO.getFieldOfStudy());
-			eduEntitiy.setInstitutionName(eduDTO.getInstituteName());
-			ResDegreeEdu resDegreeEdu = new ResDegreeEdu();
-				resDegreeEdu.setDegreeEduId(eduDTO.getEduDegreeDTO().getDegreeEduId());
-				resDegreeEdu.setDescription(eduDTO.getEduDegreeDTO().getDescription());
-				resDegreeEdu.setName(eduDTO.getEduDegreeDTO().getName());
-				eduEntitiy.setResDegreeEdu(resDegreeEdu);			
-			eduEntitiy.setState("");
-			listEduEntity.add(eduEntitiy);
+		if(null != listEduDTO){
+			for(EducationDTO eduDTO : listEduDTO){
+				ResBuilderEdu eduEntitiy = new ResBuilderEdu();
+				eduEntitiy.setBuilderEduId(eduDTO.getBuilderEduId());
+				eduEntitiy.setCity("");
+				eduEntitiy.setCompletionDt(DateUtils.convertStringToSQLDate(eduDTO.getEndDate()));
+				eduEntitiy.setCountry("");
+				eduEntitiy.setCourseOfStudy(eduDTO.getFieldOfStudy());
+				eduEntitiy.setInstitutionName(eduDTO.getInstituteName());
+				if(null != eduDTO.getEduDegreeDTO()){
+					ResDegreeEdu resDegreeEdu = new ResDegreeEdu();
+						resDegreeEdu.setDegreeEduId(eduDTO.getEduDegreeDTO().getDegreeEduId());
+						resDegreeEdu.setDescription(eduDTO.getEduDegreeDTO().getDescription());
+						resDegreeEdu.setName(eduDTO.getEduDegreeDTO().getName());
+						eduEntitiy.setResDegreeEdu(resDegreeEdu);
+				}
+				eduEntitiy.setState("");
+				eduEntitiy.setResBuilderResume(builderResume);
+				listEduEntity.add(eduEntitiy);
+			}
 		}
 		return listEduEntity;		
 	}
@@ -167,24 +188,55 @@ public class ResumeConversionHelper {
 	 * @param resumeDTO
 	 * @return builderResume
 	 */
-	public List<ResBuilderEmployment> transformBuilderWorkExp(List<WorkExpDTO> listWorkExpDTO){
+	public List<ResBuilderEmployment> transformBuilderWorkExp(List<WorkExpDTO> listWorkExpDTO, ResBuilderResume builderResume){
 		List<ResBuilderEmployment> listWorkExpEntity = new ArrayList<ResBuilderEmployment>();
-		for(WorkExpDTO workExpDTO : listWorkExpDTO){
-			ResBuilderEmployment workExpEntitiy = new ResBuilderEmployment();
-			workExpEntitiy.setBuilderEmploymentId(workExpDTO.getBuilderEmpId());
-//			workExpEntitiy.setCity(workExpDTO.get);
-//			workExpEntitiy.setCountry(country);
-			workExpEntitiy.setEmployerName(workExpDTO.getEmployerName());
-			workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
-			workExpEntitiy.setJobDescription(workExpDTO.getDescription());
-			workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
-			workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
-//			workExpEntitiy.setState(state);
-			workExpEntitiy.setStillEmployed(new Integer("0").shortValue());
-			listWorkExpEntity.add(workExpEntitiy);
+		if(null != listWorkExpDTO){
+			for(WorkExpDTO workExpDTO : listWorkExpDTO){
+				ResBuilderEmployment workExpEntitiy = new ResBuilderEmployment();
+				workExpEntitiy.setBuilderEmploymentId(workExpDTO.getBuilderEmpId());
+	//			workExpEntitiy.setCity(workExpDTO.get);
+	//			workExpEntitiy.setCountry(country);
+				workExpEntitiy.setEmployerName(workExpDTO.getEmployerName());
+				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
+				workExpEntitiy.setJobDescription(workExpDTO.getDescription());
+				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
+				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
+	//			workExpEntitiy.setState(state);
+				workExpEntitiy.setStillEmployed(new Integer("0").shortValue());
+				workExpEntitiy.setResBuilderResume(builderResume);
+				listWorkExpEntity.add(workExpEntitiy);
+			}
 		}
 		return listWorkExpEntity;		
 	}
+	
+	/**
+	 * This method is called to convert List of Work Exp DTO to 
+	 * Resume Builder Work Exp Entity
+	 * @param resumeDTO
+	 * @return builderResume
+	 */
+	/*public List<ResBuilderEmployment> transformBuilderLanguanges(List<LanguageDTO> listWorkExpDTO, ResBuilderResume builderResume){
+		List<ResBuilderEmployment> listWorkExpEntity = new ArrayList<ResBuilderEmployment>();
+		if(null != listWorkExpDTO){
+			for(WorkExpDTO workExpDTO : listWorkExpDTO){
+				ResBuilderEmployment workExpEntitiy = new ResBuilderEmployment();
+				workExpEntitiy.setBuilderEmploymentId(workExpDTO.getBuilderEmpId());
+	//			workExpEntitiy.setCity(workExpDTO.get);
+	//			workExpEntitiy.setCountry(country);
+				workExpEntitiy.setEmployerName(workExpDTO.getEmployerName());
+				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
+				workExpEntitiy.setJobDescription(workExpDTO.getDescription());
+				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
+				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
+	//			workExpEntitiy.setState(state);
+				workExpEntitiy.setStillEmployed(new Integer("0").shortValue());
+				workExpEntitiy.setResBuilderResume(builderResume);
+				listWorkExpEntity.add(workExpEntitiy);
+			}
+		}
+		return listWorkExpEntity;	
+	}*/	
 
 
 }

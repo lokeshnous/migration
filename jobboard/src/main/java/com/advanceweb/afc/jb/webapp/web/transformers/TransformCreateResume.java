@@ -35,13 +35,16 @@ public class TransformCreateResume {
 	public List<CertificationDTO> createCertificationDTO(List<CertificationsForm> listCertForms){
 		
 		List<CertificationDTO> listCertDTO = new ArrayList<CertificationDTO>();
-		for(CertificationsForm certForm : listCertForms){
-			CertificationDTO dto = new CertificationDTO();
-			dto.setCertificationName(certForm.getCertificationName());
-			dto.setDateOfReceipt(certForm.getDateOfReceipt());
-			dto.setInstituteName(certForm.getInstituteName());
-			dto.setSummary(certForm.getSummary());
-			listCertDTO.add(dto);
+		if(null != listCertForms){
+			for(CertificationsForm certForm : listCertForms){
+				CertificationDTO dto = new CertificationDTO();
+				dto.setCertificationName(certForm.getCertificationName());
+				dto.setDateOfReceipt(certForm.getDateOfReceipt());
+				dto.setInstituteName(certForm.getInstituteName());
+				dto.setSummary(certForm.getSummary());
+				dto.setBuilderCertId(certForm.getBuilderCertId());
+				listCertDTO.add(dto);
+			}
 		}
 		return listCertDTO;
 		
@@ -55,14 +58,17 @@ public class TransformCreateResume {
 	public List<ReferenceDTO> createReferenceDTO(List<ReferenceForm> listRefForms){
 		
 		List<ReferenceDTO> listRefDTO = new ArrayList<ReferenceDTO>();
-		for(ReferenceForm refForm : listRefForms){
-			ReferenceDTO dto = new ReferenceDTO();
-			dto.setCompanyName(refForm.getCompanyName());
-			dto.setEmail(refForm.getEmail());
-			dto.setJobTitle(refForm.getJobTitle());
-			dto.setName(refForm.getName());
-			dto.setPhoneNo(refForm.getPhoneNo());
-			listRefDTO.add(dto);
+		if(null != listRefForms){
+			for(ReferenceForm refForm : listRefForms){
+				ReferenceDTO dto = new ReferenceDTO();
+				dto.setCompanyName(refForm.getCompanyName());
+				dto.setEmail(refForm.getEmail());
+				dto.setJobTitle(refForm.getJobTitle());
+				dto.setName(refForm.getName());
+				dto.setPhoneNo(refForm.getPhoneNo());
+				dto.setBuilderRefId(refForm.getBuilderRefId());
+				listRefDTO.add(dto);
+			}
 		}
 		return listRefDTO;
 		
@@ -76,17 +82,20 @@ public class TransformCreateResume {
 	public List<EducationDTO> createEducationDTO(List<EducationForm> listEduForms){
 		
 		List<EducationDTO> listEduDTO = new ArrayList<EducationDTO>();
-		for(EducationForm eduForm : listEduForms){
-			EducationDTO dto = new EducationDTO();
-			dto.setCertifications(eduForm.getCertifications());
-			dto.setDegreeLvl(eduForm.getDegreeLvl());
-			dto.setDegrees(eduForm.getDegrees());
-			dto.setEndDate(eduForm.getEndDate());
-			dto.setFieldOfStudy(eduForm.getFieldOfStudy());
-			dto.setInstituteName(eduForm.getInstituteName());
-			dto.setLanguage(eduForm.getLanguage());
-			dto.setStartDate(eduForm.getStartDate());
-			listEduDTO.add(dto);
+		if(null != listEduForms){
+			for(EducationForm eduForm : listEduForms){
+				EducationDTO dto = new EducationDTO();
+				dto.setCertifications(eduForm.getCertifications());
+				dto.setDegreeLvl(eduForm.getDegreeLvl());
+				dto.setDegrees(eduForm.getDegrees());
+				dto.setEndDate(eduForm.getEndDate());
+				dto.setFieldOfStudy(eduForm.getFieldOfStudy());
+				dto.setInstituteName(eduForm.getInstituteName());
+				dto.setLanguage(eduForm.getLanguage());
+				dto.setStartDate(eduForm.getStartDate());
+				dto.setBuilderEduId(eduForm.getBuilderEduId());
+				listEduDTO.add(dto);
+			}
 		}
 		return listEduDTO;
 		
@@ -100,19 +109,22 @@ public class TransformCreateResume {
 	public List<WorkExpDTO> createWorkExpDTO(List<WorkExpForm> listWorkExpForms){
 		
 		List<WorkExpDTO> listWorkExpDTO = new ArrayList<WorkExpDTO>();
-		for(WorkExpForm workExpForm : listWorkExpForms){
-			WorkExpDTO dto = new WorkExpDTO();
-			dto.setAnnualSalary(workExpForm.getAnnualSalary());
-			dto.setCurrentCareerLvl(workExpForm.getCurrentCareerLvl());
-			dto.setDescription(workExpForm.getDescription());
-			dto.setEmployerName(workExpForm.getEmployerName());
-			dto.setEmploymentType(workExpForm.getEmploymentType());
-			dto.setEndDate(workExpForm.getEndDate());
-			dto.setHrlyPayRate(workExpForm.getHrlyPayRate());
-			dto.setJobTitle(workExpForm.getJobTitle());
-			dto.setStartDate(workExpForm.getStartDate());
-			dto.setYrsAtPostion(workExpForm.getYrsAtPostion());
-			listWorkExpDTO.add(dto);
+		if(null != listWorkExpForms){
+			for(WorkExpForm workExpForm : listWorkExpForms){
+				WorkExpDTO dto = new WorkExpDTO();
+				dto.setAnnualSalary(workExpForm.getAnnualSalary());
+				dto.setCurrentCareerLvl(workExpForm.getCurrentCareerLvl());
+				dto.setDescription(workExpForm.getDescription());
+				dto.setEmployerName(workExpForm.getEmployerName());
+				dto.setEmploymentType(workExpForm.getEmploymentType());
+				dto.setEndDate(workExpForm.getEndDate());
+				dto.setHrlyPayRate(workExpForm.getHrlyPayRate());
+				dto.setJobTitle(workExpForm.getJobTitle());
+				dto.setStartDate(workExpForm.getStartDate());
+				dto.setYrsAtPostion(workExpForm.getYrsAtPostion());
+				dto.setBuilderEmpId(workExpForm.getBuilderEmpId());
+				listWorkExpDTO.add(dto);
+			}
 		}
 		return listWorkExpDTO;
 		
@@ -126,18 +138,20 @@ public class TransformCreateResume {
 	public List<LanguageDTO> createLanguageDTO(List<LanguageForm> listLangForms){
 		
 		List<LanguageDTO> listWorkExpDTO = new ArrayList<LanguageDTO>();
-		for(LanguageForm langForm : listLangForms){
-			LanguageDTO dto = new LanguageDTO();
-			dto.setExpLvl(langForm.getExpLvl());
-			dto.setLanguage(langForm.getLanguage());
-			listWorkExpDTO.add(dto);
+		if(null != listLangForms){
+			for(LanguageForm langForm : listLangForms){
+				LanguageDTO dto = new LanguageDTO();
+				dto.setExpLvl(langForm.getExpLvl());
+				dto.setLanguage(langForm.getLanguage());
+				listWorkExpDTO.add(dto);
+			}
 		}
 		return listWorkExpDTO;
 		
 	}
 	
 	/**
-	 * Method to convert Language form to Language dto
+	 * Method to convert Create Resume form to Resume dto
 	 * @param listCertForms
 	 * @return
 	 */
