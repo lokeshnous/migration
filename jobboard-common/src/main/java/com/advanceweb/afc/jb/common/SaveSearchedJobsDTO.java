@@ -10,13 +10,23 @@ import java.util.Date;
  */
 
 public class SaveSearchedJobsDTO {
-
+	
+	private int jpSaveSearchId;
 	private String loginID;
 	private String url;
 	private String urlName;
 	private Date createdDate;
 	private Date ModifyDate;
 	private String emailFrequency;
+
+	
+	public int getJpSaveSearchId() {
+		return jpSaveSearchId;
+	}
+
+	public void setJpSaveSearchId(int jpSaveSearchId) {
+		this.jpSaveSearchId = jpSaveSearchId;
+	}
 
 	public String getLoginID() {
 		return loginID;
@@ -77,4 +87,14 @@ public class SaveSearchedJobsDTO {
 	public void setEmailFrequency(String emailFrequency) {
 		this.emailFrequency = emailFrequency;
 	}
+
+	@Override
+	public String toString() {
+		return "SaveSearchedJobsDTO [loginID=" + loginID + ", url=" + url
+				+ ", urlName=" + urlName + ", createdDate=" + createdDate
+				+ ", ModifyDate=" + ModifyDate + ", emailFrequency="
+				+ emailFrequency + "]";
+	}
+	
+	
 }

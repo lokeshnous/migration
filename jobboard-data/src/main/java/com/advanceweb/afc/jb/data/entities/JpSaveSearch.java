@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the jp_save_search database table
@@ -35,9 +37,11 @@ public class JpSaveSearch {
 	@Column(name="url_name")
 	private String urlName;
 	
+	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_date")
 	private Date createDate;
 	
+	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="modify_date")
 	private Date modifyDate;
 	

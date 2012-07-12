@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.data.common.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
 
@@ -11,20 +14,41 @@ import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
  */
 
 public class SaveSearchConversionHelper {
-	
+
 	/**
-	 * This method is called to convert saveSearchedJobsDTO to 
-	 * Save Search Entity
+	 * This method is called to convert saveSearchedJobsDTO to Save Search
+	 * Entity
+	 * 
 	 * @param saveSearchedJobsDTO
 	 * @return JpSaveSearch
 	 */
-	public JpSaveSearch transformSaveSearch(SaveSearchedJobsDTO saveSearchedJobsDTO){
+	public JpSaveSearch transformSaveSearch(
+			SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		JpSaveSearch jpSaveSearch = new JpSaveSearch();
 		jpSaveSearch.setLoginID(saveSearchedJobsDTO.getLoginID());
 		jpSaveSearch.setUrl(saveSearchedJobsDTO.getUrl());
 		jpSaveSearch.setUrlName(saveSearchedJobsDTO.getUrlName());
 		jpSaveSearch.setCreateDate(saveSearchedJobsDTO.getCreatedDate());
-		return jpSaveSearch;		
+		return jpSaveSearch;
+	}
+
+	
+	public List<SaveSearchedJobsDTO> transformJpSaveSearchToSaveSearchedJobsDTO(
+			List<JpSaveSearch> jpSaveSearchList) {
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = new ArrayList<SaveSearchedJobsDTO>();
+		for (JpSaveSearch jpSaveSearch : jpSaveSearchList) {
+			SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
+			saveSearchedJobsDTO.setJpSaveSearchId(jpSaveSearch
+					.getJpSaveSearchId());
+			saveSearchedJobsDTO.setUrl(jpSaveSearch.getUrl());
+			saveSearchedJobsDTO.setUrlName(jpSaveSearch.getUrlName());
+			saveSearchedJobsDTO.setModifyDate(jpSaveSearch.getModifyDate());
+			saveSearchedJobsDTO.setEmailFrequency(jpSaveSearch
+					.getEmailFrequency());
+			saveSearchedJobsDTOList.add(saveSearchedJobsDTO);
+		}
+
+		return saveSearchedJobsDTOList;
 	}
 
 }
