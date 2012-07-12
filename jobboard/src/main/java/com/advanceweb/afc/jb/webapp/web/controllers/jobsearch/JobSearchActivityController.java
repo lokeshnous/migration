@@ -1,12 +1,28 @@
 package com.advanceweb.afc.jb.webapp.web.controllers.jobsearch;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
+import com.advanceweb.afc.jb.common.EthenticityDTO;
+import com.advanceweb.afc.jb.common.GenderDTO;
+import com.advanceweb.afc.jb.common.SearchResultDTO;
+import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
+import com.advanceweb.afc.jb.webapp.web.forms.jobsearch.JobSearchResultForm;
+import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
+import com.advanceweb.afc.jb.webapp.web.forms.registration.JobSeekerRegistrationForm;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
@@ -19,6 +35,7 @@ import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
  */
 
 @Controller
+@RequestMapping("/jobsearchactivity")
 public class JobSearchActivityController {
 
 	@Autowired
@@ -61,6 +78,35 @@ public class JobSearchActivityController {
 		return new ModelAndView("jobSeekerActivity");
 	}
 
+	
+	
+	/**
+	 * This method is called to forward to job search page
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/findJobPage",method = RequestMethod.GET)
+	public ModelAndView findJobPage(Map model) {
+		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		model.put("jobSearchResultForm", jobSearchResultForm);
+		return new ModelAndView("findjob");
+	}
+	
+	/**
+	 * This method is called to forward to job search page
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/findJobSearch",method = RequestMethod.POST)
+	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm, BindingResult result) {
+		String searchString = jobSearchResultForm.getSearchString();
+		System.out.println(searchString);
+		SearchResultDTO searchResultDTO = jobSearchActivity.getJobSearchResult(searchString);
+		return new ModelAndView("jobsearchresult","jobSearchResultForm",searchResultDTO);
+	}
+	
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
 		this.jobSearchActivity = jobSearchActivity;
 	}
