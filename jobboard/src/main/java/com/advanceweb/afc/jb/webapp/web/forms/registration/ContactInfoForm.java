@@ -36,6 +36,10 @@ public class ContactInfoForm {
 	
 	@NotEmpty
 	private String postalCode;
+	
+	private String phoneNo;
+	
+	private String mobileNo;
 
 	public String getFirstName() {
 		return firstName;
@@ -108,7 +112,21 @@ public class ContactInfoForm {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	
-	
-	
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+			
 }

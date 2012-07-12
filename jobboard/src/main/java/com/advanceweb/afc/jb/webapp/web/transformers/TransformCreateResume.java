@@ -169,6 +169,7 @@ public class TransformCreateResume {
 		return dto;
 	}
 	
+	
 	/**
 	 * Method to convert CreateResume form to Contact Info  dto
 	 * it contains
@@ -176,7 +177,7 @@ public class TransformCreateResume {
 	 * @param listCertForms
 	 * @return
 	 */
-	public ContactInformationDTO transformContactInfoForm(ContactInfoForm form){
+	public ContactInformationDTO transformContactInfoDTO(ContactInfoForm form){
 		ContactInformationDTO dto = new ContactInformationDTO();
 		if(null!= form){
 			dto.setEmail("");
@@ -189,22 +190,214 @@ public class TransformCreateResume {
 	}
 	
 	/**
-	 * Method to convert CreateResume form to Contact Info  dto
+	 * Method to convert Contact Info dto to ContactInfo form
 	 * it contains
 	 * 	1.AddressDTO
 	 * @param listCertForms
 	 * @return
 	 */
-	public ContactInformationDTO createContactInfoDTO(ContactInfoForm form){
-		ContactInformationDTO dto = new ContactInformationDTO();
-		if(null!= form){
-			dto.setEmail("");
-			dto.setFirstName(form.getFirstName());
-			dto.setLastName(form.getLastName());
-			dto.setMiddleNameInitial(form.getMiddleName());
+	public ContactInfoForm transformContactInfoForm(ContactInformationDTO dto){
+		ContactInfoForm form = new ContactInfoForm();
+		if(null!= dto){
+			form.setFirstName(dto.getFirstName());
+			form.setLastName(dto.getLastName());
+			form.setMiddleName(dto.getMiddleNameInitial());
+			if(null != dto.getAddressDTO()){
+				form.setAddressLine1(dto.getAddressDTO().getAddress1());
+				form.setAddressLine2(dto.getAddressDTO().getAddress2());
+				form.setCity(dto.getAddressDTO().getCity());
+				form.setCountry(dto.getAddressDTO().getCountry());
+				form.setPostalCode(dto.getAddressDTO().getZipCode());
+				form.setState(dto.getAddressDTO().getState());
+				form.setPhoneNo(dto.getAddressDTO().getPhone());
+				form.setMobileNo(dto.getAddressDTO().getMobileNumber());
+			}
 		}
 		
-		return dto;
+		return form;
+	}
+	
+	/**
+	 * Method to convert education dto to education form
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<EducationForm> transformEducationForm(List<EducationDTO> listEduDTO){
+		
+		List<EducationForm> listEduForms = new ArrayList<EducationForm>();
+		
+		if(null!= listEduDTO){
+			for(EducationDTO dto : listEduDTO){
+				EducationForm form = new EducationForm();
+				form.setBuilderEduId(dto.getBuilderEduId());
+				form.setCertifications(dto.getCertifications());
+				form.setDegreeLvl(dto.getDegreeLvl());
+				form.setDegrees(dto.getDegrees());
+				form.setEndDate(dto.getEndDate());
+				form.setFieldOfStudy(dto.getFieldOfStudy());
+				form.setInstituteName(dto.getInstituteName());
+				form.setLanguage(dto.getLanguage());
+				form.setStartDate(dto.getStartDate());
+				listEduForms.add(form);
+			}
+		}else{
+			EducationForm eduForm = new EducationForm();
+			listEduForms.add(eduForm);
+		}
+		return listEduForms;
+	}
+	
+	/**
+	 * Method to convert Reference dto to reference form
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<ReferenceForm> transformReferenceForm(List<ReferenceDTO> listRefpDTO){
+		
+		List<ReferenceForm> listWorkExpForms = new ArrayList<ReferenceForm>();
+		
+		if(null!= listRefpDTO){
+			for(ReferenceDTO dto : listRefpDTO){
+				ReferenceForm form = new ReferenceForm();
+				form.setBuilderRefId(dto.getBuilderRefId());
+				form.setCompanyName(dto.getCompanyName());
+				form.setEmail(dto.getEmail());
+				form.setJobTitle(dto.getJobTitle());
+				form.setName(dto.getName());
+				form.setPhoneNo(dto.getPhoneNo());
+				listWorkExpForms.add(form);
+			}
+		}else{
+			ReferenceForm refForm = new ReferenceForm();
+			listWorkExpForms.add(refForm);
+		}
+		return listWorkExpForms;
+	}
+	
+	/**
+	 * Method to convert work exp dto to work exp form
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<WorkExpForm> transformWorkExpForm(List<WorkExpDTO> listWorkExpDTO){
+		
+		List<WorkExpForm> listWorkExpForms = new ArrayList<WorkExpForm>();
+		
+		if(null!= listWorkExpDTO){
+			for(WorkExpDTO dto : listWorkExpDTO){
+				WorkExpForm form = new WorkExpForm();
+				form.setAnnualSalary(dto.getAnnualSalary());
+				form.setBuilderEmpId(dto.getBuilderEmpId());
+				form.setCurrentCareerLvl(dto.getCurrentCareerLvl());
+				form.setDescription(dto.getDescription());
+				form.setEmployerName(dto.getEmployerName());
+				form.setEmploymentType(dto.getEmploymentType());
+				form.setEndDate(dto.getEndDate());
+				form.setHrlyPayRate(dto.getHrlyPayRate());
+				form.setJobTitle(dto.getJobTitle());
+				form.setStartDate(dto.getStartDate());
+				form.setYrsAtPostion(dto.getYrsAtPostion());
+				listWorkExpForms.add(form);
+			}
+		}else{
+			WorkExpForm workExpForm = new WorkExpForm();
+			listWorkExpForms.add(workExpForm);
+		}
+		return listWorkExpForms;
+	}
+	
+	/**
+	 * Method to convert work exp dto to work exp form
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<CertificationsForm> transformCertForm(List<CertificationDTO> listCertDTO){
+		
+		List<CertificationsForm> listCertForms = new ArrayList<CertificationsForm>();
+		
+		if(null!= listCertDTO){
+			for(CertificationDTO dto : listCertDTO){
+				CertificationsForm form = new CertificationsForm();
+				form.setBuilderCertId(dto.getBuilderCertId());
+				form.setCertificationName(dto.getCertificationName());
+				form.setDateOfReceipt(dto.getDateOfReceipt());
+				form.setInstituteName(dto.getInstituteName());
+				form.setSummary(dto.getSummary());
+				listCertForms.add(form);
+			}
+		}else{
+			CertificationsForm certForm = new CertificationsForm();
+			listCertForms.add(certForm);
+		}
+		return listCertForms;
+	}
+	
+	
+	/**
+	 * Method to convert language dto to language form
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<LanguageForm> transformLanguageForm(List<LanguageDTO> listLangDTO){
+		
+		List<LanguageForm> listLangForms = new ArrayList<LanguageForm>();
+		
+		if(null!= listLangDTO){
+			for(LanguageDTO dto : listLangDTO){
+				LanguageForm form = new LanguageForm();
+				form.setExpLvl(dto.getExpLvl());
+				form.setLanguage(dto.getLanguage());
+				listLangForms.add(form);
+			}
+		}else{
+			LanguageForm languageForm = new LanguageForm();
+			listLangForms.add(languageForm);
+		}
+		return listLangForms;
+	}
+	
+	
+	/**
+	 * Method to convert language dto to language form
+	 * it contains
+	 * 	1.AddressDTO
+	 * @param listCertForms
+	 * @return
+	 */
+	public CreateResume transformCreateResumeForm(ResumeDTO resumeDTO){
+		
+		CreateResume createResume = new CreateResume();
+		if(null != resumeDTO){
+			createResume.setAwards(resumeDTO.getAwards());
+			createResume.setBuilderResumeId(resumeDTO.getBuilderResumeId());
+			createResume.setDesired_employment_type(resumeDTO.getDesired_employment_type());
+			createResume.setDesired_job_title(resumeDTO.getDesired_job_title());
+			createResume.setEmploymentType(resumeDTO.getDesired_employment_type());
+			createResume.setMemberships(resumeDTO.getMemberships());
+			createResume.setObjective(resumeDTO.getObjective());
+			createResume.setOtherDetails(resumeDTO.getOtherDetails());
+			createResume.setResume_name(resumeDTO.getResume_name());
+			createResume.setResume_visibility(resumeDTO.getResume_visibility());
+			createResume.setResumeText(resumeDTO.getResumeText());
+//			createResume.setResumeText1(resumeDTO.get);
+			createResume.setResumeType(resumeDTO.getResumeType());
+			createResume.setSkills(resumeDTO.getSkills());
+			createResume.setWilling_to_relocate(resumeDTO.getWilling_to_relocate());
+			createResume.setWork_authorization_US(resumeDTO.getWork_authorization_US());
+		}
+		
+		return createResume;
+		
 	}
 	
 }

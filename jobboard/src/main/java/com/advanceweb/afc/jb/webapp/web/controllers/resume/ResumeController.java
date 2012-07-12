@@ -1,8 +1,6 @@
 package com.advanceweb.afc.jb.webapp.web.controllers.resume;
 
 
-import java.util.ArrayList;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -11,8 +9,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +25,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.springframework.web.servlet.ModelAndView;
-
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
@@ -45,14 +40,11 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.CertificationsForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.CreateResume;
-
 import com.advanceweb.afc.jb.webapp.web.forms.resume.EducationForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.LanguageForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.ReferenceForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.WorkExpForm;
-
 import com.advanceweb.afc.jb.webapp.web.helper.ReadDocFile;
-
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformCreateResume;
 import com.advanceweb.afc.jb.webapp.web.transformers.TransformJobSeekerRegistration;
 
@@ -161,7 +153,7 @@ public class ResumeController {
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
-		ContactInformationDTO contactInfoDTO = transCreateResume.createContactInfoDTO(createResume.getContactInfoForm());
+		ContactInformationDTO contactInfoDTO = transCreateResume.transformContactInfoDTO(createResume.getContactInfoForm());
 		contactInfoDTO.setAddressDTO(addDTO);
 		List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());
 		List<ReferenceDTO> listRefDTO = transCreateResume.transformReferenceDTO(createResume.getListRefForm());
@@ -457,8 +449,24 @@ public class ResumeController {
 	 */
 	 @RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.GET)
 	public String viewResumeBuilder(@ModelAttribute("saveResumeBuilder")
-		CreateResume createResume, BindingResult result,Model model){		
+		CreateResume createResume, BindingResult result,Model model){
+		 
 		 ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
+		 
+		 createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
+		 List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
+		 List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
+		 List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
+		 List<WorkExpForm> listWorkExpForm = transCreateResume.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+		 List<LanguageForm> listLangForm = transCreateResume.transformLanguageForm(resumeDTO.getListLangDTO());
+		 ContactInfoForm contactForm = transCreateResume.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+		 
+		 createResume.setListCertForm(listCertForm);
+		 createResume.setListEduForm(listEduForm);
+		 createResume.setListLangForm(listLangForm);
+		 createResume.setListRefForm(listRefForm);
+		 createResume.setListWorkExpForm(listWorkExpForm);
+		 createResume.setContactInfoForm(contactForm);
 		 resumeDTO.getContactInfoDTO();
 		return null;
 		
