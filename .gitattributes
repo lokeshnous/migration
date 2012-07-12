@@ -56,6 +56,7 @@ jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/dropdowns/PopulateDropdowns.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/dropdowns/PopulateDropdownsImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobapply/AnonymousUserJobApply.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/jobapply/AnonymousUserJobApplyImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobs/Jobs.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobs/JobsService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobsearch/JobSearchActivity.java -text
