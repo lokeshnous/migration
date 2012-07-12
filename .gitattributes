@@ -124,7 +124,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerLocation.java
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerLookup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerProfileAttrib.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUser.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserAlert.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserAlerts.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplication.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplicationPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserProfile.java -text

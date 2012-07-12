@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="mer_user_alerts")
-public class MerUserAlert implements Serializable {
+public class MerUserAlerts implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="alert_id")
@@ -32,7 +32,7 @@ public class MerUserAlert implements Serializable {
 
 	private int userid;
 
-    public MerUserAlert() {
+    public MerUserAlerts() {
     }
 
 	public int getAlertId() {
