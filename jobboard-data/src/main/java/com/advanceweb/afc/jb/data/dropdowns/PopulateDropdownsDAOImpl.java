@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
@@ -16,7 +17,9 @@ import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
+import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -112,7 +115,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<EthenticityDTO> getEthenticityList() {
 
 		try {
-   List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='Ethnicity' and e.lookupStatus='1'"); 
+			List<MerLookup> merUtilityList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='Ethnicity' and e.lookupStatus='1'"); 
 
 			return dropdownHelper.convertMerUtilityToEthenticityDTO(merUtilityList);
 
@@ -257,6 +260,31 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 			Session session= sessionFactory.openSession();
 			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='JobPostedDate' and e.lookupStatus='1'").list();
 			return dropdownHelper.convertMerLookupToJobPostedDateListDTO(merLookupList);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<JobAlertsDTO> getJobAlertsList() {
+		
+		try {
+			Session session= sessionFactory.openSession();
+			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='JobAlerts' and e.lookupStatus='1'").list();
+			return dropdownHelper.convertMerLookupToJobAlertsDTO(merLookupList);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<MagazinesDTO> getMagazinesList() {
+		try {
+			Session session= sessionFactory.openSession();
+			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='Magazines' and e.lookupStatus='1'").list();
+			return dropdownHelper.convertMerLookupToMagazinesDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}

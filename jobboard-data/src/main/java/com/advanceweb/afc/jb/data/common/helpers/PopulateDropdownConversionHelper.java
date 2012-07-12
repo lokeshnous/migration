@@ -10,7 +10,9 @@ import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
+import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -209,7 +211,7 @@ public class PopulateDropdownConversionHelper {
 	 * 
 	 */
 	public List<FromZipcodeDTO> convertMerLookupToFromZipcodeListDTO(List<MerLookup> merLookupList){
-		FromZipcodeDTO fromZipcodeDTO=new FromZipcodeDTO();
+		FromZipcodeDTO fromZipcodeDTO=null;
 		List<FromZipcodeDTO> list = new ArrayList<FromZipcodeDTO>();
 		
 		for(MerLookup merLookup : merLookupList){
@@ -232,7 +234,7 @@ public class PopulateDropdownConversionHelper {
 	 * 
 	 */
 	public List<StateDTO> convertMerLookupToStateListDTO(List<MerLookup> merLookupList){
-		StateDTO stateDTO=new StateDTO();
+		StateDTO stateDTO=null;
 		List<StateDTO> list = new ArrayList<StateDTO>();
 		
 		for(MerLookup merLookup : merLookupList){
@@ -253,7 +255,7 @@ public class PopulateDropdownConversionHelper {
 	 * 
 	 */
 	public List<MetroAreaDTO> convertMerLookupToMetroAreaListDTO(List<MerLookup> merLookupList){
-		MetroAreaDTO metroAreaDTO=new MetroAreaDTO();
+		MetroAreaDTO metroAreaDTO=null;
 		List<MetroAreaDTO> list = new ArrayList<MetroAreaDTO>();
 		
 		for(MerLookup merLookup : merLookupList){
@@ -275,7 +277,7 @@ public class PopulateDropdownConversionHelper {
 	 */
 	public List<EmploymentTypeDTO> convertMerLookupToEmploymentTypeListDTO(List<MerLookup> merLookupList){
 		
-		EmploymentTypeDTO employmentTypeDTO=new EmploymentTypeDTO();
+		EmploymentTypeDTO employmentTypeDTO=null;
 		List<EmploymentTypeDTO> list = new ArrayList<EmploymentTypeDTO>();
 		
 		for(MerLookup merLookup : merLookupList){
@@ -296,7 +298,7 @@ public class PopulateDropdownConversionHelper {
 	 * 
 	 */
 	public List<JobPostedDateDTO> convertMerLookupToJobPostedDateListDTO(List<MerLookup> merLookupList){
-		JobPostedDateDTO jobPostedDateDTO=new JobPostedDateDTO();
+		JobPostedDateDTO jobPostedDateDTO=null;
 		List<JobPostedDateDTO> list = new ArrayList<JobPostedDateDTO>();
 		
 		for(MerLookup merLookup : merLookupList){
@@ -306,5 +308,48 @@ public class PopulateDropdownConversionHelper {
 			list.add(jobPostedDateDTO);
 		}
 		return list;
+	}
+	
+	/**
+	   @Author :Sasibhushan
+	   @Purpose:TO convert the List of MerLookup to the List of JobAlertsDTO
+	   @Created:Jul 12, 2012
+	   @Param  :List of MerLookup
+	   @Return :List of JobAlertsDTO
+	 * 
+	 */
+	public List<JobAlertsDTO> convertMerLookupToJobAlertsDTO(List<MerLookup> merLookupList){
+	
+		List<JobAlertsDTO> list = new ArrayList<JobAlertsDTO>();
+		
+		for(MerLookup merLookup : merLookupList){
+			JobAlertsDTO jobAlertsDTO=new JobAlertsDTO();
+			jobAlertsDTO.setAlertId(String.valueOf(merLookup.getLookupId()));
+			jobAlertsDTO.setAlertName(merLookup.getLookupName());
+			list.add(jobAlertsDTO);
 		}
+		return list;
+	}
+	
+	/**
+	   @Author :Sasibhushan
+	   @Purpose:TO convert the List of MerLookup to the List of Magazines DTO
+	   @Created:Jul 12, 2012
+	   @Param  :List of MerLookup
+	   @Return :List of MagazinesDTO
+	 * 
+	 */
+	public List<MagazinesDTO> convertMerLookupToMagazinesDTO(List<MerLookup> merLookupList){
+	
+		List<MagazinesDTO> list = new ArrayList<MagazinesDTO>();
+		
+		for(MerLookup merLookup : merLookupList){
+			MagazinesDTO magazinesDTO=new MagazinesDTO();
+			magazinesDTO.setMagazineId(merLookup.getLookupName());
+			magazinesDTO.setMagazineName(merLookup.getLookupName());
+			list.add(magazinesDTO);
+		}
+		return list;
+	}
+	
 }
