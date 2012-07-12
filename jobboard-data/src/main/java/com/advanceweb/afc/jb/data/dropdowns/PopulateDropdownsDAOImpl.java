@@ -137,8 +137,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<RadiusDTO> getRadiusList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='Radius' and e.lookupStatus='1'").list();
+			
+			List<MerLookup> merLookupList = hibernateTemplate.find("from MerLookup e where e.lookupCategory='Radius' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToRadiusListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -157,8 +157,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<ExcludeFromDTO> getExcludeFromList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='ExcludeFrom' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList =  hibernateTemplate.find("from MerLookup e where e.lookupCategory='ExcludeFrom' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToExcludeFromListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -177,8 +176,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<FromZipcodeDTO> getFromZipcodeList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='FromZipcode' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList =  hibernateTemplate.find("from MerLookup e where e.lookupCategory='FromZipcode' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToFromZipcodeListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -197,8 +195,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<StateDTO> getStateList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='State' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList =  hibernateTemplate.find("from MerLookup e where e.lookupCategory='State' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -217,8 +214,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<MetroAreaDTO> getMetroAreaList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='MetroArea' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList = hibernateTemplate.find("from MerLookup e where e.lookupCategory='MetroArea' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToMetroAreaListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -237,8 +233,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<EmploymentTypeDTO> getEmploymentTypeList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='EmploymentType' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList = hibernateTemplate.find("from MerLookup e where e.lookupCategory='EmploymentType' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToEmploymentTypeListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -257,8 +252,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<JobPostedDateDTO> getJobPostedDateList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='JobPostedDate' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList =hibernateTemplate.find("from MerLookup e where e.lookupCategory='JobPostedDate' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToJobPostedDateListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
