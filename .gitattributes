@@ -161,6 +161,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEvent.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfoPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessioninfo.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobapply/AnonymousUserJobApplyDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobapply/AnonymousUserJobApplyDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobs/JobsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobs/JobsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobsearch/JobSearchActivityDAO.java -text
