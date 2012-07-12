@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.dropdowns;
 
 import java.util.List;
+
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
@@ -8,7 +9,9 @@ import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
+import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -17,17 +20,56 @@ import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 
 public interface PopulateDropdowns {
 	
+	/**
+	 * To populate Country Names
+	 * @return
+	 */
 	public List<CountryDTO> getCountryList();
 	
+	/**
+	 * To populate employment informations
+	 * @return
+	 */
 	public List<EmploymentInfoDTO> getEmployementInfoList();
-	
+		
+	/**
+	 * To populate available subscriptions
+	 * @return
+	 */
 	public List<SubscriptionsDTO> getSubscriptionsList();
 	
+	/**
+	 * To populate genders
+	 * @return
+	 */
 	public List<GenderDTO> getGenderList();
 	
+	/**
+	 * To populate veteran status
+	 * @return
+	 */
 	public List<VeteranStatusDTO> getVeteranStatusList();
 	
+	/**
+	 * To populate Ethnicity
+	 * @return
+	 */
 	public List<EthenticityDTO> getEthenticityList();
+	
+	
+	/**
+	 * To populate employment informations
+	 * @return
+	 */
+	public List<JobAlertsDTO> getJobAlertsList();
+	
+	/**
+	 * To populate employment informations
+	 * @return
+	 */
+	public List<MagazinesDTO> getMagazinesList();
+	
+	
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of RadiusDTO for the job seeker's advance search

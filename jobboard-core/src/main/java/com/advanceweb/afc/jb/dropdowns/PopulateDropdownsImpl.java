@@ -9,7 +9,9 @@ import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
+import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -149,14 +151,14 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 		return populateDropdownsDAO.getJobPostedDateList();
 	}
 
-	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the List of ResultPerPageDTO
-	   @Created:Jul 11, 2012
-	   @Param  :not required
-	   @Return :List of ResultPerPageDTO
-	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getResultPerPageList()
-	 */
-	
+	@Override
+	public List<JobAlertsDTO> getJobAlertsList() {
+		return populateDropdownsDAO.getJobAlertsList();
+	}
+
+	@Override
+	public List<MagazinesDTO> getMagazinesList() {
+		return populateDropdownsDAO.getMagazinesList();
+	}	
 
 }
