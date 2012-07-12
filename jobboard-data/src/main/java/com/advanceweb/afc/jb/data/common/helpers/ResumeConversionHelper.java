@@ -351,7 +351,7 @@ public class ResumeConversionHelper {
 				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
 				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
 	//			workExpEntitiy.setState(state);
-				workExpEntitiy.setStillEmployed(new Integer("0").shortValue());
+				workExpEntitiy.setStillEmployed(Integer.valueOf(0).shortValue());
 				workExpEntitiy.setResBuilderResume(builderResume);
 				listWorkExpEntity.add(workExpEntitiy);
 			}
