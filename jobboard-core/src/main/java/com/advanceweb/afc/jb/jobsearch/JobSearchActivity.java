@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.jobsearch;
 
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+
+import com.advanceweb.afc.jb.common.SearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
 /**
@@ -27,5 +31,30 @@ public interface JobSearchActivity {
 	 * @return
 	 */
 	void applyJob(long jobId);
+	
+	/**
+	 * Gets the job search result by searchString
+	 * 
+	 * @param SearchString
+	 * @return SearchResultDTO
+	 */
+	 public SearchResultDTO getJobSearchResult(String SearchString);
+	
+	 /**
+	 * Returns the SOLR Server object
+	 * 
+	 * @param 
+	 * @return HttpSolrServer
+	 */
+	  public HttpSolrServer connectToSOLRURL();
+	  
+	  /**
+	 * Returns the SOLR Server response object
+	 * 
+	 * @param HttpSolrServer
+	 * @return QueryResponse
+	 */
+	  public QueryResponse executeSearchQuery(HttpSolrServer server, String SearchString, String rows, String start);
+	
 
 }
