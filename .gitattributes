@@ -187,6 +187,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/search/JobSeekerAdvanceSearchController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/search/SaveSearchController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/jobapply/AnonymousUserJobApply.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/jobsearch/JobSearchViewDetailForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/ContactInfoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/registration/JobSeekerRegistrationForm.java -text
