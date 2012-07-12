@@ -219,7 +219,9 @@ jobboard/src/main/webapp/WEB-INF/flow-rules.xml -text
 jobboard/src/main/webapp/WEB-INF/jsp/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createresumebuilder.jsp -text
+jobboard/src/main/webapp/WEB-INF/jsp/findjob.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobSeekerActivity.jsp -text
+jobboard/src/main/webapp/WEB-INF/jsp/jobsearchresult.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobseekerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobseekersubscription.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/registrationsuccess.jsp -text
