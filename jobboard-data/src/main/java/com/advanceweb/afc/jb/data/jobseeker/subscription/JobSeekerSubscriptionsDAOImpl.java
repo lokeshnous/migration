@@ -37,8 +37,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	public void saveJobSeekerSubscription(Long id) {
 
 		MerUserAlerts merUserAlerts = new MerUserAlerts();
-		merUserAlerts.setUserId(id.intValue());
-		merUserAlerts.setEmail("sharad@nous.com");
+		//merUserAlerts.setUserId(id.intValue());
+		//merUserAlerts.setEmail("sharad@nous.com");
 		sessionFactoryMerionTracker.getCurrentSession().saveOrUpdate(
 				merUserAlerts);
 	}
