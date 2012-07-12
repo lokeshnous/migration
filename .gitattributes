@@ -178,6 +178,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/search/SaveSearchDAO.java
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/search/SaveSearchDAOImpl.java -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobapply/AnonymousUserJobApplyController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobsearch/JobSearchActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobseeker/activity/JobSeekerActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobseeker/subscription/JobSeekerSubscriptionsController.java -text
