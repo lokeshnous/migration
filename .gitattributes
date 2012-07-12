@@ -19,6 +19,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EthenticityDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ExcludeFromDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/FromZipcodeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/GenderDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobAlertsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostedDateDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
@@ -26,6 +27,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerSubscription
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LanguageDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MMXmlResumeParserImpl.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MagazinesDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MerUserDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetricsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetroAreaDTO.java -text
