@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
-import com.advanceweb.afc.jb.webapp.web.forms.jobapply.AnonymousUserJobApply;
+import com.advanceweb.afc.jb.webapp.web.forms.jobapply.AnonymousUserJobApplyForm;
 import com.advanceweb.afc.jb.webapp.web.forms.resume.CertificationsForm;
 
 /**
@@ -15,11 +15,11 @@ import com.advanceweb.afc.jb.webapp.web.forms.resume.CertificationsForm;
  */
 public class TransformAnonymousUserJobApply {
 
-public List<AnonymousUserJobApplyDTO> transformAnonymousUserJobApplyDTO(List<AnonymousUserJobApply> listAnoUserForms){
+public List<AnonymousUserJobApplyDTO> transformAnonymousUserJobApplyDTO(List<AnonymousUserJobApplyForm> listAnoUserForms){
 		
 		List<AnonymousUserJobApplyDTO> listAnoUserDTO = new ArrayList<AnonymousUserJobApplyDTO>();
 		if(null != listAnoUserForms){
-			for(AnonymousUserJobApply anoForm : listAnoUserForms){
+			for(AnonymousUserJobApplyForm anoForm : listAnoUserForms){
 				AnonymousUserJobApplyDTO dto = new AnonymousUserJobApplyDTO();
 				dto.setName(anoForm.getName());
 				dto.setEmail(anoForm.getEmail());
@@ -30,6 +30,7 @@ public List<AnonymousUserJobApplyDTO> transformAnonymousUserJobApplyDTO(List<Ano
 			}
 		}
 		return listAnoUserDTO;
+		
 	}
 	
 }
