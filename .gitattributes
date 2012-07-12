@@ -81,6 +81,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/SaveSearchServiceImpl.j
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/SolrAdapter.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/AppTest.java -text
 jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/AnonymousUserJobApplyConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/JobSearchActivityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/JobSeekerActivityConversionHelper.java -text
