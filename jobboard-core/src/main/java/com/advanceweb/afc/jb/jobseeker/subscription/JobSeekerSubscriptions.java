@@ -8,7 +8,7 @@ import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
 
 /**
- * <code> JobSeekerActivity </code> is a Service class. 
+ * <code> JobSeekerActivity </code> is a Service class.
  * 
  * 
  * @author sharad kumar
@@ -23,7 +23,7 @@ public interface JobSeekerSubscriptions {
 	 * @param jobSeekerSubscriptionsDTO
 	 * @return
 	 */
-	
+
 	public void saveJobSeekerSubscription(Long id);
-	
+
 }

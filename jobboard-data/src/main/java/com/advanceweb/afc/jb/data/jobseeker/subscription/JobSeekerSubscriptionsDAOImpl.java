@@ -28,6 +28,10 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	@Autowired
 	private SessionFactory sessionFactoryMerionTracker;
 
+	/**
+	 * save subscription
+	 */
+
 	@Override
 	@Transactional(readOnly = false)
 	public void saveJobSeekerSubscription(Long id) {
@@ -35,7 +39,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		MerUserAlerts merUserAlerts = new MerUserAlerts();
 		merUserAlerts.setUserId(id.intValue());
 		merUserAlerts.setEmail("sharad@nous.com");
-		sessionFactoryMerionTracker.getCurrentSession().saveOrUpdate(merUserAlerts);
+		sessionFactoryMerionTracker.getCurrentSession().saveOrUpdate(
+				merUserAlerts);
 	}
 
 }

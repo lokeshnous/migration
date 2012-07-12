@@ -35,7 +35,11 @@ public class JobSeekerSubscriptionsController {
 	public JobSeekerSubscriptionsController() {
 	}
 
-	
+	/**
+	 * to view subscription page
+	 * @param model
+	 * @return
+	 */
 	
 	@RequestMapping(value = "/modifySubscription", method = RequestMethod.GET)
 	public ModelAndView getAppliedJob(Map model) {

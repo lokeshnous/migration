@@ -20,14 +20,16 @@ import com.advanceweb.afc.jb.data.jobseeker.subscription.JobSeekerSubscriptionsD
 @Service("subscriptionService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSeekerSubscriptionsService implements JobSeekerSubscriptions {
-	
-	@Autowired
-	private JobSeekerSubscriptionsDAO  jobSeekerSubscriptionsDAO;
-	
 
+	@Autowired
+	private JobSeekerSubscriptionsDAO jobSeekerSubscriptionsDAO;
+
+	/**
+	 * save subscription
+	 */
 	@Override
-	public void  saveJobSeekerSubscription(Long id) {
+	public void saveJobSeekerSubscription(Long id) {
 		jobSeekerSubscriptionsDAO.saveJobSeekerSubscription(id);
 	}
-	
+
 }
