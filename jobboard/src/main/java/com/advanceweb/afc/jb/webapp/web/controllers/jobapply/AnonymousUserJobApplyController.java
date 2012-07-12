@@ -27,48 +27,5 @@ import com.advanceweb.afc.jb.webapp.web.transformers.TransformAnonymousUserJobAp
 @RequestMapping("/anonymoususerjobapply")
 public class AnonymousUserJobApplyController {
 
-	@Autowired
-	private AnonymousUserJobApply anonymousUserJobApply ;
-	
-	@Autowired
-	private TransformAnonymousUserJobApply transformAnonymousUserJobApply;
-	
-	public AnonymousUserJobApplyController() {
-		super();
-	}
-	
-	
-	@RequestMapping(value="/createAnonymousUserJobapply",method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistration(Map model) {
-		AnonymousUserJobApplyForm anonymousUserJobApplyForm = new AnonymousUserJobApplyForm();
-			model.put("anonymousUserJobApplyForm", anonymousUserJobApplyForm);
-			
-		return new ModelAndView("jobseekerregistration");
-	}
-	
-	
-	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.POST)
-	public ModelAndView saveJobSeekerRegistration(@Valid AnonymousUserJobApplyForm form,
-			BindingResult result) {
-
-		try {
-			
-				if (result.hasErrors()) {
-					return new ModelAndView("jobseekerregistration");
-				}
-
-				AnonymousUserJobApplyDTO anonymousUserJobApplyDTO =transformAnonymousUserJobApply.transformAnonymousUserJobApplyDTO(form); 
-				
-				
-				anonymousUserJobApply.applyJobAnonymousUser(anonymousUserJobApplyDTO);
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ModelAndView("anouserjobapplyssuccess");
-	}
-	
-	
-	
 	
 }
