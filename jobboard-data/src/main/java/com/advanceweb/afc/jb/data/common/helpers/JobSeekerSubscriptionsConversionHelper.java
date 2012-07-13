@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.data.common.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
 
@@ -13,6 +15,7 @@ import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
+@Repository("jsSubscriptionHelper")
 public class JobSeekerSubscriptionsConversionHelper {
 	
 	/**

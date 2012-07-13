@@ -20,7 +20,7 @@ import com.advanceweb.afc.jb.data.entities.JpJob;
  * @author sharadk
  * 
  */
-@Repository("jobSeekerActivityDAO")
+@Repository("activityDAO")
 public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 
 	@Autowired

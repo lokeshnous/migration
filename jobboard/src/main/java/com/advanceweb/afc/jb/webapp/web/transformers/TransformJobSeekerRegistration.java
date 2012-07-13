@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.webapp.web.transformers;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
@@ -7,6 +9,7 @@ import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.ContactInfoForm;
 import com.advanceweb.afc.jb.webapp.web.forms.registration.JobSeekerRegistrationForm;
 
+@Repository("transformJobSeekerRegistration")
 public class TransformJobSeekerRegistration {
 
 	/**

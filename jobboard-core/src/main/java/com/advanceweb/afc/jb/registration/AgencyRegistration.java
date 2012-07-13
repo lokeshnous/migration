@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.registration;
 
 
+import org.springframework.stereotype.Service;
+
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper;
@@ -11,6 +13,7 @@ import com.advanceweb.afc.jb.data.registration.AgencyRegistrationDAO;
  * @version 1.0
  * @created 21-Jun-2012 2:22:44 PM
  */
+@Service("profileAgencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
 
 	private AgencyRegistration agencyRegistration;

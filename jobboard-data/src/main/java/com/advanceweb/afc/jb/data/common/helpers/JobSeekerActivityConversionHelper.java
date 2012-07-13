@@ -1,10 +1,10 @@
 package com.advanceweb.afc.jb.data.common.helpers;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.data.entities.JpJob;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 
 
 /**
@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
  * @author sharadk
  *
  */
+@Repository("jobSeekerActivityConversionHelper")
 public class JobSeekerActivityConversionHelper {
 
 	/**

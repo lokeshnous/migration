@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
@@ -19,6 +20,7 @@ import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
  */
 @SuppressWarnings("unchecked")
 @Transactional
+@Repository("saveSearchDAO")
 public class SaveSearchDAOImpl implements SaveSearchDAO {
 
 	@Autowired

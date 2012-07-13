@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
@@ -13,6 +14,7 @@ import com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAO;
  * @version 1.0
  * @created 21-Jun-2012 2:22:44 PM
  */
+@Service("profileRegistration")
 public class JobSeekerRegistration implements ProfileRegistration {
 
 	public JobSeekerProfileDTO jobSeekerProfileDTO;

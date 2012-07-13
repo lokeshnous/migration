@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.data.registration;
 
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 
 /**
@@ -8,6 +10,7 @@ import com.advanceweb.afc.jb.common.AgencyProfileDTO;
  * @version 1.0
  * @created 21-Jun-2012 2:25:52 PM
  */
+@Repository
 public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	public AgencyRegistrationDAOImpl(){

@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.data.common.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
@@ -20,6 +22,7 @@ import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.MerLookup;
 
+@Repository("dropdownHelper")
 public class PopulateDropdownConversionHelper {
 	
 

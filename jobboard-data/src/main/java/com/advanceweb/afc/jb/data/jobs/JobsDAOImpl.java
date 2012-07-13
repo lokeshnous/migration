@@ -1,4 +1,6 @@
 package com.advanceweb.afc.jb.data.jobs;
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.data.domain.Job;
 
 /**
@@ -6,6 +8,7 @@ import com.advanceweb.afc.jb.data.domain.Job;
  * @version 1.0
  * @created 21-Jun-2012 2:25:41 PM
  */
+@Repository
 public class JobsDAOImpl implements JobsDAO {
 
 	public JobsDAOImpl(){

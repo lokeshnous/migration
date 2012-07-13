@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.registration;
 
 
+import org.springframework.stereotype.Service;
+
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.data.common.helpers.RegistrationConversionHelper;
@@ -11,6 +13,7 @@ import com.advanceweb.afc.jb.data.registration.EmployerRegistrationDAO;
  * @version 1.0
  * @created 21-Jun-2012 2:22:44 PM
  */
+@Service("profileEmployerRegistration")
 public class EmployerRegistration implements ProfileRegistration {
 
 	private EmployerProfileDTO employerProfileDTO;

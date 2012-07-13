@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.data.jobapply;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
 
 /**
@@ -9,6 +11,7 @@ import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
    @Purpose: This class implements all the DAO operations related to applying job for Anonymous User
 
  */
+@Repository
 public class AnonymousUserJobApplyDAOImpl implements AnonymousUserJobApplyDAO {
 
 	/**

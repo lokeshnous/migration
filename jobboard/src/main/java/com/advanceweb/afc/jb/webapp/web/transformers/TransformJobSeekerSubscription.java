@@ -3,12 +3,15 @@ package com.advanceweb.afc.jb.webapp.web.transformers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.webapp.web.forms.subscription.JobSeekerSubscriptionForm;
 
+@Repository("transformJobSeekerSubscription")
 public class TransformJobSeekerSubscription {
 
 	/**

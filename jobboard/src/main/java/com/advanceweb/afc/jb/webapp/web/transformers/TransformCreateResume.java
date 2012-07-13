@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.webapp.web.transformers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
@@ -25,6 +27,7 @@ import com.advanceweb.afc.jb.webapp.web.forms.resume.WorkExpForm;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
+@Repository("transCreateResume")
 public class TransformCreateResume {
 	
 	/**

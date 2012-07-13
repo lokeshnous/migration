@@ -1,7 +1,10 @@
 package com.advanceweb.afc.jb.dropdowns;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
@@ -19,6 +22,7 @@ import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.dropdowns.PopulateDropdownsDAO;
 
+@Service("populateDropdownsService")
 public class PopulateDropdownsImpl implements PopulateDropdowns{
 
 	@Autowired

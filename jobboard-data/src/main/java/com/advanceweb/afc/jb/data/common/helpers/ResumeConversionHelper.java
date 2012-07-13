@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.data.common.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
@@ -21,6 +23,7 @@ import com.advanceweb.afc.jb.data.entities.ResUploadResume;
  * @version 1.0
  * @created Jul 9, 2012
  */
+@Repository("resumeConversionHelper")
 public class ResumeConversionHelper {
 
 	/**

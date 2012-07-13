@@ -1,8 +1,11 @@
 package com.advanceweb.afc.jb.data.common.helpers;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
+@Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
 
 	/**

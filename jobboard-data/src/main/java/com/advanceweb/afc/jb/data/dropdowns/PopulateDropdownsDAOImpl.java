@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
@@ -28,7 +29,7 @@ import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper;
 import com.advanceweb.afc.jb.data.entities.MerLookup;
 
-
+@Repository("populateDropdownsDAO")
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 	@Autowired

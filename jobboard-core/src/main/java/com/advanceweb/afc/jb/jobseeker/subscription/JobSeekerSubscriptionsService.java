@@ -17,7 +17,7 @@ import com.advanceweb.afc.jb.data.jobseeker.subscription.JobSeekerSubscriptionsD
  * @author sharadk
  * @since 10 July 2012
  */
-@Service("subscriptionService")
+@Service("jobSeekerSubscriptionsService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSeekerSubscriptionsService implements JobSeekerSubscriptions {
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
@@ -21,7 +22,7 @@ import com.advanceweb.afc.jb.data.search.SaveSearchDAO;
  * @Version 1.0
  * @Since 10th July, 2012
  */
-
+@Service("saveSearchService")
 public class SaveSearchServiceImpl implements SaveSearchService{
 	
 	@Autowired

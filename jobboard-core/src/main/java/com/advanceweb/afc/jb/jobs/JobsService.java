@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.jobs;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.advanceweb.afc.jb.common.JobsDTO;
 import com.advanceweb.afc.jb.common.email.MMEmail;
 import com.advanceweb.afc.jb.search.JobSearch;
@@ -12,6 +14,7 @@ import com.advanceweb.afc.jb.search.JobSearch;
  * @version 1.0
  * @created 21-Jun-2012 2:21:08 PM
  */
+@Service
 public class JobsService implements Jobs {
 
 	private MMEmail mmMailService;

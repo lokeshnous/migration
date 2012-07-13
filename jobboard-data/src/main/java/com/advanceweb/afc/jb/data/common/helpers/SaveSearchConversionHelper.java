@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.data.common.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
 
@@ -12,7 +14,7 @@ import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
  * @version 1.0
  * @since 10th July 2012
  */
-
+@Repository("saveSearchConversionHelper")
 public class SaveSearchConversionHelper {
 
 	/**

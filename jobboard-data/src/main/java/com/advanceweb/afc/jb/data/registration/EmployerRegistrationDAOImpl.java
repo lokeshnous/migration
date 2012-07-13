@@ -1,4 +1,6 @@
 package com.advanceweb.afc.jb.data.registration;
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.data.domain.Employer;
 
 /**
@@ -6,6 +8,7 @@ import com.advanceweb.afc.jb.data.domain.Employer;
  * @version 1.0
  * @created 21-Jun-2012 2:25:55 PM
  */
+@Repository
 public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
 	public EmployerRegistrationDAOImpl(){

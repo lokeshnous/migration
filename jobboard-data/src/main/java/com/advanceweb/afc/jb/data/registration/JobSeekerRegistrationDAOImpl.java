@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
@@ -19,6 +20,7 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
  */
 @SuppressWarnings("unchecked")
 @Transactional
+@Repository("jobSeekerRegistrationDAO")
 public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
 	@Autowired
