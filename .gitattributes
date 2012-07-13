@@ -124,6 +124,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobTemp.java -
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobType.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpLocation.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpLocationBckup.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpSaveJob.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpSaveSearch.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpSource.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerApplication.java -text
