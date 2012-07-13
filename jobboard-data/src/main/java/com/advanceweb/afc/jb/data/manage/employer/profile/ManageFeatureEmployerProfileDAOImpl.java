@@ -19,7 +19,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
  * 
  * 
  */
-@Repository("manageFeatureEmployerProfile")
+@Repository("manageFeatureEmployerProfileDAO")
 public class ManageFeatureEmployerProfileDAOImpl implements
 		ManageFeatureEmployerProfileDAO {
 
