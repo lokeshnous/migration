@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.webapp.web.controllers.jobapply;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
@@ -15,15 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
-import com.advanceweb.afc.jb.common.email.AttachedFile;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
-import com.advanceweb.afc.jb.jobapply.AnonymousUserJobApply;
 import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
 import com.advanceweb.afc.jb.webapp.web.forms.jobapply.AnonymousUserJobApplyForm;
-import com.advanceweb.afc.jb.webapp.web.transformers.TransformAnonymousUserJobApply;
 
 /**
  * @Author : Prince Mathew
