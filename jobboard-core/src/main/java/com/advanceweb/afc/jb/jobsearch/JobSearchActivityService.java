@@ -60,7 +60,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public void applyJob(ApplyJobDTO applyJobDTO) {		
+	public void applyJob(ApplyJobDTO applyJobDTO) {
 		jobSearchActivityDAO.applyJob(applyJobDTO);
 	}
 
@@ -73,11 +73,10 @@ public class JobSearchActivityService implements JobSearchActivity {
 		SearchResultDTO searhResultDTO = new SearchResultDTO();
 		JobSearchDTO jobSearchDTO = new JobSearchDTO();
 
-		server = connectToSOLRURL(serverDetailsMap);
+		if (searchString.length() > 0) {
 
-		response = executeSearchQuery(server, searchString, rows, start);
-
-		if (response != null) {
+			server = connectToSOLRURL(serverDetailsMap);
+			response = executeSearchQuery(server, searchString, rows, start);
 
 			System.out.println("Number of search records===>>>"
 					+ response.getResults().getNumFound());
@@ -148,8 +147,8 @@ public class JobSearchActivityService implements JobSearchActivity {
 			searhResultDTO.setSearchResultList(jobSearchDTOList);
 
 			return searhResultDTO;
-
 		} else {
+
 			return null;
 		}
 
