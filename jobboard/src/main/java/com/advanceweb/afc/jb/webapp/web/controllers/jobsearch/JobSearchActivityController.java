@@ -3,8 +3,14 @@ package com.advanceweb.afc.jb.webapp.web.controllers.jobsearch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
+
+import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,6 +30,8 @@ import com.advanceweb.afc.jb.webapp.web.forms.search.applyJobForm;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
 import com.advanceweb.afc.jb.webapp.web.forms.jobsearch.JobSearchViewDetailForm;
+import com.advanceweb.afc.jb.webapp.web.helper.ReadSolrServerDetails;
+
 import java.util.Date;
 
 /**
@@ -47,6 +55,18 @@ public class JobSearchActivityController {
 	private MMEmailService mailSender;
 
 	public JobSearchActivityController() {
+	}
+	
+		
+	
+	
+	@Autowired
+	@Resource(name = "solrConfiguration")
+	private Properties solrConfiguration;
+
+	@PostConstruct
+	public void init() {
+		// do whatever you need with properties
 	}
 
 	/**
@@ -159,9 +179,8 @@ public class JobSearchActivityController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
-	public ModelAndView findJobPage(Map model) {
+	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("findjob");
@@ -170,19 +189,46 @@ public class JobSearchActivityController {
 	/**
 	 * This method is called to forward to job search page
 	 * 
-	 * @param model
+	 * @param JobSearchResultForm
+	 *            , BindingResult, model
 	 * @return
 	 */
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.POST)
 	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, SearchResultDTO> model) {
+		ReadSolrServerDetails readSolrServerDetails = new ReadSolrServerDetails();
+		SearchResultDTO searchResultDTO = null;
+		Map<String, String> serverDetailsMap = readSolrServerDetails
+				.getServerDetails(solrConfiguration);
 		String searchString = jobSearchResultForm.getSearchString();
-		System.out.println(searchString);
-//		SearchResultDTO searchResultDTO = jobSearchActivity
-//				.getJobSearchResult(searchString);
-//		model.put("searchResultDTO", searchResultDTO);
-		return new ModelAndView("jobsearchresult", "searchResultDTOModel",
-				model);
+
+		// Need to uncomment below 2 lines to take the rows and start values
+		// form the form
+		// String rows = jobSearchResultForm.getRows();
+		// String start = jobSearchResultForm.getStart();
+
+		// Hard coded for the time being for testing
+		String rows = "5";
+		String start = "0";
+			
+		UrlValidator urlValidator = new UrlValidator();
+		System.out.println("############"+urlValidator.isValid(serverDetailsMap.get("url")));
+		if(urlValidator.isValid(serverDetailsMap.get("url"))){
+			
+			searchResultDTO = jobSearchActivity.getJobSearchResult(
+					searchString.trim(), serverDetailsMap, rows, start);
+			
+			model.put("searchResultDTO", searchResultDTO);
+			return new ModelAndView("jobsearchresult", "searchResultDTOModel",
+					model);
+		}else{
+			
+			System.out.println("SERVER URL is not proper.");
+			model.put("searchResultDTO", null);
+			return new ModelAndView("jobsearchresult", "searchResultDTOModel",
+					model);
+		}
+		
 	}
 
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
