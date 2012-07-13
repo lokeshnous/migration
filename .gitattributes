@@ -87,6 +87,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/AnonymousU
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/JobSearchActivityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/JobSeekerActivityConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/JobSeekerSubscriptionsConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/PopulateDropdownConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/RegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/common/helpers/ResumeConversionHelper.java -text
