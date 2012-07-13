@@ -11,12 +11,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Rajeshkb
  * @version 1.0
  * @created 21-Jun-2012 2:25:22 PM
  */
+//@Repository("mailSender")
 public class MMEmailService implements MMEmail {
 	
 	@Autowired

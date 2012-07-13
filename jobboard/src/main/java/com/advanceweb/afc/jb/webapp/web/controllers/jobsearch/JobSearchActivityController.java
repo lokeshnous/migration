@@ -43,7 +43,7 @@ public class JobSearchActivityController {
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
 
-	@Autowired
+//	@Autowired
 	private MMEmailService mailSender;
 
 	public JobSearchActivityController() {

@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.data.common.helpers;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -18,6 +20,7 @@ import com.advanceweb.afc.jb.data.entities.JpSaveJob;
  * @since 10 July 2012
  * 
  */
+@Repository("jobSearchActivityConversionHelper")
 public class JobSearchActivityConversionHelper {
 
 	/**

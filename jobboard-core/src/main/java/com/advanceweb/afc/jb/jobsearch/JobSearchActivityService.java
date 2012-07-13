@@ -32,7 +32,7 @@ import com.advanceweb.afc.jb.data.jobsearch.JobSearchActivityDAO;
  * @since 10 July 2012
  * 
  */
-@Service("articleSearchService")
+@Service("jobSearchActivity")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSearchActivityService implements JobSearchActivity {
 

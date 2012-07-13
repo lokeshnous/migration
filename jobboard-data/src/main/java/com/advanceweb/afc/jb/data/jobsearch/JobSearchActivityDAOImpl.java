@@ -21,7 +21,7 @@ import com.advanceweb.afc.jb.data.entities.JpSaveJob;
  * @since 10 July 2012
  * 
  */
-@Repository("JobSearchActivityDAO")
+@Repository("jobSearchActivityDAO")
 public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 
 	private HibernateTemplate hibernateTemplate;
