@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import org.apache.poi.extractor.ExtractorFactory;
-import org.apache.poi.hpsf.DocumentSummaryInformation;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.hwpf.usermodel.HeaderStories;
@@ -12,15 +11,6 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 public class ReadDocFile {
 
-/*	public static void main(String[] args) {
-		/**This is the document that you want to read using Java.**/
-		//String fileName = "D:\\wordsample2.doc";
-/*		String fileName = "C:\\Users\\nishantn\\Desktop\\Resume.doc";
-		/**Method call to read the document (demonstrate some useage of POI)**/
-/*		readMyDocument(fileName);
-
-	}
-*/
 	public static void readMyDocument(String fileName,StringBuffer strbuffer ){
 		POIFSFileSystem fs = null;
 		try {
@@ -56,7 +46,6 @@ public class ReadDocFile {
 		for (int i = 0; i < paragraphs.length; i++) {
 
 			//System.out.println("Length of paragraph "+(i +1)+": "+ paragraphs[i].length());
-			System.out.println(paragraphs[i].toString());
 			strbuffer.append(paragraphs[i].toString());
 
 		}
@@ -66,24 +55,22 @@ public class ReadDocFile {
 	public static void readHeader(HWPFDocument doc, int pageNumber){
 		HeaderStories headerStore = new HeaderStories( doc);
 		String header = headerStore.getHeader(pageNumber);
-		System.out.println("Header Is: "+header);
 
 	}
 
 	public static void readFooter(HWPFDocument doc, int pageNumber){
 		HeaderStories headerStore = new HeaderStories( doc);
 		String footer = headerStore.getFooter(pageNumber);
-		System.out.println("Footer Is: "+footer);
 
 	}
 
 	public static void readDocumentSummary(HWPFDocument doc) {
-		DocumentSummaryInformation summaryInfo=doc.getDocumentSummaryInformation();
-		String category = summaryInfo.getCategory();
-		String company = summaryInfo.getCompany();
-		int lineCount=summaryInfo.getLineCount();
-		int sectionCount=summaryInfo.getSectionCount();
-		int slideCount=summaryInfo.getSlideCount();
+//		DocumentSummaryInformation summaryInfo=doc.getDocumentSummaryInformation();
+//		String category = summaryInfo.getCategory();
+//		String company = summaryInfo.getCompany();
+//		int lineCount=summaryInfo.getLineCount();
+//		int sectionCount=summaryInfo.getSectionCount();
+//		int slideCount=summaryInfo.getSlideCount();
 
 		/*      System.out.println("---------------------------");
         System.out.println("Category: "+category);
@@ -100,7 +87,6 @@ public class ReadDocFile {
 			
 			org.apache.poi.POITextExtractor extractor = ExtractorFactory.createExtractor(new File(fileName));
 			String mess = extractor.getText();
-			System.out.println(mess);
 			strbuffer.append(mess);
 
 		}
