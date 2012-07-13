@@ -10,47 +10,46 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  */
 public class AnonymousUserJobApplyForm {
 
-	private String name;
-	private String email;
-	private String fileName;
+	private String userName;
+	private String userEmail;
+	private String filePath;
 	private CommonsMultipartFile fileContent;
 	
-	
 	/**
-	 * @return the name
+	 * @return the userName
 	 */
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 	/**
-	 * @param name the name to set
+	 * @param userName the userName to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	/**
-	 * @return the email
+	 * @return the userEmail
 	 */
-	public String getEmail() {
-		return email;
+	public String getUserEmail() {
+		return userEmail;
 	}
 	/**
-	 * @param email the email to set
+	 * @param userEmail the userEmail to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	/**
-	 * @return the fileName
+	 * @return the filePath
 	 */
-	public String getFileName() {
-		return fileName;
+	public String getFilePath() {
+		return filePath;
 	}
 	/**
-	 * @param fileName the fileName to set
+	 * @param filePath the filePath to set
 	 */
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	/**
 	 * @return the fileContent
@@ -64,7 +63,6 @@ public class AnonymousUserJobApplyForm {
 	public void setFileContent(CommonsMultipartFile fileContent) {
 		this.fileContent = fileContent;
 	}
-	
-	
 
+	
 }
