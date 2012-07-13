@@ -1,13 +1,9 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.solr.client.solrj.response.FacetField.Count;
 
 public class SearchResultDTO implements Serializable{
-	
+/*	
 	private static final long serialVersionUID = -2200423309708244307L;
 	private List<JobSearchDTO> searchResultList;
 	private Map<String, List<Count>> facetMap;
@@ -32,5 +28,5 @@ public class SearchResultDTO implements Serializable{
 		this.facetMap = facetMap;
 	}
 	
-	
+	*/
 }
