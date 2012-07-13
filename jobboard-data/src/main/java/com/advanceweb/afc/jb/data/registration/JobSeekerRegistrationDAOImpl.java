@@ -78,7 +78,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 		try {
 			if (jobSeekerId != 0) {
-				MerUser merUser = hibernateTemplate.load(MerUser.class, new Long(jobSeekerId).intValue());
+				MerUser merUser = hibernateTemplate.load(MerUser.class, jobSeekerId);
 				MerUserDTO merUserDTO = registrationConversionHelper.transformMerUserToMerUserDTO(merUser);
 				jsRegistrationDTO.setMerUserDTO(merUserDTO);
 			}

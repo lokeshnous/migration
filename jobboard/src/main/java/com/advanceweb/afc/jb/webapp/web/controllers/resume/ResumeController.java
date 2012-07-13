@@ -453,7 +453,7 @@ public class ResumeController {
 		 
 		 ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
 		 
-		 createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
+		 transCreateResume.transformCreateResumeForm(resumeDTO);
 		 List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
 		 List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
 		 List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());

@@ -52,7 +52,7 @@ public class JobSeekerProfileManagement {
 			// Call to service layer
 			
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(1);
-			form = transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
+			transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
 
 			model.put("jobseekerregistration", form);
 		} catch (Exception e) {
