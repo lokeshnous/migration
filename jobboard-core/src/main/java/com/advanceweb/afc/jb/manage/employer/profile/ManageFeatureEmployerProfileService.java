@@ -17,20 +17,20 @@ import com.advanceweb.afc.jb.data.manage.employer.profile.ManageFeatureEmployerP
  * 
  * 
  */
-@Service("employerProfileService")
+@Service("manageFeatureEmployerProfile")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ManageFeatureEmployerProfileService implements
 		ManageFeatureEmployerProfile {
 
 	@Autowired
-	ManageFeatureEmployerProfileDAO ManageFeatureEmployerProfileDAO;
+	ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
 
 	/**
 	 * Saving Manage Featured Employer Profile
 	 */
 	@Override
 	public void saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
-		ManageFeatureEmployerProfileDAO.saveEmployerProfile(companyProfileDTO);
+		manageFeatureEmployerProfileDAO.saveEmployerProfile(companyProfileDTO);
 
 	}
 
