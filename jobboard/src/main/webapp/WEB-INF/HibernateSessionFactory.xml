@@ -141,6 +141,4 @@
 		<property name="sessionFactory" ref="sessionFactoryMerionTracker" />
 	</bean>
 
-   <import resource="flow-rules.xml" /> 
-
 </beans>
