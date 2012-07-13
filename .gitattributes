@@ -67,6 +67,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/activity/JobSeekerAc
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/activity/JobSeekerActivityService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/subscription/JobSeekerSubscriptions.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/subscription/JobSeekerSubscriptionsService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/manage/employer/profile/ManageFeatureEmployerProfile.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/manage/employer/profile/ManageFeatureEmployerProfileService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/AgencyRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/EmployerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/registration/JobSeekerRegistration.java -text
@@ -175,6 +177,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobseeker/activity/JobSee
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobseeker/activity/JobSeekerActivityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobseeker/subscription/JobSeekerSubscriptionsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/jobseeker/subscription/JobSeekerSubscriptionsDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/manage/employer/profile/ManageFeatureEmployerProfileDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/manage/employer/profile/ManageFeatureEmployerProfileDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/AgencyRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/AgencyRegistrationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/registration/EmployerRegistrationDAO.java -text
@@ -192,6 +196,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobsearch/Jo
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobseeker/activity/JobSeekerActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobseeker/subscription/JobSeekerSubscriptionsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/manage/employer/profile/EmployerProfileManagementController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/profilemgmt/JobSeekerProfileManagement.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
