@@ -178,9 +178,9 @@ public class JobSearchActivityController {
 			BindingResult result, Map<String, SearchResultDTO> model) {
 		String searchString = jobSearchResultForm.getSearchString();
 		System.out.println(searchString);
-		SearchResultDTO searchResultDTO = jobSearchActivity
-				.getJobSearchResult(searchString);
-		model.put("searchResultDTO", searchResultDTO);
+//		SearchResultDTO searchResultDTO = jobSearchActivity
+//				.getJobSearchResult(searchString);
+//		model.put("searchResultDTO", searchResultDTO);
 		return new ModelAndView("jobsearchresult", "searchResultDTOModel",
 				model);
 	}
