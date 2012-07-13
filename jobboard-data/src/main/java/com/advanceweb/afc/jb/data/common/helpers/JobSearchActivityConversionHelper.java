@@ -1,8 +1,10 @@
 package com.advanceweb.afc.jb.data.common.helpers;
 
 import java.util.List;
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
+
 import org.springframework.stereotype.Repository;
+
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -92,11 +94,11 @@ public class JobSearchActivityConversionHelper {
 	public JpSaveJob transformSearchedJobDTOtoJpSaveJob(
 			SearchedJobDTO searchedJobDTO) {
 		JpSaveJob jpSaveJob = new JpSaveJob();
-		jpSaveJob.setUserId(searchedJobDTO.getUserID());
-		jpSaveJob.setJobID(searchedJobDTO.getJobID());
-		jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
-		jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
-		jpSaveJob.setCreatedDate(searchedJobDTO.getCreatedDate());
+//		jpSaveJob.setUserId(searchedJobDTO.getUserID());
+//		jpSaveJob.setJobID(searchedJobDTO.getJobID());
+//		jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
+//		jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
+//		jpSaveJob.setCreatedDate(searchedJobDTO.getCreatedDate());
 		return jpSaveJob;
 	}
 
