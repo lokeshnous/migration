@@ -1,20 +1,16 @@
 package com.advanceweb.afc.jb.data.jobseeker.subscription;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
-import com.advanceweb.afc.jb.data.common.helpers.JobSeekerActivityConversionHelper;
-import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.common.helpers.JobSeekerSubscriptionsConversionHelper;
 import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
 
 /**
@@ -24,9 +20,16 @@ import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
  */
 @Repository("jobSeekerSubscriptionsDAO")
 public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO {
-
+	
+	private HibernateTemplate hibernateTemplate;
+	
 	@Autowired
-	private SessionFactory sessionFactoryMerionTracker;
+	private JobSeekerSubscriptionsConversionHelper jsSubscriptionHelper;
+	
+	@Autowired
+	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
+	}
 
 	/**
 	 * save subscription
@@ -34,13 +37,40 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 
 	@Override
 	@Transactional(readOnly = false)
-	public void saveJobSeekerSubscription(Long id) {
+	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, long userId) {
+		try {
+			if(userId != 0){
+				List<MerUserAlerts> listSubsAlerts= hibernateTemplate.find("from MerUserAlerts m where m.userid="+userId);
+				hibernateTemplate.deleteAll(listSubsAlerts);
+			}
+			List<MerUserAlerts> userAlerts = jsSubscriptionHelper.transformjsSubsDTOToMerUserAlerts(listSubsDTO);
+			hibernateTemplate.saveOrUpdateAll(userAlerts);
+		} catch (DataAccessException e) {
 
-		MerUserAlerts merUserAlerts = new MerUserAlerts();
-		//merUserAlerts.setUserId(id.intValue());
-		//merUserAlerts.setEmail("sharad@nous.com");
-		sessionFactoryMerionTracker.getCurrentSession().saveOrUpdate(
-				merUserAlerts);
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+
+	/**
+	 * To get current subscriptions of the user
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(long userId) {
+		
+		List<JobSeekerSubscriptionsDTO> listSubscriptiosns = null;
+		try {
+			List<MerUserAlerts> listSubsAlerts= hibernateTemplate.find("from MerUserAlerts m where m.userid="+userId);
+			listSubscriptiosns = jsSubscriptionHelper.transformMerUserAlertsTojsSubsDTO(listSubsAlerts);
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		
+		return listSubscriptiosns;
 	}
 
 }
