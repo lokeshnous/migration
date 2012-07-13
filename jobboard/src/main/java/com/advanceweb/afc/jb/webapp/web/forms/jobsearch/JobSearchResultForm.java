@@ -6,6 +6,25 @@ public class JobSearchResultForm {
 	
 	private SearchResultDTO searchResultDTO;
 	private String searchString;
+	private String rows;
+	private String start;
+
+
+	public String getRows() {
+		return rows;
+	}
+
+	public void setRows(String rows) {
+		this.rows = rows;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
 
 	public String getSearchString() {
 		return searchString;
