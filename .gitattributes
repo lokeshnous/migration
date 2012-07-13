@@ -243,6 +243,7 @@ jobboard/src/main/webapp/WEB-INF/jsp/jobsearchresult.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobseekerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobseekersubscription.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jspviewcontent.jsp -text
+jobboard/src/main/webapp/WEB-INF/jsp/manageFeatureEmpPro.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/registrationsuccess.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/uploadfile.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/uploadfileindex.jsp -text
