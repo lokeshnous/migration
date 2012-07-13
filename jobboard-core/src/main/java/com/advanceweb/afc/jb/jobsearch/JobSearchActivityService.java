@@ -72,14 +72,9 @@ public class JobSearchActivityService implements JobSearchActivity {
 		QueryResponse response = null;
 		SearchResultDTO searhResultDTO = new SearchResultDTO();
 		JobSearchDTO jobSearchDTO = new JobSearchDTO();
-		
-		
-		
-			server = connectToSOLRURL(serverDetailsMap);
-		
-		
-		
-		
+
+		server = connectToSOLRURL(serverDetailsMap);
+
 		response = executeSearchQuery(server, searchString, rows, start);
 
 		if (response != null) {
@@ -99,7 +94,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 
 				jobSearchDTO = new JobSearchDTO();
 				jobSearchDTO = itr.next();
-/*				System.out.println("@Company===>>" + jobSearchDTO.getCompany());
+				System.out.println("@Company===>>" + jobSearchDTO.getCompany());
 				System.out.println("@Job Title===>>"
 						+ jobSearchDTO.getJobTitle());
 				System.out.println("@City===>>" + jobSearchDTO.getCity());
@@ -133,7 +128,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 				System.out.println("@jobGeo1LatLon===>>"
 						+ jobSearchDTO.getJobGeo1LatLon());
 				System.out.println("@URL Display===>>"
-						+ jobSearchDTO.getUrlDisplay());*/
+						+ jobSearchDTO.getUrlDisplay());
 
 			}
 
@@ -202,7 +197,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 			searchquery.setFacet(true);
 			searchquery.addFacetField("city");
 			searchquery.addFacetField("company");
-			//searchquery.addFacetField("radius");
+			// searchquery.addFacetField("radius");
 			searchquery.addFacetField("posted_dt");
 			searchquery.addFacetField("state");
 			searchquery.add("rows", rows);
@@ -218,7 +213,6 @@ public class JobSearchActivityService implements JobSearchActivity {
 
 		return response;
 	}
-
 
 	/**
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
