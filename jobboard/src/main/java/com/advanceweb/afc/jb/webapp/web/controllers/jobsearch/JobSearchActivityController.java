@@ -100,11 +100,13 @@ public class JobSearchActivityController {
 	 * @return
 	 */
 	@RequestMapping(value="/findJobSearch",method = RequestMethod.POST)
-	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm, BindingResult result) {
+	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm, BindingResult result,
+			Map<String, SearchResultDTO> model) {
 		String searchString = jobSearchResultForm.getSearchString();
 		System.out.println(searchString);
 		SearchResultDTO searchResultDTO = jobSearchActivity.getJobSearchResult(searchString);
-		return new ModelAndView("jobsearchresult","jobSearchResultForm",searchResultDTO);
+		model.put("searchResultDTO", searchResultDTO);
+		return new ModelAndView("jobsearchresult","searchResultDTOModel",model);
 	}
 	
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
