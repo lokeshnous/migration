@@ -15,7 +15,6 @@ public class ReadSolrServerDetails {
 	
 	public Map<String, String> getServerDetails(Properties solrConfiguration){
 		Map<String, String> serverDetailsMap = new HashMap<String, String>();
-		//String serverUrl = ;
 		System.out.println("@@@@@@@@@@@@@@@@@serverUrl===="+solrConfiguration.getProperty("url"));
 		serverDetailsMap.put("serverUrl",solrConfiguration.getProperty("url") );
 		serverDetailsMap.put("sotimeout", solrConfiguration.getProperty("sotimeout"));
