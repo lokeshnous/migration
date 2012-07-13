@@ -190,6 +190,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobapply/Ano
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobsearch/JobSearchActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobseeker/activity/JobSeekerActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jobseeker/subscription/JobSeekerSubscriptionsController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/profilemgmt/JobSeekerProfileManagement.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/registration/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/resume/ResumeController.java -text
