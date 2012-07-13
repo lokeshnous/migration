@@ -15,21 +15,16 @@ import com.advanceweb.afc.jb.webapp.web.forms.resume.CertificationsForm;
  */
 public class TransformAnonymousUserJobApply {
 
-public List<AnonymousUserJobApplyDTO> transformAnonymousUserJobApplyDTO(List<AnonymousUserJobApplyForm> listAnoUserForms){
+public AnonymousUserJobApplyDTO transformAnonymousUserJobApplyDTO(AnonymousUserJobApplyForm anoUserForm){
 		
-		List<AnonymousUserJobApplyDTO> listAnoUserDTO = new ArrayList<AnonymousUserJobApplyDTO>();
-		if(null != listAnoUserForms){
-			for(AnonymousUserJobApplyForm anoForm : listAnoUserForms){
-				AnonymousUserJobApplyDTO dto = new AnonymousUserJobApplyDTO();
-				dto.setName(anoForm.getName());
-				dto.setEmail(anoForm.getEmail());
-				dto.setFileContent(anoForm.getFileContent());
-				dto.setFileName(anoForm.getFileName());
-				
-				listAnoUserDTO.add(dto);
-			}
-		}
-		return listAnoUserDTO;
+		
+                AnonymousUserJobApplyDTO dto = new AnonymousUserJobApplyDTO();
+/*				dto.setUserName(anoUserForm.getUserName());
+				dto.setUserEmail(anoUserForm.getEmail());
+				dto.setFileContent(anoUserForm.getFileContent());
+*/				
+
+		return dto;
 		
 	}
 	
