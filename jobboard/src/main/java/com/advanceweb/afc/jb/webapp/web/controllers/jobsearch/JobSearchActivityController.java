@@ -53,10 +53,7 @@ public class JobSearchActivityController {
 
 	public JobSearchActivityController() {
 	}
-	
-		
-	
-	
+
 	@Autowired
 	@Resource(name = "solrConfiguration")
 	private Properties solrConfiguration;
@@ -95,9 +92,8 @@ public class JobSearchActivityController {
 			@RequestParam("id") Long jobId) {
 
 		/**
-		 * Check for login , navigate to login page if necessary 
-		 * login by ADVACNE Guest navigate to Anonymous User 
-		 * Form apply for job or
+		 * Check for login , navigate to login page if necessary login by
+		 * ADVACNE Guest navigate to Anonymous User Form apply for job or
 		 * navigate to employer web page to apply job
 		 */
 
@@ -156,7 +152,7 @@ public class JobSearchActivityController {
 			applyJobDTO.setAppliedDate(new Date());
 			applyJobDTO.setIsApplied((byte) 1);
 			jobSearchActivity.applyJob(applyJobDTO);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,25 +196,23 @@ public class JobSearchActivityController {
 		// Hard coded for the time being for testing
 		String rows = "5";
 		String start = "0";
-			
-		UrlValidator urlValidator = new UrlValidator();
-		System.out.println("############"+urlValidator.isValid(serverDetailsMap.get("url")));
-		if(urlValidator.isValid(serverDetailsMap.get("url"))){
-			
-			searchResultDTO = jobSearchActivity.getJobSearchResult(
-					searchString.trim(), serverDetailsMap, rows, start);
-			
+
+		searchResultDTO = jobSearchActivity.getJobSearchResult(
+				searchString.trim(), serverDetailsMap, rows, start);
+
+		if (null != searchResultDTO) {
+
 			model.put("searchResultDTO", searchResultDTO);
 			return new ModelAndView("jobsearchresult", "searchResultDTOModel",
 					model);
-		}else{
-			
-			System.out.println("SERVER URL is not proper.");
+		} else {
+
+			System.out.println("Please enter the search string");
 			model.put("searchResultDTO", null);
 			return new ModelAndView("jobsearchresult", "searchResultDTOModel",
 					model);
 		}
-		
+
 	}
 
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
