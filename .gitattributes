@@ -228,7 +228,6 @@ jobboard/src/main/resources/CareerToolResource.xml -text
 jobboard/src/main/resources/HealthCareNews.xml -text
 jobboard/src/main/webapp/WEB-INF/HibernateSessionFactory.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
-jobboard/src/main/webapp/WEB-INF/flow-rules.xml -text
 jobboard/src/main/webapp/WEB-INF/jsp/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createresumebuilder.jsp -text
