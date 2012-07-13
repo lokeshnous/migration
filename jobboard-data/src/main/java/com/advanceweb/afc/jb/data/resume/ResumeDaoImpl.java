@@ -99,7 +99,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void saveCreateResumeCopyPaste(ResumeDTO createResumeDTO) {
 
-		Session session = null;
+//		Session session = null;
 
 		String visibility=createResumeDTO.getResume_visibility();
 		if(visibility.equalsIgnoreCase("Pu")){
@@ -110,7 +110,6 @@ public class ResumeDaoImpl implements ResumeDao {
 			resPublishResume.setActive(Short.parseShort("1"));
 			resPublishResume.setCreateUserId(Integer.parseInt("1"));
 			resPublishResume.setCreateDt(new Timestamp(new Date().getTime()));
-			System.out.println("In public");
 			//em.persist(resPublishResume);
 			//em.flush();
 
@@ -120,14 +119,11 @@ public class ResumeDaoImpl implements ResumeDao {
 //				session.saveOrUpdate(resPublishResume);
 			} catch (HibernateException e) {
 				e.printStackTrace();
-			}		finally{
-				//session.close();
-			}
+			}		
 
 
 
 		}else{
-			System.out.println("In private");
 			ResPublishResumePriv resPublishResumePriv=new ResPublishResumePriv();
 			ResPublishResume resPublishResume=new ResPublishResume();
 			ResPrivacy resPrivacy=new ResPrivacy();
@@ -147,7 +143,6 @@ public class ResumeDaoImpl implements ResumeDao {
 			resPublishResumePriv.setCreateUserId(Integer.parseInt("1"));
 			resPublishResumePriv.setCreateDt(new Timestamp(new Date().getTime()));
 
-			System.out.println("In public");
 			//em.persist(resPublishResume);
 			//em.persist(resPrivacy);
 
@@ -170,9 +165,7 @@ public class ResumeDaoImpl implements ResumeDao {
 				
 			} catch (HibernateException e) {
 				e.printStackTrace();
-			}		finally{
-				//session.close();
-			}
+			}		
 
 
 		}
@@ -182,7 +175,7 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void saveCreateResumeUpload(ResumeDTO createResumeDTO) {
-		Session session = null;
+		//Session session = null;
 
 		ResUploadResume resUploadResume=new ResUploadResume();
 		ResPublishResume resPublishResume=new ResPublishResume();
@@ -195,8 +188,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		resPublishResume.setCreateDt(new Timestamp(new Date().getTime()));
 
 		//em.persist(resPublishResume);
-        System.out.println(createResumeDTO.getResume_name()+"xxxxxxxxxxxxxxxxxxxxx"+createResumeDTO.getFilePath());
-
+ 
 		resUploadResume.setResPublishResume(resPublishResume);
 		resUploadResume.setUserId(Integer.parseInt("1"));
 		resUploadResume.setResumeType(createResumeDTO.getResumeType());
@@ -220,9 +212,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			//session.flush();
 		} catch (HibernateException e) {
 			e.printStackTrace();
-		}		finally{
-			//session.close();
-		}
+		}	
 	}
 	
 
@@ -241,7 +231,6 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 //			sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
 			hibernateTemplate.saveOrUpdate(builderResume);
-			System.out.println(builderResume);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}		
