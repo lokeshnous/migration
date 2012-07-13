@@ -11,7 +11,7 @@
 <h3>Display Results</h3>
 <table>
 	<tr>
-		<td>User Name :</td>
+		<!-- <td>User Name :</td> -->
 		<%-- <td><core:out value="${registration.userName}" /></td> --%>
 	</tr>
 </table>
