@@ -43,7 +43,7 @@ public interface JobSearchActivity {
 	 * @param SearchString
 	 * @return SearchResultDTO
 	 */
-	public SearchResultDTO getJobSearchResult(String searchString,
+	public SearchResultDTO getJobSearchResult(String SearchString,
 			Map<String, String> serverDetailsMap, String rows, String start);
 
 	/**
