@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.data.jobapply;
 
+
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
@@ -14,9 +16,25 @@ import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
 @Repository
 public class AnonymousUserJobApplyDAOImpl implements AnonymousUserJobApplyDAO {
 
+	/*@Autowired
+	AnonymousUserJobApplyConversionHelper conversionHelper;*/
+
+	private HibernateTemplate hibernateTemplate;
+	
+	
+	
+	/**
+	 * @param hibernateTemplate the hibernateTemplate to set
+	 */
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
+
+
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:To apply a job for Anonymous User
+	   @Purpose:This method is use to apply a job for Anonymous User
 	   @Created:Jul 12, 2012
 	   @Param  :AnonymousUserJobApplyDTO
 	   @Return :boolean value
@@ -24,6 +42,13 @@ public class AnonymousUserJobApplyDAOImpl implements AnonymousUserJobApplyDAO {
 	 */
 	@Override
 	public boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto) {
+/*		EmailDTO emailDTO=new EmailDTO();
+		List<AttachedFile> attachedFile=new ArrayList();
+		AttachedFile file=new AttachedFile();
+		file.setFilePath(dto.getFilePath());
+		attachedFile.add(file);
+*/		
+		
 		
 		return false;
 	}
