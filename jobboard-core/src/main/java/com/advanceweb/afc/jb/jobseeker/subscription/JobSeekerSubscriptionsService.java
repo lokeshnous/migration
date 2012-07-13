@@ -26,10 +26,23 @@ public class JobSeekerSubscriptionsService implements JobSeekerSubscriptions {
 
 	/**
 	 * save subscription
+	 * @return 
 	 */
 	@Override
-	public void saveJobSeekerSubscription(Long id) {
-		jobSeekerSubscriptionsDAO.saveJobSeekerSubscription(id);
+	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, long userId) {
+		return jobSeekerSubscriptionsDAO.saveJobSeekerSubscription(listSubsDTO, userId);
+	}
+	
+	/**
+	 * To get current subscriptions of the user
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(long userId) {
+
+		return jobSeekerSubscriptionsDAO.getCurrentSubscriptions(userId);
 	}
 
 }
