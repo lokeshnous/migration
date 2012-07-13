@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.common;
 
-import java.util.Date;
 
 /**
  * <code> AppliedJobDTO </code> is a DTO class. The purpose of this class to
@@ -14,33 +13,45 @@ import java.util.Date;
  * 
  */
 public class JobSeekerSubscriptionsDTO {
-
-	private String subscriptions;
-	private String magazines;
-	private String jobAlerts;
-
-	public String getSubscriptions() {
-		return subscriptions;
+	
+	private int alertId;
+	private int userId;
+	private String lookUpId;
+	private String alertValue;
+	private String createdDate;
+	
+	
+	public int getAlertId() {
+		return alertId;
 	}
-
-	public void setSubscriptions(String subscriptions) {
-		this.subscriptions = subscriptions;
+	public void setAlertId(int alertId) {
+		this.alertId = alertId;
 	}
-
-	public String getMagazines() {
-		return magazines;
+	public int getUserId() {
+		return userId;
 	}
-
-	public void setMagazines(String magazines) {
-		this.magazines = magazines;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-
-	public String getJobAlerts() {
-		return jobAlerts;
+	public String getLookUpId() {
+		return lookUpId;
 	}
-
-	public void setJobAlerts(String jobAlerts) {
-		this.jobAlerts = jobAlerts;
+	public void setLookUpId(String lookUpId) {
+		this.lookUpId = lookUpId;
 	}
+	public String getAlertValue() {
+		return alertValue;
+	}
+	public void setAlertValue(String alertValue) {
+		this.alertValue = alertValue;
+	}
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	
+	
 
 }
