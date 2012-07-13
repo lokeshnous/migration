@@ -52,7 +52,7 @@
 		class="com.advanceweb.afc.jb.data.common.helpers.PopulateDropdownConversionHelper" />
 	<bean id="jobSeekerActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSeekerActivityConversionHelper" />
 	<bean id="jobSearchActivityConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSearchActivityConversionHelper" />
-	
+	<bean id="jsSubscriptionHelper" class="com.advanceweb.afc.jb.data.common.helpers.JobSeekerSubscriptionsConversionHelper" />
 
 	<!-- Resume -->
 	<bean id="resumeService" class="com.advanceweb.afc.jb.resume.ResumeServiceImpl" />
