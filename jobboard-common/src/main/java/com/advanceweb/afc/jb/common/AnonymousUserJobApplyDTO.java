@@ -12,62 +12,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  */
 public class AnonymousUserJobApplyDTO implements Serializable {
 
-	private String name;
-	private String email;
-	private String fileName;
-	private CommonsMultipartFile fileContent;
+
+	private String employerEmail;
+	private String jobTitle;
+	private String jobDescription;
 	
-	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	/**
-	 * @return the fileName
-	 */
-	public String getFileName() {
-		return fileName;
-	}
-	/**
-	 * @param fileName the fileName to set
-	 */
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	/**
-	 * @return the fileContent
-	 */
-	public CommonsMultipartFile getFileContent() {
-		return fileContent;
-	}
-	/**
-	 * @param fileContent the fileContent to set
-	 */
-	public void setFileContent(CommonsMultipartFile fileContent) {
-		this.fileContent = fileContent;
-	}
-	
-	
-	
-	
+	// currently not using 
 }
