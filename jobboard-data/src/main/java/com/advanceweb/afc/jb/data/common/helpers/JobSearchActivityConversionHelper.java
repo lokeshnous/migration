@@ -1,12 +1,12 @@
 package com.advanceweb.afc.jb.data.common.helpers;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
 
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobLocation;
+import com.advanceweb.afc.jb.data.entities.JpLocation;
 
 
 /**
@@ -28,18 +28,36 @@ public class JobSearchActivityConversionHelper {
 	public SearchedJobDTO transformJpJobToSearchedJobDTO(JpJob entity) {
 		SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
 		if (entity != null) {
-			searchedJobDTO.setJobTitle(entity.getJobtitle());
+			/**
+			 * get detail from admFacility entity
+			 */
+			AdmFacility admFacility = entity.getAdmFacility();
+			searchedJobDTO.setCompanyName(admFacility.getName());
 
-		}
-		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-		Iterator<Entry<Integer, Integer>> entries = map.entrySet().iterator();
-		while (entries.hasNext()) {
-		    Map.Entry<Integer, Integer> entry = entries.next();
-		    
-		    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			/**
+			 * get detail from JpJob entity
+			 */
+			searchedJobDTO.setJobTitle(entity.getJobtitle());
+			searchedJobDTO.setJobDesc(entity.getAdtext());
+
+			/**
+			 * get detail from JpLocation entity
+			 */
+			List<JpJobLocation> jobLocations = entity.getJpJobLocations();
+			JpJobLocation jobJobLocation = jobLocations.get(0);
+			JpLocation jpLocation = jobJobLocation.getJpLocation();
+			searchedJobDTO.setCity(jpLocation.getCity());
+			searchedJobDTO.setState(jpLocation.getState());
+
+			/**
+			 * get the template details
+			 */
+			searchedJobDTO.setCompanyOverview(entity.getKeywords());
+			searchedJobDTO.setImagePath(entity.getImagePath());
+			searchedJobDTO.setLogo(entity.getLogo());
+
 		}
 		return searchedJobDTO;
-
 	}
 
 }

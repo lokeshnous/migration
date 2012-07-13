@@ -55,8 +55,8 @@ go(url);
 		onclick="javascript:deleteContact('deleteAppliedJob.html?id=13100');"
 		type="button">
 	<input value="View Details"
-		onclick="javascript:go('viewJobDetails.html?id=1');" type="button">
+		onclick="javascript:go('./jobsearchactivity/viewJobDetails.html?id=13101');" type="button">
 	<input value="Apply"
-		onclick="javascript:go('applyJob.html?id=1');" type="button">
+		onclick="javascript:go('./jobsearchactivity/applyJob.html?id=13100');" type="button">
 </body>
 </html>

@@ -49,11 +49,8 @@ public class JobSearchActivityService implements JobSearchActivity {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public SearchedJobDTO viewJobDetails(long jobId) {
-		
 		return jobSearchActivityDAO.viewJobDetails(jobId);
-		
 	}
-	
 	
 	/**
 	 * apply job
@@ -62,7 +59,6 @@ public class JobSearchActivityService implements JobSearchActivity {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public void applyJob(long jobId) {		
 		jobSearchActivityDAO.applyJob(jobId);
-		
 	}
 	
 	

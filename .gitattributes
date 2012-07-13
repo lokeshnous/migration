@@ -207,6 +207,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/ReferenceFo
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/resume/WorkExpForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/search/JobseekerAdvanceSearch.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/search/SaveSearchForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/search/applyJobForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/subscription/JobSeekerSubscriptionForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/helper/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/transformers/TransformAnonymousUserJobApply.java -text

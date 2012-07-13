@@ -63,7 +63,24 @@
     <!-- Save the search-->
     <bean id="saveSearchService" class="com.advanceweb.afc.jb.search.SaveSearchServiceImpl"/>
     <bean id="saveSearchDAO" class="com.advanceweb.afc.jb.data.search.SaveSearchDAOImpl"/>
-    <bean id="saveSearchConversionHelper" class="com.advanceweb.afc.jb.data.common.helpers.SaveSearchConversionHelper"/>
+	<bean id="saveSearchConversionHelper"
+		class="com.advanceweb.afc.jb.data.common.helpers.SaveSearchConversionHelper" />
+		
+	<!-- Send Mail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.nous.com" />
+		<property name="port" value="587" />
+		<property name="username" value="username" />
+		<property name="password" value="password" />
 
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="mmEmailService" class="com.advanceweb.afc.jb.common.email.MMEmailService" />
 
 </beans>
