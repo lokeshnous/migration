@@ -3,6 +3,11 @@ package com.advanceweb.afc.jb.jobsearch;
 /*import org.apache.solr.client.solrj.impl.HttpSolrServer;
  import org.apache.solr.client.solrj.response.QueryResponse;*/
 
+import java.util.Map;
+
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+
 import com.advanceweb.afc.jb.common.SearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
@@ -38,7 +43,8 @@ public interface JobSearchActivity {
 	 * @param SearchString
 	 * @return SearchResultDTO
 	 */
-	public SearchResultDTO getJobSearchResult(String SearchString);
+	public SearchResultDTO getJobSearchResult(String searchString,
+			Map<String, String> serverDetailsMap, String rows, String start);
 
 	/**
 	 * saves the job for logged in user
@@ -53,7 +59,7 @@ public interface JobSearchActivity {
 	 * @param
 	 * @return HttpSolrServer
 	 */
-	public HttpSolrServer connectToSOLRURL();
+	public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap);
 
 	/**
 	 * Returns the SOLR Server response object

@@ -11,8 +11,8 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.FacetField.Count;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,23 +24,23 @@ import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.jobsearch.JobSearchActivityDAO;
 
 /**
- * <code> JobSearchActivityService </code> is a implementation for Service class. 
+ * <code> JobSearchActivityService </code> is a implementation for Service
+ * class.
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 10 July 2012
- *  
+ * 
  */
-@Service("jobSearchActivity")
+@Service("articleSearchService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSearchActivityService implements JobSearchActivity {
 
 	@Autowired
 	public JobSearchActivityDAO jobSearchActivityDAO;
 
-
 	JobSearchActivityService() {
-		
+
 	}
 
 	/**
@@ -49,121 +49,184 @@ public class JobSearchActivityService implements JobSearchActivity {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public SearchedJobDTO viewJobDetails(long jobId) {
+
 		return jobSearchActivityDAO.viewJobDetails(jobId);
+
 	}
-	
+
 	/**
 	 * apply job
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public void applyJob(long jobId) {		
+	public void applyJob(long jobId) {
 		jobSearchActivityDAO.applyJob(jobId);
+
 	}
-	
-	
+
 	@Override
-	public SearchResultDTO getJobSearchResult(String searchString) {
-		// TODO Auto-generated method stub
-		  HttpSolrServer server = null;
-		  QueryResponse response = null;
-		  SearchResultDTO searhResultDTO = new SearchResultDTO();
-		  JobSearchDTO jobSearchDTO = new JobSearchDTO();
-		  String rows = "30";// Deafault set to 30
-		  String start = "0";// Deafault set to 0
-		  
-		  server = connectToSOLRURL();
-		  response = executeSearchQuery(server,searchString, rows, start);
-			
-			System.out.println("Number of search records===>>>"+response.getResults().getNumFound());
-			searhResultDTO.setTotalNumSearchResult(response.getResults().getNumFound());
-			
+	public SearchResultDTO getJobSearchResult(String searchString,
+			Map<String, String> serverDetailsMap, String rows, String start) {
+
+		HttpSolrServer server = null;
+		QueryResponse response = null;
+		SearchResultDTO searhResultDTO = new SearchResultDTO();
+		JobSearchDTO jobSearchDTO = new JobSearchDTO();
+		
+		
+		
+			server = connectToSOLRURL(serverDetailsMap);
+		
+		
+		
+		
+		response = executeSearchQuery(server, searchString, rows, start);
+
+		if (response != null) {
+
+			System.out.println("Number of search records===>>>"
+					+ response.getResults().getNumFound());
+
+			searhResultDTO.setTotalNumSearchResult(response.getResults()
+					.getNumFound());
+
 			List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
 			jobSearchDTOList = response.getBeans(JobSearchDTO.class);
-			
+
 			Iterator<JobSearchDTO> itr = jobSearchDTOList.iterator();
-			
+
 			while (itr.hasNext()) {
+
 				jobSearchDTO = new JobSearchDTO();
 				jobSearchDTO = itr.next();
-				System.out.println("@Company===>>"+jobSearchDTO.getCompany());
-				System.out.println("@Job Title===>>"+jobSearchDTO.getJobtitle());
-				System.out.println("@City===>>"+jobSearchDTO.getCity());
-				System.out.println("@Posted Date===>>"+jobSearchDTO.getPosted_dt());
+/*				System.out.println("@Company===>>" + jobSearchDTO.getCompany());
+				System.out.println("@Job Title===>>"
+						+ jobSearchDTO.getJobTitle());
+				System.out.println("@City===>>" + jobSearchDTO.getCity());
+				System.out.println("@Posted Date===>>"
+						+ jobSearchDTO.getPostedDate());
+				System.out.println("@Apply Online===>>"
+						+ jobSearchDTO.getApplyOnline());
+				System.out
+						.println("@Blind Ad===>>" + jobSearchDTO.getBlindAd());
+				System.out.println("@Facility Name===>>"
+						+ jobSearchDTO.getFacilityName());
+				System.out.println("@Email Display===>>"
+						+ jobSearchDTO.getEmailDisplay());
+				System.out.println("@Email===>>" + jobSearchDTO.getEmail());
+				System.out.println("@Is Inter===>>"
+						+ jobSearchDTO.isInternational());
+				System.out.println("@Is National===>>"
+						+ jobSearchDTO.isNational());
+				System.out.println("@Is Featured===>>"
+						+ jobSearchDTO.isFeatured());
+				System.out.println("@Job count===>>"
+						+ jobSearchDTO.getJobCount());
+				System.out.println("@Job id===>>" + jobSearchDTO.getJobId());
+				System.out.println("@Job Number===>>"
+						+ jobSearchDTO.getJobNumber());
+				System.out.println("@Job Geo===>>" + jobSearchDTO.getJobGeo());
+				System.out.println("@Job position===>>"
+						+ jobSearchDTO.getJobPosition());
+				System.out.println("@jobGeo0LatLon===>>"
+						+ jobSearchDTO.getJobGeo0LatLon());
+				System.out.println("@jobGeo1LatLon===>>"
+						+ jobSearchDTO.getJobGeo1LatLon());
+				System.out.println("@URL Display===>>"
+						+ jobSearchDTO.getUrlDisplay());*/
+
 			}
-			
-			 
+
 			Map<String, List<Count>> facetMap = new HashMap<String, List<Count>>();
-			FacetField facetField = null;
-			List<FacetField> facetFieldList = null;
-			facetFieldList = response.getFacetFields();
-			Iterator<FacetField> iterator = facetFieldList.iterator();
-			
-			while (iterator.hasNext()) {
-				facetField = iterator.next();
-				System.out.println("@Facet Name===>>"+facetField.getName());
+			List<FacetField> facetFieldList = response.getFacetFields();
+
+			for (FacetField facetField : facetFieldList) {
+
+				System.out.println("@Facet Name===>>" + facetField.getName());
 				facetMap.put(facetField.getName(), facetField.getValues());
-				System.out.println("@Facet Values(Categories)===>>>"+facetMap.get(facetField.getName()));		
+
+				System.out.println("@Facet Values(Categories)===>>>"
+						+ facetMap.get(facetField.getName()));
 			}
-			 
-			  searhResultDTO.setFacetMap(facetMap);
-			  searhResultDTO.setSearchResultList(jobSearchDTOList);
-			  
-			  return searhResultDTO;
-		
+
+			searhResultDTO.setFacetMap(facetMap);
+			searhResultDTO.setSearchResultList(jobSearchDTOList);
+
+			return searhResultDTO;
+
+		} else {
+			return null;
+		}
+
 	}
 
+	/**
+	 * 
+	 */
 	@Override
-	public HttpSolrServer connectToSOLRURL() {
-		  String url = "http://192.168.25.30:8080/careers/jobPost/";
-		  HttpSolrServer server = new HttpSolrServer(url);
-		  server.setSoTimeout(1000);  // socket read timeout
-		  server.setConnectionTimeout(100);
-		  server.setDefaultMaxConnectionsPerHost(100);
-		  server.setMaxTotalConnections(100);
-		  server.setFollowRedirects(false);  // defaults to false
-		  server.setAllowCompression(true);
-		  server.setMaxRetries(0); 
-		  server.setParser(new XMLResponseParser()); // binary parser is used by default
-		  return server;
+	public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap) {
+
+		HttpSolrServer server = new HttpSolrServer(serverDetailsMap.get(
+				"serverUrl").toString());
+		server.setSoTimeout(Integer.parseInt(serverDetailsMap.get("sotimeout")));
+		server.setConnectionTimeout(Integer.parseInt(serverDetailsMap
+				.get("connectiontimeout")));
+		server.setDefaultMaxConnectionsPerHost(Integer
+				.parseInt(serverDetailsMap.get("maxconnectionperhost")));
+		server.setMaxTotalConnections(Integer.parseInt(serverDetailsMap
+				.get("maxtotalconnection")));
+
+		server.setFollowRedirects(Boolean.parseBoolean(serverDetailsMap
+				.get("followredirects"))); // defaults to false
+		server.setAllowCompression(Boolean.parseBoolean(serverDetailsMap
+				.get("allowcompression")));
+		server.setMaxRetries(Integer.parseInt(serverDetailsMap
+				.get("maxretries")));
+		server.setParser(new XMLResponseParser()); // binary parser is used by
+													// default
+		return server;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
-	public QueryResponse executeSearchQuery(HttpSolrServer server, String searchString, String rows, String start) {
+	public QueryResponse executeSearchQuery(HttpSolrServer server,
+			String searchString, String rows, String start) {
 		QueryResponse response = null;
-		
-		if(searchString != null){
-			SolrQuery searchquery = new  SolrQuery();
+
+		if (searchString != null && searchString.length() > 0) {
+
+			SolrQuery searchquery = new SolrQuery();
 			searchquery.setQuery(searchString);
 			searchquery.setFacet(true);
 			searchquery.addFacetField("city");
 			searchquery.addFacetField("company");
-			searchquery.addFacetField("jobtitle");
+			//searchquery.addFacetField("radius");
 			searchquery.addFacetField("posted_dt");
+			searchquery.addFacetField("state");
 			searchquery.add("rows", rows);
 			searchquery.add("start", start);
-			System.out.println("searchquery===>>>"+searchquery);
-			
+			System.out.println("searchquery===>>>" + searchquery);
+
 			try {
 				response = server.query(searchquery);
-				} catch (SolrServerException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+			} catch (SolrServerException e1) {
+				e1.printStackTrace();
+			}
 		}
-		
+
 		return response;
 	}
-	
 
-	public JobSearchActivityDAO getJobSearchActivityDAO() {
-		return jobSearchActivityDAO;
+
+	/**
+	 * It saves the job with the details of company name,jobTitle, CreatedDate
+	 * 
+	 * @param searchedJobDTO
+	 */
+	@Override
+	public void saveJob(SearchedJobDTO searchedJobDTO) {
+		jobSearchActivityDAO.saveTheJob(searchedJobDTO);
 	}
-	
-	public void setJobSearchActivityDAO(JobSearchActivityDAO jobSearchActivityDAO) {
-		this.jobSearchActivityDAO = jobSearchActivityDAO;
-	}
-
-	
-
 }
