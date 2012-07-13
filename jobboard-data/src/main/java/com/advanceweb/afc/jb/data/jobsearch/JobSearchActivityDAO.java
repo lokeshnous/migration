@@ -1,13 +1,14 @@
 package com.advanceweb.afc.jb.data.jobsearch;
 
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+
 /**
- * <code> JobSearchActivityService </code> is a DAO. 
+ * <code> JobSearchActivityService </code> is a DAO.
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 10 July 2012
- *  
+ * 
  */
 public interface JobSearchActivityDAO {
 
@@ -18,7 +19,7 @@ public interface JobSearchActivityDAO {
 	 * @return
 	 */
 	SearchedJobDTO viewJobDetails(long jobId);
-	
+
 	/**
 	 * apply for job by job ID
 	 * 
@@ -26,5 +27,12 @@ public interface JobSearchActivityDAO {
 	 * @return
 	 */
 	void applyJob(long jobId);
+
+	/**
+	 * To Save the save job details to DB
+	 * 
+	 * @param searchedJobDTO
+	 */
+	public void saveTheJob(SearchedJobDTO searchedJobDTO);
 
 }
