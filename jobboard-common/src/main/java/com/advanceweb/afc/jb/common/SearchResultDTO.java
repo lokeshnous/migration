@@ -32,5 +32,5 @@ public class SearchResultDTO implements Serializable{
 		this.facetMap = facetMap;
 	}
 	
-
+	
 }
