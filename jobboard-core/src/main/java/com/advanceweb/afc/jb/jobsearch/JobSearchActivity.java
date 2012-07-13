@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
@@ -30,12 +31,12 @@ public interface JobSearchActivity {
 	SearchedJobDTO viewJobDetails(long jobId);
 
 	/**
-	 * apply job by job ID
+	 * apply job
 	 * 
-	 * @param jobId
+	 * @param applyJobDTO
 	 * @return
 	 */
-	void applyJob(long jobId);
+	void applyJob(ApplyJobDTO applyJobDTO);
 
 	/**
 	 * Gets the job search result by searchString

@@ -1,9 +1,8 @@
 package com.advanceweb.afc.jb.data.common.helpers;
 
 import java.util.List;
-
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import org.springframework.stereotype.Repository;
-
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -63,6 +62,25 @@ public class JobSearchActivityConversionHelper {
 		}
 		return searchedJobDTO;
 	}
+	
+	/**
+	 * This method is called to convert ApplyJobDTO
+	 * JpSaveJob Entity
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public JpSaveJob transformApplyJobDTOToJpSaveJob(ApplyJobDTO applyJobDTO) {
+		JpSaveJob jpSaveJob = new JpSaveJob();
+		if (applyJobDTO != null) {
+			jpSaveJob.setUserId(applyJobDTO.getUserId());
+			jpSaveJob.setJobId(applyJobDTO.getJobId());
+			jpSaveJob.setCreateDt(applyJobDTO.getCreateDate());
+			jpSaveJob.setAppliedDate(applyJobDTO.getAppliedDate());
+			jpSaveJob.setIsApplied(applyJobDTO.getIsApplied());
+		}
+		return jpSaveJob;
+	}
 
 	/**
 	 * This method is called to convert saveSearchedJobsDTO to Save Search
@@ -74,7 +92,7 @@ public class JobSearchActivityConversionHelper {
 	public JpSaveJob transformSearchedJobDTOtoJpSaveJob(
 			SearchedJobDTO searchedJobDTO) {
 		JpSaveJob jpSaveJob = new JpSaveJob();
-		jpSaveJob.setUserID(searchedJobDTO.getUserID());
+		jpSaveJob.setUserId(searchedJobDTO.getUserID());
 		jpSaveJob.setJobID(searchedJobDTO.getJobID());
 		jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
 		jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());

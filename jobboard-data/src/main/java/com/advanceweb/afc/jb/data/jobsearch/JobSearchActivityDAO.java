@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.data.jobsearch;
 
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
 /**
@@ -21,12 +22,12 @@ public interface JobSearchActivityDAO {
 	SearchedJobDTO viewJobDetails(long jobId);
 
 	/**
-	 * apply for job by job ID
+	 * apply for job
 	 * 
-	 * @param jobId
+	 * @param applyJobDTO
 	 * @return
 	 */
-	void applyJob(long jobId);
+	void applyJob(ApplyJobDTO applyJobDTO);
 
 	/**
 	 * To Save the save job details to DB

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.JobSearchDTO;
 import com.advanceweb.afc.jb.common.SearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
@@ -59,9 +60,8 @@ public class JobSearchActivityService implements JobSearchActivity {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public void applyJob(long jobId) {
-		jobSearchActivityDAO.applyJob(jobId);
-
+	public void applyJob(ApplyJobDTO applyJobDTO) {		
+		jobSearchActivityDAO.applyJob(applyJobDTO);
 	}
 
 	@Override

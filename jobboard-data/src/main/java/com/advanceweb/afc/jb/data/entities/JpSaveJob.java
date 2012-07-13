@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.data.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,124 +8,107 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 /**
- * The persistent class for the jp_save_job database table
+ * <code>JpSaveJob</code>The persistent class for the jp_save_job database table.
  * 
- * @author bharatiu
+ * @author Pramoda Patil
  * @version 1.0
- * @since 12th July 2012
+ * @since 13 July 2012
+ * 
  */
 
 @Entity
 @Table(name="jp_save_job")
-public class JpSaveJob {
+public class JpSaveJob implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="save_job_id")
-	private int jpSaveJobId; 
-	
+	private int saveJobId;
+
 	@Column(name="user_id")
-	private String userID;
-	
+	private int userId;
+
 	@Column(name="job_id")
-	private String jobID;
-	
-	@Column(name="job_title")
-	private String jobTitle;
-	
-	@Column(name="company_name")
-	private String companyName;
-	
+	private int jobId;
+
 	@Column(name="created_date")
-	private Date createdDate;
+	private Date createDt;
 
-	/**
-	 * @return the jpSaveJobId
-	 */
-	public int getJpSaveJobId() {
-		return jpSaveJobId;
-	}
-
-	/**
-	 * @param jpSaveJobId the jpSaveJobId to set
-	 */
-	public void setJpSaveJobId(int jpSaveJobId) {
-		this.jpSaveJobId = jpSaveJobId;
-	}
-
-	/**
-	 * @return the userID
-	 */
-	public String getUserID() {
-		return userID;
-	}
-
-	/**
-	 * @param userID the userID to set
-	 */
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
-
-	/**
-	 * @return the jobID
-	 */
-	public String getJobID() {
-		return jobID;
-	}
-
-	/**
-	 * @param jobID the jobID to set
-	 */
-	public void setJobID(String jobID) {
-		this.jobID = jobID;
-	}
-
-	/**
-	 * @return the jobTitle
-	 */
-	public String getJobTitle() {
-		return jobTitle;
-	}
-
-	/**
-	 * @param jobTitle the jobTitle to set
-	 */
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-
-	/**
-	 * @return the companyName
-	 */
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	/**
-	 * @param companyName the companyName to set
-	 */
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	/**
-	 * @return the createdDate
-	 */
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	/**
-	 * @param createdDate the createdDate to set
-	 */
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
+	@Column(name="applied_date")
+	private Date appliedDate;
 	
-	
+	@Column(name="is_applied")
+	private byte isApplied;
+
+	//bi-directional many-to-one association to JpJob
+    @ManyToOne
+	@JoinColumn(name="job_id", insertable = false, updatable = false)
+	private JpJob jpJob;
+
+    public JpSaveJob() {
+    }
+
+	public int getJobId() {
+		return this.jobId;
+	}
+
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
+
+	public int getSaveJobId() {
+		return saveJobId;
+	}
+
+	public void setSaveJobId(int saveJobId) {
+		this.saveJobId = saveJobId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Date getCreateDt() {
+		return createDt;
+	}
+
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+
+	public Date getAppliedDate() {
+		return appliedDate;
+	}
+
+	public void setAppliedDate(Date appliedDate) {
+		this.appliedDate = appliedDate;
+	}
+
+	public byte getIsApplied() {
+		return isApplied;
+	}
+
+	public void setIsApplied(byte isApplied) {
+		this.isApplied = isApplied;
+	}
+
+	public JpJob getJpJob() {
+		return jpJob;
+	}
+
+	public void setJpJob(JpJob jpJob) {
+		this.jpJob = jpJob;
+	}
+
 }

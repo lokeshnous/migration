@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.webapp.web.controllers.jobsearch;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -19,20 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
 import com.advanceweb.afc.jb.webapp.web.forms.jobsearch.JobSearchResultForm;
-import com.advanceweb.afc.jb.webapp.web.forms.search.applyJobForm;
-
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
-import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
 import com.advanceweb.afc.jb.webapp.web.forms.jobsearch.JobSearchViewDetailForm;
+import com.advanceweb.afc.jb.webapp.web.forms.search.applyJobForm;
 import com.advanceweb.afc.jb.webapp.web.helper.ReadSolrServerDetails;
-
-import java.util.Date;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
@@ -51,7 +48,7 @@ public class JobSearchActivityController {
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
 
-//	@Autowired
+	@Autowired
 	private MMEmailService mailSender;
 
 	public JobSearchActivityController() {
@@ -89,6 +86,7 @@ public class JobSearchActivityController {
 	 * The apply for job action is called as per the conditions and getting
 	 * saved in DB.
 	 * 
+	 * @param form
 	 * @param jobId
 	 * @return
 	 */
@@ -97,13 +95,16 @@ public class JobSearchActivityController {
 			@RequestParam("id") Long jobId) {
 
 		/**
-		 * Check for login , navigate to login page if necessary login by
-		 * ADVACNE Guest, navigate to Anonymous User Form apply for job or
+		 * Check for login , navigate to login page if necessary 
+		 * login by ADVACNE Guest navigate to Anonymous User 
+		 * Form apply for job or
 		 * navigate to employer web page to apply job
 		 */
 
 		try {
-
+			/**
+			 * Get the Job details
+			 */
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(jobId);
 
@@ -122,10 +123,12 @@ public class JobSearchActivityController {
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
+
+			// TODO: Fetch the path of public resume
 			attachmentpaths.add("C:\\ppResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			// mailSender.sendEmail(employerEmailDTO);
-
+			System.out.println("-------Mail sent to employer-----");
 			/**
 			 * confirm mail:Send mail to job seeker by sub as job title and body
 			 * as short job desc
@@ -141,32 +144,19 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			// mailSender.sendEmail(jobSeekerEmailDTO);
+			System.out.println("-------Mail sent to jobseeker-----");
 
 			/**
 			 * saving the job in applied job in jobseeker table
 			 */
-			jobSearchActivity.applyJob(jobId);
-
-			EmailDTO testemailDTO = new EmailDTO();
-			testemailDTO.setFromAddress("from@gmail.com");
-			InternetAddress[] ccAddress = new InternetAddress[1];
-			ccAddress[0] = new InternetAddress("cc1@gmail.com");
-			testemailDTO.setCcAddress(ccAddress);
-			InternetAddress[] bccAddress = new InternetAddress[1];
-			bccAddress[0] = new InternetAddress("bcc1@gmail.com");
-			testemailDTO.setBccAddress(bccAddress);
-			InternetAddress[] testtoAddress = new InternetAddress[1];
-			testtoAddress[0] = new InternetAddress("to1@gmail.com");
-			testemailDTO.setToAddress(testtoAddress);
-			testemailDTO.setSubject(searchedJobDTO.getJobTitle());
-			testemailDTO.setBody(searchedJobDTO.getJobDesc());
-			testemailDTO.setHtmlFormat(true);
-			List<String> testAttachmentpaths = new ArrayList<String>();
-			testAttachmentpaths.add("C:\\testResume.txt");
-			testemailDTO.setAttachmentPaths(testAttachmentpaths);
-
-			mailSender.sendEmail(testemailDTO);
-			System.out.println("-------Mail sent-----");
+			ApplyJobDTO applyJobDTO = new ApplyJobDTO();
+			applyJobDTO.setJobId(jobId.intValue());
+			applyJobDTO.setUserId(1);
+			applyJobDTO.setCreateDate(new Date());
+			applyJobDTO.setAppliedDate(new Date());
+			applyJobDTO.setIsApplied((byte) 1);
+			jobSearchActivity.applyJob(applyJobDTO);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

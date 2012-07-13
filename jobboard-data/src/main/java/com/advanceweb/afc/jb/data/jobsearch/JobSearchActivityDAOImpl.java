@@ -1,13 +1,13 @@
 package com.advanceweb.afc.jb.data.jobsearch;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.common.helpers.JobSearchActivityConversionHelper;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -68,30 +68,23 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	/**
 	 * implementation of apply job
 	 */
-	@SuppressWarnings("unused")
 	@Override
-	@Transactional(readOnly = true)
-	public void applyJob(long jobId) {
+	@Transactional(readOnly = false)
+	public void applyJob(ApplyJobDTO applyJobDTO) {
 		try {
-			if (jobId != 0) {
-				
-				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
-						new Long(jobId).intValue());
-
-				/**
-				 * save the job in DB
-				 * 
-				 */
-				// Session session = sessionFactory.getCurrentSession();
-				// session.saveOrUpdate(jpJob);
-			}
+			/**
+			 * save the job in DB
+			 * 
+			 */
+			JpSaveJob jpSaveJob = jobSearchActivityConversionHelper
+					.transformApplyJobDTOToJpSaveJob(applyJobDTO);
+			hibernateTemplate.save(jpSaveJob);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
 
 	// To Save the save searched job details to DB
-	@SuppressWarnings("unused")
 	@Override
 	public void saveTheJob(SearchedJobDTO searchedJobDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
