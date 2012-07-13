@@ -345,7 +345,7 @@ public class PopulateDropdownConversionHelper {
 		
 		for(MerLookup merLookup : merLookupList){
 			MagazinesDTO magazinesDTO=new MagazinesDTO();
-			magazinesDTO.setMagazineId(merLookup.getLookupName());
+			magazinesDTO.setMagazineId(String.valueOf(merLookup.getLookupId()));
 			magazinesDTO.setMagazineName(merLookup.getLookupName());
 			list.add(magazinesDTO);
 		}
