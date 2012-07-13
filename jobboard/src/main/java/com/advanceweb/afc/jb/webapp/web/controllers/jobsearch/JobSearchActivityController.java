@@ -21,6 +21,11 @@ import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
 import com.advanceweb.afc.jb.webapp.web.forms.jobsearch.JobSearchResultForm;
 import com.advanceweb.afc.jb.webapp.web.forms.search.applyJobForm;
 
+import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.jobsearch.JobSearchActivity;
+import com.advanceweb.afc.jb.webapp.web.forms.jobsearch.JobSearchViewDetailForm;
+import java.util.Date;
+
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
  * searched jobs details.
@@ -40,13 +45,13 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private MMEmailService mailSender;
-	
+
 	public JobSearchActivityController() {
 	}
 
 	/**
-	 * The view action is called to get the job details by jobId and navigate 
-	 * to job view details page.
+	 * The view action is called to get the job details by jobId and navigate to
+	 * job view details page.
 	 * 
 	 * @param jobId
 	 * @return : modelandview for respected Jobid
@@ -59,13 +64,13 @@ public class JobSearchActivityController {
 		jobSearchActivity.viewJobDetails(jobId);
 		return new ModelAndView("jobSeekerActivity");
 	}
-	
+
 	/**
-	 * The apply for job action is called as per the conditions and getting saved 
-	 * in DB. 
+	 * The apply for job action is called as per the conditions and getting
+	 * saved in DB.
 	 * 
 	 * @param jobId
-	 * @return 
+	 * @return
 	 */
 	@RequestMapping(value = "/applyJob")
 	public ModelAndView applyJob(@Valid applyJobForm form,
@@ -148,8 +153,6 @@ public class JobSearchActivityController {
 		return new ModelAndView("jobSeekerActivity");
 	}
 
-	
-	
 	/**
 	 * This method is called to forward to job search page
 	 * 
@@ -157,31 +160,57 @@ public class JobSearchActivityController {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value="/findJobPage",method = RequestMethod.GET)
+	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
 	public ModelAndView findJobPage(Map model) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("findjob");
 	}
-	
+
 	/**
 	 * This method is called to forward to job search page
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/findJobSearch",method = RequestMethod.POST)
-	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm, BindingResult result,
-			Map<String, SearchResultDTO> model) {
+	@RequestMapping(value = "/findJobSearch", method = RequestMethod.POST)
+	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
+			BindingResult result, Map<String, SearchResultDTO> model) {
 		String searchString = jobSearchResultForm.getSearchString();
 		System.out.println(searchString);
-		SearchResultDTO searchResultDTO = jobSearchActivity.getJobSearchResult(searchString);
+		SearchResultDTO searchResultDTO = jobSearchActivity
+				.getJobSearchResult(searchString);
 		model.put("searchResultDTO", searchResultDTO);
-		return new ModelAndView("jobsearchresult","searchResultDTOModel",model);
+		return new ModelAndView("jobsearchresult", "searchResultDTOModel",
+				model);
 	}
-	
+
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
 		this.jobSearchActivity = jobSearchActivity;
+	}
+
+	/**
+	 * It saves the job with the details of company name,jobTitle, CreatedDate
+	 * 
+	 * @param JobSearchViewDetailForm
+	 * @return
+	 */
+	@RequestMapping(value = "/saveThisJob")
+	public ModelAndView saveThisJob(@Valid JobSearchViewDetailForm form,
+			BindingResult result) {
+
+		// Transform JobSearchViewDetailForm to searchedJobDTO
+		SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
+		// Transforming from form value to DTO
+		searchedJobDTO.setUserID(form.getUserID());
+		searchedJobDTO.setJobID(form.getJobID());
+		searchedJobDTO.setCreatedDate(form.getCreatedDate());
+		searchedJobDTO.setJobTitle(form.getJobTitle());
+		searchedJobDTO.setCompanyName(form.getCompanyName());
+		// Saving the Job to DB
+		jobSearchActivity.saveJob(searchedJobDTO);
+
+		return new ModelAndView();
 	}
 
 }

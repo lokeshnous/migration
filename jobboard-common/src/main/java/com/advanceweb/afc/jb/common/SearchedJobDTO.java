@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.common;
 
+import java.util.Date;
 
 /**
  * <code> SearchedJobDTO </code> is a DTO class. The purpose of this class to
@@ -18,42 +19,21 @@ public class SearchedJobDTO {
 	private String city;
 	private String state;
 	private String jobDesc;
-	private String companyName;
 	private String companyOverview;
 	private String imagePath;
 	private String logo;
-	
-	
-	public String getCompanyOverview() {
-		return companyOverview;
+	// Added for save this job task
+	private String userID;
+	private String jobID;
+	private Date createdDate;
+	private String companyName;
+
+	public String getAreaOfInterest() {
+		return areaOfInterest;
 	}
 
-	public void setCompanyOverview(String companyOverview) {
-		this.companyOverview = companyOverview;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setAreaOfInterest(String areaOfInterest) {
+		this.areaOfInterest = areaOfInterest;
 	}
 
 	public String getPositionType() {
@@ -80,14 +60,6 @@ public class SearchedJobDTO {
 		this.state = state;
 	}
 
-	public String getAreaOfInterest() {
-		return areaOfInterest;
-	}
-
-	public void setAreaOfInterest(String areaOfInterest) {
-		this.areaOfInterest = areaOfInterest;
-	}
-
 	public String getJobDesc() {
 		return jobDesc;
 	}
@@ -102,6 +74,91 @@ public class SearchedJobDTO {
 
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
+	}
+
+	// Added for save this job task
+	/**
+	 * @return the userID
+	 */
+	public String getUserID() {
+		return userID;
+	}
+
+	/**
+	 * @param userID
+	 *            the userID to set
+	 */
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
+
+	/**
+	 * @return the jobID
+	 */
+	public String getJobID() {
+		return jobID;
+	}
+
+	/**
+	 * @param jobID
+	 *            the jobID to set
+	 */
+	public void setJobID(String jobID) {
+		this.jobID = jobID;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the companyName
+	 */
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	/**
+	 * @param companyName
+	 *            the companyName to set
+	 */
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getCompanyOverview() {
+		return companyOverview;
+	}
+
+	public void setCompanyOverview(String companyOverview) {
+		this.companyOverview = companyOverview;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 }
