@@ -1,11 +1,9 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
-import java.util.Date;
-import org.apache.solr.client.solrj.beans.Field;
 
 public class JobSearchDTO implements Serializable{
-	
+/*	
 	private static final long serialVersionUID = -2200423309708244707L;
 	@Field
 	private String company;
@@ -31,7 +29,7 @@ public class JobSearchDTO implements Serializable{
 	}
 	public String getCity() {
 		return city;
-	}
+	}*/
 	
 	/*@Field
 	private String state;
