@@ -22,11 +22,17 @@ public class SearchedJobDTO {
 	private String companyOverview;
 	private String imagePath;
 	private String logo;
+
+	private String employerEmailAddress;
+	
+
+
 	// Added for save this job task
 	private String userID;
 	private String jobID;
 	private Date createdDate;
 	private String companyName;
+
 
 	public String getAreaOfInterest() {
 		return areaOfInterest;
@@ -75,6 +81,23 @@ public class SearchedJobDTO {
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
+
+
+	/**
+	 * @return the employerEmailAddress
+	 */
+	public String getEmployerEmailAddress() {
+		return employerEmailAddress;
+	}
+
+	/**
+	 * @param employerEmailAddress the employerEmailAddress to set
+	 */
+	public void setEmployerEmailAddress(String employerEmailAddress) {
+		this.employerEmailAddress = employerEmailAddress;
+	}
+
+	
 
 	// Added for save this job task
 	/**
@@ -160,5 +183,6 @@ public class SearchedJobDTO {
 	public void setLogo(String logo) {
 		this.logo = logo;
 	}
+
 
 }
