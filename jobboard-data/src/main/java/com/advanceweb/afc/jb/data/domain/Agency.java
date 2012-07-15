@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.data.domain;
 
 
-import com.advanceweb.afc.jb.data.registration.AgencyRegistrationDAO;
+import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 
 /**
  * @author rajeshkb

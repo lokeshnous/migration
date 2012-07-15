@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.data.domain;
 
-import com.advanceweb.afc.jb.data.registration.JobSeekerRegistrationDAO;
+import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO;
 
 /**
  * @author rajeshkb

@@ -13,11 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.advanceweb.afc.jb.web.utils.Constants;
+import com.advanceweb.afc.jb.web.utils.CopyUtil;
+import com.advanceweb.afc.jb.web.utils.ReadXmlFile;
 import com.advanceweb.afc.jb.webapp.web.forms.xmldata.CareersToolResource;
 import com.advanceweb.afc.jb.webapp.web.forms.xmldata.HealthCareNew;
-import com.advanceweb.afc.jb.webapp.web.helper.Constants;
-import com.advanceweb.afc.jb.webapp.web.helper.CopyUtil;
-import com.advanceweb.afc.jb.webapp.web.helper.ReadXmlFile;
 
 @Controller
 @RequestMapping(value="/jspContentView")

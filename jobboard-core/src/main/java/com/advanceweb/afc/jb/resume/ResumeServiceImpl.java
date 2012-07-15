@@ -12,7 +12,7 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
-import com.advanceweb.afc.jb.data.resume.ResumeDao;
+import com.advanceweb.afc.jb.resume.dao.ResumeDao;
 
 /**
  * anilm
