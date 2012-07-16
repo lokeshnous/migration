@@ -6,18 +6,18 @@ import java.io.InputStream;
 import java.util.List;
 
 public class CopyUtil {
-	
-	public static void copy( List<String> li ){
+
+	public static void copy( List<String> li ,String basedirectorypath) throws Exception{
 		
-		new CopyUtil().doTheCopy(li);
+		new CopyUtil().doTheCopy(li,basedirectorypath);
 	}
 
-	public  void doTheCopy( List<String> resourceNames ) {
+	public  void doTheCopy( List<String> resourceNames ,String basedirectorypath) throws Exception {
 		try{
 			for ( String resource : resourceNames ) { 
 				InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
 				FileOutputStream fos =
-						new FileOutputStream( new File("D:\\", resource));
+						new FileOutputStream( new File(basedirectorypath, resource));
 				byte[] buffer = new byte[1024];
 				int read = -1;
 				while( (read = is.read(buffer)) != -1 ) {
@@ -28,6 +28,7 @@ public class CopyUtil {
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
+			throw e;
 		}
 	}
 }

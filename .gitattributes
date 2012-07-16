@@ -229,8 +229,8 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.j
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadSolrServerDetails.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadXmlFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/xmldata/CareersToolResource.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/xmldata/HealthCareNew.java -text
