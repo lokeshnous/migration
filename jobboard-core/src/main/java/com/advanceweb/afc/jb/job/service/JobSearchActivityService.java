@@ -161,7 +161,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 	public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap) {
 
 		HttpSolrServer server = new HttpSolrServer(serverDetailsMap.get(
-				"serverUrl").toString());
+				"serverUrl").toString()+serverDetailsMap.get("solrservice").toString());
 		server.setSoTimeout(Integer.parseInt(serverDetailsMap.get("sotimeout")));
 		server.setConnectionTimeout(Integer.parseInt(serverDetailsMap
 				.get("connectiontimeout")));
@@ -188,7 +188,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 	public QueryResponse executeSearchQuery(HttpSolrServer server,
 			String searchString, String rows, String start) {
 		QueryResponse response = null;
-
+	
 		if (searchString != null && searchString.length() > 0) {
 
 			SolrQuery searchquery = new SolrQuery();
