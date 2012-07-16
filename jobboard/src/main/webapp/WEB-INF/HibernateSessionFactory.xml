@@ -16,7 +16,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.advanceweb.afc.jb" />
 	<!-- Database properties -->
-	<context:property-placeholder location="classpath:database.properties" />
+	<context:property-placeholder location="classpath:database.properties,classpath:common.properties" />
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
