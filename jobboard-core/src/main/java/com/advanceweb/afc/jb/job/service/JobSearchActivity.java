@@ -45,7 +45,7 @@ public interface JobSearchActivity {
 	 * @return SearchResultDTO
 	 */
 	public SearchResultDTO getJobSearchResult(String SearchString,
-			Map<String, String> serverDetailsMap, String rows, String start);
+			Map<String, String> serverDetailsMap, Map<String, String> solrQueryDetails, String rows, String start);
 
 	/**
 	 * saves the job for logged in user
@@ -69,6 +69,6 @@ public interface JobSearchActivity {
 	 * @return QueryResponse
 	 */
 	public QueryResponse executeSearchQuery(HttpSolrServer server,
-			String SearchString, String rows, String start);
+			String SearchString, Map<String, String> solrQueryDetails, String rows, String start);
 
 }
