@@ -236,8 +236,9 @@ jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/xmldata/CareersToo
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/xmldata/HealthCareNew.java -text
 jobboard/src/main/java/common.properties -text
 jobboard/src/main/java/database.properties -text
-jobboard/src/main/resources/CareerToolResource.xml -text
-jobboard/src/main/resources/HealthCareNews.xml -text
+jobboard/src/main/resources/careertool.html -text
+jobboard/src/main/resources/healthcarenews.html -text
+jobboard/src/main/resources/viewcareerlinkContents.html -text
 jobboard/src/main/webapp/WEB-INF/HibernateSessionFactory.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/jsp/copyPasteResumeText.jsp -text
