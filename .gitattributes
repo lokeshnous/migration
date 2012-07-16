@@ -234,6 +234,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadXmlFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/xmldata/CareersToolResource.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/forms/xmldata/HealthCareNew.java -text
+jobboard/src/main/java/common.properties -text
 jobboard/src/main/java/database.properties -text
 jobboard/src/main/resources/CareerToolResource.xml -text
 jobboard/src/main/resources/HealthCareNews.xml -text
