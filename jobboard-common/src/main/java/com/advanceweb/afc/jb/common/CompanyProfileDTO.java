@@ -14,6 +14,7 @@ public class CompanyProfileDTO {
 	private String companyWebsite;
 	private String companyEmail;
 	private String companyNews;
+	private String positionTitle;
 
 	public CompanyProfileDTO() {
 
@@ -63,4 +64,13 @@ public class CompanyProfileDTO {
 		this.companyNews = companyNews;
 	}
 
+	public String getPositionTitle() {
+		return positionTitle;
+	}
+
+	public void setPositionTitle(String positionTitle) {
+		this.positionTitle = positionTitle;
+	}
+
+	
 }

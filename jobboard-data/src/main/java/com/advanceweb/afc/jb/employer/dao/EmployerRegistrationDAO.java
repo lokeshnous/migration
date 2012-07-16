@@ -1,4 +1,5 @@
 package com.advanceweb.afc.jb.employer.dao;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.data.domain.Employer;
 
 /**
@@ -12,7 +13,7 @@ public interface EmployerRegistrationDAO {
 	 * 
 	 * @param employer
 	 */
-	public boolean createNewEmployer(Employer employer);
+	public boolean createNewEmployer(EmployerProfileDTO empDTO);
 
 	/**
 	 * 
@@ -30,6 +31,6 @@ public interface EmployerRegistrationDAO {
 	 * 
 	 * @param employer
 	 */
-	public boolean updateEmployerDetails(Employer employer);
+	public boolean updateEmployerDetails(EmployerProfileDTO empDTO);
 
 }

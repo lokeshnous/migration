@@ -1,7 +1,8 @@
 package com.advanceweb.afc.jb.common;
 
 public class MerUserDTO {
-
+	
+	private int userId;
 	private String emailId;
 	private String firstName;
 	private String lastName;
@@ -20,8 +21,6 @@ public class MerUserDTO {
 		return lastName;
 	}
 
-
-
 	public String getPassword() {
 		return password;
 	}
@@ -38,8 +37,6 @@ public class MerUserDTO {
 		this.lastName = lastName;
 	}
 
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -50,6 +47,14 @@ public class MerUserDTO {
 
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	

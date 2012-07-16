@@ -38,7 +38,7 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	public boolean createNewProfile(ProfileDTO profileDTO) {
 		try {
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
-			jobSeekerRegistrationDAO.createNewJobSeeker(jobSeekerRegistrationDTO);
+			return jobSeekerRegistrationDAO.createNewJobSeeker(jobSeekerRegistrationDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

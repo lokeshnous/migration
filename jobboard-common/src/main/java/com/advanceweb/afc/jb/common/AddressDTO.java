@@ -15,6 +15,7 @@ public class AddressDTO {
 	private String state;
 	private String zipCode;
 	private String mobileNumber;
+	private String street;
 
 	public AddressDTO() {
 
@@ -87,6 +88,14 @@ public class AddressDTO {
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
 	
 }

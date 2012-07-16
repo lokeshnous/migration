@@ -1,26 +1,24 @@
 package com.advanceweb.afc.jb.employer.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 
 /**
  * @author rajeshkb
  * @version 1.0
  * @created 21-Jun-2012 2:22:44 PM
  */
-@Service("profileEmployerRegistration")
+@Service("employerRegistration")
 public class EmployerRegistration implements ProfileRegistration {
-
-	private EmployerProfileDTO employerProfileDTO;
-	public EmployerProfileDTO m_EmployerProfileDTO;
-	public RegistrationConversionHelper m_RegistrationConversionHelper;
-	public EmployerRegistrationDAO m_EmployerRegistrationDAO;
+	
+	@Autowired
+	public EmployerRegistrationDAO employerRegistrationDAO;
 
 	public EmployerRegistration(){
 
@@ -35,6 +33,12 @@ public class EmployerRegistration implements ProfileRegistration {
 	 * @param profileDTO
 	 */
 	public boolean createNewProfile(ProfileDTO profileDTO){
+		try {
+			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
+			return employerRegistrationDAO.createNewEmployer(empProfileDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
