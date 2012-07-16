@@ -4,10 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class ReadSolrServerDetails {
 	
