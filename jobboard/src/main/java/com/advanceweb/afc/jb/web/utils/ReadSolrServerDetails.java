@@ -26,5 +26,19 @@ public class ReadSolrServerDetails {
 		return serverDetailsMap;
 	}
 	
+	
+	public Map<String, String> getSolrQueryDetails(Properties solrConfiguration){
+		Map<String, String> solrQueryDetails = new HashMap<String, String>();
+		solrQueryDetails.put("city", solrConfiguration.getProperty("city"));
+		solrQueryDetails.put("company", solrConfiguration.getProperty("company"));
+		solrQueryDetails.put("radius", solrConfiguration.getProperty("radius"));
+		solrQueryDetails.put("posted_dt", solrConfiguration.getProperty("posted_dt"));
+		solrQueryDetails.put("state", solrConfiguration.getProperty("state"));
+		solrQueryDetails.put("rows", solrConfiguration.getProperty("rows"));
+		solrQueryDetails.put("start", solrConfiguration.getProperty("start"));
+		
+		return solrQueryDetails;
+	}
+	
 
 }
