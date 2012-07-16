@@ -28,9 +28,19 @@ public interface EmployerRegistrationDAO {
 	public Employer getEmployerDetails(long employerId);
 
 	/**
+	 * Updating employer details
 	 * 
-	 * @param employer
+	 * @param empDTO
+	 * @return
 	 */
 	public boolean updateEmployerDetails(EmployerProfileDTO empDTO);
+	
+	/**
+	 * To change the password
+	 * 
+	 * @param empDTO
+	 * @return boolean
+	 */
+	public boolean changePassword(EmployerProfileDTO empDTO);
 
 }

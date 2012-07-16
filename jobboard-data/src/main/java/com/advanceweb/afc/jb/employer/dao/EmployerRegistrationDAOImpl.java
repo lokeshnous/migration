@@ -37,8 +37,10 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	/**
+	 * To save employer registrations
 	 * 
-	 * @param employer
+	 * @param empDTO
+	 * @return boolean
 	 */
 	public boolean createNewEmployer(EmployerProfileDTO empDTO){
 			try {
@@ -73,6 +75,24 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 */
 	public boolean updateEmployerDetails(EmployerProfileDTO empDTO){
 		return false;
+	}
+	
+	/**
+	 * To Change employer password
+	 * 
+	 * @param empDTO
+	 * @return boolean
+	 */
+	@Override
+	public boolean changePassword(EmployerProfileDTO empDTO) {
+		try {
+			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO.getMerUserDTO());
+			hibernateTemplateTracker.saveOrUpdate(merUser);
+			return true;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	return false;
 	}
 
 }

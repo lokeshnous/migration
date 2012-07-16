@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,7 +42,6 @@ public class EmployerRegistrationController {
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
-
 	/**
 	 * This method is called to display job seeker registration page
 	 * 
@@ -55,6 +55,7 @@ public class EmployerRegistrationController {
 		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
 		model.put("employerRegistrationForm", form);		
 		
+
 		return new ModelAndView("employerregistration");
 	}
 	
@@ -75,6 +76,31 @@ public class EmployerRegistrationController {
 		empDTO.setMerUserDTO(merUserDTO);
 		employerRegistration.createNewProfile(empDTO);
 		return new ModelAndView("jobseekerregistration");
+	}
+	
+	
+	/**
+	 * This method is called to view/modify job seeker profile settings
+	 * 
+	 * @param jobSeekerRegistrationForm
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/changePassword",method = RequestMethod.GET)
+	public String jsChangePassword(@Valid EmployerRegistrationForm form, Map model,BindingResult result) {
+		
+		try {			
+			EmployerProfileDTO empDTO = new EmployerProfileDTO();
+			MerUserDTO merUserDTO = transformEmployerRegistration.transformEmpFormToMerUserDTO(form);
+			empDTO.setMerUserDTO(merUserDTO);
+			// Call to service layer
+			employerRegistration.changePassword(empDTO);
+//			model.put("jobSeekerRegistrationForm", jsRegistrationForm);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "registrationsuccess";
 	}
 
 }

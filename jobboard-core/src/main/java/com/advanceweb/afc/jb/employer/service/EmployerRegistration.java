@@ -68,7 +68,12 @@ public class EmployerRegistration implements ProfileRegistration {
 
 	@Override
 	public boolean changePassword(ProfileDTO profileDTO) {
-		// TODO Auto-generated method stub
+		try {
+			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
+			return employerRegistrationDAO.changePassword(empProfileDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
