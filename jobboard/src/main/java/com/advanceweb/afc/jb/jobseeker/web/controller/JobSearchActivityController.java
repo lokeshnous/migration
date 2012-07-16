@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +15,6 @@ import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
-import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -179,37 +182,63 @@ public class JobSearchActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.POST)
-	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
+	public  ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, SearchResultDTO> model) {
 		ReadSolrServerDetails readSolrServerDetails = new ReadSolrServerDetails();
 		SearchResultDTO searchResultDTO = null;
 		Map<String, String> serverDetailsMap = readSolrServerDetails
 				.getServerDetails(solrConfiguration);
 		String searchString = jobSearchResultForm.getSearchString();
+		
+		//Checking whether server url is accessible
+		boolean serverAccessibility = false;
+		String url = serverDetailsMap.get("serverUrl")+serverDetailsMap.get("solrservice")+serverDetailsMap.get("user");
+		try{
+		    final HttpURLConnection  connection = (HttpURLConnection ) new URL(url).openConnection();
+		    connection.connect();
+		    System.out.println("Server URL "+url+ " is accessible.");
+		    if(connection.getResponseCode() == 200){
+		    	serverAccessibility = true;
+		    }
+		} catch(final MalformedURLException e){
+			serverAccessibility = false;
+			System.out.println("e1=="+e);
+		} catch(final IOException e){
+			System.out.println("e2=="+e);
+			serverAccessibility = false;
+		}
+		
+		if(serverAccessibility){
 
-		// Need to uncomment below 2 lines to take the rows and start values
-		// form the form
-		// String rows = jobSearchResultForm.getRows();
-		// String start = jobSearchResultForm.getStart();
-
-		// Hard coded for the time being for testing
-		String rows = "5";
-		String start = "0";
-
-		searchResultDTO = jobSearchActivity.getJobSearchResult(
-				searchString.trim(), serverDetailsMap, rows, start);
-
-		if (null != searchResultDTO) {
-
-			model.put("searchResultDTO", searchResultDTO);
+			// Need to uncomment below 2 lines to take the rows and start values
+			// form the form
+			// String rows = jobSearchResultForm.getRows();
+			// String start = jobSearchResultForm.getStart();
+	
+			// Hard coded for the time being for testing
+			String rows = "5";
+			String start = "0";
+	
+			searchResultDTO = jobSearchActivity.getJobSearchResult(
+					searchString.trim(), serverDetailsMap, rows, start);
+	
+			if (null != searchResultDTO) {
+	
+				model.put("searchResultDTO", searchResultDTO);
+				return new ModelAndView("jobsearchresult", "searchResultDTOModel",
+						model);
+			} else {
+	
+				System.out.println("Please enter the search string");
+				model.put("searchResultDTO", null);
+				return new ModelAndView("jobsearchresult", "searchResultDTOModel",
+						model);
+			}
+		}else{
+			System.out.println("Server url is not accessible. Please check the url.");
 			return new ModelAndView("jobsearchresult", "searchResultDTOModel",
-					model);
-		} else {
-
-			System.out.println("Please enter the search string");
-			model.put("searchResultDTO", null);
-			return new ModelAndView("jobsearchresult", "searchResultDTOModel",
-					model);
+					null);
+			
 		}
 
 	}
