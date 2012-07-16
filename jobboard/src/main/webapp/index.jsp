@@ -27,8 +27,8 @@ go(url);
 <body>
 	<h1>Welcome to merion matters</h1>
 	<ul>
-		<li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeeker
-				Registration Form</a></li>
+		<li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeekerRegistration Form</a></li>
+		<li><a href="employerRegistration/createEmployerProfile.html">Employer Registration Form</a></li>
 		<li><a href="createResumePopUp.html">Create Resume</a></li>
 		<li><a href="jspContentView/copyxmltolocal.html">Copy xml to local(D drive)</a><a href="jspContentView/viewxmlContents.html">Contents</a></li>
 	</ul>

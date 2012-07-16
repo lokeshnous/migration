@@ -241,6 +241,7 @@ jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/jsp/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createresumebuilder.jsp -text
+jobboard/src/main/webapp/WEB-INF/jsp/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/findjob.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobSeekerActivity.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/jobsearchresult.jsp -text
