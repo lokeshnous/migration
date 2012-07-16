@@ -51,7 +51,7 @@ public class JobSearchActivityController {
 	private JobSearchActivity jobSearchActivity;
 
 	@Autowired
-	private MMEmailService mailSender;
+	private MMEmailService emailService;
 
 	public JobSearchActivityController() {
 	}
@@ -125,7 +125,7 @@ public class JobSearchActivityController {
 			// TODO: Fetch the path of public resume
 			attachmentpaths.add("C:\\ppResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			// mailSender.sendEmail(employerEmailDTO);
+			// emailService.sendEmail(employerEmailDTO);
 			System.out.println("-------Mail sent to employer-----");
 			/**
 			 * confirm mail:Send mail to job seeker by sub as job title and body
@@ -141,7 +141,7 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
-			// mailSender.sendEmail(jobSeekerEmailDTO);
+			// emailService.sendEmail(jobSeekerEmailDTO);
 			System.out.println("-------Mail sent to jobseeker-----");
 
 			/**

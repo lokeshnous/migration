@@ -23,7 +23,7 @@ import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptions;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
- * This controller belongs to all jobseekers activity
+ * This controller belongs to all jobseekers Subscriptions
  * 
  * @author sharadk
  * 

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @version 1.0
  * @created 21-Jun-2012 2:25:22 PM
  */
-@Repository("mailSenderService")
+@Repository("emailService")
 public class MMEmailService implements MMEmail {
 	
 	@Autowired
