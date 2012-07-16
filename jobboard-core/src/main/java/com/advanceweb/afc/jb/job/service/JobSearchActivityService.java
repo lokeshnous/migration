@@ -66,7 +66,8 @@ public class JobSearchActivityService implements JobSearchActivity {
 
 	@Override
 	public SearchResultDTO getJobSearchResult(String searchString,
-			Map<String, String> serverDetailsMap, String rows, String start) {
+			Map<String, String> serverDetailsMap,
+			Map<String, String> solrQueryDetails, String rows, String start) {
 
 		HttpSolrServer server = null;
 		QueryResponse response = null;
@@ -76,7 +77,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 		if (searchString.length() > 0) {
 
 			server = connectToSOLRURL(serverDetailsMap);
-			response = executeSearchQuery(server, searchString, rows, start);
+			response = executeSearchQuery(server, searchString, solrQueryDetails, rows, start);
 
 			System.out.println("Number of search records===>>>"
 					+ response.getResults().getNumFound());
@@ -161,7 +162,8 @@ public class JobSearchActivityService implements JobSearchActivity {
 	public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap) {
 
 		HttpSolrServer server = new HttpSolrServer(serverDetailsMap.get(
-				"serverUrl").toString()+serverDetailsMap.get("solrservice").toString());
+				"serverUrl").toString()
+				+ serverDetailsMap.get("solrservice").toString());
 		server.setSoTimeout(Integer.parseInt(serverDetailsMap.get("sotimeout")));
 		server.setConnectionTimeout(Integer.parseInt(serverDetailsMap
 				.get("connectiontimeout")));
@@ -186,19 +188,19 @@ public class JobSearchActivityService implements JobSearchActivity {
 	 */
 	@Override
 	public QueryResponse executeSearchQuery(HttpSolrServer server,
-			String searchString, String rows, String start) {
+			String searchString, Map<String, String> solrQueryDetails, String rows, String start) {
 		QueryResponse response = null;
-	
+
 		if (searchString != null && searchString.length() > 0) {
 
 			SolrQuery searchquery = new SolrQuery();
 			searchquery.setQuery(searchString);
 			searchquery.setFacet(true);
-			searchquery.addFacetField("city");
-			searchquery.addFacetField("company");
-			// searchquery.addFacetField("radius");
-			searchquery.addFacetField("posted_dt");
-			searchquery.addFacetField("state");
+			searchquery.addFacetField(solrQueryDetails.get("city"));
+			searchquery.addFacetField(solrQueryDetails.get("company"));
+			// searchquery.addFacetField(solrQueryDetails.get("radius"));
+			searchquery.addFacetField(solrQueryDetails.get("posted_dt"));
+			searchquery.addFacetField(solrQueryDetails.get("state"));
 			searchquery.add("rows", rows);
 			searchquery.add("start", start);
 			System.out.println("searchquery===>>>" + searchquery);
