@@ -164,6 +164,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmployerRegistrat
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmployerRegistrationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/AnonymousUserJobApplyDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/AnonymousUserJobApplyDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobSearchActivityDAO.java -text
