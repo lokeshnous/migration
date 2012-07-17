@@ -27,7 +27,7 @@ fieldset {
 </style>
 </head>
 <body>
-<h1>Hello  User</h1>
+
 <form:form method="Post" action="findJobSearch.html" 
 	commandName="jobSearchResultForm">
 <form:input path="searchString" />
