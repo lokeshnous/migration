@@ -22,11 +22,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
-import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
-import com.advanceweb.afc.jb.search.engine.solr.SolrJobSearchResultDTO;
-
 @Service("jobSearchDeleagate")
 public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
@@ -42,13 +37,12 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 	}
 
 	@Override
-	public JobSearchResultDTO jobSearch(String searchName,
-			Map<String, String> paramMap, long rows, long start) {
+	public JobSearchResultDTO jobSearch(final String searchName,
+			final Map<String, String> paramMap, final long rows, final long start) {
 
 		HttpSolrServer server = null;
 		QueryResponse response = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
-
 		SolrJobSearchResultDTO solrJobSearchResultDTO = null;
 		JobSearchDTO jobSearchDTO = new JobSearchDTO();
 
