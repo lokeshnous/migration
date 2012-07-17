@@ -27,7 +27,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
 public class PopulateDropdownsTest extends ServiceTest{
 
 	@Autowired
-	private PopulateDropdowns populateDropdownsService;
+	private PopulateDropdowns popService;
 	
 	
 	/**
@@ -39,8 +39,8 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 */
 	@Test
 	public void testGetRadiusList() {
-		List<RadiusDTO> radiusList=populateDropdownsService.getRadiusList();
-		assertNotNull(radiusList);
+		List<RadiusDTO> radiusList=popService.getRadiusList();
+		assertNotNull("Radius List",radiusList);
 		assertTrue("Radius List", radiusList.size()>=0);
 		
 	}
@@ -56,9 +56,9 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 */
 	@Test
 	public void testGetExcludeFromList() {
-		List<ExcludeFromDTO> excludeFromList=populateDropdownsService.getExcludeFromList();
-		assertNotNull(excludeFromList);
-		assertTrue("Radius List",excludeFromList.size()>=0);
+		List<ExcludeFromDTO> excludeFromList=popService.getExcludeFromList();
+		assertNotNull("ExcludeFrom List",excludeFromList);
+		assertTrue("ExcludeFrom List",excludeFromList.size()>=0);
 		
 	}
 
@@ -71,8 +71,8 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 */
 	@Test
 	public void testGetFromZipcodeList() {
-		List<FromZipcodeDTO> fromZipcodeList=populateDropdownsService.getFromZipcodeList();
-		assertNotNull(fromZipcodeList);
+		List<FromZipcodeDTO> fromZipcodeList=popService.getFromZipcodeList();
+		assertNotNull("From Zipcode List",fromZipcodeList);
 		assertTrue("From Zipcode List", fromZipcodeList.size()>=0);
 		
 	}
@@ -87,8 +87,8 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 */
 	@Test
 	public void testGetStateList() {
-		List<StateDTO> stateList=populateDropdownsService.getStateList();
-		assertNotNull(stateList);
+		List<StateDTO> stateList=popService.getStateList();
+		assertNotNull("State List",stateList);
 		assertTrue("State List", stateList.size()>=0);
 		
 	}
@@ -104,8 +104,8 @@ public class PopulateDropdownsTest extends ServiceTest{
 	
 	@Test
 	public void testGetMetroAreaList() {
-		List<MetroAreaDTO> metroAreaList=populateDropdownsService.getMetroAreaList();
-		assertNotNull(metroAreaList);
+		List<MetroAreaDTO> metroAreaList=popService.getMetroAreaList();
+		assertNotNull("Metro Area List", metroAreaList);
 		assertTrue("Metro Area List", metroAreaList.size()>=0);
 		
 	}
@@ -120,9 +120,9 @@ public class PopulateDropdownsTest extends ServiceTest{
 	
 	@Test
 	public void testGetEmploymentTypeList() {
-		List<EmploymentTypeDTO> employmentTypeList=populateDropdownsService.getEmploymentTypeList();
-		assertNotNull(employmentTypeList);
-		assertTrue("Employment Type List", employmentTypeList.size()>=0);
+		List<EmploymentTypeDTO> empTypeList=popService.getEmploymentTypeList();
+		assertNotNull("Employment Type List",empTypeList);
+		assertTrue("Employment Type List", empTypeList.size()>=0);
 		
 	}
 
@@ -136,9 +136,9 @@ public class PopulateDropdownsTest extends ServiceTest{
 	
 	@Test
 	public void testGetJobPostedDateList() {
-		List<JobPostedDateDTO> jobPostedDateList=populateDropdownsService.getJobPostedDateList();	
-		assertNotNull(jobPostedDateList);
-		assertTrue("Employment Type List", jobPostedDateList.size()>=0);
+		List<JobPostedDateDTO> jobPostedDateList=popService.getJobPostedDateList();	
+		assertNotNull("Job Posted Date",jobPostedDateList);
+		assertTrue("Job Posted Date", jobPostedDateList.size()>=0);
 		
 	}
 
