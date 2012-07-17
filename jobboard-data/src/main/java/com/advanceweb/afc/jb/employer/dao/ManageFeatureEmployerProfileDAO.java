@@ -17,5 +17,7 @@ public interface ManageFeatureEmployerProfileDAO {
 	 * @param companyProfileDTO
 	 */
 	void saveEmployerProfile(CompanyProfileDTO companyProfileDTO);
+	
+	CompanyProfileDTO getEmployerDetails(long employerId);
 
 }

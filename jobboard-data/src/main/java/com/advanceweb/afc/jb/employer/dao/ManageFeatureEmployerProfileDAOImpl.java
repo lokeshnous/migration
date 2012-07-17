@@ -1,13 +1,19 @@
 package com.advanceweb.afc.jb.employer.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 
 /**
  * <code> ManageFeatureEmployerProfileDAOImpl </code> is a DaoIMPL class.
@@ -42,10 +48,29 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		try {
 			if (companyProfileDTO != null) {
 				sessionFactory.getCurrentSession().saveOrUpdate(facility);
+				System.out.println("data submitted");
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public CompanyProfileDTO getEmployerDetails(long employerId) {
+		CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
+
+		try {
+			if (employerId != 0) {
+				Session session = sessionFactory.openSession();
+				AdmFacility facility = (AdmFacility) session.get(AdmFacility.class,
+						new Long(employerId).intValue());
+				System.out.println(facility);
+
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return companyProfileDTO;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 
 /**
@@ -59,6 +61,22 @@ public class EmployerProfileManagementController {
 	 */
 	@RequestMapping(value = "/cancelemployerprofile", method = RequestMethod.GET)
 	public ModelAndView cancelemployerprofile(Map model) {
+
+		return new ModelAndView("manageFeatureEmpPro");
+	}
+	
+	
+	
+	/**
+	 * to get Saved Job
+	 * 
+	 * @param model
+	 * @return
+	 */
+
+	@RequestMapping(value = "/viewEmployerDetails", method = RequestMethod.GET)
+	public ModelAndView getSavedJob(Map model) {
+		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerDetails(109);
 
 		return new ModelAndView("manageFeatureEmpPro");
 	}

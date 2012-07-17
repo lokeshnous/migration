@@ -1,7 +1,10 @@
 package com.advanceweb.afc.jb.employer.service;
 
 
+import java.util.List;
+
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.SavedJobDTO;
 
 /**
  * 
@@ -22,4 +25,7 @@ public interface ManageFeatureEmployerProfile {
 	 */
 	void saveEmployerProfile(CompanyProfileDTO companyProfileDTO);
 
+	CompanyProfileDTO getEmployerDetails(long employerId);
+	
+	
 }

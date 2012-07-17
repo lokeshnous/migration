@@ -32,7 +32,7 @@
 	<input value="Cancel"
 		onclick="javascript:cancel('cancelemployerprofile.html');"
 		type="button">
-
+	<li><a href="viewEmployerDetails.html">View Employer Deatils</a></li>
 
 </body>
 </html>

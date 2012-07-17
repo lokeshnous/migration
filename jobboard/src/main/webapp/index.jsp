@@ -58,5 +58,9 @@ go(url);
 		onclick="javascript:go('./jobsearchactivity/viewJobDetails.html?id=13101');" type="button">
 	<input value="Apply"
 		onclick="javascript:go('./jobsearchactivity/applyJob.html?id=13100');" type="button">
+		
+			<h2>Manage Featured Employer Profile</h2>
+		<li><a href="employerprofile.html">Manage Featured Employer Profile</a></li>
+		
 </body>
 </html>

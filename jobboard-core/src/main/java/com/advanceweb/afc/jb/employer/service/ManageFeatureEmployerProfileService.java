@@ -34,4 +34,10 @@ public class ManageFeatureEmployerProfileService implements
 
 	}
 
+	@Override
+	public CompanyProfileDTO getEmployerDetails(long employerId) {
+		
+		return manageFeatureEmployerProfileDAO.getEmployerDetails(employerId);
+	}
+
 }
