@@ -23,8 +23,8 @@ public interface ResumeService {
 	public boolean deleteResume(int resumeId);
 	public boolean createResumeBuilder(ResumeDTO resumeDTO);
 
-	public void addCreateResumeCopyPaste(ResumeDTO createResumeDTO);
-	public void addCreateResumeUpload(ResumeDTO createResumeDTO);
+	public boolean createResumeCopyPaste(ResumeDTO createResumeDTO);
+	public boolean createResumeUpload(ResumeDTO createResumeDTO);
 	
 	public boolean addWorkExp(List<WorkExpDTO> listWorkExp);
 	public boolean addReference(List<ReferenceDTO> listRefExp);

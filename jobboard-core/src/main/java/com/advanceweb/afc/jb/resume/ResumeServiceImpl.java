@@ -66,14 +66,14 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void addCreateResumeCopyPaste(ResumeDTO resumeDTO) {
-		resumeDao.saveCreateResumeCopyPaste(resumeDTO);
+	public boolean createResumeCopyPaste(ResumeDTO resumeDTO) {
+		return resumeDao.createResumeCopyPaste(resumeDTO);
 		
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void addCreateResumeUpload(ResumeDTO resumeDTO) {
-		resumeDao.saveCreateResumeUpload(resumeDTO);
+	public boolean createResumeUpload(ResumeDTO resumeDTO) {
+		return resumeDao.createResumeUpload(resumeDTO);
 		
 	}
 
