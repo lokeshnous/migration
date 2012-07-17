@@ -72,7 +72,7 @@ public class ResumeController {
 	public String getResumes(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
 
-		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(1);
+		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
 
 		for (ResumeDTO resumeDTO : resumeDTOList) {
 			System.out.println(resumeDTO);

@@ -79,7 +79,9 @@ public class ResumeDaoImpl implements ResumeDao {
 		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class, resumeId);
 		ResBuilderResume resumeBuilder = hibernateTemplate.get(ResBuilderResume.class, resume.getUploadResumeId());
 		ResumeDTO dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume);
-		dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto, resumeBuilder);
+		if(resumeBuilder != null){
+			dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto, resumeBuilder);
+		}
 		return dto;
 	}
 

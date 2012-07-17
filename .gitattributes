@@ -1,5 +1,7 @@
 * text=auto !eol
 jobboard-common/pom.xml -text
+jobboard-common/resources/HibernateSessionFactory.xml -text
+jobboard-common/resources/database.properties -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
@@ -84,7 +86,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeServi
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
-jobboard-core/src/test/java/com/advanceweb/afc/AppTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
@@ -233,11 +236,10 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadSolrServerDetails.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
 jobboard/src/main/java/common.properties -text
-jobboard/src/main/java/database.properties -text
 jobboard/src/main/resources/careertool.html -text
 jobboard/src/main/resources/healthcarenews.html -text
 jobboard/src/main/resources/viewcareerlinkContents.html -text
-jobboard/src/main/webapp/WEB-INF/HibernateSessionFactory.xml -text
+jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/jsp/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/createResume.jsp -text
