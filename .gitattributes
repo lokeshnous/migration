@@ -95,6 +95,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSear
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
