@@ -204,7 +204,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/helper/ResumeConversion
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
