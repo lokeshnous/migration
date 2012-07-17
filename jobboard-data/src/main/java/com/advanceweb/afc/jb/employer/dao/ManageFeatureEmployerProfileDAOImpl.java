@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -71,6 +72,22 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 			e.printStackTrace();
 		}
 		return companyProfileDTO;
+	}
+
+	@Override
+	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
+		try {
+			if (employerId != 0) {
+				Session session = sessionFactory.openSession();
+				AdmFacility facility = (AdmFacility) session.get(AdmFacility.class,
+						new Long(employerId).intValue());
+
+
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

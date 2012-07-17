@@ -1,10 +1,13 @@
 package com.advanceweb.afc.jb.employer.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.ManageFeatureEmployerProfileDAO;
 
 /**
@@ -38,6 +41,11 @@ public class ManageFeatureEmployerProfileService implements
 	public CompanyProfileDTO getEmployerDetails(long employerId) {
 		
 		return manageFeatureEmployerProfileDAO.getEmployerDetails(employerId);
+	}
+
+	@Override
+	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
+		return null;
 	}
 
 }

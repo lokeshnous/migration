@@ -9,11 +9,11 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 
 	private long employerId;
 	private PackageInformationDTO packageInformationDTO;
-	private CompanyProfileDTO comapnyProfileDTO;
 	private MetricsDTO metricsDTO;
 	private MerUserDTO merUserDTO;
 	private CompanyProfileDTO compProfileDTO;
 	private AddressDTO addDTO;
+	private String profileType;
 
 	public EmployerProfileDTO(){
 
@@ -37,14 +37,6 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 
 	public void setPackageInformationDTO(PackageInformationDTO packageInformationDTO) {
 		this.packageInformationDTO = packageInformationDTO;
-	}
-
-	public CompanyProfileDTO getComapnyProfileDTO() {
-		return comapnyProfileDTO;
-	}
-
-	public void setComapnyProfileDTO(CompanyProfileDTO comapnyProfileDTO) {
-		this.comapnyProfileDTO = comapnyProfileDTO;
 	}
 
 	public MetricsDTO getMetricsDTO() {
@@ -78,7 +70,13 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 	public void setAddDTO(AddressDTO addDTO) {
 		this.addDTO = addDTO;
 	}
-	
-	
 
+	public String getProfileType() {
+		return profileType;
+	}
+
+	public void setProfileType(String profileType) {
+		this.profileType = profileType;
+	}
+	
 }

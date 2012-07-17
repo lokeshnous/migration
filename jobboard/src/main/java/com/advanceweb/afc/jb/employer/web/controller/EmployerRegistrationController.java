@@ -72,7 +72,7 @@ public class EmployerRegistrationController {
 		CompanyProfileDTO compProfileDTO = transformEmployerRegistration.transformEmpFormToCompProfileDTO(form);
 		MerUserDTO merUserDTO = transformEmployerRegistration.transformEmpFormToMerUserDTO(form);
 		empDTO.setAddDTO(addDTO);
-		empDTO.setComapnyProfileDTO(compProfileDTO);
+		empDTO.setCompProfileDTO(compProfileDTO);
 		empDTO.setMerUserDTO(merUserDTO);
 		employerRegistration.createNewProfile(empDTO);
 		return new ModelAndView("jobseekerregistration");

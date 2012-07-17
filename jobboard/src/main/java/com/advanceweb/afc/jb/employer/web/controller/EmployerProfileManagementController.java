@@ -3,15 +3,15 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 
 /**
@@ -80,5 +80,32 @@ public class EmployerProfileManagementController {
 
 		return new ModelAndView("manageFeatureEmpPro");
 	}
+	
+	
+	
+	/**
+	 * This method is called to view/modify job seeker profile settings
+	 * 
+	 * @param jobSeekerRegistrationForm
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/editAccountSettings",method = RequestMethod.GET)
+	public String editAccountSettings(
+			BindingResult result,Map model) {		
+		try {			
+			
+			List<EmployerProfileDTO> listEmpProfile = manageFeatureEmployerProfile.getEmployerAccountDetails(2);
+			
+//			model.put("jobSeekerRegistrationForm", jsRegistrationForm);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "registrationsuccess";
+	}
+	
+	
 
 }
