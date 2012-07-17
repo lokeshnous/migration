@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.employer.dao;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
-import com.advanceweb.afc.jb.data.domain.Agency;
 
 /**
  * @author rajeshkb

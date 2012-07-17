@@ -166,6 +166,7 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/jobSeekerChangePassword",method = RequestMethod.GET)
 	public String jsChangePassword(@Valid JobSeekerRegistrationForm jsRegistrationForm,
 			BindingResult result,Map model) {

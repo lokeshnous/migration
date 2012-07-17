@@ -24,7 +24,7 @@ public interface JobSeekerActivity {
 	 * 
 	 * @return
 	 */
-	void deleteAppliedJobs(long appliedJobId);
+	boolean deleteAppliedJobs(long appliedJobId);
 
 	/**
 	 * 
@@ -39,7 +39,7 @@ public interface JobSeekerActivity {
 	 * @param savedJobId
 	 * @return
 	 */
-	void deleteSavedJobs(long savedJobId);
+	boolean deleteSavedJobs(long savedJobId);
 	
 	/**
 	 * get saved job

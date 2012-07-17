@@ -43,9 +43,9 @@ public class JobSeekerActivityService implements JobSeekerActivity {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public void deleteAppliedJobs(long appliedJobId) {
+	public boolean deleteAppliedJobs(long appliedJobId) {
 
-		activityDAO.deleteAppliedJobs(appliedJobId);
+		return activityDAO.deleteAppliedJobs(appliedJobId);
 
 	}
 
@@ -62,8 +62,8 @@ public class JobSeekerActivityService implements JobSeekerActivity {
 	 * delete Saved job
 	 */
 	@Override
-	public void deleteSavedJobs(long savedJobId) {
-		activityDAO.deleteSavedJobs(savedJobId);
+	public boolean deleteSavedJobs(long savedJobId) {
+		return activityDAO.deleteSavedJobs(savedJobId);
 	}
 
 	public JobSeekerActivityDAO getActivityDAO() {

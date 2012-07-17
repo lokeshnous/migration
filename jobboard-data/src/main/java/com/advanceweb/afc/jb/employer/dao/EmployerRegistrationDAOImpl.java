@@ -84,6 +84,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 * @return boolean
 	 */
 	@Override
+// TODO: Parameter 'empDTO' is not assigned and could be declared final
 	public boolean changePassword(EmployerProfileDTO empDTO) {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO.getMerUserDTO());

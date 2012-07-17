@@ -41,9 +41,10 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
  * deleting selected applied job
  */
 	@Override
-	public void deleteAppliedJobs(long appliedJobId) {
+	public boolean deleteAppliedJobs(long appliedJobId) {
 		JpJob jpJob = getById(appliedJobId);
 		sessionFactory.getCurrentSession().delete(jpJob);
+		return true;
 	}
 
 	/**
@@ -76,9 +77,10 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	 * deleting selected saved job
 	 */
 	@Override
-	public void deleteSavedJobs(long savedJobId) {
+	public boolean deleteSavedJobs(long savedJobId) {
 		JpJob a = getById(savedJobId);
 		sessionFactory.getCurrentSession().delete(a);
+		return true;
 	}
 
 	public JpJob getById(long id) {
