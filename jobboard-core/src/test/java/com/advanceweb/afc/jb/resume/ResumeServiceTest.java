@@ -1,18 +1,80 @@
 package com.advanceweb.afc.jb.resume;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
-import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.ResumeDTO;
-import com.advanceweb.afc.jb.resume.ResumeService;
 
 public class ResumeServiceTest extends ServiceTest {
 
 	@Autowired
 	private ResumeService resumeService;
 
+	
+	@Test
+	public void testCreateResumeUpload() {
+		try {
+			ResumeDTO createResumeDTO=new ResumeDTO();
+
+			createResumeDTO.setUserId(Integer.parseInt("1"));
+			createResumeDTO.setResumeType("Upload");
+			createResumeDTO.setResume_name("Test");
+			
+			
+			createResumeDTO.setDesired_job_title("Tilt");
+			createResumeDTO.setDesired_employment_type("1");
+			createResumeDTO.setWork_authorization_US("1");
+			createResumeDTO.setWilling_to_relocate("Y");
+			createResumeDTO.setResume_visibility("1");			
+
+			
+			createResumeDTO.setResumeText("Testttttttttttttttttt");
+			createResumeDTO.setIsPublished("1");
+
+			
+			createResumeDTO.setFileServer("10.24.64.42");
+			createResumeDTO.setFileName("Test");
+			createResumeDTO.setFilePath("filePath");
+			assertTrue("Upload Resume", resumeService.createResumeUpload(createResumeDTO));
+			System.out.println("Resume Upload");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testCreateResumeCopyPaste() {
+		try {
+			ResumeDTO createResumeDTO=new ResumeDTO();
+			createResumeDTO.setUserId(Integer.parseInt("1"));
+			createResumeDTO.setResumeType("CopyPaste");
+			createResumeDTO.setResume_name("Test");
+			
+			
+			createResumeDTO.setDesired_job_title("Tilt");
+			createResumeDTO.setDesired_employment_type("1");
+			createResumeDTO.setWork_authorization_US("1");
+			createResumeDTO.setWilling_to_relocate("Y");
+			createResumeDTO.setResume_visibility("1");			
+
+			
+			createResumeDTO.setResumeText("Testttttttttttttttttt");
+			createResumeDTO.setIsPublished("1");
+			assertTrue("Copy Paste Resume", resumeService.createResumeUpload(createResumeDTO));
+			System.out.println("Resume Copy Paste");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	@Test
 	public void testRetrieveAllResumes() {
 		try {
