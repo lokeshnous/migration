@@ -66,6 +66,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearch.java -te
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchActivity.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchActivityService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchAdapter.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSeekerActivity.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSeekerActivityService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/Jobs.java -text
