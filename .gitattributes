@@ -91,6 +91,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ReadSolrSer
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
