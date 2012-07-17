@@ -285,17 +285,17 @@ public class ResumeController {
 		resumeType.put("CP", "CopyPaste");
 		model.addAttribute("resumeTypeList", resumeType);  
 		Map<String,String> employmentType = new LinkedHashMap<String,String>();
-		employmentType.put("FT", "Full Time");
-		employmentType.put("PT", "Part Time");
-		employmentType.put("PD", "Per Diem");
-		employmentType.put("CT", "Contract/Travel");
+		employmentType.put("31", "Full Time");
+		employmentType.put("32", "Part Time");
+		employmentType.put("33", "Per Diem");
+		employmentType.put("34", "Contract/Travel");
 		model.addAttribute("employmentTypeList", employmentType);  
 		Map<String,String> workauthUS = new LinkedHashMap<String,String>();
-		workauthUS.put("CR", "1");
-		workauthUS.put("UPL", "2");
-		workauthUS.put("CP", "3");
+		workauthUS.put("35", "1");
+		workauthUS.put("36", "2");
+		workauthUS.put("37", "3");
 		model.addAttribute("workauthUSList", workauthUS);  
-		createResume.setResume_visibility("Pu");
+		createResume.setResume_visibility("P");
 		createResume.setWilling_to_relocate("Y");
 		map.put("createResume", createResume);
 
@@ -382,14 +382,14 @@ public class ResumeController {
 				createResumeDTO.setDesired_job_title(createResume.getDesired_job_title());
 				createResumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
 				createResumeDTO.setResume_visibility(createResume.getResume_visibility());
-				createResumeDTO.setWork_authorization_US(createResume.getWorkauthUS());
+				createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
 				createResumeDTO.setResumeText(resumeTextData.toString());
 				createResumeDTO.setFileServer(ownIP.getHostAddress());
-				createResumeDTO.setFilePath(fileName);
+				createResumeDTO.setFilePath("fileName");
 				createResumeDTO.setFileName(file.getOriginalFilename());
 				createResumeDTO.setIsPublished("12");
-				resumeService.addCreateResumeUpload(createResumeDTO);
-
+				//resumeService.addCreateResumeUpload(createResumeDTO);
+				resumeService.createResumeUpload(createResumeDTO);
 				//Close the input stream
 				in.close();
 				resumeTextData.delete(0, resumeTextData.length());
@@ -398,7 +398,7 @@ public class ResumeController {
 				e.printStackTrace();
 			}
 
-			return "redirect:/createResumePopUp.html";
+			return "redirect:/jobSeekerResume/createResumePopUp.html";
 		}else{
 			return "copyPasteResumeText";
 		}
@@ -415,11 +415,14 @@ public class ResumeController {
 		createResumeDTO.setDesired_job_title(createResume.getDesired_job_title());
 		createResumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
 		createResumeDTO.setResume_visibility(createResume.getResume_visibility());
-		createResumeDTO.setWork_authorization_US(createResume.getWorkauthUS());
+		createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
 		createResumeDTO.setResumeText(createResume.getResumeText());
-		resumeService.addCreateResumeCopyPaste(createResumeDTO);
+		createResumeDTO.setIsPublished("12");
 
-		return "redirect:/createResumePopUp.html";
+		//resumeService.addCreateResumeCopyPaste(createResumeDTO);
+		resumeService.createResumeCopyPaste(createResumeDTO);
+		
+		return "redirect:/jobSeekerResume/createResumePopUp.html";
 	}
 
 	/**
