@@ -86,6 +86,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeServiceImpl.java 
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDeleagate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDeleagateImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
