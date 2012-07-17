@@ -30,51 +30,106 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 	private JobSearchDeleagate jobSearchDeleagate ;//= new JobSearchDeleagateImpl();
 
 	@Test
-	public void testRetrieveAllResumes() {
+	public void jobSearchTest1() {
 		
 		String searchName = "basicjobsearch";
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("titlesearch", "doctor");
 		//paramMap.put("", arg1);
 		//paramMap.put("", arg1);
-		
-		long rows = 3;
+		long rows = 4;
 		long start = 0;
 		
-		try {
-			
-			JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
-			
-			assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
-			SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
-			
-			
-			
-			System.out.println(solrJobSearchResultDTO);
-			List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
-			
-			
-			for (JobSearchDTO jobSearchDTO : searchResultList) {
-				System.out.println(jobSearchDTO);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
+		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
+		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
+		
+		System.out.println("Size of searchResultList==>>"+searchResultList.size());
+		
+	}
+	
+	@Test
+	public void jobSearchTest2() {
+		
+		String searchName = "basicjobsearch";
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("titlesearch", "doctor");
+		//paramMap.put("", arg1);
+		//paramMap.put("", arg1);
+		long rows = 4;
+		long start = 0;
+		
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
+		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
+		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
+		
+		System.out.println("Size of searchResultList==>>"+searchResultList.size());
+		
+	}
+	
+	@Test
+	public void jobSearchTest3() {
+		
+		String searchName = "basicjobsearch";
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("titlesearch", "doctor");
+		//paramMap.put("", arg1);
+		//paramMap.put("", arg1);
+		long rows = 0;
+		long start = 0;
+		
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
+		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
+		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
+		
+		System.out.println("Size of searchResultList==>>"+searchResultList.size());
+		
+	}
+	
+	@Test
+	public void jobSearchTest4() {
+		
+		String searchName = "basicjobsearch";
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("titlesearch", "");
+		//paramMap.put("", arg1);
+		//paramMap.put("", arg1);
+		long rows = 4;
+		long start = 0;
+		
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() == null);
+		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
+		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
+		
+		System.out.println("Size of searchResultList==>>"+searchResultList.size());
+		
+	}
+	
+	@Test
+	public void jobSearchTest5() {
+		
+		String searchName = "";
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("titlesearch", "doctor");
+		//paramMap.put("", arg1);
+		//paramMap.put("", arg1);
+		long rows = 4;
+		long start = 0;
+		
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
+		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
+		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
+		
+		System.out.println("Size of searchResultList==>>"+searchResultList.size());
+		
 	}
 
-	/*@Test
-	public void testEditResume() {
-		try {
-
-			ResumeDTO resumeDTO = resumeService.editResume(2);
-			assertTrue("Edit Resume", resumeDTO != null);
-			System.out.println(resumeDTO);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
+	
 	
 
 }
