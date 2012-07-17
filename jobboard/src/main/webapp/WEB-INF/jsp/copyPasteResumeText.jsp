@@ -39,7 +39,7 @@
 			<div><h3 style="font: bold; color: white;">Copy Paste Resume</h3><br></div>
 			
 			<div  style="text-align: center;">
-				<form:textarea path="resumeText" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')"  />
+				<form:textarea path="resumeText" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')" rows="20" cols="100" />
 			</div>
 			<div style="text-align: center;">
 				<input type="submit" value="create" /><input type="button"
