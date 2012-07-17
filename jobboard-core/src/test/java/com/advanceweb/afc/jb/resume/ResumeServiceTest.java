@@ -16,12 +16,14 @@ public class ResumeServiceTest extends ServiceTest {
 	@Autowired
 	private ResumeService resumeService;
 
-
+	/**
+	 * Create Upload Resume for UserID=2
+	 */
 	@Test
 	public void testCreateResumeUpload() {
 		try {
 			ResumeDTO createResumeDTO=new ResumeDTO();
-			createResumeDTO.setUserId(Integer.parseInt("1"));
+			createResumeDTO.setUserId(Integer.parseInt("2"));
 			createResumeDTO.setResumeType("Upload");
 			createResumeDTO.setResume_name("Test");
 			createResumeDTO.setDesired_job_title("Tilt");
@@ -44,11 +46,15 @@ public class ResumeServiceTest extends ServiceTest {
 		}
 	}
 
+	/**
+	 * 
+	 * Create resume for copy paste for userid=2
+	 */
 	@Test
 	public void testCreateResumeCopyPaste() {
 		try {
 			ResumeDTO createResumeDTO=new ResumeDTO();
-			createResumeDTO.setUserId(Integer.parseInt("1"));
+			createResumeDTO.setUserId(Integer.parseInt("2"));
 			createResumeDTO.setResumeType("CopyPaste");
 			createResumeDTO.setResume_name("Test");
 			createResumeDTO.setDesired_job_title("Tilt");
@@ -65,7 +71,10 @@ public class ResumeServiceTest extends ServiceTest {
 		}
 	}
 
-
+	/**
+	 * 
+	 * Retrive resume for userid=2
+	 */
 	@Test
 	public void testRetrieveAllResumes() {
 		try {
@@ -80,25 +89,37 @@ public class ResumeServiceTest extends ServiceTest {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Edit resume for userid=2
+	 * 
+	 */
 	@Test
 	public void testEditResume() {
 		try {
 
-			ResumeDTO resumeDTO = resumeService.editResume(2);
-			assertTrue("Edit Resume", resumeDTO != null);
-			//System.out.println(resumeDTO);
+			List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
+			for (ResumeDTO resumeDTO : resumeDTOList) {
+				ResumeDTO resumeDTOInternal = resumeService.editResume(resumeDTO.getUploadResumeId());
+				assertTrue("Edit Resume", resumeDTOInternal != null);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//@Test
+	/**
+	 * Delete all created resumes for userid=2
+	 * 
+	 */
+	@Test
 	public void testDeleteResume() {
 		try {
-			assertTrue("Edit Resume", resumeService.deleteResume(22));
-			//System.out.println("Resume deleted");
+
+			List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
+			for (ResumeDTO resumeDTO : resumeDTOList) {
+				assertTrue("Delete Resume", resumeService.deleteResume(resumeDTO.getUploadResumeId()));
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
