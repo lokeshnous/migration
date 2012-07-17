@@ -1,5 +1,7 @@
 * text=auto !eol
 jobboard-common/pom.xml -text
+jobboard-common/resources/HibernateSessionFactory.xml -text
+jobboard-common/resources/database.properties -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
@@ -52,8 +54,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/EmailDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmail.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmailService.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
-jobboard-common/src/resources/HibernateSessionFactory.xml -text
-jobboard-common/src/resources/database.properties -text
 jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/AgencyRegistration.java -text
