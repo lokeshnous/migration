@@ -21,8 +21,8 @@ public interface ResumeDao {
 	public ResumeDTO editResume(int resumeId);
 	public boolean deleteResume(int resumeId);
 	public boolean createResume(ResumeDTO resumeDTO);
-	public void saveCreateResumeCopyPaste ( ResumeDTO resumeDTO );
-	public void saveCreateResumeUpload (ResumeDTO resumeDTO);
+	public boolean createResumeCopyPaste ( ResumeDTO resumeDTO );
+	public boolean createResumeUpload (ResumeDTO resumeDTO);
 	
 	public boolean addWorkExp(List<WorkExpDTO> listWorkExp);
 	public boolean addReference(List<ReferenceDTO> listRefExp);
