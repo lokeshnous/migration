@@ -186,7 +186,7 @@ public class JobSearchActivityController {
 			BindingResult result, Map<String, JobSearchResultDTO> model) {
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
-		String searchName = "jobsearch";
+		String searchName = "basicjobsearch";
 		// Each search fields will be put into this map
 		//System.out.println("jobSearchResultForm.getSearchString().trim()=="
 				//+ jobSearchResultForm.getSearchString().trim());
