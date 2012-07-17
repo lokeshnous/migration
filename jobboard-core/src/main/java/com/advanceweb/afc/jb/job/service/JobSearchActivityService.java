@@ -1,18 +1,5 @@
 package com.advanceweb.afc.jb.job.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.impl.XMLResponseParser;
-import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.FacetField.Count;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchActivityDAO;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
-import com.advanceweb.afc.jb.search.engine.solr.SearchResultDTO;
+
 
 /**
  * <code> JobSearchActivityService </code> is a implementation for Service
@@ -64,7 +50,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 		jobSearchActivityDAO.applyJob(applyJobDTO);
 	}
 
-	@Override
+	/*@Override
 	public SearchResultDTO getJobSearchResult(String searchString,
 			Map<String, String> serverDetailsMap,
 			Map<String, String> solrQueryDetails, String rows, String start) {
@@ -153,13 +139,13 @@ public class JobSearchActivityService implements JobSearchActivity {
 			return null;
 		}
 
-	}
+	}*/
 
 	/**
 	 * 
 	 */
-	@Override
-	public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap) {
+	//@Override
+	/*public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap) {
 
 		HttpSolrServer server = new HttpSolrServer(serverDetailsMap.get(
 				"serverUrl").toString()
@@ -183,9 +169,9 @@ public class JobSearchActivityService implements JobSearchActivity {
 		return server;
 	}
 
-	/**
+	*//**
 	 * 
-	 */
+	 *//*
 	@Override
 	public QueryResponse executeSearchQuery(HttpSolrServer server,
 			String searchString, Map<String, String> solrQueryDetails, String rows, String start) {
@@ -214,7 +200,7 @@ public class JobSearchActivityService implements JobSearchActivity {
 
 		return response;
 	}
-
+*/
 	/**
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
 	 * 
