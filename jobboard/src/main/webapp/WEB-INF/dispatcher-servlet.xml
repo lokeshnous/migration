@@ -40,6 +40,5 @@
 		<property name="basename" value="/WEB-INF/messages" />
 	</bean>
 	
-	<util:properties id="solrConfiguration" location="/WEB-INF/solrConfiguration.properties" />
 
 </beans>
