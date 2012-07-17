@@ -29,8 +29,8 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private HibernateTemplate hibernateTemplate;
 	
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactory) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
 	}
 
 	/**
@@ -41,11 +41,9 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 */
 	@Override
 	@Transactional(readOnly=false)
-	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jobSeekerRegistrationDTO) {
+	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
 		
-		MerUser merUser = registrationConversionHelper
-				.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO
-						.getMerUserDTO());
+		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO.getMerUserDTO());
 		try {
 			if (merUser != null) {
 				hibernateTemplate.saveOrUpdate(merUser);
@@ -80,7 +78,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 		try {
 			if (jobSeekerId != 0) {
-				MerUser merUser = hibernateTemplate.load(MerUser.class, jobSeekerId);
+				MerUser merUser = hibernateTemplate.load(MerUser.class, new Long(jobSeekerId).intValue());
 				MerUserDTO merUserDTO = registrationConversionHelper.transformMerUserToMerUserDTO(merUser);
 				jsRegistrationDTO.setMerUserDTO(merUserDTO);
 			}
