@@ -93,10 +93,12 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResul
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
+jobboard-core/src/resources/solrConfiguration.properties -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
@@ -266,7 +268,6 @@ jobboard/src/main/webapp/WEB-INF/jsp/manageFeatureEmpPro.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/registrationsuccess.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/uploadfile.jsp -text
 jobboard/src/main/webapp/WEB-INF/jsp/uploadfileindex.jsp -text
-jobboard/src/main/webapp/WEB-INF/solrConfiguration.properties -text
 jobboard/src/main/webapp/WEB-INF/web.xml -text
 jobboard/src/main/webapp/index.jsp -text
 jobboard/src/main/webapp/js/jquery-1.3.2.min.js -text

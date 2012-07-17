@@ -157,7 +157,7 @@
 		</property>
 	</bean>
 	
-	
+	<util:properties id="solrConfiguration" location="classpath:solrConfiguration.properties" />
 	
 
 </beans>
