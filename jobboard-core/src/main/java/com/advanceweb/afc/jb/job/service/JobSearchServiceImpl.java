@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 public class JobSearchServiceImpl implements JobSearchService{
 
 	@Autowired
-	JobSearchDeleagate jobSearchDeleagate;
+	private JobSearchDeleagate jobSearchDeleagate;
 	
 	@Override
-	public JobSearchResultDTO jobSearch(String searchName,
-			Map<String, String> paramMap, long rows, long start) {
+	public JobSearchResultDTO jobSearch(final String searchName,
+			final Map<String, String> paramMap, final long rows, final long start) {
 		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
 		return jobSearchResultDTO;
 	}
