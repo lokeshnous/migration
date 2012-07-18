@@ -18,7 +18,7 @@ import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 public class AgencyRegistration implements ProfileRegistration {
 
 	private AgencyRegistration agencyRegistration;
-	public RegistrationConversionHelper m_RegistrationConversionHelper;
+
 
 
 	public AgencyRegistration(){

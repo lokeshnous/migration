@@ -10,7 +10,7 @@ import com.advanceweb.afc.jb.data.domain.Job;
  */
 public interface JobsDAO {
 
-	public Job m_Job=null;
+
 
 	/**
 	 * 

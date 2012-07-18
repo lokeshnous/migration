@@ -36,8 +36,6 @@ public interface Jobs {
 
 	}
 
-	public JobApplicationDTO m_JobApplicationDTO=null;
-	public JobsDTO m_JobsDTO=null;
 
 	/**
 	 * 

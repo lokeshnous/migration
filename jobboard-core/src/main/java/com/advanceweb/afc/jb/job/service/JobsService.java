@@ -18,8 +18,7 @@ public class JobsService implements Jobs {
 
 	private MMEmail mmMailService;
 	private JobSearch jobSearchAdapter;
-	public MMEmail m_MMEmail;
-	public JobSearch m_JobSearch;
+
 
 	public JobsService(){
 

@@ -13,8 +13,7 @@ import com.advanceweb.afc.jb.search.engine.solr.SolrAdapter;
 @Service
 public class ResumeSearchAdapter implements ResumeSearch {
 
-	public SolrAdapter m_SolrAdapter;
-	public XmlResumeParser m_XmlResumeParser;
+
 
 	public ResumeSearchAdapter() {
 
