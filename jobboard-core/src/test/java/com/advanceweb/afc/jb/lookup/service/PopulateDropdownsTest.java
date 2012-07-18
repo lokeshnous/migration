@@ -138,7 +138,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of CountryDTO
 	 */
 	
 	@Test
@@ -155,7 +155,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of EmploymentInfoDTO
 	 */
 	
 	@Test
@@ -171,7 +171,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of VeteranStatusDTO
 	 */
 	
 	@Test
@@ -187,7 +187,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of GenderDTO
 	 */
 	
 	@Test
@@ -203,7 +203,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of EthenticityDTO
 	 */
 	
 	@Test
@@ -219,7 +219,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of JobAlertsDTO
 	 */
 	
 	@Test
@@ -235,7 +235,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of MagazinesDTO
 	 */
 	
 	@Test
@@ -251,7 +251,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	   @Return :List of SubscriptionsDTO
 	 */
 	
 	@Test
