@@ -16,7 +16,7 @@ public class SaveSearchedJobsDTO {
 	private String url;
 	private String urlName;
 	private Date createdDate;
-	private Date ModifyDate;
+	private Date modifyDate;
 	private String emailFrequency;
 
 	
@@ -60,19 +60,7 @@ public class SaveSearchedJobsDTO {
 		this.createdDate = createdDate;
 	}
 
-	/**
-	 * @return the modifyDate
-	 */
-	public Date getModifyDate() {
-		return ModifyDate;
-	}
-
-	/**
-	 * @param modifyDate the modifyDate to set
-	 */
-	public void setModifyDate(Date modifyDate) {
-		ModifyDate = modifyDate;
-	}
+	
 
 	/**
 	 * @return the emailFrequency
@@ -92,8 +80,22 @@ public class SaveSearchedJobsDTO {
 	public String toString() {
 		return "SaveSearchedJobsDTO [loginID=" + loginID + ", url=" + url
 				+ ", urlName=" + urlName + ", createdDate=" + createdDate
-				+ ", ModifyDate=" + ModifyDate + ", emailFrequency="
+				+ ", ModifyDate=" + modifyDate + ", emailFrequency="
 				+ emailFrequency + "]";
+	}
+
+	/**
+	 * @return the modifyDate
+	 */
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	/**
+	 * @param modifyDate the modifyDate to set
+	 */
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 	
 	
