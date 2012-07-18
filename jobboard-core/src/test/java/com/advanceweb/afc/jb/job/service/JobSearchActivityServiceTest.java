@@ -20,7 +20,8 @@ import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 
 /**
- * <code> JobSearchActivityServiceTest </code> is a Test class for JobSearchActivity
+ * <code> JobSearchActivityServiceTest </code> is a Test class for
+ * JobSearchActivity
  * 
  * @author Pramoda Patil
  * @version 1.0
@@ -31,27 +32,27 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 
 	@Autowired
 	public JobSearchActivity jobSearchActivity;
-	
+
 	@Autowired
 	private MMEmailService emailService;
-	
+
 	@Autowired
 	private ResumeService resumeService;
-	
+
 	/**
-	 * The method helps to test the retrieving of job details by JobId  
-	 * 	 
+	 * The method helps to test the retrieving of job details by JobId
+	 * 
 	 */
 	@Test
 	public void testViewJobDetails() {
-			Long jobId = 13100L;
-			SearchedJobDTO searchedJobDTO =jobSearchActivity.viewJobDetails(jobId);
-			assertNotNull("View SearchedJob", searchedJobDTO);
+		Long jobId = 13100L;
+		SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(jobId);
+		assertNotNull("View SearchedJob", searchedJobDTO);
 	}
-	
+
 	/**
-	 * The method helps to test the saving of job after applying.  
-	 * 	 
+	 * The method helps to test the saving of job after applying.
+	 * 
 	 */
 	@Test
 	public void testApplyJob() {
@@ -107,6 +108,25 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			applyJobDTO.setAppliedDate(currentDate);
 			applyJobDTO.setIsApplied(isApplied);
 			jobSearchActivity.applyJob(applyJobDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Added for save the job task
+	 * 
+	 */
+	@Test
+	public void testSaveJob() {
+		try {
+			SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
+			searchedJobDTO.setUserID(8);
+			searchedJobDTO.setJobID(10);
+			searchedJobDTO.setCreatedDate(new Date());
+			searchedJobDTO.setJobTitle("Project Manager");
+			searchedJobDTO.setCompanyName("XYZ");
+			jobSearchActivity.saveJob(searchedJobDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
