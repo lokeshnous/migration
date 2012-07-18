@@ -2,8 +2,6 @@ package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 /**
  * @Author : Prince Mathew
    @Version: 1.0 
@@ -12,10 +10,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  */
 public class AnonymousUserJobApplyDTO implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 
-	private String employerEmail;
+
+	/*private String employerEmail;
 	private String jobTitle;
-	private String jobDescription;
+	private String jobDescription;*/
 	
 	// currently not using 
 }
