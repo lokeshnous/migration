@@ -188,13 +188,13 @@ public class ResumeServiceTest extends ServiceTest {
 		certDTO.setCertificationName("Cert Nam1");
 		certDTO.setInstituteName("Nous 1");
 		certDTO.setSummary("summary 1");
-		certDTO.setBuilderCertId(57);
+//		certDTO.setBuilderCertId(57);
 		
 		CertificationDTO certDTO1 = new CertificationDTO();
 		certDTO1.setCertificationName("Cert Nam2");
 		certDTO1.setInstituteName("Nous 2");
 		certDTO1.setSummary("summary 2");
-		certDTO1.setBuilderCertId(57);
+//		certDTO1.setBuilderCertId(57);
 		
 		listCerts.add(certDTO1);
 		listCerts.add(certDTO);
