@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public class EmploymentTypeDTO implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String employmentTypeId;
 	private String employmentTypeValue;
 	
