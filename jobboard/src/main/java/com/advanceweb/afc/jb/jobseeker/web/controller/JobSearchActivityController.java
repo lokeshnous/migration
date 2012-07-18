@@ -5,10 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
@@ -54,15 +50,6 @@ public class JobSearchActivityController {
 	private JobSearchService jobSearchService;
 
 	public JobSearchActivityController() {
-	}
-
-	@Autowired
-	@Resource(name = "solrConfiguration")
-	private Properties solrConfiguration;
-
-	@PostConstruct
-	public void init() {
-		// do whatever you need with properties
 	}
 
 	/**
@@ -187,14 +174,10 @@ public class JobSearchActivityController {
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String searchName = "basicjobsearch";
-		// Each search fields will be put into this map
-		//System.out.println("jobSearchResultForm.getSearchString().trim()=="
-				//+ jobSearchResultForm.getSearchString().trim());
 		paramMap.put("titlesearch", jobSearchResultForm.getSearchString()
 				.trim());
-		//System.out.println("Search String ====>>"
-				//+ jobSearchResultForm.getSearchString() + "<==");
-
+		// The below fields values needs to be taken from the UI form which UI will 
+		// be finalized.
 		// long rows = jobSearchResultForm.getRows();
 		// long start = jobSearchResultForm.getStart();
 		long rows = 5;
