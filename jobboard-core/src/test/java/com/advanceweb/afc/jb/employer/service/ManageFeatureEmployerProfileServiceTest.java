@@ -20,7 +20,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 		try {
 
 			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
-					.getEmployerDetails(13100);
+					.getEmployerDetails(109);
 			assertTrue("Get Applied Job",
 					manageFeatureEmployerProfile
 							.saveEmployerProfile(companyProfileDTO));
@@ -35,7 +35,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 		try {
 
 			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
-					.getEmployerDetails(13100);
+					.getEmployerDetails(109);
 			assertTrue("Get Applied Job", companyProfileDTO != null);
 
 		} catch (Exception e) {
@@ -48,7 +48,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 		try {
 
 			List<EmployerProfileDTO> employerProfileDTO = manageFeatureEmployerProfile
-					.getEmployerAccountDetails(13100);
+					.getEmployerAccountDetails(2);
 			assertTrue("Get Applied Job", employerProfileDTO != null);
 
 		} catch (Exception e) {
