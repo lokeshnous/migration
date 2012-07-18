@@ -104,6 +104,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchActivityS
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerActivityServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistrationTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
