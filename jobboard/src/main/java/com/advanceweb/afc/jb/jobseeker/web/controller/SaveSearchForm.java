@@ -15,7 +15,7 @@ public class SaveSearchForm {
 	private String url;
 	private String urlName;
 	private Date createdDate;
-	private Date ModifyDate;
+	private Date modifyDate;
 	private String emailFrequency;
 
 	public String getLoginID() {
@@ -50,19 +50,7 @@ public class SaveSearchForm {
 		this.createdDate = createdDate;
 	}
 
-	/**
-	 * @return the modifyDate
-	 */
-	public Date getModifyDate() {
-		return ModifyDate;
-	}
-
-	/**
-	 * @param modifyDate the modifyDate to set
-	 */
-	public void setModifyDate(Date modifyDate) {
-		ModifyDate = modifyDate;
-	}
+	
 
 	/**
 	 * @return the emailFrequency
@@ -76,5 +64,19 @@ public class SaveSearchForm {
 	 */
 	public void setEmailFrequency(String emailFrequency) {
 		this.emailFrequency = emailFrequency;
+	}
+
+	/**
+	 * @return the modifyDate
+	 */
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	/**
+	 * @param modifyDate the modifyDate to set
+	 */
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 }
