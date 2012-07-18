@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
+import com.advanceweb.afc.jb.common.EduDegreeDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
@@ -168,6 +169,16 @@ public class ResumeServiceTest extends ServiceTest {
 	}
 	
 	/**
+	 * Creating resume builder
+	 */
+	@Test
+	public void saveCertifications(){
+		boolean bSaved = resumeService.addCertifications(getListCerts());		
+		Assert.assertTrue("Data Saved Successfully", bSaved);
+	}
+	
+	
+	/**
 	 * Create certificate dto's
 	 * @return List
 	 */
@@ -177,11 +188,13 @@ public class ResumeServiceTest extends ServiceTest {
 		certDTO.setCertificationName("Cert Nam1");
 		certDTO.setInstituteName("Nous 1");
 		certDTO.setSummary("summary 1");
+		certDTO.setBuilderCertId(57);
 		
 		CertificationDTO certDTO1 = new CertificationDTO();
 		certDTO1.setCertificationName("Cert Nam2");
 		certDTO1.setInstituteName("Nous 2");
 		certDTO1.setSummary("summary 2");
+		certDTO1.setBuilderCertId(57);
 		
 		listCerts.add(certDTO1);
 		listCerts.add(certDTO);
@@ -234,6 +247,10 @@ public class ResumeServiceTest extends ServiceTest {
 		dto1.setInstituteName("St Joseph");
 		dto1.setFieldOfStudy("HSC");
 		dto1.setLanguage("English");
+		EduDegreeDTO eduDegreeDTO1 = new EduDegreeDTO();
+		eduDegreeDTO1.setDescription("Degree DTO !");
+		eduDegreeDTO1.setName("Degree Name 1");
+		dto1.setEduDegreeDTO(eduDegreeDTO1);
 		
 		EducationDTO dto2 = new EducationDTO();
 		dto2.setCertifications("Cert2");
@@ -242,6 +259,10 @@ public class ResumeServiceTest extends ServiceTest {
 		dto2.setInstituteName("APRS");
 		dto2.setFieldOfStudy("SSC");
 		dto2.setLanguage("Telugu");
+		EduDegreeDTO eduDegreeDTO2 = new EduDegreeDTO();
+		eduDegreeDTO2.setDescription("Degree DTO !");
+		eduDegreeDTO2.setName("Degree Name 1");
+		dto2.setEduDegreeDTO(eduDegreeDTO2);
 		
 		EducationDTO dto3 = new EducationDTO();
 		dto3.setCertifications("Cert3");
@@ -250,6 +271,10 @@ public class ResumeServiceTest extends ServiceTest {
 		dto3.setInstituteName("SVDC");
 		dto3.setFieldOfStudy("MPC");
 		dto3.setLanguage("English");
+		EduDegreeDTO eduDegreeDTO3 = new EduDegreeDTO();
+		eduDegreeDTO3.setDescription("Degree DTO !");
+		eduDegreeDTO3.setName("Degree Name 1");
+		dto3.setEduDegreeDTO(eduDegreeDTO3);
 		
 		listEdu.add(dto1);
 		listEdu.add(dto2);
