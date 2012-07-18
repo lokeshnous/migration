@@ -1,12 +1,8 @@
 package com.advanceweb.afc.jb.resume.dao;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -25,9 +21,6 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
-import com.advanceweb.afc.jb.data.entities.ResPrivacy;
-import com.advanceweb.afc.jb.data.entities.ResPublishResume;
-import com.advanceweb.afc.jb.data.entities.ResPublishResumePriv;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 
@@ -64,8 +57,7 @@ public class ResumeDaoImpl implements ResumeDao {
 
 		
 		List<ResUploadResume> resumes = hibernateTemplate.find("from ResUploadResume where userId = "+ jobSeekerId);
-		List<ResumeDTO> resumeDTOList = resumeConversionHelper.transformResUploadResumeListToResumeDTOList(resumes);
-		return resumeDTOList;
+		return resumeConversionHelper.transformResUploadResumeListToResumeDTOList(resumes);
 	}
 
 	/**

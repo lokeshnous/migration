@@ -29,11 +29,6 @@ public class ResumeServiceImpl implements ResumeService {
 	@Autowired
 	public ResumeDao resumeDao;
 
-
-	public ResumeServiceImpl() {
-
-	}
-
 	/**
 	 * This method is called to retrieve the resume list belonging to a logged in jobSeeker
 	 * @param jobSeekerId

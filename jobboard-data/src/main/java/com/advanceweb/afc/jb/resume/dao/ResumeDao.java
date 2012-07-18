@@ -17,16 +17,16 @@ import com.advanceweb.afc.jb.common.WorkExpDTO;
  */
 public interface ResumeDao {
 	
-	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
-	public ResumeDTO editResume(int resumeId);
-	public boolean deleteResume(int resumeId);
-	public boolean createResume(ResumeDTO resumeDTO);
-	public boolean createResumeCopyPaste ( ResumeDTO resumeDTO );
-	public boolean createResumeUpload (ResumeDTO resumeDTO);
+	List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
+	ResumeDTO editResume(int resumeId);
+	boolean deleteResume(int resumeId);
+	boolean createResume(ResumeDTO resumeDTO);
+	boolean createResumeCopyPaste ( ResumeDTO resumeDTO );
+	boolean createResumeUpload (ResumeDTO resumeDTO);
 	
-	public boolean addWorkExp(List<WorkExpDTO> listWorkExp);
-	public boolean addReference(List<ReferenceDTO> listRefExp);
-	public boolean addEducation(List<EducationDTO> listEduExp);
-	public boolean addLanguage(List<LanguageDTO> listLangExp);
-	public boolean addCertifications(List<CertificationDTO> listLangExp);
+	boolean addWorkExp(List<WorkExpDTO> listWorkExp);
+	boolean addReference(List<ReferenceDTO> listRefExp);
+	boolean addEducation(List<EducationDTO> listEduExp);
+	boolean addLanguage(List<LanguageDTO> listLangExp);
+	boolean addCertifications(List<CertificationDTO> listLangExp);
 }

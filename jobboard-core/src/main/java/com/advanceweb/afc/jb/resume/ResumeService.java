@@ -18,18 +18,18 @@ import com.advanceweb.afc.jb.common.WorkExpDTO;
 
 public interface ResumeService {
 
-	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
-	public ResumeDTO editResume(int resumeId);
-	public boolean deleteResume(int resumeId);
-	public boolean createResumeBuilder(ResumeDTO resumeDTO);
+	List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
+	ResumeDTO editResume(int resumeId);
+	boolean deleteResume(int resumeId);
+	boolean createResumeBuilder(ResumeDTO resumeDTO);
 
-	public boolean createResumeCopyPaste(ResumeDTO createResumeDTO);
-	public boolean createResumeUpload(ResumeDTO createResumeDTO);
+	boolean createResumeCopyPaste(ResumeDTO createResumeDTO);
+	boolean createResumeUpload(ResumeDTO createResumeDTO);
 	
-	public boolean addWorkExp(List<WorkExpDTO> listWorkExp);
-	public boolean addReference(List<ReferenceDTO> listRefExp);
-	public boolean addEducation(List<EducationDTO> listEduExp);
-	public boolean addLanguage(List<LanguageDTO> listLangExp);
-	public boolean addCertifications(List<CertificationDTO> listLangExp);
+	boolean addWorkExp(List<WorkExpDTO> listWorkExp);
+	boolean addReference(List<ReferenceDTO> listRefExp);
+	boolean addEducation(List<EducationDTO> listEduExp);
+	boolean addLanguage(List<LanguageDTO> listLangExp);
+	boolean addCertifications(List<CertificationDTO> listLangExp);
 }
 
