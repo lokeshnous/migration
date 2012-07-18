@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public class FromZipcodeDTO implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private String fromZipcodeId;
 	private String fromZipcodeValue;
 	

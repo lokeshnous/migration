@@ -11,33 +11,33 @@ import java.io.Serializable;
 public class JobPostedDateDTO implements Serializable {
 
 	
-	private String JobPostedDateId;
-	private String JobPostedDateValue;
 	
-	
+	private static final long serialVersionUID = 1L;
+	private String jobPostedDateId;
+	private String jobPostedDateValue;
 	/**
 	 * @return the jobPostedDateId
 	 */
 	public String getJobPostedDateId() {
-		return JobPostedDateId;
+		return jobPostedDateId;
 	}
 	/**
 	 * @param jobPostedDateId the jobPostedDateId to set
 	 */
 	public void setJobPostedDateId(String jobPostedDateId) {
-		JobPostedDateId = jobPostedDateId;
+		this.jobPostedDateId = jobPostedDateId;
 	}
 	/**
 	 * @return the jobPostedDateValue
 	 */
 	public String getJobPostedDateValue() {
-		return JobPostedDateValue;
+		return jobPostedDateValue;
 	}
 	/**
 	 * @param jobPostedDateValue the jobPostedDateValue to set
 	 */
 	public void setJobPostedDateValue(String jobPostedDateValue) {
-		JobPostedDateValue = jobPostedDateValue;
+		this.jobPostedDateValue = jobPostedDateValue;
 	}
 	
 	

@@ -9,6 +9,12 @@ import java.io.Serializable;
    @Purpose: This class will act as a DTO for the Dropdown of Radius field in Jobseekers Advance Search
  */
 public class RadiusDTO implements Serializable{
+	/**
+	 *serialVersionUID
+	  long
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String radiusId;
 	private String radiusValue;
 	
