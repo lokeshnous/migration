@@ -64,10 +64,9 @@ public class JobSearchActivityConversionHelper {
 		}
 		return searchedJobDTO;
 	}
-	
+
 	/**
-	 * This method is called to convert ApplyJobDTO
-	 * JpSaveJob Entity
+	 * This method is called to convert ApplyJobDTO JpSaveJob Entity
 	 * 
 	 * @param entity
 	 * @return
@@ -94,11 +93,11 @@ public class JobSearchActivityConversionHelper {
 	public JpSaveJob transformSearchedJobDTOtoJpSaveJob(
 			SearchedJobDTO searchedJobDTO) {
 		JpSaveJob jpSaveJob = new JpSaveJob();
-//		jpSaveJob.setUserId(searchedJobDTO.getUserID());
-//		jpSaveJob.setJobID(searchedJobDTO.getJobID());
-//		jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
-//		jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
-//		jpSaveJob.setCreatedDate(searchedJobDTO.getCreatedDate());
+		jpSaveJob.setUserId(searchedJobDTO.getUserID());
+		jpSaveJob.setJobId(searchedJobDTO.getJobID());
+		//jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
+		//jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
+		jpSaveJob.setCreateDt(searchedJobDTO.getCreatedDate());
 		return jpSaveJob;
 	}
 
