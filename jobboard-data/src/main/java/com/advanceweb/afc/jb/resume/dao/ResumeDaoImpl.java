@@ -149,10 +149,11 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 //			sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
 			hibernateTemplate.saveOrUpdate(builderResume);
+			return true;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}		
-		return true;
+		return false;
 	}
 
 	@Override

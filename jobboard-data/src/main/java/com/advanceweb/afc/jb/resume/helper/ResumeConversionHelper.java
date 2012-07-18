@@ -362,6 +362,7 @@ public class ResumeConversionHelper {
 				refEntitiy.setJobTitle(refDTO.getJobTitle());
 				refEntitiy.setWorkPhone(refDTO.getPhoneNo());	
 				refEntitiy.setResBuilderResume(builderResume);
+				refEntitiy.setContactName(refDTO.getName());
 				listRefEntity.add(refEntitiy);
 			}
 		}
