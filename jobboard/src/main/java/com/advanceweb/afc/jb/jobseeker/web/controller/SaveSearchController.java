@@ -36,18 +36,11 @@ public class SaveSearchController {
 
 		// Transform SaveSearchForm to saveSearchedJobsDTO
 		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
-		/*
-		 * saveSearchedJobsDTO.setLoginID(form.getLoginID());
-		 * saveSearchedJobsDTO.setUrl(form.getUrl());
-		 * saveSearchedJobsDTO.setUrlName(form.getUrlName());
-		 * saveSearchedJobsDTO.setCreatedDate(form.getCreatedDate());
-		 */
 
-		saveSearchedJobsDTO.setLoginID("1");
-		saveSearchedJobsDTO
-				.setUrl("file://///nibc452/06%20JOB%20PORTAL/06%20IA/JobBoardPortalIAFinal/JobBoardPortalIAVer18/HTML/SearchResults.html?button2=Find+Jobs");
-		saveSearchedJobsDTO.setUrlName("NewJobs");
-		saveSearchedJobsDTO.setCreatedDate(new Date());
+		saveSearchedJobsDTO.setLoginID(form.getLoginID());
+		saveSearchedJobsDTO.setUrl(form.getUrl());
+		saveSearchedJobsDTO.setUrlName(form.getUrlName());
+		saveSearchedJobsDTO.setCreatedDate(form.getCreatedDate());
 		saveSearchService.saveSearchedJobs(saveSearchedJobsDTO);
 		// new ModelAndView("redirect:/saveSearchedJobs.html");
 		return new ModelAndView();
