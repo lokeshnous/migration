@@ -9,13 +9,20 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
+import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
+import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
-import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.GenderDTO;
+import com.advanceweb.afc.jb.common.JobAlertsDTO;
+import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.SubscriptionsDTO;
+import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 
 /**
  * @Author : Prince Mathew
@@ -127,19 +134,132 @@ public class PopulateDropdownsTest extends ServiceTest{
 	}
 
 	/**
-	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#getJobPostedDateList()}.
-	 * @Author :Prince Mathew
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetCountryList()}.
+	 * @Author :Sasibhushan
 	   @Created:Jul 17, 2012
 	   @Param  :not required
 	   @Return :List of JobPostedDateDTO
 	 */
 	
 	@Test
-	public void testGetJobPostedDateList() {
-		List<JobPostedDateDTO> jobPostedDateList=popService.getJobPostedDateList();	
-		assertNotNull("Job Posted Date",jobPostedDateList);
-		assertTrue("Job Posted Date", jobPostedDateList.size()>=0);
+	public void testGetCountryList() {
+		List<CountryDTO> countryList=popService.getCountryList();	
+		assertNotNull("Country List",countryList);
+		assertTrue("Country List", countryList.size()>=0);
 		
 	}
-
+	
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetEmploymentDetailsList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetEmploymentDetailsList() {
+		List<EmploymentInfoDTO> empInfoList=popService.getEmployementInfoList();	
+		assertNotNull("Employment Info List",empInfoList);
+		assertTrue("Employment Info List", empInfoList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetVeteranStatusList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetVeteranStatusList() {
+		List<VeteranStatusDTO> vetStatusList=popService.getVeteranStatusList();	
+		assertNotNull("Veteran Status List",vetStatusList);
+		assertTrue("Veteran Status List", vetStatusList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetGenderList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetGenderList() {
+		List<GenderDTO> genderList=popService.getGenderList();	
+		assertNotNull("Gender List",genderList);
+		assertTrue("Gender List", genderList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetEthenticityList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetEthenticityList() {
+		List<EthenticityDTO> ethnicityList=popService.getEthenticityList();	
+		assertNotNull("Ethnicity List",ethnicityList);
+		assertTrue("Ethnicity List", ethnicityList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetJobAlertsList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetJobAlertsList() {
+		List<JobAlertsDTO> jobAlertsList=popService.getJobAlertsList();	
+		assertNotNull("Job Alerts",jobAlertsList);
+		assertTrue("Job Alerts", jobAlertsList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetMagazinesList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetMagazinesList() {
+		List<MagazinesDTO> jobMagazinesList=popService.getMagazinesList();	
+		assertNotNull("Magazines List",jobMagazinesList);
+		assertTrue("Magazines List", jobMagazinesList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetSubscriptionList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of JobPostedDateDTO
+	 */
+	
+	@Test
+	public void testGetSubscriptionList() {
+		List<SubscriptionsDTO> jobSubscriptionList=popService.getSubscriptionsList();	
+		assertNotNull("Subscriptions List",jobSubscriptionList);
+		assertTrue("Job Posted Date", jobSubscriptionList.size()>=0);
+		
+	}
+	
 }
