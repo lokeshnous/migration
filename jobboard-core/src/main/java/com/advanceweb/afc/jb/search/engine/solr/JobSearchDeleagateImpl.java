@@ -6,12 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -25,8 +25,10 @@ import org.springframework.stereotype.Service;
 @Service("jobSearchDeleagate")
 public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
+	Logger log = Logger.getLogger("logfile");
+	
 	@Autowired
-	ReadSolrServerDetails readSolrServerDetails;
+	private ReadSolrServerDetails readSolrServerDetails;
 
 	@Autowired
 	@Resource(name = "solrConfiguration")
@@ -34,12 +36,14 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
 	@PostConstruct
 	public void init() {
+		//init() for loading the Properties file
 	}
 
 	@Override
 	public JobSearchResultDTO jobSearch(final String searchName,
 			final Map<String, String> paramMap, final long rows, final long start) {
 
+		//log.info("");
 		HttpSolrServer server = null;
 		QueryResponse response = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
@@ -77,10 +81,15 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 		}
 
 		if (serverAccessibility) {
+			
+			if ("".equalsIgnoreCase(paramMap.get("titlesearch"))
+					&& paramMap.get("titlesearch") == null) {
 
-			if (!"".equalsIgnoreCase(paramMap.get("titlesearch"))
-					&& paramMap.get("titlesearch") != null) {
-
+				System.out
+				.println("Empty Search criteria. Please enter a search criteria to seach jobs.");
+				return null;
+				
+			} else {
 				server = new HttpSolrServer(serverDetailsMap.get("serverUrl")
 						.toString()
 						+ serverDetailsMap.get("solrservice").toString());
@@ -133,21 +142,17 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 				List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
 				jobSearchDTOList = response.getBeans(JobSearchDTO.class);
 
-				Iterator<JobSearchDTO> itr = jobSearchDTOList.iterator();
-
-				while (itr.hasNext()) {
-
-					jobSearchDTO = new JobSearchDTO();
-					jobSearchDTO = itr.next();
+				for(JobSearchDTO jobSrchDTO : jobSearchDTOList){
+					
 					System.out.println("@Company===>>"
-							+ jobSearchDTO.getCompany());
+							+ jobSrchDTO.getCompany());
 					System.out.println("@Job Title===>>"
-							+ jobSearchDTO.getJobTitle());
-					System.out.println("@City===>>" + jobSearchDTO.getCity());
+							+ jobSrchDTO.getJobTitle());
+					System.out.println("@City===>>" + jobSrchDTO.getCity());
 					System.out.println("@Posted Date===>>"
-							+ jobSearchDTO.getPostedDate());
+							+ jobSrchDTO.getPostedDate());
 					System.out.println("@Apply Online===>>"
-							+ jobSearchDTO.getApplyOnline());
+							+ jobSrchDTO.getApplyOnline());
 					System.out.println("@Blind Ad===>>"
 							+ jobSearchDTO.getBlindAd());
 					System.out.println("@Facility Name===>>"
@@ -156,9 +161,9 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 							+ jobSearchDTO.getEmailDisplay());
 					System.out.println("@Email===>>" + jobSearchDTO.getEmail());
 					System.out.println("@Is Inter===>>"
-							+ jobSearchDTO.isInternational());
+							+ jobSearchDTO.isInternationalJob());
 					System.out.println("@Is National===>>"
-							+ jobSearchDTO.isNational());
+							+ jobSearchDTO.isNationalJob());
 					System.out.println("@Is Featured===>>"
 							+ jobSearchDTO.isFeatured());
 					System.out.println("@Job count===>>"
@@ -177,7 +182,7 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 							+ jobSearchDTO.getJobGeo1LatLon());
 					System.out.println("@URL Display===>>"
 							+ jobSearchDTO.getUrlDisplay());
-
+					
 				}
 
 				Map<String, List<Count>> facetMap = new HashMap<String, List<Count>>();
@@ -197,11 +202,10 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 						.setSolrJobSearchResultDTO(solrJobSearchResultDTO);
 
 				return jobSearchResultDTO;
-			} else {
-				System.out
-						.println("Empty Search criteria. Please enter a search criteria to seach jobs.");
-				return null;
+				
 			}
+			
+		
 		} else {
 			System.out
 					.println("Server url is not correct. Please check the url.");
