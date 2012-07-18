@@ -248,7 +248,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadSolrServerDetails.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
 jobboard/src/main/java/common.properties -text
 jobboard/src/main/resources/careertool.html -text
