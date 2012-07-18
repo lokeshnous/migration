@@ -1,17 +1,15 @@
 package com.advanceweb.afc.jb.resume.search.engine.solr;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
-import com.advanceweb.afc.jb.search.engine.solr.SolrJobSearchResultDTO;
 
 public class JobSearchDeleagateImplTest extends ServiceTest{
 	
@@ -21,56 +19,43 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 
 	private static final String SEARCH_NAME = "basicjobsearch";
 	private static final Map<String, String> PARAM_MAP = new HashMap<String, String>();
-	
+	private static final String TITLE_SEARCH = "titlesearch" ; 
 	
 	@Test
 	public void jobSearchTest1() {
 		
-		PARAM_MAP.put("titlesearch", "doctor");
-		//paramMap.put("", arg1);
-		//paramMap.put("", arg1);
+		PARAM_MAP.put(TITLE_SEARCH, "doctor");
 		long rows = 4;
 		long start = 0;
 		
 		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
-		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
-		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
-		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
+		assertNotNull("Job Search 1", jobSearchResultDTO.getSolrJobSearchResultDTO());
 		
-		System.out.println("Size of searchResultList==>>"+searchResultList.size());
 		
 	}
 	
 	@Test
 	public void jobSearchTest2() {
 		
-		PARAM_MAP.put("titlesearch", "nurse");
+		PARAM_MAP.put(TITLE_SEARCH, "nurse");
 		long rows = 4;
 		long start = 0;
 		
 		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
-		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
-		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
-		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
-		
-		System.out.println("Size of searchResultList==>>"+searchResultList.size());
-		
+		assertNotNull("Job Search 2", jobSearchResultDTO.getSolrJobSearchResultDTO());
+				
 	}
 	
 	@Test
 	public void jobSearchTest3() {
 		
-		PARAM_MAP.put("titlesearch", "test");
+		PARAM_MAP.put(TITLE_SEARCH, "test");
 		long rows = 0;
 		long start = 0;
 		
 		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
-		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
-		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
-		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
-		
-		System.out.println("Size of searchResultList==>>"+searchResultList.size());
-		
+		assertNotNull("Job Search 3", jobSearchResultDTO.getSolrJobSearchResultDTO());
+				
 	}
 	
 	@Test
@@ -81,12 +66,8 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long start = 0;
 		
 		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
-		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() == null);
-		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
-		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
-		
-		System.out.println("Size of searchResultList==>>"+searchResultList.size());
-		
+		assertNull("Job Search 4", jobSearchResultDTO);
+				
 	}
 	
 	@Test
@@ -99,12 +80,8 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long start = 0;
 		
 		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
-		assertTrue("Job Search", jobSearchResultDTO.getSolrJobSearchResultDTO() != null);
-		SolrJobSearchResultDTO solrJobSearchResultDTO = jobSearchResultDTO.getSolrJobSearchResultDTO();
-		List<JobSearchDTO> searchResultList = solrJobSearchResultDTO.getSearchResultList();
-		
-		System.out.println("Size of searchResultList==>>"+searchResultList.size());
-		
+		assertNotNull("Job Search 5", jobSearchResultDTO.getSolrJobSearchResultDTO());
+				
 	}
 
 	
