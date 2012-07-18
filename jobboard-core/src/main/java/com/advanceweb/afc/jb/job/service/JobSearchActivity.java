@@ -33,36 +33,10 @@ public interface JobSearchActivity {
 	void applyJob(ApplyJobDTO applyJobDTO);
 
 	/**
-	 * Gets the job search result by searchString
-	 * 
-	 * @param SearchString
-	 * @return SearchResultDTO
-	 */
-//	public SearchResultDTO getJobSearchResult(String SearchString,
-//			Map<String, String> serverDetailsMap, Map<String, String> solrQueryDetails, String rows, String start);
-
-	/**
 	 * saves the job for logged in user
 	 * 
 	 * @param searchedJobDTO
 	 */
 	public void saveJob(SearchedJobDTO searchedJobDTO);
-
-	/**
-	 * Returns the SOLR Server object
-	 * 
-	 * @param
-	 * @return HttpSolrServer
-	 */
-	//public HttpSolrServer connectToSOLRURL(Map<String, String> serverDetailsMap);
-
-	/**
-	 * Returns the SOLR Server response object
-	 * 
-	 * @param HttpSolrServer
-	 * @return QueryResponse
-	 */
-//	public QueryResponse executeSearchQuery(HttpSolrServer server,
-//			String SearchString, Map<String, String> solrQueryDetails, String rows, String start);
 
 }
