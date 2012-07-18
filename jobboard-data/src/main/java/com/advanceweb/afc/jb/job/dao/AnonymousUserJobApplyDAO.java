@@ -9,5 +9,5 @@ import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
    @Purpose: This interface defines all the DAO operations related to applying job for Anonymous User
  */
 public interface AnonymousUserJobApplyDAO {
-	public boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto);
+	boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto);
 }
