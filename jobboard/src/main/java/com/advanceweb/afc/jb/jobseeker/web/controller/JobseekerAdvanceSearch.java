@@ -1,15 +1,6 @@
 
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.util.List;
-
-import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
-import com.advanceweb.afc.jb.common.ExcludeFromDTO;
-import com.advanceweb.afc.jb.common.FromZipcodeDTO;
-import com.advanceweb.afc.jb.common.JobPostedDateDTO;
-import com.advanceweb.afc.jb.common.MetroAreaDTO;
-import com.advanceweb.afc.jb.common.RadiusDTO;
-import com.advanceweb.afc.jb.common.StateDTO;
 
 /**
  * @Author : Prince Mathew
