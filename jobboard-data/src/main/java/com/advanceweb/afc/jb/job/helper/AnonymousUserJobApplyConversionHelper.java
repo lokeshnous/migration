@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.job.helper;
 
-import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
  * @Author : Prince Mathew
