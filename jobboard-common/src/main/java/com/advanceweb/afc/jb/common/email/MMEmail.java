@@ -7,12 +7,13 @@ package com.advanceweb.afc.jb.common.email;
  */
 public interface MMEmail {
 
-	public EmailDTO m_EmailDTO=null;
+	EmailDTO M_EMAILDTO=null;
 
 	/**
+	 * Sending mail
 	 * 
 	 * @param emailDTO
 	 */
-	public void sendEmail(EmailDTO emailDTO);
+	void sendEmail(EmailDTO emailDTO);
 
 }

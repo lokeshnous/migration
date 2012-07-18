@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.job.dao;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +32,11 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	private static final Logger LOGGER = Logger
+			.getLogger(JobSearchActivityDAOImpl.class);
+
 	@Autowired
 	private JobSearchActivityConversionHelper jobSearchActivityConversionHelper;
-
-	public JobSearchActivityDAOImpl() {
-
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
-	}
 
 	/**
 	 * implementation of viewJobDetails
@@ -54,13 +49,14 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 		try {
 			if (jobId != 0) {
 				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
-						new Long(jobId).intValue());
+						Long.valueOf(jobId));
 				SearchedJobDTO searchedJobDTO = jobSearchActivityConversionHelper
 						.transformJpJobToSearchedJobDTO(jpJob);
 				jobDetail = searchedJobDTO;
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			// logger call
+			LOGGER.info("ERROR");
 		}
 		return jobDetail;
 	}
@@ -80,7 +76,8 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 					.transformApplyJobDTOToJpSaveJob(applyJobDTO);
 			hibernateTemplate.save(jpSaveJob);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			// logger call
+			LOGGER.info("ERROR");
 		}
 	}
 

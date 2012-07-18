@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
@@ -43,14 +45,14 @@ public class JobSearchActivityController {
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
 
+	private static final Logger LOGGER = Logger
+			.getLogger("JobSearchActivityController.class");
+
 	@Autowired
 	private MMEmailService emailService;
 
 	@Autowired
 	private JobSearchService jobSearchService;
-
-	public JobSearchActivityController() {
-	}
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -61,10 +63,16 @@ public class JobSearchActivityController {
 	 */
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId) {
+		try{
 		/**
 		 * View the job with template
 		 */
 		jobSearchActivity.viewJobDetails(jobId);
+		}
+		catch(Exception e){
+			// loggers call
+			LOGGER.info("ERROR");
+		}
 		return new ModelAndView("jobSeekerActivity");
 	}
 
@@ -77,7 +85,7 @@ public class JobSearchActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob")
-	public ModelAndView applyJob(@Valid applyJobForm form,
+	public ModelAndView applyJob(@Valid ApplyJobForm form,
 			@RequestParam("id") Long jobId) {
 
 		/**
@@ -112,8 +120,8 @@ public class JobSearchActivityController {
 			// TODO: Fetch the path of public resume
 			attachmentpaths.add("C:\\ppResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			// emailService.sendEmail(employerEmailDTO);
-			System.out.println("-------Mail sent to employer-----");
+			emailService.sendEmail(employerEmailDTO);
+//			System.out.println("-------Mail sent to employer-----");
 			/**
 			 * confirm mail:Send mail to job seeker by sub as job title and body
 			 * as short job desc
@@ -128,8 +136,8 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
-			// emailService.sendEmail(jobSeekerEmailDTO);
-			System.out.println("-------Mail sent to jobseeker-----");
+			emailService.sendEmail(jobSeekerEmailDTO);
+//			System.out.println("-------Mail sent to jobseeker-----");
 
 			/**
 			 * saving the job in applied job in jobseeker table
@@ -143,7 +151,8 @@ public class JobSearchActivityController {
 			jobSearchActivity.applyJob(applyJobDTO);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// loggers call
+			LOGGER.info("ERROR");
 		}
 		return new ModelAndView("jobSeekerActivity");
 	}

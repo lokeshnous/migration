@@ -24,11 +24,7 @@ import com.advanceweb.afc.jb.job.dao.JobSearchActivityDAO;
 public class JobSearchActivityService implements JobSearchActivity {
 
 	@Autowired
-	public JobSearchActivityDAO jobSearchActivityDAO;
-
-	JobSearchActivityService() {
-
-	}
+	private JobSearchActivityDAO jobSearchActivityDAO;
 
 	/**
 	 * view searched job

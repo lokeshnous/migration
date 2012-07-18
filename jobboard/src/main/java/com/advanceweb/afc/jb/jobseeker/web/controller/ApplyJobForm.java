@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.Date;
 
 /**
- * <code>applyJobForm</code> is a form bean to apply job
+ * <code>ApplyJobForm</code> is a form bean to apply job
  * 
  * @author Pramoda Patil
  * @version 1.0
@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  */
 
-public class applyJobForm {
+public class ApplyJobForm {
 
 	private String userId;
 	private String useremail;

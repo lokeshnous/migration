@@ -34,6 +34,6 @@ public interface JobSearchActivityDAO {
 	 * 
 	 * @param searchedJobDTO
 	 */
-	public void saveTheJob(SearchedJobDTO searchedJobDTO);
+	void saveTheJob(SearchedJobDTO searchedJobDTO);
 
 }

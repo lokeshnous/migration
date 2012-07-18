@@ -24,19 +24,12 @@ public class MMEmailService implements MMEmail {
 	@Autowired
 	private JavaMailSender mailSender;
 	 
-	public MMEmailService(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-
 	/**
 	 * The method is to send mail.
 	 * 
 	 * @param emailDTO
 	 */
+	@Override
 	public void sendEmail(EmailDTO emailDTO) {
 
 		MimeMessage message = mailSender.createMimeMessage();
@@ -57,9 +50,10 @@ public class MMEmailService implements MMEmail {
 			helper.setSubject(emailDTO.getSubject());
 			helper.setText(emailDTO.getBody(), emailDTO.isHtmlFormat());
 			List<String> attachmentPaths = emailDTO.getAttachmentPaths();
-			if (attachmentPaths != null && attachmentPaths.size() > 0) {
+			if (attachmentPaths != null && !attachmentPaths.isEmpty()) {
+				FileSystemResource file = null;
 				for (String path : attachmentPaths) {
-					FileSystemResource file = new FileSystemResource(path);
+					file = new FileSystemResource(path);
 					if (file.exists()) {
 						helper.addAttachment(file.getFilename(), file);
 					}
