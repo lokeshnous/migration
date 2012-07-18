@@ -1,11 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
 import com.advanceweb.afc.jb.job.web.controller.AnonymousUserJobApplyForm;
-import com.advanceweb.afc.jb.resume.web.controller.CertificationsForm;
 
 /**
  * @Author : Prince Mathew
