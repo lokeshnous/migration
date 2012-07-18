@@ -37,7 +37,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 
 	@Override
 	@Transactional(readOnly = false)
-	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, long userId) {
+	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId) {
 		try {
 			if(userId != 0){
 				List<MerUserAlerts> listSubsAlerts= hibernateTemplate.find("from MerUserAlerts m where m.userid="+userId);
@@ -59,7 +59,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 * @return
 	 */
 	@Override
-	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(long userId) {
+	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId) {
 		
 		List<JobSeekerSubscriptionsDTO> listSubscriptiosns = null;
 		try {

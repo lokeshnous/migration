@@ -53,7 +53,7 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteAppliedJob")
-	public ModelAndView deleteAppliedJob(@RequestParam("id") Long id) {
+	public ModelAndView deleteAppliedJob(@RequestParam("id") int id) {
 
 		jobSeekerActivity.deleteAppliedJobs(id);
 		return new ModelAndView("jobSeekerActivity");
@@ -66,7 +66,7 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteSavedJob")
-	public ModelAndView deleteSavedJob(@RequestParam("id") Long id) {
+	public ModelAndView deleteSavedJob(@RequestParam("id") int id) {
 
 		jobSeekerActivity.deleteSavedJobs(id);
 		return new ModelAndView("jobSeekerActivity");

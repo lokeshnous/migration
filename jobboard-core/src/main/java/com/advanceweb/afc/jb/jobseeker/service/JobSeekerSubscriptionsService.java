@@ -4,12 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
-import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerSubscriptionsDAO;
 
 /**
@@ -29,7 +27,7 @@ public class JobSeekerSubscriptionsService implements JobSeekerSubscriptions {
 	 * @return 
 	 */
 	@Override
-	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, long userId) {
+	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId) {
 		return jobSeekerSubscriptionsDAO.saveJobSeekerSubscription(listSubsDTO, userId);
 	}
 	
@@ -40,7 +38,7 @@ public class JobSeekerSubscriptionsService implements JobSeekerSubscriptions {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(long userId) {
+	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId) {
 
 		return jobSeekerSubscriptionsDAO.getCurrentSubscriptions(userId);
 	}

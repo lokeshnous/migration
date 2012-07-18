@@ -14,20 +14,20 @@ public interface JobSeekerActivityDAO {
 	 * delete appliedJob
 	 * @param appliedJobId
 	 */
-	boolean deleteAppliedJobs(long appliedJobId);
+	boolean deleteAppliedJobs(int appliedJobId);
 
 	/**
 	 * get appliedjob
 	 * @param jobSeekerId
 	 * @return
 	 */
-	List<AppliedJobDTO> getAppliedJobs(long jobSeekerId);
+	List<AppliedJobDTO> getAppliedJobs(int jobSeekerId);
 
 	/**
 	 * delete savedJob
 	 * @param savedJobId
 	 */
-	boolean deleteSavedJobs(long savedJobId);
+	boolean deleteSavedJobs(int savedJobId);
 
 	/**
 	 * get savedjob
@@ -35,6 +35,6 @@ public interface JobSeekerActivityDAO {
 	 * @return
 	 */
 
-	List<SavedJobDTO> getSavedJobs(long jobSeekerId);
+	List<SavedJobDTO> getSavedJobs(int jobSeekerId);
 
 }

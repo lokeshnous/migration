@@ -21,13 +21,13 @@ public interface JobSeekerRegistrationDAO {
 	 * 
 	 * @param jobSeekerId
 	 */
-	public boolean deleteJobSeeker(long jobSeekerId);
+	public boolean deleteJobSeeker(int jobSeekerId);
 
 	/**
 	 * 
 	 * @param jobSeekerId
 	 */
-	public JobSeekerRegistrationDTO getJobSeekerDetails(long jobSeekerId);
+	public JobSeekerRegistrationDTO getJobSeekerDetails(int jobSeekerId);
 
 	/**
 	 * 

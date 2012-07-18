@@ -59,7 +59,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 * @param jobSeekerId
 	 */
 	@Override
-	public boolean deleteJobSeeker(long jobSeekerId) {
+	public boolean deleteJobSeeker(int jobSeekerId) {
 		return false;
 	}
 
@@ -74,11 +74,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 */
 	@Override
 	@Transactional(readOnly=true)
-	public JobSeekerRegistrationDTO getJobSeekerDetails(long jobSeekerId) {
+	public JobSeekerRegistrationDTO getJobSeekerDetails(int jobSeekerId) {
 		JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 		try {
 			if (jobSeekerId != 0) {
-				MerUser merUser = hibernateTemplate.load(MerUser.class, new Long(jobSeekerId).intValue());
+				MerUser merUser = hibernateTemplate.load(MerUser.class, jobSeekerId);
 				MerUserDTO merUserDTO = registrationConversionHelper.transformMerUserToMerUserDTO(merUser);
 				jsRegistrationDTO.setMerUserDTO(merUserDTO);
 			}

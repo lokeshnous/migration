@@ -16,12 +16,12 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @param jobSeekerSubscriptionsDTO
 	 * @return
 	 */
-	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, long userId);
+	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId);
 	
 	/**
 	 * To get current subscriptions of the user
 	 * @param userId
 	 * @return
 	 */
-	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(long userId);
+	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId);
 }

@@ -41,7 +41,7 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
  * deleting selected applied job
  */
 	@Override
-	public boolean deleteAppliedJobs(long appliedJobId) {
+	public boolean deleteAppliedJobs(int appliedJobId) {
 		JpJob jpJob = getById(appliedJobId);
 		sessionFactory.getCurrentSession().delete(jpJob);
 		return true;
@@ -53,14 +53,13 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AppliedJobDTO> getAppliedJobs(long jobId) {
+	public List<AppliedJobDTO> getAppliedJobs(int jobId) {
 		List<AppliedJobDTO> appliedJobDTOList = new ArrayList<AppliedJobDTO>();
 
 		try {
 			if (jobId != 0) {
 				Session session = sessionFactory.openSession();
-				JpJob jpJob = (JpJob) session.get(JpJob.class,
-						new Long(jobId).intValue());
+				JpJob jpJob = (JpJob) session.get(JpJob.class,jobId);
 				AppliedJobDTO appliedJobDTO = jobSeekerActivityConversionHelper
 						.transformJpJobToApplidJobDTO(jpJob);
 				appliedJobDTOList.add(appliedJobDTO);
@@ -77,15 +76,14 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	 * deleting selected saved job
 	 */
 	@Override
-	public boolean deleteSavedJobs(long savedJobId) {
+	public boolean deleteSavedJobs(int savedJobId) {
 		JpJob a = getById(savedJobId);
 		sessionFactory.getCurrentSession().delete(a);
 		return true;
 	}
 
-	public JpJob getById(long id) {
-		return (JpJob) sessionFactory.getCurrentSession().get(JpJob.class, new Long(
-				id).intValue());
+	public JpJob getById(int id) {
+		return (JpJob) sessionFactory.getCurrentSession().get(JpJob.class,id);
 	}
 
 	/**
@@ -93,14 +91,13 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<SavedJobDTO> getSavedJobs(long jobSeekerId) {
+	public List<SavedJobDTO> getSavedJobs(int jobSeekerId) {
 		List<SavedJobDTO> savedJobDTOList = new ArrayList<SavedJobDTO>();
 
 		try {
 			if (jobSeekerId != 0) {
 				Session session = sessionFactory.openSession();
-				JpJob jpJob = (JpJob) session.get(JpJob.class, new Long(
-						jobSeekerId).intValue());
+				JpJob jpJob = (JpJob) session.get(JpJob.class,jobSeekerId);
 				SavedJobDTO savedJobDTO = jobSeekerActivityConversionHelper
 						.transformJpJobToSavedJobDTO(jpJob);
 				savedJobDTOList.add(savedJobDTO);
