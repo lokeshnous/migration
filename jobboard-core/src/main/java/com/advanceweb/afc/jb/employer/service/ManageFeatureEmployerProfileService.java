@@ -32,8 +32,8 @@ public class ManageFeatureEmployerProfileService implements
 	 * Saving Manage Featured Employer Profile
 	 */
 	@Override
-	public void saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
-		manageFeatureEmployerProfileDAO.saveEmployerProfile(companyProfileDTO);
+	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
+		return manageFeatureEmployerProfileDAO.saveEmployerProfile(companyProfileDTO);
 
 	}
 

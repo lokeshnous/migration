@@ -38,7 +38,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
+	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
 
 		AdmFacility facility = new AdmFacility();
 		facility.setName(companyProfileDTO.getCompanyName());
@@ -54,6 +54,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
+		return true;
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				AdmFacility facility = (AdmFacility) session.get(AdmFacility.class,
 						new Long(employerId).intValue());
 				System.out.println(facility);
-
+ 
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();

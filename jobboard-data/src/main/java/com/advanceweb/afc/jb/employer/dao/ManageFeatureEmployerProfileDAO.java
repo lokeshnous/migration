@@ -19,7 +19,7 @@ public interface ManageFeatureEmployerProfileDAO {
 	 * 
 	 * @param companyProfileDTO
 	 */
-	void saveEmployerProfile(CompanyProfileDTO companyProfileDTO);
+	boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO);
 	
 	CompanyProfileDTO getEmployerDetails(long employerId);
 	
