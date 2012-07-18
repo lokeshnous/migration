@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 
 /**
@@ -62,7 +60,7 @@ public class SaveSearchController {
 				.viewMySavedSearches(1);
 
 		for (SaveSearchedJobsDTO saveSearchedJobsDTO : saveSearchedJobsDTOList) {
-			System.out.println(saveSearchedJobsDTO);
+			//System.out.println(saveSearchedJobsDTO);
 		}
 
 		return "viewMySavedSearches";
@@ -80,9 +78,9 @@ public class SaveSearchController {
 	public String editSavedSearch(@Valid SaveSearchForm form,
 			BindingResult result) {
 
-		JpSaveSearch jpSaveSearch = saveSearchService.editSavedSearch(1);
+		saveSearchService.editSavedSearch(1);
 
-		System.out.println(jpSaveSearch);
+		//System.out.println(jpSaveSearch);
 
 		return "viewMySavedSearches";
 
@@ -99,10 +97,7 @@ public class SaveSearchController {
 	public String deleteSavedSearch(@Valid SaveSearchForm form,
 			BindingResult result) {
 
-		if (saveSearchService.deleteSavedSearch(1)) {
-			System.out.println("Deleted Succcessfully");
-		}
-
+		saveSearchService.deleteSavedSearch(1);
 		return "viewMySavedSearches";
 
 	}

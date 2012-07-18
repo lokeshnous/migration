@@ -14,9 +14,9 @@ import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
 
 public interface SaveSearchService {
 	
-	public void saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO);
-	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
-	public boolean deleteSavedSearch(int saveSearchId);
-	public JpSaveSearch editSavedSearch(int saveSearchId);
+	void saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO);
+	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
+	boolean deleteSavedSearch(int saveSearchId);
+	JpSaveSearch editSavedSearch(int saveSearchId);
 
 }

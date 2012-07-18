@@ -2,17 +2,11 @@ package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
-import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
-import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
-import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
-import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
-import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO;
 
 /**
