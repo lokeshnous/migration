@@ -29,7 +29,7 @@ public class EmployerProfileManagementController {
 	ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
-	public ModelAndView getAppliedJob(Map model) {
+	public ModelAndView getEmployeeProfile(Map model) {
 
 		return new ModelAndView("manageFeatureEmpPro");
 	}

@@ -45,7 +45,7 @@ public class ManageFeatureEmployerProfileService implements
 
 	@Override
 	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
-		return null;
+		return manageFeatureEmployerProfileDAO.getEmployerAccountDetails(employerId);
 	}
 
 }

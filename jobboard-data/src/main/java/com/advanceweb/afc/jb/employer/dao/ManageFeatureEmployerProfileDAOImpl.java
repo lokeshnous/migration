@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -64,10 +64,10 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		try {
 			if (employerId != 0) {
 				Session session = sessionFactory.openSession();
-				AdmFacility facility = (AdmFacility) session.get(AdmFacility.class,
-						new Long(employerId).intValue());
+				AdmFacility facility = (AdmFacility) session.get(
+						AdmFacility.class, new Long(employerId).intValue());
 				System.out.println(facility);
- 
+
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -77,18 +77,21 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 	@Override
 	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
+		List<EmployerProfileDTO> employerProfileDTOs = new ArrayList<EmployerProfileDTO>();
 		try {
+
 			if (employerId != 0) {
 				Session session = sessionFactory.openSession();
-				AdmFacility facility = (AdmFacility) session.get(AdmFacility.class,
-						new Long(employerId).intValue());
-
+				AdmFacility facility = (AdmFacility) session.get(
+						AdmFacility.class, new Long(employerId).intValue());
+				EmployerProfileDTO employerProfileDTO = new EmployerProfileDTO();
+				employerProfileDTOs.add(employerProfileDTO);
 
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return employerProfileDTOs;
 	}
 
 }
