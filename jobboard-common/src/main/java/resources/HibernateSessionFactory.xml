@@ -16,7 +16,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.advanceweb.afc.jb" />
 	<!-- Database properties -->
-	<context:property-placeholder location="classpath:database.properties" />
+	<context:property-placeholder location="classpath:resources/database.properties" />
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -157,7 +157,7 @@
 		</property>
 	</bean>
 	
-	<util:properties id="solrConfiguration" location="classpath:solrConfiguration.properties" />
+	<util:properties id="solrConfiguration" location="classpath:resources/solrConfiguration.properties" />
 	
 
 </beans>
