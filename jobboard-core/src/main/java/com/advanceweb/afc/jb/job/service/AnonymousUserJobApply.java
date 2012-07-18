@@ -9,5 +9,5 @@ import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
    @Purpose: This will work as a service interface for  Anonymous User for applying job
  */
 public interface AnonymousUserJobApply {
-	public boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto);
+ boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto);
 }
