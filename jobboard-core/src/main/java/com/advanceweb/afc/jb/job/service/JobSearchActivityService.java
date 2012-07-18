@@ -9,7 +9,6 @@ import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchActivityDAO;
 
-
 /**
  * <code> JobSearchActivityService </code> is a implementation for Service
  * class.
@@ -20,7 +19,7 @@ import com.advanceweb.afc.jb.job.dao.JobSearchActivityDAO;
  * 
  */
 @Service("jobSearchActivity")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobSearchActivityService implements JobSearchActivity {
 
 	@Autowired
