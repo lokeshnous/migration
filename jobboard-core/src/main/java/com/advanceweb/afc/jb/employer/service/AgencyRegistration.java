@@ -19,8 +19,7 @@ public class AgencyRegistration implements ProfileRegistration {
 
 	private AgencyRegistration agencyRegistration;
 	public RegistrationConversionHelper m_RegistrationConversionHelper;
-	public AgencyProfileDTO m_AgencyProfileDTO;
-	public AgencyRegistrationDAO m_AgencyRegistrationDAO;
+
 
 	public AgencyRegistration(){
 

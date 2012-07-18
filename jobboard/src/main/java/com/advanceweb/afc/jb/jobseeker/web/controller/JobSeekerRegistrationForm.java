@@ -49,7 +49,7 @@ public class JobSeekerRegistrationForm {
 //	private String state;
 	private String veteranStatus;
 	
-	private String MobileNo;
+	private String mobileNo;
 	
 	private CommonsMultipartFile fileData;
 	private String fileName;
@@ -159,15 +159,7 @@ public class JobSeekerRegistrationForm {
 	public void setVeteranStatus(String veteranStatus) {
 		this.veteranStatus = veteranStatus;
 	}
-
-	public String getMobileNo() {
-		return MobileNo;
-	}
-
-	public void setMobileNo(String mobileNo) {
-		MobileNo = mobileNo;
-	}
-
+	
 	public CommonsMultipartFile getFileData() {
 		return fileData;
 	}

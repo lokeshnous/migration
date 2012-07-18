@@ -14,7 +14,7 @@ public class EducationDTO {
 	private String endDate;
 	private String instituteName;
 	private String degrees;
-	private String Certifications;
+	private String certifications;
 	private String language;
 	private int builderEduId;
 	private EduDegreeDTO eduDegreeDTO;
@@ -55,12 +55,7 @@ public class EducationDTO {
 	public void setDegrees(String degrees) {
 		this.degrees = degrees;
 	}
-	public String getCertifications() {
-		return Certifications;
-	}
-	public void setCertifications(String certifications) {
-		Certifications = certifications;
-	}
+
 	public String getLanguage() {
 		return language;
 	}
@@ -79,7 +74,11 @@ public class EducationDTO {
 	public void setEduDegreeDTO(EduDegreeDTO eduDegreeDTO) {
 		this.eduDegreeDTO = eduDegreeDTO;
 	}
-	
-	
-	
+	public String getCertifications() {
+		return certifications;
+	}
+	public void setCertifications(String certifications) {
+		this.certifications = certifications;
+	}
+		
 }

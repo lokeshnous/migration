@@ -13,7 +13,7 @@ import com.advanceweb.afc.jb.resume.ResumeSearch;
  */
 public class ResumeService {
 
-	public ResumeSearch m_ResumeSearch;
+
 
 	public ResumeService() {
 

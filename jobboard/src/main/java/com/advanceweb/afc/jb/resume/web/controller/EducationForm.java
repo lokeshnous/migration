@@ -15,7 +15,7 @@ public class EducationForm {
 	private String endDate;
 	private String instituteName;
 	private String degrees;
-	private String Certifications;
+	private String certifications;
 	private String language;
 	private int builderEduId;
 	
@@ -55,12 +55,12 @@ public class EducationForm {
 	}
 	public void setDegrees(String degrees) {
 		this.degrees = degrees;
-	}
+	}	
 	public String getCertifications() {
-		return Certifications;
+		return certifications;
 	}
 	public void setCertifications(String certifications) {
-		Certifications = certifications;
+		this.certifications = certifications;
 	}
 	public String getLanguage() {
 		return language;

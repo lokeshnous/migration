@@ -13,7 +13,7 @@ public class AgencyProfileDTO extends BaseProfileDTO {
 	private PackageInformationDTO packageInformationDTO;
 	private List<EmployerProfileDTO> employerList;
 	private CompanyProfileDTO comapnyProfileDTO;
-	public CompanyProfileDTO m_CompanyProfileDTO;
+
 
 	public AgencyProfileDTO(){
 

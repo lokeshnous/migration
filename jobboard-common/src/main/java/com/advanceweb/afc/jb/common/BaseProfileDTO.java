@@ -9,8 +9,7 @@ public class BaseProfileDTO extends ProfileDTO {
 
 	public AlertsListDTO alertsListDTO;
 	public ContactInformationDTO contactInformationDTO;
-	public AlertsListDTO m_AlertsListDTO;
-	public ContactInformationDTO m_ContactInformationDTO;
+
 
 
 	public BaseProfileDTO() {
