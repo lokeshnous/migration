@@ -19,7 +19,7 @@ public class AnonymousUserJobApplyDAOImpl implements AnonymousUserJobApplyDAO {
 	/*@Autowired
 	AnonymousUserJobApplyConversionHelper conversionHelper;*/
 
-	private HibernateTemplate hibernateTemplate;
+	public HibernateTemplate hibernateTemplate;
 	
 	
 	
