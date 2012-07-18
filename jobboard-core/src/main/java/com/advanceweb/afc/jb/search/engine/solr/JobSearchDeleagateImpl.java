@@ -83,7 +83,7 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 		if (serverAccessibility) {
 			
 			if ("".equalsIgnoreCase(paramMap.get("titlesearch"))
-					&& paramMap.get("titlesearch") == null) {
+					|| paramMap.get("titlesearch") == null) {
 
 				System.out
 				.println("Empty Search criteria. Please enter a search criteria to seach jobs.");
