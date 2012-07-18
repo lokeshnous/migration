@@ -6,18 +6,29 @@ import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
-import com.advanceweb.afc.jb.job.service.JobSeekerActivity;
 
-public class ManageFeatureEmployerProfileServiceTest extends ServiceTest{
+public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+
+	@Test
+	public void testSavedJobs() {
+		try {
+
+			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+					.getEmployerDetails(13100);
+			assertTrue("Get Applied Job",
+					manageFeatureEmployerProfile
+							.saveEmployerProfile(companyProfileDTO));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Test
 	public void testGetEmployerDetails() {
@@ -31,21 +42,9 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest{
 			e.printStackTrace();
 		}
 	}
-/*
-	@Test
-	public void testDeleteAppliedJobs() {
-		try {
-
-			assertTrue("Delete Applied Job",
-					jobSeekerActivity.deleteAppliedJobs(13100));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	@Test
-	public void testSavedJobs() {
+	public void testGetEmployerAccountDetails() {
 		try {
 
 			List<EmployerProfileDTO> employerProfileDTO = manageFeatureEmployerProfile
@@ -56,9 +55,5 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest{
 			e.printStackTrace();
 		}
 	}
-
-	
-
-
 
 }
