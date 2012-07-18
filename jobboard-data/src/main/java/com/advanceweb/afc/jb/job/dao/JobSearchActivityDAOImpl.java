@@ -49,7 +49,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 		try {
 			if (jobId != 0) {
 				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
-						Long.valueOf(jobId));
+						(int)jobId);
 				SearchedJobDTO searchedJobDTO = jobSearchActivityConversionHelper
 						.transformJpJobToSearchedJobDTO(jpJob);
 				jobDetail = searchedJobDTO;

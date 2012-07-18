@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.job.service;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +46,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	public void testViewJobDetails() {
 			Long jobId = 13100L;
 			SearchedJobDTO searchedJobDTO =jobSearchActivity.viewJobDetails(jobId);
-			assertNull("View SearchedJob", searchedJobDTO);
+			assertNotNull("View SearchedJob", searchedJobDTO);
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
 			ResumeDTO resumeDTO = resumeService.fetchPublicResumeByUserId(2);
-			assertNull("Public visibility Resume", resumeDTO);
+			assertNotNull("Public visibility Resume", resumeDTO);
 			attachmentpaths.add(resumeDTO.getFilePath());
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
