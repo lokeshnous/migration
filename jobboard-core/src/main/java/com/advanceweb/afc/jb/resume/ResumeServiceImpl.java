@@ -110,6 +110,16 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.addCertifications(listLangExp);
 	}
 	
-	
+	/**
+	 * This method is called to fetch the public visibility resume of Job seeker
+	 * 
+	 * @param jobSeekerId
+	 * @return ResumeDTO
+	 */
+	@Override
+	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
+		
+		return resumeDao.fetchPublicResumeByUserId(jobSeekerId);
+	}
 
 }

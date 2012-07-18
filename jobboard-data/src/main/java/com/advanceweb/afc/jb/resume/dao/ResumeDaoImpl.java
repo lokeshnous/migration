@@ -208,5 +208,23 @@ public class ResumeDaoImpl implements ResumeDao {
 		}
 		return true;
 	}
+	
+
+	/**
+	 * This method is called to fetch the public visibility resume of Job seeker
+	 * 
+	 * @param jobSeekerId
+	 * @return resumeDTO
+	 */
+	@Override
+	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
+
+		List<ResUploadResume> resumes = hibernateTemplate
+				.find("from ResUploadResume where userId = " + jobSeekerId + " AND visibility___Public_Private__ = 1");
+		ResumeDTO resumeDTO = resumeConversionHelper
+				.transformResUploadResumeListToResumeDTOList(resumes).get(0);
+		return resumeDTO;
+	}
+
 
 }

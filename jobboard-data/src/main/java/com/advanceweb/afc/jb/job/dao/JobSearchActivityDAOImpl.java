@@ -57,6 +57,9 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 		} catch (HibernateException e) {
 			// logger call
 			LOGGER.info("ERROR");
+		} catch (Exception ex) {
+			// logger call
+			LOGGER.info("ex-ERROR");
 		}
 		return jobDetail;
 	}

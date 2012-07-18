@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailParseException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -32,7 +33,7 @@ public class MMEmailServiceTest extends ServiceTest  {
 	/**
 	 * The method test the sending of mail.
 	 */
-	@Test
+	@Test(expected = MailSendException.class)
 	public void testSendEmail() {
 		Boolean status = Boolean.FALSE;
 		try {
