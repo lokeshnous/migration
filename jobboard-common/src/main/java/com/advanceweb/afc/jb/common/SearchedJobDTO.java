@@ -28,8 +28,8 @@ public class SearchedJobDTO {
 
 
 	// Added for save this job task
-	private String userID;
-	private String jobID;
+	private int userID;
+	private int jobID;
 	private Date createdDate;
 	private String companyName;
 
@@ -100,35 +100,7 @@ public class SearchedJobDTO {
 	
 
 	// Added for save this job task
-	/**
-	 * @return the userID
-	 */
-	public String getUserID() {
-		return userID;
-	}
-
-	/**
-	 * @param userID
-	 *            the userID to set
-	 */
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
-
-	/**
-	 * @return the jobID
-	 */
-	public String getJobID() {
-		return jobID;
-	}
-
-	/**
-	 * @param jobID
-	 *            the jobID to set
-	 */
-	public void setJobID(String jobID) {
-		this.jobID = jobID;
-	}
+	
 
 	/**
 	 * @return the createdDate
@@ -182,6 +154,34 @@ public class SearchedJobDTO {
 
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+
+	/**
+	 * @return the userID
+	 */
+	public int getUserID() {
+		return userID;
+	}
+
+	/**
+	 * @param userID the userID to set
+	 */
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	/**
+	 * @return the jobID
+	 */
+	public int getJobID() {
+		return jobID;
+	}
+
+	/**
+	 * @param jobID the jobID to set
+	 */
+	public void setJobID(int jobID) {
+		this.jobID = jobID;
 	}
 
 
