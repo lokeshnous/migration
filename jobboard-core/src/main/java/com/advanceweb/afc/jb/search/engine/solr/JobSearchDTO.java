@@ -37,10 +37,10 @@ public class JobSearchDTO implements Serializable{
 	private boolean featured;
 	
 	@Field("is_international")
-	private boolean isInternational;
+	private boolean internationalJob;
 	
 	@Field("is_national")
-	private boolean isNational;
+	private boolean nationalJob;
 	
 	@Field("job_count")
 	private int jobCount;
@@ -153,20 +153,20 @@ public class JobSearchDTO implements Serializable{
 		this.featured = featured;
 	}
 
-	public boolean isInternational() {
-		return isInternational;
+	public boolean isInternationalJob() {
+		return internationalJob;
 	}
 
-	public void setInternational(boolean isInternational) {
-		this.isInternational = isInternational;
+	public void setInternationalJob(boolean internationalJob) {
+		this.internationalJob = internationalJob;
 	}
 
-	public boolean isNational() {
-		return isNational;
+	public boolean isNationalJob() {
+		return nationalJob;
 	}
 
-	public void setNational(boolean isNational) {
-		this.isNational = isNational;
+	public void setNationalJob(boolean nationalJob) {
+		this.nationalJob = nationalJob;
 	}
 
 	public int getJobCount() {
