@@ -77,7 +77,7 @@ public interface PopulateDropdowns {
 	   @Return :List of RadiusDTO
 	 * 
 	 */
-	public List<RadiusDTO> getRadiusList(); 
+	List<RadiusDTO> getRadiusList(); 
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of ExcludeFromDTO for the job seeker's advance search
@@ -85,7 +85,7 @@ public interface PopulateDropdowns {
 	   @Return :List of ExcludeFromDTO
 	 * 
 	 */
-	public List<ExcludeFromDTO> getExcludeFromList(); 
+	List<ExcludeFromDTO> getExcludeFromList(); 
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of FromZipcodeDTO for the job seeker's advance search
@@ -93,7 +93,7 @@ public interface PopulateDropdowns {
 	   @Return :List of FromZipcodeDTO
 	 *
 	 */
-	public List<FromZipcodeDTO> getFromZipcodeList();
+	List<FromZipcodeDTO> getFromZipcodeList();
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of StateDTO for the job seeker's advance search
@@ -101,7 +101,7 @@ public interface PopulateDropdowns {
 	   @Return :List of StateDTO
 	 *
 	 */
-	public List<StateDTO> getStateList();
+	List<StateDTO> getStateList();
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of MetroAreaDTO for the job seeker's advance search
@@ -109,7 +109,7 @@ public interface PopulateDropdowns {
 	   @Return :List of MetroAreaDTO
 	 * 
 	 */
-	public List<MetroAreaDTO> getMetroAreaList();
+	List<MetroAreaDTO> getMetroAreaList();
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of EmploymentTypeDTO for the job seeker's advance search
@@ -117,7 +117,7 @@ public interface PopulateDropdowns {
 	   @Return :List of EmploymentTypeDTO
 	 * 
 	 */
-	public List<EmploymentTypeDTO> getEmploymentTypeList();
+	List<EmploymentTypeDTO> getEmploymentTypeList();
 	
 	/**@Author :Prince Mathew
 	   @Purpose:To get the list of JobPostedDateDTO for the job seeker's advance search
@@ -125,7 +125,7 @@ public interface PopulateDropdowns {
 	   @Return :List of JobPostedDateDTO
 	 * 
 	 */
-	public List<JobPostedDateDTO> getJobPostedDateList();
+	List<JobPostedDateDTO> getJobPostedDateList();
 	
 	
 	
