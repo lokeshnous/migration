@@ -65,7 +65,7 @@ public class ResBuilderEmployment implements Serializable {
 
 	//bi-directional many-to-one association to ResBuilderResume
     @ManyToOne
-	@JoinColumn(name="builder_resume_id", insertable = false, updatable = false)
+	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
     public ResBuilderEmployment() {

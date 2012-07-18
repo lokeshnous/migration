@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public class ResDegreeEdu implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to ResBuilderEdu
-	@OneToMany(mappedBy="resDegreeEdu")
+	@OneToMany(mappedBy="resDegreeEdu", cascade={CascadeType.ALL})
 	private List<ResBuilderEdu> resBuilderEdus;
 
     public ResDegreeEdu() {

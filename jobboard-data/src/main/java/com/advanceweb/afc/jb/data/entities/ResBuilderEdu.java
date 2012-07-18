@@ -61,12 +61,12 @@ public class ResBuilderEdu implements Serializable {
 
 	//bi-directional many-to-one association to ResBuilderResume
     @ManyToOne
-	@JoinColumn(name="builder_resume_id", insertable = false, updatable = false)
+	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
 	//bi-directional many-to-one association to ResDegreeEdu
     @ManyToOne
-	@JoinColumn(name="degree_edu_id", insertable = false, updatable = false)
+	@JoinColumn(name="degree_edu_id")
 	private ResDegreeEdu resDegreeEdu;
 
     public ResBuilderEdu() {
