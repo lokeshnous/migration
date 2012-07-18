@@ -34,11 +34,6 @@ public class JobSeekerAdvanceSearchController {
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 	
-	public JobSeekerAdvanceSearchController() {
-		super();
-	}
-
-
 	
 	@RequestMapping(value="/jobseekeradvancesearch",method = RequestMethod.GET)
 	public ModelAndView createJobSeekerAdvanceSearch(Map model) {
