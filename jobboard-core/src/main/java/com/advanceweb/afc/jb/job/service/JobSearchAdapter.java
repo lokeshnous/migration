@@ -2,9 +2,6 @@ package com.advanceweb.afc.jb.job.service;
 
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.XmlResumeParser;
-import com.advanceweb.afc.jb.search.engine.solr.SolrAdapter;
-
 /**
  * @author Rajeshkb
  * @version 1.0
