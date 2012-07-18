@@ -41,7 +41,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileId
 	 */
-	public boolean deleteProfile(long profileId){
+	public boolean deleteProfile(int profileId){
 		return false;
 	}
 
@@ -57,7 +57,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileId
 	 */
-	public ProfileDTO viewProfile(long profileId){
+	public ProfileDTO viewProfile(int profileId){
 		return null;
 	}
 

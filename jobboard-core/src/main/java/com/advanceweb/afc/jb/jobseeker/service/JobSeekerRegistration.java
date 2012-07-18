@@ -50,7 +50,7 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	 * @param profileId
 	 */
 	@Override
-	public boolean deleteProfile(long profileId) {
+	public boolean deleteProfile(int profileId) {
 		return false;
 	}
 
@@ -75,7 +75,7 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	 * @param profileId
 	 */
 	@Override
-	public ProfileDTO viewProfile(long jobseekerId) {
+	public ProfileDTO viewProfile(int jobseekerId) {
 		return jobSeekerRegistrationDAO.getJobSeekerDetails(jobseekerId);
 	}
 

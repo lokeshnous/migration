@@ -9,7 +9,7 @@ import com.advanceweb.afc.jb.common.ProfileDTO;
  */
 public interface ProfileRegistration {
 
-	public ProfileDTO m_ProfileDTO = null;
+
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public interface ProfileRegistration {
 	 * 
 	 * @param profileId
 	 */
-	public boolean deleteProfile(long profileId);
+	public boolean deleteProfile(int profileId);
 
 	/**
 	 * 
@@ -33,7 +33,7 @@ public interface ProfileRegistration {
 	 * 
 	 * @param profileId
 	 */
-	public ProfileDTO viewProfile(long profileId);
+	public ProfileDTO viewProfile(int profileId);
 	
 	
 	/**
