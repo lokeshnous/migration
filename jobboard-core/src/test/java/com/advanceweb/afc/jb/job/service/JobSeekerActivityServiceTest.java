@@ -23,7 +23,6 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 			List<AppliedJobDTO> appliedJobDTO = jobSeekerActivity
 					.getAppliedJobs(13100);
 			assertTrue("Get Applied Job", appliedJobDTO != null);
-			System.out.println(appliedJobDTO.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,21 +30,11 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 	}
 
 	@Test
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void testDeleteAppliedJobs() {
 		try {
 
 			assertTrue("Delete Applied Job",
 					jobSeekerActivity.deleteAppliedJobs(13100));
-			System.out.println("Delete Applied Job");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,7 +48,6 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 			List<SavedJobDTO> savedJobDTO = jobSeekerActivity
 					.getSavedJobs(13100);
 			assertTrue("Get Applied Job", savedJobDTO != null);
-			System.out.println(savedJobDTO.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,7 +60,6 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 
 			assertTrue("Delete Applied Job",
 					jobSeekerActivity.deleteSavedJobs(13100));
-			System.out.println("Delete Applied Job");
 
 		} catch (Exception e) {
 			e.printStackTrace();
