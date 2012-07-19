@@ -23,7 +23,7 @@ public class LoggingAspect {
 
 	
 //	 private Log logger = LogFactory.getLog(this.getClass());
-	 private static final Logger logger = Logger.getLogger(LoggingAspect.class);
+	 private static final Logger LOGGER = Logger.getLogger(LoggingAspect.class);
 	 
 	 @Pointcut("within(com.advanceweb.afc.jb..*) AND execution(* *(..))")
 	 protected void loggingOperation() {
@@ -33,20 +33,20 @@ public class LoggingAspect {
 	
 	@Before("loggingOperation()")
 	public void logBefore(JoinPoint joinPoint) {
-		logger.info("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		LOGGER.info("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
 	}
 
 	@After("loggingOperation()")
 	public void logAfter(JoinPoint joinPoint) {
-		logger.info("Exited  From " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		LOGGER.info("Exited  From " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
 	}
 	
 	@AfterReturning(
 			pointcut = "loggingOperation()",
 			returning= "result")
 	public void logAfterReturning(JoinPoint joinPoint, Object result) {
-		logger.debug("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
-		logger.debug("Result : "+result);
+		LOGGER.debug("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		LOGGER.debug("Result : "+result);
 
 	}
 	
@@ -55,8 +55,8 @@ public class LoggingAspect {
 			throwing= "error")
 	public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
 		
-		logger.error("An exception has been thrown in " + joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
-		logger.error("Message : "+error.getMessage());
+		LOGGER.error("An exception has been thrown in " + joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		LOGGER.error("Message : "+error.getMessage());
 	}
 	
 	
