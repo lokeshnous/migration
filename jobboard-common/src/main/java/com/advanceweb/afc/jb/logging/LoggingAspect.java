@@ -42,10 +42,11 @@ public class LoggingAspect {
 	}
 	
 	@AfterReturning(
-			pointcut = "execution(* com.advanceweb.afc.jb.*.*(..))",
+			pointcut = "loggingOperation()",
 			returning= "result")
 	public void logAfterReturning(JoinPoint joinPoint, Object result) {
-		logger.info("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		logger.debug("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		logger.debug("Result : "+result);
 
 	}
 	
