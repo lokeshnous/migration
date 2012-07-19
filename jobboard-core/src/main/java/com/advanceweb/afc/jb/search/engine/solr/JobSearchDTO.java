@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import org.apache.solr.client.solrj.beans.Field;
 
+/**
+ * @author ReeteshRN
+ * @version 1.0
+ * @Date 10th July 2012 onwards
+ */
+
 public class JobSearchDTO implements Serializable{
 	
 	private static final long serialVersionUID = -2200423309708244407L;
