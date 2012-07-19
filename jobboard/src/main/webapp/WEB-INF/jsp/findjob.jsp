@@ -158,13 +158,13 @@
 	              </div>
 	                      <div class="input_grp2 marginTop10">
 	                <form:select path="radius" id="radius" cssClass="jb_input3">
-	                	<form:option label="--" value="val0"/>
+	                	<form:option label="--" value=""/>
 	                	<!-- USE <form:options/> while dynamically populating the values  -->
-	                	<form:option label="5" value="val1"/>
-	                	<form:option label="10" value="val2"/>
-	                	<form:option label="25" value="val3"/>
-	                	<form:option label="50" value="val4"/>
-	                	<form:option label="100" value="val5"/>
+	                	<form:option label="5" value="5"/>
+	                	<form:option label="10" value="10"/>
+	                	<form:option label="25" value="25"/>
+	                	<form:option label="50" value="50"/>
+	                	<form:option label="100" value="100"/>
 	                </form:select>
 	                <!-- <select name="radius" id="radius" class="jb_input3" >
 	                	
