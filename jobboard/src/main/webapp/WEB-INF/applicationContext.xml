@@ -16,4 +16,7 @@
 	<context:property-placeholder location="classpath:common.properties,classpath:resources/database.properties" />
 	<import resource="classpath:resources/HibernateSessionFactory.xml"/>
 
+	<!-- Logging Aspect -->
+	<bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" />
+	
 </beans>
