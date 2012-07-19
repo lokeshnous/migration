@@ -3,16 +3,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
+
 		<!-- STYLESHEETS -->
 		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
         
 <!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
+	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
 <![endif]-->
 
 
@@ -27,17 +28,9 @@
 		});
 		</script>
         <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-</head>
+		</head>
 
-<body class="job_board">
-
-<%-- <form:form method="Post" action="findJobSearch.html" 
-	commandName="jobSearchResultForm">
-<form:input path="searchString" />
-<input type="submit" value="Find Jobs" />
-</form:form> --%>
-
-
+		<body class="job_board">
 <div class="ad_page_top"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
 <div class="main_wrapper_outside">
           <div class="main_wrapper_inside">
@@ -147,47 +140,49 @@
               <!--nav-->
               <div class="row">
               <div class="job_search_main job_search_main_height">
-                  <form method="">
+                  <%-- <form method=""> --%>
+                  <form:form method="Post" action="findJobSearch.html" commandName="jobSearchResultForm">
             <div class="search_form">
             
-            <form:form method="Post" action="findJobSearch.html" commandName="jobSearchResultForm">
+               
             
-                      <h1 class="marginBottom5">Search <span>60,262</span> Healthcare Jobs</h1>
-                      <form:input path="keywords"  id="keywords" cssClass="jb_input1" />
-                     <!--  <input type="text" name="keywords" id="keywords" class="jb_input1" /> -->
-                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
-                      <br/>
-                      <div class="input_grp1 marginTop10">
-                       <form:input path="city_state"  id="city_state" cssClass="jb_input2" />
-                	  <!-- <input type="text" name="city_state" id="city_state" class="jb_input2" /> -->
-                <br/>
-                <div class="toolTipBefore"><label for="city_state">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
-              </div>
-                      <div class="input_grp2 marginTop10">
-                <form:select path="radius" id="radius" cssClass="jb_input3">
-                	<form:option label="--" value="val0"/>
-                	<!-- USE <form:options/> while dynamically populating the values  -->
-                	<form:option label="5" value="val1"/>
-                	<form:option label="10" value="val2"/>
-                	<form:option label="25" value="val3"/>
-                	<form:option label="50" value="val4"/>
-                	<form:option label="100" value="val5"/>
-                </form:select>
-                <!-- <select name="radius" id="radius" class="jb_input3" >
-                	
-                          <option>--</option>
-                          <option>5</option>
-                          <option>10</option>
-                          <option>25</option>
-                          <option>50</option>
-                          <option>100</option>
-                        </select> -->
-                <label for="radius">Radius</label>
-              </div>
-              <div class="clearfix"></div>
-                      <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a>
-                 <input type="submit" value="Find Jobs" />
-              </form:form>
+	                      <h1 class="marginBottom5">Search <span>60,262</span> Healthcare Jobs</h1>
+	                      <form:input path="keywords"  id="keywords" cssClass="jb_input1" />
+	                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
+	                      <br/>
+	                      <div class="input_grp1 marginTop10">
+	                       <form:input path="city_state"  id="city_state" cssClass="jb_input2" />
+	                	  <!-- <input type="text" name="city_state" id="city_state" class="jb_input2" /> -->
+	                <br/>
+	                <div class="toolTipBefore"><label for="city_state">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
+	              </div>
+	                      <div class="input_grp2 marginTop10">
+	                <form:select path="radius" id="radius" cssClass="jb_input3">
+	                	<form:option label="--" value="val0"/>
+	                	<!-- USE <form:options/> while dynamically populating the values  -->
+	                	<form:option label="5" value="val1"/>
+	                	<form:option label="10" value="val2"/>
+	                	<form:option label="25" value="val3"/>
+	                	<form:option label="50" value="val4"/>
+	                	<form:option label="100" value="val5"/>
+	                </form:select>
+	                <!-- <select name="radius" id="radius" class="jb_input3" >
+	                	
+	                          <option>--</option>
+	                          <option>5</option>
+	                          <option>10</option>
+	                          <option>25</option>
+	                          <option>50</option>
+	                          <option>100</option>
+	                        </select> -->
+	                <label for="radius">Radius</label>
+	              </div>
+	              
+	              
+	              <div class="clearfix"></div>
+	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
+	                    <input type="submit" value="Find Jobs" class="btn_sm orange jb_search_submit" />
+             <%-- </form:form>     --%>  
                       
                       <a href="">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div>
             <!-- search_form -->
@@ -231,8 +226,8 @@
             <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;<a href="">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Location</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Employment Type</a> </div>
 
             <!-- browse_bar -->
-            
-                </form>
+            </form:form>    
+                <%-- </form> --%>
                 </div>
               <div class="ad_col_right"> <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
         
@@ -241,7 +236,7 @@
               <!-- ad_col_right -->
               <div class="clearfix"></div>
       <div class="row ">
-        <div class="row marginTop5 paddingBottom05"><div class="floatLeft"><h1 class="FontSize24">Browse Jobs by Employment Type</h1></div> </div>
+        <div class="row marginTop5 paddingBottom05"><div class="floatLeft"><h1 class="FontSize24">200 Nurse jobs match your search criteria.</h1></div> </div>
        	
 
       </div>
@@ -252,24 +247,13 @@
                         
                         
                         <div class="section">
-                        <h2>Employment Type</h2>
-                        <div class="buttonRow">Full Time <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg" alt="close" width="15" height="15"> </a></div>
+                        <h2>Current Search</h2>
+                        <div class="buttonRow">Nurse <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg" alt="close" width="15" height="15"> </a></div>
                           </div><div class="buttonRow">
-                          Part Time
+                          10001
                           <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg" alt="close"> </a></div> 
                           </div><div class="buttonRow">
-                         Per Diem 
-                         <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg"  alt="close" width="15" height="15"> </a></div></div>
-                         
-                         <div class="buttonRow">
-                         Contract / Travel
-                         <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg"  alt="close" width="15" height="15"> </a></div></div>
-
-                         <div class="buttonRow">
-                         Work From Home
-                         <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg"  alt="close" width="15" height="15"> </a></div></div>
-                         <div class="buttonRow">
-                         Locum Tenens
+                         25 miles 
                          <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg"  alt="close" width="15" height="15"> </a></div></div>
                          <div class="section">
                        <div class="SaveSearchButton">
@@ -416,11 +400,11 @@
                                             <div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>
                                             
                                           <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resource/simages/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resource/simages/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
                                             </div>
                                             
                                             
@@ -1494,11 +1478,6 @@
           <p class="copyright">&copy; 2012 Merion Matters 2900 Horizon Drive King of Prussia PA 19406 800-355-5627</p>
         </div>
 <!-- footer_wrapper -->
-
-</body>
-</html>
-	
-	
 
 </body>
 </html>
