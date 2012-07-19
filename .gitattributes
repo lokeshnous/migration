@@ -66,6 +66,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeature
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/AnonymousUserJobApply.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/AnonymousUserJobApplyImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostBrandingTemplate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostBrandingTemplateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearch.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchActivity.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchActivityService.java -text

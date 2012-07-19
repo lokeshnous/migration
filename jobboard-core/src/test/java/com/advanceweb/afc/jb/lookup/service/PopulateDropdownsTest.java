@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -221,7 +222,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	   @Param  :not required
 	   @Return :List of JobAlertsDTO
 	 */
-	
+	@Ignore("Not ready to test")
 	@Test
 	public void testGetJobAlertsList() {
 		List<JobAlertsDTO> jobAlertsList=popService.getJobAlertsList();	
@@ -237,7 +238,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	   @Param  :not required
 	   @Return :List of MagazinesDTO
 	 */
-	
+	@Ignore("Not ready to test")
 	@Test
 	public void testGetMagazinesList() {
 		List<MagazinesDTO> jobMagazinesList=popService.getMagazinesList();	

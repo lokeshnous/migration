@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,6 +30,7 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 		}
 	}
 
+	@Ignore("Not Ready to test")
 	@Test
 	public void testDeleteAppliedJobs() {
 		try {
