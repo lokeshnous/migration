@@ -1,12 +1,10 @@
 package com.advanceweb.afc.jb.job.service;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class SaveSearchServiceTest extends ServiceTest {
 			int saveSearchId = 16;
 			JpSaveSearch jpSaveSearch = saveSearchService
 					.editSavedSearch(saveSearchId);
-			assertNull(jpSaveSearch);
+			assertNotNull(jpSaveSearch);
 
 		} catch (Exception e) {
 			e.printStackTrace();
