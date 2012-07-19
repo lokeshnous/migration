@@ -12,12 +12,18 @@ import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.stereotype.Repository;
 
+/**
+ * This class has been created as a helper class for the Solr related Job search functionalities.
+ * @author Reetesh Ranjan Nayak
+ * @version 1.0
+ * @since 10 July 2012
+ */
+
 @Repository("readSolrServerDetails")
 public class ReadSolrServerDetails {
 
 	/**
 	 * Reads Solr Server details from the property file and put it into the Map
-	 * 
 	 * @param solrConfiguration
 	 * @return Map
 	 */
@@ -65,6 +71,16 @@ public class ReadSolrServerDetails {
 		return solrQueryDetails;
 	}
 
+	/**
+	 * This method will be used to set the server details to HttpSolrServer object, 
+	 * query the query string and get the QueryResponse from the Solr server
+	 * @param serverDetailsMap
+	 * @param solrQueryDetails
+	 * @param paramMap
+	 * @param start
+	 * @param rows
+	 * @return QueryResponse
+	 */
 	public QueryResponse getSolrResponse(Map<String, String> serverDetailsMap,
 			Map<String, String> solrQueryDetails, Map<String, String> paramMap,
 			long start, long rows) {
