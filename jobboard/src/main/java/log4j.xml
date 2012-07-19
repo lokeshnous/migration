@@ -48,20 +48,7 @@
 
 	<!-- SMTP Appender -->
     
-    <logger name="com.advanceweb.afc.jb">
-    	<level value="DEBUG"/>
-    	<appender-ref ref="FILE" />
-    </logger>
-	
-    <logger name="org.hibernate.SQL">
-    	<level value="ERROR"/>
-    	<appender-ref ref="HQL" />
-    </logger>
     
-    <logger name="org.apache">
-    	<level value="ERROR"/>
-    	<appender-ref ref="FILE" />
-    </logger>
 	<category name="com.advanceweb.afc.jb">
 		<priority value="TRACE" />
 	</category>
@@ -70,8 +57,8 @@
 		<priority value="INFO" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="STDERR" />
-		<appender-ref ref="HQL" />
-		<!-- <appender-ref ref="FILE" /> -->
+<!-- 		<appender-ref ref="HQL" />
+		<appender-ref ref="FILE" /> -->
 	</root>
 
 </log4j:configuration>
