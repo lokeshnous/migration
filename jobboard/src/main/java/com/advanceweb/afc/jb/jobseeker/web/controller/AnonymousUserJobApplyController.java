@@ -35,8 +35,8 @@ public class AnonymousUserJobApplyController {
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
 
-	@Autowired
-	private MMEmailService mailSender;
+//	@Autowired
+	private MMEmailService emailService;
 	
 	/*@Autowired
 	private TransformAnonymousUserJobApply transformAnonymousUserJobApply;
@@ -72,7 +72,7 @@ public class AnonymousUserJobApplyController {
 				List<String> attachmentpaths = new ArrayList<String>();
 				attachmentpaths.add(form.getFilePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
-				mailSender.sendEmail(toEmployer);
+				emailService.sendEmail(toEmployer);
 
 				/**
 				 * send mail to anonymous job seeker  email id which is given while applying the job, 
@@ -86,7 +86,7 @@ public class AnonymousUserJobApplyController {
 				toJobSeeker.setSubject(searchedJobDTO.getJobTitle());
 				toJobSeeker.setBody(searchedJobDTO.getJobDesc());
 				toJobSeeker.setHtmlFormat(true);
-				mailSender.sendEmail(toJobSeeker);
+				emailService.sendEmail(toJobSeeker);
 
 		
 		} catch (Exception e) {
