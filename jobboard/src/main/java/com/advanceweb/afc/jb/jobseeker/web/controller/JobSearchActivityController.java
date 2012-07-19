@@ -159,9 +159,8 @@ public class JobSearchActivityController {
 
 	/**
 	 * This method is called to forward to job search page
-	 * 
 	 * @param model
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model) {
@@ -171,12 +170,13 @@ public class JobSearchActivityController {
 	}
 
 	/**
-	 * This method is called to forward to job search page
-	 * 
-	 * @param JobSearchResultForm
-	 *            , BindingResult, model
-	 * @return
+	 * This method will be used for doing Job search 
+	 * @param jobSearchResultForm
+	 * @param result
+	 * @param model
+	 * @return ModelAndView
 	 */
+	
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.POST)
 	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, JobSearchResultDTO> model) {
