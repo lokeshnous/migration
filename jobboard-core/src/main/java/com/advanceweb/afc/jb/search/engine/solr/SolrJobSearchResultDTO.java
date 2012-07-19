@@ -6,6 +6,11 @@ import java.util.Map;
 
 import org.apache.solr.client.solrj.response.FacetField.Count;
 
+/**
+ * @author ReeteshRN
+ * @version 1.0
+ * @Date 10th July 2012 onwards
+ */
 
 public class SolrJobSearchResultDTO implements Serializable{
 	
