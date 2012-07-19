@@ -231,12 +231,12 @@ public class ResumeConversionHelper {
 		resUploadResume.setResumeType(createResumeDTO.getResumeType());
 		resUploadResume.setResumeName(createResumeDTO.getResume_name());
 		
-		
-		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
+		//commented for the new database
+//		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+//		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+//		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+//		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+//		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
 		
 		resUploadResume.setResumeText(createResumeDTO.getResumeText());
 		resUploadResume.setIsPublished(Short.parseShort(createResumeDTO.getIsPublished()));
@@ -264,12 +264,12 @@ public class ResumeConversionHelper {
 		resUploadResume.setResumeType(createResumeDTO.getResumeType());
 		resUploadResume.setResumeName(createResumeDTO.getResume_name());
 		
-		
-		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
+		//commented for the new database
+		//resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+		//resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+		//resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+		//resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+		//resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
 		
 		resUploadResume.setResumeText(createResumeDTO.getResumeText());
 		resUploadResume.setIsPublished(Short.parseShort(createResumeDTO.getIsPublished()));
