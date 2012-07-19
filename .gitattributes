@@ -266,6 +266,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/webapp/web/controllers/jspviewcontents/JspViewContentController.java -text
 jobboard/src/main/java/common.properties -text
 jobboard/src/main/java/log4j.dtd -text
+jobboard/src/main/java/log4j.properties -text
 jobboard/src/main/java/log4j.xml -text
 jobboard/src/main/resources/careertool.html -text
 jobboard/src/main/resources/healthcarenews.html -text
