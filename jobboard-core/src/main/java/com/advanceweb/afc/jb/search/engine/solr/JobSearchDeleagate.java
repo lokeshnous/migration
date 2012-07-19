@@ -12,5 +12,5 @@ public interface JobSearchDeleagate {
 	 * @param start
 	 * @return JobSearchResultDTO
 	 */
-	JobSearchResultDTO jobSearch(String searchName, Map<String, String> paramMap, long rows, long start);
+	JobSearchResultDTO jobSearch(String searchName, Map<String, String> paramMap, long start, long rows);
 }

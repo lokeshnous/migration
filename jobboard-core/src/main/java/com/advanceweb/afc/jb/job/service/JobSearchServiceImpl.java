@@ -16,9 +16,9 @@ public class JobSearchServiceImpl implements JobSearchService{
 	
 	@Override
 	public JobSearchResultDTO jobSearch(final String searchName,
-			final Map<String, String> paramMap, final long rows, final long start) {
+			final Map<String, String> paramMap, final long start, final long rows) {
 		JobSearchResultDTO jobSearchResultDTO = null;
-		jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
 		return jobSearchResultDTO;
 	}
 

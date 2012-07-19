@@ -180,11 +180,15 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.POST)
 	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, JobSearchResultDTO> model) {
+		
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String searchName = "basicjobsearch";
-		paramMap.put("titlesearch", jobSearchResultForm.getSearchString()
+		paramMap.put("keywords", jobSearchResultForm.getKeywords()
 				.trim());
+		paramMap.put("city_state", jobSearchResultForm.getCity_state().trim());
+		paramMap.put("radius",jobSearchResultForm.getRadius());
+		
 		// The below fields values needs to be taken from the UI form which UI will 
 		// be finalized.
 		// long rows = jobSearchResultForm.getRows();
@@ -193,7 +197,7 @@ public class JobSearchActivityController {
 		long start = 0;
 
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
-				rows, start);
+				start, rows);
 		model.put("jobSearchResultDTO", jobSearchResultDTO);
 		return new ModelAndView("jobsearchresult", "jobSearchResultDTOModel",
 				jobSearchResultDTO);

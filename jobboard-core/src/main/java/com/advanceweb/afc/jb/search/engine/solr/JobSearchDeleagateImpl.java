@@ -54,11 +54,8 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
 	@Override
 	public JobSearchResultDTO jobSearch(final String searchName,
-			final Map<String, String> paramMap, final long rows,
-			final long start) {
+			final Map<String, String> paramMap, final long start, final long rows) {
 
-		// log.info("");
-		// HttpSolrServer server = null;
 		QueryResponse response = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
 		SolrJobSearchResultDTO solrJobSearchResultDTO = null;
@@ -81,25 +78,29 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
 			if (connection.getResponseCode() == 200) {
 				serverAccessibility = true;
-				// System.out.println("Server URL " + url + " is accessible.");
+				System.out.println("Server URL " + url + " is accessible.");
 			}
 		} catch (final MalformedURLException e) {
 			serverAccessibility = false;
 			// System.out.println("e1==" + e);
-			// System.out.println("Server URL " + url + " is not accessible.");
+			System.out.println("Server URL " + url + " is not accessible.");
 		} catch (final IOException e) {
 			// System.out.println("e2==" + e);
 			serverAccessibility = false;
-			// System.out.println("Server URL " + url + " is not accessible.");
+			System.out.println("Server URL " + url + " is not accessible.");
 		}
 
 		if (serverAccessibility) {
 
-			if ("".equalsIgnoreCase(paramMap.get("titlesearch"))
-					|| paramMap.get("titlesearch") == null) {
+			if (("".equalsIgnoreCase(paramMap.get("keywords"))
+					|| paramMap.get("keywords") == null) 
+					&& ("".equalsIgnoreCase(paramMap.get("city_state"))
+							|| paramMap.get("city_state") == null)
+							&& ("".equalsIgnoreCase(paramMap.get("radius"))
+									|| paramMap.get("radius") == null)) {
 
-				// System.out
-				// .println("Empty Search criteria. Please enter a search criteria to seach jobs.");
+				 System.out
+				 .println("Empty Search criteria. Please enter a search criteria to seach jobs.");
 				return null;
 
 			} else {
@@ -109,8 +110,9 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 						rows);
 
 				solrJobSearchResultDTO = new SolrJobSearchResultDTO();
-				// System.out.println("Number of search records===>>>"
-				// + response.getResults().getNumFound());
+				
+				System.out.println("Number of search records===>>>"
+				 + response.getResults().getNumFound());
 
 				solrJobSearchResultDTO.setTotalNumSearchResult(response
 						.getResults().getNumFound());
@@ -127,9 +129,9 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
 				for (FacetField facetField : facetFieldList) {
 					facetMap.put(facetField.getName(), facetField.getValues());
-					// System.out.println("@Facet Name===>>"+
-					// facetField.getName()+",@Facet Values(Categories)===>>>"
-					// + facetMap.get(facetField.getName()));
+					 System.out.println("@Facet Name===>>"+
+					 facetField.getName()+",@Facet Values(Categories)===>>>"
+					 + facetMap.get(facetField.getName()));
 				}
 
 				solrJobSearchResultDTO.setFacetMap(facetMap);
@@ -144,8 +146,8 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 			}
 
 		} else {
-			// System.out
-			// .println("Server url is not correct. Please check the url.");
+			 System.out
+			 .println("Server url is not correct. Please check the url.");
 			return null;
 		}
 

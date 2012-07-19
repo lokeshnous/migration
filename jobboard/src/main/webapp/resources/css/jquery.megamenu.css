@@ -1,0 +1,131 @@
+/*
+  jQuery MegaMenu Plugin
+  Author: GeekTantra
+  Author URI: http://www.geektantra.com
+*/
+
+/* overwrites the background-color: gray; in JB.css */
+#nav {
+background-image: linear-gradient(bottom, rgb(110,115,116) 0%, rgb(166,166,166) 73%);
+background-image: -o-linear-gradient(bottom, rgb(110,115,116) 0%, rgb(166,166,166) 73%);
+background-image: -moz-linear-gradient(bottom, rgb(110,115,116) 0%, rgb(166,166,166) 73%);
+background-image: -webkit-linear-gradient(bottom, rgb(110,115,116) 0%, rgb(166,166,166) 73%);
+background-image: -ms-linear-gradient(bottom, rgb(110,115,116) 0%, rgb(166,166,166) 73%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, rgb(110,115,116)),
+	color-stop(0.73, rgb(166,166,166))
+);
+
+}
+
+ul.megamenu {
+  margin: 0px auto;
+  list-style: none;
+  display: none;
+}
+
+ul.megamenu li.mm-item {
+}
+
+ul.megamenu li {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul.megamenu li.clear-fix {
+  float: none;
+  clear: both;
+  margin: 0px;
+  padding: 0px;
+  height: 0px;
+  font-size: 0px;
+  line-height: 0px;
+}
+
+ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
+  position: relative;
+  display: inline-block;
+  color: #FFF;
+  padding: 7px 21px;
+  text-decoration: none;
+  z-index: 10;
+  font-size: 13px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+*html ul.megamenu a.mm-item-link:link, *html ul.megamenu a.mm-item-link:visited {
+  border-color: pink;
+  filter: chroma(color=pink);
+}
+
+ul.megamenu a.mm-item-link-hover:link, ul.megamenu a.mm-item-link-hover:visited {
+  color: #FFFFFF;
+  background: #606566;
+  border-top: 1px solid #606566;
+  border-left: 1px solid #FFFFFF;
+  border-right: 1px solid #FFFFFF;
+
+}
+
+ul.megamenu div.mm-item-content {
+  background: #606566;
+  padding: 0px;
+  position: absolute;
+  border: 1px solid #FFFFFF;
+  z-index: 9;
+}
+
+.mm-content-base {
+  position: relative;
+  z-index: 11;
+  /* padding: 10px; */
+}
+.mm-js-shadow {
+  position: absolute;
+  z-index: 10;
+}
+
+/* CLASSES TO BE RELOCATED TO AFC_2012.CSS */
+
+ul.megamenu li div.megamenuContainer {
+  padding: 10px 0 10px 20px;
+  background-color: #606566;
+  
+/*
+  background-image: linear-gradient(top, rgb(255,255,255) 11%, rgb(230,230,225) 78%);
+  background-image: -o-linear-gradient(top, rgb(255,255,255) 11%, rgb(230,230,225) 78%);
+  background-image: -moz-linear-gradient(top, rgb(255,255,255) 11%, rgb(230,230,225) 78%);
+  background-image: -webkit-linear-gradient(top, rgb(255,255,255) 11%, rgb(230,230,225) 78%);
+  background-image: -ms-linear-gradient(top, rgb(255,255,255) 11%, rgb(230,230,225) 78%);
+  
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.11, rgb(255,255,255)),
+    color-stop(0.78, rgb(230,230,225))
+  );*/
+}
+
+ul.megamenu li div.megamenuContainer a p {
+  margin: 13px 0;
+  font-weight: normal;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+ul.megamenu li div.megamenuContainer div a p:hover {
+  text-decoration: underline;
+}
+
+ul.megamenu li div.megamenuContainer div.column {
+  width: 250px;
+  float: left;
+  font-size: 11px;
+  text-transform: none;
+}

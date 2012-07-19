@@ -28,7 +28,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long rows = 4;
 		long start = 0;
 		
-		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, start, rows);
 		assertNotNull("Job Search 1", jobSearchResultDTO.getSolrJobSearchResultDTO());
 		
 		
@@ -41,7 +41,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long rows = 4;
 		long start = 0;
 		
-		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, start, rows);
 		assertNotNull("Job Search 2", jobSearchResultDTO.getSolrJobSearchResultDTO());
 				
 	}
@@ -53,7 +53,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long rows = 0;
 		long start = 0;
 		
-		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, start, rows);
 		assertNotNull("Job Search 3", jobSearchResultDTO.getSolrJobSearchResultDTO());
 				
 	}
@@ -65,7 +65,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long rows = 4;
 		long start = 0;
 		
-		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, rows, start);
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(SEARCH_NAME, PARAM_MAP, start, rows);
 		assertNull("Job Search 4", jobSearchResultDTO);
 				
 	}
@@ -79,7 +79,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 		long rows = 4;
 		long start = 0;
 		
-		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, rows, start);
+		JobSearchResultDTO jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
 		assertNotNull("Job Search 5", jobSearchResultDTO.getSolrJobSearchResultDTO());
 				
 	}

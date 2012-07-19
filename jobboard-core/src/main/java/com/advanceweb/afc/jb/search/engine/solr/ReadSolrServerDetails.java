@@ -13,7 +13,9 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.stereotype.Repository;
 
 /**
- * This class has been created as a helper class for the Solr related Job search functionalities.
+ * This class has been created as a helper class for the Solr related Job search
+ * functionalities.
+ * 
  * @author Reetesh Ranjan Nayak
  * @version 1.0
  * @since 10 July 2012
@@ -24,6 +26,7 @@ public class ReadSolrServerDetails {
 
 	/**
 	 * Reads Solr Server details from the property file and put it into the Map
+	 * 
 	 * @param solrConfiguration
 	 * @return Map
 	 */
@@ -72,8 +75,10 @@ public class ReadSolrServerDetails {
 	}
 
 	/**
-	 * This method will be used to set the server details to HttpSolrServer object, 
-	 * query the query string and get the QueryResponse from the Solr server
+	 * This method will be used to set the server details to HttpSolrServer
+	 * object, query the query string and get the QueryResponse from the Solr
+	 * server
+	 * 
 	 * @param serverDetailsMap
 	 * @param solrQueryDetails
 	 * @param paramMap
@@ -104,7 +109,8 @@ public class ReadSolrServerDetails {
 				.get("maxretries")));
 		server.setParser(new XMLResponseParser());
 
-		String searchString = paramMap.get("titlesearch");
+		String searchString = paramMap.get("keywords") + "+"
+				+ paramMap.get("city_state") + "+" + paramMap.get("radius");
 		if (searchString != null && searchString.length() > 0) {
 
 			SolrQuery searchquery = new SolrQuery();
@@ -117,12 +123,12 @@ public class ReadSolrServerDetails {
 			searchquery.addFacetField(solrQueryDetails.get("state"));
 			searchquery.add("rows", String.valueOf(rows));
 			searchquery.add("start", String.valueOf(start));
-			//System.out.println("Search query===>>>" + searchquery);
+			System.out.println("Search query===>>>" + searchquery);
 
 			try {
 				response = server.query(searchquery);
 			} catch (SolrServerException e1) {
-				//e1.printStackTrace();
+				// e1.printStackTrace();
 				return null;
 			}
 		}
@@ -132,7 +138,7 @@ public class ReadSolrServerDetails {
 
 	public void displayResults(List<JobSearchDTO> jobSearchDTOList) {
 
-		/*for (JobSearchDTO jobSrchDTO : jobSearchDTOList) {
+		for (JobSearchDTO jobSrchDTO : jobSearchDTOList) {
 			System.out.println("@Company===>>" + jobSrchDTO.getCompany());
 			System.out.println("@Job Title===>>" + jobSrchDTO.getJobTitle());
 			System.out.println("@City===>>" + jobSrchDTO.getCity());
@@ -148,13 +154,12 @@ public class ReadSolrServerDetails {
 			System.out.println("@Email===>>" + jobSrchDTO.getEmail());
 			System.out.println("@Is Inter===>>"
 					+ jobSrchDTO.isInternationalJob());
-			System.out.println("@Is National===>>"
-					+ jobSrchDTO.isNationalJob());
+			System.out
+					.println("@Is National===>>" + jobSrchDTO.isNationalJob());
 			System.out.println("@Is Featured===>>" + jobSrchDTO.isFeatured());
 			System.out.println("@Job count===>>" + jobSrchDTO.getJobCount());
 			System.out.println("@Job id===>>" + jobSrchDTO.getJobId());
-			System.out
-					.println("@Job Number===>>" + jobSrchDTO.getJobNumber());
+			System.out.println("@Job Number===>>" + jobSrchDTO.getJobNumber());
 			System.out.println("@Job Geo===>>" + jobSrchDTO.getJobGeo());
 			System.out.println("@Job position===>>"
 					+ jobSrchDTO.getJobPosition());
@@ -162,9 +167,9 @@ public class ReadSolrServerDetails {
 					+ jobSrchDTO.getJobGeo0LatLon());
 			System.out.println("@jobGeo1LatLon===>>"
 					+ jobSrchDTO.getJobGeo1LatLon());
-			System.out.println("@URL Display===>>"
-					+ jobSrchDTO.getUrlDisplay());
-		}*/
+			System.out
+					.println("@URL Display===>>" + jobSrchDTO.getUrlDisplay());
+		}
 
 	}
 
