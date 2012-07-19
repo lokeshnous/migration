@@ -3,13 +3,16 @@ package com.advanceweb.afc.jb.resume.web.controller;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,6 +43,7 @@ import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.resume.ResumeService;
+import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadDocFile;
 
 /**
@@ -54,11 +59,15 @@ public class ResumeController {
 
 	@Autowired
 	private ResumeService resumeService;
-	
+
 	@Autowired
 	private TransformCreateResume transCreateResume;
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
+
+
+	private @Value("${basedirectorypathUpload}") String basedirectorypathUpload;
+
 
 	/**
 	 * This method is called to display resume list belonging to a logged in
@@ -81,7 +90,7 @@ public class ResumeController {
 		return "manageResume";
 	}
 
-	
+
 
 	/**
 	 * This method is called to display resume list belonging to a logged in
@@ -120,8 +129,8 @@ public class ResumeController {
 		model.put("createResumeForm", form);
 		return new ModelAndView("createresumebuilder");
 	}
-	
-	
+
+
 	/**
 	 * Called to create resume
 	 * it Contains 
@@ -140,10 +149,10 @@ public class ResumeController {
 	 * @param
 	 * @return
 	 */
-	 @RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST)
 	public String saveResumeBuilder(@ModelAttribute("saveResumeBuilder")
-		CreateResume createResume, BindingResult result,Model model){		
-		
+	CreateResume createResume, BindingResult result,Model model){		
+
 		ResumeDTO resumeDTO = new ResumeDTO();
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
 		ContactInformationDTO contactInfoDTO = transCreateResume.transformContactInfoDTO(createResume.getContactInfoForm());
@@ -162,10 +171,10 @@ public class ResumeController {
 		resumeDTO.setListWorkExpDTO(listWorkExpDTO);
 		boolean binsterted = resumeService.createResumeBuilder(resumeDTO);
 		return null;
-		
+
 	}
 
-	
+
 	/**
 	 * This method is called to fetch the resume data to edit
 	 * @param model
@@ -182,7 +191,7 @@ public class ResumeController {
 
 		return "manageResume";
 	}
-	
+
 	/**
 	 * This method is called to delete a resume 
 	 * @param model
@@ -194,15 +203,15 @@ public class ResumeController {
 			Model model, Map<String, Object> map) {
 
 		boolean deleteStatus = resumeService.deleteResume(24);
-		
+
 		if(deleteStatus){
 			System.out.println("Resume has been deleted succesfully ........");
 		}
 
 		return "manageResume";
 	}
-	
-	
+
+
 	/**
 	 * This method is called to save work experience
 	 * Ajax call
@@ -217,7 +226,7 @@ public class ResumeController {
 		boolean bCertSaved = resumeService.addWorkExp(listWorkExpDTO);
 		return null;
 	}
-	
+
 	/**
 	 * This method is called to delete a resume 
 	 * @param model
@@ -231,7 +240,7 @@ public class ResumeController {
 		boolean bCertSaved = resumeService.addCertifications(listCertDTO);
 		return null;
 	}
-	
+
 	/**
 	 * This method is called to delete a resume 
 	 * @param model
@@ -245,7 +254,7 @@ public class ResumeController {
 		boolean bCertSaved = resumeService.addEducation(listEduDTO);
 		return null;
 	}
-	
+
 	/**
 	 * This method is called to delete a resume 
 	 * @param model
@@ -273,7 +282,7 @@ public class ResumeController {
 		boolean bCertSaved = resumeService.addReference(listRefDTO);
 		return null;
 	}
-	
+
 
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
 	public String getTime(HttpServletRequest request, HttpSession session,Model model,Map<String, Object> map) {
@@ -309,8 +318,6 @@ public class ResumeController {
 			model.addAttribute("createResume", createResume);
 			return "copyPasteResumeText";
 		}else if (createResume.getResumeType().equalsIgnoreCase("UPL")) {
-			System.out.println("In upload++++++++++");
-			System.err.println("-------------------------------------------");
 			try {
 				MultipartFile file = createResume.getFileData();
 				String fileName = null;
@@ -319,20 +326,20 @@ public class ResumeController {
 				if (file.getSize() > 0) {
 					inputStream = file.getInputStream();
 					if (file.getSize() > 10000) {
-						System.out.println("File Size:::" + file.getSize());
 						//return "/uploadfile";
 					}
-					System.out.println("size::" + file.getSize());
 					fileName = request.getRealPath("") + "/resources/images/"
 							+ file.getOriginalFilename();
+
 					outputStream = new FileOutputStream(fileName);
-					System.out.println("fileName:" + file.getOriginalFilename()+"+++++++++++++++++++++"+fileName);
 
 					int readBytes = 0;
 					byte[] buffer = new byte[10000];
 					while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
 						outputStream.write(buffer, 0, readBytes);
 					}
+
+
 					outputStream.close();
 					inputStream.close();
 				}
@@ -353,10 +360,8 @@ public class ResumeController {
 				StringBuffer resumeTextData=new StringBuffer();
 				while ((strLine = br.readLine()) != null)   {
 					// Print the content on the console
-					System.out.println (strLine);
 					resumeTextData.append(strLine+"\n");
 				}
-
 				InetAddress ownIP=InetAddress.getLocalHost();
 				//POI File Reader
 
@@ -366,8 +371,6 @@ public class ResumeController {
 				int mid= fileName.lastIndexOf(".");
 				fname=fileName.substring(0,mid);
 				ext=fileName.substring(mid+1,fileName.length());  
-				System.out.println("File name ="+fname);
-				System.out.println("Extension ="+ext); 
 				if(ext.equalsIgnoreCase("doc")){
 					resumeTextData.delete(0, resumeTextData.length());
 					new ReadDocFile().readMyDocument(fileName, resumeTextData);
@@ -385,22 +388,44 @@ public class ResumeController {
 				createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
 				createResumeDTO.setResumeText(resumeTextData.toString());
 				createResumeDTO.setFileServer(ownIP.getHostAddress());
-				createResumeDTO.setFilePath("fileName");
+				createResumeDTO.setFilePath(basedirectorypathUpload);
 				createResumeDTO.setFileName(file.getOriginalFilename());
 				createResumeDTO.setIsPublished("12");
 				//resumeService.addCreateResumeUpload(createResumeDTO);
 				resumeService.createResumeUpload(createResumeDTO);
 				//Close the input stream
+				fstream.close();
 				in.close();
+				br.close();
 				resumeTextData.delete(0, resumeTextData.length());
+				(new File(basedirectorypathUpload)).mkdir();
+				CopyUtil.Move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
+
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			return "redirect:/jobSeekerResume/createResumePopUp.html";
+		}else if(createResume.getResumeType().equalsIgnoreCase("CR")){
+			ResumeDTO createResumeDTO=new ResumeDTO();
+
+			createResumeDTO.setResumeType(createResume.getResumeType());
+			createResumeDTO.setResume_name(createResume.getResume_name());
+			createResumeDTO.setDesired_job_title(createResume.getDesired_job_title());
+			createResumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
+			createResumeDTO.setResume_visibility(createResume.getResume_visibility());
+			createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
+			//createResumeDTO.setResumeText(createResume.getResumeText());
+			createResumeDTO.setIsPublished("12");
+
+			//resumeService.addCreateResumeCopyPaste(createResumeDTO);
+			resumeService.createResumeCopyPaste(createResumeDTO);
+
+			return "redirect:/jobSeekerResume/createResumePopUp.html";
 		}else{
-			return "copyPasteResumeText";
+			return "redirect:/jobSeekerResume/createResumePopUp.html";
+
 		}
 	}
 
@@ -408,7 +433,6 @@ public class ResumeController {
 	public String addResume(@ModelAttribute("createResume")
 	CreateResume createResume, BindingResult result,Model model) throws Exception {
 		ResumeDTO createResumeDTO=new ResumeDTO();
-		System.out.println(createResume.getResumeType()+"=========\n"+createResume.getResume_name()+"=========\n"+createResume.getDesired_job_title()+"=========\n"+createResume.getDesired_employment_type()+"=========\n"+createResume.getWorkauthUS()+"=========\n"+createResume.getResume_visibility());
 
 		createResumeDTO.setResumeType(createResume.getResumeType());
 		createResumeDTO.setResume_name(createResume.getResume_name());
@@ -421,7 +445,7 @@ public class ResumeController {
 
 		//resumeService.addCreateResumeCopyPaste(createResumeDTO);
 		resumeService.createResumeCopyPaste(createResumeDTO);
-		
+
 		return "redirect:/jobSeekerResume/createResumePopUp.html";
 	}
 
@@ -443,30 +467,30 @@ public class ResumeController {
 	 * @param
 	 * @return
 	 */
-	 @RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.GET)
 	public String viewResumeBuilder(@ModelAttribute("saveResumeBuilder")
-		CreateResume createResume, BindingResult result,Model model){
-		 
-		 ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
-		 
-		 transCreateResume.transformCreateResumeForm(resumeDTO);
-		 List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
-		 List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
-		 List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
-		 List<WorkExpForm> listWorkExpForm = transCreateResume.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
-		 List<LanguageForm> listLangForm = transCreateResume.transformLanguageForm(resumeDTO.getListLangDTO());
-		 ContactInfoForm contactForm = transCreateResume.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-		 
-		 createResume.setListCertForm(listCertForm);
-		 createResume.setListEduForm(listEduForm);
-		 createResume.setListLangForm(listLangForm);
-		 createResume.setListRefForm(listRefForm);
-		 createResume.setListWorkExpForm(listWorkExpForm);
-		 createResume.setContactInfoForm(contactForm);
-		 resumeDTO.getContactInfoDTO();
+	CreateResume createResume, BindingResult result,Model model){
+
+		ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
+
+		transCreateResume.transformCreateResumeForm(resumeDTO);
+		List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
+		List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
+		List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
+		List<WorkExpForm> listWorkExpForm = transCreateResume.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+		List<LanguageForm> listLangForm = transCreateResume.transformLanguageForm(resumeDTO.getListLangDTO());
+		ContactInfoForm contactForm = transCreateResume.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+
+		createResume.setListCertForm(listCertForm);
+		createResume.setListEduForm(listEduForm);
+		createResume.setListLangForm(listLangForm);
+		createResume.setListRefForm(listRefForm);
+		createResume.setListWorkExpForm(listWorkExpForm);
+		createResume.setContactInfoForm(contactForm);
+		resumeDTO.getContactInfoDTO();
 		return null;
-		
+
 	}
-	
-	
+
+
 }
