@@ -38,7 +38,7 @@ public class LoggingAspect {
 
 	@After("loggingOperation()")
 	public void logAfter(JoinPoint joinPoint) {
-		logger.info("Exited From " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		logger.info("Exited  From " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
 	}
 	
 	@AfterReturning(
