@@ -23,9 +23,25 @@
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
-		    jQuery(document).ready(function(){
-		    jQuery(".megamenu").megamenu();
-		});
+		
+		
+		    $(document).ready(function(){
+		    	
+		    	$(".megamenu").megamenu();
+		    	
+		    	var x = $("#results").val();
+		    	$("#rows").val(x);
+		    	$("#start").val("0");
+		    	
+		    	
+		    	
+		    	
+			});
+		    
+		    
+		    
+		    
+		    
 		</script>
         <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 		</head>
@@ -166,18 +182,8 @@
 	                	<form:option label="50" value="50"/>
 	                	<form:option label="100" value="100"/>
 	                </form:select>
-	                <!-- <select name="radius" id="radius" class="jb_input3" >
-	                	
-	                          <option>--</option>
-	                          <option>5</option>
-	                          <option>10</option>
-	                          <option>25</option>
-	                          <option>50</option>
-	                          <option>100</option>
-	                        </select> -->
 	                <label for="radius">Radius</label>
 	              </div>
-	              
 	              
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
@@ -226,6 +232,11 @@
             <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;<a href="">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Location</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Employment Type</a> </div>
 
             <!-- browse_bar -->
+            
+            <form:hidden path="start" id="start"/>
+            <form:hidden path="rows" id="rows"/>
+            
+            
             </form:form>    
                 <%-- </form> --%>
                 </div>
@@ -319,7 +330,7 @@
                             
                                      <div class="searchResultsNavigationColumn1">
                                      	<span class="marginTop5">Results viewable:</span>
-                                        <span><select name="results" class="jb_input4">
+                                        <span><select id="results" name="results" class="jb_input4">
                                         <option value="20">20</option>
 										<option value="30">30</option>
 										<option value="40">40</option>
@@ -1346,7 +1357,7 @@
                             
                                      <div class="searchResultsNavigationColumn1">
                                      	<span class="marginTop5">Results viewable:</span>
-                                        <span><select name="results" class="jb_input4">
+                                        <span><select id="results" name="results" class="jb_input4">
                                         <option value="20">20</option>
 										<option value="30">30</option>
 										<option value="40">40</option>
