@@ -54,6 +54,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmail.java -t
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmailService.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
+jobboard-common/src/main/resources/HibernateSessionFactory.xml -text
+jobboard-common/src/main/resources/database.properties -text
 jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/AgencyRegistration.java -text

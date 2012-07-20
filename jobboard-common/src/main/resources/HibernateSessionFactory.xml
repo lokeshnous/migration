@@ -1,0 +1,163 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.advanceweb.afc.jb" />
+	<!-- Database properties -->
+	<context:property-placeholder location="classpath:database.properties" />
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<bean id="dataSourceMerionTracker"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${meriontracker.jdbc.url}" />
+		<property name="username" value="${meriontracker.jdbc.username}" />
+		<property name="password" value="${meriontracker.jdbc.password}" />
+	</bean>
+	
+	<bean id="sessionFactoryMerionTracker"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceMerionTracker" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+					<value>com.advanceweb.afc.jb.data.entities.MerApplication</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerLocation</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerLookup</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttrib</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerUser</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerUserAlerts</value>
+					<!-- <value>com.advanceweb.afc.jb.data.entities.MerUserAlert</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.MerUserApplication</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerUserApplicationPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerUserProfile</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerUserProfilePK</value>
+					<!-- <value>com.advanceweb.afc.jb.data.entities.StgSessionEvent</value> -->
+					<!-- <value>com.advanceweb.afc.jb.data.entities.StgSessioninfo</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.VstClickthrough</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstClickthroughType</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstEventType</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstInfoType</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSearch</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSearchResult</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSearchResultPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSessionEvent</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSessionEventInfo</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSessionEventInfoPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSessioninfo</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacility</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityGroup</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacilitySystem</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmPermission</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmRole</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserFacility</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilityGroup</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilityGroupPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilitySystem</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserFacilitySystemPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserRole</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmUserRolePK</value>
+					<!-- <value>com.advanceweb.afc.jb.data.entities.FacilityJobTmp</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.JpAddon</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJob</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJobAddon</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJobAddonPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJobLocation</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJobLocationPK</value>
+					<!-- <value>com.advanceweb.afc.jb.data.entities.JpJobLocationBckup</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.JpJobTemp</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJobType</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpLocation</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpSaveJob</value>
+					<!-- <value>com.advanceweb.afc.jb.data.entities.JpLocationBckup</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.JpSource</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpSaveSearch</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpSaveJob</value>
+					<value>com.advanceweb.afc.jb.data.entities.MetaSearchIndex</value>
+					<value>com.advanceweb.afc.jb.data.entities.MetaSearchInput</value>
+					<value>com.advanceweb.afc.jb.data.entities.MetaSearchParam</value>
+					<value>com.advanceweb.afc.jb.data.entities.MetaSearchQueryHistory</value>
+					<value>com.advanceweb.afc.jb.data.entities.MetaSearchType</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResBuilderCertification</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResBuilderEdu</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResBuilderEmployment</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResBuilderReference</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResBuilderResume</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResDegreeEdu</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResPrivacy</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResPublishResume</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResPublishResumePriv</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResUploadResume</value>
+			</list>
+		</property>
+	</bean>
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="transactionManagerMerionTracker"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryMerionTracker" />
+	</bean>
+
+		<!-- Send Mail Configuration-->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.nous.com" />
+		<property name="port" value="587" />
+		<property name="username" value="username" />
+		<property name="password" value="password" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<util:properties id="solrConfiguration" location="classpath:solrConfiguration.properties" />
+	
+
+</beans>
