@@ -189,12 +189,13 @@ public class JobSearchActivityController {
 		paramMap.put("city_state", jobSearchResultForm.getCity_state().trim());
 		paramMap.put("radius",jobSearchResultForm.getRadius());
 		
-		// The below fields values needs to be taken from the UI form which UI will 
-		// be finalized.
-		// long rows = jobSearchResultForm.getRows();
-		// long start = jobSearchResultForm.getStart();
-		long rows = 5;
-		long start = 0;
+		
+		long start = Long.parseLong(jobSearchResultForm.getStart());
+		long rows = Long.parseLong(jobSearchResultForm.getRows());
+		System.out.println("Start=============================="+start);
+		System.out.println("rows=============================="+rows);
+		
+		
 
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
 				start, rows);
