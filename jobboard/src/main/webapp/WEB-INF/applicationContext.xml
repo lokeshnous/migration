@@ -13,8 +13,8 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	
-	<context:property-placeholder location="classpath:common.properties,classpath:resources/database.properties" />
-	<import resource="classpath:resources/HibernateSessionFactory.xml"/>
+	<context:property-placeholder location="classpath:common.properties,classpath:database.properties" />
+	<import resource="classpath:HibernateSessionFactory.xml"/>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
 	<!-- Logging Aspect -->
 	<bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" />

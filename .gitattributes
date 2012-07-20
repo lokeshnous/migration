@@ -54,8 +54,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmail.java -t
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmailService.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
-jobboard-common/src/main/java/resources/HibernateSessionFactory.xml -text
-jobboard-common/src/main/java/resources/database.properties -text
 jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/AgencyRegistration.java -text
@@ -99,7 +97,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResul
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
-jobboard-core/src/main/java/resources/solrConfiguration.properties -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileServiceTest.java -text
