@@ -468,11 +468,10 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.GET)
-	public String viewResumeBuilder(@ModelAttribute("saveResumeBuilder")
-	CreateResume createResume, BindingResult result,Model model){
+	public String viewResumeBuilder(CreateResume createResume, BindingResult result,Map model){
 
-		ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
-
+//		ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
+		ResumeDTO resumeDTO = resumeService.editResume(57);
 		transCreateResume.transformCreateResumeForm(resumeDTO);
 		List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
 		List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
@@ -488,7 +487,10 @@ public class ResumeController {
 		createResume.setListWorkExpForm(listWorkExpForm);
 		createResume.setContactInfoForm(contactForm);
 		resumeDTO.getContactInfoDTO();
-		return null;
+		
+		model.put("createResume", createResume);
+		
+		return "viewresume";
 
 	}
 
