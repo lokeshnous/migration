@@ -29,6 +29,7 @@ go(url);
 	<ul>
 		<li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeekerRegistration Form</a></li>
 		<li><a href="employerRegistration/createEmployerProfile.html">Employer Registration Form</a></li>
+		<li><a href="jobSeekerResume/viewResumeBuilder.html">View Resume</a></li>
 		<li><a href="jobSeekerResume/createResumePopUp.html">Create Resume</a></li>
 		<li><a href="postjob/postnewjob.html">Post New Job</a></li>
 		<li><a href="jspContentView/copyhtmltolocal.html">Copy html to local(D drive)&nbsp;&nbsp;&nbsp;</a><a href="jspContentView/viewcareerhtmlContents.html">htmlContents</a></li>
