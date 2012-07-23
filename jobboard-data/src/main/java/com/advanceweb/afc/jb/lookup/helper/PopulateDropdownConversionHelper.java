@@ -242,7 +242,7 @@ public class PopulateDropdownConversionHelper {
 		
 		for(MerLookup merLookup : merLookupList){
 			stateDTO = new StateDTO();
-			stateDTO.setStateId(String.valueOf(merLookup.getLookupId()));
+			stateDTO.setStateId(merLookup.getLookupId());
 			stateDTO.setStateValue(merLookup.getLookupName());
 			list.add(stateDTO);
 		}
@@ -285,7 +285,7 @@ public class PopulateDropdownConversionHelper {
 		
 		for(MerLookup merLookup : merLookupList){
 			employmentTypeDTO = new EmploymentTypeDTO();
-			employmentTypeDTO.setEmploymentTypeId(String.valueOf(merLookup.getLookupId()));
+			employmentTypeDTO.setEmploymentTypeId(merLookup.getLookupId());
 			employmentTypeDTO.setEmploymentTypeValue(merLookup.getLookupName());
 			list.add(employmentTypeDTO);
 		}
