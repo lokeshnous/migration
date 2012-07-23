@@ -14,6 +14,16 @@ public class CompanyProfileDTO {
 	private String companyEmail;
 	private String companyNews;
 	private String positionTitle;
+	private String logoPath;
+
+
+	public String getLogoPath() {
+		return logoPath;
+	}
+
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
+	}
 
 	public CompanyProfileDTO() {
 
