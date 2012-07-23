@@ -209,7 +209,10 @@
           </div>
          <div class="clearfix"></div>
          <div class="ContactInfoBox">
-         <c:forEach items="${createResume.listWorkExpForm}" var="workExp" varStatus="status">    
+         <c:forEach items="${createResume.listWorkExpForm}" var="workExp" varStatus="status">
+         <c:if test="${status.count != 1}">   
+            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+         </c:if>   
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
               <p><strong>Job Title:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.jobTitle}"/></span> </div>
@@ -246,7 +249,6 @@
               <p><strong>Summary / Job Description:</strong></p>
               </span> <span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${workExp.description}"/></span> </div>
               <div class="clearfix"></div>
-            <p class="borderBottomDotted marginBottom15">&nbsp;</p>
         </c:forEach>                          
        </div>
       </div>
@@ -259,6 +261,9 @@
 
            <div class="ContactInfoBox">
            <c:forEach items="${createResume.listEduForm}" var="education" varStatus="status">    
+	         <c:if test="${status.count != 1}">   
+	            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+	         </c:if>   
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
               <p><strong>Institution Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.instituteName}"/></span> </div>
@@ -284,7 +289,6 @@
               <p><strong>Certifications:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.certifications}"/></span> </div>
             <div class="clearfix"></div>
-            <p class="borderBottomDotted marginBottom15">&nbsp;</p>
 			</c:forEach>
           </div>
                 </div>
@@ -297,6 +301,9 @@
 
            <div class="ContactInfoBox">
            <c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status">    
+           <c:if test="${status.count != 1}">   
+            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+           </c:if>   
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
               <p><strong>Certification Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.certificationName}"/></span> </div>
@@ -312,7 +319,6 @@
               <p><strong>Summary:</strong></p>
               </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.summary}"/></span> </div>
             <div class="clearfix"></div>
-            <p class="borderBottomDotted marginBottom15">&nbsp;</p>
 			</c:forEach>              
           </div>
         </div>
@@ -336,12 +342,12 @@
            <div class="clearfix"></div>
             <div class="ContactInfoBox">
            <c:forEach items="${createResume.listLangForm}" var="language" varStatus="status">   
-
+			<c:if test="${not empty language.language}">
 			  <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
               <p><strong><c:out value="${language.language}"/> :</strong></p>
 
               </span><span class="ContactInfoAreaRight"><c:out value="${language.expLvl}"/></span> </div>
-
+			</c:if>	
            </c:forEach>
           </div> 
          </div>
@@ -387,7 +393,7 @@
 
            <div class="clearfix"></div>
            <div class="ContactInfoBox">
-           <c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">   
+           <c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">    
            <span>
              <h3 class=" marginLeft20 marginBottom10 FloatLeft width305">Professional References</h3>
              </span>
