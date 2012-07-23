@@ -296,6 +296,7 @@ jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createresumebuilder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/findjob.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerActivity.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobsearchresult.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerregistration.jsp -text
