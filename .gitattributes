@@ -1,6 +1,7 @@
 * text=auto !eol
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmBrndngTempDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AnonymousUserJobApplyDTO.java -text
@@ -103,6 +104,7 @@ jobboard-core/src/main/resources/solrConfiguration.properties -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobPostBrandingTempTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchActivityServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerActivityServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
@@ -118,6 +120,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -tex
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Job.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/JobSeeker.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Resume.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmBrandingTemp.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityGroup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySystem.java -text
@@ -197,11 +200,14 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerBrandi
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/AnonymousUserJobApplyDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/AnonymousUserJobApplyDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobPostBrandingTempDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobPostBrandingTempDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobSearchActivityDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobSearchActivityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/helper/AnonymousUserJobApplyConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/job/helper/JobPostBrandTempConvnHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerActivityDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerActivityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerRegistrationDAO.java -text

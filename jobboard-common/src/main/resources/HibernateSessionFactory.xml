@@ -82,6 +82,7 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
+					<value>com.advanceweb.afc.jb.data.entities.AdmBrandingTemp</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacility</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityGroup</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilitySystem</value>
