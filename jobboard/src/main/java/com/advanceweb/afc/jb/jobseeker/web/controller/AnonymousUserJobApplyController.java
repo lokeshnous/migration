@@ -35,15 +35,12 @@ public class AnonymousUserJobApplyController {
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
 
-//	@Autowired
 	private MMEmailService emailService;
+
 	
 	/*@Autowired
 	private TransformAnonymousUserJobApply transformAnonymousUserJobApply;
 	*/
-	public AnonymousUserJobApplyController() {
-		super();
-	}
 	
 	
 	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.POST)
@@ -90,7 +87,7 @@ public class AnonymousUserJobApplyController {
 
 		
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 		return new ModelAndView("anouserjobapplyssuccess");
 	}
