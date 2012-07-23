@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.data.entities.JpJob;
 
 /**
  * <code> ManageFeatureEmployerProfileDAOImpl </code> is a DaoIMPL class.
@@ -66,7 +64,15 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				Session session = sessionFactory.openSession();
 				AdmFacility facility = (AdmFacility) session.get(
 						AdmFacility.class, new Long(employerId).intValue());
-				System.out.println(facility);
+				//System.out.println(facility);
+				companyProfileDTO.setCompanyName(facility.getName());
+				//companyProfileDTO.setCompanyNews(facility.get);
+				//companyProfileDTO.setCompanyOverview(facility.get);
+				//companyProfileDTO.setCompanyWebsite(facility.ge);
+				//companyProfileDTO.setCompanyEmail(facility);
+				//companyProfileDTO.setPositionTitle(facility.get);
+				//companyProfileDTO.setLogoPath(facility.);
+				
 
 			}
 		} catch (HibernateException e) {
