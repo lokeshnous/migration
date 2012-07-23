@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
@@ -64,6 +66,7 @@ public class ResumeConversionHelper {
 //		resumeDTO.setListLangDTO(listLangDTO);
 		resumeDTO.setListRefDTO(transformResBldRefToRefDTO(resumeBuilder));
 		resumeDTO.setListWorkExpDTO(transformResEmpRefToWorkExpDTO(resumeBuilder));
+		resumeDTO.setContactInfoDTO(transformResBuilderToContactInfoDTO(resumeBuilder));
 //		resumeDTO.setMemberships(resumeBuilder.);
 		resumeDTO.setObjective(resumeBuilder.getJobObjective());
 		resumeDTO.setOtherDetails(resumeBuilder.getOtherInterests());
@@ -126,6 +129,41 @@ public class ResumeConversionHelper {
 	}
 	
 	
+	public ContactInformationDTO transformResBuilderToContactInfoDTO(ResBuilderResume resumeBuilder){
+		
+		ContactInformationDTO dto = new ContactInformationDTO();
+		
+		if(null != resumeBuilder){
+			dto.setEmail(resumeBuilder.getEmail());
+			dto.setFirstName(resumeBuilder.getFirstName());
+			dto.setLastName(resumeBuilder.getLastName());
+			dto.setMiddleNameInitial(resumeBuilder.getMiddleName());	
+			dto.setAddressDTO(transformResBuilderToAddressDTO(resumeBuilder));
+		}
+		
+		return dto;
+	}
+	
+	
+	public AddressDTO transformResBuilderToAddressDTO(ResBuilderResume resumeBuilder){
+		
+		AddressDTO dto = new AddressDTO();
+		
+		if(null != resumeBuilder){
+			dto.setAddress1(resumeBuilder.getStreet());
+			dto.setAddress2(resumeBuilder.getStreet2());
+			dto.setCity(resumeBuilder.getCity());
+			dto.setCountry(resumeBuilder.getCountry());
+			dto.setMobileNumber(resumeBuilder.getPhone());
+			dto.setPhone(resumeBuilder.getPhone2());
+			dto.setState(resumeBuilder.getState());
+			dto.setStreet(resumeBuilder.getStreet());
+			dto.setZipCode(resumeBuilder.getPostcode());
+		}
+		
+		return dto;
+	}
+	
 	public List<EducationDTO> transformResEduRefToEduDTO(ResBuilderResume resumeBuilder){
 		
 		List<EducationDTO> listEduDTO = new ArrayList<EducationDTO>();
@@ -151,6 +189,7 @@ public class ResumeConversionHelper {
 		
 		return listEduDTO;
 	}
+	
 	
 	public EducationDTO transformEduDegreeToEduDTO(EducationDTO eduDTO, ResBuilderEdu entity){
 			
