@@ -237,7 +237,10 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerPro
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformJobPost.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/AnonymousUserJobApplyForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchResultForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchViewDetailForm.java -text
