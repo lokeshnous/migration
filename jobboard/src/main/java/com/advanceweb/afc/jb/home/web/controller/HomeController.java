@@ -38,13 +38,23 @@ import com.advanceweb.afc.jb.web.utils.ReadFile;
 public class HomeController {
 
 
-
-	private @Value("${IMG_WIDTH}") String IMG_WIDTH;
-	private @Value("${IMG_HEIGHT}") String IMG_HEIGHT;
-	private @Value("${basedirectorypath}") String basedirectorypath;
-	private @Value("${directory}") String directory;
-	private @Value("${healthcarenewsfilename}") String healthcarenewsfilename;
-	private @Value("${careertoolfilename}") String careertoolfilename;
+	@Value("${IMG_WIDTH}")
+	private String IMG_WIDTH;
+	
+	@Value("${IMG_HEIGHT}")
+	private String IMG_HEIGHT;
+	
+	@Value("${basedirectorypath}")
+	private String basedirectorypath;
+	
+	@Value("${directory}")
+	private String directory;
+	
+	@Value("${healthcarenewsfilename}")
+	private String healthcarenewsfilename;
+	
+	@Value("${careertoolfilename}")
+	private String careertoolfilename;
 
 
 	@Autowired
@@ -80,7 +90,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,Model model) {
-
+		//CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerList();
 		return "featuredemployers";
 	}
 
@@ -105,6 +115,7 @@ public class HomeController {
 
 
 			byte[] data = extractBytes("D:\\images\\MercyRNlogo.jpg");
+			
 			response.getOutputStream().write(data);
 		
 			
@@ -121,7 +132,7 @@ public class HomeController {
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}
-	*/	
+	*/
 	}
 
 	public byte[] extractBytes (String ImageName) throws IOException {
@@ -161,15 +172,17 @@ public class HomeController {
 	@RequestMapping(value = "/copyhtmltolocal", method = RequestMethod.GET)
 	public String copyHtmlFiles(HttpServletRequest request,Model model) {
 		try{
-			(new File(basedirectorypath+directory)).mkdir();
+			File directorycreation=new File(basedirectorypath+directory);
+			directorycreation.mkdir();
 			List<String> li=new ArrayList<String>();
 			li.add(healthcarenewsfilename);
 			li.add(careertoolfilename);
 			CopyUtil.copy(li,basedirectorypath+directory);
 			model.addAttribute("copyhtml", true);
 		}catch (Exception e){//Catch exception if any
-			System.err.println("Error: " + e.getMessage());
+			//System.err.println("Error: " + e.getMessage());
 			model.addAttribute("copyhtml", "");
+			e.printStackTrace();
 		}
 
 		return "jspviewcontent";
