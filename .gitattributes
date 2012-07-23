@@ -16,6 +16,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CoverLetterDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EduDegreeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EducationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmployerBrandingTemplatesDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmployerInfoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmployerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmploymentInfoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmploymentTypeDTO.java -text
@@ -24,6 +25,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ExcludeFromDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/FromZipcodeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/GenderDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobAlertsDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostedDateDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text

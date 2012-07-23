@@ -13,19 +13,19 @@ public class StateDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String stateId;
+	private int stateId;
 	private String stateValue;
 	
 	/**
 	 * @return the stateId
 	 */
-	public String getStateId() {
+	public int getStateId() {
 		return stateId;
 	}
 	/**
 	 * @param stateId the stateId to set
 	 */
-	public void setStateId(String stateId) {
+	public void setStateId(int stateId) {
 		this.stateId = stateId;
 	}
 	/**

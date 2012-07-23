@@ -11,20 +11,20 @@ import java.io.Serializable;
 public class EmploymentTypeDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String employmentTypeId;
+	private int employmentTypeId;
 	private String employmentTypeValue;
 	
 	
 	/**
 	 * @return the employmentTypeId
 	 */
-	public String getEmploymentTypeId() {
+	public int getEmploymentTypeId() {
 		return employmentTypeId;
 	}
 	/**
 	 * @param employmentTypeId the employmentTypeId to set
 	 */
-	public void setEmploymentTypeId(String employmentTypeId) {
+	public void setEmploymentTypeId(int employmentTypeId) {
 		this.employmentTypeId = employmentTypeId;
 	}
 	/**
