@@ -62,6 +62,6 @@ go(url);
 		
 			<h2>Manage Featured Employer Profile</h2>
 		<li><a href="employerprofile.html">Manage Featured Employer Profile</a></li>
-		
+		<%response.sendRedirect("healthcarejobs/advanceweb.html"); %>
 </body>
 </html>
