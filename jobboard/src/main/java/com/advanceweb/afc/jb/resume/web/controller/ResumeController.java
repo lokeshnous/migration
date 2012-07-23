@@ -308,7 +308,7 @@ public class ResumeController {
 		createResume.setWilling_to_relocate("Y");
 		map.put("createResume", createResume);
 
-		return "createResume";
+		return "createresumepopup";
 	}
 
 	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.POST)
@@ -422,9 +422,9 @@ public class ResumeController {
 			//resumeService.addCreateResumeCopyPaste(createResumeDTO);
 			resumeService.createResumeCopyPaste(createResumeDTO);
 
-			return "redirect:/jobSeekerResume/createResumePopUp.html";
+			return "redirect:/jobSeekerResume/createresumepopup.html";
 		}else{
-			return "redirect:/jobSeekerResume/createResumePopUp.html";
+			return "redirect:/jobSeekerResume/createresumepopup.html";
 
 		}
 	}

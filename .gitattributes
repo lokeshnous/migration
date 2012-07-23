@@ -294,6 +294,7 @@ jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createresumebuilder.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/createresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/findjob.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
