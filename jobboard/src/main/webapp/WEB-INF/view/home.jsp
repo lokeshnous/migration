@@ -291,7 +291,7 @@
 						<!-- column1 -->
 
 						<div class="column2">
-							<a href="">
+							<a href="featuredemployers.html">
 								<h2 class="more_link">
 									Featured Employers<span>More</span>
 								</h2>
@@ -300,7 +300,7 @@
 								<div id="slider1PrevBtn"></div>
 								<div id="slider1">
 									<div class="slider1Frames">
-										<a href="">
+										<a href="featuredemployerdetails.html">
 											<div class="slider1FrameA1">
 												<img src="../resources/images/MercyRNlogo.jpg" />
 											</div>
