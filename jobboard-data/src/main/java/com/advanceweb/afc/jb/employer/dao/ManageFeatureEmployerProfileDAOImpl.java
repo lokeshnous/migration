@@ -48,7 +48,7 @@ ManageFeatureEmployerProfileDAO {
 		try {
 			if (companyProfileDTO != null) {
 				sessionFactory.getCurrentSession().saveOrUpdate(facility);
-				System.out.println("data submitted");
+				//System.out.println("data submitted");
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ ManageFeatureEmployerProfileDAO {
 				//companyProfileDTO.setPositionTitle(facility.get);
 				//companyProfileDTO.setLogoPath(facility.);
 				companyProfileDTOList.add(companyProfileDTO);
-				System.out.println(companyProfileDTO.getCompanyName());
+				//System.out.println(companyProfileDTO.getCompanyName());
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
