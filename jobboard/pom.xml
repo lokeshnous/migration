@@ -8,6 +8,7 @@
 	<name>Job Board version 2 Web Application</name>
 	<url>http://maven.apache.org</url>
 	<properties>
+		<maven.build.timestamp.format>EEE, d MMM yyyy HH:mm:ss Z</maven.build.timestamp.format>
 		<spring.version>3.1.0.RELEASE</spring.version>
 	</properties>
 	<dependencies>
