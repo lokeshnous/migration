@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.login.web.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.advanceweb.afc.jb.common.LoginFormDTO;
 
 /**
@@ -11,6 +13,7 @@ import com.advanceweb.afc.jb.common.LoginFormDTO;
  * @since 10th July 2012
  */
 
+@Repository("loginFormValidator")
 public class LoginFormValidator {
 
 	public boolean validateLoginValues(LoginForm form,
