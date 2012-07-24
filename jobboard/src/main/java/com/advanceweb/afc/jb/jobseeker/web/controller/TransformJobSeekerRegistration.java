@@ -6,6 +6,7 @@ import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 
 @Repository("transformJobSeekerRegistration")
 public class TransformJobSeekerRegistration {
@@ -140,5 +141,17 @@ public class TransformJobSeekerRegistration {
 		return dto;
 	}
 	
+	/**
+	 * Convering Change Password Form to MerUserDTO
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public MerUserDTO transformChangePasswordFormToMerUserDTO(ChangePasswordForm form){
+		MerUserDTO dto = new MerUserDTO();
+		dto.setEmailId(form.getEmailId());
+		dto.setPassword(form.getNewPassword());		
+		return dto;
+	}
 
 }
