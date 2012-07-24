@@ -60,6 +60,7 @@ public class JobSearchActivityConversionHelper {
 			searchedJobDTO.setCompanyOverview(entity.getKeywords());
 			searchedJobDTO.setImagePath(entity.getImagePath());
 			searchedJobDTO.setLogo(entity.getLogo());
+			searchedJobDTO.setEmployerEmailAddress(entity.getEmail());
 
 		}
 		return searchedJobDTO;
