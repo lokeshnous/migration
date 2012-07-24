@@ -32,6 +32,7 @@ go(url);
 		<li><a href="jobSeekerResume/viewResumeBuilder.html">View Resume</a></li>
 		<li><a href="jobSeekerResume/createResumePopUp.html">Create Resume</a></li>
 		<li><a href="postjob/postnewjob.html">Post New Job</a></li>
+		<li><a href="anonymoususerjobapply/anonymousUser.html">Anonymous User</a></li>
 		<li><a href="jspContentView/copyhtmltolocal.html">Copy html to local(D drive)&nbsp;&nbsp;&nbsp;</a><a href="jspContentView/viewcareerhtmlContents.html">htmlContents</a></li>
 	</ul>
 	<h2>Job Seeker Activity</h2>
@@ -63,6 +64,6 @@ go(url);
 		
 			<h2>Manage Featured Employer Profile</h2>
 		<li><a href="employerprofile.html">Manage Featured Employer Profile</a></li>
-		<%response.sendRedirect("healthcarejobs/advanceweb.html"); %>
+		<%-- <%response.sendRedirect("healthcarejobs/advanceweb.html"); %> --%>
 </body>
 </html>
