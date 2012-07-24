@@ -8,7 +8,7 @@ public class JobSearchResultForm {
 	private String keywords;
 	private String rows;
 	private String start;
-	private String city_state;
+	private String cityState;
 	private String radius;
 
 
@@ -20,12 +20,12 @@ public class JobSearchResultForm {
 		this.radius = radius;
 	}
 
-	public String getCity_state() {
-		return city_state;
+	public String getCityState() {
+		return cityState;
 	}
 
-	public void setCity_state(String city_state) {
-		this.city_state = city_state;
+	public void setCityState(String cityState) {
+		this.cityState = cityState;
 	}
 
 	public String getRows() {
