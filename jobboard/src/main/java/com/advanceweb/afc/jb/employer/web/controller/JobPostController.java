@@ -30,13 +30,13 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @RequestMapping("/postjob")
 public class JobPostController {
 	@Autowired
-	JobPost employerJobPost;
+	private JobPost employerJobPost;
 	
 	@Autowired
-	TransformJobPost transformJobPost;
+	private TransformJobPost transformJobPost;
 	
 	@Autowired
-	PopulateDropdowns populateDropdownsService;
+	private PopulateDropdowns populateDropdownsService;
 	
 	//@RequestParam("userId") int userId ,
 	
@@ -67,8 +67,7 @@ public class JobPostController {
 		
 		JobPostDTO dto=new JobPostDTO();
 		dto=transformJobPost.jobPostFormToJobPostDTO(form);
-		boolean res=employerJobPost.savePostJob(dto);
-		
+		employerJobPost.savePostJob(dto);
 		return new ModelAndView("postnewjob");
 	}	
 	
