@@ -1,19 +1,10 @@
 package com.advanceweb.afc.jb.search.engine.solr;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +29,9 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 	@Autowired
 	@Resource(name = "solrConfiguration")
 	private Properties solrConfiguration;
+	
+	@Autowired
+	private SolrJobSearchResult solrJobSearchResult;
 
 	@PostConstruct
 	public void init() {
@@ -67,37 +61,18 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 		final Map<String, String> solrQueryDetails = readSSDetails
 				.getSolrQueryDetails(solrConfiguration);
 
-		// Checking whether server url is accessible
-		boolean serverAccessible = false;
 		final String url = serverDetailsMap.get("serverUrl")
 				+ serverDetailsMap.get("solrservice")
 				+ serverDetailsMap.get("user");
-
-		try {
-			final HttpURLConnection connection = (HttpURLConnection) new URL(
-					url).openConnection();
-			connection.connect();
-
-			if (connection.getResponseCode() == 200) {
-				serverAccessible = true;
-				LOGGER.debug("Server URL " + url + " is accessible.");
-			}
-		} catch (final MalformedURLException e) {
-			serverAccessible = false;
-			LOGGER.debug( e);
-			LOGGER.debug("Server URL " + url + " is not accessible.");
-		} catch (final IOException e) {
-			LOGGER.debug( e);
-			serverAccessible = false;
-			LOGGER.debug("Server URL " + url + " is not accessible.");
-		}
-
+		
+		// Checking whether server url is accessible
+		boolean serverAccessible = readSSDetails.isServerAccessible(url);
 		if (serverAccessible) {
 
 			if (("".equalsIgnoreCase(paramMap.get("keywords"))
 					|| paramMap.get("keywords") == null) 
-					&& ("".equalsIgnoreCase(paramMap.get("city_state"))
-							|| paramMap.get("city_state") == null)
+					&& ("".equalsIgnoreCase(paramMap.get("cityState"))
+							|| paramMap.get("cityState") == null)
 							&& ("".equalsIgnoreCase(paramMap.get("radius"))
 									|| paramMap.get("radius") == null)) {
 
@@ -109,35 +84,8 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 				response = readSSDetails.getSolrResponse(
 						serverDetailsMap, solrQueryDetails, paramMap, start,
 						rows);
-
-				solrJSResultDTO = new SolrJobSearchResultDTO();
+				solrJSResultDTO = solrJobSearchResult.getSolrJSResult(response);
 				
-				LOGGER.debug("Number of search records===>>>"
-				 + response.getResults().getNumFound());
-
-				solrJSResultDTO.setTotalNumSearchResult(response
-						.getResults().getNumFound());
-
-				List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
-				jobSearchDTOList = response.getBeans(JobSearchDTO.class);
-
-				// For displaying the results. Should be removed when UI will
-				// come.
-				//JSONObject jobSrchJsonObj = readSolrServerDetails.getJSONResult(jobSearchDTOList);
-
-				final Map<String, List<Count>> facetMap = new HashMap<String, List<Count>>();
-				final List<FacetField> facetFieldList = response.getFacetFields();
-
-				for (FacetField facetField : facetFieldList) {
-					facetMap.put(facetField.getName(), facetField.getValues());
-					LOGGER.debug("@Facet Name===>>"+
-					 facetField.getName()+",@Facet Values(Categories)===>>>"
-					 + facetMap.get(facetField.getName()));
-				}
-
-				solrJSResultDTO.setFacetMap(facetMap);
-				solrJSResultDTO.setSearchResultList(jobSearchDTOList);
-
 				jSResultDTO = new JobSearchResultDTO();
 				jSResultDTO
 						.setSolrJobSearchResultDTO(solrJSResultDTO);
