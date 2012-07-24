@@ -78,10 +78,12 @@ public class TransformJobSeekerSubscription {
 		if (null != currentSubsList) {
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
 				
-				for(MagazinesDTO subdto :listMagaziness){
-					
-					if(dto.getLookUpId().equals(subdto.getMagazineId())){
-						currMagList.add(dto.getLookUpId().toString());
+				if(null != listMagaziness){
+					for(MagazinesDTO subdto :listMagaziness){
+						
+						if(dto.getLookUpId().equals(subdto.getMagazineId())){
+							currMagList.add(dto.getLookUpId().toString());
+						}
 					}
 				}
 				
@@ -105,15 +107,15 @@ public class TransformJobSeekerSubscription {
 		List<JobAlertsDTO> currentSelectedSubsList = new ArrayList<JobAlertsDTO>();
 		if (null != currentSubsList) {
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
-				
-				for(JobAlertsDTO subdto :listAlerts){
-					
-					if(dto.getLookUpId().equals(subdto.getAlertId())){
-						currAlrtList.add(dto.getLookUpId().toString());
-						currentSelectedSubsList.add(subdto);
+				if(null != listAlerts){
+					for(JobAlertsDTO subdto :listAlerts){
+						
+						if(dto.getLookUpId().equals(subdto.getAlertId())){
+							currAlrtList.add(dto.getLookUpId().toString());
+							currentSelectedSubsList.add(subdto);
+						}
 					}
-				}
-				
+				}				
 			}
 			form.setCurrentJobAlerts(currAlrtList.toArray(new String[currAlrtList.size()]));
 		}

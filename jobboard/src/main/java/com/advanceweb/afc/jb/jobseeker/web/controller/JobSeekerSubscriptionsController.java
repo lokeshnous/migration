@@ -66,7 +66,8 @@ public class JobSeekerSubscriptionsController {
 		model.put("jobSeekerSubscriptionForm",form);
 		model.put("selSubsList",selSubsList);
 		
-		return new ModelAndView("jobseekersubscription");
+//		return new ModelAndView("jobseekersubscription");
+		return new ModelAndView("jobseekermodifysubscriptions");
 	}
 	
 	/**
@@ -87,7 +88,7 @@ public class JobSeekerSubscriptionsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("jobseekersubscription");
+		return new ModelAndView("jobseekermodifysubscriptions");
 	}
 
 }
