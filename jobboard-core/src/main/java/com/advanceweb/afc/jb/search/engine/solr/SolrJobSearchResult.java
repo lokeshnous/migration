@@ -30,7 +30,7 @@ public class SolrJobSearchResult {
 		
 		
 		SolrJobSearchResultDTO solrJSResultDTO = new SolrJobSearchResultDTO();
-		System.out.println("Number of search records===>>>"+ response.getResults().getNumFound());
+		//System.out.println("Number of search records===>>>"+ response.getResults().getNumFound());
 
 		solrJSResultDTO.setTotalNumSearchResult(response
 				.getResults().getNumFound());
