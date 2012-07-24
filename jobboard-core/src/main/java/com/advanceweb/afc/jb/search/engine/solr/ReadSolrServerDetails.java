@@ -1,16 +1,22 @@
 package com.advanceweb.afc.jb.search.engine.solr;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.stereotype.Repository;
+
+
 
 /**
  * This class has been created as a helper class for the Solr related Job search
@@ -19,19 +25,22 @@ import org.springframework.stereotype.Repository;
  * @author Reetesh Ranjan Nayak
  * @version 1.0
  * @since 10 July 2012
- */
+ */ 
 
 @Repository("readSolrServerDetails")
 public class ReadSolrServerDetails {
-
+  
+	private static final Logger LOGGER = Logger
+			.getLogger("ReadSolrServerDetails.class");
+	
 	/**
 	 * Reads Solr Server details from the property file and put it into the Map
 	 * 
 	 * @param solrConfiguration
 	 * @return Map
 	 */
-	public Map<String, String> getServerDetails(Properties solrConfiguration) {
-		Map<String, String> serverDetailsMap = new HashMap<String, String>();
+	public Map<String, String> getServerDetails(final Properties solrConfiguration) {
+		final Map<String, String> serverDetailsMap = new HashMap<String, String>();
 		serverDetailsMap.put("serverUrl", solrConfiguration.getProperty("url"));
 		serverDetailsMap.put("solrservice",
 				solrConfiguration.getProperty("solrservice"));
@@ -59,8 +68,8 @@ public class ReadSolrServerDetails {
 	 * @param solrConfiguration
 	 * @return Map
 	 */
-	public Map<String, String> getSolrQueryDetails(Properties solrConfiguration) {
-		Map<String, String> solrQueryDetails = new HashMap<String, String>();
+	public Map<String, String> getSolrQueryDetails(final Properties solrConfiguration) {
+		final Map<String, String> solrQueryDetails = new HashMap<String, String>();
 		solrQueryDetails.put("city", solrConfiguration.getProperty("city"));
 		solrQueryDetails.put("company",
 				solrConfiguration.getProperty("company"));
@@ -86,11 +95,12 @@ public class ReadSolrServerDetails {
 	 * @param rows
 	 * @return QueryResponse
 	 */
-	public QueryResponse getSolrResponse(Map<String, String> serverDetailsMap,
-			Map<String, String> solrQueryDetails, Map<String, String> paramMap,
-			long start, long rows) {
+	public QueryResponse getSolrResponse(final Map<String, String> serverDetailsMap,
+			final Map<String, String> solrQueryDetails, final Map<String, String> paramMap,
+			final long start, final long rows) {
 		QueryResponse response = null;
 		HttpSolrServer server = null;
+		//boolean isSuccessful = true;
 		server = new HttpSolrServer(serverDetailsMap.get("serverUrl")
 				.toString() + serverDetailsMap.get("solrservice").toString());
 		server.setSoTimeout(Integer.parseInt(serverDetailsMap.get("sotimeout")));
@@ -109,11 +119,11 @@ public class ReadSolrServerDetails {
 				.get("maxretries")));
 		server.setParser(new XMLResponseParser());
 
-		String searchString = paramMap.get("keywords") + "+"
+		final String searchString = paramMap.get("keywords") + "+"
 				+ paramMap.get("city_state") + "+" + paramMap.get("radius");
 		if (searchString != null && searchString.length() > 0) {
 
-			SolrQuery searchquery = new SolrQuery();
+			final SolrQuery searchquery = new SolrQuery();
 			searchquery.setQuery(searchString);
 			searchquery.setFacet(true);
 			searchquery.addFacetField(solrQueryDetails.get("city"));
@@ -123,54 +133,197 @@ public class ReadSolrServerDetails {
 			searchquery.addFacetField(solrQueryDetails.get("state"));
 			searchquery.add("rows", String.valueOf(rows));
 			searchquery.add("start", String.valueOf(start));
-			System.out.println("Search query===>>>" + searchquery);
+			//System.out.println("Search query===>>>" + searchquery);
 
 			try {
 				response = server.query(searchquery);
 			} catch (SolrServerException e1) {
+				LOGGER.debug(e1);
 				// e1.printStackTrace();
-				return null;
+				//isSuccessful = false;
 			}
 		}
 
-		return response;
+		//if(isSuccessful){
+			return response;
+		/*}else{
+			return null;
+		}*/
 	}
 
-	public void displayResults(List<JobSearchDTO> jobSearchDTOList) {
+	/*public JSONObject getJSONResultTest(List<JobSearchDTO> jobSearchDTOList) {
 
+		JSONObject jobSrchJsonObj = new JSONObject();
+		JSONArray jsonRows = new JSONArray();
+		
 		for (JobSearchDTO jobSrchDTO : jobSearchDTOList) {
+			
+			JSONObject jobSrchJson = new JSONObject();
+			
 			System.out.println("@Company===>>" + jobSrchDTO.getCompany());
-			System.out.println("@Job Title===>>" + jobSrchDTO.getJobTitle());
+			
+			jobSrchJson.put("Company", jobSrchDTO.getCompany());
+			
+			
+			System.out.println("@JobTitle===>>" + jobSrchDTO.getJobTitle());
+			jobSrchJson.put("JobTitle", jobSrchDTO.getJobTitle());
+			
 			System.out.println("@City===>>" + jobSrchDTO.getCity());
-			System.out
-					.println("@Posted Date===>>" + jobSrchDTO.getPostedDate());
+			jobSrchJson.put("City", jobSrchDTO.getCity());
+			
+			System.out.println("@PostedDate===>>" + jobSrchDTO.getPostedDate());
+			jobSrchJson.put("PostedDate", jobSrchDTO.getPostedDate());
+			
 			System.out.println("@Apply Online===>>"
 					+ jobSrchDTO.getApplyOnline());
+			jobSrchJson.put("ApplyOnline", jobSrchDTO.getApplyOnline());
+			
 			System.out.println("@Blind Ad===>>" + jobSrchDTO.getBlindAd());
+			jobSrchJson.put("BlindAd", jobSrchDTO.getBlindAd());
+			
 			System.out.println("@Facility Name===>>"
 					+ jobSrchDTO.getFacilityName());
+			jobSrchJson.put("FacilityName", jobSrchDTO.getFacilityName());
+			
 			System.out.println("@Email Display===>>"
 					+ jobSrchDTO.getEmailDisplay());
+			jobSrchJson.put("EmailDisplay", jobSrchDTO.getEmailDisplay());
+			
 			System.out.println("@Email===>>" + jobSrchDTO.getEmail());
+			jobSrchJson.put("Email", jobSrchDTO.getEmail());
+			
 			System.out.println("@Is Inter===>>"
 					+ jobSrchDTO.isInternationalJob());
-			System.out
-					.println("@Is National===>>" + jobSrchDTO.isNationalJob());
+			jobSrchJson.put("IsInternational", jobSrchDTO.isInternationalJob());
+			
+			System.out.println("@Is National===>>" + jobSrchDTO.isNationalJob());
+			jobSrchJson.put("IsNational", jobSrchDTO.isNationalJob());
+			
 			System.out.println("@Is Featured===>>" + jobSrchDTO.isFeatured());
+			jobSrchJson.put("IsFeatured", jobSrchDTO.isFeatured());
+			
 			System.out.println("@Job count===>>" + jobSrchDTO.getJobCount());
+			jobSrchJson.put("JobCount", jobSrchDTO.getJobCount());
+			
 			System.out.println("@Job id===>>" + jobSrchDTO.getJobId());
+			jobSrchJson.put("JobId", jobSrchDTO.getJobId());
+			
 			System.out.println("@Job Number===>>" + jobSrchDTO.getJobNumber());
+			jobSrchJson.put("Job Number", jobSrchDTO.getJobNumber());
+			
 			System.out.println("@Job Geo===>>" + jobSrchDTO.getJobGeo());
+			jobSrchJson.put("Job Geo", jobSrchDTO.getJobGeo());
+			
 			System.out.println("@Job position===>>"
 					+ jobSrchDTO.getJobPosition());
+			jobSrchJson.put("JobPosition", jobSrchDTO.getJobPosition());
+			
 			System.out.println("@jobGeo0LatLon===>>"
 					+ jobSrchDTO.getJobGeo0LatLon());
+			jobSrchJson.put("jobGeo0LatLon", jobSrchDTO.getJobGeo0LatLon());
+			
 			System.out.println("@jobGeo1LatLon===>>"
 					+ jobSrchDTO.getJobGeo1LatLon());
-			System.out
-					.println("@URL Display===>>" + jobSrchDTO.getUrlDisplay());
+			jobSrchJson.put("jobGeo1LatLon", jobSrchDTO.getJobGeo1LatLon());
+			LOGGER.info("@URL Display===>>" + jobSrchDTO.getUrlDisplay());
+			jobSrchJson.put("URLDisplay", jobSrchDTO.getUrlDisplay());
+			
+			jsonRows.add(jobSrchJson);
 		}
+		
+		jobSrchJsonObj.put("jsonRows",jsonRows );
 
+		
+		return jobSrchJsonObj;
+	}*/
+	
+	
+	public JSONObject convertToJSON(final JobSearchResultDTO jSResultDTO) {
+		final JSONObject jobSrchJsonObj = new JSONObject();
+		final JSONArray jsonRows = new JSONArray();
+		
+		final SolrJobSearchResultDTO solrJSResultDTO = jSResultDTO.getSolrJobSearchResultDTO();
+		final List<JobSearchDTO> jobSearchDTOList = solrJSResultDTO.getSearchResultList();
+		
+		for (JobSearchDTO jobSrchDTO : jobSearchDTOList) {
+			
+			JSONObject jobSrchJson = new JSONObject();
+			
+			//System.out.println("@Company===>>" + jobSrchDTO.getCompany());
+			
+			jobSrchJson.put("Company", jobSrchDTO.getCompany());
+			
+			
+			//System.out.println("@JobTitle===>>" + jobSrchDTO.getJobTitle());
+			jobSrchJson.put("JobTitle", jobSrchDTO.getJobTitle());
+			
+			//System.out.println("@City===>>" + jobSrchDTO.getCity());
+			jobSrchJson.put("City", jobSrchDTO.getCity());
+			
+			//System.out.println("@PostedDate===>>" + jobSrchDTO.getPostedDate());
+			jobSrchJson.put("PostedDate", jobSrchDTO.getPostedDate());
+			
+			//System.out.println("@Apply Online===>>"
+					//+ jobSrchDTO.getApplyOnline());
+			jobSrchJson.put("ApplyOnline", jobSrchDTO.getApplyOnline());
+			
+			//System.out.println("@Blind Ad===>>" + jobSrchDTO.getBlindAd());
+			jobSrchJson.put("BlindAd", jobSrchDTO.getBlindAd());
+			
+			//System.out.println("@Facility Name===>>"
+				//	+ jobSrchDTO.getFacilityName());
+			jobSrchJson.put("FacilityName", jobSrchDTO.getFacilityName());
+			
+			//System.out.println("@Email Display===>>"
+					//+ jobSrchDTO.getEmailDisplay());
+			jobSrchJson.put("EmailDisplay", jobSrchDTO.getEmailDisplay());
+			
+			//System.out.println("@Email===>>" + jobSrchDTO.getEmail());
+			jobSrchJson.put("Email", jobSrchDTO.getEmail());
+			
+			//System.out.println("@Is Inter===>>"
+			//		+ jobSrchDTO.isInternationalJob());
+			jobSrchJson.put("IsInternational", jobSrchDTO.isInternationalJob());
+			
+			//System.out.println("@Is National===>>" + jobSrchDTO.isNationalJob());
+			jobSrchJson.put("IsNational", jobSrchDTO.isNationalJob());
+			
+			//System.out.println("@Is Featured===>>" + jobSrchDTO.isFeatured());
+			jobSrchJson.put("IsFeatured", jobSrchDTO.isFeatured());
+			
+			//System.out.println("@Job count===>>" + jobSrchDTO.getJobCount());
+			jobSrchJson.put("JobCount", jobSrchDTO.getJobCount());
+			
+			//System.out.println("@Job id===>>" + jobSrchDTO.getJobId());
+			jobSrchJson.put("JobId", jobSrchDTO.getJobId());
+			
+			//System.out.println("@Job Number===>>" + jobSrchDTO.getJobNumber());
+			jobSrchJson.put("Job Number", jobSrchDTO.getJobNumber());
+			
+			//System.out.println("@Job Geo===>>" + jobSrchDTO.getJobGeo());
+			jobSrchJson.put("Job Geo", jobSrchDTO.getJobGeo());
+			
+			//System.out.println("@Job position===>>"
+			//		+ jobSrchDTO.getJobPosition());
+			jobSrchJson.put("JobPosition", jobSrchDTO.getJobPosition());
+			
+			//System.out.println("@jobGeo0LatLon===>>"
+			//		+ jobSrchDTO.getJobGeo0LatLon());
+			jobSrchJson.put("jobGeo0LatLon", jobSrchDTO.getJobGeo0LatLon());
+			
+			//System.out.println("@jobGeo1LatLon===>>"
+			//		+ jobSrchDTO.getJobGeo1LatLon());
+			jobSrchJson.put("jobGeo1LatLon", jobSrchDTO.getJobGeo1LatLon());
+			LOGGER.info("@URL Display===>>" + jobSrchDTO.getUrlDisplay());
+			jobSrchJson.put("URLDisplay", jobSrchDTO.getUrlDisplay());
+			
+			jsonRows.add(jobSrchJson);
+			
+		}
+		jobSrchJsonObj.put("jsonRows", jsonRows);
+		
+		return jobSrchJsonObj;
 	}
+	
 
 }
