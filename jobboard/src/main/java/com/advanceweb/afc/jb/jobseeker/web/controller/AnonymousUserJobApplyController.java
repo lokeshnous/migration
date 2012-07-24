@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
@@ -43,10 +44,20 @@ public class AnonymousUserJobApplyController {
 	*/
 	
 	
+	
+	@RequestMapping(value="/anonymousUser",method = RequestMethod.GET)
+	public ModelAndView showAnoUserForm( Map model) {
+		
+	        model.put("anonymousUserJobApplyForm", new AnonymousUserJobApplyForm());
+	        return new ModelAndView("jobseekerguestuserformpopup");
+	    
+	}
+	
+	
 	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.POST)
 	public ModelAndView saveJobSeekerRegistration(@Valid AnonymousUserJobApplyForm form,
-			BindingResult result,@RequestParam("id") Long jobId) {
-
+			BindingResult result) {
+		//,@RequestParam("id") Long jobId
 		try {
 			
 				if (result.hasErrors()) {
@@ -58,10 +69,11 @@ public class AnonymousUserJobApplyController {
 				 * job seeker resume as attachment,subject will be job title, body will contain short description
 				 * 
 				 */
-				SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(jobId);				
+				SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(13100);				
 				EmailDTO toEmployer = new EmailDTO();
 				InternetAddress[] employerToAddress = new InternetAddress[1];
-				employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());
+				//employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());princem@nousinfo.com
+				employerToAddress[0] = new InternetAddress("princem@nousinfo.com");
 				toEmployer.setToAddress(employerToAddress);
 				toEmployer.setSubject(searchedJobDTO.getJobTitle());
 				toEmployer.setBody(searchedJobDTO.getJobDesc());
