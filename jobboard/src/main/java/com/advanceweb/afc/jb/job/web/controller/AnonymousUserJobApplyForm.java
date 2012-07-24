@@ -9,7 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
    @Purpose: This class will act as a Form Bean for the  Anonymous User to apply for the job
  */
 public class AnonymousUserJobApplyForm {
-
+	
 	private String userName;
 	private String userEmail;
 	private String filePath;
