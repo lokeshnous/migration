@@ -58,7 +58,7 @@ import com.advanceweb.afc.jb.web.utils.ReadDocFile;
 public class ResumeController {
 
 	@Autowired
-	private ResumeService resumeService;
+	private ResumeService resumeService
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
