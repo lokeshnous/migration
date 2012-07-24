@@ -43,7 +43,8 @@
 		    	
 		    	//alert("Test");
 				jQuery("#jobSearchResultTable").jqGrid({ 
-					url:"/jobboard/jobsearchactivity/findJobSearch", 
+	
+					url:"jobsearchactivity/findJobSearch", 
 					datatype: "json", 
 					colNames:[	'Job Title', 'Employer', 'Location', 'Date Posted' ], 
 					colModel:[  
@@ -189,7 +190,7 @@
               <div class="row">
               <div class="job_search_main job_search_main_height">
                   <%-- <form method=""> --%>
-                  <form:form method="Post" action="findJobSearch.html" commandName="jobSearchResultForm">
+                  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">
             <div class="search_form">
             
                
@@ -199,10 +200,10 @@
 	                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
 	                      <br/>
 	                      <div class="input_grp1 marginTop10">
-	                       <form:input path="city_state"  id="city_state" cssClass="jb_input2" />
-	                	  <!-- <input type="text" name="city_state" id="city_state" class="jb_input2" /> -->
+	                       <form:input path="cityState"  id="cityState" cssClass="jb_input2" />
+	                	  <!-- <input type="text" name="cityState" id="cityState" class="jb_input2" /> -->
 	                <br/>
-	                <div class="toolTipBefore"><label for="city_state">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
+	                <div class="toolTipBefore"><label for="cityState">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
 	              </div>
 	                      <div class="input_grp2 marginTop10">
 	                <form:select path="radius" id="radius" cssClass="jb_input3">
