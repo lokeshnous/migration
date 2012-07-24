@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.data.entities;
 
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -17,17 +18,25 @@ public class AdmFacility implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="facility_id")
-	private int facilityId;
+	@Column(name="facility_id", unique=true, nullable=false)
+	private Integer facilityId;
 
-	@Column(name="account_number")
+	@Column(name="account_number", length=255)
 	private String accountNumber;
 
-	@Column(name="admin_user_id")
-	private int adminUserId;
+	@Column(name="admin_user_id", nullable=false)
+	private Integer adminUserId;
 
+	@Column(length=255)
 	private String city;
 
+	@Column(name="company_news", length=500)
+	private String companyNews;
+
+	@Column(name="company_overview", length=500)
+	private String companyOverview;
+
+	@Column(length=5)
 	private String country;
 
     @Temporal( TemporalType.TIMESTAMP)
@@ -35,22 +44,44 @@ public class AdmFacility implements Serializable {
 	private Date createDt;
 
 	@Column(name="create_user_id")
-	private int createUserId;
+	private Integer createUserId;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
 	@Column(name="delete_user_id")
-	private int deleteUserId;
+	private Integer deleteUserId;
 
+	@Column(length=300)
+	private String email;
+
+	@Column(name="email_display", length=300)
+	private String emailDisplay;
+
+	@Column(name="logo_path", length=255)
+	private String logoPath;
+
+	@Column(nullable=false, length=255)
 	private String name;
 
+	@Column(name="name_display", length=255)
+	private String nameDisplay;
+
+	@Column(length=10)
 	private String postcode;
 
+	@Column(length=255)
 	private String state;
 
+	@Column(length=255)
 	private String street;
+
+	@Column(length=255)
+	private String url;
+
+	@Column(name="url_display", length=300)
+	private String urlDisplay;
 
 	//bi-directional many-to-one association to AdmFacilityGroup
     @ManyToOne
@@ -68,11 +99,11 @@ public class AdmFacility implements Serializable {
     public AdmFacility() {
     }
 
-	public int getFacilityId() {
+	public Integer getFacilityId() {
 		return this.facilityId;
 	}
 
-	public void setFacilityId(int facilityId) {
+	public void setFacilityId(Integer facilityId) {
 		this.facilityId = facilityId;
 	}
 
@@ -84,11 +115,11 @@ public class AdmFacility implements Serializable {
 		this.accountNumber = accountNumber;
 	}
 
-	public int getAdminUserId() {
+	public Integer getAdminUserId() {
 		return this.adminUserId;
 	}
 
-	public void setAdminUserId(int adminUserId) {
+	public void setAdminUserId(Integer adminUserId) {
 		this.adminUserId = adminUserId;
 	}
 
@@ -98,6 +129,22 @@ public class AdmFacility implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getCompanyNews() {
+		return this.companyNews;
+	}
+
+	public void setCompanyNews(String companyNews) {
+		this.companyNews = companyNews;
+	}
+
+	public String getCompanyOverview() {
+		return this.companyOverview;
+	}
+
+	public void setCompanyOverview(String companyOverview) {
+		this.companyOverview = companyOverview;
 	}
 
 	public String getCountry() {
@@ -116,11 +163,11 @@ public class AdmFacility implements Serializable {
 		this.createDt = createDt;
 	}
 
-	public int getCreateUserId() {
+	public Integer getCreateUserId() {
 		return this.createUserId;
 	}
 
-	public void setCreateUserId(int createUserId) {
+	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
 	}
 
@@ -132,12 +179,36 @@ public class AdmFacility implements Serializable {
 		this.deleteDt = deleteDt;
 	}
 
-	public int getDeleteUserId() {
+	public Integer getDeleteUserId() {
 		return this.deleteUserId;
 	}
 
-	public void setDeleteUserId(int deleteUserId) {
+	public void setDeleteUserId(Integer deleteUserId) {
 		this.deleteUserId = deleteUserId;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmailDisplay() {
+		return this.emailDisplay;
+	}
+
+	public void setEmailDisplay(String emailDisplay) {
+		this.emailDisplay = emailDisplay;
+	}
+
+	public String getLogoPath() {
+		return this.logoPath;
+	}
+
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
 	}
 
 	public String getName() {
@@ -146,6 +217,14 @@ public class AdmFacility implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getNameDisplay() {
+		return this.nameDisplay;
+	}
+
+	public void setNameDisplay(String nameDisplay) {
+		this.nameDisplay = nameDisplay;
 	}
 
 	public String getPostcode() {
@@ -170,6 +249,22 @@ public class AdmFacility implements Serializable {
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+
+	public String getUrl() {
+		return this.url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrlDisplay() {
+		return this.urlDisplay;
+	}
+
+	public void setUrlDisplay(String urlDisplay) {
+		this.urlDisplay = urlDisplay;
 	}
 
 	public AdmFacilityGroup getAdmFacilityGroup() {

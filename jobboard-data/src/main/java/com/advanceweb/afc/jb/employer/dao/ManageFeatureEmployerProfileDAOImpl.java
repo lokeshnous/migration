@@ -73,12 +73,12 @@ ManageFeatureEmployerProfileDAO {
 				AdmFacility admFacility = (AdmFacility) iterator.next();
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
-				//companyProfileDTO.setCompanyNews(facility.get);
-				//companyProfileDTO.setCompanyOverview(facility.get);
-				//companyProfileDTO.setCompanyWebsite(facility.ge);
-				//companyProfileDTO.setCompanyEmail(facility);
+				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
+				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
+				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				//companyProfileDTO.setPositionTitle(facility.get);
-				//companyProfileDTO.setLogoPath(facility.);
+				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
 				companyProfileDTOList.add(companyProfileDTO);
 				//System.out.println(companyProfileDTO.getCompanyName());
 			}
@@ -99,16 +99,17 @@ ManageFeatureEmployerProfileDAO {
 		try {
 			if (employerId != 0) {
 				Session session = sessionFactory.openSession();
-				AdmFacility facility = (AdmFacility) session.get(
+				AdmFacility admFacility = (AdmFacility) session.get(
 						AdmFacility.class, new Long(employerId).intValue());
 				//System.out.println(facility);
-				companyProfileDTO.setCompanyName(facility.getName());
-				//companyProfileDTO.setCompanyNews(facility.get);
-				//companyProfileDTO.setCompanyOverview(facility.get);
-				//companyProfileDTO.setCompanyWebsite(facility.ge);
-				//companyProfileDTO.setCompanyEmail(facility);
+				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
+				companyProfileDTO.setCompanyName(admFacility.getName());
+				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
+				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
+				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				//companyProfileDTO.setPositionTitle(facility.get);
-				//companyProfileDTO.setLogoPath(facility.);
+				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
 
 
 			}

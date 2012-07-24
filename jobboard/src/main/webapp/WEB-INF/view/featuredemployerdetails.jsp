@@ -183,7 +183,7 @@
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">
 								<span class="labelHolder1">Website:</span> <a
-									href="http://www.dekalbmedical.org/Main/Home.aspx"
+									href="http://${employerProfileManagementForm.companyWebsite }"
 									target="_blank">
 									${employerProfileManagementForm.companyWebsite }
 									</a>
