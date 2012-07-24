@@ -266,6 +266,8 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ContactInf
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSearchActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerActivityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerAdvanceSearchController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerProfileManagement.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationForm.java -text
@@ -316,6 +318,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobSeekerActivity.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobsearchresult.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerchangepassword.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobseekerdashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerguestuserformpopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekermodifysubscriptions.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerregistration.jsp -text
