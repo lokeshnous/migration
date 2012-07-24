@@ -32,7 +32,8 @@ public class MerUser implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
-
+    
+    @Column(name="email")
 	private String email;
 
 	@Column(name="empinfo_lookup_id")
@@ -68,6 +69,7 @@ public class MerUser implements Serializable {
 	@Column(name="other_details")
 	private String otherDetails;
 
+	@Column(name="password")
 	private String password;
 
 	private String phone;
