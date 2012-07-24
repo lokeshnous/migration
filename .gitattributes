@@ -89,6 +89,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceI
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptions.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionsService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginFormService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginFormServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdowns.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeSearch.java -text
