@@ -36,9 +36,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
 	
-	@Autowired
-	private SessionFactory sessionFactory;
-
 	private HibernateTemplate hibernateTemplate;
 	
 	@Autowired
@@ -266,8 +263,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<JobAlertsDTO> getJobAlertsList() {
 		
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='JobAlerts' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList = hibernateTemplate.find("from MerLookup e where e.lookupCategory='JobAlerts' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToJobAlertsDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -278,8 +274,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<MagazinesDTO> getMagazinesList() {
 		try {
-			Session session= sessionFactory.openSession();
-			List<MerLookup> merLookupList = session.createQuery("from MerLookup e where e.lookupCategory='Magazines' and e.lookupStatus='1'").list();
+			List<MerLookup> merLookupList = hibernateTemplate.find("from MerLookup e where e.lookupCategory='Magazines' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToMagazinesDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
