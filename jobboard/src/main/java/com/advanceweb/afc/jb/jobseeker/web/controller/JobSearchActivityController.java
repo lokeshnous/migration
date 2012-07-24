@@ -207,9 +207,11 @@ public class JobSearchActivityController {
 
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
 				start, rows);
+		if (jobSearchResultDTO != null){
+			JSONObject jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
+			modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
+		}
 		
-		JSONObject jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
-		modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
 		
 		return new ModelAndView("findjob", modelMap);
 		//return new ModelAndView("jsonView", modelMap);
