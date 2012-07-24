@@ -27,6 +27,7 @@ import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -171,21 +172,42 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value="/jobSeekerChangePassword",method = RequestMethod.GET)
-	public String jsChangePassword(@Valid JobSeekerRegistrationForm jsRegistrationForm,
+	@RequestMapping(value="/jobSeekerUpdatePassword",method = RequestMethod.GET)
+	public String updateNewPassword(@Valid ChangePasswordForm form,
 			BindingResult result,Map model) {
 		
 		try {			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new  JobSeekerRegistrationDTO();
-			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(jsRegistrationForm);
+			MerUserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 			// Call to service layer
 			profileRegistration.changePassword(jsRegistrationDTO);
-			model.put("jobSeekerRegistrationForm", jsRegistrationForm);
+			model.put("changePasswordForm", form);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "registrationsuccess";
+	}
+	
+	/**
+	 * This method is called to view/modify job seeker profile settings
+	 * 
+	 * @param jobSeekerRegistrationForm
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value="/jobSeekerChangePassword",method = RequestMethod.GET)
+	public String jsChangePassword(Map model) {
+		
+		try {		
+			ChangePasswordForm form = new ChangePasswordForm();
+			model.put("changePasswordForm", form);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "jobseekerchangepassword";
 	}
 	
 

@@ -27,6 +27,7 @@ go(url);
 <body>
 	<h1>Welcome to merion matters</h1>
 	<ul>
+	<li><a href="jobseekerregistration/jobSeekerChangePassword.html">JobSeeker ChangePassword</li>
 		<li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeekerRegistration Form</a></li>
 		<li><a href="employerRegistration/createEmployerProfile.html">Employer Registration Form</a></li>
 		<li><a href="jobSeekerResume/viewResumeBuilder.html">View Resume</a></li>
