@@ -7,6 +7,14 @@ package com.advanceweb.afc.jb.common;
  * @created 21-Jun-2012 2:24:27 PM
  */
 public class CompanyProfileDTO {
+	private String facilityid;
+	public String getFacilityid() {
+		return facilityid;
+	}
+
+	public void setFacilityid(String facilityid) {
+		this.facilityid = facilityid;
+	}
 
 	private String companyName;
 	private String companyOverview;
