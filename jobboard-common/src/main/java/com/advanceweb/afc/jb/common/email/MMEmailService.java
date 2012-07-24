@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  * @created 21-Jun-2012 2:25:22 PM
  */
-//@Service("emailService")
+@Service("emailService")
 public class MMEmailService implements MMEmail {
 	
 	@Autowired
@@ -32,12 +32,13 @@ public class MMEmailService implements MMEmail {
 	@Override
 	public void sendEmail(EmailDTO emailDTO) {
 
+		
 		MimeMessage message = mailSender.createMimeMessage();
 
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-			helper.setFrom(emailDTO.getFromAddress());
+			//helper.setFrom(emailDTO.getFromAddress());
 			InternetAddress[] ccAddress = emailDTO.getCcAddress();
 			if (ccAddress != null && ccAddress.length > 0) {
 				helper.setCc(emailDTO.getCcAddress());
@@ -62,7 +63,9 @@ public class MMEmailService implements MMEmail {
 		} catch (MessagingException e) {
 			throw new MailParseException(e);
 		}
+		
 		mailSender.send(message);
+		
 	}
 
 }
