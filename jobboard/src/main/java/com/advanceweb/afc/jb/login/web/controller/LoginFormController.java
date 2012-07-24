@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.advanceweb.afc.jb.common.LoginFormDTO;
-import com.advanceweb.afc.jb.login.service.LoginFormService;
 
 /**
  * 
