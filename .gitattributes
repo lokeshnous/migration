@@ -230,6 +230,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/JobSearchActi
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/JobSeekerActivityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/JobSeekerSubscriptionsConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/SaveSearchConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/login/dao/LoginFormDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/login/dao/LoginFormDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/helper/PopulateDropdownConversionHelper.java -text
