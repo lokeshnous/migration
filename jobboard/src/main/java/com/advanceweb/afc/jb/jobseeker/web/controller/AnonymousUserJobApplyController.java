@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
@@ -36,6 +35,7 @@ public class AnonymousUserJobApplyController {
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
 
+	@Autowired
 	private MMEmailService emailService;
 
 	
@@ -54,14 +54,14 @@ public class AnonymousUserJobApplyController {
 	}
 	
 	
-	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.POST)
+	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.GET)
 	public ModelAndView saveJobSeekerRegistration(@Valid AnonymousUserJobApplyForm form,
 			BindingResult result) {
 		//,@RequestParam("id") Long jobId
 		try {
 			
 				if (result.hasErrors()) {
-					return new ModelAndView("anonymoususerjobapply");
+					return new ModelAndView("jobseekerguestuserform");
 				}
 
 				/**
@@ -69,10 +69,11 @@ public class AnonymousUserJobApplyController {
 				 * job seeker resume as attachment,subject will be job title, body will contain short description
 				 * 
 				 */
-				SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(13100);				
+				SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(13100);	
+				
 				EmailDTO toEmployer = new EmailDTO();
 				InternetAddress[] employerToAddress = new InternetAddress[1];
-				//employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());princem@nousinfo.com
+				//employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());
 				employerToAddress[0] = new InternetAddress("princem@nousinfo.com");
 				toEmployer.setToAddress(employerToAddress);
 				toEmployer.setSubject(searchedJobDTO.getJobTitle());
@@ -81,6 +82,7 @@ public class AnonymousUserJobApplyController {
 				List<String> attachmentpaths = new ArrayList<String>();
 				attachmentpaths.add(form.getFilePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
+				
 				emailService.sendEmail(toEmployer);
 
 				/**
@@ -99,6 +101,8 @@ public class AnonymousUserJobApplyController {
 
 		
 		} catch (Exception e) {
+			
+			// waiting for Exception
 			
 		}
 		return new ModelAndView("anouserjobapplyssuccess");
