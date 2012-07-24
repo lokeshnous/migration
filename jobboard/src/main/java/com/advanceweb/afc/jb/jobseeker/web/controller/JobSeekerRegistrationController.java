@@ -1,7 +1,11 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-
-
+/**
+ * @Author : Sasibhushana
+   @Version: 1.0
+   @Created: Jul 12, 2012
+   @Purpose: This class is used as controller for job seeker regigstration
+ */
 import java.util.List;
 import java.util.Map;
 
