@@ -23,6 +23,7 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -284,5 +285,19 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	   @Author :Anil Malali
+	   @Purpose:To get the list of ResumeVisibilityDTO for resume
+	   @Created:Jul 24, 2012
+	   @Param  :not required
+	   @Return :List of ResumeVisibilityDTO
+	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getResumeVisibilityList()
+	 */
+	@Override
+	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
+		List<MerLookup> merLookupList= hibernateTemplate.find("from MerLookup e where e.lookupCategory='Visibility' and e.lookupStatus='1'");
+		return dropdownHelper.convertMerLookupToVisibilityDTO(merLookupList);
 	}
 }

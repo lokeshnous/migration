@@ -150,7 +150,7 @@ public class ResumeServiceTest extends ServiceTest {
 	public void testDeleteResume() {
 		try {
 
-			List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
+			List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(10);
 			for (ResumeDTO resumeDTO : resumeDTOList) {
 				assertTrue("Delete Resume", resumeService.deleteResume(resumeDTO.getUploadResumeId()));
 			}

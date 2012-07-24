@@ -17,6 +17,7 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -163,6 +164,19 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	@Override
 	public List<MagazinesDTO> getMagazinesList() {
 		return populateDropdownsDAO.getMagazinesList();
+	}
+
+	/**
+	   @Author :Prince Mathew
+	   @Purpose:To get the list of ResumeVisibilityDTO for the resume
+	   @Created:Jul 10, 2012
+	   @Param  :not required
+	   @Return :List of ResumeVisibilityDTO
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getResumeVisibilityList()
+	 */
+	@Override
+	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
+		return populateDropdownsDAO.getResumeVisibilityList();
 	}	
 
 }

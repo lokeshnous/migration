@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -30,7 +29,7 @@ public class ResumeDTO implements Serializable{
 	private String filePath;
 	private String fileName;
 	private String isPublished;
-	private Date updateDt;
+	private String updateDt;
 	
 	//Creating Resume
 	private String objective;
@@ -137,10 +136,11 @@ public class ResumeDTO implements Serializable{
 	public void setFileData(CommonsMultipartFile fileData) {
 		this.fileData = fileData;
 	}
-	public Date getUpdateDt() {
+		
+	public String getUpdateDt() {
 		return updateDt;
 	}
-	public void setUpdateDt(Date updateDt) {
+	public void setUpdateDt(String updateDt) {
 		this.updateDt = updateDt;
 	}
 	public String getObjective() {

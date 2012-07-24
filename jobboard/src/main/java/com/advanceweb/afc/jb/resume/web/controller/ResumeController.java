@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,11 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
+import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadDocFile;
@@ -65,10 +68,12 @@ public class ResumeController {
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
-
+	@Autowired
+	PopulateDropdowns populateDropdownsService;
+	
 	private @Value("${basedirectorypathUpload}") String basedirectorypathUpload;
 
-
+	
 	/**
 	 * This method is called to display resume list belonging to a logged in
 	 * jobSeeker
@@ -82,12 +87,22 @@ public class ResumeController {
 			Model model, Map<String, Object> map) {
 
 		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
-
-		for (ResumeDTO resumeDTO : resumeDTOList) {
-			System.out.println(resumeDTO);
+		List<ResumeVisibilityDTO> resumeVisibilityList=populateDropdownsService.getResumeVisibilityList();
+		Map<String,String> visibilityMap = new HashMap<String , String>();
+		
+		visibilityMap.put("63", resumeVisibilityList.get(0).getVisibilityName());
+		visibilityMap.put("64", resumeVisibilityList.get(1).getVisibilityName());
+		visibilityMap.put("65", resumeVisibilityList.get(2).getVisibilityName());
+		
+		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();  
+		
+		for(ResumeDTO resumeDTO : resumeDTOList){
+			resumeDTO.setResume_visibility((visibilityMap.get(resumeDTO.getResume_visibility())));
+			resumeDTOListNew.add(resumeDTO);
 		}
-
-		return "manageResume";
+		map.put("resumeList", resumeDTOListNew);
+		/*map.put("visibilityList", resumeVisibilityList);*/
+		return "manageResumePopup";
 	}
 
 

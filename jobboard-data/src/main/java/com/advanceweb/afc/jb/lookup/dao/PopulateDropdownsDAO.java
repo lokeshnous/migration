@@ -21,6 +21,7 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -31,49 +32,49 @@ public interface PopulateDropdownsDAO {
 	 * To populate Country Names
 	 * @return
 	 */
-	public List<CountryDTO> getCountryList();
+	List<CountryDTO> getCountryList();
 	
 	/**
 	 * To populate employment informations
 	 * @return
 	 */
-	public List<EmploymentInfoDTO> getEmployementInfoList();
+	List<EmploymentInfoDTO> getEmployementInfoList();
 	
 	/**
 	 * To populate employment informations
 	 * @return
 	 */
-	public List<JobAlertsDTO> getJobAlertsList();
+	List<JobAlertsDTO> getJobAlertsList();
 	
 	/**
 	 * To populate employment informations
 	 * @return
 	 */
-	public List<MagazinesDTO> getMagazinesList();
+	List<MagazinesDTO> getMagazinesList();
 	
 	/**
 	 * To populate available subscriptions
 	 * @return
 	 */
-	public List<SubscriptionsDTO> getSubscriptionsList();
+	List<SubscriptionsDTO> getSubscriptionsList();
 	
 	/**
 	 * To populate genders
 	 * @return
 	 */
-	public List<GenderDTO> getGenderList();
+	List<GenderDTO> getGenderList();
 	
 	/**
 	 * To populate veteran status
 	 * @return
 	 */
-	public List<VeteranStatusDTO> getVeteranStatusList();
+	List<VeteranStatusDTO> getVeteranStatusList();
 	
 	/**
 	 * To populate Ethnicity
 	 * @return
 	 */
-	public List<EthenticityDTO> getEthenticityList();
+	List<EthenticityDTO> getEthenticityList();
 
 	
 	/**@Author :Prince Mathew
@@ -131,4 +132,13 @@ public interface PopulateDropdownsDAO {
 	 * 
 	 */
 	List<JobPostedDateDTO> getJobPostedDateList();
+	
+	/**@Author :Prince Mathew
+	   @Purpose:To get the list of ResumeVisibilityDTO
+	   @Created:Jul 10, 2012
+	   @Return :List of ResumeVisibilityDTO
+	 * 
+	 */
+	List<ResumeVisibilityDTO> getResumeVisibilityList();
+	
 }

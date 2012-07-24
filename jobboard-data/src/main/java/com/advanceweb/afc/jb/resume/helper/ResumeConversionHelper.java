@@ -1,7 +1,10 @@
 package com.advanceweb.afc.jb.resume.helper;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +44,7 @@ public class ResumeConversionHelper {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 		resumeDTO.setResume_name(resume.getResumeName());
-		resumeDTO.setUpdateDt(resume.getUpdateDt());
+		resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
 		
 		return resumeDTO;
 
@@ -75,7 +78,7 @@ public class ResumeConversionHelper {
 //		resumeDTO.setResumeText(resumeText);
 //		resumeDTO.setResumeType(resumeType);
 //		resumeDTO.setSkills(resumeBuilder.ge);
-		resumeDTO.setUpdateDt(resumeBuilder.getUpdateDt());
+		resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resumeBuilder.getUpdateDt().toString()));
 //		resumeDTO.setUploadResumeId(resumeBuilder);
 		resumeDTO.setUserId(resumeBuilder.getUserId());
 //		resumeDTO.setWilling_to_relocate(resumeBuilder.getw);
@@ -246,7 +249,8 @@ public class ResumeConversionHelper {
 			ResumeDTO resumeDTO = new ResumeDTO();
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResume_name(resume.getResumeName());
-			resumeDTO.setUpdateDt(resume.getUpdateDt());
+			resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
+			resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
 			resumeDTOList.add(resumeDTO);
 		}
 
@@ -496,6 +500,17 @@ public class ResumeConversionHelper {
 		}
 		return listWorkExpEntity;	
 	}*/	
+	
+	public static void main(String[] args) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		   //get current date time with Date()
+		   Date date = new Date();
+		   System.out.println(dateFormat.format(date));
+	 
+		   //get current date time with Calendar()
+		   Calendar cal = Calendar.getInstance();
+		   System.out.println(dateFormat.format(cal.getTime()));
+	}
 
 
 }

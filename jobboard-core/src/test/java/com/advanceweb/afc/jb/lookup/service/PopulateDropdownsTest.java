@@ -21,6 +21,7 @@ import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -260,6 +261,22 @@ public class PopulateDropdownsTest extends ServiceTest{
 		List<SubscriptionsDTO> jobSubscriptionList=popService.getSubscriptionsList();	
 		assertNotNull("Subscriptions List",jobSubscriptionList);
 		assertTrue("Job Posted Date", jobSubscriptionList.size()>=0);
+		
+	}
+	
+	/**
+	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#testGetSubscriptionList()}.
+	 * @Author :Sasibhushan
+	   @Created:Jul 17, 2012
+	   @Param  :not required
+	   @Return :List of ResumeVisibilityDTO
+	 */
+	
+	@Test
+	public void testGetResumeVisibilityList() {
+		List<ResumeVisibilityDTO> resumeVisibilityDTOList=popService.getResumeVisibilityList();	
+		assertNotNull("Subscriptions List",resumeVisibilityDTOList);
+		assertTrue("Job Posted Date", resumeVisibilityDTOList.size()>=0);
 		
 	}
 	

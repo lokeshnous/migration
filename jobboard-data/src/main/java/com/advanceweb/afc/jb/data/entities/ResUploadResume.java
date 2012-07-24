@@ -78,7 +78,7 @@ public class ResUploadResume implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-	@Column(name="`visibility ( Public/Private )`")
+	@Column(name="visibility")
 	private String visibility___Public_Private__;
 
 	@Column(name="work_auth_lookup_id")

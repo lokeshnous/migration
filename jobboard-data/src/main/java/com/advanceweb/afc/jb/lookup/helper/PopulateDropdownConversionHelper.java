@@ -17,6 +17,7 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -351,6 +352,27 @@ public class PopulateDropdownConversionHelper {
 			magazinesDTO.setMagazineId(String.valueOf(merLookup.getLookupId()));
 			magazinesDTO.setMagazineName(merLookup.getLookupName());
 			list.add(magazinesDTO);
+		}
+		return list;
+	}
+	
+	/**
+	   @Author :Sasibhushan
+	   @Purpose:TO convert the List of MerLookup to the List of Magazines DTO
+	   @Created:Jul 12, 2012
+	   @Param  :List of MerLookup
+	   @Return :List of MagazinesDTO
+	 * 
+	 */
+	public List<ResumeVisibilityDTO> convertMerLookupToVisibilityDTO(List<MerLookup> merLookupList){
+	
+		List<ResumeVisibilityDTO> list = new ArrayList<ResumeVisibilityDTO>();
+		
+		for(MerLookup merLookup : merLookupList){
+			ResumeVisibilityDTO visibilityDTO=new ResumeVisibilityDTO();
+			visibilityDTO.setVisibilityId(String.valueOf(merLookup.getLookupId()));
+			visibilityDTO.setVisibilityName(merLookup.getLookupName());
+			list.add(visibilityDTO);
 		}
 		return list;
 	}

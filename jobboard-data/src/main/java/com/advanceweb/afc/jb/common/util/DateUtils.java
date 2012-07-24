@@ -20,4 +20,21 @@ public class DateUtils {
 		}  
 		return sqltDate;
 	}
+	
+	public static String convertSQLDateToStdDate(String sqlDate){
+		DateFormat formater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		java.util.Date dateSqlFormat = null;
+		String stdDate = null;
+		try {
+			if(null != sqlDate){
+				dateSqlFormat = formater.parse(sqlDate);
+				DateFormat stdDateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+				stdDate = stdDateFormat.format(dateSqlFormat);
+				
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}  
+		return stdDate;
+	}
 }
