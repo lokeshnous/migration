@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -28,14 +29,15 @@ import org.springframework.stereotype.Service;
 @Service("jobSearchDeleagate")
 public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
-	// Logger log = Logger.getLogger("logfile");
+	private static final Logger LOGGER = Logger
+	.getLogger("JobSearchDeleagateImpl.class");
 
 	@Autowired
-	private ReadSolrServerDetails readSolrServerDetails;
+	private static ReadSolrServerDetails readSSDetails;
 
 	@Autowired
 	@Resource(name = "solrConfiguration")
-	private Properties solrConfiguration;
+	private static Properties solrConfiguration;
 
 	@PostConstruct
 	public void init() {
@@ -57,17 +59,17 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 			final Map<String, String> paramMap, final long start, final long rows) {
 
 		QueryResponse response = null;
-		JobSearchResultDTO jobSearchResultDTO = null;
-		SolrJobSearchResultDTO solrJobSearchResultDTO = null;
+		JobSearchResultDTO jSResultDTO = null;
+		SolrJobSearchResultDTO solrJSResultDTO = null;
 
-		Map<String, String> serverDetailsMap = readSolrServerDetails
+		final Map<String, String> serverDetailsMap = readSSDetails
 				.getServerDetails(solrConfiguration);
-		Map<String, String> solrQueryDetails = readSolrServerDetails
+		final Map<String, String> solrQueryDetails = readSSDetails
 				.getSolrQueryDetails(solrConfiguration);
 
 		// Checking whether server url is accessible
-		boolean serverAccessibility = false;
-		String url = serverDetailsMap.get("serverUrl")
+		boolean serverAccessible = false;
+		final String url = serverDetailsMap.get("serverUrl")
 				+ serverDetailsMap.get("solrservice")
 				+ serverDetailsMap.get("user");
 
@@ -77,20 +79,20 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 			connection.connect();
 
 			if (connection.getResponseCode() == 200) {
-				serverAccessibility = true;
-				System.out.println("Server URL " + url + " is accessible.");
+				serverAccessible = true;
+				LOGGER.debug("Server URL " + url + " is accessible.");
 			}
 		} catch (final MalformedURLException e) {
-			serverAccessibility = false;
-			// System.out.println("e1==" + e);
-			System.out.println("Server URL " + url + " is not accessible.");
+			serverAccessible = false;
+			LOGGER.debug( e);
+			LOGGER.debug("Server URL " + url + " is not accessible.");
 		} catch (final IOException e) {
-			// System.out.println("e2==" + e);
-			serverAccessibility = false;
-			System.out.println("Server URL " + url + " is not accessible.");
+			LOGGER.debug( e);
+			serverAccessible = false;
+			LOGGER.debug("Server URL " + url + " is not accessible.");
 		}
 
-		if (serverAccessibility) {
+		if (serverAccessible) {
 
 			if (("".equalsIgnoreCase(paramMap.get("keywords"))
 					|| paramMap.get("keywords") == null) 
@@ -99,22 +101,21 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 							&& ("".equalsIgnoreCase(paramMap.get("radius"))
 									|| paramMap.get("radius") == null)) {
 
-				 System.out
-				 .println("Empty Search criteria. Please enter a search criteria to seach jobs.");
+				LOGGER.debug("Empty Search criteria. Please enter a search criteria to seach jobs.");
 				return null;
 
 			} else {
 
-				response = readSolrServerDetails.getSolrResponse(
+				response = readSSDetails.getSolrResponse(
 						serverDetailsMap, solrQueryDetails, paramMap, start,
 						rows);
 
-				solrJobSearchResultDTO = new SolrJobSearchResultDTO();
+				solrJSResultDTO = new SolrJobSearchResultDTO();
 				
-				System.out.println("Number of search records===>>>"
+				LOGGER.debug("Number of search records===>>>"
 				 + response.getResults().getNumFound());
 
-				solrJobSearchResultDTO.setTotalNumSearchResult(response
+				solrJSResultDTO.setTotalNumSearchResult(response
 						.getResults().getNumFound());
 
 				List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
@@ -122,32 +123,31 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 
 				// For displaying the results. Should be removed when UI will
 				// come.
-				readSolrServerDetails.displayResults(jobSearchDTOList);
+				//JSONObject jobSrchJsonObj = readSolrServerDetails.getJSONResult(jobSearchDTOList);
 
-				Map<String, List<Count>> facetMap = new HashMap<String, List<Count>>();
-				List<FacetField> facetFieldList = response.getFacetFields();
+				final Map<String, List<Count>> facetMap = new HashMap<String, List<Count>>();
+				final List<FacetField> facetFieldList = response.getFacetFields();
 
 				for (FacetField facetField : facetFieldList) {
 					facetMap.put(facetField.getName(), facetField.getValues());
-					 System.out.println("@Facet Name===>>"+
+					LOGGER.debug("@Facet Name===>>"+
 					 facetField.getName()+",@Facet Values(Categories)===>>>"
 					 + facetMap.get(facetField.getName()));
 				}
 
-				solrJobSearchResultDTO.setFacetMap(facetMap);
-				solrJobSearchResultDTO.setSearchResultList(jobSearchDTOList);
+				solrJSResultDTO.setFacetMap(facetMap);
+				solrJSResultDTO.setSearchResultList(jobSearchDTOList);
 
-				jobSearchResultDTO = new JobSearchResultDTO();
-				jobSearchResultDTO
-						.setSolrJobSearchResultDTO(solrJobSearchResultDTO);
+				jSResultDTO = new JobSearchResultDTO();
+				jSResultDTO
+						.setSolrJobSearchResultDTO(solrJSResultDTO);
 
-				return jobSearchResultDTO;
+				return jSResultDTO;
 
 			}
 
 		} else {
-			 System.out
-			 .println("Server url is not correct. Please check the url.");
+			 LOGGER.debug("Server url is not correct. Please check the url.");
 			return null;
 		}
 
