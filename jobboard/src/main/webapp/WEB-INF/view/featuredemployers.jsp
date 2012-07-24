@@ -284,6 +284,16 @@
 						<h2>Featured Employers</h2>
 					</div>
 					<ul class="employersList">
+						<li><a href="featuredemployerdetails.html?id=109"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=110"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=111"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=112"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=111"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=109"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=109"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=109"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
+						<li><a href="featuredemployerdetails.html?id=109"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
+					
 						<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}" >
 						<li><a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }"><img src="../resources/images/ablogo.jpg" alt="${companyProfileDTO.companyName }"></a></li>
 						</c:forEach>
