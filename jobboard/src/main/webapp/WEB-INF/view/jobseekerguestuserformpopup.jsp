@@ -40,7 +40,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
                   <div class="popupHeader"><h2>GUEST USER FORM</h2>
                   <a href="#"><img src="../resources/images/Close.png" width="19" height="19" alt=""></a></div>
                  
-<div class="popUpContainerWrapper"><form:form action="/anonymoususerjobapply/saveAnonymousUserJobapply.html" method="Get" commandName="anonymousUserJobApplyForm" enctype="multipart/form-data" >
+<div class="popUpContainerWrapper"><form:form  method="Get" action="saveAnonymousUserJobapply.html" commandName="anonymousUserJobApplyForm" enctype="multipart/form-data" >
             <div class="rowEvenSpacing"> <h3>Send Resume</h3></div>
             <div class="rowEvenSpacing">
 <span class="lableText3">Name:</span>   
@@ -60,7 +60,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
       <div class="rowEvenSpacing marginTop10 paddingBottom10">
              <span class="floatLeft marginTop10">
              
-             <a href="" class="btn_sm orange">Send</a> <a href="" class="btn_sm orange">Cancel</a></span>
+             <input type="submit" class="btn_sm orange" value="Send"/> <a href="" class="btn_sm orange">Cancel</a></span>
+             
 </div>
                     <div class="clearfix"></div>
           </form:form></div>
