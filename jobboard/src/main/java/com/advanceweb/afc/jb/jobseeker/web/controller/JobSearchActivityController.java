@@ -5,17 +5,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
 
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
+import net.sf.json.JSONObject;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.ApplyJobDTO;
@@ -27,6 +32,7 @@ import com.advanceweb.afc.jb.job.service.JobSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchViewDetailForm;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
+import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
@@ -53,6 +59,9 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private JobSearchService jobSearchService;
+	
+	@Autowired
+	private ReadSolrServerDetails readSolrServerDetails;
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -177,9 +186,9 @@ public class JobSearchActivityController {
 	 * @return ModelAndView
 	 */
 	
-	@RequestMapping(value = "/findJobSearch", method = RequestMethod.POST)
+	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
 	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
-			BindingResult result, Map<String, JobSearchResultDTO> model) {
+			BindingResult result, Map<String, JSONObject> modelMap) {
 		
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -192,17 +201,23 @@ public class JobSearchActivityController {
 		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
-		System.out.println("Start=============================="+start);
-		System.out.println("rows=============================="+rows);
+		
+		//System.out.println("Start=============================="+start);
+		//System.out.println("rows=============================="+rows);
 		
 		
 
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
 				start, rows);
-		model.put("jobSearchResultDTO", jobSearchResultDTO);
-		return new ModelAndView("jobsearchresult", "jobSearchResultDTOModel",
-				jobSearchResultDTO);
-
+		
+		JSONObject jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
+		modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
+		
+		return new ModelAndView("findjob", modelMap);
+		//return new ModelAndView("jsonView", modelMap);
+		/*return new ModelAndView("findjob", "jobSrchJsonObj",
+				jobSrchJsonObj);
+*/
 	}
 
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
@@ -232,5 +247,18 @@ public class JobSearchActivityController {
 
 		return new ModelAndView();
 	}
+	
+	/**
+	 * This method is called to forward to Advance job search page
+	 * @param model
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
+	public ModelAndView forwardToAdvanceJobSearch(Map<String, JobSearchResultForm> model) {
+		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		model.put("jobSearchResultForm", jobSearchResultForm);
+		return new ModelAndView("jobboardadvancedsearch");
+	}
+	
 
 }
