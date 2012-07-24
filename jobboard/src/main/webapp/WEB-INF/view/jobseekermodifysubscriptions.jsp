@@ -27,39 +27,48 @@
 		</head>
 
 		<body class="job_board">
-		<form action=""></form>		
+		<form:form method="Post" action="saveJobSeekerSubscription.html"  commandName="jobSeekerSubscriptionForm" >
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
           <div class="popupHeader">
             <h2>MODIFY SUBSCRIPTIONS</h2>
             <a href="#"><img src="../resources/images/Close.png" width="19" height="19" alt=""></a></div>
           <div class="popUpContainerWrapper">
 
-            <form:form method="Post" action="saveJobSeekerSubscription.html"  commandName="jobSeekerSubscriptionForm" >
+            
               <div class="rowEvenNewSpacing marginTop0">
               	 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid2">
 						<tr>
 							<td valign="top">						
-				     			<table> 
-				     				<tr class="borderTopNone">
-				    					<td class="Header3">Subscriptions</td>
+				     			<table>
+				     				<tr  class="borderTopNone">
+					     				<th class="borderTopNone" width="46%" align="left" scope="col">
+					    					Subscriptions
+					     				</th>
 				     				</tr>
-				     				
   									<c:forEach items="${jobSubscriptionsList}" var="subscriptions" varStatus="index">
 										<tr>	
 											<td> <form:checkbox path="currentsubs" label="${subscriptions.subscriptionName}" value="${subscriptions.subscriptionId}"   cssStyle="width:20px"/></td>
 										</tr>
 									</c:forEach>						
 				     			</table>
+				     		</td>
+				     		<td valign="top">
 								<table> 
-									<tr class="borderTopNone"><td class="Header3">Job Alerts</td></tr>	 			
+									<tr  class="borderTopNone">
+										<th class="borderTopNone" width="46%" align="left" scope="col">Job Alerts</th>
+									</tr>			 			
  									<c:forEach items="${jobAlertsList}" var="jobAlert" varStatus="index">
 										<tr>	
 											<td> <form:checkbox path="currentJobAlerts" label="${jobAlert.alertName}" value="${jobAlert.alertId}"   cssStyle="width:20px"/></td>
 										</tr>
 									</c:forEach>	 				
 							 	</table>
+							</td>
+							<td valign="top">
 						 		<table> 
-									<tr class="borderTopNone"><td class="Header3">Magazines</td></tr>	 			
+						 			<tr  class="borderTopNone">
+										<th class="borderTopNone" width="46%" align="left" scope="col">Magazines</th>
+									</tr>	 			
 									<c:forEach items="${jobMagazinesList}" var="magazine" varStatus="index">
 										<tr>	
 											<td> <form:checkbox path="currentmagazines" label="${magazine.magazineName}" value="${magazine.magazineId}"   cssStyle="width:20px"/></td>
@@ -161,9 +170,10 @@
               </div>
               <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="" class="btn_sm orange">Save</a> <a href="" class="btn_sm orange">Cancel</a></span>  </div>
 
-            </form:form>
+
           </div>
           <div class="clearfix"></div>
         </div>
+   </form:form>
 </body>
 </html>
