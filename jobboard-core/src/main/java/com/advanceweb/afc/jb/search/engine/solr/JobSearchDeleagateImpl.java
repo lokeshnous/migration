@@ -84,13 +84,20 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 				response = readSSDetails.getSolrResponse(
 						serverDetailsMap, solrQueryDetails, paramMap, start,
 						rows);
-				solrJSResultDTO = solrJobSearchResult.getSolrJSResult(response);
+				if(response == null){
+					
+					 LOGGER.debug("No Results Found...");
+					 return null;
+					
+				}else{
+					solrJSResultDTO = solrJobSearchResult.getSolrJSResult(response);
+					jSResultDTO = new JobSearchResultDTO();
+					jSResultDTO
+							.setSolrJobSearchResultDTO(solrJSResultDTO);
+	
+					return jSResultDTO;
+				}
 				
-				jSResultDTO = new JobSearchResultDTO();
-				jSResultDTO
-						.setSolrJobSearchResultDTO(solrJSResultDTO);
-
-				return jSResultDTO;
 
 			}
 
