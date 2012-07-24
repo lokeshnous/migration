@@ -34,8 +34,9 @@
 	                  <div class="popupHeader"><h2>Create Or Upload My New Resume</h2>
 	                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" alt=""></a></div>
 	                 
-	<div class="popUpContainerWrapper"><form method="post" action="copyPasteResume.html" commandName="createResume" id="formtouse" enctype="multipart/form-data" >
-	            <div class="rowEvenNewSpacing">
+	<div class="popUpContainerWrapper">
+	<form method="post" action="copyPasteResume.html" commandName="createResume" id="formtouse" enctype="multipart/form-data" >
+	<div class="rowEvenNewSpacing">
 	
 	<div class="floatLeft marginTop5 marginRight20">How would you like to create your resume?</div>
 	            <form:select path="resumeType" id="resumetype" class="jb_input3 jb_input_width3 marginTop0">
