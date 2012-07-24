@@ -20,13 +20,13 @@ public class ReadDocFile {
 			/** Read the content **/
 			readParagraphs(doc,strbuffer);
 
-			int pageNumber=1;
+			//int pageNumber=1;
 
 			/** We will try reading the header for page 1**/
-			readHeader(doc, pageNumber);
+			//readHeader(doc, pageNumber);
 
 			/** Let's try reading the footer for page 1**/
-			readFooter(doc, pageNumber);
+			//readFooter(doc, pageNumber);
 
 			/** Read the document summary**/
 			readDocumentSummary(doc);
@@ -53,14 +53,14 @@ public class ReadDocFile {
 	}
 
 	public static void readHeader(HWPFDocument doc, int pageNumber){
-		HeaderStories headerStore = new HeaderStories( doc);
-		String header = headerStore.getHeader(pageNumber);
+		//HeaderStories headerStore = new HeaderStories( doc);
+		//String header = headerStore.getHeader(pageNumber);
 
 	}
 
 	public static void readFooter(HWPFDocument doc, int pageNumber){
-		HeaderStories headerStore = new HeaderStories( doc);
-		String footer = headerStore.getFooter(pageNumber);
+		//HeaderStories headerStore = new HeaderStories( doc);
+		//String footer = headerStore.getFooter(pageNumber);
 
 	}
 
