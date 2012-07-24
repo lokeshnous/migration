@@ -23,7 +23,9 @@ public class EmailDTO {
 	private boolean htmlFormat;
 	
 	public InternetAddress[] getToAddress() {
-		return toAddress;
+		// Since: PMD 2.2:Exposing internal arrays to the caller violates object
+		// encapsulation
+		return toAddress.clone();
 	}
 
 	public void setToAddress(InternetAddress[] toAddress) {
@@ -39,7 +41,9 @@ public class EmailDTO {
 	}
 
 	public InternetAddress[] getCcAddress() {
-		return ccAddress;
+		// Since: PMD 2.2:Exposing internal arrays to the caller violates object
+		// encapsulation
+		return ccAddress.clone();
 	}
 
 	public void setCcAddress(InternetAddress[] ccAddress) {
@@ -47,7 +51,9 @@ public class EmailDTO {
 	}
 
 	public InternetAddress[] getBccAddress() {
-		return bccAddress;
+		// Since: PMD 2.2:Exposing internal arrays to the caller violates object
+		// encapsulation
+		return bccAddress.clone();
 	}
 
 	public void setBccAddress(InternetAddress[] bccAddress) {

@@ -1,21 +1,20 @@
 package com.advanceweb.afc.jb.employer.service;
 
-
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.EmployerBrandingTemplatesDTO;
+import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 
 /**
- * <code>EmployerBrandingTemplate</code>This interface help 
- * to manage job posting Branding Template
+ * <code>EmpBrandTemp</code>This interface help to manage job posting Branding
+ * Template
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 17 July 2012
  * 
  */
-public interface EmployerBrandingTemplates {
+public interface EmpBrandTemp {
 
 	/**
 	 * Fetch the job posting Branding Templates
@@ -23,8 +22,7 @@ public interface EmployerBrandingTemplates {
 	 * @param merUserDTO
 	 * @return
 	 */
-	List<EmployerBrandingTemplatesDTO> fetchJobPostingBrandingTemplates(
-			MerUserDTO merUserDTO);
+	List<EmpBrandTempDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO);
 
 	/**
 	 * Create the job posting Branding Template.
@@ -32,8 +30,7 @@ public interface EmployerBrandingTemplates {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	Boolean createJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO);
+	Boolean createEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO);
 
 	/**
 	 * View the job posting Branding Template.
@@ -41,8 +38,7 @@ public interface EmployerBrandingTemplates {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	EmployerBrandingTemplatesDTO viewJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO);
+	EmpBrandTempDTO viewEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO);
 
 	/**
 	 * Edit the job posting Branding Template.
@@ -50,8 +46,7 @@ public interface EmployerBrandingTemplates {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	EmployerBrandingTemplatesDTO editJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO);
+	EmpBrandTempDTO editEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO);
 
 	/**
 	 * Delete the job posting Branding Template.
@@ -59,7 +54,6 @@ public interface EmployerBrandingTemplates {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	Boolean deleteJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO);
-	
+	Boolean deleteEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO);
+
 }

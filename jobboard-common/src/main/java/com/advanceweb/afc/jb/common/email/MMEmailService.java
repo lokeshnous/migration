@@ -40,9 +40,7 @@ public class MMEmailService implements MMEmail {
 
 			//helper.setFrom(emailDTO.getFromAddress());
 			InternetAddress[] ccAddress = emailDTO.getCcAddress();
-			if (ccAddress != null && ccAddress.length > 0) {
-				helper.setCc(emailDTO.getCcAddress());
-			}
+			setCCAddress(helper, ccAddress, emailDTO);
 			InternetAddress[] bccAddress = emailDTO.getBccAddress();
 			if (bccAddress != null && bccAddress.length > 0) {
 				helper.setBcc(emailDTO.getBccAddress());
@@ -66,6 +64,23 @@ public class MMEmailService implements MMEmail {
 		
 		mailSender.send(message);
 		
+	}
+
+	/**
+	 * Helps to set the CC address for the mail.
+	 * 
+	 * @param helper
+	 * @param ccAddress
+	 * @param emailDTO
+	 */
+	private void setCCAddress(MimeMessageHelper helper, InternetAddress[] ccAddress, EmailDTO emailDTO) {
+			try {
+				if (ccAddress != null && ccAddress.length > 0) {
+				helper.setCc(emailDTO.getCcAddress());
+				}
+			} catch (MessagingException e) {
+				new Exception();
+			}
 	}
 
 }

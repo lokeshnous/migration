@@ -3,14 +3,14 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.Date;
 
 /**
- * <code>EmployerBrandingTemplatesForm</code> is a form bean to employer branding Templates.
+ * <code>EmpBrandTempForm</code> is a form bean to employer branding Templates.
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 17 July 2012
  * 
  */
-public class EmployerBrandingTemplatesForm {
+public class EmpBrandTempForm {
 
 	private long employerId;
 	private String description;

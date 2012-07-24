@@ -1,4 +1,5 @@
 package com.advanceweb.afc.jb.employer.dao;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,56 +10,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.advanceweb.afc.jb.common.EmployerBrandingTemplatesDTO;
+import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.MerJpBrandingTemp;
-import com.advanceweb.afc.jb.employer.helper.EmployerBrandingTemplateConversionHelper;
+import com.advanceweb.afc.jb.employer.helper.EmpBrandTempConversionHelper;
 
 /**
- * <code>EmployerBrandingTemplatesDAOImpl</code>This controller belongs to all
- * searched jobs details.
+ * <code>EmpBrandTempDAOImpl</code>is a DAO implementation class
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 17 July 2012
  * 
  */
-@Repository("employerBrandingTemplatesDAO")
-public class EmployerBrandingTemplatesDAOImpl implements EmployerBrandingTemplatesDAO {
+@Repository("empBrandTempDAO")
+public class EmpBrandTempDAOImpl implements EmpBrandTempDAO {
 
 	private HibernateTemplate hibernateTemplateTracker;
-	
+
 	@Autowired
-	private EmployerBrandingTemplateConversionHelper employerBrandingTemplateConversionHelper;
+	private EmpBrandTempConversionHelper empBrandTempConversionHelper;
 
 	private static final Logger LOGGER = Logger
-			.getLogger(EmployerBrandingTemplatesDAOImpl.class);
+			.getLogger(EmpBrandTempDAOImpl.class);
 
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {
-		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 	}
-	
+
 	/**
 	 * Fetch the job posting Branding Templates
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<EmployerBrandingTemplatesDTO> fetchJobPostingBrandingTemplates(
-			MerUserDTO merUserDTO) {
-		List<EmployerBrandingTemplatesDTO> templatesDTOs = null;
+	public List<EmpBrandTempDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO) {
+		List<EmpBrandTempDTO> templatesDTOs = null;
 
 		try {
 			int userId = merUserDTO.getUserId();
 			if (userId != 0) {
-				List<MerJpBrandingTemp> merJpBrandingTemp = (List<MerJpBrandingTemp>) hibernateTemplateTracker
-						.get(MerJpBrandingTemp.class,
-								Long.valueOf(userId));
-				List<EmployerBrandingTemplatesDTO> brandingTemplatesDTOs = new ArrayList<EmployerBrandingTemplatesDTO>();
+				List<MerJpBrandingTemp> merJpBrandingTemp = hibernateTemplateTracker
+						.find("from  MerJpBrandingTemp where userId = "
+								+ userId);
+				List<EmpBrandTempDTO> brandingTemplatesDTOs = new ArrayList<EmpBrandTempDTO>();
 				for (MerJpBrandingTemp jpBrandingTemp : merJpBrandingTemp) {
-					brandingTemplatesDTOs
-							.add(employerBrandingTemplateConversionHelper
-									.transformEmpTempToEmpTempDTO(jpBrandingTemp));
+					brandingTemplatesDTOs.add(empBrandTempConversionHelper
+							.transformEmpTempToEmpTempDTO(jpBrandingTemp));
 				}
 				templatesDTOs = brandingTemplatesDTOs;
 			}
@@ -73,17 +72,13 @@ public class EmployerBrandingTemplatesDAOImpl implements EmployerBrandingTemplat
 	 * Create the job posting Branding Template.
 	 */
 	@Override
-	public Boolean createJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO) {
+	public Boolean createEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
 		Boolean status = null;
 		try {
-			long tempId = brandingTemplatesDTO.getJpBrandTempId();
-			if (tempId != 0) {
-				MerJpBrandingTemp merJpBrandingTemp = employerBrandingTemplateConversionHelper
-						.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
-				hibernateTemplateTracker.save(merJpBrandingTemp);
-				status = Boolean.TRUE;
-			}
+			MerJpBrandingTemp merJpBrandingTemp = empBrandTempConversionHelper
+					.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
+			hibernateTemplateTracker.save(merJpBrandingTemp);
+			status = Boolean.TRUE;
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
 			// logger call
@@ -96,16 +91,14 @@ public class EmployerBrandingTemplatesDAOImpl implements EmployerBrandingTemplat
 	 * View the job posting Branding Template.
 	 */
 	@Override
-	public EmployerBrandingTemplatesDTO viewJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO) {
-		EmployerBrandingTemplatesDTO templatesDTO = null;
+	public EmpBrandTempDTO viewEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
+		EmpBrandTempDTO templatesDTO = null;
 		try {
 			long tempId = brandingTemplatesDTO.getJpBrandTempId();
 			if (tempId != 0) {
 				MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp) hibernateTemplateTracker
-						.get(MerJpBrandingTemp.class,
-								Long.valueOf(tempId));
-				templatesDTO = employerBrandingTemplateConversionHelper
+						.get(MerJpBrandingTemp.class, (int) tempId);
+				templatesDTO = empBrandTempConversionHelper
 						.transformEmpTempToEmpTempDTO(merJpBrandingTemp);
 			}
 		} catch (HibernateException e) {
@@ -119,18 +112,28 @@ public class EmployerBrandingTemplatesDAOImpl implements EmployerBrandingTemplat
 	 * Edit the job posting Branding Template.
 	 */
 	@Override
-	public EmployerBrandingTemplatesDTO editJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO) {
-		EmployerBrandingTemplatesDTO templatesDTO = null;
+	public EmpBrandTempDTO editEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
+		EmpBrandTempDTO templatesDTO = null;
 		try {
+			/**
+			 * Get the details of template
+			 */
 			long tempId = brandingTemplatesDTO.getJpBrandTempId();
 			if (tempId != 0) {
 				MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp) hibernateTemplateTracker
-						.get(MerJpBrandingTemp.class,
-								Long.valueOf(tempId));
-				templatesDTO = employerBrandingTemplateConversionHelper
+						.get(MerJpBrandingTemp.class, (int) tempId);
+				templatesDTO = empBrandTempConversionHelper
 						.transformEmpTempToEmpTempDTO(merJpBrandingTemp);
 			}
+			/**
+			 * update the template
+			 */
+			MerJpBrandingTemp merJpBrandingTemp = empBrandTempConversionHelper
+					.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
+			merJpBrandingTemp.setCreatedDate(templatesDTO.getCreatedDate());
+			hibernateTemplateTracker.merge(merJpBrandingTemp);
+			templatesDTO = empBrandTempConversionHelper
+					.transformEmpTempToEmpTempDTO(merJpBrandingTemp);
 		} catch (HibernateException e) {
 			// logger call
 			LOGGER.info("ERROR4");
@@ -142,15 +145,13 @@ public class EmployerBrandingTemplatesDAOImpl implements EmployerBrandingTemplat
 	 * Delete the job posting Branding Template.
 	 */
 	@Override
-	public Boolean deleteJobPostingBrandingTemplates(
-			EmployerBrandingTemplatesDTO brandingTemplatesDTO) {
+	public Boolean deleteEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
 		Boolean status = null;
 		try {
 			long tempId = brandingTemplatesDTO.getJpBrandTempId();
 			if (tempId != 0) {
 				MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp) hibernateTemplateTracker
-						.get(MerJpBrandingTemp.class,
-								Long.valueOf(tempId));
+						.get(MerJpBrandingTemp.class, (int) tempId);
 				hibernateTemplateTracker.delete(merJpBrandingTemp);
 				status = Boolean.TRUE;
 			}

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
+import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
-import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 
 /**
@@ -36,6 +36,9 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 
 	/*@Autowired
 	private MMEmailService emailService;*/
+	
+	private static final Logger LOGGER = Logger
+			.getLogger("JobSearchActivityController.class");
 
 	@Autowired
 	private ResumeService resumeService;
@@ -112,7 +115,8 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			applyJobDTO.setIsApplied(isApplied);
 			jobSearchActivity.applyJob(applyJobDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			LOGGER.info("testApplyJob Exception");
 		}
 	}
 
@@ -132,7 +136,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			searchedJobDTO.setCompanyName("XYZ");
 			jobSearchActivity.saveJob(searchedJobDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("testSaveJob Exception");
 		}
 	}
 

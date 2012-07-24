@@ -45,6 +45,7 @@
 		<property name="annotatedClasses">
 			<list>
 					<value>com.advanceweb.afc.jb.data.entities.MerApplication</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerJpBrandingTemp</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerLocation</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerLookup</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttrib</value>
@@ -145,10 +146,10 @@
 
 		<!-- Send Mail Configuration-->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.nous.com" />
+		<property name="host" value="smtp.testDomain.com" />
 		<property name="port" value="587" />
-		<property name="username" value="username" />
-		<property name="password" value="password" />
+		<property name="username" value="testusername" />
+		<property name="password" value="testPassword" />
 
 		<property name="javaMailProperties">
 			<props>
