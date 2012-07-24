@@ -15,12 +15,10 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.ApplyJobDTO;
@@ -46,7 +44,7 @@ import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
 
 @Controller
 @RequestMapping("/jobsearchactivity")
-public class JobSearchActivityController {
+public class JobSearchActivityController {   
 
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
@@ -195,7 +193,7 @@ public class JobSearchActivityController {
 		String searchName = "basicjobsearch";
 		paramMap.put("keywords", jobSearchResultForm.getKeywords()
 				.trim());
-		paramMap.put("city_state", jobSearchResultForm.getCity_state().trim());
+		paramMap.put("cityState", jobSearchResultForm.getCityState().trim());
 		paramMap.put("radius",jobSearchResultForm.getRadius());
 		
 		
