@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.login.service;
 
+import com.advanceweb.afc.jb.common.LoginFormDTO;
+
 
 /**
  * 
