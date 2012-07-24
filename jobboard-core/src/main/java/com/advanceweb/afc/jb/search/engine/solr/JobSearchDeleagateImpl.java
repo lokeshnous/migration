@@ -33,11 +33,11 @@ public class JobSearchDeleagateImpl implements JobSearchDeleagate {
 	.getLogger("JobSearchDeleagateImpl.class");
 
 	@Autowired
-	private static ReadSolrServerDetails readSSDetails;
+	private ReadSolrServerDetails readSSDetails;
 
 	@Autowired
 	@Resource(name = "solrConfiguration")
-	private static Properties solrConfiguration;
+	private Properties solrConfiguration;
 
 	@PostConstruct
 	public void init() {
