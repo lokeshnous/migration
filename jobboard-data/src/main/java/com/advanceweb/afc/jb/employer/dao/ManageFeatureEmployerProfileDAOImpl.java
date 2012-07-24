@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -26,7 +27,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
  */
 @Repository("manageFeatureEmployerProfileDAO")
 public class ManageFeatureEmployerProfileDAOImpl implements
-		ManageFeatureEmployerProfileDAO {
+ManageFeatureEmployerProfileDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -55,6 +56,42 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		return true;
 	}
 
+	/**
+	 * Getting Featured Employer list
+	 */
+	@Override
+	public List<CompanyProfileDTO> getEmployerList() {
+		List<CompanyProfileDTO> companyProfileDTOList = new ArrayList<CompanyProfileDTO>();
+
+		Session session = sessionFactory.openSession();
+
+		try {
+			List admFacilityList = session.createQuery("from AdmFacility").list();
+			for (Iterator iterator = admFacilityList.iterator(); iterator.hasNext();)
+			{
+				CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
+				AdmFacility admFacility = (AdmFacility) iterator.next();
+				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
+				companyProfileDTO.setCompanyName(admFacility.getName());
+				//companyProfileDTO.setCompanyNews(facility.get);
+				//companyProfileDTO.setCompanyOverview(facility.get);
+				//companyProfileDTO.setCompanyWebsite(facility.ge);
+				//companyProfileDTO.setCompanyEmail(facility);
+				//companyProfileDTO.setPositionTitle(facility.get);
+				//companyProfileDTO.setLogoPath(facility.);
+				companyProfileDTOList.add(companyProfileDTO);
+				System.out.println(companyProfileDTO.getCompanyName());
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return companyProfileDTOList;
+	}
+
+
 	@Override
 	public CompanyProfileDTO getEmployerDetails(long employerId) {
 		CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
@@ -72,7 +109,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				//companyProfileDTO.setCompanyEmail(facility);
 				//companyProfileDTO.setPositionTitle(facility.get);
 				//companyProfileDTO.setLogoPath(facility.);
-				
+
 
 			}
 		} catch (HibernateException e) {

@@ -16,15 +16,17 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
@@ -39,10 +41,10 @@ public class HomeController {
 
 
 	@Value("${IMG_WIDTH}")
-	private String IMG_WIDTH;
+	private String imgwidth;
 	
 	@Value("${IMG_HEIGHT}")
-	private String IMG_HEIGHT;
+	private String imgheight;
 	
 	@Value("${basedirectorypath}")
 	private String basedirectorypath;
@@ -55,10 +57,13 @@ public class HomeController {
 	
 	@Value("${careertoolfilename}")
 	private String careertoolfilename;
+	
+	
+
 
 
 	@Autowired
-	ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
 
 
@@ -78,6 +83,10 @@ public class HomeController {
 				String htmlcareercontent=ReadFile.htmlReader(basedirectorypath+directory+careertoolfilename);
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
+			
+//			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+//			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			model.addAttribute("healthcarenew", "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
@@ -90,13 +99,15 @@ public class HomeController {
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,Model model) {
-		//CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerList();
+		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+		model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+
 		return "featuredemployers";
 	}
 
 	@RequestMapping(value = "/featuredemployerdetails", method = RequestMethod.GET)
 	public String getfeaturedemployerbyid(EmployerProfileManagementForm employerProfileManagementForm,HttpServletRequest request,Model model) {
-		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerDetails(109);
+		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerDetails(Integer.parseInt(request.getParameter("id")));
 		employerProfileManagementForm.setCompanyName(companyProfileDTO.getCompanyName());
 		employerProfileManagementForm.setCompanyNews(companyProfileDTO.getCompanyNews());
 		employerProfileManagementForm.setCompanyOverview(companyProfileDTO.getCompanyOverview());
@@ -109,32 +120,16 @@ public class HomeController {
 		return "featuredemployerdetails";
 	}
 
-	@RequestMapping(value = "/grabImage", method = RequestMethod.GET)
-	public void imageGrab(HttpServletRequest request,HttpServletResponse response,Model model) {
-		/*try{
-
-
-			byte[] data = extractBytes("D:\\images\\MercyRNlogo.jpg");
-			
-			response.getOutputStream().write(data);
-		
-			
-			
-//			BufferedImage originalImage = ImageIO.read(new File("c:\\image\\mkyong.jpg"));
-//			int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-//
-//			BufferedImage resizeImageHintJpg = resizeImageWithHint(originalImage, type);
-//			ImageIO.write(resizeImageHintJpg, "jpg", new File("c:\\image\\mkyong_hint_jpg.jpg")); 
-//
-//			BufferedImage resizeImageHintPng = resizeImageWithHint(originalImage, type);
-//			ImageIO.write(resizeImageHintPng, "png", new File("c:\\image\\mkyong_hint_png.jpg")); 
-
-		}catch(IOException e){
-			System.out.println(e.getMessage());
-		}
-	*/
+	
+	@RequestMapping("/logo")
+	public ResponseEntity<byte[]> retriveLogo() throws IOException {
+		byte[] data = extractBytes("D:\\images\\MercyRNlogo.jpg");
+	    final HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.IMAGE_JPEG);
+	    return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
 	}
 
+	
 	public byte[] extractBytes (String ImageName) throws IOException {
 		// open image
 		File imgPath = new File(ImageName);
@@ -153,9 +148,9 @@ public class HomeController {
 
 	private BufferedImage resizeImageWithHint(BufferedImage originalImage, int type){
 
-		BufferedImage resizedImage = new BufferedImage(Integer.parseInt(IMG_WIDTH), Integer.parseInt(IMG_HEIGHT), type);
+		BufferedImage resizedImage = new BufferedImage(Integer.parseInt(imgwidth), Integer.parseInt(imgheight), type);
 		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(originalImage, 0, 0, Integer.parseInt(IMG_WIDTH), Integer.parseInt(IMG_HEIGHT), null);
+		g.drawImage(originalImage, 0, 0, Integer.parseInt(imgwidth), Integer.parseInt(imgheight), null);
 		g.dispose();	
 		g.setComposite(AlphaComposite.Src);
 

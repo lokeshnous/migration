@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -282,16 +284,11 @@
 						<h2>Featured Employers</h2>
 					</div>
 					<ul class="employersList">
-						<li><a href="#"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/emslogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
-						<li><a href="#"><img src="../resources/images/ablogo.jpg" alt=""></a></li>
+						<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}" >
+						<li><a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }"><img src="../resources/images/ablogo.jpg" alt="${companyProfileDTO.companyName }"></a></li>
+						</c:forEach>
 					</ul>
+					
 				</div>
 
 				<div class="clearfix"></div>

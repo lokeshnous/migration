@@ -300,11 +300,11 @@
 								<div id="slider1PrevBtn"></div>
 								<div id="slider1">
 									<div class="slider1Frames">
-										<a href="featuredemployerdetails.html">
+										<a href="featuredemployerdetails.html?id=109">
 											<div class="slider1FrameA1">
 												<img src="../resources/images/MercyRNlogo.jpg" />
 											</div>
-										</a> <a href="">
+										</a> <a href="featuredemployerdetails.html?id=121">
 											<div class="slider1FrameA2">
 												<img src="../resources/images/TempleLogo.jpg" />
 											</div>

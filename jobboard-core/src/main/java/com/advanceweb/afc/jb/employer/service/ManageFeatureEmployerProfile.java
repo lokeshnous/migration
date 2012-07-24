@@ -28,6 +28,8 @@ public interface ManageFeatureEmployerProfile {
 	CompanyProfileDTO getEmployerDetails(long employerId);
 	
 	List<EmployerProfileDTO> getEmployerAccountDetails(long employerId);
+
+	List<CompanyProfileDTO> getEmployerList();
 	
 	
 }

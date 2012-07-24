@@ -23,6 +23,8 @@ public interface ManageFeatureEmployerProfileDAO {
 	
 	CompanyProfileDTO getEmployerDetails(long employerId);
 	
-	List<EmployerProfileDTO> getEmployerAccountDetails(long employerId); 
+	List<EmployerProfileDTO> getEmployerAccountDetails(long employerId);
+
+	List<CompanyProfileDTO> getEmployerList(); 
 
 }
