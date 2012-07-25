@@ -1,9 +1,12 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.util.List;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+/**
+ * 
+ * @author Sasibhushana
+ *
+ * @Version 1.0
+ * @Since 2nd July, 2012
+ */
 
 public class JobSeekerSubscriptionForm {
 
