@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.advanceweb.afc.jb.common.LoginFormDTO;
 import com.advanceweb.afc.jb.login.service.LoginFormService;
 
 /**
+ * This Class validates the login form
  * 
  * @author bharatiu
  * @version 1.0
@@ -20,6 +23,7 @@ import com.advanceweb.afc.jb.login.service.LoginFormService;
  */
 
 @Controller
+@RequestMapping(value = "/loginFormForJObSeeker")
 public class LoginFormController {
 
 	@Autowired
@@ -28,17 +32,30 @@ public class LoginFormController {
 	@Autowired
 	private LoginFormValidator loginFormValidator;
 
-	@RequestMapping(value = "/Login", method = RequestMethod.GET)
-	public ModelAndView jobSeekerLogin(@Valid LoginForm form,
-			BindingResult result) {
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView jobSeekerLogin(Map<String, LoginForm> model) {
 
-		return new ModelAndView("JobSeekerLogin");
+		model.put("loginForm", new LoginForm());
+		return new ModelAndView("jobSeekerLogin");
 	}
 
-	@RequestMapping(value = "/JobSeekerLogin", method = RequestMethod.GET)
+	/**
+	 * This method gets the userId and roleId based on the logged in user email
+	 * and password Also it validates whether logged in user is authorized user
+	 * or not
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/jobSeekerLogin", method = RequestMethod.POST)
 	public ModelAndView validateLogin(@Valid LoginForm form,
-			BindingResult result) {
+			BindingResult result) throws Exception {
 
+		boolean value = false;
+
+		form.setRoleId(2);
 		String emailAddress = form.getEmailAddress();
 		String password = form.getPassword();
 
@@ -47,18 +64,20 @@ public class LoginFormController {
 		loginFormDTO.setPassword(form.getPassword());
 		loginFormDTO.setRoleId(form.getRoleId());
 
-		emailAddress = "manish@yahoo.com";
-		password = "deo";
-
 		// Get the details of logged in user using email and password
 		LoginFormDTO loginFormDTOForUser = (LoginFormDTO) loginFormService
 				.validateLoginFormValues(emailAddress, password);
 
 		if (loginFormDTOForUser != null) {
-
-			loginFormValidator.validateLoginValues(form, loginFormDTOForUser);
+			value = loginFormValidator.validateLoginValues(form,
+					loginFormDTOForUser);
 		}
 
-		return null;
+		if (value) {
+			return new ModelAndView("jobboardadvancedsearch");
+		} else {
+			return new ModelAndView("jobSeekerLogin", "errors", false);
+		}
+
 	}
 }
