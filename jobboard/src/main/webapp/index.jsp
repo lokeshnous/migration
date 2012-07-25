@@ -57,6 +57,7 @@ go(url);
 	
 	    <li><a href="jobSeekerResume/createResumePopUp.html"  target="_blank" class="basicnew">JS Link for modal popup</a></li>
     <!-- -------------------------------------------------------------------------- -->
+    <!-- for closing iframe use >><a href="#" onclick="parent.$.nyroModalRemove(); return false;">Close From Iframe</a>   -->
 	
 	<%//response.sendRedirect("jobSeeker/jobSeekerDashBoard.html"); %>
 	<li><a href="jobseekerregistration/jobSeekerChangePassword.html">JobSeeker ChangePassword</li>
