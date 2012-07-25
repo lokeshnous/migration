@@ -1,6 +1,9 @@
+<%@ page isELIgnored="false"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +11,27 @@
 <title>Welcome to merion matters</title>
 
 
+<!-- js files for modalpopup------------------------------------------------- -->
+<script src="resources/js/jquery-1.7.1.js"></script>
+<script src="resources/js/jquery-1.7.1.min.js"></script>
+
+		<script src="resources/nyroModal/js/jquery.nyroModal.custom.js"></script>
+        <script src="resources/nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="resources/nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css" media="screen">
+           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
+        </style>
+<!-- -------------------------------------------------------------------------- -->
+
+
+<!-- js function for modalpopup------------------------------------------------- -->
+
 <script type="text/javascript">
+$(function() {
+    $(".basicnew").nyroModal({minWidth:50,minHeight:50});
+   
+	});
 function go(url)
 {
 window.location = url;
@@ -23,11 +46,19 @@ go(url);
 }
 }
 </script>
+<!-- -------------------------------------------------------------------------- -->
+
 </head>
 <body>
+	<div >
 	<h1>Welcome to merion matters</h1>
 	<ul>
-	<%response.sendRedirect("jobSeeker/jobSeekerDashBoard.html"); %>
+	<!-- js link for modalpopup------------------------------------------------- -->
+	
+	    <li><a href="jobSeekerResume/createResumePopUp.html"  target="_blank" class="basicnew">JS Link for modal popup</a></li>
+    <!-- -------------------------------------------------------------------------- -->
+	
+	<%//response.sendRedirect("jobSeeker/jobSeekerDashBoard.html"); %>
 	<li><a href="jobseekerregistration/jobSeekerChangePassword.html">JobSeeker ChangePassword</li>
 		<li><a href="jobseekerregistration/createJobSeekerProfile.html">JobSeekerRegistration Form</a></li>
 		<li><a href="employerRegistration/createEmployerProfile.html">Employer Registration Form</a></li>
@@ -66,6 +97,7 @@ go(url);
 		
 			<h2>Manage Featured Employer Profile</h2>
 		<li><a href="employerprofile.html">Manage Featured Employer Profile</a></li>
-		<%-- <%response.sendRedirect("healthcarejobs/advanceweb.html"); %> --%>
+				</div>	
+		<%//response.sendRedirect("healthcarejobs/advanceweb.html"); %> 
 </body>
 </html>
