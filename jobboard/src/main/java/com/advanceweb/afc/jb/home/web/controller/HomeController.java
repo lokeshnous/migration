@@ -3,19 +3,16 @@ package com.advanceweb.afc.jb.home.web.controller;
  * @author nishantn
  */
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
@@ -42,23 +40,25 @@ public class HomeController {
 
 	@Value("${IMG_WIDTH}")
 	private String imgwidth;
-	
+
 	@Value("${IMG_HEIGHT}")
 	private String imgheight;
-	
+
 	@Value("${basedirectorypath}")
 	private String basedirectorypath;
-	
+
 	@Value("${directory}")
 	private String directory;
-	
+
 	@Value("${healthcarenewsfilename}")
 	private String healthcarenewsfilename;
-	
+
 	@Value("${careertoolfilename}")
 	private String careertoolfilename;
-	
-	
+
+	@Value("${logoPath}")
+	private String logoPath;
+
 
 
 
@@ -83,9 +83,9 @@ public class HomeController {
 				String htmlcareercontent=ReadFile.htmlReader(basedirectorypath+directory+careertoolfilename);
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
-			
-//			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
-//			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+
+			//			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+			//			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -120,16 +120,71 @@ public class HomeController {
 		return "featuredemployerdetails";
 	}
 
-	
+
 	@RequestMapping("/logo")
-	public ResponseEntity<byte[]> retriveLogo() throws IOException {
-		byte[] data = extractBytes("D:\\images\\MercyRNlogo.jpg");
-	    final HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.IMAGE_JPEG);
-	    return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+	public void getPhoto(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) {
+		try{
+			BufferedImage originalImage = 
+					ImageIO.read(new File(logoPath+request.getParameter("id")+".jpg"));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write( originalImage, "jpg", baos );
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+
+			ResponseEntity<byte[]> result =handleGetMyBytesRequest(imageInByte); 
+			// Display the image
+			write(response, result.getBody());
+		}catch(Exception e){
+
+		}
 	}
 
-	
+	public ResponseEntity< byte[] > handleGetMyBytesRequest(byte[] imageInByte)
+	{
+		// Get bytes from somewhere...
+		byte[] byteData = imageInByte;
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.setContentType( MediaType.IMAGE_PNG );
+		responseHeaders.setContentLength( byteData.length );
+
+		return new ResponseEntity< byte[] >( byteData, responseHeaders, HttpStatus.OK );
+	}
+
+
+
+	/*	public void getPhoto( HttpServletResponse response) {
+		try{
+//			BufferedImage originalImage = 
+//					ImageIO.read(new File("C:\\Users\\SHISHER\\Desktop\\images\\123.jpg"));
+//			System.out.println("in photo////////////////");
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			ImageIO.write( originalImage, "jpg", baos );
+//			baos.flush();
+//			byte[] imageInByte = baos.toByteArray();
+//			baos.close();
+
+			// Send the request as GET
+			//ResponseEntity<byte[]> result = restTemplate.exchange("http://localhost:8080/spring-rest-provider/krams/person/{id}", HttpMethod.GET, entity, byte[].class, id);
+			ResponseEntity<byte[]> result =retriveLogo(); 
+			// Display the image
+			write(response, result.getBody());
+		}catch(Exception e){
+
+		}
+	}
+
+
+
+	public ResponseEntity<byte[]> retriveLogo() throws IOException {
+		byte[] data = extractBytes("D:\\images\\MercyRNlogo.jpg");
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
+	}
+
+
 	public byte[] extractBytes (String ImageName) throws IOException {
 		// open image
 		File imgPath = new File(ImageName);
@@ -163,6 +218,43 @@ public class HomeController {
 
 		return resizedImage;
 	}	
+
+	 */
+	public  void write(HttpServletResponse response, ByteArrayOutputStream bao) {
+
+		try {
+			// Retrieve the output stream
+			ServletOutputStream outputStream = response.getOutputStream();
+			// Write to the output stream
+			bao.writeTo(outputStream);
+			// Flush the stream
+			outputStream.flush();
+			// Close the stream
+			outputStream.close();
+
+		} catch (Exception e) {
+		}
+	}
+
+	/**
+	 * Writes the report to the output stream
+	 */
+	public  void write(HttpServletResponse response, byte[] byteArray) {
+
+		try {
+			// Retrieve the output stream
+			ServletOutputStream outputStream = response.getOutputStream();
+			// Write to the output stream
+			outputStream.write(byteArray);
+			// Flush the stream
+			outputStream.flush();
+			// Close the stream
+			outputStream.close();
+
+		} catch (Exception e) {
+		}
+	}	
+
 
 	@RequestMapping(value = "/copyhtmltolocal", method = RequestMethod.GET)
 	public String copyHtmlFiles(HttpServletRequest request,Model model) {

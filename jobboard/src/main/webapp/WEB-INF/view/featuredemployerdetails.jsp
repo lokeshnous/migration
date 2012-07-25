@@ -199,7 +199,7 @@
 
 					<div class="featuredEmployerRight">
 						<div class="row marginBottom10 marginTop10">
-							<img src="../resources/images/ablogo.jpg" alt="${employerProfileManagementForm.companyName}">
+							<img src="${employerProfileManagementForm.logoPath}" alt="${employerProfileManagementForm.companyName}">
 						</div>
 						<div class="row borderTopRed">
 							<p class="marginTop15">
