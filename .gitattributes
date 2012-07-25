@@ -317,6 +317,7 @@ jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerActivity.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerDashBoard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotYourPasswordPagePopUp.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobSeekerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobsearchresult.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerchangepassword.jsp -text
