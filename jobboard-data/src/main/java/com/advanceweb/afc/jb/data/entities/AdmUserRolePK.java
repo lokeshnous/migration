@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Embeddable
 public class AdmUserRolePK implements Serializable {
-	//default serial version id, required for serializable classes.
+	//default serial version id, required for serialize classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="user_id")
