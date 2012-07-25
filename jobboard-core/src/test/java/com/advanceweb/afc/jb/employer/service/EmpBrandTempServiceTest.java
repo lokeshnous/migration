@@ -91,7 +91,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 		updatedEmpBrandTempDTO.setImagePath("c://imageupd2.jpg");
 		updatedEmpBrandTempDTO.setLogoPath("c://logoupd2.jpg");
 		updatedEmpBrandTempDTO.setColor("#ffff00");
-		updatedEmpBrandTempDTO.setUpdatedDate(new Date());
+		updatedEmpBrandTempDTO.setUpdatedDate(new Date().toString());
 		empBrandTempDTO = empBrandTempDAO
 				.editEmpBrandTemp(updatedEmpBrandTempDTO);
 		assertNull("Update selected job posting template",

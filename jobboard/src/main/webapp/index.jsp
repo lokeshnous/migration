@@ -91,14 +91,27 @@ go(url);
 	<input value="Delete"
 		onclick="javascript:deleteContact('deleteAppliedJob.html?id=13100');"
 		type="button">
+		
+	<br/> <h4>job id :1103</h4> 
 	<input value="View Details"
 		onclick="javascript:go('./jobsearchactivity/viewJobDetails.html?id=13101');" type="button">
 	<input value="Apply"
 		onclick="javascript:go('./jobsearchactivity/applyJob.html?id=13100');" type="button">
+	<input value="Save This Job"
+		onclick="javascript:go('./jobsearchactivity/saveThisJob.html?id=13100');" type="button">
 		
 			<h2>Manage Featured Employer Profile</h2>
 		<li><a href="employerprofile.html">Manage Featured Employer Profile</a></li>
 				</div>	
 		<%//response.sendRedirect("healthcarejobs/advanceweb.html"); %> 
+<h2>Employeer Activity</h2>
+<a href="brandingTemplates/empBrandTempList.html">Manage Job
+		Posting Branding Template</a	><br/>
+
+	<h3>Login</h3>
+
+	<li><a href="loginFormForJObSeeker/login.html">Login</a></li>
+
+
 </body>
 </html>

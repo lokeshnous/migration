@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
+import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchActivityDAO;
 
@@ -37,12 +37,12 @@ public class JobSearchActivityService implements JobSearchActivity {
 	}
 
 	/**
-	 * apply job
+	 * save or apply the job for logged in user
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public void applyJob(ApplyJobDTO applyJobDTO) {
-		jobSearchActivityDAO.applyJob(applyJobDTO);
+	public void saveOrApplyJob(SaveOrApplyJobDTO jobDTO) {
+		jobSearchActivityDAO.saveOrApplyJob(jobDTO);
 	}
 
 	/**

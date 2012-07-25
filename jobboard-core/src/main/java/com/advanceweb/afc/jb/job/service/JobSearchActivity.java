@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.job.service;
 /*import org.apache.solr.client.solrj.impl.HttpSolrServer;
  import org.apache.solr.client.solrj.response.QueryResponse;*/
 
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
+import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
 /**
@@ -25,12 +25,12 @@ public interface JobSearchActivity {
 	SearchedJobDTO viewJobDetails(long jobId);
 
 	/**
-	 * apply job
+	 * save or apply the job for logged in user
 	 * 
-	 * @param applyJobDTO
+	 * @param jobDTO
 	 * @return
 	 */
-	void applyJob(ApplyJobDTO applyJobDTO);
+	void saveOrApplyJob(SaveOrApplyJobDTO jobDTO);
 
 	/**
 	 * saves the job for logged in user

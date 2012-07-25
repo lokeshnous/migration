@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
+import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -67,19 +67,19 @@ public class JobSearchActivityConversionHelper {
 	}
 
 	/**
-	 * This method is called to convert ApplyJobDTO JpSaveJob Entity
+	 * This method is called to convert ApplyJobDTO to JpSaveJob Entity
 	 * 
 	 * @param entity
 	 * @return
 	 */
-	public JpSaveJob transformApplyJobDTOToJpSaveJob(ApplyJobDTO applyJobDTO) {
+	public JpSaveJob transformJobDTOToJpSaveJob(SaveOrApplyJobDTO jobDTO) {
 		JpSaveJob jpSaveJob = new JpSaveJob();
-		if (applyJobDTO != null) {
-			jpSaveJob.setUserId(applyJobDTO.getUserId());
-			jpSaveJob.setJobId(applyJobDTO.getJobId());
-			jpSaveJob.setCreateDt(applyJobDTO.getCreateDate());
-			jpSaveJob.setAppliedDate(applyJobDTO.getAppliedDate());
-			jpSaveJob.setIsApplied(applyJobDTO.getIsApplied());
+		if (jobDTO != null) {
+			jpSaveJob.setUserId(jobDTO.getUserId());
+			jpSaveJob.setJobId(jobDTO.getJobId());
+			jpSaveJob.setCreateDt(jobDTO.getCreateDate());
+			jpSaveJob.setAppliedDate(jobDTO.getAppliedDate());
+			jpSaveJob.setIsApplied(jobDTO.getIsApplied());
 		}
 		return jpSaveJob;
 	}

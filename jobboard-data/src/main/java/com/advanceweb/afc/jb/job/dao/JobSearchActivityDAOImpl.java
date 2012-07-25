@@ -8,7 +8,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
+import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpSaveJob;
@@ -65,18 +65,18 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	}
 
 	/**
-	 * implementation of apply job
+	 * implementation of save or apply the job for logged in user
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void applyJob(ApplyJobDTO applyJobDTO) {
+	public void saveOrApplyJob(SaveOrApplyJobDTO jobDTO) {
 		try {
 			/**
 			 * save the job in DB
 			 * 
 			 */
 			JpSaveJob jpSaveJob = jobSearchActivityConversionHelper
-					.transformApplyJobDTOToJpSaveJob(applyJobDTO);
+					.transformJobDTOToJpSaveJob(jobDTO);
 			hibernateTemplate.save(jpSaveJob);
 		} catch (HibernateException e) {
 			// logger call

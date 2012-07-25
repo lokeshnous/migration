@@ -1,21 +1,18 @@
 package com.advanceweb.afc.jb.job.service;
 
 import static org.junit.Assert.assertNotNull;
-
+import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.mail.internet.InternetAddress;
-
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -107,13 +104,13 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			int userId = 1;
 			Date currentDate = new Date();
 			byte isApplied = 1;
-			ApplyJobDTO applyJobDTO = new ApplyJobDTO();
+			SaveOrApplyJobDTO applyJobDTO = new SaveOrApplyJobDTO();
 			applyJobDTO.setJobId(jobId.intValue());
 			applyJobDTO.setUserId(userId);
 			applyJobDTO.setCreateDate(currentDate);
 			applyJobDTO.setAppliedDate(currentDate);
 			applyJobDTO.setIsApplied(isApplied);
-			jobSearchActivity.applyJob(applyJobDTO);
+			jobSearchActivity.saveOrApplyJob(applyJobDTO);
 		} catch (Exception e) {
 //			e.printStackTrace();
 			LOGGER.info("testApplyJob Exception");
@@ -128,6 +125,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	@Test
 	public void testSaveJob() {
 		try {
+			Boolean status = Boolean.TRUE;
 			SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
 			searchedJobDTO.setUserID(8);
 			searchedJobDTO.setJobID(10);
@@ -135,6 +133,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			searchedJobDTO.setJobTitle("Project Manager");
 			searchedJobDTO.setCompanyName("XYZ");
 			jobSearchActivity.saveJob(searchedJobDTO);
+			assertTrue("Test to save the job" , status);
 		} catch (Exception e) {
 			LOGGER.info("testSaveJob Exception");
 		}

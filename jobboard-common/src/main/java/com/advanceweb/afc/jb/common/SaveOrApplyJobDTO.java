@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.common;
 import java.util.Date;
 
 /**
- * <code> ApplyJobDTO </code> is a DTO class. The purpose of this class to
+ * <code> SaveOrApplyJobDTO </code> is a DTO class. The purpose of this class to
  * hold the required information to apply job.
  * 
  * @author Pramoda Patil
@@ -12,7 +12,7 @@ import java.util.Date;
  * 
  * 
  */
-public class ApplyJobDTO {
+public class SaveOrApplyJobDTO {
 
 	private int userId;
 	private int jobId;

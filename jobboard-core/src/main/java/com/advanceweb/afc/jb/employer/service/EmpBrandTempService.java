@@ -20,7 +20,7 @@ import com.advanceweb.afc.jb.employer.dao.EmpBrandTempDAO;
  * 
  */
 @Service("empBrandTemp")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class EmpBrandTempService implements EmpBrandTemp {
 
 	@Autowired

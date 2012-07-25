@@ -20,7 +20,7 @@ public class EmpBrandTempDTO {
 	private String logoPath;
 	private String color;
 	private Date createdDate;
-	private Date updatedDate;
+	private String updatedDate;
 
 	public String getLogoPath() {
 		return logoPath;
@@ -38,11 +38,11 @@ public class EmpBrandTempDTO {
 		this.createdDate = createdDate;
 	}
 
-	public Date getUpdatedDate() {
+	public String getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 

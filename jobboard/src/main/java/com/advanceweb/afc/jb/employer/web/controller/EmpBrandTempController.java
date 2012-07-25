@@ -39,19 +39,17 @@ public class EmpBrandTempController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings("unused")
-	@RequestMapping(value = "/manageEmpBrandTemp", method = RequestMethod.GET)
-	public ModelAndView fetchEmpBrandTemp(Map model) {
+	@RequestMapping(value = "/empBrandTempList", method = RequestMethod.GET)
+	public ModelAndView fetchEmpBrandTemp(Map<String, Object> model) {
 
 		MerUserDTO merUserDTO = new MerUserDTO();
-		merUserDTO.setUserId(30);
+		merUserDTO.setUserId(36);
 		List<EmpBrandTempDTO> empBrandTempDTOs = empBrandTemp
 				.fetchEmpBrandTemp(merUserDTO);
+		
+		model.put("templatesList", empBrandTempDTOs);
 
-//		for (EmpBrandTempDTO templatesDTO : empBrandTempDTOs) {
-//			System.out.println(templatesDTO);
-//		}
-		return new ModelAndView("empBrandTempList");
+		return new ModelAndView("empBrandTempListPopup");
 	}
 
 	/**
@@ -116,7 +114,7 @@ public class EmpBrandTempController {
 		empBrandTempDTO.setImagePath("c://imageupd2.jpg");
 		empBrandTempDTO.setLogoPath("c://logoupd2.jpg");
 		empBrandTempDTO.setColor("#ffff00");
-		empBrandTempDTO.setUpdatedDate(new Date());
+		empBrandTempDTO.setUpdatedDate(new Date().toString());
 		empBrandTempDTO = empBrandTemp.editEmpBrandTemp(empBrandTempDTO);
 		return new ModelAndView("empBrandTempEdit");
 	}
@@ -132,11 +130,22 @@ public class EmpBrandTempController {
 		Boolean status = null;
 		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
 
-		empBrandTempDTO.setJpBrandTempId(1);
+		empBrandTempDTO.setJpBrandTempId(11);
 		status = empBrandTemp.deleteEmpBrandTemp(empBrandTempDTO);
 		if (status) {
 			return null;
 		}
-		return new ModelAndView("empBrandTempDelete");
+		return new ModelAndView("empBrandTempListPopup");
+	}
+
+	/**
+	 * The method is called to close the empBrandTempList popup.
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/cancelEmpBrandTemp", method = RequestMethod.GET)
+	public ModelAndView cancelEmpBrandTemp(Map model) {
+		return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
 	}
 }

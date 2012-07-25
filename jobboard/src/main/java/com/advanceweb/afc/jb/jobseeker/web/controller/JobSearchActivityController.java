@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.ApplyJobDTO;
+import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
@@ -29,6 +29,7 @@ import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.service.JobSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchViewDetailForm;
+import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
 
@@ -44,7 +45,7 @@ import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
 
 @Controller
 @RequestMapping("/jobsearchactivity")
-public class JobSearchActivityController {   
+public class JobSearchActivityController {
 
 	@Autowired
 	private JobSearchActivity jobSearchActivity;
@@ -52,12 +53,12 @@ public class JobSearchActivityController {
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSearchActivityController.class");
 
-//	@Autowired
+	// @Autowired
 	private MMEmailService emailService;
 
 	@Autowired
 	private JobSearchService jobSearchService;
-	
+
 	@Autowired
 	private ReadSolrServerDetails readSolrServerDetails;
 
@@ -70,13 +71,12 @@ public class JobSearchActivityController {
 	 */
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId) {
-		try{
-		/**
-		 * View the job with template
-		 */
-		jobSearchActivity.viewJobDetails(jobId);
-		}
-		catch(Exception e){
+		try {
+			/**
+			 * View the job with template
+			 */
+			jobSearchActivity.viewJobDetails(jobId);
+		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("ERROR");
 		}
@@ -113,7 +113,7 @@ public class JobSearchActivityController {
 			 * desc with attached public resume
 			 */
 			EmailDTO employerEmailDTO = new EmailDTO();
-			employerEmailDTO.setFromAddress(form.getUseremail());
+			// employerEmailDTO.setFromAddress(form.getUseremail());
 			employerEmailDTO.setCcAddress(null);
 			employerEmailDTO.setBccAddress(null);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
@@ -128,13 +128,13 @@ public class JobSearchActivityController {
 			attachmentpaths.add("C:\\ppResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
-//			System.out.println("-------Mail sent to employer-----");
+			// System.out.println("-------Mail sent to employer-----");
 			/**
 			 * confirm mail:Send mail to job seeker by sub as job title and body
 			 * as short job desc
 			 */
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
-			jobSeekerEmailDTO.setFromAddress(form.getUseremail());
+			// jobSeekerEmailDTO.setFromAddress(form.getUseremail());
 			jobSeekerEmailDTO.setCcAddress(null);
 			jobSeekerEmailDTO.setBccAddress(null);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
@@ -144,18 +144,18 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			emailService.sendEmail(jobSeekerEmailDTO);
-//			System.out.println("-------Mail sent to jobseeker-----");
+			// System.out.println("-------Mail sent to jobseeker-----");
 
 			/**
-			 * saving the job in applied job in jobseeker table
+			 * save the applied job in DB
 			 */
-			ApplyJobDTO applyJobDTO = new ApplyJobDTO();
+			SaveOrApplyJobDTO applyJobDTO = new SaveOrApplyJobDTO();
 			applyJobDTO.setJobId(jobId.intValue());
 			applyJobDTO.setUserId(1);
 			applyJobDTO.setCreateDate(new Date());
 			applyJobDTO.setAppliedDate(new Date());
 			applyJobDTO.setIsApplied((byte) 1);
-			jobSearchActivity.applyJob(applyJobDTO);
+			jobSearchActivity.saveOrApplyJob(applyJobDTO);
 
 		} catch (Exception e) {
 			// loggers call
@@ -166,6 +166,7 @@ public class JobSearchActivityController {
 
 	/**
 	 * This method is called to forward to job search page
+	 * 
 	 * @param model
 	 * @return ModelAndView
 	 */
@@ -177,47 +178,44 @@ public class JobSearchActivityController {
 	}
 
 	/**
-	 * This method will be used for doing Job search 
+	 * This method will be used for doing Job search
+	 * 
 	 * @param jobSearchResultForm
 	 * @param result
 	 * @param model
 	 * @return ModelAndView
 	 */
-	
+
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
 	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, JSONObject> modelMap) {
-		
+
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String searchName = "basicjobsearch";
-		paramMap.put("keywords", jobSearchResultForm.getKeywords()
-				.trim());
+		paramMap.put("keywords", jobSearchResultForm.getKeywords().trim());
 		paramMap.put("cityState", jobSearchResultForm.getCityState().trim());
-		paramMap.put("radius",jobSearchResultForm.getRadius());
-		
-		
+		paramMap.put("radius", jobSearchResultForm.getRadius());
+
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
-		
-		//System.out.println("Start=============================="+start);
-		//System.out.println("rows=============================="+rows);
-		
-		
+
+		// System.out.println("Start=============================="+start);
+		// System.out.println("rows=============================="+rows);
 
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
 				start, rows);
-		if (jobSearchResultDTO != null){
-			JSONObject jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
+		if (jobSearchResultDTO != null) {
+			JSONObject jobSrchJsonObj = readSolrServerDetails
+					.convertToJSON(jobSearchResultDTO);
 			modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
 		}
-		
-		
+
 		return new ModelAndView("findjob", modelMap);
-		//return new ModelAndView("jsonView", modelMap);
-		/*return new ModelAndView("findjob", "jobSrchJsonObj",
-				jobSrchJsonObj);
-*/
+		// return new ModelAndView("jsonView", modelMap);
+		/*
+		 * return new ModelAndView("findjob", "jobSrchJsonObj", jobSrchJsonObj);
+		 */
 	}
 
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
@@ -228,37 +226,73 @@ public class JobSearchActivityController {
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
 	 * 
 	 * @param JobSearchViewDetailForm
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "/saveThisJob")
 	public ModelAndView saveThisJob(@Valid JobSearchViewDetailForm form,
-			BindingResult result) {
+			@RequestParam("id") Long jobId) {
 
-		// Transform JobSearchViewDetailForm to searchedJobDTO
-		SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
-		// Transforming from form value to DTO
-		searchedJobDTO.setUserID(form.getUserID());
-		searchedJobDTO.setJobID(form.getJobID());
-		searchedJobDTO.setCreatedDate(form.getCreatedDate());
-		searchedJobDTO.setJobTitle(form.getJobTitle());
-		searchedJobDTO.setCompanyName(form.getCompanyName());
-		// Saving the Job to DB
-		jobSearchActivity.saveJob(searchedJobDTO);
-
-		return new ModelAndView();
+		/**
+		 * Check for job seeker login ,open popup if not logged in.
+		 */
+		Boolean isjobSeekerLogedin = Boolean.FALSE;
+		if (!isjobSeekerLogedin) {
+			return new ModelAndView("saveThisJobPopUp");
+		}
+		/**
+		 * save the applied job in DB
+		 */
+		SaveOrApplyJobDTO saveJobDTO = new SaveOrApplyJobDTO();
+		saveJobDTO.setJobId(jobId.intValue());
+		saveJobDTO.setUserId(1);
+		saveJobDTO.setCreateDate(new Date());
+		saveJobDTO.setAppliedDate(new Date());
+		saveJobDTO.setIsApplied((byte) 0);
+		jobSearchActivity.saveOrApplyJob(saveJobDTO);
+		return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
 	}
-	
+
+	/**
+	 * The method is called to close the SaveThisJob popup
+	 * 
+	 * @param JobSearchViewDetailForm
+	 * @return
+	 */
+	@RequestMapping(value = "/cancelSaveThisJobPopUp")
+	public ModelAndView cancelSaveThisJobPopUp(
+			@Valid JobSearchViewDetailForm form) {
+
+		return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
+	}
+
+	/**
+	 * The method is called to navigate job seeker to login
+	 * 
+	 * @param JobSearchViewDetailForm
+	 * @return
+	 */
+	@RequestMapping(value = "/navigateToLogin")
+	public ModelAndView navigateToLogin(Map<String, Object> model) {
+		/**
+		 * Maintain the saving job detail in session
+		 */
+		model.put("loginForm", new LoginForm());
+		return new ModelAndView("jobSeekerLogin");
+	}
+
 	/**
 	 * This method is called to forward to Advance job search page
+	 * 
 	 * @param model
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
-	public ModelAndView forwardToAdvanceJobSearch(Map<String, JobSearchResultForm> model) {
+	public ModelAndView forwardToAdvanceJobSearch(
+			Map<String, JobSearchResultForm> model) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardadvancedsearch");
 	}
-	
 
 }

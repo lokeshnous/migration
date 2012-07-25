@@ -6,7 +6,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AnonymousUserJobApplyDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/BaseProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CertificationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CompanyProfileDTO.java -text
@@ -45,6 +44,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ReferenceDTO.java -te
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeVisibilityDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveOrApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveSearchedJobsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchedJobDTO.java -text
@@ -309,6 +309,7 @@ jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createresumebuilder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createresumepopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/empBrandTempListPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployerdetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployers.jsp -text
@@ -330,6 +331,7 @@ jobboard/src/main/webapp/WEB-INF/view/manageFeatureEmpPro.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/postnewjob.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/registrationsuccess.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/saveThisJobPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/uploadfile.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/uploadfileindex.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewresume.jsp -text
