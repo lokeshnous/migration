@@ -25,37 +25,37 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 @Repository("loginFormDAO")
 public class LoginFormDAOImpl implements LoginFormDAO {
 
-	//private HibernateTemplate hibernateTemplate;
-	
 	private HibernateTemplate hibernateTemplateTracker;
-    private HibernateTemplate hibernateTemplate;
-
+	private HibernateTemplate hibernateTemplate;
 
 	@Autowired
-    public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
-        this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
-        this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-    }
-	
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	}
+
 	/**
 	 * This method is used to get the userId and roleId of logged in user
 	 * 
 	 * @param email
-	 *            and password
+	 * @param password
 	 * 
 	 */
 	public LoginFormDTO validateLoginFormValues(String email, String password) {
 
 		// Get the user id by passing the email address of user by passing the
-		// email address
-		// from MerUser entity
+		// email address from MerUser entity
+		int loggedinUserId = 0;
 		LoginFormDTO loginFormDTO = new LoginFormDTO();
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
-		int userId = 0;
+
 		if (listMerUser != null && listMerUser.size() > 0) {
 			MerUser merUserNew = listMerUser.get(0);
-			userId = merUserNew.getUserId();
+			loggedinUserId = merUserNew.getUserId();
 			loginFormDTO.setEmailAddress(merUserNew.getEmail());
 			loginFormDTO.setPassword(merUserNew.getPassword());
 			loginFormDTO.setUserID(merUserNew.getUserId());
@@ -63,16 +63,17 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 
 		// Get the roleId for a logged in user by passing the userId from
 		// AdmUserRole entity
-		if (userId != 0) {
-			AdmUserRolePK pk = new AdmUserRolePK();
-			pk.setUserId(userId);
-			List<AdmUserRole> admUserRolePK = hibernateTemplate
-					.find("from AdmUserRole e where e.id = " + pk);
-			if (admUserRolePK != null) {
-
+		if (loggedinUserId != 0) {
+			List<AdmUserRole> listAdmUserRole = hibernateTemplate
+					.find("from AdmUserRole e where e.id.userId = "
+							+ loggedinUserId);
+			
+			
+			if (listAdmUserRole != null && listAdmUserRole.size() > 0) {
+				AdmUserRole admUserRoleNew = listAdmUserRole.get(0);
+				loginFormDTO.setRoleId(admUserRoleNew.getId().getRoleId());
 			}
 		}
-		// Get the role id of user by passing the user id
 		return loginFormDTO;
 	}
 }
