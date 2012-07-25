@@ -430,6 +430,8 @@ jobboard/src/main/webapp/resources/js/basic.js -text
 jobboard/src/main/webapp/resources/js/contact.js -text
 jobboard/src/main/webapp/resources/js/expandCollapse.js -text
 jobboard/src/main/webapp/resources/js/html5.js -text
+jobboard/src/main/webapp/resources/js/jquery-1.7.1.js -text
+jobboard/src/main/webapp/resources/js/jquery-1.7.1.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.all.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.lite.min.js -text
@@ -440,4 +442,13 @@ jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text
 jobboard/src/main/webapp/resources/js/jquery.simplemodal.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
 jobboard/src/main/webapp/resources/js/user.js -text
+jobboard/src/main/webapp/resources/nyroModal/img/ajaxLoader.gif -text
+jobboard/src/main/webapp/resources/nyroModal/img/close.gif -text
+jobboard/src/main/webapp/resources/nyroModal/img/next.gif -text
+jobboard/src/main/webapp/resources/nyroModal/img/prev.gif -text
+jobboard/src/main/webapp/resources/nyroModal/js/jquery.nyroModal-ie6.js -text
+jobboard/src/main/webapp/resources/nyroModal/js/jquery.nyroModal-ie6.min.js -text
+jobboard/src/main/webapp/resources/nyroModal/js/jquery.nyroModal.custom.js -text
+jobboard/src/main/webapp/resources/nyroModal/js/jquery.nyroModal.custom.min.js -text
+jobboard/src/main/webapp/resources/nyroModal/styles/nyroModal.css -text
 /pom.xml -text
