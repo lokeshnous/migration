@@ -5,6 +5,7 @@ package com.advanceweb.afc.jb.login.web.controller;
  * @author bharatiu
  * @version 1.0
  * @since 19th July 2012
+ * @Purpose: This class will act as a Form Bean for the  LoginForm  to login
  */
 
 public class LoginForm {
