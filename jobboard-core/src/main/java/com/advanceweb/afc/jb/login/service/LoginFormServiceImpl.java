@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.login.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +26,8 @@ public class LoginFormServiceImpl implements LoginFormService {
 	 * @return
 	 */
 	@Override
-	/*
-	 * public void validateLoginFormValues(LoginFormDTO loginFormDTO) {
-	 * loginFormDAO.validateLoginFormValues(loginFormDTO); }
-	 */
 	public LoginFormDTO validateLoginFormValues(String emailAddress,
 			String password) {
-		return (LoginFormDTO) loginFormDAO.validateLoginFormValues(emailAddress, password);
+		return loginFormDAO.validateLoginFormValues(emailAddress, password);
 	}
 }
