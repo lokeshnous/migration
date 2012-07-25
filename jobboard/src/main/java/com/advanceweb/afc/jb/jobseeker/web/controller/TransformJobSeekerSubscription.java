@@ -45,9 +45,10 @@ public class TransformJobSeekerSubscription {
 	 * @param listSubscriptions
 	 * @return
 	 */
-	public JobSeekerSubscriptionForm jsSubscriptionDTOToJobSeekerSubscriptions(List<JobSeekerSubscriptionsDTO> 
+	public List<SubscriptionsDTO> jsSubscriptionDTOToJobSeekerSubscriptions(List<JobSeekerSubscriptionsDTO> 
 		currentSubsList,JobSeekerSubscriptionForm form,List<SubscriptionsDTO> listSubscriptions){
 		List<String> currSubList = new ArrayList<String>();
+		List<SubscriptionsDTO> selSubList = new ArrayList<SubscriptionsDTO>();
 		if (null != currentSubsList) {
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
 				
@@ -55,13 +56,17 @@ public class TransformJobSeekerSubscription {
 					
 					if(dto.getLookUpId().equals(subdto.getSubscriptionId())){
 						currSubList.add(dto.getLookUpId().toString());
+						selSubList.add(subdto);
 					}
 				}
 				
 			}
-			form.setCurrentsubs(currSubList.toArray(new String[currSubList.size()]));
+			
+			if(null != form){
+				form.setCurrentsubs(currSubList.toArray(new String[currSubList.size()]));
+			}
 		}
-		return form;
+		return selSubList;
 	}
 	
 	/**
@@ -72,9 +77,10 @@ public class TransformJobSeekerSubscription {
 	 * @param listSubscriptions
 	 * @return
 	 */
-	public JobSeekerSubscriptionForm jsSubscriptionDTOToJobSeekerMagazines(List<JobSeekerSubscriptionsDTO> 
+	public List<MagazinesDTO> jsSubscriptionDTOToJobSeekerMagazines(List<JobSeekerSubscriptionsDTO> 
 		currentSubsList,JobSeekerSubscriptionForm form,List<MagazinesDTO> listMagaziness){
 		List<String> currMagList = new ArrayList<String>();
+		List<MagazinesDTO> selMagList = new ArrayList<MagazinesDTO>();
 		if (null != currentSubsList) {
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
 				
@@ -83,14 +89,17 @@ public class TransformJobSeekerSubscription {
 						
 						if(dto.getLookUpId().equals(subdto.getMagazineId())){
 							currMagList.add(dto.getLookUpId().toString());
+							selMagList.add(subdto);
 						}
 					}
-				}
-				
+				}				
 			}
-			form.setCurrentmagazines(currMagList.toArray(new String[currMagList.size()]));
+			
+			if(null != form){
+				form.setCurrentmagazines(currMagList.toArray(new String[currMagList.size()]));
+			}
 		}
-		return form;
+		return selMagList;
 	}
 	
 	/**
@@ -117,7 +126,10 @@ public class TransformJobSeekerSubscription {
 					}
 				}				
 			}
-			form.setCurrentJobAlerts(currAlrtList.toArray(new String[currAlrtList.size()]));
+			
+			if(null != form){
+				form.setCurrentJobAlerts(currAlrtList.toArray(new String[currAlrtList.size()]));
+			}
 		}
 		return currentSelectedSubsList;
 	}

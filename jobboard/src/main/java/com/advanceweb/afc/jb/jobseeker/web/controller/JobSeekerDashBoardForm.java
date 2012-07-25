@@ -8,5 +8,5 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
  * @Since 2nd July, 2012
  */
 public class JobSeekerDashBoardForm {
-
+	
 }
