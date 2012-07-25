@@ -30,4 +30,14 @@ public class LoginFormServiceImpl implements LoginFormService {
 			String password) {
 		return loginFormDAO.validateLoginFormValues(emailAddress, password);
 	}
+
+	/**
+	 * @purpose This method is to get the user email details
+	 * @param emailAddress
+	 * @return
+	 */
+	@Override
+	public LoginFormDTO getUserEmailDetails(String emailAddress) {
+		return loginFormDAO.getUserEmailDetails(emailAddress);
+	}
 }

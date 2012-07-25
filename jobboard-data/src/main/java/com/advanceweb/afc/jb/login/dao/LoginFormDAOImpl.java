@@ -76,4 +76,26 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		}
 		return loginFormDTO;
 	}
+	
+	/**
+	 * Get the user password based on email
+	 * @param email
+	 * @return
+	 */
+	public LoginFormDTO getUserEmailDetails(String email){
+		LoginFormDTO userDetailsLoginFormDTO = new LoginFormDTO();
+		
+		List<MerUser> listMerUser = hibernateTemplateTracker
+				.find("from MerUser where email = '" + email + "'");
+		
+		if (listMerUser != null && listMerUser.size() > 0) {
+			MerUser merUserNew = listMerUser.get(0);
+			//loggedinUserId = merUserNew.getUserId();
+			userDetailsLoginFormDTO.setEmailAddress(merUserNew.getEmail());
+			userDetailsLoginFormDTO.setPassword(merUserNew.getPassword());
+			userDetailsLoginFormDTO.setUserID(merUserNew.getUserId());
+		}
+		
+		return userDetailsLoginFormDTO;
+	}
 }

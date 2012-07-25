@@ -11,7 +11,20 @@ import com.advanceweb.afc.jb.common.LoginFormDTO;
  */
 
 public interface LoginFormService {
-
+    
+	/**
+	 * This Method is to get the userId and roleId based on
+	 * user email and password
+	 * @param emailAddress
+	 * @param password
+	 * @return
+	 */
 	LoginFormDTO validateLoginFormValues(String emailAddress,
 			String password);
+	
+	/**
+	 * This method is to get the user email details
+	 * @param emailAddress
+	 */
+	LoginFormDTO getUserEmailDetails(String emailAddress);
 }

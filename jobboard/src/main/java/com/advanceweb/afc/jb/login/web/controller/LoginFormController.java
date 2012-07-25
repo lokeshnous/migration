@@ -2,9 +2,12 @@ package com.advanceweb.afc.jb.login.web.controller;
 
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.common.email.EmailDTO;
+import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.login.service.LoginFormService;
 
 /**
@@ -26,12 +31,30 @@ import com.advanceweb.afc.jb.login.service.LoginFormService;
 @RequestMapping(value = "/loginFormForJObSeeker")
 public class LoginFormController {
 
+	@Value("${mail_subject}")
+	private String mailSubject;
+
+	@Value("${mail_body}")
+	private String mailBody;
+
+	private static final Logger LOGGER = Logger
+			.getLogger("JobSearchActivityController.class");
+
+	@Autowired
+	private MMEmailService emailService;
+
 	@Autowired
 	private LoginFormService loginFormService;
 
 	@Autowired
 	private LoginFormValidator loginFormValidator;
 
+	/**
+	 * This method to login
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView jobSeekerLogin(Map<String, LoginForm> model) {
 
@@ -78,6 +101,64 @@ public class LoginFormController {
 		} else {
 			return new ModelAndView("jobSeekerLogin", "errors", false);
 		}
+	}
 
+	/**
+	 * This method to login in to the forgot your password page
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/forgrtPasswordLogin", method = RequestMethod.GET)
+	public ModelAndView jobSeekerForgotYourPasswordPagePopUp(
+			Map<String, LoginForm> model) {
+
+		model.put("loginForm", new LoginForm());
+		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp");
+	}
+
+	/**
+	 * This Method is used for forgot password functionality
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value = "/jobSeekerForgotYourPasswordPagePopUp", method = RequestMethod.POST)
+	public ModelAndView emailThePassword(@Valid LoginForm form,
+			BindingResult result) {
+		String emailAddress = form.getEmailAddress();
+		boolean value = false;
+
+		LoginFormDTO userDetailsLoginFormDTO = loginFormService
+				.getUserEmailDetails(emailAddress);
+
+		// User Validation based on email address of user
+		if (userDetailsLoginFormDTO != null) {
+			value = loginFormValidator.validateEmailValues(form,
+					userDetailsLoginFormDTO);
+		}
+
+		// Sending mail to the logged in user if he is valid user
+		if (value) {
+			try {
+				EmailDTO jobSeekerEmailDTO = new EmailDTO();
+				jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
+				jobSeekerEmailDTO.setCcAddress(null);
+				jobSeekerEmailDTO.setBccAddress(null);
+				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
+				jobSeekerToAddress[0] = new InternetAddress("to1@gmail.com");
+				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
+				jobSeekerEmailDTO.setSubject(mailSubject);
+				jobSeekerEmailDTO.setBody(mailBody);
+				jobSeekerEmailDTO.setHtmlFormat(true);
+				emailService.sendEmail(jobSeekerEmailDTO);
+			} catch (Exception e) {
+				// loggers call
+				LOGGER.info("ERROR");
+			}
+			return new ModelAndView("jobSeekerLogin");
+		}
+		return new ModelAndView("jobSeekerLogin");
 	}
 }

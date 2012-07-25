@@ -152,8 +152,7 @@
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Login</h2>
 			<form:form method="Post" action="jobSeekerLogin.html"  commandName="loginForm" >
-			<form:errors path="*"/>
-			
+				
 			    <div class="rowEvenSpacing marginTop0"><span class="lableText1">Email Address:</span> 
 					<form:input type="text" path="emailAddress"  class="job_seeker_email" />
 					<form:errors path="emailAddress"/>
@@ -170,7 +169,7 @@
 				</div>		    
 				<div class="rowEvenSpacing">				    
 				    <span class="floatLeft"><input type="submit" class="btn_sm orange" value="Login" /></span> 
-                    <span class="floatLeft"><a href="#">Forgot your password?</a></span>
+                    <span class="floatLeft"><a href="forgrtPasswordLogin.html">Forgot your password?</a></span>
 				</div>
 				<div class="rowEvenSpacing">
 				    <p><span class="bold">Not a member?</span> <a href="">Sign up now!</a></p>

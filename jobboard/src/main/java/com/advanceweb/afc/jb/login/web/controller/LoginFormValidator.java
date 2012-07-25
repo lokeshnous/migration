@@ -14,6 +14,12 @@ import com.advanceweb.afc.jb.common.LoginFormDTO;
 @Repository("loginFormValidator")
 public class LoginFormValidator {
 
+	/**
+	 * Validation for login form
+	 * @param form
+	 * @param loginFormDTOForUser
+	 * @return
+	 */
 	public boolean validateLoginValues(LoginForm form,
 			LoginFormDTO loginFormDTOForUser) {
 
@@ -29,5 +35,23 @@ public class LoginFormValidator {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Validation for forgot password
+	 * @param form
+	 * @param userDetailsLoginFormDTO
+	 * @return
+	 */
+	public boolean validateEmailValues(LoginForm form,
+			LoginFormDTO userDetailsLoginFormDTO) {
+
+		if (form != null && userDetailsLoginFormDTO != null) {
+			if (form.getEmailAddress().equals(userDetailsLoginFormDTO.getEmailAddress())) {
+				return true;
+			}
+		}
+		return false;
+
 	}
 }
