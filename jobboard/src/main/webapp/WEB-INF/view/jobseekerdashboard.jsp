@@ -281,6 +281,13 @@
 								</div>
 								<!-- browse_bar -->
 
+                      
+                      <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My User Profile</h2> 
+                       <div class="lableTextDashBoard">
+                      <p><a href="">Edit Profile Settings</a> </p>
+                      </div>
+                      <div class="lableTextDashBoard" id="jsChangePassword">
+                      <p><a href="" onclick="popupJsChangePassword();">Change Password</a> </p>
 							</form>
 						</div>
 						<!-- job_search_main -->
@@ -295,7 +302,6 @@
 										<img src="../resources/images/UserProfile.jpg" width="30"
 											height="30" alt="User Profile">
 									</div>
-
 
 									<div class="dashboardPanalcontent">
 										<h2 class="noTopBorder">My User Profile</h2>
@@ -346,6 +352,62 @@
 											height="30" alt="Activity">
 									</div>
 
+
+                      <div class="dashboardPanalIconHolder"><img src="../resources/images/Subscriptions.jpg" width="30" height="30" alt="Subscription"></div>
+                      
+                      <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Subscriptions</h2> 
+                       <div class="lableTextDashBoard">
+                      <p><a href="">Modify Subscriptions</a> </p>
+                      </div>                   
+                      <div class="rowEvenNewSpacing marginTop0">
+		              	 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid2">
+								<tr>
+									<td valign="top">						
+						     			<table>
+						     				<tr  class="borderTopNone">
+							     				<th class="borderTopNone" width="46%" align="left" scope="col">
+							    					Subscriptions
+							     				</th>
+						     				</tr>
+		  									<c:forEach items="${jobSubscriptionsList}" var="subscription" varStatus="index">
+												<tr>	
+												<td> <c:out value="${subscription.subscriptionName}"/></td>													
+												</tr>
+											</c:forEach>						
+						     			</table>
+						     		</td>
+ 						     		<td valign="top">
+										<table> 
+											<tr  class="borderTopNone">
+												<th class="borderTopNone" width="46%" align="left" scope="col">Job Alerts</th>
+											</tr>			 			
+		 									<c:forEach items="${jobAlertsList}" var="jobAlert" varStatus="index">
+												<tr>	
+													<td> <c:out value="${jobAlert.alertName}"/></td>														
+												</tr>
+											</c:forEach>	 				
+									 	</table>
+									</td>
+									<td valign="top">
+								 		<table> 
+								 			<tr  class="borderTopNone">
+												<th class="borderTopNone" width="46%" align="left" scope="col">Magazines</th>
+											</tr>	 			
+											<c:forEach items="${jobMagazinesList}" var="magazine" varStatus="index">
+												<tr>	
+													<td> <c:out value="${magazine.magazineName}"/></td>	
+												</tr>
+											</c:forEach> 						
+									 	</table>
+								 	</td> 
+								</tr> 	
+		              	 </table>
+                     </div> 
+                      
+                     <c:if test="${empty jobSubscriptionsList && jobAlertsList && jobMagazinesList }">
+                      <div class="lableTextDashBoard">
+                      <p><span class="link_color2_selected">You currently have no active subscriptions.</span>
+
 									<div class="dashboardPanalcontent">
 										<h2 class="noTopBorder">My Activity</h2>
 										<div class="lableTextDashBoard">
@@ -353,6 +415,14 @@
 												<a href="">View My Saved Jobs (1)</a>
 											</p>
 										</div>
+						Sign up now to get job alerts, healthcare news and much more delivered to you automatically!</p>
+                      </div>
+                     </c:if> 
+                      </div>                     
+                      </div>
+                    
+                    </div>
+
 
 										<div class="lableTextDashBoard">
 											<p>
