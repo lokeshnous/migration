@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.LoginFormDTO;
@@ -22,18 +20,14 @@ public class LoginFormValidator {
 		// we need to first check for the role id of logged in user.
 		// if value for role id stored in adm_user_role table is same as
 		// property file value then validate for the email and password of user
-		if (form != null && loginFormDTOForUser != null) {
-			if (form.getRoleId() == loginFormDTOForUser.getRoleId()) { // change this 1 to DB value
+		if (form != null  && loginFormDTOForUser != null) {
+			if (form.getRoleId() == loginFormDTOForUser.getRoleId()) { 
 				if ((form.getEmailAddress().equals(loginFormDTOForUser.getEmailAddress()))
-						&& (form.getEmailAddress().equals(loginFormDTOForUser.getPassword()))) {
+						&& (form.getPassword().equals(loginFormDTOForUser.getPassword()))) {
 					return true;
 				}
 			}
-
 		}
-		//false means login failed
 		return false;
-
 	}
-
 }
