@@ -23,11 +23,14 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 	private static final Map<String, String> PARAM_MAP = new HashMap<String, String>();
 	private static final String TITLE_SEARCH = "titlesearch" ; 
 	
-	@Ignore("Not ready to test")
 	@Test
-	public void jobSearchTest1() {
+	public void jobSearchTest() {
 		
-		PARAM_MAP.put(TITLE_SEARCH, "doctor");
+		PARAM_MAP.put("keywords", "nurse");
+		PARAM_MAP.put("cityState", "");
+		PARAM_MAP.put("radius","");
+		PARAM_MAP.put("sessionid", "JS0011");
+		PARAM_MAP.put("search_seq", "");
 		long rows = 4;
 		long start = 0;
 		
