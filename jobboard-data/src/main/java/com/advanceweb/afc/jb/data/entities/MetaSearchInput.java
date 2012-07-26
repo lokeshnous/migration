@@ -23,6 +23,12 @@ public class MetaSearchInput implements Serializable {
 
 	@Column(name="input_value")
 	private String inputValue;
+	
+	@Column(name="search_index_id")
+	private int searchIndexId;
+	
+	@Column(name="search_type_id")
+	private int searchTypeId;
 
 	//bi-directional many-to-one association to MetaSearchIndex
     @ManyToOne
