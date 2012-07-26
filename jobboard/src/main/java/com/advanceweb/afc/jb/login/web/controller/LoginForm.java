@@ -14,6 +14,7 @@ public class LoginForm {
 	private String password;
 	private int userID;
 	private int roleId;
+	
 
 	/**
 	 * @return the emailAddress

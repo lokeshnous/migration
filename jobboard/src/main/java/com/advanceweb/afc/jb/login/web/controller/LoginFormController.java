@@ -143,14 +143,17 @@ public class LoginFormController {
 		if (value) {
 			try {
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
+				// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
 				jobSeekerEmailDTO.setCcAddress(null);
 				jobSeekerEmailDTO.setBccAddress(null);
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-				jobSeekerToAddress[0] = new InternetAddress("to1@gmail.com");
+				jobSeekerToAddress[0] = new InternetAddress(
+						form.getEmailAddress());
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 				jobSeekerEmailDTO.setSubject(mailSubject);
 				jobSeekerEmailDTO.setBody(mailBody);
+				jobSeekerEmailDTO
+						.setBody(userDetailsLoginFormDTO.getPassword());
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
@@ -159,6 +162,6 @@ public class LoginFormController {
 			}
 			return new ModelAndView("jobSeekerLogin");
 		}
-		return new ModelAndView("jobSeekerLogin");
+		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp");
 	}
 }

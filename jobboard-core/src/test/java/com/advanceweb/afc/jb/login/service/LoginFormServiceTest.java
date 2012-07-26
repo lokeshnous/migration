@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.common.LoginFormDTO;
 
 /**
  * 
@@ -17,15 +16,33 @@ public class LoginFormServiceTest extends ServiceTest {
 
 	@Autowired
 	private LoginFormService loginFormService;
-	
+
+	/**
+	 * JUnit test case for login Form page
+	 */
 	@Test
-	public void validateLogin(){
-		
-		String emailAddress = "manish@yahoo.com";
-		String password = "deo";
-		
-		LoginFormDTO loginFormDTOForUser = (LoginFormDTO) loginFormService
-				.validateLoginFormValues(emailAddress, password);
+	public void testValidateLogin() {
+		try {
+			String emailAddress = "manish@yahoo.com";
+			String password = "deo";
+
+			loginFormService.validateLoginFormValues(emailAddress, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
+	/**
+	 * JUnit test case for forgot password functionality
+	 */
+	@Test
+	public void testEmailThePassword() {
+		try {
+			String emailAddress = "manish@yahoo.com";
+			loginFormService.getUserEmailDetails(emailAddress);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
