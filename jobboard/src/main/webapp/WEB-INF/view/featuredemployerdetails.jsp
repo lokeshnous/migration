@@ -183,25 +183,25 @@
 					<div class="featuredEmployerLeft">
 						<div class="featuredEmployerVideo">
 							&nbsp;
-							<object classid="clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95"
-								width="250" height="180"
-								codebase="http://www.microsoft.com/Windows/MediaPlayer/">
-								<param name="Filename" value="${windowmediaplayerfilepath}">
-								<param name="AutoStart" value="true">
-								<param name="ShowControls" value="true">
-								<param name="BufferingTime" value="2">
-								<param name="ShowStatusBar" value="true">
-								<param name="AutoSize" value="true">
-								<param name="InvokeURLs" value="false">
-								<embed src="${windowmediaplayerfilepath}"
-									type="application/x-mplayer2" autostart="1" enabled="1"
-									showstatusbar="1" showdisplay="1" showcontrols="1"
-									pluginspage="http://www.microsoft.com/Windows/MediaPlayer/"
-									CODEBASE="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,0,0,0"
-									width="480" height="360"></embed>
+							<object classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6"
+								id="player" width="250" height="180">
+								<param name="url"
+									value="${windowmediaplayerfilepath}" />
+								<param name="src"
+									value="${windowmediaplayerfilepath}" />
+								<param name="showcontrols" value="true" />
+								<param name="autostart" value="true" />
+								<!--[if !IE]>-->
+								<object type="video/x-ms-wmv"
+									data="${windowmediaplayerfilepath}"
+									width="250" height="180">
+									<param name="src"
+										value="${windowmediaplayerfilepath}" />
+									<param name="autostart" value="true" />
+									<param name="controller" value="true" />
+								</object>
+								<!--<![endif]-->
 							</object>
-
-
 						</div>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">
