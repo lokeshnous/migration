@@ -43,7 +43,7 @@ ManageFeatureEmployerProfileDAO {
 		facility.setName(companyProfileDTO.getCompanyName());
 		// facility.setFacilityId(162);
 		// facility.setAccountNumber("347OSC002");
-		// facility.setAdminUserId(0);
+		 facility.setAdminUserId(1);
 
 		try {
 			if (companyProfileDTO != null) {
