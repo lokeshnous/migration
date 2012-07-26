@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -285,8 +287,7 @@
 								<h2 class="more_link">
 									Career Tools<span>More</span>
 								</h2>
-							</a>
-							 ${careerstoolresource}
+							</a> ${careerstoolresource}
 						</div>
 						<!-- column1 -->
 
@@ -310,39 +311,62 @@
 											</div>
 										</a>
 									</div>
-									<div class="slider1Frames" style="background-color: blue;">
-									</div>
-									<div class="slider1Frames" style="background-color: green;">
-									</div>
-								</div>
-								<div id="slider1NextBtn"></div>
-							</div>
-							<!-- featured_emp_slider -->
 
-							<a href="">
-								<h2 class="more_link Bgnone">Healthcare News</h2>
-							</a> 
-							${healthcarenew}
-							
+									<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}">
+										<div class="slider1Frames"">
+
+											<a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }">
+												<div class="slider1FrameA1">
+													<img src="../resources/images/ablogo.jpg"alt="${companyProfileDTO.companyName }">
+												</div>	
+											</a>
+										
+								       </div>
+								</c:forEach>
+
+
+
+
+								<div class="slider1Frames"">
+									<a href="featuredemployerdetails.html?id=109">
+										<div class="slider1FrameA1">
+											<img src="../resources/images/MercyRNlogo.jpg" />
+										</div>
+									</a> <a href="featuredemployerdetails.html?id=121">
+										<div class="slider1FrameA2">
+											<img src="../resources/images/TempleLogo.jpg" />
+										</div>
+									</a>
+
+								</div>
+							</div>
+							<div id="slider1NextBtn"></div>
 						</div>
-						<!-- column2-->
+						<!-- featured_emp_slider -->
+
+						<a href="">
+							<h2 class="more_link Bgnone">Healthcare News</h2>
+						</a> ${healthcarenew}
 
 					</div>
-					<!-- content_columns -->
+					<!-- column2-->
 
 				</div>
-				<!-- content_wrapper -->
-
-				<div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
-				</div>
-				<!-- ad_wrapper -->
+				<!-- content_columns -->
 
 			</div>
-			<!-- main -->
+			<!-- content_wrapper -->
+
+			<div class="ad_wrapper">
+				<img src="../resources/images/ads/banner_ad_fpo.png" />
+			</div>
+			<!-- ad_wrapper -->
 
 		</div>
-		<!-- end main_wrapper_inside -->
+		<!-- main -->
+
+	</div>
+	<!-- end main_wrapper_inside -->
 	</div>
 	<!-- end main_wrapper_outside -->
 	<div class="footer_wrapper">

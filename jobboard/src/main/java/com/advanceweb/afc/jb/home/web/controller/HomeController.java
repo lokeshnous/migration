@@ -84,8 +84,8 @@ public class HomeController {
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
 
-			//			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
-			//			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+						List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+						model.addAttribute("companyProfileDTOList", companyProfileDTOList);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
