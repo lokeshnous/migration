@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
@@ -61,7 +60,7 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private ReadSolrServerDetails readSolrServerDetails;
-
+	
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -189,34 +188,57 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
 	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, JSONObject> modelMap) {
-
+		
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
-		String searchName = "basicjobsearch";
-		paramMap.put("keywords", jobSearchResultForm.getKeywords().trim());
+		String searchName = "KEYWORD";// will be replaced by BASIC_SEARCH
+		paramMap.put("keywords", jobSearchResultForm.getKeywords()
+				.trim());
 		paramMap.put("cityState", jobSearchResultForm.getCityState().trim());
-		paramMap.put("radius", jobSearchResultForm.getRadius());
-
+		paramMap.put("radius",jobSearchResultForm.getRadius());
+		paramMap.put("sessionid", "JS0011");
+		paramMap.put("search_seq", "");
+		
+		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
-
-		// System.out.println("Start=============================="+start);
-		// System.out.println("rows=============================="+rows);
-
+		
+		LOGGER.debug("Start=============================="+start);
+		LOGGER.debug("rows=============================="+rows);
+		
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
 				start, rows);
-		if (jobSearchResultDTO != null) {
-			JSONObject jobSrchJsonObj = readSolrServerDetails
-					.convertToJSON(jobSearchResultDTO);
+		if (jobSearchResultDTO != null){
+			JSONObject jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
 			modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
 		}
-
+		
 		return new ModelAndView("findjob", modelMap);
 		// return new ModelAndView("jsonView", modelMap);
 		/*
 		 * return new ModelAndView("findjob", "jobSrchJsonObj", jobSrchJsonObj);
 		 */
 	}
+	
+	/*@RequestMapping(value = "/findJobSearchJSON", method = RequestMethod.GET)
+	public @ResponseBody	JSONObject getJSONObj() {
+		return jobSrchJsonObj;
+	}*/
+	
+	
+
+	/*@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
+	public @ResponseBody
+	List<String> getCountryList() {
+		List<String> countryList = new ArrayList<String>();
+		countryList.add("1");
+		countryList.add("2");
+		countryList.add("3");
+		countryList.add("4");
+		countryList.add("5");
+			
+		return countryList;
+	}*/
 
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
 		this.jobSearchActivity = jobSearchActivity;
