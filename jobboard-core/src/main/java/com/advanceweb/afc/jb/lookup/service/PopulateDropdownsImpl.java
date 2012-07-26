@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -177,6 +178,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	@Override
 	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
 		return populateDropdownsDAO.getResumeVisibilityList();
+	}
+
+	@Override
+	public List<DropDownDTO> populateDropdown(String dropDownName) {
+		
+		return populateDropdownsDAO.populateDropdown(dropDownName);
 	}	
 
 }

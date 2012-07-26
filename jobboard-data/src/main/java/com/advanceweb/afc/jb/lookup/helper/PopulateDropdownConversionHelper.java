@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -27,6 +28,22 @@ import com.advanceweb.afc.jb.data.entities.MerLookup;
 public class PopulateDropdownConversionHelper {
 	
 
+	public List<DropDownDTO> convertMerLookupToLookUpDTO(List<MerLookup> merLookupList){
+		
+		DropDownDTO lookUpDTO = null;
+		List<DropDownDTO> list = new ArrayList();
+		for(MerLookup merUtility : merLookupList){
+
+			lookUpDTO = new DropDownDTO();
+
+			lookUpDTO.setOptionId(String.valueOf(merUtility.getLookupId()));
+			lookUpDTO.setOptionName(merUtility.getLookupName());
+
+			list.add(lookUpDTO);
+		}		
+		return list;
+		
+	}
 	public List<CountryDTO> convertMerUtilityToCountryDTO(List<MerLookup> merUtilityList){
 
 		CountryDTO countryDTO = null;

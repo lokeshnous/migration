@@ -10,6 +10,7 @@ package com.advanceweb.afc.jb.lookup.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -140,5 +141,13 @@ public interface PopulateDropdownsDAO {
 	 * 
 	 */
 	List<ResumeVisibilityDTO> getResumeVisibilityList();
+	
+	/**@Author :Prince Mathew
+	   @Purpose:To get the dropDown values 
+	   @Created:Jul 10, 2012
+	   @Return :List of list of drop down
+	 * 
+	 */
+	List<DropDownDTO> populateDropdown(String dropDownName);
 	
 }

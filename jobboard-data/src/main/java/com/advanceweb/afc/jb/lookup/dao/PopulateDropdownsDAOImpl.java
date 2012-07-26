@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -294,5 +295,18 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
 		List<MerLookup> merLookupList= hibernateTemplate.find("from MerLookup e where e.lookupCategory='Visibility' and e.lookupStatus='1'");
 		return dropdownHelper.convertMerLookupToVisibilityDTO(merLookupList);
+	}
+	
+	/**
+	   @Author :Anil Malali
+	   @Purpose:To get the dropdown 
+	   @Created:Jul 24, 2012
+	   @Param  :not required
+	   @Return :List of dropdown values 
+	 */
+	@Override
+	public List<DropDownDTO> populateDropdown(String dropDownName) {
+		List<MerLookup> merLookupList= hibernateTemplate.find("from MerLookup e where e.lookupCategory='"+ dropDownName +"' and e.lookupStatus='1'");
+		return dropdownHelper.convertMerLookupToLookUpDTO(merLookupList);
 	}
 }

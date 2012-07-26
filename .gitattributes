@@ -12,6 +12,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CompanyProfileDTO.jav
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ContactInformationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CountryDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CoverLetterDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/DropDownDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EduDegreeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EducationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmpBrandTempDTO.java -text
