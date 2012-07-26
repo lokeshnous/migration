@@ -21,14 +21,15 @@
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+<script type="text/javascript"
+	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 <script type="text/javascript">
-		    jQuery(document).ready(function(){
-		    jQuery(".megamenu").megamenu();
-		});
-		</script>
+	jQuery(document).ready(function() {
+		jQuery(".megamenu").megamenu();
+	});
+</script>
 </head>
 
 <body class="job_board">
@@ -174,24 +175,44 @@
 				<div class="row">
 					<div class="sectionHeader">
 						<h2 class="width305 FloatLeft">Featured Employer Details</h2>
-						<span class="floatRight marginRight10"><a href="featuredemployers.html"
+						<span class="floatRight marginRight10"><a
+							href="featuredemployers.html"
 							class="link_color2_emphasized FontSize12">View All Featured
 								Employers</a></span>
 					</div>
 					<div class="featuredEmployerLeft">
-						<div class="featuredEmployerVideo">&nbsp;</div>
+						<div class="featuredEmployerVideo">
+							&nbsp;
+							<object classid="clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95"
+								width="250" height="180"
+								codebase="http://www.microsoft.com/Windows/MediaPlayer/">
+								<param name="Filename" value="${windowmediaplayerfilepath}">
+								<param name="AutoStart" value="true">
+								<param name="ShowControls" value="true">
+								<param name="BufferingTime" value="2">
+								<param name="ShowStatusBar" value="true">
+								<param name="AutoSize" value="true">
+								<param name="InvokeURLs" value="false">
+								<embed src="${windowmediaplayerfilepath}"
+									type="application/x-mplayer2" autostart="1" enabled="1"
+									showstatusbar="1" showdisplay="1" showcontrols="1"
+									pluginspage="http://www.microsoft.com/Windows/MediaPlayer/"
+									CODEBASE="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,0,0,0"
+									width="480" height="360"></embed>
+							</object>
+
+
+						</div>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">
 								<span class="labelHolder1">Website:</span> <a
 									href="http://${employerProfileManagementForm.companyWebsite }"
 									target="_blank">
-									${employerProfileManagementForm.companyWebsite }
-									</a>
+									${employerProfileManagementForm.companyWebsite } </a>
 							</div>
 							<span class="labelHolder1">E-Mail:</span> <a
 								href="mailto:${employerProfileManagementForm.companyEmail }">
-									${employerProfileManagementForm.companyEmail }
-								</a>
+								${employerProfileManagementForm.companyEmail } </a>
 						</div>
 						<a href="#"><div class="featuredEmployerViewAllJobLink">
 								View all job postings from this Employer</div></a>
@@ -199,18 +220,19 @@
 
 					<div class="featuredEmployerRight">
 						<div class="row marginBottom10 marginTop10">
-							<img src="${employerProfileManagementForm.logoPath}" alt="${employerProfileManagementForm.companyName}">
+							<img src="${employerProfileManagementForm.logoPath}"
+								alt="${employerProfileManagementForm.companyName}">
 						</div>
 						<div class="row borderTopRed">
 							<p class="marginTop15">
 								<span class="featuredEmployerSectionHeader">Company
-									Overview</span><br> 
-									${employerProfileManagementForm.companyOverview }
+									Overview</span><br>
+								${employerProfileManagementForm.companyOverview }
 							</p>
 
 							<p class="marginTop15">
 								<span class="featuredEmployerSectionHeader">Company News</span><br>
-									${employerProfileManagementForm.companyNews }
+								${employerProfileManagementForm.companyNews }
 							</p>
 						</div>
 					</div>
@@ -272,14 +294,14 @@
 			<ul>
 				<li><a href="#">ADVANCE Healthcare Jobs</a></li>
 				<li><a href="#">Subscribe</a></li>
-				<li><img src="../resources/images/email.png" class="foot_icon" /><a href="#">Sign
-						Up for Enewsletter</a></li>
-				<li><img src="../resources/images/fbook_sm.png" class="foot_icon" /><a
-					href="#">Connect on Facebook</a></li>
-				<li><img src="../resources/images/L_In_sm.png" class="foot_icon" /><a
-					href="#">Connect on LinkedIn</a></li>
-				<li><img src="../resources/images/twitter_sm.png" class="foot_icon" /><a
-					href="#">Connect on Twitter</a></li>
+				<li><img src="../resources/images/email.png" class="foot_icon" /><a
+					href="#">Sign Up for Enewsletter</a></li>
+				<li><img src="../resources/images/fbook_sm.png"
+					class="foot_icon" /><a href="#">Connect on Facebook</a></li>
+				<li><img src="../resources/images/L_In_sm.png"
+					class="foot_icon" /><a href="#">Connect on LinkedIn</a></li>
+				<li><img src="../resources/images/twitter_sm.png"
+					class="foot_icon" /><a href="#">Connect on Twitter</a></li>
 				<li><a href="#">Download the Mobile App</a></li>
 				<li><a href="#">Order Promotional Items</a></li>
 			</ul>

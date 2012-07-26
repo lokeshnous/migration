@@ -59,6 +59,8 @@ public class HomeController {
 	@Value("${logoPath}")
 	private String logoPath;
 
+	@Value("${windowmediaplayerfilepath}")
+	private String windowmediaplayerfilepath;
 
 
 
@@ -115,7 +117,7 @@ public class HomeController {
 		employerProfileManagementForm.setCompanyEmail(companyProfileDTO.getCompanyEmail());
 		employerProfileManagementForm.setPositionTitle(companyProfileDTO.getPositionTitle());
 		employerProfileManagementForm.setLogoPath(companyProfileDTO.getLogoPath());
-
+		model.addAttribute("windowmediaplayerfilepath", windowmediaplayerfilepath);
 		model.addAttribute("employerProfileManagementForm", employerProfileManagementForm);
 		return "featuredemployerdetails";
 	}
