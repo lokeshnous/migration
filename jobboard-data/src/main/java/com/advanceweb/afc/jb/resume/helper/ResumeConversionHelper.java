@@ -254,7 +254,7 @@ public class ResumeConversionHelper {
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResume_name(resume.getResumeName());
 			resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
-			if(resume.getUpdateDt().toString() != null){
+			if(resume.getUpdateDt() != null){
 				resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
 			}
 			resumeDTOList.add(resumeDTO);
