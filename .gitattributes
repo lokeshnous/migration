@@ -36,6 +36,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginFormDTO.java -te
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MMXmlResumeParserImpl.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MagazinesDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MerUserDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchIndexDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetricsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetroAreaDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PackageInformationDTO.java -text
