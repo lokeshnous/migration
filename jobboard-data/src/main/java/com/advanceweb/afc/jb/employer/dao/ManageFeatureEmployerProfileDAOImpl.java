@@ -84,9 +84,7 @@ ManageFeatureEmployerProfileDAO {
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		} 
 
 		return companyProfileDTOList;
 	}
