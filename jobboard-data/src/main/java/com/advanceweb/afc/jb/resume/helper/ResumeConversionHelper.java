@@ -45,7 +45,11 @@ public class ResumeConversionHelper {
 		resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 		resumeDTO.setResume_name(resume.getResumeName());
 		resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
-		
+		resumeDTO.setDesired_job_title(resume.getJobTitle());
+		resumeDTO.setEmploymentType(String.valueOf(resume.getEmpTypeLookupId()));
+		resumeDTO.setWilling_to_relocate(resume.getRelocate());
+		resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
+		resumeDTO.setWork_authorization_US(String.valueOf(resume.getWorkAuthLookupId()));
 		return resumeDTO;
 
 	}
@@ -250,7 +254,9 @@ public class ResumeConversionHelper {
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResume_name(resume.getResumeName());
 			resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
-			resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
+			if(resume.getUpdateDt().toString() != null){
+				resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
+			}
 			resumeDTOList.add(resumeDTO);
 		}
 
