@@ -39,36 +39,23 @@
 		    
 		    
 		    
-		    jQuery(document).ready(function (){ 
+		   /*  jQuery(document).ready(function (){ 
 		    	
-		    	//alert("Test");
-				jQuery("#jobSearchResultTable").jqGrid({ 
-	
-					url:"jobsearchactivity/findJobSearch", 
-					datatype: "json", 
-					colNames:[	'Job Title', 'Employer', 'Location', 'Date Posted' ], 
-					colModel:[  
-						   {name:'id',index:'id', width:55}, 
-						   {name:'invdate',index:'invdate', width:90}, 
-						   {name:'name',index:'name asc, invdate', width:100}, 
-						   {name:'amount',index:'amount', width:80, align:"right"}, 
-						   {name:'tax',index:'tax', width:80, align:"right"}, 
-						   {name:'total',index:'total', width:80,align:"right"}, 
-						   {name:'note',index:'note', width:150, sortable:false}
-						   
-						   ],   
-						   rowNum:10, 
-						   rowList:[10,20,30], 
-						   pager: '#pager2', 
-						   sortname: 'id', 
-						   viewrecords: true, 
-						   sortorder: "desc", 
-						   caption:"JSON Example"
-
-
-				});
+		    	$("#submitval").live('click',function(){
+		    		alert('a');
+		    		
+		    	$.ajax({
+		    		  url: "http://localhost:8083/jobboard/jobsearchactivity/findJobSearch.html",
+		    		  dataType: 'json',
+		    		  success: function(data) {
+		    			  $.each(data.jsonRows, function(key,val) {
+		    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+val.PostedDate.date+'</li></ul>');
+		    			  });
+		    		  }
+		    		});
+		    	});
 				
-		    });
+		    }); */
 		    
 		    
 		    
@@ -190,7 +177,7 @@
               <div class="row">
               <div class="job_search_main job_search_main_height">
                   <%-- <form method=""> --%>
-                  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">
+                  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm"> 
             <div class="search_form">
             
                
@@ -220,7 +207,8 @@
 	              
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
-	                    <input type="submit" value="Find Jobs" class="btn_sm orange jb_search_submit" />
+	                    <!-- <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
+	                    <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" />
              <%-- </form:form>     --%>  
                       
                       <a href="advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div>
@@ -393,7 +381,7 @@
                             
                             <table id="jobSearchResultTable">
                             
-                               <!--  <div class="searchResultsHeader">
+                             <div class="searchResultsHeader">
                                         <ul>
                                         <li class="searchResultsColumn1">
                                             Job Title
@@ -408,26 +396,14 @@
                                             Date Posted
                                         </li>
                                         </ul>
-                                </div> -->
+                                </div> 
                                 
-                                <!-- <div id="jobSearchResultDiv" class="searchResultsListing">
+                                 <div id="jobSearchResultDiv" class="searchResultsListing">
                                 
                                     
                                     <div class="searchResultsItem">
-                                        <ul id="orange-bg" class="searchResultsJobInfo closed orange-bg">
-                                            <li class="searchResultsColumn1">
-                                                Nurse Team Lead/RN Manager
-                                            </li>
-                                            <li class="searchResultsColumn2">
-                                                NOVA Medical Group
-                                            </li>
-                                            <li class="searchResultsColumn3">
-                                                Ashburn, VA
-                                            </li>
-                                            <li class="searchResultsColumn4">
-                                                07/12/2012
-                                            </li>
-                                        </ul>
+                                       
+                                        <!--
                                         <div class="searchResultsSubContent">
                                             
                                             <p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span> Busy multi-specialty Medical Group/Urgent Care Center seeks Nursing Team Leader/RN Manager to coordinate and supervise nursing staff in our Ashburn Facility. Qualified candidate will be an RN/LPN and must have a proven track record of...</p>
@@ -455,10 +431,11 @@
                                             
                                             
                                           </div>
+                                         -->
                                     </div>
-                                    
+                                   
                             
-                            </div> -->
+                            </div>
                             
                             
                             </table>
