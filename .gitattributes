@@ -319,6 +319,8 @@ jobboard/src/main/webapp/WEB-INF/view/featuredemployers.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/findjob.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerActivity.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobSeekerCreateAccount.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobSeekerCreateAccountInfo.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotYourPasswordPagePopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
