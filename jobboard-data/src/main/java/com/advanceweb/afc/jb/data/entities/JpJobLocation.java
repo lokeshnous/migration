@@ -29,6 +29,18 @@ public class JpJobLocation implements Serializable {
     @ManyToOne
 	@JoinColumn(name="location_id", insertable = false, updatable = false)
 	private JpLocation jpLocation;
+    
+	@Column(name="hide_city")
+	private int hideCity;
+	
+	@Column(name="hide_state")
+	private int hideState;
+	
+	@Column(name="hide_postcode")
+	private int hidePostCode;
+	
+	@Column(name="hide_country")
+	private int hideCountry;
 
     public JpJobLocation() {
     }
@@ -63,6 +75,38 @@ public class JpJobLocation implements Serializable {
 
 	public void setJpLocation(JpLocation jpLocation) {
 		this.jpLocation = jpLocation;
+	}
+
+	public int getHideCity() {
+		return hideCity;
+	}
+
+	public void setHideCity(int hideCity) {
+		this.hideCity = hideCity;
+	}
+
+	public int getHideState() {
+		return hideState;
+	}
+
+	public void setHideState(int hideState) {
+		this.hideState = hideState;
+	}
+
+	public int getHidePostCode() {
+		return hidePostCode;
+	}
+
+	public void setHidePostCode(int hidePostCode) {
+		this.hidePostCode = hidePostCode;
+	}
+
+	public int getHideCountry() {
+		return hideCountry;
+	}
+
+	public void setHideCountry(int hideCountry) {
+		this.hideCountry = hideCountry;
 	}
 	
 }

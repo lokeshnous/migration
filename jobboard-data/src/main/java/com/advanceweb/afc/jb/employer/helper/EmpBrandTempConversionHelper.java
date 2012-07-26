@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.helper;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
@@ -34,8 +36,12 @@ public class EmpBrandTempConversionHelper {
 		merJpBrandTempDTO.setLogoPath(merJpBrandingTemp.getLogoPath());
 		merJpBrandTempDTO.setColor(merJpBrandingTemp.getColor());
 		merJpBrandTempDTO.setCreatedDate(merJpBrandingTemp.getCreatedDate());
-		String updateDate = DateUtils.convertSQLDateToStdDate(merJpBrandingTemp.getUpdatedDate().toString());
-		merJpBrandTempDTO.setUpdatedDate(updateDate);
+		Date updateDate = merJpBrandingTemp.getUpdatedDate();
+		String strUpdateDate = null;
+		if(updateDate != null){
+			strUpdateDate = DateUtils.convertSQLDateToStdDate(updateDate.toString());
+		}
+		merJpBrandTempDTO.setUpdatedDate(strUpdateDate);
 		return merJpBrandTempDTO;
 
 	}
@@ -57,7 +63,11 @@ public class EmpBrandTempConversionHelper {
 		merJpBrandTemp.setLogoPath(brandingTemplatesDTO.getLogoPath());
 		merJpBrandTemp.setColor(brandingTemplatesDTO.getColor());
 		merJpBrandTemp.setCreatedDate(brandingTemplatesDTO.getCreatedDate());
-		java.sql.Date updateDate = DateUtils.convertStringToSQLDate(brandingTemplatesDTO.getUpdatedDate());
+		String strUpdateDate = brandingTemplatesDTO.getUpdatedDate();
+		java.sql.Date updateDate = null;
+		if(strUpdateDate != null){
+			updateDate = DateUtils.convertStringToSQLDate(brandingTemplatesDTO.getUpdatedDate());
+		}
 		merJpBrandTemp.setUpdatedDate(updateDate);
 		return merJpBrandTemp;
 

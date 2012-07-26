@@ -14,24 +14,24 @@ import java.util.Date;
 public class SearchedJobDTO {
 
 	private String jobTitle;
-	private String areaOfInterest;
-	private String positionType;
-	private String city;
-	private String state;
 	private String jobDesc;
-	private String companyOverview;
-	private String imagePath;
-	private String logo;
-
-	private String employerEmailAddress;
-	
-
-
-	// Added for save this job task
-	private int userID;
 	private int jobID;
+	private String employerEmailAddress;
+	private String positionType;
+	private String logo;
+	private String imagePath;
 	private Date createdDate;
+	private String companyOverview;
+	private int userID;	
+	// Admin facility 
 	private String companyName;
+	private String companyNameDisp;	
+	// Location
+	private String city;
+	private String stateFullName;
+	private String country;
+	private String areaOfInterest;
+	
 
 
 	public String getAreaOfInterest() {
@@ -56,14 +56,6 @@ public class SearchedJobDTO {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 
 	public String getJobDesc() {
@@ -184,5 +176,28 @@ public class SearchedJobDTO {
 		this.jobID = jobID;
 	}
 
+	public String getStateFullName() {
+		return stateFullName;
+	}
+
+	public void setStateFullName(String stateFullName) {
+		this.stateFullName = stateFullName;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCompanyNameDisp() {
+		return companyNameDisp;
+	}
+
+	public void setCompanyNameDisp(String companyNameDisp) {
+		this.companyNameDisp = companyNameDisp;
+	}
 
 }

@@ -40,7 +40,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE THIS JOB</h2>
-			<a href="cancelSaveThisJobPopUp.html"><img
+			<a href="findJobPage.html"><img
 				src="../resources/images/Close.png" width="19" height="19"
 				alt="close"></a>
 		</div>
@@ -56,7 +56,7 @@
 
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> 
-					<a href="cancelSaveThisJobPopUp.html"
+					<a href="findJobPage.html"
 						class="btn_sm orange">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>

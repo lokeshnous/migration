@@ -53,6 +53,7 @@ public class JobSearchActivityController {
 			.getLogger("JobSearchActivityController.class");
 
 	// @Autowired
+	@SuppressWarnings("unused")
 	private MMEmailService emailService;
 
 	@Autowired
@@ -69,17 +70,22 @@ public class JobSearchActivityController {
 	 * @return : modelandview for respected Jobid
 	 */
 	@RequestMapping(value = "/viewJobDetails")
-	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId) {
+	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
+			Map<String, Object> model) {
 		try {
 			/**
 			 * View the job with template
 			 */
-			jobSearchActivity.viewJobDetails(jobId);
+			SearchedJobDTO jobDTO= jobSearchActivity.viewJobDetails(jobId);
+			model.put("jobDetail", jobDTO);
+			model.put("isHideCity", jobDTO.getCity()!= null);
+			model.put("isHideState", jobDTO.getStateFullName()!= null);
+			model.put("isHideCoutry", jobDTO.getCountry()!= null);
 		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("ERROR");
 		}
-		return new ModelAndView("jobSeekerActivity");
+		return new ModelAndView("jobseekerJobDetails");
 	}
 
 	/**
@@ -126,7 +132,7 @@ public class JobSearchActivityController {
 			// TODO: Fetch the path of public resume
 			attachmentpaths.add("C:\\ppResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			emailService.sendEmail(employerEmailDTO);
+//			emailService.sendEmail(employerEmailDTO);
 			// System.out.println("-------Mail sent to employer-----");
 			/**
 			 * confirm mail:Send mail to job seeker by sub as job title and body
@@ -142,12 +148,13 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
-			emailService.sendEmail(jobSeekerEmailDTO);
+//			emailService.sendEmail(jobSeekerEmailDTO);
 			// System.out.println("-------Mail sent to jobseeker-----");
 
 			/**
 			 * save the applied job in DB
 			 */
+//			TODO:Validate if job is already applied:You already applied this job on <Date>
 			SaveOrApplyJobDTO applyJobDTO = new SaveOrApplyJobDTO();
 			applyJobDTO.setJobId(jobId.intValue());
 			applyJobDTO.setUserId(1);
@@ -260,11 +267,12 @@ public class JobSearchActivityController {
 		 */
 		Boolean isjobSeekerLogedin = Boolean.FALSE;
 		if (!isjobSeekerLogedin) {
-			return new ModelAndView("saveThisJobPopUp");
+			return new ModelAndView("jobseekersaveThisJobPopUp");
 		}
 		/**
 		 * save the applied job in DB
 		 */
+//		TODO:Validate if job is already saved.You already saved this job on <Date>
 		SaveOrApplyJobDTO saveJobDTO = new SaveOrApplyJobDTO();
 		saveJobDTO.setJobId(jobId.intValue());
 		saveJobDTO.setUserId(1);
@@ -283,9 +291,10 @@ public class JobSearchActivityController {
 	 */
 	@RequestMapping(value = "/cancelSaveThisJobPopUp")
 	public ModelAndView cancelSaveThisJobPopUp(
-			@Valid JobSearchViewDetailForm form) {
-
-		return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			Map<String, JobSearchResultForm> model) {
+		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		model.put("jobSearchResultForm", jobSearchResultForm);
+		return new ModelAndView("findJob");
 	}
 
 	/**

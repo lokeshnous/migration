@@ -34,16 +34,21 @@ public class JobSearchActivityConversionHelper {
 		SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
 		if (entity != null) {
 			/**
-			 * get detail from admFacility entity
-			 */
-			AdmFacility admFacility = entity.getAdmFacility();
-			searchedJobDTO.setCompanyName(admFacility.getName());
-
-			/**
 			 * get detail from JpJob entity
 			 */
 			searchedJobDTO.setJobTitle(entity.getJobtitle());
 			searchedJobDTO.setJobDesc(entity.getAdtext());
+			searchedJobDTO.setJobID(entity.getJobId());
+			
+			/**
+			 * get detail from admFacility entity
+			 */
+			AdmFacility admFacility = entity.getAdmFacility();
+			searchedJobDTO.setCompanyName(admFacility.getName());
+			int blindAd = entity.getBlindAd();
+			if(blindAd == 1){
+				searchedJobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
+			}		
 
 			/**
 			 * get detail from JpLocation entity
@@ -51,8 +56,19 @@ public class JobSearchActivityConversionHelper {
 			List<JpJobLocation> jobLocations = entity.getJpJobLocations();
 			JpJobLocation jobJobLocation = jobLocations.get(0);
 			JpLocation jpLocation = jobJobLocation.getJpLocation();
-			searchedJobDTO.setCity(jpLocation.getCity());
-			searchedJobDTO.setState(jpLocation.getState());
+			int hideCity = jobJobLocation.getHideCity();
+			int hideState = jobJobLocation.getHideState();
+			int hideCountry = jobJobLocation.getHideCountry();
+			
+			if(hideCity != 1){
+				searchedJobDTO.setCity(jpLocation.getCity());
+			}
+			if(hideState != 1){
+				searchedJobDTO.setStateFullName(jpLocation.getStateFullname());
+			}
+			if(hideCountry != 1){
+				searchedJobDTO.setCountry(jpLocation.getCountry());
+			}
 
 			/**
 			 * get the template details
