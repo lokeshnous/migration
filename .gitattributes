@@ -245,6 +245,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/helper/PopulateDropdown
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDaoImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/helper/ResumeConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/search/engine/solr/dao/SearchDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
