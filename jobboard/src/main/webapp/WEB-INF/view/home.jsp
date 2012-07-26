@@ -68,7 +68,8 @@
 								</span>
 							</div>
 							<div class="floatleft">
-								<span> <a href="">Login</a> | <a href="">Sign Up</a> |
+								<span> <a href="">Login</a> | <a href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign Up</a> |
+
 								</span>
 							</div>
 						</div>
