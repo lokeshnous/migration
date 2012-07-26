@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -16,7 +16,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-@Repository("registerValidation")
+@Component("registerValidation")
 public class JobSeekerRegistrationValidation {
 	
 	private Pattern pattern;
