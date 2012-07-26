@@ -105,11 +105,11 @@ public class JobSeekerRegistrationValidation {
 				 && !StringUtils.isEmpty(registerForm.getRetypepassword())){
 			 
 			 if(!validatePasswordPattern(registerForm.getPassword())){
-				 errors.rejectValue("password", "NotEmpty", "(Password should contain 8-20 characters, including at least 1 number)"); 
+				 errors.rejectValue("password", "NotEmpty", "Password should contain 8-20 characters, including at least 1 number"); 
 			 }
 			 
 			 if(!validatePasswordPattern(registerForm.getRetypepassword())){
-				 errors.rejectValue("retypepassword", "NotEmpty", "(Password should contain  8-20 characters, including at least 1 number)"); 
+				 errors.rejectValue("retypepassword", "NotEmpty", "Password should contain  8-20 characters, including at least 1 number"); 
 			 }
 			 
 			 if(!registerForm.getPassword().equals(registerForm.getRetypepassword())){

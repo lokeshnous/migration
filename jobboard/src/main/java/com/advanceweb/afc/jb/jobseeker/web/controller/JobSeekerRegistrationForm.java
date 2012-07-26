@@ -5,28 +5,28 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class JobSeekerRegistrationForm extends ContactInfoForm{
 
-	@NotEmpty
 	private String emailId;
-	@NotEmpty
 	private String confirmEmailId;
 	private String newsLetterEmailId;
-	@NotEmpty
+	@NotEmpty(message="Industry should not be empty")
 	private String myIndustry;
-	@NotEmpty
+	@NotEmpty(message="Profession should not be empty")
 	private String myProfession;
-	@NotEmpty
+	@NotEmpty(message="Speciality should not be empty")
 	private String mySpeciality;
+	@NotEmpty(message="Job Title should not be empty")
+	private String myJobTitle;
 	private String ethenticity;
 	private String gender;
 	private String imCurrentlyIn;
-	@NotEmpty
 	private String password;
 	private String phone;	
 	private String currentPassword;	
-	@NotEmpty
 	private String retypepassword;
 	private String veteranStatus;	
 	private String mobileNo;
+	private String employmentType;
+	
 	
 	private CommonsMultipartFile fileData;
 	private String fileName;
@@ -158,7 +158,29 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getEmploymentType() {
+		return employmentType;
+	}
+
+	public void setEmploymentType(String employmentType) {
+		this.employmentType = employmentType;
+	}
+
+	public String getMyJobTitle() {
+		return myJobTitle;
+	}
+
+	public void setMyJobTitle(String myJobTitle) {
+		this.myJobTitle = myJobTitle;
+	}
 	
 }

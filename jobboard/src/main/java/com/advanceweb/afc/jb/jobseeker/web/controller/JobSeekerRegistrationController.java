@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
@@ -29,6 +31,7 @@ import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -78,30 +81,31 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
-	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm")@Valid JobSeekerRegistrationForm registerForm, 
+	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
 			BindingResult result,Map map) {
 		
 		ModelAndView model = new ModelAndView();
 				
-//		registerValidation.validate(registerForm, result);
+		registerValidation.validate(registerForm, result);
 		
 		if(result.hasErrors()){
 			model.setViewName("jobSeekerCreateAccount");
 			return model;
 		}
 		
-		ContactInfoForm contactInfo = new ContactInfoForm();
 		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
 		List<StateDTO> stateList= populateDropdownsService.getStateList();
 		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
 		List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
 		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
 		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
+		List<DropDownDTO> empTyepList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		model.addObject("countryList",countryList);
 		model.addObject("employmentInfoList",empInfoList);
 		model.addObject("genderList",genderList);
 		model.addObject("ethnicityList",ethnicityList);
 		model.addObject("veteranStatusList",veteranStatusList);
+		model.addObject("empTyepList",empTyepList);
 		model.setViewName("jobSeekerCreateAccountInfo");
 		model.addObject("registerForm", registerForm);
 		return model;
@@ -122,21 +126,22 @@ public class JobSeekerRegistrationController {
 		ModelAndView model = new ModelAndView();
 		try {			
 				if (result.hasErrors()) {
-					return new ModelAndView("jobseekerregistration");
+					return new ModelAndView("jobSeekerCreateAccountInfo");
 				}
 		
 				// Transform JobSeeker Registration Form to JobSeekerRegistrationDTO
 				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				/*AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(form.getContactForm());*/
+				AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(registerForm);
 				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
 				JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(registerForm);
-//				jsRegistrationDTO.setAddressDTO(addDTO);
+				jsRegistrationDTO.setAddressDTO(addDTO);
 				jsRegistrationDTO.setJobSeekerProfileDTO(jsProfileSettingsDTO);
 				jsRegistrationDTO.setMerUserDTO(userDTO);
 				// Call to service layer
 				profileRegistration.createNewProfile(jsRegistrationDTO);
-				model.setViewName("registrationsuccess");
-//				model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
+//				model.addObject(attributeName, attributeValue)
+				model.setViewName("/jobboard/jobSeekerDashBoard");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -155,9 +160,9 @@ public class JobSeekerRegistrationController {
 	public ModelAndView backToCreateJobSeekerCreateYrAcct(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
 		try {			
-				if (result.hasErrors()) {
+/*				if (result.hasErrors()) {
 					return new ModelAndView("jobseekerregistration");
-				}
+				}*/
 
 		} catch (Exception e) {
 			e.printStackTrace();

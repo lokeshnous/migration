@@ -11,34 +11,24 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 
 public class ContactInfoForm {
-	@NotEmpty
-	private String firstName;
 	
-	@NotEmpty
+	@NotEmpty(message="First Name should not be empty")
+	private String firstName;	
+	@NotEmpty(message="Last Name should not be empty")
 	private String lastName;
-	
-	private String middleName;
-	
-	@NotEmpty
-	private String addressLine1;
-	
-	@NotEmpty
-	private String addressLine2;
-	
-	@NotEmpty
-	private String city;
-	
-	@NotEmpty
-	private String country;
-	
-	@NotEmpty
-	private String state;
-	
-	@NotEmpty
+	@NotEmpty(message="City should not be empty")
+	private String city;	
+	@NotEmpty(message="Country should not be empty")
+	private String country;	
+	@NotEmpty(message="State should not be empty")
+	private String state;	
+	@NotEmpty(message="Zip Code should not be empty")
 	private String postalCode;
-	
-	private String phoneNo;
-	
+	@NotEmpty(message="Address should not be empty")
+	private String addressLine1;
+	private String addressLine2;	
+	private String middleName;
+	private String phoneNo;	
 	private String mobileNo;
 
 	public String getFirstName() {
