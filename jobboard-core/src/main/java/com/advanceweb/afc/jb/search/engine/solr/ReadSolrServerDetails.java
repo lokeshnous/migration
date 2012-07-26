@@ -20,6 +20,10 @@ import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.MetaSearchIndexDTO;
+import com.advanceweb.afc.jb.common.MetaSearchInputDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+
 
 
 /**
@@ -36,6 +40,12 @@ public class ReadSolrServerDetails {
   
 	private static final Logger LOGGER = Logger
 			.getLogger("ReadSolrServerDetails.class");
+	
+	private static String rowsString = "rows";
+	private static String startString = "start";
+	private static String sessionID = "sessionid";
+	private static String queryType = "querytype";
+	private static String searchSeq = "search_seq";
 	
 	/**
 	 * Reads Solr Server details from the property file and put it into the Map
@@ -81,8 +91,8 @@ public class ReadSolrServerDetails {
 		solrQueryDetails.put("posted_dt",
 				solrConfiguration.getProperty("posted_dt"));
 		solrQueryDetails.put("state", solrConfiguration.getProperty("state"));
-		solrQueryDetails.put("rows", solrConfiguration.getProperty("rows"));
-		solrQueryDetails.put("start", solrConfiguration.getProperty("start"));
+		solrQueryDetails.put(rowsString, solrConfiguration.getProperty(rowsString));
+		solrQueryDetails.put(startString, solrConfiguration.getProperty(startString));
 
 		return solrQueryDetails;
 	}
@@ -101,9 +111,10 @@ public class ReadSolrServerDetails {
 	 */
 	public QueryResponse getSolrResponse(final Map<String, String> serverDetailsMap,
 			final Map<String, String> solrQueryDetails, final Map<String, String> paramMap,
-			final long start, final long rows) {
+			final long start, final long rows, final List<MetaSearchInputDTO> mSInputList) {
 		QueryResponse response = null;
 		HttpSolrServer server = null;
+		/*server = new HttpSolrServer(paramMap.get("urlString"));*/
 		server = new HttpSolrServer(serverDetailsMap.get("serverUrl")
 				.toString() + serverDetailsMap.get("solrservice").toString());
 		server.setSoTimeout(Integer.parseInt(serverDetailsMap.get("sotimeout")));
@@ -122,11 +133,43 @@ public class ReadSolrServerDetails {
 				.get("maxretries")));
 		server.setParser(new XMLResponseParser());
 
-		final String searchString = paramMap.get("keywords") + "+"
-				+ paramMap.get("cityState") + "+" + paramMap.get("radius");
+		/*final String searchString = paramMap.get("keywords") + "+"
+				+ paramMap.get("cityState") + "+" + paramMap.get("radius");*/
+		//final String searchString = paramMap.get("searchQueryString");
+		
+		SolrQuery searchquery = createSOLRQuery(mSInputList, solrQueryDetails, paramMap);
+		
+		
+		System.out.println("Search query===>>>" + searchquery);
+
+		try {
+			response = server.query(searchquery);
+		} catch (SolrServerException e1) {
+			LOGGER.debug(e1);
+			return null;
+		}
+		return response;
+	
+	}
+	
+	public SolrQuery createSOLRQuery(List<MetaSearchInputDTO> mSInputList, Map<String, String> solrQueryDetails,
+			Map<String, String> paramMap){
+		
+		String searchString = "";
+		SolrQuery searchquery = null;
+		
+		for(MetaSearchInputDTO obj: mSInputList){
+			if(obj.getInputName().toString().equalsIgnoreCase("q")){
+				searchString = paramMap.get("keywords") + "+"
+						+ paramMap.get("cityState") + "+" + paramMap.get("radius");
+			}
+		}
+		
+		LOGGER.info("!!!!!!!Search String=="+searchString);
+		
 		if (searchString != null && searchString.length() > 0) {
 
-			final SolrQuery searchquery = new SolrQuery();
+			searchquery = new SolrQuery();
 			searchquery.setQuery(searchString);
 			searchquery.setFacet(true);
 			searchquery.addFacetField(solrQueryDetails.get("city"));
@@ -134,20 +177,31 @@ public class ReadSolrServerDetails {
 			// searchquery.addFacetField(solrQueryDetails.get("radius"));
 			searchquery.addFacetField(solrQueryDetails.get("posted_dt"));
 			searchquery.addFacetField(solrQueryDetails.get("state"));
-			searchquery.add("rows", String.valueOf(rows));
-			searchquery.add("start", String.valueOf(start));
-			LOGGER.info("Search query===>>>" + searchquery);
-
-			try {
-				response = server.query(searchquery);
-			} catch (SolrServerException e1) {
-				LOGGER.debug(e1);
-				return null;
+			/*searchquery.add(rowsString, String.valueOf(rows));
+			searchquery.add(startString, String.valueOf(start));*/
+			
+			for(MetaSearchInputDTO obj: mSInputList){
+				
+				if(obj.getInputName().equalsIgnoreCase(rowsString)){
+					searchquery.add(rowsString, paramMap.get(rowsString));
+				}
+				if(obj.getInputName().equalsIgnoreCase(startString)){
+					searchquery.add(startString, paramMap.get(startString));
+				}
+				if(obj.getInputName().equalsIgnoreCase(sessionID)){
+					searchquery.add("sessionid", paramMap.get(sessionID));
+				}
+				if(obj.getInputName().equalsIgnoreCase(queryType)){
+					searchquery.add("querytype", paramMap.get(queryType));
+				}
+				if(obj.getInputName().equalsIgnoreCase(searchSeq)){
+					searchquery.add("search_seq", paramMap.get(searchSeq));
+				}
 			}
 		}
-			return response;
-	
+		return searchquery;
 	}
+	
 
 	public JSONObject convertToJSON(final JobSearchResultDTO jSResultDTO) {
 		final JSONObject jobSrchJsonObj = new JSONObject();
@@ -234,6 +288,69 @@ public class ReadSolrServerDetails {
 		return serverAccessible;
 		
 	}
+	
+	public Map<String, StringBuffer> getSearchQuery(List<MetaSearchInputDTO> mSInputList, List<MetaSearchIndexDTO> srchIndexList, final Map<String, String> paramMap){
+		
+		Map<String, StringBuffer> urlParamMap = new HashMap<String, StringBuffer>();
+		
+		StringBuffer urlStr = new StringBuffer();
+		for(MetaSearchIndexDTO obj: srchIndexList){
+			urlStr.append(obj.getSearchHost());
+			urlStr.append(MMJBCommonConstants.SLASH);
+			urlStr.append(obj.getSearchIndexGroup());
+			urlStr.append(MMJBCommonConstants.SLASH);
+			urlStr.append(obj.getSearchIndexName());
+			//urlStr.append(MMJBCommonConstants.SLASH_SELECT_SLASH);
+		}
+		
+		LOGGER.info("URL Str===>>"+urlStr);
+		
+		/*StringBuffer paramStr = new StringBuffer();
+		Map<String,String> paramInputMap = new HashMap<String, String>();
+		for(MetaSearchInputDTO obj: mSInputList){
+			LOGGER.info("@@@@@@@@@@@@@@"+obj.getInputName().toString().equalsIgnoreCase("q"));
+			
+			if(obj.getInputName().toString().equalsIgnoreCase("q")){
+				
+				//paramStr.append(MMJBCommonConstants.EQUAL_TO);
+				paramStr.append(obj.getInputValue());
+				
+			}else{
+				paramStr.append(MMJBCommonConstants.AMP);
+				paramStr.append(obj.getInputName());
+				paramStr.append(MMJBCommonConstants.EQUAL_TO);
+				paramStr.append(obj.getInputValue());
+			}
+			
+		}
+		
+		int index = paramStr.indexOf(":b01");
+		paramStr.replace(index, index + ":b01".length(), paramMap.get("keywords"));
+		
+		index = paramStr.indexOf(":b02");
+		paramStr.replace(index, index + ":b02".length(), paramMap.get(rowsString));
+		
+		index = paramStr.indexOf(":b03");
+		paramStr.replace(index, index + ":b03".length(), paramMap.get(startString));
+		
+		index = paramStr.indexOf(":b04");
+		paramStr.replace(index, index + ":b04".length(), paramMap.get("sessionId"));
+		
+		index = paramStr.indexOf(":b05");
+		paramStr.replace(index, index + ":b05".length(), paramMap.get("searchName"));
+		
+		index = paramStr.indexOf(":b06");
+		paramStr.replace(index, index + ":b06".length(), paramMap.get("searchSequence"));
+		
+		LOGGER.info("Param Str===="+paramStr);*/
+		
+		urlParamMap.put("urlString", urlStr);
+		//urlParamMap.put("paramString", paramStr);
+		
+		return urlParamMap;
+		
+	}
+	
 	
 
 }
