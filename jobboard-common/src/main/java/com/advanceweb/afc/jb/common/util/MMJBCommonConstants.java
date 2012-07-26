@@ -13,4 +13,10 @@ public interface MMJBCommonConstants {
 	
 	//For DropDowns
 	public static final String EMPLOYMENT_TYPE="EmploymentType";
+	
+	//For SOLR search
+	public static final String SLASH = "/";
+	public static final String SLASH_SELECT_SLASH = "/select/?";
+	public static final String AMP = "&";
+	public static final String EQUAL_TO = "=";
 }
