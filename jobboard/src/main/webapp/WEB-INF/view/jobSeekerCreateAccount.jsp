@@ -162,27 +162,36 @@
            <form:form method="Post" action="createJobSeekerYourInfo.html" commandName="registerForm" enctype="multipart/form-data">
 	            <div class="rowEvenNewSpacing marginTop0"> <span class="lableText3">Email Address:</span>
 	                      <form:input path="emailId" class="job_seeker_password textBox350"/>
-	                      <form:errors path="emailId" />
 	                      <span class="required">(Required)</span> 
 	            </div>
-	
+				<div>
+				<span class="lableText3"></span>
+					<FONT color="red"><form:errors path="emailId" /></FONT> 
+				</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Email Address:</span>
 	                      <form:input path="confirmEmailId" class="job_seeker_password textBox350"/>
-	                      <form:errors path="confirmEmailId" />
 	                      <span class="required">(Required)</span> 
 	            </div>
-	                      
+	            <div>
+				<span class="lableText3"></span>
+					<FONT color="red"><form:errors path="confirmEmailId" /></FONT> 
+				</div>         
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Password:</span>
-	                      <form:input path="password" class="job_seeker_password textBox350"/>
-	                      <form:errors path="password" />
+	                      <form:password path="password" class="job_seeker_password textBox350"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-	
+				<div>
+				<span class="lableText3"></span>
+					<FONT color="red"><form:errors path="password" /></FONT> 
+				</div>
 	            <div class="row marginTop5"> <span class="lableText3"></span> (8-20 characters, including at least 1 number)</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Password:</span>
 	            		  <form:password path="retypepassword" class="job_seeker_password textBox350" />
-	            		  <form:errors path="retypepassword" />
 	                      <span class="required">(Required)</span> </div>
+	            <div>
+				<span class="lableText3"></span>
+					<FONT color="red"><form:errors path="retypepassword" /></FONT> 
+				</div>
 	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> <img src="../resources/images/SecureText.jpg" width="294" height="48" alt=""> </div>
 	
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Type the two words:</span>

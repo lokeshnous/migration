@@ -164,29 +164,40 @@
                   <h2 class="sectionSubHeader">Step 2: Your Information</h2>
                   <h3 class="marginLeft10"> Contact Information </h3>
 <form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">          
-<div class="rowEvenSpacing">
-
-           <span class="lableText3">First Name:</span>
-            <form:input path="firstName" class="job_seeker_password textBox350"/>
-
-          <span class="required">(Required)</span>
-                    </div>
+			<div class="rowEvenSpacing">
+	            <span class="lableText3">First Name:</span>
+	            <form:input path="firstName" class="job_seeker_password textBox350"/>
+		        <span class="required">(Required)</span>
+            </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="firstName" /></FONT> 
+			</div>  
             <div class="rowEvenSpacing">
-                      <span class="lableText3">Middle Name:</span>
+                <span class="lableText3">Middle Name:</span>
                 <form:input path="middleName" class="job_seeker_password textBox350"/>
             </div>
+            
             <div class="rowEvenSpacing">
                       <span class="lableText3">Last Name:</span>
 
                       <form:input path="lastName" class="job_seeker_password textBox350"/>
-          <span class="required">(Required)</span>
+          				<span class="required">(Required)</span>
             </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="lastName" /></FONT> 
+			</div>  
             <div class="rowEvenSpacing">
                       <span class="lableText3">Street Address:</span>
                 <form:input path="addressLine1" class="job_seeker_password textBox350"/>
           <span class="required">(Required)</span>
 
-                    </div>
+           </div>
+                       <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="addressLine1" /></FONT> 
+			</div>  
           <div class="rowEvenSpacing">
                       <span class="lableText3"></span>
                 <form:input path="addressLine2" class="job_seeker_password textBox350"/>
@@ -198,13 +209,19 @@
                 <form:input path="postalCode" class="job_seeker_password textBox350"/>
           <span class="required">(Required)</span>
             </div>
-          
+               <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="postalCode" /></FONT> 
+			</div> 
    <div class="rowEvenSpacing">
                       <span class="lableText3">City:</span>
                 <form:input path="city" class="job_seeker_password textBox350"/>
           <span class="required">(Required)</span>
-
             </div>
+              <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="city" /></FONT> 
+			</div> 
            <div class="row">
            <span class="lableTextSelect marginTop13 ">State / Province:</span>
               
@@ -215,16 +232,22 @@
               
           <span class="required marginTop8">(Required)</span>
             </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="state" /></FONT> 
+			</div> 
            <div class="row">
            <span class="lableTextSelect marginTop13 ">Country:</span>
 		 		<form:select path="country" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
 					<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
-				</form:select>
-				
+				</form:select>				
           <span class="required marginTop8">(Required)</span>
                     </div>
-
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="country" /></FONT> 
+			</div> 
             
     <div class="rowEvenNewSpacing">
                       <span class="lableText3">Phone Number:</span>
@@ -239,39 +262,49 @@
                       <form:input path="myIndustry" class="job_seeker_password textBox350"/><div class="toolTip marginTop6 marginLeft5"><span class="classic">Enter the industry you serve. Example: Healthcare</span></div>
           <span class="required">(Required)</span>
             </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="myIndustry" /></FONT> 
+			</div>             
              <div class="rowEvenNewSpacing">
                       <span class="lableText3">My Profession:</span>
 
                       <form:input path="myProfession" class="job_seeker_password textBox350"/><div class="toolTip marginTop6 marginLeft5"><span class="classic">Enter the general field in which you work. Example: Respiratory Therapy</span></div>
           <span class="required">(Required)</span>
             </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="myProfession" /></FONT> 
+			</div>              
     <div class="rowEvenNewSpacing">
                       <span class="lableText3">My Specialty:</span>
-                      <form:input path="mySpeciality" class="job_seeker_password textBox350"/>><div class="toolTip marginTop6 marginLeft5"><span class="classic">Enter the area in which you specialize. Example: Neonatal/Pediatrics</span></div>
+                      <form:input path="mySpeciality" class="job_seeker_password textBox350"/><div class="toolTip marginTop6 marginLeft5"><span class="classic">Enter the area in which you specialize. Example: Neonatal/Pediatrics</span></div>
           <span class="required">(Required)</span>
 
             </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="mySpeciality" /></FONT> 
+			</div>                
     <div class="rowEvenNewSpacing">
               <span class="lableText3">My Job Title:</span>
-       <input type="text" name="healthCareSubSplty" class="job_seeker_password textBox350" /><div class="toolTip marginTop6 marginLeft5"><span class="classic">Enter your official job title. Example: Registered Respiratory Therapist</span></div>
+       <form:input path="myJobTitle" class="job_seeker_password textBox350"/><div class="toolTip marginTop6 marginLeft5"><span class="classic">Enter your official job title. Example: Registered Respiratory Therapist</span></div>
                      <span class="required">(Required)</span>
                     </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="myJobTitle" /></FONT> 
+			</div>                                           
 <div class="rowEvenNewSpacing"> <span class="lableText3">My Resume:</span>
 
             <div class="floatLeft"><input name="textfield4" type="file" id="textfield4" size="20" class="job_seeker_login_email fileType" /></div>
             <div class="required">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 </div>
 <div class="row"> <span class="lableTextSelect marginTop13 ">I'm seeking:</span>
-                    <select id="select3" class="jb_input3 jb_input_width3" name="select3">
-                      <option>--- I'm seeking ---</option>
-                      <option>Full-Time</option>
-                      <option>Part-Time</option>
-
-                      <option>Per Diem</option>
-                      <option>Contract/Travel</option>
-                      <option>Work From Home</option>
-                      <option>Locum Tenens</option>
-              </select>
+            <form:select path="employmentType" class="jb_input3 jb_input_width3">
+				<form:option value="0" label="Select" />
+				<form:options items="${empTyepList}" itemValue="optionId" itemLabel="optionName" />
+			</form:select>
           </div>
 
 <div class="row marginTop20 paddingBottom10">           
