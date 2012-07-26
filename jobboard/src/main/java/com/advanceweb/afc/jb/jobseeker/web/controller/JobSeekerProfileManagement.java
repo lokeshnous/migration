@@ -73,9 +73,9 @@ public class JobSeekerProfileManagement {
 		
 		try {			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());
+//			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());
 			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(jsRegistrationForm);
-			jsRegistrationDTO.setAddressDTO(addDTO);
+//			jsRegistrationDTO.setAddressDTO(addDTO);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);

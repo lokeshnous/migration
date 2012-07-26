@@ -14,11 +14,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -26,6 +27,7 @@ import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -33,48 +35,79 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Controller
 @RequestMapping("/jobseekerregistration")
+@SessionAttributes("registerForm")
 public class JobSeekerRegistrationController {
 	
-	@Autowired(required=true)
+	@Autowired
 	private ProfileRegistration profileRegistration;
 
-	@Autowired(required=true)
+	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 	
-	@Autowired(required=true)
+	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	@Autowired
+	private JobSeekerRegistrationValidation registerValidation;
 
-	public JobSeekerRegistrationController() {
-	}
-
+	
 	/**
-	 * This method is called to display job seeker registration page
+	 * This method is called to display job seeker registration page Step1
+	 * Create Your Account
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/createJobSeekerProfile",method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistration(Map model) {
+	@RequestMapping(value="/createJobSeekerCreateYrAcct",method = RequestMethod.GET)
+	public ModelAndView createJobSeekerRegistrationStep1() {
 		
-		JobSeekerRegistrationForm jobSeekerRegistrationForm = new JobSeekerRegistrationForm();
+		ModelAndView model = new ModelAndView();
+		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
+		model.setViewName("jobSeekerCreateAccount");
+		model.addObject("registerForm", registerForm);	
+		return model;
+		
+	}
+	
+	
+	/**
+	 * This method is called to display job seeker registration page
+	 * Create Your information
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
+	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm")@Valid JobSeekerRegistrationForm registerForm, 
+			BindingResult result,Map map) {
+		
+		ModelAndView model = new ModelAndView();
+				
+//		registerValidation.validate(registerForm, result);
+		
+		if(result.hasErrors()){
+			model.setViewName("jobSeekerCreateAccount");
+			return model;
+		}
+		
 		ContactInfoForm contactInfo = new ContactInfoForm();
 		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
+		List<StateDTO> stateList= populateDropdownsService.getStateList();
 		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
 		List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
 		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
 		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
-		jobSeekerRegistrationForm.setContactForm(contactInfo);
+		model.addObject("countryList",countryList);
+		model.addObject("employmentInfoList",empInfoList);
+		model.addObject("genderList",genderList);
+		model.addObject("ethnicityList",ethnicityList);
+		model.addObject("veteranStatusList",veteranStatusList);
+		model.setViewName("jobSeekerCreateAccountInfo");
+		model.addObject("registerForm", registerForm);
+		return model;
 		
-		model.put("countryList",countryList);
-		model.put("employmentInfoList",empInfoList);
-		model.put("genderList",genderList);
-		model.put("ethnicityList",ethnicityList);
-		model.put("veteranStatusList",veteranStatusList);
-		
-		model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
-		return new ModelAndView("jobseekerregistration");
 	}
-
+	
 	/**
 	 * This method is called to save employee registration
 	 * 
@@ -83,34 +116,69 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST)
-	public ModelAndView saveJobSeekerRegistration(@Valid JobSeekerRegistrationForm form,
+	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Finish")
+	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
-
-		try {
-			
+		ModelAndView model = new ModelAndView();
+		try {			
 				if (result.hasErrors()) {
 					return new ModelAndView("jobseekerregistration");
 				}
 		
 				// Transform JobSeeker Registration Form to JobSeekerRegistrationDTO
 				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(form.getContactForm());
-				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(form);
-				JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(form);
-				jsRegistrationDTO.setAddressDTO(addDTO);
+				/*AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(form.getContactForm());*/
+				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
+				JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(registerForm);
+//				jsRegistrationDTO.setAddressDTO(addDTO);
 				jsRegistrationDTO.setJobSeekerProfileDTO(jsProfileSettingsDTO);
 				jsRegistrationDTO.setMerUserDTO(userDTO);
 				// Call to service layer
 				profileRegistration.createNewProfile(jsRegistrationDTO);
-		
+				model.setViewName("registrationsuccess");
 //				model.put("jobSeekerRegistrationForm", jobSeekerRegistrationForm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("registrationsuccess");
+		return model;
 	}
 	
+	/**
+	 * This method is called to save employee registration
+	 * 
+	 * @param jobSeekerRegistrationForm
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Back")
+	public ModelAndView backToCreateJobSeekerCreateYrAcct(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
+			BindingResult result) {
+		try {			
+				if (result.hasErrors()) {
+					return new ModelAndView("jobseekerregistration");
+				}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("jobSeekerCreateAccount","registerForm", registerForm);
+	}
+		
+	/**
+	 * This method is called to navigate to home page on click of cancel
+	 * 
+	 * @param jobSeekerRegistrationForm
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Cancel")
+	public ModelAndView backToHomePage() {
+
+		return new ModelAndView("healthcarejobs/advanceweb.html","", "");
+	}
+			
 	/**
 	 * This method is called to view/modify job seeker profile settings
 	 * 
@@ -149,9 +217,9 @@ public class JobSeekerRegistrationController {
 		
 		try {			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());
+			/*AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());*/
 			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(jsRegistrationForm);
-			jsRegistrationDTO.setAddressDTO(addDTO);
+//			jsRegistrationDTO.setAddressDTO(addDTO);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);

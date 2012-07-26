@@ -108,7 +108,8 @@ public class TransformJobSeekerRegistration {
 	 */
 	public MerUserDTO createUserDTO(JobSeekerRegistrationForm form){
 		MerUserDTO dto = new MerUserDTO();
-		ContactInfoForm contactInfoForm = form.getContactForm();
+		ContactInfoForm contactInfoForm =null; 
+//				form.getContactForm();
 		
 		dto.setFirstName(contactInfoForm.getFirstName());
 		dto.setLastName(contactInfoForm.getLastName());

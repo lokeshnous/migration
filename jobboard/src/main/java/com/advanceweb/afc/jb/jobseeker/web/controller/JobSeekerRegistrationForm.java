@@ -3,17 +3,8 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class JobSeekerRegistrationForm {
+public class JobSeekerRegistrationForm extends ContactInfoForm{
 
-//	@NotEmpty
-//	private String addressLine1;
-//	@NotEmpty
-//	private String addressLine2;
-//	@NotEmpty
-//	private String city;
-//
-//	@NotEmpty
-//	private String country;
 	@NotEmpty
 	private String emailId;
 	@NotEmpty
@@ -26,36 +17,20 @@ public class JobSeekerRegistrationForm {
 	@NotEmpty
 	private String mySpeciality;
 	private String ethenticity;
-	// private String emailId;//security check
-//	@NotEmpty
-//	private String firstName;
 	private String gender;
 	private String imCurrentlyIn;
-//	@NotEmpty
-//	private String lastName;
-//	private String middleName;
 	@NotEmpty
 	private String password;
-	private String phone;
-	
-	private String currentPassword;
-	
-//	@NotEmpty
-//	private String postalCode;
+	private String phone;	
+	private String currentPassword;	
 	@NotEmpty
 	private String retypepassword;
-	// private String emailId;//resume upload
-//	@NotEmpty
-//	private String state;
-	private String veteranStatus;
-	
+	private String veteranStatus;	
 	private String mobileNo;
 	
 	private CommonsMultipartFile fileData;
 	private String fileName;
 	
-	private ContactInfoForm contactForm;
-
 	public String getEmailId() {
 		return emailId;
 	}
@@ -174,14 +149,6 @@ public class JobSeekerRegistrationForm {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
-	}
-
-	public ContactInfoForm getContactForm() {
-		return contactForm;
-	}
-
-	public void setContactForm(ContactInfoForm contactForm) {
-		this.contactForm = contactForm;
 	}
 
 	public String getGender() {
