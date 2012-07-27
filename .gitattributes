@@ -144,6 +144,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityGroup
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySystem.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmPermission.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmRole.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmSaveJob.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmUserFacility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmUserFacilityGroup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmUserFacilityGroupPK.java -text
