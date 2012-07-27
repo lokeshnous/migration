@@ -75,7 +75,7 @@ public class TransformJobSeekerRegistration {
 	 * @param form
 	 * @return
 	 */
-	public AddressDTO createAddressDTO(JobSeekerRegistrationForm form){
+	public AddressDTO createAddressDTO(ContactInfoForm form){
 		// Address DTO
 		AddressDTO dto = new AddressDTO();
 		
