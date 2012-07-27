@@ -20,8 +20,6 @@
 <script src="../resources/js/jquery-1.7.1.min.js"></script>
 
 		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-		<script src="../resources/jquery.nyroModal-1.6.2/js/jquery.nyroModal-1.6.2.pack.js"></script>
-		<script src="../resources/nyroModal-1.6.2/js/jquery.nyroModal-1.6.2.pack.js"></script>
 		
         <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
  	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
@@ -38,17 +36,13 @@
 <script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		jQuery(".megamenu").megamenu();
 		$("#id").click(function() {
+	           parent.window.location.href = "navigateToLogin.html";
+	           parent.$.nmTop().close();
 
-			parent.$.nmTop().close();
-			parent.reload();
+	      });
+		jQuery(".megamenu").megamenu();
 
-	    });
-
-	
-		
-		
 	});
 	function MM_jumpMenu(targ, selObj, restore) { //v3.0
 		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
@@ -77,7 +71,7 @@
 				<div class="rowEvenNewSpacing marginTop0">
 					<span class="lableText3 width505 TextAlignL">You need to be
 						logged in to save jobs. 
-						<a href="navigateToLogin.html" id="id">Click here to log in now.</a>
+						<a href="" id="id">Click here to log in now.</a>
 					</span>
 				</div> 
 
