@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,17 +15,40 @@
 <!--[if IE]>
 	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
 <![endif]-->
+<!-- js files for modalpopup------------------------------------------------- -->
+<script src="../resources/js/jquery-1.7.1.js"></script>
+<script src="../resources/js/jquery-1.7.1.min.js"></script>
 
+		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
+		<script src="../resources/jquery.nyroModal-1.6.2/js/jquery.nyroModal-1.6.2.pack.js"></script>
+		<script src="../resources/nyroModal-1.6.2/js/jquery.nyroModal-1.6.2.pack.js"></script>
+		
+        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css" media="screen">
+           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
+        </style>
+<!-- -------------------------------------------------------------------------- -->
+		
 
 <!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="javascripts/slider.js"></script>
 <script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		$("#id").click(function() {
+
+			parent.$.nmTop().close();
+			parent.reload();
+
+	    });
+
+	
+		
+		
 	});
 	function MM_jumpMenu(targ, selObj, restore) { //v3.0
 		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
@@ -32,6 +56,9 @@
 		if (restore)
 			selObj.selectedIndex = 0;
 	}
+	
+	
+	
 </script>
 </head>
 
@@ -41,7 +68,7 @@
 		<div class="popupHeader">
 			<h2>SAVE THIS JOB</h2>
 			<a href="findJobPage.html"><img
-				src="../resources/images/Close.png" width="19" height="19"
+				src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();"
 				alt="close"></a>
 		</div>
 
@@ -50,14 +77,14 @@
 				<div class="rowEvenNewSpacing marginTop0">
 					<span class="lableText3 width505 TextAlignL">You need to be
 						logged in to save jobs. 
-						<a href="navigateToLogin.html">Click here to log in now.</a>
+						<a href="navigateToLogin.html" id="id">Click here to log in now.</a>
 					</span>
 				</div> 
 
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> 
-					<a href="findJobPage.html"
-						class="btn_sm orange">Cancel</a></span>
+					<a href="findJobPage.html" onclick="parent.$.nmTop().close();"
+ 						class="btn_sm orange" >Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
 			</form>

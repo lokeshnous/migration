@@ -13,12 +13,12 @@
 		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
 		
 <!-- js files for modalpopup------------------------------------------------- -->
-<script src="resources/js/jquery-1.7.1.js"></script>
-<script src="resources/js/jquery-1.7.1.min.js"></script>
+<script src="../resources/js/jquery-1.7.1.js"></script>
+<script src="../resources/js/jquery-1.7.1.min.js"></script>
 
-		<script src="resources/nyroModal/js/jquery.nyroModal.custom.js"></script>
-        <script src="resources/nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="resources/nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
+        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
 
         <style type="text/css" media="screen">
            @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
@@ -28,18 +28,31 @@
 	
 	
         <!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
-			});
-			</script>
-			<script type="text/javascript">
-			$(function() {
-				$("#saveThisPopup").nyroModal({minWidth : 50,minHeight : 50});		
+
+				$("#saveThisPopup").nm({showCloseButton: false});
+			    var width = 775;
+			    var height = 252;
+			    $("#saveThisPopup").nyroModal({
+			      sizes: {
+			        initW: width, initH: height,
+			        minW: width, minH: height,
+			        w: width, h: height
+			      },
+			      callbacks: {
+			        beforeShowCont: function() { 
+			            width = $('.nyroModalCont').width();
+			            height = $('.nyroModalCont').height();
+			            $('.nyroModalCont iframe').css('width', width);
+			            $('.nyroModalCont iframe').css('height', height);
+			        }
+			      }
+			    });
 			});
 		</script>
 
