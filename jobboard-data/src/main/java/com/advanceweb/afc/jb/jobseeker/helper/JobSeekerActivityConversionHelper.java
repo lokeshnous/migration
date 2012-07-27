@@ -1,10 +1,17 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
+import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 
 
 /**
@@ -15,19 +22,34 @@ import com.advanceweb.afc.jb.data.entities.JpJob;
 @Repository("jobSeekerActivityConversionHelper")
 public class JobSeekerActivityConversionHelper {
 
+	@Autowired
+	JobPostConversionHelper jobPostConversionHelper;
+	
+	
+	
 	/**
 	 * Entity to applied job dto
 	 * @param entity
 	 * @return
 	 */
-	public AppliedJobDTO transformJpJobToApplidJobDTO(JpJob entity) {
-		AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
+	public List<AppliedJobDTO> transformToApplidJobDTO(List<AdmSaveJob> entity) {
+		List<AppliedJobDTO> appliedJobDTOList=new ArrayList<AppliedJobDTO>();
 		if (entity != null) {
-			appliedJobDTO.setJobTitle(entity.getJobtitle());
-			appliedJobDTO.setAppliedDate(entity.getCreateDt());
-
+			
+			for(AdmSaveJob job:entity){
+				AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
+				appliedJobDTO.setSaveJobId(job.getSaveJobId());
+				appliedJobDTO.setAppliedDt(DateUtils.convertSQLDateToStdDate(job.getAppliedDt().toString()));
+				appliedJobDTO.setCreateDt(job.getCreateDt());
+				appliedJobDTO.setDeleteDt(job.getDeleteDt());
+				appliedJobDTO.setFacilityName(job.getFacilityName());
+				appliedJobDTO.setJobTitle(job.getJobtitle());
+				appliedJobDTO.setJpJob(jobPostConversionHelper.transformToJpJobDTO(job.getJpJob()) );
+				appliedJobDTOList.add(appliedJobDTO);
+			}
+			
 		}
-		return appliedJobDTO;
+		return appliedJobDTOList;
 
 	}
 
