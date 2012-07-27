@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.LoginFormDTO;
@@ -29,6 +32,7 @@ import com.advanceweb.afc.jb.login.service.LoginFormService;
 
 @Controller
 @RequestMapping(value = "/loginFormForJObSeeker")
+@SessionAttributes("loginForm")
 public class LoginFormController {
 
 	@Value("${mail_subject}")
@@ -36,6 +40,9 @@ public class LoginFormController {
 
 	@Value("${mail_body}")
 	private String mailBody;
+
+	@Value("$(loginvalidation.message)")
+	private String loginValidationMsg;
 
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSearchActivityController.class");
@@ -56,10 +63,18 @@ public class LoginFormController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView jobSeekerLogin(Map<String, LoginForm> model) {
+	public ModelAndView jobSeekerLogin() {
 
-		model.put("loginForm", new LoginForm());
-		return new ModelAndView("jobSeekerLogin");
+		/*
+		 * model.put("loginForm", new LoginForm()); return new
+		 * ModelAndView("jobSeekerLogin");
+		 */
+
+		ModelAndView model = new ModelAndView();
+		LoginForm loginForm = new LoginForm();
+		model.setViewName("jobSeekerLogin");
+		model.addObject("loginForm", loginForm);
+		return model;
 	}
 
 	/**
@@ -73,34 +88,35 @@ public class LoginFormController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/jobSeekerLogin", method = RequestMethod.POST)
-	public ModelAndView validateLogin(@Valid LoginForm form,
-			BindingResult result) throws Exception {
+	public ModelAndView validateLogin(
+			@ModelAttribute("loginForm") @Valid LoginForm loginForm,
+			BindingResult result, Map map) {
+
+		ModelAndView model = new ModelAndView();
+        
+		//programmatic validation is done here which validates based on patters
+		//loginFormValidator.validate(loginForm, result);
 
 		boolean value = false;
 
-		form.setRoleId(2);
-		String emailAddress = form.getEmailAddress();
-		String password = form.getPassword();
-
-		LoginFormDTO loginFormDTO = new LoginFormDTO();
-		loginFormDTO.setEmailAddress(form.getEmailAddress());
-		loginFormDTO.setPassword(form.getPassword());
-		loginFormDTO.setRoleId(form.getRoleId());
+		loginForm.setRoleId(2);
+		String emailAddress = loginForm.getEmailAddress();
+		String password = loginForm.getPassword();
 
 		// Get the details of logged in user using email and password
 		LoginFormDTO loginFormDTOForUser = (LoginFormDTO) loginFormService
 				.validateLoginFormValues(emailAddress, password);
 
 		if (loginFormDTOForUser != null) {
-			value = loginFormValidator.validateLoginValues(form,
+			value = loginFormValidator.validateLoginValues(loginForm,
 					loginFormDTOForUser);
 		}
-
 		if (value) {
 			return new ModelAndView("jobboardadvancedsearch");
 		} else {
-			return new ModelAndView("jobSeekerLogin", "errors", false);
+			return new ModelAndView("jobSeekerLogin","message","failed");
 		}
+
 	}
 
 	/**

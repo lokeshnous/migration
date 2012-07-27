@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+
 /**
  * 
  * @author bharatiu
@@ -10,10 +13,13 @@ package com.advanceweb.afc.jb.login.web.controller;
 
 public class LoginForm {
 
-	private String emailAddress;
+	@NotEmpty
+	private String emailAddress;	
+	@NotEmpty
 	private String password;
 	private int userID;
 	private int roleId;
+	private String message;
 	
 
 	/**
@@ -72,6 +78,20 @@ public class LoginForm {
 	 */
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
+	}
+
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

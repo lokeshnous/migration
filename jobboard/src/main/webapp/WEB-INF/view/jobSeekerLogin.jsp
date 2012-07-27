@@ -153,16 +153,17 @@
 
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Login</h2>
-			<form:errors key='${message}'/>
+			<fmt:message value="$(message)"/>
+			
 			<form:form method="Post" action="jobSeekerLogin.html"  commandName="loginForm" >
 			    <div class="rowEvenSpacing marginTop0"><span class="lableText1">Email Address:</span> 
 					<form:input type="text" path="emailAddress"  class="job_seeker_email" />
-					<form:errors path="emailAddress"/>
+					<FONT color="red"><form:errors path="emailAddress" /></FONT>
 			    </div>
 			    
 			    <div class="rowEvenSpacing"><span class="lableText1">Password:</span> 
 			    	<form:input type="password" path="password"  class="job_seeker_password" />
-			    	<form:errors path="password"/>
+			    	<FONT color="red"><form:errors path="password"/></FONT>
 			    </div>
                 
 			    <div class="loginOptions">

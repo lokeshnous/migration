@@ -67,7 +67,7 @@
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> 
 					     <input type="submit" class="btn_sm orange" value="Send"/>
-					     <input type="" class="btn_sm orange" value="Cancel"/>
+					     <input type="submit" class="btn_sm orange" value="Cancel"/>
 					</span>
 				</div>
 				<div class="clearfix"></div>
