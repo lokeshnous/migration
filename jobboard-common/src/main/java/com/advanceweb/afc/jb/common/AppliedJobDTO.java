@@ -20,7 +20,7 @@ public class AppliedJobDTO {
 	private Date createDt;
 	private Date deleteDt;
 	private String facilityName;
-	private String jobtitle;
+	private String jobTitle;
 	private int userId;
 	private JobPostDTO jpJob;
 	/**
@@ -86,20 +86,24 @@ public class AppliedJobDTO {
 	/**
 	 * @return the jobtitle
 	 */
-	public String getJobtitle() {
-		return jobtitle;
-	}
-	/**
-	 * @param jobtitle the jobtitle to set
-	 */
-	public void setJobtitle(String jobtitle) {
-		this.jobtitle = jobtitle;
-	}
+
 	/**
 	 * @return the userId
 	 */
 	public int getUserId() {
 		return userId;
+	}
+	/**
+	 * @return the jobTitle
+	 */
+	public String getJobTitle() {
+		return jobTitle;
+	}
+	/**
+	 * @param jobTitle the jobTitle to set
+	 */
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 	/**
 	 * @param userId the userId to set
