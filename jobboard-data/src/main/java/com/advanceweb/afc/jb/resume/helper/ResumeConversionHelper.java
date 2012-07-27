@@ -44,7 +44,9 @@ public class ResumeConversionHelper {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 		resumeDTO.setResume_name(resume.getResumeName());
-		resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
+		if(resume.getUpdateDt() != null){
+			resumeDTO.setUpdateDt(DateUtils.convertSQLDateToStdDate(resume.getUpdateDt().toString()));
+		}
 		resumeDTO.setDesired_job_title(resume.getJobTitle());
 		resumeDTO.setEmploymentType(String.valueOf(resume.getEmpTypeLookupId()));
 		resumeDTO.setWilling_to_relocate(resume.getRelocate());
