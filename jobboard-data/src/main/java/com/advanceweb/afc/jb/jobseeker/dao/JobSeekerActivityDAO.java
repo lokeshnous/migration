@@ -27,7 +27,7 @@ public interface JobSeekerActivityDAO {
 	 * delete savedJob
 	 * @param savedJobId
 	 */
-	boolean deleteSavedJobs(int savedJobId);
+	//boolean deleteSavedJobs(int savedJobId);
 
 	/**
 	 * get savedjob
@@ -35,6 +35,6 @@ public interface JobSeekerActivityDAO {
 	 * @return
 	 */
 
-	List<SavedJobDTO> getSavedJobs(int jobSeekerId);
+	//List<SavedJobDTO> getSavedJobs(int jobSeekerId);
 
 }

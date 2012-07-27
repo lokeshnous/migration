@@ -1,18 +1,18 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
-import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerActivityConversionHelper;
 
 /**
@@ -23,12 +23,19 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerActivityConversionHelper;
 @Repository("activityDAO")
 public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 
-	@Autowired
-	private SessionFactory sessionFactory;
-
+	private HibernateTemplate hibernateTemplateTracker;
+	private HibernateTemplate hibernateTemplate;
+	
 	@Autowired
 	private JobSeekerActivityConversionHelper jobSeekerActivityConversionHelper;
 
+		
+	@Autowired
+	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	}
+	
 	public JobSeekerActivityDAOImpl() {
 
 	}
@@ -37,35 +44,51 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	public void finalize() throws Throwable {
 
 	}
-/**
- * deleting selected applied job
- */
-	@Override
-	public boolean deleteAppliedJobs(int appliedJobId) {
-		JpJob jpJob = getById(appliedJobId);
-		sessionFactory.getCurrentSession().delete(jpJob);
-		return true;
-	}
 
 	/**
-	 * implementation of get applied jobs
+	   @Author :Prince Mathew
+	   @Purpose:This method is used to delete the job applied by the Job Seeker
+	   @Created:Jul 26, 2012
+	   @Param  :appliedJobId
+	   @Return :boolean value depends on the result
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO#deleteAppliedJobs(int)
 	 */
+	@Override
+	public boolean deleteAppliedJobs(int appliedJobId) {
+try {
+			
+			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,appliedJobId);
+			job.setDeleteDt(new Date());
+			hibernateTemplate.saveOrUpdate(job);
+			 return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 
+		return false;
+	}
 
+	
+	/**
+	   @Author :Prince Mathew
+	   @Purpose:This method is used to get the list of the all job applied by the job seeker
+	   @Created:Jul 26, 2012
+	   @Param  :jobSeekerId
+	   @Return :List of the AppliedJobDTO
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO#getAppliedJobs(int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<AppliedJobDTO> getAppliedJobs(int jobId) {
-		List<AppliedJobDTO> appliedJobDTOList = new ArrayList<AppliedJobDTO>();
+	public List<AppliedJobDTO> getAppliedJobs(int jobSeekerId) {
+		List<AppliedJobDTO> appliedJobDTOList = null;
 
 		try {
-			if (jobId != 0) {
-				Session session = sessionFactory.openSession();
-				JpJob jpJob = (JpJob) session.get(JpJob.class,jobId);
-				AppliedJobDTO appliedJobDTO = jobSeekerActivityConversionHelper
-						.transformJpJobToApplidJobDTO(jpJob);
-				appliedJobDTOList.add(appliedJobDTO);
+			if (jobSeekerId != 0) {
+				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
+				List<AdmSaveJob> jobList=(List<AdmSaveJob>)hibernateTemplate.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is not NULL and asj.deleteDt is NULL",jobSeekerId);
+				appliedJobDTOList=jobSeekerActivityConversionHelper.transformToApplidJobDTO(jobList);
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			// waiting for exception
 		}
 
 		return appliedJobDTOList;
@@ -75,46 +98,45 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	/**
 	 * deleting selected saved job
 	 */
-	@Override
-	public boolean deleteSavedJobs(int savedJobId) {
-		JpJob a = getById(savedJobId);
-		sessionFactory.getCurrentSession().delete(a);
-		return true;
+	
+/*	public boolean deleteSavedJobs(int savedJobId) {
+		try {
+			
+			AdmSaveJob job=new AdmSaveJob();
+			job.setSaveJobId(savedJobId);
+			 hibernateTemplate.delete(job);
+			 return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 
+		return false;
 	}
-
-	public JpJob getById(int id) {
-		return (JpJob) sessionFactory.getCurrentSession().get(JpJob.class,id);
+*/
+/*	public JpJob getById(int id) {
+		//return (JpJob) sessionFactory.getCurrentSession().get(JpJob.class,id);
 	}
-
+*/
 	/**
 	 * implementation of get saved jobs
 	 */
-	@Override
+/*	@Override
 	@Transactional(readOnly = true)
-	public List<SavedJobDTO> getSavedJobs(int jobSeekerId) {
-		List<SavedJobDTO> savedJobDTOList = new ArrayList<SavedJobDTO>();
+	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
+		List<AppliedJobDTO> appliedJobDTOList = null;
 
 		try {
 			if (jobSeekerId != 0) {
-				Session session = sessionFactory.openSession();
-				JpJob jpJob = (JpJob) session.get(JpJob.class,jobSeekerId);
-				SavedJobDTO savedJobDTO = jobSeekerActivityConversionHelper
-						.transformJpJobToSavedJobDTO(jpJob);
-				savedJobDTOList.add(savedJobDTO);
+				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
+				List<AdmSaveJob> jobList=(List<AdmSaveJob>)hibernateTemplate.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is not NULL and asj.deleteDt is NULL",jobSeekerId);
+				appliedJobDTOList=jobSeekerActivityConversionHelper.transformToApplidJobDTO(jobList);
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			// waiting for exception
 		}
-		return savedJobDTOList;
-	}
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+		return appliedJobDTOList;
 	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+*/
 
 	public JobSeekerActivityConversionHelper getJobSeekerActivityConversionHelper() {
 		return jobSeekerActivityConversionHelper;
@@ -124,5 +146,6 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 			JobSeekerActivityConversionHelper jobSeekerActivityConversionHelper) {
 		this.jobSeekerActivityConversionHelper = jobSeekerActivityConversionHelper;
 	}
+
 
 }
