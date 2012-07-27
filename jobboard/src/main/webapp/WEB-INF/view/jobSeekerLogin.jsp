@@ -178,7 +178,11 @@
 				    <p><span class="bold">Not a member?</span> <a href="">Sign up now!</a></p>
 				</div>
 				<div class="rowEvenSpacing marginTopBottom10">
-			      <span class="bold">Or </span> <a href="#">continue as a guest.</a></div>
+			      <c:if test="${postjobfeatures}" >
+			      <span class="bold">Or </span>
+			       <a href="#">continue as a guest.</a>
+			      </c:if>
+			    </div>
                   <div class="clearfix"></div>
 			    </div>
 			</form:form>

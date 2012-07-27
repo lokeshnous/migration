@@ -19,4 +19,5 @@ public interface MMJBCommonConstants {
 	public static final String SLASH_SELECT_SLASH = "/select/?";
 	public static final String AMP = "&";
 	public static final String EQUAL_TO = "=";
+	public static final String POST_RESUME = "postresume";
 }

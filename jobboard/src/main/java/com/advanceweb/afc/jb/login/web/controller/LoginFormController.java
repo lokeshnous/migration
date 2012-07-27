@@ -1,9 +1,9 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.LoginFormDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginFormService;
 
 /**
@@ -63,17 +64,20 @@ public class LoginFormController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView jobSeekerLogin() {
+	public ModelAndView jobSeekerLogin(HttpServletRequest request) {
 
 		/*
 		 * model.put("loginForm", new LoginForm()); return new
 		 * ModelAndView("jobSeekerLogin");
 		 */
-
-		ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView();
 		LoginForm loginForm = new LoginForm();
 		model.setViewName("jobSeekerLogin");
 		model.addObject("loginForm", loginForm);
+        model.addObject("postjobfeatures", true);
+		if(request.getParameter("id")!=null && request.getParameter("id").equalsIgnoreCase(MMJBCommonConstants.POST_RESUME)){
+	        model.addObject("postjobfeatures", false);
+		}
 		return model;
 	}
 
