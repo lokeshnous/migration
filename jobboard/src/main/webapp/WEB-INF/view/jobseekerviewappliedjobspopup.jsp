@@ -19,7 +19,7 @@
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
-            var windowSizeArray = [ "width=800,height=800",
+            var windowSizeArray = [ "width=1200,height=1800",
                                     "width=300,height=400,scrollbars=yes" ];
  
             $(document).ready(function(){
@@ -60,7 +60,7 @@
               </tr>
                <c:forEach items="${appliedJobDTOList}" var = "dtoList" >  
                <tr>
-                <td><a href="/jobboard/jobsearchactivity /viewJobDetails.html" rel="0" class="newWindow" >${dtoList.getJobtitle()}</a></td>
+                <td><a href="/jobboard/jobsearchactivity /viewJobDetails.html" rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
                 <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteAppliedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>'><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
