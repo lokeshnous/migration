@@ -15,7 +15,114 @@ import java.util.Date;
  */
 public class AppliedJobDTO {
 
-	private String jobTitle;
+	private int saveJobId;
+	private String appliedDt;
+	private Date createDt;
+	private Date deleteDt;
+	private String facilityName;
+	private String jobtitle;
+	private int userId;
+	private JobPostDTO jpJob;
+	/**
+	 * @return the saveJobId
+	 */
+	public int getSaveJobId() {
+		return saveJobId;
+	}
+	/**
+	 * @param saveJobId the saveJobId to set
+	 */
+	public void setSaveJobId(int saveJobId) {
+		this.saveJobId = saveJobId;
+	}
+	/**
+	 * @return the appliedDt
+	 */
+	public String getAppliedDt() {
+		return appliedDt;
+	}
+	/**
+	 * @param appliedDt the appliedDt to set
+	 */
+	public void setAppliedDt(String appliedDt) {
+		this.appliedDt = appliedDt;
+	}
+	/**
+	 * @return the createDt
+	 */
+	public Date getCreateDt() {
+		return createDt;
+	}
+	/**
+	 * @param createDt the createDt to set
+	 */
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+	/**
+	 * @return the deleteDt
+	 */
+	public Date getDeleteDt() {
+		return deleteDt;
+	}
+	/**
+	 * @param deleteDt the deleteDt to set
+	 */
+	public void setDeleteDt(Date deleteDt) {
+		this.deleteDt = deleteDt;
+	}
+	/**
+	 * @return the facilityName
+	 */
+	public String getFacilityName() {
+		return facilityName;
+	}
+	/**
+	 * @param facilityName the facilityName to set
+	 */
+	public void setFacilityName(String facilityName) {
+		this.facilityName = facilityName;
+	}
+	/**
+	 * @return the jobtitle
+	 */
+	public String getJobtitle() {
+		return jobtitle;
+	}
+	/**
+	 * @param jobtitle the jobtitle to set
+	 */
+	public void setJobtitle(String jobtitle) {
+		this.jobtitle = jobtitle;
+	}
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	/**
+	 * @return the jpJob
+	 */
+	public JobPostDTO getJpJob() {
+		return jpJob;
+	}
+	/**
+	 * @param jpJob the jpJob to set
+	 */
+	public void setJpJob(JobPostDTO jpJob) {
+		this.jpJob = jpJob;
+	}
+	
+	
+	
+	/*private String jobTitle;
 	private Date appliedDate;
 	private String companyName;
 
@@ -42,5 +149,5 @@ public class AppliedJobDTO {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-
+*/
 }
