@@ -153,7 +153,7 @@
 
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Login</h2>
-			<fmt:message value="$(message)"/>
+			<div style="color: red">${message}</div>
 			
 			<form:form method="Post" action="jobSeekerLogin.html"  commandName="loginForm" >
 			    <div class="rowEvenSpacing marginTop0"><span class="lableText1">Email Address:</span> 

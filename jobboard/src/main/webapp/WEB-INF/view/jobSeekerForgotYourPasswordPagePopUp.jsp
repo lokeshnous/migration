@@ -51,6 +51,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
+		<div style="color: red">${message}</div>
 			<form:form method="Post" action="jobSeekerForgotYourPasswordPagePopUp.html" commandName="loginForm">
 				<div class="rowEvenNewSpacing borderBottomDotted paddingBottom10 marginTop0">
 					<p>Enter the email address you use for this account and click

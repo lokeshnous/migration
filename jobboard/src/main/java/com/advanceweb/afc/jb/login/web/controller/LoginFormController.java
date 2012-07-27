@@ -114,7 +114,7 @@ public class LoginFormController {
 		if (value) {
 			return new ModelAndView("jobboardadvancedsearch");
 		} else {
-			return new ModelAndView("jobSeekerLogin","message","failed");
+			return new ModelAndView("jobSeekerLogin","message","Login Failure.The User Name/Password you have entered is invalid Or you are not authorized to Login to the site.");
 		}
 
 	}
@@ -178,6 +178,6 @@ public class LoginFormController {
 			}
 			return new ModelAndView("jobSeekerLogin");
 		}
-		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp");
+		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp","message","Please Enter valid Email Address");
 	}
 }
