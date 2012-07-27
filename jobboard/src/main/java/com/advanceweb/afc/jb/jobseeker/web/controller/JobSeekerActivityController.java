@@ -22,6 +22,7 @@ import com.advanceweb.afc.jb.job.service.JobSeekerActivity;
  */
 
 @Controller
+@RequestMapping(value = "/jobSeekerActivity")
 public class JobSeekerActivityController {
 
 	@Autowired
@@ -37,13 +38,11 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/viewAppliedJob", method = RequestMethod.GET)
-	public ModelAndView getAppliedJob(Map model) {
-
-		List<AppliedJobDTO> appliedJobDTO = jobSeekerActivity
-				.getAppliedJobs(13100);
-
-		return new ModelAndView("jobSeekerActivity");
+	@RequestMapping(value = "/viewAppliedJob")
+	public ModelAndView getAppliedJob(/*@RequestParam("userId") int userId,*/Map model) {
+		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity.getAppliedJobs(30);
+		model.put("appliedJobDTOList", appliedJobDTOList);
+		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
 
 	/**
@@ -53,10 +52,12 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteAppliedJob")
-	public ModelAndView deleteAppliedJob(@RequestParam("id") int id) {
-
-		jobSeekerActivity.deleteAppliedJobs(id);
-		return new ModelAndView("jobSeekerActivity");
+	public ModelAndView deleteAppliedJob(/*@RequestParam("userId") int userId,*/@RequestParam("appliedJobId") int appliedJobId,Map model) {
+		
+		boolean result=jobSeekerActivity.deleteAppliedJobs(appliedJobId);
+		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity.getAppliedJobs(30);
+		model.put("appliedJobDTOList", appliedJobDTOList);
+		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
 
 	/**
@@ -65,13 +66,13 @@ public class JobSeekerActivityController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteSavedJob")
+/*	@RequestMapping(value = "/deleteSavedJob")
 	public ModelAndView deleteSavedJob(@RequestParam("id") int id) {
 
 		jobSeekerActivity.deleteSavedJobs(id);
 		return new ModelAndView("jobSeekerActivity");
 	}
-
+*/
 	/**
 	 * to get Saved Job
 	 * 
@@ -79,7 +80,7 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/viewSavedJob", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/viewSavedJob", method = RequestMethod.GET)
 	public ModelAndView getSavedJob(Map model) {
 		List<SavedJobDTO> savedJobDTO = jobSeekerActivity.getSavedJobs(13100);
 
@@ -89,5 +90,5 @@ public class JobSeekerActivityController {
 	public void setJobSeekerActivity(JobSeekerActivity jobSeekerActivity) {
 		this.jobSeekerActivity = jobSeekerActivity;
 	}
-
+*/
 }
