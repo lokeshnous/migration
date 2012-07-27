@@ -98,6 +98,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmUserRole</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmUserRolePK</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.FacilityJobTmp</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.AdmSaveJob</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpAddon</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJob</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobAddon</value>
@@ -158,6 +159,14 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- <bean id="configurationLoader"
+        class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader"/>
+    <bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
+        p:configurationLoader-ref="configurationLoader"/> -->
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
 	
 	<util:properties id="solrConfiguration" location="classpath:solrConfiguration.properties" />
 	
