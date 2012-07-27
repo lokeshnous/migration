@@ -13,7 +13,7 @@ import com.advanceweb.afc.jb.data.entities.JpJob;
  */
 @Repository("jobPostConversionHelper")
 public class JobPostConversionHelper {
-
+	
 	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto){
 		
 		 JpJob jpJob=new JpJob();
@@ -23,4 +23,14 @@ public class JobPostConversionHelper {
 		 
 		 return jpJob;
 	 }
+	 
+	 public JobPostDTO  transformToJpJobDTO(JpJob dto){
+			
+		 JobPostDTO jobPostDTO=new JobPostDTO();
+		 jobPostDTO.setCompanyName(dto.getFacility());
+		 jobPostDTO.setJobTitle(dto.getJobtitle());
+		 jobPostDTO.setJobId(dto.getJobNumber());
+		 return jobPostDTO;
+	 }
+
 }
