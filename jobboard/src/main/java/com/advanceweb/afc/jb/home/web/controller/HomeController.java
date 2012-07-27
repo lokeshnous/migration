@@ -62,6 +62,17 @@ public class HomeController {
 	@Value("${windowmediaplayerfilepath}")
 	private String windowmediaplayerfilepath;
 
+	@Value("${follouplinkfacebook}")
+	private String follouplinkfacebook;
+
+	@Value("${follouplinktwitter}")
+	private String follouplinktwitter;
+
+	@Value("${follouplinkyoutube}")
+	private String follouplinkyoutube;
+
+	@Value("${follouplinklinkedin}")
+	private String follouplinklinkedin;
 
 
 	@Autowired
@@ -86,8 +97,12 @@ public class HomeController {
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
 
-						List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
-						model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+			model.addAttribute("follouplinkfacebook", follouplinkfacebook);
+			model.addAttribute("follouplinktwitter", follouplinktwitter);
+			model.addAttribute("follouplinkyoutube", follouplinkyoutube);
+			model.addAttribute("follouplinklinkedin", follouplinklinkedin);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

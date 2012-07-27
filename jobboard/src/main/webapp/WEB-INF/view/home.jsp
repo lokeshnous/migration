@@ -177,13 +177,13 @@
 					<div class="follow_us">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
-						<a href="">
+						<a href="${follouplinkfacebook}">
 							<div class="social facebook_link">Facebook</div>
-						</a> <a href="">
+						</a> <a href="${follouplinktwitter}">
 							<div class="social twitter_link">Twitter</div>
-						</a> <a href="">
+						</a> <a href="${follouplinkyoutube}">
 							<div class="social youTube_link">YouTube</div>
-						</a> <a href="">
+						</a> <a href="${follouplinklinkedin}">
 							<div class="last social linkedIn_link">LinkedIn</div>
 						</a>
 					</div>
@@ -301,24 +301,13 @@
 							<div class="featured_emp_slider">
 								<div id="slider1PrevBtn"></div>
 								<div id="slider1">
-									<div class="slider1Frames">
-										<a href="featuredemployerdetails.html?id=109">
-											<div class="slider1FrameA1">
-												<img src="../resources/images/MercyRNlogo.jpg" />
-											</div>
-										</a> <a href="featuredemployerdetails.html?id=121">
-											<div class="slider1FrameA2">
-												<img src="../resources/images/TempleLogo.jpg" />
-											</div>
-										</a>
-									</div>
 
 									<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}">
 										<div class="slider1Frames"">
 
 											<a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }">
 												<div class="slider1FrameA1">
-													<img src="../resources/images/ablogo.jpg"alt="${companyProfileDTO.companyName }">
+													<img src="${companyProfileDTO.logoPath}"alt="${companyProfileDTO.companyName }">
 												</div>	
 											</a>
 										
@@ -328,18 +317,6 @@
 
 
 
-								<div class="slider1Frames"">
-									<a href="featuredemployerdetails.html?id=109">
-										<div class="slider1FrameA1">
-											<img src="../resources/images/MercyRNlogo.jpg" />
-										</div>
-									</a> <a href="featuredemployerdetails.html?id=121">
-										<div class="slider1FrameA2">
-											<img src="../resources/images/TempleLogo.jpg" />
-										</div>
-									</a>
-
-								</div>
 							</div>
 							<div id="slider1NextBtn"></div>
 						</div>
