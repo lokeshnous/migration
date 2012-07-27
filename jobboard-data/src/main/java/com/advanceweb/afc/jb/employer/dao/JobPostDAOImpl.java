@@ -23,7 +23,7 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
    @Created: Jul 18, 2012
    @Purpose: This class implements all the DAO operations related to post new job 
  */
-@Transactional
+@Transactional 
 @Repository("employerJobPostDAO")
 public class JobPostDAOImpl implements JobPostDAO {
 
