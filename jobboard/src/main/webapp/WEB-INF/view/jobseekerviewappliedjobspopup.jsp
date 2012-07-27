@@ -19,6 +19,24 @@
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
+            var windowSizeArray = [ "width=800,height=800",
+                                    "width=300,height=400,scrollbars=yes" ];
+ 
+            $(document).ready(function(){
+                $('.newWindow').click(function (event){
+ 
+                    var url = $(this).attr("href");
+                    var windowName = $(this).attr("name");// "/* popUp";*/
+                    var windowSize = windowSizeArray[$(this).attr("rel")];
+ 
+                    window.open(url, windowName, windowSize);
+ 
+                    event.preventDefault();
+ 
+                });
+            });
+        </script>
+		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
 		});
@@ -29,9 +47,9 @@
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader">
                   <h2>JOBS I'VE APPLIED TO</h2>
-                  <a href="#"><img src="images/Close.png" width="19" height="19" alt=""></a></div>
+                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" alt=""></a></div>
                  
-<div class="popUpContainerWrapper"><form action="" method="">
+<div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing marginTop0">
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
               <tr class="borderTopNone">
@@ -40,50 +58,19 @@
                 <th width="20%" align="left" scope="col">Applied</th>
                 <th width="12%" align="center" scope="col">Delete</th>
               </tr>
-              
-  <tr>  
-   <td>${requestScope.list1[status.count - 1]}</td>  
-   <td>${requestScope.list2[status.count - 1]}</td>  
-   <td>${requestScope.list3[status.count - 1]}</td>  
-  </tr>  
- 
-               <c:forEach items="${list}" var = "var" >  
+               <c:forEach items="${appliedJobDTOList}" var = "dtoList" >  
                <tr>
-                <td><a href="javascript:void(0)">${var.get }</a></td>
-                <td align="left">Mt. Sinai Medical Center</td>
-                <td align="left">06/01/2012</td>
-                <td align="center"><a href="#"><img src="images/Delete.png" width="20" height="20" alt=""></a></td>
+                <td><a href="/jobboard/jobsearchactivity /viewJobDetails.html" rel="0" class="newWindow" >${dtoList.getJobtitle()}</a></td>
+                <td align="left">${dtoList.getFacilityName()}</td>
+                <td align="left">${dtoList.getAppliedDt()}</td>
+                <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteAppliedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>'><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
               </tr>
               </c:forEach>
-              <!--
-              <tr>
-                <td><a href="javascript:void(0)">Nurse Practitioner</a></td>
-                <td align="left">Johns Hopkins</td>
-                <td align="left">12/30/2011</td>
-                <td align="center"><a href="#"><img src="images/Delete.png" width="20" height="20" alt=""></a></td>
-              </tr>
-              <tr>
-                <td><a href="#">Physical Therapist</a></td>
-                <td align="left">Sacred Heart</td>
-                <td align="left">11/29/2011</td>
-                <td align="center"><a href="#"><img src="images/Delete.png" width="20" height="20" alt=""></a></td>
-              </tr>
-              <tr>
-                <td><a href="#">Per Diem Surgical Care Associate</a></td>
-                <td align="left">Mt. Sinai Medical Center</td>
-                <td align="left">12/25/2012</td>
-                <td align="center"><a href="#"><img src="images/Delete.png" width="20" height="20" alt=""></a></td>
-              </tr>
-              <tr>
-                <td><a href="#">Physician Assistant</a></td>
-                <td align="left">St. Joseph's Hospital</td>
-                <td align="left">01/01/2013</td>
-                <td align="center"><a href="#"><img src="images/Delete.png" width="20" height="20" alt=""></a></td>
-              </tr> -->
+              
             </table>
           </div>
  <div class="row marginTop20 paddingBottom10"><a href="" class="btn_sm orange">Cancel</a></div>
-          </form></div>
+          </form:form></div>
           <div class="clearfix"></div>
                 </div>
 
