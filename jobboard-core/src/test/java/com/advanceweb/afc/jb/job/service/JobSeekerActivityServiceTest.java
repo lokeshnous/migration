@@ -17,7 +17,7 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 	@Autowired
 	private JobSeekerActivity jobSeekerActivity;
 
-	@Test
+	/*@Test
 	public void testGetAppliedJobs() {
 		try {
 
@@ -67,5 +67,5 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }
