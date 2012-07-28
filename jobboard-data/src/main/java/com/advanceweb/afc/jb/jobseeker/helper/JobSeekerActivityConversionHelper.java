@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,7 @@ public class JobSeekerActivityConversionHelper {
 				AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
 				appliedJobDTO.setSaveJobId(job.getSaveJobId());
 				appliedJobDTO.setAppliedDt(DateUtils.convertSQLDateToStdDate(job.getAppliedDt().toString()));
-				appliedJobDTO.setCreateDt(job.getCreateDt());
-				appliedJobDTO.setDeleteDt(job.getDeleteDt());
+				appliedJobDTO.setCreateDt(DateUtils.convertSQLDateToStdDate(job.getCreateDt().toString()));
 				appliedJobDTO.setFacilityName(job.getFacilityName());
 				appliedJobDTO.setJobTitle(job.getJobtitle());
 				appliedJobDTO.setJpJob(jobPostConversionHelper.transformToJpJobDTO(job.getJpJob()) );
@@ -52,6 +53,56 @@ public class JobSeekerActivityConversionHelper {
 		return appliedJobDTOList;
 
 	}
+	
+	
+	public List<AppliedJobDTO> transformToDTOForSavedJob(List<AdmSaveJob> entity) {
+		List<AppliedJobDTO> appliedJobDTOList=new ArrayList<AppliedJobDTO>();
+		if (entity != null) {
+			Date date=new Date();
+			for(AdmSaveJob job:entity){
+				AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
+				appliedJobDTO.setSaveJobId(job.getSaveJobId());
+				appliedJobDTO.setCreateDt(DateUtils.convertSQLDateToStdDate(job.getCreateDt().toString()));
+				appliedJobDTO.setFacilityName(job.getFacilityName());
+				appliedJobDTO.setJobTitle(job.getJobtitle());
+				appliedJobDTO.setJobAge(getWorkingDaysBetweenTwoDates(date,job.getCreateDt())  /*(date.getTime()-job.getCreateDt().getTime())/(1000*60*60*24)*/);
+				appliedJobDTO.setJpJob(jobPostConversionHelper.transformToJpJobDTO(job.getJpJob()) );
+				appliedJobDTOList.add(appliedJobDTO);
+			}
+			
+		}
+		return appliedJobDTOList;
+
+	}
+	private  int getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
+	    Calendar startCal;
+	    Calendar endCal;
+	    startCal = Calendar.getInstance();
+	    startCal.setTime(startDate);
+	    endCal = Calendar.getInstance();
+	    endCal.setTime(endDate);
+	    int workDays = 0;
+
+	    //Return 0 if start and end are the same
+	    if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
+	        return 0;
+	    }
+
+	    if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
+	        startCal.setTime(endDate);
+	        endCal.setTime(startDate);
+	    }
+
+	    do {
+	        startCal.add(Calendar.DAY_OF_MONTH, 1);
+	       // if (startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+	            ++workDays;
+	        //}
+	    } while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
+
+	    return workDays-1;
+	}
+
 
 	/**
 	 * Entity to saved job dto
