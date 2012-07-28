@@ -62,7 +62,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>FORGOT YOUR PASSWORD?</h2>
-			<a href="#"><img src="images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();"
+			<a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();"
 				alt=""></a>
 		</div>
 
