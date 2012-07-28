@@ -170,17 +170,17 @@
 
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Login</h2>
-			<div style="color: red">${message}</div>
+			<div style="color: red" align="right"><b>${message}</b></div>
 			
 			<form:form method="Post" action="jobSeekerLogin.html"  commandName="loginForm" >
 			    <div class="rowEvenSpacing marginTop0"><span class="lableText1">Email Address:</span> 
 					<form:input type="text" path="emailAddress"  class="job_seeker_email" />
-					<FONT color="red"><form:errors path="emailAddress" /></FONT>
+					<FONT color="red"><form:errors path="emailAddress" align="right"/></FONT>
 			    </div>
 			    
 			    <div class="rowEvenSpacing"><span class="lableText1">Password:</span> 
 			    	<form:input type="password" path="password"  class="job_seeker_password" />
-			    	<FONT color="red"><form:errors path="password"/></FONT>
+			    	<FONT color="red"><form:errors path="password" align="right"/></FONT>
 			    </div>
                 
 			    <div class="loginOptions">
