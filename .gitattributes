@@ -338,6 +338,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobseekerJobDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerchangepassword.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerguestuserformpopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekermodifysubscriptions.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobseekermysavedjobspopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekersaveThisJobPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekersubscription.jsp -text

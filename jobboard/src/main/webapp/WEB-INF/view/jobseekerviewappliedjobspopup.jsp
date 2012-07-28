@@ -13,26 +13,36 @@
 		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
 
+		<!-- js files for modalpopup------------------------------------------------- -->
+       <script src="../resources/js/jquery-1.7.1.js"></script>
+       <script src="../resources/js/jquery-1.7.1.min.js"></script>
+		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
+		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
+        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css" media="screen">
+           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
+        </style>
+<!-- -------------------------------------------------------------------------- -->
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
-            var windowSizeArray = [ "width=1200,height=1800",
-                                    "width=300,height=400,scrollbars=yes" ];
- 
             $(document).ready(function(){
+        		$("#id").click(function() {
+     	           parent.window.location.href = "navigateToLogin.html";
+     	           parent.$.nmTop().close();
+
+     	      });
                 $('.newWindow').click(function (event){
  
                     var url = $(this).attr("href");
-                    var windowName = $(this).attr("name");// "/* popUp";*/
-                    var windowSize = windowSizeArray[$(this).attr("rel")];
- 
-                    window.open(url, windowName, windowSize);
- 
-                    event.preventDefault();
- 
+                    parent.window.location.href = url;
+     	            parent.$.nmTop().close();
+                   event.preventDefault();
                 });
             });
         </script>
@@ -47,7 +57,7 @@
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader">
                   <h2>JOBS I'VE APPLIED TO</h2>
-                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" alt=""></a></div>
+                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();" alt=""></a></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing marginTop0">
@@ -60,7 +70,7 @@
               </tr>
                <c:forEach items="${appliedJobDTOList}" var = "dtoList" >  
                <tr>
-                <td><a href="/jobboard/jobsearchactivity /viewJobDetails.html" rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
+                <td><a href='<c:url value="/jobsearchactivity/viewJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/> </c:url>'  rel="0" target="_blank" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
                 <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteAppliedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>'><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
@@ -69,7 +79,7 @@
               
             </table>
           </div>
- <div class="row marginTop20 paddingBottom10"><a href="" class="btn_sm orange">Cancel</a></div>
+ <div class="row marginTop20 paddingBottom10"><a href=""  onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a></div>
           </form:form></div>
           <div class="clearfix"></div>
                 </div>
