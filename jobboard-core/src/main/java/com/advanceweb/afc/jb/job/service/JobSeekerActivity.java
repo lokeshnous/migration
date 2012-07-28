@@ -39,7 +39,7 @@ public interface JobSeekerActivity {
 	 * @param savedJobId
 	 * @return
 	 */
-	//boolean deleteSavedJobs(int savedJobId);
+	boolean deleteSavedJobs(int savedJobId);
 	
 	/**
 	 * get saved job
@@ -47,6 +47,6 @@ public interface JobSeekerActivity {
 	 * @return
 	 */
 	
-	//List<SavedJobDTO> getSavedJobs(int jobSeekerId);
+	List<AppliedJobDTO> getSavedJobs(int jobSeekerId);
 
 }

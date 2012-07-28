@@ -53,25 +53,22 @@ public class JobSeekerActivityService implements JobSeekerActivity {
 	 * to get list of Saved job
 	 */
 
-/*	@Override
-	public List<SavedJobDTO> getSavedJobs(int jobSeekerId) {
+	@Override
+	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
 		return activityDAO.getSavedJobs(jobSeekerId);
 	}
-*/
+
 	/**
 	 * delete Saved job
 	 */
-/*	@Override
+	@Override
 	public boolean deleteSavedJobs(int savedJobId) {
 		return activityDAO.deleteSavedJobs(savedJobId);
 	}
-*/
+
 	public JobSeekerActivityDAO getActivityDAO() {
 		return activityDAO;
 	}
 
-	public void setActivityDAO(JobSeekerActivityDAO activityDAO) {
-		this.activityDAO = activityDAO;
-	}
 
 }
