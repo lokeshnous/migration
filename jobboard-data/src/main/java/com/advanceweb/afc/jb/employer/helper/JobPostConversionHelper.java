@@ -18,7 +18,7 @@ public class JobPostConversionHelper {
 		
 		 JpJob jpJob=new JpJob();
 		 jpJob.setName(dto.getCompanyName());
-		 jpJob.setJobNumber(dto.getJobId());
+		 jpJob.setJobNumber(dto.getJobNumber());
 		 jpJob.setJobtitle(dto.getJobTitle());
 		 
 		 return jpJob;
@@ -29,7 +29,8 @@ public class JobPostConversionHelper {
 		 JobPostDTO jobPostDTO=new JobPostDTO();
 		 jobPostDTO.setCompanyName(dto.getFacility());
 		 jobPostDTO.setJobTitle(dto.getJobtitle());
-		 jobPostDTO.setJobId(dto.getJobNumber());
+		 jobPostDTO.setJobNumber(dto.getJobNumber());
+		 jobPostDTO.setJobId(dto.getJobId());
 		 return jobPostDTO;
 	 }
 
