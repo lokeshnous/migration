@@ -236,7 +236,7 @@
 									</select> <label for="radius">Radius</label>
 								</div>
 								<div class="clearfix"></div>
-								<a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a><a
+								<a href="/jobboard/jobsearchactivity/findJobPage.html" class="btn_sm orange jb_search_submit">Find Jobs</a><a
 									href="">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/jobboard/loginFormForJObSeeker/login.html?id=postresume">Post
 									Your Resume</a>
 							</div>
