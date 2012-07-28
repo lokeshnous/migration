@@ -98,7 +98,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			List<MerLookup> merLookupList =  hibernateTemplateTracker.find("from MerLookup e where e.lookupCategory='State' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			
 		}
 		return null;
 	}
@@ -118,7 +118,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			hibernateTemplate.save(jobob);
 			return true;
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			
 		}
 
 		return false;
