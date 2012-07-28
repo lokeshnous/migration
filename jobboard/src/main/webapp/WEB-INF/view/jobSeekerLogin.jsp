@@ -192,7 +192,7 @@
                     <span class="floatLeft"><a href="forgrtPasswordLogin.html" id="forgrtpassword" >Forgot your password?</a></span>
 				</div>
 				<div class="rowEvenSpacing">
-				    <p><span class="bold">Not a member?</span> <a href="">Sign up now!</a></p>
+				    <p><span class="bold">Not a member?</span> <a href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign up now!</a></p>
 				</div>
 				<div class="rowEvenSpacing marginTopBottom10">
 			      <c:if test="${postjobfeatures}" >
