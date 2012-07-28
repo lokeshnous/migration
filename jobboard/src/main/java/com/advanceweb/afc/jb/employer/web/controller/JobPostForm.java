@@ -12,7 +12,7 @@ public class JobPostForm {
 	private String customerNo;
 	private String companyName;
 	private String disCompanyName;
-	private String jobId;
+	private String jobNumber;
 	private String jobTitle;
 	private String applyEmail;
 	private String applyUrl;
@@ -85,20 +85,19 @@ public class JobPostForm {
 	/**
 	 * @return the jobId
 	 */
-	public String getJobId() {
-		return jobId;
-	}
-	/**
-	 * @param jobId the jobId to set
-	 */
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
-	}
+
+	
 	/**
 	 * @return the jobTitle
 	 */
 	public String getJobTitle() {
 		return jobTitle;
+	}
+	public String getJobNumber() {
+		return jobNumber;
+	}
+	public void setJobNumber(String jobNumber) {
+		this.jobNumber = jobNumber;
 	}
 	/**
 	 * @param jobTitle the jobTitle to set
