@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="../resources/js/common/common.js"></script>
 		<script type="text/javascript">
 		
 		
@@ -55,7 +56,64 @@
 		    		});
 		    	});
 				
-		    }); */
+		    });  */	
+		    
+		    
+		    jQuery(document).ready(function (){ 
+		    	
+			    $("#submitval").click(function(event) {
+			    	
+			    	var x = $("#results").val();
+			    	$("#rows").val(x);
+			    	$("#start").val("0");
+			    	
+			    	
+					var keywords = $("#keywords").val();
+					var cityState = $("#cityState").val();
+					var radius = $("#radius").val();
+					var rows = $("#rows").val();
+					var start = $("#start").val();
+					//alert( getBaseURL());
+						/* $.ajax({url: getBaseURL()+"/jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start,
+								
+								success: function() {
+									  
+							  },
+							error: function() {
+							},
+							complete: function() {
+							}
+						}); */
+				
+						
+						//alert("hi");
+						
+						
+						
+					    $.get(getBaseURL()+"/jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start, function(data){
+					    	//alert(data);
+					    	$(".searchResultsItem").empty();
+					    	 $.each(data.jsonRows, function(key,val) {
+					    		 //$(".searchResultsItem").clear();
+					    		 
+			    				  /* $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+val.PostedDate+'</li></ul>'); */
+			    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+ (new Date(val.PostedDate.time))+'</li></ul>');
+			    				  //alert(data.jsonRows[key]);
+			    				  //alert(key);
+			    				  //delete data.jsonRows[key];
+			    				  
+			    				  
+			    			  });
+					    	
+					    });
+				});
+			    
+			    
+			    
+			    
+		    });
 		    
 		    
 		    
@@ -177,10 +235,9 @@
               <div class="row">
               <div class="job_search_main job_search_main_height">
                   <%-- <form method=""> --%>
-                  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm"> 
+                 <%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
+                  <form:form method="" action="" commandName="jobSearchResultForm"> 
             <div class="search_form">
-            
-               
             
 	                      <h1 class="marginBottom5">Search <span>60,262</span> Healthcare Jobs</h1>
 	                      <form:input path="keywords"  id="keywords" cssClass="jb_input1" />
@@ -207,8 +264,8 @@
 	              
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
-	                    <!-- <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
-	                    <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" />
+	                    <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" />
+	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  
                       
                       <a href="advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div>
