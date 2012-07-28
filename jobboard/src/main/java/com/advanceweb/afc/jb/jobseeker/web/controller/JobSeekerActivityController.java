@@ -53,7 +53,6 @@ public class JobSeekerActivityController {
 	 */
 	@RequestMapping(value = "/deleteAppliedJob")
 	public ModelAndView deleteAppliedJob(/*@RequestParam("userId") int userId,*/@RequestParam("appliedJobId") int appliedJobId,Map model) {
-		
 		boolean result=jobSeekerActivity.deleteAppliedJobs(appliedJobId);
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity.getAppliedJobs(30);
 		model.put("appliedJobDTOList", appliedJobDTOList);
@@ -66,13 +65,16 @@ public class JobSeekerActivityController {
 	 * @param model
 	 * @return
 	 */
-/*	@RequestMapping(value = "/deleteSavedJob")
-	public ModelAndView deleteSavedJob(@RequestParam("id") int id) {
-
-		jobSeekerActivity.deleteSavedJobs(id);
-		return new ModelAndView("jobSeekerActivity");
+	@RequestMapping(value = "/deleteSavedJob")
+	public ModelAndView deleteSavedJob(/*@RequestParam("userId") int userId,*/@RequestParam("appliedJobId") int appliedJobId,Map model) {
+         System.out.println("#######"+appliedJobId);
+		boolean result=jobSeekerActivity.deleteAppliedJobs(appliedJobId);
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(30);
+		model.put("savedJobDTOList", savedJobDTOList);
+		return new ModelAndView("jobseekermysavedjobspopup");
+		
 	}
-*/
+
 	/**
 	 * to get Saved Job
 	 * 
@@ -80,14 +82,14 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 
-/*	@RequestMapping(value = "/viewSavedJob", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewSavedJob")
 	public ModelAndView getSavedJob(Map model) {
-		List<SavedJobDTO> savedJobDTO = jobSeekerActivity.getSavedJobs(13100);
-
-		return new ModelAndView("jobSeekerActivity");
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(30);
+		model.put("savedJobDTOList", savedJobDTOList);
+		return new ModelAndView("jobseekermysavedjobspopup");
 	}
 
-	public void setJobSeekerActivity(JobSeekerActivity jobSeekerActivity) {
+/*	public void setJobSeekerActivity(JobSeekerActivity jobSeekerActivity) {
 		this.jobSeekerActivity = jobSeekerActivity;
 	}
 */
