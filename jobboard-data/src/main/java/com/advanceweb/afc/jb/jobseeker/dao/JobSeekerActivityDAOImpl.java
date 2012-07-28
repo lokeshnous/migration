@@ -25,17 +25,19 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
-	
+
 	@Autowired
 	private JobSeekerActivityConversionHelper jobSeekerActivityConversionHelper;
 
-		
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
-	
+
 	public JobSeekerActivityDAOImpl() {
 
 	}
@@ -46,34 +48,35 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:This method is used to delete the job applied by the Job Seeker
-	   @Created:Jul 26, 2012
-	   @Param  :appliedJobId
-	   @Return :boolean value depends on the result
+	 * @Author :Prince Mathew
+	 * @Purpose:This method is used to delete the job applied by the Job Seeker
+	 * @Created:Jul 26, 2012
+	 * @Param :appliedJobId
+	 * @Return :boolean value depends on the result
 	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO#deleteAppliedJobs(int)
 	 */
 	@Override
 	public boolean deleteAppliedJobs(int appliedJobId) {
-try {
-			
-			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,appliedJobId);
+		try {
+
+			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,
+					appliedJobId);
 			job.setDeleteDt(new Date());
 			hibernateTemplate.saveOrUpdate(job);
-			 return true;
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-		} 
+		}
 		return false;
 	}
 
-	
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:This method is used to get the list of the all job applied by the job seeker
-	   @Created:Jul 26, 2012
-	   @Param  :jobSeekerId
-	   @Return :List of the AppliedJobDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:This method is used to get the list of the all job applied by
+	 *               the job seeker
+	 * @Created:Jul 26, 2012
+	 * @Param :jobSeekerId
+	 * @Return :List of the AppliedJobDTO
 	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO#getAppliedJobs(int)
 	 */
 	@Override
@@ -84,8 +87,11 @@ try {
 		try {
 			if (jobSeekerId != 0) {
 				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
-				List<AdmSaveJob> jobList=(List<AdmSaveJob>)hibernateTemplate.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is not NULL and asj.deleteDt is NULL",jobSeekerId);
-				appliedJobDTOList=jobSeekerActivityConversionHelper.transformToApplidJobDTO(jobList);
+				List<AdmSaveJob> jobList = (List<AdmSaveJob>) hibernateTemplate
+						.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is not NULL and asj.deleteDt is NULL",
+								jobSeekerId);
+				appliedJobDTOList = jobSeekerActivityConversionHelper
+						.transformToApplidJobDTO(jobList);
 			}
 		} catch (HibernateException e) {
 			// waiting for exception
@@ -98,24 +104,21 @@ try {
 	/**
 	 * deleting selected saved job
 	 */
-	
+
 	@Override
 	public boolean deleteSavedJobs(int savedJobId) {
-        try {
-			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,savedJobId);
+		try {
+			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,
+					savedJobId);
 			job.setDeleteDt(new Date());
 			hibernateTemplate.saveOrUpdate(job);
-			 return true;
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
-		} 
+		}
 		return false;
 	}
 
-/*	public JpJob getById(int id) {
-		//return (JpJob) sessionFactory.getCurrentSession().get(JpJob.class,id);
-	}
-*/
 	/**
 	 * implementation of get saved jobs
 	 */
@@ -123,13 +126,16 @@ try {
 	@Transactional(readOnly = true)
 	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
 		List<AppliedJobDTO> appliedJobDTOList = null;
-       
+
 		try {
 			if (jobSeekerId != 0) {
 				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
-				List<AdmSaveJob> jobList=(List<AdmSaveJob>)hibernateTemplate.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is NULL and asj.deleteDt is NULL",jobSeekerId);
-				appliedJobDTOList=jobSeekerActivityConversionHelper.transformToDTOForSavedJob(jobList);
-				
+				List<AdmSaveJob> jobList = (List<AdmSaveJob>) hibernateTemplate
+						.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is NULL and asj.deleteDt is NULL",
+								jobSeekerId);
+				appliedJobDTOList = jobSeekerActivityConversionHelper
+						.transformToDTOForSavedJob(jobList);
+
 			}
 		} catch (HibernateException e) {
 			// waiting for exception
@@ -138,15 +144,4 @@ try {
 		return appliedJobDTOList;
 	}
 
-
-/*	public JobSeekerActivityConversionHelper getJobSeekerActivityConversionHelper() {
-		return jobSeekerActivityConversionHelper;
-	}
-
-	public void setJobSeekerActivityConversionHelper(
-			JobSeekerActivityConversionHelper jobSeekerActivityConversionHelper) {
-		this.jobSeekerActivityConversionHelper = jobSeekerActivityConversionHelper;
-	}
-
-*/
 }

@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
 /**
  * Created JobSeekerActivity DAO
  * @author sharadk
