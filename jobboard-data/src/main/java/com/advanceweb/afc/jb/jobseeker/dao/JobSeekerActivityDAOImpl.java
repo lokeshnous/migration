@@ -123,7 +123,7 @@ try {
 	@Transactional(readOnly = true)
 	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
 		List<AppliedJobDTO> appliedJobDTOList = null;
-       System.out.println("DDDDDDDDDDDDD"+jobSeekerId);
+       
 		try {
 			if (jobSeekerId != 0) {
 				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
