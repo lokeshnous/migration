@@ -17,12 +17,21 @@ public class AppliedJobDTO {
 
 	private int saveJobId;
 	private String appliedDt;
-	private Date createDt;
-	private Date deleteDt;
+	private String createDt;
+	private String deleteDt;
 	private String facilityName;
 	private String jobTitle;
 	private int userId;
+	private long jobAge;
 	private JobPostDTO jpJob;
+	
+	
+	public long getJobAge() {
+		return jobAge;
+	}
+	public void setJobAge(long jobAge) {
+		this.jobAge = jobAge;
+	}
 	/**
 	 * @return the saveJobId
 	 */
@@ -50,25 +59,25 @@ public class AppliedJobDTO {
 	/**
 	 * @return the createDt
 	 */
-	public Date getCreateDt() {
+	public String getCreateDt() {
 		return createDt;
 	}
 	/**
 	 * @param createDt the createDt to set
 	 */
-	public void setCreateDt(Date createDt) {
+	public void setCreateDt(String createDt) {
 		this.createDt = createDt;
 	}
 	/**
 	 * @return the deleteDt
 	 */
-	public Date getDeleteDt() {
+	public String getDeleteDt() {
 		return deleteDt;
 	}
 	/**
 	 * @param deleteDt the deleteDt to set
 	 */
-	public void setDeleteDt(Date deleteDt) {
+	public void setDeleteDt(String deleteDt) {
 		this.deleteDt = deleteDt;
 	}
 	/**
