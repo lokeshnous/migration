@@ -32,7 +32,7 @@ import com.advanceweb.afc.jb.login.service.LoginFormService;
  */
 
 @Controller
-@RequestMapping(value = "/loginFormForJObSeeker")
+@RequestMapping(value = "/loginFormForJobSeeker")
 @SessionAttributes("loginForm")
 public class LoginFormController {
 
@@ -46,7 +46,7 @@ public class LoginFormController {
 	private String loginValidationMsg;
 
 	private static final Logger LOGGER = Logger
-			.getLogger("JobSearchActivityController.class");
+			.getLogger("LoginFormController.class");
 
 	@Autowired
 	private MMEmailService emailService;
@@ -66,10 +66,6 @@ public class LoginFormController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView jobSeekerLogin(HttpServletRequest request) {
 
-		/*
-		 * model.put("loginForm", new LoginForm()); return new
-		 * ModelAndView("jobSeekerLogin");
-		 */
         ModelAndView model = new ModelAndView();
 		LoginForm loginForm = new LoginForm();
 		model.setViewName("jobSeekerLogin");
@@ -116,7 +112,7 @@ public class LoginFormController {
 					loginFormDTOForUser);
 		}
 		if (value) {
-			return new ModelAndView("jobboardadvancedsearch");
+			return new ModelAndView("jobSeekerDashBoard");
 		} else {
 			return new ModelAndView("jobSeekerLogin","message","Login Failure.The User Name/Password you have entered is invalid Or you are not authorized to Login to the site.");
 		}
