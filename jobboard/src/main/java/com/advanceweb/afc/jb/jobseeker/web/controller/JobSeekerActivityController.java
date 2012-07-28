@@ -6,12 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.job.service.JobSeekerActivity;
 
 /**
@@ -28,15 +26,6 @@ public class JobSeekerActivityController {
 	@Autowired
 	private JobSeekerActivity jobSeekerActivity;
 
-	public JobSeekerActivityController() {
-	}
-
-	/**
-	 * to get applied Job
-	 * 
-	 * @param model
-	 * @return
-	 */
 
 	@RequestMapping(value = "/viewAppliedJob")
 	public ModelAndView getAppliedJob(/*@RequestParam("userId") int userId,*/Map model) {
@@ -67,7 +56,7 @@ public class JobSeekerActivityController {
 	 */
 	@RequestMapping(value = "/deleteSavedJob")
 	public ModelAndView deleteSavedJob(/*@RequestParam("userId") int userId,*/@RequestParam("appliedJobId") int appliedJobId,Map model) {
-         System.out.println("#######"+appliedJobId);
+        
 		boolean result=jobSeekerActivity.deleteAppliedJobs(appliedJobId);
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(30);
 		model.put("savedJobDTOList", savedJobDTOList);
