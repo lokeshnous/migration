@@ -83,8 +83,8 @@
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> 
-					     <input type="submit" class="btn_sm orange" value="Send"/>
-					     <input type="submit" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
+					     <input type="text" class="btn_sm orange" value="Send"/>
+					     <input type="text" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 					</span>
 				</div>
 				<div class="clearfix"></div>
