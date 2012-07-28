@@ -449,6 +449,7 @@ jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal-ie6.js -
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal-ie6.min.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal.custom.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js -text
+jobboard/src/main/webapp/resources/jquery.nyroModal/js/popup.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/styles/nyroModal.css -text
 jobboard/src/main/webapp/resources/js/PIE.htc -text
 jobboard/src/main/webapp/resources/js/expandCollapse.js -text

@@ -15,7 +15,7 @@
 <!-- js files for modalpopup------------------------------------------------- -->
 <script src="../resources/js/jquery-1.7.1.js"></script>
 <script src="../resources/js/jquery-1.7.1.min.js"></script>
-
+		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
 		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
         <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
  	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
@@ -34,25 +34,8 @@
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
+				$("#saveThisPopup").displaypopup("#saveThisPopup","775","252");
 
-				$("#saveThisPopup").nm({showCloseButton: false});
-			    var width = 775;
-			    var height = 252;
-			    $("#saveThisPopup").nyroModal({
-			      sizes: {
-			        initW: width, initH: height,
-			        minW: width, minH: height,
-			        w: width, h: height
-			      },
-			      callbacks: {
-			        beforeShowCont: function() { 
-			            width = $('.nyroModalCont').width();
-			            height = $('.nyroModalCont').height();
-			            $('.nyroModalCont iframe').css('width', width);
-			            $('.nyroModalCont iframe').css('height', height);
-			        }
-			      }
-			    });
 			});
 		</script>
 
