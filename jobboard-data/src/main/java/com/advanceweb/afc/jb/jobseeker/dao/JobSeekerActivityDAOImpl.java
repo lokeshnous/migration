@@ -99,19 +99,19 @@ try {
 	 * deleting selected saved job
 	 */
 	
-/*	public boolean deleteSavedJobs(int savedJobId) {
-		try {
-			
-			AdmSaveJob job=new AdmSaveJob();
-			job.setSaveJobId(savedJobId);
-			 hibernateTemplate.delete(job);
+	@Override
+	public boolean deleteSavedJobs(int savedJobId) {
+        try {
+			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,savedJobId);
+			job.setDeleteDt(new Date());
+			hibernateTemplate.saveOrUpdate(job);
 			 return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 		} 
 		return false;
 	}
-*/
+
 /*	public JpJob getById(int id) {
 		//return (JpJob) sessionFactory.getCurrentSession().get(JpJob.class,id);
 	}
@@ -119,16 +119,17 @@ try {
 	/**
 	 * implementation of get saved jobs
 	 */
-/*	@Override
+	@Override
 	@Transactional(readOnly = true)
 	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
 		List<AppliedJobDTO> appliedJobDTOList = null;
-
+       System.out.println("DDDDDDDDDDDDD"+jobSeekerId);
 		try {
 			if (jobSeekerId != 0) {
 				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
-				List<AdmSaveJob> jobList=(List<AdmSaveJob>)hibernateTemplate.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is not NULL and asj.deleteDt is NULL",jobSeekerId);
-				appliedJobDTOList=jobSeekerActivityConversionHelper.transformToApplidJobDTO(jobList);
+				List<AdmSaveJob> jobList=(List<AdmSaveJob>)hibernateTemplate.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is NULL and asj.deleteDt is NULL",jobSeekerId);
+				appliedJobDTOList=jobSeekerActivityConversionHelper.transformToDTOForSavedJob(jobList);
+				
 			}
 		} catch (HibernateException e) {
 			// waiting for exception
@@ -136,9 +137,9 @@ try {
 
 		return appliedJobDTOList;
 	}
-*/
 
-	public JobSeekerActivityConversionHelper getJobSeekerActivityConversionHelper() {
+
+/*	public JobSeekerActivityConversionHelper getJobSeekerActivityConversionHelper() {
 		return jobSeekerActivityConversionHelper;
 	}
 
@@ -147,5 +148,5 @@ try {
 		this.jobSeekerActivityConversionHelper = jobSeekerActivityConversionHelper;
 	}
 
-
+*/
 }
