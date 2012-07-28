@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
@@ -193,34 +194,62 @@ public class JobSearchActivityController {
 	 */
 
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
-	public ModelAndView findJobSearch(JobSearchResultForm jobSearchResultForm,
+	public @ResponseBody	JSONObject findJobSearch(JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, JSONObject> modelMap) {
 		
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String searchName = "KEYWORD";// will be replaced by BASIC_SEARCH
+		
+		/*String keywords = jobSearchResultForm.getKeywords().trim();
+		String radius = jobSearchResultForm.getRadius().trim();
+		String cityState = jobSearchResultForm.getCityState().trim();*/
+		/*String keywords = "nurse";
+		String radius = "";
+		String cityState = "st";*/
+		
+		
+		//System.out.println("keywords=============================="+keywords);
+		//System.out.println("radius=============================="+radius);
+		//System.out.println("cityState=============================="+cityState);
+		
 		paramMap.put("keywords", jobSearchResultForm.getKeywords()
 				.trim());
 		paramMap.put("cityState", jobSearchResultForm.getCityState().trim());
 		paramMap.put("radius",jobSearchResultForm.getRadius());
+		
+		/*paramMap.put("keywords", keywords);
+		paramMap.put("cityState", cityState);
+		paramMap.put("radius",radius);*/
+		
+		
+		
 		paramMap.put("sessionid", "JS0011");
 		paramMap.put("search_seq", "");
 		
 		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
+		/*
+		long start = 0;
+		long rows = 20;*/
 		
-		LOGGER.debug("Start=============================="+start);
-		LOGGER.debug("rows=============================="+rows);
+		
+		//System.out.println("Start=============================="+start);
+		//System.out.println("rows=============================="+rows);
+		
 		
 		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
 				start, rows);
+		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null){
-			JSONObject jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
-			modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
+			jobSrchJsonObj = readSolrServerDetails.convertToJSON(jobSearchResultDTO);
+			return jobSrchJsonObj;
+			
+			//modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
 		}
-		
-		return new ModelAndView("findjob", modelMap);
+		return null;
+		//return new ModelAndView("findjob", modelMap);
 		// return new ModelAndView("jsonView", modelMap);
 		/*
 		 * return new ModelAndView("findjob", "jobSrchJsonObj", jobSrchJsonObj);
