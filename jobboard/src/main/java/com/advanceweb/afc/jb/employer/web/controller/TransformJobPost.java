@@ -22,7 +22,7 @@ public class TransformJobPost {
 		jobPostDTO.setCustomerNo(form.getCustomerNo());
 		jobPostDTO.setCompanyName(form.getCompanyName());
 		jobPostDTO.setDisCompanyName(form.getDisCompanyName());
-		jobPostDTO.setJobId(form.getJobId());
+		jobPostDTO.setJobNumber(form.getJobNumber());
 		jobPostDTO.setJobTitle(form.getJobTitle());
 		jobPostDTO.setJobCity(form.getJobCity());
 		jobPostDTO.setJobState(form.getJobState());
