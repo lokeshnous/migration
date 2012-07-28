@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -19,7 +20,22 @@
 	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
 <![endif]-->
 
+<!-- js files for modalpopup------------------------------------------------- -->
+<script src="../resources/js/jquery-1.7.1.js"></script>
+<script src="../resources/js/jquery-1.7.1.min.js"></script>
 
+		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
+		
+        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css" media="screen">
+           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
+        </style>
+<!-- -------------------------------------------------------------------------- -->
+	
+	
+	
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
@@ -46,7 +62,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>FORGOT YOUR PASSWORD?</h2>
-			<a href="#"><img src="images/Close.png" width="19" height="19"
+			<a href="#"><img src="images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();"
 				alt=""></a>
 		</div>
 
@@ -68,7 +84,7 @@
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> 
 					     <input type="submit" class="btn_sm orange" value="Send"/>
-					     <input type="submit" class="btn_sm orange" value="Cancel"/>
+					     <input type="submit" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 					</span>
 				</div>
 				<div class="clearfix"></div>
