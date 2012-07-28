@@ -34,11 +34,24 @@
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
-				$("#saveThisPopup").displaypopup("#saveThisPopup","775","252");
-
+				$(".saveThisPopup").displaypopup(".saveThisPopup","775","252");
+				$("#saveThisJobId").click(function(event) {
+					
+					$.ajax({url: getBaseURL()+"/jobsearchactivity/saveThisJob.html?resumeId="+resumeId,
+						success: function() {
+							alert('s');
+						  },
+						error: function() {
+							alert('e');
+								
+						},
+						complete: function() {
+							alert('c');
+						}
+					});
+				});
 			});
 		</script>
-
 
 </head>
     
@@ -178,7 +191,9 @@
 			    <div class="jobDetailsIntroOptions">
 				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
 				<a href="applyJob.html?id=13165" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="saveThisJob.html?id=13100"  target="_blank" id="saveThisPopup" class="btn_sm orange">SAVE THIS JOB</a>
+				
+				<a href="" target="_blank" id="saveThisJobId" class="saveThisPopup btn_sm orange">SAVE THIS JOB</a>
+			    <c:if test="${isJobAction}"><div style="color: red">${jobActionInfo}</div></c:if>
 			    </div>
 			    <h3 class="jobSummaryTitle"><span>Job Summary:</span></h3>
 			    <p class="article">${jobDetail.jobDesc}</p>     
@@ -186,7 +201,7 @@
 				<div class="jobDetailsIntroOptions">
 				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
 				<a href="applyJob.html?id=13165" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="saveThisJob.html?id=13100" class="btn_sm orange">SAVE THIS JOB</a>
+				<a href="saveThisJob.html?id=13100" target="_blank" class="saveThisPopup btn_sm orange">SAVE THIS JOB</a>
 			    </div>
 			    </div>
 			    

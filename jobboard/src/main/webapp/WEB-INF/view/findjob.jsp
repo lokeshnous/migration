@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 		<head>
@@ -120,6 +121,32 @@
 		    
 		    
 		    
+		</script>
+		<!-- js files for modalpopup------------------------------------------------- -->
+<script src="../resources/js/jquery-1.7.1.js"></script>
+<script src="../resources/js/jquery-1.7.1.min.js"></script>
+		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
+		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
+        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css" media="screen">
+           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
+        </style>
+<!-- -------------------------------------------------------------------------- -->
+		
+	
+	
+        <!-- JAVASCRIPT FILES -->
+		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<script type="text/javascript" src="../resources/js/slider.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				jQuery(".megamenu").megamenu();
+				$(".saveThisPopup").displaypopup(".saveThisPopup","775","252");
+
+			});
 		</script>
         <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 		</head>
@@ -459,7 +486,49 @@
                                 
                                     
                                     <div class="searchResultsItem">
-                                       
+                                                                           <div class="searchResultsItem">
+                                        <ul id="orange-bg" class="searchResultsJobInfo closed orange-bg">
+                                            <li class="searchResultsColumn1">
+                                                Nurse Team Lead/RN Manager
+                                            </li>
+                                            <li class="searchResultsColumn2">
+                                                NOVA Medical Group
+                                            </li>
+                                            <li class="searchResultsColumn3">
+                                                Ashburn, VA
+                                            </li>
+                                            <li class="searchResultsColumn4">
+                                                07/1${isJobAction}2/2012
+                                            <c:if test="${isJobAction}"><div style="color: red">${jobActionInfo}</div></c:if>
+                                            </li>
+                                        </ul>
+                                        <div class="searchResultsSubContent">
+                                            
+                                            <p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span> Busy multi-specialty Medical Group/Urgent Care Center seeks Nursing Team Leader/RN Manager to coordinate and supervise nursing staff in our Ashburn Facility. Qualified candidate will be an RN/LPN and must have a proven track record of...</p>
+                                            <div class="searchResultsSubContentButtonArea">
+                                                <div class="searchResultsSubContentButtons">
+                                                    <a href="applyJob.html?id=13100" class="btn_sm white">Apply</a>
+                                                </div>
+                                                <div class="searchResultsSubContentButtons">
+                                                    <a href="viewJobDetails.html?id=13101" class="btn_sm white">View Details</a>
+                                                </div>
+                                                <div class="searchResultsSubContentButtons">
+                                                    <a href="saveThisJob.html?id=13100" target="_blank" class="saveThisPopup btn_sm white">Save This Job</a>
+                                                </div>
+                                             </div>
+                                            <div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>
+                                            
+                                          <div class="searchResultsSubContentShare">
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                            </div>
+                                            
+                                            <div class="searchResultsSubContentShare">
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            </div>
+                                            
+                                            
+                                          </div>
+                                    </div>
                                         <!--
                                         <div class="searchResultsSubContent">
                                             

@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
@@ -39,16 +41,16 @@ public class JobSearchActivityConversionHelper {
 			searchedJobDTO.setJobTitle(entity.getJobtitle());
 			searchedJobDTO.setJobDesc(entity.getAdtext());
 			searchedJobDTO.setJobID(entity.getJobId());
-			
+
 			/**
 			 * get detail from admFacility entity
 			 */
 			AdmFacility admFacility = entity.getAdmFacility();
 			searchedJobDTO.setCompanyName(admFacility.getName());
 			int blindAd = entity.getBlindAd();
-			if(blindAd == 1){
+			if (blindAd == 1) {
 				searchedJobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
-			}		
+			}
 
 			/**
 			 * get detail from JpLocation entity
@@ -59,14 +61,14 @@ public class JobSearchActivityConversionHelper {
 			int hideCity = jobJobLocation.getHideCity();
 			int hideState = jobJobLocation.getHideState();
 			int hideCountry = jobJobLocation.getHideCountry();
-			
-			if(hideCity != 1){
+
+			if (hideCity != 1) {
 				searchedJobDTO.setCity(jpLocation.getCity());
 			}
-			if(hideState != 1){
+			if (hideState != 1) {
 				searchedJobDTO.setStateFullName(jpLocation.getStateFullname());
 			}
-			if(hideCountry != 1){
+			if (hideCountry != 1) {
 				searchedJobDTO.setCountry(jpLocation.getCountry());
 			}
 
@@ -83,21 +85,45 @@ public class JobSearchActivityConversionHelper {
 	}
 
 	/**
-	 * This method is called to convert ApplyJobDTO to JpSaveJob Entity
+	 * This method is called to convert ApplyJobDTO to AdmSaveJob Entity
 	 * 
 	 * @param entity
 	 * @return
 	 */
-	public JpSaveJob transformJobDTOToJpSaveJob(SaveOrApplyJobDTO jobDTO) {
-		JpSaveJob jpSaveJob = new JpSaveJob();
+	public AdmSaveJob transformJobDTOToAdmSaveJob(AppliedJobDTO jobDTO) {
+		AdmSaveJob admSaveJob = new AdmSaveJob();
 		if (jobDTO != null) {
-			jpSaveJob.setUserId(jobDTO.getUserId());
-			jpSaveJob.setJobId(jobDTO.getJobId());
-			jpSaveJob.setCreateDt(jobDTO.getCreateDate());
-			jpSaveJob.setAppliedDate(jobDTO.getAppliedDate());
-			jpSaveJob.setIsApplied(jobDTO.getIsApplied());
+			admSaveJob.setUserId(jobDTO.getUserId());
+			JpJob jpJob = new JpJob();
+			int jobId = jobDTO.getJpJob().getJobId();
+			jpJob.setJobId(jobId);
+			admSaveJob.setJpJob(jpJob);
+			admSaveJob.setJobtitle(jobDTO.getJobTitle());
+			admSaveJob.setFacilityName(jobDTO.getFacilityName());
+			String strCreatedDate = jobDTO.getCreateDt();
+			java.sql.Date createdDate = null;
+			if (strCreatedDate != null) {
+				createdDate = DateUtils
+						.convertDateStringToSQLDate(strCreatedDate);
+			}
+			admSaveJob.setCreateDt(createdDate);
+			String strAppliedDate = jobDTO.getAppliedDt();
+			java.sql.Date appliedDate = null;
+			if (strAppliedDate != null) {
+				appliedDate = DateUtils
+						.convertDateStringToSQLDate(strAppliedDate);
+			}
+			admSaveJob.setAppliedDt(appliedDate);
+			String strDeleteDt = jobDTO.getDeleteDt();
+			java.sql.Date deleteDtDate = null;
+			if (strDeleteDt != null) {
+				deleteDtDate = DateUtils
+						.convertDateStringToSQLDate(strDeleteDt);
+			}
+			admSaveJob.setAppliedDt(appliedDate);
+			admSaveJob.setDeleteDt(deleteDtDate);
 		}
-		return jpSaveJob;
+		return admSaveJob;
 	}
 
 	/**
@@ -112,8 +138,8 @@ public class JobSearchActivityConversionHelper {
 		JpSaveJob jpSaveJob = new JpSaveJob();
 		jpSaveJob.setUserId(searchedJobDTO.getUserID());
 		jpSaveJob.setJobId(searchedJobDTO.getJobID());
-		//jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
-		//jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
+		// jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
+		// jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
 		jpSaveJob.setCreateDt(searchedJobDTO.getCreatedDate());
 		return jpSaveJob;
 	}

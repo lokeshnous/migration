@@ -10,14 +10,19 @@ package com.advanceweb.afc.jb.common.util;
 public interface MMJBCommonConstants {
 	public static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-zA-Z]).{6,20})";
 	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	
-	//For DropDowns
-	public static final String EMPLOYMENT_TYPE="EmploymentType";
-	
-	//For SOLR search
+
+	// For DropDowns
+	public static final String EMPLOYMENT_TYPE = "EmploymentType";
+
+	// For SOLR search
 	public static final String SLASH = "/";
 	public static final String SLASH_SELECT_SLASH = "/select/?";
 	public static final String AMP = "&";
 	public static final String EQUAL_TO = "=";
 	public static final String POST_RESUME = "postresume";
+
+	// Date Patterns
+	public static final String DATE_PATTERN = "yyyy-MM-dd";
+	public static final String DISP_DATE_PATTERN = "MM/dd/yyyy";
+	public static final String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
 }

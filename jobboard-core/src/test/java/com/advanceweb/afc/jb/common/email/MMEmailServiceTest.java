@@ -24,34 +24,34 @@ import com.advanceweb.afc.jb.ServiceTest;
  * @since 18 July 2012
  * 
  */
-public class MMEmailServiceTest extends ServiceTest  {
-	
+public class MMEmailServiceTest extends ServiceTest {
+
 	@Autowired
 	private MMEmailService emailService;
-	 
 
 	/**
 	 * The method test the sending of mail.
-	 *  
+	 * 
 	 */
-	@Ignore("Not Ready to test as port number is not given")
+	@Ignore("Not Ready to test as mail server properties are not set")
 	@Test(expected = MailSendException.class)
 	public void testSendEmail() {
 		Boolean status = Boolean.FALSE;
-		try {			
+		try {
 			EmailDTO testemailDTO = new EmailDTO();
-			testemailDTO.setFromAddress("testfromAddress@testDomain.com");
+			testemailDTO.setFromAddress("pramodap@nousinfo.com");
 			InternetAddress[] testccAddress = new InternetAddress[1];
-			testccAddress[0] = new InternetAddress("testCcAddress@testDomain.com");
+			testccAddress[0] = new InternetAddress("pramodeandc@yahoo.co.in");
 			testemailDTO.setCcAddress(testccAddress);
 			InternetAddress[] testbccAddress = new InternetAddress[1];
-			testbccAddress[0] = new InternetAddress("testBccAddress@testDomain.com");
+			testbccAddress[0] = new InternetAddress("pramod1356@gmail.com");
 			testemailDTO.setBccAddress(testbccAddress);
 			InternetAddress[] testtoAddress = new InternetAddress[1];
-			testtoAddress[0] = new InternetAddress("testToAddress@testDomain.com");
+			testtoAddress[0] = new InternetAddress("patilpramod20@gmail.com");
 			testemailDTO.setToAddress(testtoAddress);
-			testemailDTO.setSubject("Test mail Subject");
-			testemailDTO.setBody("Test mail body");
+			testemailDTO
+					.setSubject("Please ignore this mail:Test mail Subject");
+			testemailDTO.setBody("Please ignore this mail:Test mail body");
 			testemailDTO.setHtmlFormat(true);
 			List<String> testAttachmentpaths = new ArrayList<String>();
 			testAttachmentpaths.add("C:\\testResume.txt");
@@ -62,7 +62,7 @@ public class MMEmailServiceTest extends ServiceTest  {
 			status = Boolean.FALSE;
 			throw new MailParseException(e);
 		}
-		assertTrue("Mail info",status);		
+		assertTrue("Mail info", status);
 	}
 
 }

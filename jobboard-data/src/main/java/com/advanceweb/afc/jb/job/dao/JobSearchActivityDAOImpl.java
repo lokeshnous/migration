@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.job.dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -8,11 +10,13 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpSaveJob;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSearchActivityConversionHelper;
+import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerActivityConversionHelper;
 
 /**
  * <code> JobSearchActivityDAOImpl </code> is a DAO implementation class.
@@ -38,6 +42,9 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	@Autowired
 	private JobSearchActivityConversionHelper jobSearchActivityConversionHelper;
 
+	@Autowired
+	private JobSeekerActivityConversionHelper jobSeekerActivityConversionHelper;
+
 	/**
 	 * implementation of viewJobDetails
 	 */
@@ -49,14 +56,14 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 		try {
 			if (jobId != 0) {
 				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
-						(int)jobId);
+						(int) jobId);
 				SearchedJobDTO searchedJobDTO = jobSearchActivityConversionHelper
 						.transformJpJobToSearchedJobDTO(jpJob);
 				jobDetail = searchedJobDTO;
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("ERROR");
+			LOGGER.info("viewJobDetails ERROR");
 		} catch (Exception ex) {
 			// logger call
 			LOGGER.info("ex-ERROR");
@@ -65,23 +72,85 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	}
 
 	/**
-	 * implementation of save or apply the job for logged in user
+	 * implementation of viewJobDetails
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
+			int userId) {
+		List<AppliedJobDTO> jobDetail = null;
+		int jobId = searchedJobDTO.getJobID();
+		try {
+			if (userId != 0) {
+				@SuppressWarnings("unchecked")
+				List<AdmSaveJob> admSaveJobs = hibernateTemplate
+						.find("from AdmSaveJob where jpJob.jobId = ? and userId = ? and deleteDt = null",
+								jobId, userId);
+				jobDetail = jobSeekerActivityConversionHelper
+						.transformToApplidJobDTO(admSaveJobs);
+			}
+		} catch (HibernateException e) {
+			// logger call
+			LOGGER.info("ERROR");
+		} catch (Exception ex) {
+			// logger call
+			LOGGER.info("ex-ERROR");
+		}
+		AppliedJobDTO appliedJobDTO = null;
+		if(jobDetail != null && !jobDetail.isEmpty()){
+			appliedJobDTO = jobDetail.get(0);
+		}
+		return appliedJobDTO;
+	}
+
+	/**
+	 * implementation of create save or apply the job for logged in user
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void saveOrApplyJob(SaveOrApplyJobDTO jobDTO) {
+	public boolean saveOrApplyJob(AppliedJobDTO jobDTO) {
+		boolean status = false;
 		try {
 			/**
 			 * save the job in DB
 			 * 
 			 */
-			JpSaveJob jpSaveJob = jobSearchActivityConversionHelper
-					.transformJobDTOToJpSaveJob(jobDTO);
-			hibernateTemplate.save(jpSaveJob);
+			AdmSaveJob admSaveJob = jobSearchActivityConversionHelper
+					.transformJobDTOToAdmSaveJob(jobDTO);
+			hibernateTemplate.save(admSaveJob);
+			status = true;
 		} catch (HibernateException e) {
+			status = false;
 			// logger call
 			LOGGER.info("ERROR");
 		}
+		return status;
+	}
+
+	/**
+	 * implementation of update save or apply the job for logged in user
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public boolean updateSaveOrApplyJob(AppliedJobDTO jobDTO) {
+		boolean status = false;
+		try {
+			/**
+			 * save the job in DB
+			 * 
+			 */
+			AdmSaveJob admSaveJob = (AdmSaveJob) hibernateTemplate.load(
+					AdmSaveJob.class, jobDTO.getSaveJobId());
+
+			admSaveJob.setAppliedDt(new java.util.Date());
+			hibernateTemplate.update(admSaveJob);
+			status = true;
+		} catch (HibernateException e) {
+			status = false;
+			// logger call
+			LOGGER.info("ERROR");
+		}
+		return status;
 	}
 
 	// To Save the save searched job details to DB

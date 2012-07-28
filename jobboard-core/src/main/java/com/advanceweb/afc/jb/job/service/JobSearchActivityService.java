@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchActivityDAO;
 
@@ -26,6 +26,19 @@ public class JobSearchActivityService implements JobSearchActivity {
 	private JobSearchActivityDAO jobSearchActivityDAO;
 
 	/**
+	 * validating job for save/apply.
+	 */
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
+			int userId) {
+
+		return jobSearchActivityDAO.fetchSavedOrAppliedJob(searchedJobDTO,
+				userId);
+
+	}
+
+	/**
 	 * view searched job
 	 */
 	@Override
@@ -37,12 +50,25 @@ public class JobSearchActivityService implements JobSearchActivity {
 	}
 
 	/**
-	 * save or apply the job for logged in user
+	 * create save or apply the job for logged in user
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public void saveOrApplyJob(SaveOrApplyJobDTO jobDTO) {
-		jobSearchActivityDAO.saveOrApplyJob(jobDTO);
+	public boolean saveOrApplyJob(AppliedJobDTO jobDTO) {
+		boolean status = false;
+		status = jobSearchActivityDAO.saveOrApplyJob(jobDTO);
+		return status;
+	}
+
+	/**
+	 * update save or apply the job for logged in user
+	 */
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+	public boolean updateSaveOrApplyJob(AppliedJobDTO jobDTO) {
+		boolean status = false;
+		status = jobSearchActivityDAO.updateSaveOrApplyJob(jobDTO);
+		return status;
 	}
 
 	/**

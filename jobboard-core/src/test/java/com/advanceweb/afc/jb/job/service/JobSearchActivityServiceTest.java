@@ -2,17 +2,22 @@ package com.advanceweb.afc.jb.job.service;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.mail.internet.InternetAddress;
+
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.advanceweb.afc.jb.ServiceTest;
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
-import com.advanceweb.afc.jb.common.SaveOrApplyJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -31,9 +36,10 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	@Autowired
 	public JobSearchActivity jobSearchActivity;
 
-	/*@Autowired
-	private MMEmailService emailService;*/
-	
+	/*
+	 * @Autowired private MMEmailService emailService;
+	 */
+
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSearchActivityController.class");
 
@@ -44,7 +50,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	 * The method helps to test the retrieving of job details by JobId
 	 * 
 	 */
-	//@Ignore("Not Reaady to test")
+	// @Ignore("Not Reaady to test")
 	@Test
 	public void testViewJobDetails() {
 		Long jobId = 13100L;
@@ -60,7 +66,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	@Test
 	public void testApplyJob() {
 		try {
-			Long jobId = 13100L;
+			int jobId = 13100;
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(jobId);
 			/**
@@ -81,7 +87,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			assertNotNull("Public visibility Resume", resumeDTO);
 			attachmentpaths.add(resumeDTO.getFilePath());
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			//emailService.sendEmail(employerEmailDTO);
+			// emailService.sendEmail(employerEmailDTO);
 
 			/**
 			 * Sending mail to job seeker
@@ -96,23 +102,24 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
-			//emailService.sendEmail(jobSeekerEmailDTO);
+			// emailService.sendEmail(jobSeekerEmailDTO);
 
 			/**
 			 * saving the job in applied job in job seeker table
 			 */
 			int userId = 1;
 			Date currentDate = new Date();
-			byte isApplied = 1;
-			SaveOrApplyJobDTO applyJobDTO = new SaveOrApplyJobDTO();
-			applyJobDTO.setJobId(jobId.intValue());
+			AppliedJobDTO applyJobDTO = new AppliedJobDTO();
+			JobPostDTO jpJob = new JobPostDTO();
+			jpJob.setJobId(jobId);
+			applyJobDTO.setJpJob(jpJob);
 			applyJobDTO.setUserId(userId);
-			applyJobDTO.setCreateDate(currentDate);
-			applyJobDTO.setAppliedDate(currentDate);
-			applyJobDTO.setIsApplied(isApplied);
+			applyJobDTO.setCreateDt(currentDate.toString());
+			applyJobDTO.setAppliedDt(currentDate.toString());
+			applyJobDTO.setDeleteDt(null);
 			jobSearchActivity.saveOrApplyJob(applyJobDTO);
 		} catch (Exception e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			LOGGER.info("testApplyJob Exception");
 		}
 	}
@@ -121,7 +128,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	 * Added for save the job task
 	 * 
 	 */
-	//@Ignore("Not Reaady to test")
+	// @Ignore("Not Reaady to test")
 	@Test
 	public void testSaveJob() {
 		try {
@@ -133,7 +140,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			searchedJobDTO.setJobTitle("Project Manager");
 			searchedJobDTO.setCompanyName("XYZ");
 			jobSearchActivity.saveJob(searchedJobDTO);
-			assertTrue("Test to save the job" , status);
+			assertTrue("Test to save the job", status);
 		} catch (Exception e) {
 			LOGGER.info("testSaveJob Exception");
 		}

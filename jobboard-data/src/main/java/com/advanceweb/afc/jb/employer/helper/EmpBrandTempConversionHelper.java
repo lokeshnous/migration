@@ -38,8 +38,9 @@ public class EmpBrandTempConversionHelper {
 		merJpBrandTempDTO.setCreatedDate(merJpBrandingTemp.getCreatedDate());
 		Date updateDate = merJpBrandingTemp.getUpdatedDate();
 		String strUpdateDate = null;
-		if(updateDate != null){
-			strUpdateDate = DateUtils.convertSQLDateToStdDate(updateDate.toString());
+		if (updateDate != null) {
+			strUpdateDate = DateUtils.convertSQLDateToStdDateString(updateDate
+					.toString());
 		}
 		merJpBrandTempDTO.setUpdatedDate(strUpdateDate);
 		return merJpBrandTempDTO;
@@ -65,8 +66,8 @@ public class EmpBrandTempConversionHelper {
 		merJpBrandTemp.setCreatedDate(brandingTemplatesDTO.getCreatedDate());
 		String strUpdateDate = brandingTemplatesDTO.getUpdatedDate();
 		java.sql.Date updateDate = null;
-		if(strUpdateDate != null){
-			updateDate = DateUtils.convertStringToSQLDate(brandingTemplatesDTO.getUpdatedDate());
+		if (strUpdateDate != null) {
+			updateDate = DateUtils.convertDateStringToSQLDate(strUpdateDate);
 		}
 		merJpBrandTemp.setUpdatedDate(updateDate);
 		return merJpBrandTemp;
