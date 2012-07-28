@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -9,6 +10,22 @@
      <head>
         	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         	<title>ADVANCE Heathcare Jobs</title>
+        	
+        	
+        	
+        	<!-- js files for modalpopup------------------------------------------------- -->
+<script src="../resources/js/jquery-1.7.1.js"></script>
+<script src="../resources/js/jquery-1.7.1.min.js"></script>
+		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
+		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
+        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
+ 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
+
+        <style type="text/css" media="screen">
+           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
+        </style>
+<!-- -------------------------------------------------------------------------- -->
+        	
 
 			<!-- STYLESHEETS -->
 			<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
@@ -20,13 +37,13 @@
 			<![endif]-->
 
        	    <!-- JAVASCRIPT FILES -->
-        	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 			<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 			<script type="text/javascript" src="../resources/js/slider.js"></script>
 			<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		
 			<script type="text/javascript">
 		    	jQuery(document).ready(function(){
+				$("#forgrtpassword").displaypopup("#forgrtpassword","775","252");
 		   		jQuery(".megamenu").megamenu();
 			});
 		   </script>
@@ -172,7 +189,7 @@
 				</div>		    
 				<div class="rowEvenSpacing">				    
 				    <span class="floatLeft"><input type="submit" class="btn_sm orange" value="Login" /></span> 
-                    <span class="floatLeft"><a href="forgrtPasswordLogin.html">Forgot your password?</a></span>
+                    <span class="floatLeft"><a href="forgrtPasswordLogin.html" id="forgrtpassword" >Forgot your password?</a></span>
 				</div>
 				<div class="rowEvenSpacing">
 				    <p><span class="bold">Not a member?</span> <a href="">Sign up now!</a></p>
