@@ -90,9 +90,7 @@ public class LoginFormController {
 	@RequestMapping(value = "/jobSeekerLogin", method = RequestMethod.POST)
 	public ModelAndView validateLogin(
 			@ModelAttribute("loginForm") @Valid LoginForm loginForm,
-			BindingResult result, Map map) {
-
-		ModelAndView model = new ModelAndView();
+			BindingResult result) {
         
 		//programmatic validation is done here which validates based on patters
 		//loginFormValidator.validate(loginForm, result);
