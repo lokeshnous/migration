@@ -47,6 +47,10 @@ public class JpSaveSearch {
 	
 	@Column(name="email_frequency")
 	private String emailFrequency;
+	
+	@Temporal( TemporalType.TIMESTAMP)
+	@Column(name="deleted_date")
+	private Date deletedDate;
 
 
 	/**
@@ -149,6 +153,19 @@ public class JpSaveSearch {
 		this.createDate = createDate;
 	}
 
-	
+	/**
+	 * @return the deletedDate
+	 */
+	public Date getDeletedDate() {
+		return deletedDate;
+	}
+
+	/**
+	 * @param deletedDate the deletedDate to set
+	 */
+	public void setDeletedDate(Date deletedDate) {
+		this.deletedDate = deletedDate;
+	}
+
 
 }
