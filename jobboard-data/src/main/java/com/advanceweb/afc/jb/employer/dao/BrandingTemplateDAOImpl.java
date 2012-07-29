@@ -24,7 +24,7 @@ import com.advanceweb.afc.jb.employer.helper.EmpBrandTempConversionHelper;
  * 
  */
 @Repository("empBrandTempDAO")
-public class EmpBrandTempDAOImpl implements EmpBrandTempDAO {
+public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 
 	private HibernateTemplate hibernateTemplateTracker;
 
@@ -32,7 +32,7 @@ public class EmpBrandTempDAOImpl implements EmpBrandTempDAO {
 	private EmpBrandTempConversionHelper empBrandTempConversionHelper;
 
 	private static final Logger LOGGER = Logger
-			.getLogger(EmpBrandTempDAOImpl.class);
+			.getLogger(BrandingTemplateDAOImpl.class);
 
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {

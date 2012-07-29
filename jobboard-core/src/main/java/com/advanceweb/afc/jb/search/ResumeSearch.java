@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.resume;
+package com.advanceweb.afc.jb.search;
 
 /**
  * @author Rajeshkb

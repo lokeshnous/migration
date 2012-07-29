@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.job.service;
+package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 
 /**
  * 
@@ -17,12 +18,12 @@ import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO;
  */
 @Service("jobSeekerActivity")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class JobSeekerActivityService implements JobSeekerActivity {
+public class JobSeekerServiceImpl implements JobSeekerService {
 
 	@Autowired
 	public JobSeekerActivityDAO activityDAO;
 
-	JobSeekerActivityService() {
+	JobSeekerServiceImpl() {
 
 	}
 

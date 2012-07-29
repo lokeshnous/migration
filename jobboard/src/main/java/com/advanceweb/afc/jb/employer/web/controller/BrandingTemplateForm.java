@@ -10,7 +10,7 @@ import java.util.Date;
  * @since 17 July 2012
  * 
  */
-public class EmpBrandTempForm {
+public class BrandingTemplateForm {
 
 	private long employerId;
 	private String description;

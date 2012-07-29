@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.employer.service.EmpBrandTemp;
+import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
 /**
  * <code>EmpBrandTempController</code>This controller belongs to manage job
@@ -28,10 +28,10 @@ import com.advanceweb.afc.jb.employer.service.EmpBrandTemp;
 @Controller
 @RequestMapping("/brandingTemplates")
 @SuppressWarnings("rawtypes")
-public class EmpBrandTempController {
+public class BrandingTemplateController {
 
 	@Autowired
-	private EmpBrandTemp empBrandTemp;
+	private BrandingTemplateService empBrandTemp;
 
 	/**
 	 * The method is called to fetch the job posting Branding Templates
@@ -60,7 +60,7 @@ public class EmpBrandTempController {
 	 */
 	@RequestMapping(value = "/saveEmpBrandTemp", method = RequestMethod.GET)
 	public ModelAndView createEmpBrandTemp(
-			@Valid EmpBrandTempForm form) {
+			@Valid BrandingTemplateForm form) {
 		Boolean status = null;
 		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
 		// empBrandTempDTO.setDescription(form.getDescription());

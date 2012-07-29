@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.job.service;
+package com.advanceweb.afc.jb.search;
 
 import java.util.Map;
 

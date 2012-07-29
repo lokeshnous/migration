@@ -1,7 +1,8 @@
-package com.advanceweb.afc.jb.job.service;
+package com.advanceweb.afc.jb.job.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
+import com.advanceweb.afc.jb.job.service.AnonymousUserJobApply;
 
 /**
  * @Author : Prince Mathew

@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.employer.service;
+package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
    @Created: Jul 18, 2012
    @Purpose: This will work as a service interface for  Employer for posting new job
  */
-public interface JobPost {
+public interface JobPostService {
 
 	EmployerInfoDTO getEmployerInfo(int userId);
 	List<StateDTO> getStateList();

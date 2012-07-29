@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.engine.solr.dao;
+package com.advanceweb.afc.jb.search.dao;
 
 import java.util.List;
 

@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.MetaSearchIndexDTO;
 import com.advanceweb.afc.jb.common.MetaSearchInputDTO;
-import com.advanceweb.afc.jb.search.engine.solr.dao.SearchDao;
+import com.advanceweb.afc.jb.search.JobSearchDeleagate;
+import com.advanceweb.afc.jb.search.dao.SearchDao;
 
 /**
  * This class has been created for the Solr Server Job search functionalities.
@@ -23,7 +24,7 @@ import com.advanceweb.afc.jb.search.engine.solr.dao.SearchDao;
  */
 
 @Service("jobSearchDeleagate")
-public class JobSearchDeleagateImpl implements JobSearchDeleagate {
+public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSearchDeleagateImpl.class");

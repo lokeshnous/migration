@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.employer.service;
+package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
+import com.advanceweb.afc.jb.job.service.JobPostService;
 
 /**
  * @Author : Prince Mathew
@@ -18,9 +19,9 @@ import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
    @Created: Jul 18, 2012
    @Purpose: This class will implement all the methods of EmployerJobPost interface 
  */
-@Service("employerJobPost")
+@Service("JobPostService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class JobPostImpl implements JobPost {
+public class JobPostServiceImpl implements JobPostService {
 	
 	@Autowired
 	JobPostDAO employerJobPostDAO;
@@ -31,7 +32,7 @@ public class JobPostImpl implements JobPost {
 	   @Created:Jul 19, 2012
 	   @Param  :userId
 	   @Return :EmployerInfoDTO which contain the employer information
-	 * @see com.advanceweb.afc.jb.employer.service.JobPost#getEmployerInfo(int)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getEmployerInfo(int)
 	 */
 	@Override
 	public EmployerInfoDTO getEmployerInfo(int userId) {
@@ -45,7 +46,7 @@ public class JobPostImpl implements JobPost {
 	   @Created:Jul 19, 2012
 	   @Param  :not required
 	   @Return :List of the StateDTO
-	 * @see com.advanceweb.afc.jb.employer.service.JobPost#getStateList()
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getStateList()
 	 */
 	@Override
 	public List<StateDTO> getStateList() {
@@ -59,7 +60,7 @@ public class JobPostImpl implements JobPost {
 	   @Created:Jul 20, 2012
 	   @Param  :EmployerInfoDTO object
 	   @Return :boolean result
-	 * @see com.advanceweb.afc.jb.employer.service.JobPost#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
 	 */
 	@Override
 	public boolean savePostJob(JobPostDTO dto) {

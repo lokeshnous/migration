@@ -9,9 +9,9 @@ import com.advanceweb.afc.jb.data.domain.Job;
  * @created 21-Jun-2012 2:25:41 PM
  */
 @Repository
-public class JobsDAOImpl implements JobsDAO {
+public class JobDAOImpl implements JobDAO {
 
-	public JobsDAOImpl(){
+	public JobDAOImpl(){
 
 	}
 

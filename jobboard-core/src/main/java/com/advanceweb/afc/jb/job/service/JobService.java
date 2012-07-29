@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.JobsDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.email.MMEmail;
 
 /**
@@ -14,13 +14,13 @@ import com.advanceweb.afc.jb.common.email.MMEmail;
  * @created 21-Jun-2012 2:21:08 PM
  */
 @Service
-public class JobsService implements Jobs {
+public class JobService implements Job {
 
 	private MMEmail mmMailService;
 	private JobSearch jobSearchAdapter;
 
 
-	public JobsService(){
+	public JobService(){
 
 	}
 
@@ -32,7 +32,7 @@ public class JobsService implements Jobs {
 	 * 
 	 * @param jobsDTO
 	 */
-	public boolean createNewJob(JobsDTO jobsDTO){
+	public boolean createNewJob(JobDTO jobsDTO){
 		return false;
 	}
 
@@ -44,7 +44,7 @@ public class JobsService implements Jobs {
 		return false;
 	}
 
-	public List<JobsDTO> retrieveJobPostings(){
+	public List<JobDTO> retrieveJobPostings(){
 		return null;
 	}
 

@@ -16,7 +16,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.employer.service.JobPost;
+import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
@@ -30,7 +30,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @RequestMapping("/postjob")
 public class JobPostController {
 	@Autowired
-	private JobPost employerJobPost;
+	private JobPostService employerJobPost;
 	
 	@Autowired
 	private TransformJobPost transformJobPost;

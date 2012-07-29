@@ -10,7 +10,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
+import com.advanceweb.afc.jb.search.JobSearchDeleagate;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 
 public class JobSearchDeleagateImplTest extends ServiceTest{

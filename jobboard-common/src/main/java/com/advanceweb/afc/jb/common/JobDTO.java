@@ -1,5 +1,5 @@
 package com.advanceweb.afc.jb.common;
 
-public class JobsDTO {
+public class JobDTO {
 
 }

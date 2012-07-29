@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.jobseeker.service;
+package com.advanceweb.afc.jb.jobseeker.service.impl;
 
 import java.util.List;
 
@@ -9,15 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerSubscriptionsDAO;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 
 /**
  * 
  * @author sharadk
  * @since 10 July 2012
  */
-@Service("jobSeekerSubscriptionsService")
+@Service("jobSeekerSubscriptionService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class JobSeekerSubscriptionsService implements JobSeekerSubscriptions {
+public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionService {
 
 	@Autowired
 	private JobSeekerSubscriptionsDAO jobSeekerSubscriptionsDAO;

@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.job.service;
+package com.advanceweb.afc.jb.jobseeker.service.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
+import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO;
 
 /**

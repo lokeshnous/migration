@@ -14,7 +14,7 @@ import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
  * 
  * 
  */
-public interface JobSeekerSubscriptions {
+public interface JobSeekerSubscriptionService {
 	
 	/**
 	 * 

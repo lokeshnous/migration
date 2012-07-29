@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.job.service.JobSeekerActivity;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 
 /**
  * This controller belongs to all jobseekers activity
@@ -24,7 +24,7 @@ import com.advanceweb.afc.jb.job.service.JobSeekerActivity;
 public class JobSeekerActivityController {
 
 	@Autowired
-	private JobSeekerActivity jobSeekerActivity;
+	private JobSeekerService jobSeekerActivity;
 
 
 	@RequestMapping(value = "/viewAppliedJob")

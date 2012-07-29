@@ -1,6 +1,8 @@
-package com.advanceweb.afc.jb.search.engine.solr;
+package com.advanceweb.afc.jb.search;
 
 import java.util.Map;
+
+import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 
 public interface JobSearchDeleagate {
 

@@ -28,9 +28,9 @@ import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
-import com.advanceweb.afc.jb.job.service.JobSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
+import com.advanceweb.afc.jb.search.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
 

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.employer.dao.EmpBrandTempDAO;
+import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
 
 /**
  * <code>EmpBrandTempServiceTest</code> is a Test class for EmpBrandTemp
@@ -26,11 +26,11 @@ import com.advanceweb.afc.jb.employer.dao.EmpBrandTempDAO;
 public class EmpBrandTempServiceTest extends ServiceTest {
 
 	@Autowired
-	private EmpBrandTempDAO empBrandTempDAO;
+	private BrandingTemplateDAO empBrandTempDAO;
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.EmpBrandTempService#fetchEmpBrandTemp(MerUserDTO)}
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#fetchEmpBrandTemp(MerUserDTO)}
 	 */
 	@Test
 	public void fetchEmpBrandTemp() {
@@ -43,7 +43,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.EmpBrandTempService#createEmpBrandTemp(EmpBrandTempDTO)}
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#createEmpBrandTemp(EmpBrandTempDTO)}
 	 */
 	@Test
 	public void createEmpBrandTemp() {
@@ -62,7 +62,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.EmpBrandTempService#viewEmpBrandTemp(EmpBrandTempDTO)}
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#viewEmpBrandTemp(EmpBrandTempDTO)}
 	 */
 	@Test
 	public void viewEmpBrandTemp() {
@@ -76,7 +76,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.EmpBrandTempService#editEmpBrandTemp(EmpBrandTempDTO)}
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#editEmpBrandTemp(EmpBrandTempDTO)}
 	 */
 	@Test
 	public void editEmpBrandTemp() {
@@ -96,7 +96,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.EmpBrandTempService#deleteEmpBrandTemp(EmpBrandTempDTO)}
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#deleteEmpBrandTemp(EmpBrandTempDTO)}
 	 * .
 	 */
 	@Ignore("Test fails if repeatedly deleting deleted record")

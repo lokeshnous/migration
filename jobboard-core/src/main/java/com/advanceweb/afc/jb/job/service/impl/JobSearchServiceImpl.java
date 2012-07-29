@@ -1,10 +1,11 @@
-package com.advanceweb.afc.jb.job.service;
+package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
+import com.advanceweb.afc.jb.search.JobSearchDeleagate;
+import com.advanceweb.afc.jb.search.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 import org.springframework.stereotype.Service;
 

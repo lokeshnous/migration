@@ -12,7 +12,7 @@ import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptions;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
@@ -27,7 +27,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 public class JobSeekerDashBoardController {
 	
 	@Autowired
-	private JobSeekerSubscriptions jobSeekerSubscriptionsService;
+	private JobSeekerSubscriptionService jobSeekerSubscriptionsService;
 
 	@Autowired
 	private TransformJobSeekerSubscription transformJobSeekerSubscription;

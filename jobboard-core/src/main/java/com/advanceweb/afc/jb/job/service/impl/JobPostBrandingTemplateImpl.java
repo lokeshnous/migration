@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.job.service;
+package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AdmBrndngTempDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.job.dao.JobPostBrandingTempDAO;
+import com.advanceweb.afc.jb.job.service.JobPostBrandingTemplate;
 
 /**
  * anilm

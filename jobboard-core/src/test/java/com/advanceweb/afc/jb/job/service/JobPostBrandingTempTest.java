@@ -42,7 +42,7 @@ public class JobPostBrandingTempTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.job.service.JobPostBrandingTemplateImpl#createTemaplate(com.advanceweb.afc.jb.common.AdmBrndngTempDTO)}
+	 * {@link com.advanceweb.afc.jb.job.service.impl.JobPostBrandingTemplateImpl#createTemaplate(com.advanceweb.afc.jb.common.AdmBrndngTempDTO)}
 	 * .
 	 */
 	@Ignore("image paths hard coded")
@@ -99,7 +99,7 @@ public class JobPostBrandingTempTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.job.service.JobPostBrandingTemplateImpl#updateTemplate(com.advanceweb.afc.jb.common.AdmBrndngTempDTO)}
+	 * {@link com.advanceweb.afc.jb.job.service.impl.JobPostBrandingTemplateImpl#updateTemplate(com.advanceweb.afc.jb.common.AdmBrndngTempDTO)}
 	 * .
 	 */
 	@Ignore("image paths hard coded")
@@ -146,7 +146,7 @@ public class JobPostBrandingTempTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.job.service.JobPostBrandingTemplateImpl#deleteTemplate(int)}
+	 * {@link com.advanceweb.afc.jb.job.service.impl.JobPostBrandingTemplateImpl#deleteTemplate(int)}
 	 * .
 	 */
 	@Ignore("image paths hard coded")
@@ -159,7 +159,7 @@ public class JobPostBrandingTempTest extends ServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.job.service.JobPostBrandingTemplateImpl#retrieveAllTemplates(int)}
+	 * {@link com.advanceweb.afc.jb.job.service.impl.JobPostBrandingTemplateImpl#retrieveAllTemplates(int)}
 	 * .
 	 */
 	@Test

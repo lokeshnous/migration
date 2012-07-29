@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 
 public class JobSeekerActivityServiceTest extends ServiceTest {
 
 	@Autowired
-	private JobSeekerActivity jobSeekerActivity;
+	private JobSeekerService jobSeekerActivity;
 
 	/*@Test
 	public void testGetAppliedJobs() {

@@ -21,7 +21,7 @@ import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 public class JobSeekerSubscriptionsTest extends ServiceTest{
 	
 	@Autowired
-	public JobSeekerSubscriptions jobSeekerSubscriptionsService;
+	public JobSeekerSubscriptionService jobSeekerSubscriptionsService;
 	
 	/**
 	 * Test method for {@link com.advanceweb.afc.jb.lookup.service.PopulateDropdownsImpl#getSaveSubscriptionsList()}.

@@ -4,7 +4,7 @@ package com.advanceweb.afc.jb.job.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.CoverLetterDTO;
-import com.advanceweb.afc.jb.common.JobsDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 
 /**
@@ -12,7 +12,7 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
  * @version 1.0
  * @created 21-Jun-2012 2:22:08 PM
  */
-public interface Jobs {
+public interface Job {
 
 	/**
 	 * @author Rajeshkb
@@ -41,7 +41,7 @@ public interface Jobs {
 	 * 
 	 * @param jobsDTO
 	 */
-	public boolean createNewJob(JobsDTO jobsDTO);
+	public boolean createNewJob(JobDTO jobsDTO);
 
 	/**
 	 * 
@@ -49,6 +49,6 @@ public interface Jobs {
 	 */
 	public boolean applyForJob(JobApplicationDTO jobApplicationDTO);
 
-	public List<JobsDTO> retrieveJobPostings();
+	public List<JobDTO> retrieveJobPostings();
 
 }

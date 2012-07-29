@@ -8,7 +8,7 @@ import com.advanceweb.afc.jb.data.domain.Job;
  * @version 1.0
  * @created 21-Jun-2012 2:25:40 PM
  */
-public interface JobsDAO {
+public interface JobDAO {
 
 
 

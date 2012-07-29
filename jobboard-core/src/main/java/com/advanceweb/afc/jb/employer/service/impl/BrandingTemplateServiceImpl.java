@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.employer.service;
+package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.util.List;
 
@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.employer.dao.EmpBrandTempDAO;
+import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
+import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
 /**
  * <code> EmpBrandTempService </code> is a Service class for EmpBrandTemp.
@@ -19,12 +20,12 @@ import com.advanceweb.afc.jb.employer.dao.EmpBrandTempDAO;
  * @since 17 July 2012
  * 
  */
-@Service("empBrandTemp")
+@Service("brandingTemplateService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-public class EmpBrandTempService implements EmpBrandTemp {
+public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
 	@Autowired
-	private EmpBrandTempDAO empBrandTempDAO;
+	private BrandingTemplateDAO empBrandTempDAO;
 
 	/**
 	 * Fetch the job posting Branding Templates
