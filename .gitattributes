@@ -64,6 +64,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmail.java -t
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmailService.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConstants.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
 jobboard-common/src/main/resources/HibernateSessionFactory.xml -text
 jobboard-common/src/main/resources/database.properties -text
@@ -115,6 +116,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchResult.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrQueryDTO.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServiceException.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/resources/solrConfiguration.properties -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
@@ -207,6 +209,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEvent.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfoPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessioninfo.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/exception/JobBoardDataException.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/AgencyRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/AgencyRegistrationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmpBrandTempDAO.java -text
@@ -303,6 +306,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ReferenceForm
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/TransformCreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/web/exception/JobBoardUIException.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
