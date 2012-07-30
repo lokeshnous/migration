@@ -32,7 +32,7 @@ import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.search.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
-import com.advanceweb.afc.jb.search.engine.solr.ReadSolrServerDetails;
+import com.advanceweb.afc.jb.search.engine.solr.SOLRSearchHelper;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
@@ -73,7 +73,7 @@ public class JobSearchActivityController {
 	private JobSearchService jobSearchService;
 
 	@Autowired
-	private ReadSolrServerDetails readSolrServerDetails;
+	private SOLRSearchHelper sOLRSearchHelper;
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -234,7 +234,7 @@ public class JobSearchActivityController {
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.put("jobSearchResultForm", jobSearchResultForm);
-		return new ModelAndView("findjob");
+		return new ModelAndView("jobboardsearchresults");
 	}
 
 	/**
@@ -294,18 +294,13 @@ public class JobSearchActivityController {
 				start, rows);
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
-			jobSrchJsonObj = readSolrServerDetails
+			jobSrchJsonObj = sOLRSearchHelper
 					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
 
 			// modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
 		}
 		return null;
-		// return new ModelAndView("findjob", modelMap);
-		// return new ModelAndView("jsonView", modelMap);
-		/*
-		 * return new ModelAndView("findjob", "jobSrchJsonObj", jobSrchJsonObj);
-		 */
 	}
 
 	/*
