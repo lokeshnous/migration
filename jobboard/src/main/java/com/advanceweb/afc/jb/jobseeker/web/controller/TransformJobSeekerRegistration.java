@@ -18,10 +18,9 @@ public class TransformJobSeekerRegistration {
 	 * @return
 	 */
 	public JobSeekerRegistrationForm jsRegistrationDTOToJobSeekerRegistrationForm(
-			JobSeekerRegistrationDTO jsRegistrationDTO) {
+			JobSeekerRegistrationDTO jsRegistrationDTO, JobSeekerRegistrationForm form) {
 
-		JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
-		
+				
 		if(null != jsRegistrationDTO.getAddressDTO()){
 			AddressDTO dto = jsRegistrationDTO.getAddressDTO();
 			form.setAddressLine1(dto.getAddress1());
@@ -98,7 +97,9 @@ public class TransformJobSeekerRegistration {
 		dto.setIndustry(form.getMyIndustry());
 		dto.setProfession(form.getMyProfession());
 		dto.setSpeciality(form.getMySpeciality());
-		dto.setJobTitle(form.getMyJobTitle());
+		dto.setJobTitle(form.getMyJobTitle());		
+		dto.setUserId(322);
+//		dto.setUserId(Integer.valueOf(form.getUserId()));
 		return dto;
 	}
 	
