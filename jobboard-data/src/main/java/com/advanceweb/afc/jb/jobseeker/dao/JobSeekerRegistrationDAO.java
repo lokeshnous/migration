@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.data.domain.JobSeeker;
 
 /**
@@ -41,5 +42,7 @@ public interface JobSeekerRegistrationDAO {
 	 * @return
 	 */
 	public boolean jsChangePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
+	
+	public boolean validatePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 
 }

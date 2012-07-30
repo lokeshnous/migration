@@ -14,6 +14,7 @@ public class MerUserDTO {
 	private String jobTitle;
 	private String memberShips;
 	private String otherDetails;
+	private String currentPassword;
 
 	public String getEmailId() {
 		return emailId;
@@ -110,4 +111,13 @@ public class MerUserDTO {
 	public void setOtherDetails(String otherDetails) {
 		this.otherDetails = otherDetails;
 	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+	
 }

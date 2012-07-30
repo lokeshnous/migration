@@ -120,7 +120,9 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		try {
 			if (dto.getMerUserDTO() != null) {
 				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
-				user.setPassword(dto.getMerUserDTO().getPassword());
+				if(null != user){
+					user.setPassword(dto.getMerUserDTO().getPassword());
+				}
 				hibernateTemplate.saveOrUpdate(user);				
 			}
 		} catch (HibernateException e) {
@@ -128,6 +130,22 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public boolean validatePassword(JobSeekerRegistrationDTO dto) {
+		try {
+			if (dto.getMerUserDTO() != null) {
+				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
+				if(null != user){
+					return user.getPassword().equals(dto.getMerUserDTO().getCurrentPassword());
+				}
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }
