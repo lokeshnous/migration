@@ -285,6 +285,7 @@ public class JobSeekerRegistrationController {
 				profileRegistration.changePassword(jsRegistrationDTO);
 			}else{
 				model.setViewName("jobseekerchangepassword");
+				model.addObject("currentPassword","Invalid Password");
 				return model;
 			}
 			model.setViewName("registrationsuccess");
