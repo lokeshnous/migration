@@ -67,4 +67,10 @@ public class AgencyRegistration implements ProfileRegistration {
 		return false;
 	}
 
+	@Override
+	public boolean validatePassword(ProfileDTO profileDTO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
