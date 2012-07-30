@@ -145,11 +145,11 @@ public class LoginFormValidator {
 	 * @param userDetailsLoginFormDTO
 	 * @return
 	 */
-	public boolean validateEmailValues(LoginForm form,
+	public boolean validateEmailValues(String email,
 			LoginFormDTO userDetailsLoginFormDTO) {
 
-		if (form != null && userDetailsLoginFormDTO != null) {
-			if (form.getEmailAddress().equals(
+		if (email != null && userDetailsLoginFormDTO != null) {
+			if (email.equals(
 					userDetailsLoginFormDTO.getEmailAddress())) {
 				return true;
 			}

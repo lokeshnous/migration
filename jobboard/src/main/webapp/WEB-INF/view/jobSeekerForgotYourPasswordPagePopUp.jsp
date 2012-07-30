@@ -8,44 +8,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
-
-<!-- STYLESHEETS -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
-<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
-<!-- js files for modalpopup------------------------------------------------- -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
-<script src="../resources/js/jquery-1.7.1.min.js"></script>
-
-		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-		
-        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
-
-        <style type="text/css" media="screen">
-           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
-        </style>
-<!-- -------------------------------------------------------------------------- -->
-	
-	
-	
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
+		$('#emailbutton').click(function(){			
+			var email = $("#email").val();			
+			alert(email);
+			
+			$.ajax({url:"jobSeekerForgotYourPasswordPagePopUp.html?email="+email,
+				type:"POST",
+				success: function() {				  
+				 },
+				error: function() {
+					alert("Success");
+				},
+				complete: function() {
+					 
+				}
+			});
+		});
+		
 		jQuery(".megamenu").megamenu();
 	});
 	function MM_jumpMenu(targ, selObj, restore) { //v3.0
@@ -68,7 +52,7 @@
 
 		<div class="popUpContainerWrapper">
 		<div style="color: red">${message}</div>
-			<form:form method="Post" action="jobSeekerForgotYourPasswordPagePopUp.html" commandName="loginForm">
+			<form:form method="" action="" commandName="loginForm">
 				<div class="rowEvenNewSpacing borderBottomDotted paddingBottom10 marginTop0">
 					<p>Enter the email address you use for this account and click
 						the 'SEND' button. We'll email you a security code that will allow
@@ -76,14 +60,13 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Email Address:</span>
-					<form:input type="text" path="emailAddress"
-						class="job_seeker_email" />
+					<form:input type="text" path="emailAddress" id="email" class="job_seeker_email" />
 					<form:errors path="emailAddress" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> 
-					     <input type="submit" class="btn_sm orange" value="Send"/>
+					     <input type="button" id="emailbutton" class="btn_sm orange" value="Send"/>
 					     <input type="button" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 					</span>
 				</div>

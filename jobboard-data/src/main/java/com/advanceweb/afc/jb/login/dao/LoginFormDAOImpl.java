@@ -88,7 +88,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
 		
-		if (listMerUser != null && listMerUser.size() > 0) {
+		if (!(listMerUser.isEmpty()) && listMerUser.size() > 0) {
 			MerUser merUserNew = listMerUser.get(0);
 			//loggedinUserId = merUserNew.getUserId();
 			userDetailsLoginFormDTO.setEmailAddress(merUserNew.getEmail());

@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -140,8 +141,8 @@ public class LoginFormController {
 	 */
 	@RequestMapping(value = "/jobSeekerForgotYourPasswordPagePopUp", method = RequestMethod.POST)
 	public ModelAndView emailThePassword(@Valid LoginForm form,
-			BindingResult result) {
-		String emailAddress = form.getEmailAddress();
+			BindingResult result,@RequestParam("email") String email) {
+		String emailAddress = email;
 		boolean value = false;
 
 		LoginFormDTO userDetailsLoginFormDTO = loginFormService
@@ -149,7 +150,7 @@ public class LoginFormController {
 
 		// User Validation based on email address of user
 		if (userDetailsLoginFormDTO != null) {
-			value = loginFormValidator.validateEmailValues(form,
+			value = loginFormValidator.validateEmailValues(email,
 					userDetailsLoginFormDTO);
 		}
 
