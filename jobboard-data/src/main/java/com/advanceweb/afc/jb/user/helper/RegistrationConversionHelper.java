@@ -31,7 +31,9 @@ public class RegistrationConversionHelper {
 			entity.setProfession(userDTO.getProfession());
 			entity.setSpeciality(userDTO.getSpeciality());
 			entity.setJobTitle(userDTO.getJobTitle());
-			// merUser.setUserId(userId);
+			if(userDTO.getUserId() != 0){
+				entity.setUserId(userDTO.getUserId());
+			}
 		}
 		
 		if(addDTO != null){
