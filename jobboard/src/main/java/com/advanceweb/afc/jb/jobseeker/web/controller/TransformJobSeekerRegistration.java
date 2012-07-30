@@ -130,8 +130,10 @@ public class TransformJobSeekerRegistration {
 	 */
 	public MerUserDTO transformChangePasswordFormToMerUserDTO(ChangePasswordForm form){
 		MerUserDTO dto = new MerUserDTO();
+		dto.setUserId(322);
 		dto.setEmailId(form.getEmailId());
-		dto.setPassword(form.getNewPassword());		
+		dto.setPassword(form.getNewPassword());	
+		
 		return dto;
 	}
 
