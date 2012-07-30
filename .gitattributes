@@ -284,7 +284,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerA
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerAdvanceSearchController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardForm.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerProfileManagement.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationValidation.java -text

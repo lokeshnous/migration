@@ -27,7 +27,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String mobileNo;
 	private String employmentType;
 	private MultipartFile uploadResume;
-	
+	private String userId;
 	
 	private CommonsMultipartFile fileData;
 	private String fileName;
@@ -183,5 +183,14 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	public void setUploadResume(MultipartFile uploadResume) {
 		this.uploadResume = uploadResume;
 	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
 	
 }
