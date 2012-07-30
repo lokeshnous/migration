@@ -297,7 +297,8 @@
 			</div>                                           
 <div class="rowEvenNewSpacing"> <span class="lableText3">My Resume:</span>
 
-            <div class="floatLeft"><input name="textfield4" type="file" id="textfield4" size="20" class="job_seeker_login_email fileType" /></div>
+            <!-- <div class="floatLeft"><input name="textfield4" type="file" id="textfield4" size="20" class="job_seeker_login_email fileType" /></div> -->
+            <div><form:input path="uploadResume" id="image" type="file" class="job_seeker_login_email fileType"/></div>
             <div class="required">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 </div>
 <div class="row"> <span class="lableTextSelect marginTop13 ">I'm seeking:</span>

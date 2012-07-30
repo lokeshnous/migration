@@ -83,25 +83,16 @@ public class TransformJobSeekerRegistration {
 		dto.setAddress2(form.getAddressLine2());
 		dto.setCity(form.getCity());
 		dto.setCountry(form.getCountry());
-//		dto.setPhone(contactInfoForm.getPhone());
+		dto.setPhone(form.getPhoneNo());
 		dto.setState(form.getState());
 		dto.setZipCode(form.getPostalCode());
-		
-		
-//		dto.setAddress1(form.getAddressLine1());
-//		dto.setAddress2(form.getAddressLine2());
-//		dto.setCity(form.getCity());
-//		dto.setCountry(form.getCountry());
-//		dto.setPhone(form.getPhone());
-//		dto.setState(form.getState());
-//		dto.setZipCode(form.getPostalCode());
-		
+
 		return dto;
 
 	}
 	
 	/**
-	 * Convering Job Seeker Registration Form to MerUserDTO
+	 * Converting Job Seeker Registration Form to MerUserDTO
 	 * 
 	 * @param form
 	 * @return
@@ -114,7 +105,10 @@ public class TransformJobSeekerRegistration {
 		dto.setMiddleName(form.getMiddleName());
 		dto.setPassword(form.getPassword());
 		dto.setEmailId(form.getEmailId());
-		
+		dto.setIndustry(form.getMyIndustry());
+		dto.setProfession(form.getMyProfession());
+		dto.setSpeciality(form.getMySpeciality());
+		dto.setJobTitle(form.getMyJobTitle());
 		return dto;
 	}
 	
@@ -127,10 +121,11 @@ public class TransformJobSeekerRegistration {
 	public JobSeekerProfileDTO createJSProfileSettingsDTO(JobSeekerRegistrationForm form){
 		// JobSeekerProfileDTO
 		JobSeekerProfileDTO dto = new JobSeekerProfileDTO();
-		dto.setEmploymentInformation(form.getImCurrentlyIn());
+		dto.setEmploymentInformation(form.getEmploymentType());
 		dto.setGender(form.getGender());
 		dto.setEthinicity(form.getEthenticity());
 		dto.setVeteranStatus(form.getVeteranStatus());
+		
 		// jobSeekerProfileDTO.setJobSeekerId(jobSeekerId);
 
 		

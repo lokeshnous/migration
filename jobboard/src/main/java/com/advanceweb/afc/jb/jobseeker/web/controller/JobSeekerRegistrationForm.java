@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class JobSeekerRegistrationForm extends ContactInfoForm{
@@ -26,6 +27,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String veteranStatus;	
 	private String mobileNo;
 	private String employmentType;
+	private MultipartFile uploadResume;
 	
 	
 	private CommonsMultipartFile fileData;
@@ -181,6 +183,14 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	public void setMyJobTitle(String myJobTitle) {
 		this.myJobTitle = myJobTitle;
+	}
+
+	public MultipartFile getUploadResume() {
+		return uploadResume;
+	}
+
+	public void setUploadResume(MultipartFile uploadResume) {
+		this.uploadResume = uploadResume;
 	}
 	
 }
