@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * 
  * @author Sasibhushana
@@ -8,9 +11,14 @@ package com.advanceweb.afc.jb.login.web.controller;
  * @Since 2nd July, 2012
  */
 public class ChangePasswordForm {
+	@NotEmpty
+	@Email
 	private String emailId;
+	@NotEmpty
 	private String currentPassword;
+	@NotEmpty
 	private String newPassword;
+	@NotEmpty
 	private String confirmNewPassword;
 	
 	
