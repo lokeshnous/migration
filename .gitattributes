@@ -6,7 +6,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AnonymousUserJobApplyDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/BaseProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CertificationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CompanyProfileDTO.java -text
