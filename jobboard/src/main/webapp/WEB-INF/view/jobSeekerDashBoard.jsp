@@ -14,9 +14,12 @@
 		    jQuery(".megamenu").megamenu();
 		    $("#viewappliedjob").displaypopup("#viewappliedjob","780","370");
 			$("#viewsavedjob").displaypopup("#viewsavedjob","780","370");
+
+			$("#changePassword").displaypopup("#changePassword","780","370");
 			$("#manageResumePopup").displaypopup("#manageResumePopup","775","252");
 		    $("#createResumePopup").displaypopup("#createResumePopup","775","252");
 		    $("#editProfileId").displaypopup("#editProfileId","775","252");			
+
 		});
 		</script>
 
@@ -234,7 +237,7 @@
                       <p><a href="/jobboard/jobseekerregistration/viewJobSeekerProfile.html" id="editProfileId">Edit Profile Settings</a> </p>
                       </div>
                       <div class="lableTextDashBoard" id="jsChangePassword">
-                      <p><a href="jobseekerregistration/jobSeekerChangePassword.html" onclick="popupJsChangePassword();">Change Password</a> </p>
+                      <p><a href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html" id="changePassword" >Change Password</a> </p>
 
                       </div>
                       
