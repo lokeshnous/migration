@@ -30,7 +30,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			.getLogger("JobSearchDeleagateImpl.class");
 
 	@Autowired
-	private ReadSolrServerDetails readSSDetails;
+	private SOLRSearchHelper solrSrchHelper;
 
 	@Autowired
 	@Resource(name = "solrConfiguration")
@@ -80,7 +80,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		paramMap.put("start", String.valueOf(start));
 		paramMap.put("querytype", searchName);
 
-		Map<String, StringBuffer> urlParamMap = readSSDetails.getSearchQuery(
+		Map<String, StringBuffer> urlParamMap = solrSrchHelper.getSearchQuery(
 				mSInputList, srchIndexList, paramMap);
 		LOGGER.info("URL QueryString====>>>" + urlParamMap.get("urlString").toString());
 		//LOGGER.info("Param QueryString====>>>" + urlParamMap.get("paramString").toString());
@@ -88,9 +88,9 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		paramMap.put("urlQueryString", urlParamMap.get("urlString").toString());
 		//paramMap.put("paramQueryString", urlParamMap.get("paramString").toString());
 		
-		final Map<String, String> serverDetailsMap = readSSDetails
+		final Map<String, String> serverDetailsMap = solrSrchHelper
 				.getServerDetails(solrConfiguration);
-		final Map<String, String> solrQueryDetails = readSSDetails
+		final Map<String, String> solrQueryDetails = solrSrchHelper
 				.getSolrQueryDetails(solrConfiguration);
 
 		final String url = serverDetailsMap.get("serverUrl")
@@ -98,7 +98,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				+ serverDetailsMap.get("user");
 
 		// Checking whether server url is accessible
-		boolean serverAccessible = readSSDetails.isServerAccessible(url);
+		boolean serverAccessible = solrSrchHelper.isServerAccessible(url);
 		if (serverAccessible) {
 
 			if (("".equalsIgnoreCase(paramMap.get("keywords")) || paramMap
@@ -113,7 +113,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 			} else {
 
-				response = readSSDetails.getSolrResponse(serverDetailsMap,
+				response = solrSrchHelper.getSolrResponse(serverDetailsMap,
 						solrQueryDetails, paramMap, start, rows, mSInputList);
 				if (response == null) {
 
