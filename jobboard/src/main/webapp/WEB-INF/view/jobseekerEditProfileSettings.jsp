@@ -111,13 +111,13 @@
 				</div>
 
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">E-Mail Address:</span> <input type="text"
-						name="healthCareSubSplty" class="job_seeker_password width350" /><span
-						class="required">(Required)</span>
+					<span class="lableText3">E-Mail Address:</span>
+					<form:input path="emailId" class="job_seeker_password textBox350" />
+					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Phone Number:</span> <input type="text"
-						name="healthCareSubSplty" class="job_seeker_password width350" />
+					<span class="lableText3">Phone Number:</span> 
+					<form:input path="phoneNo" class="job_seeker_password textBox350" />
 				</div>
 
 				<div class="row marginTop31">
@@ -125,8 +125,8 @@
 				</div>
 
 				<div class="rowEvenNewSpacing marginTop13">
-					<span class="lableText3">My Industry:</span> <input type="text"
-						name="healthCareSubSplty" class="job_seeker_password width350" />
+					<span class="lableText3">My Industry:</span> 
+					<form:input path="myIndustry" class="job_seeker_password textBox350" />
 					<div class="toolTip marginTop6 marginLeft5">
 						<span class="classic">Enter the industry you serve.
 							Example: Healthcare</span>
@@ -134,8 +134,8 @@
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">My Profession:</span> <input type="text"
-						name="healthCareSubSplty" class="job_seeker_password width350" />
+					<span class="lableText3">My Profession:</span> 
+					<form:input path="myProfession" class="job_seeker_password textBox350" />
 					<div class="toolTip marginTop6 marginLeft5">
 						<span class="classic">Enter the general field in which you
 							work. Example: Respiratory Therapy</span>
@@ -144,8 +144,8 @@
 				</div>
 
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">My Specialty:</span> <input type="text"
-						name="healthCareSubSplty" class="job_seeker_password width350" />
+					<span class="lableText3">My Specialty:</span> 
+					<form:input path="mySpeciality" class="job_seeker_password textBox350" />
 					<div class="toolTip marginTop6 marginLeft5">
 						<span class="classic">Enter the area in which you
 							specialize. Example: Neonatal/Pediatrics</span>
@@ -154,8 +154,7 @@
 				</div>
 
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">My Job Title:</span> <input type="text"
-						name="healthCareSubSplty" class="job_seeker_password width350" />
+					<span class="lableText3">My Job Title:</span> <form:input path="myJobTitle" class="job_seeker_password textBox350" />
 					<div class="toolTip marginTop6 marginLeft5">
 						<span class="classic">Enter your official job title.
 							Example: Registered Respiratory Therapist</span>
@@ -163,17 +162,11 @@
 					<span class="required">(Required)</span>
 				</div>
 				<div class="row">
-					<span class="lableTextSelect marginTop13 ">I am seeking:</span> <select
-						name="Country2" id="Country2" class="jb_input3 jb_input_width3">
-						<option value="--- Select One ---" selected>--- Select
-							One ---</option>
-						<option value="Full-Time">Full-Time</option>
-						<option value="Part-Time">Part-Time</option>
-						<option value="Per Diem">Per Diem</option>
-						<option value="Contract/Travel">Contract/Travel</option>
-						<option value="Work From Home">Work From Home</option>
-						<option value="Locum Tenens">Locum Tenens</option>
-					</select>
+					<span class="lableTextSelect marginTop13 ">I am seeking:</span>
+					<form:select path="employmentType" class="jb_input3 jb_input_width3">
+						<form:option value="0" label="Select" />
+						<form:options items="${empTyepList}" itemValue="optionId" itemLabel="optionName" />
+					</form:select>
 				</div>
 
 				<div class="row marginTop30">
@@ -181,54 +174,29 @@
 				</div>
 
 				<div class="row">
-					<span class="lableTextSelect marginTop13 ">Ethnicity:</span> <select
-						name="Country2" id="Country2" class="jb_input3 jb_input_width3">
-						<option value="--- Select One ---">--- Select One ---</option>
-						<option value="White (Not of Hispanic Origin)">White (Not
-							of Hispanic Origin)</option>
-						<option value="Black (Not of Hispanic Origin)">Black (Not
-							of Hispanic Origin)</option>
-						<option value="Asian or Pacific Islander">Asian or
-							Pacific Islander</option>
-						<option value="American Indian or Alaska Native">American
-							Indian or Alaska Native</option>
-						<option value="Hispanic / Latino">Hispanic / Latino</option>
-					</select>
+					<span class="lableTextSelect marginTop13 ">Ethnicity:</span> 
+				<form:select path="ethenticity" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="Select" />
+					<form:options items="${ethnicityList}" itemValue="ethencityId" itemLabel="ethencityValue" />
+				</form:select>
 				</div>
 
 
 				<div class="row">
-					<span class="lableTextSelect marginTop13 ">Gender:</span> <select
-						name="Country2" id="Country2" class="jb_input3 jb_input_width3">
-						<option selected="" value="--- Select One ---">--- Select
-							One ---</option>
-						<option value="Male">Male</option>
-						<option value="Female">Female</option>
-						<option value="Other Gender Identity">Other Gender
-							Identity</option>
-					</select>
+					<span class="lableTextSelect marginTop13 ">Gender:</span> 
+				<form:select path="gender" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="Select" />
+					<form:options items="${genderList}" itemValue="genderId" itemLabel="genderName" />
+				</form:select>
 				</div>
 
 
 				<div class="row">
-					<span class="lableTextSelect marginTop13 ">Veteran Status:</span> <select
-						name="Country2" id="Country2" class="jb_input3 jb_input_width3">
-						<option value="--- Select One ---">--- Select One ---</option>
-						<option value="Armed Forces Service Medal Veteran">Armed
-							Forces Service Medal Veteran</option>
-						<option value="Disabled Veteran">Disabled Veteran</option>
-						<option value="Non-Veteran">Non-Veteran</option>
-						<option value="One-Year Recently Separated Veteran">One-Year
-							Recently Separated Veteran</option>
-						<option value="Other Protected Veteran">Other Protected
-							Veteran</option>
-						<option value="Special Disabled Veteran">Special Disabled
-							Veteran</option>
-						<option value="Three-Year Recently Separated Veteran">Three-Year
-							Recently Separated Veteran</option>
-						<option value="Veteran">Veteran</option>
-						<option value="Vietnam Era Veteran">Vietnam Era Veteran</option>
-					</select>
+					<span class="lableTextSelect marginTop13 ">Veteran Status:</span> 
+		 		<form:select path="veteranStatus" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="Select" />
+					<form:options items="${veteranStatusList}" itemValue="statusId" itemLabel="statusValue" />
+				</form:select>
 				</div>
 				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 					<span class="floatLeft marginTop10"><a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
