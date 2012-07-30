@@ -14,6 +14,9 @@
 		    jQuery(".megamenu").megamenu();
 		    $("#viewappliedjob").displaypopup("#viewappliedjob","780","370");
 			$("#viewsavedjob").displaypopup("#viewsavedjob","780","370");
+			$("#manageResumePopup").displaypopup("#manageResumePopup","775","252");
+		    $("#createResumePopup").displaypopup("#createResumePopup","775","252");
+		    $("#editProfileId").displaypopup("#editProfileId","775","252");			
 		});
 		</script>
 
@@ -228,7 +231,7 @@
                       
                       <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My User Profile</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a href="">Edit Profile Settings</a> </p>
+                      <p><a href="/jobboard/jobseekerregistration/viewJobSeekerProfile.html" id="editProfileId">Edit Profile Settings</a> </p>
                       </div>
                       <div class="lableTextDashBoard" id="jsChangePassword">
                       <p><a href="jobseekerregistration/jobSeekerChangePassword.html" onclick="popupJsChangePassword();">Change Password</a> </p>
@@ -286,10 +289,10 @@
 
                       </div>
                       <div class="lableTextDashBoard">
-                      <p><a href="">Manage Existing Resumes</a> </p>
+                      <p><a href="/jobboard/jobSeekerResume/manageResume.html" id="manageResumePopup" >Manage Existing Resumes</a> </p>
                       </div>
                        <div class="lableTextDashBoard">                         
-                           <p><a href="">Create New Resume</a> </p>                         
+                           <p><a href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume" id="createResumePopup">Create New Resume</a> </p>                
                        </div>
                         <div class="lableTextBLineDashBoard">
 
