@@ -17,4 +17,4 @@ function getBaseURL() {
 			    // Root Url for domain name
 			    return baseURL + "/";
 			}
-		}
+}

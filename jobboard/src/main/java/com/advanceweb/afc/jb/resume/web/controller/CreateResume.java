@@ -14,6 +14,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 
 public class CreateResume {
+	private String uploadResumeId;
 	private String resume_name;
 	private String desired_job_title;
 	private String desired_employment_type;
@@ -42,6 +43,12 @@ public class CreateResume {
 	private int builderResumeId;
 	//Creating Resume	
 	
+	public String getUploadResumeId() {
+		return uploadResumeId;
+	}
+	public void setUploadResumeId(String uploadResumeId) {
+		this.uploadResumeId = uploadResumeId;
+	}
 	public String getFilename() {
 		return filename;
 	}

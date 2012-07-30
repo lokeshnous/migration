@@ -9,58 +9,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<!-- STYLESHEETS -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="javascripts/slider.js"></script>
-<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
-
-<!-- js files for modalpopup------------------------------------------------- -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
-<script src="../resources/js/jquery-1.7.1.min.js"></script>
-
-		<script src="../resources/nyroModal/js/jquery.nyroModal.custom.js"></script>
-        <script src="../resources/nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="../resources/nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
-
-        <style type="text/css" media="screen">
-           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
-        </style>
-<!-- -------------------------------------------------------------------------- -->
-
-
+<jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 	
 		/* jQuery(".megamenu").megamenu(); */
 
+		$("#resumePopupId").click(function (event){
+             parent.$.nmTop().close();
+             $("#createResumePopupId").click();
+        });
+
+		$("#createResumePopupId").displaypopup("#createResumePopupId","775","252");
+		
+		$("#editResumePopupId").displaypopup("#editResumePopupId","775","252");
+
 		$("#tb_manage_resume img").click(function(event) {
 
 			var action = $(this).attr("alt");
 			var resumeId = $(this).parent().parent().parent().attr("id");
-
+			
 			switch (action) {
 			case "view":
 				alert("view");
 				break;
 			case "edit":
-				$.ajax({url: getBaseURL()+"/jobSeekerResume/editResume.html?resumeId="+resumeId,
-					success: function() {
-					  },
-					error: function() {
-					},
-					complete: function() {
-					}
-				});
+				/* $("#editResumePopupId").attr("href",getBaseURL()+"/jobSeekerResume/editResume.html?resumeId="+resumeId);
+				alert($("#editResumePopupId").attr("href")); */
+				parent.$.nmTop().close();
+				$("#editResumePopupId").click();
 				break;
 			case "download":
 				alert("download");
@@ -80,34 +58,13 @@
 					}
 				});
 				$(this).parent().parent().parent().remove();
+				alert("Deleted Successfully");
 			}
 				break;
 
 			}
 
 		});
-		
-		function getBaseURL() {
-			var url = location.href;  // entire url including querystring - also: window.location.href;
-			var baseURL = url.substring(0, url.indexOf('/', 14));
-
-
-			if (baseURL.indexOf('http://localhost') != -1) {
-			    // Base Url for localhost
-			    var url = location.href;  // window.location.href;
-			    var pathname = location.pathname;  // window.location.pathname;
-			    var index1 = url.indexOf(pathname);
-			    var index2 = url.indexOf("/", index1 + 1);
-			    var baseLocalUrl = url.substr(0, index2);
-
-			    return baseLocalUrl + "/";
-			}
-			else {
-			    // Root Url for domain name
-			    return baseURL + "/";
-			}
-		}
-
 	});
 </script>
 </head>
@@ -117,11 +74,11 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE MY RESUMES</h2>
-			<a href="#" class="nyroModalClose nyroModalCloseButton nmReposition" title="close"><img src="../resources/images/Close.png" width="19"
-				height="19" alt=""></a>
+			<img src="../resources/images/Close.png" width="19"
+				height="19" alt="Close" onclick="parent.$.nmTop().close();">
 		</div>
 		<div class="popUpContainerWrapper">
-			<form action="" method="">
+			<form:form method="POST" action="">
 				<div class="rowEvenNewSpacing marginTop0">
 					<table id="tb_manage_resume" width="100%" border="0"
 						cellspacing="0" cellpadding="0" class="grid">
@@ -158,13 +115,17 @@
 					</table>
 				</div>
 				<div class="row marginTop5 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href=""
-						class="btn_sm orange">New Resume</a> <a href=""
-						class="btn_sm orange">Cancel</a></span> <span
+					<span class="floatLeft marginTop10">
+					<!-- <input type="button" id="resumePopupId" class="btn_sm orange" value="New Resume" />  -->
+					<a class="btn_sm orange" id="resumePopupId" href="#">New Resume</a>
+					<input type="button" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" /></span> 
+					<a style="visibility: hidden;" class="btn_sm orange" id="createResumePopupId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume"></a>
+					<a style="visibility: hidden;" class="btn_sm orange" id="editResumePopupId" href="/jobboard/jobSeekerResume/editResume.html?resumeId=408"></a>
+					<span
 						class="floatLeft marginTop10 marginLeft5"><em>*Only 1
 							resume may be made Public at a time</em></span>
 				</div>
-			</form>
+			</form:form>
 		</div>
 		<div class="clearfix"></div>
 	</div>

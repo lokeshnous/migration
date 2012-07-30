@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -35,7 +36,7 @@ public class ResumeServiceTest extends ServiceTest {
 	public void testCreateResume() {
 		try {
 			ResumeDTO createResumeDTO=new ResumeDTO();
-			createResumeDTO.setUserId(Integer.parseInt("2"));
+			createResumeDTO.setUserId(Integer.parseInt("10"));
 			createResumeDTO.setResumeType("Create");
 			createResumeDTO.setResume_name("Test");
 			createResumeDTO.setDesired_job_title("Tilt");
@@ -50,6 +51,31 @@ public class ResumeServiceTest extends ServiceTest {
 		}
 	}
 
+	@Test
+	public void testCreateResume2() {
+		try {
+			for(int i=0 ; i< 5 ; i++){
+				ResumeDTO createResumeDTO=new ResumeDTO();
+				createResumeDTO.setUserId(Integer.parseInt("10"));
+				createResumeDTO.setResumeType("Create");
+				createResumeDTO.setResume_name("Nurse Resume "+i);
+				createResumeDTO.setDesired_job_title("Resume Tilte "+i);
+				createResumeDTO.setDesired_employment_type("31");
+				createResumeDTO.setWork_authorization_US("35");
+				createResumeDTO.setWilling_to_relocate("Y");
+				if(i==0)
+					createResumeDTO.setResume_visibility("63");
+				else 
+					createResumeDTO.setResume_visibility("64");
+				createResumeDTO.setIsPublished("1");
+				createResumeDTO.setUpdateDt(new Date().toString());
+				assertTrue("Create Resume", resumeService.createResumeCopyPaste(createResumeDTO));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Create Upload Resume for UserID=2
 	 */

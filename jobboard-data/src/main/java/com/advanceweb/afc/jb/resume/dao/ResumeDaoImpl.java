@@ -97,9 +97,9 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public boolean createResumeCopyPaste(ResumeDTO createResumeDTO) {
 		Boolean result=false;
-		ResUploadResume resUploadResume= resumeConversionHelper.transformCopyPasteResume(createResumeDTO);
+		ResUploadResume resUploadResume= resumeConversionHelper.transformAdvancedResumeBuilder(createResumeDTO);
 		try {
-			hibernateTemplate.saveOrUpdate(resUploadResume);
+			hibernateTemplate.save(resUploadResume);
 			result=true;
 		} catch (HibernateException e) {
 			result=false;

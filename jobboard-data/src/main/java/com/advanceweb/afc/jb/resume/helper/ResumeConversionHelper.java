@@ -300,6 +300,30 @@ public class ResumeConversionHelper {
 		return resUploadResume;		
 	}
     
+	
+	/**
+	 * This method is called to convert resumeDTO to 
+	 * ResUploadResume Entity for copy paste
+	 * 
+	 * @param createResumeDTO
+	 * @return
+	 */
+	public ResUploadResume transformAdvancedResumeBuilder(ResumeDTO createResumeDTO){
+
+		ResUploadResume resUploadResume=new ResUploadResume();
+
+		resUploadResume.setUserId(createResumeDTO.getUserId());
+		resUploadResume.setResumeType(createResumeDTO.getResumeType());
+		resUploadResume.setResumeName(createResumeDTO.getResume_name());
+		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());		
+		resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
+
+		return resUploadResume;		
+	}
 	/**
 	 * This method is called to convert resumeDTO to 
 	 * ResUploadResume Entity for copy paste
@@ -316,11 +340,11 @@ public class ResumeConversionHelper {
 		resUploadResume.setResumeName(createResumeDTO.getResume_name());
 		
 		//commented for the new database
-		//resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		//resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		//resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		//resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		//resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
+		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
 		
 		resUploadResume.setResumeText(createResumeDTO.getResumeText());
 		resUploadResume.setIsPublished(Short.parseShort(createResumeDTO.getIsPublished()));
