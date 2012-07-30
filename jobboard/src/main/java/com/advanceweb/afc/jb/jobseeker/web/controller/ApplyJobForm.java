@@ -16,7 +16,15 @@ public class ApplyJobForm {
 	private String userId;
 	private String useremail;
 	private Date createdDate;
+	private int jobID;
+
 	
+	public int getJobID() {
+		return jobID;
+	}
+	public void setJobID(int jobID) {
+		this.jobID = jobID;
+	}
 	public String getUserId() {
 		return userId;
 	}
