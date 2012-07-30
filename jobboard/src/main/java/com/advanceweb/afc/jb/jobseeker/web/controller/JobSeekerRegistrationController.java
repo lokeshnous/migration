@@ -196,11 +196,11 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/viewJobSeekerProfile",method = RequestMethod.GET)
-	public ModelAndView viewJobSeekerProfileSettings() {
+	@RequestMapping(value="/viewJobSeekerProfile", method=RequestMethod.GET)
+	public ModelAndView viewJobSeekerProfileSettings(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		try {
-
+			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
 			// Call to service layer
 			List<CountryDTO> countryList= populateDropdownsService.getCountryList();
 			List<StateDTO> stateList= populateDropdownsService.getStateList();
@@ -216,7 +216,7 @@ public class JobSeekerRegistrationController {
 			model.addObject("veteranStatusList",veteranStatusList);
 			model.addObject("empTyepList",empTyepList);
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(322);
-			JobSeekerRegistrationForm form = transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
+			transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO, form);
 			model.addObject("registerForm", form);
 			model.setViewName("jobseekerEditProfileSettings");
 			
@@ -234,23 +234,30 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/updateJobSeekerProfile",method = RequestMethod.GET)
-	public String updateJobSeekerProfileSettings(@Valid JobSeekerRegistrationForm jsRegistrationForm,
-			BindingResult result,Map model) {
-		
-		try {			
+	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
+	public ModelAndView updateJobSeekerProfileSettings(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
+			BindingResult result) {
+			ModelAndView model = new ModelAndView();
+		try {	
+			
+			if(result.hasErrors()){
+				model.setViewName("jobseekerEditProfileSettings");
+				return model;
+			}
+			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			/*AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(jsRegistrationForm.getContactForm());*/
-			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(jsRegistrationForm);
-//			jsRegistrationDTO.setAddressDTO(addDTO);
+			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(registerForm);
+			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
+			JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(registerForm);
+			jsRegistrationDTO.setAddressDTO(addDTO);
+			jsRegistrationDTO.setJobSeekerProfileDTO(jsProfileSettingsDTO);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
-			model.put("jobseekerregistration", jsRegistrationForm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "registrationsuccess";
+		return model;
 	}
 	
 	
