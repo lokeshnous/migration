@@ -294,6 +294,7 @@ public class JobSeekerRegistrationController {
 		
 		try {		
 			ChangePasswordForm form = new ChangePasswordForm();
+			form.setEmailId("sasi@sasi1.com");
 			model.put("changePasswordForm", form);
 		} catch (Exception e) {
 			e.printStackTrace();
