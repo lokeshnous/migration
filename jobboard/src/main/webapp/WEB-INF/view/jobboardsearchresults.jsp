@@ -103,8 +103,8 @@
 			    				  /* $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+val.PostedDate+'</li></ul>'); */
 			    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'
 			    						  +val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'
-			    						  +val.City+'</li><li class="searchResultsColumn4">'
-			    						  + alert(val.PostedDate.time)+ dateFormat(new Date(val.PostedDate.time), 'dd/mm/yyyy')+'</li></ul>');
+			    						  +val.City+'</li><li class="searchResultsColumn4">'+
+			    						 (new Date(val.PostedDate.time))+'</li></ul>');
 			    				  //alert(data.jsonRows[key]);
 			    				  //alert(key);
 			    				  //delete data.jsonRows[key];
