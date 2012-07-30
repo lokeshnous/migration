@@ -5,8 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import net.sf.json.JSONObject;
@@ -14,8 +17,11 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +33,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
@@ -68,6 +75,26 @@ public class JobSearchActivityController {
 
 	@Value("${applyJobErrMsg}")
 	private String applyJobErrMsg;
+	
+	
+	@Value("${invalidemail}")
+	private String invalidemail;
+
+	@Value("${notempty}")
+	private String notempty;
+
+	@Value("${subject}")
+	private String subject;
+
+	@Value("${commonupperbody}")
+	private String commonupperbody;
+
+	@Value("${commonlowerbody}")
+	private String commonlowerbody;
+	
+	@Value("${joburl}")
+	private String joburl;
+
 
 	@Autowired
 	private JobSearchService jobSearchService;
@@ -432,4 +459,78 @@ public class JobSearchActivityController {
 		return new ModelAndView("jobboardadvancedsearch");
 	}
 
+	
+	/**
+	 * This method is called to send job to a friend
+	 * 
+	 */
+	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
+	public String sendToFriend(HttpServletRequest request,Model model) {
+		try{
+			model.addAttribute("joburl", joburl+request.getParameter("id"));
+			model.addAttribute("sendtofriendmail", new SendToFriend());
+		}catch (Exception e){//Catch exception if any
+			//System.err.println("Error: " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "jobseekersendtofriendpopup";
+	}
+
+	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
+	public String sendToFriendPost(@ModelAttribute("sendtofriendmail")
+	SendToFriend sendtofriendmail, BindingResult result,Model model,HttpServletRequest request) {
+
+		Boolean status = Boolean.FALSE;
+		String finalmailbody;
+		if(sendtofriendmail.getMessage().length()>0){
+			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+"<h4>Your friend message</h4>"+sendtofriendmail.getMessage()+commonlowerbody;
+		}else{
+			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+commonlowerbody;
+		}
+		try {	
+			if(sendtofriendmail.getEmail().length()>0 && validateEmailPattern(sendtofriendmail.getEmail())){
+				try {
+					EmailDTO jobSeekerEmailDTO = new EmailDTO();
+					// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
+					jobSeekerEmailDTO.setCcAddress(null);
+					jobSeekerEmailDTO.setBccAddress(null);
+					InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
+					jobSeekerToAddress[0] = new InternetAddress(sendtofriendmail.getEmail());
+					jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
+					jobSeekerEmailDTO.setSubject(subject);
+					jobSeekerEmailDTO.setBody(finalmailbody);
+					jobSeekerEmailDTO.setHtmlFormat(true);
+					emailService.sendEmail(jobSeekerEmailDTO);
+				} catch (Exception e) {
+					// loggers call
+					//LOGGER.info("ERROR");
+					e.printStackTrace();
+				}
+				model.addAttribute("visible", true);
+			}else if(sendtofriendmail.getEmail().length()>0 && !validateEmailPattern(sendtofriendmail.getEmail())){
+				model.addAttribute("visible", false);
+				model.addAttribute("invalidemail", invalidemail);
+				return "jobseekersendtofriendpopup";
+			}
+			else{
+				model.addAttribute("visible", false);
+				model.addAttribute("notempty", notempty);
+				return "jobseekersendtofriendpopup";
+			}
+
+		} catch (Exception e) {
+			status = Boolean.FALSE;
+			throw new MailParseException(e);
+		}
+		return "jobseekersendtofriendpopup";
+	}
+     
+	private boolean validateEmailPattern(String emailAddress) {
+		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(emailAddress);
+		return matcher.matches();
+	}
+	
+	
 }
