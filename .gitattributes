@@ -276,6 +276,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/ApplyJobForm.jav
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchResultForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchViewDetailForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/AnonymousUserJobApplyController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ApplyJobController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ApplyJobForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ContactInfoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSearchActivityController.java -text
