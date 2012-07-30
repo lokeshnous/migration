@@ -9,9 +9,11 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +41,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @Controller
 @RequestMapping("/jobseekerregistration")
 @SessionAttributes("registerForm")
+@Scope("session")
 public class JobSeekerRegistrationController {
 	
 	@Autowired
@@ -122,7 +125,7 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Finish")
 	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
-			BindingResult result) {
+			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		try {			
 				if (result.hasErrors()) {
@@ -139,8 +142,9 @@ public class JobSeekerRegistrationController {
 				jsRegistrationDTO.setMerUserDTO(userDTO);
 				// Call to service layer
 				profileRegistration.createNewProfile(jsRegistrationDTO);
+				session.setAttribute("Username", registerForm.getFirstName()+" "+registerForm.getLastName());
 //				model.addObject(attributeName, attributeValue)
-				model.setViewName("jobSeekerDashBoard");
+				model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 
 		} catch (Exception e) {
 			e.printStackTrace();

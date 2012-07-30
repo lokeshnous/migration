@@ -3,7 +3,10 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +27,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
  */
 @Controller
 @RequestMapping("/jobSeeker")
+@Scope("session")
 public class JobSeekerDashBoardController {
 	
 	@Autowired
@@ -36,7 +40,7 @@ public class JobSeekerDashBoardController {
 	private PopulateDropdowns populateDropdownsService;
 
 	@RequestMapping("/jobSeekerDashBoard")
-	public ModelAndView displayDashBoard(Map model){
+	public ModelAndView displayDashBoard(Map model,HttpSession session){
 
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
 		
@@ -49,12 +53,13 @@ public class JobSeekerDashBoardController {
 		List<SubscriptionsDTO> selSubs = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,null, listSubscriptions);
 		List<MagazinesDTO> selMags =transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,null, listMagazines);
 		List<JobAlertsDTO> selAlerts = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,null, listAlerts);
+		form.setUserName((String)session.getAttribute("UserName"));
 		model.put("jobAlertsList", selAlerts);		
 		model.put("jobSubscriptionsList", selSubs);		
 		model.put("jobMagazinesList", selMags);			
 
 		model.put("jobSeekerDashBoardForm", form);
 
-		return new ModelAndView("jobseekerdashboard");			
+		return new ModelAndView("jobSeekerDashBoard");			
 	}	
 }
