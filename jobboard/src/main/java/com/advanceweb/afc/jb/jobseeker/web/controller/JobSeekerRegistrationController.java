@@ -193,19 +193,21 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value="/viewJobSeekerProfile",method = RequestMethod.GET)
-	public ModelAndView viewJobSeekerProfileSettings(Map model) {
+	public ModelAndView viewJobSeekerProfileSettings() {
+		ModelAndView model = new ModelAndView();
 		try {
 
 			// Call to service layer
 			
-			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(1);
+			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(30);
 			JobSeekerRegistrationForm form = transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
-
-			model.put("jobseekerregistration", form);
+			model.addObject("registerForm", form);
+			model.setViewName("jobseekerEditProfileSettings");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("jobseekerregistration");
+		return model;
 	}
 	
 	/**
