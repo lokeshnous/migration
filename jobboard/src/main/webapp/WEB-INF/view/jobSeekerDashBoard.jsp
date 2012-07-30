@@ -266,11 +266,11 @@
                       
                       <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Activity</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a href="/jobboard/jobSeekerActivity/viewSavedJob.html" target="_blank" id="viewsavedjob">View My Saved Jobs (1)</a> </p>
+                      <p><a href="/jobboard/jobSeekerActivity/viewSavedJob.html" target="_blank" id="viewsavedjob">View My Saved Jobs </a> </p>
                       </div>
 
                       <div class="lableTextDashBoard">
-                      <p><a href="/jobboard/jobSeekerActivity/viewAppliedJob.html" target="_blank"  id="viewappliedjob"  >View Jobs I've Applied To (1)</a> </p>
+                      <p><a href="/jobboard/jobSeekerActivity/viewAppliedJob.html" target="_blank"  id="viewappliedjob"  >View Jobs I've Applied To </a> </p>
                       </div>
                        <div class="lableTextDashBoard">
                       <p><a href="">Employers Who Viewed My Profile</a> </p>
