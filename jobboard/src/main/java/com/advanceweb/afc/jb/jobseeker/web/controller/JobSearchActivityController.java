@@ -92,6 +92,9 @@ public class JobSearchActivityController {
 	@Value("${commonlowerbody}")
 	private String commonlowerbody;
 	
+	@Value("${commonbeforefriendmsgbody}")
+	private String commonbeforefriendmsgbody;
+	
 	@Value("${joburl}")
 	private String joburl;
 
@@ -484,7 +487,7 @@ public class JobSearchActivityController {
 		Boolean status = Boolean.FALSE;
 		String finalmailbody;
 		if(sendtofriendmail.getMessage().length()>0){
-			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+"<h4>Your friend message</h4>"+sendtofriendmail.getMessage()+commonlowerbody;
+			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+commonbeforefriendmsgbody+sendtofriendmail.getMessage()+commonlowerbody;
 		}else{
 			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+commonlowerbody;
 		}
