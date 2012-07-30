@@ -41,20 +41,20 @@
        <div class="popUpContainerWrapper">
        <form:form method="Get" action="/jobboard/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="formtouse"> 
             <div class="rowEvenNewSpacing">
-              <span class="lableText3">Email Address:</span>
-            <form:input path="emailId" class="job_seeker_email textBox2"/>
+              <span class="lableText3">Email Address:</span> 
+            <form:input path="emailId" class="job_seeker_email textBox2" readonly="true"/>
             <form:errors path="emailId"/>
             </div>
 
             <div class="rowEvenNewSpacing">
             <span class="lableText3">Current Password:</span>
-            <form:input path="currentPassword" class="job_seeker_password textBox2"/>
+            <form:password path="currentPassword" class="job_seeker_password textBox2"/>
             <span class="required">(Required)</span>
             <form:errors path="currentPassword"/>
             </div>
             <div class="rowEvenNewSpacing">
             <span class="lableText3">New Password:</span>
-            <form:input path="newPassword" class="job_seeker_password textBox2"/>
+            <form:password path="newPassword" class="job_seeker_password textBox2"/>
             <span class="required">(Required)</span>
              <form:errors path="newPassword"/>
             <div class="row marginTop5"><span class="lableText3"></span>(8-20 characters, including at least 1 number)</div>
@@ -62,7 +62,7 @@
 
             <div class="rowEvenNewSpacing">
              <span class="lableText3"> Confirm New Password:</span>
-             <form:input path="confirmNewPassword" class="job_seeker_password textBox2"/>
+             <form:password path="confirmNewPassword" class="job_seeker_password textBox2"/>
             <span class="required">(Required)</span>
             <form:errors path="confirmNewPassword"/>
             </div>
