@@ -202,8 +202,20 @@ public class JobSeekerRegistrationController {
 		try {
 
 			// Call to service layer
-			
-			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(30);
+			List<CountryDTO> countryList= populateDropdownsService.getCountryList();
+			List<StateDTO> stateList= populateDropdownsService.getStateList();
+			List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
+			List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
+			List<GenderDTO> genderList= populateDropdownsService.getGenderList();
+			List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
+			List<DropDownDTO> empTyepList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+			model.addObject("countryList",countryList);
+			model.addObject("employmentInfoList",empInfoList);
+			model.addObject("genderList",genderList);
+			model.addObject("ethnicityList",ethnicityList);
+			model.addObject("veteranStatusList",veteranStatusList);
+			model.addObject("empTyepList",empTyepList);
+			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(322);
 			JobSeekerRegistrationForm form = transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO);
 			model.addObject("registerForm", form);
 			model.setViewName("jobseekerEditProfileSettings");

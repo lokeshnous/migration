@@ -21,47 +21,37 @@ public class TransformJobSeekerRegistration {
 			JobSeekerRegistrationDTO jsRegistrationDTO) {
 
 		JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
-		ContactInfoForm contactInfoForm = new ContactInfoForm();
 		
 		if(null != jsRegistrationDTO.getAddressDTO()){
 			AddressDTO dto = jsRegistrationDTO.getAddressDTO();
-			
-			contactInfoForm.setAddressLine1(dto.getAddress1());
-			contactInfoForm.setAddressLine2(dto.getAddress2());
-			contactInfoForm.setCity(dto.getCity());
-			contactInfoForm.setCountry(dto.getCountry());
-			contactInfoForm.setState(dto.getState());
-			contactInfoForm.setPostalCode(dto.getZipCode());
-		
-//			form.setAddressLine1(dto.getAddress1());
-//			form.setAddressLine2(dto.getAddress2());
-//			form.setCity(dto.getCity());
-//			form.setCountry(dto.getCountry());
-//			form.setState(dto.getState());
-//			form.setPostalCode(dto.getZipCode());
+			form.setAddressLine1(dto.getAddress1());
+			form.setAddressLine2(dto.getAddress2());
+			form.setCity(dto.getCity());
+			form.setCountry(dto.getCountry());
+			form.setState(dto.getState());
+			form.setPostalCode(dto.getZipCode());
+			form.setPhoneNo(dto.getPhone());
 		}
 		
 		if(null != jsRegistrationDTO.getMerUserDTO()){
 			MerUserDTO dto = jsRegistrationDTO.getMerUserDTO();
 			form.setEmailId(dto.getEmailId());
-			
-			contactInfoForm.setFirstName(dto.getFirstName());
-			contactInfoForm.setLastName(dto.getLastName());
-			contactInfoForm.setMiddleName(dto.getMiddleName());
-			
-//			form.setFirstName(dto.getFirstName());
-//			form.setLastName(dto.getLastName());
-//			form.setMiddleName(dto.getMiddleName());
+			form.setFirstName(dto.getFirstName());
+			form.setLastName(dto.getLastName());
+			form.setMiddleName(dto.getMiddleName());
 			form.setPassword(dto.getPassword());
+			form.setMyIndustry(dto.getIndustry());
+			form.setMyJobTitle(dto.getJobTitle());
+			form.setMyProfession(dto.getProfession());
+			form.setMySpeciality(dto.getSpeciality());		
 		}
 		
 		if(null != jsRegistrationDTO.getJobSeekerProfileDTO()){
 			JobSeekerProfileDTO dto = jsRegistrationDTO.getJobSeekerProfileDTO();
-			form.setImCurrentlyIn(dto.getEmploymentInformation());
 			form.setEthenticity(dto.getEthinicity());
-//			form.setGender(dto.getGender());
-			form.setVeteranStatus(dto.getVeteranStatus());
-//			form.setPassword(dto.getJobSeekerId());
+			form.setGender(dto.getGender());
+			form.setVeteranStatus(dto.getVeteranStatus());	
+			form.setEmploymentType(dto.getEmploymentInformation());
 		}
 
 		return form;

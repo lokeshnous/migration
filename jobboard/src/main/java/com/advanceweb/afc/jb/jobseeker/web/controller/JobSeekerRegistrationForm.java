@@ -21,7 +21,6 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String gender;
 	private String imCurrentlyIn;
 	private String password;
-	private String phone;	
 	private String currentPassword;	
 	private String retypepassword;
 	private String veteranStatus;	
@@ -103,14 +102,6 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	public String getCurrentPassword() {
