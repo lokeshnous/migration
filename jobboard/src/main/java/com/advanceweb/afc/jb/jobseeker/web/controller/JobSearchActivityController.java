@@ -54,8 +54,7 @@ public class JobSearchActivityController {
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSearchActivityController.class");
 
-	// @Autowired
-	@SuppressWarnings("unused")
+	@Autowired
 	private MMEmailService emailService;
 
 	@Value("${saveThisJobSuccessMsg}")
@@ -110,9 +109,9 @@ public class JobSearchActivityController {
 	 * @param jobId
 	 * @return
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/applyJob")
-	public ModelAndView applyJob(@Valid ApplyJobForm form, Map map) {
+	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
+	public @ResponseBody String applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
+			@RequestParam String userID) {
 
 		/**
 		 * Check for login , navigate to login page if necessary login by
@@ -127,12 +126,14 @@ public class JobSearchActivityController {
 			Boolean isjobSeekerLogedin = Boolean.FALSE;
 			if (isjobSeekerLogedin) {
 				map.put("loginForm", new LoginForm());
-				return new ModelAndView("jobSeekerLogin");
+//				return new ModelAndView("jobSeekerLogin");
 			}
 
 			map.put("isJobAction", true);
 			form.setJobID(13158);
 			int userId = 30;
+			form.setUseremail("mmnousinfo@gmail.com");
+			
 			/**
 			 * Get the Job details
 			 */
@@ -148,8 +149,9 @@ public class JobSearchActivityController {
 				applyJobErrMsg = applyJobErrMsg.replace("?",
 						appliedJobDTO.getAppliedDt());
 				map.put("jobActionInfo", applyJobErrMsg);
-				return new ModelAndView(
-						"redirect:/jobsearchactivity/findJobPage.html");
+//				return new ModelAndView(
+//						"redirect:/jobsearchactivity/findJobPage.html");
+				return applyJobErrMsg;
 			}
 
 			/**
@@ -161,18 +163,19 @@ public class JobSearchActivityController {
 			employerEmailDTO.setCcAddress(null);
 			employerEmailDTO.setBccAddress(null);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
-			employerToAddress[0] = new InternetAddress("to1@gmail.com");
+			employerToAddress[0] = new InternetAddress(
+					searchedJobDTO.getEmployerEmailAddress());
 			employerEmailDTO.setToAddress(employerToAddress);
-			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
+			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle()+" employer");
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
 
 			// TODO: Fetch the path of public resume
-			attachmentpaths.add("C:\\ppResume.txt");
+			attachmentpaths.add("C:\\testResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			// emailService.sendEmail(employerEmailDTO);
-			// System.out.println("-------Mail sent to employer-----");
+			emailService.sendEmail(employerEmailDTO);
+			LOGGER.info("Mail sent to employer");
 			/**
 			 * confirm mail:Send mail to job seeker by sub as job title and body
 			 * as short job desc
@@ -182,13 +185,13 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setCcAddress(null);
 			jobSeekerEmailDTO.setBccAddress(null);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-			jobSeekerToAddress[0] = new InternetAddress("to1@gmail.com");
+			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
+			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle()+" jobseeker");
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
-			// emailService.sendEmail(jobSeekerEmailDTO);
-			// System.out.println("-------Mail sent to jobseeker-----");
+			emailService.sendEmail(jobSeekerEmailDTO);
+			LOGGER.info("Mail sent to jobseeker");
 
 			/**
 			 * save the applied job in DB
@@ -217,7 +220,8 @@ public class JobSearchActivityController {
 			// loggers call
 			LOGGER.info("ERROR");
 		}
-		return new ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
+//		return new ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
+		return applyJobSuccessMsg;
 	}
 
 	/**
@@ -322,7 +326,7 @@ public class JobSearchActivityController {
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
 		this.jobSearchActivity = jobSearchActivity;
 	}
-
+	
 	/**
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
 	 * 
@@ -330,16 +334,17 @@ public class JobSearchActivityController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/saveThisJob")
-	public ModelAndView saveThisJob(@Valid ApplyJobForm form,
-			BindingResult result, Map<String, Object> map) {
-		map.put("isJobAction", true);
+	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
+	public @ResponseBody String saveThisJob(@Valid ApplyJobForm form,
+			Map<String, Object> map, @RequestParam String userID ) {
+				map.put("isJobAction", true);
 		/**
 		 * Check for job seeker login ,open popup if not logged in.
 		 */
 		Boolean isjobSeekerLogedin = Boolean.FALSE;
 		if (isjobSeekerLogedin) {
-			return new ModelAndView("jobseekersaveThisJobPopUp");
+			return "jobseekersaveThisJobPopUp";
+//			return new ModelAndView("jobseekersaveThisJobPopUp");
 		}
 		form.setJobID(13158);
 		int userId = 30;
@@ -355,11 +360,18 @@ public class JobSearchActivityController {
 		AppliedJobDTO appliedJobDTO = jobSearchActivity.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
-			map.put("isApplied", true);
-			saveThisJobErrMsg = saveThisJobErrMsg.replace("?", appliedJobDTO
-					.getCreateDt().toString());
-			map.put("isAppliedErr", saveThisJobErrMsg);
-			return new ModelAndView("findJob");
+			if(appliedJobDTO.getAppliedDt() != null){
+				applyJobErrMsg = applyJobErrMsg.replace("?", appliedJobDTO
+						.getAppliedDt().toString());
+				map.put("jobActionInfo", applyJobErrMsg);
+				return applyJobErrMsg;
+			}else{
+				saveThisJobErrMsg = saveThisJobErrMsg.replace("?", appliedJobDTO
+						.getCreateDt().toString());
+				map.put("jobActionInfo", saveThisJobErrMsg);
+				return saveThisJobErrMsg;
+			}
+//			return new ModelAndView("findJob");
 		}
 
 		/**
@@ -378,7 +390,8 @@ public class JobSearchActivityController {
 		saveJobDTO.setDeleteDt(null);
 		jobSearchActivity.saveOrApplyJob(saveJobDTO);
 		map.put("jobActionInfo", saveThisJobSuccessMsg);
-		return new ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
+//		return new ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
+		return saveThisJobSuccessMsg;
 	}
 
 	/**

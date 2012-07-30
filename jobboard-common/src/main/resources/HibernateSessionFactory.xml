@@ -16,7 +16,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.advanceweb.afc.jb" />
 	<!-- Database properties -->
-	<context:property-placeholder location="classpath:database.properties" />
+	<context:property-placeholder location="classpath:database.properties,classpath:mailServer.properties" />
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -147,10 +147,10 @@
 
 		<!-- Send Mail Configuration-->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.testDomain.com" />
-		<property name="port" value="587" />
-		<property name="username" value="testusername" />
-		<property name="password" value="testPassword" />
+		<property name="host" value="${mail.smtpHostAddress}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
 
 		<property name="javaMailProperties">
 			<props>

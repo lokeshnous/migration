@@ -39,15 +39,15 @@ public class MMEmailServiceTest extends ServiceTest {
 		Boolean status = Boolean.FALSE;
 		try {
 			EmailDTO testemailDTO = new EmailDTO();
-			testemailDTO.setFromAddress("pramodap@nousinfo.com");
+			testemailDTO.setFromAddress("mmnousinfo@gmail.com");
 			InternetAddress[] testccAddress = new InternetAddress[1];
-			testccAddress[0] = new InternetAddress("pramodeandc@yahoo.co.in");
+			testccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			testemailDTO.setCcAddress(testccAddress);
 			InternetAddress[] testbccAddress = new InternetAddress[1];
-			testbccAddress[0] = new InternetAddress("pramod1356@gmail.com");
+			testbccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			testemailDTO.setBccAddress(testbccAddress);
 			InternetAddress[] testtoAddress = new InternetAddress[1];
-			testtoAddress[0] = new InternetAddress("patilpramod20@gmail.com");
+			testtoAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			testemailDTO.setToAddress(testtoAddress);
 			testemailDTO
 					.setSubject("Please ignore this mail:Test mail Subject");

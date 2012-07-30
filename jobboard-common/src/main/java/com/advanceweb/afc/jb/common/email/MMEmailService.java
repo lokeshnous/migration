@@ -20,10 +20,10 @@ import org.springframework.stereotype.Service;
  */
 @Service("emailService")
 public class MMEmailService implements MMEmail {
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
-	 
+
 	/**
 	 * The method is to send mail.
 	 * 
@@ -32,22 +32,32 @@ public class MMEmailService implements MMEmail {
 	@Override
 	public void sendEmail(EmailDTO emailDTO) {
 
-		
 		MimeMessage message = mailSender.createMimeMessage();
 
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-			//helper.setFrom(emailDTO.getFromAddress());
-			InternetAddress[] ccAddress = emailDTO.getCcAddress();
-			setCCAddress(helper, ccAddress, emailDTO);
-			InternetAddress[] bccAddress = emailDTO.getBccAddress();
+			// helper.setFrom(emailDTO.getFromAddress());
+			// InternetAddress[] ccAddress = emailDTO.getCcAddress();
+			// InternetAddress[] bccAddress = emailDTO.getBccAddress();
+			// helper.setTo(emailDTO.getToAddress());
+
+			InternetAddress[] ccAddress = new InternetAddress[1];
+			ccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
+			setCCAddress(helper, ccAddress);
+			InternetAddress[] bccAddress = new InternetAddress[1];
+			bccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			if (bccAddress != null && bccAddress.length > 0) {
-				helper.setBcc(emailDTO.getBccAddress());
+				helper.setBcc(bccAddress);
 			}
-			helper.setTo(emailDTO.getToAddress());
-			helper.setSubject(emailDTO.getSubject());
-			helper.setText(emailDTO.getBody(), emailDTO.isHtmlFormat());
+			InternetAddress[] toAddress = new InternetAddress[1];
+			toAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
+			helper.setTo(toAddress);
+
+			helper.setSubject("Please Ignore this Test mail :"
+					+ emailDTO.getSubject());
+			helper.setText("<b>Please Ignore this Test mail :</b>" + emailDTO.getBody(),
+					emailDTO.isHtmlFormat());
 			List<String> attachmentPaths = emailDTO.getAttachmentPaths();
 			if (attachmentPaths != null && !attachmentPaths.isEmpty()) {
 				FileSystemResource file = null;
@@ -61,9 +71,8 @@ public class MMEmailService implements MMEmail {
 		} catch (MessagingException e) {
 			throw new MailParseException(e);
 		}
-		
+
 		mailSender.send(message);
-		
 	}
 
 	/**
@@ -71,16 +80,16 @@ public class MMEmailService implements MMEmail {
 	 * 
 	 * @param helper
 	 * @param ccAddress
-	 * @param emailDTO
 	 */
-	private void setCCAddress(MimeMessageHelper helper, InternetAddress[] ccAddress, EmailDTO emailDTO) {
-			try {
-				if (ccAddress != null && ccAddress.length > 0) {
-				helper.setCc(emailDTO.getCcAddress());
-				}
-			} catch (MessagingException e) {
-				new Exception();
+	private void setCCAddress(MimeMessageHelper helper,
+			InternetAddress[] ccAddress) {
+		try {
+			if (ccAddress != null && ccAddress.length > 0) {
+				helper.setCc(ccAddress);
 			}
+		} catch (MessagingException e) {
+			new Exception();
+		}
 	}
 
 }
