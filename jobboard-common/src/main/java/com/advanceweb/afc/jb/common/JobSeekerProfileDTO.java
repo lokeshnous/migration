@@ -12,6 +12,8 @@ public class JobSeekerProfileDTO extends BaseProfileDTO {
 	private String gender;
 	private long jobSeekerId;
 	private String veteranStatus;
+	private String fileName;
+	
 
 	public JobSeekerProfileDTO() {
 

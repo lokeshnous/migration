@@ -8,6 +8,12 @@ public class MerUserDTO {
 	private String lastName;
 	private String middleName;
 	private String password;
+	private String industry;
+	private String profession;
+	private String speciality;
+	private String jobTitle;
+	private String memberShips;
+	private String otherDetails;
 
 	public String getEmailId() {
 		return emailId;
@@ -56,7 +62,52 @@ public class MerUserDTO {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-	
 
+	public String getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(String industry) {
+		this.industry = industry;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getSpeciality() {
+		return speciality;
+	}
+
+	public void setSpeciality(String speciality) {
+		this.speciality = speciality;
+	}
+
+	public String getJobTitle() {
+		return jobTitle;
+	}
+
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
+	}
+
+	public String getMemberShips() {
+		return memberShips;
+	}
+
+	public void setMemberShips(String memberShips) {
+		this.memberShips = memberShips;
+	}
+
+	public String getOtherDetails() {
+		return otherDetails;
+	}
+
+	public void setOtherDetails(String otherDetails) {
+		this.otherDetails = otherDetails;
+	}
 }
