@@ -25,7 +25,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="Post" action="saveJobSeekerProfile.html"
+			<form:form action="/jobboard/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
 				commandName="registerForm" enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">First Name:</span>
@@ -199,8 +199,12 @@
 				</form:select>
 				</div>
 				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
-						class="btn_sm orange">Save</a> <a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
+					<span class="floatLeft marginTop10">
+					
+<!-- 					<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
+						class="btn_sm orange">Save</a>  -->
+						<input type="submit" value="Save" class="btn_sm orange"/>
+						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
