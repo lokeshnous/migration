@@ -41,5 +41,11 @@ public interface ProfileRegistration {
 	 * @param profileDTO
 	 */
 	public boolean changePassword(ProfileDTO profileDTO);
+	
+	/**
+	 * 
+	 * @param profileDTO
+	 */
+	public boolean validatePassword(ProfileDTO profileDTO);
 
 }

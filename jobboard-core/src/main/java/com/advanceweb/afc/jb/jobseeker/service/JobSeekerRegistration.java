@@ -83,6 +83,12 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	public boolean changePassword(ProfileDTO profileDTO) {
 		JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
 		return jobSeekerRegistrationDAO.jsChangePassword(jsRegistrationDTO);
+	}
+
+	@Override
+	public boolean validatePassword(ProfileDTO profileDTO) {
+		JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
+		return jobSeekerRegistrationDAO.validatePassword(jsRegistrationDTO);
 	}	
 	
 	
