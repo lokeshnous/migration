@@ -96,11 +96,15 @@
 								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start, function(data){
 					    	//alert(data);
 					    	$(".searchResultsItem").empty();
+					    	$("#TotalNoRecords").text(data.TotalNoRecords);
 					    	 $.each(data.jsonRows, function(key,val) {
 					    		 //$(".searchResultsItem").clear();
 					    		 
 			    				  /* $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+val.PostedDate+'</li></ul>'); */
-			    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobId+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+ (new Date(val.PostedDate.time))+'</li></ul>');
+			    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'
+			    						  +val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'
+			    						  +val.City+'</li><li class="searchResultsColumn4">'
+			    						  + alert(val.PostedDate.time)+ dateFormat(new Date(val.PostedDate.time), 'dd/mm/yyyy')+'</li></ul>');
 			    				  //alert(data.jsonRows[key]);
 			    				  //alert(key);
 			    				  //delete data.jsonRows[key];
@@ -266,7 +270,7 @@
                   <form:form method="" action="" commandName="jobSearchResultForm"> 
             <div class="search_form">
             
-	                      <h1 class="marginBottom5">Search <span>60,262</span> Healthcare Jobs</h1>
+	                      <h1 class="marginBottom5">Search <span id="TotalNoRecords"></span> Healthcare Jobs</h1>
 	                      <form:input path="keywords"  id="keywords" cssClass="jb_input1" />
 	                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
 	                      <br/>
@@ -486,7 +490,7 @@
                                 
                                     
                                     <div class="searchResultsItem">
-                                                                           <div class="searchResultsItem">
+                                           <%-- <div class="searchResultsItem">
                                         <ul id="orange-bg" class="searchResultsJobInfo closed orange-bg">
                                             <li class="searchResultsColumn1">
                                                 Nurse Team Lead/RN Manager
@@ -528,7 +532,7 @@
                                             
                                             
                                           </div>
-                                    </div>
+                                    </div> --%>
                                         <!--
                                         <div class="searchResultsSubContent">
                                             
