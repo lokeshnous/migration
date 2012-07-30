@@ -272,6 +272,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEm
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformJobPost.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/home/web/controller/HomeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/AnonymousUserJobApplyForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/ApplyJobForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchResultForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchViewDetailForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/AnonymousUserJobApplyController.java -text
