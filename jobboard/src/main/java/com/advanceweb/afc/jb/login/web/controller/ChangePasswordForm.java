@@ -11,14 +11,14 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @Since 2nd July, 2012
  */
 public class ChangePasswordForm {
+	
 	@NotEmpty
-	@Email
 	private String emailId;
-	@NotEmpty
+	@NotEmpty(message="Current Password should not be empty")
 	private String currentPassword;
-	@NotEmpty
+	@NotEmpty(message="New Password should not be empty")
 	private String newPassword;
-	@NotEmpty
+	@NotEmpty(message="Confirm Password should not be empty")
 	private String confirmNewPassword;
 	
 	
