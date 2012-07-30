@@ -43,7 +43,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	@Transactional(readOnly=false)
 	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
 		
-		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO.getMerUserDTO());
+		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO);
 		try {
 			if (merUser != null) {
 				hibernateTemplate.saveOrUpdate(merUser);
@@ -96,9 +96,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	@Override
 	public boolean updateJobSeekerDetails(JobSeekerRegistrationDTO jobSeekerRegistrationDTO) {
 		
-		MerUser merUser = registrationConversionHelper
-				.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO
-						.getMerUserDTO());
+		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO);
 		try {
 			if (merUser != null) {
 				hibernateTemplate.saveOrUpdate(merUser);
@@ -115,8 +113,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	public boolean jsChangePassword(
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO) {
 		MerUser merUser = registrationConversionHelper
-				.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO
-						.getMerUserDTO());
+				.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO);
 		try {
 			if (merUser != null) {
 				hibernateTemplate.saveOrUpdate(merUser);
