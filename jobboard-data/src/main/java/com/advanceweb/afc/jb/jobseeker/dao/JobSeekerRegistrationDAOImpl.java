@@ -8,6 +8,8 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AddressDTO;
+import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -80,7 +82,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			if (jobSeekerId != 0) {
 				MerUser merUser = hibernateTemplate.load(MerUser.class, jobSeekerId);
 				MerUserDTO merUserDTO = registrationConversionHelper.transformMerUserToMerUserDTO(merUser);
+				AddressDTO addDTO = registrationConversionHelper.transformMerUserToAddDTO(merUser);
+				JobSeekerProfileDTO profileDTO = registrationConversionHelper.transformMerUserToProfileDTO(merUser);
 				jsRegistrationDTO.setMerUserDTO(merUserDTO);
+				jsRegistrationDTO.setAddressDTO(addDTO);
+				jsRegistrationDTO.setJobSeekerProfileDTO(profileDTO);
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -112,8 +118,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	@Override
 	public boolean jsChangePassword(
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO) {
-		MerUser merUser = registrationConversionHelper
-				.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO);
+		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO);
 		try {
 			if (merUser != null) {
 				hibernateTemplate.saveOrUpdate(merUser);
