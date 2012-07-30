@@ -2,6 +2,9 @@ package com.advanceweb.afc.jb.user.helper;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AddressDTO;
+import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
@@ -13,16 +16,37 @@ public class RegistrationConversionHelper {
 	 * @param dto
 	 * @return
 	 */
-	public MerUser transformMerUserDTOToMerUser(MerUserDTO dto) {
+	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto) {
 		MerUser entity = new MerUser();
-		if (dto != null) {
-			entity.setFirstName(dto.getFirstName());
-			entity.setEmail(dto.getEmailId());
-			entity.setPassword(dto.getPassword());
-			entity.setLastName(dto.getLastName());
-	
+		MerUserDTO userDTO = dto.getMerUserDTO();
+		AddressDTO addDTO = dto.getAddressDTO();
+		JobSeekerProfileDTO profileDTO = dto.getJobSeekerProfileDTO();
+		if (userDTO != null) {
+			entity.setFirstName(userDTO.getFirstName());
+			entity.setMiddleName(userDTO.getMiddleName());
+			entity.setEmail(userDTO.getEmailId());
+			entity.setPassword(userDTO.getPassword());
+			entity.setLastName(userDTO.getLastName());
+			entity.setIndustry(userDTO.getIndustry());
+			entity.setProfession(userDTO.getProfession());
+			entity.setSpeciality(userDTO.getSpeciality());
+			entity.setJobTitle(userDTO.getJobTitle());
 			// merUser.setUserId(userId);
 		}
+		
+		if(addDTO != null){
+			entity.setMobileNo(addDTO.getPhone());
+			entity.setCountryLocationId(addDTO.getCountry());
+			entity.setZipCodeLocationId(addDTO.getZipCode());		
+		}
+		
+		if(profileDTO != null){
+			entity.setGender(profileDTO.getGender());
+			entity.setEthinicityLookupId(Integer.valueOf(profileDTO.getEthinicity()));
+			entity.setEmpinfoLookupId(Integer.valueOf(profileDTO.getEmploymentInformation()));
+			entity.setVeteranLookupId(Integer.valueOf(profileDTO.getVeteranStatus()));
+		}
+		
 		return entity;
 
 	}
