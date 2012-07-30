@@ -135,6 +135,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdow
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/CheckNullUtil.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -text
