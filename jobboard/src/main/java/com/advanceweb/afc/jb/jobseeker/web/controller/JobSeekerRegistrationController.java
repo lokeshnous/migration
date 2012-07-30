@@ -140,7 +140,7 @@ public class JobSeekerRegistrationController {
 				// Call to service layer
 				profileRegistration.createNewProfile(jsRegistrationDTO);
 //				model.addObject(attributeName, attributeValue)
-				model.setViewName("/jobboard/jobSeekerDashBoard");
+				model.setViewName("jobSeekerDashBoard");
 
 		} catch (Exception e) {
 			e.printStackTrace();
