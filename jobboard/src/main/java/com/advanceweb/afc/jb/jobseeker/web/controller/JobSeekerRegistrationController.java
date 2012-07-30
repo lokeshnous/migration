@@ -271,20 +271,27 @@ public class JobSeekerRegistrationController {
 	 */
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/jobSeekerUpdatePassword",method = RequestMethod.GET)
-	public String updateNewPassword(@Valid ChangePasswordForm form,
-			BindingResult result,Map model) {
-		
-		try {			
+	public ModelAndView updateNewPassword(@Valid ChangePasswordForm form,
+			BindingResult result) {
+			ModelAndView model = new ModelAndView();
+		try {		
+			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new  JobSeekerRegistrationDTO();
 			MerUserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
+			model.addObject("changePasswordForm", form);
 			// Call to service layer
-			profileRegistration.changePassword(jsRegistrationDTO);
-			model.put("changePasswordForm", form);
+			if(profileRegistration.validatePassword(jsRegistrationDTO)){
+				profileRegistration.changePassword(jsRegistrationDTO);
+			}else{
+				model.setViewName("jobseekerchangepassword");
+				return model;
+			}
+			model.setViewName("registrationsuccess");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "registrationsuccess";
+		return model;
 	}
 	
 	/**
