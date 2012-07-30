@@ -126,9 +126,9 @@
 					</div>
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href=""
-						class="btn_sm orange">Create</a> <a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
-					<form:input path="" type="submit" value="Update & Continue"/>	
+					<span class="floatLeft marginTop10"><a href="/jobboard/jobSeekerResume/updateResumePopup.html"
+						class="btn_sm orange">Update</a> 
+						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
