@@ -116,12 +116,12 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
 
 	@Override
-	public boolean jsChangePassword(
-			JobSeekerRegistrationDTO jobSeekerRegistrationDTO) {
-		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO);
+	public boolean jsChangePassword( JobSeekerRegistrationDTO dto) {
 		try {
-			if (merUser != null) {
-				hibernateTemplate.saveOrUpdate(merUser);
+			if (dto.getMerUserDTO() != null) {
+				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
+				user.setPassword(dto.getMerUserDTO().getPassword());
+				hibernateTemplate.saveOrUpdate(user);				
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
