@@ -45,7 +45,7 @@
           
 					<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
-					<span class="boldText">Welcome, (Job Seeker Name)!</span><br>
+					<span class="boldText">Welcome, <c:out value="${jobSeekerDashBoardForm.userName}"/>!</span><br>
 					<div class="floatRight"> <span class="floatLeft"> <a href="">Log Out</a> | <a href="">Back to Home</a></span></div></div><!-- loginHeader -->
 
                     <div class="headerLoginSectionColumns" style="display:none">
