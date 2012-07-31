@@ -16,52 +16,44 @@
 	
 		/* jQuery(".megamenu").megamenu(); */
 
-		$("#resumePopupId").click(function (event){
-             parent.$.nmTop().close();
-             $("#createResumePopupId").click();
-        });
-
-		$("#createResumePopupId").displaypopup("#createResumePopupId","775","252");
-		
-		$("#editResumePopupId").displaypopup("#editResumePopupId","775","252");
-
 		$("#tb_manage_resume img").click(function(event) {
 
 			var action = $(this).attr("alt");
-			var resumeId = $(this).parent().parent().parent().attr("id");
+			var rowObj = $(this).parent().parent().parent();
+			var resumeId = rowObj.attr("id");
 			
 			switch (action) {
 			case "view":
-				alert("view");
-				break;
-			case "edit":
-				/* $("#editResumePopupId").attr("href",getBaseURL()+"/jobSeekerResume/editResume.html?resumeId="+resumeId);
-				alert($("#editResumePopupId").attr("href")); */
-				parent.$.nmTop().close();
-				$("#editResumePopupId").click();
-				break;
+					$("form").attr("action", getBaseURL()+"jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
+					//parent.$.nmTop().close();
+					$("form").submit();
+					break;
 			case "download":
 				alert("download");
 				break;
 			case "print":
 				alert("print");
 				break;
-			case "delete": {
+			case "delete":{
 				$.ajax({url: getBaseURL()+"/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
-					success: function() {
-						  $(this).parent().parent().parent().remove();
-					  },
-					error: function() {
-					},
-					complete: function() {
-						 $(this).parent().parent().parent().remove();
-					}
-				});
-				$(this).parent().parent().parent().remove();
-				alert("Deleted Successfully");
-			}
+						success: function(data){ 
+						    if(data.success != null){
+						    	rowObj.remove();
+						    	alert(data.success);
+						    }
+						    if(data.failure != null){
+						    	alert(data.failure);
+						    }
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							
+						}
+					});
+				}
 				break;
-
 			}
 
 		});
@@ -74,8 +66,8 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE MY RESUMES</h2>
-			<img src="../resources/images/Close.png" width="19"
-				height="19" alt="Close" onclick="parent.$.nmTop().close();">
+			<img src="../resources/images/Close.png" width="19" class="nyroModalClose"
+				height="19" alt="Close">
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="POST" action="">
@@ -100,7 +92,7 @@
 									<td align="center">${resume.updateDt}</td>
 									<td align="center"><a href="#"><img
 											src="../resources/images/View.png" width="20" height="20"
-											alt="view"></a>&nbsp;<a href="#"><img
+											alt="view"></a>&nbsp;<a href='/jobboard/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal"><img 
 											src="../resources/images/Edit.png" width="20" height="20"
 											alt="edit"></a>&nbsp;<a href="#"><img
 											src="../resources/images/Download.png" width="20" height="20"
@@ -116,11 +108,10 @@
 				</div>
 				<div class="row marginTop5 paddingBottom10">
 					<span class="floatLeft marginTop10">
-					<!-- <input type="button" id="resumePopupId" class="btn_sm orange" value="New Resume" />  -->
-					<a class="btn_sm orange" id="resumePopupId" href="#">New Resume</a>
-					<input type="button" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" /></span> 
-					<a style="visibility: hidden;" class="btn_sm orange" id="createResumePopupId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume"></a>
-					<a style="visibility: hidden;" class="btn_sm orange" id="editResumePopupId" href="/jobboard/jobSeekerResume/editResume.html?resumeId=408"></a>
+						<a class="nyroModal btn_sm orange" id="resumePopupId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume">New Resume</a>
+						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>
+					</span> 
+					
 					<span
 						class="floatLeft marginTop10 marginLeft5"><em>*Only 1
 							resume may be made Public at a time</em></span>

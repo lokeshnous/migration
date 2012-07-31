@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -92,7 +95,7 @@ public class ResumeController {
 			Model model, Map<String, Object> map) {
 		
 		CreateResume resume = new CreateResume();
-		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(11);
+		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(30);
 		List<ResumeVisibilityDTO> resumeVisibilityList=populateDropdownsService.getResumeVisibilityList();
 		Map<String,String> visibilityMap = new HashMap<String , String>();
 		
@@ -253,13 +256,18 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteResume", method = RequestMethod.GET)
-	public String deleteResume(HttpServletRequest request, HttpSession session, @RequestParam("resumeId") int resumeId) {
+	public @ResponseBody JSONObject deleteResume(HttpServletRequest request,HttpServletResponse response, HttpSession session, @RequestParam("resumeId") int resumeId) {
 
 		boolean deleteStatus = resumeService.deleteResume(resumeId);
+		JSONObject deleteStatusJson = new JSONObject();
 		if(deleteStatus){
-			return "manageResume";
+			deleteStatusJson.put("success", "Profile Deleted Succesfully");
+			return deleteStatusJson;
 		}
-		return "failure";
+		else{
+			deleteStatusJson.put("failed", "Failed to Delete this record");
+			return deleteStatusJson;
+		}
 	}
 
 
@@ -378,7 +386,7 @@ public class ResumeController {
 			model.addAttribute("resumeform", resumeForm);
 		
 			ResumeDTO resumeDTO=new ResumeDTO();
-			resumeDTO.setUserId(11);
+			resumeDTO.setUserId(30);
 			resumeDTO.setResumeType(resumeForm.getResumeType());
 			resumeDTO.setResume_name(resumeForm.getResume_name());
 			resumeDTO.setDesired_job_title(resumeForm.getDesired_job_title());
@@ -569,11 +577,11 @@ public class ResumeController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.GET)
-	public String viewResumeBuilder(CreateResume createResume, BindingResult result,Map model){
+	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
+	public String viewResumeBuilder(CreateResume createResume, BindingResult result,Map model, @RequestParam("resumeId") int resumeId){
 
 //		ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
-		ResumeDTO resumeDTO = resumeService.editResume(57);
+		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		transCreateResume.transformCreateResumeForm(resumeDTO);
 		List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
 		List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
