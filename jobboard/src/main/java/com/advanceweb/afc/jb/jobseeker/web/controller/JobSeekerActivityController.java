@@ -78,8 +78,4 @@ public class JobSeekerActivityController {
 		return new ModelAndView("jobseekermysavedjobspopup");
 	}
 
-/*	public void setJobSeekerActivity(JobSeekerActivity jobSeekerActivity) {
-		this.jobSeekerActivity = jobSeekerActivity;
-	}
-*/
 }
