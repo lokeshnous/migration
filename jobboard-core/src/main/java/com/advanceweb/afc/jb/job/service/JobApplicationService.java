@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.job.service;
 
-import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
+import com.advanceweb.afc.jb.common.JobApplicationDTO;
 
 /**
  * @Author : Prince Mathew
@@ -8,6 +8,6 @@ import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
    @Created: Jul 12, 2012
    @Purpose: This will work as a service interface for  Anonymous User for applying job
  */
-public interface AnonymousUserJobApply {
- boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto);
+public interface JobApplicationService {
+ boolean applyJobAnonymousUser(JobApplicationDTO dto);
 }
