@@ -206,47 +206,67 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
-	public ModelAndView editResume(@ModelAttribute("resumeForm") CreateResume resumeForm, HttpServletRequest request, HttpSession session,
-			@RequestParam("resumeId") int resumeId,Map<String, Object> map) {
+	public ModelAndView editResume(CreateResume createResume,
+			@RequestParam("resumeId") int resumeId) {
 
 		//CreateResume resumeForm = new CreateResume(); 
+		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		
-		resumeForm.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
-		resumeForm.setResume_name(resumeDTO.getResume_name());
-		resumeForm.setDesired_job_title(resumeDTO.getDesired_job_title());
-		resumeForm.setDesired_employment_type(resumeDTO.getEmploymentType());
-		resumeForm.setWork_authorization_US(resumeDTO.getWork_authorization_US());
-		resumeForm.setWilling_to_relocate(resumeDTO.getWilling_to_relocate());
-		resumeForm.setResume_visibility(resumeDTO.getResume_visibility());
+		createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
+		createResume.setResume_name(resumeDTO.getResume_name());
+		createResume.setDesired_job_title(resumeDTO.getDesired_job_title());
+		createResume.setDesired_employment_type(resumeDTO.getEmploymentType());
+		createResume.setWork_authorization_US(resumeDTO.getWork_authorization_US());
+		createResume.setWilling_to_relocate(resumeDTO.getWilling_to_relocate());
+		createResume.setResume_visibility(resumeDTO.getResume_visibility());
 		
 		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown("EmploymentType");
 		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown("WorkAuthUS");
 		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown("Relocate");
 		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown("Visibility");
 		
-		map.put("resumeForm", resumeForm);
-		map.put("resumeDetail", resumeDTO);
-		map.put("employmentType", employmentTypeList);
-		map.put("workAuthUS", workAuthUSList);
-		map.put("resumeVisibility", visibilityList);
-		map.put("relocate", relocateList);
+		model.addObject("resumeForm", createResume);
+		model.addObject("resumeDetail", resumeDTO);
+		model.addObject("employmentType", employmentTypeList);
+		model.addObject("workAuthUS", workAuthUSList);
+		model.addObject("resumeVisibility", visibilityList);
+		model.addObject("relocate", relocateList);
+		model.setViewName("editresumepopup");
 		
-		return new ModelAndView("editresumepopup");
+		return model;
 	}
 	
 	/**
 	 * This method is called to fetch the resume data to edit
 	 * @param model
-	 * @param map
 	 * @return
 	 */
 	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.GET)
-	public ModelAndView updateResumePopup(@ModelAttribute("resumeForm") CreateResume resumeForm,Map<String, Object> map) {
+	public ModelAndView updateResumePopup(CreateResume createResume) {
 
-		System.out.println("Update resume popup"+resumeForm.getResume_name());
+		ModelAndView model = new ModelAndView();
 		
-		return new ModelAndView("jobseekereditresume");
+		ResumeDTO resumeDTO = resumeService.editResume(62);
+		transCreateResume.transformCreateResumeForm(resumeDTO);
+		List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
+		List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
+		List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
+		List<WorkExpForm> listWorkExpForm = transCreateResume.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+		List<LanguageForm> listLangForm = transCreateResume.transformLanguageForm(resumeDTO.getListLangDTO());
+		ContactInfoForm contactForm = transCreateResume.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+
+		createResume.setListCertForm(listCertForm);
+		createResume.setListEduForm(listEduForm);
+		createResume.setListLangForm(listLangForm);
+		createResume.setListRefForm(listRefForm);
+		createResume.setListWorkExpForm(listWorkExpForm);
+		createResume.setContactInfoForm(contactForm);
+		resumeDTO.getContactInfoDTO();
+		model.addObject("createResume",createResume);
+		model.setViewName("createResumeBuilder");
+		
+		return model;
 	}
 	
 
@@ -380,7 +400,7 @@ public class ResumeController {
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value = "/moveToResumeBuilder", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/moveToResumeBuilder", method = RequestMethod.GET)
 	public ModelAndView createResume(@ModelAttribute("createResume") CreateResume createResume ,HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
 				
@@ -398,7 +418,7 @@ public class ResumeController {
 			model.addAttribute("resumeform", createResume);
 
 		return new ModelAndView("jobseekereditresume");
-	}
+	}*/
 	
 	/**
 	 * This method is called to hold the values of create resume popup 
