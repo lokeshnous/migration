@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="/jobboard/jobSeekerResume/moveToResumeBuilder.html" commandName="createResume" modelAttribute="resumeform" id="formtouse"	enctype="multipart/form-data">
+			<form:form method="get" action="/jobboard/jobSeekerResume/createResumeBuilder.html" commandName="createResume" modelAttribute="resumeform" id="formtouse"	enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 
 					<div class="floatLeft marginTop5 marginRight20">How would you
