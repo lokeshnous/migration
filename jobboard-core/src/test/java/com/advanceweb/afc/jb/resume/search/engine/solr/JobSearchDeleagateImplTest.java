@@ -23,6 +23,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 	private static final Map<String, String> PARAM_MAP = new HashMap<String, String>();
 	private static final String TITLE_SEARCH = "titlesearch" ; 
 	
+	@Ignore("Not ready to test")
 	@Test
 	public void jobSearchTest() {
 		
@@ -66,6 +67,7 @@ public class JobSearchDeleagateImplTest extends ServiceTest{
 				
 	}
 	
+	@Ignore("Not ready to test")
 	@Test
 	public void jobSearchTest4() {
 		
