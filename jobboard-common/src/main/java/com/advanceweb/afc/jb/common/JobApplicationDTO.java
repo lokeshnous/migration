@@ -8,7 +8,7 @@ import java.io.Serializable;
    @Created: Jul 12, 2012
    @Purpose: This class will act as a DTO for the Anonymous User to apply for job
  */
-public class AnonymousUserJobApplyDTO implements Serializable {
+public class JobApplicationDTO implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
