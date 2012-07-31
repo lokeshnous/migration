@@ -36,73 +36,118 @@
 				jQuery(".megamenu").megamenu();
 			});
 		</script>
-		
-		<script type="text/javascript">
-    function saveThisJob() {
-      $.ajax({
-        url: 'saveThisJob.html',
-        data: ({userID : "userID"}),
-        success: function(data) {
-        	$('#topjobActionInfo').html(data);
-        	$('#bottomjobActionInfo').html('');
-        },
-		error: function(data) {
-			  alert('Unable to process');
-		},
-		complete: function(data) {
-		}
-      });
-    }
-    function applyThisJob() {
-      $.ajax({
-        url: 'applyJob.html',
-        data: ({userID : "userID"}),
-        success: function(data) {
-        	$('#topjobActionInfo').html(data);
-        	$('#bottomjobActionInfo').html('');
-        },
-		error: function(data) {
-			alert('Unable to process');
-		},
-		complete: function(data) {
-		}
-      });
-    }
-    function btsaveThisJob() {
-        $.ajax({
-          url: 'saveThisJob.html',
-          data: ({userID : "userID"}),
-          success: function(data) {
-          	$('#bottomjobActionInfo').html(data);
-          	$('#topjobActionInfo').html('');
-          },
-  		error: function(data) {
-  			  alert('Unable to process');
-  		},
-  		complete: function(data) {
-  		}
-        });
-      }
-      function btapplyThisJob() {
-        $.ajax({
-          url: 'applyJob.html',
-          data: ({userID : "userID"}),
-          success: function(data) {
-          	$('#bottomjobActionInfo').html(data);
-          	$('#topjobActionInfo').html('');
-          },
-  		error: function(data) {
-  			alert('Unable to process');
-  		},
-  		complete: function(data) {
-  		}
-        });
-      }
-    </script>
-    
+  
+<script type="text/javascript">
+	function saveThisJob() {
+		$.ajax({
+			url : 'saveThisJob.html',
+			data : ({
+				userID : "userID"
+			}),
+			success : function(data) {
+				$.each(data, function(key, val) {
+					if (key == "AjaxMSG") {
+						$('#topjobActionInfo').html(val);
+						$('#bottomjobActionInfo').html('');
+					}
+				});
+				$.each(data, function(key, val) {
+					if (key == "NavigationPath") {
+						$('#saveThisJobId').attr('target', '_blank');
+						$('#saveThisJobId').attr('href', val + '.html');
+						$("#saveThisJobId").displaypopup("#saveThisJobId",
+								"775", "252");
+
+					}
+				});
+			},
+			error : function(data) {
+				alert('Unable to process');
+			},
+			complete : function(data) {
+			}
+		});
+	}
+
+	function applyThisJob() {
+		$.ajax({
+			url : 'applyJob.html',
+			data : ({
+				userID : "userID"
+			}),
+
+			success : function(data) {
+				$.each(data, function(key, val) {
+					if (key == "AjaxMSG") {
+						$('#topjobActionInfo').html(val);
+						$('#bottomjobActionInfo').html('');
+					}
+				});
+			},
+			error : function(data) {
+				alert('Unable to process');
+			},
+			complete : function(data) {
+			}
+		});
+	}
+	function btsaveThisJob() {
+		$.ajax({
+			url : 'saveThisJob.html',
+			data : ({
+				userID : "userID"
+			}),
+			success : function(data) {
+				$.each(data, function(key, val) {
+					if (key == "AjaxMSG") {
+						$('#bottomjobActionInfo').html(val);
+						$('#topjobActionInfo').html('');
+					}
+				});
+				$.each(data, function(key, val) {
+					if (key == "NavigationPath") {
+						$('#btsaveThisJobId').attr('target', '_blank');
+						$('#btsaveThisJobId').attr('href', val + '.html');
+						$("#btsaveThisJobId").displaypopup("#btsaveThisJobId",
+								"775", "252");
+					}
+				});
+			},
+			error : function(data) {
+				alert('Unable to process');
+			},
+			complete : function(data) {
+			}
+		});
+	}
+
+	function btapplyThisJob() {
+		$.ajax({
+			url : 'applyJob.html',
+			data : ({
+				userID : "userID"
+			}),
+
+			success : function(data) {
+				$.each(data, function(key, val) {
+					if (key == "AjaxMSG") {
+						$('#bottomjobActionInfo').html(val);
+						$('#topjobActionInfo').html('');
+					}
+				});
+			},
+			error : function(data) {
+				alert('Unable to process');
+			},
+			complete : function(data) {
+			}
+		});
+	}
+</script>
 </head>
     
     <body class="job_board_home">    
+    <ul><li><a id="nav">pp</a></li></ul>
         <div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
         </div>
@@ -239,7 +284,7 @@
 				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
 				<a onclick="applyThisJob();" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				
-				<a onclick="saveThisJob();" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
+				<a onclick="saveThisJob()" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
 			    
 			    <br/><br/>
 			    <h4><div style="color: red" id="topjobActionInfo" ></div></h4>
@@ -249,7 +294,7 @@
 				<div class="jobDetailsIntroOptions">
 				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
 				<a onclick="btapplyThisJob();" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob();" style=" cursor: default;" class="btn_sm orange">SAVE THIS JOB</a>
+				<a onclick="btsaveThisJob();" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
 			    <br/><br/>
 			    <h4><div style="color: red" id="bottomjobActionInfo" ></div></h4>
 			    </div>

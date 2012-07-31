@@ -75,10 +75,15 @@ public class JobSearchActivityController {
 
 	@Value("${applyJobErrMsg}")
 	private String applyJobErrMsg;
-	
-	
+
+	@Value("${ajaxMsg}")
+	private String ajaxMsg;
+
 	@Value("${invalidemail}")
 	private String invalidemail;
+
+	@Value("${ajaxNavigationPath}")
+	private String ajaxNavigationPath;
 
 	@Value("${notempty}")
 	private String notempty;
@@ -91,13 +96,12 @@ public class JobSearchActivityController {
 
 	@Value("${commonlowerbody}")
 	private String commonlowerbody;
-	
+
 	@Value("${commonbeforefriendmsgbody}")
 	private String commonbeforefriendmsgbody;
-	
+
 	@Value("${joburl}")
 	private String joburl;
-
 
 	@Autowired
 	private JobSearchService jobSearchService;
@@ -134,21 +138,21 @@ public class JobSearchActivityController {
 	/**
 	 * The apply for job action is called as per the conditions and getting
 	 * saved in DB.
-	 * 
+	 * Check for login , navigate to login page if necessary login by
+	 * ADVACNE Guest navigate to Anonymous User Form apply for job or
+	 * navigate to employer web page to apply job
 	 * @param form
 	 * @param jobId
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
-	public @ResponseBody String applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
+	public @ResponseBody
+	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
 			@RequestParam String userID) {
-
-		/**
-		 * Check for login , navigate to login page if necessary login by
-		 * ADVACNE Guest navigate to Anonymous User Form apply for job or
-		 * navigate to employer web page to apply job
-		 */
-
+		JSONObject jsonObject = new JSONObject();
+		form.setJobID(13158);
+		int userId = 30;
+		form.setUseremail("mmnousinfo@gmail.com");
 		try {
 			/**
 			 * Check for job seeker login
@@ -156,38 +160,24 @@ public class JobSearchActivityController {
 			Boolean isjobSeekerLogedin = Boolean.FALSE;
 			if (isjobSeekerLogedin) {
 				map.put("loginForm", new LoginForm());
-//				return new ModelAndView("jobSeekerLogin");
+				jsonObject.put("navigationPath", "jobSeekerLogin");
+				return jsonObject;
 			}
 
-			map.put("isJobAction", true);
-			form.setJobID(13158);
-			int userId = 30;
-			form.setUseremail("mmnousinfo@gmail.com");
-			
-			/**
-			 * Get the Job details
-			 */
+			//Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(form.getJobID());
-
-			/**
-			 * Validate if job is already applied
-			 */
+			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchActivity
 					.fetchSavedOrAppliedJob(searchedJobDTO, userId);
 			if (appliedJobDTO != null && appliedJobDTO.getAppliedDt() != null) {
 				applyJobErrMsg = applyJobErrMsg.replace("?",
 						appliedJobDTO.getAppliedDt());
-				map.put("jobActionInfo", applyJobErrMsg);
-//				return new ModelAndView(
-//						"redirect:/jobsearchactivity/findJobPage.html");
-				return applyJobErrMsg;
+				jsonObject.put(ajaxMsg, applyJobErrMsg);
+				return jsonObject;
 			}
 
-			/**
-			 * Send mail to employer's by sub as job title and body as short job
-			 * desc with attached public resume
-			 */
+			// Send mail to Employer regarding job application
 			EmailDTO employerEmailDTO = new EmailDTO();
 			// employerEmailDTO.setFromAddress(form.getUseremail());
 			employerEmailDTO.setCcAddress(null);
@@ -196,20 +186,18 @@ public class JobSearchActivityController {
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			employerEmailDTO.setToAddress(employerToAddress);
-			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle()+" employer");
+			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle()
+					+ " employer");
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-
 			// TODO: Fetch the path of public resume
 			attachmentpaths.add("C:\\testResume.txt");
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
 			LOGGER.info("Mail sent to employer");
-			/**
-			 * confirm mail:Send mail to job seeker by sub as job title and body
-			 * as short job desc
-			 */
+			
+			// Send confirmation mail to job seeker regarding job application
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
 			// jobSeekerEmailDTO.setFromAddress(form.getUseremail());
 			jobSeekerEmailDTO.setCcAddress(null);
@@ -217,15 +205,14 @@ public class JobSearchActivityController {
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle()+" jobseeker");
+			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle()
+					+ " jobseeker");
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			emailService.sendEmail(jobSeekerEmailDTO);
 			LOGGER.info("Mail sent to jobseeker");
 
-			/**
-			 * save the applied job in DB
-			 */
+			// save the applied job in DB
 			Date currentDate = new Date();
 			AppliedJobDTO applyJobDTO = null;
 			if (appliedJobDTO == null || appliedJobDTO.getAppliedDt() != null) {
@@ -245,13 +232,12 @@ public class JobSearchActivityController {
 				applyJobDTO.setAppliedDt(currentDate.toString());
 				jobSearchActivity.updateSaveOrApplyJob(applyJobDTO);
 			}
-			map.put("jobActionInfo", applyJobSuccessMsg);
 		} catch (Exception e) {
 			// loggers call
-			LOGGER.info("ERROR");
+			LOGGER.info("applyJob ERROR");
 		}
-//		return new ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
-		return applyJobSuccessMsg;
+		jsonObject.put(ajaxMsg, applyJobSuccessMsg);
+		return jsonObject;
 	}
 
 	/**
@@ -324,8 +310,7 @@ public class JobSearchActivityController {
 				start, rows);
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
-			jobSrchJsonObj = sOLRSearchHelper
-					.convertToJSON(jobSearchResultDTO);
+			jobSrchJsonObj = sOLRSearchHelper.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
 
 			// modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
@@ -351,7 +336,7 @@ public class JobSearchActivityController {
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
 		this.jobSearchActivity = jobSearchActivity;
 	}
-	
+
 	/**
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
 	 * 
@@ -360,16 +345,19 @@ public class JobSearchActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
-	public @ResponseBody String saveThisJob(@Valid ApplyJobForm form,
-			Map<String, Object> map, @RequestParam String userID ) {
-				map.put("isJobAction", true);
+	public @ResponseBody
+	JSONObject saveThisJob(@Valid ApplyJobForm form, Map<String, Object> map,
+			@RequestParam String userID) {
+		JSONObject jsonObject = new JSONObject();
+
 		/**
 		 * Check for job seeker login ,open popup if not logged in.
 		 */
 		Boolean isjobSeekerLogedin = Boolean.FALSE;
 		if (isjobSeekerLogedin) {
-			return "jobseekersaveThisJobPopUp";
-//			return new ModelAndView("jobseekersaveThisJobPopUp");
+			jsonObject.put(ajaxNavigationPath, "jobseekersaveThisJobPopUp");
+			return jsonObject;
+			// return new ModelAndView("jobseekersaveThisJobPopUp");
 		}
 		form.setJobID(13158);
 		int userId = 30;
@@ -385,18 +373,18 @@ public class JobSearchActivityController {
 		AppliedJobDTO appliedJobDTO = jobSearchActivity.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
-			if(appliedJobDTO.getAppliedDt() != null){
+			if (appliedJobDTO.getAppliedDt() != null) {
 				applyJobErrMsg = applyJobErrMsg.replace("?", appliedJobDTO
 						.getAppliedDt().toString());
-				map.put("jobActionInfo", applyJobErrMsg);
-				return applyJobErrMsg;
-			}else{
-				saveThisJobErrMsg = saveThisJobErrMsg.replace("?", appliedJobDTO
-						.getCreateDt().toString());
-				map.put("jobActionInfo", saveThisJobErrMsg);
-				return saveThisJobErrMsg;
+				jsonObject.put(ajaxMsg, applyJobErrMsg);
+				return jsonObject;
+			} else {
+				saveThisJobErrMsg = saveThisJobErrMsg.replace("?",
+						appliedJobDTO.getCreateDt().toString());
+				jsonObject.put(ajaxMsg, saveThisJobErrMsg);
+				return jsonObject;
 			}
-//			return new ModelAndView("findJob");
+			// return new ModelAndView("findJob");
 		}
 
 		/**
@@ -414,9 +402,10 @@ public class JobSearchActivityController {
 		saveJobDTO.setAppliedDt(null);
 		saveJobDTO.setDeleteDt(null);
 		jobSearchActivity.saveOrApplyJob(saveJobDTO);
-		map.put("jobActionInfo", saveThisJobSuccessMsg);
-//		return new ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
-		return saveThisJobSuccessMsg;
+		// return new
+		// ModelAndView("redirect:/jobsearchactivity/findJobPage.html");
+		jsonObject.put(ajaxMsg, saveThisJobSuccessMsg);
+		return jsonObject;
 	}
 
 	/**
@@ -425,12 +414,10 @@ public class JobSearchActivityController {
 	 * @param JobSearchViewDetailForm
 	 * @return
 	 */
-	@RequestMapping(value = "/cancelSaveThisJobPopUp")
-	public ModelAndView cancelSaveThisJobPopUp(
+	@RequestMapping(value = "/jobseekersaveThisJobPopUp")
+	public ModelAndView callSaveThisJobPopUp(
 			Map<String, JobSearchResultForm> model) {
-		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-		model.put("jobSearchResultForm", jobSearchResultForm);
-		return new ModelAndView("findJob");
+		return new ModelAndView("jobseekersaveThisJobPopUp");
 	}
 
 	/**
@@ -462,18 +449,17 @@ public class JobSearchActivityController {
 		return new ModelAndView("jobboardadvancedsearch");
 	}
 
-	
 	/**
 	 * This method is called to send job to a friend
 	 * 
 	 */
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
-	public String sendToFriend(HttpServletRequest request,Model model) {
-		try{
-			model.addAttribute("joburl", joburl+request.getParameter("id"));
+	public String sendToFriend(HttpServletRequest request, Model model) {
+		try {
+			model.addAttribute("joburl", joburl + request.getParameter("id"));
 			model.addAttribute("sendtofriendmail", new SendToFriend());
-		}catch (Exception e){//Catch exception if any
-			//System.err.println("Error: " + e.getMessage());
+		} catch (Exception e) {// Catch exception if any
+			// System.err.println("Error: " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -481,25 +467,34 @@ public class JobSearchActivityController {
 	}
 
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
-	public String sendToFriendPost(@ModelAttribute("sendtofriendmail")
-	SendToFriend sendtofriendmail, BindingResult result,Model model,HttpServletRequest request) {
+	public String sendToFriendPost(
+			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
+			BindingResult result, Model model, HttpServletRequest request) {
 
 		Boolean status = Boolean.FALSE;
 		String finalmailbody;
-		if(sendtofriendmail.getMessage().length()>0){
-			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+commonbeforefriendmsgbody+sendtofriendmail.getMessage()+commonlowerbody;
-		}else{
-			 finalmailbody=commonupperbody+"<a href="+sendtofriendmail.getJoburl()+">"+sendtofriendmail.getJoburl()+"</a>"+commonlowerbody;
+		if (sendtofriendmail.getMessage().length() > 0) {
+			finalmailbody = commonupperbody + "<a href="
+					+ sendtofriendmail.getJoburl() + ">"
+					+ sendtofriendmail.getJoburl() + "</a>"
+					+ commonbeforefriendmsgbody + sendtofriendmail.getMessage()
+					+ commonlowerbody;
+		} else {
+			finalmailbody = commonupperbody + "<a href="
+					+ sendtofriendmail.getJoburl() + ">"
+					+ sendtofriendmail.getJoburl() + "</a>" + commonlowerbody;
 		}
-		try {	
-			if(sendtofriendmail.getEmail().length()>0 && validateEmailPattern(sendtofriendmail.getEmail())){
+		try {
+			if (sendtofriendmail.getEmail().length() > 0
+					&& validateEmailPattern(sendtofriendmail.getEmail())) {
 				try {
 					EmailDTO jobSeekerEmailDTO = new EmailDTO();
 					// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
 					jobSeekerEmailDTO.setCcAddress(null);
 					jobSeekerEmailDTO.setBccAddress(null);
 					InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-					jobSeekerToAddress[0] = new InternetAddress(sendtofriendmail.getEmail());
+					jobSeekerToAddress[0] = new InternetAddress(
+							sendtofriendmail.getEmail());
 					jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 					jobSeekerEmailDTO.setSubject(subject);
 					jobSeekerEmailDTO.setBody(finalmailbody);
@@ -507,16 +502,16 @@ public class JobSearchActivityController {
 					emailService.sendEmail(jobSeekerEmailDTO);
 				} catch (Exception e) {
 					// loggers call
-					//LOGGER.info("ERROR");
+					// LOGGER.info("ERROR");
 					e.printStackTrace();
 				}
 				model.addAttribute("visible", true);
-			}else if(sendtofriendmail.getEmail().length()>0 && !validateEmailPattern(sendtofriendmail.getEmail())){
+			} else if (sendtofriendmail.getEmail().length() > 0
+					&& !validateEmailPattern(sendtofriendmail.getEmail())) {
 				model.addAttribute("visible", false);
 				model.addAttribute("invalidemail", invalidemail);
 				return "jobseekersendtofriendpopup";
-			}
-			else{
+			} else {
 				model.addAttribute("visible", false);
 				model.addAttribute("notempty", notempty);
 				return "jobseekersendtofriendpopup";
@@ -528,12 +523,11 @@ public class JobSearchActivityController {
 		}
 		return "jobseekersendtofriendpopup";
 	}
-     
+
 	private boolean validateEmailPattern(String emailAddress) {
 		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(emailAddress);
 		return matcher.matches();
 	}
-	
-	
+
 }
