@@ -10,11 +10,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,6 +47,12 @@ public class LoginFormController {
 
 	@Value("$(loginvalidation.message)")
 	private String loginValidationMsg;
+
+	@Value("${invalidemail}")
+	private String invalidmail;
+
+	@Value("${notempty}")
+	private String emptyerrormsg;
 
 	private static final Logger LOGGER = Logger
 			.getLogger("LoginFormController.class");
@@ -126,9 +134,12 @@ public class LoginFormController {
 	 */
 	@RequestMapping(value = "/forgrtPasswordLogin", method = RequestMethod.GET)
 	public ModelAndView jobSeekerForgotYourPasswordPagePopUp(
-			Map<String, LoginForm> model) {
+			Map<String, LoginForm> model,Model modelconstants) {
 
 		model.put("loginForm", new LoginForm());
+		modelconstants.addAttribute("MMJBCommonConstantserror", MMJBCommonConstants.ERROR_STRING);
+		modelconstants.addAttribute("MMJBCommonConstantsok", MMJBCommonConstants.OK_STRING);
+
 		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp");
 	}
 
@@ -139,12 +150,14 @@ public class LoginFormController {
 	 * @param result
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/jobSeekerForgotYourPasswordPagePopUp", method = RequestMethod.POST)
-	public ModelAndView emailThePassword(@Valid LoginForm form,
-			BindingResult result,@RequestParam("email") String email) {
+	public String emailThePassword(@Valid LoginForm form,
+			BindingResult result,@RequestParam("email") String email,Model model) {
 		String emailAddress = email;
+		String finalresult="";
 		boolean value = false;
-
+        
 		LoginFormDTO userDetailsLoginFormDTO = loginFormService
 				.getUserEmailDetails(emailAddress);
 
@@ -155,7 +168,9 @@ public class LoginFormController {
 		}
 
 		// Sending mail to the logged in user if he is valid user
-		if (value) {
+        if(!(email.length()>0)){
+			finalresult=MMJBCommonConstants.ERROR_STRING+","+emptyerrormsg;
+		}else if (email.length()>0 && value) {
 			try {
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
@@ -163,7 +178,8 @@ public class LoginFormController {
 				jobSeekerEmailDTO.setBccAddress(null);
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 				jobSeekerToAddress[0] = new InternetAddress(
-						form.getEmailAddress());
+				//		form.getEmailAddress());
+						email);
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 				jobSeekerEmailDTO.setSubject(mailSubject);
 				jobSeekerEmailDTO.setBody(mailBody);
@@ -175,8 +191,11 @@ public class LoginFormController {
 				// loggers call
 				LOGGER.info("ERROR");
 			}
-			return new ModelAndView("jobSeekerLogin");
+			finalresult=MMJBCommonConstants.OK_STRING;
+		}else{
+			finalresult=MMJBCommonConstants.ERROR_STRING+","+invalidmail;
 		}
-		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp","message","Please Enter valid Email Address");
+		
+		return finalresult;
 	}
 }
