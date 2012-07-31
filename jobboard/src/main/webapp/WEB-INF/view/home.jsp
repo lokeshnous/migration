@@ -177,13 +177,13 @@
 					<div class="follow_us">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
-						<a href="${follouplinkfacebook}">
+						<a href="${follouplinkfacebook}" target="_blank">
 							<div class="social facebook_link">Facebook</div>
-						</a> <a href="${follouplinktwitter}">
+						</a> <a href="${follouplinktwitter}" target="_blank">
 							<div class="social twitter_link">Twitter</div>
-						</a> <a href="${follouplinkyoutube}">
+						</a> <a href="${follouplinkyoutube}" target="_blank">
 							<div class="social youTube_link">YouTube</div>
-						</a> <a href="${follouplinklinkedin}">
+						</a> <a href="${follouplinklinkedin}" target="_blank">
 							<div class="last social linkedIn_link">LinkedIn</div>
 						</a>
 					</div>
