@@ -64,6 +64,7 @@ import com.advanceweb.afc.jb.web.utils.ReadDocFile;
 
 @Controller
 @RequestMapping(value="/jobSeekerResume")
+@SessionAttributes("createResume")
 public class ResumeController {
 
 	@Autowired
@@ -124,9 +125,9 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/createResumeBuilder", method = RequestMethod.GET)
-	public ModelAndView getResumes(HttpServletRequest request, HttpSession session, Map model) {
-
-		CreateResume form = new CreateResume();
+	public ModelAndView getResumes(CreateResume createResume, 
+			HttpServletRequest request, HttpSession session, Map model) {
+	
 		CertificationsForm certForm = new CertificationsForm();
 		EducationForm eduForm = new EducationForm();
 		LanguageForm langForm = new LanguageForm();
@@ -143,14 +144,14 @@ public class ResumeController {
 		listLangForm.add(langForm);
 		listRefForm.add(refForm);
 		listWorkExpForm.add(workExpForm);
-		form.setContactInfoForm(contactInfoForm);
-		form.setListCertForm(listCertForm);
-		form.setListEduForm(listEduForm);
-		form.setListLangForm(listLangForm);
-		form.setListRefForm(listRefForm);
-		form.setListWorkExpForm(listWorkExpForm);
-		model.put("createResumeForm", form);
-		return new ModelAndView("createresumebuilder");
+		createResume.setContactInfoForm(contactInfoForm);
+		createResume.setListCertForm(listCertForm);
+		createResume.setListEduForm(listEduForm);
+		createResume.setListLangForm(listLangForm);
+		createResume.setListRefForm(listRefForm);
+		createResume.setListWorkExpForm(listWorkExpForm);
+		model.put("createResume", createResume);
+		return new ModelAndView("createResumeBuilder");
 	}
 
 
@@ -380,22 +381,21 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/moveToResumeBuilder", method = RequestMethod.GET)
-	public ModelAndView createResume(@ModelAttribute("createResume") CreateResume resumeForm ,HttpServletRequest request, HttpSession session,
+	public ModelAndView createResume(@ModelAttribute("createResume") CreateResume createResume ,HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
-		
-			model.addAttribute("resumeform", resumeForm);
-		
+				
 			ResumeDTO resumeDTO=new ResumeDTO();
 			resumeDTO.setUserId(30);
-			resumeDTO.setResumeType(resumeForm.getResumeType());
-			resumeDTO.setResume_name(resumeForm.getResume_name());
-			resumeDTO.setDesired_job_title(resumeForm.getDesired_job_title());
-			resumeDTO.setDesired_employment_type(resumeForm.getDesired_employment_type());
-			resumeDTO.setResume_visibility(resumeForm.getResume_visibility());
-			resumeDTO.setWork_authorization_US(resumeForm.getWork_authorization_US());
-			resumeDTO.setWilling_to_relocate(resumeForm.getWilling_to_relocate());
-			resumeDTO.setResume_visibility(resumeForm.getResume_visibility());
+			resumeDTO.setResumeType(createResume.getResumeType());
+			resumeDTO.setResume_name(createResume.getResume_name());
+			resumeDTO.setDesired_job_title(createResume.getDesired_job_title());
+			resumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
+			resumeDTO.setResume_visibility(createResume.getResume_visibility());
+			resumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
+			resumeDTO.setWilling_to_relocate(createResume.getWilling_to_relocate());
+			resumeDTO.setResume_visibility(createResume.getResume_visibility());
 			resumeService.createResumeCopyPaste(resumeDTO);
+			model.addAttribute("resumeform", createResume);
 
 		return new ModelAndView("jobseekereditresume");
 	}
