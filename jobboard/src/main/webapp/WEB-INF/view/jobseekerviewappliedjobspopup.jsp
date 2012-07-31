@@ -61,6 +61,7 @@
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing marginTop0">
+            
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
               <tr class="borderTopNone">
                 <th width="36%" align="left" scope="col">Job Title</th>
@@ -68,16 +69,16 @@
                 <th width="20%" align="left" scope="col">Applied</th>
                 <th width="12%" align="center" scope="col">Delete</th>
               </tr>
-               <c:forEach items="${appliedJobDTOList}" var = "dtoList" >  
+                 <c:forEach items="${appliedJobDTOList}" var = "dtoList" > 
                <tr>
                 <td><a href='<c:url value="/jobsearchactivity/viewJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/> </c:url>'  rel="0" target="_blank" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
-                <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteAppliedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>'><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
+                <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteAppliedJob.html" ><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>'><img src="../resources/images/Delete.png" width="20" height="20" alt="" ></a></td>
               </tr>
               </c:forEach>
-              
             </table>
+             
           </div>
  <div class="row marginTop20 paddingBottom10"><a href=""  onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a></div>
           </form:form></div>
