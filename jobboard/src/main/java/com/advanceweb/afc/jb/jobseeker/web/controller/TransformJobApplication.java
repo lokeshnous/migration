@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
-import com.advanceweb.afc.jb.job.web.controller.AnonymousUserJobApplyForm;
+import com.advanceweb.afc.jb.common.JobApplicationDTO;
+import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
 
 /**
  * @Author : Prince Mathew
@@ -9,12 +9,12 @@ import com.advanceweb.afc.jb.job.web.controller.AnonymousUserJobApplyForm;
    @Created: Jul 12, 2012
    @Purpose: This class will act as a Converter from Form Bean to DTO or from DTO to Form Bean
  */
-public class TransformAnonymousUserJobApply {
+public class TransformJobApplication {
 
-public AnonymousUserJobApplyDTO transformAnonymousUserJobApplyDTO(AnonymousUserJobApplyForm anoUserForm){
+public JobApplicationDTO transformAnonymousUserJobApplyDTO(JobApplicationForm anoUserForm){
 		
 		
-                AnonymousUserJobApplyDTO dto = new AnonymousUserJobApplyDTO();
+                JobApplicationDTO dto = new JobApplicationDTO();
 /*				dto.setUserName(anoUserForm.getUserName());
 				dto.setUserEmail(anoUserForm.getEmail());
 				dto.setFileContent(anoUserForm.getFileContent());

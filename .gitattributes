@@ -293,7 +293,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerA
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearchController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearchForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SendToFriend.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformAnonymousUserJobApply.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobApplication.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobSeekerRegistration.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobSeekerSubscription.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/ChangePasswordForm.java -text
