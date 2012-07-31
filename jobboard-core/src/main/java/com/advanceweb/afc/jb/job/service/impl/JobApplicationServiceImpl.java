@@ -1,8 +1,8 @@
 package com.advanceweb.afc.jb.job.service.impl;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO;
-import com.advanceweb.afc.jb.job.service.AnonymousUserJobApply;
+import com.advanceweb.afc.jb.common.JobApplicationDTO;
+import com.advanceweb.afc.jb.job.service.JobApplicationService;
 
 /**
  * @Author : Prince Mathew
@@ -11,7 +11,7 @@ import com.advanceweb.afc.jb.job.service.AnonymousUserJobApply;
    @Purpose: This class will act as a implementation class of the AnonymousUserJobApply interface and implement all the service
  */
 @Service
-public class AnonymousUserJobApplyImpl implements AnonymousUserJobApply {
+public class JobApplicationServiceImpl implements JobApplicationService {
 
 /*	@Autowired 
 	AnonymousUserJobApplyDAO anonymousUserJobApplyDAO;
@@ -22,9 +22,9 @@ public class AnonymousUserJobApplyImpl implements AnonymousUserJobApply {
 	   @Created:Jul 12, 2012
 	   @Param  :Object of AnonymousUserJobApplyDTO
 	   @Return :boolean value
-	 * @see com.advanceweb.afc.jb.job.service.AnonymousUserJobApply#applyJobAnonymousUser(com.advanceweb.afc.jb.common.AnonymousUserJobApplyDTO)
+	 * @see com.advanceweb.afc.jb.job.service.JobApplicationService#applyJobAnonymousUser(com.advanceweb.afc.jb.common.JobApplicationDTO)
 	 */
-	public boolean applyJobAnonymousUser(AnonymousUserJobApplyDTO dto){
+	public boolean applyJobAnonymousUser(JobApplicationDTO dto){
 		boolean result=false;
 		try {
 			//result=anonymousUserJobApplyDAO.applyJobAnonymousUser(dto);
