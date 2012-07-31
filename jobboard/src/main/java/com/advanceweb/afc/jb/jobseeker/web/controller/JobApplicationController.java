@@ -18,7 +18,7 @@ import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
-import com.advanceweb.afc.jb.job.web.controller.AnonymousUserJobApplyForm;
+import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
 
 /**
  * @Author : Prince Mathew
@@ -29,7 +29,7 @@ import com.advanceweb.afc.jb.job.web.controller.AnonymousUserJobApplyForm;
 
 @Controller
 @RequestMapping("/anonymoususerjobapply")
-public class AnonymousUserJobApplyController {
+public class JobApplicationController {
 
 	
 	@Autowired
@@ -48,14 +48,14 @@ public class AnonymousUserJobApplyController {
 	@RequestMapping(value="/anonymousUser",method = RequestMethod.GET)
 	public ModelAndView showAnoUserForm( Map model) {
 		
-	        model.put("anonymousUserJobApplyForm", new AnonymousUserJobApplyForm());
+	        model.put("anonymousUserJobApplyForm", new JobApplicationForm());
 	        return new ModelAndView("jobseekerguestuserformpopup");
 	    
 	}
 	
 	
 	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.GET)
-	public ModelAndView saveJobSeekerRegistration(@Valid AnonymousUserJobApplyForm form,
+	public ModelAndView saveJobSeekerRegistration(@Valid JobApplicationForm form,
 			BindingResult result) {
 		//,@RequestParam("id") Long jobId
 		try {
