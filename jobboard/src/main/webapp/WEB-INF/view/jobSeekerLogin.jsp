@@ -86,7 +86,7 @@
             </div>
             <p class=" marginTop10">And it's all FREE!</p>
           </span>
-          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div><!-- loginHeader -->
+          </div> <div class="floatleft"><span> <a href="/jobboard/loginFormForJobSeeker/login.html">Login</a> | <a href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign Up</a> | </span></div></div><!-- loginHeader -->
                    <!-- <div class="headerLoginSectionColumns">
 					<span class="boldText">Employer:</span><br>
                     	<a href="">Login</a> | <a href="">Post Jobs</a>
