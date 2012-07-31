@@ -8,7 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
    @Created: Jul 12, 2012
    @Purpose: This class will act as a Form Bean for the  Anonymous User to apply for the job
  */
-public class AnonymousUserJobApplyForm {
+public class JobApplicationForm {
 	
 	private String userName;
 	private String userEmail;
