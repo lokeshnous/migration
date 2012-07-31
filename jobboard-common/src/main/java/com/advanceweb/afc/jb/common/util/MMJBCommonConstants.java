@@ -25,4 +25,8 @@ public interface MMJBCommonConstants {
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
 	public static final String DISP_DATE_PATTERN = "MM/dd/yyyy";
 	public static final String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
+	
+	public static final String ERROR_STRING = "error";
+	public static final String OK_STRING = "ok";
+	
 }
