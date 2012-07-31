@@ -140,18 +140,18 @@ public class LoginFormController {
 		modelconstants.addAttribute("MMJBCommonConstantserror", MMJBCommonConstants.ERROR_STRING);
 		modelconstants.addAttribute("MMJBCommonConstantsok", MMJBCommonConstants.OK_STRING);
 
-		return new ModelAndView("jobSeekerForgotYourPasswordPagePopUp");
+		return new ModelAndView("jobSeekerForgotPWDPopUp");
 	}
 
 	/**
 	 * This Method is used for forgot password functionality
 	 * 
 	 * @param form
-	 * @param result
+	 * @param result  
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jobSeekerForgotYourPasswordPagePopUp", method = RequestMethod.POST)
+	@RequestMapping(value = "/jobSeekerForgotPWDPopUp", method = RequestMethod.POST)
 	public String emailThePassword(@Valid LoginForm form,
 			BindingResult result,@RequestParam("email") String email,Model model) {
 		String emailAddress = email;
