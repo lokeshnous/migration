@@ -17,9 +17,9 @@ public class ChangePasswordForm {
 	@NotEmpty(message="Current Password should not be empty")
 	private String currentPassword;
 	@NotEmpty(message="New Password should not be empty")
-	private String newPassword;
+	private String password;
 	@NotEmpty(message="Confirm Password should not be empty")
-	private String confirmNewPassword;
+	private String retypepassword;
 	
 	
 	public String getEmailId() {
@@ -34,18 +34,19 @@ public class ChangePasswordForm {
 	public void setCurrentPassword(String currentPassword) {
 		this.currentPassword = currentPassword;
 	}
-	public String getNewPassword() {
-		return newPassword;
+	public String getPassword() {
+		return password;
 	}
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getConfirmNewPassword() {
-		return confirmNewPassword;
+	public String getRetypepassword() {
+		return retypepassword;
 	}
-	public void setConfirmNewPassword(String confirmNewPassword) {
-		this.confirmNewPassword = confirmNewPassword;
+	public void setRetypepassword(String retypepassword) {
+		this.retypepassword = retypepassword;
 	}
+
 	
 	
 		
