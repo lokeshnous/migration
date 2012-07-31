@@ -62,7 +62,7 @@ public class JobSeekerRegistrationTest  extends ServiceTest{
 		merUserDTO.setLastName("Matcha");
 		merUserDTO.setMiddleName("");
 		merUserDTO.setPassword("Sasibhushan");
-		merUserDTO.setUserId(3);
+		merUserDTO.setUserId(30);
 
 		jsDTO.setMerUserDTO(merUserDTO);
 		boolean bSaved = profileRegistration.modifyProfile(jsDTO);
