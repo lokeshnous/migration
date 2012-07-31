@@ -279,13 +279,19 @@ public class JobSeekerRegistrationController {
 			JobSeekerRegistrationDTO jsRegistrationDTO = new  JobSeekerRegistrationDTO();
 			MerUserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
-			model.addObject("changePasswordForm", form);
+			model.addObject("changePasswordForm", form);			
+			
 			// Call to service layer
 			if(profileRegistration.validatePassword(jsRegistrationDTO)){
+				registerValidation.validatePassoword(form.getPassword(), form.getRetypepassword(), result);
+				if(result.hasErrors()){
+					model.setViewName("jobseekerchangepassword");
+					return model;
+				}
 				profileRegistration.changePassword(jsRegistrationDTO);
 			}else{
 				model.setViewName("jobseekerchangepassword");
-				model.addObject("currentPassword","Invalid Password");
+				result.rejectValue("currentPassword", "NotEmpty", "Invalid Current Password");
 				return model;
 			}
 			model.setViewName("registrationsuccess");

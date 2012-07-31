@@ -41,31 +41,40 @@
        <div class="popUpContainerWrapper">
        <form:form method="Get" action="/jobboard/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="formtouse"> 
             <div class="rowEvenNewSpacing">
-              <span class="lableText3">Email Address:</span> 
-            <form:input path="emailId" class="job_seeker_email textBox2" readonly="true"/>
-            <form:errors path="emailId"/>
+              	<span class="lableText3">Email Address:</span> 
+	            <form:input path="emailId" class="job_seeker_email textBox2" readonly="true"/>
+	            <form:errors path="emailId"/>
             </div>
-
+			
             <div class="rowEvenNewSpacing">
             <span class="lableText3">Current Password:</span>
             <form:password path="currentPassword" class="job_seeker_password textBox2"/>
             <span class="required">(Required)</span>
-            <form:errors path="currentPassword"/>
             </div>
+            <div>
+				<span class="lableText3"></span> 
+				<FONT color="red"><form:errors path="currentPassword" /></FONT>
+			</div>
             <div class="rowEvenNewSpacing">
             <span class="lableText3">New Password:</span>
-            <form:password path="newPassword" class="job_seeker_password textBox2"/>
+            <form:password path="password" class="job_seeker_password textBox2"/>
             <span class="required">(Required)</span>
-             <form:errors path="newPassword"/>
-            <div class="row marginTop5"><span class="lableText3"></span>(8-20 characters, including at least 1 number)</div>
+            <div class="row marginTop5">
+            	<span class="lableText3"></span>(8-20 characters, including at least 1 number)</div>
             </div>
-
+			<div>
+				<span class="lableText3"></span> 
+				<FONT color="red"><form:errors path="password" /></FONT>
+			</div>
             <div class="rowEvenNewSpacing">
              <span class="lableText3"> Confirm New Password:</span>
-             <form:password path="confirmNewPassword" class="job_seeker_password textBox2"/>
+             <form:password path="retypepassword" class="job_seeker_password textBox2"/>
             <span class="required">(Required)</span>
-            <form:errors path="confirmNewPassword"/>
             </div>
+            <div>
+				<span class="lableText3"></span> 
+				<FONT color="red"><form:errors path="retypepassword" /></FONT>
+			</div>
             <div class="rowEvenNewSpacing marginTop10 paddingBottom10">
              <span class="floatLeft marginTop10"><input type="submit" value="Save" class="btn_sm orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a></span>
 

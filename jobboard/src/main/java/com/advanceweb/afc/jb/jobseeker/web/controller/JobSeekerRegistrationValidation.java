@@ -91,28 +91,28 @@ public class JobSeekerRegistrationValidation {
 	 * @param registerForm
 	 * @return
 	 */
-	public void validatePassoword(JobSeekerRegistrationForm registerForm, Errors errors){
+	public void validatePassoword(String password, String retypePassword, Errors errors){
 		
-		 if(StringUtils.isEmpty(registerForm.getPassword())){
+		 if(StringUtils.isEmpty(password)){
 			 errors.rejectValue("password", "NotEmpty", "Password Should not be empty");
 		 }
 		 
-		 if(StringUtils.isEmpty(registerForm.getRetypepassword())){
+		 if(StringUtils.isEmpty(retypePassword)){
 			 errors.rejectValue("retypepassword", "NotEmpty", "Password Should not be empty");
 		 }
 		 
-		 if(!StringUtils.isEmpty(registerForm.getPassword()) 
-				 && !StringUtils.isEmpty(registerForm.getRetypepassword())){
+		 if(!StringUtils.isEmpty(password) 
+				 && !StringUtils.isEmpty(retypePassword)){
 			 
-			 if(!validatePasswordPattern(registerForm.getPassword())){
+			 if(!validatePasswordPattern(password)){
 				 errors.rejectValue("password", "NotEmpty", "Password should contain 8-20 characters, including at least 1 number"); 
 			 }
 			 
-			 if(!validatePasswordPattern(registerForm.getRetypepassword())){
+			 if(!validatePasswordPattern(retypePassword)){
 				 errors.rejectValue("retypepassword", "NotEmpty", "Password should contain  8-20 characters, including at least 1 number"); 
 			 }
 			 
-			 if(!registerForm.getPassword().equals(registerForm.getRetypepassword())){
+			 if(!password.equals(retypePassword)){
 				errors.rejectValue("retypepassword", "NotEmpty","Passwords are not equal");
 			 }
 		 }
@@ -128,7 +128,7 @@ public class JobSeekerRegistrationValidation {
 		 JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
 		 
 		 validateEmail(registerForm, errors);
-		 validatePassoword(registerForm, errors);
+		 validatePassoword(registerForm.getPassword(), registerForm.getRetypepassword(), errors);
 	}
 	
 	
