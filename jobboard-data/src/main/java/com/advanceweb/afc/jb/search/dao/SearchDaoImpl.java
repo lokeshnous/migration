@@ -11,10 +11,8 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.MetaSearchIndexDTO;
 import com.advanceweb.afc.jb.common.MetaSearchParamDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
-import com.advanceweb.afc.jb.data.entities.MetaSearchIndex;
 import com.advanceweb.afc.jb.data.entities.MetaSearchParam;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
