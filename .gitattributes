@@ -110,6 +110,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/JobSearchDeleagate.java
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/JobSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearch.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearchAdapter.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/JSONConverterService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeService.java -text
