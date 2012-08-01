@@ -1,33 +1,30 @@
-<!DOCTYPE html>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en">
-		<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>ADVANCE Heathcare Jobs</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Job Seeker Change Password</title>
 
-		<!-- ../resources/css -->
-		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
-
-        <!--[if IE]>
-	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
-        
-
-		<!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<jsp:include page="common/include.jsp" />
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	
+		 		$('#save').click(function(){			
+		 			
+					$.ajax({url:"/jobboard/jobseekerregistration/jobSeekerUpdatePassword.html",
+						data:$('#passwordChange').serialize(),
+						type:"POST",
+						success: function(data) {
+							parent.$.nmTop().close();
+						 },
+					});
+				}); 
+		    			    	
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -39,7 +36,7 @@
        <a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();" alt=""></a></div>
                  
        <div class="popUpContainerWrapper">
-       <form:form method="Get" action="/jobboard/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="formtouse"> 
+       <form:form method="Get" action="/jobboard/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 
             <div class="rowEvenNewSpacing">
               	<span class="lableText3">Email Address:</span> 
 	            <form:input path="emailId" class="job_seeker_email textBox2" readonly="true"/>
@@ -76,7 +73,7 @@
 				<FONT color="red"><form:errors path="retypepassword" /></FONT>
 			</div>
             <div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-             <span class="floatLeft marginTop10"><input type="submit" value="Save" class="btn_sm orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a></span>
+             <span class="floatLeft marginTop10"><input type="button" id="save" value="Save" class="btn_sm orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a></span>
 
             </div>
             <div class="clearfix"></div>
