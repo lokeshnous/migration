@@ -87,7 +87,7 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
 	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
-			BindingResult result,Map map) {
+			BindingResult result) {
 		
 		ModelAndView model = new ModelAndView();
 				
@@ -114,6 +114,7 @@ public class JobSeekerRegistrationController {
 		model.addObject("veteranStatusList",veteranStatusList);
 		model.addObject("empTyepList",empTyepList);
 		model.addObject("jobSubscriptionsList",subsList);
+		model.addObject("stateList",stateList);
 		model.setViewName("jobSeekerCreateAccountInfo");
 		model.addObject("registerForm", registerForm);
 		return model;
@@ -221,6 +222,7 @@ public class JobSeekerRegistrationController {
 			model.addObject("ethnicityList",ethnicityList);
 			model.addObject("veteranStatusList",veteranStatusList);
 			model.addObject("empTyepList",empTyepList);
+			model.addObject("stateList",stateList);
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(322);
 			transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO, form);
 			model.addObject("registerForm", form);
@@ -240,6 +242,7 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
 	public ModelAndView updateJobSeekerProfileSettings(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
@@ -315,7 +318,7 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value="/jobSeekerChangePassword",method = RequestMethod.GET)
 	public String jsChangePassword(Map model) {
 		
