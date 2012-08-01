@@ -37,27 +37,17 @@ public class MMEmailService implements MMEmail {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-			// helper.setFrom(emailDTO.getFromAddress());
-			// InternetAddress[] ccAddress = emailDTO.getCcAddress();
-			// InternetAddress[] bccAddress = emailDTO.getBccAddress();
-			// helper.setTo(emailDTO.getToAddress());
-
-			InternetAddress[] ccAddress = new InternetAddress[1];
-			ccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
+			helper.setFrom(emailDTO.getFromAddress());
+			InternetAddress[] ccAddress = emailDTO.getCcAddress();
 			setCCAddress(helper, ccAddress);
-			InternetAddress[] bccAddress = new InternetAddress[1];
-			bccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
+			InternetAddress[] bccAddress = emailDTO.getBccAddress();
 			if (bccAddress != null && bccAddress.length > 0) {
 				helper.setBcc(bccAddress);
 			}
-			InternetAddress[] toAddress = new InternetAddress[1];
-			toAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
-			helper.setTo(toAddress);
+			helper.setTo(emailDTO.getToAddress());
 
-			helper.setSubject("Please Ignore this Test mail :"
-					+ emailDTO.getSubject());
-			helper.setText("<b>Please Ignore this Test mail :</b>" + emailDTO.getBody(),
-					emailDTO.isHtmlFormat());
+			helper.setSubject(emailDTO.getSubject());
+			helper.setText(emailDTO.getBody(), emailDTO.isHtmlFormat());
 			List<String> attachmentPaths = emailDTO.getAttachmentPaths();
 			if (attachmentPaths != null && !attachmentPaths.isEmpty()) {
 				FileSystemResource file = null;
@@ -68,11 +58,10 @@ public class MMEmailService implements MMEmail {
 					}
 				}
 			}
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			throw new MailParseException(e);
 		}
-
-		mailSender.send(message);
 	}
 
 	/**

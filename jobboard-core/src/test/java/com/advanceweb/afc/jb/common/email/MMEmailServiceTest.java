@@ -8,11 +8,9 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailParseException;
-import org.springframework.mail.MailSendException;
 
 import com.advanceweb.afc.jb.ServiceTest;
 
@@ -33,21 +31,20 @@ public class MMEmailServiceTest extends ServiceTest {
 	 * The method test the sending of mail.
 	 * 
 	 */
-	@Ignore("Not Ready to test as mail server properties are not set")
-	@Test(expected = MailSendException.class)
+	@Test
 	public void testSendEmail() {
 		Boolean status = Boolean.FALSE;
 		try {
 			EmailDTO testemailDTO = new EmailDTO();
-			testemailDTO.setFromAddress("mmnousinfo@gmail.com");
+			testemailDTO.setFromAddress("merion@nousinfosystems.com");
 			InternetAddress[] testccAddress = new InternetAddress[1];
 			testccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			testemailDTO.setCcAddress(testccAddress);
 			InternetAddress[] testbccAddress = new InternetAddress[1];
-			testbccAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
+			testbccAddress[0] = new InternetAddress("pramodap@nousinfo.com");
 			testemailDTO.setBccAddress(testbccAddress);
 			InternetAddress[] testtoAddress = new InternetAddress[1];
-			testtoAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
+			testtoAddress[0] = new InternetAddress("anilm@nousinfo.com");
 			testemailDTO.setToAddress(testtoAddress);
 			testemailDTO
 					.setSubject("Please ignore this mail:Test mail Subject");
