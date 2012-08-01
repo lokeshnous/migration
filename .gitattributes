@@ -262,6 +262,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/SearchDaoImpl.java 
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
+jobboard/src/main/java/Messages_IN.properties -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text

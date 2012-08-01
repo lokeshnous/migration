@@ -24,7 +24,17 @@
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
+		 <property name="exposedContextBeanNames">
+        <list><value>msg</value></list>
+    </property>
+		
 	</bean>
+	
+	<bean id="msg" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    <property name="locations">
+        <list><value>classpath:Messages_IN.properties</value></list>
+    </property>
+</bean>
 
 	<!-- For file uploading -->
 	<bean id="multipartResolver"
@@ -33,10 +43,11 @@
 		<property name="maxUploadSize" value="100000" />
 	</bean>
 
-	<bean id="messageSource"
+	<!-- Commented as there is no messages folder -->
+	<!-- <bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="/WEB-INF/messages" />
-	</bean>
+	</bean> -->
 
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"

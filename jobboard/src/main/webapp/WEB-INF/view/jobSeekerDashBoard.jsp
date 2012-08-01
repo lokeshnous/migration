@@ -48,17 +48,17 @@
           
 					<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
-					<span class="boldText">Welcome, <c:out value="${jobSeekerDashBoardForm.userName}"/>!</span><br>
-					<div class="floatRight"> <span class="floatLeft"> <a href="">Log Out</a> | <a href="">Back to Home</a></span></div></div><!-- loginHeader -->
+					<span class="boldText">${msg.jsWelcomeMsg}<c:out value="${jobSeekerDashBoardForm.userName}"/>${msg.commonExclamationMark}</span><br>
+					<div class="floatRight"> <span class="floatLeft"> <a href="../healthcarejobs/advanceweb.html">${msg.commonLogOut}</a> ${msg.commonVerticalBar}<a href="">${msg.commonBackHome}</a></span></div></div><!-- loginHeader -->
 
                     <div class="headerLoginSectionColumns" style="display:none">
-					<span class="boldText">Employer:</span><br>
-                    	<a href="">Login</a> | <a href="">Post Jobs</a>
+					<span class="boldText">${msg.commonEmployer}</span><br>
+                    	<a href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div><!-- loginHeader -->
 					<div class="headerLoginSectionColumns"  style="display:none">
-					<span class="boldText">Ad Agency:</span><br>
+					<span class="boldText">${msg.commonAdAgency}</span><br>
 
-						 <a href="">Login</a> | <a href="">Post Jobs</a>
+						 <a href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div><!-- loginHeader -->
                     </div><!-- loginHeader -->
 					<!-- loginHeader -->
@@ -235,12 +235,12 @@
                       <div class="dashboardPanalIconHolder"> <img src="../resources/images/UserProfile.jpg" width="30" height="30" alt="User Profile"></div>
 
                       
-                      <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My User Profile</h2> 
+                      <div class="dashboardPanalcontent"><h2 class="noTopBorder">${msg.jsUserProfile}</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a href="/jobboard/jobseekerregistration/viewJobSeekerProfile.html" id="editProfileId">Edit Profile Settings</a> </p>
+                      <p><a href="/jobboard/jobseekerregistration/viewJobSeekerProfile.html" id="editProfileId">${msg.jsEditProfileSettings}</a> </p>
                       </div>
                       <div class="lableTextDashBoard" id="jsChangePassword">
-                      <p><a href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html" id="changePassword" >Change Password</a> </p>
+                      <p><a href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html" id="changePassword" >${msg.jsChangePwd}</a> </p>
 
                       </div>
                       
@@ -249,16 +249,16 @@
                       <div class="dashboardPanal">
                       <div class="dashboardPanalIconHolder"><img src="../resources/images/SearchAgents.jpg" width="30" height="30" alt="Search"></div>
                       
-                      <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Saved Searches</h2> 
+                      <div class="dashboardPanalcontent"><h2 class="noTopBorder">${msg.jsSavedSearches}</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a href="">View My Saved Searches (5)</a> </p>
+                      <p><a href="">${msg.jsViewSavedSearches}&nbsp;${msg.commonOpenBrace}<c:out value="${jobSeekerDashBoardForm.savedSearchCount}"/>${msg.commonCloseBrace}</a> </p>
 
                       </div>
                       <div class="lableTextDashBoard">
-                      <p><a href="">Create a New Saved Search</a> </p>
+                      <p><a href="../jobsearchactivity/findJobPage.html">${msg.jsCreateNewSavedSearch}</a> </p>
                       </div>
                       <div class="lableTextDashBoard">
-                      <p>You can create up to 5 Saved Searches </p>
+                      <p>${msg.jsSavedSearchInfo}</p>
                       </div>
 
                       
@@ -267,16 +267,16 @@
                       <div class="dashboardPanal">
                       <div class="dashboardPanalIconHolder"><img src="../resources/images/Activity.jpg" width="30" height="30" alt="Activity"></div>
                       
-                      <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Activity</h2> 
+                      <div class="dashboardPanalcontent"><h2 class="noTopBorder">${msg.jsActivity}</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a href="/jobboard/jobSeekerActivity/viewSavedJob.html" target="_blank" id="viewsavedjob">View My Saved Jobs </a> </p>
+                      <p><a href="/jobboard/jobSeekerActivity/viewSavedJob.html" target="_blank" id="viewsavedjob">${msg.jsViewSavedjobs}&nbsp;${msg.commonOpenBrace}<c:out value="${jobSeekerDashBoardForm.savedJobsCount}"/>${msg.commonCloseBrace}</a> </p>
                       </div>
 
                       <div class="lableTextDashBoard">
-                      <p><a href="/jobboard/jobSeekerActivity/viewAppliedJob.html" target="_blank"  id="viewappliedjob"  >View Jobs I've Applied To </a> </p>
+                      <p><a href="/jobboard/jobSeekerActivity/viewAppliedJob.html" target="_blank"  id="viewappliedjob"  >${msg.jsViewJobsApplied}&nbsp;${msg.commonOpenBrace}<c:out value="${jobSeekerDashBoardForm.appliedJobsCount}"/>${msg.commonCloseBrace}</a> </p>
                       </div>
                        <div class="lableTextDashBoard">
-                      <p><a href="">Employers Who Viewed My Profile</a> </p>
+                      <p><a href="">${msg.jsEmployersViewedProfile}</a> </p>
                       </div>
                       
                       </div>                     
@@ -289,33 +289,33 @@
                     <div class="dashboardPanal">
                       <div class="dashboardPanalIconHolder"><img src="../resources/images/Resume.jpg" width="30" height="30" alt="Resume"></div>
                       
-                      <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Resumes & Cover Letters</h2> 
+                      <div class="dashboardPanalcontent"><h2 class="noTopBorder">${msg.jsResumeCoverLetters}</h2> 
                        <div class="lableTextDashBoard">
-                      <p><span class="link_color2_selected">My Resumes</span> </p>
+                      <p><span class="link_color2_selected">${msg.jsResumes}</span> </p>
 
                       </div>
                       <div class="lableTextDashBoard">
-                      <p><a href="/jobboard/jobSeekerResume/manageResume.html" id="manageResumePopup" >Manage Existing Resumes</a> </p>
+                      <p><a href="/jobboard/jobSeekerResume/manageResume.html" id="manageResumePopup" >${msg.jsManageExistingResumes}</a> </p>
                       </div>
                        <div class="lableTextDashBoard">                         
-                           <p><a href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume" id="createResumePopup">Create New Resume</a> </p>                
+                           <p><a href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume" id="createResumePopup">${msg.jsCreateNewResume}</a> </p>                
                        </div>
                         <div class="lableTextBLineDashBoard">
 
-                      <p>You can have up to 5 unique resumes </p>
+                      <p>${msg.jsResumeInfo}</p>
                       </div>
                       <div class="lableTextDashBoard">
-                      <p><span class="link_color2_selected">My Cover Letters</span> </p>
+                      <p><span class="link_color2_selected">${msg.jsCoverLetters}</span> </p>
                       </div>
                       <div class="lableTextDashBoard">
-                      <p><a href="">Manage Existing Cover Letters</a> </p>
+                      <p><a href="">${msg.jsManageExistingCoverLetters}</a> </p>
 
                       </div>
                        <div class="lableTextDashBoard">                         
-                           <p><a href="">Create New Cover Letter </a> </p>                         
+                           <p><a href="">${msg.jsCreateNewCoverLetter}</a> </p>                         
                        </div>
                         <div class="lableTextDashBoard">                         
-                           <p>You can have up to 5 unique cover letters </p>                         
+                           <p>${msg.jsCoverLetterInfo}</p>                         
                        </div>
                       
                       </div>                     
@@ -326,7 +326,7 @@
                       
                       <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Subscriptions</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a id="modifySubs" href="/jobboard/subscriptions/modifySubscription.html">Modify Subscriptions</a> </p>
+                      <p><a id="modifySubs" href="/jobboard/subscriptions/modifySubscription.html">${msg.jsModifySubscriptions}</a> </p>
                       </div>
                       <div class="lableTextDashBoard">
                        <div class="rowEvenNewSpacing marginTop0">

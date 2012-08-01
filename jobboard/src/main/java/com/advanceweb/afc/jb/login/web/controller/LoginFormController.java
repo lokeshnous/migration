@@ -45,6 +45,7 @@ public class LoginFormController {
 	@Value("${mail_body}")
 	private String mailBody;
 
+	@SuppressWarnings("unused")
 	@Value("$(loginvalidation.message)")
 	private String loginValidationMsg;
 
@@ -119,7 +120,7 @@ public class LoginFormController {
 					loginFormDTOForUser);
 		}
 		if (value) {
-			return new ModelAndView("jobSeekerDashBoard");
+			return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		} else {
 			return new ModelAndView("jobSeekerLogin","message","Login Failure.The User Name/Password you have entered is invalid Or you are not authorized to Login to the site.");
 		}

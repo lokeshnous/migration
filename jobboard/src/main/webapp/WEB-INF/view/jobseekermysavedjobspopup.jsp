@@ -42,12 +42,22 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
-		</head>
+<script type="text/javascript">
+	function closePopup() {
+		parent.window.location.reload();
+	}
+	$(document).keyup(function(event) {
+		if (event.keyCode == 27) {
+			parent.window.location.reload();
+		}
+	});
+</script>
+</head>
 
 <body class="job_board">
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader marginBottom5"><h2>MY SAVED JOBS</h2>
-                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();" alt=""></a></div>
+                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="closePopup();" alt=""></a></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing">
@@ -73,7 +83,7 @@
               </c:forEach>
             </table>
           </div>
- <div class="row marginTop23"><a href="" onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a></div>
+ <div class="row marginTop23"><a href="" onclick="closePopup();" class="btn_sm orange">Cancel</a></div>
           </form:form></div>
           <div class="clearfix"></div>
                 </div>
