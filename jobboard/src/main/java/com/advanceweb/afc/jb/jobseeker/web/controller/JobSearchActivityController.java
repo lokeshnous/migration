@@ -34,12 +34,13 @@ import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.search.JobSearchService;
+import com.advanceweb.afc.jb.search.engine.JSONConverterService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
-import com.advanceweb.afc.jb.search.engine.solr.SOLRSearchHelper;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
@@ -102,12 +103,12 @@ public class JobSearchActivityController {
 
 	@Value("${joburl}")
 	private String joburl;
+	
+	@Autowired
+	private JSONConverterService jSONConverterService;
 
 	@Autowired
 	private JobSearchService jobSearchService;
-
-	@Autowired
-	private SOLRSearchHelper sOLRSearchHelper;
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -260,6 +261,7 @@ public class JobSearchActivityController {
 	 * @param result
 	 * @param model
 	 * @return ModelAndView
+	 * @throws UnsupportedEncodingException 
 	 */
 
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
@@ -270,68 +272,33 @@ public class JobSearchActivityController {
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String searchName = "KEYWORD";// will be replaced by BASIC_SEARCH
-
-		/*
-		 * String keywords = jobSearchResultForm.getKeywords().trim(); String
-		 * radius = jobSearchResultForm.getRadius().trim(); String cityState =
-		 * jobSearchResultForm.getCityState().trim();
-		 */
-		/*
-		 * String keywords = "nurse"; String radius = ""; String cityState =
-		 * "st";
-		 */
-
-		// System.out.println("keywords=============================="+keywords);
-		// System.out.println("radius=============================="+radius);
-		// System.out.println("cityState=============================="+cityState);
-
-		paramMap.put("keywords", jobSearchResultForm.getKeywords().trim());
-		paramMap.put("cityState", jobSearchResultForm.getCityState().trim());
-		paramMap.put("radius", jobSearchResultForm.getRadius());
-
-		/*
-		 * paramMap.put("keywords", keywords); paramMap.put("cityState",
-		 * cityState); paramMap.put("radius",radius);
-		 */
-
-		paramMap.put("sessionid", "JS0011");
-		paramMap.put("search_seq", "");
+		// The value of Search_seq will be changed when the session management is done.
+		// This value needs to be increased every time when there is a search happening for a session
+		int search_seq = 0;
+		paramMap.put(MMJBCommonConstants.KEYWORDS, jobSearchResultForm.getKeywords().trim());
+		paramMap.put(MMJBCommonConstants.CITY_STATE, jobSearchResultForm.getCityState().trim());
+		paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm.getRadius().trim());
+		paramMap.put(MMJBCommonConstants.SESSION_ID, "JS0011".trim());
+		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, String.valueOf(search_seq));
+		paramMap.put(MMJBCommonConstants.QUERY_TYPE, searchName.trim());
 
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
-		/*
-		 * long start = 0; long rows = 20;
-		 */
 
-		// System.out.println("Start=============================="+start);
-		// System.out.println("rows=============================="+rows);
-
-		jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
-				start, rows);
+		try {
+			jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
+					start, rows);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
+		}
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
-			jobSrchJsonObj = sOLRSearchHelper.convertToJSON(jobSearchResultDTO);
+			jobSrchJsonObj = jSONConverterService
+					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
-
-			// modelMap.put("jobSrchJsonObj", jobSrchJsonObj);
 		}
 		return null;
 	}
-
-	/*
-	 * @RequestMapping(value = "/findJobSearchJSON", method = RequestMethod.GET)
-	 * public @ResponseBody JSONObject getJSONObj() { return jobSrchJsonObj; }
-	 */
-
-	/*
-	 * @RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
-	 * public @ResponseBody List<String> getCountryList() { List<String>
-	 * countryList = new ArrayList<String>(); countryList.add("1");
-	 * countryList.add("2"); countryList.add("3"); countryList.add("4");
-	 * countryList.add("5");
-	 * 
-	 * return countryList; }
-	 */
 
 	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
 		this.jobSearchActivity = jobSearchActivity;
