@@ -80,41 +80,6 @@ public class SearchDaoImpl implements SearchDao {
 		return queryDTO;
 	}
 	
-	/**
-	 * This method is used for getting the rqsults related to Solr server URL.
-	 */
-	
-	public List<MetaSearchIndexDTO> getURLQuery(String searchIndexName,
-			String environment, String searchIndexGroup) {
-		
-		List<MetaSearchIndexDTO> srchIndexList = new ArrayList<MetaSearchIndexDTO>();
-		try {
-			
-			@SuppressWarnings("unchecked")
-			List<MetaSearchIndex> mSrchIndexList =hibernateTemplate.find(" from MetaSearchIndex where searchIndexName = '"+searchIndexName+"'  and "+
-					" environment = '"+environment+"'and searchIndexGroup = '"+searchIndexGroup+"'");
-			
-			for(MetaSearchIndex obj: mSrchIndexList){
-				MetaSearchIndexDTO mSIndexDTO = new MetaSearchIndexDTO();
-				mSIndexDTO.setSearchHost(obj.getSearchHost());
-				mSIndexDTO.setSearchIndexGroup(obj.getSearchIndexGroup());
-				mSIndexDTO.setSearchIndexName(obj.getSearchIndexName());
-				
-				LOGGER.debug(mSIndexDTO.getSearchIndexGroup());
-				LOGGER.debug(mSIndexDTO.getSearchHost());
-				LOGGER.debug(mSIndexDTO.getSearchIndexName());
-				
-				srchIndexList.add(mSIndexDTO);
-			}
-
-		} catch (HibernateException e) {
-			LOGGER.info(e);
-		}
-		return srchIndexList;
-	}
-	
-	
-	
 	
 
 }
