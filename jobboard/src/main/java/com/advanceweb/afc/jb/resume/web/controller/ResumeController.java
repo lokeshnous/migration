@@ -365,9 +365,9 @@ public class ResumeController {
 
 
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
-	public String createResumePopUp(@ModelAttribute("createResume")
-	CreateResume resumeForm, HttpServletRequest request, @RequestParam("resumeType") String resumeType, HttpSession session,Model model,Map<String, Object> map) {
-
+	public String createResumePopUp(CreateResume resumeForm, HttpServletRequest request, @RequestParam("resumeType") String resumeType,
+			Model model,Map<String, Object> map) {
+		
 		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown("EmploymentType");
 		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown("WorkAuthUS");
 		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown("Relocate");
