@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
+import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
  * 
@@ -24,32 +25,36 @@ public class SaveSearchConversionHelper {
 	 * @param saveSearchedJobsDTO
 	 * @return JpSaveSearch
 	 */
-	public JpSaveSearch transformSaveSearch(
+	public AdmSaveSearch transformSaveSearch(
 			SaveSearchedJobsDTO saveSearchedJobsDTO) {
-		JpSaveSearch jpSaveSearch = new JpSaveSearch();
-		jpSaveSearch.setLoginID(saveSearchedJobsDTO.getLoginID());
-		jpSaveSearch.setUrl(saveSearchedJobsDTO.getUrl());
-		jpSaveSearch.setUrlName(saveSearchedJobsDTO.getUrlName());
-		jpSaveSearch.setCreateDate(saveSearchedJobsDTO.getCreatedDate());
-		return jpSaveSearch;
+		AdmSaveSearch admSaveSearch = new AdmSaveSearch(); 
+		admSaveSearch.setUserID(saveSearchedJobsDTO.getUserID());
+		admSaveSearch.setUrl(saveSearchedJobsDTO.getUrl());
+		admSaveSearch.setSearchName(saveSearchedJobsDTO.getSearchName());
+		admSaveSearch.setCreateDate(saveSearchedJobsDTO.getCreatedDate());
+		return admSaveSearch;
 	}
 
-	
+	/**
+	 * This method converts from entity to DTO class
+	 * 
+	 * @param admSaveSearchList
+	 * @return
+	 */
 	public List<SaveSearchedJobsDTO> transformJpSaveSearchToSaveSearchedJobsDTO(
-			List<JpSaveSearch> jpSaveSearchList) {
+			List<AdmSaveSearch> admSaveSearchList) {
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = new ArrayList<SaveSearchedJobsDTO>();
-		for (JpSaveSearch jpSaveSearch : jpSaveSearchList) {
+		for (AdmSaveSearch admSaveSearch : admSaveSearchList) {
 			SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
-			saveSearchedJobsDTO.setJpSaveSearchId(jpSaveSearch
-					.getJpSaveSearchId());
-			saveSearchedJobsDTO.setUrl(jpSaveSearch.getUrl());
-			saveSearchedJobsDTO.setUrlName(jpSaveSearch.getUrlName());
-			saveSearchedJobsDTO.setModifyDate(jpSaveSearch.getModifyDate());
-			saveSearchedJobsDTO.setEmailFrequency(jpSaveSearch
-					.getEmailFrequency());
+			saveSearchedJobsDTO.setSaveSearchID(admSaveSearch.getSaveSearchId());
+			saveSearchedJobsDTO.setUrl(admSaveSearch.getUrl());
+			saveSearchedJobsDTO.setSearchName(admSaveSearch.getSearchName());
+			saveSearchedJobsDTO.setEmailFrequency(admSaveSearch.getEmailFrequency());
+			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDate());
+			saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDate().toString()));
+			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeletedDate());		
 			saveSearchedJobsDTOList.add(saveSearchedJobsDTO);
 		}
-
 		return saveSearchedJobsDTOList;
 	}
 

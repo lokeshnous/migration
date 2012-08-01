@@ -112,7 +112,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.JpSaveJob</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.JpLocationBckup</value> -->
 					<value>com.advanceweb.afc.jb.data.entities.JpSource</value>
-					<value>com.advanceweb.afc.jb.data.entities.JpSaveSearch</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmSaveSearch</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpSaveJob</value>
 					<value>com.advanceweb.afc.jb.data.entities.MetaSearchIndex</value>
 					<value>com.advanceweb.afc.jb.data.entities.MetaSearchInput</value>

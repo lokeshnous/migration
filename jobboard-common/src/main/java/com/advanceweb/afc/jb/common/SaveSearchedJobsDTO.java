@@ -10,57 +10,75 @@ import java.util.Date;
  */
 
 public class SaveSearchedJobsDTO {
-	
-	private int jpSaveSearchId;
-	private String loginID;
+
+	private int saveSearchID;
+	private int userID;
 	private String url;
-	private String urlName;
-	private Date createdDate;
-	private Date modifyDate;
+	private String searchName;
 	private String emailFrequency;
+	private Date createdDate;
+	private String modifyDate;
+	private Date deletedDate;
 
-	
-	public int getJpSaveSearchId() {
-		return jpSaveSearchId;
+	/**
+	 * @return the saveSearchID
+	 */
+	public int getSaveSearchID() {
+		return saveSearchID;
 	}
 
-	public void setJpSaveSearchId(int jpSaveSearchId) {
-		this.jpSaveSearchId = jpSaveSearchId;
+	/**
+	 * @param saveSearchID
+	 *            the saveSearchID to set
+	 */
+	public void setSaveSearchID(int saveSearchID) {
+		this.saveSearchID = saveSearchID;
 	}
 
-	public String getLoginID() {
-		return loginID;
+	/**
+	 * @return the userID
+	 */
+	public int getUserID() {
+		return userID;
 	}
 
-	public void setLoginID(String loginID) {
-		this.loginID = loginID;
+	/**
+	 * @param userID
+	 *            the userID to set
+	 */
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
-	
-	public String getUrl(){
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
 		return url;
 	}
-	
-	public void setUrl(String url){
+
+	/**
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	public String getUrlName(){
-		return urlName;
-	}
-	
-	public void setUrlName(String urlName){
-		this.urlName = urlName;
-	}
-	
-	public Date getCreatedDate() {
-		return createdDate;
+
+	/**
+	 * @return the searchName
+	 */
+	public String getSearchName() {
+		return searchName;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	/**
+	 * @param searchName
+	 *            the searchName to set
+	 */
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
-
-	
 
 	/**
 	 * @return the emailFrequency
@@ -70,33 +88,57 @@ public class SaveSearchedJobsDTO {
 	}
 
 	/**
-	 * @param emailFrequency the emailFrequency to set
+	 * @param emailFrequency
+	 *            the emailFrequency to set
 	 */
 	public void setEmailFrequency(String emailFrequency) {
 		this.emailFrequency = emailFrequency;
 	}
 
-	@Override
-	public String toString() {
-		return "SaveSearchedJobsDTO [loginID=" + loginID + ", url=" + url
-				+ ", urlName=" + urlName + ", createdDate=" + createdDate
-				+ ", ModifyDate=" + modifyDate + ", emailFrequency="
-				+ emailFrequency + "]";
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	
+
+	/**
+	 * @return the deletedDate
+	 */
+	public Date getDeletedDate() {
+		return deletedDate;
+	}
+
+	/**
+	 * @param deletedDate
+	 *            the deletedDate to set
+	 */
+	public void setDeletedDate(Date deletedDate) {
+		this.deletedDate = deletedDate;
 	}
 
 	/**
 	 * @return the modifyDate
 	 */
-	public Date getModifyDate() {
+	public String getModifyDate() {
 		return modifyDate;
 	}
 
 	/**
 	 * @param modifyDate the modifyDate to set
 	 */
-	public void setModifyDate(Date modifyDate) {
+	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
-	
+
 }

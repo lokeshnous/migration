@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.job.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
  * 
@@ -13,10 +13,45 @@ import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
  */
 
 public interface SaveSearchService {
-	
+
+	/**
+	 * This method is called to save the find job searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	void saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO);
+
+	/**
+	 * This method is called to display Saved Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
+	
+	/**
+	 * This method is called to view the particular Saved Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId, String searchName);
+    
+	/**
+	 * This method is called to delete the Saved Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	boolean deleteSavedSearch(int saveSearchId);
-	JpSaveSearch editSavedSearch(int saveSearchId);
+    
+	/**
+	 * This method is called to edit the Saved Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	AdmSaveSearch editSavedSearch(int saveSearchId);
 
 }

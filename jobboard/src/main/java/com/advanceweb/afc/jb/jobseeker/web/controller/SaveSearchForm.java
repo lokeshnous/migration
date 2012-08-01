@@ -11,46 +11,59 @@ import java.util.Date;
 
 public class SaveSearchForm {
 
-	private String loginID;
+	private int userID;
 	private String url;
-	private String urlName;
-	private Date createdDate;
-	private Date modifyDate;
+	private String searchName;
 	private String emailFrequency;
+	private Date createdDate;
+	private String modifyDate;
+	private Date deletedDate;
+	private String notify_me;
 
-	public String getLoginID() {
-		return loginID;
+	/**
+	 * @return the userID
+	 */
+	public int getUserID() {
+		return userID;
 	}
 
-	public void setLoginID(String loginID) {
-		this.loginID = loginID;
+	/**
+	 * @param userID
+	 *            the userID to set
+	 */
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
-	
-	public String getUrl(){
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
 		return url;
 	}
-	
-	public void setUrl(String url){
+
+	/**
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	public String getUrlName(){
-		return urlName;
-	}
-	
-	public void setUrlName(String urlName){
-		this.urlName = urlName;
-	}
-	
-	public Date getCreatedDate() {
-		return createdDate;
+
+	/**
+	 * @return the searchName
+	 */
+	public String getSearchName() {
+		return searchName;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	/**
+	 * @param searchName
+	 *            the searchName to set
+	 */
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
-
-	
 
 	/**
 	 * @return the emailFrequency
@@ -60,23 +73,71 @@ public class SaveSearchForm {
 	}
 
 	/**
-	 * @param emailFrequency the emailFrequency to set
+	 * @param emailFrequency
+	 *            the emailFrequency to set
 	 */
 	public void setEmailFrequency(String emailFrequency) {
 		this.emailFrequency = emailFrequency;
 	}
 
 	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	
+
+	/**
+	 * @return the deletedDate
+	 */
+	public Date getDeletedDate() {
+		return deletedDate;
+	}
+
+	/**
+	 * @param deletedDate
+	 *            the deletedDate to set
+	 */
+	public void setDeletedDate(Date deletedDate) {
+		this.deletedDate = deletedDate;
+	}
+
+	/**
+	 * @return the notify_me
+	 */
+	public String getNotify_me() {
+		return notify_me;
+	}
+
+	/**
+	 * @param notify_me the notify_me to set
+	 */
+	public void setNotify_me(String notify_me) {
+		this.notify_me = notify_me;
+	}
+
+	/**
 	 * @return the modifyDate
 	 */
-	public Date getModifyDate() {
+	public String getModifyDate() {
 		return modifyDate;
 	}
 
 	/**
 	 * @param modifyDate the modifyDate to set
 	 */
-	public void setModifyDate(Date modifyDate) {
+	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+
 }

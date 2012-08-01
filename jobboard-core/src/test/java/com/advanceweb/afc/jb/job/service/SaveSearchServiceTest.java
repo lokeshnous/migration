@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.JpSaveSearch;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 public class SaveSearchServiceTest extends ServiceTest {
 
@@ -36,7 +36,7 @@ public class SaveSearchServiceTest extends ServiceTest {
 	public void testEditSavedSearch() {
 		try {
 			int saveSearchId = 16;
-			JpSaveSearch jpSaveSearch = saveSearchService
+			AdmSaveSearch jpSaveSearch = saveSearchService
 					.editSavedSearch(saveSearchId);
 			assertNotNull(jpSaveSearch);
 
@@ -62,10 +62,10 @@ public class SaveSearchServiceTest extends ServiceTest {
 	public void testSaveSearchedJobs() {
 		try {
 			SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
-			saveSearchedJobsDTO.setLoginID("9");
+			saveSearchedJobsDTO.setUserID(9);
 			saveSearchedJobsDTO
 					.setUrl("file://///nibc452/06%20JOB%20PORTAL/06%20IA/JobBoardPortalIAFinal/JobBoardPortalIAVer18/HTML/SearchResults.html?button2=Find+Jobs");
-			saveSearchedJobsDTO.setUrlName("JobName");
+			saveSearchedJobsDTO.setSearchName("JobName");
 			saveSearchedJobsDTO.setCreatedDate(new Date());
 			saveSearchService.saveSearchedJobs(saveSearchedJobsDTO);
 		} catch (Exception e) {
