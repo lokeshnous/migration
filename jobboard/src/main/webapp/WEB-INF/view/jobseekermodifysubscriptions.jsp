@@ -13,14 +13,31 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
+		
+		
+ 		$('#save').click(function(){			
+			alert("sdsd");
+			
+			$.ajax({url:"/jobboard/subscriptions/saveJobSeekerSubscription.html",
+				data:$('#subscriptionsId').serialize(),
+				type:"POST",
+				success: function(data) {					
+					parent.$.nmTop().close();
+					alert(data);
+				 },
+			});
+		}); 
+		
 		jQuery(".megamenu").megamenu();
+		
 	});
 </script>
 
 </head>
 
 <body class="job_board">
-	<form:form method="Post" action="saveJobSeekerSubscription.html"
+	<form:form method="Post" action="/jobboard/subscriptions/saveJobSeekerSubscription.html" id="subscriptionsId"
 		commandName="jobSeekerSubscriptionForm">
 		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
@@ -45,7 +62,7 @@
 									<c:forEach items="${jobSubscriptionsList}" var="subscriptions"
 										varStatus="index">
 										<tr>
-											<td><form:checkbox path="currentsubs"
+											<td><form:checkbox path="currentsubs" 
 													label="${subscriptions.subscriptionName}"
 													value="${subscriptions.subscriptionId}"
 													cssStyle="width:20px" /></td>
@@ -53,7 +70,7 @@
 									</c:forEach>
 								</table>
 							</td>
-							<td valign="top">
+							<%-- <td valign="top">
 								<table>
 									<tr class="borderTopNone">
 										<th class="borderTopNone" width="46%" align="left" scope="col">Job
@@ -83,13 +100,15 @@
 										</tr>
 									</c:forEach>
 								</table>
-							</td>
+							</td> --%>
 						</tr>
 					</table>
 				</div>
 				<div class="row marginTop5 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href=""
-						class="btn_sm orange">Save</a> <a href="" class="nyroModalClose btn_sm orange">Cancel</a></span>
+					<span class="floatLeft marginTop10">
+					<input type="button" id="save" class="btn_sm orange" value="Save" />
+					<%--<a href="" id="save" class="btn_sm orange">Save</a>  --%>
+					<a href="" class="nyroModalClose btn_sm orange">Cancel</a></span>
 				</div>
 
 

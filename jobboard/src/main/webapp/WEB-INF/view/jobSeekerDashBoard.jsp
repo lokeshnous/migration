@@ -326,7 +326,7 @@
                       
                       <div class="dashboardPanalcontent"><h2 class="noTopBorder"> My Subscriptions</h2> 
                        <div class="lableTextDashBoard">
-                      <p><a id="modifySubs" href="/jobboard/modifySubscription.html">Modify Subscriptions</a> </p>
+                      <p><a id="modifySubs" href="/jobboard/subscriptions/modifySubscription.html">Modify Subscriptions</a> </p>
                       </div>
                       <div class="lableTextDashBoard">
                        <div class="rowEvenNewSpacing marginTop0">
