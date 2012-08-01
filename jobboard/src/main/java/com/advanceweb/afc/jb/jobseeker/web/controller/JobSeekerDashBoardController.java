@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -40,8 +39,8 @@ public class JobSeekerDashBoardController {
 	private PopulateDropdowns populateDropdownsService;
 
 	@RequestMapping("/jobSeekerDashBoard")
-	public ModelAndView displayDashBoard(Map model,HttpSession session){
-
+	public ModelAndView displayDashBoard(HttpSession session){
+		ModelAndView model = new ModelAndView();
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
 		
 		//Retrieve Current subscriptions of the user
@@ -54,12 +53,11 @@ public class JobSeekerDashBoardController {
 		List<MagazinesDTO> selMags =transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,null, listMagazines);
 		List<JobAlertsDTO> selAlerts = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,null, listAlerts);
 		form.setUserName((String)session.getAttribute("UserName"));
-		model.put("jobAlertsList", selAlerts);		
-		model.put("jobSubscriptionsList", selSubs);		
-		model.put("jobMagazinesList", selMags);			
-
-		model.put("jobSeekerDashBoardForm", form);
-
-		return new ModelAndView("jobSeekerDashBoard");			
+		model.addObject("jobAlertsList", selAlerts);		
+		model.addObject("jobSubscriptionsList", selSubs);		
+		model.addObject("jobMagazinesList", selMags);			
+		model.addObject("jobSeekerDashBoardForm", form);
+		model.setViewName("jobSeekerDashBoard");
+		return model;			
 	}	
 }
