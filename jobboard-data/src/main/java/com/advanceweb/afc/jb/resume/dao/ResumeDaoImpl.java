@@ -11,17 +11,21 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.MerLookup;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
+import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 
 /**
@@ -39,6 +43,9 @@ public class ResumeDaoImpl implements ResumeDao {
 	private ResumeConversionHelper resumeConversionHelper;
 	
 	private HibernateTemplate hibernateTemplate;
+	
+	@Autowired
+	private PopulateDropdownsDAO populateDropdownsDAO;
 	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
@@ -78,6 +85,29 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 
 	/**
+	 * This method is called to update the resume
+	 * @param resumeDTO
+	 * @return boolean
+	 */
+	@Override
+	public boolean updateResume(ResumeDTO resumeDTO) {
+		
+		List<DropDownDTO> visibilityDropDown= populateDropdownsDAO.populateDropdown("Visibility");
+		if(resumeDTO.getResume_visibility().equals(String.valueOf(visibilityDropDown.get(0).getOptionId()))){
+			List<ResUploadResume> resumes = hibernateTemplate.find("from ResUploadResume where userId = "+resumeDTO.getUserId()+" and uploadResumeId !="+ resumeDTO.getUploadResumeId()+" and visibility___Public_Private__='"+visibilityDropDown.get(0).getOptionId()+"'");
+			if(resumes.size() > 0){
+				resumes.get(0).setVisibility___Public_Private__(String.valueOf(visibilityDropDown.get(1).getOptionId()));
+				hibernateTemplate.update(resumes.get(0));
+			}
+		}
+		
+		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class, resumeDTO.getUploadResumeId());
+		resume = resumeConversionHelper.transformAdvancedResumeBuilder(resume,resumeDTO);
+		hibernateTemplate.update(resume);
+		return true;
+	}
+	
+	/**
 	 * This method is called to delete the resume
 	 * 
 	 * @param resumeId
@@ -85,11 +115,9 @@ public class ResumeDaoImpl implements ResumeDao {
 	 */
 	@Override
 	public boolean deleteResume(int resumeId) {
-//		Session session = sessionFactory.getCurrentSession();
 		ResUploadResume resume = new ResUploadResume();
 		resume.setUploadResumeId(resumeId);
 		hibernateTemplate.delete(resume);
-//		session.delete(resume);
 		return true;
 	}
 

@@ -27,6 +27,13 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+	 $("#update").click(function(){
+		
+		$("form").attr("action", getBaseURL()+"jobSeekerResume/updateResumePopup.html");
+		$("form").submit();
+	 });
+	 
 	});
 	function MM_jumpMenu(targ, selObj, restore) { //v3.0
 		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
@@ -47,11 +54,12 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="updateResumePopup.html" commandName="createResume" modelAttribute="resumeForm" id="editResumeForm" enctype="multipart/form-data" >
+			<form:form method="get" action="updateResumePopup.html" id="editResumeForm" commandName="createResume" modelAttribute="resumeform" enctype="multipart/form-data" >
 				
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
 					<form:input type="hidden" path="uploadResumeId" />
+					<form:input type="hidden" path="resumeType" />
 					<form:input type="text"	path="resume_name" class="job_seeker_password textBox2"/>
 					<span class="required">(Required)</span>
 				</div>
@@ -126,9 +134,9 @@
 					</div>
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href="/jobboard/jobSeekerResume/updateResumePopup.html"
-						class="btn_sm orange">Update</a> 
-						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
+					<span class="floatLeft marginTop10">
+					<a id="update" href="#"	class="btn_sm orange">Update</a> 
+						<a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

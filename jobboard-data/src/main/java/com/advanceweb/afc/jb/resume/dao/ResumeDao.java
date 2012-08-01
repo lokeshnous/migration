@@ -20,6 +20,7 @@ public interface ResumeDao {
 	List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
 	ResumeDTO editResume(int resumeId);
 	boolean deleteResume(int resumeId);
+	boolean updateResume(ResumeDTO resumeDTO);
 	boolean createResume(ResumeDTO resumeDTO);
 	boolean createResumeCopyPaste ( ResumeDTO resumeDTO );
 	boolean createResumeUpload (ResumeDTO resumeDTO);

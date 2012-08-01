@@ -49,6 +49,16 @@ public class ResumeServiceImpl implements ResumeService {
 	public ResumeDTO editResume(int resumeId) {
 		return resumeDao.editResume(resumeId);
 	}
+	
+	/**
+	 * This method is called to update the resume
+	 * @param resumeDTO
+	 * @return boolean
+	 */
+	@Override
+	public boolean updateResume(ResumeDTO resumeDTO) {
+		return resumeDao.updateResume(resumeDTO);
+	}
 
 	/**
 	 * This method is called to delete the resume 
