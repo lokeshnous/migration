@@ -343,13 +343,24 @@
 
  <div class="centerAlign ">
 <ul>
-	<li><div class="row marginBottom5">
+
+	<c:forEach items="${jobSubscriptionsList}" var="subscriptions" varStatus="index">
+		<li>
+			<div>
+				<form:checkbox path="currentsubs" label="${subscriptions.subscriptionName}" value="${subscriptions.subscriptionId}" cssStyle="width:20px" />
+			</div>
+		</li>
+	</c:forEach>
+<!-- 
+
+						<li><div class="row marginBottom5">
                                   <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_0" class="marginRight5" />
 								<span>E-newsletters</span>
-</div></li> 
-                          <li>
+								</div>
+						</li> 
+                         <li>
                           <div class="row marginBottom5">
-                      <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_1" class="marginRight5" />
+                      		<input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_1" class="marginRight5" />
                                   Magazines</div></li>
 
                                   
@@ -362,7 +373,7 @@
                                   
                                   </ul>
                         
-                
+                 -->
                   
 </div>
 <div class="rowEvenNewSpacing marginTop25 paddingBottom10 marginLeft10">
