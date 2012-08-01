@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -274,9 +275,9 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value="/jobSeekerUpdatePassword",method = RequestMethod.GET)
-	public ModelAndView updateNewPassword(@Valid ChangePasswordForm form,
+	@ResponseBody
+	@RequestMapping(value="/jobSeekerUpdatePassword",method = RequestMethod.POST)
+	public String updateNewPassword(@Valid ChangePasswordForm form,
 			BindingResult result) {
 			ModelAndView model = new ModelAndView();
 		try {		
@@ -291,19 +292,19 @@ public class JobSeekerRegistrationController {
 				registerValidation.validatePassoword(form.getPassword(), form.getRetypepassword(), result);
 				if(result.hasErrors()){
 					model.setViewName("jobseekerchangepassword");
-					return model;
+					return "jobseekerchangepassword";
 				}
 				profileRegistration.changePassword(jsRegistrationDTO);
 			}else{
 				model.setViewName("jobseekerchangepassword");
 				result.rejectValue("currentPassword", "NotEmpty", "Invalid Current Password");
-				return model;
+				return "jobseekerchangepassword";
 			}
 			model.setViewName("registrationsuccess");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return model;
+		return null;
 	}
 	
 	/**
