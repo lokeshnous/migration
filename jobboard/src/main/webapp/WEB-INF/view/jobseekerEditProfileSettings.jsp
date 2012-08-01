@@ -10,6 +10,18 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
+ 		$('#save').click(function(){			
+ 			
+			$.ajax({url:"/jobboard/jobseekerregistration/updateJobSeekerProfile.html",
+				data:$('#editProfileSettingsId').serialize(),
+				type:"POST",
+				success: function(data) {
+					parent.$.nmTop().close();
+				 },
+			});
+		}); 
+		
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -26,7 +38,7 @@
 
 		<div class="popUpContainerWrapper">
 			<form:form action="/jobboard/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
-				commandName="registerForm" enctype="multipart/form-data">
+				commandName="registerForm" enctype="multipart/form-data" id="editProfileSettingsId">
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">First Name:</span>
 					<form:input path="firstName" class="job_seeker_password textBox350" />
@@ -203,7 +215,7 @@
 					
 <!-- 					<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
-						<input type="submit" value="Save" class="btn_sm orange"/>
+						<input type="button" value="Save" class="btn_sm orange" id="save"/>
 						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
