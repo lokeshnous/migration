@@ -17,14 +17,12 @@
 		
 		
  		$('#save').click(function(){			
-			alert("sdsd");
 			
 			$.ajax({url:"/jobboard/subscriptions/saveJobSeekerSubscription.html",
 				data:$('#subscriptionsId').serialize(),
 				type:"POST",
 				success: function(data) {					
 					parent.$.nmTop().close();
-					alert(data);
 				 },
 			});
 		}); 
