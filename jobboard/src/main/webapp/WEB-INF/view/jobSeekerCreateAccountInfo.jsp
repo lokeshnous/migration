@@ -249,11 +249,15 @@
 				<FONT color="red"><form:errors path="country" /></FONT> 
 			</div> 
             
-    <div class="rowEvenNewSpacing">
-                      <span class="lableText3">Phone Number:</span>
-                <form:input path="phoneNo" class="job_seeker_password textBox350"/>
-          <span class="required"></span>
+    		<div class="rowEvenNewSpacing">
+	            <span class="lableText3">Phone Number:</span>
+	                <form:input path="phoneNo" class="job_seeker_password textBox350"/>
+	          	<span class="required"></span>
             </div>
+            <div>
+				<span class="lableText3"></span>
+				<FONT color="red"><form:errors path="phoneNo" /></FONT> 
+			</div> 
            <div class="row marginTop20 paddingBottom10">           
             <h3 class="marginLeft10"> Employment information</h3> </div>
 
