@@ -24,6 +24,28 @@ public class MetaSearchParam implements Serializable {
 	@Column(name="parameter_value")
 	private String parameterValue;
 
+	public int getSearchIndexId() {
+		return searchIndexId;
+	}
+
+	public void setSearchIndexId(int searchIndexId) {
+		this.searchIndexId = searchIndexId;
+	}
+
+	@Column(name="search_index_id")
+	private int searchIndexId;
+	
+	@Column(name="search_type_id")
+	private int searchTypeId;
+	   
+	public int getSearchTypeId() {
+		return searchTypeId;
+	}
+
+	public void setSearchTypeId(int searchTypeId) {
+		this.searchTypeId = searchTypeId;
+	}
+
 	private int seq;
 
 	//bi-directional many-to-one association to MetaSearchIndex
