@@ -154,7 +154,7 @@ public class TransformJobSeekerSubscription {
 			}
 		}
 		
-		if (null != form.getCurrentsubs()) {
+		/*if (null != form.getCurrentsubs()) {
 			for(String selSubscription : form.getCurrentmagazines()){
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
 				dto.setAlertValue("");
@@ -172,7 +172,7 @@ public class TransformJobSeekerSubscription {
 				dto.setUserId(form.getUserId());
 				selectedSubsList.add(dto);
 			}
-		}
+		}*/
 		
 		return selectedSubsList;
 	}
