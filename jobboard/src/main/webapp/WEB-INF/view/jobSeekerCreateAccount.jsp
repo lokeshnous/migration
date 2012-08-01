@@ -192,12 +192,12 @@
 				<span class="lableText3"></span>
 					<FONT color="red"><form:errors path="retypepassword" /></FONT> 
 				</div>
-	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> <img src="../resources/images/SecureText.jpg" width="294" height="48" alt=""> </div>
+	            <%-- <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> <img src="../resources/images/SecureText.jpg" width="294" height="48" alt=""> </div>
 	
-	            <div class="rowEvenNewSpacing"> <span class="lableText3">Type the two words:</span>
-	                      <%-- <form:password path="retypepassword" class="job_seeker_password textBox350" /> --%>
-	                      <%-- <form:errors path="retypepassword" /> --%>
-	                      <span class="required">(Required)</span> </div>
+	           <div class="rowEvenNewSpacing"> <span class="lableText3">Type the two words:</span>
+	                       <form:password path="retypepassword" class="job_seeker_password textBox350" /> 
+	                       <form:errors path="retypepassword" /> 
+	                      <span class="required">(Required)</span> </div>--%>
 				<div class="rowEvenNewSpacing marginTop25 paddingBottom10 marginLeft10">
 				<div rowEvenNewSpacing></div>
 	               <input type="submit" value="Next" class="btn_sm orange"  name="Next"/>
