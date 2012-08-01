@@ -32,6 +32,7 @@ import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
@@ -103,12 +104,15 @@ public class JobSeekerRegistrationController {
 		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
 		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
 		List<DropDownDTO> empTyepList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();
+		
 		model.addObject("countryList",countryList);
 		model.addObject("employmentInfoList",empInfoList);
 		model.addObject("genderList",genderList);
 		model.addObject("ethnicityList",ethnicityList);
 		model.addObject("veteranStatusList",veteranStatusList);
 		model.addObject("empTyepList",empTyepList);
+		model.addObject("jobSubscriptionsList",subsList);
 		model.setViewName("jobSeekerCreateAccountInfo");
 		model.addObject("registerForm", registerForm);
 		return model;
