@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
@@ -30,6 +31,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
  */
 
 @Controller
+@RequestMapping("/subscriptions")
 public class JobSeekerSubscriptionsController {
 
 	@Autowired
@@ -48,8 +50,9 @@ public class JobSeekerSubscriptionsController {
 	 */
 	
 	@RequestMapping(value = "/modifySubscription", method = RequestMethod.GET)
-	public ModelAndView viewCurrentSubscriptions(Map model) {
-
+	public ModelAndView viewCurrentSubscriptions() {
+		
+		ModelAndView model = new ModelAndView();
 		JobSeekerSubscriptionForm form = new JobSeekerSubscriptionForm();
 		
 		List<JobAlertsDTO> listAlerts = populateDropdownsService.getJobAlertsList();		
@@ -60,14 +63,13 @@ public class JobSeekerSubscriptionsController {
 		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,form, listSubscriptions);
 		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,form, listMagazines);
 		List<JobAlertsDTO> selSubsList = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,form, listAlerts);
-		model.put("jobAlertsList", listAlerts);		
-		model.put("jobSubscriptionsList", listSubscriptions);		
-		model.put("jobMagazinesList", listMagazines);		
-		model.put("jobSeekerSubscriptionForm",form);
-		model.put("selSubsList",selSubsList);
-		
-//		return new ModelAndView("jobseekersubscription");
-		return new ModelAndView("jobseekermodifysubscriptions");
+		model.addObject("jobAlertsList", listAlerts);		
+		model.addObject("jobSubscriptionsList", listSubscriptions);		
+		model.addObject("jobMagazinesList", listMagazines);		
+		model.addObject("jobSeekerSubscriptionForm",form);
+		model.addObject("selSubsList",selSubsList);
+		model.setViewName("jobseekermodifysubscriptions");	
+		return model;
 	}
 	
 	/**
@@ -78,17 +80,17 @@ public class JobSeekerSubscriptionsController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/saveJobSeekerSubscription", method = RequestMethod.POST)
-	public ModelAndView saveJobSeekerSubscription(JobSeekerSubscriptionForm form, BindingResult result) {
+	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm form, BindingResult result) {
 		
 		try {
-			
 			List<JobSeekerSubscriptionsDTO>	listSubsDTO = transformJobSeekerSubscription.jsSubscriptionFormToJobSeekerSubsDTO(form);			
 			boolean bSaved = jobSeekerSubscriptionsService.saveJobSeekerSubscription(listSubsDTO, form.getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("jobseekermodifysubscriptions");
+		return null;
 	}
 
 }
