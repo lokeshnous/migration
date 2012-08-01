@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 
 public class DateUtils {
 	public static Date convertStringToSQLDateTime(String stringDate) {
-		DateFormat formater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		DateFormat formater = new SimpleDateFormat(MMJBCommonConstants.SQL_DATE_PATTERN);
 		Date sqltDate = null;
 		java.util.Date parsedUtilDate;
 		try {
@@ -22,13 +22,13 @@ public class DateUtils {
 	}
 
 	public static String convertSQLDateTimeToStdDateTime(String sqlDate) {
-		DateFormat formater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		DateFormat formater = new SimpleDateFormat(MMJBCommonConstants.SQL_DATE_PATTERN);
 		java.util.Date dateSqlFormat = null;
 		String stdDate = null;
 		try {
 			if (null != sqlDate) {
 				dateSqlFormat = formater.parse(sqlDate);
-				DateFormat stdDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				DateFormat stdDateFormat = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
 				stdDate = stdDateFormat.format(dateSqlFormat);
 
 			}
@@ -39,13 +39,13 @@ public class DateUtils {
 	}
 	
 	public static String convertSQLDateToStdDate(String sqlDate){
-		DateFormat formater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); 
+		DateFormat formater = new SimpleDateFormat(MMJBCommonConstants.SQL_DATE_PATTERN); 
 		java.util.Date dateSqlFormat = null;
 		String stdDate = null;
 		try {
 			if(null != sqlDate){
 				dateSqlFormat = formater.parse(sqlDate);
-				DateFormat stdDateFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+				DateFormat stdDateFormat = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN); 
 				stdDate = stdDateFormat.format(dateSqlFormat);
 				
 			}

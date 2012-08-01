@@ -47,6 +47,7 @@ import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -94,11 +95,11 @@ public class ResumeController {
 		
 		CreateResume resume = new CreateResume();
 		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(30);
-		List<ResumeVisibilityDTO> resumeVisibilityList=populateDropdownsService.getResumeVisibilityList();
+		List<DropDownDTO> visibilityList=populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
 		Map<String,String> visibilityMap = new HashMap<String , String>();
 		
-		visibilityMap.put("63", resumeVisibilityList.get(0).getVisibilityName());
-		visibilityMap.put("64", resumeVisibilityList.get(1).getVisibilityName());
+		visibilityMap.put(visibilityList.get(0).getOptionId(), visibilityList.get(0).getOptionName());
+		visibilityMap.put(visibilityList.get(1).getOptionId(), visibilityList.get(1).getOptionName());
 		
 		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();  
 		
@@ -218,10 +219,10 @@ public class ResumeController {
 		resumeForm.setWilling_to_relocate(resumeDTO.getWilling_to_relocate());
 		resumeForm.setResume_visibility(resumeDTO.getResume_visibility());
 		
-		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown("EmploymentType");
-		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown("WorkAuthUS");
-		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown("Relocate");
-		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown("Visibility");
+		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown(MMJBCommonConstants.WORK_AUTH_US);
+		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown(MMJBCommonConstants.RELOCATE);
+		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
 		
 		map.put("resumeForm", resumeForm);
 		map.put("resumeDetail", resumeDTO);
@@ -363,10 +364,10 @@ public class ResumeController {
 	public String createResumePopUp(@ModelAttribute("createResume")
 	CreateResume resumeForm, HttpServletRequest request, @RequestParam("resumeType") String resumeType, HttpSession session,Model model,Map<String, Object> map) {
 
-		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown("EmploymentType");
-		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown("WorkAuthUS");
-		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown("Relocate");
-		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown("Visibility");
+		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown(MMJBCommonConstants.WORK_AUTH_US);
+		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown(MMJBCommonConstants.RELOCATE);
+		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
 		
 		resumeForm = new CreateResume();
 		

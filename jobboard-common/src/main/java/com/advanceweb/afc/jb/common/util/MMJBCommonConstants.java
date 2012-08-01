@@ -12,8 +12,15 @@ public interface MMJBCommonConstants {
 	public static final String MOBILE_PATTERN = "((?=.*\\d).{10})";
 	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-	// For DropDowns
+	// For DropDowns 
 	public static final String EMPLOYMENT_TYPE = "EmploymentType";
+	public static final String VISIBILITY = "Visibility" ;
+	public static final String WORK_AUTH_US = "WorkAuthUS";
+	public static final String RELOCATE = "Relocate";
+	
+	//Resume Visibility
+	public static final String VISIBILITY_PUBLIC = "Public" ;
+	public static final String VISIBILITY_PRIVATE = "Private";
 
 	// For SOLR search
 	public static final String SLASH = "/";
@@ -98,17 +105,8 @@ public interface MMJBCommonConstants {
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
 	public static final String DISP_DATE_PATTERN = "MM/dd/yyyy";
 	public static final String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
+	public static final String SQL_DATE_PATTERN = "yyyy-MM-dd hh:mm:ss"; 
 
-	
-	//Resume Visibility
-	public static final String VISIBILITY_PUBLIC = "Public" ;
-	public static final String VISIBILITY_PRIVATE = "Private" ;
-			
-	
-
-	
-	
-	
 	public static final String ERROR_STRING = "error";
 	public static final String OK_STRING = "ok";
 	

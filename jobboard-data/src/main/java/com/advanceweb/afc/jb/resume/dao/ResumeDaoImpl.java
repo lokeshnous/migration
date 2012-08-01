@@ -18,7 +18,6 @@ import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.MerLookup;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
@@ -92,7 +91,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public boolean updateResume(ResumeDTO resumeDTO) {
 		
-		List<DropDownDTO> visibilityDropDown= populateDropdownsDAO.populateDropdown("Visibility");
+		List<DropDownDTO> visibilityDropDown= populateDropdownsDAO.populateDropdown(MMJBCommonConstants.VISIBILITY);
 		if(resumeDTO.getResume_visibility().equals(String.valueOf(visibilityDropDown.get(0).getOptionId()))){
 			List<ResUploadResume> resumes = hibernateTemplate.find("from ResUploadResume where userId = "+resumeDTO.getUserId()+" and uploadResumeId !="+ resumeDTO.getUploadResumeId()+" and visibility___Public_Private__='"+visibilityDropDown.get(0).getOptionId()+"'");
 			if(resumes.size() > 0){
