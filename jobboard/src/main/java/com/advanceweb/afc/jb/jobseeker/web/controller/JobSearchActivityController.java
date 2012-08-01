@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
@@ -38,6 +39,7 @@ import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
+import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.JSONConverterService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
@@ -64,6 +66,12 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private MMEmailService emailService;
+
+	@Autowired
+	private JSONConverterService jSONConverterService;
+	
+	@Autowired
+	private ResumeService resumeService;
 
 	@Value("${saveThisJobSuccessMsg}")
 	private String saveThisJobSuccessMsg;
@@ -104,8 +112,9 @@ public class JobSearchActivityController {
 	@Value("${joburl}")
 	private String joburl;
 	
-	@Autowired
-	private JSONConverterService jSONConverterService;
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
+	
 
 	@Autowired
 	private JobSearchService jobSearchService;
@@ -153,7 +162,7 @@ public class JobSearchActivityController {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(13158);
 		int userId = 30;
-		form.setUseremail("mmnousinfo@gmail.com");
+		form.setUseremail("merion@nousinfosystems.com");
 		try {
 			/**
 			 * Check for job seeker login
@@ -180,7 +189,7 @@ public class JobSearchActivityController {
 
 			// Send mail to Employer regarding job application
 			EmailDTO employerEmailDTO = new EmailDTO();
-			// employerEmailDTO.setFromAddress(form.getUseremail());
+			employerEmailDTO.setFromAddress(advanceWebAddress);
 			employerEmailDTO.setCcAddress(null);
 			employerEmailDTO.setBccAddress(null);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
@@ -188,26 +197,28 @@ public class JobSearchActivityController {
 					searchedJobDTO.getEmployerEmailAddress());
 			employerEmailDTO.setToAddress(employerToAddress);
 			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle()
-					+ " employer");
+					);
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-			// TODO: Fetch the path of public resume
-			attachmentpaths.add("C:\\testResume.txt");
+			// TODO: Exception if resume not found
+			ResumeDTO resumeDTO = resumeService
+					.fetchPublicResumeByUserId(userId);
+			attachmentpaths.add(resumeDTO.getFilePath());
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
 			LOGGER.info("Mail sent to employer");
 			
 			// Send confirmation mail to job seeker regarding job application
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
-			// jobSeekerEmailDTO.setFromAddress(form.getUseremail());
+			jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 			jobSeekerEmailDTO.setCcAddress(null);
 			jobSeekerEmailDTO.setBccAddress(null);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle()
-					+ " jobseeker");
+					);
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			emailService.sendEmail(jobSeekerEmailDTO);

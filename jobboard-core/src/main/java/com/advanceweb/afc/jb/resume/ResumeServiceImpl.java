@@ -128,7 +128,6 @@ public class ResumeServiceImpl implements ResumeService {
 	 */
 	@Override
 	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
-		
 		return resumeDao.fetchPublicResumeByUserId(jobSeekerId);
 	}
 

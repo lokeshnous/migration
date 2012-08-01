@@ -50,7 +50,6 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	 * The method helps to test the retrieving of job details by JobId
 	 * 
 	 */
-	// @Ignore("Not Reaady to test")
 	@Test
 	public void testViewJobDetails() {
 		Long jobId = 13100L;
@@ -73,11 +72,11 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			 * Sending mail to employer
 			 */
 			EmailDTO employerEmailDTO = new EmailDTO();
-			employerEmailDTO.setFromAddress("carrer@carrer.com");
+			employerEmailDTO.setFromAddress("mmnousinfo@gmail.com");
 			employerEmailDTO.setCcAddress(null);
 			employerEmailDTO.setBccAddress(null);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
-			employerToAddress[0] = new InternetAddress("jobseeker@carrer.com");
+			employerToAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			employerEmailDTO.setToAddress(employerToAddress);
 			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
@@ -93,11 +92,11 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			 * Sending mail to job seeker
 			 */
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
-			jobSeekerEmailDTO.setFromAddress("carrer@carrer.com");
+			jobSeekerEmailDTO.setFromAddress("mmnousinfo@gmail.com");
 			jobSeekerEmailDTO.setCcAddress(null);
 			jobSeekerEmailDTO.setBccAddress(null);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-			jobSeekerToAddress[0] = new InternetAddress("employer@carrer.com");
+			jobSeekerToAddress[0] = new InternetAddress("mmnousinfo@gmail.com");
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());

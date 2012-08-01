@@ -30,11 +30,12 @@ public interface ResumeDao {
 	boolean addEducation(List<EducationDTO> listEduExp);
 	boolean addLanguage(List<LanguageDTO> listLangExp);
 	boolean addCertifications(List<CertificationDTO> listLangExp);
+	
 	/**
-	 * 
+	 * Get the public visibility resume of Job seeker
 	 * 
 	 * @param jobSeekerId
 	 * @return
 	 */
-	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
+	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
 }
