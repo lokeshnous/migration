@@ -83,6 +83,18 @@ public class JobSeekerRegistrationValidation {
 		return matcher.matches();
 	}	
 	
+	
+	/**
+	 * Validating Email Pattern
+	 * @param emailId
+	 * @return
+	 */
+	private boolean validateMobileNumberPattern(String mobile){
+		pattern = Pattern.compile(MMJBCommonConstants.MOBILE_PATTERN);
+		matcher = pattern.matcher(mobile);
+		return matcher.matches();
+	}
+	
 	/**
 	 * Validating the password as per the following format
 	 * 
@@ -128,8 +140,13 @@ public class JobSeekerRegistrationValidation {
 		 JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
 		 
 		 validateEmail(registerForm, errors);
-		 validatePassoword(registerForm.getPassword(), registerForm.getRetypepassword(), errors);
 	}
 	
+	public void validateMobileNumber(Object target, Errors errors){
+		JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
+		 if(!validateMobileNumberPattern(registerForm.getPhoneNo())){
+			 errors.rejectValue("phoneNo", "NotEmpty", "Phone Number should contain only numerics"); 
+		 }
+	}
 	
 }
