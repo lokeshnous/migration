@@ -126,8 +126,9 @@ public class JobSeekerRegistrationController {
 	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Finish")
 	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session) {
-		ModelAndView model = new ModelAndView();
-		try {			
+			ModelAndView model = new ModelAndView();
+		try {
+				registerValidation.validateMobileNumber(registerForm, result);
 				if (result.hasErrors()) {
 					return new ModelAndView("jobSeekerCreateAccountInfo");
 				}
