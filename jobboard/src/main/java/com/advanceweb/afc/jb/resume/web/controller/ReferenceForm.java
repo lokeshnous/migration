@@ -13,6 +13,7 @@ public class ReferenceForm {
 	private String companyName;
 	private String phoneNo;
 	private String email;
+	private String referenceType;
 	private int builderRefId;
 	
 	
@@ -51,6 +52,12 @@ public class ReferenceForm {
 	}
 	public void setBuilderRefId(int builderRefId) {
 		this.builderRefId = builderRefId;
+	}
+	public String getReferenceType() {
+		return referenceType;
+	}
+	public void setReferenceType(String referenceType) {
+		this.referenceType = referenceType;
 	}
 	
 	
