@@ -59,12 +59,12 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	}
 
 	/**
-	 * Does the Solr Server Job Search
+	 * This method is used to do the Solr Server Job Search based on the passed parameters.
 	 * 
-	 * @param searchName
-	 * @param paramMap
-	 * @param rows
-	 * @param start
+	 * @param searchName	represents the type of the job search 
+	 * @param paramMap		contains the input parameters from the UI
+	 * @param rows			represents how many rows will be displayed
+	 * @param start			represents the starting point of the search
 	 * @return JobSearchResultDTO
 	 * @throws JobBoardServiceException
 	 * @throws JobBoardDataException
@@ -78,75 +78,52 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			JobBoardDataException {
 
 		QueryResponse response = null;
-		JobSearchResultDTO jSResultDTO = null;
-		SolrJobSearchResultDTO solrJSResultDTO = null;
 		QueryDTO queryDTO = null;
-
-		// Should return a QueryDTO
+		
+		/** Calling the DAO layer to get the QueryDTO which contains all the details
+		 * of the solr search query with server details.*/
 		queryDTO = searchDao.getSearchQueryDTO(
 				solrParameter.getSearchIndexName(),
 				solrParameter.getEnvironment(),
-				solrParameter.getSearchIndexGroup(),
-				solrParameter.getSearchName());
+				solrParameter.getSearchIndexGroup(), searchName);
 
-		String serverURlToCheck = createServerUrl(queryDTO);
+		/** Creation of server url to check whether it is accessible or not.*/
+		String serverURlToCheck = queryDTO.getSearchHost()
+				.concat(MMJBCommonConstants.SLASH)
+				.concat(queryDTO.getSearchIndexGroup())
+				.concat(MMJBCommonConstants.SLASH)
+				.concat(queryDTO.getSearchIndexName())
+				.concat(MMJBCommonConstants.SLASH)
+				.concat(MMJBCommonConstants.SELECT);
 
-		LOGGER.info("serverURlToCheck===>" + serverURlToCheck);
+		LOGGER.info("Server URL To Check===>" + serverURlToCheck);
 
-		// Checking whether server url is accessible
+		/** Checking whether server url is accessible. */
 		boolean serverAccessible = solrSrchHelper
-				.isServerAccessible(serverURlToCheck.concat(
-						MMJBCommonConstants.USER).concat(
-						MMJBCommonConstants.SLASH));
-		
+				.isServerAccessible(serverURlToCheck);
+
 		if (serverAccessible) {
 
-			//Getting the Search String with All the parameters
-			String srchStrWithParam = formSearchQuery(queryDTO,
-					paramMap.get(MMJBCommonConstants.KEYWORDS),
-					paramMap.get(MMJBCommonConstants.CITY_STATE),
-					paramMap.get(MMJBCommonConstants.RADIUS), rows, start,
-					paramMap.get(MMJBCommonConstants.SESSION_ID),
-					paramMap.get(MMJBCommonConstants.QUERY_TYPE),
-					paramMap.get(MMJBCommonConstants.SEARCH_SEQ));
+			LOGGER.info("Server URL is Accessible.");
 
-			LOGGER.info("srchStrWithParam===>>" + srchStrWithParam);
+			/** Getting the Server details from the properties file **/
+			final Map<String, String> serverDetailsMap = solrSrchHelper
+					.getServerDetails(solrConfiguration);
 
-			if (("".equalsIgnoreCase(paramMap.get(MMJBCommonConstants.KEYWORDS)) || paramMap
-					.get(MMJBCommonConstants.KEYWORDS) == null)
-					&& ("".equalsIgnoreCase(paramMap
-							.get(MMJBCommonConstants.CITY_STATE)) || paramMap
-							.get(MMJBCommonConstants.CITY_STATE) == null)
-					&& ("".equalsIgnoreCase(paramMap
-							.get(MMJBCommonConstants.RADIUS)) || paramMap
-							.get(MMJBCommonConstants.RADIUS) == null)) {
+			/**Getting the SOLR query response by execution of the query.**/
+			response = getSolrResponseForKeywords(serverDetailsMap,
+					queryDTO, paramMap, rows, start);
 
-				LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
+			if (response == null) {
+
+				LOGGER.info("No Results Found...");
 				return null;
 
 			} else {
 
-				//Getting the Server details from the properties file
-				final Map<String, String> serverDetailsMap = solrSrchHelper
-						.getServerDetails(solrConfiguration);
-				
-				//Getting the SOLR query response by execution of the query
-				response = getSolrResponse(serverDetailsMap, srchStrWithParam);
-
-				if (response == null) {
-
-					LOGGER.info("No Results Found...");
-					return null;
-
-				} else {
-					
-					solrJSResultDTO = getSolrJSResult(response);
-					jSResultDTO = new JobSearchResultDTO();
-					jSResultDTO.setSolrJobSearchResultDTO(solrJSResultDTO);
-
-					return jSResultDTO;
-				}
-
+				/** Calling getSolrJSResult()by passing the response object
+				 * and returning the JobSearchResultDTO object into service layer.**/
+				return getSolrJSResult(response);
 			}
 
 		} else {
@@ -154,84 +131,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			return null;
 		}
 
-	}
-
-	/**
-	 * This methos forms the SOLR search query from the
-	 * parameter list got from the DB
-	 * @param queryDTO
-	 * @param keywords
-	 * @param cityState
-	 * @param radius
-	 * @param rows
-	 * @param start
-	 * @param sessionId
-	 * @param queryType
-	 * @param searchSeq
-	 * @return String
-	 */
 	
-
-	private String formSearchQuery(QueryDTO queryDTO, String keywords,
-			String cityState, String radius, long rows, long start,
-			String sessionId, String queryType, String searchSeq) {
-
-		String serverUrlStr = createServerUrl(queryDTO).concat(
-				MMJBCommonConstants.SELECT_SLASH_QUESTIONMARK);
-
-		LOGGER.info("serverUrlStr===>>" + serverUrlStr);
-		String urlParams = new String();
-		List<MetaSearchParamDTO> srchParamDTOList = queryDTO
-				.getmSrchParamList();
-
-		for (MetaSearchParamDTO mSrchParamDTO : srchParamDTOList) {
-
-			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
-					MMJBCommonConstants.DEF_TYPE)) {
-				urlParams = urlParams.concat(mSrchParamDTO.getParameterName())
-						.concat(MMJBCommonConstants.EQUAL_TO)
-						.concat(mSrchParamDTO.getParameterValue());
-			} else {
-				urlParams = urlParams.concat(MMJBCommonConstants.AMP)
-						.concat(mSrchParamDTO.getParameterName())
-						.concat(MMJBCommonConstants.EQUAL_TO)
-						.concat(mSrchParamDTO.getParameterValue());
-			}
-		}
-
-		//Replacing the place holders with the actual input parameters from UI
-		urlParams = urlParams.replace(MMJBCommonConstants.B_01, keywords
-				+ MMJBCommonConstants.PLUS + cityState
-				+ MMJBCommonConstants.PLUS + radius);
-		urlParams = urlParams.replace(MMJBCommonConstants.B_02,
-				String.valueOf(rows));
-		urlParams = urlParams.replace(MMJBCommonConstants.B_03,
-				String.valueOf(start));
-		urlParams = urlParams.replace(MMJBCommonConstants.B_04, sessionId);
-		urlParams = urlParams.replace(MMJBCommonConstants.B_05, queryType);
-		urlParams = urlParams.replace(MMJBCommonConstants.B_06, searchSeq);
-
-		LOGGER.info("URLParams after replacement======>>>" + urlParams);
-
-		return serverUrlStr.concat(urlParams);
-
-	}
-
-	/**
-	 * This method will return a server url which will be used for checking
-	 * whether it is accessible
-	 * 
-	 * @param queryDTO
-	 * @return String serverURL
-	 */
-
-	private String createServerUrl(QueryDTO queryDTO) {
-
-		return queryDTO.getSearchHost().concat(MMJBCommonConstants.SLASH)
-				.concat(queryDTO.getSearchIndexGroup())
-				.concat(MMJBCommonConstants.SLASH)
-				.concat(queryDTO.getSearchIndexName())
-				.concat(MMJBCommonConstants.SLASH);
 
 	}
 
@@ -240,22 +140,30 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 * object, query the query string and get the QueryResponse from the Solr
 	 * server
 	 * 
-	 * @param serverDetailsMap
-	 * @param solrQueryDetails
-	 * @param paramMap
-	 * @param start
-	 * @param rows
-	 * @return QueryResponse
+	 * @param serverDetailsMap 	represents the Map containing all the 
+	 * 							values of server details from the property file 
+	 *  
+	 * @param paramMap		Contains all the input parameters from the UI
+	 * @param start			represents the starting point of the search
+	 * @param rows			represents how many rows will be displayed
+	 * @return QueryResponse represents the solr query object
 	 * @throws JobBoardServiceException
 	 * @throws UnsupportedEncodingException
 	 */
-	private QueryResponse getSolrResponse(
-			final Map<String, String> serverDetailsMap,
-			final String srchStrWithParam) throws JobBoardServiceException {
+	private QueryResponse getSolrResponseForKeywords(
+			final Map<String, String> serverDetailsMap, QueryDTO queryDTO,
+			Map<String, String> paramMap, long rows, long start)
+			throws JobBoardServiceException {
 		QueryResponse response = null;
 		HttpSolrServer server = null;
-		server = new HttpSolrServer(srchStrWithParam.substring(0,
-				srchStrWithParam.indexOf(MMJBCommonConstants.SELECT)));
+
+		server = new HttpSolrServer(queryDTO.getSearchHost()
+				.concat(MMJBCommonConstants.SLASH)
+				.concat(queryDTO.getSearchIndexGroup())
+				.concat(MMJBCommonConstants.SLASH)
+				.concat(queryDTO.getSearchIndexName())
+				.concat(MMJBCommonConstants.SLASH));
+
 		server.setSoTimeout(Integer.parseInt(serverDetailsMap
 				.get(MMJBCommonConstants.SO_TIMEOUT)));
 		server.setConnectionTimeout(Integer.parseInt(serverDetailsMap
@@ -275,368 +183,213 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				.get(MMJBCommonConstants.MAX_RETRIES)));
 		server.setParser(new XMLResponseParser());
 
-		//Creating the SOLR query from the SearchString formed by the parameters got from DB
-		SolrQuery searchquery = createSOLRQuery(srchStrWithParam);
+		/** Creating the SOLR query from the SearchString formed by the
+		* parameters got from DB **/
+		SolrQuery searchquery = createSOLRQueryForKeywords(queryDTO, paramMap,
+				rows, start);
 
 		LOGGER.info("Search query===>>>" + searchquery);
 
 		try {
-			//Execution of the solr query
+			// Execution of the solr query
 			response = server.query(searchquery);
 
 		} catch (SolrServerException e) {
+			LOGGER.debug(e);
 			throw new JobBoardServiceException(
 					"Error occurred while trying to Execute the SOLR query...");
-			// return null;
 		}
 		return response;
 
 	}
-
-	/**
-	 * This method creates the search SOLR query
-	 * @param String srchStrWithParam
-	 * @return
-	 */
 	
-	public SolrQuery createSOLRQuery(String srchStrWithParam) {
+	/**
+	 * This method creates the search SOLR query.
+	 * @param queryDTO	Represents the QueryDTO object which contails all the details 
+	 * 					of the solr query parameters taken from the DB 
+	 * @param paramMap  Contains all the input parameters from the UI
+	 * @param rows represents number of rows will be displayed
+	 * @param start represents the starting point of the search
+	 * @return object of SolrQuery
+	 */
 
-		String qVal = "";
-		SolrQuery searchquery = null;
-		// Getting the &q value from the search string to put it as params to SolrQuery
-		qVal = srchStrWithParam
-				.substring(
-						srchStrWithParam.indexOf(MMJBCommonConstants.AMP
-								+ MMJBCommonConstants.Q
-								+ MMJBCommonConstants.EQUAL_TO)
-								+ (MMJBCommonConstants.AMP
-										+ MMJBCommonConstants.Q + MMJBCommonConstants.EQUAL_TO)
-										.length(),
-						srchStrWithParam.indexOf(MMJBCommonConstants.AMP
-								+ MMJBCommonConstants.ROWS));
-		LOGGER.info("QVal===>" + qVal);
+	public SolrQuery createSOLRQueryForKeywords(QueryDTO queryDTO,
+			Map<String, String> paramMap, long rows, long start) {
 
-		if (qVal != null && qVal.length() > 0) {
-			//Instantiating the SolrQuery
-			searchquery = new SolrQuery();
-			
-			
-			//Setting the deftype param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.DEF_TYPE)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.DEF_TYPE,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.DEF_TYPE
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.DEF_TYPE + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.QF)));
+		SolrQuery searchquery = new SolrQuery();
+
+		/** Getting the Search parameter List from QueryDTo for iteration **/
+		List<MetaSearchParamDTO> srchParamDTOList = queryDTO
+				.getmSrchParamList();
+
+		/** Iterating Search parameter List and forming the SOLR query.**/
+		for (MetaSearchParamDTO mSrchParamDTO : srchParamDTOList) {
+
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.DEF_TYPE)) {
+				searchquery.setParam(MMJBCommonConstants.DEF_TYPE,
+						mSrchParamDTO.getParameterValue());
+
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.QF)) {
+				searchquery.setParam(MMJBCommonConstants.QF,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the qf param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.QF)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.QF,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.QF
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.QF + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.PF)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.PF)) {
+				searchquery.setParam(MMJBCommonConstants.PF,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the pf param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.PF)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.PF,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.PF
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.PF + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.PS)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.PS)) {
+				searchquery.setParam(MMJBCommonConstants.PS,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the ps param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.PS)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.PS,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.PS
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.PS + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.MM)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.MM)) {
+				searchquery.setParam(MMJBCommonConstants.MM,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the mm param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.MM)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.MM,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.MM
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.MM + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.BQ)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.BQ)) {
+				searchquery.setParam(MMJBCommonConstants.BQ,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the bq param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.BQ)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.BQ,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.BQ
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.BQ + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.BF)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.PF)) {
+				searchquery.setParam(MMJBCommonConstants.PF,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the bf param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.BF)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.BF,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.BF
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.BF + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SORT)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.SORT)) {
+				searchquery.setParam(MMJBCommonConstants.SORT,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the sort param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.SORT)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.SORT,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SORT
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SORT + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.Q_ALT)));
 			}
-			
-			//Setting the q.alt param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.Q_ALT)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.Q_ALT,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.Q_ALT
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.Q_ALT + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.Q
-														+ MMJBCommonConstants.EQUAL_TO)));
-			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.Q_ALT)) {
+				searchquery.setParam(MMJBCommonConstants.Q_ALT,
+						mSrchParamDTO.getParameterValue());
 
-			//Setting the 'q' param into SolrQuery
-			searchquery.setQuery(qVal);
-			searchquery.setFacet(true);
-			//Setting the rows param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.ROWS)) {
+			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.Q)) {
+				searchquery.setQuery(mSrchParamDTO.getParameterValue().replace(
+						MMJBCommonConstants.B_01,
+						paramMap.get(MMJBCommonConstants.KEYWORDS)
+								+ MMJBCommonConstants.PLUS
+								+ paramMap.get(MMJBCommonConstants.CITY_STATE)
+								+ MMJBCommonConstants.PLUS
+								+ paramMap.get(MMJBCommonConstants.RADIUS)));
+
+			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.ROWS)) {
 				searchquery
 						.setParam(
 								MMJBCommonConstants.ROWS,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.ROWS
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.ROWS + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.START)));
+								mSrchParamDTO.getParameterValue().replace(
+										MMJBCommonConstants.B_02,
+										String.valueOf(rows)));
+
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.START)) {
+				searchquery.setParam(
+						MMJBCommonConstants.START,
+						mSrchParamDTO.getParameterValue()
+								.replace(MMJBCommonConstants.B_03,
+										String.valueOf(start)));
 
-			//Setting the start param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.START)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.START,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.START
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.START + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SESSION_ID)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.SESSION_ID)) {
+				searchquery.setParam(
+						MMJBCommonConstants.SESSION_ID,
+						mSrchParamDTO.getParameterValue().replace(
+								MMJBCommonConstants.B_04,
+								paramMap.get(MMJBCommonConstants.SESSION_ID)));
 
-			//Setting the sessionid param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.SESSION_ID)) {
-
-				searchquery.setParam(MMJBCommonConstants.SESSION_ID,
-						srchStrWithParam.substring(
-								(srchStrWithParam.indexOf("&sessionid="))
-										+ ("&sessionid=").length(),
-								srchStrWithParam.indexOf("&querytype")));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.QUERY_TYPE)) {
+				searchquery.setParam(
+						MMJBCommonConstants.QUERY_TYPE,
+						mSrchParamDTO.getParameterValue().replace(
+								MMJBCommonConstants.B_05,
+								paramMap.get(MMJBCommonConstants.QUERY_TYPE)));
 
-			//Setting the querytype param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.QUERY_TYPE)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.QUERY_TYPE,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.QUERY_TYPE
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.QUERY_TYPE + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SEARCH_SEQ)));
 			}
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.SEARCH_SEQ)) {
+				searchquery.setParam(
+						MMJBCommonConstants.SEARCH_SEQ,
+						mSrchParamDTO.getParameterValue().replace(
+								MMJBCommonConstants.B_06,
+								paramMap.get(MMJBCommonConstants.SEARCH_SEQ)));
 
-			//Setting the search_seq param into SolrQuery
-			if (isPresent(srchStrWithParam, MMJBCommonConstants.AMP
-					+ MMJBCommonConstants.SEARCH_SEQ)) {
-				searchquery
-						.setParam(
-								MMJBCommonConstants.SEARCH_SEQ,
-								srchStrWithParam.substring(
-										srchStrWithParam
-												.indexOf(MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SEARCH_SEQ
-														+ MMJBCommonConstants.EQUAL_TO)
-												+ (MMJBCommonConstants.AMP
-														+ MMJBCommonConstants.SEARCH_SEQ + MMJBCommonConstants.EQUAL_TO)
-														.length(),
-										srchStrWithParam.length()));
 			}
-
-			//Adding the facets to SOLR query
-			searchquery.addFacetField(MMJBCommonConstants.CITY);
-			searchquery.addFacetField(MMJBCommonConstants.COMPANY);
-			// searchquery.addFacetField(MMJBCommonConstants.RADIUS);
-			searchquery.addFacetField(MMJBCommonConstants.POSTED_DT);
-			searchquery.addFacetField(MMJBCommonConstants.STATE);
 
 		}
+
+		/** Adding the facets to SOLR query */
+		searchquery.addFacetField(MMJBCommonConstants.CITY);
+		searchquery.addFacetField(MMJBCommonConstants.COMPANY);
+		// searchquery.addFacetField(MMJBCommonConstants.RADIUS);
+		searchquery.addFacetField(MMJBCommonConstants.POSTED_DT);
+		searchquery.addFacetField(MMJBCommonConstants.STATE);
 
 		return searchquery;
+
 	}
 
-	/**
-	 * This method checks whether the value presents in the search string or not
-	 * @param srchStrWithParam
-	 * @param name
-	 * @return boolean
-	 */
-	private boolean isPresent(String srchStrWithParam, String name) {
-
-		if (srchStrWithParam.indexOf(name) > 0){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
 	/**
 	 * This method parse the response and set the values into the bean
+	 * 
 	 * @param response
-	 * @returnSolrJobSearchResultDTO
+	 * @return JobSearchResultDTO
 	 */
-	private SolrJobSearchResultDTO getSolrJSResult(QueryResponse response){
-		
-		
-		SolrJobSearchResultDTO solrJSResultDTO = new SolrJobSearchResultDTO();
-		LOGGER.info("Number of search records===>>>"+ response.getResults().getNumFound());
+	private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
 
-		solrJSResultDTO.setTotalNumSearchResult(response
-				.getResults().getNumFound());
+		JobSearchResultDTO jobSResultDTO = new JobSearchResultDTO();
+		LOGGER.info("Number of search records===>"
+				+ response.getResults().getNumFound());
+
+		jobSResultDTO.setTotalNumSearchResult(response.getResults()
+				.getNumFound());
 
 		List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
 		jobSearchDTOList = response.getBeans(JobSearchDTO.class);
 
-		final Map<String, List<Count>> facetMap = new HashMap<String, List<Count>>();
+		final Map<String, List<String>> facetMap = new HashMap<String, List<String>>();
 		final List<FacetField> facetFieldList = response.getFacetFields();
 
 		for (FacetField facetField : facetFieldList) {
-			facetMap.put(facetField.getName(), facetField.getValues());
-			LOGGER.debug("@Facet Name===>>"+
-			 facetField.getName()+",@Facet Values(Categories)===>>>"
-			 + facetMap.get(facetField.getName()));
+			List<String> facetsList = new ArrayList<String>();
+			List<Count> facetFieldValList = facetField.getValues();
+			
+			for(Count countObj: facetFieldValList){
+				
+				String facetVal = countObj.getName().toString();
+				long count = countObj.getCount();
+				facetsList.add(facetVal.concat(" (").concat(String.valueOf(count)).concat(")"));
+			}
+			
+			LOGGER.info("facetsList==="+facetsList);
+			facetMap.put(facetField.getName(), facetsList);
+			
 		}
-		solrJSResultDTO.setFacetMap(facetMap);
-		solrJSResultDTO.setSearchResultList(jobSearchDTOList);
-		
-		return solrJSResultDTO;
+		jobSResultDTO.setFacetMap(facetMap);
+		jobSResultDTO.setSearchResultList(jobSearchDTOList);
+
+		return jobSResultDTO;
 	}
-	
-	
 
 }
