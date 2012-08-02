@@ -43,15 +43,12 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Create Or Upload My New Resume</h2>
-			<img src="../resources/images/Close.png" width="19"
-				onclick="parent.$.nmTop().close();" height="19" alt="">
+			<img src="../resources/images/Close.png" width="19" onclick="parent.$.nmTop().close();"
+				height="19" alt="">
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get"
-				action="/jobboard/jobSeekerResume/createResumeBuilder.html"
-				commandName="createResume" modelAttribute="resumeform"
-				id="formtouse" enctype="multipart/form-data">
+			<form:form method="get" action="/jobboard/jobSeekerResume/createResumeBuilder.html" commandName="createResume"  id="formtouse"	enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 
 					<div class="floatLeft marginTop5 marginRight20">How would you
@@ -63,9 +60,12 @@
 					<form:select path="resumeType"
 						onchange="MM_jumpMenu('self',this,0)" id="jumpMenu"
 						class="jb_input3 jb_input_width3 marginTop0" name="jumpMenu">
-						<form:option id="createResume" value="createResume">Create Resume</form:option>
-						<form:option id="uploadResume" value="uploadResume">Upload Resume</form:option>
-						<form:option id="copyPasteResume" value="copyPasteResume">Copy and paste</form:option>
+						<form:option
+							id="createResume" value="createResume" >Create Resume</form:option>
+						<form:option id="uploadResume"
+							value="uploadResume">Upload Resume</form:option>
+						<form:option id="copyPasteResume"
+							value="copyPasteResume">Copy and paste</form:option>
 					</form:select>
 					<span class="required">(Required)</span>
 
@@ -149,10 +149,9 @@
 					</div>
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <input type="submit"
-						value="Create" class="btn_sm orange" /> <input type="button"
-						class="btn_sm orange" value="Cancel"
-						onclick="parent.$.nmTop().close();" /></span>
+				<span class="floatLeft marginTop10"> 
+				<input type="submit" value="Create" class="btn_sm orange" /> 
+				<input type="button" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();"/></span>
 				</div>
 				<div class="clearfix"></div>
 
