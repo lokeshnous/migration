@@ -262,8 +262,8 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 			}
 			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
-					MMJBCommonConstants.PF)) {
-				searchquery.setParam(MMJBCommonConstants.PF,
+					MMJBCommonConstants.BF)) {
+				searchquery.setParam(MMJBCommonConstants.BF,
 						mSrchParamDTO.getParameterValue());
 
 			}
