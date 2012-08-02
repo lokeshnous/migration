@@ -1,19 +1,15 @@
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-
 import com.advanceweb.afc.jb.common.util.CheckNullUtil;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.search.engine.JSONConverterService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
-import com.advanceweb.afc.jb.search.engine.solr.SolrJobSearchResultDTO;
 
 /**
  * This class has been created as a service interface for converting to JSON object
@@ -37,9 +33,7 @@ public class JSONConverterServiceImpl implements JSONConverterService{
 		final JSONObject jobSrchJsonObj = new JSONObject();
 		final JSONArray jsonRows = new JSONArray();
 
-		final SolrJobSearchResultDTO solrJSResultDTO = jSResultDTO
-				.getSolrJobSearchResultDTO();
-		final List<JobSearchDTO> jobSearchDTOList = solrJSResultDTO
+		final List<JobSearchDTO> jobSearchDTOList = jSResultDTO
 				.getSearchResultList();
 
 		for (JobSearchDTO jobSrchDTO : jobSearchDTOList) {
@@ -112,7 +106,7 @@ public class JSONConverterServiceImpl implements JSONConverterService{
 		}
 
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				solrJSResultDTO.getTotalNumSearchResult());
+				jSResultDTO.getTotalNumSearchResult());
 		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
 
 		return jobSrchJsonObj;
