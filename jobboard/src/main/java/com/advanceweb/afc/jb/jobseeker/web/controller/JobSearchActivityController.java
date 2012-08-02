@@ -69,7 +69,7 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private JSONConverterService jSONConverterService;
-	
+
 	@Autowired
 	private ResumeService resumeService;
 
@@ -111,10 +111,9 @@ public class JobSearchActivityController {
 
 	@Value("${joburl}")
 	private String joburl;
-	
+
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
-	
 
 	@Autowired
 	private JobSearchService jobSearchService;
@@ -147,10 +146,10 @@ public class JobSearchActivityController {
 
 	/**
 	 * The apply for job action is called as per the conditions and getting
-	 * saved in DB.
-	 * Check for login , navigate to login page if necessary login by
-	 * ADVACNE Guest navigate to Anonymous User Form apply for job or
+	 * saved in DB. Check for login , navigate to login page if necessary login
+	 * by ADVACNE Guest navigate to Anonymous User Form apply for job or
 	 * navigate to employer web page to apply job
+	 * 
 	 * @param form
 	 * @param jobId
 	 * @return
@@ -174,7 +173,7 @@ public class JobSearchActivityController {
 				return jsonObject;
 			}
 
-			//Get the Job details
+			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(form.getJobID());
 			// Validate if job is already applied
@@ -196,8 +195,7 @@ public class JobSearchActivityController {
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			employerEmailDTO.setToAddress(employerToAddress);
-			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle()
-					);
+			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
@@ -208,7 +206,7 @@ public class JobSearchActivityController {
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
 			LOGGER.info("Mail sent to employer");
-			
+
 			// Send confirmation mail to job seeker regarding job application
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
 			jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
@@ -217,8 +215,7 @@ public class JobSearchActivityController {
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle()
-					);
+			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
 			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			emailService.sendEmail(jobSeekerEmailDTO);
@@ -266,13 +263,13 @@ public class JobSearchActivityController {
 	}
 
 	/**
-	 * This method will be used for doing Job search
-	 * 
+	 * This method will be used for doing Job search and Return a JSON Object
+	 * which will later be parsed at the UI end and all the results will be displayed
 	 * @param jobSearchResultForm
 	 * @param result
 	 * @param model
-	 * @return ModelAndView
-	 * @throws UnsupportedEncodingException 
+	 * @return JSON Object
+	 * @throws UnsupportedEncodingException
 	 */
 
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
@@ -283,27 +280,53 @@ public class JobSearchActivityController {
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		String searchName = "KEYWORD";// will be replaced by BASIC_SEARCH
-		// The value of Search_seq will be changed when the session management is done.
-		// This value needs to be increased every time when there is a search happening for a session
+		// The value of Search_seq will be changed when the session management
+		// is done.
+		// This value needs to be increased every time when there is a search
+		// happening for a session
 		int search_seq = 0;
-		paramMap.put(MMJBCommonConstants.KEYWORDS, jobSearchResultForm.getKeywords().trim());
-		paramMap.put(MMJBCommonConstants.CITY_STATE, jobSearchResultForm.getCityState().trim());
-		paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm.getRadius().trim());
-		paramMap.put(MMJBCommonConstants.SESSION_ID, "JS0011".trim());
-		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, String.valueOf(search_seq));
-		paramMap.put(MMJBCommonConstants.QUERY_TYPE, searchName.trim());
+		String sessionId = "JS0011";
 
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
 
 		try {
-			jobSearchResultDTO = jobSearchService.jobSearch(searchName, paramMap,
-					start, rows);
+			/** It is checking whether all the parameters coming from the UI is blank or not */
+			if (("".equalsIgnoreCase(jobSearchResultForm.getKeywords().trim()) || jobSearchResultForm
+					.getKeywords().trim() == null)
+					&& ("".equalsIgnoreCase(jobSearchResultForm.getCityState()
+							.trim()) || jobSearchResultForm.getCityState()
+							.trim() == null)
+					&& ("".equalsIgnoreCase(jobSearchResultForm.getRadius()
+							.trim()) || jobSearchResultForm.getRadius().trim() == null)) {
+
+				LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
+				return null;
+
+			} else {
+
+				/** Putting all the parameters coming from the UI into a Map for further processing */
+				paramMap.put(MMJBCommonConstants.KEYWORDS, jobSearchResultForm
+						.getKeywords().trim());
+				paramMap.put(MMJBCommonConstants.CITY_STATE,
+						jobSearchResultForm.getCityState().trim());
+				paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm
+						.getRadius().trim());
+				paramMap.put(MMJBCommonConstants.SESSION_ID, sessionId.trim());
+				paramMap.put(MMJBCommonConstants.SEARCH_SEQ,
+						String.valueOf(search_seq));
+				paramMap.put(MMJBCommonConstants.QUERY_TYPE, searchName.trim());
+
+				/** Calling the jobSearch() of Service layer from getting the object of JobSearchResultDTO*/
+				jobSearchResultDTO = jobSearchService.jobSearch(searchName,
+						paramMap, start, rows);
+			}
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
 		}
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
+			/** Calling the service layer for converting the JobSearchResultDTO object into JSON Object */
 			jobSrchJsonObj = jSONConverterService
 					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
