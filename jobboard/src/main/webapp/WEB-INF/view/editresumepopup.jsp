@@ -30,8 +30,18 @@
 		
 	 $("#update").click(function(){
 		
-		$("form").attr("action", getBaseURL()+"jobSeekerResume/updateResumePopup.html");
-		$("form").submit();
+		var resumeName = $.trim($("#resume_name").val());
+		var jobTitle = $.trim($("#desired_job_title").val());
+		var workAuth = $.trim($("#work_authorization_US option:selected").text());
+		debugger; 
+		if(resumeName != null && resumeName !="" && jobTitle != null && jobTitle != "" && workAuth !="Select" && workAuth != null && workAuth != ""){
+			$("#errorMsg").html("");
+			$("form").attr("action", getBaseURL()+"jobSeekerResume/updateResumePopup.html");
+			$("form").submit();
+		} 
+		else{
+			 $("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+		}
 	 });
 	 
 	});
@@ -54,8 +64,10 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="updateResumePopup.html" id="editResumeForm" commandName="createResume" modelAttribute="resumeform" enctype="multipart/form-data" >
-				
+			<form:form method="get" action="updateResumePopup.html" id="editResumeForm" commandName="createResume" enctype="multipart/form-data" >
+				<div id="errorMsg">
+					
+				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
 					<form:input type="hidden" path="uploadResumeId" />
@@ -71,15 +83,14 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Desired Employment Type:</span> 
 					
-						<form:select id="select14" class="jb_input3 jb_input_width3 marginTop0" name="select9" 
+						<form:select class="jb_input3 jb_input_width3 marginTop0" name="select9" 
 							path="desired_employment_type" items="${employmentType}" 
 							itemValue="optionId" itemLabel="optionName" />
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">U.S. Work Authorization:</span> 
-					<form:select id="select3" class="jb_input3 marginTop0 width350" name="select3" style="width: auto"
-							path="work_authorization_US" items="${workAuthUS}" 
-							itemValue="optionId" itemLabel="optionName" />
+					<form:select class="jb_input3 marginTop0 width350" name="select3" style="width: auto"
+							path="work_authorization_US" items="${workAuthUS}" itemValue="optionId" itemLabel="optionName" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
