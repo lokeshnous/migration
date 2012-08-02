@@ -406,6 +406,8 @@ public class ResumeController {
 		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown(MMJBCommonConstants.RELOCATE);
 		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
 		
+		createResume = new CreateResume();
+		
 		ModelAndView model = new ModelAndView();
 		model.addObject("createResume", createResume);
 		model.addObject("employmentType", employmentTypeList);
@@ -413,15 +415,15 @@ public class ResumeController {
 		model.addObject("resumeVisibility", visibilityList);
 		model.addObject("relocate", relocateList);
 		
-		if("createResume".equals(resumeType)){
+		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeType)){
 			model.setViewName("createresumepopup");
 			return model;
 		}
-		if("uploadResume".equals(resumeType)){
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD .equals(resumeType)){
 			model.setViewName("uploadreumepopup");
 			return model;
 		}
-		if("copyPasteResume".equals(resumeType)){
+		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeType)){
 			model.setViewName("copypasteresumepopup");
 			return model;
 		}
