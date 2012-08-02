@@ -65,6 +65,24 @@ public class SaveSearchController {
 		return new ModelAndView();
 
 	}
+	
+	@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
+	public ModelAndView SaveMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+			BindingResult result) {
+		ModelAndView model = new ModelAndView();
+		saveSearchForm.setUserID(203);
+		if (saveSearchForm.getUserID() != 0) {
+			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+					.viewMySavedSearches(saveSearchForm.getUserID());
+			List<DropDownDTO> notifyMeList = populateDropdownsService
+					.populateDropdown("NotifyMe");
+			model.addObject("notifyMeList", notifyMeList);
+			model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
+		}
+		model.addObject(saveSearchForm);
+		model.setViewName("jobseekersavedsearchespopup");
+        return model;
+	}
 
 	/**
 	 * This method is called to display Saved Searches
@@ -99,7 +117,7 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewMySavedSearchRecord", method = RequestMethod.GET)
-	public String viewMySavedSearchRecord(@Valid SaveSearchForm saveSearchForm,
+	public String viewMySavedSearchRecord(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
