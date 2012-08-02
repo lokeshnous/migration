@@ -438,7 +438,8 @@ public class JobSearchActivityController {
 			model.addAttribute("sendtofriendmail", new SendToFriend());
 		} catch (Exception e) {// Catch exception if any
 			// System.err.println("Error: " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
+			 LOGGER.info("ERROR");
 		}
 
 		return "jobseekersendtofriendpopup";
@@ -480,8 +481,8 @@ public class JobSearchActivityController {
 					emailService.sendEmail(jobSeekerEmailDTO);
 				} catch (Exception e) {
 					// loggers call
-					// LOGGER.info("ERROR");
-					e.printStackTrace();
+				    LOGGER.info("ERROR");
+					//e.printStackTrace();
 				}
 				model.addAttribute("visible", true);
 			} else if (sendtofriendmail.getEmail().length() > 0
