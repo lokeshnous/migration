@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 /**
  * This class has been created for reading the values 
  * directly from the Spring configuration for
- *  the Solr Server Job search functionalities
+ *  the Solr Server Job search functionalities.
  * @author Reetesh Ranjan Nayak
  * @version 1.0
  * @since 31st July 2012
@@ -20,8 +20,6 @@ public class SolrParameter {
 	
 	private String environment;
 	
-	private String searchName;
-
 	public String getSearchIndexName() {
 		return searchIndexName;
 	}
@@ -45,17 +43,5 @@ public class SolrParameter {
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
-
-	public String getSearchName() {
-		return searchName;
-	}
-
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
-	
-	
-	
-
 
 }
