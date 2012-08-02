@@ -29,8 +29,8 @@ public class SOLRSearchHelper {
 
 	/**
 	 * Reads Solr Server details from the property file and put it into the Map
-	 * @param solrConfiguration
-	 * @return Map
+	 * @param solrConfiguration		represents the Object of the Property file
+	 * @return Map<String, String> which contains all the details in key and value pair
 	 */
 	public Map<String, String> getServerDetails(
 			final Properties solrConfiguration) {
@@ -54,8 +54,8 @@ public class SOLRSearchHelper {
 
 	/**
 	 * This method will check whether the SOLR server url is accessible or not
-	 * @param url
-	 * @return boolean
+	 * @param url		represents the SOLR server url
+	 * @return boolean	represents whether server is accessible or not by returning true or false.
 	 */
 
 	public boolean isServerAccessible(String url) {
