@@ -19,18 +19,16 @@ public class JobSearchServiceImpl implements JobSearchService{
 	private JobSearchDeleagate jobSearchDeleagate;
 	
 	/**
-	 * Does the Job Search
-	 * @param searchName
-	 * @param paramMap
-	 * @param rows
-	 * @param start
+	 * This method is used to do the Job Search by taking the following parameters.
+	 * @param searchName	represents the type of the job search 
+	 * @param paramMap		contains the input parameters from the UI
+	 * @param rows			represents how many rows will be displayed
+	 * @param start			represents the starting point of the search
 	 * @return JobSearchResultDTO
 	 */
 	public JobSearchResultDTO jobSearch(final String searchName,
 			final Map<String, String> paramMap, final long start, final long rows) throws JobBoardServiceException, JobBoardDataException {
-		JobSearchResultDTO jobSearchResultDTO = null;
-		jobSearchResultDTO = jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
-		return jobSearchResultDTO;
+		return jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
 	}
 
 }
