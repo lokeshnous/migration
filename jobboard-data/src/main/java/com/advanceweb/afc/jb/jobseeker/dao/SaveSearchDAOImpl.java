@@ -78,10 +78,10 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * @return
 	 */
 	@Override
-	public boolean deleteSavedSearch(int jpSaveSearchId) {
-		AdmSaveSearch jpSaveSearch = new AdmSaveSearch();
-		jpSaveSearch.setSaveSearchId(jpSaveSearchId);
-		hibernateTemplate.delete(jpSaveSearch);
+	public boolean deleteSavedSearch(int saveSearchId) {
+		AdmSaveSearch admSaveSearch = new AdmSaveSearch();
+		admSaveSearch.setSaveSearchId(saveSearchId);
+		hibernateTemplate.delete(admSaveSearch);
 		return true;
 	}
 

@@ -3,13 +3,21 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -66,19 +74,21 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewMySavedSearches", method = RequestMethod.GET)
-	public String viewMySavedSearches(@Valid SaveSearchForm saveSearchForm,
-			BindingResult result, Map<String, Object> model) {
+	public ModelAndView viewMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+			BindingResult result) {
+		ModelAndView model = new ModelAndView();
 		saveSearchForm.setUserID(203);
 		if (saveSearchForm.getUserID() != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 					.viewMySavedSearches(saveSearchForm.getUserID());
 			List<DropDownDTO> notifyMeList = populateDropdownsService
 					.populateDropdown("NotifyMe");
-			model.put("notifyMeList", notifyMeList);
-			model.put("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
+			model.addObject("notifyMeList", notifyMeList);
+			model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
 		}
-		return "jobseekersavedsearchespopup";
-
+		model.addObject(saveSearchForm);
+		model.setViewName("jobseekersavedsearchespopup");
+        return model;
 	}
 
 	/**
@@ -130,12 +140,21 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteSavedSearch", method = RequestMethod.GET)
-	public String deleteSavedSearch(@Valid SaveSearchForm form,
-			BindingResult result) {
+	public @ResponseBody
+	JSONObject deleteResume(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			@RequestParam("saveSearchId") int saveSearchId) {
 
-		saveSearchService.deleteSavedSearch(1);
-		return "viewMySavedSearches";
-
+		boolean deleteStatus = saveSearchService
+				.deleteSavedSearch(saveSearchId);
+		JSONObject deleteStatusJson = new JSONObject();
+		if (deleteStatus) {
+			deleteStatusJson.put("success", "Record Deleted Successfully");
+			return deleteStatusJson;
+		} else {
+			deleteStatusJson.put("failed", "Failed to Delete this record");
+			return deleteStatusJson;
+		}
 	}
 
 }

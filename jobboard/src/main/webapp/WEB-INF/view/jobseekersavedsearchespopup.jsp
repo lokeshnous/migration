@@ -11,9 +11,62 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery(".megamenu").megamenu();
-	});
+	jQuery(document)
+			.ready(
+					function() {
+						$("#tb_save_search img")
+								.click(
+										function(event) {
+
+											var action = $(this).attr("alt");
+											var rowObj = $(this).parent()
+													.parent().parent();
+											var saveSearchId = rowObj
+													.attr("id");
+
+											switch (action) {
+											case "view":
+												$("form")
+														.attr(
+																"action",
+																getBaseURL()
+																		+ "savedSearches/viewMySavedSearchRecord.html?saveSearchId="
+																		+ saveSearchId);
+												$("form").submit();
+												break;
+											case "delete": {
+												$
+														.ajax({
+															url : getBaseURL()
+																	+ "/savedSearches/deleteSavedSearch.html?saveSearchId="
+																	+ saveSearchId,
+															success : function(
+																	data) {
+																if (data.success != null) {
+																	rowObj
+																			.remove();
+																	alert(data.success);
+																}
+																if (data.failure != null) {
+																	alert(data.failure);
+																}
+															},
+															error : function(
+																	response) {
+																alert("Server Error : "
+																		+ response.status);
+															},
+															complete : function() {
+
+															}
+														});
+											}
+												break;
+											}
+
+										});
+						jQuery(".megamenu").megamenu();
+					});
 </script>
 </head>
 
@@ -23,11 +76,11 @@
 		<div class="popupHeader">
 			<h2>My Saved Searches</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" alt=""></a>
+				height="19" onclick="parent.$.nmTop().close();" alt=""></a>
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form action="" method="" commandName="saveSearchForm">
+			<form:form method="" commandName="saveSearchForm">
 				<div class="row">
 					<table id="tb_save_search" width="100%" border="0" cellspacing="0"
 						cellpadding="0" class="grid">
@@ -41,15 +94,17 @@
 
 						<c:forEach items="${saveSearchedJobsDTOList}"
 							var="saveSearchdtoList">
-							<tr>
+							<tr id="${saveSearchdtoList.saveSearchID}">
 								<td><a
 									href='<c:url value="/savedSearches/viewMySavedSearchRecord.html"><c:param name="id" value="${saveSearchdtoList.getUrl()}"/> </c:url>'
 									rel="0" target="_blank" class="newWindow">${saveSearchdtoList.getSearchName()}</a></td>
-								<td align="left">${saveSearchdtoList.getModifyDate()}</td>
-								<td align="center"><form:select id="select"
-										class="jb_input3 select100 marginTopBottom0" name="select"
-										path="notify_me" items="${notifyMeList}" itemValue="optionId"
-										itemLabel="optionName" /></td>
+								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
+								<td align="center"><form:select
+										class="jb_input3 select100 marginTopBottom0"
+										path="emailFrequency" items="${notifyMeList}"
+										itemValue="optionId" itemLabel="optionName" />
+										
+								</td>
 								<td align="center"><a href="#"><img
 										src="../resources/images/View.png" width="20" height="20"
 										alt="view"></a>&nbsp;<a href='' class="nyroModal"><img
@@ -62,16 +117,15 @@
 					</table>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<a href="">
-						<h3>Create a new Saved Search</h3>
-					</a> <em class="lineHeight16">You can create up to 5 Saved
-						Searches</em>
-				</div>
-				<div class="row marginTop20 paddingBottom10">
-					<a href="" class="btn_sm orange">Save</a> <a href=""
-						onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a>
+					<a href="/jobboard/jobsearchactivity/findJobPage.html">
+						<h3>${msg.jsCreateNewSavedSearch}</h3>
+					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>
 			</form:form>
+			<div class="row marginTop20 paddingBottom10">
+				<a href="" class="btn_sm orange">Save</a> <a
+					onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a>
+			</div>
 		</div>
 		<div class="clearfix"></div>
 	</div>
