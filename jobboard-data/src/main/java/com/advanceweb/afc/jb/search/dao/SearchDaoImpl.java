@@ -69,7 +69,7 @@ public class SearchDaoImpl implements SearchDao {
 				queryDTO.setmSrchParamList(srchParamDTOList);
 			}
 			
-			LOGGER.info("Search Param List from DAO===>{"+mSrchParamList+"}");
+			//LOGGER.info("Search Param List from DAO===>{"+mSrchParamList+"}");
 
 		} catch (HibernateException e) {
 			LOGGER.debug(e);
