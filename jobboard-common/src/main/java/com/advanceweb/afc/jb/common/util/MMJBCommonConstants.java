@@ -12,6 +12,9 @@ public interface MMJBCommonConstants {
 	public static final String MOBILE_PATTERN = "((?=.*\\d).{10})";
 	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+	public static final String RESUME_TYPE_RESUME_BUILDER = "Create";
+	public static final String RESUME_TYPE_UPLOAD = "Upload";
+	public static final String RESUME_TYPE_COPY_PASTE = "CopyPaste";
 	// For DropDowns 
 	public static final String EMPLOYMENT_TYPE = "EmploymentType";
 	public static final String VISIBILITY = "Visibility" ;
