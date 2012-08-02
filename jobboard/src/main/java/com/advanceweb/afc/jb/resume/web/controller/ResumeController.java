@@ -180,9 +180,8 @@ public class ResumeController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST)
-	public String saveResumeBuilder(@ModelAttribute("saveResumeBuilder")
-	CreateResume createResume, BindingResult result,Model model){		
+	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params="Save")
+	public String saveResumeBuilder(CreateResume createResume, BindingResult result,Model model){		
 
 		ResumeDTO resumeDTO = new ResumeDTO();
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
@@ -205,7 +204,16 @@ public class ResumeController {
 
 	}
 
+	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params="Preview")
+	public ModelAndView previewResumeBuilder(CreateResume createResume){		
+		ModelAndView model = new ModelAndView();
+		model.addObject("createResume", createResume);
+		model.setViewName("viewresume");
+		return model;
 
+	}
+
+		
 	/**
 	 * This method is called to fetch the resume data to edit
 	 * @param model
