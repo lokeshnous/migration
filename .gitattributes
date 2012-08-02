@@ -81,7 +81,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeature
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/Job.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobApplicationService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostBrandingTemplate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearch.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchActivity.java -text
@@ -91,7 +90,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobService.java -t
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/SaveSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JSONConverterServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobApplicationServiceImpl.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostBrandingTemplateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobSeekerServiceImpl.java -text

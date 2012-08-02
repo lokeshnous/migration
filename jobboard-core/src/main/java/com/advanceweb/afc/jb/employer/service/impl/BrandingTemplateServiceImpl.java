@@ -20,7 +20,7 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
  * @since 17 July 2012
  * 
  */
-@Service("brandingTemplateService")
+@Service("empBrandTemp")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
