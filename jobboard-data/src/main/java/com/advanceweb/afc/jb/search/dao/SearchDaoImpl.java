@@ -37,9 +37,13 @@ public class SearchDaoImpl implements SearchDao {
 	}
 
 	/**
-	 * This method is used for getting the parameter lists from the DB for 
-	 * creating the SOLR query.
-	 * @throws JobBoardDataException 
+	 * This method is used for getting the parameter lists from the DB for creating the SOLR query.
+	 * @param searchIndexName represents search index name
+	 * @param environment
+	 * @param searchIndexGroup represents search index group
+	 * @param searchTypeName represents search type name
+	 * @return QueryDTO object of QueryDTO
+	 * @throws JobBoardDataException
 	 */
 	public QueryDTO getSearchQueryDTO(String searchIndexName,
 			String environment, String searchIndexGroup, String searchTypeName) throws JobBoardDataException {
