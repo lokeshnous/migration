@@ -18,7 +18,7 @@ import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.MerLookup;
+import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
@@ -109,10 +109,7 @@ public class ResumeDaoImpl implements ResumeDao {
 							+ " and visibility___Public_Private__='"
 							+ visibilityDropDown.get(0).getOptionId() + "'");
 			if (resumes.size() > 0) {
-				resumes.get(0)
-						.setVisibility___Public_Private__(
-								String.valueOf(visibilityDropDown.get(1)
-										.getOptionId()));
+//				resumes.get(0).setVisibility___Public_Private__(String.valueOf(visibilityDropDown.get(1).getOptionId()));
 				hibernateTemplate.update(resumes.get(0));
 			}
 		}
@@ -277,13 +274,13 @@ public class ResumeDaoImpl implements ResumeDao {
 	 */
 	@Override
 	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
-		List<MerLookup> merLookupList = hibernateTemplate
-				.find("from MerLookup e where e.lookupCategory='"
+		List<JpAttribList> merLookupList = hibernateTemplate
+				.find("from JpAttribList e where e.lookupCategory='"
 						+ MMJBCommonConstants.VISIBILITY_PUBLIC + "'");
-		MerLookup merLookup = merLookupList.get(0);
+		JpAttribList JpAttribList = merLookupList.get(0);
 		List<ResUploadResume> resumes = hibernateTemplate
 				.find("from ResUploadResume where userId = " + jobSeekerId
-						+ " AND visibility = " + merLookup.getLookupId());
+						+ " AND visibility = " + JpAttribList.getAttribListId());
 		ResumeDTO resumeDTO = resumeConversionHelper
 				.transformResUploadResumeListToResumeDTOList(resumes).get(0);
 		return resumeDTO;

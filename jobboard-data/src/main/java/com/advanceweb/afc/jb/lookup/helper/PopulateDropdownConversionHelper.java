@@ -22,39 +22,39 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
-import com.advanceweb.afc.jb.data.entities.MerLookup;
+import com.advanceweb.afc.jb.data.entities.JpAttribList;
 
 @Repository("dropdownHelper")
 public class PopulateDropdownConversionHelper {
 	
 
-	public List<DropDownDTO> convertMerLookupToLookUpDTO(List<MerLookup> merLookupList){
+	public List<DropDownDTO> convertMerLookupToLookUpDTO(List<JpAttribList> merLookupList){
 		
 		DropDownDTO lookUpDTO = null;
 		List<DropDownDTO> list = new ArrayList();
-		for(MerLookup merUtility : merLookupList){
+		for(JpAttribList merUtility : merLookupList){
 
 			lookUpDTO = new DropDownDTO();
 
-			lookUpDTO.setOptionId(String.valueOf(merUtility.getLookupId()));
-			lookUpDTO.setOptionName(merUtility.getLookupName());
+			lookUpDTO.setOptionId(String.valueOf(merUtility.getAttribListId()));
+			lookUpDTO.setOptionName(merUtility.getAttribValue());
 
 			list.add(lookUpDTO);
 		}		
 		return list;
 		
 	}
-	public List<CountryDTO> convertMerUtilityToCountryDTO(List<MerLookup> merUtilityList){
+	public List<CountryDTO> convertMerUtilityToCountryDTO(List<JpAttribList> merUtilityList){
 
 		CountryDTO countryDTO = null;
 		List<CountryDTO> list = new ArrayList();
 
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 
 			countryDTO = new CountryDTO();
 
-			countryDTO.setCountryId(String.valueOf(merUtility.getLookupId()));
-			countryDTO.setCountryValue(merUtility.getLookupName());
+			countryDTO.setCountryId(String.valueOf(merUtility.getAttribListId()));
+			countryDTO.setCountryValue(merUtility.getAttribValue());
 
 			list.add(countryDTO);
 		}		
@@ -63,17 +63,17 @@ public class PopulateDropdownConversionHelper {
 	
 	
 
-	public List<EmploymentInfoDTO> convertMerUtilityToEmploymentInfoDTO(List<MerLookup> merUtilityList){
+	public List<EmploymentInfoDTO> convertMerUtilityToEmploymentInfoDTO(List<JpAttribList> merUtilityList){
 
 		EmploymentInfoDTO employmentInfoDTO = null;
 		List<EmploymentInfoDTO> list = new ArrayList();
 
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 
 			employmentInfoDTO = new EmploymentInfoDTO();
 
-			employmentInfoDTO.setInfoId(String.valueOf(merUtility.getLookupId()));
-			employmentInfoDTO.setInfoName(merUtility.getLookupName());
+			employmentInfoDTO.setInfoId(String.valueOf(merUtility.getAttribListId()));
+			employmentInfoDTO.setInfoName(merUtility.getAttribValue());
 
 			list.add(employmentInfoDTO);
 		}		
@@ -81,17 +81,17 @@ public class PopulateDropdownConversionHelper {
 	}
 	
 
-	public List<SubscriptionsDTO> convertMerUtilityToSubscriptionsDTO(List<MerLookup> merUtilityList){
+	public List<SubscriptionsDTO> convertMerUtilityToSubscriptionsDTO(List<JpAttribList> merUtilityList){
 
 		SubscriptionsDTO subscriptionsDTO = null;
 		List<SubscriptionsDTO> list = new ArrayList();
 
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 
 			subscriptionsDTO = new SubscriptionsDTO();
 
-			subscriptionsDTO.setSubscriptionId(String.valueOf(merUtility.getLookupId()));
-			subscriptionsDTO.setSubscriptionName(merUtility.getLookupName());
+			subscriptionsDTO.setSubscriptionId(String.valueOf(merUtility.getAttribListId()));
+			subscriptionsDTO.setSubscriptionName(merUtility.getAttribValue());
 
 			list.add(subscriptionsDTO);
 		}		
@@ -99,24 +99,24 @@ public class PopulateDropdownConversionHelper {
 	}
 	
 
-	/*public List<CountryDTO> convertMerLookupToDTO(List<MerLookup> MerLookupList){
+	/*public List<CountryDTO> convertMerLookupToDTO(List<JpAttribList> MerLookupList){
 =======
-	public List<CountryDTO> convertMerUtilityToDTO(List<MerLookup> merUtilityList){
+	public List<CountryDTO> convertMerUtilityToDTO(List<JpAttribList> merUtilityList){
 >>>>>>> .r56
 		CountryDTO countryDTO = null;
 		List<CountryDTO> list = new ArrayList();
 <<<<<<< .mine
-		for(MerLookup merLookup : MerLookupList){
+		for(JpAttribList JpAttribList : MerLookupList){
 =======
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 >>>>>>> .r56
 			countryDTO = new CountryDTO();
 <<<<<<< .mine
-			countryDTO.setCountryId(String.valueOf(merLookup.getLookupId()));
-			countryDTO.setCountryId(merLookup.getLookupName());
+			countryDTO.setCountryId(String.valueOf(JpAttribList.getAttribListId()));
+			countryDTO.setCountryId(JpAttribList.getAttribValue());
 =======
-			countryDTO.setCountryId(String.valueOf(merUtility.getLookupId()));
-			countryDTO.setCountryId(merUtility.getLookupName());
+			countryDTO.setCountryId(String.valueOf(merUtility.getAttribListId()));
+			countryDTO.setCountryId(merUtility.getAttribValue());
 >>>>>>> .r56
 			list.add(countryDTO);
 		}		
@@ -126,17 +126,17 @@ public class PopulateDropdownConversionHelper {
 	*/
 
 	
-	public List<GenderDTO> convertMerUtilityToGenderDTO(List<MerLookup> merUtilityList){
+	public List<GenderDTO> convertMerUtilityToGenderDTO(List<JpAttribList> merUtilityList){
 
 		GenderDTO genderDTO = null;
 		List<GenderDTO> list = new ArrayList();
 
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 
 			genderDTO = new GenderDTO();
 
-			genderDTO.setGenderId(String.valueOf(merUtility.getLookupId()));
-			genderDTO.setGenderName(merUtility.getLookupName());
+			genderDTO.setGenderId(String.valueOf(merUtility.getAttribListId()));
+			genderDTO.setGenderName(merUtility.getAttribValue());
 
 			list.add(genderDTO);
 		}		
@@ -144,17 +144,17 @@ public class PopulateDropdownConversionHelper {
 	}
 	
 
-	public List<EthenticityDTO> convertMerUtilityToEthenticityDTO(List<MerLookup> merUtilityList){
+	public List<EthenticityDTO> convertMerUtilityToEthenticityDTO(List<JpAttribList> merUtilityList){
 
 		EthenticityDTO ethenticityDTO = null;
 		List<EthenticityDTO> list = new ArrayList();
 
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 
 			ethenticityDTO = new EthenticityDTO();
 
-			ethenticityDTO.setEthencityId(String.valueOf(merUtility.getLookupId()));
-			ethenticityDTO.setEthencityValue(merUtility.getLookupName());
+			ethenticityDTO.setEthencityId(String.valueOf(merUtility.getAttribListId()));
+			ethenticityDTO.setEthencityValue(merUtility.getAttribValue());
 
 			list.add(ethenticityDTO);
 		}		
@@ -162,17 +162,17 @@ public class PopulateDropdownConversionHelper {
 	}
 	
 
-	public List<VeteranStatusDTO> convertMerUtilityToVeteranStatusDTO(List<MerLookup> merUtilityList){
+	public List<VeteranStatusDTO> convertMerUtilityToVeteranStatusDTO(List<JpAttribList> merUtilityList){
 
 		VeteranStatusDTO veteranStatusDTO = null;
 		List<VeteranStatusDTO> list = new ArrayList();
 
-		for(MerLookup merUtility : merUtilityList){
+		for(JpAttribList merUtility : merUtilityList){
 
 			veteranStatusDTO = new VeteranStatusDTO();
 
-			veteranStatusDTO.setStatusId(String.valueOf(merUtility.getLookupId()));
-			veteranStatusDTO.setStatusValue(merUtility.getLookupName());
+			veteranStatusDTO.setStatusId(String.valueOf(merUtility.getAttribListId()));
+			veteranStatusDTO.setStatusValue(merUtility.getAttribValue());
 
 			list.add(veteranStatusDTO);
 		}		
@@ -182,19 +182,19 @@ public class PopulateDropdownConversionHelper {
 	
 	
 	/**@Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of RadiusDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of RadiusDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of RadiusDTO
 	  */
-	public List<RadiusDTO> convertMerLookupToRadiusListDTO(List<MerLookup> merLookupList){
+	public List<RadiusDTO> convertMerLookupToRadiusListDTO(List<JpAttribList> merLookupList){
 		
 		RadiusDTO radiusDTO=null;
 		List<RadiusDTO> list = new ArrayList<RadiusDTO>();
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			radiusDTO = new RadiusDTO();
-			radiusDTO.setRadiusId(String.valueOf(merLookup.getLookupId()));
-			radiusDTO.setRadiusValue(merLookup.getLookupName());
+			radiusDTO.setRadiusId(String.valueOf(JpAttribList.getAttribListId()));
+			radiusDTO.setRadiusValue(JpAttribList.getAttribValue());
 			list.add(radiusDTO);
 		}
 		return list;
@@ -203,19 +203,19 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of ExcludeFromDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of ExcludeFromDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of ExcludeFromDTO
 	 * 
 	 */
-	public List<ExcludeFromDTO> convertMerLookupToExcludeFromListDTO(List<MerLookup> merLookupList){
+	public List<ExcludeFromDTO> convertMerLookupToExcludeFromListDTO(List<JpAttribList> merLookupList){
 		ExcludeFromDTO excludeFromDTO=null;
 		List<ExcludeFromDTO> list = new ArrayList<ExcludeFromDTO>();
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			excludeFromDTO = new ExcludeFromDTO();
-			excludeFromDTO.setExcludeFromId(String.valueOf(merLookup.getLookupId()));
-			excludeFromDTO.setExcludeFromValue(merLookup.getLookupName());
+			excludeFromDTO.setExcludeFromId(String.valueOf(JpAttribList.getAttribListId()));
+			excludeFromDTO.setExcludeFromValue(JpAttribList.getAttribValue());
 			list.add(excludeFromDTO);
 		}
 		return list;
@@ -225,20 +225,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of FromZipcodeDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of FromZipcodeDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of FromZipcodeDTO
 	 * 
 	 */
-	public List<FromZipcodeDTO> convertMerLookupToFromZipcodeListDTO(List<MerLookup> merLookupList){
+	public List<FromZipcodeDTO> convertMerLookupToFromZipcodeListDTO(List<JpAttribList> merLookupList){
 		FromZipcodeDTO fromZipcodeDTO=null;
 		List<FromZipcodeDTO> list = new ArrayList<FromZipcodeDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			fromZipcodeDTO = new FromZipcodeDTO();
-			fromZipcodeDTO.setFromZipcodeId(String.valueOf(merLookup.getLookupId()));
-			fromZipcodeDTO.setFromZipcodeValue(merLookup.getLookupName());
+			fromZipcodeDTO.setFromZipcodeId(String.valueOf(JpAttribList.getAttribListId()));
+			fromZipcodeDTO.setFromZipcodeValue(JpAttribList.getAttribValue());
 			list.add(fromZipcodeDTO);
 		}
 		return list;
@@ -248,20 +248,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of StateDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of StateDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of StateDTO
 	 * 
 	 */
-	public List<StateDTO> convertMerLookupToStateListDTO(List<MerLookup> merLookupList){
+	public List<StateDTO> convertMerLookupToStateListDTO(List<JpAttribList> merLookupList){
 		StateDTO stateDTO=null;
 		List<StateDTO> list = new ArrayList<StateDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			stateDTO = new StateDTO();
-			stateDTO.setStateId(merLookup.getLookupId());
-			stateDTO.setStateValue(merLookup.getLookupName());
+			stateDTO.setStateId(JpAttribList.getAttribListId());
+			stateDTO.setStateValue(JpAttribList.getAttribValue());
 			list.add(stateDTO);
 		}
 		return list;}
@@ -269,20 +269,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of MetroAreaDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of MetroAreaDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of MetroAreaDTO
 	 * 
 	 */
-	public List<MetroAreaDTO> convertMerLookupToMetroAreaListDTO(List<MerLookup> merLookupList){
+	public List<MetroAreaDTO> convertMerLookupToMetroAreaListDTO(List<JpAttribList> merLookupList){
 		MetroAreaDTO metroAreaDTO=null;
 		List<MetroAreaDTO> list = new ArrayList<MetroAreaDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			metroAreaDTO = new MetroAreaDTO();
-			metroAreaDTO.setMetroAreaId(String.valueOf(merLookup.getLookupId()));
-			metroAreaDTO.setMetroAreaValue(merLookup.getLookupName());
+			metroAreaDTO.setMetroAreaId(String.valueOf(JpAttribList.getAttribListId()));
+			metroAreaDTO.setMetroAreaValue(JpAttribList.getAttribValue());
 			list.add(metroAreaDTO);
 		}
 		return list;}
@@ -290,21 +290,21 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of EmploymentTypeDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of EmploymentTypeDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of EmploymentTypeDTO
 	 * 
 	 */
-	public List<EmploymentTypeDTO> convertMerLookupToEmploymentTypeListDTO(List<MerLookup> merLookupList){
+	public List<EmploymentTypeDTO> convertMerLookupToEmploymentTypeListDTO(List<JpAttribList> merLookupList){
 		
 		EmploymentTypeDTO employmentTypeDTO=null;
 		List<EmploymentTypeDTO> list = new ArrayList<EmploymentTypeDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			employmentTypeDTO = new EmploymentTypeDTO();
-			employmentTypeDTO.setEmploymentTypeId(merLookup.getLookupId());
-			employmentTypeDTO.setEmploymentTypeValue(merLookup.getLookupName());
+			employmentTypeDTO.setEmploymentTypeId(JpAttribList.getAttribListId());
+			employmentTypeDTO.setEmploymentTypeValue(JpAttribList.getAttribValue());
 			list.add(employmentTypeDTO);
 		}
 		return list;}
@@ -312,20 +312,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Prince Mathew
-	   @Purpose:TO convert the List of MerLookup to the List of JobPostedDateDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of JobPostedDateDTO
 	   @Created:Jul 10, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of JobPostedDateDTO
 	 * 
 	 */
-	public List<JobPostedDateDTO> convertMerLookupToJobPostedDateListDTO(List<MerLookup> merLookupList){
+	public List<JobPostedDateDTO> convertMerLookupToJobPostedDateListDTO(List<JpAttribList> merLookupList){
 		JobPostedDateDTO jobPostedDateDTO=null;
 		List<JobPostedDateDTO> list = new ArrayList<JobPostedDateDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			jobPostedDateDTO = new JobPostedDateDTO();
-			jobPostedDateDTO.setJobPostedDateId(String.valueOf(merLookup.getLookupId()));
-			jobPostedDateDTO.setJobPostedDateValue(merLookup.getLookupName());
+			jobPostedDateDTO.setJobPostedDateId(String.valueOf(JpAttribList.getAttribListId()));
+			jobPostedDateDTO.setJobPostedDateValue(JpAttribList.getAttribValue());
 			list.add(jobPostedDateDTO);
 		}
 		return list;
@@ -333,20 +333,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Sasibhushan
-	   @Purpose:TO convert the List of MerLookup to the List of JobAlertsDTO
+	   @Purpose:TO convert the List of JpAttribList to the List of JobAlertsDTO
 	   @Created:Jul 12, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of JobAlertsDTO
 	 * 
 	 */
-	public List<JobAlertsDTO> convertMerLookupToJobAlertsDTO(List<MerLookup> merLookupList){
+	public List<JobAlertsDTO> convertMerLookupToJobAlertsDTO(List<JpAttribList> merLookupList){
 	
 		List<JobAlertsDTO> list = new ArrayList<JobAlertsDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			JobAlertsDTO jobAlertsDTO=new JobAlertsDTO();
-			jobAlertsDTO.setAlertId(String.valueOf(merLookup.getLookupId()));
-			jobAlertsDTO.setAlertName(merLookup.getLookupName());
+			jobAlertsDTO.setAlertId(String.valueOf(JpAttribList.getAttribListId()));
+			jobAlertsDTO.setAlertName(JpAttribList.getAttribValue());
 			list.add(jobAlertsDTO);
 		}
 		return list;
@@ -354,20 +354,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Sasibhushan
-	   @Purpose:TO convert the List of MerLookup to the List of Magazines DTO
+	   @Purpose:TO convert the List of JpAttribList to the List of Magazines DTO
 	   @Created:Jul 12, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of MagazinesDTO
 	 * 
 	 */
-	public List<MagazinesDTO> convertMerLookupToMagazinesDTO(List<MerLookup> merLookupList){
+	public List<MagazinesDTO> convertMerLookupToMagazinesDTO(List<JpAttribList> merLookupList){
 	
 		List<MagazinesDTO> list = new ArrayList<MagazinesDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			MagazinesDTO magazinesDTO=new MagazinesDTO();
-			magazinesDTO.setMagazineId(String.valueOf(merLookup.getLookupId()));
-			magazinesDTO.setMagazineName(merLookup.getLookupName());
+			magazinesDTO.setMagazineId(String.valueOf(JpAttribList.getAttribListId()));
+			magazinesDTO.setMagazineName(JpAttribList.getAttribValue());
 			list.add(magazinesDTO);
 		}
 		return list;
@@ -375,20 +375,20 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Sasibhushan
-	   @Purpose:TO convert the List of MerLookup to the List of Magazines DTO
+	   @Purpose:TO convert the List of JpAttribList to the List of Magazines DTO
 	   @Created:Jul 12, 2012
-	   @Param  :List of MerLookup
+	   @Param  :List of JpAttribList
 	   @Return :List of MagazinesDTO
 	 * 
 	 */
-	public List<ResumeVisibilityDTO> convertMerLookupToVisibilityDTO(List<MerLookup> merLookupList){
+	public List<ResumeVisibilityDTO> convertMerLookupToVisibilityDTO(List<JpAttribList> merLookupList){
 	
 		List<ResumeVisibilityDTO> list = new ArrayList<ResumeVisibilityDTO>();
 		
-		for(MerLookup merLookup : merLookupList){
+		for(JpAttribList JpAttribList : merLookupList){
 			ResumeVisibilityDTO visibilityDTO=new ResumeVisibilityDTO();
-			visibilityDTO.setVisibilityId(String.valueOf(merLookup.getLookupId()));
-			visibilityDTO.setVisibilityName(merLookup.getLookupName());
+			visibilityDTO.setVisibilityId(String.valueOf(JpAttribList.getAttribListId()));
+			visibilityDTO.setVisibilityName(JpAttribList.getAttribValue());
 			list.add(visibilityDTO);
 		}
 		return list;

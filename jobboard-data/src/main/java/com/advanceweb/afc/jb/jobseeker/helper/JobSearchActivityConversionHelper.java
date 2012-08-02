@@ -12,7 +12,6 @@ import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
-import com.advanceweb.afc.jb.data.entities.JpSaveJob;
 
 /**
  * <code> JobSearchActivityConversionHelper </code> is a Conversion Helper class
@@ -113,14 +112,14 @@ public class JobSearchActivityConversionHelper {
 				appliedDate = DateUtils
 						.convertDateStringToSQLDate(strAppliedDate);
 			}
-			admSaveJob.setAppliedDt(appliedDate);
+//			admSaveJob.setAppliedDt(appliedDate);
 			String strDeleteDt = jobDTO.getDeleteDt();
 			java.sql.Date deleteDtDate = null;
 			if (strDeleteDt != null) {
 				deleteDtDate = DateUtils
 						.convertDateStringToSQLDate(strDeleteDt);
 			}
-			admSaveJob.setAppliedDt(appliedDate);
+//			admSaveJob.setAppliedDt(appliedDate);
 			admSaveJob.setDeleteDt(deleteDtDate);
 		}
 		return admSaveJob;
@@ -133,11 +132,11 @@ public class JobSearchActivityConversionHelper {
 	 * @param saveSearchedJobsDTO
 	 * @return JpSaveSearch
 	 */
-	public JpSaveJob transformSearchedJobDTOtoJpSaveJob(
+	public AdmSaveJob transformSearchedJobDTOtoJpSaveJob(
 			SearchedJobDTO searchedJobDTO) {
-		JpSaveJob jpSaveJob = new JpSaveJob();
+		AdmSaveJob jpSaveJob = new AdmSaveJob();
 		jpSaveJob.setUserId(searchedJobDTO.getUserID());
-		jpSaveJob.setJobId(searchedJobDTO.getJobID());
+		jpSaveJob.setSaveJobId(searchedJobDTO.getJobID());
 		// jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
 		// jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
 		jpSaveJob.setCreateDt(searchedJobDTO.getCreatedDate());

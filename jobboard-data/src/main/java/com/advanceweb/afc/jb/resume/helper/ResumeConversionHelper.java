@@ -48,11 +48,11 @@ public class ResumeConversionHelper {
 		if(resume.getUpdateDt() != null){
 			resumeDTO.setUpdateDt(DateUtils.convertSQLDateTimeToStdDateTime(resume.getUpdateDt().toString()));
 		}
-		resumeDTO.setDesired_job_title(resume.getJobTitle());
-		resumeDTO.setEmploymentType(String.valueOf(resume.getEmpTypeLookupId()));
-		resumeDTO.setWilling_to_relocate(resume.getRelocate());
-		resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
-		resumeDTO.setWork_authorization_US(String.valueOf(resume.getWorkAuthLookupId()));
+//		resumeDTO.setDesired_job_title(resume.getJobTitle());
+//		resumeDTO.setEmploymentType(String.valueOf(resume.getEmpTypeLookupId()));
+//		resumeDTO.setWilling_to_relocate(resume.getRelocate());
+//		resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
+//		resumeDTO.setWork_authorization_US(String.valueOf(resume.getWorkAuthLookupId()));
 		return resumeDTO;
 
 	}
@@ -107,7 +107,7 @@ public class ResumeConversionHelper {
 				dto.setBuilderCertId(entity.getBuilderCertificationId());
 				dto.setCertificationName(entity.getCertificationName());
 				dto.setDateOfReceipt(String.valueOf(entity.getEarnedDt()));
-				dto.setInstituteName(entity.getInstitutionName());
+//				dto.setInstituteName(entity.getInstitutionName());
 				dto.setSummary(entity.getDescription());
 				listCertDTO.add(dto);
 			}
@@ -187,11 +187,11 @@ public class ResumeConversionHelper {
 //				dto.setDegreeLvl(entity.get);
 //				dto.setDegrees(degrees);
 //				dto.setEduDegreeDTO(eduDegreeDTO);
-				dto.setEndDate(String.valueOf(entity.getEnd_Date()));
-				dto.setFieldOfStudy(entity.getCourseOfStudy());
-				dto.setInstituteName(entity.getInstitutionName());
-				dto.setLanguage(String.valueOf(entity.getLanguageLookupId()));
-				dto.setStartDate(String.valueOf(entity.getStartDate()));
+//				dto.setEndDate(String.valueOf(entity.getEnd_Date()));
+//				dto.setFieldOfStudy(entity.getCourseOfStudy());
+//				dto.setInstituteName(entity.getInstitutionName());
+//				dto.setLanguage(String.valueOf(entity.getLanguageLookupId()));
+//				dto.setStartDate(String.valueOf(entity.getStartDate()));
 				
 				listEduDTO.add(dto);
 			}
@@ -223,17 +223,17 @@ public class ResumeConversionHelper {
 		if(null != listEmp){
 			for(ResBuilderEmployment entity:listEmp){
 				WorkExpDTO dto = new WorkExpDTO();
-				dto.setAnnualSalary(String.valueOf(entity.getAnnualSalLookupId()));
-				dto.setBuilderEmpId(entity.getBuilderEmploymentId());
-				dto.setCurrentCareerLvl(entity.getPositionName());
-//				dto.setDescription(entity.get);
-				dto.setEmployerName(entity.getEmployerName());
-				dto.setEmploymentType(String.valueOf(entity.getEmpTypeLookupId()));
-				dto.setEndDate(String.valueOf(entity.getSeparationDt()));
-				dto.setHrlyPayRate(String.valueOf(entity.getHrPayRateLookupId()));
-				dto.setJobTitle(entity.getJobTitle());
-				dto.setStartDate(String.valueOf(entity.getEmploymentDt()));
-				dto.setYrsAtPostion(String.valueOf(entity.getStillEmployed()));
+//				dto.setAnnualSalary(String.valueOf(entity.getAnnualSalLookupId()));
+//				dto.setBuilderEmpId(entity.getBuilderEmploymentId());
+//				dto.setCurrentCareerLvl(entity.getPositionName());
+////				dto.setDescription(entity.get);
+//				dto.setEmployerName(entity.getEmployerName());
+//				dto.setEmploymentType(String.valueOf(entity.getEmpTypeLookupId()));
+//				dto.setEndDate(String.valueOf(entity.getSeparationDt()));
+//				dto.setHrlyPayRate(String.valueOf(entity.getHrPayRateLookupId()));
+//				dto.setJobTitle(entity.getJobTitle());
+//				dto.setStartDate(String.valueOf(entity.getEmploymentDt()));
+//				dto.setYrsAtPostion(String.valueOf(entity.getStillEmployed()));
 				
 				listWorkExpDTO.add(dto);
 			}
@@ -256,7 +256,7 @@ public class ResumeConversionHelper {
 			ResumeDTO resumeDTO = new ResumeDTO();
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResume_name(resume.getResumeName());
-			resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
+//			resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
 			if(resume.getUpdateDt() != null){
 				resumeDTO.setUpdateDt(DateUtils.convertSQLDateTimeToStdDateTime(resume.getUpdateDt().toString()));
 			}
@@ -316,12 +316,12 @@ public class ResumeConversionHelper {
 		resUploadResume.setUserId(createResumeDTO.getUserId());
 		resUploadResume.setResumeType(createResumeDTO.getResumeType());
 		resUploadResume.setResumeName(createResumeDTO.getResume_name());
-		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());		
-		resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
+//		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+//		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+//		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+//		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+//		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());		
+//		resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
 
 		return resUploadResume;		
 	}
@@ -338,11 +338,11 @@ public class ResumeConversionHelper {
 //		resUploadResume.setUserId(createResumeDTO.getUserId());
 		resUploadResume.setResumeType(createResumeDTO.getResumeType());
 		resUploadResume.setResumeName(createResumeDTO.getResume_name());
-		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());		
+//		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+//		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+//		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+//		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+//		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());		
 //		resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
 		resUploadResume.setUpdateDt(new Timestamp(new Date().getTime()));
 
@@ -365,11 +365,11 @@ public class ResumeConversionHelper {
 		resUploadResume.setResumeName(createResumeDTO.getResume_name());
 		
 		//commented for the new database
-		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
+//		resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+//		resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+//		resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+//		resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+//		resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
 		
 		resUploadResume.setResumeText(createResumeDTO.getResumeText());
 		resUploadResume.setIsPublished(Short.parseShort(createResumeDTO.getIsPublished()));
@@ -436,7 +436,7 @@ public class ResumeConversionHelper {
 				certEntity.setEarnedDt(DateUtils.convertStringToSQLDateTime(certDTO.getDateOfReceipt()));
 				certEntity.setExpireDt(null);
 				certEntity.setCertificationName(certDTO.getCertificationName());
-				certEntity.setInstitutionName(certDTO.getInstituteName());
+//				certEntity.setInstitutionName(certDTO.getInstituteName());
 				certEntity.setResBuilderResume(builderResume);
 				listCertEntity.add(certEntity);
 			}

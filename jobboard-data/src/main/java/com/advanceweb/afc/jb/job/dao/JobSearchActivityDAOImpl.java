@@ -14,7 +14,6 @@ import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
-import com.advanceweb.afc.jb.data.entities.JpSaveJob;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSearchActivityConversionHelper;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerActivityConversionHelper;
 
@@ -141,8 +140,8 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 			 */
 			AdmSaveJob admSaveJob = (AdmSaveJob) hibernateTemplate.load(
 					AdmSaveJob.class, jobDTO.getSaveJobId());
-
-			admSaveJob.setAppliedDt(new java.util.Date());
+			
+//			admSaveJob.setAppliedDt(new java.util.Date());
 			hibernateTemplate.update(admSaveJob);
 			status = true;
 		} catch (HibernateException e) {
@@ -157,7 +156,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	@Override
 	public void saveTheJob(SearchedJobDTO searchedJobDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
-		JpSaveJob jpSaveJob = jobSearchActivityConversionHelper
+		AdmSaveJob jpSaveJob = jobSearchActivityConversionHelper
 				.transformSearchedJobDTOtoJpSaveJob(searchedJobDTO);
 		hibernateTemplate.saveOrUpdate(jpSaveJob);
 	}

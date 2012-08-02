@@ -52,11 +52,11 @@ public class JobSeekerActivityConversionHelper {
 				// .toString()));
 				// }
 				// appliedJobDTO.setDeleteDt(job.getDeleteDt());
-				java.util.Date appliedDate = job.getAppliedDt();
-				if (appliedDate != null) {
-					appliedJobDTO.setAppliedDt(DateUtils
-							.convertSQLDateToStdDate(appliedDate.toString()));
-				}
+//				java.util.Date appliedDate = job.getAppliedDt();
+//				if (appliedDate != null) {
+//					appliedJobDTO.setAppliedDt(DateUtils
+//							.convertSQLDateToStdDate(appliedDate.toString()));
+//				}
 				java.util.Date createdDate = job.getCreateDt();
 				if (createdDate != null) {
 					appliedJobDTO.setCreateDt(DateUtils

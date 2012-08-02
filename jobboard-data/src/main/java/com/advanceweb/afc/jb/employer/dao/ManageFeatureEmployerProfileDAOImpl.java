@@ -74,7 +74,8 @@ ManageFeatureEmployerProfileDAO {
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
-				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+//				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				//companyProfileDTO.setPositionTitle(facility.get);
@@ -103,7 +104,8 @@ ManageFeatureEmployerProfileDAO {
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
-				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+//				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				//companyProfileDTO.setPositionTitle(facility.get);

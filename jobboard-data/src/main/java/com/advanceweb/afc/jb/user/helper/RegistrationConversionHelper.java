@@ -27,26 +27,26 @@ public class RegistrationConversionHelper {
 			entity.setEmail(userDTO.getEmailId());
 			entity.setPassword(userDTO.getPassword());
 			entity.setLastName(userDTO.getLastName());
-			entity.setIndustry(userDTO.getIndustry());
-			entity.setProfession(userDTO.getProfession());
-			entity.setSpeciality(userDTO.getSpeciality());
-			entity.setJobTitle(userDTO.getJobTitle());
+//			entity.setIndustry(userDTO.getIndustry());
+//			entity.setProfession(userDTO.getProfession());
+//			entity.setSpeciality(userDTO.getSpeciality());
+//			entity.setJobTitle(userDTO.getJobTitle());
 			if(userDTO.getUserId() != 0){
 				entity.setUserId(userDTO.getUserId());
 			}
 		}
 		
 		if(addDTO != null){
-			entity.setMobileNo(addDTO.getPhone());
-			entity.setCountryLocationId(addDTO.getCountry());
-			entity.setZipCodeLocationId(addDTO.getZipCode());		
+//			entity.setMobileNo(addDTO.getPhone());
+//			entity.setCountryLocationId(addDTO.getCountry());
+//			entity.setZipCodeLocationId(addDTO.getZipCode());		
 		}
 		
 		if(profileDTO != null){
-			entity.setGender(profileDTO.getGender());
-			entity.setEthinicityLookupId(Integer.valueOf(profileDTO.getEthinicity()));
-			entity.setEmpinfoLookupId(Integer.valueOf(profileDTO.getEmploymentInformation()));
-			entity.setVeteranLookupId(Integer.valueOf(profileDTO.getVeteranStatus()));
+//			entity.setGender(profileDTO.getGender());
+//			entity.setEthinicityLookupId(Integer.valueOf(profileDTO.getEthinicity()));
+//			entity.setEmpinfoLookupId(Integer.valueOf(profileDTO.getEmploymentInformation()));
+//			entity.setVeteranLookupId(Integer.valueOf(profileDTO.getVeteranStatus()));
 		}
 		
 		return entity;
@@ -66,10 +66,10 @@ public class RegistrationConversionHelper {
 			dto.setLastName(entity.getLastName());
 			dto.setMiddleName(entity.getMiddleName());
 			dto.setPassword(entity.getPassword());
-			dto.setJobTitle(entity.getJobTitle());
-			dto.setProfession(entity.getProfession());
-			dto.setSpeciality(entity.getSpeciality());
-			dto.setIndustry(entity.getIndustry());
+//			dto.setJobTitle(entity.getJobTitle());
+//			dto.setProfession(entity.getProfession());
+//			dto.setSpeciality(entity.getSpeciality());
+//			dto.setIndustry(entity.getIndustry());
 		}
 		return dto;
 
@@ -86,11 +86,11 @@ public class RegistrationConversionHelper {
 //			dto.setCity(entity.);
 //			dto.setAddress1(address1);
 //			dto.setAddress2(address2);
-			dto.setCountry(entity.getCountryLocationId());
-			dto.setPhone(entity.getMobileNo());		
+//			dto.setCountry(entity.getCountryLocationId());
+//			dto.setPhone(entity.getMobileNo());		
 //			dto.setState(entity.g);
 //			dto.setStreet(entity.get);
-			dto.setZipCode(entity.getZipCodeLocationId());
+//			dto.setZipCode(entity.getZipCodeLocationId());
 		}
 		return dto;
 
@@ -104,10 +104,10 @@ public class RegistrationConversionHelper {
 	public JobSeekerProfileDTO transformMerUserToProfileDTO(MerUser entity) {
 		JobSeekerProfileDTO dto = new JobSeekerProfileDTO();
 		if (entity != null) {
-			dto.setEmploymentInformation(String.valueOf(entity.getEmpinfoLookupId()));
-			dto.setEthinicity(String.valueOf(entity.getEthinicityLookupId()));
-			dto.setGender(String.valueOf(entity.getGender()));
-			dto.setVeteranStatus(String.valueOf(entity.getVeteranLookupId()));
+//			dto.setEmploymentInformation(String.valueOf(entity.getEmpinfoLookupId()));
+//			dto.setEthinicity(String.valueOf(entity.getEthinicityLookupId()));
+//			dto.setGender(String.valueOf(entity.getGender()));
+//			dto.setVeteranStatus(String.valueOf(entity.getVeteranLookupId()));
 		}
 		return dto;
 

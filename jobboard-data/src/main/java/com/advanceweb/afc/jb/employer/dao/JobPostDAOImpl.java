@@ -13,7 +13,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.data.entities.JpJob;
-import com.advanceweb.afc.jb.data.entities.MerLookup;
+import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
@@ -95,7 +95,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return null;*/
 		
 		try {
-			List<MerLookup> merLookupList =  hibernateTemplateTracker.find("from MerLookup e where e.lookupCategory='State' and e.lookupStatus='1'");
+			List<JpAttribList> merLookupList =  hibernateTemplateTracker.find("from JpAttribList e where e.lookupCategory='State' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
 		} catch (HibernateException e) {
 			

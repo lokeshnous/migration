@@ -28,10 +28,10 @@ public class SaveSearchConversionHelper {
 	public AdmSaveSearch transformSaveSearch(
 			SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		AdmSaveSearch admSaveSearch = new AdmSaveSearch(); 
-		admSaveSearch.setUserID(saveSearchedJobsDTO.getUserID());
+		admSaveSearch.setUserId(saveSearchedJobsDTO.getUserID());
 		admSaveSearch.setUrl(saveSearchedJobsDTO.getUrl());
 		admSaveSearch.setSearchName(saveSearchedJobsDTO.getSearchName());
-		admSaveSearch.setCreateDate(saveSearchedJobsDTO.getCreatedDate());
+		admSaveSearch.setCreateDt(saveSearchedJobsDTO.getCreatedDate());
 		return admSaveSearch;
 	}
 
@@ -50,9 +50,9 @@ public class SaveSearchConversionHelper {
 			saveSearchedJobsDTO.setUrl(admSaveSearch.getUrl());
 			saveSearchedJobsDTO.setSearchName(admSaveSearch.getSearchName());
 			saveSearchedJobsDTO.setEmailFrequency(admSaveSearch.getEmailFrequency());
-			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDate());
-			saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDate().toString()));
-			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeletedDate());		
+			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDt());
+			saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDt().toString()));
+			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());		
 			saveSearchedJobsDTOList.add(saveSearchedJobsDTO);
 		}
 		return saveSearchedJobsDTOList;

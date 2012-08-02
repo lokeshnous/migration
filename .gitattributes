@@ -253,12 +253,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobApplicationDAO.java
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobApplicationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobDAOImpl.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobPostBrandingTempDAO.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobPostBrandingTempDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobSearchActivityDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobSearchActivityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/helper/JobApplicationConversionHelper.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/job/helper/JobPostBrandTempConvnHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerActivityDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerActivityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerRegistrationDAO.java -text
