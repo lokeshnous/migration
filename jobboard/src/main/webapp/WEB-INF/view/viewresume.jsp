@@ -133,7 +133,7 @@
               <div class="MidContent_Wrapper floatLeft">
               <div class="popupHeader Padding0  OrangeBG">
                   <h2>VIEW YOUR RESUME</h2>
-          <span class="floatRight marginRight10"><a href="#" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
+          <span class="floatRight marginRight10"><a href="/jobboard/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
 
         
         <div class="clearfix"></div>

@@ -137,7 +137,7 @@
               <div class="MidContent_Wrapper floatLeft">
         <div class="popupHeader Padding0  OrangeBG">
                   <h2>CREATE YOUR RESUME</h2>
-                  <span class="floatRight marginRight10"><a href="#" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
+                  <span class="floatRight marginRight10"><a href="/jobboard/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
         <div class="clearfix"></div>
         <div class="MidContent_Wrapper FloatLeft"><span>
           <h1 class="marginTop3 marginLeft10 width305 FloatLeft FontSize18 TextColor03">Resume Name:</h1>
@@ -716,8 +716,12 @@
                 </div>               
       </div>
       <div class="clearfix"></div><br />
-       <span class="marginBottom10 FloatLeft"><a href="#" class="btn_sm orange">Save</a><a href="#" class="btn_sm orange">PREVIEW</a><a href="#" class="btn_sm orange">Cancel</a></span> 
-            </div>
+       <span class="marginBottom10 FloatLeft">
+	       <input type="submit" value="Save" name="Save" class="btn_sm orange"/>
+	       <input type="submit" value="Preview" name="Preview" class="btn_sm orange"/>
+	       <a href="/jobboard/jobSeeker/jobSeekerDashBoard.html" class="btn_sm orange">Cancel</a>	       
+       </span> 
+     </div>
    
     <!--Start:MidContant-->
 
