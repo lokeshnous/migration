@@ -175,8 +175,6 @@
 		<property name="searchIndexName" value="jobpost" />
 		<property name="searchIndexGroup" value="careers" />
 		<property name="environment" value="DEV" />
-		<property name="searchName" value="KEYWORD" />
-
 	</bean>
 	
 	
