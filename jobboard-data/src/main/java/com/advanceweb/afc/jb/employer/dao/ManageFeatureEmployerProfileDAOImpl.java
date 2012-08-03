@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.JpTemplate;
 
 /**
  * <code> ManageFeatureEmployerProfileDAOImpl </code> is a DaoIMPL class.
@@ -105,7 +106,16 @@ ManageFeatureEmployerProfileDAO {
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
 //				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
-				companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
+				
+				List<JpTemplate> jbTemplateList=admFacility.getJpTemplates();
+				if(!jbTemplateList.isEmpty()){
+					for(JpTemplate JpTemplate:jbTemplateList){
+						companyProfileDTO.setCompanyOverview(JpTemplate.getCompanyOverview());
+					}
+				}else{
+					companyProfileDTO.setCompanyOverview("");
+				}
+				//companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				//companyProfileDTO.setPositionTitle(facility.get);
