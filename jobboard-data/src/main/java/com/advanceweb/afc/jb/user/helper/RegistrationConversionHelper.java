@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.user.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
@@ -7,6 +10,8 @@ import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 
 @Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
@@ -17,9 +22,14 @@ public class RegistrationConversionHelper {
 	 * @return
 	 */
 	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto) {
-		MerUser entity = new MerUser();
+
 		MerUserDTO userDTO = dto.getMerUserDTO();
 		AddressDTO addDTO = dto.getAddressDTO();
+		
+		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
+		MerUserProfile profile = new MerUserProfile();
+		MerUser entity = new MerUser();
+		
 		JobSeekerProfileDTO profileDTO = dto.getJobSeekerProfileDTO();
 		if (userDTO != null) {
 			entity.setFirstName(userDTO.getFirstName());
@@ -27,31 +37,77 @@ public class RegistrationConversionHelper {
 			entity.setEmail(userDTO.getEmailId());
 			entity.setPassword(userDTO.getPassword());
 			entity.setLastName(userDTO.getLastName());
-//			entity.setIndustry(userDTO.getIndustry());
-//			entity.setProfession(userDTO.getProfession());
-//			entity.setSpeciality(userDTO.getSpeciality());
-//			entity.setJobTitle(userDTO.getJobTitle());
+			
 			if(userDTO.getUserId() != 0){
 				entity.setUserId(userDTO.getUserId());
 			}
 		}
-		
+	
 		if(addDTO != null){
-//			entity.setMobileNo(addDTO.getPhone());
-//			entity.setCountryLocationId(addDTO.getCountry());
-//			entity.setZipCodeLocationId(addDTO.getZipCode());		
+			profile.setCity(addDTO.getCity());
+			profile.setCountry(addDTO.getCountry());
+			profile.setState(addDTO.getState());
+			profile.setStreetAddress2(addDTO.getAddress2());
+			profile.setStreetAddress1(addDTO.getAddress1());
+			profile.setPhone(addDTO.getPhone());
+			profile.setIndustry(userDTO.getIndustry());
+			profile.setJobTitle(userDTO.getJobTitle());
+			profile.setProfession(userDTO.getProfession());
+			profile.setSpeciality(userDTO.getSpeciality());	
+			profile.setZip(addDTO.getZipCode());
 		}
 		
 		if(profileDTO != null){
-//			entity.setGender(profileDTO.getGender());
-//			entity.setEthinicityLookupId(Integer.valueOf(profileDTO.getEthinicity()));
-//			entity.setEmpinfoLookupId(Integer.valueOf(profileDTO.getEmploymentInformation()));
-//			entity.setVeteranLookupId(Integer.valueOf(profileDTO.getVeteranStatus()));
+			profile.setEthinicity(profileDTO.getEthinicity());
+			profile.setVeteranStatus(profileDTO.getVeteranStatus());	
+			profile.setGender(profileDTO.getGender());
+			if(profileDTO.getProfileId() != 0){
+				profile.setUserProfileId(userDTO.getUserId());
+			}
+
+		}
+		listProfiles.add(profile);
+		profile.setMerUser(entity);
+		entity.setMerUserProfiles(listProfiles);
+				
+		return entity;
+
+	}
+	
+	/**
+	 * Transform MerUserDTO to entity MerUser	 
+	 * @param dto
+	 * @return
+	 */
+	public MerUserProfile transformMerUserDTOToMerUserProfile(JobSeekerRegistrationDTO dto) {
+		MerUserProfile entity = new MerUserProfile();
+		MerUserDTO userDTO = dto.getMerUserDTO();
+		AddressDTO addDTO = dto.getAddressDTO();
+		JobSeekerProfileDTO profileDTO = dto.getJobSeekerProfileDTO();
+		
+		if(addDTO != null){
+			entity.setCity(addDTO.getCity());
+			entity.setCountry(addDTO.getCountry());
+			entity.setState(addDTO.getState());
+			entity.setStreetAddress2(addDTO.getAddress2());
+			entity.setStreetAddress1(addDTO.getAddress1());
+			entity.setPhone(addDTO.getPhone());
+			entity.setIndustry(userDTO.getIndustry());
+			entity.setJobTitle(userDTO.getJobTitle());
+			entity.setProfession(userDTO.getProfession());
+			entity.setSpeciality(userDTO.getSpeciality());	
+		}
+		
+		if(profileDTO != null){
+			entity.setEthinicity(profileDTO.getEthinicity());
+			entity.setVeteranStatus(profileDTO.getVeteranStatus());
+
 		}
 		
 		return entity;
 
 	}
+	
 	
 	/**
 	 * Transform MerUser to MerUserDTO

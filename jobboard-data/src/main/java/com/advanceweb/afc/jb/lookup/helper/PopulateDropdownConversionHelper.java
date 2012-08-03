@@ -23,6 +23,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.MerLocation;
 
 @Repository("dropdownHelper")
 public class PopulateDropdownConversionHelper {
@@ -31,7 +32,7 @@ public class PopulateDropdownConversionHelper {
 	public List<DropDownDTO> convertMerLookupToLookUpDTO(List<JpAttribList> merLookupList){
 		
 		DropDownDTO lookUpDTO = null;
-		List<DropDownDTO> list = new ArrayList();
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
 		for(JpAttribList merUtility : merLookupList){
 
 			lookUpDTO = new DropDownDTO();
@@ -44,18 +45,15 @@ public class PopulateDropdownConversionHelper {
 		return list;
 		
 	}
-	public List<CountryDTO> convertMerUtilityToCountryDTO(List<JpAttribList> merUtilityList){
+	public List<CountryDTO> convertMerUtilityToCountryDTO(List<Object> merUtilityList){
 
 		CountryDTO countryDTO = null;
-		List<CountryDTO> list = new ArrayList();
+		List<CountryDTO> list = new ArrayList<CountryDTO>();
 
-		for(JpAttribList merUtility : merUtilityList){
-
+		for(Object merUtility : merUtilityList){
 			countryDTO = new CountryDTO();
-
-			countryDTO.setCountryId(String.valueOf(merUtility.getAttribListId()));
-			countryDTO.setCountryValue(merUtility.getAttribValue());
-
+			countryDTO.setCountryId((String)merUtility);
+			countryDTO.setCountryValue((String)merUtility);
 			list.add(countryDTO);
 		}		
 		return list;		
@@ -66,7 +64,7 @@ public class PopulateDropdownConversionHelper {
 	public List<EmploymentInfoDTO> convertMerUtilityToEmploymentInfoDTO(List<JpAttribList> merUtilityList){
 
 		EmploymentInfoDTO employmentInfoDTO = null;
-		List<EmploymentInfoDTO> list = new ArrayList();
+		List<EmploymentInfoDTO> list = new ArrayList<EmploymentInfoDTO>();
 
 		for(JpAttribList merUtility : merUtilityList){
 
@@ -84,7 +82,7 @@ public class PopulateDropdownConversionHelper {
 	public List<SubscriptionsDTO> convertMerUtilityToSubscriptionsDTO(List<JpAttribList> merUtilityList){
 
 		SubscriptionsDTO subscriptionsDTO = null;
-		List<SubscriptionsDTO> list = new ArrayList();
+		List<SubscriptionsDTO> list = new ArrayList<SubscriptionsDTO>();
 
 		for(JpAttribList merUtility : merUtilityList){
 
@@ -129,7 +127,7 @@ public class PopulateDropdownConversionHelper {
 	public List<GenderDTO> convertMerUtilityToGenderDTO(List<JpAttribList> merUtilityList){
 
 		GenderDTO genderDTO = null;
-		List<GenderDTO> list = new ArrayList();
+		List<GenderDTO> list = new ArrayList<GenderDTO>();
 
 		for(JpAttribList merUtility : merUtilityList){
 
@@ -147,7 +145,7 @@ public class PopulateDropdownConversionHelper {
 	public List<EthenticityDTO> convertMerUtilityToEthenticityDTO(List<JpAttribList> merUtilityList){
 
 		EthenticityDTO ethenticityDTO = null;
-		List<EthenticityDTO> list = new ArrayList();
+		List<EthenticityDTO> list = new ArrayList<EthenticityDTO>();
 
 		for(JpAttribList merUtility : merUtilityList){
 
@@ -165,7 +163,7 @@ public class PopulateDropdownConversionHelper {
 	public List<VeteranStatusDTO> convertMerUtilityToVeteranStatusDTO(List<JpAttribList> merUtilityList){
 
 		VeteranStatusDTO veteranStatusDTO = null;
-		List<VeteranStatusDTO> list = new ArrayList();
+		List<VeteranStatusDTO> list = new ArrayList<VeteranStatusDTO>();
 
 		for(JpAttribList merUtility : merUtilityList){
 
@@ -254,14 +252,15 @@ public class PopulateDropdownConversionHelper {
 	   @Return :List of StateDTO
 	 * 
 	 */
-	public List<StateDTO> convertMerLookupToStateListDTO(List<JpAttribList> merLookupList){
+	public List<StateDTO> convertMerLookupToStateListDTO(List<Object> merLookupList){
 		StateDTO stateDTO=null;
 		List<StateDTO> list = new ArrayList<StateDTO>();
 		
-		for(JpAttribList JpAttribList : merLookupList){
+		for(Object object : merLookupList){
 			stateDTO = new StateDTO();
-			stateDTO.setStateId(JpAttribList.getAttribListId());
-			stateDTO.setStateValue(JpAttribList.getAttribValue());
+//			stateDTO.setStateId(JpAttribList.getLocationId());
+			stateDTO.setStateKey((String)object);
+			stateDTO.setStateValue((String)object);
 			list.add(stateDTO);
 		}
 		return list;}
