@@ -18,7 +18,7 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
  * @since 10th July 2012
  */
 
-@Repository("loginFormValidator")
+@Repository("loginValidator")
 public class LoginFormValidator {
 
 	private Pattern pattern;
