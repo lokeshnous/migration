@@ -83,4 +83,10 @@ public class EmployerRegistration implements ProfileRegistration {
 		return false;
 	}
 
+	@Override
+	public boolean validateEmail(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
