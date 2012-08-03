@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -206,6 +207,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		try {
 			DetachedCriteria criteria = DetachedCriteria.forClass(MerLocation.class);
 			criteria.setProjection(Projections.distinct(Projections.property("state")));
+			criteria.addOrder(Order.asc("state"));
 			List<Object> merUtilityList = hibernateTemplateTracker.findByCriteria(criteria);		
 			return dropdownHelper.convertMerLookupToStateListDTO(merUtilityList);
 		} catch (HibernateException e) {
