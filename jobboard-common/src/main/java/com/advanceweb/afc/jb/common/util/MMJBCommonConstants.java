@@ -117,5 +117,8 @@ public interface MMJBCommonConstants {
 	public static final String ERROR_STRING = "error";
 	public static final String OK_STRING = "ok";
 	
+	public static final String CLICKTYPE_VIEW = "view";
+	public static final String CLICKTYPE_APPLY = "apply";
+	public static final String CLICKTYPE_CLICK = "click";
 
 }
