@@ -11,9 +11,7 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-	jQuery(document)
-			.ready(
-					function() {
+	jQuery(document).ready(function() {
 						$("#tb_save_search img").click(function(event) {
 							var action = $(this).attr("alt");
 							var rowObj = $(this).parent().parent().parent();
@@ -52,7 +50,38 @@
 		     	            parent.$.nmTop().close();
 		                   event.preventDefault();
 		                });		
+						//For saving the data
 						
+						$("#saveData").click(function(event){						
+							var stringObj;
+							var stringObjNew;
+							//storing data in key  value manner
+							$('#tb_save_search > tbody > tr').each(function(){
+							    var saveSearchId  = $(this).attr("id");   
+							    var notifyMe = $(this).find("td").eq(2).children().val(); 
+							    //alert(saveSearchId+"===="+notifyMe);
+							    stringObj = saveSearchId +"="+ notifyMe;
+							    /*stringObjNew ="".append('stringObj');
+							    alert(stringObjNew);*/
+							 });
+							/* $.ajax({url: getBaseURL()+"/savedSearches/saveSearchedNames.html?saveSearchId="+saveSearchId,
+								success: function(data){ 
+								    if(data.success != null){
+								    	rowObj.remove();
+								    	alert(data.success);
+								    }
+								    if(data.failure != null){
+								    	alert(data.failure);
+								    }
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+									
+								}
+							}); */
+						});
 						jQuery(".megamenu").megamenu();
 					});
 </script>
@@ -72,6 +101,7 @@
 				<div class="row">
 					<table id="tb_save_search" width="100%" border="0" cellspacing="0"
 						cellpadding="0" class="grid">
+					<thead>
 						<tr>
 							<th width="49%" align="left" scope="col">Saved Search Name</th>
 							<th width="15%" align="center" scope="col">Updated</th>
@@ -79,7 +109,8 @@
 								Me</th>
 							<th width="14%" align="center" scope="col">Actions</th>
 						</tr>
-
+					</thead>
+					<tbody>	
 						<c:forEach items="${saveSearchedJobsDTOList}"
 							var="saveSearchdtoList">
 							<tr id="${saveSearchdtoList.saveSearchID}">
@@ -101,6 +132,7 @@
 										alt="delete"></a></td>
 							</tr>
 						</c:forEach>
+						</tbody>
 					</table>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
