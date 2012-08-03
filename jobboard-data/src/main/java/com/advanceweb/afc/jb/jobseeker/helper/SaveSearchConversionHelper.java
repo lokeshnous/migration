@@ -22,16 +22,16 @@ public class SaveSearchConversionHelper {
 	 * This method is called to convert saveSearchedJobsDTO to Save Search
 	 * Entity
 	 * 
-	 * @param saveSearchedJobsDTO
+	 * @param searchedJobsDTO
 	 * @return JpSaveSearch
 	 */
 	public AdmSaveSearch transformSaveSearch(
-			SaveSearchedJobsDTO saveSearchedJobsDTO) {
+			SaveSearchedJobsDTO searchedJobsDTO) {
 		AdmSaveSearch admSaveSearch = new AdmSaveSearch(); 
-		admSaveSearch.setUserId(saveSearchedJobsDTO.getUserID());
-		admSaveSearch.setUrl(saveSearchedJobsDTO.getUrl());
-		admSaveSearch.setSearchName(saveSearchedJobsDTO.getSearchName());
-		admSaveSearch.setCreateDt(saveSearchedJobsDTO.getCreatedDate());
+		admSaveSearch.setUserId(searchedJobsDTO.getUserID());
+		admSaveSearch.setUrl(searchedJobsDTO.getUrl());
+		admSaveSearch.setSearchName(searchedJobsDTO.getSearchName());
+		admSaveSearch.setCreateDt(searchedJobsDTO.getCreatedDate());
 		return admSaveSearch;
 	}
 
@@ -43,7 +43,7 @@ public class SaveSearchConversionHelper {
 	 */
 	public List<SaveSearchedJobsDTO> transformJpSaveSearchToSaveSearchedJobsDTO(
 			List<AdmSaveSearch> admSaveSearchList) {
-		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = new ArrayList<SaveSearchedJobsDTO>();
+		List<SaveSearchedJobsDTO> searchedJobsDTOList = new ArrayList<SaveSearchedJobsDTO>();
 		for (AdmSaveSearch admSaveSearch : admSaveSearchList) {
 			SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 			saveSearchedJobsDTO.setSaveSearchID(admSaveSearch.getSaveSearchId());
@@ -53,9 +53,9 @@ public class SaveSearchConversionHelper {
 			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDt());
 			saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDt().toString()));
 			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());		
-			saveSearchedJobsDTOList.add(saveSearchedJobsDTO);
+			searchedJobsDTOList.add(saveSearchedJobsDTO);
 		}
-		return saveSearchedJobsDTOList;
+		return searchedJobsDTOList;
 	}
 
 }
