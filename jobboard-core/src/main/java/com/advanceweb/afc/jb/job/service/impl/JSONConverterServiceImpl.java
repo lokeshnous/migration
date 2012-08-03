@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.job.service.impl;
 
+import java.util.Date;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -12,20 +16,23 @@ import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 
 /**
- * This class has been created as a service interface for converting to JSON object
+ * This class has been created as a service interface for converting to JSON
+ * object
+ * 
  * @author Reetesh Ranjan Nayak
  * @version 1.0
  * @since 31ST July 2012
  */
 
 @Service("jSONConverterService")
-public class JSONConverterServiceImpl implements JSONConverterService{
-	
+public class JSONConverterServiceImpl implements JSONConverterService {
+
 	private static final Logger LOGGER = Logger
 			.getLogger("JSONConverterServiceImpl.class");
-	
+
 	/**
 	 * This method will convert the JobSearchResultDTO to JSON object
+	 * 
 	 * @param JobSearchResultDTO
 	 * @return JSONObject
 	 */
@@ -47,7 +54,8 @@ public class JSONConverterServiceImpl implements JSONConverterService{
 			jobSrchJson.put(MMJBCommonConstants.CAP_CITY,
 					CheckNullUtil.isNull(jobSrchDTO.getCity()));
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
-					jobSrchDTO.getPostedDate());
+					convertToReqdDateString(jobSrchDTO.getPostedDate()
+							.toString()));
 			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,
 					jobSrchDTO.getApplyOnline());
 			jobSrchJson.put(MMJBCommonConstants.BLIND_AD,
@@ -82,7 +90,7 @@ public class JSONConverterServiceImpl implements JSONConverterService{
 					CheckNullUtil.isNull(jobSrchDTO.getUrlDisplay()));
 			jsonRows.add(jobSrchJson);
 
-			LOGGER.info("@Company===>>" + jobSrchDTO.getCompany()
+			/*LOGGER.info("@Company===>>" + jobSrchDTO.getCompany()
 					+ "@JobTitle===>>" + jobSrchDTO.getJobTitle()
 					+ "@City===>>" + jobSrchDTO.getCity() + "@PostedDate===>>"
 					+ jobSrchDTO.getPostedDate() + "@Apply Online===>>"
@@ -101,7 +109,7 @@ public class JSONConverterServiceImpl implements JSONConverterService{
 					+ jobSrchDTO.getJobPosition() + "@jobGeo0LatLon===>>"
 					+ jobSrchDTO.getJobGeo0LatLon() + "@jobGeo1LatLon===>>"
 					+ jobSrchDTO.getJobGeo1LatLon() + "@URL Display===>>"
-					+ jobSrchDTO.getUrlDisplay());
+					+ jobSrchDTO.getUrlDisplay());*/
 
 		}
 
@@ -110,6 +118,32 @@ public class JSONConverterServiceImpl implements JSONConverterService{
 		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
 
 		return jobSrchJsonObj;
+	}
+
+	/**
+	 * This method converts the date in string format to required format
+	 * for displaying it in the job search result page.
+	 * @param dateString
+	 * @return String
+	 */
+
+	private String convertToReqdDateString(String dateString) {
+
+		Date date = new Date();
+		String dateStr = "";
+		SimpleDateFormat parser = new SimpleDateFormat(
+				"E MMM dd hh:mm:ss Z yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("MMM-dd-yyyy");
+		try {
+			date = parser.parse(dateString);
+			dateStr = formatter.format(date);
+
+		} catch (ParseException e) {
+			LOGGER.info(e + " Error while converting the date.");
+		}
+
+		return dateStr;
+
 	}
 
 }
