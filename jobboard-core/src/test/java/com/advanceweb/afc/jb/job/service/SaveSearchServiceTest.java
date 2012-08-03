@@ -22,10 +22,10 @@ public class SaveSearchServiceTest extends ServiceTest {
 	public void testViewMySavedSearches() {
 		try {
 			int userId = 1;
-			List<SaveSearchedJobsDTO> saveSearchedJobsDTOs = saveSearchService
+			List<SaveSearchedJobsDTO> searchedJobsDTOs = saveSearchService
 					.viewMySavedSearches(userId);
 			assertTrue("View My Saved Searches",
-					saveSearchedJobsDTOs.size() >= 0);
+					searchedJobsDTOs.size() >= 0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
