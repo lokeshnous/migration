@@ -264,7 +264,9 @@ public class JobSearchActivityController {
 
 	/**
 	 * This method will be used for doing Job search and Return a JSON Object
-	 * which will later be parsed at the UI end and all the results will be displayed
+	 * which will later be parsed at the UI end and all the results will be
+	 * displayed
+	 * 
 	 * @param jobSearchResultForm
 	 * @param result
 	 * @param model
@@ -290,43 +292,38 @@ public class JobSearchActivityController {
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
 
+		/**
+		 * Putting all the parameters coming from the UI into a Map for further
+		 * processing
+		 */
+		paramMap.put(MMJBCommonConstants.KEYWORDS, jobSearchResultForm
+				.getKeywords().trim());
+		paramMap.put(MMJBCommonConstants.CITY_STATE, jobSearchResultForm
+				.getCityState().trim());
+		paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm
+				.getRadius().trim());
+		paramMap.put(MMJBCommonConstants.SESSION_ID, sessionId.trim());
+		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, String.valueOf(search_seq));
+		paramMap.put(MMJBCommonConstants.QUERY_TYPE, searchName.trim());
+
 		try {
-			/** It is checking whether all the parameters coming from the UI is blank or not */
-			if (("".equalsIgnoreCase(jobSearchResultForm.getKeywords().trim()) || jobSearchResultForm
-					.getKeywords().trim() == null)
-					&& ("".equalsIgnoreCase(jobSearchResultForm.getCityState()
-							.trim()) || jobSearchResultForm.getCityState()
-							.trim() == null)
-					&& ("".equalsIgnoreCase(jobSearchResultForm.getRadius()
-							.trim()) || jobSearchResultForm.getRadius().trim() == null)) {
 
-				LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
-				return null;
+			/**
+			 * Calling the jobSearch() of Service layer from getting the object
+			 * of JobSearchResultDTO
+			 */
+			jobSearchResultDTO = jobSearchService.jobSearch(searchName,
+					paramMap, start, rows);
 
-			} else {
-
-				/** Putting all the parameters coming from the UI into a Map for further processing */
-				paramMap.put(MMJBCommonConstants.KEYWORDS, jobSearchResultForm
-						.getKeywords().trim());
-				paramMap.put(MMJBCommonConstants.CITY_STATE,
-						jobSearchResultForm.getCityState().trim());
-				paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm
-						.getRadius().trim());
-				paramMap.put(MMJBCommonConstants.SESSION_ID, sessionId.trim());
-				paramMap.put(MMJBCommonConstants.SEARCH_SEQ,
-						String.valueOf(search_seq));
-				paramMap.put(MMJBCommonConstants.QUERY_TYPE, searchName.trim());
-
-				/** Calling the jobSearch() of Service layer from getting the object of JobSearchResultDTO*/
-				jobSearchResultDTO = jobSearchService.jobSearch(searchName,
-						paramMap, start, rows);
-			}
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
 		}
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
-			/** Calling the service layer for converting the JobSearchResultDTO object into JSON Object */
+			/**
+			 * Calling the service layer for converting the JobSearchResultDTO
+			 * object into JSON Object
+			 */
 			jobSrchJsonObj = jSONConverterService
 					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
@@ -461,8 +458,8 @@ public class JobSearchActivityController {
 			model.addAttribute("sendtofriendmail", new SendToFriend());
 		} catch (Exception e) {// Catch exception if any
 			// System.err.println("Error: " + e.getMessage());
-			//e.printStackTrace();
-			 LOGGER.info("ERROR");
+			// e.printStackTrace();
+			LOGGER.info("ERROR");
 		}
 
 		return "jobseekersendtofriendpopup";
@@ -504,8 +501,8 @@ public class JobSearchActivityController {
 					emailService.sendEmail(jobSeekerEmailDTO);
 				} catch (Exception e) {
 					// loggers call
-				    LOGGER.info("ERROR");
-					//e.printStackTrace();
+					LOGGER.info("ERROR");
+					// e.printStackTrace();
 				}
 				model.addAttribute("visible", true);
 			} else if (sendtofriendmail.getEmail().length() > 0
