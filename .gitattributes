@@ -250,6 +250,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmpl
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmpBrandTempConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobPostConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobApplicationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobApplicationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobDAO.java -text
