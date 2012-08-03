@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -101,7 +102,7 @@ public class ResumeController {
 		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();  
 		
 		for(ResumeDTO resumeDTO : resumeDTOList){
-			resumeDTO.setResume_visibility((visibilityMap.get(resumeDTO.getResume_visibility())));
+			resumeDTO.setResume_visibility(visibilityMap.get(resumeDTO.getResume_visibility()));
 			resumeDTOListNew.add(resumeDTO);
 		}
 		map.put("resumeList", resumeDTOListNew);
@@ -199,7 +200,7 @@ public class ResumeController {
 		resumeDTO.setListLangDTO(listLangDTO);
 		resumeDTO.setListRefDTO(listRefDTO);
 		resumeDTO.setListWorkExpDTO(listWorkExpDTO);
-		boolean binsterted = resumeService.createResumeBuilder(resumeDTO);
+		resumeService.createResumeBuilder(resumeDTO);
 		return null;
 
 	}
@@ -267,7 +268,7 @@ public class ResumeController {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		resumeDTO.setUserId(30);
 		
-		resumeDTO.setUploadResumeId(Integer.parseInt((createResume.getUploadResumeId())));
+		resumeDTO.setUploadResumeId(Integer.parseInt(createResume.getUploadResumeId()));
 		resumeDTO.setResume_name(createResume.getResume_name());
 		resumeDTO.setResumeType(createResume.getResumeType());
 		resumeDTO.setDesired_job_title(createResume.getDesired_job_title());
@@ -301,13 +302,13 @@ public class ResumeController {
 			model.addObject("createResume",createResume);
 			model.setViewName("createResumeBuilder");
 		}
-		else if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType()))
+		/*else if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType()))
 		{
 			//Show excel file 
 		}
 		else{
 			//Show copy paste resume page
-		}
+		}*/
 		return model;
 	}
 	
@@ -345,7 +346,7 @@ public class ResumeController {
 	public String addWorkExp(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
 		List<WorkExpDTO> listWorkExpDTO = transCreateResume.transformWorkExpDTO(createResume.getListWorkExpForm());
-		boolean bCertSaved = resumeService.addWorkExp(listWorkExpDTO);
+		resumeService.addWorkExp(listWorkExpDTO);
 		return null;
 	}
 
@@ -359,7 +360,7 @@ public class ResumeController {
 	public String addCertifications(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
 		List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());
-		boolean bCertSaved = resumeService.addCertifications(listCertDTO);
+		resumeService.addCertifications(listCertDTO);
 		return null;
 	}
 
@@ -373,7 +374,7 @@ public class ResumeController {
 	public String addEducationDetails(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
 		List<EducationDTO> listEduDTO = transCreateResume.transformEducationDTO(createResume.getListEduForm());
-		boolean bCertSaved = resumeService.addEducation(listEduDTO);
+		resumeService.addEducation(listEduDTO);
 		return null;
 	}
 
@@ -387,7 +388,7 @@ public class ResumeController {
 	public String addLanguage(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
 		List<LanguageDTO> listLangDTO = transCreateResume.transformLanguageDTO(createResume.getListLangForm());
-		boolean bCertSaved = resumeService.addLanguage(listLangDTO);
+		resumeService.addLanguage(listLangDTO);
 		return null;
 	}
 
@@ -401,7 +402,7 @@ public class ResumeController {
 	public String addReference(HttpServletRequest request, HttpSession session,
 			CreateResume createResume, Model model, Map<String, Object> map) {
 		List<ReferenceDTO> listRefDTO = transCreateResume.transformReferenceDTO(createResume.getListRefForm());
-		boolean bCertSaved = resumeService.addReference(listRefDTO);
+		resumeService.addReference(listRefDTO);
 		return null;
 	}
 
@@ -439,31 +440,10 @@ public class ResumeController {
 		return model;
 	}
 	
-	
-	/**
-	 * This method is called to hold the values of create resume popup 
-	 * @param model
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.GET)
-	public ModelAndView saveCreateResume(@ModelAttribute("createResume") CreateResume resumeform ,HttpServletRequest request, HttpSession session,
-			Model model, Map<String, Object> map) {
-		
-		System.out.println(resumeform);
-		
-		model.addAttribute("resumeform", resumeform);
-		
-		return new ModelAndView("jobseekereditresume");
-	}
-	
-	
-	
-	
 
 	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.POST)
 	public String addContact(@ModelAttribute("createResume")
-	CreateResume createResume, BindingResult result,Model model,HttpServletRequest request, HttpServletResponse response,HttpSession session) throws Exception {
+	CreateResume createResume, BindingResult result,Model model,HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		if(createResume.getResumeType().equalsIgnoreCase("CP")){
 			model.addAttribute("createResume", createResume);
 			return "copyPasteResumeText";
@@ -475,9 +455,9 @@ public class ResumeController {
 				OutputStream outputStream = null;
 				if (file.getSize() > 0) {
 					inputStream = file.getInputStream();
-					if (file.getSize() > 10000) {
+					/*if (file.getSize() > 10000) {
 						//return "/uploadfile";
-					}
+					}*/
 					fileName = request.getRealPath("") + "/resources/images/"
 							+ file.getOriginalFilename();
 
@@ -485,7 +465,8 @@ public class ResumeController {
 
 					int readBytes = 0;
 					byte[] buffer = new byte[10000];
-					while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+					readBytes = inputStream.read(buffer, 0, 10000);
+					while (readBytes != -1) {
 						outputStream.write(buffer, 0, readBytes);
 					}
 
@@ -503,12 +484,13 @@ public class ResumeController {
 				//==============================
 				FileInputStream fstream = new FileInputStream(fileName);
 				// Get the object of DataInputStream
-				DataInputStream in = new DataInputStream(fstream);
-				BufferedReader br = new BufferedReader(new InputStreamReader(in,"UTF8"));
+				DataInputStream dataInputStream = new DataInputStream(fstream);
+				BufferedReader bufferReader = new BufferedReader(new InputStreamReader(dataInputStream,"UTF8"));
 				String strLine;
 				//Read File Line By Line
 				StringBuffer resumeTextData=new StringBuffer();
-				while ((strLine = br.readLine()) != null)   {
+				strLine = bufferReader.readLine();
+				while (strLine != null)   {
 					// Print the content on the console
 					resumeTextData.append(strLine+"\n");
 				}
@@ -516,10 +498,9 @@ public class ResumeController {
 				//POI File Reader
 
 
-				String fname="";
 				String ext="";
 				int mid= fileName.lastIndexOf(".");
-				fname=fileName.substring(0,mid);
+				fileName.substring(0,mid);
 				ext=fileName.substring(mid+1,fileName.length());  
 				if(ext.equalsIgnoreCase("doc")){
 					resumeTextData.delete(0, resumeTextData.length());
@@ -545,15 +526,15 @@ public class ResumeController {
 				resumeService.createResumeUpload(createResumeDTO);
 				//Close the input stream
 				fstream.close();
-				in.close();
-				br.close();
+				dataInputStream.close();
+				bufferReader.close();
 				resumeTextData.delete(0, resumeTextData.length());
 				(new File(basedirectorypathUpload)).mkdir();
 				CopyUtil.Move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
 
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.getLogger("");
 			}
 
 			return "redirect:/jobSeekerResume/createResumePopUp.html";
@@ -581,7 +562,7 @@ public class ResumeController {
 
 	@RequestMapping(value = "/copyPasteResumeSubmit", method = RequestMethod.POST)
 	public String addResume(@ModelAttribute("createResume")
-	CreateResume createResume, BindingResult result,Model model) throws Exception {
+	CreateResume createResume, BindingResult result,Model model){
 		ResumeDTO createResumeDTO=new ResumeDTO();
 
 		createResumeDTO.setResumeType(createResume.getResumeType());
