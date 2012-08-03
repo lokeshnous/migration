@@ -150,7 +150,6 @@ public class JobSeekerRegistrationController {
 				// Call to service layer
 				profileRegistration.createNewProfile(jsRegistrationDTO);
 				session.setAttribute("UserName", registerForm.getFirstName()+" "+registerForm.getLastName());
-//				model.addObject(attributeName, attributeValue)
 				model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 
 		} catch (Exception e) {

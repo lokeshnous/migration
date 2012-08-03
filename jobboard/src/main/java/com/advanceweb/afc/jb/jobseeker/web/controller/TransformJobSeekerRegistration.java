@@ -98,7 +98,7 @@ public class TransformJobSeekerRegistration {
 		dto.setProfession(form.getMyProfession());
 		dto.setSpeciality(form.getMySpeciality());
 		dto.setJobTitle(form.getMyJobTitle());		
-		dto.setUserId(322);
+//		dto.setUserId(322);
 //		dto.setUserId(Integer.valueOf(form.getUserId()));
 		return dto;
 	}
