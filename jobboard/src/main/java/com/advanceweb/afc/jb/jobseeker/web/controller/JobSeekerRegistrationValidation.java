@@ -140,6 +140,7 @@ public class JobSeekerRegistrationValidation {
 		 JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
 		 
 		 validateEmail(registerForm, errors);
+		 validatePassoword(registerForm.getPassword(), registerForm.getRetypepassword(), errors);
 	}
 	
 	public void validateMobileNumber(Object target, Errors errors){
