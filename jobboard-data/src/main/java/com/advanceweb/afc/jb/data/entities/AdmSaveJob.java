@@ -27,6 +27,10 @@ public class AdmSaveJob implements Serializable {
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="applied_dt")
+	private Date appliedDt;
+    
 	@Column(name="facility_name")
 	private String facilityName;
 
@@ -106,5 +110,14 @@ public class AdmSaveJob implements Serializable {
 	public void setJpJob(JpJob jpJob) {
 		this.jpJob = jpJob;
 	}
+
+	public Date getAppliedDt() {
+		return appliedDt;
+	}
+
+	public void setAppliedDt(Date appliedDt) {
+		this.appliedDt = appliedDt;
+	}
+	
 	
 }
