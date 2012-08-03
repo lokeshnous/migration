@@ -53,8 +53,8 @@ public class SearchDaoImpl implements SearchDao {
 		try {
 			@SuppressWarnings("unchecked")
 			List<MetaSearchParam> mSrchParamList = hibernateTemplate.find("SELECT a from  MetaSearchParam a, MetaSearchIndex b, MetaSearchType c  where "+
-					" a.searchIndexId = b.searchIndexId  and "+
-					"a.searchTypeId = c.searchTypeId and b.searchIndexName = '"+searchIndexName+"' and "+ 
+					" a.metaSearchIndex.searchIndexId = b.searchIndexId  and "+
+					"a.metaSearchType.searchTypeId = c.searchTypeId and b.searchIndexName = '"+searchIndexName+"' and "+ 
 					"b.environment = '"+environment+"' and c.searchTypeName = '"+searchTypeName+"'and b.searchIndexGroup = '"+searchIndexGroup+"' order by a.seq");
 			
 			for(MetaSearchParam obj: mSrchParamList){
