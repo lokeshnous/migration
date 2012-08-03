@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.advanceweb.afc.jb.common.ClickEventDTO;
@@ -25,18 +26,19 @@ public class ClickController {
 
 	@ResponseBody
 	@RequestMapping(value = "/clickevent", method = RequestMethod.GET)
-	public String getclickevent(HttpServletRequest request,HttpServletResponse response,Model model) {
+	public String getclickevent(@RequestParam("jobid") String jobid,@RequestParam("type") String type, HttpServletRequest request,HttpServletResponse response,Model model) {
 		String finalresult=MMJBCommonConstants.ERROR_STRING;
+		
 		try{
-			if(request.getParameter("type").equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)){
+			if(type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)){
 				//System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(request.getParameter("jobid")),clickService,MMJBCommonConstants.CLICKTYPE_CLICK);
-			}else if(request.getParameter("type").equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)){
+				update(Integer.parseInt(jobid),clickService,MMJBCommonConstants.CLICKTYPE_CLICK);
+			}else if(type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)){
 				//System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(request.getParameter("jobid")),clickService,MMJBCommonConstants.CLICKTYPE_APPLY);
-			}else if(request.getParameter("type").equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)){
+				update(Integer.parseInt(jobid),clickService,MMJBCommonConstants.CLICKTYPE_APPLY);
+			}else if(type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)){
 				//System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(request.getParameter("jobid")),clickService,MMJBCommonConstants.CLICKTYPE_VIEW);
+				update(Integer.parseInt(jobid),clickService,MMJBCommonConstants.CLICKTYPE_VIEW);
 			}
 			finalresult=MMJBCommonConstants.OK_STRING;
 			response.setStatus(response.SC_OK);
