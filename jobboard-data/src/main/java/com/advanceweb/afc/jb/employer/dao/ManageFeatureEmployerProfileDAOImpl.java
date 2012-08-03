@@ -108,12 +108,10 @@ ManageFeatureEmployerProfileDAO {
 //				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
 				
 				List<JpTemplate> jbTemplateList=admFacility.getJpTemplates();
-				if(!jbTemplateList.isEmpty()){
+				if(null != jbTemplateList){
 					for(JpTemplate JpTemplate:jbTemplateList){
 						companyProfileDTO.setCompanyOverview(JpTemplate.getCompanyOverview());
 					}
-				}else{
-					companyProfileDTO.setCompanyOverview("");
 				}
 				//companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
