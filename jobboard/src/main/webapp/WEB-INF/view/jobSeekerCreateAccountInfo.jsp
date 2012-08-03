@@ -163,7 +163,8 @@
         <div id="jobSeekerRegister1" class="job_seeker_login leftFormHolderLMargin marginTop0" style="display:block">
                   <h2 class="sectionSubHeader">Step 2: Your Information</h2>
                   <h3 class="marginLeft10"> Contact Information </h3>
-<form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">          
+<form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">  
+        
 			<div class="rowEvenSpacing">
 	            <span class="lableText3">First Name:</span>
 	            <form:input path="firstName" class="job_seeker_password textBox350"/>
@@ -227,7 +228,7 @@
               
             <form:select path="state" class="jb_input3 jb_input_width3">
 				<form:option value="0" label="Select" />
-				<form:options items="${stateList}" itemValue="stateId" itemLabel="stateValue" />
+				<form:options items="${stateList}" itemValue="stateKey" itemLabel="stateValue" />
 			</form:select>
               
           <span class="required marginTop8">(Required)</span>
@@ -308,7 +309,7 @@
 <div class="row"> <span class="lableTextSelect marginTop13 ">I'm seeking:</span>
             <form:select path="employmentType" class="jb_input3 jb_input_width3">
 				<form:option value="0" label="Select" />
-				<form:options items="${empTyepList}" itemValue="optionId" itemLabel="optionName" />
+				<form:options items="${empTyepList}" itemValue="optionName" itemLabel="optionName" />
 			</form:select>
           </div>
 
@@ -318,21 +319,21 @@
 			<div class="row"> <span class="lableTextSelect marginTop13 ">Ethnicity:</span>
 		 		<form:select path="ethenticity" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
-					<form:options items="${ethnicityList}" itemValue="ethencityId" itemLabel="ethencityValue" />
+					<form:options items="${ethnicityList}" itemValue="ethencityValue" itemLabel="ethencityValue" />
 				</form:select>
            </div> 
           
  			<div class="row"> <span class="lableTextSelect marginTop13 ">Gender:</span>	
 				<form:select path="gender" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
-					<form:options items="${genderList}" itemValue="genderId" itemLabel="genderName" />
+					<form:options items="${genderList}" itemValue="genderName" itemLabel="genderName" />
 				</form:select>
           </div>  
 
 		  <div class="row"> <span class="lableTextSelect marginTop13 ">Veteran Status:</span>
 		 		<form:select path="veteranStatus" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
-					<form:options items="${veteranStatusList}" itemValue="statusId" itemLabel="statusValue" />
+					<form:options items="${veteranStatusList}" itemValue="statusValue" itemLabel="statusValue" />
 				</form:select>
           </div>
            <div class="row marginTop20 paddingBottom10">           
@@ -347,7 +348,7 @@
 	<c:forEach items="${jobSubscriptionsList}" var="subscriptions" varStatus="index">
 		<li>
 			<div>
-				<form:checkbox path="currentsubs" label="${subscriptions.subscriptionName}" value="${subscriptions.subscriptionId}" cssStyle="width:20px" />
+				<form:checkbox path="currentsubs" label="${subscriptions.subscriptionName}" value="${subscriptions.subscriptionName}" cssStyle="width:20px" />
 			</div>
 		</li>
 	</c:forEach>
