@@ -14,6 +14,7 @@ public class StateDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int stateId;
+	private String stateKey;
 	private String stateValue;
 	
 	/**
@@ -39,6 +40,12 @@ public class StateDTO implements Serializable {
 	 */
 	public void setStateValue(String stateValue) {
 		this.stateValue = stateValue;
+	}
+	public String getStateKey() {
+		return stateKey;
+	}
+	public void setStateKey(String stateKey) {
+		this.stateKey = stateKey;
 	}
 	
 	

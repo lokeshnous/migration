@@ -7,12 +7,15 @@ package com.advanceweb.afc.jb.common;
  */
 public class JobSeekerProfileDTO extends BaseProfileDTO {
 
+	private static final long	serialVersionUID	= 1L;
+	
 	private String employmentInformation;
 	private String ethinicity;
 	private String gender;
 	private long jobSeekerId;
 	private String veteranStatus;
 	private String fileName;
+	private int profileId;
 	
 
 	public JobSeekerProfileDTO() {
@@ -62,6 +65,22 @@ public class JobSeekerProfileDTO extends BaseProfileDTO {
 
 	public void setVeteranStatus(String veteranStatus) {
 		this.veteranStatus = veteranStatus;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public int getProfileId() {
+		return profileId;
+	}
+
+	public void setProfileId(int profileId) {
+		this.profileId = profileId;
 	}
 
 }
