@@ -4,10 +4,18 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import org.apache.log4j.Logger;
 
 public class DateUtils {
+
+	private static final Logger LOGGER = Logger
+			.getLogger("JobSearchActivityController.class");
+
 	public static Date convertStringToSQLDateTime(String stringDate) {
-		DateFormat formater = new SimpleDateFormat(MMJBCommonConstants.SQL_DATE_PATTERN);
+		DateFormat formater = new SimpleDateFormat(
+				MMJBCommonConstants.SQL_DATE_PATTERN,Locale.ENGLISH);
 		Date sqltDate = null;
 		java.util.Date parsedUtilDate;
 		try {
@@ -16,42 +24,49 @@ public class DateUtils {
 				sqltDate = new java.sql.Date(parsedUtilDate.getTime());
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info("convertStringToSQLDateTime Exception");
+			// e.printStackTrace();
 		}
 		return sqltDate;
 	}
 
 	public static String convertSQLDateTimeToStdDateTime(String sqlDate) {
-		DateFormat formater = new SimpleDateFormat(MMJBCommonConstants.SQL_DATE_PATTERN);
+		DateFormat formater = new SimpleDateFormat(
+				MMJBCommonConstants.SQL_DATE_PATTERN,Locale.ENGLISH);
 		java.util.Date dateSqlFormat = null;
 		String stdDate = null;
 		try {
 			if (null != sqlDate) {
 				dateSqlFormat = formater.parse(sqlDate);
-				DateFormat stdDateFormat = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
+				DateFormat stdDateFormat = new SimpleDateFormat(
+						MMJBCommonConstants.DISP_DATE_PATTERN,Locale.ENGLISH);
 				stdDate = stdDateFormat.format(dateSqlFormat);
 
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info("convertSQLDateTimeToStdDateTime Exception");
+			// e.printStackTrace();
 		}
 		return stdDate;
 	}
-	
-	public static String convertSQLDateToStdDate(String sqlDate){
-		DateFormat formater = new SimpleDateFormat(MMJBCommonConstants.SQL_DATE_PATTERN); 
+
+	public static String convertSQLDateToStdDate(String sqlDate) {
+		DateFormat formater = new SimpleDateFormat(
+				MMJBCommonConstants.SQL_DATE_PATTERN,Locale.ENGLISH);
 		java.util.Date dateSqlFormat = null;
 		String stdDate = null;
 		try {
-			if(null != sqlDate){
+			if (null != sqlDate) {
 				dateSqlFormat = formater.parse(sqlDate);
-				DateFormat stdDateFormat = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN); 
+				DateFormat stdDateFormat = new SimpleDateFormat(
+						MMJBCommonConstants.DISP_DATE_PATTERN,Locale.ENGLISH);
 				stdDate = stdDateFormat.format(dateSqlFormat);
-				
+
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
-		}  
+			LOGGER.info("convertSQLDateToStdDate Exception");
+			// e.printStackTrace();
+		}
 		return stdDate;
 	}
 
@@ -63,19 +78,20 @@ public class DateUtils {
 	 */
 	public static String convertSQLDateToStdDateString(String sqlDate) {
 		String pattern = MMJBCommonConstants.DATE_PATTERN;
-		DateFormat formater = new SimpleDateFormat(pattern);
+		DateFormat formater = new SimpleDateFormat(pattern,Locale.ENGLISH);
 		java.util.Date dateSqlFormat = null;
 		String stdDate = null;
 		try {
 			if (null != sqlDate) {
 				dateSqlFormat = formater.parse(sqlDate);
 				DateFormat stdDateFormat = new SimpleDateFormat(
-						MMJBCommonConstants.DISP_DATE_PATTERN);
+						MMJBCommonConstants.DISP_DATE_PATTERN,Locale.ENGLISH);
 				stdDate = stdDateFormat.format(dateSqlFormat);
 
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info("convertSQLDateToStdDateString Exception");
+			// e.printStackTrace();
 		}
 		return stdDate;
 	}
@@ -90,8 +106,8 @@ public class DateUtils {
 	public static Date convertDateStringToSQLDate(String dateInStr) {
 		String pattern = MMJBCommonConstants.DATE_PATTERN;
 		String dateStrpattern = MMJBCommonConstants.NEWDATE_PATTERN;
-		DateFormat formater = new SimpleDateFormat(pattern);
-		DateFormat dateStrFormater = new SimpleDateFormat(dateStrpattern);
+		DateFormat formater = new SimpleDateFormat(pattern,Locale.ENGLISH);
+		DateFormat dateStrFormater = new SimpleDateFormat(dateStrpattern,Locale.ENGLISH);
 
 		Date sqltDate = null;
 		java.util.Date parsedUtilDate;
@@ -102,7 +118,8 @@ public class DateUtils {
 				sqltDate = new java.sql.Date(parsedUtilDate.getTime());
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.info("convertDateStringToSQLDate Exception");
+			// e.printStackTrace();
 		}
 		return sqltDate;
 	}

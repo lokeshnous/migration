@@ -43,9 +43,6 @@ public class AdmSaveJob implements Serializable {
 	@JoinColumn(name="job_id")
 	private JpJob jpJob;
 
-    public AdmSaveJob() {
-    }
-
 	public int getSaveJobId() {
 		return this.saveJobId;
 	}

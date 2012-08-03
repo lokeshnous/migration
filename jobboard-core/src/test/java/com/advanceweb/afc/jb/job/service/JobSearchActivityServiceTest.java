@@ -66,13 +66,14 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	public void testApplyJob() {
 		try {
 			int jobId = 13100;
+			int userId = 30;
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(jobId);
 			/**
 			 * Sending mail to employer
 			 */
 			EmailDTO employerEmailDTO = new EmailDTO();
-			employerEmailDTO.setFromAddress("mmnousinfo@gmail.com");
+			employerEmailDTO.setFromAddress("merion@nousinfosystems.com");
 			employerEmailDTO.setCcAddress(null);
 			employerEmailDTO.setBccAddress(null);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
@@ -82,7 +83,9 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-			ResumeDTO resumeDTO = resumeService.fetchPublicResumeByUserId(2);
+			// TODO: Exception if resume not found
+			ResumeDTO resumeDTO = resumeService
+					.fetchPublicResumeByUserId(userId);
 			assertNotNull("Public visibility Resume", resumeDTO);
 			attachmentpaths.add(resumeDTO.getFilePath());
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
@@ -92,7 +95,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			 * Sending mail to job seeker
 			 */
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
-			jobSeekerEmailDTO.setFromAddress("mmnousinfo@gmail.com");
+			jobSeekerEmailDTO.setFromAddress("merion@nousinfosystems.com");
 			jobSeekerEmailDTO.setCcAddress(null);
 			jobSeekerEmailDTO.setBccAddress(null);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
@@ -106,7 +109,6 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			/**
 			 * saving the job in applied job in job seeker table
 			 */
-			int userId = 1;
 			Date currentDate = new Date();
 			AppliedJobDTO applyJobDTO = new AppliedJobDTO();
 			JobPostDTO jpJob = new JobPostDTO();

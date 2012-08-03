@@ -288,9 +288,16 @@ public class JobSearchActivityController {
 		// happening for a session
 		int search_seq = 0;
 		String sessionId = "JS0011";
-
+		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
+
+
+//		long start = Long.parseLong("0");
+//		long rows = Long.parseLong("100");
+//		jobSearchResultForm.setKeywords("test");
+//		jobSearchResultForm.setRadius("");
+//		jobSearchResultForm.setCityState("");
 
 		/**
 		 * Putting all the parameters coming from the UI into a Map for further
@@ -371,7 +378,7 @@ public class JobSearchActivityController {
 		AppliedJobDTO appliedJobDTO = jobSearchActivity.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
-			if (appliedJobDTO.getAppliedDt() != null) {
+			if (appliedJobDTO.getAppliedDt().isEmpty()) {
 				applyJobErrMsg = applyJobErrMsg.replace("?", appliedJobDTO
 						.getAppliedDt().toString());
 				jsonObject.put(ajaxMsg, applyJobErrMsg);
@@ -465,12 +472,13 @@ public class JobSearchActivityController {
 		return "jobseekersendtofriendpopup";
 	}
 
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
 	public String sendToFriendPost(
 			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
 			BindingResult result, Model model, HttpServletRequest request) {
 
-		Boolean status = Boolean.FALSE;
+		Boolean status = Boolean.TRUE;
 		String finalmailbody;
 		if (sendtofriendmail.getMessage().length() > 0) {
 			finalmailbody = commonupperbody + "<a href="
@@ -509,11 +517,11 @@ public class JobSearchActivityController {
 					&& !validateEmailPattern(sendtofriendmail.getEmail())) {
 				model.addAttribute("visible", false);
 				model.addAttribute("invalidemail", invalidemail);
-				return "jobseekersendtofriendpopup";
+//				return "jobseekersendtofriendpopup";
 			} else {
 				model.addAttribute("visible", false);
 				model.addAttribute("notempty", notempty);
-				return "jobseekersendtofriendpopup";
+//				return "jobseekersendtofriendpopup";
 			}
 
 		} catch (Exception e) {

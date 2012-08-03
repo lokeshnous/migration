@@ -107,6 +107,7 @@ public class JobSearchActivityConversionHelper {
 			}
 			admSaveJob.setCreateDt(createdDate);
 			String strAppliedDate = jobDTO.getAppliedDt();
+			@SuppressWarnings("unused")
 			java.sql.Date appliedDate = null;
 			if (strAppliedDate != null) {
 				appliedDate = DateUtils
