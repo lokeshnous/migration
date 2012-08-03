@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -49,33 +50,33 @@ public class JobSeekerDashBoardController {
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
 		
 		//Retrieve Current subscriptions of the user
-		List<JobAlertsDTO> listAlerts = populateDropdownsService.getJobAlertsList();		
+//		List<JobAlertsDTO> listAlerts = populateDropdownsService.getJobAlertsList();		
 		List<SubscriptionsDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
-		List<MagazinesDTO> listMagazines = populateDropdownsService.getMagazinesList();
+//		List<MagazinesDTO> listMagazines = populateDropdownsService.getMagazinesList();
 
-		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(0);
-		List<SubscriptionsDTO> selSubs = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,null, listSubscriptions);
-		List<MagazinesDTO> selMags =transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,null, listMagazines);
-		List<JobAlertsDTO> selAlerts = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,null, listAlerts);
+//		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(0);
+		List<SubscriptionsDTO> selSubs = new ArrayList<SubscriptionsDTO>(); 
+//				transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,null, listSubscriptions);
+//		List<MagazinesDTO> selMags =transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,null, listMagazines);
+//		List<JobAlertsDTO> selAlerts = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,null, listAlerts);
 		form.setUserName((String)session.getAttribute("UserName"));
-		model.addObject("jobAlertsList", selAlerts);		
+//		model.addObject("jobAlertsList", selAlerts);		
 		model.addObject("jobSubscriptionsList", selSubs);		
-		model.addObject("jobMagazinesList", selMags);	
+//		model.addObject("jobMagazinesList", selMags);	
 		// Load the lists info
 		int userId = 30;
 		int savedSearchCount = 0;
 		int savedJobsCount = 0;
 		int appliedJobsCount = 0;
 		
-		form.setSavedSearchCount(savedSearchCount);
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs(userId);
+/*		form.setSavedSearchCount(savedSearchCount);
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
 		form.setSavedJobsCount(savedJobsCount);
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
 				.getAppliedJobs(userId);
 		appliedJobsCount = appliedJobDTOList.size();
-		form.setAppliedJobsCount(appliedJobsCount);
+		form.setAppliedJobsCount(appliedJobsCount);*/
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");
 		return model;			
