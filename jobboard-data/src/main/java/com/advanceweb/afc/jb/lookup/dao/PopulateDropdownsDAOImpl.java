@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.lookup.dao;
 
-
-
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -36,30 +34,35 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
 @Repository("populateDropdownsDAO")
 @SuppressWarnings("unchecked")
-public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
-		
+public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
+
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
-	
+
 	private HibernateTemplate hibernateTemplate;
 	private HibernateTemplate hibernateTemplateTracker;
-	
+
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
-	
+
 	@Autowired
-	public void setHibernateTemplateTracker(SessionFactory sessionFactoryMerionTracker) {
-		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
+	public void setHibernateTemplateTracker(
+			SessionFactory sessionFactoryMerionTracker) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 	}
 
 	@Override
-	public List<CountryDTO> getCountryList() {		
+	public List<CountryDTO> getCountryList() {
 		try {
-			DetachedCriteria criteria = DetachedCriteria.forClass(MerLocation.class);
-			criteria.setProjection(Projections.distinct(Projections.property("country")));
-			List<Object> merUtilityList = hibernateTemplateTracker.findByCriteria(criteria);
+			DetachedCriteria criteria = DetachedCriteria
+					.forClass(MerLocation.class);
+			criteria.setProjection(Projections.distinct(Projections
+					.property("country")));
+			List<Object> merUtilityList = hibernateTemplateTracker
+					.findByCriteria(criteria);
 			return dropdownHelper.convertMerUtilityToCountryDTO(merUtilityList);
 
 		} catch (HibernateException e) {
@@ -70,10 +73,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 	@Override
 	public List<EmploymentInfoDTO> getEmployementInfoList() {
-		
+
 		try {
-			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.attribType='EmploymentInformation' order by e.position"); 
-			return dropdownHelper.convertMerUtilityToEmploymentInfoDTO(merUtilityList);
+			List<JpAttribList> merUtilityList = hibernateTemplate
+					.find("from JpAttribList e where e.attribType='EmploymentInformation' order by e.position");
+			return dropdownHelper
+					.convertMerUtilityToEmploymentInfoDTO(merUtilityList);
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -83,10 +88,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 	@Override
 	public List<SubscriptionsDTO> getSubscriptionsList() {
-		
-		try {			
-			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.attribType='Subscriptions' order by e.position");  
-			return dropdownHelper.convertMerUtilityToSubscriptionsDTO(merUtilityList);
+
+		try {
+			List<JpAttribList> merUtilityList = hibernateTemplate
+					.find("from JpAttribList e where e.attribType='Subscriptions' order by e.position");
+			return dropdownHelper
+					.convertMerUtilityToSubscriptionsDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +104,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<GenderDTO> getGenderList() {
 
 		try {
-			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.attribType='Gender' order by e.position"); 
+			List<JpAttribList> merUtilityList = hibernateTemplate
+					.find("from JpAttribList e where e.attribType='Gender' order by e.position");
 			return dropdownHelper.convertMerUtilityToGenderDTO(merUtilityList);
 
 		} catch (HibernateException e) {
@@ -111,9 +119,11 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 		try {
 
-			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.attribType='VeteranStatus' order by e.position"); 
+			List<JpAttribList> merUtilityList = hibernateTemplate
+					.find("from JpAttribList e where e.attribType='VeteranStatus' order by e.position");
 
-			return dropdownHelper.convertMerUtilityToVeteranStatusDTO(merUtilityList);
+			return dropdownHelper
+					.convertMerUtilityToVeteranStatusDTO(merUtilityList);
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -125,31 +135,34 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<EthenticityDTO> getEthenticityList() {
 
 		try {
-			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.attribType='Ethnicity' order by e.position"); 
+			List<JpAttribList> merUtilityList = hibernateTemplate
+					.find("from JpAttribList e where e.attribType='Ethnicity' order by e.position");
 
-			return dropdownHelper.convertMerUtilityToEthenticityDTO(merUtilityList);
+			return dropdownHelper
+					.convertMerUtilityToEthenticityDTO(merUtilityList);
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	
+
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of RadiusDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of RadiusDTO
-	   @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getRadiusList()
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of RadiusDTO for the job seeker's advance search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of RadiusDTO
+	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getRadiusList()
 	 */
 	@Override
 	public List<RadiusDTO> getRadiusList() {
 		try {
-			
-			List<JpAttribList> merLookupList = hibernateTemplate.find("from JpAttribList e where e.lookupCategory='Radius' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToRadiusListDTO(merLookupList);
+
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='Radius' and e.lookupStatus='1'");
+			return dropdownHelper
+					.convertMerLookupToRadiusListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -157,18 +170,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of ExcludeFromDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of ExcludeFromDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of ExcludeFromDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of ExcludeFromDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getExcludeFromList()
 	 */
 	@Override
 	public List<ExcludeFromDTO> getExcludeFromList() {
 		try {
-			List<JpAttribList> merLookupList =  hibernateTemplate.find("from JpAttribList e where e.lookupCategory='ExcludeFrom' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToExcludeFromListDTO(merLookupList);
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='ExcludeFrom' and e.lookupStatus='1'");
+			return dropdownHelper
+					.convertMerLookupToExcludeFromListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -176,18 +192,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of FromZipcodeDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of FromZipcodeDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of FromZipcodeDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of FromZipcodeDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getFromZipcodeList()
 	 */
 	@Override
 	public List<FromZipcodeDTO> getFromZipcodeList() {
 		try {
-			List<JpAttribList> merLookupList =  hibernateTemplate.find("from JpAttribList e where e.lookupCategory='FromZipcode' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToFromZipcodeListDTO(merLookupList);
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='FromZipcode' and e.lookupStatus='1'");
+			return dropdownHelper
+					.convertMerLookupToFromZipcodeListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -195,21 +214,25 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of StateDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of StateDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of StateDTO for the job seeker's advance search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of StateDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getStateList()
 	 */
 	@Override
 	public List<StateDTO> getStateList() {
 		try {
-			DetachedCriteria criteria = DetachedCriteria.forClass(MerLocation.class);
-			criteria.setProjection(Projections.distinct(Projections.property("state")));
+			DetachedCriteria criteria = DetachedCriteria
+					.forClass(MerLocation.class);
+			criteria.setProjection(Projections.distinct(Projections
+					.property("state")));
 			criteria.addOrder(Order.asc("state"));
-			List<Object> merUtilityList = hibernateTemplateTracker.findByCriteria(criteria);		
-			return dropdownHelper.convertMerLookupToStateListDTO(merUtilityList);
+			List<Object> merUtilityList = hibernateTemplateTracker
+					.findByCriteria(criteria);
+			return dropdownHelper
+					.convertMerLookupToStateListDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -217,18 +240,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of MetroAreaDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of MetroAreaDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of MetroAreaDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of MetroAreaDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getMetroAreaList()
 	 */
 	@Override
 	public List<MetroAreaDTO> getMetroAreaList() {
 		try {
-			List<JpAttribList> merLookupList = hibernateTemplate.find("from JpAttribList e where e.lookupCategory='MetroArea' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToMetroAreaListDTO(merLookupList);
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='MetroArea' and e.lookupStatus='1'");
+			return dropdownHelper
+					.convertMerLookupToMetroAreaListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -236,18 +262,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of EmploymentTypeDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of EmploymentTypeDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of EmploymentTypeDTO for the job seeker's
+	 *             advance search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of EmploymentTypeDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getEmploymentTypeList()
 	 */
 	@Override
 	public List<EmploymentTypeDTO> getEmploymentTypeList() {
 		try {
-			List<JpAttribList> merLookupList = hibernateTemplate.find("from JpAttribList e where e.attribType='EmploymentType' order by e.position");
-			return dropdownHelper.convertMerLookupToEmploymentTypeListDTO(merLookupList);
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.attribType='EmploymentType' order by e.position");
+			return dropdownHelper
+					.convertMerLookupToEmploymentTypeListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -255,18 +284,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of JobPostedDateDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of JobPostedDateDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of JobPostedDateDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getJobPostedDateList()
 	 */
 	@Override
 	public List<JobPostedDateDTO> getJobPostedDateList() {
 		try {
-			List<JpAttribList> merLookupList =hibernateTemplate.find("from JpAttribList e where e.lookupCategory='JobPostedDate' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToJobPostedDateListDTO(merLookupList);
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='JobPostedDate' and e.lookupStatus='1'");
+			return dropdownHelper
+					.convertMerLookupToJobPostedDateListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -275,9 +307,10 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 
 	@Override
 	public List<JobAlertsDTO> getJobAlertsList() {
-		
+
 		try {
-			List<JpAttribList> merLookupList = hibernateTemplate.find("from JpAttribList e where e.lookupCategory='JobAlerts' and e.lookupStatus='1'");
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='JobAlerts' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToJobAlertsDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -288,7 +321,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<MagazinesDTO> getMagazinesList() {
 		try {
-			List<JpAttribList> merLookupList = hibernateTemplate.find("from JpAttribList e where e.lookupCategory='Magazines' and e.lookupStatus='1'");
+			List<JpAttribList> merLookupList = hibernateTemplate
+					.find("from JpAttribList e where e.lookupCategory='Magazines' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToMagazinesDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -297,29 +331,31 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	}
 
 	/**
-	   @Author :Anil Malali
-	   @Purpose:To get the list of ResumeVisibilityDTO for resume
-	   @Created:Jul 24, 2012
-	   @Param  :not required
-	   @Return :List of ResumeVisibilityDTO
+	 * @Author :Anil Malali
+	 * @Purpose:To get the list of ResumeVisibilityDTO for resume
+	 * @Created:Jul 24, 2012
+	 * @Param :not required
+	 * @Return :List of ResumeVisibilityDTO
 	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getResumeVisibilityList()
 	 */
 	@Override
 	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
-		List<JpAttribList> merLookupList= hibernateTemplate.find("from JpAttribList e where e.lookupCategory='Visibility' and e.lookupStatus='1'");
+		List<JpAttribList> merLookupList = hibernateTemplate
+				.find("from JpAttribList e where e.lookupCategory='Visibility' and e.lookupStatus='1'");
 		return dropdownHelper.convertMerLookupToVisibilityDTO(merLookupList);
 	}
-	
+
 	/**
-	   @Author :Anil Malali
-	   @Purpose:To get the dropdown 
-	   @Created:Jul 24, 2012
-	   @Param  :not required
-	   @Return :List of dropdown values 
+	 * @Author :Anil Malali
+	 * @Purpose:To get the dropdown
+	 * @Created:Jul 24, 2012
+	 * @Param :not required
+	 * @Return :List of dropdown values
 	 */
 	@Override
 	public List<DropDownDTO> populateDropdown(String dropDownName) {
-		List<JpAttribList> merLookupList= hibernateTemplate.find("from JpAttribList e where e.attribType='"+ dropDownName +"' order by e.position");
+		List<JpAttribList> merLookupList = hibernateTemplate.find(
+				"from JpAttribList e where e.attribType=?", dropDownName);
 		return dropdownHelper.convertMerLookupToLookUpDTO(merLookupList);
 	}
 }
