@@ -21,7 +21,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
  * @since 10 July 2012
  */
 
-@Repository("sOLRSearchHelper")
+@Repository("solrSrchHelper")
 public class SOLRSearchHelper {
 
 	private static final Logger LOGGER = Logger
@@ -69,15 +69,15 @@ public class SOLRSearchHelper {
 
 			if (connection.getResponseCode() == 200) {
 				serverAccessible = true;
-				LOGGER.debug("Server URL " + url + " is accessible.");
+				LOGGER.info("Server URL " + url + " is accessible.");
 			}
 		} catch (final MalformedURLException e) {
 			serverAccessible = false;
-			LOGGER.debug("Server URL " + url + " is not accessible.");
+			LOGGER.info("Server URL " + url + " is not accessible.");
 		} catch (final IOException e) {
 			LOGGER.debug(e);
 			serverAccessible = false;
-			LOGGER.debug("Server URL " + url + " is not accessible.");
+			LOGGER.info("Server URL " + url + " is not accessible.");
 		}
 
 		return serverAccessible;
