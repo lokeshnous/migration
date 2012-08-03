@@ -29,9 +29,11 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
 @Repository("populateDropdownsDAO")
+@SuppressWarnings("unchecked")
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 	@Autowired
@@ -40,8 +42,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	private HibernateTemplate hibernateTemplate;
 	
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
+	public void setHibernateTemplate(SessionFactory sessionFactory) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 		
 		try {
 
-			List<JpAttribList> merUtilityList = hibernateTemplate.find("from JpAttribList e where e.lookupCategory='Country' and e.lookupStatus='1'");
+			List<MerLocation> merUtilityList = hibernateTemplate.find("SELECT DISTINCT loc.country from MerLocation loc");
 			return dropdownHelper.convertMerUtilityToCountryDTO(merUtilityList);
 
 		} catch (HibernateException e) {
@@ -75,7 +77,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	public List<SubscriptionsDTO> getSubscriptionsList() {
 		
 		try {			
-			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.lookupCategory='Subscriptions' and e.lookupStatus='1'");  
+			List<JpAttribList> merUtilityList =hibernateTemplate.find("from JpAttribList e where e.attribType='Subscriptions' order by e.position");  
 			return dropdownHelper.convertMerUtilityToSubscriptionsDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -195,8 +197,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO{
 	@Override
 	public List<StateDTO> getStateList() {
 		try {
-			List<JpAttribList> merLookupList =  hibernateTemplate.find("from JpAttribList e where e.lookupCategory='State' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
+			List<MerLocation> merLookupList =  hibernateTemplate.find("SELECT DISTINCT loc.state from MerLocation loc");
+			return null;
+//					dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
