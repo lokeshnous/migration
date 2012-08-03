@@ -80,6 +80,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerRegis
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/Job.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobApplicationService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostService.java -text
