@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.solr.client.solrj.response.FacetField.Count;
-
 /**
  * @author ReeteshRN
  * @version 1.0
