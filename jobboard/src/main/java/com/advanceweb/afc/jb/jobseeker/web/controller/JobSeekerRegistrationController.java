@@ -98,6 +98,12 @@ public class JobSeekerRegistrationController {
 			return model;
 		}
 		
+		if(profileRegistration.validateEmail(registerForm.getEmailId())){
+			model.setViewName("jobSeekerCreateAccount");
+			result.rejectValue("emailId", "NotEmpty", "Email Id already Exist in the DataBase!");
+			return model;
+		}
+		
 		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
 		List<StateDTO> stateList= populateDropdownsService.getStateList();
 		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();

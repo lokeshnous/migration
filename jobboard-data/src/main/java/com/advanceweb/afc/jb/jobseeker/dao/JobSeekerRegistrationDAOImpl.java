@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
+import com.mysql.jdbc.StringUtils;
 
 /**
  * @author rajeshkb
@@ -29,6 +30,8 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private RegistrationConversionHelper registrationConversionHelper;
 	
 	private HibernateTemplate hibernateTemplate;
+	
+	private final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
 	
 	@Autowired
 	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker) {
@@ -145,6 +148,21 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			e.printStackTrace();
 		}
 		
+		return false;
+	}
+
+	@Override
+	public boolean validateEmail(String email) {
+		try {
+			if (StringUtils.isEmptyOrWhitespaceOnly(email)) {
+				MerUser user = (MerUser) hibernateTemplate.find(VERIFY_EMAIL,email);
+				if(null != user){
+					return true;
+				}
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 

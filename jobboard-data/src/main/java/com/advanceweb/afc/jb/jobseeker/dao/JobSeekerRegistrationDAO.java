@@ -44,5 +44,7 @@ public interface JobSeekerRegistrationDAO {
 	public boolean jsChangePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
 	public boolean validatePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
+	
+	public boolean validateEmail(String email);
 
 }
