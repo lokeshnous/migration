@@ -50,7 +50,7 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
 		List<AdmSaveSearch> admSaveSearchList = hibernateTemplate
-				.find("from AdmSaveSearch where userID = " + userId);
+				.find("from AdmSaveSearch e where e.userId = " + userId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(admSaveSearchList);
 	}

@@ -95,7 +95,7 @@ public class SaveSearchController {
 	public ModelAndView viewMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
-		saveSearchForm.setUserID(203);
+		saveSearchForm.setUserID(5);
 		if (saveSearchForm.getUserID() != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 					.viewMySavedSearches(saveSearchForm.getUserID());
