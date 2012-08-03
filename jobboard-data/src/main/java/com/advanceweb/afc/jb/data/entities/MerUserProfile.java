@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -15,11 +16,10 @@ import java.util.Date;
 public class MerUserProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private MerUserProfilePK id;
-
-	@Column(name="attrib_value")
-	private String attribValue;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="user_profile_id")
+	private int userProfileId;
 
 	private String city;
 
@@ -66,33 +66,20 @@ public class MerUserProfile implements Serializable {
 
 	private String zip;
 
-	//bi-directional many-to-one association to MerProfileAttrib
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="profile_attrib_id", insertable=false, updatable=false)
-	private MerProfileAttrib merProfileAttrib;
-
 	//bi-directional many-to-one association to MerUser
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id", insertable=false, updatable=false)
+	@JoinColumn(name="user_id")
 	private MerUser merUser;
 
     public MerUserProfile() {
     }
 
-	public MerUserProfilePK getId() {
-		return this.id;
+	public int getUserProfileId() {
+		return userProfileId;
 	}
 
-	public void setId(MerUserProfilePK id) {
-		this.id = id;
-	}
-	
-	public String getAttribValue() {
-		return this.attribValue;
-	}
-
-	public void setAttribValue(String attribValue) {
-		this.attribValue = attribValue;
+	public void setUserProfileId(int userProfileId) {
+		this.userProfileId = userProfileId;
 	}
 
 	public String getCity() {
@@ -237,14 +224,6 @@ public class MerUserProfile implements Serializable {
 
 	public void setZip(String zip) {
 		this.zip = zip;
-	}
-
-	public MerProfileAttrib getMerProfileAttrib() {
-		return this.merProfileAttrib;
-	}
-
-	public void setMerProfileAttrib(MerProfileAttrib merProfileAttrib) {
-		this.merProfileAttrib = merProfileAttrib;
 	}
 	
 	public MerUser getMerUser() {

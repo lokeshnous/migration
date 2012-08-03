@@ -2,6 +2,9 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +49,7 @@ public class MerUser implements Serializable {
 	private List<MerUserApplication> merUserApplications;
 
 	//bi-directional many-to-one association to MerUserProfile
-	@OneToMany(mappedBy="merUser")
+	@OneToMany(mappedBy="merUser",cascade={CascadeType.ALL})
 	private List<MerUserProfile> merUserProfiles;
 
 	//bi-directional many-to-one association to VstSessioninfo
