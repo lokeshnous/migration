@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,7 +67,7 @@ public class SaveSearchController {
 	}
 	
 	@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
-	public ModelAndView SaveMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+	public ModelAndView saveMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		saveSearchForm.setUserID(203);
