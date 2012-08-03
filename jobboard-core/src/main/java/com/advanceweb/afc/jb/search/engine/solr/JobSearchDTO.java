@@ -2,8 +2,6 @@ package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 import org.apache.solr.client.solrj.beans.Field;
 
 /**
@@ -281,10 +279,6 @@ public class JobSearchDTO implements Serializable{
 	public void setJobGeo1LatLon(String jobGeo1LatLon) {
 		this.jobGeo1LatLon = jobGeo1LatLon;
 	}
-	
-	
-	
-	
 	
 
 }
