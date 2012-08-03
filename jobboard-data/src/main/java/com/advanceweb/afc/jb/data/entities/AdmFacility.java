@@ -18,13 +18,13 @@ public class AdmFacility implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="facility_id")
-	private int facilityId;
+	private Integer facilityId;
 
 	@Column(name="account_number")
 	private String accountNumber;
 
 	@Column(name="admin_user_id")
-	private int adminUserId;
+	private Integer adminUserId;
 
 	private String city;
 
@@ -41,14 +41,14 @@ public class AdmFacility implements Serializable {
 	private Date createDt;
 
 	@Column(name="create_user_id")
-	private int createUserId;
+	private Integer createUserId;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
 	@Column(name="delete_user_id")
-	private int deleteUserId;
+	private Integer deleteUserId;
 
 	private String email;
 
@@ -120,11 +120,11 @@ public class AdmFacility implements Serializable {
     public AdmFacility() {
     }
 
-	public int getFacilityId() {
+	public Integer getFacilityId() {
 		return this.facilityId;
 	}
 
-	public void setFacilityId(int facilityId) {
+	public void setFacilityId(Integer facilityId) {
 		this.facilityId = facilityId;
 	}
 
@@ -136,11 +136,11 @@ public class AdmFacility implements Serializable {
 		this.accountNumber = accountNumber;
 	}
 
-	public int getAdminUserId() {
+	public Integer getAdminUserId() {
 		return this.adminUserId;
 	}
 
-	public void setAdminUserId(int adminUserId) {
+	public void setAdminUserId(Integer adminUserId) {
 		this.adminUserId = adminUserId;
 	}
 
@@ -184,11 +184,11 @@ public class AdmFacility implements Serializable {
 		this.createDt = createDt;
 	}
 
-	public int getCreateUserId() {
+	public Integer getCreateUserId() {
 		return this.createUserId;
 	}
 
-	public void setCreateUserId(int createUserId) {
+	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
 	}
 
@@ -200,11 +200,11 @@ public class AdmFacility implements Serializable {
 		this.deleteDt = deleteDt;
 	}
 
-	public int getDeleteUserId() {
+	public Integer getDeleteUserId() {
 		return this.deleteUserId;
 	}
 
-	public void setDeleteUserId(int deleteUserId) {
+	public void setDeleteUserId(Integer deleteUserId) {
 		this.deleteUserId = deleteUserId;
 	}
 
