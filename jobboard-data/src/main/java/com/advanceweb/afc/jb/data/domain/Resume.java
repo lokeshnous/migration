@@ -7,7 +7,7 @@ package com.advanceweb.afc.jb.data.domain;
  */
 public class Resume {
 
-	public JobSeeker m_JobSeeker;
+	public JobSeeker seeker;
 
 	public Resume(){
 

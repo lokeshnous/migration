@@ -19,7 +19,7 @@ public class AdmFacilityContact implements Serializable {
 	@Column(name="facility_contact_id")
 	private int facilityContactId;
 
-	private short active;
+	private int active;
 
 	private String city;
 
@@ -80,11 +80,11 @@ public class AdmFacilityContact implements Serializable {
 		this.facilityContactId = facilityContactId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

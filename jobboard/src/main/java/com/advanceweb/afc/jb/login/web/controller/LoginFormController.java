@@ -65,7 +65,7 @@ public class LoginFormController {
 	private LoginFormService loginFormService;
 
 	@Autowired
-	private LoginFormValidator loginFormValidator;
+	private LoginFormValidator loginValidator;
 
 	/**
 	 * This method to login
@@ -116,9 +116,10 @@ public class LoginFormController {
 				.validateLoginFormValues(emailAddress, password);
 
 		if (loginFormDTOForUser != null) {
-			value = loginFormValidator.validateLoginValues(loginForm,
+			value = loginValidator.validateLoginValues(loginForm,
 					loginFormDTOForUser);
 		}
+		
 		if (value) {
 			return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		} else {
@@ -164,7 +165,7 @@ public class LoginFormController {
 
 		// User Validation based on email address of user
 		if (userDetailsLoginFormDTO != null) {
-			value = loginFormValidator.validateEmailValues(email,
+			value = loginValidator.validateEmailValues(email,
 					userDetailsLoginFormDTO);
 		}
 

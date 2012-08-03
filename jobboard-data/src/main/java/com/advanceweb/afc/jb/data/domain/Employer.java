@@ -8,7 +8,7 @@ import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
  */
 public class Employer {
 
-	public EmployerRegistrationDAO m_EmployerRegistrationDAO;
+	public EmployerRegistrationDAO registrationDAO;
 //	public RegistrationConversionHelper m_RegistrationConversionHelper;
 
 	public Employer(){

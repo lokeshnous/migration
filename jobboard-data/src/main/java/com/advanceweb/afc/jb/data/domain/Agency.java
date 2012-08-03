@@ -10,7 +10,7 @@ import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
  */
 public class Agency {
 
-	public AgencyRegistrationDAO m_AgencyRegistrationDAO;
+	public AgencyRegistrationDAO registrationDAO;
 
 	public Agency(){
 

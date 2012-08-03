@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.common;
 
-import java.util.Date;
-
 /**
  * <code> AppliedJobDTO </code> is a DTO class. The purpose of this class to
  * hold the required information for applied job.

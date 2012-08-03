@@ -18,7 +18,7 @@ public class SaveSearchForm {
 	private Date createdDate;
 	private String modifyDate;
 	private Date deletedDate;
-	private String notify_me;
+	private String notifyMe;
 
 	/**
 	 * @return the userID
@@ -113,20 +113,6 @@ public class SaveSearchForm {
 	}
 
 	/**
-	 * @return the notify_me
-	 */
-	public String getNotify_me() {
-		return notify_me;
-	}
-
-	/**
-	 * @param notify_me the notify_me to set
-	 */
-	public void setNotify_me(String notify_me) {
-		this.notify_me = notify_me;
-	}
-
-	/**
 	 * @return the modifyDate
 	 */
 	public String getModifyDate() {
@@ -138,6 +124,20 @@ public class SaveSearchForm {
 	 */
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	/**
+	 * @return the notifyMe
+	 */
+	public String getNotifyMe() {
+		return notifyMe;
+	}
+
+	/**
+	 * @param notifyMe the notifyMe to set
+	 */
+	public void setNotifyMe(String notifyMe) {
+		this.notifyMe = notifyMe;
 	}
 
 }
