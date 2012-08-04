@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.search.engine.solr;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -147,8 +146,8 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 						.getServerDetails(solrConfiguration);
 
 				/** Getting the SOLR query response by execution of the query. **/
-				response = getSolrResponse(serverDetailsMap,
-						queryDTO, paramMap, rows, start);
+				response = getSolrResponse(serverDetailsMap, queryDTO,
+						paramMap, rows, start);
 
 				if (response == null) {
 
@@ -190,34 +189,57 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents how many rows will be displayed
 	 * @return QueryResponse represents the solr query object
 	 * @throws JobBoardServiceException
+	 * @throws JobBoardDataException
 	 * @throws UnsupportedEncodingException
 	 */
 	private QueryResponse getSolrResponse(
 			final Map<String, String> serverDetailsMap, QueryDTO queryDTO,
 			Map<String, String> paramMap, long rows, long start)
-			throws JobBoardServiceException {
-		
+			throws JobBoardServiceException, JobBoardDataException {
+		SolrQuery searchquery = null;
+
 		QueryResponse response = null;
 
-		/** Get the instance of the HttpSolrServer by passing the QueryDTO and 
-		 * values read from the properties file. **/
-		HttpSolrServer server = getSolrServerInstance(queryDTO, serverDetailsMap);
-
 		/**
-		 * Creating and getting the search parameter list from the QueryDTO 
-		 * got from the DB and then creating the Search Parameter list by the replacing
-		 * the parameter values. 
+		 * Get the instance of the HttpSolrServer by passing the QueryDTO and
+		 * values read from the properties file.
 		 **/
-		List<MetaSearchParamDTO> srchParamRlpcdDTOList = createParamsForKeywordSearch(
-				queryDTO, paramMap, rows, start);
+		HttpSolrServer server = getSolrServerInstance(queryDTO,
+				serverDetailsMap);
 
-		/** Creating the SOLR query by passing the replaced searched parameter list. 
-		 * **/
-		SolrQuery searchquery = creatSOLRQuery(srchParamRlpcdDTOList);
+		if (MMJBCommonConstants.LOCATION.equalsIgnoreCase(paramMap
+				.get(MMJBCommonConstants.QUERY_TYPE))) {
+
+			List<MetaSearchParamDTO> srchParamRlpcdDTOList = createParamsForLocationSearch(
+					queryDTO, paramMap, rows, start);
+
+			/**
+			 * Creating the SOLR query by passing the replaced searched
+			 * parameter list.
+			 * **/
+			searchquery = creatSOLRQuery(srchParamRlpcdDTOList);
+
+		} else {
+
+			/**
+			 * Creating and getting the search parameter list from the QueryDTO
+			 * got from the DB and then creating the Search Parameter list by
+			 * the replacing the parameter values.
+			 **/
+			List<MetaSearchParamDTO> srchParamRlpcdDTOList = createParamsForKeywordSearch(
+					queryDTO, paramMap, rows, start);
+
+			/**
+			 * Creating the SOLR query by passing the replaced searched
+			 * parameter list.
+			 * **/
+			searchquery = creatSOLRQuery(srchParamRlpcdDTOList);
+
+		}
 		LOGGER.info("Search query===>>>" + searchquery);
 
 		try {
-			/** Execution of the solr query*/
+			/** Execution of the solr query */
 			response = server.query(searchquery);
 
 		} catch (SolrServerException e) {
@@ -233,7 +255,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 * This method creates the search SOLR query.
 	 * 
 	 * @param queryDTO
-	 *            Represents the QueryDTO object which contails all the details
+	 *            Represents the QueryDTO object which contains all the details
 	 *            of the solr query parameters taken from the DB
 	 * @param paramMap
 	 *            Contains all the input parameters from the UI
@@ -258,39 +280,35 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 			int value = 0;
 			String temp = "";
-			if (mSrchParamDTO.getParameterValue().contains(":b")) {
+			if (mSrchParamDTO.getParameterValue().contains(MMJBCommonConstants.B)) {
 				temp = mSrchParamDTO.getParameterValue().substring(
-						mSrchParamDTO.getParameterValue().indexOf(":b")
-								+ ":b".length(),
+						mSrchParamDTO.getParameterValue().indexOf(MMJBCommonConstants.B)
+								+ MMJBCommonConstants.B.length(),
 						mSrchParamDTO.getParameterValue().length());
 
 				if (isIntNumber(temp)) {
 					value = Integer.parseInt(temp);
 
 					switch (value) {
-					case 01:
+					case 1:
 						mSrchParamDTO.setParameterValue(paramMap
-								.get(MMJBCommonConstants.KEYWORDS)
-								+ "+"
-								+ paramMap.get(MMJBCommonConstants.CITY_STATE)
-								+ "+"
-								+ paramMap.get(MMJBCommonConstants.RADIUS));
+								.get(MMJBCommonConstants.KEYWORDS));
 						break;
-					case 02:
+					case 2:
 						mSrchParamDTO.setParameterValue(String.valueOf(rows));
 						break;
-					case 03:
+					case 3:
 						mSrchParamDTO.setParameterValue(String.valueOf(start));
 						break;
-					case 04:
+					case 4:
 						mSrchParamDTO.setParameterValue(paramMap
 								.get(MMJBCommonConstants.SESSION_ID));
 						break;
-					case 05:
+					case 5:
 						mSrchParamDTO.setParameterValue(paramMap
 								.get(MMJBCommonConstants.QUERY_TYPE));
 						break;
-					case 06:
+					case 6:
 						mSrchParamDTO.setParameterValue(paramMap
 								.get(MMJBCommonConstants.SEARCH_SEQ));
 						break;
@@ -299,26 +317,153 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 						break;
 					}
 
-				} 
+				}
 
 			}
-			/**Adding the SearchParamDTO to the ReplacedSearchParamDTO list to return it back.**/
+			/**
+			 * Adding the SearchParamDTO to the ReplacedSearchParamDTO list to
+			 * return it back.
+			 **/
 			srchReplacedParamDTOList.add(mSrchParamDTO);
 
 		}
-		
+
 		return srchReplacedParamDTOList;
 
 	}
 
+	/**
+	 * This method creates the search SOLR query.
+	 * 
+	 * @param queryDTO
+	 *            Represents the QueryDTO object which contains all the details
+	 *            of the solr query parameters taken from the DB
+	 * @param paramMap
+	 *            Contains all the input parameters from the UI
+	 * @param rows
+	 *            represents number of rows will be displayed
+	 * @param start
+	 *            represents the starting point of the search
+	 * @return object of SolrQuery
+	 * @throws JobBoardDataException
+	 */
+
+	private List<MetaSearchParamDTO> createParamsForLocationSearch(
+			QueryDTO queryDTO, Map<String, String> paramMap, long rows,
+			long start) throws JobBoardDataException {
+
+		List<MetaSearchParamDTO> srchReplacedParamDTOList = new ArrayList<MetaSearchParamDTO>();
+
+		List<Float> latLonList = null;
+		if (isFloatNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
+
+			latLonList = searchDao.getLatitudeLongitudebyPostcode(paramMap
+					.get(MMJBCommonConstants.CITY_STATE));
+
+		} else {
+
+			latLonList = searchDao.getLatitudeLongitudeByCityState(
+					paramMap.get(MMJBCommonConstants.CITY_STATE).trim()
+							.split(MMJBCommonConstants.SPACE)[0],
+					paramMap.get(MMJBCommonConstants.CITY_STATE).trim()
+							.split(MMJBCommonConstants.SPACE)[1]);
+
+		}
+
+		/** Getting the Search parameter List from QueryDTO. **/
+		List<MetaSearchParamDTO> srchParamDTOList = queryDTO
+				.getmSrchParamList();
+
+		for (MetaSearchParamDTO mSrchParamDTO : srchParamDTOList) {
+
+			int value = 0;
+			String strValue = mSrchParamDTO.getParameterValue();
+			String tStrValue = "";
+
+			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+					MMJBCommonConstants.FQ)) {
+
+				/** Calling the method to replace the :b01 and :b02 value for fq filed**/
+				strValue = formAndRepalceFQParam(strValue, latLonList, paramMap);
+				mSrchParamDTO.setParameterValue(strValue);
+				
+			} else {
+
+				if (mSrchParamDTO.getParameterValue().contains(MMJBCommonConstants.B)) {
+					tStrValue = mSrchParamDTO.getParameterValue().substring(
+							mSrchParamDTO.getParameterValue().indexOf(MMJBCommonConstants.B)
+									+ MMJBCommonConstants.B.length(),
+							mSrchParamDTO.getParameterValue().length());
+
+					if (isIntNumber(tStrValue)) {
+						value = Integer.parseInt(tStrValue);
+
+						switch (value) {
+
+						case 3:
+							mSrchParamDTO.setParameterValue(paramMap
+									.get(MMJBCommonConstants.KEYWORDS));
+							break;
+						case 4:
+							mSrchParamDTO.setParameterValue(String
+									.valueOf(rows));
+							break;
+						case 5:
+							mSrchParamDTO.setParameterValue(String
+									.valueOf(start));
+							break;
+						case 6:
+							mSrchParamDTO.setParameterValue(paramMap
+									.get(MMJBCommonConstants.SESSION_ID));
+							break;
+						case 7:
+							mSrchParamDTO.setParameterValue(paramMap
+									.get(MMJBCommonConstants.QUERY_TYPE));
+							break;
+						case 8:
+							mSrchParamDTO.setParameterValue(paramMap
+									.get(MMJBCommonConstants.SEARCH_SEQ));
+							break;
+						default:
+							LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
+							break;
+						}
+
+					}
+
+				}
+			}
+
+			/**
+			 * Adding the SearchParamDTO to the ReplacedSearchParamDTO list to
+			 * return it back.
+			 **/
+
+			srchReplacedParamDTOList.add(mSrchParamDTO);
+
+		}
+
+		return srchReplacedParamDTOList;
+
+	}
+
+	/**
+	 * This method will be used to create SOLR query by passing
+	 * MetaSearchParamDTO list
+	 * 
+	 * @param srchReplacedParamDTOList
+	 * @return instance of the SolrQuery
+	 */
 	// Set the param into the SOLR query
-	private SolrQuery creatSOLRQuery(List<MetaSearchParamDTO> srchReplacedParamDTOList) {
+	private SolrQuery creatSOLRQuery(
+			List<MetaSearchParamDTO> srchReplacedParamDTOList) {
 
 		SolrQuery searchquery = new SolrQuery();
 
 		/** Iterating Search parameter List and forming the SOLR query. **/
 		for (MetaSearchParamDTO mSrchParamDTO : srchReplacedParamDTOList) {
-			searchquery.setParam(mSrchParamDTO.getParameterName(), mSrchParamDTO.getParameterValue());
+			searchquery.setParam(mSrchParamDTO.getParameterName(),
+					mSrchParamDTO.getParameterValue());
 		}
 
 		/** Adding the facets to SOLR query */
@@ -335,8 +480,10 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	/**
 	 * This method parse the response and set the values into the bean for
 	 * further processing.
-	 * @param response represents the instance of QueryResponse 
-	 * @return JobSearchResultDTO 
+	 * 
+	 * @param response
+	 *            represents the instance of QueryResponse
+	 * @return JobSearchResultDTO
 	 */
 	private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
 
@@ -348,14 +495,17 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				.getNumFound());
 
 		List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
-		
-		/** Binding the JobSearchDTO.class into the QueryResponse object**/
+
+		/** Binding the JobSearchDTO.class into the QueryResponse object **/
 		jobSearchDTOList = response.getBeans(JobSearchDTO.class);
 
 		final Map<String, List<String>> facetMap = new HashMap<String, List<String>>();
 		final List<FacetField> facetFieldList = response.getFacetFields();
-		
-		/**Creating Lists of Facets(List<String>) by iterating the FaceeFieldList**/
+
+		/**
+		 * Creating Lists of Facets(List<String>) by iterating the
+		 * FaceeFieldList
+		 **/
 		for (FacetField facetField : facetFieldList) {
 			List<String> facetsList = new ArrayList<String>();
 			List<Count> facetFieldValList = facetField.getValues();
@@ -380,11 +530,15 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	/**
 	 * This method creates a HttpSolrServer instance by setting all the required
 	 * server parameters.
-	 * @param queryDTO	represents all the SOLR server parameter values from the DB. 
-	 * @param serverDetailsMap contains all the server details being red from the property file.
-	 * @return instance of HttpSolrServer 
+	 * 
+	 * @param queryDTO
+	 *            represents all the SOLR server parameter values from the DB.
+	 * @param serverDetailsMap
+	 *            contains all the server details being red from the property
+	 *            file.
+	 * @return instance of HttpSolrServer
 	 */
-	
+
 	private HttpSolrServer getSolrServerInstance(QueryDTO queryDTO,
 			Map<String, String> serverDetailsMap) {
 
@@ -417,10 +571,11 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		return server;
 
 	}
-	
+
 	/**
 	 * This method checks whether the String parameter is int or not.
-	 * @param String 
+	 * 
+	 * @param String
 	 * @return boolean
 	 */
 
@@ -431,6 +586,72 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * This method checks whether the String parameter is double or not.
+	 * 
+	 * @param String
+	 * @return boolean
+	 */
+
+	private boolean isFloatNumber(String num) {
+		try {
+			Float.parseFloat(num);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * This method parse the passed string and replace the :b01 and :b02 occurrence
+	 * with Lat long value and radius.
+	 * @param strValue
+	 * @param latLonList
+	 * @param paramMap
+	 * @return String which contains the replaced value for FQ parameter
+	 */
+	
+	private String formAndRepalceFQParam(String strValue,
+			List<Float> latLonList, Map<String, String> paramMap) {
+
+		String retString = "";
+		/** Checking for how many occurrence are there for :b in the string **/
+		for (int i = 0; i <= StringUtils.countMatches(strValue, MMJBCommonConstants.B); i++) {
+			/** Checking if :b is present or not **/
+			if (strValue.contains(MMJBCommonConstants.B)) {
+				/** Getting the next string after :b **/
+				String tStrValue = strValue.substring(strValue.indexOf(MMJBCommonConstants.B)
+						+ MMJBCommonConstants.B.length(), strValue.length());
+				String valStr = tStrValue.split(MMJBCommonConstants.SPACE)[0];
+				if (valStr.contains(MMJBCommonConstants.CLSD_BRACES)) {
+					valStr = valStr.replace(MMJBCommonConstants.CLSD_BRACES, "");
+				}
+				if (isIntNumber(valStr)) {
+					int value = Integer.parseInt(valStr);
+					switch (value) {
+					case 1:
+						retString = strValue.replace(MMJBCommonConstants.B_01, latLonList.get(0)
+								+ "," + latLonList.get(1));
+						break;
+					case 2:
+						retString = strValue.replace(MMJBCommonConstants.B_02,
+								paramMap.get(MMJBCommonConstants.RADIUS));
+						break;
+					default:
+						LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
+						break;
+					
+					}
+
+				}
+
+			}
+
+		}
+		return retString;
+
 	}
 
 }
