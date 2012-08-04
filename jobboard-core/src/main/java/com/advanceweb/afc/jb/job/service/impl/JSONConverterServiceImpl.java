@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.Date;
+import java.util.Locale;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +48,8 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 
 			final JSONObject jobSrchJson = new JSONObject();
 
+			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
+					CheckNullUtil.isNull(jobSrchDTO.getAdText()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
 					CheckNullUtil.isNull(jobSrchDTO.getCompany()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
@@ -132,8 +135,8 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		Date date = new Date();
 		String dateStr = "";
 		SimpleDateFormat parser = new SimpleDateFormat(
-				"E MMM dd hh:mm:ss Z yyyy");
-		SimpleDateFormat formatter = new SimpleDateFormat("MMM-dd-yyyy");
+				MMJBCommonConstants.SOLR_DATE_PATTERN, Locale.US);
+		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.REQ_SOLR_DATE_PATTERN, Locale.US);
 		try {
 			date = parser.parse(dateString);
 			dateStr = formatter.format(date);
