@@ -94,6 +94,12 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	@Override
 	public boolean validateEmail(String email) {
 		return jobSeekerRegistrationDAO.validateEmail(email);
+	}
+
+	@Override
+	public ProfileDTO getProfileAttributes(String strScreenName) {
+		
+		return jobSeekerRegistrationDAO.getProfileAttributes(strScreenName);
 	}	
 	
 	

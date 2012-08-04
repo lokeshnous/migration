@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.user;
 
 import com.advanceweb.afc.jb.common.ProfileDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 
 /**
  * @author rajeshkb
@@ -53,5 +54,11 @@ public interface ProfileRegistration {
 	 * @param profileDTO
 	 */
 	public boolean validateEmail(String email);
+	
+	/**
+	 * 
+	 * @param profileDTO
+	 */
+	public ProfileDTO getProfileAttributes(String screenName);
 
 }
