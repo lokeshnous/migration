@@ -616,7 +616,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	private String formAndRepalceFQParam(String strValue,
 			List<Float> latLonList, Map<String, String> paramMap) {
 
-		String retString = "";
 		/** Checking for how many occurrence are there for :b in the string **/
 		for (int i = 0; i <= StringUtils.countMatches(strValue, MMJBCommonConstants.B); i++) {
 			/** Checking if :b is present or not **/
@@ -632,11 +631,11 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					int value = Integer.parseInt(valStr);
 					switch (value) {
 					case 1:
-						retString = strValue.replace(MMJBCommonConstants.B_01, latLonList.get(0)
+						strValue = strValue.replace(MMJBCommonConstants.B_01, latLonList.get(0)
 								+ "," + latLonList.get(1));
 						break;
 					case 2:
-						retString = strValue.replace(MMJBCommonConstants.B_02,
+						strValue = strValue.replace(MMJBCommonConstants.B_02,
 								paramMap.get(MMJBCommonConstants.RADIUS));
 						break;
 					default:
@@ -650,7 +649,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			}
 
 		}
-		return retString;
+		return strValue;
 
 	}
 
