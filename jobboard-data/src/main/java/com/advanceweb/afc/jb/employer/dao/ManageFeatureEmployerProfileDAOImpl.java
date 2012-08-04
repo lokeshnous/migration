@@ -75,8 +75,8 @@ ManageFeatureEmployerProfileDAO {
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
-//				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
-				companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
+				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				//companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				//companyProfileDTO.setPositionTitle(facility.get);
@@ -105,14 +105,14 @@ ManageFeatureEmployerProfileDAO {
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
-//				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
 				
-				List<JpTemplate> jbTemplateList=admFacility.getJpTemplates();
-				if(null != jbTemplateList){
-					for(JpTemplate JpTemplate:jbTemplateList){
-						companyProfileDTO.setCompanyOverview(JpTemplate.getCompanyOverview());
-					}
-				}
+//				List<JpTemplate> jbTemplateList=admFacility.getJpTemplates();
+//				if(null != jbTemplateList){
+//					for(JpTemplate JpTemplate:jbTemplateList){
+//						companyProfileDTO.setCompanyOverview(JpTemplate.getCompanyOverview());
+//					}
+//				}
 				//companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
