@@ -12,7 +12,7 @@ import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
@@ -183,9 +183,9 @@ public class RegistrationConversionHelper {
 	 * @param stateList
 	 * @return
 	 */
-	public ResumeDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,List<DropDownDTO> countryList, List<DropDownDTO> stateList){
+	public JobSeekerRegistrationDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,List<DropDownDTO> countryList, List<DropDownDTO> stateList){
 		
-		ResumeDTO resumeDTO = new ResumeDTO();
+		JobSeekerRegistrationDTO registerDTO = new JobSeekerRegistrationDTO();
 		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
 		if(null != listProfAttrib){
 			for(MerProfileAttrib entity : listProfAttrib){
@@ -212,8 +212,8 @@ public class RegistrationConversionHelper {
 				listDTO.add(dto);
 			}
 		}
-		resumeDTO.setAttribList(listDTO);
-		return resumeDTO;		
+		registerDTO.setAttribList(listDTO);
+		return registerDTO;		
 	}
 	
 	/**

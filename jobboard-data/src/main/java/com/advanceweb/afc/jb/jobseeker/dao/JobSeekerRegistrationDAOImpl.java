@@ -177,8 +177,8 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	}
 
 	@Override
-	public ResumeDTO getProfileAttributes(String strScreenName) {
-		ResumeDTO dto = null;
+	public JobSeekerRegistrationDTO getProfileAttributes(String strScreenName) {
+		JobSeekerRegistrationDTO dto = null;
 		try {
 			  List<MerProfileAttrib> listProfAttrib = hibernateTemplate.find(REGISTRATION_ATTRIBS,strScreenName);
 			  List<DropDownDTO> countryList = getCountryList();

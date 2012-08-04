@@ -43,7 +43,7 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private List<ReferenceDTO> listRefDTO;
 	private List<WorkExpDTO> listWorkExpDTO;
 	private ContactInformationDTO contactInfoDTO;
-	private List<MerProfileAttribDTO> attribList;
+
 
 	//Creating Resume	
 
@@ -223,12 +223,7 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}	
-	public List<MerProfileAttribDTO> getAttribList() {
-		return attribList;
-	}
-	public void setAttribList(List<MerProfileAttribDTO> attribList) {
-		this.attribList = attribList;
-	}
+
 	@Override
 	public String toString() {
 		return "ResumeDTO [uploadResumeId=" + uploadResumeId + ", resumeText="

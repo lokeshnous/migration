@@ -105,10 +105,10 @@ public class JobSeekerRegistrationController {
 			return model;
 		}
 		String strScreenName="JobSeeker Registration";
-		ResumeDTO resumeDTO = (ResumeDTO) profileRegistration.getProfileAttributes(strScreenName);
+		JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes(strScreenName);
 
 		List<JobSeekerProfileAttribForm> listProfAttribForms = 
-				transformJobSeekerRegistration.transformDTOToProfileAttribForm(resumeDTO);
+				transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO);
 		
 //		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();
 		

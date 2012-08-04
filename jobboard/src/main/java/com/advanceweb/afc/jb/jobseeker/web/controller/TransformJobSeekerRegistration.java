@@ -144,12 +144,12 @@ public class TransformJobSeekerRegistration {
 		return dto;
 	}
 
-	public List<JobSeekerProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
+	public List<JobSeekerProfileAttribForm> transformDTOToProfileAttribForm(JobSeekerRegistrationDTO registerDTO){
 		
 		List<JobSeekerProfileAttribForm> listForms = new ArrayList<JobSeekerProfileAttribForm>();
 		
-		if(null != resumeDTO.getAttribList()){
-			for(MerProfileAttribDTO dto : resumeDTO.getAttribList()){
+		if(null != registerDTO.getAttribList()){
+			for(MerProfileAttribDTO dto : registerDTO.getAttribList()){
 				JobSeekerProfileAttribForm form = new JobSeekerProfileAttribForm();
 				form.setDropdown(dto.getDropdown());
 				form.setStrAttribType(dto.getStrAttribType());
