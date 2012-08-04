@@ -24,6 +24,7 @@ public class JpAttribList implements Serializable {
 	@Column(name="attrib_value")
 	private String attribValue;
 
+	@Column(name="position")
 	private int position;
 
     public JpAttribList() {

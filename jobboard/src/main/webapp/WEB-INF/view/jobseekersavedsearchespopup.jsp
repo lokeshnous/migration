@@ -54,20 +54,19 @@
 						
 						$("#saveData").click(function(event){						
 							var stringObj;
-							var stringObjNew;
+							var stringObjNew = '';
 							//storing data in key  value manner
 							$('#tb_save_search > tbody > tr').each(function(){
 							    var saveSearchId  = $(this).attr("id");   
 							    var notifyMe = $(this).find("td").eq(2).children().val(); 
-							    //alert(saveSearchId+"===="+notifyMe);
 							    stringObj = saveSearchId +"="+ notifyMe;
-							    /*stringObjNew ="".append('stringObj');
-							    alert(stringObjNew);*/
+							    stringObjNew = stringObjNew +";"+ stringObj;
 							 });
-							/* $.ajax({url: getBaseURL()+"/savedSearches/saveSearchedNames.html?saveSearchId="+saveSearchId,
+							alert('objects are'+stringObjNew);
+							$.ajax({url:getBaseURL()+"/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
-								    	rowObj.remove();
+								    	//rowObj.remove();
 								    	alert(data.success);
 								    }
 								    if(data.failure != null){
@@ -80,7 +79,7 @@
 								complete: function() {
 									
 								}
-							}); */
+							}); 
 						});
 						jQuery(".megamenu").megamenu();
 					});
@@ -117,19 +116,24 @@
 								<td><a href="${saveSearchdtoList.getUrl()}"							
 									rel="0" target="_blank" class="newWindow">${saveSearchdtoList.getSearchName()}</a></td>
 								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
-								<td align="center"><form:select
-										class="jb_input3 select100 marginTopBottom0"
-										path="emailFrequency" items="${notifyMeList}"
-										itemValue="optionId" itemLabel="optionName" />
+								
+								<td align="center">						
 										
+								    <form:select class="jb_input3 select100 marginTopBottom0"									
+										path="emailFrequency" items="${notifyMeList}"
+										itemValue="optionId" itemLabel="optionName">																				
+								    </form:select>
+								    										
 								</td>
+								
 								<td align="center"><a href='' class="newWindow"><img
 										src="../resources/images/View.png" width="20" height="20"
 										alt="view"></a>&nbsp;<a href='' class="newWindow"><img
 										src="../resources/images/Edit.png" width="20" height="20"
 										alt="edit"></a>&nbsp;<a href="#"><img
 										src="../resources/images/Delete.png" width="20" height="20"
-										alt="delete"></a></td>
+										alt="delete"></a>
+										</td>
 							</tr>
 						</c:forEach>
 						</tbody>
