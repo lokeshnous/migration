@@ -35,8 +35,8 @@ public class MerProfileAttrib implements Serializable {
 	private List<MerProfileAttribList> merProfileAttribLists;
 
 	//bi-directional many-to-one association to MerUserProfile
-//	@OneToMany(mappedBy="merProfileAttrib")
-//	private List<MerUserProfile> merUserProfiles;
+	@OneToMany(mappedBy="merProfileAttrib")
+	private List<MerUserProfile> merUserProfiles;
 
     public MerProfileAttrib() {
     }
@@ -89,12 +89,12 @@ public class MerProfileAttrib implements Serializable {
 		this.merProfileAttribLists = merProfileAttribLists;
 	}
 	
-//	public List<MerUserProfile> getMerUserProfiles() {
-//		return this.merUserProfiles;
-//	}
-//
-//	public void setMerUserProfiles(List<MerUserProfile> merUserProfiles) {
-//		this.merUserProfiles = merUserProfiles;
-//	}
+	public List<MerUserProfile> getMerUserProfiles() {
+		return this.merUserProfiles;
+	}
+
+	public void setMerUserProfiles(List<MerUserProfile> merUserProfiles) {
+		this.merUserProfiles = merUserProfiles;
+	}
 	
 }
