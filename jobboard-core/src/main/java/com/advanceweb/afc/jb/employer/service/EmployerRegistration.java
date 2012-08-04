@@ -89,4 +89,10 @@ public class EmployerRegistration implements ProfileRegistration {
 		return false;
 	}
 
+	@Override
+	public ProfileDTO getProfileAttributes(String screenName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
