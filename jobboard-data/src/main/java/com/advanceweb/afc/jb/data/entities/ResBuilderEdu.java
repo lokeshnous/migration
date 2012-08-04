@@ -41,7 +41,7 @@ public class ResBuilderEdu implements Serializable {
 	private String institutionName;
 
 	@Column(name="is_graduated")
-	private short isGraduated;
+	private int isGraduated;
 
     @Temporal( TemporalType.DATE)
 	@Column(name="start_dt")
@@ -134,11 +134,11 @@ public class ResBuilderEdu implements Serializable {
 		this.institutionName = institutionName;
 	}
 
-	public short getIsGraduated() {
+	public int getIsGraduated() {
 		return this.isGraduated;
 	}
 
-	public void setIsGraduated(short isGraduated) {
+	public void setIsGraduated(int isGraduated) {
 		this.isGraduated = isGraduated;
 	}
 

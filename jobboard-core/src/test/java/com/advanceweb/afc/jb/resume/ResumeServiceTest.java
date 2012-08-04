@@ -38,12 +38,12 @@ public class ResumeServiceTest extends ServiceTest {
 			ResumeDTO createResumeDTO=new ResumeDTO();
 			createResumeDTO.setUserId(Integer.parseInt("10"));
 			createResumeDTO.setResumeType("Create");
-			createResumeDTO.setResume_name("Test");
-			createResumeDTO.setDesired_job_title("Tilt");
-			createResumeDTO.setDesired_employment_type("31");
-			createResumeDTO.setWork_authorization_US("35");
-			createResumeDTO.setWilling_to_relocate("Y");
-			createResumeDTO.setResume_visibility("1");			
+			createResumeDTO.setResumeName("Test");
+			createResumeDTO.setDesiredJobTitle("Tilt");
+			createResumeDTO.setDesiredEmploymentType("31");
+			createResumeDTO.setWorkAuthorizationUS("35");
+			createResumeDTO.setWillingToRelocate("Y");
+			createResumeDTO.setResumeVisibility("1");			
 			createResumeDTO.setIsPublished("1");
 			assertTrue("Create Resume", resumeService.createResumeCopyPaste(createResumeDTO));
 		} catch (Exception e) {
@@ -58,15 +58,15 @@ public class ResumeServiceTest extends ServiceTest {
 				ResumeDTO createResumeDTO=new ResumeDTO();
 				createResumeDTO.setUserId(Integer.parseInt("10"));
 				createResumeDTO.setResumeType("Create");
-				createResumeDTO.setResume_name("Nurse Resume "+i);
-				createResumeDTO.setDesired_job_title("Resume Tilte "+i);
-				createResumeDTO.setDesired_employment_type("31");
-				createResumeDTO.setWork_authorization_US("35");
-				createResumeDTO.setWilling_to_relocate("Y");
+				createResumeDTO.setResumeName("Nurse Resume "+i);
+				createResumeDTO.setDesiredJobTitle("Resume Tilte "+i);
+				createResumeDTO.setDesiredEmploymentType("31");
+				createResumeDTO.setWorkAuthorizationUS("35");
+				createResumeDTO.setWillingToRelocate("Y");
 				if(i==0)
-					createResumeDTO.setResume_visibility("63");
+					createResumeDTO.setResumeVisibility("63");
 				else 
-					createResumeDTO.setResume_visibility("64");
+					createResumeDTO.setResumeVisibility("64");
 				createResumeDTO.setIsPublished("1");
 				createResumeDTO.setUpdateDt(new Date().toString());
 				assertTrue("Create Resume", resumeService.createResumeCopyPaste(createResumeDTO));
@@ -85,12 +85,12 @@ public class ResumeServiceTest extends ServiceTest {
 			ResumeDTO createResumeDTO=new ResumeDTO();
 			createResumeDTO.setUserId(Integer.parseInt("2"));
 			createResumeDTO.setResumeType("Upload");
-			createResumeDTO.setResume_name("Test");
-			createResumeDTO.setDesired_job_title("Tilt");
-			createResumeDTO.setDesired_employment_type("31");
-			createResumeDTO.setWork_authorization_US("35");
-			createResumeDTO.setWilling_to_relocate("Y");
-			createResumeDTO.setResume_visibility("1");			
+			createResumeDTO.setResumeName("Test");
+			createResumeDTO.setDesiredJobTitle("Tilt");
+			createResumeDTO.setDesiredEmploymentType("31");
+			createResumeDTO.setWorkAuthorizationUS("35");
+			createResumeDTO.setWillingToRelocate("Y");
+			createResumeDTO.setResumeVisibility("1");			
 			createResumeDTO.setResumeText("Testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 			createResumeDTO.setIsPublished("1");
 
@@ -116,12 +116,12 @@ public class ResumeServiceTest extends ServiceTest {
 			ResumeDTO createResumeDTO=new ResumeDTO();
 			createResumeDTO.setUserId(Integer.parseInt("2"));
 			createResumeDTO.setResumeType("CopyPaste");
-			createResumeDTO.setResume_name("Test");
-			createResumeDTO.setDesired_job_title("Tilt");
-			createResumeDTO.setDesired_employment_type("31");
-			createResumeDTO.setWork_authorization_US("35");
-			createResumeDTO.setWilling_to_relocate("Y");
-			createResumeDTO.setResume_visibility("1");			
+			createResumeDTO.setResumeName("Test");
+			createResumeDTO.setDesiredJobTitle("Tilt");
+			createResumeDTO.setDesiredEmploymentType("31");
+			createResumeDTO.setWorkAuthorizationUS("35");
+			createResumeDTO.setWillingToRelocate("Y");
+			createResumeDTO.setResumeVisibility("1");			
 			createResumeDTO.setResumeText("Testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 			createResumeDTO.setIsPublished("1");
 			assertTrue("Copy Paste Resume", resumeService.createResumeCopyPaste(createResumeDTO));
@@ -193,7 +193,7 @@ public class ResumeServiceTest extends ServiceTest {
 	public void createResumeBuilder(){
 		ResumeDTO dto = new ResumeDTO();
 		dto.setAwards("Awards");
-		dto.setResume_name("Sasibhushana");
+		dto.setResumeName("Sasibhushana");
 		ContactInformationDTO contactDTO = new ContactInformationDTO();
 		AddressDTO addDTO = new AddressDTO();
 		addDTO.setAddress1("address1");

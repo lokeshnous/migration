@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.jobseeker.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
 
 /**
  * <code> JobSeekerActivity </code> is a Service class. 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.ResumeWordDocumentDTO;
-import com.advanceweb.afc.jb.search.ResumeSearch;
 
 /**
  * @author rajeshkb

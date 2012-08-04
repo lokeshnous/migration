@@ -21,12 +21,12 @@ public class ResBuilderResume implements Serializable {
 	@Column(name="builder_resume_id")
 	private int builderResumeId;
 
-	private short active;
+	private int active;
 
 	private String awards;
 
 	@Column(name="can_apply_to_jobs")
-	private short canApplyToJobs;
+	private int canApplyToJobs;
 
 	private String city;
 
@@ -53,7 +53,7 @@ public class ResBuilderResume implements Serializable {
 	private String firstName;
 
 	@Column(name="is_published")
-	private short isPublished;
+	private int isPublished;
 
 	@Column(name="job_objective")
 	private String jobObjective;
@@ -144,11 +144,11 @@ public class ResBuilderResume implements Serializable {
 		this.builderResumeId = builderResumeId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 
@@ -160,11 +160,11 @@ public class ResBuilderResume implements Serializable {
 		this.awards = awards;
 	}
 
-	public short getCanApplyToJobs() {
+	public int getCanApplyToJobs() {
 		return this.canApplyToJobs;
 	}
 
-	public void setCanApplyToJobs(short canApplyToJobs) {
+	public void setCanApplyToJobs(int canApplyToJobs) {
 		this.canApplyToJobs = canApplyToJobs;
 	}
 
@@ -240,11 +240,11 @@ public class ResBuilderResume implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public short getIsPublished() {
+	public int getIsPublished() {
 		return this.isPublished;
 	}
 
-	public void setIsPublished(short isPublished) {
+	public void setIsPublished(int isPublished) {
 		this.isPublished = isPublished;
 	}
 

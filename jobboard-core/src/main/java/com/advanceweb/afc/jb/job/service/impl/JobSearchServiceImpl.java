@@ -3,14 +3,13 @@ package com.advanceweb.afc.jb.job.service.impl;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.search.JobSearchDeleagate;
 import com.advanceweb.afc.jb.search.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-
-import org.springframework.stereotype.Service;
 
 @Service("jobSearchService")
 public class JobSearchServiceImpl implements JobSearchService{

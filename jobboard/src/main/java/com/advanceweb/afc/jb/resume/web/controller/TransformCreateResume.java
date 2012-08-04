@@ -377,20 +377,20 @@ public class TransformCreateResume {
 		if(null != resumeDTO){
 			createResume.setAwards(resumeDTO.getAwards());
 			createResume.setBuilderResumeId(resumeDTO.getBuilderResumeId());
-			createResume.setDesired_employment_type(resumeDTO.getDesired_employment_type());
-			createResume.setDesired_job_title(resumeDTO.getDesired_job_title());
-			createResume.setEmploymentType(resumeDTO.getDesired_employment_type());
+			createResume.setDesiredEmploymentType(resumeDTO.getDesiredEmploymentType());
+			createResume.setDesiredJobTitle(resumeDTO.getDesiredJobTitle());
+			createResume.setEmploymentType(resumeDTO.getDesiredEmploymentType());
 			createResume.setMemberships(resumeDTO.getMemberships());
 			createResume.setObjective(resumeDTO.getObjective());
 			createResume.setOtherDetails(resumeDTO.getOtherDetails());
-			createResume.setResume_name(resumeDTO.getResume_name());
-			createResume.setResume_visibility(resumeDTO.getResume_visibility());
+			createResume.setResumeName(resumeDTO.getResumeName());
+			createResume.setResumeVisibility(resumeDTO.getResumeVisibility());
 			createResume.setResumeText(resumeDTO.getResumeText());
 //			createResume.setResumeText1(resumeDTO.get);
 			createResume.setResumeType(resumeDTO.getResumeType());
 			createResume.setSkills(resumeDTO.getSkills());
-			createResume.setWilling_to_relocate(resumeDTO.getWilling_to_relocate());
-			createResume.setWork_authorization_US(resumeDTO.getWork_authorization_US());
+			createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
+			createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
 		}
 		
 		return createResume;

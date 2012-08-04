@@ -28,7 +28,7 @@ import com.advanceweb.afc.jb.data.entities.JpTemplate;
  */
 @Repository("manageFeatureEmployerProfileDAO")
 public class ManageFeatureEmployerProfileDAOImpl implements
-ManageFeatureEmployerProfileDAO {
+		ManageFeatureEmployerProfileDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -44,13 +44,13 @@ ManageFeatureEmployerProfileDAO {
 		facility.setName(companyProfileDTO.getCompanyName());
 		// facility.setFacilityId(162);
 		// facility.setAccountNumber("347OSC002");
-		 facility.setAdminUserId(1);
+		facility.setAdminUserId(1);
 
 		try {
 			if (companyProfileDTO != null) {
-				sessionFactory.getCurrentSession().saveOrUpdate(facility);
-				//System.out.println("data submitted");
+				sessionFactory.getCurrentSession().saveOrUpdate(facility);				
 			}
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -67,30 +67,33 @@ ManageFeatureEmployerProfileDAO {
 		Session session = sessionFactory.openSession();
 
 		try {
-			List admFacilityList = session.createQuery("from AdmFacility").list();
-			for (Iterator iterator = admFacilityList.iterator(); iterator.hasNext();)
-			{
+			
+			List<?> admFacilityList = session.createQuery("from AdmFacility").list();
+			
+			for (Iterator<?> iterator = admFacilityList.iterator(); iterator.hasNext();) {
+				
 				CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
 				AdmFacility admFacility = (AdmFacility) iterator.next();
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
 				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
-				//companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
+
+				// companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
-				//companyProfileDTO.setPositionTitle(facility.get);
+				
+				// companyProfileDTO.setPositionTitle(facility.get);
 				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
 				companyProfileDTOList.add(companyProfileDTO);
-				//System.out.println(companyProfileDTO.getCompanyName());
+				
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
-		} 
+		}
 
 		return companyProfileDTOList;
 	}
-
 
 	@Override
 	public CompanyProfileDTO getEmployerDetails(long employerId) {
@@ -99,26 +102,28 @@ ManageFeatureEmployerProfileDAO {
 		try {
 			if (employerId != 0) {
 				Session session = sessionFactory.openSession();
+
 				AdmFacility admFacility = (AdmFacility) session.get(
-						AdmFacility.class, new Long(employerId).intValue());
-				//System.out.println(facility);
-				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
+						AdmFacility.class, Long.valueOf(employerId).intValue());
+				// System.out.println(facility);
+				companyProfileDTO.setFacilityid(String.valueOf(admFacility
+						.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
-				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
-				
-//				List<JpTemplate> jbTemplateList=admFacility.getJpTemplates();
-//				if(null != jbTemplateList){
-//					for(JpTemplate JpTemplate:jbTemplateList){
-//						companyProfileDTO.setCompanyOverview(JpTemplate.getCompanyOverview());
-//					}
-//				}
-				//companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
+				companyProfileDTO.setCompanyOverview(admFacility
+						.getCompanyOverview());
+
+				// List<JpTemplate> jbTemplateList=admFacility.getJpTemplates();
+				// if(null != jbTemplateList){
+				// for(JpTemplate JpTemplate:jbTemplateList){
+				// companyProfileDTO.setCompanyOverview(JpTemplate.getCompanyOverview());
+				// }
+				// }
+				// companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
-				//companyProfileDTO.setPositionTitle(facility.get);
+				// companyProfileDTO.setPositionTitle(facility.get);
 				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
-
 
 			}
 		} catch (HibernateException e) {
@@ -133,9 +138,12 @@ ManageFeatureEmployerProfileDAO {
 		try {
 
 			if (employerId != 0) {
-				Session session = sessionFactory.openSession();
-				AdmFacility facility = (AdmFacility) session.get(
-						AdmFacility.class, new Long(employerId).intValue());
+
+				// Session session = sessionFactory.openSession();
+				// AdmFacility facility = (AdmFacility)
+				// session.get(AdmFacility.class,
+				// Long.valueOf(employerId).intValue());
+
 				EmployerProfileDTO employerProfileDTO = new EmployerProfileDTO();
 				employerProfileDTOs.add(employerProfileDTO);
 

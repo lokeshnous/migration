@@ -19,7 +19,7 @@ public class ResCoverletterPriv implements Serializable {
 	@Column(name="coverletter_priv_id")
 	private int coverletterPrivId;
 
-	private short active;
+	private int active;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
@@ -56,11 +56,11 @@ public class ResCoverletterPriv implements Serializable {
 		this.coverletterPrivId = coverletterPrivId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

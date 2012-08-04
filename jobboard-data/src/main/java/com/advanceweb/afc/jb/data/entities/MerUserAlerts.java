@@ -22,13 +22,13 @@ public class MerUserAlerts implements Serializable {
 
     @Temporal( TemporalType.TIMESTAMP)
     @Column(name="created_date")
-	private Date created_date;
-
+	private Date createdDate;
+    
     @Column(name="alert_value")
-	private String alertvalue;
+	private String alertValue;
     
     @Column(name="user_id")
-	private int userid;
+	private int userId;
     
     @Column(name="lookup_id")
 	private int lookupid;
@@ -42,28 +42,28 @@ public class MerUserAlerts implements Serializable {
 		this.alertId = alertId;
 	}
 
-	public Date getCreated_date() {
-		return created_date;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreated_date(Date created_date) {
-		this.created_date = created_date;
+	public void setCreatedDate(Date created_date) {
+		this.createdDate = created_date;
 	}
 
 	public String getAlertvalue() {
-		return alertvalue;
+		return alertValue;
 	}
 
-	public void setAlertvalue(String alertvalue) {
-		this.alertvalue = alertvalue;
+	public void setAlertValue(String alertvalue) {
+		this.alertValue = alertvalue;
 	}
 
 	public int getUserid() {
-		return userid;
+		return userId;
 	}
 
 	public void setUserid(int userid) {
-		this.userid = userid;
+		this.userId = userid;
 	}
 
 	public int getLookupid() {

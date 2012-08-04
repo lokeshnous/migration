@@ -53,7 +53,7 @@ public class StgSessionEvent implements Serializable {
 	private String sessionId;
 
 	@Column(name="wifi_status")
-	private short wifiStatus;
+	private int wifiStatus;
 
     public StgSessionEvent() {
     }
@@ -146,11 +146,11 @@ public class StgSessionEvent implements Serializable {
 		this.sessionId = sessionId;
 	}
 
-	public short getWifiStatus() {
+	public int getWifiStatus() {
 		return this.wifiStatus;
 	}
 
-	public void setWifiStatus(short wifiStatus) {
+	public void setWifiStatus(int wifiStatus) {
 		this.wifiStatus = wifiStatus;
 	}
 

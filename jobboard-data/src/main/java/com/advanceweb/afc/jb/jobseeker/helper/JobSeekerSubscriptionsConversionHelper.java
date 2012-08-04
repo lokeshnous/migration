@@ -33,7 +33,7 @@ public class JobSeekerSubscriptionsConversionHelper {
 				dto.setAlertId(alert.getAlertId());
 				dto.setAlertValue(alert.getAlertvalue());
 				dto.setLookUpId(String.valueOf(alert.getLookupid()));
-				dto.setCreatedDate(String.valueOf(alert.getCreated_date()));
+				dto.setCreatedDate(String.valueOf(alert.getCreatedDate()));
 				dto.setUserId(alert.getUserid());
 				
 				subsList.add(dto);
@@ -56,7 +56,7 @@ public class JobSeekerSubscriptionsConversionHelper {
 			for(JobSeekerSubscriptionsDTO dto : listSubsDTO){
 				MerUserAlerts entity = new MerUserAlerts();
 				entity.setAlertId(dto.getAlertId());
-				entity.setAlertvalue(dto.getAlertValue());
+				entity.setAlertValue(dto.getAlertValue());
 				entity.setLookupid(Integer.valueOf(dto.getLookUpId()));
 				entity.setUserid(dto.getUserId());				
 				subsEntityList.add(entity);

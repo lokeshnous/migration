@@ -18,7 +18,7 @@ public class JpJobApply implements Serializable {
 	@Column(name="job_apply_id")
 	private int jobApplyId;
 
-	private short active;
+	private int active;
 
 	@Column(name="apply_link")
 	private String applyLink;
@@ -42,11 +42,11 @@ public class JpJobApply implements Serializable {
 		this.jobApplyId = jobApplyId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

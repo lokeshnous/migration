@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

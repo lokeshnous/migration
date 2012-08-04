@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

@@ -102,7 +102,7 @@ public class ResumeController {
 		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();  
 		
 		for(ResumeDTO resumeDTO : resumeDTOList){
-			resumeDTO.setResume_visibility(visibilityMap.get(resumeDTO.getResume_visibility()));
+			resumeDTO.setResumeVisibility(visibilityMap.get(resumeDTO.getResumeVisibility()));
 			resumeDTOListNew.add(resumeDTO);
 		}
 		map.put("resumeList", resumeDTOListNew);
@@ -126,13 +126,13 @@ public class ResumeController {
 		ResumeDTO resumeDTO=new ResumeDTO();
 		resumeDTO.setUserId(30);
 		resumeDTO.setResumeType(createResume.getResumeType());
-		resumeDTO.setResume_name(createResume.getResume_name());
-		resumeDTO.setDesired_job_title(createResume.getDesired_job_title());
-		resumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
-		resumeDTO.setResume_visibility(createResume.getResume_visibility());
-		resumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
-		resumeDTO.setWilling_to_relocate(createResume.getWilling_to_relocate());
-		resumeDTO.setResume_visibility(createResume.getResume_visibility());
+		resumeDTO.setResumeName(createResume.getResumeName());
+		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+		resumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
+		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
+		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
 		resumeService.createResumeCopyPaste(resumeDTO);
 		
 		CertificationsForm certForm = new CertificationsForm();
@@ -230,13 +230,13 @@ public class ResumeController {
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		
 		createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
-		createResume.setResume_name(resumeDTO.getResume_name());
+		createResume.setResumeName(resumeDTO.getResumeName());
 		createResume.setResumeType(resumeDTO.getResumeType());
-		createResume.setDesired_job_title(resumeDTO.getDesired_job_title());
-		createResume.setDesired_employment_type(resumeDTO.getEmploymentType());
-		createResume.setWork_authorization_US(resumeDTO.getWork_authorization_US());
-		createResume.setWilling_to_relocate(resumeDTO.getWilling_to_relocate());
-		createResume.setResume_visibility(resumeDTO.getResume_visibility());
+		createResume.setDesiredJobTitle(resumeDTO.getDesiredJobTitle());
+		createResume.setDesiredEmploymentType(resumeDTO.getEmploymentType());
+		createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
+		createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
+		createResume.setResumeVisibility(resumeDTO.getResumeVisibility());
 		
 		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown(MMJBCommonConstants.WORK_AUTH_US);
@@ -269,13 +269,13 @@ public class ResumeController {
 		resumeDTO.setUserId(30);
 		
 		resumeDTO.setUploadResumeId(Integer.parseInt(createResume.getUploadResumeId()));
-		resumeDTO.setResume_name(createResume.getResume_name());
+		resumeDTO.setResumeName(createResume.getResumeName());
 		resumeDTO.setResumeType(createResume.getResumeType());
-		resumeDTO.setDesired_job_title(createResume.getDesired_job_title());
-		resumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
-		resumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
-		resumeDTO.setResume_visibility(createResume.getResume_visibility());
-		resumeDTO.setWilling_to_relocate(createResume.getWilling_to_relocate());
+		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+		resumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
+		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
 				
 		resumeService.updateResume(resumeDTO);
 		
@@ -408,14 +408,14 @@ public class ResumeController {
 
 
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
-	public ModelAndView createResumePopUp(CreateResume createResume, @RequestParam("resumeType") String resumeType) {
+	public ModelAndView createResumePopUp(@RequestParam("resumeType") String resumeType) {
 
 		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown(MMJBCommonConstants.WORK_AUTH_US);
 		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown(MMJBCommonConstants.RELOCATE);
 		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
 		
-		createResume = new CreateResume();
+		CreateResume createResume = new CreateResume();
 		
 		ModelAndView model = new ModelAndView();
 		model.addObject("createResume", createResume);
@@ -507,16 +507,16 @@ public class ResumeController {
 					new ReadDocFile().readMyDocument(fileName, resumeTextData);
 				}else if (ext.equalsIgnoreCase("docx")) {
 					resumeTextData.delete(0, resumeTextData.length());
-					new ReadDocFile().DocxFileReader(fileName, resumeTextData);
+					new ReadDocFile().docxFileReader(fileName, resumeTextData);
 				}
 				//Data Insertion part   
 				ResumeDTO createResumeDTO=new ResumeDTO();
 				createResumeDTO.setResumeType(createResume.getResumeType());
-				createResumeDTO.setResume_name(createResume.getResume_name());
-				createResumeDTO.setDesired_job_title(createResume.getDesired_job_title());
-				createResumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
-				createResumeDTO.setResume_visibility(createResume.getResume_visibility());
-				createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
+				createResumeDTO.setResumeName(createResume.getResumeName());
+				createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+				createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+				createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+				createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
 				createResumeDTO.setResumeText(resumeTextData.toString());
 				createResumeDTO.setFileServer(ownIP.getHostAddress());
 				createResumeDTO.setFilePath(basedirectorypathUpload);
@@ -530,7 +530,7 @@ public class ResumeController {
 				bufferReader.close();
 				resumeTextData.delete(0, resumeTextData.length());
 				(new File(basedirectorypathUpload)).mkdir();
-				CopyUtil.Move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
+				CopyUtil.move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
 
 
 			} catch (Exception e) {
@@ -542,11 +542,11 @@ public class ResumeController {
 			ResumeDTO createResumeDTO=new ResumeDTO();
 
 			createResumeDTO.setResumeType(createResume.getResumeType());
-			createResumeDTO.setResume_name(createResume.getResume_name());
-			createResumeDTO.setDesired_job_title(createResume.getDesired_job_title());
-			createResumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
-			createResumeDTO.setResume_visibility(createResume.getResume_visibility());
-			createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
+			createResumeDTO.setResumeName(createResume.getResumeName());
+			createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+			createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+			createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+			createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
 			//createResumeDTO.setResumeText(createResume.getResumeText());
 			createResumeDTO.setIsPublished("12");
 
@@ -566,11 +566,11 @@ public class ResumeController {
 		ResumeDTO createResumeDTO=new ResumeDTO();
 
 		createResumeDTO.setResumeType(createResume.getResumeType());
-		createResumeDTO.setResume_name(createResume.getResume_name());
-		createResumeDTO.setDesired_job_title(createResume.getDesired_job_title());
-		createResumeDTO.setDesired_employment_type(createResume.getDesired_employment_type());
-		createResumeDTO.setResume_visibility(createResume.getResume_visibility());
-		createResumeDTO.setWork_authorization_US(createResume.getWork_authorization_US());
+		createResumeDTO.setResumeName(createResume.getResumeName());
+		createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+		createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+		createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
 		createResumeDTO.setResumeText(createResume.getResumeText());
 		createResumeDTO.setIsPublished("12");
 

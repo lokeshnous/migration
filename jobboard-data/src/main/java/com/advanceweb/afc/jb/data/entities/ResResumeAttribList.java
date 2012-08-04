@@ -18,7 +18,7 @@ public class ResResumeAttribList implements Serializable {
 	@Column(name="resume_attrib_list_id")
 	private int resumeAttribListId;
 
-	private short active;
+	private int active;
 
 	@Column(name="list_value")
 	private String listValue;
@@ -41,11 +41,11 @@ public class ResResumeAttribList implements Serializable {
 		this.resumeAttribListId = resumeAttribListId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

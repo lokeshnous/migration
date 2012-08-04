@@ -20,7 +20,7 @@ public class ResUploadResume implements Serializable {
 	@Column(name="upload_resume_id")
 	private int uploadResumeId;
 
-	private short active;
+	private int active;
 
 	@Column(name="create_dt")
 	private Timestamp createDt;
@@ -45,7 +45,7 @@ public class ResUploadResume implements Serializable {
 	private String fileServer;
 
 	@Column(name="is_published")
-	private short isPublished;
+	private int isPublished;
 
 	@Column(name="resume_name")
 	private String resumeName;
@@ -83,11 +83,11 @@ public class ResUploadResume implements Serializable {
 		this.uploadResumeId = uploadResumeId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 
@@ -147,11 +147,11 @@ public class ResUploadResume implements Serializable {
 		this.fileServer = fileServer;
 	}
 
-	public short getIsPublished() {
+	public int getIsPublished() {
 		return this.isPublished;
 	}
 
-	public void setIsPublished(short isPublished) {
+	public void setIsPublished(int isPublished) {
 		this.isPublished = isPublished;
 	}
 

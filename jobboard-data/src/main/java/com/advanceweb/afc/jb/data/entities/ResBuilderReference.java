@@ -27,7 +27,7 @@ public class ResBuilderReference implements Serializable {
 	private String email;
 
 	@Column(name="is_available")
-	private short isAvailable;
+	private int isAvailable;
 
 	@Column(name="job_title")
 	private String jobTitle;
@@ -78,11 +78,11 @@ public class ResBuilderReference implements Serializable {
 		this.email = email;
 	}
 
-	public short getIsAvailable() {
+	public int getIsAvailable() {
 		return this.isAvailable;
 	}
 
-	public void setIsAvailable(short isAvailable) {
+	public void setIsAvailable(int isAvailable) {
 		this.isAvailable = isAvailable;
 	}
 

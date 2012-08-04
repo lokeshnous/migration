@@ -17,7 +17,7 @@ public class AdmUserSubscription implements Serializable {
 	@EmbeddedId
 	private AdmUserSubscriptionPK id;
 
-	private short active;
+	private int active;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
@@ -45,11 +45,11 @@ public class AdmUserSubscription implements Serializable {
 		this.id = id;
 	}
 	
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

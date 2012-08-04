@@ -100,7 +100,7 @@ public class ResumeDaoImpl implements ResumeDao {
 
 		List<DropDownDTO> visibilityDropDown = populateDropdownsDAO
 				.populateDropdown(MMJBCommonConstants.VISIBILITY);
-		if (resumeDTO.getResume_visibility().equals(
+		if (resumeDTO.getResumeVisibility().equals(
 				String.valueOf(visibilityDropDown.get(0).getOptionId()))) {
 			List<ResUploadResume> resumes = hibernateTemplate
 					.find("from ResUploadResume where userId = "

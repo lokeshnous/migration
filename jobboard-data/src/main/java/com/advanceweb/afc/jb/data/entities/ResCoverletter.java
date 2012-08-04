@@ -20,7 +20,7 @@ public class ResCoverletter implements Serializable {
 	@Column(name="coverletter_id")
 	private int coverletterId;
 
-	private short active;
+	private int active;
 
     @Lob()
 	@Column(name="coverletter_text")
@@ -58,11 +58,11 @@ public class ResCoverletter implements Serializable {
 		this.coverletterId = coverletterId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

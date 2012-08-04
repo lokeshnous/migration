@@ -29,7 +29,7 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 @RequestMapping("/brandingTemplates")
 @SuppressWarnings("rawtypes")
 public class BrandingTemplateController {
-
+	
 	@Autowired
 	private BrandingTemplateService empBrandTemp;
 

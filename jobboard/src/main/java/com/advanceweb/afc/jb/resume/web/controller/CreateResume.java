@@ -87,7 +87,7 @@ public class CreateResume {
 	}
 	private String workauthUS;
 
-	public String getResume_name() {
+	public String getResumeName() {
 		return resume_name;
 	}
 	public String getResumeType() {
@@ -96,37 +96,37 @@ public class CreateResume {
 	public void setResumeType(String resumeType) {
 		this.resumeType = resumeType;
 	}
-	public void setResume_name(String resume_name) {
+	public void setResumeName(String resume_name) {
 		this.resume_name = resume_name;
 	}
-	public String getDesired_job_title() {
+	public String getDesiredJobTitle() {
 		return desired_job_title;
 	}
-	public void setDesired_job_title(String desired_job_title) {
+	public void setDesiredJobTitle(String desired_job_title) {
 		this.desired_job_title = desired_job_title;
 	}
-	public String getDesired_employment_type() {
+	public String getDesiredEmploymentType() {
 		return desired_employment_type;
 	}
-	public void setDesired_employment_type(String desired_employment_type) {
+	public void setDesiredEmploymentType(String desired_employment_type) {
 		this.desired_employment_type = desired_employment_type;
 	}
-	public String getWork_authorization_US() {
+	public String getWorkAuthorizationUS() {
 		return work_authorization_US;
 	}
-	public void setWork_authorization_US(String work_authorization_US) {
+	public void setWorkAuthorizationUS(String work_authorization_US) {
 		this.work_authorization_US = work_authorization_US;
 	}
-	public String getWilling_to_relocate() {
+	public String getWillingToRelocate() {
 		return willing_to_relocate;
 	}
-	public void setWilling_to_relocate(String willing_to_relocate) {
+	public void setWillingToRelocate(String willing_to_relocate) {
 		this.willing_to_relocate = willing_to_relocate;
 	}
-	public String getResume_visibility() {
+	public String getResumeVisibility() {
 		return resume_visibility;
 	}
-	public void setResume_visibility(String resume_visibility) {
+	public void setResumeVisibility(String resume_visibility) {
 		this.resume_visibility = resume_visibility;
 	}
 	public String getObjective() {

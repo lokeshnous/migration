@@ -21,7 +21,7 @@ public class ResPublishResume implements Serializable {
 	@Column(name="publish_resume_id")
 	private int publishResumeId;
 
-	private short active;
+	private int active;
 
 	@Column(name="create_dt")
 	private Timestamp createDt;
@@ -86,11 +86,11 @@ public class ResPublishResume implements Serializable {
 		this.publishResumeId = publishResumeId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

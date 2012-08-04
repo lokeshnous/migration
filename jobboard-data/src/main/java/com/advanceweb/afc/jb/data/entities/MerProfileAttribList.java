@@ -18,7 +18,7 @@ public class MerProfileAttribList implements Serializable {
 	@Column(name="profile_attrib_list_id")
 	private int profileAttribListId;
 
-	private short active;
+	private int active;
 
 	@Column(name="list_value")
 	private String listValue;
@@ -41,11 +41,11 @@ public class MerProfileAttribList implements Serializable {
 		this.profileAttribListId = profileAttribListId;
 	}
 
-	public short getActive() {
+	public int getActive() {
 		return this.active;
 	}
 
-	public void setActive(short active) {
+	public void setActive(int active) {
 		this.active = active;
 	}
 

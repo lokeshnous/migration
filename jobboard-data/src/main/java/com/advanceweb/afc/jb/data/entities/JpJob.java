@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="jp_job")
 public class JpJob implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -36,7 +37,7 @@ public class JpJob implements Serializable {
 	private int applyOnline;
 
 	@Column(name="auto_renew")
-	private short autoRenew;
+	private int autoRenew;
 
 	@Column(name="blind_ad")
 	private int blindAd;
@@ -220,11 +221,11 @@ public class JpJob implements Serializable {
 		this.applyOnline = applyOnline;
 	}
 
-	public short getAutoRenew() {
+	public int getAutoRenew() {
 		return this.autoRenew;
 	}
 
-	public void setAutoRenew(short autoRenew) {
+	public void setAutoRenew(int autoRenew) {
 		this.autoRenew = autoRenew;
 	}
 

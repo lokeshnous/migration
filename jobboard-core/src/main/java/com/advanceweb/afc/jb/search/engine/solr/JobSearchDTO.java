@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import org.apache.solr.client.solrj.beans.Field;
 
 /**

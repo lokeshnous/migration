@@ -1,15 +1,17 @@
 package com.advanceweb.afc.jb.job.service.impl;
 
-import java.util.Date;
-import java.util.Locale;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+
 import com.advanceweb.afc.jb.common.util.CheckNullUtil;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.search.engine.JSONConverterService;

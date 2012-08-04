@@ -3,11 +3,8 @@ package com.advanceweb.afc.jb.employer.service;
 
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
-import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 
 /**
  * @author rajeshkb

@@ -21,16 +21,16 @@ public class JpJobLocation implements Serializable {
 	private Timestamp createDt;
 
 	@Column(name="hide_city")
-	private short hideCity;
+	private int hideCity;
 
 	@Column(name="hide_country")
-	private short hideCountry;
+	private int hideCountry;
 
 	@Column(name="hide_postcode")
-	private short hidePostcode;
+	private int hidePostcode;
 
 	@Column(name="hide_state")
-	private short hideState;
+	private int hideState;
 
 	//bi-directional many-to-one association to JpJob
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -61,35 +61,35 @@ public class JpJobLocation implements Serializable {
 		this.createDt = createDt;
 	}
 
-	public short getHideCity() {
+	public int getHideCity() {
 		return this.hideCity;
 	}
 
-	public void setHideCity(short hideCity) {
+	public void setHideCity(int hideCity) {
 		this.hideCity = hideCity;
 	}
 
-	public short getHideCountry() {
+	public int getHideCountry() {
 		return this.hideCountry;
 	}
 
-	public void setHideCountry(short hideCountry) {
+	public void setHideCountry(int hideCountry) {
 		this.hideCountry = hideCountry;
 	}
 
-	public short getHidePostcode() {
+	public int getHidePostcode() {
 		return this.hidePostcode;
 	}
 
-	public void setHidePostcode(short hidePostcode) {
+	public void setHidePostcode(int hidePostcode) {
 		this.hidePostcode = hidePostcode;
 	}
 
-	public short getHideState() {
+	public int getHideState() {
 		return this.hideState;
 	}
 
-	public void setHideState(short hideState) {
+	public void setHideState(int hideState) {
 		this.hideState = hideState;
 	}
 

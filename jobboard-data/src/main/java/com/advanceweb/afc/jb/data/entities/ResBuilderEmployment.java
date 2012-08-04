@@ -46,7 +46,7 @@ public class ResBuilderEmployment implements Serializable {
 	private String hourlyRate;
 
 	@Column(name="is_cur_career_level")
-	private short isCurCareerLevel;
+	private int isCurCareerLevel;
 
 	@Column(name="job_description")
 	private String jobDescription;
@@ -61,7 +61,7 @@ public class ResBuilderEmployment implements Serializable {
 	private String state;
 
 	@Column(name="still_employed")
-	private short stillEmployed;
+	private int stillEmployed;
 
 	//bi-directional many-to-one association to ResBuilderResume
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -151,11 +151,11 @@ public class ResBuilderEmployment implements Serializable {
 		this.hourlyRate = hourlyRate;
 	}
 
-	public short getIsCurCareerLevel() {
+	public int getIsCurCareerLevel() {
 		return this.isCurCareerLevel;
 	}
 
-	public void setIsCurCareerLevel(short isCurCareerLevel) {
+	public void setIsCurCareerLevel(int isCurCareerLevel) {
 		this.isCurCareerLevel = isCurCareerLevel;
 	}
 
@@ -191,11 +191,11 @@ public class ResBuilderEmployment implements Serializable {
 		this.state = state;
 	}
 
-	public short getStillEmployed() {
+	public int getStillEmployed() {
 		return this.stillEmployed;
 	}
 
-	public void setStillEmployed(short stillEmployed) {
+	public void setStillEmployed(int stillEmployed) {
 		this.stillEmployed = stillEmployed;
 	}
 

@@ -11,10 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.JobAlertsDTO;
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
-import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
