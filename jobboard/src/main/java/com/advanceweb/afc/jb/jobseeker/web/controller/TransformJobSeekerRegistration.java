@@ -1,11 +1,16 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 
 @Repository("transformJobSeekerRegistration")
@@ -139,4 +144,28 @@ public class TransformJobSeekerRegistration {
 		return dto;
 	}
 
+	public List<JobSeekerProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
+		
+		List<JobSeekerProfileAttribForm> listForms = new ArrayList<JobSeekerProfileAttribForm>();
+		
+		if(null != resumeDTO.getAttribList()){
+			for(MerProfileAttribDTO dto : resumeDTO.getAttribList()){
+				JobSeekerProfileAttribForm form = new JobSeekerProfileAttribForm();
+				form.setDropdown(dto.getDropdown());
+				form.setStrAttribType(dto.getStrAttribType());
+				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrProfileAttribId(dto.getStrProfileAttribId());
+				form.setStrScreenName(dto.getStrScreenName());
+				form.setStrSectionName(dto.getStrSectionName());
+				
+				listForms.add(form);
+			}
+		}
+		
+		return listForms;
+		
+	}
+	
+	
 }

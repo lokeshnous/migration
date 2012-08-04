@@ -9,7 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  * @author anilm
  * @version 1.0
  */
-public class ResumeDTO implements Serializable{
+public class ResumeDTO extends ProfileDTO implements Serializable{
 	
 	private static final long serialVersionUID = -2200423309708244707L;
 	private int uploadResumeId;
@@ -43,6 +43,8 @@ public class ResumeDTO implements Serializable{
 	private List<ReferenceDTO> listRefDTO;
 	private List<WorkExpDTO> listWorkExpDTO;
 	private ContactInformationDTO contactInfoDTO;
+	private List<MerProfileAttribDTO> attribList;
+
 	//Creating Resume	
 
 	
@@ -202,8 +204,7 @@ public class ResumeDTO implements Serializable{
 	}
 	public void setListWorkExpDTO(List<WorkExpDTO> listWorkExpDTO) {
 		this.listWorkExpDTO = listWorkExpDTO;
-	}
-	
+	}	
 	public ContactInformationDTO getContactInfoDTO() {
 		return contactInfoDTO;
 	}
@@ -221,6 +222,12 @@ public class ResumeDTO implements Serializable{
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}	
+	public List<MerProfileAttribDTO> getAttribList() {
+		return attribList;
+	}
+	public void setAttribList(List<MerProfileAttribDTO> attribList) {
+		this.attribList = attribList;
 	}
 	@Override
 	public String toString() {

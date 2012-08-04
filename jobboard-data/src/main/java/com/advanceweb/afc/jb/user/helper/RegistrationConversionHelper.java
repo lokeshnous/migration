@@ -6,12 +6,19 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
+import com.advanceweb.afc.jb.data.entities.MerProfileAttribList;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
-import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 
 @Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
@@ -43,7 +50,7 @@ public class RegistrationConversionHelper {
 			}
 		}
 	
-		if(addDTO != null){
+/*		if(addDTO != null){
 			profile.setCity(addDTO.getCity());
 			profile.setCountry(addDTO.getCountry());
 			profile.setState(addDTO.getState());
@@ -65,7 +72,7 @@ public class RegistrationConversionHelper {
 				profile.setUserProfileId(userDTO.getUserId());
 			}
 
-		}
+		}*/
 		listProfiles.add(profile);
 		profile.setMerUser(entity);
 		entity.setMerUserProfiles(listProfiles);
@@ -85,7 +92,7 @@ public class RegistrationConversionHelper {
 		AddressDTO addDTO = dto.getAddressDTO();
 		JobSeekerProfileDTO profileDTO = dto.getJobSeekerProfileDTO();
 		
-		if(addDTO != null){
+/*		if(addDTO != null){
 			entity.setCity(addDTO.getCity());
 			entity.setCountry(addDTO.getCountry());
 			entity.setState(addDTO.getState());
@@ -102,7 +109,7 @@ public class RegistrationConversionHelper {
 			entity.setEthinicity(profileDTO.getEthinicity());
 			entity.setVeteranStatus(profileDTO.getVeteranStatus());
 
-		}
+		}*/
 		
 		return entity;
 
@@ -167,6 +174,77 @@ public class RegistrationConversionHelper {
 		}
 		return dto;
 
+	}
+	
+	/**
+	 * 
+	 * @param listProfAttrib
+	 * @param countryList
+	 * @param stateList
+	 * @return
+	 */
+	public ResumeDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,List<DropDownDTO> countryList, List<DropDownDTO> stateList){
+		
+		ResumeDTO resumeDTO = new ResumeDTO();
+		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
+		if(null != listProfAttrib){
+			for(MerProfileAttrib entity : listProfAttrib){
+				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				dto.setStrAttribType(entity.getFormType());
+				dto.setStrLabelName(entity.getName());
+				dto.setStrProfileAttribId(String.valueOf(entity.getProfileAttribId()));
+				dto.setStrScreenName(entity.getScreenName());
+				dto.setStrSectionName(entity.getSectionName());
+				
+				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN) || dto.getStrAttribType().equals(MMJBCommonConstants.CHECK_BOX)){
+					//populating countries
+					if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_COUNTRY)){
+						dto.setDropdown(countryList);
+						
+					}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_STATE)){
+						dto.setDropdown(stateList);	//populating states
+						
+					}else{
+						List<MerProfileAttribList> dropdownVals = entity.getMerProfileAttribLists();
+						dto.setDropdown(transformToDropDownDTO(dropdownVals));
+					}
+				}							
+				listDTO.add(dto);
+			}
+		}
+		resumeDTO.setAttribList(listDTO);
+		return resumeDTO;		
+	}
+	
+	/**
+	 * Converting list of MerProfileAttribList to list of DropDownDTO's
+	 */
+	public List<DropDownDTO> transformToDropDownDTO(List<MerProfileAttribList> dropdownVals){
+		
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		if(null != dropdownVals){
+			for(MerProfileAttribList attrib : dropdownVals){
+				DropDownDTO dto = new DropDownDTO();
+				dto.setOptionId(String.valueOf(attrib.getProfileAttribListId()));
+				dto.setOptionName(attrib.getListValue());
+				dropdownList.add(dto);
+			}
+		}
+		return dropdownList;
+	}
+	
+	public List<DropDownDTO> convertMerUtilityToDropDownDTO(List<Object> merUtilityList){
+
+		DropDownDTO dropDownDTO = null;
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
+
+		for(Object merUtility : merUtilityList){
+			dropDownDTO = new DropDownDTO();
+			dropDownDTO.setOptionId((String)merUtility);
+			dropDownDTO.setOptionName((String)merUtility);
+			list.add(dropDownDTO);
+		}		
+		return list;		
 	}
 	
 }

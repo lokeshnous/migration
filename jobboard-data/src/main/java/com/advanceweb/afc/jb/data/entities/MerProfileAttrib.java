@@ -29,6 +29,12 @@ public class MerProfileAttrib implements Serializable {
 	private String formType;
 
 	private String name;
+	
+	@Column(name="section_name")
+	private String sectionName;
+	
+	@Column(name="screen_name")
+	private String screenName;
 
 	//bi-directional many-to-one association to MerProfileAttribList
 	@OneToMany(mappedBy="merProfileAttrib")
@@ -95,6 +101,22 @@ public class MerProfileAttrib implements Serializable {
 
 	public void setMerUserProfiles(List<MerUserProfile> merUserProfiles) {
 		this.merUserProfiles = merUserProfiles;
+	}
+
+	public String getSectionName() {
+		return sectionName;
+	}
+
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
+	}
+
+	public String getScreenName() {
+		return screenName;
+	}
+
+	public void setScreenName(String screenName) {
+		this.screenName = screenName;
 	}
 	
 }

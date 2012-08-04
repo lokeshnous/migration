@@ -1,8 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.ProfileDTO;
-import com.advanceweb.afc.jb.data.domain.JobSeeker;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 
 /**
  * @author rajeshkb
@@ -46,5 +45,12 @@ public interface JobSeekerRegistrationDAO {
 	public boolean validatePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
 	public boolean validateEmail(String email);
+	
+	/**
+	 * To change password
+	 * @param jobSeekerRegistrationDTO
+	 * @return
+	 */
+	public ResumeDTO getProfileAttributes(String strScreenName);
 
 }

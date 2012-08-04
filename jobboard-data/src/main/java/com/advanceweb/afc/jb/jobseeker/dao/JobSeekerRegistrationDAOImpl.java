@@ -1,17 +1,25 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.data.entities.MerLocation;
+import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
@@ -26,12 +34,14 @@ import com.mysql.jdbc.StringUtils;
 @Repository("jobSeekerRegistrationDAO")
 public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
+	
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
 	
 	private HibernateTemplate hibernateTemplate;
 	
 	private final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
+	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof where prof.screenName = ?";
 	
 	@Autowired
 	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker) {
@@ -164,6 +174,55 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public ResumeDTO getProfileAttributes(String strScreenName) {
+		ResumeDTO dto = null;
+		try {
+			  List<MerProfileAttrib> listProfAttrib = hibernateTemplate.find(REGISTRATION_ATTRIBS,strScreenName);
+			  List<DropDownDTO> countryList = getCountryList();
+			  List<DropDownDTO> stateList = getStateList();
+			  dto = registrationConversionHelper.transformProfileAttrib(listProfAttrib, countryList, stateList);
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
+	
+	
+	
+	private List<DropDownDTO> getCountryList() {
+		try {
+			DetachedCriteria criteria = DetachedCriteria.forClass(MerLocation.class);
+			criteria.setProjection(Projections.distinct(Projections.property("country")));
+			List<Object> merUtilityList = hibernateTemplate.findByCriteria(criteria);
+			return registrationConversionHelper.convertMerUtilityToDropDownDTO(merUtilityList);
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+
+	private List<DropDownDTO> getStateList() {
+		try {
+			DetachedCriteria criteria = DetachedCriteria
+					.forClass(MerLocation.class);
+			criteria.setProjection(Projections.distinct(Projections
+					.property("state")));
+			criteria.addOrder(Order.asc("state"));
+			List<Object> merUtilityList = hibernateTemplate
+					.findByCriteria(criteria);
+			return registrationConversionHelper.convertMerUtilityToDropDownDTO(merUtilityList);
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

@@ -36,6 +36,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LanguageDTO.java -tex
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginFormDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MMXmlResumeParserImpl.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MagazinesDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MerProfileAttribDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MerUserDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchIndexDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchInputDTO.java -text
@@ -312,6 +313,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerA
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerAdvanceSearchController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationValidation.java -text

@@ -32,6 +32,7 @@ import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -103,25 +104,33 @@ public class JobSeekerRegistrationController {
 			result.rejectValue("emailId", "NotEmpty", "Email Id already Exist in the DataBase!");
 			return model;
 		}
+		String strScreenName="JobSeeker Registration";
+		ResumeDTO resumeDTO = (ResumeDTO) profileRegistration.getProfileAttributes(strScreenName);
+
+		List<JobSeekerProfileAttribForm> listProfAttribForms = 
+				transformJobSeekerRegistration.transformDTOToProfileAttribForm(resumeDTO);
 		
-		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
+//		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();
+		
+/*		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
 		List<StateDTO> stateList= populateDropdownsService.getStateList();
 		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
 		List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
 		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
 		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
 		List<DropDownDTO> empTyepList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();
+		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();*/
 		
-		model.addObject("countryList",countryList);
+/*		model.addObject("countryList",countryList);
 		model.addObject("employmentInfoList",empInfoList);
 		model.addObject("genderList",genderList);
 		model.addObject("ethnicityList",ethnicityList);
 		model.addObject("veteranStatusList",veteranStatusList);
 		model.addObject("empTyepList",empTyepList);
 		model.addObject("jobSubscriptionsList",subsList);
-		model.addObject("stateList",stateList);
+		model.addObject("stateList",stateList);*/
 		model.setViewName("jobSeekerCreateAccountInfo");
+		model.addObject("listProfAttribForms",listProfAttribForms);
 		model.addObject("registerForm", registerForm);
 		return model;
 		
