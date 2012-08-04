@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -282,7 +281,20 @@ public class JobSearchActivityController {
 
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
-		String searchName = "KEYWORD";// will be replaced by BASIC_SEARCH
+		
+		String searchName = "";// will be replaced by BASIC_SEARCH
+		
+		/**Check if city state and radius field is not empty to check for LOCATION search**/
+		if("".equalsIgnoreCase(jobSearchResultForm.getCityState().trim())  
+				&& "".equalsIgnoreCase(jobSearchResultForm.getRadius().trim())){
+			
+			if(!"".equalsIgnoreCase(jobSearchResultForm.getKeywords().trim())){
+				searchName = MMJBCommonConstants.KEYWORD;
+			}
+		}else{
+			searchName = MMJBCommonConstants.LOCATION;
+		}
+		
 		// The value of Search_seq will be changed when the session management
 		// is done.
 		// This value needs to be increased every time when there is a search
