@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.MetaSearchParamDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
+import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.MetaSearchParam;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
@@ -82,6 +83,58 @@ public class SearchDaoImpl implements SearchDao {
 		return queryDTO;
 	}
 	
+	
+	/**
+	 * This method gets the latitude and longitude from the JPLoaction table.
+	 * @param String  Postcode
+	 * @return List<Float> of latitude and longitude
+	 */
+	public List<Float> getLatitudeLongitudebyPostcode(String postcode) throws JobBoardDataException{
+
+		List<Float> latLonList = new ArrayList<Float>();
+		try {
+			@SuppressWarnings("unchecked")
+			List<JpLocation> joLocationList = hibernateTemplate.find(" from  JpLocation WHERE  postcode  = '"+postcode+"'");
+			
+			for(JpLocation locObj: joLocationList){
+				
+				latLonList.add(locObj.getLatitude());
+				latLonList.add(locObj.getLongitude());
+			}
+
+		} catch (HibernateException e) {
+			LOGGER.debug(e);
+			throw new JobBoardDataException("Error while fetching the Latitude Longitude by Postcode from the Database...");
+		}
+		return latLonList;
+		
+	}
+	
+	/**
+	 * This method gets the latitude and longitude from the JPLoaction table.
+	 * @param String  city and state
+	 * @return List<Float> of latitude and longitude
+	 */
+	public List<Float> getLatitudeLongitudeByCityState(String city, String state) throws JobBoardDataException{
+		
+		List<Float> latLonList = new ArrayList<Float>();
+		try {
+			@SuppressWarnings("unchecked")
+			List<JpLocation> joLocationList = hibernateTemplate.find(" from  JpLocation WHERE  city  = '"+city+"' and state = '"+state+"'");
+			
+			for(JpLocation locObj: joLocationList){
+				
+				latLonList.add(locObj.getLatitude());
+				latLonList.add(locObj.getLongitude());
+			}
+
+		} catch (HibernateException e) {
+			LOGGER.debug(e);
+			throw new JobBoardDataException("Error while fetching the latitude and longitude By CityState from the Database...");
+		}
+		return latLonList;
+		
+	}
 	
 
 }
