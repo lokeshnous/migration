@@ -33,6 +33,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.j
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerSubscriptionsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LanguageDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LocationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginFormDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MMXmlResumeParserImpl.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MagazinesDTO.java -text
