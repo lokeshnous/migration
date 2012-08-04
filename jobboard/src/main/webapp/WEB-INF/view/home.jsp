@@ -302,18 +302,25 @@
 								<div id="slider1PrevBtn"></div>
 								<div id="slider1">
 
-									<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}">
-										<div class="slider1Frames"">
 
-											<a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }">
+ 
+ 									<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}" varStatus="status" step="2">
+										<div class="slider1Frames">
+
+											<a href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index].facilityid }">
 												<div class="slider1FrameA1">
-													<img src="${companyProfileDTO.logoPath}"alt="${companyProfileDTO.companyName }">
+													<img src="${companyProfileDTOList[status.index].logoPath}"alt="${companyProfileDTOList[status.index].companyName }" width="125" height="37">
+												</div>	
+											</a>
+											<a href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index+1].facilityid }">
+												<div class="slider1FrameA2">
+													<img src="${companyProfileDTOList[status.index+1].logoPath}"alt="${companyProfileDTOList[status.index+1].companyName }" width="125" height="37">
 												</div>	
 											</a>
 										
 								       </div>
 								</c:forEach>
-
+  
 
 
 
