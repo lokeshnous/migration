@@ -54,6 +54,7 @@ public interface MMJBCommonConstants {
 	String B_05 = ":b05";
 	String B_06 = ":b06";
 	
+	String AD_TEXT = "AdText";
 	String CAP_COMPANY = "Company";
 	String JOB_TITLE = "JobTitle";
 	String CAP_CITY = "City";
