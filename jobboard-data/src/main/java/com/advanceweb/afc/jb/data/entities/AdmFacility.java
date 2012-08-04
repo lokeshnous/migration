@@ -34,6 +34,9 @@ public class AdmFacility implements Serializable {
 	@Column(name="company_news")
 	private String companyNews;
 
+	@Column(name="company_overview")
+	private String companyOverview;
+
 	private String country;
 
     @Temporal( TemporalType.TIMESTAMP)
@@ -374,6 +377,14 @@ public class AdmFacility implements Serializable {
 
 	public void setJpTemplates(List<JpTemplate> jpTemplates) {
 		this.jpTemplates = jpTemplates;
+	}
+
+	public String getCompanyOverview() {
+		return companyOverview;
+	}
+
+	public void setCompanyOverview(String companyOverview) {
+		this.companyOverview = companyOverview;
 	}
 	
 }
