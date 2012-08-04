@@ -96,7 +96,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 		
 		try {
 			List<JpAttribList> merLookupList =  hibernateTemplateTracker.find("from JpAttribList e where e.lookupCategory='State' and e.lookupStatus='1'");
-			return dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
+			return null;
+//					dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
 		} catch (HibernateException e) {
 			
 		}
