@@ -31,6 +31,8 @@ public interface MMJBCommonConstants {
 	String SLASH_SELECT_SLASH = "/select/?";
 	String AMP = "&";
 	String QUESTION_MARK = "?";
+	String CLSD_BRACES = "}";
+	String SPACE = " ";
 	String EQUAL_TO = "=";
 	String USER = "admin";
 	String SELECT_SLASH_QUESTIONMARK = "select/?";
@@ -47,6 +49,7 @@ public interface MMJBCommonConstants {
 	String COMPANY = "company";
 	String POSTED_DT = "posted_dt";
 	
+	String B = ":b";
 	String B_01 = ":b01";
 	String B_02 = ":b02";
 	String B_03 = ":b03";
@@ -100,6 +103,10 @@ public interface MMJBCommonConstants {
 	String ROWS = "rows";
 	String START = "start";
 	String Q = "q";
+	String FQ = "fq";
+	
+	String LOCATION = "LOCATION";
+	String KEYWORD = "KEYWORD";
 
 	//Solr Date pattern
 	
