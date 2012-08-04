@@ -402,6 +402,8 @@ jobboard/src/main/webapp/resources/css/basic_ie.css -text
 jobboard/src/main/webapp/resources/css/demo.css -text
 jobboard/src/main/webapp/resources/css/displaytag.css -text
 jobboard/src/main/webapp/resources/css/ie.css -text
+jobboard/src/main/webapp/resources/css/jquery-ui.css -text
+jobboard/src/main/webapp/resources/css/jquery.dataTables.css -text
 jobboard/src/main/webapp/resources/css/jquery.megamenu.css -text
 jobboard/src/main/webapp/resources/css/screen.css -text
 jobboard/src/main/webapp/resources/css/site.css -text
@@ -505,6 +507,8 @@ jobboard/src/main/webapp/resources/js/jquery.cycle.all.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.lite.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.min.js -text
+jobboard/src/main/webapp/resources/js/jquery.dataTables.js -text
+jobboard/src/main/webapp/resources/js/jquery.dataTables.nightly.js -text
 jobboard/src/main/webapp/resources/js/jquery.displaytagdetail.js -text
 jobboard/src/main/webapp/resources/js/jquery.js -text
 jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text

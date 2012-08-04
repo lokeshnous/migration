@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
@@ -70,6 +70,7 @@ public class JobSearchActivityController {
 	@Autowired
 	private JSONConverterService jSONConverterService;
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private ResumeService resumeService;
 
@@ -157,9 +158,9 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
-			@RequestParam String userID) {
+			@RequestParam String userID, @RequestParam("id") int jobId) {
 		JSONObject jsonObject = new JSONObject();
-		form.setJobID(13158);
+		form.setJobID(jobId);
 		int userId = 30;
 		form.setUseremail("merion@nousinfosystems.com");
 		try {
@@ -200,9 +201,15 @@ public class JobSearchActivityController {
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
 			// TODO: Exception if resume not found
-			ResumeDTO resumeDTO = resumeService
-					.fetchPublicResumeByUserId(userId);
-			attachmentpaths.add(resumeDTO.getFilePath());
+//			ResumeDTO resumeDTO = resumeService
+//					.fetchPublicResumeByUserId(userId);
+//			attachmentpaths.add(resumeDTO.getFilePath());
+			try{
+				attachmentpaths.add("c:\\testResume.txt");
+			}catch (Exception e) {
+				// TODO: handle exception
+				LOGGER.info("Resume not found");
+			}
 			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
 			LOGGER.info("Mail sent to employer");
@@ -241,11 +248,11 @@ public class JobSearchActivityController {
 				applyJobDTO.setAppliedDt(currentDate.toString());
 				jobSearchActivity.updateSaveOrApplyJob(applyJobDTO);
 			}
+			jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("applyJob ERROR");
 		}
-		jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		return jsonObject;
 	}
 
@@ -306,8 +313,6 @@ public class JobSearchActivityController {
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
 
 
-//		long start = Long.parseLong("0");
-//		long rows = Long.parseLong("100");
 //		jobSearchResultForm.setKeywords("test");
 //		jobSearchResultForm.setRadius("");
 //		jobSearchResultForm.setCityState("");
@@ -365,7 +370,7 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveThisJob(@Valid ApplyJobForm form, Map<String, Object> map,
-			@RequestParam String userID) {
+			@RequestParam("id") int jobId) {
 		JSONObject jsonObject = new JSONObject();
 
 		/**
@@ -377,7 +382,7 @@ public class JobSearchActivityController {
 			return jsonObject;
 			// return new ModelAndView("jobseekersaveThisJobPopUp");
 		}
-		form.setJobID(13158);
+		form.setJobID(jobId);
 		int userId = 30;
 		/**
 		 * Get the Job details
@@ -391,7 +396,7 @@ public class JobSearchActivityController {
 		AppliedJobDTO appliedJobDTO = jobSearchActivity.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
-			if (appliedJobDTO.getAppliedDt().isEmpty()) {
+			if (appliedJobDTO.getAppliedDt() != null) {
 				applyJobErrMsg = applyJobErrMsg.replace("?", appliedJobDTO
 						.getAppliedDt().toString());
 				jsonObject.put(ajaxMsg, applyJobErrMsg);

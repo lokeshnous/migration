@@ -6,24 +6,16 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
-		<!-- STYLESHEETS -->
-		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
-        
-<!--[if IE]>
-	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
-
-		<!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+        <!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
-		<script type="text/javascript" src="../resources/js/common/common.js"></script>
+ 	    <link href="../resources/css/jquery.dataTables.css" rel="stylesheet" type="text/css">
+ 	    <link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css">
+    	<script type="text/javascript" language="javascript" src="/media/js/jquery.js"></script>
+    	<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+<!--
 		<script type="text/javascript">
 		
 		
@@ -121,25 +113,7 @@
 		    
 		    
 		</script>
-		<!-- js files for modalpopup------------------------------------------------- -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
-<script src="../resources/js/jquery-1.7.1.min.js"></script>
-		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
-		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
-
-        <style type="text/css" media="screen">
-           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
-        </style>
-<!-- -------------------------------------------------------------------------- -->
-		
-	
-	
-        <!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+-->
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
@@ -147,10 +121,227 @@
 
 			});
 		</script>
-        <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+	<style type="text/css">
+	.advertiseStyle{
+		border: 2px solid;
+		background-image : url(../resources/images/ads/banner_ad_fpo.png);
+		}
+	.details{
+	border: 2px solid;
+	}
+	</style>
+		<script type="text/javascript">
+		function saveThisJob(jobId) {
+			$.ajax({
+				url : 'saveThisJob.html?id='+jobId,
+				data : ({
+					userID : "userID"
+				}),
+				success : function(data) {
+					$.each(data, function(key, val) {
+						if (key == "AjaxMSG") {
+							$('#topjobActionInfo'+jobId).html(val);
+						}
+					});
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							$('#saveThisJobId').attr('target', '_blank');
+							$('#saveThisJobId').attr('href', val + '.html');
+							$("#saveThisJobId").displaypopup("#saveThisJobId",
+									"775", "252");
+
+						}
+					});
+				},
+				error : function(data) {
+					alert('Unable to process');
+				},
+				complete : function(data) {
+				}
+			});
+		}
+		function applyThisJob(jobId) {
+			$.ajax({
+				url : 'applyJob.html?id='+jobId,
+				data : ({
+					userID : "userID"
+				}),
+
+				success : function(data) {
+					$.each(data, function(key, val) {
+						if (key == "AjaxMSG") {
+							$('#topjobActionInfo'+jobId).html(val);
+						}
+					});
+				},
+				error : function(data) {
+					alert('Unable to process');
+				},
+				complete : function(data) {
+				}
+			});
+		}
+			function fnFormatDetails(table, nTr) {
+				var aData = table.fnGetData(nTr);
+				//alert('--' + aData['Company']+aData['JobId']);
+				var jobId = aData['JobId'];
+				var jobDesc = aData['AdText'];
+				/* var sOut = '<div class="searchResultsSubContent">';	
+				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p>';
+				sOut += '<div class="searchResultsSubContentButtonArea">';
+				sOut += '<div class="searchResultsSubContentButtons">';
+				sOut += '<a href="applyJob.html?id='+jobId;
+				sOut += '" class="btn_sm white">Apply</a>';
+				sOut += '</div>';
+				sOut += '<div class="searchResultsSubContentButtons">';
+				sOut += '<a href="viewJobDetails.html?id='+jobId;
+				sOut += '" class="btn_sm white">View Details</a>';
+				sOut += '</div>';
+				sOut += '<div class="searchResultsSubContentButtons">';
+				sOut += '<a href="saveThisJob.html?id='+jobId;
+				sOut += '" target="_blank" class="saveThisPopup btn_sm white">Save This Job</a>';
+				sOut += '</div>';
+				sOut += '</div>';
+				sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
+				sOut += '                ';
+				sOut += '<div class="searchResultsSubContentShare">';
+				sOut += '<span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>';
+				sOut += '</div>';
+				sOut += '                <div class="searchResultsSubContentShare">';
+				sOut += '<span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>';
+				sOut += '</div>';
+				<a onclick="saveThisJob()" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
+				href="saveThisJob.html?id='+jobId
+				sOut += '</div>'; */
+				var sOut = '<div class="searchResultsSubContent">';	
+				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p><br/>';
+				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;">';
+				sOut += 'Apply</a>';
+				sOut += '<a href="viewJobDetails.html?id='+jobId;
+				sOut += '" class="btn_sm white">View Details</a>';
+				sOut += '<a onclick="saveThisJob('+jobId+')" style=" cursor: default;"';
+				sOut += '" class="btn_sm white">Save This Job</a>';
+				sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
+				sOut += '<br/><br/>';
+				sOut += '<span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>';
+				sOut += '<span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>';
+				sOut += '<h4><div style="color: red" id="topjobActionInfo'+jobId+'" ></div></h4>';
+				sOut += '</div>';
+				return sOut;
+			}
+			var table;
+
+			function generateTable() {
+				table = $("#jsonTable")
+						.dataTable(
+								{
+									"bFilter" : false,
+								    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+								        if (iDataIndex  != 0 && (iDataIndex % 10) == 0)
+								        {
+								        //alert(iDataIndex+aData['City']+nRow+"--"+$('td:eq(4)', nRow));
+								        //nRow
+								        //$(this).fnOpen(nRow,'<tr><td>pppppppppppppppppppppp</td></tr>','details');
+								        //table.fnOpen(nTr,fnFormatDetails(table,nTr),'details');
+								        }
+								      },
+									"bProcessing" : true,
+									"sPaginationType" : "full_numbers",
+									"bJQueryUI" : true,
+									"bSort" : true,
+									"iDisplayLength": 25,
+									"oLanguage" : {
+										"sLengthMenu" : "Results viewable: _MENU_ per page",
+										//"sZeroRecords" : "Nothing found - sorry",
+										"sInfo" : "",
+										//"sInfo" : "Showing _START_ to _END_ of _TOTAL_ records",
+										//"sInfoEmpty" : "Showing 0 to 0 of 0 records",
+										//"sInfoFiltered" : "(filtered from _MAX_ total records)"
+									},
+									"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
+									 //"sDom": 'T<"clear">lfrtip',
+									"sScrollY" : 500,
+									"aoColumns" : [ {
+										"mDataProp" : "JobTitle","bSortable": "false"
+									}, {
+										"mDataProp" : "Company","bSortable": "false"
+									}, {
+										"mDataProp" : "City","bSortable": "false"
+									}, {
+										"mDataProp" : "PostedDate","bSortable": "true"
+									} ]
+								});
+			};
+
+			$(document)
+					.ready(
+							function() {
+								$(".megamenu").megamenu();
+								var x = $("#results").val();
+								$("#rows").val(2500);
+								$("#start").val("0");
+								var keywords = $("#keywords").val();
+								var cityState = $("#cityState").val();
+								var radius = $("#radius").val();
+								var rows = $("#rows").val();
+								var start = $("#start").val();
+								var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start;
+								$("#submitval").click(function(event) {
+									$.getJSON(navUrl,function(data) {
+											table.fnClearTable();
+											table.fnAddData(data.jsonRows);
+											var nNodes = table.fnGetNodes();
+											var count = 0;
+											for(var i=0;i<nNodes.length;i++)
+										        {
+												if(i  != 0 && (i % 9) == 0){
+												table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
+												count = count+1;
+												}
+										        }
+											});
+								});
+								generateTable();
+								/* Add event listener for opening and closing details
+								 * Note that the indicator for showing which row is open is not controlled by DataTables,
+								 * rather it is done here
+								 */
+								$('#jsonTable tbody tr')
+										.live(
+												'click',
+												function() {
+													var nTr = this;
+													if ($(this).attr('popup')) {
+													} else {
+														$(this).attr('popup',
+																'show');
+													}
+
+													if ($(this).attr('popup')
+															.match('show')) {
+														$(this).attr('popup',
+																'hide');
+														table
+																.fnOpen(
+																		nTr,
+																		fnFormatDetails(
+																				table,
+																				nTr),
+																		'details');
+													} else {
+														$(this).attr('popup',
+																'show');
+														table.fnClose(nTr);
+													}
+												});
+							});
+		</script>
+		
 		</head>
 
 		<body class="job_board">
+		<form>
 <div class="ad_page_top"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
 <div class="main_wrapper_outside">
           <div class="main_wrapper_inside">
@@ -430,7 +621,7 @@
 			
 							<div class="searchResults">
                             
-                            	<div class="searchResultsNavigation">
+                            	<!-- <div class="searchResultsNavigation">
                             
                                      <div class="searchResultsNavigationColumn1">
                                      	<span class="marginTop5">Results viewable:</span>
@@ -460,23 +651,23 @@
                                         <span><a href="">9</a></span>
                                         <span><a href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
                                   </div>
-                              </div>
+                              </div> -->
                             
                             <table id="jobSearchResultTable">
                             
                              <div class="searchResultsHeader">
-                                        <ul>
+                                        <ul style="height: 0px;">
                                         <li class="searchResultsColumn1">
-                                            Job Title
+                                            
                                         </li>
                                         <li class="searchResultsColumn2">
-                                            Employer
+                                            
                                         </li>
                                         <li class="searchResultsColumn3">
-                                            Location
+                                            
                                         </li>
                                         <li class="searchResultsColumn4">
-                                            Date Posted
+                                            
                                         </li>
                                         </ul>
                                 </div> 
@@ -485,7 +676,33 @@
                                 
                                     
                                     <div class="searchResultsItem">
-                                           <%-- <div class="searchResultsItem">
+                                    <table cellpadding="0" cellspacing="0" style="width:100%" border="0" class="display" id="jsonTable">
+         <thead>
+          <tr  class="searchResultsHeader">
+            <th  class="searchResultsColumn1">Job Title</th>
+            <th  class="searchResultsColumn2">Employer</th>
+            <th  class="searchResultsColumn3">Location</th>
+            <th  class="searchResultsColumn4">Date Posted</th>
+          </tr>
+        </thead>
+        <!--<tbody>
+          <tr class="odd gradeX">
+            <td>aTrident</td>
+            <td>aInternet Explorer 4.0</td>
+            <td>aWin 95+</td>
+            <td class="center"> a4</td>
+            <td class="center">aX</td>
+          </tr>
+          <tr class="odd gradeX">
+            <td>Trident</td>
+            <td>Internet Explorer 4.0</td>
+            <td>Win 95+</td>
+            <td class="center"> 4</td>
+            <td class="center">X</td>
+          </tr>
+          </tbody> -->
+          </table>
+                                      <!--    <div class="searchResultsItem">
                                         <ul id="orange-bg" class="searchResultsJobInfo closed orange-bg">
                                             <li class="searchResultsColumn1">
                                                 Nurse Team Lead/RN Manager
@@ -527,8 +744,8 @@
                                             
                                             
                                           </div>
-                                    </div> --%>
-                                        <!--
+                                    </div> 
+                                        
                                         <div class="searchResultsSubContent">
                                             
                                             <p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span> Busy multi-specialty Medical Group/Urgent Care Center seeks Nursing Team Leader/RN Manager to coordinate and supervise nursing staff in our Ashburn Facility. Qualified candidate will be an RN/LPN and must have a proven track record of...</p>
@@ -558,44 +775,13 @@
                                           </div>
                                          -->
                                     </div>
-                                   
+                                   <!-- <div id="pager2"></div> -->
                             
                             </div>
                             
                             
                             </table>
                             
-                            <div class="searchResultsNavigation searchResultsNavigationBottom">
-                            
-                                     <div class="searchResultsNavigationColumn1">
-                                     	<span class="marginTop5">Results viewable:</span>
-                                        <span><select id="results" name="results" class="jb_input4">
-                                        <option value="20">20</option>
-										<option value="30">30</option>
-										<option value="40">40</option>
-                                        <option value="50">50</option>
-                                        <option value="All">All</option>
-										</select></span>
-                                        <span class="marginTop5">per page</span>
-                                     </div>
-                                     
-                                     
-                                     
-                                     <div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp; </div>
-<div class="searchResultsNavigationColumn2">
-                                     	<span>Page:</span>
-                                        <span class="active">1</span>
-                                        <span><a href="">2</a></span>
-                                        <span><a href="">3</a></span>
-                                        <span><a href="">4</a></span>
-                                        <span><a href="">5</a></span>
-                                        <span><a href="">6</a></span>
-                                        <span><a href="">7</a></span>
-                                        <span><a href="">8</a></span>
-                                        <span><a href="">9</a></span>
-                                        <span><a href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
-                              </div>
-                              </div>
                             
                             </div>
 			
@@ -701,6 +887,6 @@
           <p class="copyright">&copy; 2012 Merion Matters 2900 Horizon Drive King of Prussia PA 19406 800-355-5627</p>
         </div>
 <!-- footer_wrapper -->
-
+</form>
 </body>
 </html>

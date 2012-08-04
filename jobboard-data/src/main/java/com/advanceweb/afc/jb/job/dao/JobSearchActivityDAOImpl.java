@@ -141,7 +141,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 			AdmSaveJob admSaveJob = (AdmSaveJob) hibernateTemplate.load(
 					AdmSaveJob.class, jobDTO.getSaveJobId());
 			
-//			admSaveJob.setAppliedDt(new java.util.Date());
+			admSaveJob.setAppliedDt(new java.util.Date());
 			hibernateTemplate.update(admSaveJob);
 			status = true;
 		} catch (HibernateException e) {

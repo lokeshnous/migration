@@ -38,9 +38,9 @@
 		</script>
   
 <script type="text/javascript">
-	function saveThisJob() {
+	function saveThisJob(jobId) {
 		$.ajax({
-			url : 'saveThisJob.html',
+			url : 'saveThisJob.html?id='+jobId,
 			data : ({
 				userID : "userID"
 			}),
@@ -69,9 +69,9 @@
 		});
 	}
 
-	function applyThisJob() {
+	function applyThisJob(jobId) {
 		$.ajax({
-			url : 'applyJob.html',
+			url : 'applyJob.html?id='+jobId,
 			data : ({
 				userID : "userID"
 			}),
@@ -91,9 +91,9 @@
 			}
 		});
 	}
-	function btsaveThisJob() {
+	function btsaveThisJob(jobId) {
 		$.ajax({
-			url : 'saveThisJob.html',
+			url : 'saveThisJob.html?id='+jobId,
 			data : ({
 				userID : "userID"
 			}),
@@ -121,9 +121,9 @@
 		});
 	}
 
-	function btapplyThisJob() {
+	function btapplyThisJob(jobId) {
 		$.ajax({
-			url : 'applyJob.html',
+			url : 'applyJob.html?id='+jobId,
 			data : ({
 				userID : "userID"
 			}),
@@ -282,9 +282,9 @@
 			    </div>
 			    <div class="jobDetailsIntroOptions">
 				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
-				<a onclick="applyThisJob();" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a onclick="applyThisJob('+${jobDetail.jobID}+');" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				
-				<a onclick="saveThisJob()" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
+				<a onclick="saveThisJob('+${jobDetail.jobID}+')" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
 			    
 			    <br/><br/>
 			    <h4><div style="color: red" id="topjobActionInfo" ></div></h4>
@@ -293,8 +293,8 @@
 			    <div class="jobDetailsIntroOptionsTborder">
 				<div class="jobDetailsIntroOptions">
 				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
-				<a onclick="btapplyThisJob();" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob();" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
+				<a onclick="btapplyThisJob('+${jobDetail.jobID}+');" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a onclick="btsaveThisJob('+${jobDetail.jobID}+');" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
 			    <br/><br/>
 			    <h4><div style="color: red" id="bottomjobActionInfo" ></div></h4>
 			    </div>
