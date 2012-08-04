@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -28,7 +30,8 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String employmentType;
 	private MultipartFile uploadResume;
 	private String[] currentsubs;
-	private String userId;
+	private String userId;	
+	private List<JobSeekerProfileAttribForm> listProfAttribForms;
 	
 	private CommonsMultipartFile fileData;
 	private String fileName;
@@ -199,5 +202,15 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	public void setCurrentsubs(String[] currentsubs) {
 		this.currentsubs = currentsubs;
-	}		
+	}
+
+	public List<JobSeekerProfileAttribForm> getListProfAttribForms() {
+		return listProfAttribForms;
+	}
+
+	public void setListProfAttribForms(
+			List<JobSeekerProfileAttribForm> listProfAttribForms) {
+		this.listProfAttribForms = listProfAttribForms;
+	}	
+	
 }

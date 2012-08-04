@@ -33,7 +33,7 @@ public class MerUserProfile implements Serializable {
 	private Date updateDt;
 
 	//bi-directional many-to-one association to MerUser
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", insertable=false, updatable=false)
 	private MerUser merUser;
 

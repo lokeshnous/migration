@@ -17,10 +17,10 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
@@ -57,12 +57,19 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	@Override
 	@Transactional(readOnly=false)
 	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
-		
-		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO);
+				
 		try {
+			MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO);
 			if (merUser != null) {
-				hibernateTemplate.saveOrUpdate(merUser);
+				hibernateTemplate.saveOrUpdate(merUser);			
 			}
+			
+			List<MerUserProfile> merUserProfiles = registrationConversionHelper.transformMerUserDTOToMerUserProfiles(jsDTO, merUser);
+			if (merUserProfiles != null) {
+				hibernateTemplate.saveOrUpdateAll(merUserProfiles);
+			}
+			
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}

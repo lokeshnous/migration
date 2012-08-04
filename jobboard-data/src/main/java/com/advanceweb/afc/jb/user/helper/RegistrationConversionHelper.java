@@ -19,6 +19,8 @@ import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttribList;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
+import com.mysql.jdbc.StringUtils;
 
 @Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
@@ -30,56 +32,98 @@ public class RegistrationConversionHelper {
 	 */
 	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto) {
 
-		MerUserDTO userDTO = dto.getMerUserDTO();
-		AddressDTO addDTO = dto.getAddressDTO();
-		
+		MerUserDTO userDTO = dto.getMerUserDTO();		
 		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
-		MerUserProfile profile = new MerUserProfile();
-		MerUser entity = new MerUser();
 		
-		JobSeekerProfileDTO profileDTO = dto.getJobSeekerProfileDTO();
-		if (userDTO != null) {
-			entity.setFirstName(userDTO.getFirstName());
-			entity.setMiddleName(userDTO.getMiddleName());
+		MerUser entity = new MerUser();
+		MerUserProfilePK pk = null;
+		
+		if (null != userDTO) {
 			entity.setEmail(userDTO.getEmailId());
 			entity.setPassword(userDTO.getPassword());
-			entity.setLastName(userDTO.getLastName());
-			
-			if(userDTO.getUserId() != 0){
-				entity.setUserId(userDTO.getUserId());
-			}
 		}
 	
-/*		if(addDTO != null){
-			profile.setCity(addDTO.getCity());
-			profile.setCountry(addDTO.getCountry());
-			profile.setState(addDTO.getState());
-			profile.setStreetAddress2(addDTO.getAddress2());
-			profile.setStreetAddress1(addDTO.getAddress1());
-			profile.setPhone(addDTO.getPhone());
-			profile.setIndustry(userDTO.getIndustry());
-			profile.setJobTitle(userDTO.getJobTitle());
-			profile.setProfession(userDTO.getProfession());
-			profile.setSpeciality(userDTO.getSpeciality());	
-			profile.setZip(addDTO.getZipCode());
-		}
-		
-		if(profileDTO != null){
-			profile.setEthinicity(profileDTO.getEthinicity());
-			profile.setVeteranStatus(profileDTO.getVeteranStatus());	
-			profile.setGender(profileDTO.getGender());
-			if(profileDTO.getProfileId() != 0){
-				profile.setUserProfileId(userDTO.getUserId());
-			}
-
-		}*/
-		listProfiles.add(profile);
-		profile.setMerUser(entity);
-		entity.setMerUserProfiles(listProfiles);
+		if(null != dto.getAttribList()){
+			
+			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
+				
+				pk = new MerUserProfilePK();
+				MerUserProfile profile = new MerUserProfile();
+				
+				profile.setAttribValue(attribDTO.getStrLabelValue());
+				
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+					entity.setFirstName(attribDTO.getStrLabelValue());
+				}
+				
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
+					entity.setMiddleName(attribDTO.getStrLabelValue());
+				}
+				
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+					entity.setLastName(attribDTO.getStrLabelValue());
+				}
+				
+				if(!StringUtils.isEmptyOrWhitespaceOnly(attribDTO.getStrProfileAttribId())){
+					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+				}
+				
+				if(userDTO.getUserId() != 0){
+					entity.setUserId(userDTO.getUserId());
+//					pk.setUserId(userDTO.getUserId());
+				}
+				
+//				profile.setId(pk);
+//				profile.setMerUser(entity);
+//				listProfiles.add(profile);
+			}						
+		}		
+//		entity.setMerUserProfiles(listProfiles);
 				
 		return entity;
 
 	}
+	
+	
+	/**
+	 * Transform MerUserDTO to entity MerUser	 
+	 * @param dto
+	 * @return
+	 */
+	public List<MerUserProfile> transformMerUserDTOToMerUserProfiles(JobSeekerRegistrationDTO dto, MerUser user) {
+	
+		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
+		
+		MerUserProfilePK pk = null;
+		
+	
+		if(null != dto.getAttribList()){
+			
+			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
+				
+				pk = new MerUserProfilePK();
+				MerUserProfile profile = new MerUserProfile();
+				
+				profile.setAttribValue(attribDTO.getStrLabelValue());
+				
+				
+				if(!StringUtils.isEmptyOrWhitespaceOnly(attribDTO.getStrProfileAttribId())){
+					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+				}
+				
+				if(user.getUserId() != 0){
+					pk.setUserId(user.getUserId());
+				}
+				
+				profile.setId(pk);
+				listProfiles.add(profile);
+			}						
+		}		
+				
+		return listProfiles;
+
+	}
+	
 	
 	/**
 	 * Transform MerUserDTO to entity MerUser	 

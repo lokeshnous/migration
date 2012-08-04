@@ -197,7 +197,7 @@
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
 						<form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">
 
-							<c:forEach items="${listProfAttribForms}" var="profAttrib" varStatus="index">							
+							<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">							
  								<c:if test="${profAttrib.strSectionName == 'Contact Information1'}">
 		 							<div class="row marginTop20 paddingBottom10">
 										<h3 class="marginLeft10">Employment information</h3>
@@ -226,7 +226,7 @@
 											<c:if test="${profAttrib.strLabelName == 'Street Address1'}" >
 												<span class="lableText3"></span>
 											</c:if>
-											<form:input path="${profAttrib.strLabelValue}" class="job_seeker_password textBox350" />
+											 <form:input  path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350"/>
 											<span class="required">(Required)</span>
 										</div>
 									</c:if>
@@ -234,7 +234,7 @@
 									<c:if test="${profAttrib.strAttribType == 'Dropdown'}">
 										<div class="row">
 											<span class="lableText3"><c:out value="${profAttrib.strLabelName}" />:</span>
-											<form:select path="${profAttrib.strLabelValue}" class="jb_input3 jb_input_width3">
+											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 												<form:option value="0" label="Select" />
 												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 													itemLabel="optionName" />
@@ -252,9 +252,9 @@
 												<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
 													<li>
 														<div>
-															<form:checkbox path="${profAttrib.strLabelValue}"
-																label="${dropdown.optionId}"
-																value="${dropdown.optionName}"
+															<form:checkbox path="listProfAttribForms[${status.index}].strLabelValue"
+																label="${dropdown.optionName}"
+																value="${dropdown.optionId}"
 																cssStyle="width:20px" />
 														</div>
 													</li>
