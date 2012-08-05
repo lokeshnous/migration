@@ -264,6 +264,10 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	private List<DropDownDTO> getSubscriptions(){
 		
 		try {

@@ -43,7 +43,7 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	@Override
-	public List<SubscriptionsDTO> getSubscriptionsList() {
+	public List<DropDownDTO> getSubscriptionsList() {
 		
 		return populateDropdownsDAO.getSubscriptionsList();
 	}

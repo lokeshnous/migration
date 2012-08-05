@@ -38,7 +38,7 @@ public interface PopulateDropdowns {
 	 * To populate available subscriptions
 	 * @return
 	 */
-	List<SubscriptionsDTO> getSubscriptionsList();
+	List<DropDownDTO> getSubscriptionsList();
 	
 	/**
 	 * To populate genders

@@ -14,18 +14,21 @@ package com.advanceweb.afc.jb.common;
  */
 public class JobSeekerSubscriptionsDTO {
 	
-	private int alertId;
 	private int userId;
-	private String lookUpId;
-	private String alertValue;
-	private String createdDate;
+	private int subscriptionId;
+	private int active;
 	
-	
-	public int getAlertId() {
-		return alertId;
+	public int getSubscriptionId() {
+		return subscriptionId;
 	}
-	public void setAlertId(int alertId) {
-		this.alertId = alertId;
+	public void setSubscriptionId(int subscriptionId) {
+		this.subscriptionId = subscriptionId;
+	}
+	public int getActive() {
+		return active;
+	}
+	public void setActive(int active) {
+		this.active = active;
 	}
 	public int getUserId() {
 		return userId;
@@ -33,25 +36,4 @@ public class JobSeekerSubscriptionsDTO {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getLookUpId() {
-		return lookUpId;
-	}
-	public void setLookUpId(String lookUpId) {
-		this.lookUpId = lookUpId;
-	}
-	public String getAlertValue() {
-		return alertValue;
-	}
-	public void setAlertValue(String alertValue) {
-		this.alertValue = alertValue;
-	}
-	public String getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
-	
-	
-
 }

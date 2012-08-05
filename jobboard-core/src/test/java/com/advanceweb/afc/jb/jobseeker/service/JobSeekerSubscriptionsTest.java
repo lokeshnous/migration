@@ -34,18 +34,18 @@ public class JobSeekerSubscriptionsTest extends ServiceTest{
 	public void getSaveSubscriptionsList(){
 		List<JobSeekerSubscriptionsDTO> subsList = new ArrayList<JobSeekerSubscriptionsDTO>();
 		JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-		dto.setLookUpId("23");
-		JobSeekerSubscriptionsDTO dto1 = new JobSeekerSubscriptionsDTO();
-		dto1.setLookUpId("25");
-		JobSeekerSubscriptionsDTO dto2 = new JobSeekerSubscriptionsDTO();
-		dto2.setLookUpId("28");
-		JobSeekerSubscriptionsDTO dto3 = new JobSeekerSubscriptionsDTO();
-		dto3.setLookUpId("30");
+//		dto.setLookUpId("23");
+//		JobSeekerSubscriptionsDTO dto1 = new JobSeekerSubscriptionsDTO();
+//		dto1.setLookUpId("25");
+//		JobSeekerSubscriptionsDTO dto2 = new JobSeekerSubscriptionsDTO();
+//		dto2.setLookUpId("28");
+//		JobSeekerSubscriptionsDTO dto3 = new JobSeekerSubscriptionsDTO();
+//		dto3.setLookUpId("30");
 		
-		subsList.add(dto);
-		subsList.add(dto1);
-		subsList.add(dto2);
-		subsList.add(dto3);
+//		subsList.add(dto);
+//		subsList.add(dto1);
+//		subsList.add(dto2);
+//		subsList.add(dto3);
 		
 		boolean bSaved = jobSeekerSubscriptionsService.saveJobSeekerSubscription(subsList, 1);
 		assertNotNull("Subscriptions List",subsList);

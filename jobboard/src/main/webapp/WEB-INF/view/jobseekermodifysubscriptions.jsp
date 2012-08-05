@@ -57,12 +57,12 @@
 										<th class="borderTopNone" width="46%" align="left" scope="col">
 											Subscriptions</th>
 									</tr>
-									<c:forEach items="${jobSubscriptionsList}" var="subscriptions"
+									<c:forEach items="${listSubscriptions}" var="subscriptions"
 										varStatus="index">
 										<tr>
 											<td><form:checkbox path="currentsubs" 
-													label="${subscriptions.subscriptionName}"
-													value="${subscriptions.subscriptionId}"
+													label="${subscriptions.optionName}"
+													value="${subscriptions.optionId}"
 													cssStyle="width:20px" /></td>
 										</tr>
 									</c:forEach>

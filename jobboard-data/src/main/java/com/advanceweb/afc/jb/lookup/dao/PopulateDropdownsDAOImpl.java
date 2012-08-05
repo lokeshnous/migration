@@ -8,6 +8,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
@@ -36,6 +38,8 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 @SuppressWarnings("unchecked")
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
+	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
+	
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
 
@@ -87,17 +91,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<SubscriptionsDTO> getSubscriptionsList() {
-
+	public List<DropDownDTO> getSubscriptionsList() {
+			
 		try {
-			List<JpAttribList> merUtilityList = hibernateTemplate
-					.find("from JpAttribList e where e.attribType='Subscriptions' order by e.position");
-			return dropdownHelper
-					.convertMerUtilityToSubscriptionsDTO(merUtilityList);
-		} catch (HibernateException e) {
+			List<AdmSubscription> subsList = hibernateTemplate.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
+			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
+		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
+		
 		return null;
+
 	}
 
 	@Override
@@ -358,4 +362,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				"from JpAttribList e where e.attribType=?", dropDownName);
 		return dropdownHelper.convertMerLookupToLookUpDTO(merLookupList);
 	}
+	
+	
+	
 }

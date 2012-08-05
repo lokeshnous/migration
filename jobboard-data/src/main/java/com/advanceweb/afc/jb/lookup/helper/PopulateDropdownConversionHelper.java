@@ -22,6 +22,7 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 
@@ -391,6 +392,21 @@ public class PopulateDropdownConversionHelper {
 			list.add(visibilityDTO);
 		}
 		return list;
+	}
+	
+	
+	public List<DropDownDTO> convertAdmSubscriptionToDropDownDTO(List<AdmSubscription> subsList){
+
+		DropDownDTO dropDownDTO = null;
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
+
+		for(AdmSubscription subs : subsList){
+			dropDownDTO = new DropDownDTO();
+			dropDownDTO.setOptionId(String.valueOf(subs.getSubscriptionId()));
+			dropDownDTO.setOptionName(subs.getName());
+			list.add(dropDownDTO);
+		}		
+		return list;		
 	}
 	
 }

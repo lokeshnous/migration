@@ -464,18 +464,18 @@
 															<table>
 																<tr class="borderTopNone">
 																	<th class="borderTopNone" width="46%" align="left"
-																		scope="col">Subscriptions</th>
+																		scope="col">Current Subscriptions</th>
 																</tr>
-																<c:forEach items="${jobSubscriptionsList}"
+																<c:forEach items="${currentSubs}"
 																	var="subscription" varStatus="index">
 																	<tr>
 																		<td><c:out
-																				value="${subscription.subscriptionName}" /></td>
+																				value="${subscription.optionName}" /></td>
 																	</tr>
 																</c:forEach>
 															</table>
 														</td>
-														<td valign="top">
+														<%-- <td valign="top">
 															<table>
 																<tr class="borderTopNone">
 																	<th class="borderTopNone" width="46%" align="left"
@@ -502,23 +502,14 @@
 																	</tr>
 																</c:forEach>
 															</table>
-														</td>
+														</td> --%>
 													</tr>
 												</table>
 											</div>
-											<c:if
-												test="${empty jobSubscriptionsList && jobAlertsList && jobMagazinesList }">
+											<c:if test="${empty currentSubs}">
 												<div class="lableTextDashBoard">
 													<p>
-														<span class="link_color2_selected">You currently
-															have no active subscriptions.</span>
-													<div class="dashboardPanalcontent">
-														<h2 class="noTopBorder">My Activity</h2>
-														<div class="lableTextDashBoard">
-															<p>
-																<a href="">View My Saved Jobs (1)</a>
-															</p>
-														</div>
+														<span class="link_color2_selected">You currently have no active subscriptions.</span>
 														Sign up now to get job alerts, healthcare news and much
 														more delivered to you automatically!
 														</p>

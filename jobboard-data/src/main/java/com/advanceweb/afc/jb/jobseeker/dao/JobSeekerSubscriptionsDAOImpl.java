@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
 
@@ -18,18 +19,25 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHe
  * @author sharadk
  * 
  */
+@SuppressWarnings("unchecked")
 @Repository("jobSeekerSubscriptionsDAO")
 public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO {
 	
 	private HibernateTemplate hibernateTemplate;
 	
+	private HibernateTemplate hibernateTemplateCareers;
+	
 	@Autowired
 	private JobSeekerSubscriptionsConversionHelper jsSubscriptionHelper;
 	
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {
+	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker, SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
+		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
+		
 	}
+	
+	
 
 	/**
 	 * save subscription
@@ -63,8 +71,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		
 		List<JobSeekerSubscriptionsDTO> listSubscriptiosns = null;
 		try {
-			List<MerUserAlerts> listSubsAlerts= hibernateTemplate.find("from MerUserAlerts m where m.userid="+userId);
-			listSubscriptiosns = jsSubscriptionHelper.transformMerUserAlertsTojsSubsDTO(listSubsAlerts);
+			List<AdmUserSubscription> listSubs= hibernateTemplateCareers.find("Select m from AdmUserSubscription m where m.id.userId="+userId);
+			listSubscriptiosns = jsSubscriptionHelper.transformMerUserAlertsTojsSubsDTO(listSubs);
 		} catch (DataAccessException e) {
 
 			e.printStackTrace();
