@@ -18,6 +18,8 @@ public class JobSeekerProfileAttribForm {
 	private String strAttribType;
 	private String strSectionName;
 	private String strScreenName;
+	private int bRequired;
+	private String strToolTip;
 	private List<DropDownDTO> dropdown;
 	
 	
@@ -63,7 +65,17 @@ public class JobSeekerProfileAttribForm {
 	public void setDropdown(List<DropDownDTO> dropdown) {
 		this.dropdown = dropdown;
 	}
-	
-	
+	public String getStrToolTip() {
+		return strToolTip;
+	}
+	public void setStrToolTip(String strToolTip) {
+		this.strToolTip = strToolTip;
+	}
+	public int getbRequired() {
+		return bRequired;
+	}
+	public void setbRequired(int bRequired) {
+		this.bRequired = bRequired;
+	}
 	
 }

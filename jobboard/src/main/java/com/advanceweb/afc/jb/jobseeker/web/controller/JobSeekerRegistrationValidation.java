@@ -56,7 +56,7 @@ public class JobSeekerRegistrationValidation {
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", "NotEmpty", "Email Id's are not equal");
+				errors.rejectValue("confirmEmailId", "NotEmpty", "Please enter the correct E-Mail Address");
 			 }
 		 }
 	}
@@ -89,7 +89,7 @@ public class JobSeekerRegistrationValidation {
 	 * @param emailId
 	 * @return
 	 */
-	private boolean validateMobileNumberPattern(String mobile){
+	public boolean validateMobileNumberPattern(String mobile){
 		pattern = Pattern.compile(MMJBCommonConstants.MOBILE_PATTERN);
 		matcher = pattern.matcher(mobile);
 		return matcher.matches();
@@ -141,13 +141,5 @@ public class JobSeekerRegistrationValidation {
 		 
 		 validateEmail(registerForm, errors);
 		 validatePassoword(registerForm.getPassword(), registerForm.getRetypepassword(), errors);
-	}
-	
-	public void validateMobileNumber(Object target, Errors errors){
-		JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
-		 if(!validateMobileNumberPattern(registerForm.getPhoneNo())){
-			 errors.rejectValue("phoneNo", "NotEmpty", "Phone Number should contain only numerics"); 
-		 }
-	}
-	
+	}	
 }

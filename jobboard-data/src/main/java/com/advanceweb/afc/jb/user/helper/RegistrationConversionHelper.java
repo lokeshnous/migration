@@ -1,26 +1,31 @@
 package com.advanceweb.afc.jb.user.helper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.AdmSubscription;
+import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
+import com.advanceweb.afc.jb.data.entities.AdmUserSubscriptionPK;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttribList;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
-import com.mysql.jdbc.StringUtils;
+
+
+
+
 
 @Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
@@ -64,7 +69,7 @@ public class RegistrationConversionHelper {
 					entity.setLastName(attribDTO.getStrLabelValue());
 				}
 				
-				if(!StringUtils.isEmptyOrWhitespaceOnly(attribDTO.getStrProfileAttribId())){
+				if(!StringUtils.isEmpty(attribDTO.getStrProfileAttribId())){
 					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
 				}
 				
@@ -92,37 +97,72 @@ public class RegistrationConversionHelper {
 	 */
 	public List<MerUserProfile> transformMerUserDTOToMerUserProfiles(JobSeekerRegistrationDTO dto, MerUser user) {
 	
-		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
-		
+		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();		
 		MerUserProfilePK pk = null;
-		
-	
+			
 		if(null != dto.getAttribList()){
 			
 			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
 				
-				pk = new MerUserProfilePK();
-				MerUserProfile profile = new MerUserProfile();
-				
-				profile.setAttribValue(attribDTO.getStrLabelValue());
-				
-				
-				if(!StringUtils.isEmptyOrWhitespaceOnly(attribDTO.getStrProfileAttribId())){
-					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+				if(!MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO.getStrLabelName())){
+					pk = new MerUserProfilePK();
+					MerUserProfile profile = new MerUserProfile();
+					
+					profile.setAttribValue(attribDTO.getStrLabelValue());
+									
+					if(!StringUtils.isEmpty(attribDTO.getStrProfileAttribId())){
+						pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+					}
+					
+					if(user.getUserId() != 0){
+						pk.setUserId(user.getUserId());
+					}
+					
+					profile.setId(pk);
+					listProfiles.add(profile);
 				}
-				
-				if(user.getUserId() != 0){
-					pk.setUserId(user.getUserId());
-				}
-				
-				profile.setId(pk);
-				listProfiles.add(profile);
 			}						
 		}		
 				
 		return listProfiles;
 
 	}
+	
+	
+	/**
+	 * Transform MerUserDTO to entity MerUser	 
+	 * @param dto
+	 * @return
+	 */
+	public List<AdmUserSubscription> transformMerUserDTOToAdmUserSubs(JobSeekerRegistrationDTO dto, MerUser user) {
+	
+		List<AdmUserSubscription> subsList = new ArrayList<AdmUserSubscription>();		
+		AdmUserSubscriptionPK pk = null;
+			
+		if(null != dto.getAttribList()){
+			
+			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
+				
+				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO.getStrLabelName())
+						&& !StringUtils.isEmpty(attribDTO.getStrLabelValue())){					
+					List<String> sellItems = Arrays.asList(attribDTO.getStrLabelValue().split(","));
+					for(String idVal : sellItems){
+						pk = new AdmUserSubscriptionPK();
+						AdmUserSubscription sub = new AdmUserSubscription();
+							pk.setSubscriptionId(Integer.valueOf(idVal));
+							pk.setUserId(user.getUserId());
+						sub.setId(pk);
+						subsList.add(sub);						
+					}
+				}
+			}						
+		}		
+				
+		return subsList;
+
+	}
+	
+	
 	
 	
 	/**
@@ -227,7 +267,8 @@ public class RegistrationConversionHelper {
 	 * @param stateList
 	 * @return
 	 */
-	public JobSeekerRegistrationDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,List<DropDownDTO> countryList, List<DropDownDTO> stateList){
+	public JobSeekerRegistrationDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,
+			List<DropDownDTO> countryList, List<DropDownDTO> stateList, List<DropDownDTO> subsList){
 		
 		JobSeekerRegistrationDTO registerDTO = new JobSeekerRegistrationDTO();
 		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
@@ -239,7 +280,8 @@ public class RegistrationConversionHelper {
 				dto.setStrProfileAttribId(String.valueOf(entity.getProfileAttribId()));
 				dto.setStrScreenName(entity.getScreenName());
 				dto.setStrSectionName(entity.getSectionName());
-				
+				dto.setbRequired(entity.getRequired());
+				dto.setStrToolTip(entity.getToolTip());
 				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN) || dto.getStrAttribType().equals(MMJBCommonConstants.CHECK_BOX)){
 					//populating countries
 					if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_COUNTRY)){
@@ -248,6 +290,8 @@ public class RegistrationConversionHelper {
 					}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_STATE)){
 						dto.setDropdown(stateList);	//populating states
 						
+					}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_SUSBSCRIPTION)){
+						dto.setDropdown(subsList);	//populating states
 					}else{
 						List<MerProfileAttribList> dropdownVals = entity.getMerProfileAttribLists();
 						dto.setDropdown(transformToDropDownDTO(dropdownVals));
@@ -277,6 +321,12 @@ public class RegistrationConversionHelper {
 		return dropdownList;
 	}
 	
+	/**
+	 * Converting list of States/Countries to dropdown dto
+	 * 
+	 * @param merUtilityList
+	 * @return
+	 */
 	public List<DropDownDTO> convertMerUtilityToDropDownDTO(List<Object> merUtilityList){
 
 		DropDownDTO dropDownDTO = null;
@@ -286,6 +336,20 @@ public class RegistrationConversionHelper {
 			dropDownDTO = new DropDownDTO();
 			dropDownDTO.setOptionId((String)merUtility);
 			dropDownDTO.setOptionName((String)merUtility);
+			list.add(dropDownDTO);
+		}		
+		return list;		
+	}
+	
+	public List<DropDownDTO> convertAdmSubscriptionToDropDownDTO(List<AdmSubscription> subsList){
+
+		DropDownDTO dropDownDTO = null;
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
+
+		for(AdmSubscription subs : subsList){
+			dropDownDTO = new DropDownDTO();
+			dropDownDTO.setOptionId(String.valueOf(subs.getSubscriptionId()));
+			dropDownDTO.setOptionName(subs.getName());
 			list.add(dropDownDTO);
 		}		
 		return list;		

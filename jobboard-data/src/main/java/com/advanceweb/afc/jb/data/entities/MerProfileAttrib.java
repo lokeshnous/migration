@@ -35,6 +35,13 @@ public class MerProfileAttrib implements Serializable {
 	
 	@Column(name="screen_name")
 	private String screenName;
+	
+	@Column(name="required")
+	private int required;
+	
+	@Column(name="tool_tip")
+	private String toolTip;
+	
 
 	//bi-directional many-to-one association to MerProfileAttribList
 	@OneToMany(mappedBy="merProfileAttrib")
@@ -117,6 +124,22 @@ public class MerProfileAttrib implements Serializable {
 
 	public void setScreenName(String screenName) {
 		this.screenName = screenName;
+	}
+
+	public int getRequired() {
+		return required;
+	}
+
+	public void setRequired(int required) {
+		this.required = required;
+	}
+
+	public String getToolTip() {
+		return toolTip;
+	}
+
+	public void setToolTip(String toolTip) {
+		this.toolTip = toolTip;
 	}
 	
 }

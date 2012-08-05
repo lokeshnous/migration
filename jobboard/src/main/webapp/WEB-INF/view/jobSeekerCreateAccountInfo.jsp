@@ -195,6 +195,11 @@
 						class="job_seeker_login leftFormHolderLMargin marginTop0"
 						style="display: block">
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
+						<c:if test="${not empty message}">
+							<div style="color: red" align="middle">
+								<b>${message}</b>
+							</div>
+						</c:if>
 						<form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">
 
 							<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">							
@@ -227,6 +232,11 @@
 												<span class="lableText3"></span>
 											</c:if>
 											 <form:input  path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350"/>
+											 <c:if test="${not empty profAttrib.strToolTip}">
+												 <div class="toolTip marginTop6 marginLeft5">
+														<span class="classic"><c:out value="${profAttrib.strToolTip}" /></span>
+												</div>
+											</c:if>
 											<span class="required">(Required)</span>
 										</div>
 									</c:if>

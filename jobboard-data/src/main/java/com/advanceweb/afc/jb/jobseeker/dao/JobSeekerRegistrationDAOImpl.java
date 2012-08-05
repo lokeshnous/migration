@@ -8,6 +8,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,8 +20,10 @@ import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
+import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
+import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -48,6 +51,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
 	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof where prof.screenName = ?";
 	private final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
+	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
 	
 	@Autowired
 	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker) {
@@ -78,6 +82,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			List<MerUserProfile> merUserProfiles = registrationConversionHelper.transformMerUserDTOToMerUserProfiles(jsDTO, merUser);
 			if (merUserProfiles != null) {
 				hibernateTemplate.saveOrUpdateAll(merUserProfiles);
+			}
+			
+			List<AdmUserSubscription> admUserSubs = registrationConversionHelper.transformMerUserDTOToAdmUserSubs(jsDTO, merUser);
+			if (admUserSubs != null) {
+				hibernateTemplateCareers.saveOrUpdateAll(admUserSubs);
 			}
 			
 			List<AdmRole> roleList = hibernateTemplateCareers.find(FIND_JOBSEEKER_ROLE_ID,"jobseeker");
@@ -212,7 +221,8 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			  List<MerProfileAttrib> listProfAttrib = hibernateTemplate.find(REGISTRATION_ATTRIBS,strScreenName);
 			  List<DropDownDTO> countryList = getCountryList();
 			  List<DropDownDTO> stateList = getStateList();
-			  dto = registrationConversionHelper.transformProfileAttrib(listProfAttrib, countryList, stateList);
+			  List<DropDownDTO> subsList = getSubscriptions();
+			  dto = registrationConversionHelper.transformProfileAttrib(listProfAttrib, countryList, stateList, subsList);
 			
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -251,6 +261,18 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	private List<DropDownDTO> getSubscriptions(){
+		
+		try {
+			List<AdmSubscription> subsList = hibernateTemplateCareers.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
+			return registrationConversionHelper.convertAdmSubscriptionToDropDownDTO(subsList);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 

@@ -152,7 +152,9 @@ public class TransformJobSeekerRegistration {
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setStrScreenName(dto.getStrScreenName());
 				form.setStrSectionName(dto.getStrSectionName());
-				
+				form.setbRequired(dto.getbRequired());
+				form.setbRequired(dto.getbRequired());
+				form.setStrToolTip(dto.getStrToolTip());
 				listForms.add(form);
 			}
 		}
@@ -160,6 +162,11 @@ public class TransformJobSeekerRegistration {
 		return listForms;		
 	}
 	
+	/**
+	 * 
+	 * @param attributeList
+	 * @return
+	 */
 	public List<MerProfileAttribDTO> transformProfileAttribFormToDTO(List<JobSeekerProfileAttribForm> attributeList){
 		
 		List<MerProfileAttribDTO> dtoList = new ArrayList<MerProfileAttribDTO>();

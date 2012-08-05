@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -128,11 +129,30 @@ public class JobSeekerRegistrationController {
 			BindingResult result, HttpSession session) {
 			ModelAndView model = new ModelAndView();
 		try {
-//				registerValidation.validateMobileNumber(registerForm, result);
-//				if (result.hasErrors()) {
-//					return new ModelAndView("jobSeekerCreateAccountInfo");
-//				}
-		
+			
+				if(null != registerForm.getListProfAttribForms()){
+					for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
+						
+						//Checking validation for input text box
+						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
+							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+						}
+						
+						//Checking validation for dropdowns & checkboxes etc
+						if(form.getbRequired() !=0 && form.getStrLabelValue().equals(MMJBCommonConstants.ZERO) 
+								&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
+								|| MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType()))){
+							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+						}
+						//validation mobile number
+						if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
+								&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
+							return new ModelAndView("jobSeekerCreateAccountInfo","message","Phone number should contain only numbers");
+						}
+					}
+				}
+			
+			
 				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
 				List<MerProfileAttribDTO> attribLists = transformJobSeekerRegistration.
