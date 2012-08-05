@@ -31,6 +31,7 @@ import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
@@ -102,33 +103,13 @@ public class JobSeekerRegistrationController {
 			result.rejectValue("emailId", "NotEmpty", "Email Id already Exist in the DataBase!");
 			return model;
 		}
-		String strScreenName="JobSeeker Registration";
-		JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes(strScreenName);
+		
+		JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes(MMJBCommonConstants.JOB_SEEKER_REGISTRATION);
 
 		List<JobSeekerProfileAttribForm> listProfAttribForms = 
 				transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO);
-		
-//		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();
-		
-/*		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
-		List<StateDTO> stateList= populateDropdownsService.getStateList();
-		List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
-		List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
-		List<GenderDTO> genderList= populateDropdownsService.getGenderList();
-		List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
-		List<DropDownDTO> empTyepList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<SubscriptionsDTO> subsList = populateDropdownsService.getSubscriptionsList();*/
-		
-/*		model.addObject("countryList",countryList);
-		model.addObject("employmentInfoList",empInfoList);
-		model.addObject("genderList",genderList);
-		model.addObject("ethnicityList",ethnicityList);
-		model.addObject("veteranStatusList",veteranStatusList);
-		model.addObject("empTyepList",empTyepList);
-		model.addObject("jobSubscriptionsList",subsList);
-		model.addObject("stateList",stateList);*/
+		registerForm.setListProfAttribForms(listProfAttribForms);
 		model.setViewName("jobSeekerCreateAccountInfo");
-		model.addObject("listProfAttribForms",listProfAttribForms);
 		model.addObject("registerForm", registerForm);
 		return model;
 		
@@ -143,23 +124,22 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Finish")
-	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
+	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm")  JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session) {
 			ModelAndView model = new ModelAndView();
 		try {
-				registerValidation.validateMobileNumber(registerForm, result);
-				if (result.hasErrors()) {
-					return new ModelAndView("jobSeekerCreateAccountInfo");
-				}
+//				registerValidation.validateMobileNumber(registerForm, result);
+//				if (result.hasErrors()) {
+//					return new ModelAndView("jobSeekerCreateAccountInfo");
+//				}
 		
-				// Transform JobSeeker Registration Form to JobSeekerRegistrationDTO
 				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(registerForm);
 				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
-				JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(registerForm);
-				jsRegistrationDTO.setAddressDTO(addDTO);
-				jsRegistrationDTO.setJobSeekerProfileDTO(jsProfileSettingsDTO);
+				List<MerProfileAttribDTO> attribLists = transformJobSeekerRegistration.
+						transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
+				jsRegistrationDTO.setAttribList(attribLists);
 				jsRegistrationDTO.setMerUserDTO(userDTO);
+
 				// Call to service layer
 				profileRegistration.createNewProfile(jsRegistrationDTO);
 				session.setAttribute("UserName", registerForm.getFirstName()+" "+registerForm.getLastName());

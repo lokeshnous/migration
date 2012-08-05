@@ -135,4 +135,7 @@ public interface MMJBCommonConstants {
 	//If you change the following value, you should change in mer_profile_attrib as well.
 	//Colum name Screen Name
 	public static final String JOB_SEEKER_REGISTRATION="JobSeeker Registration";
+	public static final String FIRST_NAME="First Name";
+	public static final String LAST_NAME="Last Name";
+	public static final String MIDDLE_NAME="Middle Name";
 }

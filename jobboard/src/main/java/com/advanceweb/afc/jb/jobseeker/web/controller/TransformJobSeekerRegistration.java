@@ -98,12 +98,7 @@ public class TransformJobSeekerRegistration {
 		dto.setMiddleName(form.getMiddleName());
 		dto.setPassword(form.getPassword());
 		dto.setEmailId(form.getEmailId());
-		dto.setIndustry(form.getMyIndustry());
-		dto.setProfession(form.getMyProfession());
-		dto.setSpeciality(form.getMySpeciality());
-		dto.setJobTitle(form.getMyJobTitle());		
-//		dto.setUserId(322);
-//		dto.setUserId(Integer.valueOf(form.getUserId()));
+		
 		return dto;
 	}
 	
@@ -162,9 +157,27 @@ public class TransformJobSeekerRegistration {
 			}
 		}
 		
-		return listForms;
-		
+		return listForms;		
 	}
 	
-	
+	public List<MerProfileAttribDTO> transformProfileAttribFormToDTO(List<JobSeekerProfileAttribForm> attributeList){
+		
+		List<MerProfileAttribDTO> dtoList = new ArrayList<MerProfileAttribDTO>();
+		
+		if(null != attributeList){
+			for(JobSeekerProfileAttribForm form : attributeList){
+				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				dto.setStrAttribType(form.getStrAttribType());
+				dto.setStrLabelName(form.getStrLabelName());
+				dto.setStrLabelValue(form.getStrLabelValue());
+				dto.setStrProfileAttribId(form.getStrProfileAttribId());
+				dto.setStrScreenName(form.getStrScreenName());
+				dto.setStrSectionName(form.getStrSectionName());
+				
+				dtoList.add(dto);
+			}
+		}
+		
+		return dtoList;		
+	}
 }

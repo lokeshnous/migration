@@ -10,6 +10,7 @@ import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
@@ -17,6 +18,9 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmRole;
+import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -39,13 +43,20 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private RegistrationConversionHelper registrationConversionHelper;
 	
 	private HibernateTemplate hibernateTemplate;
+	private HibernateTemplate hibernateTemplateCareers;
 	
 	private final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
 	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof where prof.screenName = ?";
+	private final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
 	
 	@Autowired
 	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
+	}
+	
+	@Autowired
+	public void setHibernateTemplateCareers(SessionFactory sessionFactory) {
+		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 	}
 
 	/**
@@ -55,7 +66,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 * @param jobSeekerRegistrationDTO
 	 */
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
 	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
 				
 		try {
@@ -69,6 +80,17 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				hibernateTemplate.saveOrUpdateAll(merUserProfiles);
 			}
 			
+			List<AdmRole> roleList = hibernateTemplateCareers.find(FIND_JOBSEEKER_ROLE_ID,"jobseeker");
+			if(null != roleList && roleList.size()>0){
+				AdmRole role = roleList.get(0);
+				AdmUserRole userRole = new AdmUserRole();
+				AdmUserRolePK pk = new AdmUserRolePK();
+					pk.setUserId(merUser.getUserId());
+					pk.setRoleId(role.getRoleId());
+				userRole.setId(pk);
+				hibernateTemplateCareers.saveOrUpdate(userRole);
+			}
+
 			
 		} catch (HibernateException e) {
 			e.printStackTrace();
