@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
@@ -20,7 +21,7 @@ public class TransformJobSeekerSubscription {
 	 * @return
 	 */
 	public JobSeekerSubscriptionForm jsSubscriptionDTOToJobSeekerSubscriptionForm(List<JobSeekerSubscriptionsDTO> 
-	currentSubsList,JobSeekerSubscriptionForm form) {
+		currentSubsList,JobSeekerSubscriptionForm form) {
 
 		if (null != currentSubsList) {
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
@@ -45,17 +46,19 @@ public class TransformJobSeekerSubscription {
 	 * @param listSubscriptions
 	 * @return
 	 */
-	public List<SubscriptionsDTO> jsSubscriptionDTOToJobSeekerSubscriptions(List<JobSeekerSubscriptionsDTO> 
-		currentSubsList,JobSeekerSubscriptionForm form,List<SubscriptionsDTO> listSubscriptions){
+	public List<DropDownDTO> jsSubscriptionDTOToJobSeekerSubscriptions(List<JobSeekerSubscriptionsDTO> 
+		currentSubsList,JobSeekerSubscriptionForm form,List<DropDownDTO> listSubscriptions){
+		
 		List<String> currSubList = new ArrayList<String>();
-		List<SubscriptionsDTO> selSubList = new ArrayList<SubscriptionsDTO>();
+		List<DropDownDTO> selSubList = new ArrayList<DropDownDTO>();
 		if (null != currentSubsList) {
+			
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
 				
-				for(SubscriptionsDTO subdto :listSubscriptions){
+				for(DropDownDTO subdto :listSubscriptions){
 					
-					if(dto.getLookUpId().equals(subdto.getSubscriptionId())){
-						currSubList.add(dto.getLookUpId().toString());
+					if(subdto.getOptionId().equals(String.valueOf(dto.getSubscriptionId()))){
+						currSubList.add(subdto.getOptionId());
 						selSubList.add(subdto);
 					}
 				}
@@ -86,11 +89,11 @@ public class TransformJobSeekerSubscription {
 				
 				if(null != listMagaziness){
 					for(MagazinesDTO subdto :listMagaziness){
-						
-						if(dto.getLookUpId().equals(subdto.getMagazineId())){
-							currMagList.add(dto.getLookUpId().toString());
-							selMagList.add(subdto);
-						}
+//						
+//						if(dto.getLookUpId().equals(subdto.getMagazineId())){
+//							currMagList.add(dto.getLookUpId().toString());
+//							selMagList.add(subdto);
+//						}
 					}
 				}				
 			}
@@ -118,11 +121,11 @@ public class TransformJobSeekerSubscription {
 			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
 				if(null != listAlerts){
 					for(JobAlertsDTO subdto :listAlerts){
-						
-						if(dto.getLookUpId().equals(subdto.getAlertId())){
-							currAlrtList.add(dto.getLookUpId().toString());
-							currentSelectedSubsList.add(subdto);
-						}
+//						
+//						if(dto.getLookUpId().equals(subdto.getAlertId())){
+//							currAlrtList.add(dto.getLookUpId().toString());
+//							currentSelectedSubsList.add(subdto);
+//						}
 					}
 				}				
 			}
@@ -147,10 +150,10 @@ public class TransformJobSeekerSubscription {
 		if (null != form.getCurrentsubs()) {
 			for(String selSubscription : form.getCurrentsubs()){
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-				dto.setAlertValue("");
-				dto.setLookUpId(selSubscription);
-				dto.setUserId(form.getUserId());
-				selectedSubsList.add(dto);
+//				dto.setAlertValue("");
+//				dto.setLookUpId(selSubscription);
+//				dto.setUserId(form.getUserId());
+//				selectedSubsList.add(dto);
 			}
 		}
 		
@@ -175,6 +178,32 @@ public class TransformJobSeekerSubscription {
 		}*/
 		
 		return selectedSubsList;
+	}
+	
+	/**
+	 * Converting JobSeekerRegistrationDTO to JobSeekerRegistrationForm
+	 * 
+	 * @param jobSeekerRegistrationDTO
+	 * @return
+	 */
+	public List<DropDownDTO> jsSubscriptionDTOToJobSeekerSubscriptionForm(List<JobSeekerSubscriptionsDTO> 
+		currentSubsList, List<DropDownDTO> listSubscriptions) {
+		
+		List<DropDownDTO> currentSubs = new ArrayList<DropDownDTO>();
+		if (null != currentSubsList) {
+			
+			for(JobSeekerSubscriptionsDTO dto :currentSubsList){	
+				for(DropDownDTO dropDown : listSubscriptions){
+					if(dropDown.getOptionId().equals(String.valueOf(dto.getSubscriptionId()))){
+						currentSubs.add(dropDown);
+					}
+				}
+			}
+
+
+		}
+		return currentSubs;
+
 	}
 	
 }
