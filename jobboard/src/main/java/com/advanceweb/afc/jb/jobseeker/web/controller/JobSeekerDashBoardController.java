@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.SubscriptionsDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -46,26 +46,20 @@ public class JobSeekerDashBoardController {
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
 		
 		//Retrieve Current subscriptions of the user
-//		List<JobAlertsDTO> listAlerts = populateDropdownsService.getJobAlertsList();		
-		List<SubscriptionsDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
-//		List<MagazinesDTO> listMagazines = populateDropdownsService.getMagazinesList();
-
-//		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(0);
-		List<SubscriptionsDTO> selSubs = new ArrayList<SubscriptionsDTO>(); 
-//				transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,null, listSubscriptions);
-//		List<MagazinesDTO> selMags =transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,null, listMagazines);
-//		List<JobAlertsDTO> selAlerts = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,null, listAlerts);
+		List<DropDownDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
+		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(1564);
+		
+		List<DropDownDTO> currentSubs = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,listSubscriptions);
 		form.setUserName((String)session.getAttribute("UserName"));
-//		model.addObject("jobAlertsList", selAlerts);		
-		model.addObject("jobSubscriptionsList", selSubs);		
-//		model.addObject("jobMagazinesList", selMags);	
+		model.addObject("currentSubs", currentSubs);			
+		
 		// Load the lists info
-		int userId = 30;
+		/*		int userId = 30;
 		int savedSearchCount = 0;
 		int savedJobsCount = 0;
 		int appliedJobsCount = 0;
 		
-/*		form.setSavedSearchCount(savedSearchCount);
+		form.setSavedSearchCount(savedSearchCount);
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
 		form.setSavedJobsCount(savedJobsCount);
