@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
 
 /**
@@ -23,19 +24,16 @@ public class JobSeekerSubscriptionsConversionHelper {
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	public List<JobSeekerSubscriptionsDTO> transformMerUserAlertsTojsSubsDTO(List<MerUserAlerts> listSubsAlerts){
+	public List<JobSeekerSubscriptionsDTO> transformMerUserAlertsTojsSubsDTO(List<AdmUserSubscription> listSubs){
 		
 		List<JobSeekerSubscriptionsDTO> subsList = new ArrayList<JobSeekerSubscriptionsDTO>();
 		
-		if(null != listSubsAlerts){
-			for(MerUserAlerts alert : listSubsAlerts){
+		if(null != listSubs){
+			for(AdmUserSubscription alert : listSubs){
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-				dto.setAlertId(alert.getAlertId());
-				dto.setAlertValue(alert.getAlertvalue());
-				dto.setLookUpId(String.valueOf(alert.getLookupid()));
-				dto.setCreatedDate(String.valueOf(alert.getCreatedDate()));
-				dto.setUserId(alert.getUserid());
-				
+
+				dto.setSubscriptionId(alert.getId().getSubscriptionId());
+				dto.setUserId(alert.getId().getUserId());			
 				subsList.add(dto);
 			}
 		}		
@@ -55,9 +53,6 @@ public class JobSeekerSubscriptionsConversionHelper {
 		if(null != listSubsDTO){
 			for(JobSeekerSubscriptionsDTO dto : listSubsDTO){
 				MerUserAlerts entity = new MerUserAlerts();
-				entity.setAlertId(dto.getAlertId());
-				entity.setAlertValue(dto.getAlertValue());
-				entity.setLookupid(Integer.valueOf(dto.getLookUpId()));
 				entity.setUserid(dto.getUserId());				
 				subsEntityList.add(entity);
 			}
