@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
-import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
@@ -51,19 +51,11 @@ public class JobSeekerSubscriptionsController {
 		ModelAndView model = new ModelAndView();
 		JobSeekerSubscriptionForm form = new JobSeekerSubscriptionForm();
 		
-		List<JobAlertsDTO> listAlerts = populateDropdownsService.getJobAlertsList();		
-		List<SubscriptionsDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
-		List<MagazinesDTO> listMagazines = populateDropdownsService.getMagazinesList();
-		
-		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(0);
+		List<DropDownDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
+		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(1564);
 		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,form, listSubscriptions);
-		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerMagazines(currentSubsList,form, listMagazines);
-		List<JobAlertsDTO> selSubsList = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerAlerts(currentSubsList,form, listAlerts);
-		model.addObject("jobAlertsList", listAlerts);		
-		model.addObject("jobSubscriptionsList", listSubscriptions);		
-		model.addObject("jobMagazinesList", listMagazines);		
+		model.addObject("jobSubscriptionsList", listSubscriptions);				
 		model.addObject("jobSeekerSubscriptionForm",form);
-		model.addObject("selSubsList",selSubsList);
 		model.setViewName("jobseekermodifysubscriptions");	
 		return model;
 	}
