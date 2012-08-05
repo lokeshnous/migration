@@ -1,8 +1,19 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 
 /**
@@ -19,9 +30,8 @@ public class AdmUserSubscription implements Serializable {
 
 	private int active;
 
-    @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
-	private Date createDt;
+    private Timestamp createDt;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
@@ -53,22 +63,6 @@ public class AdmUserSubscription implements Serializable {
 		this.active = active;
 	}
 
-	public Date getCreateDt() {
-		return this.createDt;
-	}
-
-	public void setCreateDt(Date createDt) {
-		this.createDt = createDt;
-	}
-
-	public Date getDeleteDt() {
-		return this.deleteDt;
-	}
-
-	public void setDeleteDt(Date deleteDt) {
-		this.deleteDt = deleteDt;
-	}
-
 	public String getInfo() {
 		return this.info;
 	}
@@ -84,5 +78,22 @@ public class AdmUserSubscription implements Serializable {
 	public void setAdmSubscription(AdmSubscription admSubscription) {
 		this.admSubscription = admSubscription;
 	}
+
+	public void setCreateDt(Timestamp createDt) {
+		this.createDt = createDt;
+	}
+	
+	public Date getDeleteDt() {
+		return deleteDt;
+	}
+
+	public void setDeleteDt(Date deleteDt) {
+		this.deleteDt = deleteDt;
+	}
+
+	public Timestamp getCreateDt() {
+		return createDt;
+	}
+	
 	
 }
