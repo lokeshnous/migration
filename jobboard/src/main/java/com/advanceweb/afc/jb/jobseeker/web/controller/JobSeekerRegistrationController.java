@@ -201,7 +201,8 @@ public class JobSeekerRegistrationController {
 		try {
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
 			// Call to service layer
-			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(1565);
+			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile
+					((Integer) session.getAttribute("userId"));
 			List<JobSeekerProfileAttribForm> listProfAttribForms = 
 					transformJobSeekerRegistration.transformDTOToProfileAttribForm(jsRegistrationDTO);
 			form.setListProfAttribForms(listProfAttribForms);
