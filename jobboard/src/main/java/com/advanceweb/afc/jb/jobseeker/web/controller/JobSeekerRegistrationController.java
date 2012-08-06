@@ -256,9 +256,7 @@ public class JobSeekerRegistrationController {
 						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){
 							return "Please enter the correct E-Mail Address";
 						}else{
-							if(profileRegistration.validateEmail(registerForm.getEmailId())){
-//								model.setViewName("jobSeekerCreateAccount");
-//								result.rejectValue("emailId", "NotEmpty", "Email Id already Exists!");
+							if(profileRegistration.validateEmail(form.getStrLabelValue())){
 								return "Email Id already Exists!";
 							}
 						}
@@ -334,11 +332,11 @@ public class JobSeekerRegistrationController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value="/jobSeekerChangePassword",method = RequestMethod.GET)
-	public String jsChangePassword(Map model) {
+	public String jsChangePassword(Map model, HttpSession session) {
 		
 		try {		
 			ChangePasswordForm form = new ChangePasswordForm();
-			form.setEmailId("sasi@sasi1.com");
+			form.setEmailId((String) session.getAttribute("userEmail"));
 			model.put("changePasswordForm", form);
 		} catch (Exception e) {
 			e.printStackTrace();
