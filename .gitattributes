@@ -353,6 +353,7 @@ jobboard/src/main/resources/healthcarenews.html -text
 jobboard/src/main/resources/viewcareerlinkContents.html -text
 jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
+jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text

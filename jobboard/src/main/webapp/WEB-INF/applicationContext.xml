@@ -17,7 +17,9 @@
 	
 	<mvc:annotation-driven />
 	<context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties" />
+	
 	<import resource="classpath:HibernateSessionFactory.xml"/>
+	
 	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
 	Logging Aspect
 	<bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" /> -->
