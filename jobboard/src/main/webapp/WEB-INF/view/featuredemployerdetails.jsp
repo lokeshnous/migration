@@ -183,25 +183,8 @@
 					<div class="featuredEmployerLeft">
 						<div class="featuredEmployerVideo">
 							&nbsp;
-							<object classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6"
-								id="player" width="250" height="180">
-								<param name="url"
-									value="${windowmediaplayerfilepath}" />
-								<param name="src"
-									value="${windowmediaplayerfilepath}" />
-								<param name="showcontrols" value="true" />
-								<param name="autostart" value="true" />
-								<!--[if !IE]>-->
-								<object type="video/x-ms-wmv"
-									data="${windowmediaplayerfilepath}"
-									width="250" height="180">
-									<param name="src"
-										value="${windowmediaplayerfilepath}" />
-									<param name="autostart" value="true" />
-									<param name="controller" value="true" />
-								</object>
-								<!--<![endif]-->
-							</object>
+							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="http://multimedia.advanceweb.com/default.aspx?PlaylistID=1298&amp;H=180&amp;W=255" frameborder="0" height="180" scrolling="no" width="255"></iframe><br>
+
 						</div>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">
