@@ -17,7 +17,11 @@
 				data:$('#editProfileSettingsId').serialize(),
 				type:"POST",
 				success: function(data) {
-					parent.$.nmTop().close();
+					if(data == ''){
+						parent.$.nmTop().close();
+					}else{
+						$("#errmsg").html(data);
+					}					
 				 },
 			});
 		}); 
@@ -37,6 +41,8 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
+				<div id="errmsg" style="color: red" align="middle">
+				</div>
 			<form:form action="/jobboard/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
 				commandName="registerForm" enctype="multipart/form-data" id="editProfileSettingsId">
 				<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">			

@@ -224,7 +224,7 @@ public class JobSeekerRegistrationController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
-	public ModelAndView updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+	public String updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
 			ModelAndView model = new ModelAndView();
 		try {	
@@ -234,7 +234,7 @@ public class JobSeekerRegistrationController {
 					
 					//Checking validation for input text box
 					if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
-						return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+						return "Please fill the Required fields";
 					}
 					
 					//Checking validation for dropdowns & checkboxes etc
@@ -242,23 +242,23 @@ public class JobSeekerRegistrationController {
 							&& MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
 							&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
 							|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
-						return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+						return "Please fill the Required fields";
 					}
 					//validation mobile number
 					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
 							&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
-						return new ModelAndView("jobSeekerCreateAccountInfo","message","Phone number should contain only numbers");
+						return "Phone number should contain only numbers";
 					}
 					
 					//validation mobile number
 					if(MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
 						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){
-							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please enter the correct E-Mail Address");
+							return "Please enter the correct E-Mail Address";
 						}else{
 							if(profileRegistration.validateEmail(registerForm.getEmailId())){
-								model.setViewName("jobSeekerCreateAccount");
-								result.rejectValue("emailId", "NotEmpty", "Email Id already Exists!");
-								return model;
+//								model.setViewName("jobSeekerCreateAccount");
+//								result.rejectValue("emailId", "NotEmpty", "Email Id already Exists!");
+								return "Email Id already Exists!";
 							}
 						}
 					}					
@@ -279,7 +279,7 @@ public class JobSeekerRegistrationController {
 			e.printStackTrace();
 		}
 		
-		return model;
+		return "";
 	}
 	
 	
