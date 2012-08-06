@@ -117,6 +117,7 @@ public class SearchDaoImpl implements SearchDao {
 	 */
 	public List<Float> getLatitudeLongitudeByCityState(String city, String state) throws JobBoardDataException{
 		
+		LOGGER.info("City=["+city+"], State=["+state+"]");
 		List<Float> latLonList = new ArrayList<Float>();
 		try {
 			@SuppressWarnings("unchecked")
