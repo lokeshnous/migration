@@ -227,6 +227,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResResumeAttrib.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResResumeAttribList.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResResumeProfile.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResUploadResume.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/SaveSearchResults.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/StgSessionEvent.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/StgSessioninfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstClickthrough.java -text
