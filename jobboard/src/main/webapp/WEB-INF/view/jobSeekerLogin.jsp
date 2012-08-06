@@ -161,30 +161,32 @@
 					<div class="job_seeker_login">
 						<h2 class="noTopBottomBorder">Login</h2>
 						<div style="color: red" align="right">
-							<b>${message}</b>
+							<b>${error}</b>
 						</div>
 
-						<form:form method="Post" action="jobSeekerLogin.html"
-							commandName="loginForm">
+						<form method="post" action="../j_spring_security_check">
 							<div class="rowEvenSpacing marginTop0">
-								<span class="lableText1">Email Address:</span>
-								<form:input type="text" path="emailAddress"
+
+
+
+								<span class="lableText1"><label for="j_username"
+									class="lableText1">Email Address:</label></span> <input
+									id="j_username" name="j_username" type="text"
 									class="job_seeker_email" />
-								<FONT color="red"><form:errors path="emailAddress"
-										align="right" /></FONT>
+
 							</div>
 
 							<div class="rowEvenSpacing">
-								<span class="lableText1">Password:</span>
-								<form:input type="password" path="password"
-									class="job_seeker_password" />
-								<FONT color="red"><form:errors path="password"
-										align="right" /></FONT>
+
+								<span class="lableText1"><label for="j_password"
+									class="lableText1">Password:</label></span> <input id="j_password"
+									name="j_password" type="password" class="job_seeker_password" />
 							</div>
 
 							<div class="loginOptions">
 								<div class="rowEvenSpacing marginTopBottom10">
-									<input type="checkbox" value="stayLoggedIn" /> Stay Logged In<br />
+									<input type='checkbox' name='_spring_security_remember_me'
+										id="_spring_security_remember_me" /> Stay Logged In<br />
 								</div>
 								<div class="rowEvenSpacing">
 									<span class="floatLeft"><input type="submit"
@@ -207,7 +209,7 @@
 								</div>
 								<div class="clearfix"></div>
 							</div>
-						</form:form>
+						</form>
 					</div>
 					<div class="job_seeker_social_login">
 						<p class="bold lableLetterSpacer">Login with your social
@@ -330,3 +332,41 @@
 	<!-- footer_wrapper -->
 </body>
 </html>
+
+
+<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1>Login</h1>
+
+<div id="login-error">${error}</div>
+
+<form action="../j_spring_security_check" method="post" >
+
+<p>
+	<label for="j_username">Username</label>
+	<input id="j_username" name="j_username" type="text" />
+</p>
+
+<p>
+	<label for="j_password">Password</label>
+	<input id="j_password" name="j_password" type="password" />
+</p>
+
+<input  type="submit" value="Login"/>								
+	
+</form>
+
+</body>
+</html> --%>
