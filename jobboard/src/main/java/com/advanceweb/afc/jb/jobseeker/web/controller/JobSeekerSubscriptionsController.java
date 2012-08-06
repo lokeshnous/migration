@@ -4,6 +4,8 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
-import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
@@ -54,6 +54,7 @@ public class JobSeekerSubscriptionsController {
 		List<DropDownDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
 		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(1564);
 		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,form, listSubscriptions);
+//		form.setUserId(1564);
 		model.addObject("jobSubscriptionsList", listSubscriptions);				
 		model.addObject("jobSeekerSubscriptionForm",form);
 		model.setViewName("jobseekermodifysubscriptions");	
@@ -70,9 +71,12 @@ public class JobSeekerSubscriptionsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveJobSeekerSubscription", method = RequestMethod.POST)
-	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm form, BindingResult result) {
+	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm form, BindingResult result,HttpSession session) {
 		
 		try {
+			
+//			form.setUserId(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+			form.setUserId(1564);
 			List<JobSeekerSubscriptionsDTO>	listSubsDTO = transformJobSeekerSubscription.jsSubscriptionFormToJobSeekerSubsDTO(form);			
 			boolean bSaved = jobSeekerSubscriptionsService.saveJobSeekerSubscription(listSubsDTO, form.getUserId());
 		} catch (Exception e) {

@@ -17,6 +17,7 @@
 				data:$('#editProfileSettingsId').serialize(),
 				type:"POST",
 				success: function(data) {
+
 					if(data == ''){
 						parent.$.nmTop().close();
 					}else{

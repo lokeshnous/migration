@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
@@ -22,6 +23,8 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHe
 @SuppressWarnings("unchecked")
 @Repository("jobSeekerSubscriptionsDAO")
 public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO {
+	
+	private static final String SELECTED_CURRENT_SUBS="from AdmUserSubscription sub where sub.id.userId=?";
 	
 	private HibernateTemplate hibernateTemplate;
 	
@@ -44,15 +47,16 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 */
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation=Propagation.REQUIRED)
 	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId) {
 		try {
+			
 			if(userId != 0){
-				List<MerUserAlerts> listSubsAlerts= hibernateTemplate.find("from MerUserAlerts m where m.userid="+userId);
-				hibernateTemplate.deleteAll(listSubsAlerts);
-			}
-			List<MerUserAlerts> userAlerts = jsSubscriptionHelper.transformjsSubsDTOToMerUserAlerts(listSubsDTO);
-			hibernateTemplate.saveOrUpdateAll(userAlerts);
+				List<AdmUserSubscription> listSubsAlerts= hibernateTemplateCareers.find(SELECTED_CURRENT_SUBS,userId);				
+				List<AdmUserSubscription> userAlerts = jsSubscriptionHelper.transformjsSubsDTOToAdmUserSubs(listSubsDTO, listSubsAlerts);
+				hibernateTemplateCareers.deleteAll(listSubsAlerts);
+				hibernateTemplateCareers.saveOrUpdateAll(userAlerts);
+			}		
 		} catch (DataAccessException e) {
 
 			e.printStackTrace();

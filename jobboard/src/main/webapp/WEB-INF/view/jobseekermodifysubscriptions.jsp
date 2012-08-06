@@ -13,9 +13,6 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
-		
-		
  		$('#save').click(function(){			
 			
 			$.ajax({url:"/jobboard/subscriptions/saveJobSeekerSubscription.html",
@@ -57,7 +54,7 @@
 										<th class="borderTopNone" width="46%" align="left" scope="col">
 											Subscriptions</th>
 									</tr>
-									<c:forEach items="${listSubscriptions}" var="subscriptions"
+									<c:forEach items="${jobSubscriptionsList}" var="subscriptions"
 										varStatus="index">
 										<tr>
 											<td><form:checkbox path="currentsubs" 

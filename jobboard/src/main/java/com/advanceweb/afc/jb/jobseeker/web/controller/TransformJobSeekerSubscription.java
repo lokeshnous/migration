@@ -150,32 +150,12 @@ public class TransformJobSeekerSubscription {
 		if (null != form.getCurrentsubs()) {
 			for(String selSubscription : form.getCurrentsubs()){
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-//				dto.setAlertValue("");
-//				dto.setLookUpId(selSubscription);
-//				dto.setUserId(form.getUserId());
-//				selectedSubsList.add(dto);
-			}
-		}
-		
-		/*if (null != form.getCurrentsubs()) {
-			for(String selSubscription : form.getCurrentmagazines()){
-				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-				dto.setAlertValue("");
-				dto.setLookUpId(selSubscription);
+				dto.setSubscriptionId(Integer.valueOf(selSubscription));
 				dto.setUserId(form.getUserId());
+				dto.setActive(1);
 				selectedSubsList.add(dto);
 			}
 		}
-		
-		if (null != form.getCurrentsubs()) {
-			for(String selSubscription : form.getCurrentJobAlerts()){
-				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-				dto.setAlertValue("");
-				dto.setLookUpId(selSubscription);
-				dto.setUserId(form.getUserId());
-				selectedSubsList.add(dto);
-			}
-		}*/
 		
 		return selectedSubsList;
 	}
@@ -199,8 +179,6 @@ public class TransformJobSeekerSubscription {
 					}
 				}
 			}
-
-
 		}
 		return currentSubs;
 

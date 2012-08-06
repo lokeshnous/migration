@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
-import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
+import com.advanceweb.afc.jb.data.entities.AdmUserSubscriptionPK;
 
 /**
  * 
@@ -31,7 +31,6 @@ public class JobSeekerSubscriptionsConversionHelper {
 		if(null != listSubs){
 			for(AdmUserSubscription alert : listSubs){
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-
 				dto.setSubscriptionId(alert.getId().getSubscriptionId());
 				dto.setUserId(alert.getId().getUserId());			
 				subsList.add(dto);
@@ -46,17 +45,44 @@ public class JobSeekerSubscriptionsConversionHelper {
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	public List<MerUserAlerts> transformjsSubsDTOToMerUserAlerts(List<JobSeekerSubscriptionsDTO> listSubsDTO){
+	public List<AdmUserSubscription> transformjsSubsDTOToAdmUserSubs(List<JobSeekerSubscriptionsDTO> listSubsDTO, 
+			List<AdmUserSubscription> listSubsAlerts){
 		
-		List<MerUserAlerts> subsEntityList = new ArrayList<MerUserAlerts>();
+		List<AdmUserSubscription> subsEntityList = new ArrayList<AdmUserSubscription>();
 		
 		if(null != listSubsDTO){
 			for(JobSeekerSubscriptionsDTO dto : listSubsDTO){
-				MerUserAlerts entity = new MerUserAlerts();
-				entity.setUserid(dto.getUserId());				
-				subsEntityList.add(entity);
+				if(!validateAdmUserSubscriptions(dto, listSubsAlerts)){
+					AdmUserSubscription entity = new AdmUserSubscription();
+						AdmUserSubscriptionPK pk = new AdmUserSubscriptionPK();
+						pk.setSubscriptionId(dto.getSubscriptionId());
+						pk.setUserId(dto.getUserId());
+					entity.setId(pk);
+					entity.setActive(dto.getActive());
+					subsEntityList.add(entity);
+				}
 			}
 		}		
 		return subsEntityList;		
 	}
+	
+	/**
+	 * Converting into MerUserAlerts entity
+	 * @param listSubsAlerts
+	 * @return
+	 */
+	private boolean validateAdmUserSubscriptions(JobSeekerSubscriptionsDTO subDTO, List<AdmUserSubscription> listSubsAlerts){
+			
+		if(null != subDTO && null != listSubsAlerts){
+			for(AdmUserSubscription entity : listSubsAlerts){
+				if(subDTO.getSubscriptionId() == entity.getId().getSubscriptionId() && 
+						subDTO.getUserId() == entity.getId().getUserId()){
+					listSubsAlerts.remove(entity);
+					return true;
+				}
+			}
+		}		
+		return false;		
+	}
+	
 }
