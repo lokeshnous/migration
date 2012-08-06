@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,24 +67,21 @@ public class SaveSearchController {
 		return new ModelAndView();
 
 	}
-	
-	/*@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
-	public ModelAndView saveMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
-			BindingResult result) {
-		ModelAndView model = new ModelAndView();
-		saveSearchForm.setUserID(5);
-		if (saveSearchForm.getUserID() != 0) {
-			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-					.viewMySavedSearches(saveSearchForm.getUserID());
-			List<DropDownDTO> notifyMeList = populateDropdownsService
-					.populateDropdown("NotifyMe");
-			model.addObject("notifyMeList", notifyMeList);
-			model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
-		}
-		model.addObject(saveSearchForm);
-		model.setViewName("jobseekersavedsearchespopup");
-        return model;
-	}*/
+
+	/*
+	 * @RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
+	 * public ModelAndView saveMySavedSearches(@ModelAttribute("saveSearchForm")
+	 * SaveSearchForm saveSearchForm, BindingResult result) { ModelAndView model
+	 * = new ModelAndView(); saveSearchForm.setUserID(5); if
+	 * (saveSearchForm.getUserID() != 0) { List<SaveSearchedJobsDTO>
+	 * saveSearchedJobsDTOList = saveSearchService
+	 * .viewMySavedSearches(saveSearchForm.getUserID()); List<DropDownDTO>
+	 * notifyMeList = populateDropdownsService .populateDropdown("NotifyMe");
+	 * model.addObject("notifyMeList", notifyMeList);
+	 * model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList); }
+	 * model.addObject(saveSearchForm);
+	 * model.setViewName("jobseekersavedsearchespopup"); return model; }
+	 */
 
 	/**
 	 * This method is called to display Saved Searches
@@ -93,7 +91,8 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewMySavedSearches", method = RequestMethod.GET)
-	public ModelAndView viewMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+	public ModelAndView viewMySavedSearches(
+			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		saveSearchForm.setUserID(5);
@@ -107,7 +106,7 @@ public class SaveSearchController {
 		}
 		model.addObject(saveSearchForm);
 		model.setViewName("jobseekersavedsearchespopup");
-        return model;
+		return model;
 	}
 
 	/**
@@ -118,7 +117,8 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewMySavedSearchRecord", method = RequestMethod.GET)
-	public String viewMySavedSearchRecord(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+	public String viewMySavedSearchRecord(
+			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
@@ -175,23 +175,46 @@ public class SaveSearchController {
 			return deleteStatusJson;
 		}
 	}
-	
+
+	/**
+	 * This method is used to update the modified notify me value in the table
+	 * adm_save_search
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param stringObjNew
+	 * @return
+	 */
 	@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
-	public @ResponseBody JSONObject saveMySavedSearches(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session, @RequestParam("stringObjNew") String stringObjNew){
-		
-		//StringTokenizer stringNew = new StringTokenizer(stringObjNew);
+	public @ResponseBody
+	JSONObject saveMySavedSearches(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			@RequestParam("stringObjNew") String stringObjNew) {
+
+		// Splitting the string
 		StringTokenizer stringNew = new StringTokenizer(stringObjNew, ";");
 		List<SaveSearchedJobsDTO> searchedJobsDTOs = new ArrayList<SaveSearchedJobsDTO>();
+
 		while (stringNew.hasMoreElements()) {
-			System.out.println(stringNew.nextElement());
-			String username = stringNew.nextElement().toString();
-			
+			SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+			String stringObject = (String) stringNew.nextElement();
+			StringTokenizer stringAlter = new StringTokenizer(stringObject, "=");
+			int saveId = Integer.parseInt((String) stringAlter.nextElement());
+			String notifyMe = stringAlter.nextElement().toString();
+			searchedJobsDTO.setSaveSearchID(saveId);
+			searchedJobsDTO.setEmailFrequency(notifyMe);
+			searchedJobsDTOs.add(searchedJobsDTO);
 		}
-		//boolean saveData = saveSearchService.saveModifiedData();
+		// update the data in DB
+		boolean saveData = saveSearchService.saveModifiedData(searchedJobsDTOs);
 		JSONObject saveStatusJson = new JSONObject();
+		if (saveData) {
+			saveStatusJson.put("success", "Data Updated Successfully");
+		} else {
+			saveStatusJson.put("failed", "Failed to update the data");
+		}
 		return saveStatusJson;
-		
 	}
 
 }

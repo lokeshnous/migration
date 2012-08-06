@@ -62,7 +62,7 @@
 							    stringObj = saveSearchId +"="+ notifyMe;
 							    stringObjNew = stringObjNew +";"+ stringObj;
 							 });
-							alert('objects are'+stringObjNew);
+							//alert('objects are'+stringObjNew);
 							$.ajax({url:getBaseURL()+"/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
@@ -80,7 +80,10 @@
 									
 								}
 							}); 
-						});
+						}); $("select").change(function () { 
+					           $('select option:eq(5)').attr('selected', true);
+				        })
+				        .trigger('change');
 						jQuery(".megamenu").megamenu();
 					});
 </script>
@@ -123,6 +126,12 @@
 										path="emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
 								    </form:select>
+								    <script>
+								    $("select").change(function () { 
+         							  $('select option:eq(5)').attr('selected', true);
+       							   })
+        						  .trigger('change');
+								    </script>
 								    										
 								</td>
 								

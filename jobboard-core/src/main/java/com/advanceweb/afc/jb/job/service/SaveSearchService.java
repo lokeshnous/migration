@@ -29,15 +29,16 @@ public interface SaveSearchService {
 	 * @return
 	 */
 	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
-	
+
 	/**
 	 * This method is called to view the particular Saved Searches
 	 * 
 	 * @param userId
 	 * @return
 	 */
-	List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId, String searchName);
-    
+	List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
+			String searchName);
+
 	/**
 	 * This method is called to delete the Saved Searches
 	 * 
@@ -45,7 +46,7 @@ public interface SaveSearchService {
 	 * @return
 	 */
 	boolean deleteSavedSearch(int saveSearchId);
-    
+
 	/**
 	 * This method is called to edit the Saved Searches
 	 * 
@@ -53,5 +54,13 @@ public interface SaveSearchService {
 	 * @return
 	 */
 	AdmSaveSearch editSavedSearch(int saveSearchId);
+
+	/**
+	 * This Method saves modified notify me data to the adm_save_search table
+	 * 
+	 * @param searchedJobsDTOs
+	 * @return
+	 */
+	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
 
 }

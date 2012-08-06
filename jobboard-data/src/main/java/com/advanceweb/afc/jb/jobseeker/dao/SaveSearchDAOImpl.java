@@ -98,4 +98,22 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		return jpSaveSearch;
 	}
 
+	/**
+	 * This Method saves modified notify me data to the adm_save_search table
+	 * 
+	 * @param searchedJobsDTOs
+	 * @return
+	 */
+	public boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs) {
+		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+		for (int i = 0; i < searchedJobsDTOs.size(); i++) {
+			searchedJobsDTO = (SaveSearchedJobsDTO) searchedJobsDTOs.get(i);
+			AdmSaveSearch admSaveSearch = (AdmSaveSearch) hibernateTemplate
+					.load(AdmSaveSearch.class,searchedJobsDTO.getSaveSearchID()); 
+			admSaveSearch.setEmailFrequency(searchedJobsDTO.getEmailFrequency());
+			hibernateTemplate.update(admSaveSearch);
+		}
+		return true;
+	}
+
 }

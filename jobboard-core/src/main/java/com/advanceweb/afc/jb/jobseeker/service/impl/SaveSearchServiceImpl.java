@@ -17,6 +17,7 @@ import com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO;
  * @Version 1.0
  * @Since 10th July, 2012
  */
+
 @Service("saveSearchService")
 public class SaveSearchServiceImpl implements SaveSearchService {
 
@@ -45,7 +46,8 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 * @return
 	 */
 	@Override
-	public List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,String searchName) {
+	public List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
+			String searchName) {
 		return saveSearchDAO.viewMySavedSearchRecord(userId, searchName);
 	}
 
@@ -71,5 +73,16 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	public AdmSaveSearch editSavedSearch(int saveSearchId) {
 
 		return saveSearchDAO.editSavedSearch(saveSearchId);
+	}
+
+	/**
+	 * This Method saves modified notify me data to the adm_save_search table
+	 * 
+	 * @param searchedJobsDTOs
+	 * @return
+	 */
+	@Override
+	public boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs) {
+		return saveSearchDAO.saveModifiedData(searchedJobsDTOs);
 	}
 }
