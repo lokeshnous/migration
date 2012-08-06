@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +67,7 @@ public class SaveSearchController {
 
 	}
 	
-	@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
 	public ModelAndView saveMySavedSearches(@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
@@ -81,7 +83,7 @@ public class SaveSearchController {
 		model.addObject(saveSearchForm);
 		model.setViewName("jobseekersavedsearchespopup");
         return model;
-	}
+	}*/
 
 	/**
 	 * This method is called to display Saved Searches
@@ -172,6 +174,24 @@ public class SaveSearchController {
 			deleteStatusJson.put("failed", "Failed to Delete this record");
 			return deleteStatusJson;
 		}
+	}
+	
+	@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
+	public @ResponseBody JSONObject saveMySavedSearches(HttpServletRequest request, HttpServletResponse response,
+			HttpSession session, @RequestParam("stringObjNew") String stringObjNew){
+		
+		//StringTokenizer stringNew = new StringTokenizer(stringObjNew);
+		StringTokenizer stringNew = new StringTokenizer(stringObjNew, ";");
+		List<SaveSearchedJobsDTO> searchedJobsDTOs = new ArrayList<SaveSearchedJobsDTO>();
+		while (stringNew.hasMoreElements()) {
+			System.out.println(stringNew.nextElement());
+			String username = stringNew.nextElement().toString();
+			
+		}
+		//boolean saveData = saveSearchService.saveModifiedData();
+		JSONObject saveStatusJson = new JSONObject();
+		return saveStatusJson;
+		
 	}
 
 }
