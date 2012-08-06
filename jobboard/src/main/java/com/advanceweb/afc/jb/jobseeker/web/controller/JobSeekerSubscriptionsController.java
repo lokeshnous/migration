@@ -46,17 +46,17 @@ public class JobSeekerSubscriptionsController {
 	 */
 	
 	@RequestMapping(value = "/modifySubscription", method = RequestMethod.GET)
-	public ModelAndView viewCurrentSubscriptions() {
+	public ModelAndView viewCurrentSubscriptions(HttpSession session) {
 		
 		ModelAndView model = new ModelAndView();
-		JobSeekerSubscriptionForm form = new JobSeekerSubscriptionForm();
+		JobSeekerSubscriptionForm subscriptform = new JobSeekerSubscriptionForm();
 		
 		List<DropDownDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
-		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(1564);
-		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,form, listSubscriptions);
-//		form.setUserId(1564);
+		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions
+				(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+		transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptions(currentSubsList,subscriptform, listSubscriptions);
 		model.addObject("jobSubscriptionsList", listSubscriptions);				
-		model.addObject("jobSeekerSubscriptionForm",form);
+		model.addObject("jobSeekerSubscriptionForm",subscriptform);
 		model.setViewName("jobseekermodifysubscriptions");	
 		return model;
 	}
@@ -71,14 +71,13 @@ public class JobSeekerSubscriptionsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveJobSeekerSubscription", method = RequestMethod.POST)
-	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm form, BindingResult result,HttpSession session) {
+	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm subscriptform, BindingResult result,HttpSession session) {
 		
 		try {
 			
-//			form.setUserId(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
-			form.setUserId(1564);
-			List<JobSeekerSubscriptionsDTO>	listSubsDTO = transformJobSeekerSubscription.jsSubscriptionFormToJobSeekerSubsDTO(form);			
-			boolean bSaved = jobSeekerSubscriptionsService.saveJobSeekerSubscription(listSubsDTO, form.getUserId());
+			subscriptform.setUserId(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+			List<JobSeekerSubscriptionsDTO>	listSubsDTO = transformJobSeekerSubscription.jsSubscriptionFormToJobSeekerSubsDTO(subscriptform);			
+			jobSeekerSubscriptionsService.saveJobSeekerSubscription(listSubsDTO, subscriptform.getUserId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
