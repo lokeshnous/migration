@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
@@ -69,9 +68,9 @@ public class RegistrationConversionHelper {
 					entity.setLastName(attribDTO.getStrLabelValue());
 				}
 				
-				if(!StringUtils.isEmpty(attribDTO.getStrProfileAttribId())){
-					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
-				}
+//				if(!StringUtils.isEmpty(attribDTO.getStrProfileAttribId())){
+//					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+//				}
 				
 				if(userDTO.getUserId() != 0){
 					entity.setUserId(userDTO.getUserId());
@@ -110,9 +109,9 @@ public class RegistrationConversionHelper {
 					
 					profile.setAttribValue(attribDTO.getStrLabelValue());
 									
-					if(!StringUtils.isEmpty(attribDTO.getStrProfileAttribId())){
-						pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
-					}
+//					if(!StringUtils.isEmpty(attribDTO.getStrProfileAttribId())){
+//						pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+//					}
 					
 					if(user.getUserId() != 0){
 						pk.setUserId(user.getUserId());
@@ -144,7 +143,8 @@ public class RegistrationConversionHelper {
 			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
 				
 				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO.getStrLabelName())
-						&& !StringUtils.isEmpty(attribDTO.getStrLabelValue())){					
+//						&& !StringUtils.isEmpty(attribDTO.getStrLabelValue())
+						){					
 					List<String> sellItems = Arrays.asList(attribDTO.getStrLabelValue().split(","));
 					for(String idVal : sellItems){
 						pk = new AdmUserSubscriptionPK();
