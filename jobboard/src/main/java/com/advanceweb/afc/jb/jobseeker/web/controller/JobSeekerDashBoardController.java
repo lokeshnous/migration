@@ -47,7 +47,8 @@ public class JobSeekerDashBoardController {
 		
 		//Retrieve Current subscriptions of the user
 		List<DropDownDTO> listSubscriptions = populateDropdownsService.getSubscriptionsList();		
-		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.getCurrentSubscriptions(1564);
+		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService.
+				getCurrentSubscriptions(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
 		
 		List<DropDownDTO> currentSubs = transformJobSeekerSubscription.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,listSubscriptions);
 		form.setUserName((String)session.getAttribute("UserName"));
