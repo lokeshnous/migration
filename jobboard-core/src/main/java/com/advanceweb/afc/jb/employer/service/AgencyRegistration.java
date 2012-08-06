@@ -77,7 +77,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	}
 
 	@Override
-	public ProfileDTO getProfileAttributes(String screenName) {
+	public ProfileDTO getProfileAttributes() {
 		// TODO Auto-generated method stub
 		return null;
 	}

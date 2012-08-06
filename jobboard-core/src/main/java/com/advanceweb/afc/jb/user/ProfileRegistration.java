@@ -58,6 +58,6 @@ public interface ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public ProfileDTO getProfileAttributes(String screenName);
+	public ProfileDTO getProfileAttributes();
 
 }
