@@ -357,7 +357,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		List<MetaSearchParamDTO> srchReplacedParamDTOList = new ArrayList<MetaSearchParamDTO>();
 
 		List<Float> latLonList = null;
-		if (isFloatNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
+		if (isIntNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
 
 			latLonList = searchDao.getLatitudeLongitudebyPostcode(paramMap
 					.get(MMJBCommonConstants.CITY_STATE));
@@ -609,21 +609,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		return true;
 	}
 
-	/**
-	 * This method checks whether the String parameter is double or not.
-	 * 
-	 * @param String
-	 * @return boolean
-	 */
-
-	private boolean isFloatNumber(String num) {
-		try {
-			Float.parseFloat(num);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
-	}
 
 	/**
 	 * This method parse the passed string and replace the :b01 and :b02
