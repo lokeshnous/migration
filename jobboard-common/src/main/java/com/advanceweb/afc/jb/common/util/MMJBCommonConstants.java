@@ -36,6 +36,7 @@ public interface MMJBCommonConstants {
 	String EQUAL_TO = "=";
 	String USER = "admin";
 	String SELECT_SLASH_QUESTIONMARK = "select/?";
+	String COMMA = ",";
 	
 	String KEYWORDS = "keywords";
 	String CITY_STATE = "cityState";
