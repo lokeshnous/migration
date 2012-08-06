@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
+import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
 
 public class SaveSearchServiceTest extends ServiceTest {
 
@@ -36,9 +36,9 @@ public class SaveSearchServiceTest extends ServiceTest {
 	public void testEditSavedSearch() {
 		try {
 			int saveSearchId = 16;
-			AdmSaveSearch jpSaveSearch = saveSearchService
+			SaveSearchResults searchResults = saveSearchService
 					.editSavedSearch(saveSearchId);
-			assertNotNull(jpSaveSearch);
+			assertNotNull(searchResults);
 
 		} catch (Exception e) {
 			e.printStackTrace();

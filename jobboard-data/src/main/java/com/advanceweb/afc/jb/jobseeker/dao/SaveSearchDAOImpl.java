@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
+import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
 import com.advanceweb.afc.jb.jobseeker.helper.SaveSearchConversionHelper;
 
 /**
@@ -36,9 +36,9 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	// To Save the save searched job details to DB
 	public void saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
-		AdmSaveSearch jpSaveSearch = saveSearchConversionHelper
+		SaveSearchResults searchResults = saveSearchConversionHelper
 				.transformSaveSearch(saveSearchedJobsDTO);
-		hibernateTemplate.saveOrUpdate(jpSaveSearch);
+		hibernateTemplate.saveOrUpdate(searchResults);
 	}
 
 	/**
@@ -49,10 +49,10 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 */
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
-		List<AdmSaveSearch> admSaveSearchList = hibernateTemplate
+		List<SaveSearchResults> searchResults = hibernateTemplate
 				.find("from AdmSaveSearch e where e.userId = " + userId);
 		return saveSearchConversionHelper
-				.transformJpSaveSearchToSaveSearchedJobsDTO(admSaveSearchList);
+				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
 
 	/**
@@ -64,11 +64,11 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
 			String searchName) {
-		List<AdmSaveSearch> admSaveSearchList = hibernateTemplate
+		List<SaveSearchResults> searchResults = hibernateTemplate
 				.find("from AdmSaveSearch e where e.userID = " + userId
 						+ " and e.searchName = " + searchName);
 		return saveSearchConversionHelper
-				.transformJpSaveSearchToSaveSearchedJobsDTO(admSaveSearchList);
+				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
 
 	/**
@@ -79,9 +79,9 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 */
 	@Override
 	public boolean deleteSavedSearch(int saveSearchId) {
-		AdmSaveSearch admSaveSearch = new AdmSaveSearch();
-		admSaveSearch.setSaveSearchId(saveSearchId);
-		hibernateTemplate.delete(admSaveSearch);
+		SaveSearchResults searchResults = new SaveSearchResults();
+		searchResults.setSaveSearchId(saveSearchId);
+		hibernateTemplate.delete(searchResults);
 		return true;
 	}
 
@@ -92,10 +92,10 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * @return jpSaveSearch
 	 */
 	@Override
-	public AdmSaveSearch editSavedSearch(int saveSearchId) {
-		AdmSaveSearch jpSaveSearch = hibernateTemplate.get(AdmSaveSearch.class,
-				saveSearchId);
-		return jpSaveSearch;
+	public SaveSearchResults editSavedSearch(int saveSearchId) {
+		SaveSearchResults searchResults = hibernateTemplate.get(
+				SaveSearchResults.class, saveSearchId);
+		return searchResults;
 	}
 
 	/**
@@ -108,10 +108,11 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 		for (int i = 0; i < searchedJobsDTOs.size(); i++) {
 			searchedJobsDTO = (SaveSearchedJobsDTO) searchedJobsDTOs.get(i);
-			AdmSaveSearch admSaveSearch = (AdmSaveSearch) hibernateTemplate
-					.load(AdmSaveSearch.class,searchedJobsDTO.getSaveSearchID()); 
-			admSaveSearch.setEmailFrequency(searchedJobsDTO.getEmailFrequency());
-			hibernateTemplate.update(admSaveSearch);
+			SaveSearchResults searchResults = (SaveSearchResults) hibernateTemplate
+					.load(SaveSearchResults.class,
+							searchedJobsDTO.getSaveSearchID());
+			searchResults.setEmailFrequency(searchedJobsDTO.getEmailFrequency());
+			hibernateTemplate.update(searchResults);
 		}
 		return true;
 	}

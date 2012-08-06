@@ -66,11 +66,10 @@
 							$.ajax({url:getBaseURL()+"/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
-								    	//rowObj.remove();
-								    	alert(data.success);
+								    	//alert(data.success);
 								    }
 								    if(data.failure != null){
-								    	alert(data.failure);
+								    	//alert(data.failure);
 								    }
 								},
 								error: function(response) {

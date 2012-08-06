@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,21 +67,6 @@ public class SaveSearchController {
 
 	}
 
-	/*
-	 * @RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
-	 * public ModelAndView saveMySavedSearches(@ModelAttribute("saveSearchForm")
-	 * SaveSearchForm saveSearchForm, BindingResult result) { ModelAndView model
-	 * = new ModelAndView(); saveSearchForm.setUserID(5); if
-	 * (saveSearchForm.getUserID() != 0) { List<SaveSearchedJobsDTO>
-	 * saveSearchedJobsDTOList = saveSearchService
-	 * .viewMySavedSearches(saveSearchForm.getUserID()); List<DropDownDTO>
-	 * notifyMeList = populateDropdownsService .populateDropdown("NotifyMe");
-	 * model.addObject("notifyMeList", notifyMeList);
-	 * model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList); }
-	 * model.addObject(saveSearchForm);
-	 * model.setViewName("jobseekersavedsearchespopup"); return model; }
-	 */
-
 	/**
 	 * This method is called to display Saved Searches
 	 * 
@@ -121,13 +105,10 @@ public class SaveSearchController {
 			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
 
-		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-				.viewMySavedSearchRecord(saveSearchForm.getUserID(),
-						saveSearchForm.getSearchName());
+		// List<SaveSearchedJobsDTO> saveSearchedJobsDTOList =
+		saveSearchService.viewMySavedSearchRecord(saveSearchForm.getUserID(),
+				saveSearchForm.getSearchName());
 
-		for (SaveSearchedJobsDTO saveSearchedJobsDTO : saveSearchedJobsDTOList) {
-			// System.out.println(saveSearchedJobsDTO); }
-		}
 		return "viewMySavedSearches";
 
 	}
