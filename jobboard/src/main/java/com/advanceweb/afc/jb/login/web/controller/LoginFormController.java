@@ -3,14 +3,16 @@ package com.advanceweb.afc.jb.login.web.controller;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,59 +75,19 @@ public class LoginFormController {
 	 * @param model
 	 * @return
 	 */
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView jobSeekerLogin(HttpServletRequest request) {
-
-        ModelAndView model = new ModelAndView();
-		LoginForm loginForm = new LoginForm();
-		model.setViewName("jobSeekerLogin");
-		model.addObject("loginForm", loginForm);
-        model.addObject("postjobfeatures", true);
-		if(request.getParameter("id")!=null && request.getParameter("id").equalsIgnoreCase(MMJBCommonConstants.POST_RESUME)){
-	        model.addObject("postjobfeatures", false);
-		}
-		return model;
-	}
-
-	/**
-	 * This method gets the userId and roleId based on the logged in user email
-	 * and password Also it validates whether logged in user is authorized user
-	 * or not
-	 * 
-	 * @param form
-	 * @param result
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/jobSeekerLogin", method = RequestMethod.POST)
-	public ModelAndView validateLogin(
-			@ModelAttribute("loginForm") @Valid LoginForm loginForm,
-			BindingResult result) {
-        
-		//programmatic validation is done here which validates based on patters
-		//loginFormValidator.validate(loginForm, result);
-
-		boolean value = false;
-
-		loginForm.setRoleId(2);
-		String emailAddress = loginForm.getEmailAddress();
-		String password = loginForm.getPassword();
-
-		// Get the details of logged in user using email and password
-		LoginFormDTO loginFormDTOForUser = (LoginFormDTO) loginFormService
-				.validateLoginFormValues(emailAddress, password);
-
-		if (loginFormDTOForUser != null) {
-			value = loginValidator.validateLoginValues(loginForm,
-					loginFormDTOForUser);
-		}
-		
-		if (value) {
-			return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
+	public String jobSeekerLogin(
+			@RequestParam(value = "error", required = false) boolean error,
+			ModelMap model) {
+		if (error == true) {
+			model.put(
+					"error",
+					"The User Name/Password you have entered is invalid Or you are not authorized to Login to the site");
 		} else {
-			return new ModelAndView("jobSeekerLogin","message","Login Failure.The User Name/Password you have entered is invalid Or you are not authorized to Login to the site.");
+			model.put("error", "");
 		}
-
+		return "jobSeekerLogin";
 	}
 
 	/**
@@ -136,11 +98,13 @@ public class LoginFormController {
 	 */
 	@RequestMapping(value = "/forgrtPasswordLogin", method = RequestMethod.GET)
 	public ModelAndView jobSeekerForgotYourPasswordPagePopUp(
-			Map<String, LoginForm> model,Model modelconstants) {
+			Map<String, LoginForm> model, Model modelconstants) {
 
 		model.put("loginForm", new LoginForm());
-		modelconstants.addAttribute("MMJBCommonConstantserror", MMJBCommonConstants.ERROR_STRING);
-		modelconstants.addAttribute("MMJBCommonConstantsok", MMJBCommonConstants.OK_STRING);
+		modelconstants.addAttribute("MMJBCommonConstantserror",
+				MMJBCommonConstants.ERROR_STRING);
+		modelconstants.addAttribute("MMJBCommonConstantsok",
+				MMJBCommonConstants.OK_STRING);
 
 		return new ModelAndView("jobSeekerForgotPWDPopUp");
 	}
@@ -149,17 +113,17 @@ public class LoginFormController {
 	 * This Method is used for forgot password functionality
 	 * 
 	 * @param form
-	 * @param result  
+	 * @param result
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/jobSeekerForgotPWDPopUp", method = RequestMethod.POST)
-	public String emailThePassword(@Valid LoginForm form,
-			BindingResult result,@RequestParam("email") String email,Model model) {
+	public String emailThePassword(@Valid LoginForm form, BindingResult result,
+			@RequestParam("email") String email, Model model) {
 		String emailAddress = email;
-		String finalresult="";
+		String finalresult = "";
 		boolean value = false;
-        
+
 		LoginFormDTO userDetailsLoginFormDTO = loginFormService
 				.getUserEmailDetails(emailAddress);
 
@@ -170,9 +134,10 @@ public class LoginFormController {
 		}
 
 		// Sending mail to the logged in user if he is valid user
-        if(!(email.length()>0)){
-			finalresult=MMJBCommonConstants.ERROR_STRING+","+emptyerrormsg;
-		}else if (email.length()>0 && value) {
+		if (!(email.length() > 0)) {
+			finalresult = MMJBCommonConstants.ERROR_STRING + ","
+					+ emptyerrormsg;
+		} else if (email.length() > 0 && value) {
 			try {
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
@@ -180,7 +145,7 @@ public class LoginFormController {
 				jobSeekerEmailDTO.setBccAddress(null);
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 				jobSeekerToAddress[0] = new InternetAddress(
-				//		form.getEmailAddress());
+				// form.getEmailAddress());
 						email);
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 				jobSeekerEmailDTO.setSubject(mailSubject);
@@ -193,11 +158,11 @@ public class LoginFormController {
 				// loggers call
 				LOGGER.info("ERROR");
 			}
-			finalresult=MMJBCommonConstants.OK_STRING;
-		}else{
-			finalresult=MMJBCommonConstants.ERROR_STRING+","+invalidmail;
+			finalresult = MMJBCommonConstants.OK_STRING;
+		} else {
+			finalresult = MMJBCommonConstants.ERROR_STRING + "," + invalidmail;
 		}
-		
+
 		return finalresult;
 	}
 }
