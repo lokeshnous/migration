@@ -26,7 +26,6 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	
 	private static final String SELECTED_CURRENT_SUBS="from AdmUserSubscription sub where sub.id.userId=?";
 	
-	private HibernateTemplate hibernateTemplate;
 	
 	private HibernateTemplate hibernateTemplateCareers;
 	
@@ -35,7 +34,6 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker, SessionFactory sessionFactory) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 		
 	}
@@ -75,7 +73,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		
 		List<JobSeekerSubscriptionsDTO> listSubscriptiosns = null;
 		try {
-			List<AdmUserSubscription> listSubs= hibernateTemplateCareers.find("Select m from AdmUserSubscription m where m.id.userId="+userId);
+			List<AdmUserSubscription> listSubs= hibernateTemplateCareers.find(SELECTED_CURRENT_SUBS,userId);
 			listSubscriptiosns = jsSubscriptionHelper.transformMerUserAlertsTojsSubsDTO(listSubs);
 		} catch (DataAccessException e) {
 
