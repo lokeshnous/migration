@@ -105,7 +105,7 @@ public class JobSeekerRegistrationController {
 			return model;
 		}
 		
-		JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes(MMJBCommonConstants.JOB_SEEKER_REGISTRATION);
+		JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes();
 
 		List<JobSeekerProfileAttribForm> listProfAttribForms = 
 				transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO);
@@ -221,22 +221,10 @@ public class JobSeekerRegistrationController {
 		try {
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
 			// Call to service layer
-			List<CountryDTO> countryList= populateDropdownsService.getCountryList();
-			List<StateDTO> stateList= populateDropdownsService.getStateList();
-			List<EmploymentInfoDTO> empInfoList= populateDropdownsService.getEmployementInfoList();
-			List<EthenticityDTO> ethnicityList= populateDropdownsService.getEthenticityList();
-			List<GenderDTO> genderList= populateDropdownsService.getGenderList();
-			List<VeteranStatusDTO> veteranStatusList= populateDropdownsService.getVeteranStatusList();
-			List<DropDownDTO> empTyepList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-			model.addObject("countryList",countryList);
-			model.addObject("employmentInfoList",empInfoList);
-			model.addObject("genderList",genderList);
-			model.addObject("ethnicityList",ethnicityList);
-			model.addObject("veteranStatusList",veteranStatusList);
-			model.addObject("empTyepList",empTyepList);
-			model.addObject("stateList",stateList);
-			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(322);
-			transformJobSeekerRegistration.jsRegistrationDTOToJobSeekerRegistrationForm(jsRegistrationDTO, form);
+			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(1565);
+			List<JobSeekerProfileAttribForm> listProfAttribForms = 
+					transformJobSeekerRegistration.transformDTOToProfileAttribForm(jsRegistrationDTO);
+			form.setListProfAttribForms(listProfAttribForms);
 			model.addObject("registerForm", form);
 			model.setViewName("jobseekerEditProfileSettings");
 			

@@ -16,7 +16,6 @@ public class MerProfileAttribDTO {
 	private String strProfileAttribId;
 	private String strAttribType;
 	private String strSectionName;
-	private String strScreenName;
 	private int bRequired;
 	private String strToolTip;
 	private List<DropDownDTO> dropdown;
@@ -50,12 +49,6 @@ public class MerProfileAttribDTO {
 	}
 	public void setStrSectionName(String strSectionName) {
 		this.strSectionName = strSectionName;
-	}
-	public String getStrScreenName() {
-		return strScreenName;
-	}
-	public void setStrScreenName(String strScreenName) {
-		this.strScreenName = strScreenName;
 	}
 	public List<DropDownDTO> getDropdown() {
 		return dropdown;

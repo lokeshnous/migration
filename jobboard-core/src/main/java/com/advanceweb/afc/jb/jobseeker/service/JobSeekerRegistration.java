@@ -97,10 +97,9 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	}
 
 	@Override
-	public ProfileDTO getProfileAttributes(String strScreenName) {
+	public ProfileDTO getProfileAttributes() {
 		
-		return jobSeekerRegistrationDAO.getProfileAttributes(strScreenName);
+		return jobSeekerRegistrationDAO.getProfileAttributes();
 	}	
-	
 	
 }

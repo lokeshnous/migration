@@ -33,9 +33,6 @@ public class MerProfileAttrib implements Serializable {
 	@Column(name="section_name")
 	private String sectionName;
 	
-	@Column(name="screen_name")
-	private String screenName;
-	
 	@Column(name="required")
 	private int required;
 	
@@ -116,14 +113,6 @@ public class MerProfileAttrib implements Serializable {
 
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
-	}
-
-	public String getScreenName() {
-		return screenName;
-	}
-
-	public void setScreenName(String screenName) {
-		this.screenName = screenName;
 	}
 
 	public int getRequired() {

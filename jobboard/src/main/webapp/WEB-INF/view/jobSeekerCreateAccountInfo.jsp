@@ -223,7 +223,7 @@
  										<h3 class="marginLeft10">Subscriptions</h3>
  									</div>
  								</c:if>  								
-									<c:if test="${profAttrib.strAttribType == 'TextBox'}">
+									<c:if test="${profAttrib.strAttribType == 'TextBox' && profAttrib.strLabelName != 'E-Mail Address'}">
 										<div class="rowEvenSpacing">
 											<c:if test="${profAttrib.strLabelName != 'Street Address1'}" >
 												<span class="lableText3"><c:out value="${profAttrib.strLabelName}" />:</span>

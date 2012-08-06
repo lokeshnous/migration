@@ -39,7 +39,80 @@
 		<div class="popUpContainerWrapper">
 			<form:form action="/jobboard/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
 				commandName="registerForm" enctype="multipart/form-data" id="editProfileSettingsId">
-				<div class="rowEvenNewSpacing">
+				<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">			
+					<c:if test="${profAttrib.strLabelName != 'Subscriptions'}">				
+ 								<c:if test="${profAttrib.strSectionName == 'Contact Information1'}">
+		 							<div class="row marginTop20 paddingBottom10">
+										<h3 class="marginLeft10">Employment information</h3>
+									</div>
+ 								</c:if> 
+ 								<c:if test="${profAttrib.strSectionName == 'Employment information1'}">
+ 									<div class="row marginTop20 paddingBottom10">
+ 										<h3 class="marginLeft10">Employment information</h3>
+ 									</div>
+ 								</c:if> 
+ 								<c:if test="${profAttrib.strSectionName == 'Equal Opportunity1'}">
+ 									<div class="row marginTop20 paddingBottom10">
+ 										<h3 class="marginLeft10">Equal Opportunity / Affirmative Action</h3>
+ 									</div>
+ 								</c:if> 
+ 								<c:if test="${profAttrib.strSectionName == 'Subscriptions1'}">
+ 									<div class="row marginTop20 paddingBottom10">
+ 										<h3 class="marginLeft10">Subscriptions</h3>
+ 									</div>
+ 								</c:if>  								
+									<c:if test="${profAttrib.strAttribType == 'TextBox'}">
+										<div class="rowEvenSpacing">
+											<c:if test="${profAttrib.strLabelName != 'Street Address1'}" >
+												<span class="lableText3"><c:out value="${profAttrib.strLabelName}" />:</span>
+											</c:if>
+											<c:if test="${profAttrib.strLabelName == 'Street Address1'}" >
+												<span class="lableText3"></span>
+											</c:if>
+											 <form:input  path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350"/>
+											 <c:if test="${not empty profAttrib.strToolTip}">
+												 <div class="toolTip marginTop6 marginLeft5">
+														<span class="classic"><c:out value="${profAttrib.strToolTip}" /></span>
+												</div>
+											</c:if>
+											<span class="required">(Required)</span>
+										</div>
+									</c:if>
+									
+									<c:if test="${profAttrib.strAttribType == 'Dropdown'}">
+										<div class="row">
+											<span class="lableText3"><c:out value="${profAttrib.strLabelName}" />:</span>
+											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+												<form:option value="0" label="Select" />
+												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+													itemLabel="optionName" />
+											</form:select>
+											<span class="required">(Required)</span>
+										</div>
+									</c:if>
+									<c:if test="${profAttrib.strAttribType == 'CheckBox'}">
+										<div class="row paddingBottom10 marginLeft10">I would like
+											the following sent to me so I can stay up to date with the
+											latest healthcare news and information:</div>
+			
+										<div class="centerAlign ">
+											<ul>		
+												<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
+													<li>
+														<div>
+															<form:checkbox path="listProfAttribForms[${status.index}].strLabelValue"
+																label="${dropdown.optionName}"
+																value="${dropdown.optionId}"
+																cssStyle="width:20px" />
+														</div>
+													</li>
+												</c:forEach>
+											</ul>
+										</div>	
+									</c:if>	
+					</c:if> 
+				</c:forEach>
+<%-- 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">First Name:</span>
 					<form:input path="firstName" class="job_seeker_password textBox350" />
 					<span class="required">(Required)</span>
@@ -209,7 +282,7 @@
 					<form:option value="0" label="Select" />
 					<form:options items="${veteranStatusList}" itemValue="statusId" itemLabel="statusValue" />
 				</form:select>
-				</div>
+				</div> --%>
 				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 					<span class="floatLeft marginTop10">
 					

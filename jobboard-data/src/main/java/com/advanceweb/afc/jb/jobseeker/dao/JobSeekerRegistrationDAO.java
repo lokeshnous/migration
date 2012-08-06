@@ -51,6 +51,6 @@ public interface JobSeekerRegistrationDAO {
 	 * @param jobSeekerRegistrationDTO
 	 * @return
 	 */
-	public JobSeekerRegistrationDTO getProfileAttributes(String strScreenName);
+	public JobSeekerRegistrationDTO getProfileAttributes();
 
 }

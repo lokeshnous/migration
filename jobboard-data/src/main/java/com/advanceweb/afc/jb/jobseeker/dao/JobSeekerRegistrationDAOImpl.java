@@ -19,6 +19,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -49,19 +50,17 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private HibernateTemplate hibernateTemplateCareers;
 	
 	private final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
-	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof where prof.screenName = ?";
+	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
 	private final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
 	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
+	private final String FIND_JOBSEEKER_PROFILE="from MerUserProfile prof where prof.id.userId=?";
 	
 	@Autowired
-	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker) {
+	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker, SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
-	}
-	
-	@Autowired
-	public void setHibernateTemplateCareers(SessionFactory sessionFactory) {
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 	}
+	
 
 	/**
 	 * This method is called to save Job seeker registration information into
@@ -132,12 +131,10 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		try {
 			if (jobSeekerId != 0) {
 				MerUser merUser = hibernateTemplate.load(MerUser.class, jobSeekerId);
-				MerUserDTO merUserDTO = registrationConversionHelper.transformMerUserToMerUserDTO(merUser);
-				AddressDTO addDTO = registrationConversionHelper.transformMerUserToAddDTO(merUser);
-				JobSeekerProfileDTO profileDTO = registrationConversionHelper.transformMerUserToProfileDTO(merUser);
-				jsRegistrationDTO.setMerUserDTO(merUserDTO);
-				jsRegistrationDTO.setAddressDTO(addDTO);
-				jsRegistrationDTO.setJobSeekerProfileDTO(profileDTO);
+				JobSeekerRegistrationDTO jsDTO = getProfileAttributes();
+				List<MerUserProfile> profiles = hibernateTemplate.find(FIND_JOBSEEKER_PROFILE,jobSeekerId);
+								
+				jsRegistrationDTO = registrationConversionHelper.transformMerUserProfilesToDTO(merUser, jsDTO, profiles);
 			}
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -215,10 +212,10 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	}
 
 	@Override
-	public JobSeekerRegistrationDTO getProfileAttributes(String strScreenName) {
+	public JobSeekerRegistrationDTO getProfileAttributes() {
 		JobSeekerRegistrationDTO dto = null;
 		try {
-			  List<MerProfileAttrib> listProfAttrib = hibernateTemplate.find(REGISTRATION_ATTRIBS,strScreenName);
+			  List<MerProfileAttrib> listProfAttrib = hibernateTemplate.find(REGISTRATION_ATTRIBS);
 			  List<DropDownDTO> countryList = getCountryList();
 			  List<DropDownDTO> stateList = getStateList();
 			  List<DropDownDTO> subsList = getSubscriptions();
