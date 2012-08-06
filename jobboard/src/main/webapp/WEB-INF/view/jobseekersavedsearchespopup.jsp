@@ -11,6 +11,14 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
+function closePopup() {
+	parent.window.location.reload();
+}
+$(document).keyup(function(event) {
+	if (event.keyCode == 27) {
+		parent.window.location.reload();
+	}
+});
 	jQuery(document).ready(function() {
 						$("#tb_save_search img").click(function(event) {
 							var action = $(this).attr("alt");
@@ -94,7 +102,7 @@
 		<div class="popupHeader">
 			<h2>My Saved Searches</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" onclick="parent.$.nmTop().close();" alt=""></a>
+				height="19" onclick="closePopup();" alt=""></a>
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -154,7 +162,7 @@
 				</div>			
 			<div class="row marginTop20 paddingBottom10">
 				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
-				<input type="button" onclick="parent.$.nmTop().close();" class="btn_sm orange" value="Cancel"/>
+				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>
 			</div>
 			</form:form>
 		</div>

@@ -540,7 +540,8 @@ ul.news {
 
 .search_form {
 	width: 404px;
-	height: 190px;
+	/* height: 190px;*/
+	height: 200px;
 	float: right;
 	border-left: 1px solid #CCCCCC;
 	padding: 0 0 15px 20px;
@@ -641,7 +642,8 @@ select.jb_input3, select.jb_input4, select.jb_input75 { /*MM: Added */
 
 .jb_search_submit {
 	clear: both;
-	margin: 15px 10px 0 0;
+	/* margin: 15px 10px 0 0; */
+	margin: 5px 10px 0 0;
 	display: inline-block;
 }
 

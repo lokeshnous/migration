@@ -123,7 +123,7 @@
 		</script>
 	<style type="text/css">
 	.advertiseStyle{
-		border: 2px solid;
+		border: 2px solid white;
 		background-image : url(../resources/images/ads/banner_ad_fpo.png);
 		}
 	.details{
@@ -131,6 +131,31 @@
 	}
 	</style>
 		<script type="text/javascript">
+		
+		function validateRadius() {
+			var cityState = $.trim($("#cityState").val());
+			var radius = $.trim($("#radius").val());
+			if(radius.length != 0 && cityState.length == 0){
+				//$("#radius").val("");
+				$('#findSearchInfo').html('Please enter the City and State or Zip Code');
+			}else{
+				$('#findSearchInfo').html('');
+			}
+		}
+		function validateSearch() {
+			var cityState = $.trim($("#cityState").val());
+			var radius = $.trim($("#radius").val());
+			var keywords = $.trim($("#keywords").val());
+			if(radius.length == 0 && cityState.length == 0 && keywords.length == 0){
+				$('#findSearchInfo').html('Please enter the \"Job Title, Keyword, Job Id, Company Name\" to perform a search.');
+			}else if(radius.length != 0 && cityState.length == 0){
+				$('#findSearchInfo').html('Please enter the City and State or Zip Code.');
+			}else if(cityState.length != 0 && radius.length == 0){
+				$('#findSearchInfo').html('Please select the Radius to search the job in miles.');
+			}else{
+				$('#findSearchInfo').html('');
+			}			
+		}
 		function saveThisJob(jobId) {
 			$.ajax({
 				url : 'saveThisJob.html?id='+jobId,
@@ -279,9 +304,9 @@
 								$(".megamenu").megamenu();
 								
 								$("#submitval").click(function(event) {
-									
+									validateSearch();
 									var x = $("#results").val();
-									$("#rows").val(250);
+									$("#rows").val(1000);
 									$("#start").val("0");
 									var keywords = $("#keywords").val();
 									var cityState = $("#cityState").val();
@@ -290,7 +315,7 @@
 									var start = $("#start").val();
 									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start;
-									
+									$("#TotalNoRecords").text("");
 									//alert("navUrl="+navUrl);
 									$.getJSON(navUrl,function(data) {
 											table.fnClearTable();
@@ -302,11 +327,12 @@
 												if(i  != 0 && (i % 9) == 0){
 												//nNodes[i+count] = 	 "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>";
 												//$('#jsonTable').dataTable().fnAddData(["row 3, cell 1", "row 3, cell 2","row 3, cell 1", "row 3, cell 2"]);
-												table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
+												//table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
+												table.fnOpen( nNodes[i+count], "<img src='../resources/images/ads/banner_ad_fpo.png'>", "advertiseStyle" );
 												count = count+1;
 												}
 										        }
-									$("#TotalNoRecords").text(data.TotalNoRecords);
+											$("#TotalNoRecords").text(data.TotalNoRecords);
 											});
 									
 								});
@@ -465,7 +491,7 @@
             <div class="search_form">
             
 	                      <h1 class="marginBottom5">Search <span id="TotalNoRecords"></span> Healthcare Jobs</h1>
-	                      <form:input path="keywords"  id="keywords" cssClass="jb_input1" />
+	                      <form:input path="keywords" maxlength="60" id="keywords" cssClass="jb_input1" />
 	                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
 	                      <br/>
 	                      <div class="input_grp1 marginTop10">
@@ -475,20 +501,21 @@
 	                <div class="toolTipBefore"><label for="cityState">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
 	              </div>
 	                      <div class="input_grp2 marginTop10">
-	                <form:select path="radius" id="radius" cssClass="jb_input3">
+	                <form:select path="radius" id="radius" cssClass="jb_input3" onchange="validateRadius();">
 	                	<form:option label="--" value=""/>
 	                	<!-- USE <form:options/> while dynamically populating the values  -->
-	                	<form:option label="5" value="5"/>
-	                	<form:option label="10" value="10"/>
-	                	<form:option label="25" value="25"/>
-	                	<form:option label="50" value="50"/>
-	                	<form:option label="100" value="100"/>
+	                	<form:option label="5 Miles" value="5"/>
+	                	<form:option label="10 Miles" value="10"/>
+	                	<form:option label="25 Miles" value="25"/>
+	                	<form:option label="50 Miles" value="50"/>
+	                	<form:option label="100 Miles" value="100"/>
 	                </form:select>
 	                <label for="radius">Radius</label>
 	              </div>
 	              
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
+	                      <div style="color: red;font-weight:bold; height: 30px;" id="findSearchInfo" ></div>
 	                    <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" />
 	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  

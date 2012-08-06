@@ -147,7 +147,6 @@
 </head>
     
     <body class="job_board_home">    
-    <ul><li><a id="nav">pp</a></li></ul>
         <div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
         </div>
