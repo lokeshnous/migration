@@ -277,17 +277,21 @@
 					.ready(
 							function() {
 								$(".megamenu").megamenu();
-								var x = $("#results").val();
-								$("#rows").val(2500);
-								$("#start").val("0");
-								var keywords = $("#keywords").val();
-								var cityState = $("#cityState").val();
-								var radius = $("#radius").val();
-								var rows = $("#rows").val();
-								var start = $("#start").val();
-								var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
-								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start;
+								
 								$("#submitval").click(function(event) {
+									
+									var x = $("#results").val();
+									$("#rows").val(250);
+									$("#start").val("0");
+									var keywords = $("#keywords").val();
+									var cityState = $("#cityState").val();
+									var radius = $("#radius").val();
+									var rows = $("#rows").val();
+									var start = $("#start").val();
+									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start;
+									
+									//alert("navUrl="+navUrl);
 									$.getJSON(navUrl,function(data) {
 											table.fnClearTable();
 											table.fnAddData(data.jsonRows);
@@ -296,11 +300,15 @@
 											for(var i=0;i<nNodes.length;i++)
 										        {
 												if(i  != 0 && (i % 9) == 0){
+												//nNodes[i+count] = 	 "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>";
+												//$('#jsonTable').dataTable().fnAddData(["row 3, cell 1", "row 3, cell 2","row 3, cell 1", "row 3, cell 2"]);
 												table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
 												count = count+1;
 												}
 										        }
+									$("#TotalNoRecords").text(data.TotalNoRecords);
 											});
+									
 								});
 								generateTable();
 								/* Add event listener for opening and closing details
