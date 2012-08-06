@@ -73,7 +73,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
 				
 		try {
-			MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO);
+			MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO, null);
 			if (merUser != null) {
 				hibernateTemplate.saveOrUpdate(merUser);			
 			}
@@ -148,13 +148,22 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 * @param jobSeeker
 	 */
 	@Override
-	public boolean updateJobSeekerDetails(JobSeekerRegistrationDTO jobSeekerRegistrationDTO) {
-		
-		MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jobSeekerRegistrationDTO);
-		try {
-			if (merUser != null) {
-				hibernateTemplate.saveOrUpdate(merUser);
-			}
+	public boolean updateJobSeekerDetails(JobSeekerRegistrationDTO jsDTO) {
+
+		try {				
+				MerUser merUser = hibernateTemplate.get(MerUser.class,jsDTO.getMerUserDTO().getUserId());
+				
+				merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO, merUser);
+				
+				if (merUser != null) {
+					hibernateTemplate.saveOrUpdate(merUser);			
+				}
+				
+				List<MerUserProfile> merUserProfiles = registrationConversionHelper.transformMerUserDTOToMerUserProfiles(jsDTO, merUser);
+				if (merUserProfiles != null) {
+					hibernateTemplate.saveOrUpdateAll(merUserProfiles);
+				}
+				
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -199,10 +208,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	@Override
 	public boolean validateEmail(String email) {
 		try {
-			if (StringUtils.isEmptyOrWhitespaceOnly(email)) {
-				MerUser user = (MerUser) hibernateTemplate.find(VERIFY_EMAIL,email);
-				if(null != user){
-					return true;
+			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+				List<MerUser> usersList = hibernateTemplate.find(VERIFY_EMAIL,email);
+				if(null != usersList && usersList.size()>0){
+					MerUser user = usersList.get(0);
+					return (null != user ? true : false);
 				}
 			}
 		} catch (HibernateException e) {

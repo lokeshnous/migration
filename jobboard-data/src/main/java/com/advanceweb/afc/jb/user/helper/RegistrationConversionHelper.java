@@ -32,23 +32,22 @@ public class RegistrationConversionHelper {
 	 * @param dto
 	 * @return
 	 */
-	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto) {
+	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto, MerUser entity) {
 
 		MerUserDTO userDTO = dto.getMerUserDTO();		
+			
 		
-		MerUser entity = new MerUser();
-		MerUserProfilePK pk = null;
-		
-		if (null != userDTO) {
-			entity.setEmail(userDTO.getEmailId());
+		if (null != userDTO && null == entity) {
+			entity = new MerUser();
 			entity.setPassword(userDTO.getPassword());
+			entity.setEmail(userDTO.getEmailId());
 		}
 	
 		if(null != dto.getAttribList()){
 			
 			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
 				
-				pk = new MerUserProfilePK();
+				MerUserProfilePK pk = new MerUserProfilePK();
 				MerUserProfile profile = new MerUserProfile();
 				
 				profile.setAttribValue(attribDTO.getStrLabelValue());
@@ -63,6 +62,11 @@ public class RegistrationConversionHelper {
 				
 				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
 					entity.setLastName(attribDTO.getStrLabelValue());
+				}
+				
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.EMAIL_ADDRESS)
+						&& null != attribDTO.getStrLabelValue() && !attribDTO.getStrLabelValue().isEmpty()){
+					entity.setEmail(attribDTO.getStrLabelValue());
 				}
 				
 				if(null != attribDTO.getStrProfileAttribId() && !attribDTO.getStrProfileAttribId().isEmpty()){

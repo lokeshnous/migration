@@ -24,21 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.AddressDTO;
-import com.advanceweb.afc.jb.common.CountryDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
-import com.advanceweb.afc.jb.common.EthenticityDTO;
-import com.advanceweb.afc.jb.common.GenderDTO;
-import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
-import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Controller
@@ -52,9 +42,6 @@ public class JobSeekerRegistrationController {
 
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
-	
-	@Autowired
-	private PopulateDropdowns populateDropdownsService;
 	
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
@@ -101,7 +88,7 @@ public class JobSeekerRegistrationController {
 		
 		if(profileRegistration.validateEmail(registerForm.getEmailId())){
 			model.setViewName("jobSeekerCreateAccount");
-			result.rejectValue("emailId", "NotEmpty", "Email Id already Exist in the DataBase!");
+			result.rejectValue("emailId", "NotEmpty", "Email Id already Exists!");
 			return model;
 		}
 		
@@ -134,14 +121,15 @@ public class JobSeekerRegistrationController {
 					for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
 						
 						//Checking validation for input text box
-						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
+						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue()) 
+								&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
 							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
 						}
 						
 						//Checking validation for dropdowns & checkboxes etc
-						if(form.getbRequired() !=0 && form.getStrLabelValue().equals(MMJBCommonConstants.ZERO) 
+						if(form.getbRequired() !=0 && MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
 								&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
-								|| MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType()))){
+								|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
 							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
 						}
 						//validation mobile number
@@ -182,14 +170,6 @@ public class JobSeekerRegistrationController {
 	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Back")
 	public ModelAndView backToCreateJobSeekerCreateYrAcct(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
-		try {			
-/*				if (result.hasErrors()) {
-					return new ModelAndView("jobseekerregistration");
-				}*/
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return new ModelAndView("jobSeekerCreateAccount","registerForm", registerForm);
 	}
 		
@@ -244,28 +224,61 @@ public class JobSeekerRegistrationController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
-	public ModelAndView updateJobSeekerProfileSettings(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
+	public ModelAndView updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
 			ModelAndView model = new ModelAndView();
 		try {	
 			
-			if(result.hasErrors()){
-				model.setViewName("jobseekerEditProfileSettings");
-				return model;
+			if(null != registerForm.getListProfAttribForms()){
+				for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
+					
+					//Checking validation for input text box
+					if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
+						return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+					}
+					
+					//Checking validation for dropdowns & checkboxes etc
+					if(form.getbRequired() !=0 && !MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName()) 
+							&& MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
+							&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
+							|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
+						return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+					}
+					//validation mobile number
+					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
+							&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
+						return new ModelAndView("jobSeekerCreateAccountInfo","message","Phone number should contain only numbers");
+					}
+					
+					//validation mobile number
+					if(MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
+						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){
+							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please enter the correct E-Mail Address");
+						}else{
+							if(profileRegistration.validateEmail(registerForm.getEmailId())){
+								model.setViewName("jobSeekerCreateAccount");
+								result.rejectValue("emailId", "NotEmpty", "Email Id already Exists!");
+								return model;
+							}
+						}
+					}					
+				}
 			}
 			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(registerForm);
+			List<MerProfileAttribDTO> attribList = transformJobSeekerRegistration.
+					transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
 			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
-			JobSeekerProfileDTO jsProfileSettingsDTO = transformJobSeekerRegistration.createJSProfileSettingsDTO(registerForm);
-			jsRegistrationDTO.setAddressDTO(addDTO);
-			jsRegistrationDTO.setJobSeekerProfileDTO(jsProfileSettingsDTO);
+			userDTO.setUserId(1565);
+			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
+
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return model;
 	}
 	

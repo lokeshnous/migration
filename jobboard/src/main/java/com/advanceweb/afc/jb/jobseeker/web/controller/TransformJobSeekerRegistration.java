@@ -148,7 +148,7 @@ public class TransformJobSeekerRegistration {
 				form.setDropdown(dto.getDropdown());
 				form.setStrAttribType(dto.getStrAttribType());
 				form.setStrLabelName(dto.getStrLabelName());
-				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setStrSectionName(dto.getStrSectionName());
 				form.setbRequired(dto.getbRequired());
