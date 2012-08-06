@@ -32,7 +32,7 @@ public class AdmUserRole implements Serializable {
 	private int deleteUserId;
 
 	//bi-directional many-to-one association to AdmRole
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="role_id", insertable=false, updatable=false)
 	private AdmRole admRole;
 
