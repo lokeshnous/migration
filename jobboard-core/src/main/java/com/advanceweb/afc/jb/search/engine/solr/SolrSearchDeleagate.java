@@ -280,9 +280,11 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 			int value = 0;
 			String temp = "";
-			if (mSrchParamDTO.getParameterValue().contains(MMJBCommonConstants.B)) {
+			if (mSrchParamDTO.getParameterValue().contains(
+					MMJBCommonConstants.B)) {
 				temp = mSrchParamDTO.getParameterValue().substring(
-						mSrchParamDTO.getParameterValue().indexOf(MMJBCommonConstants.B)
+						mSrchParamDTO.getParameterValue().indexOf(
+								MMJBCommonConstants.B)
 								+ MMJBCommonConstants.B.length(),
 						mSrchParamDTO.getParameterValue().length());
 
@@ -361,86 +363,105 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					.get(MMJBCommonConstants.CITY_STATE));
 
 		} else {
-
-			latLonList = searchDao.getLatitudeLongitudeByCityState(
-					paramMap.get(MMJBCommonConstants.CITY_STATE).trim()
-							.split(MMJBCommonConstants.SPACE)[0],
-					paramMap.get(MMJBCommonConstants.CITY_STATE).trim()
-							.split(MMJBCommonConstants.SPACE)[1]);
+			
+			String[] cityState = paramMap.get(MMJBCommonConstants.CITY_STATE).trim()
+					.split(MMJBCommonConstants.COMMA);
+			if(cityState.length >= 2){
+				latLonList = searchDao.getLatitudeLongitudeByCityState(
+						cityState[0].trim(), cityState[1].trim());
+			}else{
+				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
+			}
 
 		}
 
-		/** Getting the Search parameter List from QueryDTO. **/
-		List<MetaSearchParamDTO> srchParamDTOList = queryDTO
-				.getmSrchParamList();
+		if (latLonList == null || latLonList.size() == 0) {
 
-		for (MetaSearchParamDTO mSrchParamDTO : srchParamDTOList) {
+			LOGGER.info("Latitude and Longitude not found in the DB for the providesd City State..");
+		} else {
 
-			int value = 0;
-			String strValue = mSrchParamDTO.getParameterValue();
-			String tStrValue = "";
+			/** Getting the Search parameter List from QueryDTO. **/
+			List<MetaSearchParamDTO> srchParamDTOList = queryDTO
+					.getmSrchParamList();
 
-			if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
-					MMJBCommonConstants.FQ)) {
+			for (MetaSearchParamDTO mSrchParamDTO : srchParamDTOList) {
 
-				/** Calling the method to replace the :b01 and :b02 value for fq filed**/
-				strValue = formAndRepalceFQParam(strValue, latLonList, paramMap);
-				mSrchParamDTO.setParameterValue(strValue);
-				
-			} else {
+				int value = 0;
+				String strValue = mSrchParamDTO.getParameterValue();
+				String tStrValue = "";
 
-				if (mSrchParamDTO.getParameterValue().contains(MMJBCommonConstants.B)) {
-					tStrValue = mSrchParamDTO.getParameterValue().substring(
-							mSrchParamDTO.getParameterValue().indexOf(MMJBCommonConstants.B)
-									+ MMJBCommonConstants.B.length(),
-							mSrchParamDTO.getParameterValue().length());
+				if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
+						MMJBCommonConstants.FQ)) {
 
-					if (isIntNumber(tStrValue)) {
-						value = Integer.parseInt(tStrValue);
+					/**
+					 * Calling the method to replace the :b01 and :b02 value for
+					 * fq filed
+					 **/
+					strValue = formAndRepalceFQParam(strValue, latLonList,
+							paramMap);
+					mSrchParamDTO.setParameterValue(strValue);
 
-						switch (value) {
+				} else {
 
-						case 3:
-							mSrchParamDTO.setParameterValue(paramMap
-									.get(MMJBCommonConstants.KEYWORDS));
-							break;
-						case 4:
-							mSrchParamDTO.setParameterValue(String
-									.valueOf(rows));
-							break;
-						case 5:
-							mSrchParamDTO.setParameterValue(String
-									.valueOf(start));
-							break;
-						case 6:
-							mSrchParamDTO.setParameterValue(paramMap
-									.get(MMJBCommonConstants.SESSION_ID));
-							break;
-						case 7:
-							mSrchParamDTO.setParameterValue(paramMap
-									.get(MMJBCommonConstants.QUERY_TYPE));
-							break;
-						case 8:
-							mSrchParamDTO.setParameterValue(paramMap
-									.get(MMJBCommonConstants.SEARCH_SEQ));
-							break;
-						default:
-							LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
-							break;
+					if (mSrchParamDTO.getParameterValue().contains(
+							MMJBCommonConstants.B)) {
+						tStrValue = mSrchParamDTO
+								.getParameterValue()
+								.substring(
+										mSrchParamDTO.getParameterValue()
+												.indexOf(MMJBCommonConstants.B)
+												+ MMJBCommonConstants.B
+														.length(),
+										mSrchParamDTO.getParameterValue()
+												.length());
+
+						if (isIntNumber(tStrValue)) {
+							value = Integer.parseInt(tStrValue);
+
+							switch (value) {
+
+							case 3:
+								mSrchParamDTO.setParameterValue(paramMap
+										.get(MMJBCommonConstants.KEYWORDS));
+								break;
+							case 4:
+								mSrchParamDTO.setParameterValue(String
+										.valueOf(rows));
+								break;
+							case 5:
+								mSrchParamDTO.setParameterValue(String
+										.valueOf(start));
+								break;
+							case 6:
+								mSrchParamDTO.setParameterValue(paramMap
+										.get(MMJBCommonConstants.SESSION_ID));
+								break;
+							case 7:
+								mSrchParamDTO.setParameterValue(paramMap
+										.get(MMJBCommonConstants.QUERY_TYPE));
+								break;
+							case 8:
+								mSrchParamDTO.setParameterValue(paramMap
+										.get(MMJBCommonConstants.SEARCH_SEQ));
+								break;
+							default:
+								LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
+								break;
+							}
+
 						}
 
 					}
-
 				}
+
+				/**
+				 * Adding the SearchParamDTO to the ReplacedSearchParamDTO list
+				 * to return it back.
+				 **/
+
+				srchReplacedParamDTOList.add(mSrchParamDTO);
+
 			}
-
-			/**
-			 * Adding the SearchParamDTO to the ReplacedSearchParamDTO list to
-			 * return it back.
-			 **/
-
-			srchReplacedParamDTOList.add(mSrchParamDTO);
-
 		}
 
 		return srchReplacedParamDTOList;
@@ -605,34 +626,39 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	}
 
 	/**
-	 * This method parse the passed string and replace the :b01 and :b02 occurrence
-	 * with Lat long value and radius.
+	 * This method parse the passed string and replace the :b01 and :b02
+	 * occurrence with Lat long value and radius.
+	 * 
 	 * @param strValue
 	 * @param latLonList
 	 * @param paramMap
 	 * @return String which contains the replaced value for FQ parameter
 	 */
-	
+
 	private String formAndRepalceFQParam(String strValue,
 			List<Float> latLonList, Map<String, String> paramMap) {
 
 		/** Checking for how many occurrence are there for :b in the string **/
-		for (int i = 0; i <= StringUtils.countMatches(strValue, MMJBCommonConstants.B); i++) {
+		for (int i = 0; i <= StringUtils.countMatches(strValue,
+				MMJBCommonConstants.B); i++) {
 			/** Checking if :b is present or not **/
 			if (strValue.contains(MMJBCommonConstants.B)) {
 				/** Getting the next string after :b **/
-				String tStrValue = strValue.substring(strValue.indexOf(MMJBCommonConstants.B)
-						+ MMJBCommonConstants.B.length(), strValue.length());
+				String tStrValue = strValue.substring(
+						strValue.indexOf(MMJBCommonConstants.B)
+								+ MMJBCommonConstants.B.length(),
+						strValue.length());
 				String valStr = tStrValue.split(MMJBCommonConstants.SPACE)[0];
 				if (valStr.contains(MMJBCommonConstants.CLSD_BRACES)) {
-					valStr = valStr.replace(MMJBCommonConstants.CLSD_BRACES, "");
+					valStr = valStr
+							.replace(MMJBCommonConstants.CLSD_BRACES, "");
 				}
 				if (isIntNumber(valStr)) {
 					int value = Integer.parseInt(valStr);
 					switch (value) {
 					case 1:
-						strValue = strValue.replace(MMJBCommonConstants.B_01, latLonList.get(0)
-								+ "," + latLonList.get(1));
+						strValue = strValue.replace(MMJBCommonConstants.B_01,
+								latLonList.get(0) + "," + latLonList.get(1));
 						break;
 					case 2:
 						strValue = strValue.replace(MMJBCommonConstants.B_02,
@@ -641,7 +667,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					default:
 						LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
 						break;
-					
+
 					}
 
 				}
