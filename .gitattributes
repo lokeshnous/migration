@@ -57,6 +57,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveOrApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveSearchedJobsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchParamDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/StateDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionListDTO.java -text
