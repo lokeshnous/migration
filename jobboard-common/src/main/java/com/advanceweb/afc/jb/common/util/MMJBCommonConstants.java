@@ -26,6 +26,11 @@ public interface MMJBCommonConstants {
 	public static final String VISIBILITY_PRIVATE = "Private";
 
 	// For SOLR search
+	int ZERO_INT = 0;
+	String TEMP_SESSION_ID = "JS0011";
+	String SPACE_OPN_BRCKT = " (";
+	String CLSG_BRCKT = ")";
+	String EMPTY = "";
 	String SLASH = "/";
 	String PLUS = "+";
 	String SLASH_SELECT_SLASH = "/select/?";
