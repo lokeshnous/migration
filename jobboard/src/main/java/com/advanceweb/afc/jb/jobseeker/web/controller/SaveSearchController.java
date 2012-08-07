@@ -77,9 +77,10 @@ public class SaveSearchController {
 	@RequestMapping(value = "/viewMySavedSearches", method = RequestMethod.GET)
 	public ModelAndView viewMySavedSearches(
 			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
-			BindingResult result) {
+			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		saveSearchForm.setUserID(5);
+		int userId = (Integer) session.getAttribute("userId");
+		saveSearchForm.setUserID(userId);
 		if (saveSearchForm.getUserID() != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 					.viewMySavedSearches(saveSearchForm.getUserID());
