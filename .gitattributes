@@ -72,6 +72,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
 jobboard-common/src/main/resources/HibernateSessionFactory.xml -text
 jobboard-common/src/main/resources/database.properties -text
+jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/mailServer.properties -text
 jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text

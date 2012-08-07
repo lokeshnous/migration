@@ -1,9 +1,14 @@
 package com.advanceweb.afc.jb.user.helper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -218,9 +223,22 @@ public class RegistrationConversionHelper {
 	 * @param stateList
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public JobSeekerRegistrationDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,
 			List<DropDownDTO> countryList, List<DropDownDTO> stateList, List<DropDownDTO> subsList){
-		
+		Properties entries = null;
+		Set set = null;
+		List<String> labels = new ArrayList<String>();
+		try {
+				entries = PropertiesLoaderUtils.loadAllProperties("entries.properties");
+				set = entries.keySet(); 
+				Iterator itr = set.iterator(); 
+				while(itr.hasNext()) { 
+					labels.add(entries.getProperty((String) itr.next())); 
+				}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		JobSeekerRegistrationDTO registerDTO = new JobSeekerRegistrationDTO();
 		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
 		if(null != listProfAttrib){
@@ -229,7 +247,7 @@ public class RegistrationConversionHelper {
 				dto.setStrAttribType(entity.getFormType());
 				dto.setStrLabelName(entity.getName());
 				dto.setStrProfileAttribId(String.valueOf(entity.getProfileAttribId()));
-				dto.setbRequired(entity.getRequired());
+				dto.setbRequired((labels.contains(dto.getStrLabelName())? 1 : 0));
 				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN) || dto.getStrAttribType().equals(MMJBCommonConstants.CHECK_BOX)){
 					//populating countries
 					if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_COUNTRY)){
@@ -251,6 +269,10 @@ public class RegistrationConversionHelper {
 		registerDTO.setAttribList(listDTO);
 		return registerDTO;		
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Converting list of MerProfileAttribList to list of DropDownDTO's

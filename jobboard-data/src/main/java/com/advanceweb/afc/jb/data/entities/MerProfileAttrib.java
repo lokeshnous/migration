@@ -30,9 +30,6 @@ public class MerProfileAttrib implements Serializable {
 
 	private String name;
 	
-	@Column(name="required")
-	private int required;
-	
 
 	//bi-directional many-to-one association to MerProfileAttribList
 	@OneToMany(mappedBy="merProfileAttrib")
@@ -99,14 +96,6 @@ public class MerProfileAttrib implements Serializable {
 
 	public void setMerUserProfiles(List<MerUserProfile> merUserProfiles) {
 		this.merUserProfiles = merUserProfiles;
-	}
-
-	public int getRequired() {
-		return required;
-	}
-
-	public void setRequired(int required) {
-		this.required = required;
 	}
 	
 }
