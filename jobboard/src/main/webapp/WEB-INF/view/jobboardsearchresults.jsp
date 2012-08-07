@@ -15,105 +15,7 @@
  	    <link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css">
     	<script type="text/javascript" language="javascript" src="/media/js/jquery.js"></script>
     	<script src="../resources/js/jquery.dataTables.nightly.js"></script>
-<!--
-		<script type="text/javascript">
-		
-		
-		    $(document).ready(function(){
-		    	
-		    	$(".megamenu").megamenu();
-		    	
-		    	var x = $("#results").val();
-		    	$("#rows").val(x);
-		    	$("#start").val("0");
-		    	
-		    	//$('#jobSearchResultTable').dataTable();
-		    	
-			});
-		    
-		    
-		    
-		   /*  jQuery(document).ready(function (){ 
-		    	
-		    	$("#submitval").live('click',function(){
-		    		alert('a');
-		    		
-		    	$.ajax({
-		    		  url: "http://localhost:8083/jobboard/jobsearchactivity/findJobSearch.html",
-		    		  dataType: 'json',
-		    		  success: function(data) {
-		    			  $.each(data.jsonRows, function(key,val) {
-		    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'+val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'+val.City+', '+val.City+'</li><li class="searchResultsColumn4">'+val.PostedDate.date+'</li></ul>');
-		    			  });
-		    		  }
-		    		});
-		    	});
-				
-		    });  */	
-		    
-		    
-		    jQuery(document).ready(function (){ 
-		    	
-			    $("#submitval").click(function(event) {
-			    	
-			    	var x = $("#results").val();
-			    	$("#rows").val(x);
-			    	$("#start").val("0");
-			    	
-			    	
-					var keywords = $("#keywords").val();
-					var cityState = $("#cityState").val();
-					var radius = $("#radius").val();
-					var rows = $("#rows").val();
-					var start = $("#start").val();
-					//alert( getBaseURL());
-						/* $.ajax({url: getBaseURL()+"/jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
-								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start,
-								
-								success: function() {
-									  
-							  },
-							error: function() {
-							},
-							complete: function() {
-							}
-						}); */
-				
-						
-						//alert("hi");
-						
-						
-						
-					    $.get(getBaseURL()+"/jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
-								+cityState+"&radius="+radius+"&rows="+rows+"&start="+start, function(data){
-					    	//alert(data);
-					    	$(".searchResultsItem").empty();
-					    	//alert($(".searchResultsItem").empty());
-					    	$("#TotalNoRecords").text(data.TotalNoRecords);
-					    	 $.each(data.jsonRows, function(key,val) {
-			    				  $(".searchResultsItem").append('<ul id="orange-bg" class="searchResultsJobInfo closed orange-bg"><li class="searchResultsColumn1">'
-			    						  +val.JobTitle+'</li><li class="searchResultsColumn2">'+val.Company+'</li><li class="searchResultsColumn3">'
-			    						  +val.City+'</li><li class="searchResultsColumn4">'+
-			    						 val.PostedDate+'</li></ul>');
-			    				  
-			    				  
-			    			  });
-					    	
-					    });
-				});
-			    
-			    
-			    
-			    
-		    });
-		    
-		    
-		    
-		    
-		    
-		    
-		</script>
--->
+
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
@@ -216,33 +118,7 @@
 				//alert('--' + aData['Company']+aData['JobId']);
 				var jobId = aData['JobId'];
 				var jobDesc = aData['AdText'];
-				/* var sOut = '<div class="searchResultsSubContent">';	
-				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p>';
-				sOut += '<div class="searchResultsSubContentButtonArea">';
-				sOut += '<div class="searchResultsSubContentButtons">';
-				sOut += '<a href="applyJob.html?id='+jobId;
-				sOut += '" class="btn_sm white">Apply</a>';
-				sOut += '</div>';
-				sOut += '<div class="searchResultsSubContentButtons">';
-				sOut += '<a href="viewJobDetails.html?id='+jobId;
-				sOut += '" class="btn_sm white">View Details</a>';
-				sOut += '</div>';
-				sOut += '<div class="searchResultsSubContentButtons">';
-				sOut += '<a href="saveThisJob.html?id='+jobId;
-				sOut += '" target="_blank" class="saveThisPopup btn_sm white">Save This Job</a>';
-				sOut += '</div>';
-				sOut += '</div>';
-				sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
-				sOut += '                ';
-				sOut += '<div class="searchResultsSubContentShare">';
-				sOut += '<span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>';
-				sOut += '</div>';
-				sOut += '                <div class="searchResultsSubContentShare">';
-				sOut += '<span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>';
-				sOut += '</div>';
-				<a onclick="saveThisJob()" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
-				href="saveThisJob.html?id='+jobId
-				sOut += '</div>'; */
+				
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p><br/>';
 				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;">';
@@ -313,7 +189,7 @@
 										return false;
 									}
 									var x = $("#results").val();
-									$("#rows").val(1000);
+									$("#rows").val(12000);
 									$("#start").val("0");
 									var keywords = $("#keywords").val();
 									var cityState = $("#cityState").val();
