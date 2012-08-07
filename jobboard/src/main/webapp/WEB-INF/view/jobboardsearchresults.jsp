@@ -146,15 +146,20 @@
 			var cityState = $.trim($("#cityState").val());
 			var radius = $.trim($("#radius").val());
 			var keywords = $.trim($("#keywords").val());
-			if(radius.length == 0 && cityState.length == 0 && keywords.length == 0){
+			var status = true;
+			if(keywords.length == 0){
+				status = false;
 				$('#findSearchInfo').html('Please enter the \"Job Title, Keyword, Job Id, Company Name\" to perform a search.');
 			}else if(radius.length != 0 && cityState.length == 0){
+				status = false;
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code.');
 			}else if(cityState.length != 0 && radius.length == 0){
+				status = false;
 				$('#findSearchInfo').html('Please select the Radius to search the job in miles.');
 			}else{
 				$('#findSearchInfo').html('');
-			}			
+			}
+			return status;
 		}
 		function saveThisJob(jobId) {
 			$.ajax({
@@ -304,7 +309,9 @@
 								$(".megamenu").megamenu();
 								
 								$("#submitval").click(function(event) {
-									validateSearch();
+									if(!validateSearch()){
+										return false;
+									}
 									var x = $("#results").val();
 									$("#rows").val(1000);
 									$("#start").val("0");
@@ -334,6 +341,7 @@
 										        }
 											$("#TotalNoRecords").text(data.TotalNoRecords);
 											});
+									return true;
 									
 								});
 								generateTable();
