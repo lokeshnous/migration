@@ -54,7 +54,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 	@Autowired
 	private SearchDAO searchDAO;
-	
+
 	@Autowired
 	private LocationDAO locationDAO;
 
@@ -93,12 +93,10 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		QueryResponse response = null;
 		QueryDTO queryDTO = null;
 
-		if ("".equalsIgnoreCase(paramMap.get(MMJBCommonConstants.SESSION_ID))
-				|| paramMap.get(MMJBCommonConstants.SESSION_ID) == null) {
+		if (StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.SESSION_ID))) {
 			LOGGER.info("Session ID is not present in the Search query.");
 		}
-		if ("".equalsIgnoreCase(paramMap.get(MMJBCommonConstants.SEARCH_SEQ))
-				|| paramMap.get(MMJBCommonConstants.SEARCH_SEQ) == null) {
+		if (StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.SEARCH_SEQ))) {
 			LOGGER.info(" Sequence ID is not present in the Search query.");
 		}
 
@@ -106,14 +104,11 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		 * It is checking whether all the parameters coming from the UI is blank
 		 * or not.
 		 */
-		if (("".equalsIgnoreCase(paramMap.get(MMJBCommonConstants.KEYWORDS)) || paramMap
-				.get(MMJBCommonConstants.KEYWORDS) == null)
-				&& ("".equalsIgnoreCase(paramMap
-						.get(MMJBCommonConstants.CITY_STATE)) || paramMap
-						.get(MMJBCommonConstants.CITY_STATE) == null)
-				&& ("".equalsIgnoreCase(paramMap
-						.get(MMJBCommonConstants.RADIUS)) || paramMap
-						.get(MMJBCommonConstants.RADIUS) == null)) {
+		if ((StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.KEYWORDS)))
+				&& (StringUtils.isEmpty(paramMap
+						.get(MMJBCommonConstants.CITY_STATE)))
+				&& (StringUtils.isEmpty(paramMap
+						.get(MMJBCommonConstants.RADIUS)))) {
 
 			LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
 			return null;
@@ -201,10 +196,10 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			final Map<String, String> serverDetailsMap, QueryDTO queryDTO,
 			Map<String, String> paramMap, long rows, long start)
 			throws JobBoardServiceException, JobBoardDataException {
-		
+
 		SolrQuery searchquery = null;
 		QueryResponse response = null;
-		
+
 		List<SearchParamDTO> srchParamRlpcdDTOList = null;
 
 		/**
@@ -217,9 +212,8 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		if (MMJBCommonConstants.LOCATION.equalsIgnoreCase(paramMap
 				.get(MMJBCommonConstants.QUERY_TYPE))) {
 
-			srchParamRlpcdDTOList = createParamsForLocationSearch(
-					queryDTO, paramMap, rows, start);
-
+			srchParamRlpcdDTOList = createParamsForLocationSearch(queryDTO,
+					paramMap, rows, start);
 
 		} else {
 
@@ -228,18 +222,17 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			 * got from the DB and then creating the Search Parameter list by
 			 * the replacing the parameter values.
 			 **/
-			srchParamRlpcdDTOList = createParamsForKeywordSearch(
-					queryDTO, paramMap, rows, start);
-
+			srchParamRlpcdDTOList = createParamsForKeywordSearch(queryDTO,
+					paramMap, rows, start);
 
 		}
-		
+
 		/**
-		 * Creating the SOLR query by passing the replaced searched
-		 * parameter list.
+		 * Creating the SOLR query by passing the replaced searched parameter
+		 * list.
 		 * **/
 		searchquery = creatSOLRQuery(srchParamRlpcdDTOList);
-		
+
 		LOGGER.info("Search query===>>>" + searchquery);
 
 		try {
@@ -277,13 +270,12 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		List<SearchParamDTO> srchReplacedParamDTOList = new ArrayList<SearchParamDTO>();
 
 		/** Getting the Search parameter List from QueryDTO. **/
-		List<SearchParamDTO> srchParamDTOList = queryDTO
-				.getmSrchParamList();
+		List<SearchParamDTO> srchParamDTOList = queryDTO.getmSrchParamList();
 
 		for (SearchParamDTO mSrchParamDTO : srchParamDTOList) {
 
-			int value = 0;
-			String temp = "";
+			int value = MMJBCommonConstants.ZERO_INT;
+			String temp = MMJBCommonConstants.EMPTY;
 			if (mSrchParamDTO.getParameterValue().contains(
 					MMJBCommonConstants.B)) {
 				temp = mSrchParamDTO.getParameterValue().substring(
@@ -367,22 +359,22 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					.get(MMJBCommonConstants.CITY_STATE));
 
 		} else {
-			
-			String[] cityState = paramMap.get(MMJBCommonConstants.CITY_STATE).trim()
-					.split(MMJBCommonConstants.COMMA);
-			if(cityState.length >= 2){
+
+			String[] cityState = paramMap.get(MMJBCommonConstants.CITY_STATE)
+					.trim().split(MMJBCommonConstants.COMMA);
+			if (cityState.length >= 2) {
 				latLonList = locationDAO.getLocationByCityState(
 						cityState[0].trim(), cityState[1].trim());
-			}else{
+			} else {
 				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
 			}
 
 		}
 
 		if (latLonList == null || latLonList.isEmpty()) {
-			
+
 			LOGGER.info("Latitude and Longitude not found in the DB for the provided City State..");
-			
+
 		} else {
 
 			/** Getting the Search parameter List from QueryDTO. **/
@@ -391,9 +383,9 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 			for (SearchParamDTO mSrchParamDTO : srchParamDTOList) {
 
-				int value = 0;
+				int value = MMJBCommonConstants.ZERO_INT;
 				String strValue = mSrchParamDTO.getParameterValue();
-				String tStrValue = "";
+				String tStrValue = MMJBCommonConstants.EMPTY;
 
 				if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
 						MMJBCommonConstants.FQ)) {
@@ -539,8 +531,10 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			for (Count countObj : facetFieldValList) {
 				String facetVal = countObj.getName().toString();
 				long count = countObj.getCount();
-				facetsList.add(facetVal.concat(" (")
-						.concat(String.valueOf(count)).concat(")"));
+				facetsList.add(facetVal
+						.concat(MMJBCommonConstants.SPACE_OPN_BRCKT)
+						.concat(String.valueOf(count))
+						.concat(MMJBCommonConstants.CLSG_BRCKT));
 			}
 
 			LOGGER.info("facetsList===>" + facetsList);
@@ -614,7 +608,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		return true;
 	}
 
-
 	/**
 	 * This method parse the passed string and replace the :b01 and :b02
 	 * occurrence with Lat long value and radius.
@@ -648,7 +641,8 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					switch (value) {
 					case 1:
 						strValue = strValue.replace(MMJBCommonConstants.B_01,
-								latLonList.get(0).getLatitude() + "," + latLonList.get(0).getLongitude());
+								latLonList.get(0).getLatitude() + ","
+										+ latLonList.get(0).getLongitude());
 						break;
 					case 2:
 						strValue = strValue.replace(MMJBCommonConstants.B_02,
