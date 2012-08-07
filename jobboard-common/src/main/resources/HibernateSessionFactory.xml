@@ -197,7 +197,7 @@
 	
 	<!-- For SOLR search -->
 	<bean id="solrParameter" class="com.advanceweb.afc.jb.common.util.SolrParameter">
-		<property name="searchIndexName" value="jobpost" />
+		<property name="searchIndexName" value="jobPost" />
 		<property name="searchIndexGroup" value="careers" />
 		<property name="environment" value="DEV" />
 	</bean>
