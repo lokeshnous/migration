@@ -42,7 +42,8 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
-<script type="text/javascript">
+
+    <script type="text/javascript">
 	function closePopup() {
 		parent.window.location.reload();
 	}
@@ -51,10 +52,22 @@
 			parent.window.location.reload();
 		}
 	});
-</script>
+   </script>
+      <script type="text/javascript">
+	    function confirmDelete() {
+		if (confirm("You want to delete this?")) {
+			return true;
+		} else {
+			return false;
+		}
+	    }
+     </script>
 </head>
-
+<div id="dialog-confirm" title="Confirm" style="display:none;">
+    <p>Are you sure you want to do this?</p>
+</div>
 <body class="job_board">
+
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader marginBottom5"><h2>MY SAVED JOBS</h2>
                   <a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="closePopup();" alt=""></a></div>
@@ -78,7 +91,7 @@
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="center">${dtoList.getCreateDt()}</td>
                 <td align="center">${dtoList.getJobAge()} days</td>
-                <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>'><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
+                <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
               </tr>
               </c:forEach>
             </table>
