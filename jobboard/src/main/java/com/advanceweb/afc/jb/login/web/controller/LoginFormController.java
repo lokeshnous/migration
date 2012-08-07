@@ -53,6 +53,9 @@ public class LoginFormController {
 
 	@Value("${notempty}")
 	private String emptyerrormsg;
+	
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
 
 	private static final Logger LOGGER = Logger
 			.getLogger("LoginFormController.class");
@@ -137,7 +140,7 @@ public class LoginFormController {
 		} else if (email.length() > 0 && value) {
 			try {
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
+				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 				jobSeekerEmailDTO.setCcAddress(null);
 				jobSeekerEmailDTO.setBccAddress(null);
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
