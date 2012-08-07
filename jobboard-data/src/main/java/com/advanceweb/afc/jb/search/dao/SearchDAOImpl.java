@@ -63,16 +63,14 @@ public class SearchDAOImpl implements SearchDAO{
 			}
 			
 			if(mSrchParamList != null && mSrchParamList.size() > 0){
-				queryDTO.setEnvironment(mSrchParamList.get(0).getMetaSearchIndex().getEnvironment());
-				queryDTO.setSearchIndexName(mSrchParamList.get(0).getMetaSearchIndex().getSearchIndexName());
-				queryDTO.setSearchIndexGroup(mSrchParamList.get(0).getMetaSearchIndex().getSearchIndexGroup());
-				queryDTO.setSearchName(mSrchParamList.get(0).getMetaSearchType().getSearchTypeName());
 				queryDTO.setSearchHost(mSrchParamList.get(0).getMetaSearchIndex().getSearchHost());
 				queryDTO.setmSrchParamList(srchParamDTOList);
 			}
+			queryDTO.setEnvironment(environment);
+			queryDTO.setSearchIndexName(searchIndexName);
+			queryDTO.setSearchIndexGroup(searchIndexGroup);
+			queryDTO.setSearchName(searchTypeName);
 			
-			//LOGGER.info("Search Param List from DAO===>{"+mSrchParamList+"}");
-
 		} catch (HibernateException e) {
 			LOGGER.debug(e);
 			throw new JobBoardDataException("Error while fetching the SOLR parameters from the Database...");
