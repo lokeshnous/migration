@@ -75,6 +75,7 @@ $(document).keyup(function(event) {
 								success: function(data){ 
 								    if(data.success != null){
 								    	//alert(data.success);
+								    	parent.$.nmTop().close();
 								    }
 								    if(data.failure != null){
 								    	//alert(data.failure);

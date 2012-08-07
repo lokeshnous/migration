@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
  * 
@@ -24,7 +24,7 @@ public interface SaveSearchDAO {
 
 	boolean deleteSavedSearch(int saveSearchId);
 
-	SaveSearchResults editSavedSearch(int saveSearchId);
+	AdmSaveSearch editSavedSearch(int saveSearchId);
 
 	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
 }

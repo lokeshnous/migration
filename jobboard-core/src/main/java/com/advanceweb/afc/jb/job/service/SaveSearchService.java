@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.job.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
  * 
@@ -53,7 +53,7 @@ public interface SaveSearchService {
 	 * @param userId
 	 * @return
 	 */
-	SaveSearchResults editSavedSearch(int saveSearchId);
+	AdmSaveSearch editSavedSearch(int saveSearchId);
 
 	/**
 	 * This Method saves modified notify me data to the adm_save_search table

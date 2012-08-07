@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
-import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
  * 
@@ -25,9 +25,9 @@ public class SaveSearchConversionHelper {
 	 * @param searchedJobsDTO
 	 * @return JpSaveSearch
 	 */
-	public SaveSearchResults transformSaveSearch(
+	public AdmSaveSearch transformSaveSearch(
 			SaveSearchedJobsDTO searchedJobsDTO) {
-		SaveSearchResults admSaveSearch = new SaveSearchResults(); 
+		AdmSaveSearch admSaveSearch = new AdmSaveSearch(); 
 		admSaveSearch.setUserId(searchedJobsDTO.getUserID());
 		admSaveSearch.setUrl(searchedJobsDTO.getUrl());
 		admSaveSearch.setSearchName(searchedJobsDTO.getSearchName());
@@ -42,9 +42,9 @@ public class SaveSearchConversionHelper {
 	 * @return
 	 */
 	public List<SaveSearchedJobsDTO> transformJpSaveSearchToSaveSearchedJobsDTO(
-			List<SaveSearchResults> admSaveSearchList) {
+			List<AdmSaveSearch> admSaveSearchList) {
 		List<SaveSearchedJobsDTO> searchedJobsDTOList = new ArrayList<SaveSearchedJobsDTO>();
-		for (SaveSearchResults admSaveSearch : admSaveSearchList) {
+		for (AdmSaveSearch admSaveSearch : admSaveSearchList) {
 			SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 			saveSearchedJobsDTO.setSaveSearchID(admSaveSearch.getSaveSearchId());
 			saveSearchedJobsDTO.setUrl(admSaveSearch.getUrl());

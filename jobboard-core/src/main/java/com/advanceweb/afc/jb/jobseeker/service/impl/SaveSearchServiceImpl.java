@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO;
 
@@ -70,7 +70,7 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 * @return
 	 */
 	@Override
-	public SaveSearchResults editSavedSearch(int saveSearchId) {
+	public AdmSaveSearch editSavedSearch(int saveSearchId) {
 
 		return saveSearchDAO.editSavedSearch(saveSearchId);
 	}
