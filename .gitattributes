@@ -288,7 +288,6 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/LocationDAOImpl.jav
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/SearchDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/SearchDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/security/CustomAuthenticationManager.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/security/LoginSuccessManager.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserDaoImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
