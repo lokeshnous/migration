@@ -227,7 +227,6 @@ public class JobSeekerRegistrationController {
 	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
 	public String updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
-			ModelAndView model = new ModelAndView();
 		try {	
 			
 			if(null != registerForm.getListProfAttribForms()){
@@ -292,34 +291,66 @@ public class JobSeekerRegistrationController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/jobSeekerUpdatePassword",method = RequestMethod.POST)
-	public String updateNewPassword(@Valid ChangePasswordForm form,
-			BindingResult result) {
-			ModelAndView model = new ModelAndView();
+	public String updateNewPassword(ChangePasswordForm form, HttpSession session) {
 		try {		
 			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new  JobSeekerRegistrationDTO();
-			MerUserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
-			jsRegistrationDTO.setMerUserDTO(userDTO);
-			model.addObject("changePasswordForm", form);			
 			
+			String errorMessage =validatePasswords(form.getPassword(), form.getRetypepassword());
+			if(!StringUtils.isEmpty(errorMessage)){
+				return errorMessage;
+			}
+			
+			MerUserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
+			userDTO.setUserId((Integer) session.getAttribute("userId"));
+			jsRegistrationDTO.setMerUserDTO(userDTO);
+
 			// Call to service layer
 			if(profileRegistration.validatePassword(jsRegistrationDTO)){
-				registerValidation.validatePassoword(form.getPassword(), form.getRetypepassword(), result);
-				if(result.hasErrors()){
-					model.setViewName("jobseekerchangepassword");
-					return "jobseekerchangepassword";
-				}
 				profileRegistration.changePassword(jsRegistrationDTO);
 			}else{
-				model.setViewName("jobseekerchangepassword");
-				result.rejectValue("currentPassword", "NotEmpty", "Invalid Current Password");
-				return "jobseekerchangepassword";
+				return "Invalid Current Password";				
 			}
-			model.setViewName("registrationsuccess");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return "";
+	}
+	
+	
+	/**
+	 * This method is called to validate passwords
+	 * 
+	 * @param password
+	 * @param retypePassword
+	 * @return
+	 */
+	private String validatePasswords(String password, String retypePassword){
+		 if(StringUtils.isEmpty(password)){
+			 return "Password Should not be empty";
+		 }
+		 
+		 if(StringUtils.isEmpty(retypePassword)){
+			 return "Password Should not be empty";
+		 }
+		 
+		 if(!StringUtils.isEmpty(password) 
+				 && !StringUtils.isEmpty(retypePassword)){
+			 
+			 if(!registerValidation.validatePasswordPattern(password)){
+				 return "Password should contain 8-20 characters, including at least 1 number"; 
+			 }
+			 
+			 if(!registerValidation.validatePasswordPattern(retypePassword)){
+				 return "Password should contain  8-20 characters, including at least 1 number"; 
+			 }
+			 
+			 if(!password.equals(retypePassword)){
+				return "Passwords are not incorrect";
+			 }
+		 }
+		 
+		 return null;
 	}
 	
 	/**

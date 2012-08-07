@@ -77,7 +77,7 @@ public class JobSeekerRegistrationValidation {
 	 * @param emailId
 	 * @return
 	 */
-	private boolean validatePasswordPattern(String password){
+	public boolean validatePasswordPattern(String password){
 		pattern = Pattern.compile(MMJBCommonConstants.PASSWORD_PATTERN);
 		matcher = pattern.matcher(password);
 		return matcher.matches();

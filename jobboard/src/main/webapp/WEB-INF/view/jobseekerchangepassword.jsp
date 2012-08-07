@@ -20,7 +20,11 @@
 						data:$('#passwordChange').serialize(),
 						type:"POST",
 						success: function(data) {
-							parent.$.nmTop().close();
+							if(data == ''){
+								parent.$.nmTop().close();
+							}else{
+								$("#errmsg").html(data);
+							}
 						 },
 					});
 				}); 
@@ -37,6 +41,7 @@
                  
        <div class="popUpContainerWrapper">
        <form:form method="Get" action="/jobboard/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 
+       		<div id="errmsg" style="color: red" align="left"> </div>
             <div class="rowEvenNewSpacing">
               	<span class="lableText3">Email Address:</span> 
 	            <form:input path="emailId" class="job_seeker_email textBox2" readonly="true"/>
