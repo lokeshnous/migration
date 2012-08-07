@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import javax.validation.Valid;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -298,13 +298,13 @@ public class JobSearchActivityController {
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
 		
-		String searchName = "";// will be replaced by BASIC_SEARCH
+		String searchName = MMJBCommonConstants.EMPTY;// will be replaced by BASIC_SEARCH
 		
 		/**Check if city state and radius field is not empty to check for LOCATION search**/
-		if("".equalsIgnoreCase(jobSearchResultForm.getCityState().trim())  
-				&& "".equalsIgnoreCase(jobSearchResultForm.getRadius().trim())){
+		if(StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())  
+				&& StringUtils.isEmpty(jobSearchResultForm.getRadius().trim())){
 			
-			if(!"".equalsIgnoreCase(jobSearchResultForm.getKeywords().trim())){
+			if(!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())){
 				searchName = MMJBCommonConstants.KEYWORD;
 			}
 		}else{
@@ -315,16 +315,11 @@ public class JobSearchActivityController {
 		// is done.
 		// This value needs to be increased every time when there is a search
 		// happening for a session
-		int search_seq = 0;
-		String sessionId = "JS0011";
+		int search_seq = MMJBCommonConstants.ZERO_INT;
+		String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
-
-
-//		jobSearchResultForm.setKeywords("test");
-//		jobSearchResultForm.setRadius("");
-//		jobSearchResultForm.setCityState("");
 
 		/**
 		 * Putting all the parameters coming from the UI into a Map for further
