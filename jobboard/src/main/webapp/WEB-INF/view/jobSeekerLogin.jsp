@@ -68,14 +68,16 @@
 							</div>
 						</div>
 						<!-- loginHeader -->
-						<!-- <div class="headerLoginSectionColumns">
-					<span class="boldText">Employer:</span><br>
-                    	<a href="">Login</a> | <a href="">Post Jobs</a>
-					</div>loginHeader
-					<div class="headerLoginSectionColumns">
-					<span class="boldText">Ad Agency:</span><br>
-						 <a href="">Login</a> | <a href="">Post Jobs</a>
-					</div>loginHeader -->
+						<div class="headerLoginSectionColumns">
+							<span class="boldText">Employer:</span><br> <a href="">Login</a>
+							| <a href="">Post Jobs</a>
+						</div>
+						<!--loginHeader-->
+						<div class="headerLoginSectionColumns">
+							<span class="boldText">Ad Agency:</span><br> <a href="">Login</a>
+							| <a href="">Post Jobs</a>
+						</div>
+						<!-- loginHeader  -->
 					</div>
 					<!-- loginHeader -->
 					<!-- loginHeader -->
