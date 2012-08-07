@@ -17,12 +17,7 @@
 				data:$('#editProfileSettingsId').serialize(),
 				type:"POST",
 				success: function(data) {
-
-					if(data == ''){
-						parent.$.nmTop().close();
-					}else{
-						$("#errmsg").html(data);
-					}					
+					parent.$.nmTop().close();
 				 },
 			});
 		}); 
@@ -42,87 +37,197 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-				<div id="errmsg" style="color: red" align="middle">
-				</div>
 			<form:form action="/jobboard/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
-				commandName="registerForm" enctype="multipart/form-data" id="editProfileSettingsId">
-				<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">			
-					<c:if test="${profAttrib.strLabelName != 'Subscriptions'}">				
- 								<c:if test="${profAttrib.strSectionName == 'Contact Information1'}">
-		 							<div class="row marginTop20 paddingBottom10">
-										<h3 class="marginLeft10">Employment information</h3>
-									</div>
- 								</c:if> 
- 								<c:if test="${profAttrib.strSectionName == 'Employment information1'}">
- 									<div class="row marginTop20 paddingBottom10">
- 										<h3 class="marginLeft10">Employment information</h3>
- 									</div>
- 								</c:if> 
- 								<c:if test="${profAttrib.strSectionName == 'Equal Opportunity1'}">
- 									<div class="row marginTop20 paddingBottom10">
- 										<h3 class="marginLeft10">Equal Opportunity / Affirmative Action</h3>
- 									</div>
- 								</c:if> 
- 								<c:if test="${profAttrib.strSectionName == 'Subscriptions1'}">
- 									<div class="row marginTop20 paddingBottom10">
- 										<h3 class="marginLeft10">Subscriptions</h3>
- 									</div>
- 								</c:if>  								
-									<c:if test="${profAttrib.strAttribType == 'TextBox'}">
-										<div class="rowEvenSpacing">
-											<c:if test="${profAttrib.strLabelName != 'Street Address1'}" >
-												<span class="lableText3"><c:out value="${profAttrib.strLabelName}" />:</span>
-											</c:if>
-											<c:if test="${profAttrib.strLabelName == 'Street Address1'}" >
-												<span class="lableText3"></span>
-											</c:if>
-											 <form:input  path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350"/>
-											 <c:if test="${not empty profAttrib.strToolTip}">
-												 <div class="toolTip marginTop6 marginLeft5">
-														<span class="classic"><c:out value="${profAttrib.strToolTip}" /></span>
-												</div>
-											</c:if>
-											<span class="required">(Required)</span>
-										</div>
-									</c:if>
-									
-									<c:if test="${profAttrib.strAttribType == 'Dropdown'}">
-										<div class="row">
-											<span class="lableText3"><c:out value="${profAttrib.strLabelName}" />:</span>
-											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-												<form:option value="0" label="Select" />
-												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-													itemLabel="optionName" />
-											</form:select>
-											<span class="required">(Required)</span>
-										</div>
-									</c:if>
-									<c:if test="${profAttrib.strAttribType == 'CheckBox'}">
-										<div class="row paddingBottom10 marginLeft10">I would like
-											the following sent to me so I can stay up to date with the
-											latest healthcare news and information:</div>
+				commandName="registerForm"  id="editProfileSettingsId">
+					<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">
+						<c:if test="${profAttrib.strLabelName == 'First Name'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">First Name:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Middle Name'}">		
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Middle Name:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue"
+									class="job_seeker_password textBox350" />
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Last Name'}">	
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Last Name:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Street Address'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Street Address:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue"
+									class="job_seeker_password textBox350" />
+								<span class="required">(Required)</span>
 			
-										<div class="centerAlign ">
-											<ul>		
-												<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
-													<li>
-														<div>
-															<form:checkbox path="listProfAttribForms[${status.index}].strLabelValue"
-																label="${dropdown.optionName}"
-																value="${dropdown.optionId}"
-																cssStyle="width:20px" />
-														</div>
-													</li>
-												</c:forEach>
-											</ul>
-										</div>	
-									</c:if>	
-					</c:if> 
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Street Address1'}">
+							<div class="rowEvenSpacing">
+								<span class="lableText3"></span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue"
+									class="job_seeker_password textBox350" />
+								<span class="required"></span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'City'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">City:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'State / Province'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">State:</span>
+								<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+									<form:option value="0" label="Select" />
+									<form:options items="${stateList}" itemValue="stateId"
+										itemLabel="stateValue" />
+								</form:select>
+			
+								<span class="required marginTop8">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Zip Code'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">ZIP Code:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue"
+									class="job_seeker_password textBox350" />
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Country'}">
+							<div class="row">
+								<span class="lableTextSelect marginTop13 ">Country:</span>
+								<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+									<form:option value="0" label="Select" />
+									<form:options items="${countryList}" itemValue="countryId"
+										itemLabel="countryValue" />
+								</form:select>
+								<span class="required marginTop8">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'E-Mail Address'}">							
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">E-Mail Address:</span>
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Phone Number'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Phone Number:</span> 
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'My Industry'}">
+							<div class="row marginTop31">
+								<h3>Employment Information</h3>
+							</div>		
+							<div class="rowEvenNewSpacing marginTop13">
+								<span class="lableText3">My Industry:</span> 
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<div class="toolTip marginTop6 marginLeft5">
+									<span class="classic">Enter the industry you serve.
+										Example: Healthcare</span>
+								</div>
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'My Profession'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">My Profession:</span> 
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<div class="toolTip marginTop6 marginLeft5">
+									<span class="classic">Enter the general field in which you
+										work. Example: Respiratory Therapy</span>
+								</div>
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'My Specialty'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">My Specialty:</span> 
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<div class="toolTip marginTop6 marginLeft5">
+									<span class="classic">Enter the area in which you
+										specialize. Example: Neonatal/Pediatrics</span>
+								</div>
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'My Job Title'}">
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">My Job Title:</span> 
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<div class="toolTip marginTop6 marginLeft5">
+									<span class="classic">Enter your official job title.
+										Example: Registered Respiratory Therapist</span>
+								</div>
+								<span class="required">(Required)</span>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Im seeking'}">
+							<div class="row">
+								<span class="lableTextSelect marginTop13 ">I am seeking:</span>
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+									</form:select>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Ethnicity'}">
+							<div class="row marginTop30">
+								<h3>Equal Opportunity / Affirmative Action</h3>
+							</div>
+			
+							<div class="row">
+								<span class="lableTextSelect marginTop13 ">Ethnicity:</span> 
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+									</form:select>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Gender'}">
+							<div class="row">
+								<span class="lableTextSelect marginTop13 ">Gender:</span> 
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+									</form:select>
+							</div>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Veteran Status'}">
+							<div class="row">
+								<span class="lableTextSelect marginTop13 ">Veteran Status:</span> 
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+									</form:select>
+							</div>
+						</c:if>
 				</c:forEach>
 				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 					<span class="floatLeft marginTop10">
-					<input type="button" value="Save" class="btn_sm orange" id="save"/>
-					<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
+					
+<!-- 					<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
+						class="btn_sm orange">Save</a>  -->
+						<input type="button" value="Save" class="btn_sm orange" id="save"/>
+						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
