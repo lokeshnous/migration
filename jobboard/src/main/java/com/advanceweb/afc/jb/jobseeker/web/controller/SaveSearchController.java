@@ -55,13 +55,13 @@ public class SaveSearchController {
 			BindingResult result) {
 
 		// Transform SaveSearchForm to saveSearchedJobsDTO
-		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
+		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-		saveSearchedJobsDTO.setUserID(saveSearchForm.getUserID());
-		saveSearchedJobsDTO.setUrl(saveSearchForm.getUrl());
-		saveSearchedJobsDTO.setSearchName(saveSearchForm.getSearchName());
-		saveSearchedJobsDTO.setCreatedDate(saveSearchForm.getCreatedDate());
-		saveSearchService.saveSearchedJobs(saveSearchedJobsDTO);
+		searchedJobsDTO.setUserID(saveSearchForm.getUserID());
+		searchedJobsDTO.setUrl(saveSearchForm.getUrl());
+		searchedJobsDTO.setSearchName(saveSearchForm.getSearchName());
+		searchedJobsDTO.setCreatedDate(saveSearchForm.getCreatedDate());
+		saveSearchService.saveSearchedJobs(searchedJobsDTO);
 		// new ModelAndView("redirect:/saveSearchedJobs.html");
 		return new ModelAndView();
 

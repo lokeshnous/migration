@@ -46,7 +46,7 @@ public class LoginFormController {
 
 	@SuppressWarnings("unused")
 	@Value("$(loginvalidation.message)")
-	private String loginValidationMsg;
+	private String loginValidation;
 
 	@Value("${invalidemail}")
 	private String invalidmail;
@@ -124,13 +124,13 @@ public class LoginFormController {
 		String finalresult = "";
 		boolean value = false;
 
-		LoginFormDTO userDetailsLoginFormDTO = loginFormService
+		LoginFormDTO formDTO= loginFormService
 				.getUserEmailDetails(emailAddress);
 
 		// User Validation based on email address of user
-		if (userDetailsLoginFormDTO != null) {
+		if (formDTO != null) {
 			value = loginValidator.validateEmailValues(email,
-					userDetailsLoginFormDTO);
+					formDTO);
 		}
 
 		// Sending mail to the logged in user if he is valid user
@@ -143,15 +143,15 @@ public class LoginFormController {
 				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 				jobSeekerEmailDTO.setCcAddress(null);
 				jobSeekerEmailDTO.setBccAddress(null);
-				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-				jobSeekerToAddress[0] = new InternetAddress(
+				InternetAddress[] jobSeekerToAdd = new InternetAddress[1];
+				jobSeekerToAdd[0] = new InternetAddress(
 				// form.getEmailAddress());
 						email);
-				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
+				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
 				jobSeekerEmailDTO.setSubject(mailSubject);
 				jobSeekerEmailDTO.setBody(mailBody);
 				jobSeekerEmailDTO
-						.setBody(userDetailsLoginFormDTO.getPassword());
+						.setBody(formDTO.getPassword());
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
