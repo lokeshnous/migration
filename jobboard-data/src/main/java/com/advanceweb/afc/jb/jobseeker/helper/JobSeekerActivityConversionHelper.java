@@ -39,34 +39,20 @@ public class JobSeekerActivityConversionHelper {
 			for (AdmSaveJob job : entity) {
 				AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
 				appliedJobDTO.setSaveJobId(job.getSaveJobId());
-				// java.util.Date appliedDate = job.getAppliedDt();
-				// if(appliedDate != null){
-				// appliedJobDTO.setAppliedDt(DateUtils
-				// .convertSQLDateTimeToStdDateTime(appliedDate
-				// .toString()));
-				// }
-				// java.util.Date createdDate = job.getCreateDt();
-				// if(createdDate != null){
-				// appliedJobDTO.setCreateDt(DateUtils
-				// .convertSQLDateTimeToStdDateTime(createdDate
-				// .toString()));
-				// }
-				// appliedJobDTO.setDeleteDt(job.getDeleteDt());
-//				java.util.Date appliedDate = job.getAppliedDt();
-//				if (appliedDate != null) {
-//					appliedJobDTO.setAppliedDt(DateUtils
-//							.convertSQLDateToStdDate(appliedDate.toString()));
-//				}
-				java.util.Date appliedDate = job.getAppliedDt();
-				if (appliedDate != null) {
-					appliedJobDTO.setAppliedDt(DateUtils
-							.convertSQLDateToStdDate(appliedDate.toString()));
-				}
-				java.util.Date createdDate = job.getCreateDt();
-				if (createdDate != null) {
-					appliedJobDTO.setCreateDt(DateUtils
-							.convertSQLDateToStdDate(createdDate.toString()));
-				}
+
+				 Date appliedDate = job.getAppliedDt();
+				 if(appliedDate != null){
+				 appliedJobDTO.setAppliedDt(DateUtils
+				 .convertSQLDateTimeToStdDateTime(appliedDate
+				 .toString()));
+				 }
+				 Date createdDate = job.getCreateDt();
+				 if(createdDate != null){
+				 appliedJobDTO.setCreateDt(DateUtils
+				 .convertSQLDateTimeToStdDateTime(createdDate
+				 .toString()));
+				 }
+				
 				appliedJobDTO.setFacilityName(job.getFacilityName());
 				appliedJobDTO.setJobTitle(job.getJobtitle());
 				appliedJobDTO.setJpJob(jobPostConversionHelper
@@ -91,10 +77,7 @@ public class JobSeekerActivityConversionHelper {
 				appliedJobDTO.setFacilityName(job.getFacilityName());
 				appliedJobDTO.setJobTitle(job.getJobtitle());
 				appliedJobDTO.setJobAge(getWorkingDaysBetweenTwoDates(date,
-						job.getCreateDt()) /*
-											 * (date.getTime()-job.getCreateDt().
-											 * getTime())/(1000*60*60*24)
-											 */);
+						job.getCreateDt()));
 				appliedJobDTO.setJpJob(jobPostConversionHelper
 						.transformToJpJobDTO(job.getJpJob()));
 				appliedJobDTOList.add(appliedJobDTO);
@@ -114,7 +97,6 @@ public class JobSeekerActivityConversionHelper {
 		endCal.setTime(endDate);
 		int workDays = 0;
 
-		// Return 0 if start and end are the same
 		if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
 			return 0;
 		}
@@ -126,10 +108,7 @@ public class JobSeekerActivityConversionHelper {
 
 		do {
 			startCal.add(Calendar.DAY_OF_MONTH, 1);
-			// if (startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY &&
-			// startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
 			++workDays;
-			// }
 		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
 
 		return workDays - 1;
