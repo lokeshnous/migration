@@ -183,7 +183,7 @@
 					<div class="featuredEmployerLeft">
 						<div class="featuredEmployerVideo">
 							&nbsp;
-							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="http://multimedia.advanceweb.com/default.aspx?PlaylistID=1298&amp;H=180&amp;W=255" frameborder="0" height="180" scrolling="no" width="255"></iframe><br>
+							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="" frameborder="0" height="180" scrolling="no" width="255"></iframe><br>
 
 						</div>
 						<div class="featuredEmployerLinks">
