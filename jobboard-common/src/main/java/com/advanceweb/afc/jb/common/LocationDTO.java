@@ -1,5 +1,12 @@
 package com.advanceweb.afc.jb.common;
 
+
+/**
+ * @Author : Reetesh RN
+ * @Version: 1.0
+ * @Created: 02 Aug, 2012
+ * @Purpose: This class is the DTO for the attributes of the jp_location table.
+ */
 public class LocationDTO {
 	
 	
@@ -13,7 +20,6 @@ public class LocationDTO {
 	
 	private float longitude;
 	
-	private String country;
 
 	public String getCity() {
 		return city;
@@ -55,13 +61,5 @@ public class LocationDTO {
 		this.longitude = longitude;
 	}
 
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	
 
 }
