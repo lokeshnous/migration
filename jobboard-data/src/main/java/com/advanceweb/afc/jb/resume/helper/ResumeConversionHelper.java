@@ -13,17 +13,22 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 
 /**
@@ -268,7 +273,7 @@ public class ResumeConversionHelper {
 			ResumeDTO resumeDTO = new ResumeDTO();
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResumeName(resume.getResumeName());
-			// resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
+			resumeDTO.setResumeVisibility(String.valueOf(resume.getIsPublished()));
 			if (resume.getUpdateDt() != null) {
 				resumeDTO.setUpdateDt(DateUtils
 						.convertSQLDateTimeToStdDateTime(resume.getUpdateDt()
@@ -573,6 +578,56 @@ public class ResumeConversionHelper {
 			}
 		}
 		return listWorkExpEntity;
+	}
+	
+	
+	/**
+	 * 
+	 * @param listProfAttrib
+	 * @param countryList
+	 * @param stateList
+	 * @return
+	 */
+	public ResumeDTO transformProfileAttrib(List<ResResumeAttrib> listProfAttrib){
+		
+		ResumeDTO resumeDTO = new ResumeDTO();
+		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
+		if(null != listProfAttrib){
+			for(ResResumeAttrib entity : listProfAttrib){
+				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				dto.setStrAttribType(entity.getFormType());
+				dto.setStrLabelName(entity.getName());
+				dto.setStrProfileAttribId(String.valueOf(entity.getResumeAttribId()));
+				
+				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN)){
+					List<ResResumeAttribList> dropdownVals = entity.getResResumeAttribLists();
+					dto.setDropdown(transformToDropDownDTO(dropdownVals));
+				}
+				if(dto.getStrAttribType().equals(MMJBCommonConstants.RADIO_BUTTON)){
+					List<ResResumeAttribList> dropdownVals = entity.getResResumeAttribLists();
+					dto.setDropdown(transformToDropDownDTO(dropdownVals));
+				}
+				listDTO.add(dto);
+			}
+		}
+		resumeDTO.setResumeAttribList(listDTO);
+		return resumeDTO;		
+	}
+	/**
+	 * Converting list of MerProfileAttribList to list of DropDownDTO's
+	 */
+	public List<DropDownDTO> transformToDropDownDTO(List<ResResumeAttribList> dropdownVals){
+		
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		if(null != dropdownVals){
+			for(ResResumeAttribList attrib : dropdownVals){
+				DropDownDTO dto = new DropDownDTO();
+				dto.setOptionId(String.valueOf(attrib.getResumeAttribListId()));
+				dto.setOptionName(attrib.getListValue());
+				dropdownList.add(dto);
+			}
+		}
+		return dropdownList;
 	}
 
 }

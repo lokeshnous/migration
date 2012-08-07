@@ -85,9 +85,9 @@
 						<tbody>
 							<c:forEach items="${resumeList}" var="resume" varStatus="status">
 								<tr id="${resume.uploadResumeId}">
-									<td>${resume.resume_name}</td>
+									<td>${resume.resumeName}</td>
 									<td align="center"><label>
-											${resume.resume_visibility}
+											${resume.resumeVisibility}
 									</label></td>
 									<td align="center">${resume.updateDt}</td>
 									<td align="center"><a href="#"><img

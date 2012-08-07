@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.lookup.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -25,6 +26,7 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
@@ -32,6 +34,9 @@ import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
+import com.advanceweb.afc.jb.data.entities.ResPrivacy;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
 import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
 @Repository("populateDropdownsDAO")
@@ -336,21 +341,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	/**
 	 * @Author :Anil Malali
-	 * @Purpose:To get the list of ResumeVisibilityDTO for resume
-	 * @Created:Jul 24, 2012
-	 * @Param :not required
-	 * @Return :List of ResumeVisibilityDTO
-	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getResumeVisibilityList()
-	 */
-	@Override
-	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
-		List<JpAttribList> merLookupList = hibernateTemplate
-				.find("from JpAttribList e where e.lookupCategory='Visibility' and e.lookupStatus='1'");
-		return dropdownHelper.convertMerLookupToVisibilityDTO(merLookupList);
-	}
-
-	/**
-	 * @Author :Anil Malali
 	 * @Purpose:To get the dropdown
 	 * @Created:Jul 24, 2012
 	 * @Param :not required
@@ -362,6 +352,41 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				"from JpAttribList e where e.attribType=?", dropDownName);
 		return dropdownHelper.convertMerLookupToLookUpDTO(merLookupList);
 	}
+
+	@Override
+	public List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName) {
+		List<ResumeAttribListDTO> resumeAttribListDTOList = new ArrayList<ResumeAttribListDTO>();
+		try {
+			List<ResResumeAttrib> resResumeAttrib = hibernateTemplate
+					.find("from ResResumeAttrib where name='" + dropdownName
+							+ "'");
+			if (resResumeAttrib.size() > 0) {
+				List<ResResumeAttribList> resResumeAttribList = resResumeAttrib
+						.get(0).getResResumeAttribLists();
+				resumeAttribListDTOList = dropdownHelper
+						.transformResumeAttribListToDTO(resResumeAttribList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resumeAttribListDTOList;
+	}
+
+	/**
+	 * @Author :Anil Malali
+	 * @Purpose:To get the list of ResumeVisibilityDTO for resume
+	 * @Created:Jul 24, 2012
+	 * @Param :not required
+	 * @Return :List of ResumeVisibilityDTO
+	 * @see com.advanceweb.afc.jb.dropdowns.PopulateDropdowns#getResumeVisibilityList()
+	 */
+	@Override
+	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
+		List<ResPrivacy> resPrivacyList = hibernateTemplate
+				.find("from ResPrivacy");
+		return dropdownHelper.transformResPrivacyToVisibilityDTO(resPrivacyList);
+	}
+
 	
 	
 	

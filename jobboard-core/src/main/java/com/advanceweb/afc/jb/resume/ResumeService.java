@@ -32,6 +32,7 @@ public interface ResumeService {
 	boolean addEducation(List<EducationDTO> listEduExp);
 	boolean addLanguage(List<LanguageDTO> listLangExp);
 	boolean addCertifications(List<CertificationDTO> listLangExp);
+	public ResumeDTO getProfileAttributes();
 	/**
 	 * Get the public visibility resume of Job seeker
 	 * 

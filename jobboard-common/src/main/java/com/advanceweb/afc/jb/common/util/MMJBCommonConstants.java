@@ -131,6 +131,7 @@ public interface MMJBCommonConstants {
 	public static final String CLICKTYPE_CLICK = "click";
 	public static final String DROP_DOWN = "Dropdown";
 	public static final String CHECK_BOX = "CheckBox";
+	public static final String RADIO_BUTTON = "Radio";
 	public static final String LABEL_COUNTRY = "Country";
 	public static final String LABEL_STATE = "State / Province";
 	public static final String LABEL_SUSBSCRIPTION = "Subscriptions";

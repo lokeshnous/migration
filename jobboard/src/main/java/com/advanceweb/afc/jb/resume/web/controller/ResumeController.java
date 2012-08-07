@@ -42,12 +42,17 @@ import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
+import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -92,12 +97,14 @@ public class ResumeController {
 	public String getResumes(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
 		
-		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(30);
-		List<DropDownDTO> visibilityList=populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
+		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
+		
+		List<ResumeVisibilityDTO> visiblityList= populateDropdownsService.getResumeVisibilityList();
 		Map<String,String> visibilityMap = new HashMap<String , String>();
 		
-		visibilityMap.put(visibilityList.get(0).getOptionId(), visibilityList.get(0).getOptionName());
-		visibilityMap.put(visibilityList.get(1).getOptionId(), visibilityList.get(1).getOptionName());
+		for(int i = 0 ; i< visiblityList.size() ; i++){
+			visibilityMap.put(visiblityList.get(i).getVisibilityId(), visiblityList.get(i).getVisibilityName());
+		}
 		
 		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();  
 		
@@ -105,7 +112,7 @@ public class ResumeController {
 			resumeDTO.setResumeVisibility(visibilityMap.get(resumeDTO.getResumeVisibility()));
 			resumeDTOListNew.add(resumeDTO);
 		}
-		map.put("resumeList", resumeDTOListNew);
+		map.put("resumeList", resumeDTOList);
 		return "manageResumePopup";
 	}
 
@@ -417,6 +424,10 @@ public class ResumeController {
 		
 		CreateResume createResume = new CreateResume();
 		
+		ResumeDTO resumeDTO = resumeService.getProfileAttributes();
+
+		createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
+		
 		ModelAndView model = new ModelAndView();
 		model.addObject("createResume", createResume);
 		model.addObject("employmentType", employmentTypeList);
@@ -438,6 +449,52 @@ public class ResumeController {
 		}
 		model.setViewName("createresumepopup");
 		return model;
+	}
+	
+	public List<ResumeProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
+		
+		List<ResumeProfileAttribForm> listForms = new ArrayList<ResumeProfileAttribForm>();
+		
+		if(null != resumeDTO.getResumeAttribList()){
+			for(MerProfileAttribDTO dto : resumeDTO.getResumeAttribList()){
+				ResumeProfileAttribForm form = new ResumeProfileAttribForm();
+				form.setDropdown(dto.getDropdown());
+				form.setStrAttribType(dto.getStrAttribType());
+				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrProfileAttribId(dto.getStrProfileAttribId());
+				//form.setStrScreenName(dto.getStrScreenName());
+				//form.setStrSectionName(dto.getStrSectionName());
+				
+				listForms.add(form);
+			}
+		}
+		
+		return listForms;
+		
+	}
+	
+	public ResumeDTO ProfileAttribFormTotransformDTO(List<ResumeProfileAttribForm> resumeProfileAttribForm){
+		
+		List<MerProfileAttribDTO> list = new ArrayList<MerProfileAttribDTO>();
+		
+		if(null != resumeProfileAttribForm){
+			for(ResumeProfileAttribForm form : resumeProfileAttribForm){
+				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				dto.setDropdown(form.getDropdown());
+				dto.setStrAttribType(form.getStrAttribType());
+				dto.setStrLabelName(form.getStrLabelName());
+				dto.setStrLabelName(form.getStrLabelName());
+				dto.setStrProfileAttribId(form.getStrProfileAttribId());
+				//dto.setStrScreenName(form.getStrScreenName());
+				//dto.setStrSectionName(form.getStrSectionName());
+				list.add(dto);
+			}
+		}
+		ResumeDTO resumeDTO = new ResumeDTO();
+		resumeDTO.setResumeAttribList(list);
+		return resumeDTO;
+		
 	}
 	
 

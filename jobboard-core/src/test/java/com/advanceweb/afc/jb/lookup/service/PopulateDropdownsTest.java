@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.lookup.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
@@ -278,6 +280,12 @@ public class PopulateDropdownsTest extends ServiceTest{
 		assertNotNull("Subscriptions List",resumeVisibilityDTOList);
 		assertTrue("Job Posted Date", resumeVisibilityDTOList.size()>=0);
 		
+	}
+	
+	@Test
+	public void testResumeAttribList() {
+		List<ResumeAttribListDTO>  ResumeAttribListDTO = popService.populateResumeDropdown("ResumeType");
+		assertNull(ResumeAttribListDTO);
 	}
 	
 }

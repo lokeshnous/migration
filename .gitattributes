@@ -50,6 +50,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/QueryDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/RadiusDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ReferenceDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeAttribListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeVisibilityDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
@@ -342,6 +343,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/EducationForm
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/LanguageForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ReferenceForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/TransformCreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/exception/JobBoardUIException.java -text

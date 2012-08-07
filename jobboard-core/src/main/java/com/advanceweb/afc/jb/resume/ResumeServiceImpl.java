@@ -132,4 +132,9 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.fetchPublicResumeByUserId(jobSeekerId);
 	}
 
+	@Override
+	public ResumeDTO getProfileAttributes() {
+		return resumeDao.getProfileAttributes();
+	}
+
 }

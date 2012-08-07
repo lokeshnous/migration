@@ -15,12 +15,12 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 
 public class CreateResume {
 	private String uploadResumeId;
-	private String resume_name;
-	private String desired_job_title;
-	private String desired_employment_type;
-	private String work_authorization_US;
-	private String willing_to_relocate;
-	private String resume_visibility;
+	private String resumeName;
+	private String desiredJobTitle;
+	private String desiredEmploymentType;
+	private String workAuthorizationUS;
+	private String willingToRelocate;
+	private String resumeVisibility;
 	private String resumeType;
 	private String employmentType;
 	private String resumeText;
@@ -41,6 +41,7 @@ public class CreateResume {
 	private List<WorkExpForm> listWorkExpForm;
 	private ContactInfoForm contactInfoForm;
 	private int builderResumeId;
+	List<ResumeProfileAttribForm> resumeProfileAttribForm; 
 	//Creating Resume	
 	
 	public String getUploadResumeId() {
@@ -48,6 +49,42 @@ public class CreateResume {
 	}
 	public void setUploadResumeId(String uploadResumeId) {
 		this.uploadResumeId = uploadResumeId;
+	}
+	public String getResumeName() {
+		return resumeName;
+	}
+	public void setResumeName(String resumeName) {
+		this.resumeName = resumeName;
+	}
+	public String getDesiredJobTitle() {
+		return desiredJobTitle;
+	}
+	public void setDesiredJobTitle(String desiredJobTitle) {
+		this.desiredJobTitle = desiredJobTitle;
+	}
+	public String getDesiredEmploymentType() {
+		return desiredEmploymentType;
+	}
+	public void setDesiredEmploymentType(String desiredEmploymentType) {
+		this.desiredEmploymentType = desiredEmploymentType;
+	}
+	public String getWorkAuthorizationUS() {
+		return workAuthorizationUS;
+	}
+	public void setWorkAuthorizationUS(String workAuthorizationUS) {
+		this.workAuthorizationUS = workAuthorizationUS;
+	}
+	public String getWillingToRelocate() {
+		return willingToRelocate;
+	}
+	public void setWillingToRelocate(String willingToRelocate) {
+		this.willingToRelocate = willingToRelocate;
+	}
+	public String getResumeVisibility() {
+		return resumeVisibility;
+	}
+	public void setResumeVisibility(String resumeVisibility) {
+		this.resumeVisibility = resumeVisibility;
 	}
 	public String getFilename() {
 		return filename;
@@ -87,47 +124,12 @@ public class CreateResume {
 	}
 	private String workauthUS;
 
-	public String getResumeName() {
-		return resume_name;
-	}
+	
 	public String getResumeType() {
 		return resumeType;
 	}
 	public void setResumeType(String resumeType) {
 		this.resumeType = resumeType;
-	}
-	public void setResumeName(String resume_name) {
-		this.resume_name = resume_name;
-	}
-	public String getDesiredJobTitle() {
-		return desired_job_title;
-	}
-	public void setDesiredJobTitle(String desired_job_title) {
-		this.desired_job_title = desired_job_title;
-	}
-	public String getDesiredEmploymentType() {
-		return desired_employment_type;
-	}
-	public void setDesiredEmploymentType(String desired_employment_type) {
-		this.desired_employment_type = desired_employment_type;
-	}
-	public String getWorkAuthorizationUS() {
-		return work_authorization_US;
-	}
-	public void setWorkAuthorizationUS(String work_authorization_US) {
-		this.work_authorization_US = work_authorization_US;
-	}
-	public String getWillingToRelocate() {
-		return willing_to_relocate;
-	}
-	public void setWillingToRelocate(String willing_to_relocate) {
-		this.willing_to_relocate = willing_to_relocate;
-	}
-	public String getResumeVisibility() {
-		return resume_visibility;
-	}
-	public void setResumeVisibility(String resume_visibility) {
-		this.resume_visibility = resume_visibility;
 	}
 	public String getObjective() {
 		return objective;
@@ -201,6 +203,12 @@ public class CreateResume {
 	public void setBuilderResumeId(int builderResumeId) {
 		this.builderResumeId = builderResumeId;
 	}
-	
+	public List<ResumeProfileAttribForm> getResumeProfileAttribForm() {
+		return resumeProfileAttribForm;
+	}
+	public void setResumeProfileAttribForm(
+			List<ResumeProfileAttribForm> resumeProfileAttribForm) {
+		this.resumeProfileAttribForm = resumeProfileAttribForm;
+	}
 		
 }

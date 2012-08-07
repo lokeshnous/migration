@@ -18,10 +18,12 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 
 @Service("populateDropdownsService")
@@ -184,6 +186,11 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	public List<DropDownDTO> populateDropdown(String dropDownName) {
 		
 		return populateDropdownsDAO.populateDropdown(dropDownName);
+	}
+
+	@Override
+	public List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName) {
+		return populateDropdownsDAO.populateResumeDropdown(dropdownName);
 	}	
 
 }

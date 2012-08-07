@@ -31,7 +31,7 @@ public class ResResumeAttrib implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to ResResumeAttribList
-	@OneToMany(mappedBy="resResumeAttrib")
+	@OneToMany(mappedBy="resResumeAttrib",fetch=FetchType.EAGER)
 	private List<ResResumeAttribList> resResumeAttribLists;
 
 	//bi-directional many-to-one association to ResResumeProfile

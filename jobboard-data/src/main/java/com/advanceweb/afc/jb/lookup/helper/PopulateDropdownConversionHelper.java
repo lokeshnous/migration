@@ -18,6 +18,7 @@ import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
+import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
@@ -25,6 +26,8 @@ import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
+import com.advanceweb.afc.jb.data.entities.ResPrivacy;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
 
 @Repository("dropdownHelper")
 public class PopulateDropdownConversionHelper {
@@ -375,23 +378,39 @@ public class PopulateDropdownConversionHelper {
 	
 	/**
 	   @Author :Sasibhushan
-	   @Purpose:TO convert the List of JpAttribList to the List of Magazines DTO
+	   @Purpose:TO convert the List of ResPrivacy to the List of VisibilityDTO
 	   @Created:Jul 12, 2012
-	   @Param  :List of JpAttribList
-	   @Return :List of MagazinesDTO
+	   @Param  :List of resPrivacyList
+	   @Return :List of visibilityDTO
 	 * 
 	 */
-	public List<ResumeVisibilityDTO> convertMerLookupToVisibilityDTO(List<JpAttribList> merLookupList){
+	public List<ResumeVisibilityDTO> transformResPrivacyToVisibilityDTO(List<ResPrivacy> resPrivacyList){
 	
-		List<ResumeVisibilityDTO> list = new ArrayList<ResumeVisibilityDTO>();
+		List<ResumeVisibilityDTO> visibilityDTOList = new ArrayList<ResumeVisibilityDTO>();
 		
-		for(JpAttribList JpAttribList : merLookupList){
+		for(ResPrivacy resPrivacy : resPrivacyList){
 			ResumeVisibilityDTO visibilityDTO=new ResumeVisibilityDTO();
-			visibilityDTO.setVisibilityId(String.valueOf(JpAttribList.getAttribListId()));
-			visibilityDTO.setVisibilityName(JpAttribList.getAttribValue());
-			list.add(visibilityDTO);
+			visibilityDTO.setVisibilityId(String.valueOf(resPrivacy.getPrivacyId()));
+			visibilityDTO.setVisibilityName(resPrivacy.getName());
+			visibilityDTOList.add(visibilityDTO);
 		}
-		return list;
+		return visibilityDTOList;
+	}
+	
+	public List<ResumeAttribListDTO> transformResumeAttribListToDTO(List<ResResumeAttribList> resResumeAttribList){
+		List<ResumeAttribListDTO> ResumeAttribListDTOList = new ArrayList<ResumeAttribListDTO>();
+		for(ResResumeAttribList resResumeAttrib: resResumeAttribList){
+			ResumeAttribListDTO resumeAttribListDTO = new ResumeAttribListDTO();
+			
+			resumeAttribListDTO.setOptionId(String.valueOf(resResumeAttrib.getResumeAttribListId()));
+			resumeAttribListDTO.setOptionValue(resResumeAttrib.getListValue());
+			resumeAttribListDTO.setPosition(String.valueOf(resResumeAttrib.getPosition()));
+			resumeAttribListDTO.setActive(String.valueOf(resResumeAttrib.getActive()));
+			resumeAttribListDTO.setResResumeAttribId(String.valueOf(resResumeAttrib.getResResumeAttrib()));
+			ResumeAttribListDTOList.add(resumeAttribListDTO);
+		}
+		return ResumeAttribListDTOList;		
+		
 	}
 	
 	
@@ -407,6 +426,6 @@ public class PopulateDropdownConversionHelper {
 			list.add(dropDownDTO);
 		}		
 		return list;		
-	}
+	}	
 	
 }

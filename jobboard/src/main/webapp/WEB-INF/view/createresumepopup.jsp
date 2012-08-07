@@ -43,115 +43,110 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Create Or Upload My New Resume</h2>
-			<img src="../resources/images/Close.png" width="19" onclick="parent.$.nmTop().close();"
-				height="19" alt="">
+			<img src="../resources/images/Close.png" width="19"
+				onclick="parent.$.nmTop().close();" height="19" alt="">
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="/jobboard/jobSeekerResume/createResumeBuilder.html" commandName="createResume"  id="formtouse"	enctype="multipart/form-data">
-				<div class="rowEvenNewSpacing">
+			<form:form method="get"
+				action="/jobboard/jobSeekerResume/createResumeBuilder.html"
+				commandName="createResume" id="formtouse"
+				enctype="multipart/form-data">
+				
+				<c:forEach items="${createResume.resumeProfileAttribForm}" 
+					var="profAttrib" varStatus="status">
+					<c:if test="${profAttrib.strAttribType == 'TextBox'}">
+					<div class="rowEvenNewSpacing">
+						<c:if test="${profAttrib.strLabelName == 'Resume Name'}">	
+							<span class="lableText4"><c:out	value="${profAttrib.strLabelName}" />:</span>
+							<form:input path="${profAttrib.strLabelValue}"
+								class="job_seeker_password textBox2" />
+							<span class="required">(Required)</span>
+						</c:if>
+						<c:if test="${profAttrib.strLabelName == 'Desired job title'}">	
+							<span class="lableText4"><c:out	value="${profAttrib.strLabelName}" />:</span>
+							<form:input path="${profAttrib.strLabelValue}"
+								class="job_seeker_password textBox2" />
+							<span class="required">(Required)</span>
+						</c:if>		
+					</div>
+					</c:if>
+					<c:if test="${profAttrib.strAttribType == 'Dropdown'}">						
+						<div class="rowEvenNewSpacing">
+							<c:if test="${profAttrib.strLabelName == 'How would you like to create your resume?'}">
+								<span class="lableText3"><c:out
+										value="${profAttrib.strLabelName}" />:</span>
+								<form:select path="resumeProfileAttribForm[${status.index}].strLabelValue"
+									class="jb_input3 jb_input_width3">
+									<form:options items="${profAttrib.dropdown}"
+										itemValue="optionId" itemLabel="optionName" />
+								</form:select>
+								<span class="required">(Required)</span>
+							</c:if>
+							<c:if test="${profAttrib.strLabelName == 'Desired Employment Type'}">
+								<span class="lableText4"><c:out
+										value="${profAttrib.strLabelName}" />:</span>
+								<form:select path="resumeProfileAttribForm[${status.index}].strLabelValue"
+									class="jb_input3 jb_input_width3 marginTop0">
+									<form:option value="0" label="Select" />
+									<form:options items="${profAttrib.dropdown}"
+										itemValue="optionId" itemLabel="optionName" />
+								</form:select>
+							</c:if>
+						  	<c:if test="${profAttrib.strLabelName == 'U.S. Work Authorization'}">
+								<span class="lableText4"><c:out
+										value="${profAttrib.strLabelName}" />:</span>
+								<form:select path="resumeProfileAttribForm[${status.index}].strLabelValue"
+									class="jb_input3 marginTop0 width350">
+									<form:option value="0" label="Select" />
+									<form:options items="${profAttrib.dropdown}"
+										itemValue="optionId" itemLabel="optionName" />
+								</form:select>
+								<span class="required">(Required)</span>
+							</c:if>
+						</div>
+					</c:if>
+					
+					<c:if test="${profAttrib.strAttribType == 'Radio'}">
+						<div class="rowEvenNewSpacing ">
+						<span class="lableText4">
+						<c:out	value="${profAttrib.strLabelName}" />:</span>
+							<div class="">
+								<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="radioStatus">
+									<form:radiobutton path="" Value="${dropdown.optionId}" label="${dropdown.optionName}"/>
+								</c:forEach>
+						</div>
+						</div>
+					</c:if>
+					
+					<c:if test="${profAttrib.strAttribType == 'CheckBox'}">
+						<div class="row paddingBottom10 marginLeft10">I would like
+							the following sent to me so I can stay up to date with the latest
+							healthcare news and information:</div>
 
-					<div class="floatLeft marginTop5 marginRight20">How would you
-						like to create your resume?</div>
-					<%-- <form:select path="resumeType" id="resumeType" class="jb_input3 jb_input_width3 marginTop0">
-                     <form:option value="NONE" label="--- Select ---"/>
-                     <form:options items="${resumeTypeList}" />
-                </form:select> --%>
-					<form:select path="resumeType"
-						onchange="MM_jumpMenu('self',this,0)" id="jumpMenu"
-						class="jb_input3 jb_input_width3 marginTop0" name="jumpMenu">
-						<form:option
-							id="createResume" value="createResume" >Create Resume</form:option>
-						<form:option id="uploadResume"
-							value="uploadResume">Upload Resume</form:option>
-						<form:option id="copyPasteResume"
-							value="copyPasteResume">Copy and paste</form:option>
-					</form:select>
-					<span class="required">(Required)</span>
-
-				</div>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText4">Resume Name:</span>
-					<!-- <input type="text" name="lastname" class="job_seeker_password textBox2" /><span class="required">(Required)</span> -->
-					<form:input path="resume_name" class="job_seeker_password textBox2" />
-					<span class="required">(Required)</span>
-					<form:errors path="resume_name" />
-				</div>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText4">Desired job title:</span>
-					<!-- <input type="text" name="lastname2" class="job_seeker_password textBox2" /><span class="required">(Required)</span> -->
-					<form:input path="desired_job_title"
-						class="job_seeker_password textBox2" />
-					<span class="required">(Required)</span>
-					<form:errors path="desired_job_title" />
-
-				</div>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText4">Desired Employment Type:</span>
-
-					<form:select id="select14"
-						class="jb_input3 jb_input_width3 marginTop0" name="select9"
-						path="desired_employment_type" items="${employmentType}"
-						itemValue="optionId" itemLabel="optionName" />
-					<form:errors path="desired_employment_type" />
-
-				</div>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText4">U.S. Work Authorization:</span>
-
-					<form:select id="select3" class="jb_input3 marginTop0 width350"
-						name="select3" style="width: auto" path="work_authorization_US"
-						items="${workAuthUS}" itemValue="optionId" itemLabel="optionName" />
-					<form:errors path="work_authorization_US" />
-					<span class="required">(Required)</span>
-
-				</div>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText4"> Willing to relocate:</span>
-					<div class="redioButtonHolderWidth marginTop5">
-						<label><form:radiobutton path="willing_to_relocate"
-								value="68" checked="checked" />Yes </label>
-					</div>
-					<div class="redioButtonHolderWidth marginTop5">
-						<label><form:radiobutton path="willing_to_relocate"
-								value="69" />No</label>
-					</div>
-					<div class="toolTip marginTop8">
-						<span class="classic">Select 'Yes' to let potential
-							employers know you're willing to move to a new location for the
-							right job opportunity.</span>
-					</div>
-					<div class="toolTipBefore">
-						<span class="required">(Required)</span>
-					</div>
-				</div>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText4">Resume Visibility:</span>
-					<div class="redioButtonHolderWidth marginTop5">
-						<label> <form:radiobutton path="resume_visibility"
-								value="63" checked="checked" />Public
-						</label>
-					</div>
-					<div class="redioButtonHolderWidth marginTop5">
-						<label> <form:radiobutton path="resume_visibility"
-								value="64" />Private
-						</label>
-					</div>
-					<div class="toolTip marginTop8">
-						<span class="classic">You can only have one resume visible
-							to employers at a time, so select 'Private' if you already have a
-							public resume saved to your profile. Otherwise, you may select
-							'Public' and employers will be able to view your resume
-							immediately.</span>
-					</div>
-					<div class="toolTipBefore">
-						<span class="required">(Required)</span>
-					</div>
-				</div>
+						<div class="centerAlign ">
+							<ul>
+								<c:forEach items="${profAttrib.dropdown}" var="dropdown"
+									varStatus="index">
+									<li>
+										<div>
+											<form:checkbox path="${profAttrib.strLabelValue}"
+												label="${dropdown.optionId}" value="${dropdown.optionName}"
+												cssStyle="width:20px" />
+										</div>
+									</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</c:if>
+					
+				</c:forEach>
+				
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-				<span class="floatLeft marginTop10"> 
-				<input type="submit" value="Create" class="btn_sm orange" /> 
-				<input type="button" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();"/></span>
+					<span class="floatLeft marginTop10"> <input type="submit"
+						value="Create" class="btn_sm orange" /> <input type="button"
+						class="btn_sm orange" value="Cancel"
+						onclick="parent.$.nmTop().close();" /></span>
 				</div>
 				<div class="clearfix"></div>
 

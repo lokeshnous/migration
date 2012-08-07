@@ -24,6 +24,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
+import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
@@ -106,10 +107,10 @@ public class ResumeDaoImpl implements ResumeDao {
 					.find("from ResUploadResume where userId = "
 							+ resumeDTO.getUserId() + " and uploadResumeId !="
 							+ resumeDTO.getUploadResumeId()
-							+ " and visibility___Public_Private__='"
+							+ " and isPublished='"
 							+ visibilityDropDown.get(0).getOptionId() + "'");
 			if (resumes.size() > 0) {
-//				resumes.get(0).setVisibility___Public_Private__(String.valueOf(visibilityDropDown.get(1).getOptionId()));
+				resumes.get(0).setIsPublished(Integer.parseInt(visibilityDropDown.get(1).getOptionId()));
 				hibernateTemplate.update(resumes.get(0));
 			}
 		}
@@ -284,6 +285,20 @@ public class ResumeDaoImpl implements ResumeDao {
 		ResumeDTO resumeDTO = resumeConversionHelper
 				.transformResUploadResumeListToResumeDTOList(resumes).get(0);
 		return resumeDTO;
+	}
+
+	@Override
+	public ResumeDTO getProfileAttributes() {
+		ResumeDTO dto = null;
+		try {
+			  List<ResResumeAttrib> listProfAttrib = hibernateTemplate.find("from ResResumeAttrib");
+			  dto = resumeConversionHelper.transformProfileAttrib(listProfAttrib);
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 }

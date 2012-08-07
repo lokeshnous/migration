@@ -85,12 +85,12 @@
 					
 						<form:select class="jb_input3 jb_input_width3 marginTop0" name="select9" 
 							path="desired_employment_type" items="${employmentType}" 
-							itemValue="optionId" itemLabel="optionName" />
+							itemValue="optionValue" itemLabel="optionValue" />
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">U.S. Work Authorization:</span> 
 					<form:select class="jb_input3 marginTop0 width350" name="select3" style="width: auto"
-							path="work_authorization_US" items="${workAuthUS}" itemValue="optionId" itemLabel="optionName" />
+							path="work_authorization_US" items="${workAuthUS}" itemValue="optionValue" itemLabel="optionValue" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
@@ -107,7 +107,7 @@
 						</label>
 					</div> -->
 					<div class="redioButtonHolderWidth marginTop5">
-						<form:radiobuttons path="willing_to_relocate" items="${relocate}" itemValue="optionId" itemLabel="optionName" />
+						<form:radiobuttons path="willing_to_relocate" items="${relocate}" itemValue="optionValue" itemLabel="optionValue" />
 					</div>
 					<div class="toolTip marginTop8">
 						<span class="classic">Select 'Yes' to let potential
@@ -131,7 +131,7 @@
 						</label>
 					</div> -->
 					<div class="redioButtonHolderWidth marginTop5">
-						<form:radiobuttons path="resume_visibility" items="${resumeVisibility}" itemValue="optionId" itemLabel="optionName" />
+						<form:radiobuttons path="resume_visibility" items="${resumeVisibility}" itemValue="visibilityId" itemLabel="visibilityName" />
 					</div>
 					<div class="toolTip marginTop8">
 						<span class="classic">You can only have one resume visible
