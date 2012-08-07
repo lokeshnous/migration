@@ -1,10 +1,15 @@
 package com.advanceweb.afc.jb.login.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
  * 
@@ -18,6 +23,9 @@ public class LoginFormServiceImpl implements LoginFormService {
 
 	@Autowired
 	private LoginFormDAO loginFormDAO;
+	
+	@Autowired
+	UserDao userDAO;
 
 	/**
 	 * This method is called to fetch logged in user details
@@ -39,5 +47,15 @@ public class LoginFormServiceImpl implements LoginFormService {
 	@Override
 	public LoginFormDTO getUserEmailDetails(String emailAddress) {
 		return loginFormDAO.getUserEmailDetails(emailAddress);
+	}
+
+	@Override
+	public MerUser getUser(String email) {
+		return userDAO.getUser(email);
+	}
+
+	@Override
+	public List<AdmUserRole> getUserRole(int userId) {
+		return userDAO.getUserRole(userId);
 	}
 }

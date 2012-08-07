@@ -1,6 +1,10 @@
 package com.advanceweb.afc.jb.login.service;
 
+import java.util.List;
+
 import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 
 
 /**
@@ -27,4 +31,7 @@ public interface LoginFormService {
 	 * @param emailAddress
 	 */
 	LoginFormDTO getUserEmailDetails(String emailAddress);
+	
+	MerUser getUser(String email);
+	List<AdmUserRole> getUserRole(int userId);
 }
