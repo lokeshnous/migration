@@ -88,12 +88,11 @@
 						<c:if test="${profAttrib.strLabelName == 'State / Province'}">
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">State:</span>
-								<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-									<form:option value="0" label="Select" />
-									<form:options items="${stateList}" itemValue="stateId"
-										itemLabel="stateValue" />
-								</form:select>
-			
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+									</form:select>			
 								<span class="required marginTop8">(Required)</span>
 							</div>
 						</c:if>
@@ -108,11 +107,11 @@
 						<c:if test="${profAttrib.strLabelName == 'Country'}">
 							<div class="row">
 								<span class="lableTextSelect marginTop13 ">Country:</span>
-								<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-									<form:option value="0" label="Select" />
-									<form:options items="${countryList}" itemValue="countryId"
-										itemLabel="countryValue" />
-								</form:select>
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+									</form:select>
 								<span class="required marginTop8">(Required)</span>
 							</div>
 						</c:if>
