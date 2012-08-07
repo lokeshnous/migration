@@ -30,14 +30,8 @@ public class MerProfileAttrib implements Serializable {
 
 	private String name;
 	
-	@Column(name="section_name")
-	private String sectionName;
-	
 	@Column(name="required")
 	private int required;
-	
-	@Column(name="tool_tip")
-	private String toolTip;
 	
 
 	//bi-directional many-to-one association to MerProfileAttribList
@@ -107,28 +101,12 @@ public class MerProfileAttrib implements Serializable {
 		this.merUserProfiles = merUserProfiles;
 	}
 
-	public String getSectionName() {
-		return sectionName;
-	}
-
-	public void setSectionName(String sectionName) {
-		this.sectionName = sectionName;
-	}
-
 	public int getRequired() {
 		return required;
 	}
 
 	public void setRequired(int required) {
 		this.required = required;
-	}
-
-	public String getToolTip() {
-		return toolTip;
-	}
-
-	public void setToolTip(String toolTip) {
-		this.toolTip = toolTip;
 	}
 	
 }

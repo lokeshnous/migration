@@ -15,9 +15,7 @@ public class MerProfileAttribDTO {
 	private String strLabelValue;
 	private String strProfileAttribId;
 	private String strAttribType;
-	private String strSectionName;
 	private int bRequired;
-	private String strToolTip;
 	private List<DropDownDTO> dropdown;
 	
 	public String getStrLabelName() {
@@ -44,23 +42,11 @@ public class MerProfileAttribDTO {
 	public void setStrAttribType(String strAttribType) {
 		this.strAttribType = strAttribType;
 	}
-	public String getStrSectionName() {
-		return strSectionName;
-	}
-	public void setStrSectionName(String strSectionName) {
-		this.strSectionName = strSectionName;
-	}
 	public List<DropDownDTO> getDropdown() {
 		return dropdown;
 	}
 	public void setDropdown(List<DropDownDTO> dropdown) {
 		this.dropdown = dropdown;
-	}
-	public String getStrToolTip() {
-		return strToolTip;
-	}
-	public void setStrToolTip(String strToolTip) {
-		this.strToolTip = strToolTip;
 	}
 	public int getbRequired() {
 		return bRequired;

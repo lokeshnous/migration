@@ -16,10 +16,7 @@ public class JobSeekerProfileAttribForm {
 	private String strLabelValue;
 	private String strProfileAttribId;
 	private String strAttribType;
-	private String strSectionName;
-	private String strScreenName;
 	private int bRequired;
-	private String strToolTip;
 	private List<DropDownDTO> dropdown;
 	
 	
@@ -47,29 +44,11 @@ public class JobSeekerProfileAttribForm {
 	public void setStrAttribType(String strAttribType) {
 		this.strAttribType = strAttribType;
 	}
-	public String getStrSectionName() {
-		return strSectionName;
-	}
-	public void setStrSectionName(String strSectionName) {
-		this.strSectionName = strSectionName;
-	}
-	public String getStrScreenName() {
-		return strScreenName;
-	}
-	public void setStrScreenName(String strScreenName) {
-		this.strScreenName = strScreenName;
-	}
 	public List<DropDownDTO> getDropdown() {
 		return dropdown;
 	}
 	public void setDropdown(List<DropDownDTO> dropdown) {
 		this.dropdown = dropdown;
-	}
-	public String getStrToolTip() {
-		return strToolTip;
-	}
-	public void setStrToolTip(String strToolTip) {
-		this.strToolTip = strToolTip;
 	}
 	public int getbRequired() {
 		return bRequired;

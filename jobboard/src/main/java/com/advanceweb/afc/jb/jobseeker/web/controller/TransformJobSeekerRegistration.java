@@ -149,10 +149,8 @@ public class TransformJobSeekerRegistration {
 				form.setStrLabelName(dto.getStrLabelName());
 				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
-				form.setStrSectionName(dto.getStrSectionName());
 				form.setbRequired(dto.getbRequired());
 				form.setbRequired(dto.getbRequired());
-				form.setStrToolTip(dto.getStrToolTip());
 				listForms.add(form);
 			}
 		}
@@ -175,9 +173,7 @@ public class TransformJobSeekerRegistration {
 				dto.setStrAttribType(form.getStrAttribType());
 				dto.setStrLabelName(form.getStrLabelName());
 				dto.setStrLabelValue(form.getStrLabelValue());
-				dto.setStrProfileAttribId(form.getStrProfileAttribId());
-				dto.setStrSectionName(form.getStrSectionName());
-				
+				dto.setStrProfileAttribId(form.getStrProfileAttribId());				
 				dtoList.add(dto);
 			}
 		}

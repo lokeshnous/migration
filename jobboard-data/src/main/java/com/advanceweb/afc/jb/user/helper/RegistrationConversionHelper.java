@@ -138,7 +138,7 @@ public class RegistrationConversionHelper {
 	public List<AdmUserSubscription> transformMerUserDTOToAdmUserSubs(JobSeekerRegistrationDTO dto, MerUser user) {
 	
 		List<AdmUserSubscription> subsList = new ArrayList<AdmUserSubscription>();		
-		AdmUserSubscriptionPK pk = null;
+		AdmUserSubscriptionPK pkey = null;
 			
 		if(null != dto.getAttribList()){
 			
@@ -148,11 +148,11 @@ public class RegistrationConversionHelper {
 						&& null != attribDTO.getStrLabelValue() && !attribDTO.getStrLabelValue().isEmpty()){					
 					List<String> sellItems = Arrays.asList(attribDTO.getStrLabelValue().split(","));
 					for(String idVal : sellItems){
-						pk = new AdmUserSubscriptionPK();
+						pkey = new AdmUserSubscriptionPK();
 						AdmUserSubscription sub = new AdmUserSubscription();
-							pk.setSubscriptionId(Integer.valueOf(idVal));
-							pk.setUserId(user.getUserId());
-						sub.setId(pk);
+						pkey.setSubscriptionId(Integer.valueOf(idVal));
+						pkey.setUserId(user.getUserId());
+						sub.setId(pkey);
 						subsList.add(sub);						
 					}
 				}
@@ -229,9 +229,7 @@ public class RegistrationConversionHelper {
 				dto.setStrAttribType(entity.getFormType());
 				dto.setStrLabelName(entity.getName());
 				dto.setStrProfileAttribId(String.valueOf(entity.getProfileAttribId()));
-				dto.setStrSectionName(entity.getSectionName());
 				dto.setbRequired(entity.getRequired());
-				dto.setStrToolTip(entity.getToolTip());
 				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN) || dto.getStrAttribType().equals(MMJBCommonConstants.CHECK_BOX)){
 					//populating countries
 					if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_COUNTRY)){
