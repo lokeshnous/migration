@@ -22,7 +22,7 @@ public class QueryDTO {
 	
 	private String searchHost;
 	
-	private List<MetaSearchParamDTO> mSrchParamList;
+	private List<SearchParamDTO> mSrchParamList;
 	
 	public String getSearchHost() {
 		return searchHost;
@@ -64,11 +64,11 @@ public class QueryDTO {
 		this.searchName = searchName;
 	}
 
-	public List<MetaSearchParamDTO> getmSrchParamList() {
+	public List<SearchParamDTO> getmSrchParamList() {
 		return mSrchParamList;
 	}
 
-	public void setmSrchParamList(List<MetaSearchParamDTO> mSrchParamList) {
+	public void setmSrchParamList(List<SearchParamDTO> mSrchParamList) {
 		this.mSrchParamList = mSrchParamList;
 	}
 	
