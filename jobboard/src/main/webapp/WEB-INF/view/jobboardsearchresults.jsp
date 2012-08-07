@@ -57,7 +57,7 @@
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code.');
 			}else if(cityState.length != 0 && radius.length == 0){
 				status = false;
-				$('#findSearchInfo').html('Please select the Radius to search the job in miles.');
+				$('#findSearchInfo').html('Please select a mileage range to search within');
 			}else{
 				$('#findSearchInfo').html('');
 			}
