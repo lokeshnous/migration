@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +30,9 @@ public class JobSeekerActivityController {
 	private JobSeekerService jobSeekerActivity;
 
 	@RequestMapping(value = "/viewAppliedJob")
-	public ModelAndView getAppliedJob(
-			/* @RequestParam("userId") int userId, */Map model) {
+	public ModelAndView getAppliedJob(HttpSession session,Map model) {
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
-				.getAppliedJobs(30);
+				.getAppliedJobs((Integer) session.getAttribute("userId"));
 		model.put("appliedJobDTOList", appliedJobDTOList);
 		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
@@ -44,12 +45,11 @@ public class JobSeekerActivityController {
 	 */
 	@SuppressWarnings({ "unused"})
 	@RequestMapping(value = "/deleteAppliedJob")
-	public ModelAndView deleteAppliedJob(
-			/* @RequestParam("userId") int userId, */@RequestParam("appliedJobId") int appliedJobId,
+	public ModelAndView deleteAppliedJob(HttpSession session,@RequestParam("appliedJobId") int appliedJobId,
 			Map model) {
 		boolean result = jobSeekerActivity.deleteAppliedJobs(appliedJobId);
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
-				.getAppliedJobs(30);
+				.getAppliedJobs((Integer) session.getAttribute("userId"));
 		model.put("appliedJobDTOList", appliedJobDTOList);
 		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
@@ -62,13 +62,12 @@ public class JobSeekerActivityController {
 	 */
 	@SuppressWarnings({ "unused"})
 	@RequestMapping(value = "/deleteSavedJob")
-	public ModelAndView deleteSavedJob(
-			/* @RequestParam("userId") int userId, */@RequestParam("appliedJobId") int appliedJobId,
+	public ModelAndView deleteSavedJob(HttpSession session,@RequestParam("appliedJobId") int appliedJobId,
 			Map model) {
 
 		boolean result = jobSeekerActivity.deleteAppliedJobs(appliedJobId);
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs(30);
+				.getSavedJobs((Integer) session.getAttribute("userId"));
 		model.put("savedJobDTOList", savedJobDTOList);
 
 		return new ModelAndView("jobseekermysavedjobspopup");
@@ -82,9 +81,9 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewSavedJob")
-	public ModelAndView getSavedJob(Map model) {
+	public ModelAndView getSavedJob(HttpSession session,Map model) {
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs(30);
+				.getSavedJobs((Integer) session.getAttribute("userId"));
 		model.put("savedJobDTOList", savedJobDTOList);
 		return new ModelAndView("jobseekermysavedjobspopup");
 	}
