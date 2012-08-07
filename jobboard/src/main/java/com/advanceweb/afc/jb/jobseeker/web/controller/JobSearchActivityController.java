@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.sf.json.JSONObject;
@@ -38,6 +39,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.JobSearchService;
@@ -69,6 +71,12 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private JSONConverterService jSONConverterService;
+	
+	@Autowired
+	private JobSeekerService jobSeekerActivity;
+	
+	@Value("${saveThisJobLimitsMsg}")
+	private String saveThisJobLimitsMsg;
 
 	@SuppressWarnings("unused")
 	@Autowired
@@ -153,15 +161,16 @@ public class JobSearchActivityController {
 	 * 
 	 * @param form
 	 * @param jobId
+	 * @param session 
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
-			@RequestParam String userID, @RequestParam("id") int jobId) {
+			@RequestParam String userID, @RequestParam("id") int jobId, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(jobId);
-		int userId = 30;
+		int userId = (Integer)session.getAttribute("userId");
 		form.setUseremail("merion@nousinfosystems.com");
 		try {
 			/**
@@ -370,7 +379,7 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveThisJob(@Valid ApplyJobForm form, Map<String, Object> map,
-			@RequestParam("id") int jobId) {
+			@RequestParam("id") int jobId, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 
 		/**
@@ -383,7 +392,14 @@ public class JobSearchActivityController {
 			// return new ModelAndView("jobseekersaveThisJobPopUp");
 		}
 		form.setJobID(jobId);
-		int userId = 30;
+		int userId = (Integer)session.getAttribute("userId");
+		int savedJobsCount = 0;
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(userId);
+		savedJobsCount = savedJobDTOList.size();
+		if(savedJobsCount > 30){
+			jsonObject.put(ajaxMsg, saveThisJobLimitsMsg);
+			return jsonObject;
+		}
 		/**
 		 * Get the Job details
 		 */
