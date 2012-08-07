@@ -14,12 +14,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -70,7 +67,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 */
 	@Override
 	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
-	public boolean createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
+	public MerUserDTO createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
 				
 		try {
 			MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO, null);
@@ -98,12 +95,13 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				userRole.setId(pk);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
-
+			
+			return registrationConversionHelper.transformMerUserToUserDTO(merUser);
 			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
-		return true;
+		return null;
 	}
 
 	/**
@@ -246,7 +244,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			DetachedCriteria criteria = DetachedCriteria.forClass(MerLocation.class);
 			criteria.setProjection(Projections.distinct(Projections.property("country")));
 			List<Object> merUtilityList = hibernateTemplate.findByCriteria(criteria);
-			return registrationConversionHelper.convertMerUtilityToDropDownDTO(merUtilityList);
+			return registrationConversionHelper.transformMerUtilityToDropDownDTO(merUtilityList);
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -264,7 +262,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			criteria.addOrder(Order.asc("state"));
 			List<Object> merUtilityList = hibernateTemplate
 					.findByCriteria(criteria);
-			return registrationConversionHelper.convertMerUtilityToDropDownDTO(merUtilityList);
+			return registrationConversionHelper.transformMerUtilityToDropDownDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -279,7 +277,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		
 		try {
 			List<AdmSubscription> subsList = hibernateTemplateCareers.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
-			return registrationConversionHelper.convertAdmSubscriptionToDropDownDTO(subsList);
+			return registrationConversionHelper.transformAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}

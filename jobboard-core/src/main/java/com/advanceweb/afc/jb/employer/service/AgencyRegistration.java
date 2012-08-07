@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.service;
 
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -30,8 +31,8 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean createNewProfile(ProfileDTO profileDTO){
-		return false;
+	public MerUserDTO createNewProfile(ProfileDTO profileDTO){
+		return null;
 	}
 
 	/**

@@ -272,12 +272,12 @@ public class RegistrationConversionHelper {
 	}
 	
 	/**
-	 * Converting list of States/Countries to dropdown dto
+	 * Converting list of States/Countries to DropDownDTO
 	 * 
 	 * @param merUtilityList
 	 * @return
 	 */
-	public List<DropDownDTO> convertMerUtilityToDropDownDTO(List<Object> merUtilityList){
+	public List<DropDownDTO> transformMerUtilityToDropDownDTO(List<Object> merUtilityList){
 
 		DropDownDTO dropDownDTO = null;
 		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
@@ -291,7 +291,12 @@ public class RegistrationConversionHelper {
 		return list;		
 	}
 	
-	public List<DropDownDTO> convertAdmSubscriptionToDropDownDTO(List<AdmSubscription> subsList){
+	/**
+	 * Transforming List of AdmSubscriptions to List of DropDownDTO
+	 * @param subsList
+	 * @return
+	 */
+	public List<DropDownDTO> transformAdmSubscriptionToDropDownDTO(List<AdmSubscription> subsList){
 
 		DropDownDTO dropDownDTO = null;
 		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
@@ -303,6 +308,25 @@ public class RegistrationConversionHelper {
 			list.add(dropDownDTO);
 		}		
 		return list;		
+	}
+	
+	/**
+	 * Transforming MerUser to MerUserDTO
+	 * @param user
+	 * @return
+	 */
+	public MerUserDTO transformMerUserToUserDTO(MerUser user){
+
+		MerUserDTO userDTO = new MerUserDTO();
+		if(null != user){
+			userDTO.setEmailId(user.getEmail());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setUserId(user.getUserId());
+			userDTO.setMiddleName(user.getMiddleName());
+		}
+		
+		return userDTO;		
 	}
 	
 }

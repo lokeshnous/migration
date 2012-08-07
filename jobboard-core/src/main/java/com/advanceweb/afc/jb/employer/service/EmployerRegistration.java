@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -32,14 +33,14 @@ public class EmployerRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean createNewProfile(ProfileDTO profileDTO){
+	public MerUserDTO createNewProfile(ProfileDTO profileDTO){
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerRegistrationDAO.createNewEmployer(empProfileDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 
 	/**

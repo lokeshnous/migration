@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.user;
 
+import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 
 /**
@@ -15,7 +16,7 @@ public interface ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean createNewProfile(ProfileDTO profileDTO);
+	public MerUserDTO createNewProfile(ProfileDTO profileDTO);
 
 	/**
 	 * 

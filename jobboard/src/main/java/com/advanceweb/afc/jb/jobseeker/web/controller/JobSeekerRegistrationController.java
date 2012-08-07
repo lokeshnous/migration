@@ -149,9 +149,11 @@ public class JobSeekerRegistrationController {
 				jsRegistrationDTO.setMerUserDTO(userDTO);
 
 				// Call to service layer
-				profileRegistration.createNewProfile(jsRegistrationDTO);
-				session.setAttribute("userName", registerForm.getFirstName()+" "+registerForm.getLastName());
-				model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+				userDTO = profileRegistration.createNewProfile(jsRegistrationDTO);
+				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
+				session.setAttribute("userId", userDTO.getUserId());
+				session.setAttribute("userEmail", userDTO.getEmailId());
+				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
 
 		} catch (Exception e) {
 			e.printStackTrace();

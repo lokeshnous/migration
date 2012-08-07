@@ -33,8 +33,8 @@ public class JobSeekerRegistrationTest  extends ServiceTest{
 		merUserDTO.setPassword("Sasibhushan");
 
 		jsDTO.setMerUserDTO(merUserDTO);
-		boolean bSaved = profileRegistration.createNewProfile(jsDTO);
-		Assert.assertTrue("Data Saved Successfully", bSaved);
+		merUserDTO = profileRegistration.createNewProfile(jsDTO);
+		Assert.assertNotNull(merUserDTO);
 	}
 	
 	@Ignore("Not ready to test")

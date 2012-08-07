@@ -6,9 +6,11 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.domain.Employer;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
+import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 
 /**
  * @author rajeshkb
@@ -22,6 +24,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
+	
+	@Autowired
+	private RegistrationConversionHelper registrationConversionHelper;
 	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker) {
@@ -42,15 +47,15 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 * @param empDTO
 	 * @return boolean
 	 */
-	public boolean createNewEmployer(EmployerProfileDTO empDTO){
+	public MerUserDTO createNewEmployer(EmployerProfileDTO empDTO){
 			try {
 				MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO.getMerUserDTO());
 				hibernateTemplateTracker.saveOrUpdate(merUser);
-				return true;
+				registrationConversionHelper.transformMerUserToUserDTO(merUser);
 			} catch (DataAccessException e) {
 				e.printStackTrace();
 			}
-		return false;
+		return null;
 	}
 
 	/**
