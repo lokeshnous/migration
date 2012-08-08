@@ -21,7 +21,7 @@
 		access="hasRole('ROLE_JOB_SEEKER')" />
 
 	<security:logout invalidate-session="true"
-		logout-success-url="/healthcarejobs/advanceweb.html" logout-url="/jobboard/logout" />
+		logout-success-url="/loginFormForJobSeeker/login.html" logout-url="/jobboard/logout" />
 
 
 	<security:custom-filter ref="authenticationFilter"
