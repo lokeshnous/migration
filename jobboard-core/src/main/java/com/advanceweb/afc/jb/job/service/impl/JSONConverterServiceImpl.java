@@ -95,27 +95,6 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					CheckNullUtil.isNull(jobSrchDTO.getUrlDisplay()));
 			jsonRows.add(jobSrchJson);
 
-			/*LOGGER.info("@Company===>>" + jobSrchDTO.getCompany()
-					+ "@JobTitle===>>" + jobSrchDTO.getJobTitle()
-					+ "@City===>>" + jobSrchDTO.getCity() + "@PostedDate===>>"
-					+ jobSrchDTO.getPostedDate() + "@Apply Online===>>"
-					+ jobSrchDTO.getApplyOnline() + " @Blind Ad===>>"
-					+ jobSrchDTO.getBlindAd() + "@Facility Name===>>"
-					+ jobSrchDTO.getFacilityName() + "@Email Display===>>"
-					+ jobSrchDTO.getEmailDisplay() + "@Email===>>"
-					+ jobSrchDTO.getEmail() + "@Is Inter===>>"
-					+ jobSrchDTO.isInternationalJob() + "@Is National===>>"
-					+ jobSrchDTO.isNationalJob() + "@Is Featured===>>"
-					+ jobSrchDTO.isFeatured() + "@Job count===>>"
-					+ jobSrchDTO.getJobCount() + "@Job id===>>"
-					+ jobSrchDTO.getJobId() + "@Job Number===>>"
-					+ jobSrchDTO.getJobNumber() + "@Job Geo===>>"
-					+ jobSrchDTO.getJobGeo() + "@Job position===>>"
-					+ jobSrchDTO.getJobPosition() + "@jobGeo0LatLon===>>"
-					+ jobSrchDTO.getJobGeo0LatLon() + "@jobGeo1LatLon===>>"
-					+ jobSrchDTO.getJobGeo1LatLon() + "@URL Display===>>"
-					+ jobSrchDTO.getUrlDisplay());*/
-
 		}
 
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
@@ -125,6 +104,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		return jobSrchJsonObj;
 	}
 
+	
 	/**
 	 * This method converts the date in string format to required format
 	 * for displaying it in the job search result page.
