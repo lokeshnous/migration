@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.search.engine;
 
-import net.sf.json.JSONObject;
 
+import net.sf.json.JSONObject;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 
 /**
