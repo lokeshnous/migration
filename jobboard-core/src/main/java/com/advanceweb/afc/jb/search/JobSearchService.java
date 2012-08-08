@@ -1,7 +1,9 @@
 package com.advanceweb.afc.jb.search;
 
+import java.util.List;
 import java.util.Map;
 
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -18,6 +20,15 @@ public interface JobSearchService{
 	 */
 	
 	JobSearchResultDTO jobSearch(String searchName, Map<String, String> paramMap, long start, long rows) throws JobBoardServiceException, JobBoardDataException;
+	
+	/**
+	 * * This method is used to do the location Search for autocomplete
+	 *  by taking the following parameters.
+	 * @param keywords	represents the search keyword for autocomplete of city state
+	 * @return List<LocationDTO>
+	 */
+	
+	List<LocationDTO> locationSearch(String keywords);
 	
 
 }
