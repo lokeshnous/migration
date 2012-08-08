@@ -125,7 +125,7 @@
 				sOut += 'Apply</a>';
 				sOut += '<a href="viewJobDetails.html?id='+jobId;
 				sOut += '" class="btn_sm white">View Details</a>';
-				sOut += '<a onclick="saveThisJob('+jobId+')" style=" cursor: default;"';
+				sOut += '<a onclick="saveThisJob('+jobId+')" id="saveThisJobId" style=" cursor: default;"';
 				sOut += '" class="btn_sm white">Save This Job</a>';
 				sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				sOut += '<br/><br/>';
