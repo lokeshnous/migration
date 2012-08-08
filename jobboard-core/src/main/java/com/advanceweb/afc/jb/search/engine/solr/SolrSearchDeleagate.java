@@ -24,6 +24,7 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.SearchParamDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.common.util.SolrParameter;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.search.JobSearchDeleagate;
@@ -284,7 +285,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 								+ MMJBCommonConstants.B.length(),
 						mSrchParamDTO.getParameterValue().length());
 
-				if (isIntNumber(temp)) {
+				if (MMUtils.isIntNumber(temp)) {
 					value = Integer.parseInt(temp);
 
 					switch (value) {
@@ -353,7 +354,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		List<SearchParamDTO> srchReplacedParamDTOList = new ArrayList<SearchParamDTO>();
 
 		List<LocationDTO> latLonList = null;
-		if (isIntNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
+		if (MMUtils.isIntNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
 
 			latLonList = locationDAO.getLocationByPostcode(paramMap
 					.get(MMJBCommonConstants.CITY_STATE));
@@ -412,7 +413,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 										mSrchParamDTO.getParameterValue()
 												.length());
 
-						if (isIntNumber(tStrValue)) {
+						if (MMUtils.isIntNumber(tStrValue)) {
 							value = Integer.parseInt(tStrValue);
 
 							switch (value) {
@@ -528,15 +529,16 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			List<String> facetsList = new ArrayList<String>();
 			List<Count> facetFieldValList = facetField.getValues();
 
-			for (Count countObj : facetFieldValList) {
-				String facetVal = countObj.getName().toString();
-				long count = countObj.getCount();
-				facetsList.add(facetVal
-						.concat(MMJBCommonConstants.SPACE_OPN_BRCKT)
-						.concat(String.valueOf(count))
-						.concat(MMJBCommonConstants.CLSG_BRCKT));
+			if(facetFieldValList != null){
+				for (Count countObj : facetFieldValList) {
+					String facetVal = countObj.getName().toString();
+					long count = countObj.getCount();
+					facetsList.add(facetVal
+							.concat(MMJBCommonConstants.SPACE_OPN_BRCKT)
+							.concat(String.valueOf(count))
+							.concat(MMJBCommonConstants.CLSG_BRCKT));
+				}
 			}
-
 			LOGGER.info("facetsList===>" + facetsList);
 			facetMap.put(facetField.getName(), facetsList);
 
@@ -593,22 +595,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	}
 
 	/**
-	 * This method checks whether the String parameter is int or not.
-	 * 
-	 * @param String
-	 * @return boolean
-	 */
-
-	private boolean isIntNumber(String num) {
-		try {
-			Integer.parseInt(num);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
 	 * This method parse the passed string and replace the :b01 and :b02
 	 * occurrence with Lat long value and radius.
 	 * 
@@ -636,7 +622,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					valStr = valStr
 							.replace(MMJBCommonConstants.CLSD_BRACES, "");
 				}
-				if (isIntNumber(valStr)) {
+				if (MMUtils.isIntNumber(valStr)) {
 					int value = Integer.parseInt(valStr);
 					switch (value) {
 					case 1:
@@ -662,5 +648,29 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		return strValue;
 
 	}
+	
+	
+	
+	public List<LocationDTO> locationSearch(String keywords){
+		
+		if(MMUtils.isIntNumber(keywords)){
+			return locationDAO.getPostcodeLocationByKeyword(keywords);
+		}else{
+			return locationDAO.getCityStateLocationByKeyword(keywords);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
