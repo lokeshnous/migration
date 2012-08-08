@@ -292,7 +292,7 @@ public class JobSearchActivityController {
 
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject findJobSearch(JobSearchResultForm jobSearchResultForm,
+	JSONObject findJobSearch(HttpSession session, JobSearchResultForm jobSearchResultForm,
 			BindingResult result, Map<String, JSONObject> modelMap) {
 
 		JobSearchResultDTO jobSearchResultDTO = null;
@@ -315,7 +315,12 @@ public class JobSearchActivityController {
 		// This value needs to be increased every time when there is a search
 		// happening for a session
 		int search_seq = MMJBCommonConstants.ZERO_INT;
-		String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
+		//String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
+		String sessionId = MMJBCommonConstants.NULL_STR;
+		
+		if(!StringUtils.isEmpty((String) session.getAttribute(MMJBCommonConstants.USER_ID))){
+			sessionId = (String) session.getAttribute(MMJBCommonConstants.USER_ID);
+		}
 		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
