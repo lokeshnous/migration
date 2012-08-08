@@ -223,7 +223,7 @@
 										        }
 											$("#TotalNoRecords").text(data.TotalNoRecords);
 											$("#TotalRecord").text(data.TotalNoRecords);
-											$("#SearchCriteria").text(keywords);
+											/* $("#SearchCriteria").text(keywords); */
 											});
 									return true;
 									
@@ -403,7 +403,7 @@
 	                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
 	                      <br/>
 	                      <div class="input_grp1 marginTop10" >
-	                       <form:input path="cityState"  id="cityState" cssClass="jb_input2" size=""/>
+	                       <form:input path="cityState"  id="cityState" cssClass="jb_input2" />
 	                	  <!-- <input type="text" name="cityState" id="cityState" class="jb_input2" /> -->
 	                <br/>
 	                <div class="toolTipBefore"><label for="cityState">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
@@ -485,7 +485,7 @@
               <!-- ad_col_right -->
               <div class="clearfix"></div>
       <div class="row ">
-        <div class="row marginTop5 paddingBottom05"><div class="floatLeft"><h1 class="FontSize24"><span id="TotalRecord"></span> <span id="SearchCriteria"></span> jobs match your search criteria.</h1></div> </div>
+        <div class="row marginTop5 paddingBottom05"><div class="floatLeft"><h1 class="FontSize24"><span id="TotalRecord"></span> jobs match your search criteria.</h1></div> </div>
        	
 
       </div>
