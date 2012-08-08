@@ -515,6 +515,7 @@ jobboard/src/main/webapp/resources/js/expandCollapse.js -text
 jobboard/src/main/webapp/resources/js/html5.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.min.js -text
+jobboard/src/main/webapp/resources/js/jquery-ui.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.all.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.lite.min.js -text
