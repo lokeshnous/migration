@@ -64,6 +64,7 @@
 			return status;
 		}
 		function saveThisJob(jobId) {
+			var saveThisJobIdid = "#saveThisJobId"+jobId;
 			$.ajax({
 				url : 'saveThisJob.html?id='+jobId,
 				data : ({
@@ -77,9 +78,9 @@
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							$('#saveThisJobId').attr('target', '_blank');
-							$('#saveThisJobId').attr('href', val + '.html');
-							$("#saveThisJobId").displaypopup("#saveThisJobId",
+							$(saveThisJobIdid).attr('target', '_blank');
+							$(saveThisJobIdid).attr('href', val + '.html');
+							$(saveThisJobIdid).displaypopup(saveThisJobIdid,
 									"775", "252");
 
 						}
@@ -118,14 +119,14 @@
 				//alert('--' + aData['Company']+aData['JobId']);
 				var jobId = aData['JobId'];
 				var jobDesc = aData['AdText'];
-				
+				var saveThisJobIdid= "saveThisJobId"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p><br/>';
 				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;">';
 				sOut += 'Apply</a>';
 				sOut += '<a href="viewJobDetails.html?id='+jobId;
 				sOut += '" class="btn_sm white">View Details</a>';
-				sOut += '<a onclick="saveThisJob('+jobId+')" id="saveThisJobId" style=" cursor: default;"';
+				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
 				sOut += '" class="btn_sm white">Save This Job</a>';
 				sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				sOut += '<br/><br/>';
