@@ -66,6 +66,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/EmailDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmail.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/MMEmailService.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConstants.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/SolrParameter.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.java -text
