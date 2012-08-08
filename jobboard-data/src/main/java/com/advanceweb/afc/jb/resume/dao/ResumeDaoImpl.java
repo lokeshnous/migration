@@ -7,15 +7,16 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
@@ -25,6 +26,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
+import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
@@ -77,15 +79,23 @@ public class ResumeDaoImpl implements ResumeDao {
 	 */
 	@Override
 	public ResumeDTO editResume(int resumeId) {
+		ResumeDTO dto = new ResumeDTO();
 		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,
 				resumeId);
-		ResBuilderResume resumeBuilder = hibernateTemplate.get(
-				ResBuilderResume.class, resume.getUploadResumeId());
-		ResumeDTO dto = resumeConversionHelper
-				.transformResUploadResumeToResumeDTO(resume);
-		if (resumeBuilder != null) {
-			dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(
-					dto, resumeBuilder);
+		List<ResResumeProfile> resumeProfile = hibernateTemplate
+				.find("from ResResumeProfile where resumeId = " + resumeId);
+		if (resumeProfile != null && resumeProfile.size() > 0) {
+			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(
+					resume, resumeProfile);
+
+			ResBuilderResume resumeBuilder = hibernateTemplate.get(
+					ResBuilderResume.class, resume.getUploadResumeId());
+
+			if (resumeBuilder != null) {
+				dto = resumeConversionHelper
+						.transformResBuilderResumeToResumeDTO(dto,
+								resumeBuilder);
+			}
 		}
 		return dto;
 	}
@@ -99,28 +109,41 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public boolean updateResume(ResumeDTO resumeDTO) {
 
-		List<DropDownDTO> visibilityDropDown = populateDropdownsDAO
-				.populateDropdown(MMJBCommonConstants.VISIBILITY);
+		resumeVisibilityPublicToPrivate(resumeDTO);
+		
+		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,
+				resumeDTO.getUploadResumeId());
+
+		resume = resumeConversionHelper.transformAdvancedResumeBuilder(resume,resumeDTO);
+		hibernateTemplate.update(resume);
+		
+		hibernateTemplate.deleteAll(hibernateTemplate.find("from ResResumeProfile where resumeId = " + resume.getUploadResumeId()));
+		
+		List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
+		List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resume,resumeDTO,resumeAttrib);
+		hibernateTemplate.saveOrUpdateAll(resumeProfileList);
+		
+		return true;
+	}
+
+	private void resumeVisibilityPublicToPrivate(ResumeDTO resumeDTO) {
+		List<ResumeVisibilityDTO> visibilityDropDown = populateDropdownsDAO
+				.getResumeVisibilityList();
 		if (resumeDTO.getResumeVisibility().equals(
-				String.valueOf(visibilityDropDown.get(0).getOptionId()))) {
+				String.valueOf(visibilityDropDown.get(0).getVisibilityId()))) {
 			List<ResUploadResume> resumes = hibernateTemplate
 					.find("from ResUploadResume where userId = "
 							+ resumeDTO.getUserId() + " and uploadResumeId !="
 							+ resumeDTO.getUploadResumeId()
 							+ " and isPublished='"
-							+ visibilityDropDown.get(0).getOptionId() + "'");
+							+ visibilityDropDown.get(0).getVisibilityId() + "'");
 			if (resumes.size() > 0) {
-				resumes.get(0).setIsPublished(Integer.parseInt(visibilityDropDown.get(1).getOptionId()));
+				resumes.get(0).setIsPublished(
+						Integer.parseInt(visibilityDropDown.get(1)
+								.getVisibilityId()));
 				hibernateTemplate.update(resumes.get(0));
 			}
 		}
-
-		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,
-				resumeDTO.getUploadResumeId());
-		resume = resumeConversionHelper.transformAdvancedResumeBuilder(resume,
-				resumeDTO);
-		hibernateTemplate.update(resume);
-		return true;
 	}
 
 	/**
@@ -139,7 +162,33 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public boolean createResume(ResumeDTO resumeDTO) {
+		//if any public resumes , make it private 
+		resumeVisibilityPublicToPrivate(resumeDTO);
+		
+		Boolean result = false;
+		ResUploadResume resUploadResume = resumeConversionHelper
+				.transformAdvancedResumeBuilder(resumeDTO);
+		try {
+			hibernateTemplate.save(resUploadResume);
+			System.out.println(resUploadResume.getUploadResumeId());			
+			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
+			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
+			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
+			
+			result = true;
+		} catch (HibernateException e) {
+			result = false;
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean createResumeCopyPaste(ResumeDTO createResumeDTO) {
+		resumeVisibilityPublicToPrivate(createResumeDTO);
 		Boolean result = false;
 		ResUploadResume resUploadResume = resumeConversionHelper
 				.transformAdvancedResumeBuilder(createResumeDTO);
@@ -172,7 +221,7 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public boolean createResume(ResumeDTO resumeDTO) {
+	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
 		ResBuilderResume builderResume = resumeConversionHelper
 				.transformBuilderResume(resumeDTO);
 		List<ResBuilderCertification> builderCerts = resumeConversionHelper
@@ -291,14 +340,26 @@ public class ResumeDaoImpl implements ResumeDao {
 	public ResumeDTO getProfileAttributes() {
 		ResumeDTO dto = null;
 		try {
-			  List<ResResumeAttrib> listProfAttrib = hibernateTemplate.find("from ResResumeAttrib");
-			  dto = resumeConversionHelper.transformProfileAttrib(listProfAttrib);
-			
+			List<ResResumeAttrib> listProfAttrib = hibernateTemplate
+					.find("from ResResumeAttrib");
+			dto = resumeConversionHelper.transformProfileAttrib(listProfAttrib);
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
-		
+
 		return dto;
 	}
+	
+	@Override
+	public int findResumeCount(int userId) {
+		int resumeCount = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId));
+		return resumeCount;
+	}
 
+	@Override
+	public boolean checkDuplicateResumeName(String resumeName, int userId) {
+		int resumePresence = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and resumeName = '"+resumeName+"'"));
+		return resumePresence > 0;
+	}
 }

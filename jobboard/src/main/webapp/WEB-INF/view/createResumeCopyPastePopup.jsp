@@ -12,25 +12,24 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-	
-	jQuery(".megamenu").megamenu();
-
-	 $("#resumeType").change(function() {
-			var resumeType = $.trim($("#resumeType").val());
-			switch(resumeType){
-				case "ADVANCE Resume Builder":
-					$("#resumeBuilder").click();
-					break;
-				case "Upload Existing Resume":
-					$("#uploadResume").click();
-					break;
-				case "Copy and Paste":
-					$("#copyPaste").click();
-					break;
-			}
-	});
-
-	$("#create").click(function() {
+		jQuery(".megamenu").megamenu();
+		
+		 $("#resumeType").change(function() {
+				var resumeType = $.trim($("#resumeType").val());
+				switch(resumeType){
+					case "ADVANCE Resume Builder":
+						$("#resumeBuilder").click();
+						break;
+					case "Upload Existing Resume":
+						$("#uploadResume").click();
+						break;
+					case "Copy and Paste":
+						$("#copyPaste").click();
+						break;
+				}
+		});
+		 
+		$("#create").click(function() {
 
 											//validate the required fields
 											var resumeName = $.trim($(
@@ -103,6 +102,15 @@
 										});
 
 					});
+	function MM_jumpMenu(targ, selObj, restore) { //v3.0
+		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
+				+ "'");
+		/* createResumePopUp.html?resumeType=
+		createResumePopUp.html?resumeType=
+		createResumePopUp.html?resumeType= */
+		if (restore)
+			selObj.selectedIndex = 0;
+	}
 </script>
 </head>
 <body class="job_board">
@@ -197,9 +205,16 @@
 						<span class="required">(Required)</span>
 					</div>
 				</div>
+				<div class="rowEvenNewSpacing">
+					<span class="lableText4 TextAlignL">Paste Resume:</span>
+					<div class="clearfix"></div>
+					<textarea id="Body Text:"
+						class="textareaBoxCResume width615 Height255 marginTop5 "
+						name="Body Text:" cols="45" rows="3"></textarea>
+				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> <a id="create" href="#"
-						class="btn_sm orange">Create</a> <a href="#"
+						class="btn_sm orange">Save</a> <a href="#"
 						class="nyroModalClose btn_sm orange">Cancel</a></span>
 				</div>
 				<a id="resumeBuilder" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder" class="nyroModal"></a>

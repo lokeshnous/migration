@@ -28,6 +28,8 @@ public class ResumeServiceTest extends ServiceTest {
 	private ResumeService resumeService;
 	
 	
+	
+	
 	/**
 	 * 
 	 * Create resume for copy paste for userid=2
@@ -36,20 +38,21 @@ public class ResumeServiceTest extends ServiceTest {
 	public void testCreateResume() {
 		try {
 			ResumeDTO createResumeDTO=new ResumeDTO();
-			createResumeDTO.setUserId(Integer.parseInt("10"));
-			createResumeDTO.setResumeType("Create");
-			createResumeDTO.setResumeName("Test");
-			createResumeDTO.setDesiredJobTitle("Tilt");
-			createResumeDTO.setDesiredEmploymentType("31");
-			createResumeDTO.setWorkAuthorizationUS("35");
-			createResumeDTO.setWillingToRelocate("Y");
-			createResumeDTO.setResumeVisibility("1");			
+			createResumeDTO.setUserId(Integer.parseInt("2"));
+			createResumeDTO.setResumeType("ADVANCE Resume Builder");
+			createResumeDTO.setResumeName("Test Resume");
+			createResumeDTO.setDesiredJobTitle("Job Tilt");
+			createResumeDTO.setDesiredEmploymentType("Per Diem");
+			createResumeDTO.setWorkAuthorizationUS("I am authorized to work in US for any employer");
+			createResumeDTO.setWillingToRelocate("Yes");
+			//createResumeDTO.setResumeVisibility("1");			
 			createResumeDTO.setIsPublished("1");
-			assertTrue("Create Resume", resumeService.createResumeCopyPaste(createResumeDTO));
+			assertTrue("Create Resume", resumeService.createResume(createResumeDTO));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 	@Test
 	public void testCreateResume2() {

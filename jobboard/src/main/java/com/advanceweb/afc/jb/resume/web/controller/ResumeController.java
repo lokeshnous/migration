@@ -131,7 +131,7 @@ public class ResumeController {
 		
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO=new ResumeDTO();
-		resumeDTO.setUserId(30);
+		resumeDTO.setUserId(2);
 		resumeDTO.setResumeType(createResume.getResumeType());
 		resumeDTO.setResumeName(createResume.getResumeName());
 		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
@@ -140,7 +140,7 @@ public class ResumeController {
 		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
 		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
 		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-		resumeService.createResumeCopyPaste(resumeDTO);
+		resumeService.createResume(resumeDTO);
 		
 		CertificationsForm certForm = new CertificationsForm();
 		EducationForm eduForm = new EducationForm();
@@ -240,15 +240,15 @@ public class ResumeController {
 		createResume.setResumeName(resumeDTO.getResumeName());
 		createResume.setResumeType(resumeDTO.getResumeType());
 		createResume.setDesiredJobTitle(resumeDTO.getDesiredJobTitle());
-		createResume.setDesiredEmploymentType(resumeDTO.getEmploymentType());
+		createResume.setDesiredEmploymentType(resumeDTO.getDesiredEmploymentType());
 		createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
 		createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
 		createResume.setResumeVisibility(resumeDTO.getResumeVisibility());
 		
-		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown(MMJBCommonConstants.WORK_AUTH_US);
-		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown(MMJBCommonConstants.RELOCATE);
-		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
+		List<ResumeAttribListDTO> employmentTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<ResumeAttribListDTO> workAuthUSList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.WORK_AUTH_US);
+		List<ResumeAttribListDTO> relocateList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RELOCATE);
+		List<ResumeVisibilityDTO> visibilityList = populateDropdownsService.getResumeVisibilityList();
 		
 		model.addObject("resumeForm", createResume);
 		model.addObject("resumeDetail", resumeDTO);
@@ -273,7 +273,7 @@ public class ResumeController {
 		ModelAndView model = new ModelAndView();
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
-		resumeDTO.setUserId(30);
+		resumeDTO.setUserId(2);
 		
 		resumeDTO.setUploadResumeId(Integer.parseInt(createResume.getUploadResumeId()));
 		resumeDTO.setResumeName(createResume.getResumeName());
@@ -288,7 +288,7 @@ public class ResumeController {
 		
 		//depending on the resume type either move to resume builder or show excel file 
 		
-		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO.getResumeType())){ 
+		if(MMJBCommonConstants.RESUME_TYPE.equals(resumeDTO.getResumeType())){ 
 			resumeDTO = resumeService.editResume(resumeDTO.getUploadResumeId());
 			
 			transCreateResume.transformCreateResumeForm(resumeDTO);
@@ -416,20 +416,26 @@ public class ResumeController {
 
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
 	public ModelAndView createResumePopUp(@RequestParam("resumeType") String resumeType) {
-
-		List<DropDownDTO> employmentTypeList = populateDropdownsService.populateDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> workAuthUSList = populateDropdownsService.populateDropdown(MMJBCommonConstants.WORK_AUTH_US);
-		List<DropDownDTO> relocateList = populateDropdownsService.populateDropdown(MMJBCommonConstants.RELOCATE);
-		List<DropDownDTO> visibilityList = populateDropdownsService.populateDropdown(MMJBCommonConstants.VISIBILITY);
+		
+		List<ResumeAttribListDTO> resumeTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RESUME_TYPE);
+		List<ResumeAttribListDTO> employmentTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<ResumeAttribListDTO> workAuthUSList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.WORK_AUTH_US);
+		List<ResumeAttribListDTO> relocateList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RELOCATE);
+		List<ResumeVisibilityDTO> visibilityList = populateDropdownsService.getResumeVisibilityList();
 		
 		CreateResume createResume = new CreateResume();
 		
-		ResumeDTO resumeDTO = resumeService.getProfileAttributes();
-
-		createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
+		//ResumeDTO resumeDTO = resumeService.getProfileAttributes();
+		//createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
 		
+		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_YES);
+		createResume.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
 		ModelAndView model = new ModelAndView();
+
+		createResume.setResumeType(resumeType);
+
 		model.addObject("createResume", createResume);
+		model.addObject("resumeTypeList", resumeTypeList);
 		model.addObject("employmentType", employmentTypeList);
 		model.addObject("workAuthUS", workAuthUSList);
 		model.addObject("resumeVisibility", visibilityList);
@@ -440,16 +446,39 @@ public class ResumeController {
 			return model;
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD .equals(resumeType)){
-			model.setViewName("uploadreumepopup");
+			model.setViewName("createResumeUploadPopup");			
 			return model;
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeType)){
-			model.setViewName("copypasteresumepopup");
+			model.setViewName("createResumeCopyPastePopup");
 			return model;
 		}
 		model.setViewName("createresumepopup");
 		return model;
 	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.GET)
+	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName) {
+		int userId = 2;
+		int resumeCount = resumeService.findResumeCount(userId);
+		JSONObject warningMessage = new JSONObject();
+		if(resumeCount == 5){
+			warningMessage.put("maxResume", "You can create 5 resume at max.");
+			return warningMessage;
+		}
+		if(!("".equals(resumeName)) && resumeService.checkDuplicateResumeName(resumeName, userId)){
+			warningMessage.put("duplicateResume", "Resume Name already exists, Please try again.");
+			return warningMessage;
+		}
+		return warningMessage;		
+	}
+	
 	
 	public List<ResumeProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
 		

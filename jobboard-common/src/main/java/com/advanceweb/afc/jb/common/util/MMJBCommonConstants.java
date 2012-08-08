@@ -12,18 +12,25 @@ public interface MMJBCommonConstants {
 	public static final String MOBILE_PATTERN = "((?=.*\\d).{10})";
 	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-	public static final String RESUME_TYPE_RESUME_BUILDER = "Create";
-	public static final String RESUME_TYPE_UPLOAD = "Upload";
-	public static final String RESUME_TYPE_COPY_PASTE = "CopyPaste";
-	// For DropDowns 
+	public static final String RESUME_TYPE_RESUME_BUILDER = "ADVANCE Resume Builder";
+	public static final String RESUME_TYPE_UPLOAD = "Upload Existing Resume";
+	public static final String RESUME_TYPE_COPY_PASTE = "Copy and Paste";
+	// For DropDowns
+	public static final String RESUME_TYPE = "ResumeType";	
+	public static final String DESIRED_JOB_TITLE = "JobTitle";
 	public static final String EMPLOYMENT_TYPE = "EmploymentType";
-	public static final String VISIBILITY = "Visibility" ;
-	public static final String WORK_AUTH_US = "WorkAuthUS";
+	public static final String WORK_AUTH_US = "WorkAuthorization";
 	public static final String RELOCATE = "Relocate";
+	public static final String RESUME_VISIBILITY = "ResumeVisibility" ;
+	public static final String VISIBILITY = "Visibility" ;
+	
+	//Relocate
+	public static final String RELOCATE_YES = "Yes" ;
+	public static final String RELOCATE_NO = "No" ;
 	
 	//Resume Visibility
-	public static final String VISIBILITY_PUBLIC = "Public" ;
-	public static final String VISIBILITY_PRIVATE = "Private";
+	public static final String VISIBILITY_PUBLIC = "1" ;
+	public static final String VISIBILITY_PRIVATE = "2";
 
 	// For SOLR search
 	int ZERO_INT = 0;

@@ -29,6 +29,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
+import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 
 /**
@@ -46,7 +47,7 @@ public class ResumeConversionHelper {
 	 * @param resume
 	 * @return resumeDTO
 	 */
-	public ResumeDTO transformResUploadResumeToResumeDTO(ResUploadResume resume) {
+	public ResumeDTO transformResUploadResumeToResumeDTO(ResUploadResume resume , List<ResResumeProfile> resumeProfileList) {
 
 		ResumeDTO resumeDTO = new ResumeDTO();
 		resumeDTO.setUploadResumeId(resume.getUploadResumeId());
@@ -57,11 +58,27 @@ public class ResumeConversionHelper {
 					.convertSQLDateTimeToStdDateTime(resume.getUpdateDt()
 							.toString()));
 		}
-		// resumeDTO.setDesired_job_title(resume.getJobTitle());
-		// resumeDTO.setEmploymentType(String.valueOf(resume.getEmpTypeLookupId()));
-		// resumeDTO.setWilling_to_relocate(resume.getRelocate());
-		// resumeDTO.setResume_visibility(resume.getVisibility___Public_Private__());
-		// resumeDTO.setWork_authorization_US(String.valueOf(resume.getWorkAuthLookupId()));
+		
+		for(ResResumeProfile resumeProfile : resumeProfileList){
+			
+			String formType = resumeProfile.getResResumeAttrib().getName();
+			
+			if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(formType)){
+				resumeDTO.setDesiredJobTitle(resumeProfile.getAttribValue());
+			}
+			else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(formType)){
+				resumeDTO.setDesiredEmploymentType(resumeProfile.getAttribValue());
+			}
+			else if(MMJBCommonConstants.WORK_AUTH_US.equals(formType)){
+				resumeDTO.setWorkAuthorizationUS(resumeProfile.getAttribValue());
+			}
+			else if(MMJBCommonConstants.RELOCATE.equals(formType)){
+				resumeDTO.setWillingToRelocate(resumeProfile.getAttribValue());
+			}
+			else if(MMJBCommonConstants.RESUME_VISIBILITY.equals(formType)){
+				resumeDTO.setResumeVisibility(resumeProfile.getAttribValue());
+			}
+		}
 		return resumeDTO;
 
 	}
@@ -336,12 +353,13 @@ public class ResumeConversionHelper {
 		resUploadResume.setUserId(createResumeDTO.getUserId());
 		resUploadResume.setResumeType(createResumeDTO.getResumeType());
 		resUploadResume.setResumeName(createResumeDTO.getResumeName());
-		// resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		// resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		// resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		// resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		// resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
-		// resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
+    	resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
+    	
+    	// resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
+    			// resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
+    			// resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
+    			// resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
+    	resUploadResume.setIsPublished(Integer.parseInt(createResumeDTO.getResumeVisibility()));
 
 		return resUploadResume;
 	}
@@ -350,25 +368,64 @@ public class ResumeConversionHelper {
 	 * This method is called to convert resumeDTO to ResUploadResume Entity for
 	 * copy paste
 	 * 
-	 * @param createResumeDTO
+	 * @param resumeDTO
 	 * @return
 	 */
 	public ResUploadResume transformAdvancedResumeBuilder(
-			ResUploadResume resUploadResume, ResumeDTO createResumeDTO) {
+			ResUploadResume resUploadResume, ResumeDTO resumeDTO) {
 
-		// resUploadResume.setUserId(createResumeDTO.getUserId());
-		resUploadResume.setResumeType(createResumeDTO.getResumeType());
-		resUploadResume.setResumeName(createResumeDTO.getResumeName());
-		// resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		// resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		// resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		// resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		// resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
-		// resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
+		resUploadResume.setUserId(resumeDTO.getUserId());
+		resUploadResume.setResumeType(resumeDTO.getResumeType());
+		resUploadResume.setResumeName(resumeDTO.getResumeName());
+		resUploadResume.setIsPublished(Integer.parseInt(resumeDTO.getResumeVisibility()));
 		resUploadResume.setUpdateDt(new Timestamp(new Date().getTime()));
 
 		return resUploadResume;
 	}
+	
+	/**
+	 * This method is called to convert resumeDTO to ResUploadResume Entity for
+	 * copy paste
+	 * 
+	 * @param resumeDTO
+	 * @return
+	 */
+	public List<ResResumeProfile> transformResumeDTOResResumeProfile(
+			ResUploadResume resUploadResume, ResumeDTO resumeDTO ,List<ResResumeAttrib> resumeAttribs) {
+		
+		List<ResResumeProfile> resumeProfileList = new ArrayList<ResResumeProfile>();
+		
+		for(ResResumeAttrib resumeAttrib :resumeAttribs){
+			ResResumeProfile resumeProfile = new ResResumeProfile();
+			if(MMJBCommonConstants.RESUME_TYPE.equals(resumeAttrib.getName())){
+				continue;
+			}
+			else if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(resumeAttrib.getName())){
+				resumeProfile.setAttribValue(resumeDTO.getDesiredJobTitle());
+			}
+			else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(resumeAttrib.getName())){
+				resumeProfile.setAttribValue(resumeDTO.getDesiredEmploymentType());
+			}
+			else if(MMJBCommonConstants.WORK_AUTH_US.equals(resumeAttrib.getName())){
+				resumeProfile.setAttribValue(resumeDTO.getWorkAuthorizationUS());
+			}
+			else if(MMJBCommonConstants.RELOCATE.equals(resumeAttrib.getName())){
+				resumeProfile.setAttribValue(resumeDTO.getWillingToRelocate());
+			}
+			else if(MMJBCommonConstants.RESUME_VISIBILITY.equals(resumeAttrib.getName())){
+				resumeProfile.setAttribValue(resumeDTO.getResumeVisibility());
+			}
+			resumeProfile.setResResumeAttrib(resumeAttrib);
+			resumeProfile.setResumeId(resUploadResume.getUploadResumeId());
+			resumeProfile.setResumeType(resUploadResume.getResumeType());
+			resumeProfile.setCreateDt(new Timestamp(new Date().getTime()));
+			resumeProfileList.add(resumeProfile);
+		}
+		
+
+		return resumeProfileList;
+	}
+	
 
 	/**
 	 * This method is called to convert resumeDTO to ResUploadResume Entity for

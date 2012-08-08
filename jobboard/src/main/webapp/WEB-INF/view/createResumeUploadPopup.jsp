@@ -12,25 +12,24 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-	
-	jQuery(".megamenu").megamenu();
-
-	 $("#resumeType").change(function() {
-			var resumeType = $.trim($("#resumeType").val());
-			switch(resumeType){
-				case "ADVANCE Resume Builder":
-					$("#resumeBuilder").click();
-					break;
-				case "Upload Existing Resume":
-					$("#uploadResume").click();
-					break;
-				case "Copy and Paste":
-					$("#copyPaste").click();
-					break;
-			}
-	});
-
-	$("#create").click(function() {
+		jQuery(".megamenu").megamenu();
+		
+		 $("#resumeType").change(function() {
+				var resumeType = $.trim($("#resumeType").val());
+				switch(resumeType){
+					case "ADVANCE Resume Builder":
+						$("#resumeBuilder").click();
+						break;
+					case "Upload Existing Resume":
+						$("#uploadResume").click();
+						break;
+					case "Copy and Paste":
+						$("#copyPaste").click();
+						break;
+				}
+		});
+		 
+		$("#create").click(function() {
 
 											//validate the required fields
 											var resumeName = $.trim($(
@@ -103,6 +102,15 @@
 										});
 
 					});
+	function MM_jumpMenu(targ, selObj, restore) { //v3.0
+		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
+				+ "'");
+		/* createResumePopUp.html?resumeType=
+		createResumePopUp.html?resumeType=
+		createResumePopUp.html?resumeType= */
+		if (restore)
+			selObj.selectedIndex = 0;
+	}
 </script>
 </head>
 <body class="job_board">
@@ -128,6 +136,10 @@
 					<span class="required">(Required)</span>
 
 				</div>
+				<div class="rowEvenNewSpacing">
+					<span class="lableText4">Upload Resume:</span>
+                	<span class="floatLeft marginTop5"><a href="" class="btn_sm orange">Choose File</a></span><span class="required paddingTop0 marginTop4 TextColorA05">No File Chosen</span><span class="required paddingTop0 marginTop4">(Required)</span>
+            	</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
 					<!-- <input type="text" name="lastname" class="job_seeker_password textBox2" /><span class="required">(Required)</span> -->
@@ -197,6 +209,7 @@
 						<span class="required">(Required)</span>
 					</div>
 				</div>
+				
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> <a id="create" href="#"
 						class="btn_sm orange">Create</a> <a href="#"

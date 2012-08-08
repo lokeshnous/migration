@@ -22,6 +22,7 @@ public interface ResumeDao {
 	boolean deleteResume(int resumeId);
 	boolean updateResume(ResumeDTO resumeDTO);
 	boolean createResume(ResumeDTO resumeDTO);
+	boolean createResumeBuilder(ResumeDTO resumeDTO);
 	boolean createResumeCopyPaste ( ResumeDTO resumeDTO );
 	boolean createResumeUpload (ResumeDTO resumeDTO);
 	
@@ -38,4 +39,6 @@ public interface ResumeDao {
 	 * @return
 	 */
 	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
+	int findResumeCount(int userId);
+	boolean checkDuplicateResumeName(String resumeName,int userId);
 }

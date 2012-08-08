@@ -22,8 +22,9 @@ public interface ResumeService {
 	ResumeDTO editResume(int resumeId);
 	boolean deleteResume(int resumeId);
 	boolean updateResume(ResumeDTO resumeDTO);
+	boolean createResume(ResumeDTO createResumeDTO);
 	boolean createResumeBuilder(ResumeDTO resumeDTO);
-
+	
 	boolean createResumeCopyPaste(ResumeDTO createResumeDTO);
 	boolean createResumeUpload(ResumeDTO createResumeDTO);
 	
@@ -40,5 +41,7 @@ public interface ResumeService {
 	 * @return
 	 */
 	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
+	int findResumeCount(int userId);
+	boolean checkDuplicateResumeName(String resumeName,int userId);
 }
 

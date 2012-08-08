@@ -72,6 +72,12 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean createResume(ResumeDTO resumeDTO) {
+		return resumeDao.createResume(resumeDTO);
+		
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean createResumeCopyPaste(ResumeDTO resumeDTO) {
 		return resumeDao.createResumeCopyPaste(resumeDTO);
 		
@@ -87,7 +93,7 @@ public class ResumeServiceImpl implements ResumeService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
 		
-		return resumeDao.createResume(resumeDTO);
+		return resumeDao.createResumeBuilder(resumeDTO);
 	}
 
 	@Override
@@ -135,6 +141,16 @@ public class ResumeServiceImpl implements ResumeService {
 	@Override
 	public ResumeDTO getProfileAttributes() {
 		return resumeDao.getProfileAttributes();
+	}
+	
+	@Override
+	public int findResumeCount(int userId) {
+		return resumeDao.findResumeCount(userId);
+	}
+
+	@Override
+	public boolean checkDuplicateResumeName(String resumeName, int userId) {
+		return resumeDao.checkDuplicateResumeName(resumeName, userId);
 	}
 
 }
