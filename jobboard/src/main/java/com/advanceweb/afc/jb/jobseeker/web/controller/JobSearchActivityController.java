@@ -320,6 +320,8 @@ public class JobSearchActivityController {
 		
 		if(!StringUtils.isEmpty((String) session.getAttribute(MMJBCommonConstants.USER_ID))){
 			sessionId = (String) session.getAttribute(MMJBCommonConstants.USER_ID);
+		}else{
+			LOGGER.info("Session ID is not present since it is a Anonymous user.");
 		}
 		
 		long start = Long.parseLong(jobSearchResultForm.getStart());
