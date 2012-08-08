@@ -22,6 +22,7 @@
 		
 		<script type="text/javascript" 
 		src="../resources/js/jquery-ui.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
 
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
