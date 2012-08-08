@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.login.service.LoginFormService;
-import com.advanceweb.afc.jb.user.dao.UserDao;
 
 public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
