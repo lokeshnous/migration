@@ -15,6 +15,13 @@
  	    <link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css">
     	<script type="text/javascript" language="javascript" src="/media/js/jquery.js"></script>
     	<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+    	<!-- <script type="text/javascript" 
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" 
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script> -->
+		
+		<script type="text/javascript" 
+		src="../resources/js/jquery-ui.min.js"></script>
 
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
@@ -37,7 +44,8 @@
 		function validateRadius() {
 			var cityState = $.trim($("#cityState").val());
 			var radius = $.trim($("#radius").val());
-			if(radius.length != 0 && cityState.length == 0){
+			
+			if(radius != 0 && cityState.length == 0){
 				//$("#radius").val("");
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code');
 			}else{
@@ -52,12 +60,9 @@
 			if(keywords.length == 0){
 				status = false;
 				$('#findSearchInfo').html('Please enter the \"Job Title, Keyword, Job Id, Company Name\" to perform a search.');
-			}else if(radius.length != 0 && cityState.length == 0){
+			}else if(radius != 0 && cityState.length == 0){
 				status = false;
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code.');
-			}else if(cityState.length != 0 && radius.length == 0){
-				status = false;
-				$('#findSearchInfo').html('Please select a mileage range to search within');
 			}else{
 				$('#findSearchInfo').html('');
 			}
@@ -217,6 +222,8 @@
 												}
 										        }
 											$("#TotalNoRecords").text(data.TotalNoRecords);
+											$("#TotalRecord").text(data.TotalNoRecords);
+											$("#SearchCriteria").text(keywords);
 											});
 									return true;
 									
@@ -254,7 +261,23 @@
 														table.fnClose(nTr);
 													}
 												});
+								
+								
+								
 							});
+			
+			
+			 $(document).ready(function() {
+				var cityState = $("#cityState").val();
+				var url = "../jobsearchactivity/findLocation.html?cityState="+cityState;
+				//alert(url);
+				$( "#cityState" ).autocomplete({
+					source: url
+				});
+				
+			}); 
+			
+			
 		</script>
 		
 		</head>
@@ -379,15 +402,15 @@
 	                      <form:input path="keywords" maxlength="60" id="keywords" cssClass="jb_input1" />
 	                      <div class="toolTipBefore"><label for="keywords">Job Title, Keywords, Job ID, Company Name </label></div> <div class="toolTip"><span class="classic"><p>Type in your search criteria here. Include any group of terms related to your desired position. Click on 'Advanced Search' below for more options.</p></span></div>
 	                      <br/>
-	                      <div class="input_grp1 marginTop10">
-	                       <form:input path="cityState"  id="cityState" cssClass="jb_input2" />
+	                      <div class="input_grp1 marginTop10" >
+	                       <form:input path="cityState"  id="cityState" cssClass="jb_input2" size=""/>
 	                	  <!-- <input type="text" name="cityState" id="cityState" class="jb_input2" /> -->
 	                <br/>
 	                <div class="toolTipBefore"><label for="cityState">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
 	              </div>
 	                      <div class="input_grp2 marginTop10">
-	                <form:select path="radius" id="radius" cssClass="jb_input3" onchange="validateRadius();">
-	                	<form:option label="--" value=""/>
+	                <form:select path="radius" id="radius" cssClass="jb_input3" >
+	                	<form:option label="--" value="0"/>
 	                	<!-- USE <form:options/> while dynamically populating the values  -->
 	                	<form:option label="5 Miles" value="5"/>
 	                	<form:option label="10 Miles" value="10"/>
@@ -401,7 +424,7 @@
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
 	                      <div style="color: red;font-weight:bold; height: 30px;" id="findSearchInfo" ></div>
-	                    <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" />
+	                    <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" onclick="validateRadius();"/>
 	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  
                       
@@ -462,7 +485,7 @@
               <!-- ad_col_right -->
               <div class="clearfix"></div>
       <div class="row ">
-        <div class="row marginTop5 paddingBottom05"><div class="floatLeft"><h1 class="FontSize24">200 Nurse jobs match your search criteria.</h1></div> </div>
+        <div class="row marginTop5 paddingBottom05"><div class="floatLeft"><h1 class="FontSize24"><span id="TotalRecord"></span> <span id="SearchCriteria"></span> jobs match your search criteria.</h1></div> </div>
        	
 
       </div>
