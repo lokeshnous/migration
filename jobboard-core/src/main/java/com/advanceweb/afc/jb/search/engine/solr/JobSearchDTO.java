@@ -64,7 +64,7 @@ public class JobSearchDTO implements Serializable{
 	@Field("jobposition")
 	private String jobPosition;
 	
-	@Field("job_title")
+	@Field("jobtitle")
 	private String jobTitle;
 	
 	@Field("postcode")
