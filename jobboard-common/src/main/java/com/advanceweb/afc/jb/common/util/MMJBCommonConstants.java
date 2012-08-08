@@ -34,6 +34,8 @@ public interface MMJBCommonConstants {
 
 	// For SOLR search
 	int ZERO_INT = 0;
+	String NULL_STR = "null";
+	String USER_ID = "userId";
 	String TEMP_SESSION_ID = "JS0011";
 	String SPACE_OPN_BRCKT = " (";
 	String CLSG_BRCKT = ")";
