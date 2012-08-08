@@ -24,5 +24,23 @@ public interface LocationDAO {
 	List<LocationDTO> getLocationByCityState(String city, String state) throws JobBoardDataException;
 	
 	
+	/**
+	 * This method gets the Postcode  from the JPLocation table.
+	 * @param String  city and state
+	 * @return List<LocationDTO> of postcode
+	 */
+	
+	
+	List<LocationDTO> getPostcodeLocationByKeyword(String keywords);
+	
+	/**
+	 * This method gets the City and State from the JPLocation table.
+	 * @param String postcode
+	 * @return List<LocationDTO> of city and state
+	 */
+	
+	List<LocationDTO> getCityStateLocationByKeyword(String keywords);
+	
+	
 
 }
