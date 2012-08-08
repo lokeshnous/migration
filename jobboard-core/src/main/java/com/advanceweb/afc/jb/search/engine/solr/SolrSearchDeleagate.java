@@ -94,9 +94,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		QueryResponse response = null;
 		QueryDTO queryDTO = null;
 
-		if (StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.SESSION_ID))) {
-			LOGGER.info("Session ID is not present in the Search query.");
-		}
+		
 		if (StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.SEARCH_SEQ))) {
 			LOGGER.info(" Sequence ID is not present in the Search query.");
 		}
