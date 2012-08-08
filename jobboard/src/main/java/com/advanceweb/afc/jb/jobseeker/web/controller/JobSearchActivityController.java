@@ -32,10 +32,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
@@ -285,7 +287,7 @@ public class JobSearchActivityController {
 	 * @param result
 	 * @param model
 	 * @return JSON Object
-	 * @throws UnsupportedEncodingException
+	 * 
 	 */
 
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
@@ -299,8 +301,7 @@ public class JobSearchActivityController {
 		String searchName = MMJBCommonConstants.EMPTY;// will be replaced by BASIC_SEARCH
 		
 		/**Check if city state and radius field is not empty to check for LOCATION search**/
-		if(StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())  
-				&& StringUtils.isEmpty(jobSearchResultForm.getRadius().trim())){
+		if(StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())){
 			
 			if(!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())){
 				searchName = MMJBCommonConstants.KEYWORD;
@@ -562,5 +563,34 @@ public class JobSearchActivityController {
 		Matcher matcher = pattern.matcher(emailAddress);
 		return matcher.matches();
 	}
+	
+	/**
+	 * This method will be used for Autocomplete for city, state or Postcode 
+	 * and Return List<String>.
+	 * @param String keyword
+	 * @return List<String> Object
+	 */
+	
+	@RequestMapping(value = "/findLocation", method = RequestMethod.GET, headers="Accept=*/*")
+	public @ResponseBody
+	List<String> findLocation(@RequestParam("term") String keyword) {
+
+		List<LocationDTO> locationDTOList = jobSearchService.locationSearch(keyword.trim());
+		
+		if (locationDTOList != null) {
+			/**
+			 * Returning the List<String> based on Post code search or CityState search
+			 */
+			if(MMUtils.isIntNumber(keyword)){
+				return MMUtils.convertToPostcodeStringList(locationDTOList);
+			}else{
+				return MMUtils.convertToCityStateStringList(locationDTOList);
+			}
+		}
+		
+		return null;
+	}
+	
+	
 
 }
