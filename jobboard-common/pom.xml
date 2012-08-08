@@ -96,11 +96,36 @@
 		</dependency>
 		
 		<!-- Spring Security -->
-		<dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>3.1.0.RELEASE</version>
+    </dependency>
+    
+    <dependency>
     	<groupId>org.springframework.security</groupId>
-    	<artifactId>spring-security-core</artifactId>
-    	<version>3.0.5.RELEASE</version>
+    	<artifactId>spring-security-config</artifactId>
+    	<version>3.1.0.RELEASE</version>
     	<scope>compile</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-web</artifactId>
+    	<version>3.1.0.RELEASE</version>
+    	<scope>compile</scope>
+    </dependency>
+    
+    <dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-taglibs</artifactId>
+	    <version>3.1.0.RELEASE</version>
+	    <scope>compile</scope>
+	</dependency>
+    
+    <!-- <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>3.0.7.RELEASE</version>
     </dependency>
     
     <dependency>
@@ -121,6 +146,6 @@
 	    <artifactId>spring-security-taglibs</artifactId>
 	    <version>3.1.0.RELEASE</version>
 	    <scope>compile</scope>
-	</dependency>
+	</dependency> -->
 	</dependencies>
 </project>
