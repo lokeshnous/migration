@@ -170,18 +170,16 @@ public class JobSearchActivityController {
 			@RequestParam String userID, @RequestParam("id") int jobId, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(jobId);
-		int userId = (Integer)session.getAttribute("userId");
 		form.setUseremail("merion@nousinfosystems.com");
 		try {
-			/**
-			 * Check for job seeker login
-			 */
-			Boolean isjobSeekerLogedin = Boolean.FALSE;
-			if (isjobSeekerLogedin) {
+			
+			 //Check for job seeker login
+			if (session.getAttribute("userId") == null) {
 				map.put("loginForm", new LoginForm());
 				jsonObject.put("navigationPath", "jobSeekerLogin");
 				return jsonObject;
 			}
+			int userId = (Integer)session.getAttribute("userId");
 
 			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
@@ -380,8 +378,7 @@ public class JobSearchActivityController {
 		/**
 		 * Check for job seeker login ,open popup if not logged in.
 		 */
-		Boolean isjobSeekerLogedin = Boolean.FALSE;
-		if (isjobSeekerLogedin) {
+		if (session.getAttribute("userId") == null) {
 			jsonObject.put(ajaxNavigationPath, "jobseekersaveThisJobPopUp");
 			return jsonObject;
 			// return new ModelAndView("jobseekersaveThisJobPopUp");
