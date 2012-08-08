@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -30,7 +31,7 @@ public class LocationDAOImpl implements LocationDAO{
 	
 	
 	private HibernateTemplate hibernateTemplate;
-
+	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -48,7 +49,6 @@ public class LocationDAOImpl implements LocationDAO{
 		try {
 			@SuppressWarnings("unchecked")
 			List<JpLocation> joLocationList = hibernateTemplate.find(" from  JpLocation WHERE  postcode  = '"+postcode+"'");
-			
 			
 			if(joLocationList != null){
 				for(JpLocation locObj: joLocationList){
@@ -78,10 +78,10 @@ public class LocationDAOImpl implements LocationDAO{
 		List<LocationDTO> latLonList = new ArrayList<LocationDTO>();
 		try {
 			@SuppressWarnings("unchecked")
-			List<JpLocation> joLocationList = hibernateTemplate.find(" from  JpLocation WHERE  city  = '"+city+"' and state = '"+state+"'");
+			List<JpLocation> jpLocationList = hibernateTemplate.find(" from  JpLocation WHERE  city  = '"+city+"' and state = '"+state+"'");
 			
-			if(joLocationList != null){
-				for(JpLocation locObj: joLocationList){
+			if(jpLocationList != null){
+				for(JpLocation locObj: jpLocationList){
 					LocationDTO locDTO = new LocationDTO();
 					locDTO.setLatitude(locObj.getLatitude());
 					locDTO.setLongitude(locObj.getLongitude());
@@ -96,5 +96,71 @@ public class LocationDAOImpl implements LocationDAO{
 		return latLonList;
 		
 	}
+	
+	
+	/**
+	 * This method gets the Postcode  from the JPLocation table.
+	 * @param String  city and state
+	 * @return List<LocationDTO> of postcode
+	 */
+	
+	public List<LocationDTO> getPostcodeLocationByKeyword(String keywords){
+		
+		LOGGER.info("The value of passes keyword is "+keywords);
+		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
+		
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(" from  JpLocation WHERE  postcode like '"+keywords+"%' ORDER BY  postcode ASC");
+		query.setMaxResults(10);
+		@SuppressWarnings("unchecked")
+		List<JpLocation> jpLocationList = query.list();
+		
+		if(jpLocationList != null){
+			for(JpLocation locObj: jpLocationList){
+					LocationDTO locDTO = new LocationDTO();
+					locDTO.setPostcode(locObj.getPostcode());
+					locationList.add(locDTO);
+			}
+		}
+		LOGGER.info("Location List size after Post code search is "+locationList.size());	
+		return locationList;
+	}
+	
+	/**
+	 * This method gets the City and State from the JPLocation table.
+	 * @param String postcode
+	 * @return List<LocationDTO> of city and state
+	 */
+	
+	public List<LocationDTO> getCityStateLocationByKeyword(String keywords){
+		
+		LOGGER.info("The value of passes keyword is "+keywords);
+		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
+		
+		@SuppressWarnings("unchecked")
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("from  JpLocation WHERE  city like '"+keywords+"%' ORDER BY  city, state  ASC");
+		query.setMaxResults(10);
+		List<JpLocation> jpLocationList = query.list();
+  		
+  		if(jpLocationList != null){
+			for(JpLocation locObj: jpLocationList){
+					LocationDTO locDTO = new LocationDTO();
+					locDTO.setCity(locObj.getCity());
+					locDTO.setState(locObj.getState());
+					locationList.add(locDTO);
+			}
+		}
+  		
+  		LOGGER.info("Location List size after city state search is "+locationList.size());
+  		return locationList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
