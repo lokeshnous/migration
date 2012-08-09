@@ -318,8 +318,8 @@ public class JobSearchActivityController {
 		//String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 		String sessionId = MMJBCommonConstants.NULL_STR;
 		
-		if(!StringUtils.isEmpty((String) session.getAttribute(MMJBCommonConstants.USER_ID))){
-			sessionId = (String) session.getAttribute(MMJBCommonConstants.USER_ID);
+		if(!StringUtils.isEmpty(String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID)))){
+			sessionId = String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID));
 		}else{
 			LOGGER.info("Session ID is not present since it is a Anonymous user.");
 		}
@@ -387,7 +387,7 @@ public class JobSearchActivityController {
 		 * Check for job seeker login ,open popup if not logged in.
 		 */
 		if (session.getAttribute("userId") == null) {
-			jsonObject.put(ajaxNavigationPath, "jobseekersaveThisJobPopUp");
+			jsonObject.put(ajaxNavigationPath, "../jobsearchactivity/jobseekersaveThisJobPopUp");
 			return jsonObject;
 			// return new ModelAndView("jobseekersaveThisJobPopUp");
 		}

@@ -364,6 +364,8 @@ jobboard/src/main/resources/viewcareerlinkContents.html -text
 jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
+jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
+jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text
@@ -388,6 +390,8 @@ jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotYourPasswordPagePopUp.jsp -
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresults.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsBody.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsHeader.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerEditProfileSettings.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerJobDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerchangepassword.jsp -text
@@ -417,6 +421,7 @@ jobboard/src/main/webapp/resources/css/basic_ie.css -text
 jobboard/src/main/webapp/resources/css/demo.css -text
 jobboard/src/main/webapp/resources/css/displaytag.css -text
 jobboard/src/main/webapp/resources/css/ie.css -text
+jobboard/src/main/webapp/resources/css/jobsearchResults.css -text
 jobboard/src/main/webapp/resources/css/jquery-ui.css -text
 jobboard/src/main/webapp/resources/css/jquery.dataTables.css -text
 jobboard/src/main/webapp/resources/css/jquery.megamenu.css -text
@@ -529,5 +534,6 @@ jobboard/src/main/webapp/resources/js/jquery.displaytagdetail.js -text
 jobboard/src/main/webapp/resources/js/jquery.js -text
 jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text
 jobboard/src/main/webapp/resources/js/jquery.simplemodal.js -text
+jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
 /pom.xml -text

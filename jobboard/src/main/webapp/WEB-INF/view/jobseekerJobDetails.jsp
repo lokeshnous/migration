@@ -155,8 +155,9 @@
 
 
             <div class="main">
+            <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 
-				<div class="header_wrapper">
+<!-- 				<div class="header_wrapper">
 
 					 <a href="">
           <div class="logo"></div>
@@ -181,19 +182,19 @@
             </div>
             <p class=" marginTop10">And it's all FREE!</p>
           </span>
-          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div><!-- loginHeader -->
+          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div>loginHeader
                     <div class="headerLoginSectionColumns">
 					<span class="boldText">Employer:</span><br>
                     	<a href="">Login</a> | <a href="">Post Jobs</a>
-					</div><!-- loginHeader -->
+					</div>loginHeader
 					<div class="headerLoginSectionColumns">
 					<span class="boldText">Ad Agency:</span><br>
 						 <a href="">Login</a> | <a href="">Post Jobs</a>
-					</div><!-- loginHeader -->
-                    </div><!-- loginHeader -->
-					<!-- loginHeader -->
+					</div>loginHeader
+                    </div>loginHeader
+					loginHeader
 
-				</div><!-- header_wrapper -->
+				</div>header_wrapper
 
 				<div id="nav">
 					<ul class="megamenu">
@@ -252,7 +253,7 @@
 						<a href="javascript:">Custom Promotions</a>
 					  </li>
 					</ul>
-				</div><!--nav-->
+				</div>nav -->
 
 				<div class="ad_col_right">
                     <img src="../resources/images/ads/300x250ad1.png" />
@@ -315,7 +316,7 @@
         </div> <!-- end main_wrapper_inside -->   
         </div> <!-- end main_wrapper_outside -->
         
-			<div class="footer_wrapper">
+			<!-- <div class="footer_wrapper">
             
             <div class="container1">
             <h4>Professions:</h4>
@@ -337,7 +338,7 @@
 				<li><a href="#">Physician Assistants</a></li>
 				<li><a href="#">Healthcare Executives</a></li>
             </ul>
-            </div><!-- end container1 -->
+            </div>end container1
 
 			<div class="container2">
             <h4>Content:</h4>
@@ -349,7 +350,7 @@
 				<li><a href="#">Community</a></li>
 				<li><a href="#">Downloads</a></li>
             </ul>
-            </div><!-- end container2 -->
+            </div>end container2
 
             <div class="container3">
             <h4>Services:</h4>
@@ -368,7 +369,7 @@
             <li><a href="#">Download the Mobile App</a></li>
 			<li><a href="#">Order Promotional Items</a></li>
             </ul>
-            </div><!-- end container3 -->
+            </div>end container3
 			
 
             <div class="container4">
@@ -381,7 +382,7 @@
 			<li><a href="#">ADVANCE Continuing Ediucation</a></li>
 			<li><a href="#">ADVANCE Custom Publishing</a></li>
 			</ul>
-			</div><!-- end container4 -->
+			</div>end container4
 
 			<div class="container5">
             <h4>Corporate:</h4>
@@ -394,12 +395,11 @@
             <li><a href="#">Term of Service</a></li>
             <li><a href="#">Help</a></li>
             </ul>
-            </div><!-- end container5 -->
+            </div>end container5
 
 <br class="clearfix" />
 			<p class="copyright">&copy; 2012 Merion Matters 2900 Horizon Drive King of Prussia PA 19406 800-355-5627</p>
-
         </div><!-- footer_wrapper -->        
-
+<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
     </body>
 </html>
