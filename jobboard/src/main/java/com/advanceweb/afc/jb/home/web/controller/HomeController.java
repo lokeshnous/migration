@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
+import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
 
@@ -104,7 +105,8 @@ public class HomeController {
 			model.addAttribute("follouplinktwitter", follouplinktwitter);
 			model.addAttribute("follouplinkyoutube", follouplinkyoutube);
 			model.addAttribute("follouplinklinkedin", follouplinklinkedin);
-
+			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			model.addAttribute("healthcarenew", "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");

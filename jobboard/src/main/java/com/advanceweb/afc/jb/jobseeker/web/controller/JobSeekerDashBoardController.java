@@ -15,6 +15,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
+import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -79,7 +80,8 @@ public class JobSeekerDashBoardController {
 				.getAppliedJobs(nUserId);
 		appliedJobsCount = appliedJobDTOList.size();
 		form.setAppliedJobsCount(appliedJobsCount);
-
+		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		model.addObject("jobSearchResultForm", jobSearchResultForm);
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");
 		return model;
