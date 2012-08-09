@@ -31,25 +31,27 @@ $(document).keyup(function(event) {
 								
 							   break; 
 							case "delete":{
-								$.ajax({url: getBaseURL()+"/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
-										success: function(data){ 
-										    if(data.success != null){
-										    	rowObj.remove();
-										    	alert(data.success);
-										    }
-										    if(data.failure != null){
-										    	alert(data.failure);
-										    }
-										},
-										error: function(response) {
-											alert("Server Error : "+response.status);
-										},
-										complete: function() {
-											
-										}
-									});
-								}
-								break;
+								var r=confirm("Do you want to delete");
+								if(r==true){
+									$.ajax({url: getBaseURL()+"/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
+											success: function(data){ 
+											    if(data.success != null){
+											    	rowObj.remove();
+											    }
+											    if(data.failure != null){
+											    	alert(data.failure);
+											    }
+											},
+											error: function(response) {
+												alert("Server Error : "+response.status);
+											},
+											complete: function() {
+												
+											}
+										});
+									}
+									break;
+							}
 							}
 						});					
 						$('.newWindow').click(function (event){							 
@@ -149,7 +151,7 @@ $(document).keyup(function(event) {
 										src="../resources/images/Edit.png" width="20" height="20"
 										alt="edit"></a>&nbsp;<a href="#"><img
 										src="../resources/images/Delete.png" width="20" height="20"
-										alt="delete"></a>
+										alt="delete" ></a>
 										</td>
 							</tr>
 						</c:forEach>
