@@ -31,7 +31,7 @@ $(document).keyup(function(event) {
 								
 							   break; 
 							case "delete":{
-								var r=confirm("You want to delete this");
+								var r=confirm("You want to delete this?");
 								if(r==true){
 									$.ajax({url: getBaseURL()+"/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
 											success: function(data){ 
