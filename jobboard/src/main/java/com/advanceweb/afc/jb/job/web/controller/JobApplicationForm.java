@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.job.web.controller;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
@@ -9,9 +11,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
    @Purpose: This class will act as a Form Bean for the  Anonymous User to apply for the job
  */
 public class JobApplicationForm {
-	
+	@NotEmpty(message="User Name should not be empty")
 	private String userName;
+	@NotEmpty(message="Email should not be empty")
+	@Email(message="Please provide correct email")
 	private String userEmail;
+	@NotEmpty(message="Please choose the file")
 	private String filePath;
 	private CommonsMultipartFile fileContent;
 	
