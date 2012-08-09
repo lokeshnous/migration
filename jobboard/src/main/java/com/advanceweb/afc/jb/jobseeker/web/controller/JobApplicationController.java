@@ -20,6 +20,7 @@ import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
+import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 
 /**
  * @Author : Prince Mathew
@@ -55,7 +56,7 @@ public class JobApplicationController {
 	
 	@RequestMapping(value="/saveAnonymousUserJobapply",method = RequestMethod.GET)
 	public ModelAndView saveJobSeekerRegistration(@Valid JobApplicationForm form,
-			BindingResult result) {
+			BindingResult result,Map model) {
 		//,@RequestParam("id") Long jobId
 		try {
 			
@@ -106,7 +107,9 @@ public class JobApplicationController {
 			// waiting for Exception
 			
 		}
-		return new ModelAndView("anouserjobapplyssuccess");
+		JobSearchResultForm jobSearchResultForm=new JobSearchResultForm();
+		model.put("jobSearchResultForm", jobSearchResultForm);
+		return new ModelAndView("jobboardsearchresults");
 	}
 	
 	
