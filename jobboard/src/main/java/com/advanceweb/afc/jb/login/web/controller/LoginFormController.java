@@ -83,7 +83,7 @@ public class LoginFormController {
 		if (error == true) {
 			model.put(
 					"error",
-					"The User Name/Password you have entered is invalid Or you are not authorized to Login to the site");
+					"The User Name / Password you have entered is invalid or you are not authorized to Login to the site");
 		} else {
 			model.put("error", "");
 		}
