@@ -343,6 +343,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/Certification
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/EducationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/LanguageForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/PhoneDetailForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ReferenceForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeProfileAttribForm.java -text
