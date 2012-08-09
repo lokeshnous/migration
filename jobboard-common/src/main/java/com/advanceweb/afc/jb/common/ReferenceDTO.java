@@ -13,6 +13,8 @@ public class ReferenceDTO {
 	private String companyName;
 	private String phoneNo;
 	private String email;
+	private String refType;
+	
 	private int builderRefId;
 	
 	public String getName() {
@@ -51,6 +53,10 @@ public class ReferenceDTO {
 	public void setBuilderRefId(int builderRefId) {
 		this.builderRefId = builderRefId;
 	}
-	
-	
+	public String getRefType() {
+		return refType;
+	}
+	public void setRefType(String refType) {
+		this.refType = refType;
+	}
 }

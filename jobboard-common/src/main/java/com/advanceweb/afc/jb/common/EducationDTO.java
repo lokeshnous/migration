@@ -16,6 +16,7 @@ public class EducationDTO {
 	private String degrees;
 	private String certifications;
 	private String language;
+	private int bGraduated;
 	private int builderEduId;
 	private EduDegreeDTO eduDegreeDTO;
 	
@@ -79,6 +80,12 @@ public class EducationDTO {
 	}
 	public void setCertifications(String certifications) {
 		this.certifications = certifications;
+	}
+	public int getbGraduated() {
+		return bGraduated;
+	}
+	public void setbGraduated(int bGraduated) {
+		this.bGraduated = bGraduated;
 	}
 		
 }

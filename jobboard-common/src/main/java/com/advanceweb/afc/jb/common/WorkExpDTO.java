@@ -19,6 +19,11 @@ public class WorkExpDTO {
 	private String annualSalary;
 	private String hrlyPayRate;
 	private String description;
+	private String city;
+	private String state;
+	private String country;
+	private int stillEmployed;
+	private int isCurrentCareerLvl;
 	private int builderEmpId;
 	
 	public String getJobTitle() {
@@ -87,7 +92,34 @@ public class WorkExpDTO {
 	public void setBuilderEmpId(int builderEmpId) {
 		this.builderEmpId = builderEmpId;
 	}
-	
-	
-	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public int getStillEmployed() {
+		return stillEmployed;
+	}
+	public void setStillEmployed(int stillEmployed) {
+		this.stillEmployed = stillEmployed;
+	}
+	public int getIsCurrentCareerLvl() {
+		return isCurrentCareerLvl;
+	}
+	public void setIsCurrentCareerLvl(int isCurrentCareerLvl) {
+		this.isCurrentCareerLvl = isCurrentCareerLvl;
+	}	
 }

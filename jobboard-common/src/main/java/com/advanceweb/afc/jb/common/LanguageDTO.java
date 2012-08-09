@@ -10,6 +10,7 @@ package com.advanceweb.afc.jb.common;
 public class LanguageDTO {
 	private String language;
 	private String expLvl;
+	private int nLangId;
 	
 	public String getLanguage() {
 		return language;
@@ -22,6 +23,12 @@ public class LanguageDTO {
 	}
 	public void setExpLvl(String expLvl) {
 		this.expLvl = expLvl;
+	}
+	public int getnLangId() {
+		return nLangId;
+	}
+	public void setnLangId(int nLangId) {
+		this.nLangId = nLangId;
 	}
 	
 	
