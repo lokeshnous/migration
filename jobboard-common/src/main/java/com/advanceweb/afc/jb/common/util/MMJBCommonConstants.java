@@ -93,6 +93,7 @@ public interface MMJBCommonConstants {
 	String JOB_GEO_0_LATLON = "jobGeo0LatLon";
 	String JOB_GEO_1_LATLON = "jobGeo1LatLon";
 	String URL_DISPLAY = "URLDisplay";
+	String URL = "url";
 	
 	String TOTAL_NO_RECORDS = "TotalNoRecords";
 	String JSON_ROWS = "jsonRows";
