@@ -8,9 +8,9 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +25,7 @@ import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
+import com.advanceweb.afc.jb.data.entities.ResBuilderLanguage;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
@@ -80,15 +81,12 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public ResumeDTO editResume(int resumeId) {
 		ResumeDTO dto = new ResumeDTO();
-		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,
-				resumeId);
-		List<ResResumeProfile> resumeProfile = hibernateTemplate
-				.find("from ResResumeProfile where resumeId = " + resumeId);
+		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,resumeId);
+		List<ResResumeProfile> resumeProfile = hibernateTemplate.find("from ResResumeProfile where resumeId = " + resumeId);
 		if(resumeProfile != null && resumeProfile.size() > 0) {
 			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume, resumeProfile);
 
-			ResBuilderResume resumeBuilder = hibernateTemplate.get(
-					ResBuilderResume.class, resume.getUploadResumeId());
+			ResBuilderResume resumeBuilder = hibernateTemplate.get(ResBuilderResume.class, resume.getUploadResumeId());
 
 			if (resumeBuilder != null) {
 				dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto,resumeBuilder);
@@ -168,7 +166,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResume(ResumeDTO resumeDTO) {
 		//if any public resumes , make it private 
 		resumeVisibilityPublicToPrivate(resumeDTO);
@@ -191,7 +189,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeCopyPaste(ResumeDTO resumeDTO) {
 		resumeVisibilityPublicToPrivate(resumeDTO);
 		Boolean result = false;
@@ -216,7 +214,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeUpload(ResumeDTO resumeDTO) {
 		resumeVisibilityPublicToPrivate(resumeDTO);
 		Boolean result = false;
@@ -236,26 +234,19 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
-		ResBuilderResume builderResume = resumeConversionHelper
-				.transformBuilderResume(resumeDTO);
-		List<ResBuilderCertification> builderCerts = resumeConversionHelper
-				.transformBuilderCertifications(resumeDTO.getListCertDTO(),
-						builderResume);
-		List<ResBuilderEdu> builderEducations = resumeConversionHelper
-				.transformBuilderEducation(resumeDTO.getListEduDTO(),
-						builderResume);
-		List<ResBuilderReference> builderRefs = resumeConversionHelper
-				.transformBuilderReferences(resumeDTO.getListRefDTO(),
-						builderResume);
-		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper
-				.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(),
-						builderResume);
+		ResBuilderResume builderResume = resumeConversionHelper.transformBuilderResume(resumeDTO);
+		List<ResBuilderCertification> builderCerts = resumeConversionHelper.transformBuilderCertifications(resumeDTO.getListCertDTO(),builderResume);
+		List<ResBuilderEdu> builderEducations = resumeConversionHelper.transformBuilderEducation(resumeDTO.getListEduDTO(),builderResume);
+		List<ResBuilderReference> builderRefs = resumeConversionHelper.transformBuilderReferences(resumeDTO.getListRefDTO(),builderResume);
+		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(),builderResume);
+		List<ResBuilderLanguage> builderLangList = resumeConversionHelper.transformBuilderLanguages(resumeDTO.getListLangDTO(),builderResume);		
 		builderResume.setResBuilderCertifications(builderCerts);
 		builderResume.setResBuilderEdus(builderEducations);
 		builderResume.setResBuilderEmployments(builderWorkExp);
 		builderResume.setResBuilderReferences(builderRefs);
+		builderResume.setResBuilderLanguages(builderLangList);
 		try {
 			// sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
 			hibernateTemplate.saveOrUpdate(builderResume);
