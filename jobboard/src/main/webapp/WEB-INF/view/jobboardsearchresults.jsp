@@ -196,7 +196,7 @@
 										return false;
 									}
 									var x = $("#results").val();
-									$("#rows").val(12000);
+									$("#rows").val(25000);
 									$("#start").val("0");
 									var keywords = $("#keywords").val();
 									var cityState = $("#cityState").val();
