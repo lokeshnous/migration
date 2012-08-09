@@ -26,12 +26,12 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderLanguage;
+import com.advanceweb.afc.jb.data.entities.ResBuilderPhone;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
-import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 
 /**
@@ -50,8 +50,6 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	private HibernateTemplate hibernateTemplate;
 
-	@Autowired
-	private PopulateDropdownsDAO populateDropdownsDAO;
 
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
@@ -241,14 +239,16 @@ public class ResumeDaoImpl implements ResumeDao {
 		List<ResBuilderEdu> builderEducations = resumeConversionHelper.transformBuilderEducation(resumeDTO.getListEduDTO(),builderResume);
 		List<ResBuilderReference> builderRefs = resumeConversionHelper.transformBuilderReferences(resumeDTO.getListRefDTO(),builderResume);
 		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(),builderResume);
-		List<ResBuilderLanguage> builderLangList = resumeConversionHelper.transformBuilderLanguages(resumeDTO.getListLangDTO(),builderResume);		
+		List<ResBuilderLanguage> builderLangList = resumeConversionHelper.transformBuilderLanguages(resumeDTO.getListLangDTO(),builderResume);	
+		List<ResBuilderPhone> builderPhoneList = resumeConversionHelper.transformBuilderPhoneDetails(resumeDTO.getListPhoneDtl(), builderResume);
+		
 		builderResume.setResBuilderCertifications(builderCerts);
 		builderResume.setResBuilderEdus(builderEducations);
 		builderResume.setResBuilderEmployments(builderWorkExp);
 		builderResume.setResBuilderReferences(builderRefs);
 		builderResume.setResBuilderLanguages(builderLangList);
+		builderResume.setResBuilderPhones(builderPhoneList);
 		try {
-			// sessionFactory.getCurrentSession().saveOrUpdate(builderResume);
 			hibernateTemplate.saveOrUpdate(builderResume);
 			return true;
 		} catch (HibernateException e) {

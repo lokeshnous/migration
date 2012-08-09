@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
+import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
@@ -23,6 +24,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
 import com.advanceweb.afc.jb.data.entities.ResBuilderLanguage;
+import com.advanceweb.afc.jb.data.entities.ResBuilderPhone;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
@@ -641,6 +643,32 @@ public class ResumeConversionHelper {
 			}
 		}
 		return langList;
+	}
+	
+	
+	/**
+	 * This method is called to convert List of References DTO to Resume Builder
+	 * References Entity
+	 * 
+	 * @param resumeDTO
+	 * @return builderResume
+	 */
+	public List<ResBuilderPhone> transformBuilderPhoneDetails(
+		List<PhoneDetailDTO> phoneDtlDTOList, ResBuilderResume builderResume) {
+		List<ResBuilderPhone> phoneDtlList = new ArrayList<ResBuilderPhone>();
+		if (null != phoneDtlList) {
+			for (PhoneDetailDTO langDTO : phoneDtlDTOList) {
+				ResBuilderPhone entity = new ResBuilderPhone();
+				
+				entity.setBuilderPhoneId(langDTO.getBuilderPhoneId());
+				entity.setPhoneNumber(langDTO.getPhoneNumber());
+				entity.setPhoneType(langDTO.getPhoneType());
+				
+				entity.setResBuilderResume(builderResume);			
+				phoneDtlList.add(entity);
+			}
+		}
+		return phoneDtlList;
 	}
 	
 	/**

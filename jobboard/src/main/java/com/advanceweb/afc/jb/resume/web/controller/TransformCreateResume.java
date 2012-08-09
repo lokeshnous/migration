@@ -9,6 +9,7 @@ import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
+import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
@@ -181,6 +182,30 @@ public class TransformCreateResume {
 			}
 		}
 		return listWorkExpDTO;
+		
+	}
+	
+	
+	/**
+	 * Method to convert Language form to Language dto
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<PhoneDetailDTO> transformPhoneDetailDTO(List<PhoneDetailForm> phoneDetails){
+		
+		List<PhoneDetailDTO> phoneDtlDTO = new ArrayList<PhoneDetailDTO>();
+		if(null != phoneDetails){
+			for(PhoneDetailForm phoneForm : phoneDetails){
+				PhoneDetailDTO dto = new PhoneDetailDTO();
+				
+				dto.setBuilderPhoneId(phoneForm.getBuilderPhoneId());
+				dto.setPhoneNumber(phoneForm.getPhoneNumber());
+				dto.setPhoneType(phoneForm.getPhoneType());
+				
+				phoneDtlDTO.add(dto);
+			}
+		}
+		return phoneDtlDTO;
 		
 	}
 	

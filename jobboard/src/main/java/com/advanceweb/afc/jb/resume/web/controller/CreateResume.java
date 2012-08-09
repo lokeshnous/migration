@@ -39,6 +39,7 @@ public class CreateResume {
 	private List<LanguageForm> listLangForm;
 	private List<ReferenceForm> listRefForm;
 	private List<WorkExpForm> listWorkExpForm;
+	private List<PhoneDetailForm> listPhoneDtlForm;
 	private ContactInfoForm contactInfoForm;
 	private int builderResumeId;
 	List<ResumeProfileAttribForm> resumeProfileAttribForm; 
@@ -209,6 +210,12 @@ public class CreateResume {
 	public void setResumeProfileAttribForm(
 			List<ResumeProfileAttribForm> resumeProfileAttribForm) {
 		this.resumeProfileAttribForm = resumeProfileAttribForm;
+	}
+	public List<PhoneDetailForm> getListPhoneDtlForm() {
+		return listPhoneDtlForm;
+	}
+	public void setListPhoneDtlForm(List<PhoneDetailForm> listPhoneDtlForm) {
+		this.listPhoneDtlForm = listPhoneDtlForm;
 	}
 		
 }

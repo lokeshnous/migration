@@ -43,8 +43,9 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private List<LanguageDTO> listLangDTO;
 	private List<ReferenceDTO> listRefDTO;
 	private List<WorkExpDTO> listWorkExpDTO;
-	private ContactInformationDTO contactInfoDTO;
 	private List<MerProfileAttribDTO> resumeAttribList;
+	private List<PhoneDetailDTO> listPhoneDtl;
+	private ContactInformationDTO contactInfoDTO;
 
 	public int getUploadResumeId() {
 		return uploadResumeId;
@@ -342,6 +343,16 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 
 	public void setResumeAttribList(List<MerProfileAttribDTO> resumeAttribList) {
 		this.resumeAttribList = resumeAttribList;
+	}
+
+
+	public List<PhoneDetailDTO> getListPhoneDtl() {
+		return listPhoneDtl;
+	}
+
+
+	public void setListPhoneDtl(List<PhoneDetailDTO> listPhoneDtl) {
+		this.listPhoneDtl = listPhoneDtl;
 	}
 	
 }

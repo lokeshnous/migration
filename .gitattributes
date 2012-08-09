@@ -43,6 +43,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchTypeDTO.jav
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetricsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetroAreaDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PackageInformationDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PhoneDetailDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/QueryDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/RadiusDTO.java -text
@@ -366,6 +367,7 @@ jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addCerts.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text

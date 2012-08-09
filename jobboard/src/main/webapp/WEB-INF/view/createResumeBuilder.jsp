@@ -25,14 +25,32 @@
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    jQuery(".megamenu").megamenu();
-		});
+		    	
+/* 		 		//$('#certAjaxCallIdButton').click(function(){		
+		 			 $('#certAjaxCallIdButton').live('click', function() {
+		 			
+					$.ajax({url:"/jobboard/jobSeekerResume/addCertifications.html",
+						//data:$('#passwordChange').serialize(),
+						type:"POST",
+						success: function(data) {
+							if(data == ''){
+								alert("once again");
+								$('#listOfCertsId').jqprint();
+								  //$('#listOfCertsId').append($('addCertDivId'));
+							}else{
+								alert("error");
+							}
+						 },
+					});
+				}); 
+		    }); */
+		    jQuery(".megamenu").megamenu();		    
 		</script>
 		<script type="text/javascript" src="../resources/css/expandCollapse.js"></script>
 		</head>
 
 <body class="job_board">
-<form:form method="Post" action="saveResumeBuilder.html" commandName="createResume">
+<form:form method="Post" action="saveResumeBuilder.html" commandName="createResume" id="createResumeBuilderId">
 <div class="ad_page_top"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
 <div class="main_wrapper_outside">
           <div class="main_wrapper_inside">
@@ -171,48 +189,48 @@
             <div class="job_seeker_login leftFormHolderResumepage marginTop0">
 
               <div class="rowEvenNewSpacing"> <span class="lableText3">First Name:</span>                
-                <form:input path="${createResume.contactInfoForm.firstName}" class="job_seeker_password textBox350" />
+                <form:input path="contactInfoForm.firstName" class="job_seeker_password textBox350" />
                 <span class="required">(Required)</span> 
               </div>
 				<div>
 					<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="${createResume.contactInfoForm.firstName}" /></FONT> 
+					<FONT color="red"><form:errors path="contactInfoForm.firstName" /></FONT> 
 				</div>
               
                <div class="rowEvenNewSpacing"> <span class="lableText3">Middle Name:</span>
-                <form:input path="${createResume.contactInfoForm.middleName}" class="job_seeker_password textBox350" />
+                <form:input path="contactInfoForm.middleName" class="job_seeker_password textBox350" />
               </div>
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Last Name:</span>
-                <form:input path="${createResume.contactInfoForm.lastName}" class="job_seeker_password textBox350" />
+                <form:input path="contactInfoForm.lastName" class="job_seeker_password textBox350" />
                 <span class="required">(Required)</span> 
                </div>
 				<div>
 					<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="${createResume.contactInfoForm.lastName}" /></FONT> 
+					<FONT color="red"><form:errors path="contactInfoForm.lastName" /></FONT> 
 				</div>               
                <div class="rowEvenNewSpacing"> <span class="lableText3">Street Address:</span>
-                <form:input path="${createResume.contactInfoForm.addressLine1}" class="job_seeker_password textBox350" />
+                <form:input path="contactInfoForm.addressLine1" class="job_seeker_password textBox350" />
         		<span class="required">(Required)</span> 
         		</div>
 				<div>
 					<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="${createResume.contactInfoForm.addressLine1}" /></FONT> 
+					<FONT color="red"><form:errors path="contactInfoForm.addressLine1" /></FONT> 
 				</div>  
                <div class="rowEvenNewSpacing"> <span class="lableText3"></span>
-	                <form:input path="${createResume.contactInfoForm.addressLine2}" class="job_seeker_password textBox350" />
+	                <form:input path="contactInfoForm.addressLine2" class="job_seeker_password textBox350" />
 	        		<span class="required"></span> 
         		</div>
                <div class="rowEvenNewSpacing"> <span class="lableText3">City:</span>
-                <form:input path="${createResume.contactInfoForm.city}" class="job_seeker_password textBox350"/>
+                <form:input path="contactInfoForm.city" class="job_seeker_password textBox350"/>
         		<span class="required">(Required)</span> 
         	  </div>
 				<div>
 					<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="${createResume.contactInfoForm.city}" /></FONT> 
+					<FONT color="red"><form:errors path="contactInfoForm.city" /></FONT> 
 				</div> 
                <div class="row"> <span class="lableTextSelect marginTop13 ">State / Province:</span>
-		            <form:select path="${createResume.contactInfoForm.state}" class="jb_input3 jb_input_width3">
+		            <form:select path="contactInfoForm.state" class="jb_input3 jb_input_width3">
 						<form:option value="0" label="Select" />
 						<form:options items="${stateList}" itemValue="stateId" itemLabel="stateValue" />
 					</form:select>                
@@ -220,18 +238,18 @@
 			</div>
 			<div>
 				<span class="lableText3"></span>
-				<FONT color="red"><form:errors path="${createResume.contactInfoForm.state}" /></FONT> 
+				<FONT color="red"><form:errors path="contactInfoForm.state" /></FONT> 
 			</div> 
             <div class="rowEvenNewSpacing"> <span class="lableText3">Zip Code:</span>
-                 <form:input path="${createResume.contactInfoForm.postalCode}" class="job_seeker_password textBox350"/>
+                 <form:input path="contactInfoForm.postalCode" class="job_seeker_password textBox350"/>
         		<span class="required">(Required)</span> 
         	</div>
         	<div>
 				<span class="lableText3"></span>
-				<FONT color="red"><form:errors path="${createResume.contactInfoForm.postalCode}" /></FONT> 
+				<FONT color="red"><form:errors path="contactInfoForm.postalCode" /></FONT> 
 			</div>
             <div class="row"> <span class="lableTextSelect marginTop13 ">Country:</span>
-		 		<form:select path="${createResume.contactInfoForm.country}" class="jb_input3 jb_input_width3">
+		 		<form:select path="contactInfoForm.country" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
 					<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
 				</form:select>	                
@@ -239,7 +257,7 @@
 			</div>
 			<div>
 				<span class="lableText3"></span>
-				<FONT color="red"><form:errors path="${createResume.contactInfoForm.country}" /></FONT> 
+				<FONT color="red"><form:errors path="contactInfoForm.country" /></FONT> 
 			</div> 
             <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3">Phone Number:</span>
                 <div class="floatLeft marginRight10"></div>
@@ -303,25 +321,25 @@
            <c:forEach items="${createResume.listWorkExpForm}" var="workExp" varStatus="status">
             <div class="job_seeker_login leftFormHolderResumepage marginTop0">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
-                <form:input path="${workExp.jobTitle}"  class="job_seeker_Resume" />
+                <form:input path="listWorkExpForm[${status.index}].jobTitle"  class="job_seeker_Resume" />
                 <span class="required">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
 
-                <form:input path="${workExp.employerName}"  class="job_seeker_Resume"/>
+                <form:input path="listWorkExpForm[${status.index}].employerName"  class="job_seeker_Resume"/>
                 <span class="required">(Required)</span> </div>
                 <div class="class="row""> <span class="lableTextSelect marginTop13 ">Employment Type:</span>
 					<form:select id="select14"
 						class="jb_input3 jb_input_width3" name="select9"
-						path="${workExp.employmentType}" items="${employmentType}"
+						path="listWorkExpForm[${status.index}].employmentType" items="${employmentType}"
 						itemValue="optionId" itemLabel="optionName" />
 
                 <span class="required marginTop8">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3"> Start Date:</span>
-                <form:input path="${workExp.startDate}"  class="job_seeker_Resume" /> 
+                <form:input path="listWorkExpForm[${status.index}].startDate"  class="job_seeker_Resume" /> 
                 <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
         			<span class="required">(Required)</span> </div>
                       <div class="row marginTop10"> <span class="lableTextSelect marginTop10">End Date:</span>
-                <form:input path="${workExp.endDate}"  class="job_seeker_Resume" />
+                <form:input path="listWorkExpForm[${status.index}].endDate"  class="job_seeker_Resume" />
                  <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
                 <span class="required">
                 <input name="" type="checkbox" value="">
@@ -330,7 +348,7 @@
 
                 <span class="required">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Years at Position:</span>
-                <form:input path="${workExp.yrsAtPostion}"  class="job_seeker_Resume" />
+                <form:input path="listWorkExpForm[${status.index}].yrsAtPostion"  class="job_seeker_Resume" />
         			<span class="required">(Required)</span> </div>
                 <div class="row"> <span class="lableTextSelect marginTop13 ">Career Level:</span>
 
@@ -401,7 +419,7 @@
            <c:forEach items="${createResume.listEduForm}" var="education" varStatus="status">
             <div class="job_seeker_login leftFormHolderResumepage marginTop0">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Institution Name:</span>
-                <form:input path="${education.instituteName}" class="job_seeker_password textBox350" />
+                <form:input path="listEduForm[${status.index}].instituteName" class="job_seeker_password textBox350" />
                 <span class="required">(Required)</span> </div>
                       <div class="row"> <span class="lableTextSelect marginTop13 ">Degree Level:</span>
 
@@ -426,21 +444,21 @@
 		                </div>
                 <span class="required marginTop8">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Field of Study:</span>
-                <form:input path="${education.fieldOfStudy}" class="job_seeker_password textBox350" />
+                <form:input path="listEduForm[${status.index}].fieldOfStudy" class="job_seeker_password textBox350" />
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3"> Start Date:</span>
-                <form:input path="${education.startDate}" class="job_seeker_Resume" />
+                <form:input path="listEduForm[${status.index}].startDate" class="job_seeker_Resume" />
                  <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
       				</div>
                       <div class="row marginTop10"> <span class="lableTextSelect marginTop10">End Date:</span>
 
-                <form:input path="${education.endDate}" class="job_seeker_Resume" /> <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
+                <form:input path="listEduForm[${status.index}].endDate" class="job_seeker_Resume" /> <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
               </div>
                       <div class="row MarginBottom10 ">
 
                 <div class="lableText3 marginTop10"> Degrees:</div>
                 <div class="input_grp5 ">
-                          <form:textarea path="${education.degrees}" class="textareaBoxCResume" rows="3" cols="45"/>
+                          <form:textarea path="listEduForm[${status.index}].degrees" class="textareaBoxCResume" rows="3" cols="45"/>
                           <p>2000 characters remaining</p>
                         </div>
               </div>
@@ -448,7 +466,7 @@
 
                 <div class="lableText3 marginTop10"> Certifications:</div>
                 <div class="input_grp5 ">
-                          <form:textarea path="${education.certifications}" class="textareaBoxCResume" rows="3" cols="45"/>
+                          <form:textarea path="listEduForm[${status.index}].certifications" class="textareaBoxCResume" rows="3" cols="45"/>
                           <p>2000 characters remaining</p>
                           <p><a href="" class="link_color1_emphasized">Save and add another institution</a></p>
                         </div>
@@ -470,31 +488,33 @@
               </div>
                     </li>
           </ul>
-         <div class="searchResultsSubContent">
-         <c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status">    
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
-
-            <div class="rowEvenNewSpacing"> <span class="lableText3">Certification Name:</span>
-                <form:input path="${education.certificationName}" class="job_seeker_password textBox350"/>
-                <span class="required">(Required)</span> </div>
-              <div class="rowEvenNewSpacing"> <span class="lableText3">Certifying Authority:</span>
-                <form:input path="${education.certificationName}" class="job_seeker_password textBox350"/>
-              </div>
-
-                      <div class="rowEvenNewSpacing"> <span class="lableText3"> Received:</span>
-                <form:input path="${education.dateOfReceipt}" class="job_seeker_Resume"/>
-      		</div>
-                      <div class="row MarginBottom10 ">
-                <div class="lableText3 marginTop10"> Summary:</div>
-                <div class="input_grp5 ">
-
-                          <form:textarea path="${education.summary}" class="textareaBoxCResume" rows="3" cols="45"/>
-                          <p>2000 characters remaining</p>
-                          <p><a href="" class="link_color1_emphasized">Save and add another certification</a></p>
-                        </div>
-              </div>
-             </div>
-            </c:forEach> 
+         <div class="searchResultsSubContent" id="listOfCertsId">
+           <c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status"> 
+				    <div class="job_seeker_login leftFormHolderResumepage marginTop0" id="addCertDivId">
+					     <div class="rowEvenNewSpacing"> <span class="lableText3">Certification Name:</span>
+					         <form:input path="listCertForm[${status.index}].certificationName" class="job_seeker_password textBox350"/>
+					         <span class="required">(Required)</span> </div>
+					       <div class="rowEvenNewSpacing"> <span class="lableText3">Certifying Authority:</span>
+					         <form:input path="listCertForm[${status.index}].certificationName" class="job_seeker_password textBox350"/>
+					       </div>
+					
+					               <div class="rowEvenNewSpacing"> <span class="lableText3"> Received:</span>
+					         <form:input path="listCertForm[${status.index}].dateOfReceipt" class="job_seeker_Resume"/>
+						</div>
+					               <div class="row MarginBottom10 ">
+					         <div class="lableText3 marginTop10"> Summary:</div>
+					         <div class="input_grp5 ">
+					
+					                   <form:textarea path="listCertForm[${status.index}].summary" class="textareaBoxCResume" rows="3" cols="45"/>
+					                   <p>2000 characters remaining</p>
+					                 </div>
+					       </div>
+					     </div>
+			</c:forEach> 
+          </div>
+          <div id="certAjaxCallId">
+          	<input type="button" value="Save and add another certification" class="btn_sm orange" id="certAjaxCallIdButton"/>
+          	<!-- <p><a href="#" class="link_color1_emphasized">Save and add another certification</a></p> -->
           </div>
        </div>
         <div class="searchResultsItem">
@@ -684,21 +704,21 @@
          <c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">    
             <div class="job_seeker_login leftFormHolderResumepage marginTop0">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Name:</span>
-                <form:input path="${reference.name}" class="job_seeker_password textBox350"/>
+                <form:input path="listRefForm[${status.index}].name" class="job_seeker_password textBox350"/>
               </div>
 
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
-                <form:input path="${reference.jobTitle}" class="job_seeker_password textBox350"/>
+                <form:input path="listRefForm[${status.index}].jobTitle" class="job_seeker_password textBox350"/>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
-                <form:input path="${reference.companyName}" class="job_seeker_password textBox350"/>
+                <form:input path="listRefForm[${status.index}].companyName" class="job_seeker_password textBox350"/>
       </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Phone Number:</span>
 
-                <form:input path="${reference.phoneNo}" class="job_seeker_password textBox350"/>
+                <form:input path="listRefForm[${status.index}].phoneNo" class="job_seeker_password textBox350"/>
       </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Email Address:</span>
-                <form:input path="${reference.email}" class="job_seeker_password textBox350"/>
+                <form:input path="listRefForm[${status.index}].email" class="job_seeker_password textBox350"/>
         <span class="required"></span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Reference Type:</span><span class="requiredleft0">
 

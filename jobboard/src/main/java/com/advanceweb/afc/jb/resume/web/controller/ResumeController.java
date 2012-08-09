@@ -1,17 +1,7 @@
 package com.advanceweb.afc.jb.resume.web.controller;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +30,7 @@ import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
+import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
@@ -53,9 +41,6 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
-import com.advanceweb.afc.jb.web.utils.CopyUtil;
-import com.advanceweb.afc.jb.web.utils.ReadDocFile;
-import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -511,8 +496,10 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params="Save")
-	public String saveResumeBuilder(CreateResume createResume, BindingResult result,Model model){		
+	public ModelAndView saveResumeBuilder(CreateResume createResume){		
 
+		ModelAndView model = new ModelAndView();
+		
 		ResumeDTO resumeDTO = new ResumeDTO();
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
 		ContactInformationDTO contactInfoDTO = transCreateResume.transformContactInfoDTO(createResume.getContactInfoForm());
@@ -522,6 +509,7 @@ public class ResumeController {
 		List<WorkExpDTO> listWorkExpDTO = transCreateResume.transformWorkExpDTO(createResume.getListWorkExpForm());
 		List<EducationDTO> listEduDTO = transCreateResume.transformEducationDTO(createResume.getListEduForm());
 		List<LanguageDTO> listLangDTO = transCreateResume.transformLanguageDTO(createResume.getListLangForm());
+		List<PhoneDetailDTO> listPhoneDTO = transCreateResume.transformPhoneDetailDTO(createResume.getListPhoneDtlForm());
 		resumeDTO = transCreateResume.transformResumeDTO(resumeDTO, createResume);
 		resumeDTO.setContactInfoDTO(contactInfoDTO);
 		resumeDTO.setListCertDTO(listCertDTO);
@@ -529,8 +517,12 @@ public class ResumeController {
 		resumeDTO.setListLangDTO(listLangDTO);
 		resumeDTO.setListRefDTO(listRefDTO);
 		resumeDTO.setListWorkExpDTO(listWorkExpDTO);
+		resumeDTO.setListPhoneDtl(listPhoneDTO);
 		resumeService.createResumeBuilder(resumeDTO);
-		return null;
+		
+		model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+		
+		return model;
 
 	}
 
@@ -565,12 +557,21 @@ public class ResumeController {
 	 * @param map
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/addCertifications", method = RequestMethod.POST)
-	public String addCertifications(HttpServletRequest request, HttpSession session,
-			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());
-		resumeService.addCertifications(listCertDTO);
-		return null;
+	public String addCertifications(HttpSession session,CreateResume createResume) {
+		/*List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());*/
+//		resumeService.addCertifications(listCertDTO);
+		CertificationsForm form = new CertificationsForm();
+		if(null != createResume.getListCertForm()){
+			createResume.getListCertForm().add(form);
+			return "";
+		}else{
+			List<CertificationsForm> listCertForms = new ArrayList<CertificationsForm>();
+			listCertForms.add(form);
+			createResume.setListCertForm(listCertForms);
+			return "";
+		}
 	}
 
 	/**
