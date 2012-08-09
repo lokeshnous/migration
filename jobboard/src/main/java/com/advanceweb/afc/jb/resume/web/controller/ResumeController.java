@@ -138,11 +138,13 @@ public class ResumeController {
 	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName,@RequestParam("resumeId") String resumeId) {
 		//set this from session
 		int userId = 2;
-		int resumeCount = resumeService.findResumeCount(userId);
 		JSONObject warningMessage = new JSONObject();
-		if(resumeCount == 5){
-			warningMessage.put("maxResume", "You can create 5 resume at max.");
-			return warningMessage;
+		if("".equals(resumeId) || resumeId == null){
+			int resumeCount = resumeService.findResumeCount(userId);
+			if(resumeCount == 5){
+				warningMessage.put("maxResume", "You can create 5 resume at max.");
+				return warningMessage;
+			}
 		}
 		if(!("".equals(resumeName)) && resumeService.checkDuplicateResumeName(resumeId,resumeName, userId)){
 			warningMessage.put("duplicateResume", "Resume Name already exists, Please try again.");
@@ -292,7 +294,7 @@ public class ResumeController {
 			//set it from session
 			resumeDTO.setUserId(2);
 			resumeService.createResumeCopyPaste(resumeDTO);
-			model.setViewName("createResumeCopyPastePopup");
+			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		}
 		return model;
 	}
@@ -304,7 +306,7 @@ public class ResumeController {
 		//set it from session
 		resumeDTO.setUserId(2);
 		resumeService.updateResumeCopyPaste(resumeDTO);
-		model.setViewName("editCopyPasteResume");
+		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		return model;
 	}
 
