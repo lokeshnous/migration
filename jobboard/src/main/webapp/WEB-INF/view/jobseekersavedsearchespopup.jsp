@@ -122,7 +122,7 @@ $(document).keyup(function(event) {
 					</thead>
 					<tbody>	
 						<c:forEach items="${saveSearchedJobsDTOList}"
-							var="saveSearchdtoList">
+							var="saveSearchdtoList"  varStatus="status">
 							<tr id="${saveSearchdtoList.saveSearchID}">
 								<td><a href="${saveSearchdtoList.getUrl()}"							
 									rel="0" target="_blank" class="newWindow">${saveSearchdtoList.getSearchName()}</a></td>
@@ -131,7 +131,7 @@ $(document).keyup(function(event) {
 								<td align="center">						
 										
 								    <form:select class="jb_input3 select100 marginTopBottom0"									
-										path="emailFrequency" items="${notifyMeList}"
+										path="saveSearchedJobsDTOList[${status.index}].emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
 								    </form:select>
 								    <script>
