@@ -77,7 +77,9 @@ public class ResumeConversionHelper {
 					}
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resume.getResumeType())){
-		
+			resumeDTO.setFilePath(resume.getFilePath());
+			resumeDTO.setFileServer(resume.getFileServer());
+			resumeDTO.setFileName(resume.getFileName());
 		}
 		else if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resume.getResumeType())){
 			resumeDTO.setResumeText(resume.getResumeText());
@@ -356,10 +358,14 @@ public class ResumeConversionHelper {
     	resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
     	resUploadResume.setActive(Integer.parseInt(resumeDTO.getResumeVisibility()));
     	resUploadResume.setIsPublished(Integer.parseInt(resumeDTO.getResumeVisibility()));
+    	if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
+    		resUploadResume.setFileServer(resumeDTO.getFileServer());
+    		resUploadResume.setFilePath(resumeDTO.getFilePath());
+    		resUploadResume.setFileName(resumeDTO.getFileName());
+    	}
     	if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
     		resUploadResume.setResumeText(resumeDTO.getResumeText());
     	}
-
 		return resUploadResume;
 	}
 
@@ -401,6 +407,9 @@ public class ResumeConversionHelper {
 		for(ResResumeAttrib resumeAttrib :resumeAttribs){
 			ResResumeProfile resumeProfile = new ResResumeProfile();
 			if(MMJBCommonConstants.RESUME_TYPE.equals(resumeAttrib.getName())){
+				continue;
+			}
+			if("PhoneType".equals(resumeAttrib.getName())){
 				continue;
 			}
 			else if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(resumeAttrib.getName())){

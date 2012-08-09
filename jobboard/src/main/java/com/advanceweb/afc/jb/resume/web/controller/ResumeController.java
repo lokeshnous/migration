@@ -55,6 +55,8 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadDocFile;
+import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  * anilm
@@ -81,6 +83,7 @@ public class ResumeController {
 	
 	private @Value("${basedirectorypathUpload}") String basedirectorypathUpload;
 
+	public static final String FileServerPath = "asdfasd";
 	
 	/**
 	 * This method is called to display resume list belonging to a logged in
@@ -171,7 +174,7 @@ public class ResumeController {
 			return model;
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
-			model.setViewName("editCopyPasteResumePopup");
+			model.setViewName("editUploadResumePopup");
 			return model;
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
@@ -310,24 +313,45 @@ public class ResumeController {
 		return model;
 	}
 
-	@RequestMapping(value = "/copyPasteResumeSubmit", method = RequestMethod.POST)
-	public String addResume(@ModelAttribute("createResume")
-	CreateResume createResume, BindingResult result,Model model){
-		ResumeDTO createResumeDTO=new ResumeDTO();
-
-		createResumeDTO.setResumeType(createResume.getResumeType());
-		createResumeDTO.setResumeName(createResume.getResumeName());
-		createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-		createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-		createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-		createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-		createResumeDTO.setResumeText(createResume.getResumeText());
-		createResumeDTO.setIsPublished("12");
+	@RequestMapping(value = "/createResumeUpload", method = RequestMethod.POST)
+	public ModelAndView createResumeUpload(CreateResume createResume){
+		
+		ModelAndView model = populateResumeDropDowns(createResume);
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())){
+			
+			ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+			String fileName = null, filePath = null;
+			try {
+				MultipartFile file = createResume.getFileData();
+				
+				if (file.getSize() > 0) {
+					if (file.getSize() > 100000) {
+						//return "/uploadfile";
+					}else{
+						fileName = file.getOriginalFilename();
+						filePath = basedirectorypathUpload+fileName;
+						File dest = new File(filePath);
+						file.transferTo(dest);
+						resumeDTO.setFileServer(basedirectorypathUpload);
+						resumeDTO.setFileName(fileName);
+						resumeDTO.setFilePath(filePath);
+						//set it from session
+						resumeDTO.setUserId(2);
+						resumeService.createResumeUpload(resumeDTO);
+					}
+				}	
+			}catch (Exception e) {
+				
+			}
+			
+			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+		}
+		return model;
 
 		//resumeService.addCreateResumeCopyPaste(createResumeDTO);
-		resumeService.createResumeCopyPaste(createResumeDTO);
+		
 
-		return "redirect:/jobSeekerResume/createResumePopUp.html";
+		//return "redirect:/jobSeekerResume/createResumePopUp.html";
 		
 		/*else if (createResume.getResumeType().equalsIgnoreCase("UPL")) {
 			try {

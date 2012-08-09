@@ -217,12 +217,16 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public boolean createResumeUpload(ResumeDTO createResumeDTO) {
+	public boolean createResumeUpload(ResumeDTO resumeDTO) {
+		resumeVisibilityPublicToPrivate(resumeDTO);
 		Boolean result = false;
-		ResUploadResume resUploadResume = resumeConversionHelper
-				.transformUploadResume(createResumeDTO);
+		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
-			hibernateTemplate.saveOrUpdate(resUploadResume);
+			hibernateTemplate.save(resUploadResume);
+			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
+			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
+			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
+			
 			result = true;
 		} catch (HibernateException e) {
 			result = false;

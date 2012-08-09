@@ -14,25 +14,11 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 		
-		 $("#resumeType").change(function() {
-				var resumeType = $.trim($("#resumeType").val());
-				switch(resumeType){
-					case "ADVANCE Resume Builder":
-						$("#resumeBuilder").click();
-						break;
-					case "Upload Existing Resume":
-						$("#uploadResume").click();
-						break;
-					case "Copy and Paste":
-						$("#copyPaste").click();
-						break;
-				}
-		});
-		 
-		 $("#create").click(function() {
+		 $("#update").click(function() {
 				
 				//validate the required fields
 				var resumeName = $.trim($("#resumeName").val());
+				var resumeId = $.trim($("#uploadResumeId").val());
 				var jobTitle = $.trim($("#desiredJobTitle").val());
 				var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
 		
@@ -42,7 +28,7 @@
 						$("#errorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
-						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId=",
+						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
 							success : function(data) {
 								if (data.maxResume != null) {
 										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
@@ -72,29 +58,22 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Create Or Upload My New Resume</h2>
-			<img src="../resources/images/Close.png" class="nyroModalClose"
+			<img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();"
 				width="19" height="19" alt="">
 		</div>
 
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="createResumeUpload.html" commandName="createResume" id="formtouse" enctype="multipart/form-data">
-				<div class="rowEvenNewSpacing">
-					<div id="errorMsg"></div>
-					<div class="floatLeft marginTop5 marginRight20">How would you
-						like to create your resume?</div>
-					<form:select class="jb_input3 jb_input_width3 marginTop0"
-						path="resumeType" items="${resumeTypeList}"
-						itemValue="optionValue" itemLabel="optionValue" />
-					<span class="required">(Required)</span>
-
-				</div>
+				<div id="errorMsg"></div>
+				
+				<form:input type="hidden" path="uploadResumeId" />
+				<form:input type="hidden" path="resumeType" />
 				<!-- Choose file section -->
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Upload Resume:</span>
-					<form:input path="fileData" id="chooseFile" type="file" />
+					<form:input path="fileData" type="file" value="${createResume.filename}"/>
                 	<!-- <span class="floatLeft marginTop5"><a href="" class="btn_sm orange">Choose File</a></span><span class="required paddingTop0 marginTop4 TextColorA05">No File Chosen</span><span class="required paddingTop0 marginTop4">(Required)</span> -->
-            	</div>
-            	
+            	</div>            	
             	
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
@@ -167,13 +146,9 @@
 				</div>
 				
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a id="create" href="#"
-						class="btn_sm orange">Create</a> <a href="#"
-						class="nyroModalClose btn_sm orange">Cancel</a></span>
+					<span class="floatLeft marginTop10"> <a id="update" href="#"
+						class="btn_sm orange">Update</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a></span>
 				</div>
-				<a id="resumeBuilder" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder" class="nyroModal"></a>
-				<a id="uploadResume" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume" class="nyroModal"></a>
-				<a id="copyPaste" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Copy and Paste" class="nyroModal"></a>
 				<div class="clearfix"></div>
 			</form:form>
 		</div>
