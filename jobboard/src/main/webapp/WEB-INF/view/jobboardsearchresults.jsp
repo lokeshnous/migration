@@ -168,7 +168,8 @@
 									"sPaginationType" : "full_numbers",
 									"bJQueryUI" : true,
 									"bSort" : true,
-									"iDisplayLength": 25,
+									"iDisplayLength": 20,
+									 "aLengthMenu": [[20, 30, 40, 50, -1], [20, 30, 40, 50, "All"]],
 									"oLanguage" : {
 										"sLengthMenu" : "Results viewable: _MENU_ per page",
 										//"sZeroRecords" : "Nothing found - sorry",
