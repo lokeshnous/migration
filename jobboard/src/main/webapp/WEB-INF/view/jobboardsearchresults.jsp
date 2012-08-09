@@ -178,6 +178,7 @@
 										//"sInfoEmpty" : "Showing 0 to 0 of 0 records",
 										//"sInfoFiltered" : "(filtered from _MAX_ total records)"
 									},
+									"sEmptyTable": "No results found",
 									"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
 									 //"sDom": 'T<"clear">lfrtip',
 									"sScrollY" : 500,
