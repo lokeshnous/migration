@@ -17,7 +17,7 @@ public class CheckNullUtil {
 	 */
 	public static String isNull(String checkStr){
 		if(checkStr == null){
-			return "Not Available";
+			return "N/A";
 		}else{
 			return checkStr;
 		}
