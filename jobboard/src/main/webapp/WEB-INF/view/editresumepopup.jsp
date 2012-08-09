@@ -30,27 +30,42 @@
 		
 	 $("#update").click(function(){
 		
-		var resumeName = $.trim($("#resumeName").val());
-		var jobTitle = $.trim($("#desiredJobTitle").val());
-		var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
-		debugger; 
-		if(resumeName != null && resumeName !="" && jobTitle != null && jobTitle != "" && workAuth !="Select" && workAuth != null && workAuth != ""){
-			$("#errorMsg").html("");
-			$("form").attr("action", getBaseURL()+"jobSeekerResume/updateResumePopup.html");
-			$("form").submit();
-		} 
-		else{
-			 $("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
-		}
+		//validate the required fields
+			var resumeName = $.trim($("#resumeName").val());
+			var resumeId = $.trim($("#uploadResumeId").val());
+			var jobTitle = $.trim($("#desiredJobTitle").val());
+			var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
+	
+			if (resumeName != null && resumeName != ""
+				&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
+				&& workAuth != null	&& workAuth != ""){
+					$("#errorMsg").html("");
+					//validate number of resumes
+					//validate if resume name already exist in db
+					$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
+						success : function(data) {
+							if (data.maxResume != null) {
+									$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+								} else if (data.duplicateResume != null) {
+									$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+								} else {
+									$("form").attr("action",getBaseURL()+ "jobSeekerResume/updateResumePopup.html");
+									$("form").submit();
+								}
+							},
+						error : function(response) {
+							alert("Server Error : "+ response.status);
+							},
+						complete : function() {
+							
+						}
+					});
+			} else {
+				$("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+			}
 	 });
 	 
 	});
-	function MM_jumpMenu(targ, selObj, restore) { //v3.0
-		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
-				+ "'");
-		if (restore)
-			selObj.selectedIndex = 0;
-	}
 </script>
 </head>
 
@@ -70,8 +85,8 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
-					<form:input type="hidden" path="uploadResumeId" />
-					<form:input type="hidden" path="resumeType" />
+					<form:hidden path="uploadResumeId" />
+					<form:hidden path="resumeType" />
 					<form:input type="text"	path="resumeName" class="job_seeker_password textBox2"/>
 					<span class="required">(Required)</span>
 				</div>

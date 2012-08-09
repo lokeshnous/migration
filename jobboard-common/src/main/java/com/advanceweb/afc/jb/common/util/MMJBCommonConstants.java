@@ -30,7 +30,7 @@ public interface MMJBCommonConstants {
 	
 	//Resume Visibility
 	public static final String VISIBILITY_PUBLIC = "1" ;
-	public static final String VISIBILITY_PRIVATE = "2";
+	public static final String VISIBILITY_PRIVATE = "0";
 
 	// For SOLR search
 	int ZERO_INT = 0;

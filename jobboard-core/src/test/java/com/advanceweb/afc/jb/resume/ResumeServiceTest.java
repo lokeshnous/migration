@@ -181,7 +181,7 @@ public class ResumeServiceTest extends ServiceTest {
 
 			List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(10);
 			for (ResumeDTO resumeDTO : resumeDTOList) {
-				assertTrue("Delete Resume", resumeService.deleteResume(resumeDTO.getUploadResumeId()));
+				assertTrue("Delete Resume", resumeService.deleteResume(resumeDTO.getUploadResumeId(),10));
 			}
 
 		} catch (Exception e) {

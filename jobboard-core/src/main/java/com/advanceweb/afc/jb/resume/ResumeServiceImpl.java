@@ -67,8 +67,8 @@ public class ResumeServiceImpl implements ResumeService {
 	 * @return delete status
 	 */
 	@Override
-	public boolean deleteResume(int resumeId) {
-		return resumeDao.deleteResume(resumeId);
+	public boolean deleteResume(int resumeId, int userId) {
+		return resumeDao.deleteResume(resumeId, userId);
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
@@ -149,8 +149,13 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
-	public boolean checkDuplicateResumeName(String resumeName, int userId) {
-		return resumeDao.checkDuplicateResumeName(resumeName, userId);
+	public boolean checkDuplicateResumeName(String resumeId, String resumeName, int userId) {
+		return resumeDao.checkDuplicateResumeName(resumeId, resumeName, userId);
+	}
+
+	@Override
+	public boolean updateResumeCopyPaste(ResumeDTO resumeDTO) {
+		return resumeDao.updateResumeCopyPaste(resumeDTO);
 	}
 
 }

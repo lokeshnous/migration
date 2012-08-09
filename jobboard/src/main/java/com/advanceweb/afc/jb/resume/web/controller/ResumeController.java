@@ -40,9 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
@@ -52,7 +50,6 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -80,7 +77,7 @@ public class ResumeController {
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
 	@Autowired
-	PopulateDropdowns populateDropdownsService;
+	private PopulateDropdowns populateDropdownsService;
 	
 	private @Value("${basedirectorypathUpload}") String basedirectorypathUpload;
 
@@ -96,18 +93,17 @@ public class ResumeController {
 	@RequestMapping(value = "/manageResume", method = RequestMethod.GET)
 	public String getResumes(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
-		
-		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
+		//set this from session
+		int userId = 2;
+		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(userId);		
 		
 		List<ResumeVisibilityDTO> visiblityList= populateDropdownsService.getResumeVisibilityList();
-		Map<String,String> visibilityMap = new HashMap<String , String>();
-		
+		Map<String,String> visibilityMap = new HashMap<String , String>();		
 		for(int i = 0 ; i< visiblityList.size() ; i++){
 			visibilityMap.put(visiblityList.get(i).getVisibilityId(), visiblityList.get(i).getVisibilityName());
 		}
 		
 		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();  
-		
 		for(ResumeDTO resumeDTO : resumeDTOList){
 			resumeDTO.setResumeVisibility(visibilityMap.get(resumeDTO.getResumeVisibility()));
 			resumeDTOListNew.add(resumeDTO);
@@ -115,9 +111,316 @@ public class ResumeController {
 		map.put("resumeList", resumeDTOList);
 		return "manageResumePopup";
 	}
+	
+	private ModelAndView populateResumeDropDowns(CreateResume createResume) {
+		ModelAndView model = new ModelAndView();
+		List<ResumeAttribListDTO> resumeTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RESUME_TYPE);
+		List<ResumeAttribListDTO> employmentTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<ResumeAttribListDTO> workAuthUSList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.WORK_AUTH_US);
+		List<ResumeAttribListDTO> relocateList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RELOCATE);
+		List<ResumeVisibilityDTO> visibilityList = populateDropdownsService.getResumeVisibilityList();
+		
+		model.addObject("resumeTypeList", resumeTypeList);
+		model.addObject("employmentType", employmentTypeList);
+		model.addObject("workAuthUS", workAuthUSList);
+		model.addObject("resumeVisibility", visibilityList);
+		model.addObject("relocate", relocateList);
+		return model;
+	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.GET)
+	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName,@RequestParam("resumeId") String resumeId) {
+		//set this from session
+		int userId = 2;
+		int resumeCount = resumeService.findResumeCount(userId);
+		JSONObject warningMessage = new JSONObject();
+		if(resumeCount == 5){
+			warningMessage.put("maxResume", "You can create 5 resume at max.");
+			return warningMessage;
+		}
+		if(!("".equals(resumeName)) && resumeService.checkDuplicateResumeName(resumeId,resumeName, userId)){
+			warningMessage.put("duplicateResume", "Resume Name already exists, Please try again.");
+			return warningMessage;
+		}
+		return warningMessage;		
+	}
+	
+	/**
+	 * This method is called to fetch the resume data to edit
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
+	public ModelAndView editResume(CreateResume createResume,@RequestParam("resumeId") int resumeId) {
+		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
+		
+		transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
+		ModelAndView model = populateResumeDropDowns(createResume);
+		model.addObject("createResume", createResume);
+		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO.getResumeType())){
+			model.setViewName("editresumepopup");
+			return model;
+		}
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
+			model.setViewName("editCopyPasteResumePopup");
+			return model;
+		}
+		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
+			model.setViewName("editCopyPasteResumePopup");
+			return model;
+		}	
+		model.setViewName("editresumepopup");
+		return model;
+	}
+	
+	/**
+	 * This method is called to delete a resume 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteResume", method = RequestMethod.GET)
+	public @ResponseBody JSONObject deleteResume(HttpServletRequest request,HttpServletResponse response, HttpSession session, @RequestParam("resumeId") int resumeId) {
+		//Integer.parseInt(String.valueOf(session.getAttribute("userId")));
+		int userId = 2;
+		boolean deleteStatus = resumeService.deleteResume(resumeId,userId);
+		JSONObject deleteStatusJson = new JSONObject();
+		if(deleteStatus){
+			deleteStatusJson.put("success", "Profile Deleted Succesfully");
+			return deleteStatusJson;
+		}
+		else{
+			deleteStatusJson.put("failed", "Failed to Delete this record");
+			return deleteStatusJson;
+		}
+	}
+	
+	/**
+	 * This method is called to fetch the resume data to edit
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.GET)
+	public ModelAndView updateResumePopup(CreateResume createResume) {
+
+		ModelAndView model = new ModelAndView();
+		
+		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+		//set it from session
+		resumeDTO.setUserId(2);				
+		//depending on the resume type either move to resume builder or show excel file 
+		
+		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO.getResumeType())){
+			resumeService.updateResume(resumeDTO);
+			resumeDTO = resumeService.editResume(resumeDTO.getUploadResumeId());
+			
+			transCreateResume.transformCreateResumeForm(resumeDTO);
+			List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
+			List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
+			List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
+			List<WorkExpForm> listWorkExpForm = transCreateResume.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+			List<LanguageForm> listLangForm = transCreateResume.transformLanguageForm(resumeDTO.getListLangDTO());
+			ContactInfoForm contactForm = transCreateResume.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+	
+			createResume.setListCertForm(listCertForm);
+			createResume.setListEduForm(listEduForm);
+			createResume.setListLangForm(listLangForm);
+			createResume.setListRefForm(listRefForm);
+			createResume.setListWorkExpForm(listWorkExpForm);
+			createResume.setContactInfoForm(contactForm);
+			resumeDTO.getContactInfoDTO();
+			model.addObject("createResume",createResume);
+			model.setViewName("createResumeBuilder");
+		}
+		/*else if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType()))
+		{
+			//Show excel file 
+		}
+		else{
+			//Show copy paste resume page
+		}*/
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
+	public ModelAndView createResumePopUp(@RequestParam("resumeType") String resumeType) {
+		
+		CreateResume createResume = new CreateResume();
+		
+		//ResumeDTO resumeDTO = resumeService.getProfileAttributes();
+		//createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
+		
+		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_YES);
+		createResume.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
+		
+		createResume.setResumeType(resumeType);
+		
+		ModelAndView model = populateResumeDropDowns(createResume);
+		model.addObject("createResume", createResume);
+		
+		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeType)){
+			model.setViewName("createresumepopup");
+			return model;
+		}
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD .equals(resumeType)){
+			model.setViewName("createResumeUploadPopup");			
+			return model;
+		}
+		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeType)){
+			model.setViewName("createResumeCopyPastePopup");
+			return model;
+		}
+		model.setViewName("createresumepopup");
+		return model;
+	}
+	
+	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.GET)
+	public ModelAndView createCopyPasteResume(CreateResume createResume, HttpSession session) {
+		ModelAndView model = populateResumeDropDowns(createResume);
+		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(createResume.getResumeType())){
+			
+			ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+			//set it from session
+			resumeDTO.setUserId(2);
+			resumeService.createResumeCopyPaste(resumeDTO);
+			model.setViewName("createResumeCopyPastePopup");
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/updateCopyPasteResume", method = RequestMethod.GET)
+	public ModelAndView updateCopyPasteResume(CreateResume createResume, HttpSession session) {
+		ModelAndView model = populateResumeDropDowns(createResume);
+		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+		//set it from session
+		resumeDTO.setUserId(2);
+		resumeService.updateResumeCopyPaste(resumeDTO);
+		model.setViewName("editCopyPasteResume");
+		return model;
+	}
+
+	@RequestMapping(value = "/copyPasteResumeSubmit", method = RequestMethod.POST)
+	public String addResume(@ModelAttribute("createResume")
+	CreateResume createResume, BindingResult result,Model model){
+		ResumeDTO createResumeDTO=new ResumeDTO();
+
+		createResumeDTO.setResumeType(createResume.getResumeType());
+		createResumeDTO.setResumeName(createResume.getResumeName());
+		createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+		createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+		createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
+		createResumeDTO.setResumeText(createResume.getResumeText());
+		createResumeDTO.setIsPublished("12");
+
+		//resumeService.addCreateResumeCopyPaste(createResumeDTO);
+		resumeService.createResumeCopyPaste(createResumeDTO);
+
+		return "redirect:/jobSeekerResume/createResumePopUp.html";
+		
+		/*else if (createResume.getResumeType().equalsIgnoreCase("UPL")) {
+			try {
+				MultipartFile file = createResume.getFileData();
+				String fileName = null;
+				InputStream inputStream = null;
+				OutputStream outputStream = null;
+				if (file.getSize() > 0) {
+					inputStream = file.getInputStream();
+					if (file.getSize() > 10000) {
+						//return "/uploadfile";
+					}
+					fileName = request.getRealPath("") + "/resources/images/"
+							+ file.getOriginalFilename();
+
+					outputStream = new FileOutputStream(fileName);
+
+					int readBytes = 0;
+					byte[] buffer = new byte[10000];
+					readBytes = inputStream.read(buffer, 0, 10000);
+					while (readBytes != -1) {
+						outputStream.write(buffer, 0, readBytes);
+					}
 
 
+					outputStream.close();
+					inputStream.close();
+				}
 
+				// ..........................................
+				session.setAttribute("uploadFile", file.getOriginalFilename());
+
+
+				//==============================
+				//Reading File
+				//==============================
+				FileInputStream fstream = new FileInputStream(fileName);
+				// Get the object of DataInputStream
+				DataInputStream dataInputStream = new DataInputStream(fstream);
+				BufferedReader bufferReader = new BufferedReader(new InputStreamReader(dataInputStream,"UTF8"));
+				String strLine;
+				//Read File Line By Line
+				StringBuffer resumeTextData=new StringBuffer();
+				strLine = bufferReader.readLine();
+				while (strLine != null)   {
+					// Print the content on the console
+					resumeTextData.append(strLine+"\n");
+				}
+				InetAddress ownIP=InetAddress.getLocalHost();
+				//POI File Reader
+
+
+				String ext="";
+				int mid= fileName.lastIndexOf(".");
+				fileName.substring(0,mid);
+				ext=fileName.substring(mid+1,fileName.length());  
+				if(ext.equalsIgnoreCase("doc")){
+					resumeTextData.delete(0, resumeTextData.length());
+					new ReadDocFile().readMyDocument(fileName, resumeTextData);
+				}else if (ext.equalsIgnoreCase("docx")) {
+					resumeTextData.delete(0, resumeTextData.length());
+					new ReadDocFile().docxFileReader(fileName, resumeTextData);
+				}
+				//Data Insertion part   
+				ResumeDTO createResumeDTO=new ResumeDTO();
+				createResumeDTO.setResumeType(createResume.getResumeType());
+				createResumeDTO.setResumeName(createResume.getResumeName());
+				createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+				createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+				createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+				createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
+				createResumeDTO.setResumeText(resumeTextData.toString());
+				createResumeDTO.setFileServer(ownIP.getHostAddress());
+				createResumeDTO.setFilePath(basedirectorypathUpload);
+				createResumeDTO.setFileName(file.getOriginalFilename());
+				createResumeDTO.setIsPublished("12");
+				//resumeService.addCreateResumeUpload(createResumeDTO);
+				resumeService.createResumeUpload(createResumeDTO);
+				//Close the input stream
+				fstream.close();
+				dataInputStream.close();
+				bufferReader.close();
+				resumeTextData.delete(0, resumeTextData.length());
+				(new File(basedirectorypathUpload)).mkdir();
+				CopyUtil.move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
+
+
+			} catch (Exception e) {
+				Logger.getLogger("");
+			}
+
+			return "redirect:/jobSeekerResume/createResumePopUp.html";
+		}*/
+	}
+	
 	/**
 	 * This method is called to display resume list belonging to a logged in
 	 * jobSeeker
@@ -130,16 +433,9 @@ public class ResumeController {
 	public ModelAndView getResumes(CreateResume createResume) {
 		
 		ModelAndView model = new ModelAndView();
-		ResumeDTO resumeDTO=new ResumeDTO();
+		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+		//set it from session
 		resumeDTO.setUserId(2);
-		resumeDTO.setResumeType(createResume.getResumeType());
-		resumeDTO.setResumeName(createResume.getResumeName());
-		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-		resumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
-		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
 		resumeService.createResume(resumeDTO);
 		
 		CertificationsForm certForm = new CertificationsForm();
@@ -221,127 +517,7 @@ public class ResumeController {
 
 	}
 
-		
-	/**
-	 * This method is called to fetch the resume data to edit
-	 * @param model
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
-	public ModelAndView editResume(CreateResume createResume,
-			@RequestParam("resumeId") int resumeId) {
-
-		//CreateResume resumeForm = new CreateResume(); 
-		ModelAndView model = new ModelAndView();
-		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-		
-		createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
-		createResume.setResumeName(resumeDTO.getResumeName());
-		createResume.setResumeType(resumeDTO.getResumeType());
-		createResume.setDesiredJobTitle(resumeDTO.getDesiredJobTitle());
-		createResume.setDesiredEmploymentType(resumeDTO.getDesiredEmploymentType());
-		createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
-		createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
-		createResume.setResumeVisibility(resumeDTO.getResumeVisibility());
-		
-		List<ResumeAttribListDTO> employmentTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<ResumeAttribListDTO> workAuthUSList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.WORK_AUTH_US);
-		List<ResumeAttribListDTO> relocateList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RELOCATE);
-		List<ResumeVisibilityDTO> visibilityList = populateDropdownsService.getResumeVisibilityList();
-		
-		model.addObject("resumeForm", createResume);
-		model.addObject("resumeDetail", resumeDTO);
-		model.addObject("employmentType", employmentTypeList);
-		model.addObject("workAuthUS", workAuthUSList);
-		model.addObject("resumeVisibility", visibilityList);
-		model.addObject("relocate", relocateList);
-		model.setViewName("editresumepopup");
-		
-		return model;
-	}
 	
-	/**
-	 * This method is called to fetch the resume data to edit
-	 * @param model
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.GET)
-	public ModelAndView updateResumePopup(CreateResume createResume) {
-
-		ModelAndView model = new ModelAndView();
-		
-		ResumeDTO resumeDTO = new ResumeDTO();
-		resumeDTO.setUserId(2);
-		
-		resumeDTO.setUploadResumeId(Integer.parseInt(createResume.getUploadResumeId()));
-		resumeDTO.setResumeName(createResume.getResumeName());
-		resumeDTO.setResumeType(createResume.getResumeType());
-		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-		resumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
-				
-		resumeService.updateResume(resumeDTO);
-		
-		//depending on the resume type either move to resume builder or show excel file 
-		
-		if(MMJBCommonConstants.RESUME_TYPE.equals(resumeDTO.getResumeType())){ 
-			resumeDTO = resumeService.editResume(resumeDTO.getUploadResumeId());
-			
-			transCreateResume.transformCreateResumeForm(resumeDTO);
-			List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
-			List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
-			List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
-			List<WorkExpForm> listWorkExpForm = transCreateResume.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
-			List<LanguageForm> listLangForm = transCreateResume.transformLanguageForm(resumeDTO.getListLangDTO());
-			ContactInfoForm contactForm = transCreateResume.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-	
-			createResume.setListCertForm(listCertForm);
-			createResume.setListEduForm(listEduForm);
-			createResume.setListLangForm(listLangForm);
-			createResume.setListRefForm(listRefForm);
-			createResume.setListWorkExpForm(listWorkExpForm);
-			createResume.setContactInfoForm(contactForm);
-			resumeDTO.getContactInfoDTO();
-			model.addObject("createResume",createResume);
-			model.setViewName("createResumeBuilder");
-		}
-		/*else if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType()))
-		{
-			//Show excel file 
-		}
-		else{
-			//Show copy paste resume page
-		}*/
-		return model;
-	}
-	
-
-	/**
-	 * This method is called to delete a resume 
-	 * @param model
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value = "/deleteResume", method = RequestMethod.GET)
-	public @ResponseBody JSONObject deleteResume(HttpServletRequest request,HttpServletResponse response, HttpSession session, @RequestParam("resumeId") int resumeId) {
-
-		boolean deleteStatus = resumeService.deleteResume(resumeId);
-		JSONObject deleteStatusJson = new JSONObject();
-		if(deleteStatus){
-			deleteStatusJson.put("success", "Profile Deleted Succesfully");
-			return deleteStatusJson;
-		}
-		else{
-			deleteStatusJson.put("failed", "Failed to Delete this record");
-			return deleteStatusJson;
-		}
-	}
-
-
 	/**
 	 * This method is called to save work experience
 	 * Ajax call
@@ -413,74 +589,7 @@ public class ResumeController {
 		return null;
 	}
 
-
-	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
-	public ModelAndView createResumePopUp(@RequestParam("resumeType") String resumeType) {
-		
-		List<ResumeAttribListDTO> resumeTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RESUME_TYPE);
-		List<ResumeAttribListDTO> employmentTypeList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<ResumeAttribListDTO> workAuthUSList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.WORK_AUTH_US);
-		List<ResumeAttribListDTO> relocateList = populateDropdownsService.populateResumeDropdown(MMJBCommonConstants.RELOCATE);
-		List<ResumeVisibilityDTO> visibilityList = populateDropdownsService.getResumeVisibilityList();
-		
-		CreateResume createResume = new CreateResume();
-		
-		//ResumeDTO resumeDTO = resumeService.getProfileAttributes();
-		//createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
-		
-		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_YES);
-		createResume.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
-		ModelAndView model = new ModelAndView();
-
-		createResume.setResumeType(resumeType);
-
-		model.addObject("createResume", createResume);
-		model.addObject("resumeTypeList", resumeTypeList);
-		model.addObject("employmentType", employmentTypeList);
-		model.addObject("workAuthUS", workAuthUSList);
-		model.addObject("resumeVisibility", visibilityList);
-		model.addObject("relocate", relocateList);
-		
-		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeType)){
-			model.setViewName("createresumepopup");
-			return model;
-		}
-		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD .equals(resumeType)){
-			model.setViewName("createResumeUploadPopup");			
-			return model;
-		}
-		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeType)){
-			model.setViewName("createResumeCopyPastePopup");
-			return model;
-		}
-		model.setViewName("createresumepopup");
-		return model;
-	}
-	
-	/**
-	 * This method is called to delete a resume 
-	 * @param model
-	 * @param map
-	 * @return
-	 */
-	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.GET)
-	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName) {
-		int userId = 2;
-		int resumeCount = resumeService.findResumeCount(userId);
-		JSONObject warningMessage = new JSONObject();
-		if(resumeCount == 5){
-			warningMessage.put("maxResume", "You can create 5 resume at max.");
-			return warningMessage;
-		}
-		if(!("".equals(resumeName)) && resumeService.checkDuplicateResumeName(resumeName, userId)){
-			warningMessage.put("duplicateResume", "Resume Name already exists, Please try again.");
-			return warningMessage;
-		}
-		return warningMessage;		
-	}
-	
-	
-	public List<ResumeProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
+	/*public List<ResumeProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
 		
 		List<ResumeProfileAttribForm> listForms = new ArrayList<ResumeProfileAttribForm>();
 		
@@ -524,147 +633,7 @@ public class ResumeController {
 		resumeDTO.setResumeAttribList(list);
 		return resumeDTO;
 		
-	}
-	
-
-	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.POST)
-	public String addContact(@ModelAttribute("createResume")
-	CreateResume createResume, BindingResult result,Model model,HttpServletRequest request, HttpServletResponse response,HttpSession session) {
-		if(createResume.getResumeType().equalsIgnoreCase("CP")){
-			model.addAttribute("createResume", createResume);
-			return "copyPasteResumeText";
-		}else if (createResume.getResumeType().equalsIgnoreCase("UPL")) {
-			try {
-				MultipartFile file = createResume.getFileData();
-				String fileName = null;
-				InputStream inputStream = null;
-				OutputStream outputStream = null;
-				if (file.getSize() > 0) {
-					inputStream = file.getInputStream();
-					/*if (file.getSize() > 10000) {
-						//return "/uploadfile";
-					}*/
-					fileName = request.getRealPath("") + "/resources/images/"
-							+ file.getOriginalFilename();
-
-					outputStream = new FileOutputStream(fileName);
-
-					int readBytes = 0;
-					byte[] buffer = new byte[10000];
-					readBytes = inputStream.read(buffer, 0, 10000);
-					while (readBytes != -1) {
-						outputStream.write(buffer, 0, readBytes);
-					}
-
-
-					outputStream.close();
-					inputStream.close();
-				}
-
-				// ..........................................
-				session.setAttribute("uploadFile", file.getOriginalFilename());
-
-
-				//==============================
-				//Reading File
-				//==============================
-				FileInputStream fstream = new FileInputStream(fileName);
-				// Get the object of DataInputStream
-				DataInputStream dataInputStream = new DataInputStream(fstream);
-				BufferedReader bufferReader = new BufferedReader(new InputStreamReader(dataInputStream,"UTF8"));
-				String strLine;
-				//Read File Line By Line
-				StringBuffer resumeTextData=new StringBuffer();
-				strLine = bufferReader.readLine();
-				while (strLine != null)   {
-					// Print the content on the console
-					resumeTextData.append(strLine+"\n");
-				}
-				InetAddress ownIP=InetAddress.getLocalHost();
-				//POI File Reader
-
-
-				String ext="";
-				int mid= fileName.lastIndexOf(".");
-				fileName.substring(0,mid);
-				ext=fileName.substring(mid+1,fileName.length());  
-				if(ext.equalsIgnoreCase("doc")){
-					resumeTextData.delete(0, resumeTextData.length());
-					new ReadDocFile().readMyDocument(fileName, resumeTextData);
-				}else if (ext.equalsIgnoreCase("docx")) {
-					resumeTextData.delete(0, resumeTextData.length());
-					new ReadDocFile().docxFileReader(fileName, resumeTextData);
-				}
-				//Data Insertion part   
-				ResumeDTO createResumeDTO=new ResumeDTO();
-				createResumeDTO.setResumeType(createResume.getResumeType());
-				createResumeDTO.setResumeName(createResume.getResumeName());
-				createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-				createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-				createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-				createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-				createResumeDTO.setResumeText(resumeTextData.toString());
-				createResumeDTO.setFileServer(ownIP.getHostAddress());
-				createResumeDTO.setFilePath(basedirectorypathUpload);
-				createResumeDTO.setFileName(file.getOriginalFilename());
-				createResumeDTO.setIsPublished("12");
-				//resumeService.addCreateResumeUpload(createResumeDTO);
-				resumeService.createResumeUpload(createResumeDTO);
-				//Close the input stream
-				fstream.close();
-				dataInputStream.close();
-				bufferReader.close();
-				resumeTextData.delete(0, resumeTextData.length());
-				(new File(basedirectorypathUpload)).mkdir();
-				CopyUtil.move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
-
-
-			} catch (Exception e) {
-				Logger.getLogger("");
-			}
-
-			return "redirect:/jobSeekerResume/createResumePopUp.html";
-		}else if(createResume.getResumeType().equalsIgnoreCase("CR")){
-			ResumeDTO createResumeDTO=new ResumeDTO();
-
-			createResumeDTO.setResumeType(createResume.getResumeType());
-			createResumeDTO.setResumeName(createResume.getResumeName());
-			createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-			createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-			createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-			createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-			//createResumeDTO.setResumeText(createResume.getResumeText());
-			createResumeDTO.setIsPublished("12");
-
-			//resumeService.addCreateResumeCopyPaste(createResumeDTO);
-			resumeService.createResumeCopyPaste(createResumeDTO);
-
-			return "redirect:/jobSeekerResume/createresumepopup.html";
-		}else{
-			return "redirect:/jobSeekerResume/createresumepopup.html";
-
-		}
-	}
-
-	@RequestMapping(value = "/copyPasteResumeSubmit", method = RequestMethod.POST)
-	public String addResume(@ModelAttribute("createResume")
-	CreateResume createResume, BindingResult result,Model model){
-		ResumeDTO createResumeDTO=new ResumeDTO();
-
-		createResumeDTO.setResumeType(createResume.getResumeType());
-		createResumeDTO.setResumeName(createResume.getResumeName());
-		createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-		createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-		createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-		createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-		createResumeDTO.setResumeText(createResume.getResumeText());
-		createResumeDTO.setIsPublished("12");
-
-		//resumeService.addCreateResumeCopyPaste(createResumeDTO);
-		resumeService.createResumeCopyPaste(createResumeDTO);
-
-		return "redirect:/jobSeekerResume/createResumePopUp.html";
-	}
+	}*/
 
 	/**
 	 * Called to create resume

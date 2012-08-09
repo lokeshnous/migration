@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 
 /**
@@ -23,6 +24,39 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
  */
 @Repository("transCreateResume")
 public class TransformCreateResume {
+	
+	public ResumeDTO transformCreateResumeToResumeDTO(CreateResume createResume) {
+		ResumeDTO resumeDTO=new ResumeDTO();
+		if(!("".equals(createResume.getUploadResumeId())) && createResume.getUploadResumeId() != null){
+			resumeDTO.setUploadResumeId(Integer.parseInt(createResume.getUploadResumeId()));
+		}
+		resumeDTO.setResumeType(createResume.getResumeType());
+		resumeDTO.setResumeName(createResume.getResumeName());
+		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
+		resumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
+		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
+		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
+		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
+			resumeDTO.setResumeText(createResume.getResumeText());
+		}
+		return resumeDTO;
+	}
+	
+	public void transformResumeDTOToCreateResume(CreateResume createResume,ResumeDTO resumeDTO) {
+		createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
+		createResume.setResumeName(resumeDTO.getResumeName());
+		createResume.setResumeType(resumeDTO.getResumeType());
+		createResume.setDesiredJobTitle(resumeDTO.getDesiredJobTitle());
+		createResume.setDesiredEmploymentType(resumeDTO.getDesiredEmploymentType());
+		createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
+		createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
+		createResume.setResumeVisibility(resumeDTO.getResumeVisibility());
+		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
+			createResume.setResumeText(resumeDTO.getResumeText());
+		}
+	}
 	
 	/**
 	 * Method to convert Certifications form to Reference dto

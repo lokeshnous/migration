@@ -205,7 +205,6 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 		this.fileName = fileName;
 	}
 
-
 	public String getIsPublished() {
 		return isPublished;
 	}

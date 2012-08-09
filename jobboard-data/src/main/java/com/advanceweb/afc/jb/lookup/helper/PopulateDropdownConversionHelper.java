@@ -390,7 +390,7 @@ public class PopulateDropdownConversionHelper {
 		
 		for(ResPrivacy resPrivacy : resPrivacyList){
 			ResumeVisibilityDTO visibilityDTO=new ResumeVisibilityDTO();
-			visibilityDTO.setVisibilityId(String.valueOf(resPrivacy.getPrivacyId()));
+			visibilityDTO.setVisibilityId(String.valueOf(resPrivacy.getDescription()));
 			visibilityDTO.setVisibilityName(resPrivacy.getName());
 			visibilityDTOList.add(visibilityDTO);
 		}

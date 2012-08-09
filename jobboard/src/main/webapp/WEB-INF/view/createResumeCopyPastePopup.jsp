@@ -29,88 +29,42 @@
 				}
 		});
 		 
-		$("#create").click(function() {
-
-											//validate the required fields
-											var resumeName = $.trim($(
-													"#resumeName").val());
-											var jobTitle = $.trim($(
-													"#desiredJobTitle").val());
-											var workAuth = $
-													.trim($(
-															"#workAuthorizationUS option:selected")
-															.text());
-
-											if (resumeName != null
-													&& resumeName != ""
-													&& jobTitle != null
-													&& jobTitle != ""
-													&& workAuth != "Select"
-													&& workAuth != null
-													&& workAuth != "") {
-												$("#errorMsg").html("");
-
-												//validate number of resumes
-												//validate if resume name already exist in db
-												alert(resumeName);
-												$
-														.ajax({
-															url : getBaseURL()
-																	+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="
-																	+ resumeName,
-															success : function(
-																	data) {
-																if (data.maxResume != null) {
-																	$(
-																			"#errorMsg")
-																			.html(
-																					"<span style='color:red'>"
-																							+ data.maxResume
-																							+ "</span>");
-																} else if (data.duplicateResume != null) {
-																	$(
-																			"#errorMsg")
-																			.append(
-																					"<br/><span style='color:red'>"
-																							+ data.duplicateResume
-																							+ "</span>");
-																} else {
-																	$("form")
-																			.attr(
-																					"action",
-																					getBaseURL()
-																							+ "jobSeekerResume/createResumeBuilder.html");
-																	$("form")
-																			.submit();
-																}
-															},
-															error : function(
-																	response) {
-																alert("Server Error : "
-																		+ response.status);
-															},
-															complete : function() {
-
-															}
-														});
-											} else {
-												$("#errorMsg")
-														.html(
-																"<span style='color:red'>Please enter the required parameters.</span>");
-											}
-
-										});
-
-					});
-	function MM_jumpMenu(targ, selObj, restore) { //v3.0
-		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
-				+ "'");
-		/* createResumePopUp.html?resumeType=
-		createResumePopUp.html?resumeType=
-		createResumePopUp.html?resumeType= */
-		if (restore)
-			selObj.selectedIndex = 0;
-	}
+		 $("#Save").click(function() {
+				
+				//validate the required fields
+				var resumeName = $.trim($("#resumeName").val());
+				var jobTitle = $.trim($("#desiredJobTitle").val());
+				var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
+		
+				if (resumeName != null && resumeName != ""
+					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
+					&& workAuth != null	&& workAuth != ""){
+						$("#errorMsg").html("");
+						//validate number of resumes
+						//validate if resume name already exist in db
+						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName,
+							success : function(data) {
+								if (data.maxResume != null) {
+										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+									} else if (data.duplicateResume != null) {
+										$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+									} else {
+										$("form").attr("action",getBaseURL()+ "jobSeekerResume/copyPasteResume.html");
+										$("form").submit();
+									}
+								},
+							error : function(response) {
+								alert("Server Error : "+ response.status);
+								},
+							complete : function() {
+								
+							}
+						});
+				} else {
+					$("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+				}
+			});
+	});	 
 </script>
 </head>
 <body class="job_board">
@@ -123,9 +77,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="createResumeBuilder.html"
-				commandName="createResume" id="formtouse"
-				enctype="multipart/form-data">
+			<form:form method="get" action="copyPasteResume.html" commandName="createResume" id="copyPastResume" enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>
 					<div class="floatLeft marginTop5 marginRight20">How would you
@@ -208,12 +160,12 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4 TextAlignL">Paste Resume:</span>
 					<div class="clearfix"></div>
-					<textarea id="Body Text:"
+					<form:textarea path="resumeText"
 						class="textareaBoxCResume width615 Height255 marginTop5 "
-						name="Body Text:" cols="45" rows="3"></textarea>
+						cols="45" rows="3"></form:textarea>
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a id="create" href="#"
+					<span class="floatLeft marginTop10"> <a id="Save" href="#"
 						class="btn_sm orange">Save</a> <a href="#"
 						class="nyroModalClose btn_sm orange">Cancel</a></span>
 				</div>

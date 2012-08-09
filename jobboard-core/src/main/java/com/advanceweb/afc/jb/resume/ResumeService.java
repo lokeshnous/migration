@@ -20,13 +20,15 @@ public interface ResumeService {
 
 	List<ResumeDTO> retrieveAllResumes(long jobSeekerId);
 	ResumeDTO editResume(int resumeId);
-	boolean deleteResume(int resumeId);
+	boolean deleteResume(int resumeId , int userId);
 	boolean updateResume(ResumeDTO resumeDTO);
-	boolean createResume(ResumeDTO createResumeDTO);
+	boolean createResume(ResumeDTO resumeDTO);
 	boolean createResumeBuilder(ResumeDTO resumeDTO);
 	
-	boolean createResumeCopyPaste(ResumeDTO createResumeDTO);
-	boolean createResumeUpload(ResumeDTO createResumeDTO);
+	boolean createResumeCopyPaste(ResumeDTO resumeDTO);
+	boolean updateResumeCopyPaste(ResumeDTO resumeDTO);
+	
+	boolean createResumeUpload(ResumeDTO resumeDTO);
 	
 	boolean addWorkExp(List<WorkExpDTO> listWorkExp);
 	boolean addReference(List<ReferenceDTO> listRefExp);
@@ -42,6 +44,6 @@ public interface ResumeService {
 	 */
 	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
 	int findResumeCount(int userId);
-	boolean checkDuplicateResumeName(String resumeName,int userId);
+	boolean checkDuplicateResumeName(String resumeId, String resumeName,int userId);
 }
 
