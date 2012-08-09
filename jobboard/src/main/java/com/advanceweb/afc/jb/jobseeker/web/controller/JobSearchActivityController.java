@@ -178,7 +178,7 @@ public class JobSearchActivityController {
 			 //Check for job seeker login
 			if (session.getAttribute("userId") == null) {
 				map.put("loginForm", new LoginForm());
-				jsonObject.put("navigationPath", "jobSeekerLogin");
+				jsonObject.put(ajaxNavigationPath, "../loginFormForJobSeeker/login");
 				return jsonObject;
 			}
 			int userId = (Integer)session.getAttribute("userId");

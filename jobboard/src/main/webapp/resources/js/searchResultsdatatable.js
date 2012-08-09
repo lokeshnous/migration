@@ -69,8 +69,9 @@ function validateRadius() {
 			});
 		}
 		function applyThisJob(jobId) {
+			var applyJobidId = "#applyJobid"+jobId;
 			$.ajax({
-				url : 'applyJob.html?id='+jobId,
+				url : '../jobsearchactivity/applyJob.html?id='+jobId,
 				data : ({
 					userID : "userID"
 				}),
@@ -79,6 +80,11 @@ function validateRadius() {
 					$.each(data, function(key, val) {
 						if (key == "AjaxMSG") {
 							$('#topjobActionInfo'+jobId).html(val);
+						}
+					});
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							$(applyJobidId).attr('href', val + '.html');
 						}
 					});
 				},
@@ -94,10 +100,12 @@ function validateRadius() {
 				//alert('--' + aData['Company']+aData['JobId']);
 				var jobId = aData['JobId'];
 				var jobDesc = aData['AdText'];
+				//alert(jobDesc.toLowerCase().indexOf("job description"));
 				var saveThisJobIdid= "saveThisJobId"+jobId;
+				var applyJobId= "applyJobid"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p><br/>';
-				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;">';
+				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">';
 				sOut += 'Apply</a>';
 				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId;
 				sOut += '" class="btn_sm white">View Details</a>';

@@ -95,15 +95,15 @@ public class JobApplicationController {
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 				jobSeekerToAddress[0] = new InternetAddress(form.getUserEmail());
 				toJobSeeker.setToAddress(jobSeekerToAddress);
-				toEmployer.setFromAddress(advanceWebAddress);
+				toJobSeeker.setFromAddress(advanceWebAddress);
 				toJobSeeker.setSubject(searchedJobDTO.getJobTitle());
 				toJobSeeker.setBody(searchedJobDTO.getJobDesc());
 				toJobSeeker.setHtmlFormat(true);
 				emailService.sendEmail(toJobSeeker);
-
+				System.out.println("Mail sent");
 		
 		} catch (Exception e) {
-			
+			System.out.println("ERROR");
 			// waiting for Exception
 			
 		}
