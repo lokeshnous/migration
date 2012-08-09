@@ -48,6 +48,8 @@
 			
 			if(radius != 0 && cityState.length == 0){
 				//$("#radius").val("");
+				$("#TotalNoRecords").text("");
+				$("#TotalRecord").text("");
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code');
 			}else{
 				$('#findSearchInfo').html('');
@@ -59,9 +61,13 @@
 			var keywords = $.trim($("#keywords").val());
 			var status = true;
 			if(keywords.length == 0){
+				$("#TotalNoRecords").text("");
+				$("#TotalRecord").text("");
 				status = false;
 				$('#findSearchInfo').html('Please enter the \"Job Title, Keyword, Job Id, Company Name\" to perform a search.');
 			}else if(radius != 0 && cityState.length == 0){
+				$("#TotalNoRecords").text("");
+				$("#TotalRecord").text("");
 				status = false;
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code.');
 			}else{
@@ -206,6 +212,7 @@
 									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start;
 									$("#TotalNoRecords").text("");
+									$("#TotalRecord").text("");
 									//alert("navUrl="+navUrl);
 									$.getJSON(navUrl,function(data) {
 											table.fnClearTable();
