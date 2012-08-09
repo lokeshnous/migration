@@ -38,29 +38,31 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <body class="job_board">
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader"><h2>GUEST USER FORM</h2>
-                  <a href="#"><img src="../resources/images/Close.png" width="19" height="19" alt=""></a></div>
+                  <a href="#"><img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();" width="19" height="19" alt=""></a></div>
                  
-<div class="popUpContainerWrapper"><form:form  method="Get" action="saveAnonymousUserJobapply.html" commandName="anonymousUserJobApplyForm" enctype="multipart/form-data" >
+<div class="popUpContainerWrapper"><form:form  method="Get" action="/jobboard/anonymoususerjobapply /saveAnonymousUserJobapply.html" commandName="jobApplicationForm" enctype="multipart/form-data" >
             <div class="rowEvenSpacing"> <h3>Send Resume</h3></div>
             <div class="rowEvenSpacing">
 <span class="lableText3">Name:</span>   
                 <form:input type="text" path="userName" class="job_seeker_email" />
-                <form:errors path="userName"/>
                 <span class="required">(Required)</span>
+                <div style="color: red" align="center"><form:errors path="userName"/></div>
             </div>
             <div class="rowEvenSpacing"><span class="lableText3">Email Address:</span>
               <form:input type="text" path="userEmail"  class="job_seeker_email" />
-              <form:errors path="userEmail"/><span class="required">(Required)</span>
+              <span class="required">(Required)</span>
+              <div style="color: red" align="center"><form:errors path="userEmail"/></div>
     </div>
             <div class="rowEvenSpacing"> <span class="lableText3">Upload Resume File:</span>
             <div class="floatLeft"><form:input path="filePath" type="file" id="textfield4" size="20" class="job_seeker_login_email fileType" />
-            <form:errors path="filePath"/></div>
+            </div>
             <span class="required">(Required)</span>
+             <div style="color: red" align="center"><form:errors path="filePath"/></div>
 </div>
       <div class="rowEvenSpacing marginTop10 paddingBottom10">
              <span class="floatLeft marginTop10">
              
-             <input type="submit" class="btn_sm orange" value="Send"/> <a href="" class="btn_sm orange">Cancel</a></span>
+             <input type="submit" class="btn_sm orange" value="Send"/> <a href="" onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a></span>
              
 </div>
                     <div class="clearfix"></div>
