@@ -93,6 +93,12 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					CheckNullUtil.isNull(jobSrchDTO.getJobGeo1LatLon()));
 			jobSrchJson.put(MMJBCommonConstants.URL_DISPLAY,
 					CheckNullUtil.isNull(jobSrchDTO.getUrlDisplay()));
+			jobSrchJson.put(MMJBCommonConstants.STATE,
+					CheckNullUtil.isNull(jobSrchDTO.getState()));
+			jobSrchJson.put(MMJBCommonConstants.URL,
+					CheckNullUtil.isNull(jobSrchDTO.getUrl()));
+			
+			
 			jsonRows.add(jobSrchJson);
 
 		}
