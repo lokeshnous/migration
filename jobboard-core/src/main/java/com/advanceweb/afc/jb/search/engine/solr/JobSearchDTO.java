@@ -73,10 +73,10 @@ public class JobSearchDTO implements Serializable{
 	@Field("posted_dt")
 	private Date postedDate;
 	
-	@Field
+	@Field("state")
 	private String state;
 	
-	@Field
+	@Field("url")
 	private String url;
 	
 	@Field("url_display")
