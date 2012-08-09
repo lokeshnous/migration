@@ -31,7 +31,7 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
-<!--<script type="text/javascript">
+  <script type="text/javascript">
 	function closePopup() {
 		parent.window.location.reload();
 	}
@@ -40,7 +40,7 @@
 			parent.window.location.reload();
 		}
 	});
-   </script> -->
+   </script>
       <script type="text/javascript">
 	    function confirmDelete() {
 		if (confirm("You want to delete this?")) {
@@ -56,7 +56,7 @@
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader">
                   <h2>JOBS I'VE APPLIED TO</h2>
-                  <img src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();"></div>
+                  <img src="../resources/images/Close.png" width="19" height="19" onclick="closePopup();"></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing marginTop0">
@@ -79,7 +79,7 @@
             </table>
              
           </div>
- <div class="row marginTop20 paddingBottom10"><a href="#" onclick="parent.$.nmTop().close();" class="nyroModalClose btn_sm orange">Cancel</a></div>
+ <div class="row marginTop20 paddingBottom10"><a href="#" onclick="closePopup();" class="nyroModalClose btn_sm orange">Cancel</a></div>
           </form:form></div>
           <div class="clearfix"></div>
                 </div>
