@@ -39,10 +39,11 @@
 				<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
 				<div class="searchContent" style="display: none;">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
-				</div>
-				<div class="otherContent">
+					<br class="clearfix" />
+				
+				<div class="otherContent ">
 				<div class="ad_col_right">
-					<img
+					<img class="marginTop10"
 						src="../resources/images/ads/300x250ad2.png" />
 					<div class="follow_us">
 						<h2>Follow Us</h2>
@@ -117,14 +118,19 @@
 
 				</div>
 				</div>
+				<br class="clearfix" />
+				
 				<div class="ad_wrapper">
 					<img src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
+				</div>
+				
 			</div>
 			<!-- main -->
-		</div>
+			</div>
+
 		<!-- end main_wrapper_inside -->
-	</div>
+
 	<!-- end main_wrapper_outside -->
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 </body>

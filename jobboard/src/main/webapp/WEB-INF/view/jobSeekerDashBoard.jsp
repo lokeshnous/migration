@@ -63,10 +63,10 @@
 					</div>
 					<div class="searchContent" style="display: none;">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
-					</div>
+					<br class="clearfix" />
 					<div class="otherContent">
-					<div class="ad_col_right otherContent">
-						<img
+					<div class="ad_col_right">
+						<img class="marginTop10"
 							src="../resources/images/ads/300x250ad2.png" />
 
 						<div class="follow_us">
@@ -331,6 +331,7 @@
 					
 					<div class="ad_wrapper">
 						<img src="../resources/images/ads/banner_ad_fpo.png" />
+					</div>
 					</div>
 				</div>
 				<!-- main -->
