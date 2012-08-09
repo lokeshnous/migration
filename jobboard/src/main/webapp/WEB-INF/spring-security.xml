@@ -9,19 +9,19 @@
 
 
 	<security:http auto-config="false" use-expressions="true"
-	access-denied-page="/healthcarejobs/advanceweb" entry-point-ref="authenticationEntryPoint">
+	access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">
 
-	<security:intercept-url pattern="/healthcarejobs/advanceweb.html"
-		access="permitAll" />
-	<security:intercept-url pattern="/jobsearchactivity /**"
-		access="permitAll" />
-	<security:intercept-url pattern="/loginFormForJobSeeker/login.html"
-		access="permitAll" />
-	<security:intercept-url pattern="/jobSeeker/**"
-		access="hasRole('ROLE_JOB_SEEKER')" />
-
-	<security:logout invalidate-session="true"
-		logout-success-url="/loginFormForJobSeeker/login.html" logout-url="/jobboard/logout" />
+    
+	<security:intercept-url pattern="/healthcarejobs/advanceweb.html" access="permitAll" />
+	<security:intercept-url pattern="/loginFormForJobSeeker/login.html"	access="permitAll" />
+	<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/jobseeker*/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/jobSeeker*/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/savedSearches/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/subscriptions/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/jobsearchactivity/**" access="permitAll" />
+	
+    <security:logout invalidate-session="true" logout-success-url="/loginFormForJobSeeker/login.html" logout-url="/jobboard/logout" />
 
 
 	<security:custom-filter ref="authenticationFilter"

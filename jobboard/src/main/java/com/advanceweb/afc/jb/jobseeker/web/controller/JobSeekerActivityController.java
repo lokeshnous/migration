@@ -22,7 +22,7 @@ import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
  */
 
 @Controller
-@RequestMapping(value = "/jobSeekerActivity")
+@RequestMapping(value = "/jobSeeker")
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class JobSeekerActivityController {
 

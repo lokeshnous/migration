@@ -94,6 +94,7 @@ public class JobApplicationController {
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 				jobSeekerToAddress[0] = new InternetAddress(form.getUserEmail());
 				toJobSeeker.setToAddress(jobSeekerToAddress);
+				toEmployer.setFromAddress(advanceWebAddress);
 				toJobSeeker.setSubject(searchedJobDTO.getJobTitle());
 				toJobSeeker.setBody(searchedJobDTO.getJobDesc());
 				toJobSeeker.setHtmlFormat(true);
@@ -102,8 +103,6 @@ public class JobApplicationController {
 		
 		} catch (Exception e) {
 			
-			System.out.println("***********");
-			e.printStackTrace();
 			// waiting for Exception
 			
 		}
