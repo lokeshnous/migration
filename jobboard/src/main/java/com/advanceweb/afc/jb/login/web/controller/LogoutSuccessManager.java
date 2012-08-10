@@ -14,7 +14,6 @@ public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException,
 			ServletException {
-		System.out.println("******************");
 		response.reset();
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
