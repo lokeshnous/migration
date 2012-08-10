@@ -116,7 +116,7 @@ function validateRadius() {
 				var saveThisJobIdid= "saveThisJobId"+jobId;
 				var applyJobId= "applyJobid"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
-				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 35px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
+				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 30px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
 				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
 				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId;
 				sOut += '" class="btn_sm white">View Details</a>';
@@ -125,7 +125,7 @@ function validateRadius() {
 				if(isFeaturedEmployer){
 					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				}else{
-					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></a> </div>';
+					sOut += '<div class="featured_empButton1"><a href=""><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				}
 				sOut += '';
 				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span></div>';
