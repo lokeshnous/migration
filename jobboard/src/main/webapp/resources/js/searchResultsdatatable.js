@@ -10,6 +10,7 @@ function validateRadius() {
 			
 			if(radius != 0 && cityState.length == 0){
 				//$("#radius").val("");
+				table.fnClearTable();
 				$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code');
@@ -23,11 +24,13 @@ function validateRadius() {
 			var keywords = $.trim($("#keywords").val());
 			var status = true;
 			if(keywords.length == 0){
+				table.fnClearTable();
 				$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				status = false;
 				$('#findSearchInfo').html('Please enter the \"Job Title, Keyword, Job Id, Company Name\" to perform a search.');
 			}else if(radius != 0 && cityState.length == 0){
+				table.fnClearTable();
 				$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				status = false;
