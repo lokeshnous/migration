@@ -14,13 +14,14 @@
     
 	<security:intercept-url pattern="/healthcarejobs/advanceweb.html" access="permitAll" />
 	<security:intercept-url pattern="/loginFormForJobSeeker/login.html"	access="permitAll" />
+	<security:intercept-url pattern="/jobseekerregistration/saveJobSeekerProfile.html" access="permitAll" />
+	<security:intercept-url pattern="/jobseekerregistration/createJobSeekerYourInfo.html" access="permitAll" />
 	<security:intercept-url pattern="/jobseekerregistration/createJobSeekerCreateYrAcct.html" access="permitAll" />
-	<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/jobseeker*/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/jobSeeker*/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/savedSearches/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/subscriptions/**" access="hasRole('ROLE_JOB_SEEKER')" />
 	<security:intercept-url pattern="/jobsearchactivity/**" access="permitAll" />
+	<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html" access="hasRole('ROLE_JOB_SEEKER')" />
+    <security:intercept-url pattern="/savedSearches/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/subscriptions/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	
 	
     <security:logout success-handler-ref="customLogoutSuccessHandler" invalidate-session="true" logout-url="/jobboard/logout" />
 
