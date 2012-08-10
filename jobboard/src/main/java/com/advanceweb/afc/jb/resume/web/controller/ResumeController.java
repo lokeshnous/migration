@@ -125,7 +125,7 @@ public class ResumeController {
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.POST)
+	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.GET)
 	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName,@RequestParam("resumeId") String resumeId) {
 		//set this from session
 		int userId = 2;
@@ -404,23 +404,27 @@ public class ResumeController {
 		LanguageForm langForm = new LanguageForm();
 		ReferenceForm refForm = new ReferenceForm();
 		WorkExpForm workExpForm = new WorkExpForm();
+		PhoneDetailForm phoneDtlForm = new PhoneDetailForm();
 		ContactInfoForm contactInfoForm = new ContactInfoForm();
 		List<CertificationsForm> listCertForm = new ArrayList<CertificationsForm>();
 		List<EducationForm> listEduForm = new ArrayList<EducationForm>();
 		List<LanguageForm> listLangForm = new ArrayList<LanguageForm>();
 		List<ReferenceForm> listRefForm = new ArrayList<ReferenceForm>();
 		List<WorkExpForm> listWorkExpForm = new ArrayList<WorkExpForm>();
+		List<PhoneDetailForm> listPhoneDtlForm = new ArrayList<PhoneDetailForm>();
 		listCertForm.add(certForm);
 		listEduForm.add(eduForm);
 		listLangForm.add(langForm);
 		listRefForm.add(refForm);
 		listWorkExpForm.add(workExpForm);
+		listPhoneDtlForm.add(phoneDtlForm);
 		createResume.setContactInfoForm(contactInfoForm);
 		createResume.setListCertForm(listCertForm);
 		createResume.setListEduForm(listEduForm);
 		createResume.setListLangForm(listLangForm);
 		createResume.setListRefForm(listRefForm);
 		createResume.setListWorkExpForm(listWorkExpForm);
+		createResume.setListPhoneDtlForm(listPhoneDtlForm);
 		//DropDowns
 		model.addObject("empTypeList",empTypeList);
 		model.addObject("phoneTypeList",phoneTypeList);

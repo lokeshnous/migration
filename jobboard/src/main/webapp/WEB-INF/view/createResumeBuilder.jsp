@@ -262,20 +262,18 @@
             <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3">Phone Number:</span>
                 <div class="floatLeft marginRight10"></div>
                 <span class="floatLeft marginRight10">
-	                  <select name="exclude" id="exclude" class="jb_input75 marginTop0" >
-	                  <option value="Home">Home</option>
-	                  <option selected="" value="Work">Work</option>
-	                  <option value="Mobile">Mobile</option>
-	                  <option value="Other">Other</option>
-	                </select>
+                <c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">                
+                	<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75 marginTop0" >
+						<form:option value="0" label="Select" />
+						<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
+					</form:select>	
+					<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password"/>
+					<span class="required ">(Required)</span>                 
+                </c:forEach> 
                </span>
-
-                <input type="text" name="healthCareSubSplty" class="job_seeker_password" />
-                <span class="required ">(Required)</span> <span class="required ">
                 </div>
-                <div/>
                 <div>
-                		<a href="" class="link_color1_emphasized">Save and add another phone number</a></span> </div>
+                <a href="" class="link_color1_emphasized">Save and add another phone number</a></span> </div>
                 </div>
           </div>
                 </div>
@@ -328,10 +326,11 @@
                 <form:input path="listWorkExpForm[${status.index}].employerName"  class="job_seeker_Resume"/>
                 <span class="required">(Required)</span> </div>
                 <div class="class="row""> <span class="lableTextSelect marginTop13 ">Employment Type:</span>
-					<form:select id="select14"
-						class="jb_input3 jb_input_width3" name="select9"
-						path="listWorkExpForm[${status.index}].employmentType" items="${employmentType}"
-						itemValue="optionId" itemLabel="optionName" />
+                
+                <form:select path="listWorkExpForm[${status.index}].employmentType" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="--- Employment Type ---" />
+					<form:options items="${empTypeList}" itemValue="optionId" itemLabel="optionName" />
+				</form:select>
 
                 <span class="required marginTop8">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3"> Start Date:</span>
@@ -351,18 +350,12 @@
                 <form:input path="listWorkExpForm[${status.index}].yrsAtPostion"  class="job_seeker_Resume" />
         			<span class="required">(Required)</span> </div>
                 <div class="row"> <span class="lableTextSelect marginTop13 ">Career Level:</span>
-
-                <select name="Country" id="Country" class="jb_input3 jb_input_width3" >
-                          <option value="--- Select One ---">--- Career Level ---</option>
-                          <option value="Student (High School)">Student (High School)</option>
-                          <option value="Student (Undergraduate / Graduate)">Student (Undergraduate / Graduate)</option>
-                          <option value="Entry Level">Entry Level</option>
-                          <option value="Experienced">Experienced</option>
-
-                          <option value="Manager">Manager</option>
-                          <option value="Executive">Executive</option>
-                          <option value="Senior Executive">Senior Executive</option>
-                        </select>
+	
+				<form:select path="listWorkExpForm[${status.index}].currentCareerLvl" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="--- Career Level ---" />
+					<form:options items="${careerLvlList}" itemValue="optionId" itemLabel="optionName" />
+				</form:select>
+						
                 <span class="required marginTop8">
                         <input name="" type="checkbox" value="">
                         </span>
@@ -371,18 +364,13 @@
                           <p >This is my current career level</p>
                         </div>
                 <span class="required marginTop8">(Required)</span> </div>
-                      <div class="row"> <span class="lableTextSelect marginTop13 ">Annual Salary:</span>
-                <select name="Country" id="Country" class="jb_input75 width200" >
-
-                          <option>--- Annual Salary ---</option>
-                          <option value="$0 to $20,000">$0 to $20,000</option>
-                          <option value="$20,000 to $40,000">$20,000 to $40,000</option>
-                          <option value="$40,000 to $60,000">$40,000 to $60,000</option>
-                          <option value="$60,000 to $80,000">$60,000 to $80,000</option>
-                          <option value="$80,000 to $100,000">$80,000 to $100,000</option>
-
-                          <option value="$100,000+">$100,000+</option>
-                        </select>
+                <div class="row"> <span class="lableTextSelect marginTop13 ">Annual Salary:</span>
+                                       						
+				<form:select path="listWorkExpForm[${status.index}].annualSalary" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="--- Annual Salary ---" />
+					<form:options items="${annualSalarylList}" itemValue="optionId" itemLabel="optionName" />
+				</form:select>
+				
                 <div class="toolTip marginTop15 marginLeft10"><span class="classic">Select your annual salary from this drop-down menu or enter your hourly pay rate in the following text box.</span></div>
                 <span class="required marginTop8"></span> </div>
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3"> Hourly Pay Rate:</span>
@@ -422,26 +410,19 @@
                 <form:input path="listEduForm[${status.index}].instituteName" class="job_seeker_password textBox350" />
                 <span class="required">(Required)</span> </div>
                       <div class="row"> <span class="lableTextSelect marginTop13 ">Degree Level:</span>
-
-                <select name="Country" id="Country" class="jb_input3 jb_input_width3" >
-                          <option value="--- Select One ---">--- Degree Level ---</option>
-                          <option value="High School Diploma or GED">High School Diploma or GED</option>
-                          <option value="Some college, no degree">Some college, no degree</option>
-                          <option value="Associate's Degree">Associate's Degree</option>
-                          <option value="Bachelor's Degree">Bachelor's Degree</option>
-
-                          <option value="Some Graduate, no degree">Some Graduate, no degree</option>
-                          <option value="Master's Degree">Master's Degree</option>
-                          <option value="Doctorate">Doctorate</option>
-                        </select>
+				
+				<form:select path="listEduForm[${status.index}].degreeLvl" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="--- Degree Level ---" />
+					<form:options items="${eduDegreeList}" itemValue="optionId" itemLabel="optionName" />
+				</form:select>
             
-		                <span class="required marginTop8">
-		                     <input name="" type="checkbox" value="">
-		                </span>
-		
-		                <div class=" floatLeft marginLeft10 marginTop5">
-		                     <p >I haven't graduated yet.</p>
-		                </div>
+	                <span class="required marginTop8">
+	                     <input name="" type="checkbox" value="">
+	                </span>
+	
+	                <div class=" floatLeft marginLeft10 marginTop5">
+	                     <p >I haven't graduated yet.</p>
+	                </div>
                 <span class="required marginTop8">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Field of Study:</span>
                 <form:input path="listEduForm[${status.index}].fieldOfStudy" class="job_seeker_password textBox350" />
@@ -562,38 +543,20 @@
           <div class="searchResultsSubContent">
 			<c:forEach items="${createResume.listLangForm}" var="language" varStatus="status">   
             <div class="job_seeker_login leftFormHolderResumepage marginTop0">
-                      <div class="row"> <span class="lableText3 marginTop13 ">Language:</span>
-                <select name="Country" id="Country" class="jb_input3 jb_input_width3" >
-                          <option value="--- Select One ---">--- Language ---</option>
-                          <option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
-                          <option selected="" value="English">English</option>
-
-                          <option value="French">French</option>
-                          <option value="German">German</option>
-                          <option value="Italian">Italian</option>
-                          <option value="Korean">Korean</option>
-                          <option value="Portuguese">Portuguese</option>
-                          <option value="Russian">Russian</option>
-
-                          <option value="Spanish ">Spanish </option>
-                          <option value="Tagalog">Tagalog</option>
-                          <option value="Vietnamese">Vietnamese</option>
-                          <option value="Other">Other</option>
-                        </select>
+               <div class="row"> <span class="lableText3 marginTop13 ">Language:</span>
+				<form:select path="listLangForm[${status.index}].language" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="English" />
+					<form:options items="${eduDegreeList}" itemValue="optionId" itemLabel="optionName" />
+				</form:select>
               </div>
-                      <div class="row"> <span class="lableText3 marginTop13 ">Proficiency Level:</span>
-
-                <select name="Country" id="Country" class="jb_input3 jb_input_width3" >
-                          <option value="--- Select One ---">--- Proficiency Level ---</option>
-                          <option value="Elementary proficiency">Elementary proficiency</option>
-                          <option value="Limited working proficiency">Limited working proficiency</option>
-                          <option value="Professional working proficiency">Professional working proficiency</option>
-                          <option value="Full professional proficiency">Full professional proficiency</option>
-
-                          <option value="Native or bilingual proficiency">Native or bilingual proficiency</option>
-                        </select>
+              <div class="row"> <span class="lableText3 marginTop13 ">Proficiency Level:</span>
+              
+              	<form:select path="listLangForm[${status.index}].expLvl" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="--- Proficiency Level ---" />
+					<form:options items="${langProficiencylList}" itemValue="optionId" itemLabel="optionName" />
+				</form:select>
               </div>
-                      <div class="row MarginBottom10"> <span class="lableText3 marginTop13 "></span>
+               <div class="row MarginBottom10"> <span class="lableText3 marginTop13 "></span>
                 <p><a href="" class="link_color1_emphasized">Save and add another language</a></p>
               </div>
             </div>

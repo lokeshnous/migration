@@ -379,8 +379,7 @@
 										<span class="lableTextSelect marginTop13 ">Ethnicity:</span>
 											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 												<form:option value="0" label="Select" />
-												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-													itemLabel="optionName" />
+												<form:options items="${profAttrib.dropdown}" itemValue="optionId" itemLabel="optionName" />
 											</form:select>
 									</div>
 								</c:if>
