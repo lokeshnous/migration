@@ -21,6 +21,13 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
+		
+		response.reset();
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control", "no-store");
+		response.setHeader("Cache-Control", "must-revalidate");
+		response.setDateHeader("Expires", 0);
 
 		MerUser user = loginFormService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
