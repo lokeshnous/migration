@@ -83,6 +83,12 @@
 						$('#bottomjobActionInfo').html('');
 					}
 				});
+				$.each(data, function(key, val) {
+					if (key == "NavigationPath") {
+						//$(applyJobidId).attr('href', val + '.html');
+						window.location.href = val+".html";
+					}
+				});
 			},
 			error : function(data) {
 				alert('Unable to process');
@@ -133,6 +139,12 @@
 					if (key == "AjaxMSG") {
 						$('#bottomjobActionInfo').html(val);
 						$('#topjobActionInfo').html('');
+					}
+				});
+				$.each(data, function(key, val) {
+					if (key == "NavigationPath") {
+						//$(applyJobidId).attr('href', val + '.html');
+						window.location.href = val+".html";
 					}
 				});
 			},

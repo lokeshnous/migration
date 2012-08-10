@@ -42,7 +42,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$("#id").click(function() {
-			parent.window.location.href = "navigateToLogin.html";
+			parent.window.location.href = "+.html";
 			parent.$.nmTop().close();
 
 		});

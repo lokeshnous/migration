@@ -31,8 +31,8 @@
 
 
             <div class="main">
-
-				<div class="header_wrapper">
+<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+				<!-- <div class="header_wrapper">
 
 					 <a href="">
           <div class="logo"></div>
@@ -57,19 +57,19 @@
             </div>
             <p class=" marginTop10">And it's all FREE!</p>
           </span>
-          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div><!-- loginHeader -->
+          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div>loginHeader
                     <div class="headerLoginSectionColumns">
 					<span class="boldText">Employer:</span><br>
                     	<a href="">Login</a> | <a href="">Post Jobs</a>
-					</div><!-- loginHeader -->
+					</div>loginHeader
 					<div class="headerLoginSectionColumns">
 					<span class="boldText">Ad Agency:</span><br>
 						 <a href="">Login</a> | <a href="">Post Jobs</a>
-					</div><!-- loginHeader -->
-                    </div><!-- loginHeader -->
-					<!-- loginHeader -->
+					</div>loginHeader
+                    </div>loginHeader
+					loginHeader
 
-				</div><!-- header_wrapper -->
+				</div>header_wrapper
 
 				<div id="nav">
 					<ul class="megamenu">
@@ -128,7 +128,7 @@
 						<a href="javascript:">Custom Promotions</a>
 					  </li>
 					</ul>
-				</div><!--nav-->
+				</div>nav -->
 
 				<div class="ad_col_right">
                     <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
