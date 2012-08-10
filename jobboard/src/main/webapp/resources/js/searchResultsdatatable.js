@@ -41,7 +41,7 @@ function validateRadius() {
 			return status;
 		}
 		function saveThisJob(jobId) {
-			var saveThisJobIdid = "#saveThisJobId"+jobId;
+			//var saveThisJobIdid = "#saveThisJobId"+jobId;
 			//alert(saveThisJobIdid);
 			$.ajax({
 				url : '../jobsearchactivity/saveThisJob.html?id='+jobId,
@@ -57,9 +57,10 @@ function validateRadius() {
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
 							//$(saveThisJobIdid).attr('target', '_blank');
-							$(saveThisJobIdid).attr('href', val + '.html');
-							$(saveThisJobIdid).displaypopup(saveThisJobIdid,
-									"775", "252");
+							//$(saveThisJobIdid).attr('href', val + '.html');
+							//$(saveThisJobIdid).displaypopup(saveThisJobIdid,
+								//	"775", "252");
+							$.nmManual(val + '.html');
 							//location.href = val+".html";
 
 						}
@@ -110,21 +111,25 @@ function validateRadius() {
 				//alert('--' + aData['Company']+aData['JobId']);
 				var jobId = aData['JobId'];
 				var jobDesc = aData['AdText'];
+				var isFeaturedEmployer = aData['IsFeatured'];
 				//alert(jobDesc.toLowerCase().indexOf("job description"));
 				var saveThisJobIdid= "saveThisJobId"+jobId;
 				var applyJobId= "applyJobid"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
-				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 50px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
-				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">';
-				sOut += 'Apply</a>';
+				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 35px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
+				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
 				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId;
 				sOut += '" class="btn_sm white">View Details</a>';
 				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
-				sOut += '" class="btn_sm white">Save This Job</a>';
-				sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
-				sOut += '<br/><br/>';
-				sOut += '<span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>';
-				sOut += '<span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>';
+				sOut += '" class="btn_sm white">Save This Job</a></div>';
+				if(isFeaturedEmployer){
+					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
+				}else{
+					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></a> </div>';
+				}
+				sOut += '';
+				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span></div>';
+				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span></div>';
 				sOut += '<h4><div style="color: red" id="topjobActionInfo'+jobId+'" ></div></h4>';
 				sOut += '</div>';
 				return sOut;
@@ -149,10 +154,10 @@ function validateRadius() {
 									"sPaginationType" : "full_numbers",
 									"bJQueryUI" : true,
 									"bSort" : true,
-									"iDisplayLength": 20,
-									 "aLengthMenu": [[20, 30, 40, 50, -1], [20, 30, 40, 50, "All"]],
+									"iDisplayLength": 30,
+									 "aLengthMenu": [[20, 30, 40, 50], [20, 30, 40, 50]],
 									"oLanguage" : {
-										"sLengthMenu" : "Results viewable: _MENU_ per page",
+										"sLengthMenu" : "<span>Results viewable: </span>_MENU_ <span>per page</span>",
 										//"sZeroRecords" : "Nothing found - sorry",
 										"sInfo" : "",
 										//"sInfo" : "Showing _START_ to _END_ of _TOTAL_ records",
@@ -160,9 +165,28 @@ function validateRadius() {
 										//"sInfoFiltered" : "(filtered from _MAX_ total records)"
 									},
 									"sEmptyTable": "No results found",
-									"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
+									//"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
+									"sDom": '<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"><"searchResultsNavigationColumn2"p>>t<"bottom"i><"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn2"pr>><"clear">',
 									 //"sDom": 'T<"clear">lfrtip',
-									"sScrollY" : 500,
+									//"sScrollY" : 500,
+									'fnRowCallback' : function(nRow, aData, iDisplayIndex,iDisplayIndexFull) {
+									// alert(aData['IsFeatured']);
+									if (aData['IsFeatured'] == true) {
+										//$('td:eq(0)', nRow).addClass('featuredEmployerRowColor');
+										//$('td:eq(1)', nRow).addClass('featuredEmployerRowColor');
+										//$('td:eq(1)', nRow).addClass('featuredEmployerRowColor');
+										//$('td:eq(2)', nRow).addClass('featuredEmployerRowColor');
+										//$('td:eq(3)', nRow).addClass('featuredEmployerRowColor');
+										$(nRow).addClass('featuredEmployerRowColor');
+									}
+									//else{
+										//$('td:eq(0)',nRow).addClass('leftCornerBorder');
+										//$('td:eq(1)',nRow).addClass('middleBorder');
+										//$('td:eq(2)',nRow).addClass('middleBorder');
+										//$('td:eq(3)',nRow).addClass('rightCornerBorder');
+									//}
+										return nRow;
+									},
 									"aoColumns" : [ {
 										"mDataProp" : "JobTitle","bSortable": "false"
 									}, {
@@ -241,6 +265,15 @@ function validateRadius() {
 															.match('show')) {
 														$(this).attr('popup',
 																'hide');
+														if ($(this).find('td').attr('class')
+																.match('details')) {
+														}else{
+															$(this).addClass('row_selected'); 
+															$('td:eq(0)',$(this)).addClass('leftCornerBorder');
+															$('td:eq(1)',$(this)).addClass('middleBorder');
+															$('td:eq(2)',$(this)).addClass('middleBorder');
+															$('td:eq(3)',$(this)).addClass('rightCornerBorder');
+														}
 														table
 																.fnOpen(
 																		nTr,
@@ -251,6 +284,12 @@ function validateRadius() {
 													} else {
 														$(this).attr('popup',
 																'show');
+														$(this).removeClass('row_selected');
+														$('td:eq(0)',$(this)).removeClass('leftCornerBorder');
+														$('td:eq(1)',$(this)).removeClass('middleBorder');
+														$('td:eq(2)',$(this)).removeClass('middleBorder');
+														$('td:eq(3)',$(this)).removeClass('rightCornerBorder');
+													
 														table.fnClose(nTr);
 													}
 												});

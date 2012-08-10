@@ -15,8 +15,8 @@
 		</head>
 
 		<body class="job_board">
-					<div class="clearfix"></div>
-					<div class="row ">
+					
+					<div class="row marginTop10">
 						<div class="row marginTop5 paddingBottom05">
 							<div class="floatLeft">
 								<h1 class="FontSize24">
@@ -151,14 +151,14 @@
 
 								<table id="jobSearchResultTable">
 
-									<div class="searchResultsHeader">
+									<!-- <div class="searchResultsHeader">
 										<ul style="height: 0px;">
 											<li class="searchResultsColumn1"></li>
 											<li class="searchResultsColumn2"></li>
 											<li class="searchResultsColumn3"></li>
 											<li class="searchResultsColumn4"></li>
 										</ul>
-									</div>
+									</div> -->
 
 									<div id="jobSearchResultDiv" class="searchResultsListing">
 

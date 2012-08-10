@@ -1225,7 +1225,7 @@ h3.jobSummaryTitle {
     float: left;
     margin-left: 0;
     padding-left: 10px;
-    width: 759px;
+    width: 758px;
 }
 
 	
@@ -1259,7 +1259,7 @@ h3.jobSummaryTitle {
 				
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn2,.searchResultsNavigationColumn2 {
 					color: #6B7B84;
-					float: left;
+					float: right;
 					font-weight: bold;
 					font-size: 12px;
 					margin-bottom: 0px;
@@ -1300,6 +1300,7 @@ h3.jobSummaryTitle {
 					margin-bottom: 0px;
 					padding: 0px 0px;
 					width: 266px;
+					
 				}
 				
 				.content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn3 .SaveButton {
@@ -1503,6 +1504,7 @@ div.searchResultsSubContent .btn_sm{ margin-right:5px !important }
 	width:165px;
 	float:left;
 	height:auto;
+	margin-top:5px;
 	}	
 	
 /*---by Vitthal---*/
@@ -2007,7 +2009,8 @@ padding-bottom:10px;}
 
 .searchResultsNavigationColumn1 span {
 	float:left;
-	padding-right:5px;}
+	padding:6px 5px;
+}
 	
 .orange-bg{ background:#fe9400 !important; -moz-border-radius:4px;
 	-webkit-border-radius:4px;

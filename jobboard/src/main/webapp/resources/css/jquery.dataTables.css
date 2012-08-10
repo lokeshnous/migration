@@ -9,11 +9,11 @@ table.dataTable {
 }
 
 table.dataTable thead th {
-	padding: 3px 18px 3px 10px;
-	border-bottom: 1px solid black;
+	padding: 3px 25px 3px 10px;
 	font-weight: bold;
 	cursor: pointer;
 	*cursor: hand;
+	t
 }
 
 table.dataTable tfoot th {
@@ -23,7 +23,7 @@ table.dataTable tfoot th {
 }
 
 table.dataTable td {
-	padding: 3px 10px;
+	padding: 10px 10px;
 }
 
 table.dataTable td.center,
@@ -31,14 +31,24 @@ table.dataTable td.dataTables_empty {
 	text-align: center;
 }
 
-table.dataTable tr.odd { background-color: #E2E4FF; }
-#table.dataTable tr.odd { background-color: #E2E4FF; }
-table.dataTable tr.even { background-color: white; }
+table.dataTable tr.odd {border-bottom:1px dotted #CCCCCC !important;
+border-bottom:1px dotted #E0E2FF;
+    color: #6B7B84;
 
-table.dataTable tr.odd td.sorting_1 { background-color: #D3D6FF; }
-table.dataTable tr.odd td.sorting_2 { background-color: #DADCFF; }
+ }
+table.dataTable tr.odd td {border-bottom:1px dotted #CCCCCC !important;}
+#table.dataTable tr.odd { background-color: #E2E4FF; }
+table.dataTable tr.even {border-bottom:1px dotted #CCCCCC !important;
+    color: #6B7B84;
+ }
+
+/*table.dataTable tr.odd td.sorting_1 {
+    color: #ffffff; } */
+table.dataTable tr.odd td.sorting_2 { 
+    color: #6B7B84;}
 table.dataTable tr.odd td.sorting_3 { background-color: #E0E2FF; }
-table.dataTable tr.even td.sorting_1 { background-color: #EAEBFF; }
+/*table.dataTable tr.even td.sorting_1 { color: #ffffff; } */
+table.dataTable tr.even td {border-bottom:1px dotted #CCCCCC !important;}
 table.dataTable tr.even td.sorting_2 { background-color: #F2F3FF; }
 table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 
@@ -50,6 +60,7 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 	position: relative;
 	clear: both;
 	*zoom: 1;
+	width:757px;
 }
 
 
@@ -58,8 +69,17 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
  */
 .dataTables_length {
 	float: left;
-}
+	
 
+}
+.dataTables_length label {float:left;line-height:16px; }
+.dataTables_length label select {background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    font-size: 14px;
+    width:50px; height: 25px;
+    padding: 3px; float: left;
+    }
 
 /*
  * Filter
@@ -188,3 +208,34 @@ table.dataTable th:active {
 	*margin-top: -1px;
 }
 
+.dataTables_scrollHeadInner {
+	width:727px;
+	height:auto;
+	
+}
+.display {width:737px !important; float: left;}
+.featuredEmployerRowColor {background: none repeat scroll 0 0 #FE9400 !important;
+    border-radius: 4px 4px 4px 4px;
+    color: #FFFFFF !important;
+    font-weight: bold !important;}
+    
+.row_selected {
+	/* background-color: #ECECEC;
+	border-color: 1px solid #FE9400 ;
+    border-radius: 4px 4px 0 0; */
+    background-color: #ECECEC;
+   	border-left: 1px solid #FE9400;
+	border-right: 1px solid #FE9400;
+	border-bottom: 1px solid #FE9400;
+    }
+    
+.dataTables_wrapper .searchResultsNavigation {
+	width:737px;	
+}
+.dataTables_wrapper .searchResultsNavigation .searchResultsNavigationColumn2 {float: right;}
+
+.searchResultsSubContent {width:730px;}
+.searchResultsSubContent .searchResultsSubContentButtonArea, .searchResultsSubContentShare { float:left; width:auto; padding:5px;	
+}
+.searchResultsSubContent .searchResultsSubContentButtonArea {padding-top:8px;}
+.dataTables_scrollBody {overflow-x:hidden;margin-top:5px; }

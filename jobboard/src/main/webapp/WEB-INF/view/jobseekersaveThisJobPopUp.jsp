@@ -63,7 +63,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE THIS JOB</h2>
-			<a href="findJobPage.html"><img
+			<a href=""><img
 				src="../resources/images/Close.png" width="19" height="19"
 				onclick="parent.$.nmTop().close();" alt="close"></a>
 		</div>
@@ -72,14 +72,14 @@
 			<form action="" method="">
 				<div class="rowEvenNewSpacing marginTop0">
 					<span class="lableText3 width505 TextAlignL">You need to be
-						logged in to save jobs. <a href="" id="id">Click here to log
+						logged in to save jobs. <a href="../loginFormForJobSeeker/login.html" id="id">Click here to log
 							in now.</a>
 					</span>
 				</div>
 
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"> <a
-						href="findJobPage.html" onclick="parent.$.nmTop().close();"
+						href="" onclick="parent.$.nmTop().close();"
 						class="btn_sm orange">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>

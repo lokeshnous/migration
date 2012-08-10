@@ -56,11 +56,11 @@
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #1c94c4; outline: none; }
+.ui-state-default, .ui-widget-content .ui-state-default { background: #ECECEC; font-weight: bold; color: #6B7B84; outline: none;}
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #1c94c4; text-decoration: none; outline: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #fbcb09; background: #fdf5ce url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; outline: none; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; outline: none; }
-.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; outline: none; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #fbd850; background: #ECECEC ; font-weight: bold; color: #eb8f00; outline: none; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; outline: none; text-decoration: none; }
 
 /* Interaction Cues
@@ -403,3 +403,17 @@
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { padding: 1em 1.4em; display: block; border-width: 0; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
+
+.DataTables_sort_wrapper {
+	width:auto;
+	float: left;
+	height:25px;
+	text-align:left;
+	padding-top:8px;
+}
+.dataTables_scrollHeadInner {
+	width:737px !important;
+	height:auto;
+}
+
+.display dataTable {width:735px !important;}

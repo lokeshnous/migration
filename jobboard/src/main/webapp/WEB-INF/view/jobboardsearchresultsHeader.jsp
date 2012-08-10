@@ -113,7 +113,9 @@
                 </div>
               <div class="ad_col_right"> <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
         
-              </div></div>
+              </div>
+              </div>
+            
 
     </div>
     <!-- main --> 
