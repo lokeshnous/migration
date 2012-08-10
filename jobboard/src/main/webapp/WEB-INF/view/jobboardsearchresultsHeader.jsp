@@ -106,7 +106,7 @@
             
             <form:hidden path="start" id="start"/>
             <form:hidden path="rows" id="rows"/>
-            
+            <input type="hidden" id="searchtype" value="basic"></input>
             
             </form:form>    
                 <%-- </form> --%>

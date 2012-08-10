@@ -5,6 +5,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 		<head>
+		<script type="text/javascript">
+	jQuery(document).ready(
+			function() {
+				$("#saveThisSearchId").displaypopup(
+						"#saveThisSearchId", "775", "252");
+			});
+</script>
 		</head>
 
 		<body class="job_board">
@@ -51,7 +58,7 @@
 								</div>
 								<div class="section">
 									<div class="SaveSearchButton">
-										<a href="" class="btn_sm orange">Save This Search</a>
+										<a href="/jobboard/savedSearches/saveThisSearch.html" class="btn_sm orange" id="saveThisSearchId">Save This Search22</a>
 									</div>
 								</div>
 							</div>

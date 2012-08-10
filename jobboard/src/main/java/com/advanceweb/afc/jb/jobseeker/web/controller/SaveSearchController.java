@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
+import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
@@ -65,6 +69,26 @@ public class SaveSearchController {
 		// new ModelAndView("redirect:/saveSearchedJobs.html");
 		return new ModelAndView();
 
+	}
+
+	/*
+	 * @RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
+	 * public ModelAndView saveThisSearch(@Valid SaveSearchForm saveSearchForm,
+	 * BindingResult result,@RequestParam("searchName") String searchName) {
+	 * 
+	 * saveSearchService.saveThisSearch(searchName); // new
+	 * ModelAndView("redirect:/saveSearchedJobs.html"); return new
+	 * ModelAndView("");
+	 * 
+	 * }
+	 */
+
+	@RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
+	public ModelAndView saveThisSearch(Map<String, SaveSearchForm> model) {
+		System.out.println("Hi");
+		model.put("saveSearchForm", new SaveSearchForm());
+
+		return new ModelAndView("jobseekersavethissearchpopup");
 	}
 
 	/**
