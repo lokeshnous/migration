@@ -91,7 +91,7 @@
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="center">${dtoList.getCreateDt()}</td>
                 <td align="center">${dtoList.getJobAge()} days</td>
-                <td align="center"><a href='<c:url value="/jobSeeker/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
+                <td align="center"><a href='<c:url value="/jobSeekerActivity/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><img src="../resources/images/Delete.png" width="20" height="20" alt=""></a></td>
               </tr>
               </c:forEach>
             </table>
