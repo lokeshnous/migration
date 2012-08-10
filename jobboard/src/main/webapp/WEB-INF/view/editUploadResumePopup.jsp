@@ -29,7 +29,7 @@
 						//validate number of resumes
 						//validate if resume name already exist in db
 						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
-							type: "POST",
+							type: "GET",
 							success : function(data) {
 								if (data.maxResume != null) {
 										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");

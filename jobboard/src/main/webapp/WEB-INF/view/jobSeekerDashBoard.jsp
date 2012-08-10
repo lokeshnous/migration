@@ -17,14 +17,12 @@
 	type="text/css">
 <link href="../resources/css/jobsearchResults.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <link rel="stylesheet" type="text/css"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
+	href="../resources/css/jquery-ui.css" />
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {

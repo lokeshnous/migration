@@ -80,7 +80,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="createResumeBuilder.html"
+			<form:form method="GET" action="createResumeBuilder.html"
 				commandName="createResume" id="formtouse"
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
