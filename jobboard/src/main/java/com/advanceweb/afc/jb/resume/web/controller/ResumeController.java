@@ -125,15 +125,15 @@ public class ResumeController {
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.GET)
+	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.POST)
 	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName,@RequestParam("resumeId") String resumeId) {
 		//set this from session
 		int userId = 2;
 		JSONObject warningMessage = new JSONObject();
 		if("".equals(resumeId) || resumeId == null){
 			int resumeCount = resumeService.findResumeCount(userId);
-			if(resumeCount == 5){
-				warningMessage.put("maxResume", "You can create 5 resume at max.");
+			if(resumeCount >= 5){
+				warningMessage.put("maxResume", "max 5 resumes (total size 750K) can be created, Please delete any existing resume and try again.");
 				return warningMessage;
 			}
 		}
@@ -179,7 +179,7 @@ public class ResumeController {
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteResume", method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteResume", method = RequestMethod.POST)
 	public @ResponseBody JSONObject deleteResume(HttpServletRequest request,HttpServletResponse response, HttpSession session, @RequestParam("resumeId") int resumeId) {
 		//Integer.parseInt(String.valueOf(session.getAttribute("userId")));
 		int userId = 2;
@@ -201,7 +201,7 @@ public class ResumeController {
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.POST)
 	public ModelAndView updateResumePopup(CreateResume createResume) {
 
 		ModelAndView model = new ModelAndView();
@@ -252,7 +252,7 @@ public class ResumeController {
 		//ResumeDTO resumeDTO = resumeService.getProfileAttributes();
 		//createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
 		
-		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_YES);
+		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_NO);
 		createResume.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
 		
 		createResume.setResumeType(resumeType);
@@ -276,7 +276,7 @@ public class ResumeController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.GET)
+	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.POST)
 	public ModelAndView createCopyPasteResume(CreateResume createResume, HttpSession session) {
 		ModelAndView model = populateResumeDropDowns(createResume);
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(createResume.getResumeType())){
@@ -290,7 +290,7 @@ public class ResumeController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/updateCopyPasteResume", method = RequestMethod.GET)
+	@RequestMapping(value = "/updateCopyPasteResume", method = RequestMethod.POST)
 	public ModelAndView updateCopyPasteResume(CreateResume createResume, HttpSession session) {
 		ModelAndView model = populateResumeDropDowns(createResume);
 		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
@@ -335,104 +335,43 @@ public class ResumeController {
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		}
 		return model;
-
-		//resumeService.addCreateResumeCopyPaste(createResumeDTO);
+	}
+	
+	
+	@RequestMapping(value = "/updateResumeUpload", method = RequestMethod.POST)
+	public ModelAndView updateResumeUpload(CreateResume createResume){
 		
-
-		//return "redirect:/jobSeekerResume/createResumePopUp.html";
-		
-		/*else if (createResume.getResumeType().equalsIgnoreCase("UPL")) {
+		ModelAndView model = populateResumeDropDowns(createResume);
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())){
+			
+			ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+			String fileName = null, filePath = null;
 			try {
 				MultipartFile file = createResume.getFileData();
-				String fileName = null;
-				InputStream inputStream = null;
-				OutputStream outputStream = null;
+				
 				if (file.getSize() > 0) {
-					inputStream = file.getInputStream();
-					if (file.getSize() > 10000) {
+					if (file.getSize() > 100000) {
 						//return "/uploadfile";
+					}else{
+						fileName = file.getOriginalFilename();
+						filePath = basedirectorypathUpload+fileName;
+						File dest = new File(filePath);
+						file.transferTo(dest);
+						resumeDTO.setFileServer(basedirectorypathUpload);
+						resumeDTO.setFileName(fileName);
+						resumeDTO.setFilePath(filePath);
+						//set it from session
+						resumeDTO.setUserId(2);
+						resumeService.updateResumeUpload(resumeDTO);
 					}
-					fileName = request.getRealPath("") + "/resources/images/"
-							+ file.getOriginalFilename();
-
-					outputStream = new FileOutputStream(fileName);
-
-					int readBytes = 0;
-					byte[] buffer = new byte[10000];
-					readBytes = inputStream.read(buffer, 0, 10000);
-					while (readBytes != -1) {
-						outputStream.write(buffer, 0, readBytes);
-					}
-
-
-					outputStream.close();
-					inputStream.close();
-				}
-
-				// ..........................................
-				session.setAttribute("uploadFile", file.getOriginalFilename());
-
-
-				//==============================
-				//Reading File
-				//==============================
-				FileInputStream fstream = new FileInputStream(fileName);
-				// Get the object of DataInputStream
-				DataInputStream dataInputStream = new DataInputStream(fstream);
-				BufferedReader bufferReader = new BufferedReader(new InputStreamReader(dataInputStream,"UTF8"));
-				String strLine;
-				//Read File Line By Line
-				StringBuffer resumeTextData=new StringBuffer();
-				strLine = bufferReader.readLine();
-				while (strLine != null)   {
-					// Print the content on the console
-					resumeTextData.append(strLine+"\n");
-				}
-				InetAddress ownIP=InetAddress.getLocalHost();
-				//POI File Reader
-
-
-				String ext="";
-				int mid= fileName.lastIndexOf(".");
-				fileName.substring(0,mid);
-				ext=fileName.substring(mid+1,fileName.length());  
-				if(ext.equalsIgnoreCase("doc")){
-					resumeTextData.delete(0, resumeTextData.length());
-					new ReadDocFile().readMyDocument(fileName, resumeTextData);
-				}else if (ext.equalsIgnoreCase("docx")) {
-					resumeTextData.delete(0, resumeTextData.length());
-					new ReadDocFile().docxFileReader(fileName, resumeTextData);
-				}
-				//Data Insertion part   
-				ResumeDTO createResumeDTO=new ResumeDTO();
-				createResumeDTO.setResumeType(createResume.getResumeType());
-				createResumeDTO.setResumeName(createResume.getResumeName());
-				createResumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-				createResumeDTO.setDesiredEmploymentType(createResume.getDesiredEmploymentType());
-				createResumeDTO.setResumeVisibility(createResume.getResumeVisibility());
-				createResumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
-				createResumeDTO.setResumeText(resumeTextData.toString());
-				createResumeDTO.setFileServer(ownIP.getHostAddress());
-				createResumeDTO.setFilePath(basedirectorypathUpload);
-				createResumeDTO.setFileName(file.getOriginalFilename());
-				createResumeDTO.setIsPublished("12");
-				//resumeService.addCreateResumeUpload(createResumeDTO);
-				resumeService.createResumeUpload(createResumeDTO);
-				//Close the input stream
-				fstream.close();
-				dataInputStream.close();
-				bufferReader.close();
-				resumeTextData.delete(0, resumeTextData.length());
-				(new File(basedirectorypathUpload)).mkdir();
-				CopyUtil.move(fileName.replace("\\", "\\\\").replace("/", "\\\\"),basedirectorypathUpload.replace("\\", "\\\\")+file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf("."))+"_UserId_"+new Timestamp(new Date().getTime()).toString().split(" ")[0]+"_"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[0]+"-"+new Timestamp(new Date().getTime()).toString().split(" ")[1].split(":")[1]+"."+file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
-
-
-			} catch (Exception e) {
-				Logger.getLogger("");
+				}	
+			}catch (Exception e) {
+				
 			}
-
-			return "redirect:/jobSeekerResume/createResumePopUp.html";
-		}*/
+			
+			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+		}
+		return model;		
 	}
 	
 	/**

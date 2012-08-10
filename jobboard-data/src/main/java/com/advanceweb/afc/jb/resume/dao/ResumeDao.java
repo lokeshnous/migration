@@ -28,6 +28,7 @@ public interface ResumeDao {
 	boolean updateResumeCopyPaste(ResumeDTO resumeDTO);
 	
 	boolean createResumeUpload (ResumeDTO resumeDTO);
+	boolean updateResumeUpload(ResumeDTO resumeDTO);
 	
 	boolean addWorkExp(List<WorkExpDTO> listWorkExp);
 	boolean addReference(List<ReferenceDTO> listRefExp);

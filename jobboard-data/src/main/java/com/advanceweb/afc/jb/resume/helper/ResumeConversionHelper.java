@@ -367,10 +367,14 @@ public class ResumeConversionHelper {
 		resUploadResume.setActive(Integer.parseInt(resumeDTO.getResumeVisibility()));
 		resUploadResume.setIsPublished(Integer.parseInt(resumeDTO.getResumeVisibility()));
 		resUploadResume.setUpdateDt(new Timestamp(new Date().getTime()));
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
+			resUploadResume.setFileName(resumeDTO.getFileName());
+			resUploadResume.setFilePath(resumeDTO.getFilePath());
+			resUploadResume.setFileServer(resumeDTO.getFileServer());
+		}
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
 			resUploadResume.setResumeText(resumeDTO.getResumeText());
 		}
-
 		return resUploadResume;
 	}
 	
@@ -385,26 +389,26 @@ public class ResumeConversionHelper {
 			ResUploadResume resUploadResume, ResumeDTO resumeDTO ,List<ResResumeAttrib> resumeAttribs) {
 		
 		List<ResResumeProfile> resumeProfileList = new ArrayList<ResResumeProfile>();
-		
+		String formTypeName = null;
 		for(ResResumeAttrib resumeAttrib :resumeAttribs){
+			
+			formTypeName = resumeAttrib.getName();
 			ResResumeProfile resumeProfile = new ResResumeProfile();
-			if(MMJBCommonConstants.RESUME_TYPE.equals(resumeAttrib.getName())){
-				continue;
-			}
-			if("PhoneType".equals(resumeAttrib.getName())){
-				continue;
-			}
-			else if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(resumeAttrib.getName())){
+			
+			if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(formTypeName)){
 				resumeProfile.setAttribValue(resumeDTO.getDesiredJobTitle());
 			}
-			else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(resumeAttrib.getName())){
+			else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(formTypeName)){
 				resumeProfile.setAttribValue(resumeDTO.getDesiredEmploymentType());
 			}
-			else if(MMJBCommonConstants.WORK_AUTH_US.equals(resumeAttrib.getName())){
+			else if(MMJBCommonConstants.WORK_AUTH_US.equals(formTypeName)){
 				resumeProfile.setAttribValue(resumeDTO.getWorkAuthorizationUS());
 			}
-			else if(MMJBCommonConstants.RELOCATE.equals(resumeAttrib.getName())){
+			else if(MMJBCommonConstants.RELOCATE.equals(formTypeName)){
 				resumeProfile.setAttribValue(resumeDTO.getWillingToRelocate());
+			}
+			else{
+				continue;
 			}
 			resumeProfile.setResResumeAttrib(resumeAttrib);
 			resumeProfile.setResumeId(resUploadResume.getUploadResumeId());
@@ -644,7 +648,6 @@ public class ResumeConversionHelper {
 		}
 		return langList;
 	}
-	
 	
 	/**
 	 * This method is called to convert List of References DTO to Resume Builder

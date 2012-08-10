@@ -29,13 +29,14 @@
 						//validate number of resumes
 						//validate if resume name already exist in db
 						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
+							type: "POST",
 							success : function(data) {
 								if (data.maxResume != null) {
 										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
 									} else if (data.duplicateResume != null) {
 										$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 									} else {
-										$("form").attr("action",getBaseURL()+ "jobSeekerResume/createResumeUpload.html");
+										$("form").attr("action",getBaseURL()+ "jobSeekerResume/updateResumeUpload.html");
 										$("form").submit();
 									}
 								},
@@ -63,15 +64,18 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="post" action="createResumeUpload.html" commandName="createResume" id="formtouse" enctype="multipart/form-data">
+			<form:form method="post" action="updateResumeUpload.html" commandName="createResume" id="formtouse" enctype="multipart/form-data">
 				<div id="errorMsg"></div>
 				
 				<form:input type="hidden" path="uploadResumeId" />
 				<form:input type="hidden" path="resumeType" />
+				<div class="rowEvenNewSpacing">
+					<span>You uploaded <a href="#">${createResume.filename}</a> as your resume, you can upload an updated resume</span>
+            	</div> 
 				<!-- Choose file section -->
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Upload Resume:</span>
-					<form:input path="fileData" type="file" value="${createResume.filename}"/>
+					<form:input path="fileData" type="file" />
                 	<!-- <span class="floatLeft marginTop5"><a href="" class="btn_sm orange">Choose File</a></span><span class="required paddingTop0 marginTop4 TextColorA05">No File Chosen</span><span class="required paddingTop0 marginTop4">(Required)</span> -->
             	</div>            	
             	

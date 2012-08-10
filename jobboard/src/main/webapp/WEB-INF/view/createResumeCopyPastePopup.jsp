@@ -42,7 +42,8 @@
 						$("#errorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
-						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName,
+						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId=",
+							type: "POST",
 							success : function(data) {
 								if (data.maxResume != null) {
 										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
@@ -77,7 +78,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="copyPasteResume.html" commandName="createResume" id="copyPastResume" enctype="multipart/form-data">
+			<form:form method="post" action="copyPasteResume.html" commandName="createResume" id="copyPastResume" enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>
 					<div class="floatLeft marginTop5 marginRight20">How would you

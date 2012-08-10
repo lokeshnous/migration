@@ -88,6 +88,12 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.createResumeUpload(resumeDTO);
 		
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean updateResumeUpload(ResumeDTO resumeDTO) {
+		return resumeDao.updateResumeUpload(resumeDTO);
+		
+	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)

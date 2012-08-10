@@ -39,6 +39,9 @@ public class TransformCreateResume {
 		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
 		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
 		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
+		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
+			resumeDTO.setFileName(createResume.getFilename());
+		}
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
 			resumeDTO.setResumeText(createResume.getResumeText());
 		}

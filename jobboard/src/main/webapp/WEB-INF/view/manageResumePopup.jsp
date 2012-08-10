@@ -36,6 +36,7 @@
 				break;
 			case "delete":{
 				$.ajax({url: getBaseURL()+"/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
+						type: "POST",
 						success: function(data){ 
 						    if(data.success != null){
 						    	rowObj.remove();

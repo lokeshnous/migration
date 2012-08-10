@@ -230,6 +230,13 @@ public class ResumeDaoImpl implements ResumeDao {
 		}
 		return result;
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public boolean updateResumeUpload(ResumeDTO resumeDTO) {
+		return updateResume(resumeDTO);
+	}
+	
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
