@@ -684,14 +684,14 @@
                 <form:input path="listRefForm[${status.index}].email" class="job_seeker_password textBox350"/>
         <span class="required"></span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Reference Type:</span><span class="requiredleft0">
-
-                        <input name="Professional" type="radio" value="" class="marginRight5">
-                        <form:radiobutton path="${reference.referenceType}" value="Professional"/>
-                        <label class="greyLabel">Professional</label>
-                        </span>&nbsp;&nbsp;&nbsp;<span class="required">
-                        <form:radiobutton path="${reference.referenceType}" value="Personal"/>
-                        <label class="greyLabel">Personal</label>
-                        </span> </div>
+	                        <input name="Professional" type="radio" value="" class="marginRight5">
+	                        <form:radiobutton path="${reference.referenceType}" value="Professional"/>
+	                        <label class="greyLabel">Professional</label>
+	                        </span>&nbsp;&nbsp;&nbsp;<span class="required">
+	                        <form:radiobutton path="${reference.referenceType}" value="Personal"/>
+	                        <label class="greyLabel">Personal</label>
+	                        </span> 
+                        </div>
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3"></span> <a href="" class="link_color1_emphasized">Save and add another reference</a> </div>
 
                     </div>
