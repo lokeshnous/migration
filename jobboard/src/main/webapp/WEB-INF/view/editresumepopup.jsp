@@ -80,7 +80,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="get" action="updateResumePopup.html" id="editResumeForm" commandName="createResume" enctype="multipart/form-data" >
+			<form:form method="post" action="updateResumePopup.html" id="editResumeForm" commandName="createResume" enctype="multipart/form-data" >
 				<div id="errorMsg">
 					
 				</div>
