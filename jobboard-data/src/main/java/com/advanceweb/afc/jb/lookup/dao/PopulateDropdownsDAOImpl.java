@@ -44,6 +44,7 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
+	private final String FIND_RESBUILDER_DROPDOWNS="from ResResumeAttrib attrib where attrib.name=?";
 	
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
@@ -385,6 +386,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		List<ResPrivacy> resPrivacyList = hibernateTemplate
 				.find("from ResPrivacy");
 		return dropdownHelper.transformResPrivacyToVisibilityDTO(resPrivacyList);
+	}
+
+	@Override
+	public List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName) {
+		
+		try {
+			List<ResResumeAttrib> resResumeAttrib = hibernateTemplate.find(FIND_RESBUILDER_DROPDOWNS, dropdownName);
+			if (resResumeAttrib.size() > 0) {
+				List<ResResumeAttribList> resResumeAttribList = resResumeAttrib.get(0).getResResumeAttribLists();
+				return dropdownHelper.transformResumeAttribListToDropDownDTO(resResumeAttribList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	

@@ -191,6 +191,11 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	@Override
 	public List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName) {
 		return populateDropdownsDAO.populateResumeDropdown(dropdownName);
+	}
+
+	@Override
+	public List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName) {
+		return populateDropdownsDAO.populateResumeBuilderDropdowns(dropdownName);
 	}	
 
 }

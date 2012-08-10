@@ -154,4 +154,6 @@ public interface PopulateDropdownsDAO {
 	
 	List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName);
 	
+	List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName);
+	
 }

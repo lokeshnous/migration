@@ -428,4 +428,18 @@ public class PopulateDropdownConversionHelper {
 		return list;		
 	}	
 	
+	
+	public List<DropDownDTO> transformResumeAttribListToDropDownDTO(List<ResResumeAttribList> resResumeAttribList){
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		for(ResResumeAttribList resResumeAttrib: resResumeAttribList){
+			DropDownDTO dropdownDTO = new DropDownDTO();
+			dropdownDTO.setOptionId(String.valueOf(resResumeAttrib.getResumeAttribListId()));
+			dropdownDTO.setOptionName(resResumeAttrib.getListValue());
+			
+			dropdownList.add(dropdownDTO);
+		}
+		return dropdownList;		
+		
+	}
+	
 }
