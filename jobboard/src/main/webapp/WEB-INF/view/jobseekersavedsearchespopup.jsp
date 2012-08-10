@@ -33,7 +33,7 @@ $(document).keyup(function(event) {
 							case "delete":{
 								var r=confirm("You want to delete this?");
 								if(r==true){
-									$.ajax({url: getBaseURL()+"/savedSearches/jobSeeker/deleteSavedSearch.html?saveSearchId="+saveSearchId,
+									$.ajax({url: getBaseURL()+"/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
 											success: function(data){ 
 											    if(data.success != null){
 											    	rowObj.remove();
@@ -73,7 +73,7 @@ $(document).keyup(function(event) {
 							    stringObjNew = stringObjNew +";"+ stringObj;
 							 });
 							//alert('objects are'+stringObjNew);
-							$.ajax({url:getBaseURL()+"/savedSearches/jobSeeker/saveSearchedNames.html?stringObjNew="+stringObjNew,
+							$.ajax({url:getBaseURL()+"/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
 								    	//alert(data.success);
@@ -109,7 +109,7 @@ $(document).keyup(function(event) {
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form  method="get" action = "/jobboard/savedSearches/jobSeeker/saveSearchedNames.html" commandName="saveSearchForm">
+			<form:form  method="get" action = "/jobboard/savedSearches/saveSearchedNames.html" commandName="saveSearchForm">
 				<div class="row">
 					<table id="tb_save_search" width="100%" border="0" cellspacing="0"
 						cellpadding="0" class="grid">
