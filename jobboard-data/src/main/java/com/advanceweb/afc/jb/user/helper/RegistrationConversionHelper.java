@@ -344,6 +344,7 @@ public class RegistrationConversionHelper {
 			userDTO.setLastName(user.getLastName());
 			userDTO.setUserId(user.getUserId());
 			userDTO.setMiddleName(user.getMiddleName());
+			userDTO.setPassword(user.getPassword());
 		}
 		
 		return userDTO;		
