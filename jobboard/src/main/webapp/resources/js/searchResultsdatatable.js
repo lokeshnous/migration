@@ -56,13 +56,19 @@ function validateRadius() {
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							$(saveThisJobIdid).attr('target', '_blank');
+							//$(saveThisJobIdid).attr('target', '_blank');
 							$(saveThisJobIdid).attr('href', val + '.html');
 							$(saveThisJobIdid).displaypopup(saveThisJobIdid,
 									"775", "252");
+							//location.href = val+".html";
 
 						}
 					});
+					//$.each(data, function(key, val) {
+					//	if (key == "NavigationPath") {
+					//		window.location.href = val+".html";
+					//	}
+					//});
 				},
 				error : function(data) {
 					alert('Unable to process');
@@ -72,7 +78,7 @@ function validateRadius() {
 			});
 		}
 		function applyThisJob(jobId) {
-			var applyJobidId = "#applyJobid"+jobId;
+			//var applyJobidId = "#applyJobid"+jobId;
 			$.ajax({
 				url : '../jobsearchactivity/applyJob.html?id='+jobId,
 				data : ({
@@ -87,7 +93,8 @@ function validateRadius() {
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							$(applyJobidId).attr('href', val + '.html');
+							//$(applyJobidId).attr('href', val + '.html');
+							window.location.href = val+".html";
 						}
 					});
 				},
@@ -107,7 +114,7 @@ function validateRadius() {
 				var saveThisJobIdid= "saveThisJobId"+jobId;
 				var applyJobId= "applyJobid"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
-				sOut += '<p class="searchResultsSubContentJobDescription"><span class="bold">Job Description:</span>'+jobDesc+'</p><br/>';
+				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 50px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
 				sOut += '<a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">';
 				sOut += 'Apply</a>';
 				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId;
