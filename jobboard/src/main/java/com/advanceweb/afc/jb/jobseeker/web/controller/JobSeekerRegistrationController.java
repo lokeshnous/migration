@@ -284,7 +284,7 @@ public class JobSeekerRegistrationController {
 	@ResponseBody
 	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
 	public String updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
-			BindingResult result) {
+			BindingResult result, HttpSession session) {
 		try {	
 			
 			if(null != registerForm.getListProfAttribForms()){
@@ -312,11 +312,11 @@ public class JobSeekerRegistrationController {
 					if(MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
 						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){
 							return "Please enter the correct E-Mail Address";
-						}else{
+						}/*else{
 							if(profileRegistration.validateEmail(form.getStrLabelValue())){
 								return "Email Id already Exists!";
 							}
-						}
+						}*/
 					}					
 				}
 			}
@@ -325,7 +325,7 @@ public class JobSeekerRegistrationController {
 			List<MerProfileAttribDTO> attribList = transformJobSeekerRegistration.
 					transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
 			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
-			userDTO.setUserId(1565);
+			userDTO.setUserId((Integer) session.getAttribute("userId"));
 			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
