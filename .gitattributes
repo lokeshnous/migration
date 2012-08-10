@@ -340,6 +340,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginForm.java
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginSuccessManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutSuccessManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CertificationsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/EducationForm.java -text
