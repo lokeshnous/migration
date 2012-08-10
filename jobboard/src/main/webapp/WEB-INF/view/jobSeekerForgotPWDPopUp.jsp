@@ -68,8 +68,7 @@
 			<form:form method="" action="" commandName="loginForm">
 				<div class="rowEvenNewSpacing borderBottomDotted paddingBottom10 marginTop0">
 					<p>Enter the email address you use for this account and click
-						the 'SEND' button. We'll email you a security code that will allow
-						you to reset your password.</p>
+						the 'SEND' button. We'll email your password.</p>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Email Address:</span>
@@ -85,7 +84,7 @@
 					     <input type="button" id="cancelbutton" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 					</span>
 				</div>
-				<span  style="font-size: 25px;font:bold; "><div id="waitmsg" >Please Wait...........</div></span>
+				<span  style="font-size: 25px;font:bold; "><div id="waitmsg" >Please Wait..Your password has been sending to your email address</div></span>
 				
 				<div class="clearfix"></div>
 			</form:form>
