@@ -72,7 +72,7 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public boolean createResume(ResumeDTO resumeDTO) {
+	public ResumeDTO createResume(ResumeDTO resumeDTO) {
 		return resumeDao.createResume(resumeDTO);
 		
 	}

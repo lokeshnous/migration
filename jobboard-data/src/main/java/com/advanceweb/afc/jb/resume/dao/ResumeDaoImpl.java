@@ -165,7 +165,7 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public boolean createResume(ResumeDTO resumeDTO) {
+	public ResumeDTO createResume(ResumeDTO resumeDTO) {
 		//if any public resumes , make it private 
 		resumeVisibilityPublicToPrivate(resumeDTO);
 		
@@ -176,13 +176,13 @@ public class ResumeDaoImpl implements ResumeDao {
 			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
 			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			
+			resumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, null);
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
 			e.printStackTrace();
 		}
-		return result;
+		return resumeDTO;
 
 	}
 	

@@ -22,7 +22,7 @@ public interface ResumeService {
 	ResumeDTO editResume(int resumeId);
 	boolean deleteResume(int resumeId , int userId);
 	boolean updateResume(ResumeDTO resumeDTO);
-	boolean createResume(ResumeDTO resumeDTO);
+	ResumeDTO createResume(ResumeDTO resumeDTO);
 	boolean createResumeBuilder(ResumeDTO resumeDTO);
 	
 	boolean createResumeCopyPaste(ResumeDTO resumeDTO);

@@ -61,22 +61,24 @@ public class ResumeConversionHelper {
 					.convertSQLDateTimeToStdDateTime(resume.getUpdateDt()
 							.toString()));
 		}
-		for(ResResumeProfile resumeProfile : resumeProfileList){
-					String formType = resumeProfile.getResResumeAttrib().getName();
-					
-					if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(formType)){
-						resumeDTO.setDesiredJobTitle(resumeProfile.getAttribValue());
-					}
-					else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(formType)){
-						resumeDTO.setDesiredEmploymentType(resumeProfile.getAttribValue());
-					}
-					else if(MMJBCommonConstants.WORK_AUTH_US.equals(formType)){
-						resumeDTO.setWorkAuthorizationUS(resumeProfile.getAttribValue());
-					}
-					else if(MMJBCommonConstants.RELOCATE.equals(formType)){
-						resumeDTO.setWillingToRelocate(resumeProfile.getAttribValue());
-					}
-		}
+		if(resumeProfileList != null && resumeProfileList.size() > 0){
+				for(ResResumeProfile resumeProfile : resumeProfileList){
+						String formType = resumeProfile.getResResumeAttrib().getName();
+						
+						if(MMJBCommonConstants.DESIRED_JOB_TITLE.equals(formType)){
+							resumeDTO.setDesiredJobTitle(resumeProfile.getAttribValue());
+						}
+						else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(formType)){
+							resumeDTO.setDesiredEmploymentType(resumeProfile.getAttribValue());
+						}
+						else if(MMJBCommonConstants.WORK_AUTH_US.equals(formType)){
+							resumeDTO.setWorkAuthorizationUS(resumeProfile.getAttribValue());
+						}
+						else if(MMJBCommonConstants.RELOCATE.equals(formType)){
+							resumeDTO.setWillingToRelocate(resumeProfile.getAttribValue());
+						}
+			}
+		}		
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resume.getResumeType())){
 			resumeDTO.setFilePath(resume.getFilePath());
 			resumeDTO.setFileServer(resume.getFileServer());

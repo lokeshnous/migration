@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.resume;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.net.InetAddress;
@@ -47,7 +48,7 @@ public class ResumeServiceTest extends ServiceTest {
 			createResumeDTO.setWillingToRelocate("Yes");
 			//createResumeDTO.setResumeVisibility("1");			
 			createResumeDTO.setIsPublished("1");
-			assertTrue("Create Resume", resumeService.createResume(createResumeDTO));
+			assertNotNull("Create Resume", resumeService.createResume(createResumeDTO));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

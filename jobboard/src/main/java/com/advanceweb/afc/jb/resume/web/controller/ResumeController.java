@@ -85,8 +85,7 @@ public class ResumeController {
 	public String getResumes(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
 		//set this from session
-		int userId = 2;
-		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(userId);		
+		List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes((Integer) session.getAttribute("userId"));		
 		
 		List<ResumeVisibilityDTO> visiblityList= populateDropdownsService.getResumeVisibilityList();
 		Map<String,String> visibilityMap = new HashMap<String , String>();		
@@ -387,7 +386,7 @@ public class ResumeController {
 		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
 		//set it from session
 		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
-		resumeService.createResume(resumeDTO);
+		resumeDTO = resumeService.createResume(resumeDTO);
 		List<DropDownDTO> empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> phoneTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
 		List<DropDownDTO> careerLvlList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
