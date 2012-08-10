@@ -45,6 +45,9 @@ import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 @Repository("resumeDao")
 public class ResumeDaoImpl implements ResumeDao {
 
+	
+	private static final String FIND_RES_BUILD_RESUME="from ResBuilderResume res where res.resUploadResumeId=?";
+	
 	@Autowired
 	private ResumeConversionHelper resumeConversionHelper;
 
@@ -82,12 +85,14 @@ public class ResumeDaoImpl implements ResumeDao {
 		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,resumeId);
 		List<ResResumeProfile> resumeProfile = hibernateTemplate.find("from ResResumeProfile where resumeId = " + resumeId);
 		if(resumeProfile != null && resumeProfile.size() > 0) {
+			
 			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume, resumeProfile);
 
-			ResBuilderResume resumeBuilder = hibernateTemplate.get(ResBuilderResume.class, resume.getUploadResumeId());
+			List<ResBuilderResume> resBuilderList = hibernateTemplate.find(FIND_RES_BUILD_RESUME, resume.getUploadResumeId());
 
-			if (resumeBuilder != null) {
-				dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto,resumeBuilder);
+			if (resBuilderList != null && resBuilderList.size()>0) {
+				ResBuilderResume resBuilder = resBuilderList.get(0);
+				dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto,resBuilder);
 				return dto;
 			}
 		}

@@ -213,7 +213,20 @@ public class ResumeController {
 			resumeService.updateResume(resumeDTO);
 			resumeDTO = resumeService.editResume(resumeDTO.getUploadResumeId());
 			
-			transCreateResume.transformCreateResumeForm(resumeDTO);
+			createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
+			
+			
+			List<DropDownDTO> empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+			List<DropDownDTO> phoneTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+			List<DropDownDTO> careerLvlList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
+			List<DropDownDTO> annualSalarylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
+			List<DropDownDTO> languagelList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_TYPE);
+			List<DropDownDTO> langProficiencylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
+			List<DropDownDTO> eduDegreeList = populateDropdownsService.populateEducationDegreesDropdowns();
+			List<CountryDTO>  countryList = populateDropdownsService.getCountryList();
+			List<StateDTO>    stateList = populateDropdownsService.getStateList();
+			
+						
 			List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
 			List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
 			List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
@@ -227,6 +240,19 @@ public class ResumeController {
 			createResume.setListRefForm(listRefForm);
 			createResume.setListWorkExpForm(listWorkExpForm);
 			createResume.setContactInfoForm(contactForm);
+			
+			//DropDowns
+			model.addObject("empTypeList",empTypeList);
+			model.addObject("phoneTypeList",phoneTypeList);
+			model.addObject("careerLvlList",careerLvlList);
+			model.addObject("annualSalarylList",annualSalarylList);
+			model.addObject("languagelList",languagelList);
+			model.addObject("langProficiencylList",langProficiencylList);
+			model.addObject("eduDegreeList",eduDegreeList);
+			model.addObject("countryList",countryList);
+			model.addObject("stateList",stateList);
+			//DropDowns end
+			
 			resumeDTO.getContactInfoDTO();
 			model.addObject("createResume",createResume);
 			model.setViewName("createResumeBuilder");
@@ -387,6 +413,7 @@ public class ResumeController {
 		//set it from session
 		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 		resumeDTO = resumeService.createResume(resumeDTO);
+		createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
 		List<DropDownDTO> empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> phoneTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
 		List<DropDownDTO> careerLvlList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
@@ -458,11 +485,12 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params="Save")
-	public ModelAndView saveResumeBuilder(CreateResume createResume){		
+	public ModelAndView saveResumeBuilder(CreateResume createResume, HttpSession session){		
 
 		ModelAndView model = new ModelAndView();
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
+		createResume.setUserId((Integer) session.getAttribute("userId"));
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
 		ContactInformationDTO contactInfoDTO = transCreateResume.transformContactInfoDTO(createResume.getContactInfoForm());
 		contactInfoDTO.setAddressDTO(addDTO);

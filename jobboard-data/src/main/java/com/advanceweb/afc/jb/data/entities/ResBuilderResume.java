@@ -128,6 +128,9 @@ public class ResBuilderResume implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="publish_resume_id")
 	private ResPublishResume resPublishResume;
+		
+	@Column(name="upload_resume_id")
+	private int resUploadResumeId;
 
 	//bi-directional many-to-one association to ResBuilderSkill
 	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
@@ -447,5 +450,15 @@ public class ResBuilderResume implements Serializable {
 	public void setResBuilderSkills(List<ResBuilderSkill> resBuilderSkills) {
 		this.resBuilderSkills = resBuilderSkills;
 	}
+
+	public int getResUploadResumeId() {
+		return resUploadResumeId;
+	}
+
+	public void setResUploadResumeId(int resUploadResumeId) {
+		this.resUploadResumeId = resUploadResumeId;
+	}
+
+	
 	
 }

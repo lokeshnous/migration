@@ -51,7 +51,7 @@
 		    }); 
 		    //jQuery(".megamenu").megamenu();		    
 		</script>
-		<script type="text/javascript" src="../resources/css/expandCollapse.js"></script>
+		<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 		</head>
 
 <body class="job_board">
@@ -237,7 +237,7 @@
                <div class="row"> <span class="lableTextSelect marginTop13 ">State / Province:</span>
 		            <form:select path="contactInfoForm.state" class="jb_input3 jb_input_width3">
 						<form:option value="0" label="Select" />
-						<form:options items="${stateList}" itemValue="stateId" itemLabel="stateValue" />
+						<form:options items="${stateList}" itemValue="stateValue" itemLabel="stateValue" />
 					</form:select>                
 				<span class="required marginTop8">(Required)</span> 
 			</div>
@@ -256,7 +256,7 @@
             <div class="row"> <span class="lableTextSelect marginTop13 ">Country:</span>
 		 		<form:select path="contactInfoForm.country" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
-					<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
+					<form:options items="${countryList}" itemValue="countryValue" itemLabel="countryValue" />
 				</form:select>	                
 				<span class="required marginTop8">(Required)</span> 
 			</div>
@@ -269,13 +269,15 @@
                 <span class="floatLeft marginRight10">
                 <c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">                
                 	<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75 marginTop0" >
-						<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
+						<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 					</form:select>	
 					<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password"/>
 					<span class="required ">(Required)</span>                 
                 </c:forEach> 
                </span>
                 </div>
+                <form:hidden path="uploadResumeId"/>
+                <form:hidden path="builderResumeId"/>
                 <div>
                 <a href="" class="link_color1_emphasized">Save and add another phone number</a></span> </div>
                 </div>
@@ -333,7 +335,7 @@
                 
                 <form:select path="listWorkExpForm[${status.index}].employmentType" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Employment Type ---" />
-					<form:options items="${empTypeList}" itemValue="optionId" itemLabel="optionName" />
+					<form:options items="${empTypeList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
 
                 <span class="required marginTop8">(Required)</span> </div>
@@ -357,7 +359,7 @@
 	
 				<form:select path="listWorkExpForm[${status.index}].currentCareerLvl" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Career Level ---" />
-					<form:options items="${careerLvlList}" itemValue="optionId" itemLabel="optionName" />
+					<form:options items="${careerLvlList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
 						
                 <span class="required marginTop8">
@@ -372,19 +374,18 @@
                                        						
 				<form:select path="listWorkExpForm[${status.index}].annualSalary" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Annual Salary ---" />
-					<form:options items="${annualSalarylList}" itemValue="optionId" itemLabel="optionName" />
+					<form:options items="${annualSalarylList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
 				
                 <div class="toolTip marginTop15 marginLeft10"><span class="classic">Select your annual salary from this drop-down menu or enter your hourly pay rate in the following text box.</span></div>
                 <span class="required marginTop8"></span> </div>
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3"> Hourly Pay Rate:</span>
                 <form:input path="${workExp.hrlyPayRate}"  class="job_seeker_Resume" />
-
-        <span class="required "></span> </div>
+        				<span class="required "></span> </div>
                       <div class="row MarginBottom10 ">
                 <div class="lableText3 marginTop10"> Summary/Job Description:</div>
                 <div class="input_grp5 ">                          
-                          <form:textarea path="objective" class="textareaBoxCResume" rows="3" cols="45"/>
+                          <form:textarea path="listWorkExpForm[${status.index}].description" class="textareaBoxCResume" rows="3" cols="45"/>
                           <p>2000 characters remaining</p>
 
                           <p><a href="" class="link_color1_emphasized">Save and add another work experience</a></p>
@@ -525,7 +526,7 @@
                       <div class="row MarginBottom10 ">
                 <div class="lableText3 marginTop10"> </div>
                 <div class="input_grp5 ">
-                          <textarea id="Body Text:" class="textareaBoxCResume" rows="3" cols="45" name="Body Text:"></textarea>
+                          <form:textarea path="skills" class="textareaBoxCResume" rows="3" cols="45"/>	
 
                         </div>
               </div>
@@ -550,14 +551,14 @@
                <div class="row"> <span class="lableText3 marginTop13 ">Language:</span>
 				<form:select path="listLangForm[${status.index}].language" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="English" />
-					<form:options items="${eduDegreeList}" itemValue="optionId" itemLabel="optionName" />
+					<form:options items="${languagelList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
               </div>
               <div class="row"> <span class="lableText3 marginTop13 ">Proficiency Level:</span>
               
               	<form:select path="listLangForm[${status.index}].expLvl" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Proficiency Level ---" />
-					<form:options items="${langProficiencylList}" itemValue="optionId" itemLabel="optionName" />
+					<form:options items="${langProficiencylList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
               </div>
                <div class="row MarginBottom10"> <span class="lableText3 marginTop13 "></span>
@@ -589,7 +590,7 @@
                           along with the years in<br>
                           which you earned them: </div>
                 <div class="input_grp5 ">
-						  <form:textarea path="${createResume.awards}" class="textareaBoxCResume" rows="3" cols="45"/>	
+						  <form:textarea path="awards" class="textareaBoxCResume" rows="3" cols="45"/>	
                           <p>2000 characters remaining</p>
                         </div>
               </div>
@@ -617,7 +618,7 @@
                           associations, please
                           list them here: </div>
                 <div class="input_grp5 ">                          
-                          <form:textarea path="${createResume.memberships}" class="textareaBoxCResume" rows="3" cols="45"/>	
+                          <form:textarea path="memberships" class="textareaBoxCResume" rows="3" cols="45"/>	
                           <p>2000 characters remaining</p>
 
                         </div>
@@ -647,7 +648,7 @@
                           please enter it here:</div>
 
                 <div class="input_grp5 ">
-                          <form:textarea path="${createResume.otherDetails}" class="textareaBoxCResume" rows="3" cols="45"/>	
+                          <form:textarea path="otherDetails" class="textareaBoxCResume" rows="3" cols="45"/>	
                           <p>2000 characters remaining</p>
                         </div>
               </div>

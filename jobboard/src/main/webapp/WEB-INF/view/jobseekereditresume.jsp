@@ -15,7 +15,7 @@
 		jQuery(".megamenu").megamenu();
 	});
 </script>
-<script type="text/javascript" src="javascripts/expandCollapse.js"></script>
+<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 </head>
 
 <body class="job_board">

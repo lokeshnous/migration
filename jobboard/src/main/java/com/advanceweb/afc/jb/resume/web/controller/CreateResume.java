@@ -42,6 +42,7 @@ public class CreateResume {
 	private List<PhoneDetailForm> listPhoneDtlForm;
 	private ContactInfoForm contactInfoForm;
 	private int builderResumeId;
+	private int userId;
 	List<ResumeProfileAttribForm> resumeProfileAttribForm; 
 	//Creating Resume	
 	
@@ -216,6 +217,12 @@ public class CreateResume {
 	}
 	public void setListPhoneDtlForm(List<PhoneDetailForm> listPhoneDtlForm) {
 		this.listPhoneDtlForm = listPhoneDtlForm;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 		
 }

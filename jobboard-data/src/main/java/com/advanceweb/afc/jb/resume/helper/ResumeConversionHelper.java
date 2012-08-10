@@ -97,8 +97,10 @@ public class ResumeConversionHelper {
 		resumeDTO.setObjective(resumeBuilder.getJobObjective());
 		resumeDTO.setOtherDetails(resumeBuilder.getOtherInterests());
 		resumeDTO.setResumeName(resumeBuilder.getResumeName());
-		resumeDTO.setUpdateDt(DateUtils.convertSQLDateTimeToStdDateTime(
-				resumeBuilder.getUpdateDt().toString()));
+		if(null != resumeBuilder.getUpdateDt()){
+			resumeDTO.setUpdateDt(DateUtils.convertSQLDateTimeToStdDateTime(
+					resumeBuilder.getUpdateDt().toString()));
+		}
 		resumeDTO.setUserId(resumeBuilder.getUserId());
 		
 		resumeDTO.setListCertDTO(transformResBldResToCertDTO(resumeBuilder));
@@ -464,16 +466,15 @@ public class ResumeConversionHelper {
 		ResBuilderResume builderResume = new ResBuilderResume();
 		builderResume.setUserId(resumeDTO.getUserId());
 		builderResume.setBuilderResumeId(resumeDTO.getBuilderResumeId());
+		builderResume.setResUploadResumeId(resumeDTO.getUploadResumeId());
 		builderResume.setResumeName(resumeDTO.getResumeName());
 
 		if (null != resumeDTO.getContactInfoDTO()) {
-			builderResume.setFirstName(resumeDTO.getContactInfoDTO()
-					.getFirstName());
-			builderResume.setLastName(resumeDTO.getContactInfoDTO()
-					.getLastName());
-			builderResume.setMiddleName(resumeDTO.getContactInfoDTO()
-					.getMiddleNameInitial());
+			builderResume.setFirstName(resumeDTO.getContactInfoDTO().getFirstName());
+			builderResume.setLastName(resumeDTO.getContactInfoDTO().getLastName());
+			builderResume.setMiddleName(resumeDTO.getContactInfoDTO().getMiddleNameInitial());
 			builderResume.setEmail(resumeDTO.getContactInfoDTO().getEmail());
+			builderResume.setResUploadResumeId(resumeDTO.getUploadResumeId());
 
 			if (null != resumeDTO.getContactInfoDTO().getAddressDTO()) {
 				builderResume.setStreet(resumeDTO.getContactInfoDTO()
@@ -501,6 +502,9 @@ public class ResumeConversionHelper {
 		builderResume.setIsPublished(Integer.valueOf(0).shortValue());
 		builderResume.setJobObjective(resumeDTO.getObjective());
 		builderResume.setOtherInterests(resumeDTO.getOtherDetails());
+		builderResume.setAwards(resumeDTO.getAwards());
+		builderResume.setOtherInterests(resumeDTO.getOtherDetails());
+		builderResume.setMemberships(resumeDTO.getMemberships());
 		builderResume.setPrefixName("");
 		builderResume.setSuffixName("");
 		return builderResume;

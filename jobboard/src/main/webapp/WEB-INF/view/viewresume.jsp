@@ -138,10 +138,10 @@
         
         <div class="clearfix"></div>
         <div class="MidContent_Wrapper FloatLeft marginBottom10">
-                  <div class="ResumeHeader"> <span class="FontSize18"><c:out value="${createResume.resume_name}"/></span>
+                  <div class="ResumeHeader"> <span class="FontSize18"><c:out value="${createResume.resumeName}"/></span>
             <div class="clearfix"></div>
             <span>
-                    <h3 class="marginTop3"><c:out value="${createResume.desired_job_title}"/></h3>
+                    <h3 class="marginTop3"><c:out value="${createResume.desiredJobTitle}"/></h3>
                     </span>
 
             <div class="clearfix"></div>

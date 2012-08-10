@@ -226,6 +226,9 @@ public class TransformCreateResume {
 			dto.setMemberships(form.getMemberships());
 			dto.setSkills(form.getSkills());
 			dto.setBuilderResumeId(form.getBuilderResumeId());
+			dto.setResumeName(form.getResumeName());
+			dto.setUserId(form.getUserId());
+			dto.setUploadResumeId(Integer.valueOf(form.getUploadResumeId()));
 		}
 		
 		return dto;
@@ -456,6 +459,8 @@ public class TransformCreateResume {
 			createResume.setSkills(resumeDTO.getSkills());
 			createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
 			createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
+			createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));
+			createResume.setBuilderResumeId(resumeDTO.getBuilderResumeId());
 		}
 		
 		return createResume;
