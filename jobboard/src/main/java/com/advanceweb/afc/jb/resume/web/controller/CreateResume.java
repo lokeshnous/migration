@@ -44,6 +44,7 @@ public class CreateResume {
 	private int builderResumeId;
 	private int userId;
 	List<ResumeProfileAttribForm> resumeProfileAttribForm; 
+	private Long totalProgress = 0L;
 	//Creating Resume	
 	
 	public String getUploadResumeId() {
@@ -224,5 +225,10 @@ public class CreateResume {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-		
+	public Long getTotalProgress() {
+		return totalProgress;
+	}
+	public void setTotalProgress(Long totalProgress) {
+		this.totalProgress = totalProgress;
+	}
 }

@@ -166,7 +166,7 @@
           <h1 class="marginTop3 marginLeft10 width305 FloatLeft FontSize18 TextColor03">Resume Name:</h1>
 
           <div class=" floatRight width255"><span class="FloatLeft"><img src="../resources/images/percimg.png" width="149" height="16" alt="img"></span>
-            <h3 class="floatRight">60% Complete</h3>
+             <h3 class="floatRight"><c:out value="${createResume.totalProgress}"/>% Complete</h3>
           </div>
           </span> </div>
         <div class="clearfix"></div>
