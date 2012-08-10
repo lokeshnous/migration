@@ -16,6 +16,7 @@
 	
 		/* jQuery(".megamenu").megamenu(); */
 
+		
 		$("#tb_manage_resume img").click(function(event) {
 
 			var action = $(this).attr("alt");
@@ -25,7 +26,6 @@
 			switch (action) {
 			case "view":
 					$("form").attr("action", getBaseURL()+"jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
-					//parent.$.nmTop().close();
 					$("form").submit();
 					break;
 			case "download":
@@ -35,25 +35,27 @@
 				alert("print");
 				break;
 			case "delete":{
-				$.ajax({url: getBaseURL()+"/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
-						type: "POST",
-						success: function(data){ 
-						    if(data.success != null){
-						    	rowObj.remove();
-						    	alert(data.success);
-						    }
-						    if(data.failure != null){
-						    	alert(data.failure);
-						    }
-						},
-						error: function(response) {
-							alert("Server Error : "+response.status);
-						},
-						complete: function() {
-							
-						}
-					});
-				}
+				if (confirm("Do You want to Delete?")) {
+						$.ajax({url: getBaseURL()+"/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
+							type: "POST",
+							success: function(data){ 
+							    if(data.success != null){
+							    	rowObj.remove();
+							    	//alert(data.success);
+							    }
+							    if(data.failure != null){
+							    	alert(data.failure);
+							    }
+							},
+							error: function(response) {
+								alert("Server Error : "+response.status);
+							}
+						});
+					return true;
+				 } else {
+					return false;
+				 }
+   			   }
 				break;
 			}
 

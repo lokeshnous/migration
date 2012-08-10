@@ -126,9 +126,9 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/validateCreateResumePopUp", method = RequestMethod.GET)
-	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName,@RequestParam("resumeId") String resumeId) {
+	public @ResponseBody JSONObject validateCreateResumePopUp(@RequestParam("resumeName") String resumeName,@RequestParam("resumeId") String resumeId, HttpSession session) {
 		//set this from session
-		int userId = 2;
+		int userId = (Integer) session.getAttribute("userId");
 		JSONObject warningMessage = new JSONObject();
 		if("".equals(resumeId) || resumeId == null){
 			int resumeCount = resumeService.findResumeCount(userId);
@@ -181,9 +181,8 @@ public class ResumeController {
 	 */
 	@RequestMapping(value = "/deleteResume", method = RequestMethod.POST)
 	public @ResponseBody JSONObject deleteResume(HttpServletRequest request,HttpServletResponse response, HttpSession session, @RequestParam("resumeId") int resumeId) {
-		//Integer.parseInt(String.valueOf(session.getAttribute("userId")));
-		int userId = 2;
-		boolean deleteStatus = resumeService.deleteResume(resumeId,userId);
+		
+		boolean deleteStatus = resumeService.deleteResume(resumeId,(Integer) session.getAttribute("userId"));
 		JSONObject deleteStatusJson = new JSONObject();
 		if(deleteStatus){
 			deleteStatusJson.put("success", "Profile Deleted Succesfully");
@@ -202,13 +201,13 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.POST)
-	public ModelAndView updateResumePopup(CreateResume createResume) {
+	public ModelAndView updateResumePopup(CreateResume createResume, HttpSession session) {
 
 		ModelAndView model = new ModelAndView();
 		
 		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
 		//set it from session
-		resumeDTO.setUserId(2);				
+		resumeDTO.setUserId((Integer) session.getAttribute("userId"));				
 		//depending on the resume type either move to resume builder or show excel file 
 		
 		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO.getResumeType())){
@@ -283,7 +282,7 @@ public class ResumeController {
 			
 			ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
 			//set it from session
-			resumeDTO.setUserId(2);
+			resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 			resumeService.createResumeCopyPaste(resumeDTO);
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		}
@@ -295,14 +294,14 @@ public class ResumeController {
 		ModelAndView model = populateResumeDropDowns(createResume);
 		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
 		//set it from session
-		resumeDTO.setUserId(2);
+		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 		resumeService.updateResumeCopyPaste(resumeDTO);
 		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		return model;
 	}
 
 	@RequestMapping(value = "/createResumeUpload", method = RequestMethod.POST)
-	public ModelAndView createResumeUpload(CreateResume createResume){
+	public ModelAndView createResumeUpload(CreateResume createResume, HttpSession session){
 		
 		ModelAndView model = populateResumeDropDowns(createResume);
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())){
@@ -324,7 +323,7 @@ public class ResumeController {
 						resumeDTO.setFileName(fileName);
 						resumeDTO.setFilePath(filePath);
 						//set it from session
-						resumeDTO.setUserId(2);
+						resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 						resumeService.createResumeUpload(resumeDTO);
 					}
 				}	
@@ -339,7 +338,7 @@ public class ResumeController {
 	
 	
 	@RequestMapping(value = "/updateResumeUpload", method = RequestMethod.POST)
-	public ModelAndView updateResumeUpload(CreateResume createResume){
+	public ModelAndView updateResumeUpload(CreateResume createResume, HttpSession session){
 		
 		ModelAndView model = populateResumeDropDowns(createResume);
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())){
@@ -361,14 +360,13 @@ public class ResumeController {
 						resumeDTO.setFileName(fileName);
 						resumeDTO.setFilePath(filePath);
 						//set it from session
-						resumeDTO.setUserId(2);
-						resumeService.updateResumeUpload(resumeDTO);
 					}
 				}	
 			}catch (Exception e) {
 				
 			}
-			
+			resumeDTO.setUserId((Integer) session.getAttribute("userId"));
+			resumeService.updateResumeUpload(resumeDTO);
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		}
 		return model;		
@@ -383,12 +381,12 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/createResumeBuilder", method = RequestMethod.GET)
-	public ModelAndView createResumebuilder(CreateResume createResume) {
+	public ModelAndView createResumebuilder(CreateResume createResume, HttpSession session) {
 		
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
 		//set it from session
-		resumeDTO.setUserId(2);
+		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 		resumeService.createResume(resumeDTO);
 		List<DropDownDTO> empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> phoneTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
