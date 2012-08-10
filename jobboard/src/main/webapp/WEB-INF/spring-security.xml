@@ -14,6 +14,7 @@
     
 	<security:intercept-url pattern="/healthcarejobs/advanceweb.html" access="permitAll" />
 	<security:intercept-url pattern="/loginFormForJobSeeker/login.html"	access="permitAll" />
+	<security:intercept-url pattern="/jobseekerregistration/createJobSeekerCreateYrAcct.html" access="permitAll" />
 	<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html" access="hasRole('ROLE_JOB_SEEKER')" />
 	<security:intercept-url pattern="/jobseeker*/**" access="hasRole('ROLE_JOB_SEEKER')" />
 	<security:intercept-url pattern="/jobSeeker*/**" access="hasRole('ROLE_JOB_SEEKER')" />
@@ -21,7 +22,7 @@
 	<security:intercept-url pattern="/subscriptions/**" access="hasRole('ROLE_JOB_SEEKER')" />
 	<security:intercept-url pattern="/jobsearchactivity/**" access="permitAll" />
 	
-    <security:logout invalidate-session="true" logout-success-url="/loginFormForJobSeeker/login.html" logout-url="/jobboard/logout" />
+    <security:logout success-handler-ref="customLogoutSuccessHandler" invalidate-session="true" logout-url="/jobboard/logout" />
 
 
 	<security:custom-filter ref="authenticationFilter"
@@ -44,6 +45,9 @@
 	<bean id="customAuthenticationSuccessHandler" class="com.advanceweb.afc.jb.login.web.controller.LoginSuccessManager"
 		p:defaultTargetUrl="/jobSeeker/jobSeekerDashBoard.html" />
 
+
+<bean id="customLogoutSuccessHandler" class="com.advanceweb.afc.jb.login.web.controller.LogoutSuccessManager"
+		p:defaultTargetUrl="/loginFormForJobSeeker/login.html" />
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
