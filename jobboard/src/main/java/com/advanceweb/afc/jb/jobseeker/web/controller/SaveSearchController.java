@@ -50,7 +50,7 @@ public class SaveSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/saveSearchedJobs", method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeeker/saveSearchedJobs", method = RequestMethod.GET)
 	public ModelAndView saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
 			BindingResult result) {
 
@@ -74,7 +74,7 @@ public class SaveSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/viewMySavedSearches", method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeeker/viewMySavedSearches", method = RequestMethod.GET)
 	public ModelAndView viewMySavedSearches(
 			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result, HttpSession session) {
@@ -102,7 +102,7 @@ public class SaveSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/viewMySavedSearchRecord", method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeeker/viewMySavedSearchRecord", method = RequestMethod.GET)
 	public String viewMySavedSearchRecord(
 			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result) {
@@ -122,7 +122,7 @@ public class SaveSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/editSavedSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeeker/editSavedSearch", method = RequestMethod.GET)
 	public String editSavedSearch(@Valid SaveSearchForm form,
 			BindingResult result) {
 
@@ -141,7 +141,7 @@ public class SaveSearchController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteSavedSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeeker/deleteSavedSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject deleteResume(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -169,7 +169,7 @@ public class SaveSearchController {
 	 * @param stringObjNew
 	 * @return
 	 */
-	@RequestMapping(value = "/saveSearchedNames", method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeeker/saveSearchedNames", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveMySavedSearches(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
