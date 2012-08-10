@@ -6,15 +6,24 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
    @Created: Jul 12, 2012
    @Purpose: This class is used as controller for job seeker regigstration
  */
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,11 +33,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.job.service.SaveSearchService;
+import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
+import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Controller
@@ -38,6 +56,9 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class JobSeekerRegistrationController {
 	
 	@Autowired
+    protected AuthenticationManager customAuthenticationManager;
+	
+	@Autowired
 	private ProfileRegistration profileRegistration;
 
 	@Autowired
@@ -45,6 +66,22 @@ public class JobSeekerRegistrationController {
 	
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
+	
+	@Autowired
+	private PopulateDropdowns populateDropdownsService;
+	
+	@Autowired
+	private JobSeekerSubscriptionService	jobSeekerSubscriptionsService;
+
+	@Autowired
+	private TransformJobSeekerSubscription	transformJobSeekerSubscription;
+	
+	@Autowired
+	private SaveSearchService saveSearchService;
+	
+	@Autowired
+	private JobSeekerService jobSeekerActivity;
+
 
 	
 	/**
@@ -113,7 +150,7 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Finish")
 	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm")  JobSeekerRegistrationForm registerForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session, HttpServletRequest request) {
 			ModelAndView model = new ModelAndView();
 		try {
 			
@@ -154,12 +191,31 @@ public class JobSeekerRegistrationController {
 				session.setAttribute("userId", userDTO.getUserId());
 				session.setAttribute("userEmail", userDTO.getEmailId());
 				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
-
+			    authenticateUserAndSetSession(userDTO, request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
+	
+	
+	 private void authenticateUserAndSetSession(MerUserDTO user,
+		        HttpServletRequest request)
+		{
+		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		 authList.add(new GrantedAuthorityImpl("ROLE_JOB_SEEKER"));
+		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+		            user.getEmailId(), user.getPassword(),authList);
+
+		    request.getSession();
+
+		    token.setDetails(new WebAuthenticationDetails(request));
+		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
+
+		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+		}
+	
+	
 	
 	/**
 	 * This method is called to save employee registration
