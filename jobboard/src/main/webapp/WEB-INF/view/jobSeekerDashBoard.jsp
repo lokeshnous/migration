@@ -155,7 +155,7 @@
 										<h2 class="noTopBorder">${msg.jsActivity}</h2>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="/jobboard/jobSeeker/viewSavedJob.html"
+												<a href="/jobboard/jobSeekerActivity/viewSavedJob.html"
 													target="_blank" id="viewsavedjob">${msg.jsViewSavedjobs}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.savedJobsCount}" />${msg.commonCloseBrace}
 												</a>
@@ -164,7 +164,7 @@
 
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="/jobboard/jobSeeker/viewAppliedJob.html"
+												<a href="/jobboard/jobSeekerActivity/viewAppliedJob.html"
 													target="_blank" id="viewappliedjob">${msg.jsViewJobsApplied}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.appliedJobsCount}" />${msg.commonCloseBrace}
 												</a>
