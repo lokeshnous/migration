@@ -318,7 +318,7 @@ public class JobSearchActivityController {
 		//String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 		String sessionId = MMJBCommonConstants.NULL_STR;
 		
-		if(!StringUtils.isEmpty(String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID)))){
+		if(!"null".equalsIgnoreCase((String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID))))){
 			sessionId = String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID));
 		}else{
 			LOGGER.info("Session ID is not present since it is a Anonymous user.");
