@@ -150,4 +150,6 @@ public interface PopulateDropdowns {
 	List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName);
 	
 	List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName);
+	
+	List<DropDownDTO> populateEducationDegreesDropdowns(); 
 }

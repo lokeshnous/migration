@@ -29,11 +29,11 @@ import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
+import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
@@ -45,6 +45,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
 	private final String FIND_RESBUILDER_DROPDOWNS="from ResResumeAttrib attrib where attrib.name=?";
+	private final String FIND_EDU_DEGREES="from ResDegreeEdu edu";
 	
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
@@ -403,7 +404,18 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
-	
+	@Override
+	public List<DropDownDTO> populateEducationDegreesDropdowns() {
+		
+		try {
+			List<ResDegreeEdu> resEduDegreeList = hibernateTemplate.find(FIND_EDU_DEGREES);
+			return dropdownHelper.transformResDegreeEduToDropDownDTO(resEduDegreeList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 }

@@ -28,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
+import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.PhoneDetailDTO;
@@ -35,6 +37,7 @@ import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
+import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
@@ -441,14 +444,22 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/createResumeBuilder", method = RequestMethod.GET)
-	public ModelAndView getResumes(CreateResume createResume) {
+	public ModelAndView createResumebuilder(CreateResume createResume) {
 		
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
 		//set it from session
 		resumeDTO.setUserId(2);
 		resumeService.createResume(resumeDTO);
-		
+		List<DropDownDTO> empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> phoneTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+		List<DropDownDTO> careerLvlList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
+		List<DropDownDTO> annualSalarylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
+		List<DropDownDTO> languagelList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_TYPE);
+		List<DropDownDTO> langProficiencylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
+		List<DropDownDTO> eduDegreeList = populateDropdownsService.populateEducationDegreesDropdowns();
+		List<CountryDTO>  countryList = populateDropdownsService.getCountryList();
+		List<StateDTO>    stateList = populateDropdownsService.getStateList();
 		CertificationsForm certForm = new CertificationsForm();
 		EducationForm eduForm = new EducationForm();
 		LanguageForm langForm = new LanguageForm();
@@ -471,6 +482,17 @@ public class ResumeController {
 		createResume.setListLangForm(listLangForm);
 		createResume.setListRefForm(listRefForm);
 		createResume.setListWorkExpForm(listWorkExpForm);
+		//DropDowns
+		model.addObject("empTypeList",empTypeList);
+		model.addObject("phoneTypeList",phoneTypeList);
+		model.addObject("careerLvlList",careerLvlList);
+		model.addObject("annualSalarylList",annualSalarylList);
+		model.addObject("languagelList",languagelList);
+		model.addObject("langProficiencylList",langProficiencylList);
+		model.addObject("eduDegreeList",eduDegreeList);
+		model.addObject("countryList",countryList);
+		model.addObject("stateList",stateList);
+		//DropDowns end
 		model.addObject("createResume", createResume);
 		model.setViewName("createResumeBuilder");
 		return model;
@@ -681,9 +703,10 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
-	public String viewResumeBuilder(CreateResume createResume, BindingResult result,Map model, @RequestParam("resumeId") int resumeId){
+	public ModelAndView viewResumeBuilder(CreateResume createResume, BindingResult result, @RequestParam("resumeId") int resumeId){
 
 //		ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
+		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		transCreateResume.transformCreateResumeForm(resumeDTO);
 		List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
@@ -701,9 +724,10 @@ public class ResumeController {
 		createResume.setContactInfoForm(contactForm);
 		resumeDTO.getContactInfoDTO();
 		
-		model.put("createResume", createResume);
+		model.addObject("createResume", createResume);
+		model.setViewName("viewresume");
 		
-		return "viewresume";
+		return model;
 
 	}
 

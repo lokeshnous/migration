@@ -19,6 +19,11 @@ public interface MMJBCommonConstants {
 	public static final String RESUME_TYPE = "ResumeType";	
 	public static final String DESIRED_JOB_TITLE = "JobTitle";
 	public static final String EMPLOYMENT_TYPE = "EmploymentType";
+	public static final String PHONE_TYPE = "PhoneType";
+	public static final String CAREER_LEVEL = "CareerLevel";
+	public static final String ANNUAL_SALARY = "AnnualSalary";
+	public static final String LANGUAGE_TYPE = "Language";
+	public static final String LANGUAGE_PROFICIENCY_TYPE = "LanguageProficiencyLevel";
 	public static final String WORK_AUTH_US = "WorkAuthorization";
 	public static final String RELOCATE = "Relocate";
 	public static final String RESUME_VISIBILITY = "ResumeVisibility" ;
