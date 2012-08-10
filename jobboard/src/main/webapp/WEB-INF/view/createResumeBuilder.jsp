@@ -18,33 +18,38 @@
 <![endif]-->
 
 		<!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="../resources/css/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/css/slider.js"></script>
-		<script type="text/javascript" src="../resources/css/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<script type="text/javascript" src="../resources/js/slider.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	
-/* 		 		//$('#certAjaxCallIdButton').click(function(){		
-		 			 $('#certAjaxCallIdButton').live('click', function() {
-		 			
-					$.ajax({url:"/jobboard/jobSeekerResume/addCertifications.html",
+ 		 		//$('#certAjaxCallIdButton').click(function(){		
+		 		$('#certAjaxCallIdButton').live('click', function() {
+		 			alert("hello");
+					$.ajax({
 						//data:$('#passwordChange').serialize(),
 						type:"POST",
+						url:"/jobboard/jobSeekerResume/addCertifications.html",
+						
 						success: function(data) {
-							if(data == ''){
+							
+							//alert(data);
+							$('#listOfCertsId').append(data);
+							/*if(data == ''){
 								alert("once again");
 								$('#listOfCertsId').jqprint();
 								  //$('#listOfCertsId').append($('addCertDivId'));
 							}else{
 								alert("error");
-							}
+							}*/
 						 },
 					});
 				}); 
-		    }); */
-		    jQuery(".megamenu").megamenu();		    
+		    }); 
+		    //jQuery(".megamenu").megamenu();		    
 		</script>
 		<script type="text/javascript" src="../resources/css/expandCollapse.js"></script>
 		</head>
@@ -264,7 +269,6 @@
                 <span class="floatLeft marginRight10">
                 <c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">                
                 	<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75 marginTop0" >
-						<form:option value="0" label="Select" />
 						<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
 					</form:select>	
 					<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password"/>

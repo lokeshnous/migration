@@ -524,19 +524,20 @@ public class ResumeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addCertifications", method = RequestMethod.POST)
-	public String addCertifications(HttpSession session,CreateResume createResume) {
+	public ModelAndView addCertifications(HttpSession session,CreateResume createResume) {
 		/*List<CertificationDTO> listCertDTO = transCreateResume.transformCertificationDTO(createResume.getListCertForm());*/
 //		resumeService.addCertifications(listCertDTO);
 		CertificationsForm form = new CertificationsForm();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addCerts");
 		if(null != createResume.getListCertForm()){
-			createResume.getListCertForm().add(form);
-			return "";
+			createResume.getListCertForm().add(form);	
 		}else{
 			List<CertificationsForm> listCertForms = new ArrayList<CertificationsForm>();
 			listCertForms.add(form);
 			createResume.setListCertForm(listCertForms);
-			return "";
 		}
+		return model;
 	}
 
 	/**
