@@ -165,4 +165,10 @@ public interface MMJBCommonConstants {
 	public static final String EMAIL_ADDRESS="E-Mail Address";
 	public static final String PHONE_NUMBER="Phone Number";
 	public static final String ZERO = "0";
+	
+	
+	//For Save this 
+	public static final String SEARCH_TYPE = "searchtype";
+	public static final String SEMICOLON = ";";
+	
 }
