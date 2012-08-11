@@ -41,11 +41,6 @@
 						<!-- loginHeader -->
 					</div>
 				</security:authorize>
-
-							<%-- <c:if test="<%= (String)session.getAttribute("userId") == null %>"> --%>	
-						<%-- </c:if> --%>
-						<!-- loginHeader -->
-						<%-- </security:authorize> --%>
 			<security:authorize access="hasRole('ROLE_MERION_ADMIN')">
 					<div class="headerLoginSection">
 						<div class="headerLoginSectionColumns">
@@ -99,6 +94,7 @@
 						<!-- loginHeader -->
 					</div>
 					</security:authorize>
+					<%-- <c:if test="${sessionScope.userId == null}">  --%>
 				<security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_MERION_ADMIN') and !hasRole('ROLE_MERION_ADMIN')">
 						<div class="headerLoginSectionColumns width205">
 						<span class="boldText">Job Seeker:</span><br>
@@ -139,7 +135,7 @@
 							| <a href="">Post Jobs</a>
 						</div>
 			</security:authorize>
-
+          <%--  </c:if> --%>
 						<!-- loginHeader -->
 					</div>
 					<!-- loginHeader -->

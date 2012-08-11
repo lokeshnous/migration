@@ -149,9 +149,9 @@
 					</div>
 				</div>
 				
-				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a id="update" href="#"
-						class="btn_sm orange">Update</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a></span>
+				<div class="popUpButtonRow">
+					 <a id="update" href="#"
+						class="btn_sm orange">Update</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

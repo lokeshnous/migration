@@ -43,7 +43,7 @@ function closePopup() {
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
 				</div>
 
-				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
+				<div class="popUpButtonRow">
 				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
 				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>					
 				</div>

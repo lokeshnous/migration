@@ -141,10 +141,10 @@
 						<span class="required">(Required)</span>
 					</div>
 				</div>
-				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10">
+				<div class="popUpButtonRow">
+					
 					<a id="update" href="#"	class="btn_sm orange">Update</a> 
-						<a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a></span>
+						<a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

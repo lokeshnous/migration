@@ -99,11 +99,11 @@
 						</tr>
 					</table>
 				</div>
-				<div class="row marginTop5 paddingBottom10">
-					<span class="floatLeft marginTop10">
+				<div class="popUpButtonRow">
+					
 					<input type="button" id="save" class="btn_sm orange" value="Save" />
 					<%--<a href="" id="save" class="btn_sm orange">Save</a>  --%>
-					<a href="" class="nyroModalClose btn_sm orange">Cancel</a></span>
+					<a href="" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 
 

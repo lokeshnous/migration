@@ -109,14 +109,12 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="row marginTop5 paddingBottom10">
-					<span class="floatLeft marginTop10">
+				<div class="popUpButtonRow">
+					<span class="floatLeft ">
 						<a class="nyroModal btn_sm orange" id="resumePopupId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume">New Resume</a>
-						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>
-					</span> 
-					
+						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	</span>				
 					<span
-						class="floatLeft marginTop10 marginLeft5"><em>*Only 1
+						class="floatLeft"><em>*Only 1
 							resume may be made Public at a time</em></span>
 				</div>
 			</form:form>

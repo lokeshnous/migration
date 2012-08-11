@@ -35,7 +35,7 @@
 	<div class="main_wrapper_outside">
     <div class="main_wrapper_inside">
     <div class="main">
-              <div class="row">
+              <!-- <div class="row">
 
         <div class="header_wrapper"> <a href="">
           <div class="logo"></div>
@@ -64,24 +64,24 @@
           </span>
           </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div>
 
-            <!-- loginHeader -->
+            loginHeader
             <div class="headerLoginSectionColumns"> <span class="boldText">Employer:</span><br>
                       <a href="">Login</a> | <a href="">Post Jobs</a> </div>
-            <!-- loginHeader -->
+            loginHeader
             <div class="headerLoginSectionColumns"> <span class="boldText">Ad Agency:</span><br>
 
                       <a href="">Login</a> | <a href="">Post Jobs</a> </div>
-            <!-- loginHeader --> 
+            loginHeader 
           </div>
-                  <!-- loginHeader --> 
-                  <!-- loginHeader --> 
+                  loginHeader 
+                  loginHeader 
                   
                 </div>
-      </div>
+      </div> -->
               <!-- header_wrapper -->
 
-              
-              <div class="row">
+              <jsp:include page="../templates/templates_header.jsp"></jsp:include>
+              <!-- <div class="row">
         <div id="nav">
                   <ul class="megamenu">
             <li> <a href="javascript:">Magazines</a>
@@ -153,7 +153,7 @@
             <li> <a href="javascript:">Custom Promotions</a> </li>
           </ul>
                 </div>
-      </div>
+      </div> -->
        <div class="row"> 
         <!-- Step 1 -->
 
@@ -198,8 +198,8 @@
 	                       <form:password path="retypepassword" class="job_seeker_password textBox350" /> 
 	                       <form:errors path="retypepassword" /> 
 	                      <span class="required">(Required)</span> </div>--%>
-				<div class="rowEvenNewSpacing marginTop25 paddingBottom10 marginLeft10">
-				<div rowEvenNewSpacing></div>
+				<div class="popUpButtonRow">
+				
 	               <input type="submit" value="Next" class="btn_sm orange"  name="Next"/>
 	               <a href="/jobboard/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a>
 	               <!-- <input type="submit" value="Cancel" class="btn_sm orange"  name="Cancel"/> -->  

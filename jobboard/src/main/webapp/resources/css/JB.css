@@ -31,35 +31,30 @@ body {
     background-color: #ECECEC;
 }
 
-.color1 {
+.color1, span.jb  {
 	color: #FE9400; /* Orange */
 }
 
 .color2 {
 	color: #6b7b84; /* Steel Gray */
 }
-
-span.jb {
-    color: #FE9400; /* Orange */
-}
-
-.style_guide {
+/*.style_guide {
 	padding: 25px;
-}
+}*/
 
-.guide_note {
+/*.guide_note {
 	font-size: 20px;
 	text-transform: uppercase;
 	color: red;
-}
+}*/
 
-.style_guide .footer {
+/*.style_guide .footer {
 	background-color: #606566; /* Darker Gray */
 	color: #FFFFFF;
 	height: 50px;
 	width: 175px;
 	padding: 10px;
-}
+}*/
 
 .clearfix {
 	clear:both;
@@ -335,6 +330,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F5F5F5', end
 	background-image:url("../images/Jobs_Board_sprite.png");
 	background-repeat:no-repeat;
 	}
+	
 /* Job Board page header styles */
 .header_wrapper {
 	width: 960px;
@@ -1531,7 +1527,7 @@ div.searchResultsSubContent .btn_sm{ margin-right:5px !important }
 .leftFormHolder input[type="checkbox"] {  float: left; width:auto !important; margin:0 5px 10px 0; }
 
 .leftFormHolder input[type="file"] { border:1px solid #ccc; height:25px; width:auto !important; }
-
+input[type="submit"]{width:auto; box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5); text-decoration: none; margin-top:-5px; height:25px; vertical-align : middle;  }
 input.textBox2 { width:220px !important;}
 
 .job_Advancedsearch_main {
@@ -1602,9 +1598,6 @@ input.textBox2 { width:220px !important;}
 .floatRight { width:auto; height:auto; float:right}
 .AddToCartfloatRight { width:175px; height:auto; float:right; margin:0 30px 0 0;}
 
-.margin0 { margin:0 !important;}
-.marginTopBottom0 { margin-top:0 !important; margin-bottom:0 !important;}
-.marginTopBottom10 { margin:15px 0 10px !important;}
 .marginTop0 { margin-top:0 !important;}
 .marginTop1 { margin-top:1px !important;}
 .marginTop3 { margin-top:3px !important;}
@@ -1618,18 +1611,10 @@ input.textBox2 { width:220px !important;}
 .marginTop16 { margin-top:16px!important;}
 .marginTop20 { margin-top:20px!important;}
 .marginTop23 { margin-top:23px!important;}
-.marginTop25 { margin-top:25px!important;}
 .marginTop30 { margin-top:30px !important;}
-.marginTop35 { margin-top:35px !important;}
-.marginTop40 { margin-top:40px !important;}
-.marginTop50 { margin-top:50px !important;}
-.marginTop31 { margin-top:31px !important;}
-.marginTop25 { margin-top:25px !important;}
-.marginTop45 { margin-top:45px !important;}
-.marginTop50 { margin-top:50px !important;}
-.marginTop60 { margin-top:60px !important;}
-.marginTop70 { margin-top:70px !important;}
-.marginTop80 { margin-top:80px !important;}
+
+
+
 
 .marginRight5 { margin-right:5px;}
 .marginRight10 { margin-right:10px;}
@@ -2520,4 +2505,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F5F5F5', end
 	float:left;
 	background:#FFF;
 	margin-left:20px;
+}
+
+.popUpButtonRow {
+    float: left;
+    height: auto;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-top: 15px;
 }

@@ -74,7 +74,7 @@ public class JobApplicationController {
 				EmailDTO toEmployer = new EmailDTO();
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 				//employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());
-				employerToAddress[0] = new InternetAddress("princem@nousinfo.com");
+				employerToAddress[0] = new InternetAddress("pramodap@nousinfo.com");
 				toEmployer.setFromAddress(advanceWebAddress);
 				toEmployer.setToAddress(employerToAddress);
 				toEmployer.setSubject(searchedJobDTO.getJobTitle());
@@ -82,6 +82,7 @@ public class JobApplicationController {
 				toEmployer.setHtmlFormat(true);
 				List<String> attachmentpaths = new ArrayList<String>();
 				attachmentpaths.add(form.getFilePath());
+				//attachmentpaths.add("D:\\testresume.txt");
 				toEmployer.setAttachmentPaths(attachmentpaths);
 				
 				emailService.sendEmail(toEmployer);
@@ -103,7 +104,7 @@ public class JobApplicationController {
 				System.out.println("Mail sent");
 		
 		} catch (Exception e) {
-			System.out.println("ERROR");
+
 			// waiting for Exception
 			
 		}

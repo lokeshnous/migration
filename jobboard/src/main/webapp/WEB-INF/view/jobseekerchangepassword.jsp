@@ -77,8 +77,8 @@
 				<span class="lableText3"></span> 
 				<FONT color="red"><form:errors path="retypepassword" /></FONT>
 			</div>
-            <div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-             <span class="floatLeft marginTop10"><input type="button" id="save" value="Save" class="btn_sm orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a></span>
+            <div class="popUpButtonRow">
+             <input type="button" id="save" value="Save" class="btn_sm orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a>
 
             </div>
             <div class="clearfix"></div>

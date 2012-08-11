@@ -77,10 +77,10 @@
 					</span>
 				</div>
 
-				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a
+				<div class="popUpButtonRow">
+					 <a
 						href="" onclick="parent.$.nmTop().close();"
-						class="btn_sm orange">Cancel</a></span>
+						class="btn_sm orange">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form>

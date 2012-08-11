@@ -163,7 +163,7 @@ $(document).keyup(function(event) {
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			
-			<div class="row marginTop20 paddingBottom10">
+			<div class="popUpButtonRow">
 				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
 				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>
 			</div>

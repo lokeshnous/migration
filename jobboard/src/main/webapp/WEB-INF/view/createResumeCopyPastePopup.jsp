@@ -165,10 +165,10 @@
 						class="textareaBoxCResume width615 Height255 marginTop5 "
 						cols="45" rows="3"></form:textarea>
 				</div>
-				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a id="Save" href="#"
+				<div class="popUpButtonRow">
+					<a id="Save" href="#"
 						class="btn_sm orange">Save</a> <a href="#"
-						class="nyroModalClose btn_sm orange">Cancel</a></span>
+						class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 				<a id="resumeBuilder" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder" class="nyroModal"></a>
 				<a id="uploadResume" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume" class="nyroModal"></a>

@@ -145,9 +145,9 @@
 						class="textareaBoxCResume width615 Height255 marginTop5 "
 						cols="45" rows="3"></form:textarea>
 				</div>
-				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a id="update" href="#"
-						class="btn_sm orange">Update</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a></span>
+				<div class="popUpButtonRow">
+					<a id="update" href="#"
+						class="btn_sm orange">Update</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

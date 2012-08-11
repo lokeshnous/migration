@@ -52,9 +52,10 @@
                   </tbody>
                 </table>
               </div>
-              <div class="row marginTop10 paddingBottom10"> <span class="floatLeft marginTop10"><a href="" class="btn_sm orange">New  Branding TEMPLATE</a> 
+              <div class="row marginTop10 paddingBottom10"> 
+              <a href="" class="btn_sm orange">New  Branding TEMPLATE</a> 
               <a href="cancelEmpBrandTemp.html" class="btn_sm orange">Cancel</a>
-              </span>  </div>
+              </div>
             </form>
           </div>
           <div class="clearfix"></div>

@@ -59,9 +59,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
             <span class="required">(Required)</span>
              <div style="color: red" align="center"><form:errors path="filePath"/></div>
 </div>
-      <div class="rowEvenSpacing marginTop10 paddingBottom10">
-             <span class="floatLeft marginTop10">
-             
+      <div class="popUpButtonRow">
+                         
              <input type="submit" class="btn_sm orange" value="Send"/> <a href="" onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a></span>
              
 </div>

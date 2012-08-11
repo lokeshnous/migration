@@ -429,7 +429,7 @@
 								</c:if>				
 						</c:forEach>			
 							<div
-								class="rowEvenNewSpacing marginTop25 paddingBottom10 marginLeft10">
+								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
 								<input type="submit" value="Back" class="btn_sm orange"
 									name="Back" /> <input type="submit" value="Finish"

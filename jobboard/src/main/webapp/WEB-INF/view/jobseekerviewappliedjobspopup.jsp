@@ -79,7 +79,7 @@
             </table>
              
           </div>
- <div class="row marginTop20 paddingBottom10"><a href="#" onclick="closePopup();" class="nyroModalClose btn_sm orange">Cancel</a></div>
+ <div class="popUpButtonRow"><a href="#" onclick="closePopup();" class="nyroModalClose btn_sm orange">Cancel</a></div>
           </form:form></div>
           <div class="clearfix"></div>
                 </div>

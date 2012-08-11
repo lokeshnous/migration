@@ -96,7 +96,7 @@
               </c:forEach>
             </table>
           </div>
- <div class="row marginTop23"><a href="" onclick="closePopup();"  class="btn_sm orange">Cancel</a></div>
+ <div class="popUpButtonRow"><a href="" onclick="closePopup();"  class="btn_sm orange">Cancel</a></div>
           </form:form></div>
           <div class="clearfix"></div>
                 </div>

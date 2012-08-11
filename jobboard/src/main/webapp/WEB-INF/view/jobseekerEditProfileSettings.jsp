@@ -135,7 +135,7 @@
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'My Industry'}">
-							<div class="row marginTop31">
+							<div class="row marginTop30">
 								<h3>Employment Information</h3>
 							</div>		
 							<div class="rowEvenNewSpacing marginTop13">
@@ -226,13 +226,11 @@
 							</div>
 						</c:if>
 				</c:forEach>
-				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
-					<span class="floatLeft marginTop10">
-					
-<!-- 					<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
+				<div class="popUpButtonRow">
+				<!-- 					<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
 						<input type="button" value="Save" class="btn_sm orange" id="save"/>
-						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a></span>
+						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
