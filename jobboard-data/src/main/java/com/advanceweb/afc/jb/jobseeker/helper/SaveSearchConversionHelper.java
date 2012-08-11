@@ -51,7 +51,10 @@ public class SaveSearchConversionHelper {
 			saveSearchedJobsDTO.setSearchName(admSaveSearch.getSearchName());
 			saveSearchedJobsDTO.setEmailFrequency(admSaveSearch.getEmailFrequency());
 			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDt());
-			saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDt().toString()));
+			
+			if(admSaveSearch.getModifyDt() != null){
+				saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDt().toString()));
+			}
 			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());		
 			searchedJobsDTOList.add(saveSearchedJobsDTO);
 		}
