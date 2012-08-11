@@ -39,7 +39,7 @@ function closePopup() {
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="/jobboard/savedSearches/saveSearchedJobs.html" commandName="saveSearchForm">
 				<span class="lableText3 width505 TextAlignL">Search Title</a></span>
-				<div class="rowEvenNewSpacing marginTop0">
+				<div class="rowEvenNewSpacing margin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
 				</div>
 

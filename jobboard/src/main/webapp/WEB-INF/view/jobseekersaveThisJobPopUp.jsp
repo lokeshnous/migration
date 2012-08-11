@@ -70,7 +70,7 @@
 
 		<div class="popUpContainerWrapper">
 			<form action="" method="">
-				<div class="rowEvenNewSpacing marginTop0">
+				<div class="rowEvenNewSpacing margin0">
 					<span class="lableText3 width505 TextAlignL">You need to be
 						logged in to save jobs. <a href="../loginFormForJobSeeker/login.html" id="id">Click here to log
 							in now.</a>

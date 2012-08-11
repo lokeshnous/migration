@@ -88,7 +88,7 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Desired Employment Type:</span>
 
-					<form:select class="jb_input3 jb_input_width3 marginTop0"
+					<form:select class="jb_input3 jb_input_width3"
 						path="desiredEmploymentType" items="${employmentType}"
 						itemValue="optionValue" itemLabel="optionValue" />
 					<form:errors path="desiredEmploymentType" />
@@ -97,7 +97,7 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">U.S. Work Authorization:</span>
 
-					<form:select class="jb_input3 marginTop0 width350"
+					<form:select class="jb_input3 width350"
 						style="width: auto" path="workAuthorizationUS"
 						items="${workAuthUS}" itemValue="optionValue"
 						itemLabel="optionValue" />

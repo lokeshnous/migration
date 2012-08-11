@@ -132,7 +132,7 @@ $(document).keyup(function(event) {
 								
 								<td align="center">						
 										
-								    <form:select class="jb_input3 select100 marginTopBottom0"									
+								    <form:select class="jb_input3 select100"									
 										path="saveSearchedJobsDTOList[${status.index}].emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
 								    </form:select>

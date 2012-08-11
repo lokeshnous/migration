@@ -192,7 +192,7 @@
 					<!-- Step 1 -->
 
 					<div id="jobSeekerRegister1"
-						class="job_seeker_login leftFormHolderLMargin marginTop0"
+						class="job_seeker_login leftFormHolder"
 						style="display: block">
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
 						<h3 class="marginLeft10"> Contact Information </h3>
@@ -304,7 +304,7 @@
 										<span class="lableText3">My Industry:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
-										<div class="toolTip marginTop6 marginLeft5">
+										<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter the industry you serve.
 												Example: Healthcare</span>
 										</div>
@@ -317,7 +317,7 @@
 		
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
-										<div class="toolTip marginTop6 marginLeft5">
+										<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter the general field in which
 												you work. Example: Respiratory Therapy</span>
 										</div>
@@ -329,7 +329,7 @@
 										<span class="lableText3">My Specialty:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
-										<div class="toolTip marginTop6 marginLeft5">
+										<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter the area in which you
 												specialize. Example: Neonatal/Pediatrics</span>
 										</div>
@@ -341,7 +341,7 @@
 										<span class="lableText3">My Job Title:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
-										<div class="toolTip marginTop6 marginLeft5">
+										<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter your official job title.
 												Example: Registered Respiratory Therapist</span>
 										</div>

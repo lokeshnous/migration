@@ -4,7 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   
            <%-- <c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status">  --%>
-				    <div class="job_seeker_login leftFormHolderResumepage marginTop0" id="addCertDivId">
+				    <div class="job_seeker_login leftFormHolderResumepage" id="addCertDivId">
 					     <div class="rowEvenNewSpacing"> <span class="lableText3">Certification Name:</span>
 					         
 					         <span class="required">(Required)</span> </div>

@@ -163,7 +163,7 @@
                   <span class="floatRight marginRight10"><a href="/jobboard/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
         <div class="clearfix"></div>
         <div class="MidContent_Wrapper FloatLeft"><span>
-          <h1 class="marginTop3 marginLeft10 width305 FloatLeft FontSize18 TextColor03">Resume Name:</h1>
+          <h1 class="marginLeft10 FloatLeft FontSize18 color1">Resume Name:</h1>
 
           <div class=" floatRight width255"><span class="FloatLeft"><img src="../resources/images/percimg.png" width="149" height="16" alt="img"></span>
              <h3 class="floatRight"><c:out value="${createResume.totalProgress}"/>% Complete</h3>
@@ -184,14 +184,14 @@
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
 
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Contact Info</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Contact Info</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
                     </li>
           </ul>
                   <div class="searchResultsSubContent">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
 
               <div class="rowEvenNewSpacing"> <span class="lableText3">First Name:</span>                
                 <form:input path="contactInfoForm.firstName" class="job_seeker_password textBox350" />
@@ -268,7 +268,7 @@
                 <div class="floatLeft marginRight10"></div>
                 <span class="floatLeft marginRight10">
                 <c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">                
-                	<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75 marginTop0" >
+                	<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75" >
 						<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 					</form:select>	
 					<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password"/>
@@ -289,7 +289,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Objective</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Objective</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -297,7 +297,7 @@
 
           </ul>
                   <div class="searchResultsSubContent">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="row MarginBottom10 ">
                 <div class="lableText3 marginTop10"> Your Career Objective:</div>
                 <div class="input_grp5 ">
@@ -314,7 +314,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Work Experience</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Work Experience</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -323,7 +323,7 @@
           </ul>
            <div class="searchResultsSubContent">
            <c:forEach items="${createResume.listWorkExpForm}" var="workExp" varStatus="status">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
                 <form:input path="listWorkExpForm[${status.index}].jobTitle"  class="job_seeker_Resume" />
                 <span class="required">(Required)</span> </div>
@@ -401,7 +401,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Education</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Education</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -410,7 +410,7 @@
           </ul>
            <div class="searchResultsSubContent">
            <c:forEach items="${createResume.listEduForm}" var="education" varStatus="status">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Institution Name:</span>
                 <form:input path="listEduForm[${status.index}].instituteName" class="job_seeker_password textBox350" />
                 <span class="required">(Required)</span> </div>
@@ -468,7 +468,7 @@
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
 
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Certification</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Certification</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -476,7 +476,7 @@
           </ul>
          <div class="searchResultsSubContent" id="listOfCertsId">
            <c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status"> 
-				    <div class="job_seeker_login leftFormHolderResumepage marginTop0" id="addCertDivId">
+				    <div class="job_seeker_login leftFormHolderResumepage" id="addCertDivId">
 					     <div class="rowEvenNewSpacing"> <span class="lableText3">Certification Name:</span>
 					         <form:input path="listCertForm[${status.index}].certificationName" class="job_seeker_password textBox350"/>
 					         <span class="required">(Required)</span> </div>
@@ -508,7 +508,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Skills</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Skills</h2>
                         </div>
 
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
@@ -516,7 +516,7 @@
                     </li>
           </ul>
                   <div class="searchResultsSubContent">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Skill:</span>
                 <input type="text" name="mobileNo" class="job_seeker_password textBox350" />
 
@@ -539,7 +539,7 @@
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
 
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Languages</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Languages</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -547,7 +547,7 @@
           </ul>
           <div class="searchResultsSubContent">
 			<c:forEach items="${createResume.listLangForm}" var="language" varStatus="status">   
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                <div class="row"> <span class="lableText3 marginTop13 ">Language:</span>
 				<form:select path="listLangForm[${status.index}].language" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="English" />
@@ -573,7 +573,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Awards</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Awards</h2>
 
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
@@ -581,7 +581,7 @@
                     </li>
           </ul>
                   <div class="searchResultsSubContent">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="row MarginBottom10 ">
                 <div class="lableText3 marginTop10">If you've received any<br>
 
@@ -603,7 +603,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Memberships</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Memberships</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -611,7 +611,7 @@
 
           </ul>
                   <div class="searchResultsSubContent">
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="row MarginBottom10 ">
                 <div class="lableText3 marginTop10">If you're a member of
                           any professionals
@@ -632,7 +632,7 @@
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
 
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">Other</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Other</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
               </div>
@@ -640,7 +640,7 @@
           </ul>
                   <div class="searchResultsSubContent">
 
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="row MarginBottom10 ">
                 <div class="lableText3 marginTop10"> If you have more<br>
                           information that you<br>
@@ -661,7 +661,7 @@
             <li class="searchResultsColumn1">
                       <div class="sectionHeader Padding0 Height28 LightGrayBG">
                 <div class="floatLeft">
-                          <h2 class="width305 marginTop6 UpperCaseNone TextColor01">References</h2>
+                          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">References</h2>
                         </div>
                 <div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 
@@ -670,7 +670,7 @@
           </ul>
          <div class="searchResultsSubContent">
          <c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">    
-            <div class="job_seeker_login leftFormHolderResumepage marginTop0">
+            <div class="job_seeker_login leftFormHolderResumepage">
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Name:</span>
                 <form:input path="listRefForm[${status.index}].name" class="job_seeker_password textBox350"/>
               </div>

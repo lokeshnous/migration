@@ -145,7 +145,7 @@
 			<b>${error}</b>
 			</div>
 			<form method="post" action="../j_spring_security_check">
-			    <div class="rowEvenSpacing marginTop0">
+			    <div class="rowEvenSpacing margin0">
 				<span class="lableText1">Email Address:</span> <input type="text" id="j_username" name="j_username" class="job_seeker_email" />
 			    </div>
 			    <div class="rowEvenSpacing">

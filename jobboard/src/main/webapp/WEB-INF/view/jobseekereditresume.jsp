@@ -140,7 +140,7 @@
 					<div class="MidContent_Wrapper FloatLeft ">
 						<span>
 							<h1
-								class="marginTop3 marginLeft10 FloatLeft FontSize18 TextColor03">Resume
+								class="marginTop3 marginLeft10 FloatLeft FontSize18 color1">Resume
 								Name:&nbsp;</h1>
 							<h1 class="FontSize18 marginTop3">Registered Nurse Resume</h1>
 
@@ -160,11 +160,11 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Contact
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Contact
 											Info</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -175,7 +175,7 @@
 						<form:form method="get" action="saveResumeBuilder.html" commandName="createResume" modelAttribute="resumeform" id="editResumeForm" enctype="multipart/form-data" >
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">First Name:</span> <input type="text"
 										name="mobileNo" class="job_seeker_password textBox350" /> <span
@@ -505,7 +505,7 @@
 									<span class="lableText3">Phone Number:</span>
 									<div class="floatLeft marginRight10"></div>
 									<span class="floatLeft marginRight10"> <select
-										name="exclude" id="exclude" class="jb_input75 marginTop0">
+										name="exclude" id="exclude" class="jb_input75">
 											<option value="Home">Home</option>
 											<option selected="" value="Work">Work</option>
 											<option value="Mobile">Mobile</option>
@@ -530,10 +530,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Objective</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Objective</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -543,7 +543,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="row MarginBottom10 ">
 									<div class="lableText3 marginTop10">Your Career
 										Objective:</div>
@@ -571,11 +571,11 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Work
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Work
 											Experience</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -585,7 +585,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Job Title:</span> <input type="text"
 										name="mobileNo" class="job_seeker_password textBox350" /> <span
@@ -708,10 +708,6 @@
 								</div>
 							</div>
 
-
-
-
-
 						</div>
 					</div>
 
@@ -720,10 +716,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Education</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Education</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -733,7 +729,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Institution Name:</span> <input
 										type="text" name="mobileNo"
@@ -832,10 +828,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Certification</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Certification</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -846,7 +842,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Certification Name:</span> <input
 										type="text" name="mobileNo"
@@ -894,10 +890,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Skills</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Skills</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -907,7 +903,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Skill:</span> <input type="text"
 										name="mobileNo" class="job_seeker_password textBox350" /> <span
@@ -946,10 +942,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Languages</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Languages</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -959,7 +955,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="row">
 									<span class="lableText3 marginTop13 ">Language:</span> <select
 										name="Country" id="Country" class="jb_input3 jb_input_width3">
@@ -1015,10 +1011,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Awards</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Awards</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -1028,7 +1024,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="row MarginBottom10 ">
 									<div class="lableText3 marginTop10">
 										If you've received any<br> professional awards,<br>
@@ -1059,10 +1055,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Memberships</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Memberships</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -1072,7 +1068,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="row MarginBottom10 ">
 									<div class="lableText3 marginTop10">If you're a member of
 										any professionals associations, please list them here:</div>
@@ -1100,10 +1096,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">Other</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Other</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -1113,7 +1109,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="row MarginBottom10 ">
 									<div class="lableText3 marginTop10">
 										If you have more<br> information that you<br> would
@@ -1142,10 +1138,10 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop6 UpperCaseNone TextColor01">References</h2>
+										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">References</h2>
 									</div>
 									<div class="ESsection accord-open">
-										<h2 class="UpperCaseNone FontSize12 marginTop1">
+										<h2 class="UpperCaseNone FontSize12">
 											<a href="#" class="edit">Edit this section</a>
 										</h2>
 									</div>
@@ -1155,7 +1151,7 @@
 						</ul>
 						<div class="searchResultsSubContent">
 
-							<div class="job_seeker_login leftFormHolderResumepage marginTop0">
+							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Name:</span> <input type="text"
 										name="mobileNo" class="job_seeker_password textBox350" />

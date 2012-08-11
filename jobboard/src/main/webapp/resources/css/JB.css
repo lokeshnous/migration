@@ -31,30 +31,11 @@ body {
     background-color: #ECECEC;
 }
 
-.color1, span.jb  {
-	color: #FE9400; /* Orange */
+span.jb {
+    color: #FE9400; /* Orange */
 }
 
-.color2 {
-	color: #6b7b84; /* Steel Gray */
-}
-/*.style_guide {
-	padding: 25px;
-}*/
 
-/*.guide_note {
-	font-size: 20px;
-	text-transform: uppercase;
-	color: red;
-}*/
-
-/*.style_guide .footer {
-	background-color: #606566; /* Darker Gray */
-	color: #FFFFFF;
-	height: 50px;
-	width: 175px;
-	padding: 10px;
-}*/
 
 .clearfix {
 	clear:both;
@@ -66,7 +47,7 @@ body {
  
 h1 { 
 	font-size: 26px;
-	font-weight: normal
+	font-weight: normal;
 }
 
 h1 span {
@@ -583,6 +564,8 @@ ul.news {
 	border: 1px solid #CCCCCC;
 	font-size:14px;
 }
+
+.grid select, .rowEvenNewSpacing select{ margin:0px;}
 
 .jb_input2Coverletter,.InputActiveText  {
 
@@ -1427,10 +1410,8 @@ h3.jobSummaryTitle {
 		
 		.content_columns_search_results .column2 .searchResults .searchResultsListing .searchResultsItem ul.open  {
 			background-color: #ECECEC;
+			border: 1px solid #FE9400;
 			border-bottom: 1px dotted #CCCCCC;
-			border-top: 1px solid #FE9400;
-			border-left: 1px solid #FE9400;
-			border-right: 1px solid #FE9400;
 			color: #6B7B84;
 			float: left;
 			font-size: 12px;
@@ -1446,9 +1427,7 @@ h3.jobSummaryTitle {
 		.content_columns_search_results .column2 .searchResults .searchResultsListing div.searchResultsSubContent {
 			float: left;
 			background-color: #ffffff;
-			border-left: 1px solid #FE9400;
-			border-right: 1px solid #FE9400;
-			border-bottom: 1px solid #FE9400;
+			border: 1px solid #FE9400;
 			border-top: none;
 			border-radius: 0px 0px 4px 4px;
 		}
@@ -1598,23 +1577,17 @@ input.textBox2 { width:220px !important;}
 .floatRight { width:auto; height:auto; float:right}
 .AddToCartfloatRight { width:175px; height:auto; float:right; margin:0 30px 0 0;}
 
-.marginTop0 { margin-top:0 !important;}
-.marginTop1 { margin-top:1px !important;}
+.margin0 { margin:0 !important;}
+.marginTopBottom10 { margin:15px 0 10px !important;}
 .marginTop3 { margin-top:3px !important;}
-.marginTop4 { margin-top:4px;}
 .marginTop5 { margin-top:5px!important;}
-.marginTop6 { margin-top:6px;}
 .marginTop8 { margin-top:8px;}
 .marginTop10 { margin-top:10px;}
 .marginTop13 { margin-top:13px !important;}
 .marginTop15 { margin-top:15px!important;}
-.marginTop16 { margin-top:16px!important;}
 .marginTop20 { margin-top:20px!important;}
 .marginTop23 { margin-top:23px!important;}
 .marginTop30 { margin-top:30px !important;}
-
-
-
 
 .marginRight5 { margin-right:5px;}
 .marginRight10 { margin-right:10px;}
@@ -1625,21 +1598,13 @@ input.textBox2 { width:220px !important;}
 .marginRight60 { margin-right:60px;}
 
 .marginBottom0 { margin-bottom:0px !important;}
-.marginTop3 { margin-top:3px;}
-.marginBottom3 { margin-bottom:3px!important;}
 .marginBottom5 { margin-bottom:5px!important;}
 .marginBottom10 { margin-bottom:10px !important;}
-.marginBottom13 { margin-bottom:13px !important;}
 .marginBottom15 { margin-bottom:15px !important;}
 .marginBottom20 { margin-bottom:20px !important;}
-.marginBottom25 { margin-bottom:25px !important;}
-.marginBottom50 { margin-bottom:50px !important;}
 .marginLeft5 { margin-left:5px !important;}
 .marginLeft10 { margin-left:10px !important;}
-.marginLeft15 { margin-left:15px !important;}
-.marginLeft18 { margin-left:18px !important;}
 .marginLeft20 { margin-left:20px !important;}
-.marginLeft25 { margin-left:25px;}
 .marginLeft30 { margin-left:30px;}
 .marginLeft65 { margin-left:65px;}
 .marginLeft165 { margin-left:165px;}
@@ -1752,9 +1717,9 @@ select { border:1px solid #7f9db9;}
 fieldset { border:1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;}
 legend {color: #6B7B84; font-size: 14px; margin:0 10px; font-weight:bold;}
 
-.leftFormHolder {  width: 67.7%; float: left; border-right: none; margin:10px 0 0 10px;}
-.leftFormHolderLMargin {  width: 67.7%; float: left; border-right: none; margin:5px 0 0 0px;}
-.leftFormHolderResumepage {  width: 99.7%; float: left; border-right: none; margin:5px 0 0 0px;}
+.leftFormHolder {  width: 67.7%; float: left; border-right: none; margin:0;}
+.leftFormHolderResumepage {  width: 99.7%; float: left; border-right: none; margin:0px;}
+
 h2.sectionSubHeader { 
 	color: #6b7b84;
 	font-size: 18px;
@@ -2206,8 +2171,8 @@ input.fileType { width:auto !important; background:inherit !important; border:in
 .TextColor01{ color:#6b7b84 !important;}
 .TextColor01:hover{ color: #374147 !important; text-decoration:none !important;}
 .TextColor02{ color:#fff !important;}
-.TextColor03{ color:#FE9400 !important;}
-.TextColor04{ color::#6b7b84 !important;}
+.color1 {color: #FE9400 !important; /* Orange */}
+.color2 {color: #6b7b84 !important; /* Steel Gray */}
 .UpperCaseNone{ text-transform:none !important;}
 .TextAlignC{ text-align: center;}
 .TextAlignR{ text-align:right;}
@@ -2331,7 +2296,6 @@ input.job_seeker_Resume{ width: 125px; height: 25px; border-radius: 4px; float:l
 .borderTopNone th{ padding:0 0 0 0 !important; }
 .gridB{ height:35px !important;}
 .TBorderNone{ border-bottom:none !important;}
-.TcolorA{color:#fe9400 !important;}
 .TcolorB{color:#8bc53e !important;}
 .TcolorC{color:#24a9e0 !important;}
 .rowBox{ width:99%; height:auto; float:left; margin-top:3px; padding:10px 0px 10px; 0px;}

@@ -74,7 +74,7 @@
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="POST" action="">
-				<div class="rowEvenNewSpacing marginTop0">
+				<div class="rowEvenNewSpacing margin0">
 					<table id="tb_manage_resume" width="100%" border="0"
 						cellspacing="0" cellpadding="0" class="grid">
 						<thead>
