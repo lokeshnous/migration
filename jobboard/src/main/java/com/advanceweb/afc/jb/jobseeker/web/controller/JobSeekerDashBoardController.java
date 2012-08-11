@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,18 @@ public class JobSeekerDashBoardController {
 
 	@Autowired
 	private JobSeekerService				jobSeekerActivity;
+	
+	@Value("${follouplinkfacebook}")
+	private String follouplinkfacebook;
+
+	@Value("${follouplinktwitter}")
+	private String follouplinktwitter;
+
+	@Value("${follouplinkyoutube}")
+	private String follouplinkyoutube;
+
+	@Value("${follouplinklinkedin}")
+	private String follouplinklinkedin;
 
 	@RequestMapping("/jobSeekerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session) {
@@ -81,6 +94,10 @@ public class JobSeekerDashBoardController {
 		appliedJobsCount = appliedJobDTOList.size();
 		form.setAppliedJobsCount(appliedJobsCount);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		model.addObject("follouplinkfacebook", follouplinkfacebook);
+		model.addObject("follouplinktwitter", follouplinktwitter);
+		model.addObject("follouplinkyoutube", follouplinkyoutube);
+		model.addObject("follouplinklinkedin", follouplinklinkedin);
 		model.addObject("jobSearchResultForm", jobSearchResultForm);
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");

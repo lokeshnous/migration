@@ -25,6 +25,13 @@
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
+		
+		function CloseAndRefresh()
+		{
+		opener.location.reload(true);
+		self.close();
+		}
+		
 jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
 		});
@@ -40,7 +47,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
                   <div class="popupHeader"><h2>GUEST USER FORM</h2>
                   <a href="#"><img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();" width="19" height="19" alt=""></a></div>
                  
-<div class="popUpContainerWrapper"><form:form  method="Get" action="/jobboard/anonymoususerjobapply /saveAnonymousUserJobapply.html" commandName="jobApplicationForm" enctype="multipart/form-data" >
+<div class="popUpContainerWrapper"><form:form action="/jobboard/anonymoususerjobapply /saveAnonymousUserJobapply.html"   method="Get" commandName="jobApplicationForm" enctype="multipart/form-data" >
             <div class="rowEvenSpacing"> <h3>Send Resume</h3></div>
             <div class="rowEvenSpacing">
 <span class="lableText3">Name:</span>   

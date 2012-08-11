@@ -80,6 +80,24 @@ public class JobSearchActivityController {
 	@Value("${saveThisJobLimitsMsg}")
 	private String saveThisJobLimitsMsg;
 
+	@Value("${jobseekerJobApplicationSub}")
+	private String jobseekerJobApplicationSub;
+
+	@Value("${jobseekerJobApplicationBody}")
+	private String jobseekerJobApplicationBody;
+
+	@Value("${employeJobApplicationSub}")
+	private String employeJobApplicationSub;
+
+	@Value("${employeJobApplicationBody}")
+	private String employeJobApplicationBody;
+	
+	@Value("${jsLoginPage}")
+	private String jsLoginPage;
+
+	@Value("${empLoginPage}")
+	private String empLoginPage;
+
 	@SuppressWarnings("unused")
 	@Autowired
 	private ResumeService resumeService;
@@ -169,20 +187,22 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
-			@RequestParam String userID, @RequestParam("id") int jobId, HttpSession session) {
+			@RequestParam String userID, @RequestParam("id") int jobId,
+			HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(jobId);
 		form.setUseremail("merion@nousinfosystems.com");
 		try {
-			
-			 //Check for job seeker login
+
+			// Check for job seeker login
 			if (session.getAttribute("userId") == null) {
 				map.put("loginForm", new LoginForm());
-				jsonObject.put(ajaxNavigationPath, "../loginFormForJobSeeker/login");
+				jsonObject.put(ajaxNavigationPath,
+						"../loginFormForJobSeeker/login");
 				return jsonObject;
 			}
-			int userId = (Integer)session.getAttribute("userId");
-
+			int userId = (Integer) session.getAttribute("userId");
+			String userName = (String) session.getAttribute("userName");
 			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(form.getJobID());
@@ -199,40 +219,49 @@ public class JobSearchActivityController {
 			// Send mail to Employer regarding job application
 			EmailDTO employerEmailDTO = new EmailDTO();
 			employerEmailDTO.setFromAddress(advanceWebAddress);
-			employerEmailDTO.setCcAddress(null);
-			employerEmailDTO.setBccAddress(null);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			employerEmailDTO.setToAddress(employerToAddress);
-			employerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
-			employerEmailDTO.setBody(searchedJobDTO.getJobDesc());
+			String employerMailSub = employeJobApplicationSub.replace(
+					"?jobseekername", userName);
+			employerEmailDTO.setSubject(employerMailSub);
+
+			String employerMailBody = employeJobApplicationBody.replace(
+					"?empDashboardLink", empLoginPage);
+			employerMailBody = employerMailBody.replace("?jobseekername",
+					userName);
+			employerEmailDTO.setBody(employerMailBody);
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
 			// TODO: Exception if resume not found
-//			ResumeDTO resumeDTO = resumeService
-//					.fetchPublicResumeByUserId(userId);
-//			attachmentpaths.add(resumeDTO.getFilePath());
-			try{
-				attachmentpaths.add("c:\\testResume.txt");
-			}catch (Exception e) {
+			// ResumeDTO resumeDTO = resumeService
+			// .fetchPublicResumeByUserId(userId);
+			// attachmentpaths.add(resumeDTO.getFilePath());
+			attachmentpaths.add("c:\\testResume.txt");
+			employerEmailDTO.setAttachmentPaths(attachmentpaths);
+			try {
+				emailService.sendEmail(employerEmailDTO);
+			} catch (Exception e) {
 				// TODO: handle exception
 				LOGGER.info("Resume not found");
 			}
-			employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			emailService.sendEmail(employerEmailDTO);
 			LOGGER.info("Mail sent to employer");
 
 			// Send confirmation mail to job seeker regarding job application
 			EmailDTO jobSeekerEmailDTO = new EmailDTO();
 			jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
-			jobSeekerEmailDTO.setCcAddress(null);
-			jobSeekerEmailDTO.setBccAddress(null);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-			jobSeekerEmailDTO.setSubject(searchedJobDTO.getJobTitle());
-			jobSeekerEmailDTO.setBody(searchedJobDTO.getJobDesc());
+			String jobseekerMailSub = jobseekerJobApplicationSub.replace(
+					"?companyname", searchedJobDTO.getCompanyName());
+			jobSeekerEmailDTO.setSubject(jobseekerMailSub);
+			String jobseekerMailBody = jobseekerJobApplicationBody.replace(
+					"?jsdashboardLink", jsLoginPage);
+			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
+					searchedJobDTO.getCompanyName());
+			jobSeekerEmailDTO.setBody(jobseekerMailBody);
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			emailService.sendEmail(jobSeekerEmailDTO);
 			LOGGER.info("Mail sent to jobseeker");
@@ -537,8 +566,6 @@ public class JobSearchActivityController {
 				try {
 					EmailDTO jobSeekerEmailDTO = new EmailDTO();
 					// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
-					jobSeekerEmailDTO.setCcAddress(null);
-					jobSeekerEmailDTO.setBccAddress(null);
 					InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 					jobSeekerToAddress[0] = new InternetAddress(
 							sendtofriendmail.getEmail());
