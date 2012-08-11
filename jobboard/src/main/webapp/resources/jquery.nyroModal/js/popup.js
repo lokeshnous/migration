@@ -14,7 +14,7 @@ jQuery.fn.displaypopup = function(detailClass, width, height) {
             $('.nyroModalCont iframe').css('width', width);
             $('.nyroModalCont iframe').css('height', height);
         }
-      }
+      }      
     });
 
 	

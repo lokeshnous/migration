@@ -318,8 +318,14 @@ public class JobSearchActivityController {
 		//String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 		String sessionId = MMJBCommonConstants.NULL_STR;
 		
-		if(!"null".equalsIgnoreCase((String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID))))){
+		if(!MMJBCommonConstants.NULL_STR.equalsIgnoreCase((String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID))))){
 			sessionId = String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID));
+			session.setAttribute(MMJBCommonConstants.KEYWORDS, jobSearchResultForm
+					.getKeywords().trim());
+			session.setAttribute(MMJBCommonConstants.CITY_STATE, jobSearchResultForm
+					.getCityState().trim());
+			session.setAttribute(MMJBCommonConstants.RADIUS, jobSearchResultForm
+					.getRadius().trim());
 		}else{
 			LOGGER.info("Session ID is not present since it is a Anonymous user.");
 		}

@@ -24,6 +24,7 @@
 	<security:intercept-url pattern="/jobSeekerActivity/**" access="hasRole('ROLE_JOB_SEEKER')" />
 	<security:intercept-url pattern="/jobSeeker/**" access="hasRole('ROLE_JOB_SEEKER')" />
 	<security:intercept-url pattern="/jobSeekerResume/**" access="hasRole('ROLE_JOB_SEEKER')" />
+	<security:intercept-url pattern="/savedSearches/**" access="permitAll" />
 	
 	
 	

@@ -5,18 +5,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 		<head>
+		
 		<script type="text/javascript">
-	jQuery(document).ready(
-			function() {
-				$("#saveThisSearchId").displaypopup(
-						"#saveThisSearchId", "775", "252");
-			});
+	
+	function saveThisSearch() {
+		
+		$.ajax({
+			url : '../savedSearches/saveThisSearch.html',
+			success: function(data){ 
+				$.each(data, function(key, val) {
+					if (key == "NavigationPath") {
+						window.location.href = val+".html";
+					}
+					
+					if (key == "LoggedInNavigationPath") {
+						$.nmManual(val + '.html');
+					}
+				}); 
+			    if(data.success != null){
+			    }
+			    if(data.failure != null){
+			    }
+			},
+			error: function(response) {
+				alert("Server Error : "+response.status);
+			},
+			complete: function() {
+				
+			}
+		
+		});
+	} 
+	
 </script>
 		</head>
 
 		<body class="job_board">
+
 					
 					<div class="row marginTop10">
+
 						<div class="row marginTop5 paddingBottom05">
 							<div class="floatLeft">
 								<h1 class="FontSize24">
@@ -58,7 +86,7 @@
 								</div>
 								<div class="section">
 									<div class="SaveSearchButton">
-										<a href="/jobboard/savedSearches/saveThisSearch.html" class="btn_sm orange" id="saveThisSearchId">Save This Search22</a>
+										<a href="#" class="btn_sm orange" id="saveThisSearchId" onclick="saveThisSearch();">Save This Search</a>
 									</div>
 								</div>
 							</div>

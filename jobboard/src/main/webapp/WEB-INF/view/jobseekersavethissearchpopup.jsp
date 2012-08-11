@@ -17,6 +17,20 @@ function closePopup() {
 }
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		$("#saveData").click(function(event){	
+			var searchName = $.trim($("#searchTitleName").val());
+			$.ajax({url: getBaseURL()+"/savedSearches/saveSearchedJobs.html?searchName="+searchName,
+				success: function(data){ 
+						parent.window.location.href = "../loginFormForJobSeeker/login.html";
+				},
+				error: function(response) {
+					alert("Server Error : "+response.status);
+				},
+				complete: function() {
+					
+				}
+			});
+		});
 	});
 	function MM_jumpMenu(targ, selObj, restore) { //v3.0
 		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
@@ -24,6 +38,7 @@ function closePopup() {
 		if (restore)
 			selObj.selectedIndex = 0;
 	}
+	
 </script>
 </head>
 
@@ -37,7 +52,7 @@ function closePopup() {
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form action="" method="/jobboard/savedSearches/saveSearchedJobs.html" commandName="saveSearchForm">
+			<form:form action="/jobboard/savedSearches/saveSearchedJobs.html" method="" commandName="saveSearchForm">
 				<span class="lableText3 width505 TextAlignL">Search Title</a></span>
 				<div class="rowEvenNewSpacing margin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />

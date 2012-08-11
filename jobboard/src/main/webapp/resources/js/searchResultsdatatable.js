@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 
 			});
 
-function validateRadius() {
+		function validateRadius() {
 			var cityState = $.trim($("#cityState").val());
 			var radius = $.trim($("#radius").val());
 			
@@ -18,6 +18,36 @@ function validateRadius() {
 				$('#findSearchInfo').html('');
 			}
 		}
+
+
+		/*function saveThisSearch() {
+			
+			$.ajax({
+				url : '../savedSearches/saveThisSearch.html',
+				success: function(data){ 
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							window.location.href = val+".html";
+						}
+						
+						if (key == "LoggedInNavigationPath") {
+							$.nmManual(val + '.html');
+						}
+					}); 
+				    if(data.success != null){
+				    }
+				    if(data.failure != null){
+				    }
+				},
+				error: function(response) {
+					alert("Server Error : "+response.status);
+				},
+				complete: function() {
+					
+				}
+			
+			});
+		}*/
 		function validateSearch() {
 			var cityState = $.trim($("#cityState").val());
 			var radius = $.trim($("#radius").val());

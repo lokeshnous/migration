@@ -12,9 +12,9 @@ import javax.validation.Valid;
 
 import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
-import com.advanceweb.afc.jb.login.web.controller.LoginForm;
+import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
@@ -40,6 +41,9 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @Controller
 @RequestMapping(value = "/savedSearches")
 public class SaveSearchController {
+
+	private static final Logger LOGGER = Logger
+			.getLogger("SaveSearchController.class");
 
 	@Autowired
 	private SaveSearchService saveSearchService;
@@ -56,38 +60,87 @@ public class SaveSearchController {
 	 */
 	@RequestMapping(value = "/saveSearchedJobs", method = RequestMethod.GET)
 	public ModelAndView saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
-			BindingResult result) {
+			BindingResult result, Map<String, JobSearchResultForm> model,
+			@RequestParam("searchName") String searchName, HttpSession session) {
 
-		// Transform SaveSearchForm to saveSearchedJobsDTO
-		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+			return new ModelAndView("jobSeekerLogin");
+		} else {
+			int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+			SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-		searchedJobsDTO.setUserID(saveSearchForm.getUserID());
-		searchedJobsDTO.setUrl(saveSearchForm.getUrl());
-		searchedJobsDTO.setSearchName(saveSearchForm.getSearchName());
-		searchedJobsDTO.setCreatedDate(saveSearchForm.getCreatedDate());
-		saveSearchService.saveSearchedJobs(searchedJobsDTO);
-		// new ModelAndView("redirect:/saveSearchedJobs.html");
-		return new ModelAndView();
+			searchedJobsDTO.setUserID(userId);
+			searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+					+ MMJBCommonConstants.EQUAL_TO
+					+ saveSearchForm.getSearchName()
+					+ MMJBCommonConstants.SEMICOLON
+					+ MMJBCommonConstants.KEYWORDS
+					+ MMJBCommonConstants.EQUAL_TO
+					+ session.getAttribute(MMJBCommonConstants.KEYWORDS)
+					+ MMJBCommonConstants.SEMICOLON
+					+ MMJBCommonConstants.CITY_STATE
+					+ MMJBCommonConstants.EQUAL_TO
+					+ session.getAttribute(MMJBCommonConstants.CITY_STATE)
+					+ MMJBCommonConstants.SEMICOLON
+					+ MMJBCommonConstants.RADIUS + MMJBCommonConstants.EQUAL_TO
+					+ session.getAttribute(MMJBCommonConstants.RADIUS));
+
+			searchedJobsDTO.setSearchName(searchName);
+			searchedJobsDTO.setCreatedDate(DateUtils.getCurrentDateAndTime());
+			saveSearchService.saveSearchedJobs(searchedJobsDTO);
+			
+			//System.out.println("ifffff");
+			model.put("jobSearchResultForm", new JobSearchResultForm());
+			//System.out.println("ifffff");
+			return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			
+		}
 
 	}
 
-	/*
-	 * @RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
-	 * public ModelAndView saveThisSearch(@Valid SaveSearchForm saveSearchForm,
-	 * BindingResult result,@RequestParam("searchName") String searchName) {
-	 * 
-	 * saveSearchService.saveThisSearch(searchName); // new
-	 * ModelAndView("redirect:/saveSearchedJobs.html"); return new
-	 * ModelAndView("");
-	 * 
-	 * }
+	/**
+	 * This method is used to navigate the save this search pages to Login page
+	 * or pop up page depending upon whether the user is a ananymous user or 
+	 * registered user.
+	 * @param saveSearchForm
+	 * @param model
+	 * @param session
+	 * @return JSonObject
 	 */
 
 	@RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
-	public ModelAndView saveThisSearch(Map<String, SaveSearchForm> model) {
-		System.out.println("Hi");
-		model.put("saveSearchForm", new SaveSearchForm());
+	public @ResponseBody
+	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
+			Map<String, SaveSearchForm> model, HttpSession session) {
+		JSONObject jsonObject = new JSONObject();
+		try {
 
+			// Check for job seeker login
+			if (session.getAttribute("userId") == null) {
+				model.put("SaveSearchForm", new SaveSearchForm());
+				jsonObject.put("NavigationPath",
+						"../loginFormForJobSeeker/login");
+			} else {
+				model.put("SaveSearchForm", new SaveSearchForm());
+				jsonObject.put("LoggedInNavigationPath",
+						"../savedSearches/displaySaveThisSearchPopup");
+			}
+
+		} catch (Exception e) {
+			LOGGER.info("Save this search ERROR");
+		}
+		return jsonObject;
+	}
+
+	/**
+	 * This method is used to display the Save Search pop up.
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/displaySaveThisSearchPopup", method = RequestMethod.GET)
+	public ModelAndView displaySaveThisSearchPopup(
+			Map<String, SaveSearchForm> model) {
+		model.put("saveSearchForm", new SaveSearchForm());
 		return new ModelAndView("jobseekersavethissearchpopup");
 	}
 
