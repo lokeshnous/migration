@@ -265,25 +265,25 @@
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'State / Province'}">
 									<div class="row">
-										<span class="lableTextSelect marginTop13 ">State /
+										<span class="lableTextSelect ">State /
 											Province:</span>
 												<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />
 												</form:select>
-										<span class="required marginTop8">(Required)</span>
+										<span class="requiredTopmargin">(Required)</span>
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Country'}">
 									<div class="row">
-										<span class="lableTextSelect marginTop13 ">Country:</span>
+										<span class="lableTextSelect ">Country:</span>
 												<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />
 												</form:select>
-										<span class="required marginTop8">(Required)</span>
+										<span class="requiredTopmargin">(Required)</span>
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Phone Number'}">
@@ -297,7 +297,7 @@
 								
 
 								<c:if test="${profAttrib.strLabelName == 'My Industry'}">
-									<div class="row marginTop20 paddingBottom10">
+									<div class="rowH3Holder">
 										<h3 class="marginLeft10">Employment information</h3>
 									</div>
 									<div class="rowEvenNewSpacing">
@@ -362,7 +362,7 @@
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Im seeking'}">
 									<div class="row">
-										<span class="lableTextSelect marginTop13 ">I'm seeking:</span>
+										<span class="lableTextSelect ">I'm seeking:</span>
 											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 												<form:option value="0" label="Select" />
 												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
@@ -372,11 +372,11 @@
 								</c:if>
 
 								<c:if test="${profAttrib.strLabelName == 'Ethnicity'}">
-									<div class="row marginTop20 paddingBottom10">
+									<div class="rowH3Holder">
 										<h3 class="marginLeft10">Equal Opportunity / Affirmative Action</h3>
 									</div>
 									<div class="row">
-										<span class="lableTextSelect marginTop13 ">Ethnicity:</span>
+										<span class="lableTextSelect ">Ethnicity:</span>
 											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 												<form:option value="0" label="Select" />
 												<form:options items="${profAttrib.dropdown}" itemValue="optionId" itemLabel="optionName" />
@@ -385,7 +385,7 @@
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Gender'}">
 									<div class="row">
-										<span class="lableTextSelect marginTop13 ">Gender:</span>
+										<span class="lableTextSelect">Gender:</span>
 											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 												<form:option value="0" label="Select" />
 												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
@@ -395,7 +395,7 @@
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Veteran Status'}">
 									<div class="row">
-										<span class="lableTextSelect marginTop13 ">Veteran
+										<span class="lableTextSelect ">Veteran
 											Status:</span>
 											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 												<form:option value="0" label="Select" />
@@ -405,7 +405,7 @@
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Subscriptions'}">
-									<div class="row marginTop20 paddingBottom10">
+									<div class="rowH3Holder">
 										<h3 class="marginLeft10">Subscriptions</h3>
 									</div>
 									<div class="row paddingBottom10 marginLeft10">I would like

@@ -47,7 +47,7 @@
 
 						<div class="row marginTop5 paddingBottom05">
 							<div class="floatLeft">
-								<h1 class="FontSize24">
+								<h1 >
 									<span id="TotalRecord"></span> jobs match your search criteria.
 								</h1>
 							</div>

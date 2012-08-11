@@ -211,7 +211,7 @@
 										class="required">(Required)</span>
 								</div>
 								<div class="row">
-									<span class="lableTextSelect marginTop13 ">State /
+									<span class="lableTextSelect ">State /
 										Province:</span> <select name="Country" id="Country"
 										class="jb_input3 jb_input_width3">
 										<option value="--- Select State ---">--- Select State
@@ -279,7 +279,7 @@
 										<option value="Wisconsin">Wisconsin</option>
 										<option value="Wyoming">Wyoming</option>
 
-									</select> <span class="required marginTop8">(Required)</span>
+									</select> <span class="requiredTopmargin">(Required)</span>
 								</div>
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Zip Code:</span> <input type="text"
@@ -288,7 +288,7 @@
 										class="required">(Required)</span>
 								</div>
 								<div class="row">
-									<span class="lableTextSelect marginTop13 ">Country:</span> <select
+									<span class="lableTextSelect ">Country:</span> <select
 										name="Country" id="Country" class="jb_input3 jb_input_width3">
 										<option value="--- Select Country ---">--- Select
 											Country ---</option>
@@ -498,7 +498,7 @@
 										<option value="Yemen">Yemen</option>
 										<option value="Zambia">Zambia</option>
 										<option value="Zimbabwe">Zimbabwe</option>
-									</select> <span class="required marginTop8">(Required)</span>
+									</select> <span class="requiredTopmargin">(Required)</span>
 								</div>
 
 								<div class="rowEvenNewSpacing MarginBottom10">
@@ -598,7 +598,7 @@
 										class="required">(Required)</span>
 								</div>
 								<div class="class="row"">
-									<span class="lableTextSelect marginTop13 ">Employment
+									<span class="lableTextSelect ">Employment
 										Type:</span> <select name="Country" id="Country"
 										class="jb_input3 jb_input_width3">
 										<option value="--- Select One ---">--- Employment
@@ -609,7 +609,7 @@
 										<option value="Contract/Travel">Contract/Travel</option>
 										<option value="Work From Home">Work From Home</option>
 										<option value="Locum Tenens">Locum Tenens</option>
-									</select> <span class="required marginTop8">(Required)</span>
+									</select> <span class="requiredTopmargin">(Required)</span>
 
 								</div>
 								<div class="rowEvenNewSpacing">
@@ -622,7 +622,7 @@
 									<span class="required">(Required)</span>
 								</div>
 								<div class="row marginTop10">
-									<span class="lableTextSelect marginTop10">End Date:</span> <input
+									<span class="lableTextSelect ">End Date:</span> <input
 										type="text" name="healthCareSubSplty"
 										class="job_seeker_Resume" />
 									<div class="calender">
@@ -641,7 +641,7 @@
 										class="job_seeker_Resume" /> <span class="required">(Required)</span>
 								</div>
 								<div class="row">
-									<span class="lableTextSelect marginTop13 ">Career Level:</span>
+									<span class="lableTextSelect ">Career Level:</span>
 									<select name="Country" id="Country"
 										class="jb_input3 jb_input_width3">
 										<option value="--- Select One ---">--- Career Level
@@ -655,15 +655,15 @@
 										<option value="Manager">Manager</option>
 										<option value="Executive">Executive</option>
 										<option value="Senior Executive">Senior Executive</option>
-									</select> <span class="required marginTop8"><input name=""
+									</select> <span class="requiredTopmargin"><input name=""
 										type="checkbox" value=""> </span>
 									<div class=" floatLeft marginLeft10 marginTop5">
 										<p>This is my current career level</p>
 									</div>
-									<span class="required marginTop8">(Required)</span>
+									<span class="requiredTopmargin">(Required)</span>
 								</div>
 								<div class="row">
-									<span class="lableTextSelect marginTop13 ">Annual
+									<span class="lableTextSelect ">Annual
 										Salary:</span> <select name="Country" id="Country"
 										class="jb_input75 width200">
 										<option>--- Annual Salary ---</option>
@@ -680,7 +680,7 @@
 											this drop-down menu or enter your hourly pay rate in the
 											following text box.</span>
 									</div>
-									<span class="required marginTop8"></span>
+									<span class="requiredTopmargin"></span>
 								</div>
 
 								<div class="rowEvenNewSpacing MarginBottom10">
@@ -737,7 +737,7 @@
 										class="required">(Required)</span>
 								</div>
 								<div class="row">
-									<span class="lableTextSelect marginTop13 ">Degree Level:</span>
+									<span class="lableTextSelect ">Degree Level:</span>
 									<select name="Country" id="Country"
 										class="jb_input3 jb_input_width3">
 										<option value="--- Select One ---">--- Degree Level
@@ -752,7 +752,7 @@
 											Graduate, no degree</option>
 										<option value="Master's Degree">Master's Degree</option>
 										<option value="Doctorate">Doctorate</option>
-									</select> <span class="required marginTop8">(Required)</span>
+									</select> <span class="requiredTopmargin">(Required)</span>
 								</div>
 
 								<div class="rowEvenNewSpacing">
@@ -771,7 +771,7 @@
 
 								</div>
 								<div class="row marginTop10">
-									<span class="lableTextSelect marginTop10">End Date:</span> <input
+									<span class="lableTextSelect ">End Date:</span> <input
 										type="text" name="healthCareSubSplty2"
 										class="job_seeker_Resume" />
 									<div class="calender">
@@ -957,7 +957,7 @@
 
 							<div class="job_seeker_login leftFormHolderResumepage">
 								<div class="row">
-									<span class="lableText3 marginTop13 ">Language:</span> <select
+									<span class="lableTextSelect ">Language:</span> <select
 										name="Country" id="Country" class="jb_input3 jb_input_width3">
 										<option value="--- Select One ---">--- Language ---</option>
 										<option value="Chinese (Mandarin)">Chinese (Mandarin)</option>
@@ -976,7 +976,7 @@
 
 								</div>
 								<div class="row">
-									<span class="lableText3 marginTop13 ">Proficiency Level:</span>
+									<span class="lableTextSelect ">Proficiency Level:</span>
 									<select name="Country" id="Country"
 										class="jb_input3 jb_input_width3">
 										<option value="--- Select One ---">--- Proficiency
@@ -995,7 +995,7 @@
 
 								</div>
 								<div class="row">
-									<span class="lableText3 marginTop13 "></span>
+									<span class="lableText3 marginTop15 "></span>
 									<p>
 										<a href="" class="link_color1_emphasized">Save and add
 											another language</a>

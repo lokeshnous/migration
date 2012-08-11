@@ -162,8 +162,8 @@
                   <h2>CREATE YOUR RESUME</h2>
                   <span class="floatRight marginRight10"><a href="/jobboard/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
         <div class="clearfix"></div>
-        <div class="MidContent_Wrapper FloatLeft"><span>
-          <h1 class="marginLeft10 FloatLeft FontSize18 color1">Resume Name:</h1>
+        <div class="MidContent_Wrapper"><span>
+          <h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume Name:</h2>
 
           <div class=" floatRight width255"><span class="FloatLeft"><img src="../resources/images/percimg.png" width="149" height="16" alt="img"></span>
              <h3 class="floatRight"><c:out value="${createResume.totalProgress}"/>% Complete</h3>
@@ -234,12 +234,12 @@
 					<span class="lableText3"></span>
 					<FONT color="red"><form:errors path="contactInfoForm.city" /></FONT> 
 				</div> 
-               <div class="row"> <span class="lableTextSelect marginTop13 ">State / Province:</span>
+               <div class="row"> <span class="lableTextSelect ">State / Province:</span>
 		            <form:select path="contactInfoForm.state" class="jb_input3 jb_input_width3">
 						<form:option value="0" label="Select" />
 						<form:options items="${stateList}" itemValue="stateValue" itemLabel="stateValue" />
 					</form:select>                
-				<span class="required marginTop8">(Required)</span> 
+				<span class="requiredTopmargin">(Required)</span> 
 			</div>
 			<div>
 				<span class="lableText3"></span>
@@ -253,12 +253,12 @@
 				<span class="lableText3"></span>
 				<FONT color="red"><form:errors path="contactInfoForm.postalCode" /></FONT> 
 			</div>
-            <div class="row"> <span class="lableTextSelect marginTop13 ">Country:</span>
+            <div class="row"> <span class="lableTextSelect ">Country:</span>
 		 		<form:select path="contactInfoForm.country" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
 					<form:options items="${countryList}" itemValue="countryValue" itemLabel="countryValue" />
 				</form:select>	                
-				<span class="required marginTop8">(Required)</span> 
+				<span class="requiredTopmargin">(Required)</span> 
 			</div>
 			<div>
 				<span class="lableText3"></span>
@@ -331,19 +331,19 @@
 
                 <form:input path="listWorkExpForm[${status.index}].employerName"  class="job_seeker_Resume"/>
                 <span class="required">(Required)</span> </div>
-                <div class="class="row""> <span class="lableTextSelect marginTop13 ">Employment Type:</span>
+                <div class="class="row""> <span class="lableTextSelect ">Employment Type:</span>
                 
                 <form:select path="listWorkExpForm[${status.index}].employmentType" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Employment Type ---" />
 					<form:options items="${empTypeList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
 
-                <span class="required marginTop8">(Required)</span> </div>
+                <span class="requiredTopmargin">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3"> Start Date:</span>
                 <form:input path="listWorkExpForm[${status.index}].startDate"  class="job_seeker_Resume" /> 
                 <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
         			<span class="required">(Required)</span> </div>
-                      <div class="row marginTop10"> <span class="lableTextSelect marginTop10">End Date:</span>
+                      <div class="row marginTop10"> <span class="lableTextSelect">End Date:</span>
                 <form:input path="listWorkExpForm[${status.index}].endDate"  class="job_seeker_Resume" />
                  <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
                 <span class="required">
@@ -355,22 +355,22 @@
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Years at Position:</span>
                 <form:input path="listWorkExpForm[${status.index}].yrsAtPostion"  class="job_seeker_Resume" />
         			<span class="required">(Required)</span> </div>
-                <div class="row"> <span class="lableTextSelect marginTop13 ">Career Level:</span>
+                <div class="row"> <span class="lableTextSelect">Career Level:</span>
 	
 				<form:select path="listWorkExpForm[${status.index}].currentCareerLvl" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Career Level ---" />
 					<form:options items="${careerLvlList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
 						
-                <span class="required marginTop8">
+                <span class="requiredTopmargin">
                         <input name="" type="checkbox" value="">
                         </span>
 
                 <div class=" floatLeft marginLeft10 marginTop5">
                           <p >This is my current career level</p>
                         </div>
-                <span class="required marginTop8">(Required)</span> </div>
-                <div class="row"> <span class="lableTextSelect marginTop13 ">Annual Salary:</span>
+                <span class="requiredTopmargin">(Required)</span> </div>
+                <div class="row"> <span class="lableTextSelect">Annual Salary:</span>
                                        						
 				<form:select path="listWorkExpForm[${status.index}].annualSalary" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Annual Salary ---" />
@@ -378,7 +378,7 @@
 				</form:select>
 				
                 <div class="toolTip marginTop15 marginLeft10"><span class="classic">Select your annual salary from this drop-down menu or enter your hourly pay rate in the following text box.</span></div>
-                <span class="required marginTop8"></span> </div>
+                <span class="requiredTopmargin"></span> </div>
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3"> Hourly Pay Rate:</span>
                 <form:input path="${workExp.hrlyPayRate}"  class="job_seeker_Resume" />
         				<span class="required "></span> </div>
@@ -414,21 +414,21 @@
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Institution Name:</span>
                 <form:input path="listEduForm[${status.index}].instituteName" class="job_seeker_password textBox350" />
                 <span class="required">(Required)</span> </div>
-                      <div class="row"> <span class="lableTextSelect marginTop13 ">Degree Level:</span>
+                      <div class="row"> <span class="lableTextSelect">Degree Level:</span>
 				
 				<form:select path="listEduForm[${status.index}].degreeLvl" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Degree Level ---" />
 					<form:options items="${eduDegreeList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
             
-	                <span class="required marginTop8">
+	                <span class="requiredTopmargin">
 	                     <input name="" type="checkbox" value="">
 	                </span>
 	
 	                <div class=" floatLeft marginLeft10 marginTop5">
 	                     <p >I haven't graduated yet.</p>
 	                </div>
-                <span class="required marginTop8">(Required)</span> </div>
+                <span class="requiredTopmargin">(Required)</span> </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Field of Study:</span>
                 <form:input path="listEduForm[${status.index}].fieldOfStudy" class="job_seeker_password textBox350" />
               </div>
@@ -436,7 +436,7 @@
                 <form:input path="listEduForm[${status.index}].startDate" class="job_seeker_Resume" />
                  <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
       				</div>
-                      <div class="row marginTop10"> <span class="lableTextSelect marginTop10">End Date:</span>
+                      <div class="row marginTop10"> <span class="lableTextSelect">End Date:</span>
 
                 <form:input path="listEduForm[${status.index}].endDate" class="job_seeker_Resume" /> <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
               </div>
@@ -548,20 +548,20 @@
           <div class="searchResultsSubContent">
 			<c:forEach items="${createResume.listLangForm}" var="language" varStatus="status">   
             <div class="job_seeker_login leftFormHolderResumepage">
-               <div class="row"> <span class="lableText3 marginTop13 ">Language:</span>
+               <div class="row"> <span class="lableTextSelect">Language:</span>
 				<form:select path="listLangForm[${status.index}].language" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="English" />
 					<form:options items="${languagelList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
               </div>
-              <div class="row"> <span class="lableText3 marginTop13 ">Proficiency Level:</span>
+              <div class="row"> <span class="lableTextSelect ">Proficiency Level:</span>
               
               	<form:select path="listLangForm[${status.index}].expLvl" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="--- Proficiency Level ---" />
 					<form:options items="${langProficiencylList}" itemValue="optionName" itemLabel="optionName" />
 				</form:select>
               </div>
-               <div class="row MarginBottom10"> <span class="lableText3 marginTop13 "></span>
+               <div class="row MarginBottom10"> <span class="lableTextSelect"></span>
                 <p><a href="" class="link_color1_emphasized">Save and add another language</a></p>
               </div>
             </div>
@@ -688,13 +688,13 @@
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Email Address:</span>
                 <form:input path="listRefForm[${status.index}].email" class="job_seeker_password textBox350"/>
         <span class="required"></span> </div>
-                      <div class="rowEvenNewSpacing"> <span class="lableText3">Reference Type:</span><span class="requiredleft0">
+                      <div class="rowEvenNewSpacing"> <span class="lableText3">Reference Type:</span><span class="floteleft">
 	                        <input name="Professional" type="radio" value="" class="marginRight5">
 	                        <form:radiobutton path="${reference.referenceType}" value="Professional"/>
-	                        <label class="greyLabel">Professional</label>
-	                        </span>&nbsp;&nbsp;&nbsp;<span class="required">
+	                        <label >Professional</label>
+	                        </span>&nbsp;&nbsp;&nbsp;<span class="floteleft">
 	                        <form:radiobutton path="${reference.referenceType}" value="Personal"/>
-	                        <label class="greyLabel">Personal</label>
+	                        <label >Personal</label>
 	                        </span> 
                         </div>
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3"></span> <a href="" class="link_color1_emphasized">Save and add another reference</a> </div>

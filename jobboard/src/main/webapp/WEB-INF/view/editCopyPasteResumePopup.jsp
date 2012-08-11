@@ -142,7 +142,7 @@
 					<span class="lableText4 TextAlignL">Paste Resume:</span>
 					<div class="clearfix"></div>
 					<form:textarea path="resumeText"
-						class="textareaBoxCResume width615 Height255 marginTop5 "
+						class="textareaBoxCResume Height255 marginTop5 "
 						cols="45" rows="3"></form:textarea>
 				</div>
 				<div class="popUpButtonRow">

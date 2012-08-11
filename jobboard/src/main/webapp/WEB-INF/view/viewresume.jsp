@@ -158,32 +158,32 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox">
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>First Name:</strong></p>
 
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.firstName}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Last Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.lastName}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
 
               <p><strong>Street Address:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.addressLine1}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>City:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.city}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>State / Province:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.state}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>ZIP Code:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.postalCode}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Country:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.country}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Phone:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.mobileNo}"/></span> </div>
 
@@ -197,7 +197,7 @@
           </div>
 
                   <div class="clearfix"></div>
-                  <div class="ContactInfoBox paddingLeft12 width646 MarginBottom10">
+                  <div class="ContactInfoBox paddingLeft15 MarginBottom10">
             <p><c:out value="${createResume.objective}"/></p>
           </div>
                 </div>
@@ -213,39 +213,39 @@
          <c:if test="${status.count != 1}">   
             <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
          </c:if>   
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Job Title:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.jobTitle}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Company Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.employerName}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Employment Type:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.employmentType}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Start Date:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.startDate}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>End Date:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.endDate}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Years at Position:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.yrsAtPostion}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Career Level:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.currentCareerLvl}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Annual Salary: </strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.annualSalary}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Hourly Pay Rate</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.hrlyPayRate}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Summary / Job Description:</strong></p>
               </span> <span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${workExp.description}"/></span> </div>
               <div class="clearfix"></div>
@@ -264,28 +264,28 @@
 	         <c:if test="${status.count != 1}">   
 	            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
 	         </c:if>   
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Institution Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.instituteName}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Degree Level:</strong></p>
 
               </span><span class="ContactInfoAreaRight"><c:out value="${education.degreeLvl}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Field of Study:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.fieldOfStudy}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
 
               <p><strong>Start Date:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.startDate}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>End Date:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.endDate}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Degrees:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.degrees}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certifications:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.certifications}"/></span> </div>
             <div class="clearfix"></div>
@@ -304,17 +304,17 @@
            <c:if test="${status.count != 1}">   
             <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
            </c:if>   
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certification Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.certificationName}"/></span> </div>
-<%--             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+<%--             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certifying Authority:</strong></p>
 
               </span><span class="ContactInfoAreaRight"><c:out value="${education.certifications}"/></span> </div> --%>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Received:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${education.dateOfReceipt}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
 
               <p><strong>Summary:</strong></p>
               </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.summary}"/></span> </div>
@@ -329,7 +329,7 @@
             <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Skills</h2>
           </div>
                   <div class="clearfix"></div>
-                  <div class="ContactInfoBox paddingLeft12 width646 MarginBottom10">
+                  <div class="ContactInfoBox paddingLeft15 MarginBottom10">
             <p><c:out value="${createResume.skills}"/></p>
           </div>
                 </div>
@@ -343,7 +343,7 @@
             <div class="ContactInfoBox">
            <c:forEach items="${createResume.listLangForm}" var="language" varStatus="status">   
 			<c:if test="${not empty language.language}">
-			  <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+			  <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong><c:out value="${language.language}"/> :</strong></p>
 
               </span><span class="ContactInfoAreaRight"><c:out value="${language.expLvl}"/></span> </div>
@@ -358,7 +358,7 @@
             <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Awards</h2>
           </div>
                   <div class="clearfix"></div>
-                  <div class="ContactInfoBox paddingLeft12 width646 MarginBottom10">
+                  <div class="ContactInfoBox paddingLeft15 MarginBottom10">
             <p><c:out value="${createResume.awards}"/></p>
           </div>
                 </div>
@@ -369,7 +369,7 @@
             <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Memberships</h2>
           </div>
                   <div class="clearfix"></div>
-                  <div class="ContactInfoBox paddingLeft12 width646 MarginBottom10">
+                  <div class="ContactInfoBox paddingLeft15 MarginBottom10">
             <p><c:out value="${createResume.memberships}"/></p>
           </div>
 
@@ -380,7 +380,7 @@
             <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Other</h2>
           </div>
                   <div class="clearfix"></div>
-                  <div class="ContactInfoBox paddingLeft12 width646 MarginBottom10">
+                  <div class="ContactInfoBox paddingLeft15 MarginBottom10">
 
             <p><c:out value="${createResume.otherDetails}"/></p>
           </div>
@@ -395,48 +395,48 @@
            <div class="ContactInfoBox">
            <c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">    
            <span>
-             <h3 class=" marginLeft20 marginBottom10 FloatLeft width305">Professional References</h3>
+             <h3 class=" marginLeft10 marginBottom10 FloatLeft width305">Professional References</h3>
              </span>
              <div class="clearfix"></div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Name:</strong></p>
 
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.name}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Job Title:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.jobTitle}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
 
               <p><strong>Company Name:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.companyName}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Phone Number:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.phoneNo}"/></span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Email Address:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.email}"/></span> </div>
             </c:forEach>
             
            <!--  <span>
-                    <h3 class=" marginLeft20 marginTop10 marginBottom10 FloatLeft width305">Personal References</h3>
+                    <h3 class=" marginLeft10 marginTop10 marginBottom10 FloatLeft width305">Personal References</h3>
                     </span>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Name:</strong></p>
               </span><span class="ContactInfoAreaRight">Mark Shireman</span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Job Title:</strong></p>
               </span><span class="ContactInfoAreaRight">Associate Art Director</span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Company Name:</strong></p>
               </span><span class="ContactInfoAreaRight">Merion Matters, Inc.</span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Phone Number:</strong></p>
               </span><span class="ContactInfoAreaRight">610-278-1400 x1629</span> </div>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft TextAlignR marginRight15">
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Email Address:</strong></p>
               </span><span class="ContactInfoAreaRight">mshireman@advanceweb.com</span> </div> -->
               <div class="IconsArea"><a href="#"><img src="../resources/images/Download.png" width="20" height="20" alt=""></a>&nbsp; <a href="#"><img src="../resources/images/Print2.png" width="20" height="20" alt=""></a></div>

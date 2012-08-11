@@ -112,13 +112,13 @@
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'Country'}">
 							<div class="row">
-								<span class="lableTextSelect marginTop13 ">Country:</span>
+								<span class="lableTextSelect">Country:</span>
 									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 											itemLabel="optionName" />
 									</form:select>
-								<span class="required marginTop8">(Required)</span>
+								<span class="requiredTopmargin">(Required)</span>
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'E-Mail Address'}">							
@@ -135,10 +135,10 @@
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'My Industry'}">
-							<div class="row marginTop30">
+							<div class="rowH3Holder">
 								<h3>Employment Information</h3>
 							</div>		
-							<div class="rowEvenNewSpacing marginTop13">
+							<div class="rowEvenNewSpacing marginTop15">
 								<span class="lableText3">My Industry:</span> 
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
 								<div class="toolTip marginTop5 marginLeft5">
@@ -183,7 +183,7 @@
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'Im seeking'}">
 							<div class="row">
-								<span class="lableTextSelect marginTop13 ">I am seeking:</span>
+								<span class="lableTextSelect ">I am seeking:</span>
 									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
@@ -192,12 +192,12 @@
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'Ethnicity'}">
-							<div class="row marginTop30">
+							<div class="rowH3Holder">
 								<h3>Equal Opportunity / Affirmative Action</h3>
 							</div>
 			
 							<div class="row">
-								<span class="lableTextSelect marginTop13 ">Ethnicity:</span> 
+								<span class="lableTextSelect ">Ethnicity:</span> 
 									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
@@ -207,7 +207,7 @@
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'Gender'}">
 							<div class="row">
-								<span class="lableTextSelect marginTop13 ">Gender:</span> 
+								<span class="lableTextSelect ">Gender:</span> 
 									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
@@ -217,7 +217,7 @@
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'Veteran Status'}">
 							<div class="row">
-								<span class="lableTextSelect marginTop13 ">Veteran Status:</span> 
+								<span class="lableTextSelect ">Veteran Status:</span> 
 									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"

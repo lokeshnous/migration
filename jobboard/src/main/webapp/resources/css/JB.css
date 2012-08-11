@@ -1492,6 +1492,7 @@ div.searchResultsSubContent .btn_sm{ margin-right:5px !important }
 	color: #FE9400;
 	float: left;
 	padding: 7px 0 0 10px; /* MM: changed */
+	
 }
 
 .requiredleft0 {
@@ -1573,29 +1574,22 @@ input.textBox2 { width:220px !important;}
 	padding:0 10px;
 }
 
-.floatLeft { width:auto; height:auto; float:left}
+.floatLeft { width:auto; height:auto; float:left !important; }
 .floatRight { width:auto; height:auto; float:right}
 .AddToCartfloatRight { width:175px; height:auto; float:right; margin:0 30px 0 0;}
 
 .margin0 { margin:0 !important;}
 .marginTopBottom10 { margin:15px 0 10px !important;}
-.marginTop3 { margin-top:3px !important;}
-.marginTop5 { margin-top:5px!important;}
+.marginTop5 { margin-top:5px !important;}
 .marginTop8 { margin-top:8px;}
 .marginTop10 { margin-top:10px;}
-.marginTop13 { margin-top:13px !important;}
-.marginTop15 { margin-top:15px!important;}
-.marginTop20 { margin-top:20px!important;}
-.marginTop23 { margin-top:23px!important;}
-.marginTop30 { margin-top:30px !important;}
+.marginTop15 { margin-top:15px !important;}
+.marginTop20 { margin-top:20px !important;}
 
 .marginRight5 { margin-right:5px;}
 .marginRight10 { margin-right:10px;}
-.marginRight12 { margin-right:12px;}
 .marginRight15 { margin-right:15px;}
 .marginRight20 { margin-right:20px !important;}
-.marginRight40 { margin-right:40px;}
-.marginRight60 { margin-right:60px;}
 
 .marginBottom0 { margin-bottom:0px !important;}
 .marginBottom5 { margin-bottom:5px!important;}
@@ -1604,30 +1598,20 @@ input.textBox2 { width:220px !important;}
 .marginBottom20 { margin-bottom:20px !important;}
 .marginLeft5 { margin-left:5px !important;}
 .marginLeft10 { margin-left:10px !important;}
-.marginLeft20 { margin-left:20px !important;}
-.marginLeft30 { margin-left:30px;}
-.marginLeft65 { margin-left:65px;}
-.marginLeft165 { margin-left:165px;}
-.marginLeft335 { margin-left:335px;}
-.marginLeft8 { margin-left:5px;}
+
 .Padding0{ padding:0px !important;}
 .paddingTop0{ padding-top:0px !important;}
-.paddingTop4 { padding-top:4px !important;}
 .paddingBottom10 { padding-bottom:10px;}
 .paddingBottom05 { padding-bottom:5px; border-bottom:1px dotted #666;}
 .paddingBottom0 { padding-bottom:0 !important;}
 .paddingRight0 { padding-right:0px!important;}
 .paddingRight5 { padding-right:5px!important;}
 .paddingLeft15 { padding-left:15px!important;}
-.paddingLeft12 { padding-left:12px!important;}
-.paddingBottom30 { padding-bottom:30px;}
 .paddingBottom10DB { padding-bottom:10px; border-bottom:1px dotted #666;}
-.labelHolder { width:118px; height:auto; float:left}
 .labelHolder1 { width:60px; height:auto; float:left}
 
 .capsText { font-size:12px; text-transform:uppercase; font-weight:bold;}
 
-.greyLabel {color:#6b7b84}
 
  .row { 	 
 	width: 100%;
@@ -1696,7 +1680,7 @@ select { border:1px solid #7f9db9;}
 .lableText3 { line-height: 16px; padding-top: 6px !important;} /* MM: changed */
 .lableText4  { width:160px !important}
 .lableText5  { width:170px !important}
-.lableTextSelect { padding-top: 1px;}
+.lableTextSelect { padding-top: 1px; margin-top:13px;}
 
 .lableLetterSpacer{ letter-spacing:-1px;}
 
@@ -2101,70 +2085,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe9400', end
 .NameOrderSelected{background-color: #FE9400 !important; color:#fff !important;}
 .AutoHeight{ height:auto !important;}
 .AutoWidth{ width:auto !important;}
-.Height25{ height:25px !important;}
+
 .Height28{ height:28px !important;}
-.Height30{ height:30px !important;}
-.Height35{ height:35px !important;}
-.Height45{ height:45px !important;}
-.Height50{ height:50px !important;}
+
 .Height255{ height:255px !important;}
-.Height695{ height:695px !important;}
-.width8P { width:8% !important;}
-.width10P { width:10% !important;}
-.width60P { width:60% !important;}
-.width92P { width:92% !important;}
-.width98P { width:98% !important;}
-.width100P { width:100% !important;}
-.width50 { width:50px !important;}
-.width87 { width:87px !important;}
-.width100 { width:100px !important;}
-.width125 { width:125px !important;}
-.width105 { width:105px !important;}
-.width150 { width:150px !important;}
-.width165 { width:165px !important;}
-.width175 { width:175px !important;}
-.width185 { width:185px !important;}
+
 .width200 { width:200px !important;}
 .width205 { width:208px !important;}
-.width207 { width:207px !important;}
-.width210 { width:210px !important;}
-.width218 { width:218px !important;}
-.width255 { width:255px !important;}
-.width285 { width:285px !important;}
-.width295 { width:295px !important;}
-.width300{ width:300px !important;}
-.width305{ width:305px !important;}
-.width310{ width:310px !important;}
-.width320{ width:320px !important;}
-.width350 { width:352px !important;}
-.width360 { width:360px !important;}
-.width380 { width:380px !important;}
-.width400 { width:400px !important;}
-.width450 { width:450px !important;}
-.width467 { width:467px !important;}
-.width505 { width:505px !important;}
 
-.width580 { width:580px !important;}
-.width600 { width:600px !important;}
-.width615 { width:615px !important;}
-.width646 { width:646px !important;}
-.FloatLeft{ float:left !important;}
 .FontWeight{ font-weight:normal !important;}
-.FontSize10{ font-size:10px !important;}
-.FontSize11{ font-size:11px !important;}
+
 .FontSize12{ font-size:12px !important; text-transform:none; line-height:16px !important;}
-.FontSize13{ font-size:13px !important; line-height:16px;}
-.FontSize14{ font-size:14px !important;}
-.FontSize15{ font-size:15px !important;}
-.FontSize16{ font-size:16px !important;}
-.FontSize17{ font-size:17px !important;}
+
 .FontSize18{ font-size:18px !important;}
-.FontSize19{ font-size:19px !important;}
-.FontSize20{ font-size:20px !important;}
-.FontSize24{ font-size:24px !important;}
-.FontSize35{ font-size:35px !important; margin: 25px 0 6px 0;}
-.PaddingRightLeft{ padding-left:5px; padding-right:5px;}
-.MarginBottom10{ margin-bottom:10px !important;}
+ 
 input.fileType { width:auto !important; background:inherit !important; border:inherit !important; }
 .OrangeBG{ background:#FE9400;}
 .LightGrayBG{ background-color:#e0e0e0;}
@@ -2175,7 +2109,6 @@ input.fileType { width:auto !important; background:inherit !important; border:in
 .color2 {color: #6b7b84 !important; /* Steel Gray */}
 .UpperCaseNone{ text-transform:none !important;}
 .TextAlignC{ text-align: center;}
-.TextAlignR{ text-align:right;}
 .TextAlignL{ text-align:left;}
 .TextColorA05{color:#6b7b84 !important; font-size:12px; float:left;}
 
@@ -2266,7 +2199,7 @@ input.job_seeker_Resume{ width: 125px; height: 25px; border-radius: 4px; float:l
 .IconsArea{ width:auto; height:20px; float:right;}
 .ContactInfoBox{ width:auto; height:auto; float:left;}
 .ContactInfoArea{ width:910px;; float:left; padding: 2px 0;}
-.ContactInfoAreaLeft{ width:170px; height:15px; float:left; line-height:16px;}
+.ContactInfoAreaLeft{ width:170px; height:15px; float:left; line-height:16px;text-align:right;padding-right:15px;}
 .ContactInfoAreaRight{ width:370px; height:15px; float:left; line-height:16px;}
 .jobDetailsEyebrowHeader{ color:#6B7B84; text-transform: uppercase;} 
 .accord-open{
@@ -2477,4 +2410,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F5F5F5', end
     width: 100%;
     padding-bottom: 10px;
     margin-top: 15px;
+}
+.rowH3Holder { float: left;
+    height: auto;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-top: 20px;}
+    
+.requiredTopmargin {
+	color: #FE9400;
+	float: left;
+	padding: 7px 0 0 10px; /* MM: changed */
+	margin-top:8px;
+	
 }
