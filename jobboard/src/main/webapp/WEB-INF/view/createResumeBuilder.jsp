@@ -30,9 +30,8 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		var per =${createResume.totalProgress};
-		var lprog ;
-		    jQuery(document).ready(function(){
-		    	lprog =$("#progressbar").progress({ width: 100, height: 10, prog:per });
+		var lprog;
+		 lprog =$("#progressbar").progress({ width: 100, height: 10, prog:per});
 		    	if(per<50)
 		    	lprog.color("red");
 		    	if(per>50 && per<80)
