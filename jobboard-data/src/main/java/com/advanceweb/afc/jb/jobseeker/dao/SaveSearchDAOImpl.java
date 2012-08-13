@@ -133,9 +133,9 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 				"from AdmSaveSearch where searchName=? and delete_dt is  NULL",
 				searchName);
 		if (searchResults.isEmpty()) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	/**
