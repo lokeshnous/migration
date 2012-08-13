@@ -241,13 +241,16 @@ jQuery(document).ready(function() {
 									var x = $("#results").val();
 									$("#rows").val(25000);
 									$("#start").val("0");
+									
 									var keywords = $("#keywords").val();
 									var cityState = $("#cityState").val();
 									var radius = $("#radius").val();
 									var rows = $("#rows").val();
 									var start = $("#start").val();
+									var searchtype = $("#searchtype").val();
+									
 									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
-									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start;
+									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
 									//alert("navUrl="+navUrl);

@@ -5,7 +5,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-		<head>	
+<head>
+	
 </head>
 		<body class="job_board">
 
@@ -106,8 +107,10 @@
             
             <form:hidden path="start" id="start"/>
             <form:hidden path="rows" id="rows"/>
-            <input type="hidden" id="searchtype" value="basic"></input>
             
+            <form:hidden path="searchtype" id="searchtype" value= "basic"/>
+            <!-- <input type="hidden" id="searchtype" value="basic"></input>
+            </div> -->
             </form:form>    
                 <%-- </form> --%>
                 </div>
