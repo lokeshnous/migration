@@ -1,6 +1,10 @@
 package com.advanceweb.afc.jb.resume.web.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -168,6 +172,7 @@ public class ResumeController {
 			model.setViewName("editCopyPasteResumePopup");
 			return model;
 		}	
+		getTotalNotNullField(createResume);
 		model.setViewName("editresumepopup");
 		return model;
 	}
@@ -252,7 +257,7 @@ public class ResumeController {
 			model.addObject("countryList",countryList);
 			model.addObject("stateList",stateList);
 			//DropDowns end
-			
+			getTotalNotNullField(createResume);
 			resumeDTO.getContactInfoDTO();
 			model.addObject("createResume",createResume);
 			model.setViewName("createResumeBuilder");
@@ -353,7 +358,7 @@ public class ResumeController {
 					}
 				}	
 			}catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 			
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
@@ -388,7 +393,7 @@ public class ResumeController {
 					}
 				}	
 			}catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 			resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 			resumeService.updateResumeUpload(resumeDTO);
@@ -607,52 +612,6 @@ public class ResumeController {
 		return null;
 	}
 
-	/*public List<ResumeProfileAttribForm> transformDTOToProfileAttribForm(ResumeDTO resumeDTO){
-		
-		List<ResumeProfileAttribForm> listForms = new ArrayList<ResumeProfileAttribForm>();
-		
-		if(null != resumeDTO.getResumeAttribList()){
-			for(MerProfileAttribDTO dto : resumeDTO.getResumeAttribList()){
-				ResumeProfileAttribForm form = new ResumeProfileAttribForm();
-				form.setDropdown(dto.getDropdown());
-				form.setStrAttribType(dto.getStrAttribType());
-				form.setStrLabelName(dto.getStrLabelName());
-				form.setStrLabelName(dto.getStrLabelName());
-				form.setStrProfileAttribId(dto.getStrProfileAttribId());
-				//form.setStrScreenName(dto.getStrScreenName());
-				//form.setStrSectionName(dto.getStrSectionName());
-				
-				listForms.add(form);
-			}
-		}
-		
-		return listForms;
-		
-	}
-	
-	public ResumeDTO ProfileAttribFormTotransformDTO(List<ResumeProfileAttribForm> resumeProfileAttribForm){
-		
-		List<MerProfileAttribDTO> list = new ArrayList<MerProfileAttribDTO>();
-		
-		if(null != resumeProfileAttribForm){
-			for(ResumeProfileAttribForm form : resumeProfileAttribForm){
-				MerProfileAttribDTO dto = new MerProfileAttribDTO();
-				dto.setDropdown(form.getDropdown());
-				dto.setStrAttribType(form.getStrAttribType());
-				dto.setStrLabelName(form.getStrLabelName());
-				dto.setStrLabelName(form.getStrLabelName());
-				dto.setStrProfileAttribId(form.getStrProfileAttribId());
-				//dto.setStrScreenName(form.getStrScreenName());
-				//dto.setStrSectionName(form.getStrSectionName());
-				list.add(dto);
-			}
-		}
-		ResumeDTO resumeDTO = new ResumeDTO();
-		resumeDTO.setResumeAttribList(list);
-		return resumeDTO;
-		
-	}*/
-
 	/**
 	 * Called to create resume
 	 * it Contains 
@@ -672,12 +631,13 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
-	public ModelAndView viewResumeBuilder(CreateResume createResume, BindingResult result, @RequestParam("resumeId") int resumeId){
+	public ModelAndView viewResumeBuilder(CreateResume createResume, BindingResult result, @RequestParam("resumeId") int resumeId,HttpServletRequest request,
+			HttpServletResponse response){
 
 //		ResumeDTO resumeDTO = resumeService.editResume(createResume.getBuilderResumeId());
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-		transCreateResume.transformCreateResumeForm(resumeDTO);
+		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
 		List<CertificationsForm> listCertForm = transCreateResume.transformCertForm(resumeDTO.getListCertDTO());
 		List<ReferenceForm> listRefForm = transCreateResume.transformReferenceForm(resumeDTO.getListRefDTO());
 		List<EducationForm> listEduForm = transCreateResume.transformEducationForm(resumeDTO.getListEduDTO());
@@ -692,10 +652,20 @@ public class ResumeController {
 		createResume.setListWorkExpForm(listWorkExpForm);
 		createResume.setContactInfoForm(contactForm);
 		resumeDTO.getContactInfoDTO();
-		
-		model.addObject("createResume", createResume);
-		model.setViewName("viewresume");
-		
+		if(MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume.getResumeType())){
+			model.addObject("createResume", createResume);
+			model.setViewName("viewresume");
+		}
+		else if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())){
+			try {
+				export(request, response,resumeDTO.getFileName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else{
+			model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+		}
 		return model;
 
 	}
@@ -879,6 +849,36 @@ public class ResumeController {
 
 		}
 		createResume.setTotalProgress(count * 2);
+
+	}	
+	
+	public void export(HttpServletRequest request,
+			HttpServletResponse response,String fileName) throws Exception {
+		
+        response.setContentType("application/vnd.ms-word");
+        response.setHeader( "Content-Disposition", "attachment; filename="+fileName);
+       
+        
+        File file = new File("D:/UploadResume/", fileName);
+        //response.setHeader("Content-Type", getServletContext().getMimeType(file.getName()));
+        //response.setHeader("Content-Length", file.length());
+        response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
+
+        BufferedInputStream input = null;
+        BufferedOutputStream output = null;
+
+        try {
+            input = new BufferedInputStream(new FileInputStream(file));
+            output = new BufferedOutputStream(response.getOutputStream());
+
+            byte[] buffer = new byte[8192];
+            for (int length = 0; (length = input.read(buffer)) > 0;) {
+                output.write(buffer, 0, length);
+            }
+        } finally {
+            if (output != null) try { output.close(); } catch (IOException ignore) {}
+            if (input != null) try { input.close(); } catch (IOException ignore) {}
+        }
 
 	}
 

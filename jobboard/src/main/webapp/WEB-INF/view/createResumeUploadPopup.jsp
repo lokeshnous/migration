@@ -11,61 +11,99 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery(".megamenu").megamenu();
-		
-		 $("#resumeType").change(function() {
-				var resumeType = $.trim($("#resumeType").val());
-				switch(resumeType){
-					case "ADVANCE Resume Builder":
-						$("#resumeBuilder").click();
-						break;
-					case "Upload Existing Resume":
-						$("#uploadResume").click();
-						break;
-					case "Copy and Paste":
-						$("#copyPaste").click();
-						break;
-				}
-		});
-		 
-		 $("#create").click(function() {
-				
-				//validate the required fields
-				var resumeName = $.trim($("#resumeName").val());
-				var jobTitle = $.trim($("#desiredJobTitle").val());
-				var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
-		
-				if (resumeName != null && resumeName != ""
-					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
-					&& workAuth != null	&& workAuth != ""){
-						$("#errorMsg").html("");
-						//validate number of resumes
-						//validate if resume name already exist in db
-						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId=",
-							type: "GET",
-							success : function(data) {
-								if (data.maxResume != null) {
-										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
-									} else if (data.duplicateResume != null) {
-										$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
-									} else {
-										$("form").attr("action",getBaseURL()+ "jobSeekerResume/createResumeUpload.html");
-										$("form").submit();
-									}
-								},
-							error : function(response) {
-								alert("Server Error : "+ response.status);
-								},
-							complete : function() {
-								
+	jQuery(document)
+			.ready(
+					function() {
+						jQuery(".megamenu").megamenu();
+
+						$("#resumeType").change(function() {
+							var resumeType = $.trim($("#resumeType").val());
+							switch (resumeType) {
+							case "ADVANCE Resume Builder":
+								$("#resumeBuilder").click();
+								break;
+							case "Upload Existing Resume":
+								$("#uploadResume").click();
+								break;
+							case "Copy and Paste":
+								$("#copyPaste").click();
+								break;
 							}
 						});
-				} else {
-					$("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
-				}
-			});
-	});	 
+
+						$("#create")
+								.click(
+										function() {
+
+											//validate the required fields
+											var resumeName = $.trim($(
+													"#resumeName").val());
+											var jobTitle = $.trim($(
+													"#desiredJobTitle").val());
+											var workAuth = $
+													.trim($(
+															"#workAuthorizationUS option:selected")
+															.text());
+
+											if (resumeName != null
+													&& resumeName != ""
+													&& jobTitle != null
+													&& jobTitle != ""
+													&& workAuth != "Select"
+													&& workAuth != null
+													&& workAuth != "") {
+												$("#errorMsg").html("");
+												//validate number of resumes
+												//validate if resume name already exist in db
+												$
+														.ajax({
+															url : getBaseURL()
+																	+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="
+																	+ resumeName
+																	+ "&resumeId=",
+															type : "GET",
+															success : function(
+																	data) {
+																if (data.maxResume != null) {
+																	$(
+																			"#errorMsg")
+																			.html(
+																					"<span style='color:red'>"
+																							+ data.maxResume
+																							+ "</span>");
+																} else if (data.duplicateResume != null) {
+																	$(
+																			"#errorMsg")
+																			.append(
+																					"<br/><span style='color:red'>"
+																							+ data.duplicateResume
+																							+ "</span>");
+																} else {
+																	$("form")
+																			.attr(
+																					"action",
+																					getBaseURL()
+																							+ "jobSeekerResume/createResumeUpload.html");
+																	$("form")
+																			.submit();
+																}
+															},
+															error : function(
+																	response) {
+																alert("Server Error : "
+																		+ response.status);
+															},
+															complete : function() {
+
+															}
+														});
+											} else {
+												$("#errorMsg")
+														.html(
+																"<span style='color:red'>Please enter the required parameters.</span>");
+											}
+										});
+					});
 </script>
 </head>
 <body class="job_board">
@@ -78,25 +116,41 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="post" action="createResumeUpload.html" commandName="createResume" id="formtouse" enctype="multipart/form-data">
+			<form:form method="post" action="createResumeUpload.html"
+				commandName="createResume" id="formtouse"
+				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>
 					<div class="floatLeft marginTop5 marginRight20">How would you
 						like to create your resume?</div>
-					<form:select class="jb_input3 jb_input_width3"
-						path="resumeType" items="${resumeTypeList}"
-						itemValue="optionValue" itemLabel="optionValue" />
+					<form:select class="jb_input3 jb_input_width3" path="resumeType"
+						items="${resumeTypeList}" itemValue="optionValue"
+						itemLabel="optionValue" />
 					<span class="required">(Required)</span>
 
 				</div>
 				<!-- Choose file section -->
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Upload Resume:</span>
-					<form:input path="fileData" id="chooseFile" type="file" />
+					<form:input path="fileData" id="chooseFile" class="FloatLeft" type="file" />
+					<span class="required paddingTop0 marginTop5">(Required)</span>
                 	<!-- <span class="floatLeft marginTop5"><a href="" class="btn_sm orange">Choose File</a></span><span class="required paddingTop0 marginTop5 TextColorA05">No File Chosen</span><span class="required paddingTop0 marginTop4">(Required)</span> -->
             	</div>
-            	
-            	
+
+				<!-- <div class="rowEvenNewSpacing">
+					<span class="lableText4">Upload Resume:</span>
+					<div id="FileUpload">
+						<input type="file" size="24" id="BrowserHidden"
+							onchange="getElementById('FileField').value = getElementById('BrowserHidden').value;" />
+						<div id="BrowserVisible">
+							<input type="text" id="FileField" readonly="readonly"  value="No file chosen"/>
+							<span class="required paddingTop0 marginTop5">(Required)</span>
+						</div>
+					</div>
+					
+				</div> -->
+
+
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
 					<!-- <input type="text" name="lastname" class="job_seeker_password textBox2" /><span class="required">(Required)</span> -->
@@ -125,10 +179,9 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">U.S. Work Authorization:</span>
 
-					<form:select class="jb_input3 width350"
-						style="width: auto" path="workAuthorizationUS"
-						items="${workAuthUS}" itemValue="optionValue"
-						itemLabel="optionValue" />
+					<form:select class="jb_input3 width350" style="width: auto"
+						path="workAuthorizationUS" items="${workAuthUS}"
+						itemValue="optionValue" itemLabel="optionValue" />
 					<form:errors path="workAuthorizationUS" />
 					<span class="required">(Required)</span>
 
@@ -166,15 +219,20 @@
 						<span class="required">(Required)</span>
 					</div>
 				</div>
-				
+
 				<div class="popUpButtonRow">
-					 <a id="create" href="#"
-						class="btn_sm orange">Create</a> <a href="#"
-						class="nyroModalClose btn_sm orange">Cancel</a>
+					<a id="create" href="#" class="btn_sm orange">Create</a> <a
+						href="#" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
-				<a id="resumeBuilder" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder" class="nyroModal"></a>
-				<a id="uploadResume" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume" class="nyroModal"></a>
-				<a id="copyPaste" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Copy and Paste" class="nyroModal"></a>
+				<a id="resumeBuilder"
+					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder"
+					class="nyroModal"></a>
+				<a id="uploadResume"
+					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume"
+					class="nyroModal"></a>
+				<a id="copyPaste"
+					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Copy and Paste"
+					class="nyroModal"></a>
 				<div class="clearfix"></div>
 			</form:form>
 		</div>
