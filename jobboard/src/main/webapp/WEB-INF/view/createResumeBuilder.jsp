@@ -37,6 +37,25 @@
     		$( ".datepicker" ).datepicker();
     	});
     	
+    	$('#workExpPresentCBId').click(function(){
+    		alert($("#workExpPresentCBId").val());
+    	
+    	});
+    	
+    	
+    	$('#skillRefId').click(function() {
+    	    var skillName = $('#skillId').val();
+
+    	    if(skillName != ''){
+    	    	if($('#textAreaId').val() != '') {
+    	    		$("#textAreaId").append(',');    	    
+    	    	}   	    
+    	    	$("#textAreaId").append(skillName);
+    	    	$("#skillId").val('');
+    	    }
+    	    //send to server and process response
+    	});
+    	
 		var per =${createResume.totalProgress};
 		var lprog;
 		 lprog =$("#progressbar").progress({ width: 100, height: 10, prog:per});
@@ -350,8 +369,8 @@
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
 											</div>
-											<span class="required"> <input name="" type="checkbox"
-												value="">
+											<span class="required"> 
+											<%-- <form:checkbox path="listWorkExpForm[${status.index}].isPresent" id="workExpPresentCBId"/> --%>
 											</span>
 											<div class="floatLeft marginLeft10 marginTop8">present</div>
 
@@ -375,8 +394,8 @@
 													itemValue="optionName" itemLabel="optionName" />
 											</form:select>
 
-											<span class="requiredTopmargin"> <input name=""
-												type="checkbox" value="">
+											<span class="requiredTopmargin"> 
+											<%-- <form:checkbox path="listWorkExpForm[${status.index}].isCurrentCareerLevel"/> --%>
 											</span>
 
 											<div class=" floatLeft marginLeft10 marginTop5">
@@ -592,9 +611,9 @@
 							<div class="searchResultsSubContent">
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="rowEvenNewSpacing">
-										<span class="lableText3">Skill:</span> <input type="text"
-											name="mobileNo" class="job_seeker_password textBox350" /> <span
-											class="required"><a href="" class="btn_sm orange">Add</a></span>
+										<span class="lableText3">Skill:</span> 
+										<input type="text" name="skill" class="job_seeker_password textBox350" id="skillId"/> 
+										<span class="required"><a href="#" class="btn_sm orange" id="skillRefId">Add</a></span>
 										<div class="toolTip marginTop8 marginLeft5">
 											<span class="classic">Show potential employers what
 												your strengths are by entering up to 50 special skills in
@@ -607,7 +626,7 @@
 										<div class="lableText3 marginTop10"></div>
 										<div class="input_grp5 ">
 											<form:textarea path="skills" class="textareaBoxCResume"
-												rows="3" cols="45" />
+												rows="3" cols="45" id="textAreaId"/>
 
 										</div>
 									</div>
