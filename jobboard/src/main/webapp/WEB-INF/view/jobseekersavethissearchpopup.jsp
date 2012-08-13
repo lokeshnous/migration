@@ -22,9 +22,31 @@ function closePopup() {
 			var searchName = $.trim($("#searchTitleName").val());
 			$.ajax({url: getBaseURL()+"/savedSearches/saveSearchedJobs.html?searchName="+searchName,
 				success: function(data){ 
-						//parent.window.location.href = "../loginFormForJobSeeker/login.html";
-					parent.$.nmTop().close();
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							//window.location.href = val+".html";
+							$.nmManual(val + '.html');
+							parent.$.nmTop().close();
+						}
+						
+						if (key == "LoggedInNavigationPath") {
+							parent.$.nmTop().close();
+							//$.nmManual(val + '.html');
+						}
+						
+						if(key == "EmptySearchName"){
+							$("#ErrorMsg").text("${msg.EmptySearchName}");
+						}
+						if(key == "DuplicateSearchName"){
+							$("#ErrorMsg").text("${msg.DuplicateSearchName}");
+						}
+					}); 
+				    if(data.success != null){
+				    }
+				    if(data.failure != null){
+				    }
 				},
+				
 				error: function(response) {
 					alert("Server Error : "+response.status);
 				},
@@ -59,7 +81,7 @@ function closePopup() {
 				<div class="rowEvenNewSpacing margin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
 				</div>
-
+				<span id="ErrorMsg" style="color: red; font: bold; font-size: 15px;" ></span>
 				<div class="popUpButtonRow">
 				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
 				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>					
