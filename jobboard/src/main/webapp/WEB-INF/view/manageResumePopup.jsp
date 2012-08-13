@@ -15,7 +15,10 @@
 	jQuery(document).ready(function() {
 	
 		/* jQuery(".megamenu").megamenu(); */
-
+		$("#resumePopupId").click(function(event){
+			alert("Hi");
+			return false;
+     	});
 		
 		$("#tb_manage_resume img").click(function(event) {
 

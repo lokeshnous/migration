@@ -58,7 +58,7 @@
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
-			<h2>Create Or Upload My New Resume</h2>
+			<h2>Edit Resume</h2>
 			<img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();"
 				width="19" height="19" alt="">
 		</div>
@@ -151,7 +151,7 @@
 				
 				<div class="popUpButtonRow">
 					 <a id="update" href="#"
-						class="btn_sm orange">Update</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
+						class="btn_sm orange">Ok</a> <a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
