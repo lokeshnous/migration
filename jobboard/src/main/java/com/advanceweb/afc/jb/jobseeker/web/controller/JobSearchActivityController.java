@@ -148,7 +148,7 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private JobSearchService jobSearchService;
-	
+
 	@Autowired
 	private SaveSearchService saveSearchService;
 
@@ -309,13 +309,16 @@ public class JobSearchActivityController {
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
 			HttpSession session) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		// Modified to delete the first saved search,allow user to
+		// create new search if he has already created 5 searches and trying to
+		// add 6th search
 		int userId = (Integer) session.getAttribute("userId");
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
 		int savedSearchCount = 0;
 		savedSearchCount = saveSearchedJobsDTOList.size();
 		if (savedSearchCount == 5) {
-			boolean deleteStatus = saveSearchService.deleteFirstSearch(userId);
+			saveSearchService.deleteFirstSearch(userId);
 		}
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardsearchresults");
