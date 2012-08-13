@@ -349,6 +349,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/PhoneDetailFo
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ReferenceForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeProfileAttribForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/TransformCreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/exception/JobBoardUIException.java -text

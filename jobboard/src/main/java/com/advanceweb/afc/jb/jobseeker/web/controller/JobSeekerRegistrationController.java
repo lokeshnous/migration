@@ -66,23 +66,7 @@ public class JobSeekerRegistrationController {
 	
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
-	
-	@Autowired
-	private PopulateDropdowns populateDropdownsService;
-	
-	@Autowired
-	private JobSeekerSubscriptionService	jobSeekerSubscriptionsService;
-
-	@Autowired
-	private TransformJobSeekerSubscription	transformJobSeekerSubscription;
-	
-	@Autowired
-	private SaveSearchService saveSearchService;
-	
-	@Autowired
-	private JobSeekerService jobSeekerActivity;
-
-
+		
 	
 	/**
 	 * This method is called to display job seeker registration page Step1

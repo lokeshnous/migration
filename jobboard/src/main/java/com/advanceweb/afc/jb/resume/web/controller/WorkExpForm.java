@@ -18,6 +18,7 @@ public class WorkExpForm {
 	private String annualSalary;
 	private String hrlyPayRate;
 	private String description;
+	private String isPresent;
 	private int builderEmpId;
 	
 	
@@ -87,4 +88,11 @@ public class WorkExpForm {
 	public void setBuilderEmpId(int builderEmpId) {
 		this.builderEmpId = builderEmpId;
 	}
+	public String getIsPresent() {
+		return isPresent;
+	}
+	public void setIsPresent(String isPresent) {
+		this.isPresent = isPresent;
+	}
+	
 }

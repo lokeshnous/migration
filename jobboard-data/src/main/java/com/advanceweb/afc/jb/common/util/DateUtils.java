@@ -8,12 +8,14 @@ import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
+import com.mysql.jdbc.StringUtils;
+
 public class DateUtils {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSearchActivityController.class");
 
-	public static Date convertStringToSQLDateTime(String stringDate) {
+/*	public static Date convertStringToSQLDateTime(String stringDate) {
 		DateFormat formater = new SimpleDateFormat(
 				MMJBCommonConstants.SQL_DATE_PATTERN,Locale.ENGLISH);
 		Date sqltDate = null;
@@ -28,7 +30,7 @@ public class DateUtils {
 			// e.printStackTrace();
 		}
 		return sqltDate;
-	}
+	}*/
 
 	public static String convertSQLDateTimeToStdDateTime(String sqlDate) {
 		DateFormat formater = new SimpleDateFormat(
@@ -145,5 +147,31 @@ public class DateUtils {
 		
 	}
 	
+	
+	/**
+	 * This method helps to convert UtilDate To SQLDate
+	 * 
+	 * @param sqlDate
+	 * @return
+	 */
+	public static Date convertStringToSQLDate(String strDate) {
+		String pattern = MMJBCommonConstants.SQL_DATE_PATTERN;
+		String dateStrpattern = MMJBCommonConstants.DISP_DATE_PATTERN;
+		DateFormat formater = new SimpleDateFormat(pattern,Locale.ENGLISH);
+		DateFormat dateStrFormater = new SimpleDateFormat(dateStrpattern,Locale.ENGLISH);
+
+		Date sqltDate = null;
+		java.util.Date parsedUtilDate;
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(strDate)) {
+				parsedUtilDate = (java.util.Date) formater.parse(formater
+						.format(dateStrFormater.parse(strDate)));
+				sqltDate = new java.sql.Date(parsedUtilDate.getTime());
+			}
+		} catch (ParseException e) {
+			LOGGER.info("convertDateStringToSQLDate Exception");
+		}
+		return sqltDate;
+	}
 
 }

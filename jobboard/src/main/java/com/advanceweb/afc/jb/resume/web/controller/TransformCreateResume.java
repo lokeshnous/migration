@@ -80,6 +80,7 @@ public class TransformCreateResume {
 				dto.setDateOfReceipt(certForm.getDateOfReceipt());
 				dto.setInstituteName(certForm.getInstituteName());
 				dto.setSummary(certForm.getSummary());
+				dto.setCertifyingAuthority(certForm.getCertifyingAuthority());
 				dto.setBuilderCertId(certForm.getBuilderCertId());
 				listCertDTO.add(dto);
 			}
@@ -105,6 +106,7 @@ public class TransformCreateResume {
 				dto.setName(refForm.getName());
 				dto.setPhoneNo(refForm.getPhoneNo());
 				dto.setBuilderRefId(refForm.getBuilderRefId());
+				dto.setRefType(refForm.getReferenceType());
 				listRefDTO.add(dto);
 			}
 		}
@@ -113,7 +115,7 @@ public class TransformCreateResume {
 	}
 	
 	/**
-	 * Method to convert Education form to Education dto
+	 * Method to convert Education form to Education DTO
 	 * @param listCertForms
 	 * @return
 	 */
@@ -334,6 +336,7 @@ public class TransformCreateResume {
 				form.setJobTitle(dto.getJobTitle());
 				form.setName(dto.getName());
 				form.setPhoneNo(dto.getPhoneNo());
+				form.setReferenceType(dto.getRefType());
 				listWorkExpForms.add(form);
 			}
 		}else{
@@ -394,6 +397,7 @@ public class TransformCreateResume {
 				form.setBuilderCertId(dto.getBuilderCertId());
 				form.setCertificationName(dto.getCertificationName());
 				form.setDateOfReceipt(dto.getDateOfReceipt());
+				form.setCertifyingAuthority(dto.getCertifyingAuthority());
 				form.setInstituteName(dto.getInstituteName());
 				form.setSummary(dto.getSummary());
 				listCertForms.add(form);

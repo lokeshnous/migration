@@ -97,6 +97,8 @@ public class ResumeConversionHelper {
 		resumeDTO.setObjective(resumeBuilder.getJobObjective());
 		resumeDTO.setOtherDetails(resumeBuilder.getOtherInterests());
 		resumeDTO.setResumeName(resumeBuilder.getResumeName());
+		resumeDTO.setAwards(resumeBuilder.getAwards());
+		resumeDTO.setMemberships(resumeBuilder.getMemberships());
 		if(null != resumeBuilder.getUpdateDt()){
 			resumeDTO.setUpdateDt(DateUtils.convertSQLDateTimeToStdDateTime(
 					resumeBuilder.getUpdateDt().toString()));
@@ -127,7 +129,7 @@ public class ResumeConversionHelper {
 				dto.setBuilderCertId(entity.getBuilderCertificationId());
 				dto.setCertificationName(entity.getCertificationName());
 				dto.setCertifyingAuthority(entity.getCertifyingAuthority());
-				dto.setDateOfReceipt(String.valueOf(entity.getEarnedDt()));
+				dto.setDateOfReceipt(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getEarnedDt())));
 				dto.setSummary(entity.getDescription());
 				listCertDTO.add(dto);
 			}
@@ -208,10 +210,10 @@ public class ResumeConversionHelper {
 				
 				 dto.setBuilderEduId(entity.getBuilderEduId());
 				 dto.setInstituteName(entity.getInstitutionName());
-				 dto.setDegreeLvl(String.valueOf(entity.getBuilderEduId()));
+				 dto.setDegreeLvl(String.valueOf(entity.getDegreeLevel()));
 				 dto.setFieldOfStudy(entity.getCourseOfStudy());	
-				 dto.setStartDate(String.valueOf(entity.getStartDt()));
-				 dto.setEndDate(String.valueOf(entity.getCompletionDt()));
+				 dto.setStartDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getStartDt())));
+				 dto.setEndDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getCompletionDt())));
 				 dto.setDegrees(entity.getDegrees());
 				 dto.setCertifications(entity.getCertifications());				 		 
 				 
@@ -250,10 +252,10 @@ public class ResumeConversionHelper {
 				 dto.setJobTitle(entity.getPositionName());
 				 dto.setEmployerName(entity.getEmployerName());
 				 dto.setEmploymentType(entity.getEmploymentType());
-				 dto.setStartDate(String.valueOf(entity.getEmploymentDt()));
-				 dto.setEndDate(String.valueOf(entity.getSeparationDt()));
+				 dto.setStartDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getEmploymentDt())));
+				 dto.setEndDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getSeparationDt())));
 				 dto.setYrsAtPostion(String.valueOf(entity.getEmploymentYears()));
-				 dto.setCurrentCareerLvl(entity.getPositionName());
+				 dto.setCurrentCareerLvl(entity.getCareerLevel());
 				 dto.setAnnualSalary(entity.getAnnualSalary());
 				 dto.setHrlyPayRate(entity.getHourlyRate());
 				 dto.setDescription(entity.getJobDescription());
@@ -525,9 +527,9 @@ public class ResumeConversionHelper {
 				ResBuilderCertification certEntity = new ResBuilderCertification();
 				certEntity.setBuilderCertificationId(certDTO.getBuilderCertId());
 				certEntity.setDescription(certDTO.getSummary());
-				certEntity.setEarnedDt(DateUtils.convertStringToSQLDateTime(certDTO.getDateOfReceipt()));
+				certEntity.setEarnedDt(DateUtils.convertStringToSQLDate(certDTO.getDateOfReceipt()));
 				certEntity.setExpireDt((null != certDTO.getDateOfReceipt() && certDTO.getDateOfReceipt().length() != 0) 
-						? DateUtils.convertStringToSQLDateTime(certDTO.getDateOfReceipt()):null);
+						? DateUtils.convertStringToSQLDate(certDTO.getDateOfReceipt()):null);
 				certEntity.setCertificationName(certDTO.getCertificationName());
 				certEntity.setCertifyingAuthority(certDTO.getCertifyingAuthority());
 				certEntity.setResBuilderResume(builderResume);
@@ -584,8 +586,8 @@ public class ResumeConversionHelper {
 				eduEntitiy.setInstitutionName(eduDTO.getInstituteName());
 				eduEntitiy.setDegreeLevel(eduDTO.getDegreeLvl());
 				eduEntitiy.setCourseOfStudy(eduDTO.getFieldOfStudy());
-				eduEntitiy.setStartDt(DateUtils.convertStringToSQLDateTime(eduDTO.getStartDate()));
-				eduEntitiy.setCompletionDt(DateUtils.convertStringToSQLDateTime(eduDTO.getEndDate()));
+				eduEntitiy.setStartDt(DateUtils.convertStringToSQLDate(eduDTO.getStartDate()));
+				eduEntitiy.setCompletionDt(DateUtils.convertStringToSQLDate(eduDTO.getEndDate()));
 				eduEntitiy.setDegrees(eduDTO.getDegrees());
 				eduEntitiy.setCertifications(eduDTO.getCertifications());
 				eduEntitiy.setIsGraduated(eduDTO.getbGraduated());
@@ -616,14 +618,15 @@ public class ResumeConversionHelper {
 				workExpEntitiy.setState(workExpDTO.getState());
 				workExpEntitiy.setEmployerName(workExpDTO.getEmployerName());
 				workExpEntitiy.setEmploymentType(workExpDTO.getEmploymentType());
-				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDateTime(workExpDTO.getStartDate()));
+				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
 				workExpEntitiy.setEmploymentYears(Integer.valueOf(workExpDTO.getYrsAtPostion()));
 				workExpEntitiy.setCareerLevel(workExpDTO.getCurrentCareerLvl());
 				workExpEntitiy.setIsCurCareerLevel(workExpDTO.getIsCurrentCareerLvl());
 				workExpEntitiy.setJobDescription(workExpDTO.getDescription());
 				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
-				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDateTime(workExpDTO.getEndDate()));
+				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
 				workExpEntitiy.setStillEmployed(workExpDTO.getStillEmployed());
+				workExpEntitiy.setHourlyRate(workExpDTO.getHrlyPayRate());
 				workExpEntitiy.setResBuilderResume(builderResume);
 				listWorkExpEntity.add(workExpEntitiy);
 			}
