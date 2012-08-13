@@ -62,5 +62,12 @@ public interface SaveSearchService {
 	 * @return
 	 */
 	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
+	
+	/**
+	 * This method is called to delete the first search if user is trying to create more than 5th search
+	 * @param userId
+	 * @return
+	 */
+	boolean deleteFirstSearch(int userId);
 
 }

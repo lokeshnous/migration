@@ -123,4 +123,23 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		return true;
 	}
 
+	/**
+	 * Added to delete the first saved search from the DB and allow the user to
+	 * create new search
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public boolean deleteFirstSearch(int userId) {
+		List<AdmSaveSearch> searchResults = hibernateTemplate
+				.find("from AdmSaveSearch e where e.userId=? and e.createDt is not NULL and e.deleteDt is NULL",
+						userId);
+		AdmSaveSearch admSaveSearch = searchResults.get(0);
+		AdmSaveSearch search = hibernateTemplate.load(AdmSaveSearch.class,
+				admSaveSearch.getSaveSearchId());
+		search.setDeleteDt(new Date());
+		hibernateTemplate.saveOrUpdate(search);
+		return true;
+	}
+
 }

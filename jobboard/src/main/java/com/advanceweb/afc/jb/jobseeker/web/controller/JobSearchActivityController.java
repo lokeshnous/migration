@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
@@ -40,6 +41,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
+import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
@@ -73,10 +75,10 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private JSONConverterService jSONConverterService;
-	
+
 	@Autowired
 	private JobSeekerService jobSeekerActivity;
-	
+
 	@Value("${saveThisJobLimitsMsg}")
 	private String saveThisJobLimitsMsg;
 
@@ -91,7 +93,7 @@ public class JobSearchActivityController {
 
 	@Value("${employeJobApplicationBody}")
 	private String employeJobApplicationBody;
-	
+
 	@Value("${jsLoginPage}")
 	private String jsLoginPage;
 
@@ -146,6 +148,9 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private JobSearchService jobSearchService;
+	
+	@Autowired
+	private SaveSearchService saveSearchService;
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -181,7 +186,7 @@ public class JobSearchActivityController {
 	 * 
 	 * @param form
 	 * @param jobId
-	 * @param session 
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
@@ -301,8 +306,17 @@ public class JobSearchActivityController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
-	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model) {
+	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
+			HttpSession session) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		int userId = (Integer) session.getAttribute("userId");
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+				.viewMySavedSearches(userId);
+		int savedSearchCount = 0;
+		savedSearchCount = saveSearchedJobsDTOList.size();
+		if (savedSearchCount == 5) {
+			boolean deleteStatus = saveSearchService.deleteFirstSearch(userId);
+		}
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardsearchresults");
 	}
@@ -321,46 +335,53 @@ public class JobSearchActivityController {
 
 	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject findJobSearch(HttpSession session, JobSearchResultForm jobSearchResultForm,
-			BindingResult result, Map<String, JSONObject> modelMap) {
+	JSONObject findJobSearch(HttpSession session,
+			JobSearchResultForm jobSearchResultForm, BindingResult result,
+			Map<String, JSONObject> modelMap) {
 
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
-		
-		String searchName = MMJBCommonConstants.EMPTY;// will be replaced by BASIC_SEARCH
-		
-		/**Check if city state and radius field is not empty to check for LOCATION search**/
-		if(StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())){
-			
-			if(!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())){
+
+		String searchName = MMJBCommonConstants.EMPTY;// will be replaced by
+														// BASIC_SEARCH
+
+		/**
+		 * Check if city state and radius field is not empty to check for
+		 * LOCATION search
+		 **/
+		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
+
+			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
 				searchName = MMJBCommonConstants.KEYWORD;
 			}
-		}else{
+		} else {
 			searchName = MMJBCommonConstants.LOCATION;
 		}
-		
+
 		// The value of Search_seq will be changed when the session management
 		// is done.
 		// This value needs to be increased every time when there is a search
 		// happening for a session
 		int search_seq = MMJBCommonConstants.ZERO_INT;
-		//String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
+		// String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 		String sessionId = MMJBCommonConstants.NULL_STR;
-		
-		if(!MMJBCommonConstants.NULL_STR.equalsIgnoreCase((String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID))))){
-			sessionId = String.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID));
-			session.setAttribute(MMJBCommonConstants.KEYWORDS, jobSearchResultForm
-					.getKeywords().trim());
-			session.setAttribute(MMJBCommonConstants.CITY_STATE, jobSearchResultForm
-					.getCityState().trim());
-			session.setAttribute(MMJBCommonConstants.RADIUS, jobSearchResultForm
-					.getRadius().trim());
-			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
-					.getSearchtype().trim());
-		}else{
+
+		if (!MMJBCommonConstants.NULL_STR.equalsIgnoreCase((String
+				.valueOf(session.getAttribute(MMJBCommonConstants.USER_ID))))) {
+			sessionId = String.valueOf(session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+			session.setAttribute(MMJBCommonConstants.KEYWORDS,
+					jobSearchResultForm.getKeywords().trim());
+			session.setAttribute(MMJBCommonConstants.CITY_STATE,
+					jobSearchResultForm.getCityState().trim());
+			session.setAttribute(MMJBCommonConstants.RADIUS,
+					jobSearchResultForm.getRadius().trim());
+			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE,
+					jobSearchResultForm.getSearchtype().trim());
+		} else {
 			LOGGER.info("Session ID is not present since it is a Anonymous user.");
 		}
-		
+
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
 
@@ -424,16 +445,18 @@ public class JobSearchActivityController {
 		 * Check for job seeker login ,open popup if not logged in.
 		 */
 		if (session.getAttribute("userId") == null) {
-			jsonObject.put(ajaxNavigationPath, "../jobsearchactivity/jobseekersaveThisJobPopUp");
+			jsonObject.put(ajaxNavigationPath,
+					"../jobsearchactivity/jobseekersaveThisJobPopUp");
 			return jsonObject;
 			// return new ModelAndView("jobseekersaveThisJobPopUp");
 		}
 		form.setJobID(jobId);
-		int userId = (Integer)session.getAttribute("userId");
+		int userId = (Integer) session.getAttribute("userId");
 		int savedJobsCount = 0;
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity.getSavedJobs(userId);
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
+				.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
-		if(savedJobsCount > 30){
+		if (savedJobsCount > 30) {
 			jsonObject.put(ajaxMsg, saveThisJobLimitsMsg);
 			return jsonObject;
 		}
@@ -586,11 +609,11 @@ public class JobSearchActivityController {
 					&& !validateEmailPattern(sendtofriendmail.getEmail())) {
 				model.addAttribute("visible", false);
 				model.addAttribute("invalidemail", invalidemail);
-//				return "jobseekersendtofriendpopup";
+				// return "jobseekersendtofriendpopup";
 			} else {
 				model.addAttribute("visible", false);
 				model.addAttribute("notempty", notempty);
-//				return "jobseekersendtofriendpopup";
+				// return "jobseekersendtofriendpopup";
 			}
 
 		} catch (Exception e) {
@@ -605,34 +628,36 @@ public class JobSearchActivityController {
 		Matcher matcher = pattern.matcher(emailAddress);
 		return matcher.matches();
 	}
-	
+
 	/**
-	 * This method will be used for Autocomplete for city, state or Postcode 
-	 * and Return List<String>.
-	 * @param String keyword
+	 * This method will be used for Autocomplete for city, state or Postcode and
+	 * Return List<String>.
+	 * 
+	 * @param String
+	 *            keyword
 	 * @return List<String> Object
 	 */
-	
-	@RequestMapping(value = "/findLocation", method = RequestMethod.GET, headers="Accept=*/*")
+
+	@RequestMapping(value = "/findLocation", method = RequestMethod.GET, headers = "Accept=*/*")
 	public @ResponseBody
 	List<String> findLocation(@RequestParam("term") String keyword) {
 
-		List<LocationDTO> locationDTOList = jobSearchService.locationSearch(keyword.trim());
-		
+		List<LocationDTO> locationDTOList = jobSearchService
+				.locationSearch(keyword.trim());
+
 		if (locationDTOList != null) {
 			/**
-			 * Returning the List<String> based on Post code search or CityState search
+			 * Returning the List<String> based on Post code search or CityState
+			 * search
 			 */
-			if(MMUtils.isIntNumber(keyword)){
+			if (MMUtils.isIntNumber(keyword)) {
 				return MMUtils.convertToPostcodeStringList(locationDTOList);
-			}else{
+			} else {
 				return MMUtils.convertToCityStateStringList(locationDTOList);
 			}
 		}
-		
+
 		return null;
 	}
-	
-	
 
 }

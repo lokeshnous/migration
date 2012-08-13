@@ -85,4 +85,15 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	public boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs) {
 		return saveSearchDAO.saveModifiedData(searchedJobsDTOs);
 	}
+
+	/**
+	 * Added to delete the first saved search from the DB and allow the user to
+	 * create new search
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public boolean deleteFirstSearch(int userId) {
+		return saveSearchDAO.deleteFirstSearch(userId);
+	}
 }
