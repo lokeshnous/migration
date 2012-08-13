@@ -13,7 +13,8 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 function closePopup() {
-	parent.window.location.reload();
+	//parent.window.location.reload();
+	parent.$.nmTop().close();
 }
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
@@ -21,7 +22,8 @@ function closePopup() {
 			var searchName = $.trim($("#searchTitleName").val());
 			$.ajax({url: getBaseURL()+"/savedSearches/saveSearchedJobs.html?searchName="+searchName,
 				success: function(data){ 
-						parent.window.location.href = "../loginFormForJobSeeker/login.html";
+						//parent.window.location.href = "../loginFormForJobSeeker/login.html";
+					parent.$.nmTop().close();
 				},
 				error: function(response) {
 					alert("Server Error : "+response.status);
