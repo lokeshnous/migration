@@ -24,11 +24,21 @@
 <script type="text/javascript"
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
+ <link href="../resources/js/lprogress.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-
+		var per =${createResume.totalProgress};
+		var lprog ;
+		    jQuery(document).ready(function(){
+		    	lprog =$("#progressbar").progress({ width: 100, height: 10, prog:per });
+		    	if(per<50)
+		    	lprog.color("red");
+		    	if(per>50 && per<80)
+		    		lprog.color("blue");
+		    	if(per>80)
+		    		lprog.color("green");
 		//$('#certAjaxCallIdButton').click(function(){		
 		$('#certAjaxCallIdButton').live('click', function() {
 			alert("hello");
@@ -55,6 +65,8 @@
 	//jQuery(".megamenu").megamenu();
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+<script type="text/javascript" src="../resources/js/lprogress.min.js"></script>
+<script type="text/javascript" src="../resources/js/lprogress.js"></script>
 </head>
 
 <body class="job_board">
@@ -85,15 +97,9 @@
 								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume
 									Name:</h2>
 
-								<div class=" floatRight width255">
-									<span class="FloatLeft"><img
-										src="../resources/images/percimg.png" width="149" height="16"
-										alt="img"></span>
-									<h3 class="floatRight">
-										<c:out value="${createResume.totalProgress}" />
-										% Complete
-									</h3>
-								</div>
+								 <div class=" floatRight width255"><span class="FloatLeft"><div id="progressbar"></div><c:out value="${createResume.totalProgress}"/>% Complete</h3></span>
+           </div>
+           </span> </div>
 							</span>
 						</div>
 						<div class="clearfix"></div>

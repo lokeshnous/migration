@@ -1,0 +1,14 @@
+.lp-wrap{border:1px solid;overflow:hidden}
+.lp-inner{height:10px;background:repeat-x;position:relative}
+.lp-text{padding:1px 5px;overflow:hidden;position:absolute;left:0;text-align:center}
+.lp-text-back{line-height:10px}
+.lp-text-t{font:9px;vertical-align:middle;text-align:center;color:black}
+
+
+.lp-blue{height:10px;float:left;width:0;background:repeat-x left center;border-top:1px solid;border-bottom:1px solid;border-right:1px solid}
+.lp-red{height:10px;float:left;width:0;background:repeat-x left center;border-top:1px solid;border-bottom:1px solid;border-right:1px solid}
+.lp-green{height:10px;float:left;width:0;background:repeat-x left center;border-top:1px solid;border-bottom:1px solid;border-right:1px solid}
+
+.lp-blue{background-color:#9cbfee;background-image:url(lpb.gif);border-top-color:#d1e4fd;border-bottom-color:#7fa9e4;border-right-color:#7fa9e4}
+.lp-red{background-color:#FF0000;background-image:url(lpr.gif);border-top-color:#FF0000;border-bottom-color:#FF0000;border-right-color:#FF0000;border-left-color:#FF0000}
+.lp-green{background-color:#00CC00;background-image:url(lpg.gif);border-top-color:#00CC00;border-bottom-color:#00CC00;border-right-color:#00CC00;border-left-color:#00CC00}
