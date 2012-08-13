@@ -240,7 +240,7 @@ public class ResumeController {
 			createResume.setListRefForm(listRefForm);
 			createResume.setListWorkExpForm(listWorkExpForm);
 			createResume.setContactInfoForm(contactForm);
-			
+			getTotalNotNullField(createResume);
 			//DropDowns
 			model.addObject("empTypeList",empTypeList);
 			model.addObject("phoneTypeList",phoneTypeList);
@@ -705,62 +705,62 @@ public class ResumeController {
 	 * @param createResume
 	 * @return
 	 */
-	public Void getTotalNotNullField(CreateResume createResume) {
+	public void getTotalNotNullField(CreateResume createResume) {
 		Long count = 0L;
 		if (null != createResume.getListCertForm()) {
 			for (CertificationsForm certForm : createResume.getListCertForm()) {
 				if (certForm.getCertificationName() != null
 						&& certForm.getCertificationName() != "")
-					count = +1L;
+					count = count + 1L;
 				if (certForm.getDateOfReceipt() != null
 						&& certForm.getDateOfReceipt() != "")
-					count = +1L;
+					count = count + 1L;
 				if (certForm.getInstituteName() != null
 						&& certForm.getInstituteName() != "")
-					count = +1L;
+					count = count + 1L;
 				if (certForm.getSummary() != null
 						&& certForm.getSummary() != "")
-					count = +1L;
+					count = count + 1L;
 			}
 		}
 		if (null != createResume.getListRefForm()) {
 			for (ReferenceForm refForm : createResume.getListRefForm()) {
 				if (refForm.getCompanyName() != null
 						&& refForm.getCompanyName() != "")
-					count = +1L;
+					count = count + 1L;
 				if (refForm.getEmail() != null && refForm.getEmail() != "")
-					count = +1L;
+					count = count + 1L;
 				if (refForm.getJobTitle() != null
 						&& refForm.getJobTitle() != "")
-					count = +1L;
+					count = count + 1L;
 				if (refForm.getName() != null && refForm.getName() != "")
-					count = +1L;
+					count = count + 1L;
 			}
 		}
 		if (null != createResume.getListEduForm()) {
 			for (EducationForm eduForm : createResume.getListEduForm()) {
 				if (eduForm.getCertifications() != null
 						&& eduForm.getCertifications() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getDegreeLvl() != null
 						&& eduForm.getDegreeLvl() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getDegrees() != null && eduForm.getDegrees() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getEndDate() != null && eduForm.getEndDate() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getFieldOfStudy() != null
 						&& eduForm.getFieldOfStudy() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getInstituteName() != null
 						&& eduForm.getInstituteName() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getLanguage() != null
 						&& eduForm.getLanguage() != "")
-					count = +1L;
+					count = count + 1L;
 				if (eduForm.getStartDate() != null
 						&& eduForm.getStartDate() != "")
-					count = +1L;
+					count = count + 1L;
 
 			}
 		}
@@ -768,67 +768,76 @@ public class ResumeController {
 			ContactInfoForm cntInfoForm = createResume.getContactInfoForm();
 			if (cntInfoForm.getAddressLine1() != null
 					&& cntInfoForm.getAddressLine1() != "")
-				count = +1L;
+				count = count + 1L;
 			if (cntInfoForm.getAddressLine2() != null
 					&& cntInfoForm.getAddressLine2() != "")
-				count = +1L;
+				count = count + 1L;
 			if (cntInfoForm.getCity() != null && cntInfoForm.getCity() != "")
-				count = +1L;
+				count = count + 1L;
 			if (cntInfoForm.getCountry() != null
 					&& cntInfoForm.getCountry() != "")
-				count = +1L;
+				count = count + 1L;
 			if (cntInfoForm.getPhoneNo() != null
 					&& cntInfoForm.getPhoneNo() != "")
-				count = +1L;
+				count = count + 1L;
 			if (cntInfoForm.getState() != null && cntInfoForm.getState() != "")
-				count = +1L;
+				count = count + 1L;
 			if (cntInfoForm.getPostalCode() != null
 					&& cntInfoForm.getPostalCode() != "")
-				count = +1L;
+				count = count + 1L;
+			if (cntInfoForm.getFirstName() != null
+					&& cntInfoForm.getMiddleName() != "")
+				count = count + 1L;
+			if (cntInfoForm.getMiddleName() != null
+					&& cntInfoForm.getMiddleName() != "")
+				count = count + 1L;
+			if (cntInfoForm.getLastName() != null
+					&& cntInfoForm.getMiddleName() != "")
+				count = count + 1L;
 
 		}
 		if (null != createResume.getListWorkExpForm()) {
 			for (WorkExpForm wrkExpForm : createResume.getListWorkExpForm()) {
 				if (wrkExpForm.getAnnualSalary() != null
 						&& wrkExpForm.getAnnualSalary() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getCurrentCareerLvl() != null
 						&& wrkExpForm.getCurrentCareerLvl() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getDescription() != null
 						&& wrkExpForm.getDescription() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getEmployerName() != null
 						&& wrkExpForm.getEmployerName() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getEmploymentType() != null
 						&& wrkExpForm.getEmploymentType() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getEndDate() != null
 						&& wrkExpForm.getEndDate() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getHrlyPayRate() != null
 						&& wrkExpForm.getHrlyPayRate() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getJobTitle() != null
 						&& wrkExpForm.getJobTitle() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getStartDate() != null
 						&& wrkExpForm.getStartDate() != "")
-					count = +1L;
+					count = count + 1L;
 				if (wrkExpForm.getYrsAtPostion() != null
 						&& wrkExpForm.getYrsAtPostion() != "")
-					count = +1L;
+					count = count + 1L;
 			}
 
 		}
 		if (null != createResume.getListLangForm()) {
 			for (LanguageForm langForm : createResume.getListLangForm()) {
 				if (langForm.getExpLvl() != null && langForm.getExpLvl() != "")
-					count = +1L;
+					count = count + 1L;
 				if (langForm.getLanguage() != null
 						&& langForm.getLanguage() != "")
-					count = +1L;
+					count = count + 1L;
 
 			}
 
@@ -838,16 +847,38 @@ public class ResumeController {
 					.getListPhoneDtlForm()) {
 				if (phnDtlForm.getPhoneNumber() != null
 						&& phnDtlForm.getPhoneNumber() != "")
-					count = +1L;
+					count = count + 1L;
 				if (phnDtlForm.getPhoneType() != null
 						&& phnDtlForm.getPhoneType() != "")
-					count = +1L;
+					count = count + 1L;
 
 			}
 
 		}
+		if (createResume.getObjective() != null
+				&& createResume.getObjective() != "") {
+			count = count + 1L;
+
+		}
+		if (createResume.getSkills() != null && createResume.getSkills() != "") {
+			count = count + 1L;
+
+		}
+		if (createResume.getAwards() != null && createResume.getAwards() != "") {
+			count = count + 1L;
+
+		}
+		if (createResume.getMemberships() != null
+				&& createResume.getMemberships() != "") {
+			count = count + 1L;
+
+		}
+		if (createResume.getOtherDetails() != null
+				&& createResume.getOtherDetails() != "") {
+			count = count + 1L;
+
+		}
 		createResume.setTotalProgress(count * 2);
-		return null;
 
 	}
 
