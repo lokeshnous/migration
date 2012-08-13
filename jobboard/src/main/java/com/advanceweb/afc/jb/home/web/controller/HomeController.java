@@ -121,7 +121,8 @@ public class HomeController {
 	public String getfeaturedemployerslist(HttpServletRequest request,Model model) {
 		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
 		model.addAttribute("companyProfileDTOList", companyProfileDTOList);
-
+		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 		return "featuredemployers";
 	}
 

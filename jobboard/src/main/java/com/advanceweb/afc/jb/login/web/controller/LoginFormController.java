@@ -38,11 +38,14 @@ import com.advanceweb.afc.jb.login.service.LoginFormService;
 @SessionAttributes("loginForm")
 public class LoginFormController {
 
-	@Value("${mail_subject}")
-	private String mailSubject;
+	@Value("${jobseekerForgotPwdSub}")
+	private String jobseekerForgotPwdSub;
 
-	@Value("${mail_body}")
-	private String mailBody;
+	@Value("${jobseekerForgotPwdBody}")
+	private String jobseekerForgotPwdBody;
+
+	@Value("${jsLoginPage}")
+	private String jsLoginPage;
 
 	@SuppressWarnings("unused")
 	@Value("$(loginvalidation.message)")
@@ -148,10 +151,10 @@ public class LoginFormController {
 				// form.getEmailAddress());
 						email);
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
-				jobSeekerEmailDTO.setSubject(mailSubject);
-				jobSeekerEmailDTO.setBody(mailBody);
-				jobSeekerEmailDTO
-						.setBody(formDTO.getPassword());
+				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
+				String forgotPwdMailBody = jobseekerForgotPwdBody.replace("?temporarypassword", formDTO.getPassword());
+				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink", jsLoginPage);
+				jobSeekerEmailDTO.setBody(forgotPwdMailBody); 
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {

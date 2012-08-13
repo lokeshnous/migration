@@ -8,6 +8,8 @@ public class SendToFriend {
 	private String message;
 	
 	private String joburl;
+	
+	private int jobId;
 
 	
 	public String getJoburl() {
@@ -27,5 +29,11 @@ public class SendToFriend {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public int getJobId() {
+		return jobId;
+	}
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
 	}
 }

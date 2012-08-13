@@ -128,17 +128,11 @@ public class JobSearchActivityController {
 	@Value("${notempty}")
 	private String notempty;
 
-	@Value("${subject}")
-	private String subject;
+	@Value("${jobseekerSuggestFrdSub}")
+	private String jobseekerSuggestFrdSub;
 
-	@Value("${commonupperbody}")
-	private String commonupperbody;
-
-	@Value("${commonlowerbody}")
-	private String commonlowerbody;
-
-	@Value("${commonbeforefriendmsgbody}")
-	private String commonbeforefriendmsgbody;
+	@Value("${jobseekerSuggestFrdBody}")
+	private String jobseekerSuggestFrdBody;
 
 	@Value("${joburl}")
 	private String joburl;
@@ -559,6 +553,7 @@ public class JobSearchActivityController {
 	public String sendToFriend(HttpServletRequest request, Model model) {
 		try {
 			model.addAttribute("joburl", joburl + request.getParameter("id"));
+			model.addAttribute("jobId", request.getParameter("id"));
 			model.addAttribute("sendtofriendmail", new SendToFriend());
 		} catch (Exception e) {// Catch exception if any
 			// System.err.println("Error: " + e.getMessage());
@@ -573,11 +568,11 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
 	public String sendToFriendPost(
 			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
-			BindingResult result, Model model, HttpServletRequest request) {
+			BindingResult result, Model model, HttpServletRequest request, HttpSession session) {
 
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
-		if (sendtofriendmail.getMessage().length() > 0) {
+		/*if (sendtofriendmail.getMessage().length() > 0) {
 			finalmailbody = commonupperbody + "<a href="
 					+ sendtofriendmail.getJoburl() + ">"
 					+ sendtofriendmail.getJoburl() + "</a>"
@@ -587,7 +582,7 @@ public class JobSearchActivityController {
 			finalmailbody = commonupperbody + "<a href="
 					+ sendtofriendmail.getJoburl() + ">"
 					+ sendtofriendmail.getJoburl() + "</a>" + commonlowerbody;
-		}
+		}*/
 		try {
 			if (sendtofriendmail.getEmail().length() > 0
 					&& validateEmailPattern(sendtofriendmail.getEmail())) {
@@ -598,8 +593,23 @@ public class JobSearchActivityController {
 					jobSeekerToAddress[0] = new InternetAddress(
 							sendtofriendmail.getEmail());
 					jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-					jobSeekerEmailDTO.setSubject(subject);
-					jobSeekerEmailDTO.setBody(finalmailbody);
+					String jobseekerName = (String) session
+							.getAttribute("userName");
+					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
+							"?Jobseekername", jobseekerName);
+					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
+					// ?Jobtitle</b><br/>?Companyname
+					SearchedJobDTO searchedJobDTO = jobSearchActivity
+							.viewJobDetails(sendtofriendmail.getJobId());
+					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
+							"?Jobtitle", searchedJobDTO.getJobTitle());
+					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
+							"?Companyname", searchedJobDTO.getCompanyName());
+					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
+							"?Jobseekername", jobseekerName);
+					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
+							"?joburl", sendtofriendmail.getJoburl());
+					jobSeekerEmailDTO.setBody(jobseekerSuggestFrdBody);
 					jobSeekerEmailDTO.setHtmlFormat(true);
 					emailService.sendEmail(jobSeekerEmailDTO);
 				} catch (Exception e) {
