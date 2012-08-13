@@ -62,7 +62,12 @@ public class SaveSearchController {
 	public ModelAndView saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
 			BindingResult result, Map<String, JobSearchResultForm> model,
 			@RequestParam("searchName") String searchName, HttpSession session) {
-
+		
+		/*if(result.hasErrors()){
+			return new ModelAndView("jobseekersavethissearchpopup");
+		}*/
+		
+		
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			return new ModelAndView("jobSeekerLogin");
 		} else {
