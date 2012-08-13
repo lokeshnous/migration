@@ -28,7 +28,7 @@
 			<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="clearfix"></div>
 				<!--Start:MidContant-->
-				<div class="MidContent_Wrapper floatLeft">
+				<div class="MidContent_Wrapper">
 					<div class="popupHeader Padding0  OrangeBG">
 						<h2>EDIT YOUR RESUME</h2>
 						<span class="floatRight marginRight10"><a href="#"
@@ -36,7 +36,7 @@
 								Dashboard</a></span>
 					</div>
 					<div class="clearfix"></div>
-					<div class="MidContent_Wrapper FloatLeft ">
+					<div class="MidContent_Wrapper ">
 						<span>
 							<h1
 								class="marginTop3 marginLeft10 FloatLeft FontSize18 color1">Resume
@@ -59,7 +59,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Contact
+										<h2 class="noBorder">Contact
 											Info</h2>
 									</div>
 									<div class="ESsection accord-open">
@@ -429,7 +429,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Objective</h2>
+										<h2 class="noBorder">Objective</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -470,7 +470,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Work
+										<h2 class="noBorder">Work
 											Experience</h2>
 									</div>
 									<div class="ESsection accord-open">
@@ -615,7 +615,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Education</h2>
+										<h2 class="noBorder">Education</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -727,7 +727,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Certification</h2>
+										<h2 class="noBorder">Certification</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -789,7 +789,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Skills</h2>
+										<h2 class="noBorder">Skills</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -841,7 +841,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Languages</h2>
+										<h2 class="noBorder">Languages</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -910,7 +910,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Awards</h2>
+										<h2 class="noBorder">Awards</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -954,7 +954,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Memberships</h2>
+										<h2 class="noBorder">Memberships</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -995,7 +995,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Other</h2>
+										<h2 class="noBorder">Other</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">
@@ -1037,7 +1037,7 @@
 							<li class="searchResultsColumn1">
 								<div class="sectionHeader Padding0 Height28 LightGrayBG">
 									<div class="floatLeft">
-										<h2 class="width305 marginTop5 UpperCaseNone TextColor01">References</h2>
+										<h2 class="noBorder">References</h2>
 									</div>
 									<div class="ESsection accord-open">
 										<h2 class="UpperCaseNone FontSize12">

@@ -185,7 +185,7 @@
 			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> <div class="floatRight"><a href="findJobPage.html" class="link_color2_emphasized">Return to Search Results &nbsp; </a></div>
 			</div>
 			<div class="JobDetailHeaderLeft">
-			<h1 class="marginBottom0"><span>${jobDetail.jobTitle}</span></h1>
+			<h1 ><span>${jobDetail.jobTitle}</span></h1>
             <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
             </div>
             <div class="JobDetailHeaderRight"><img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer"> </div>

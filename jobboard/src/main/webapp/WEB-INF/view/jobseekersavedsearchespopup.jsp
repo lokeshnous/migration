@@ -158,7 +158,7 @@ $(document).keyup(function(event) {
 						</tbody>
 					</table>
 				</div>
-				<div class="row marginTop20 paddingBottom10">
+				<div class="popUpButtonRow">
 					<a href="/jobboard/jobsearchactivity/findJobPage.html">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>

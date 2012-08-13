@@ -39,14 +39,14 @@
  <form action="" method="get" commandName="createResume" id="viewresumeId">
               <div class="clearfix"></div>
               <!--Start:MidContant-->
-              <div class="MidContent_Wrapper floatLeft">
+              <div class="MidContent_Wrapper ">
               <div class="popupHeader Padding0  OrangeBG">
                   <h2>VIEW YOUR RESUME</h2>
           <span class="floatRight marginRight10"><a href="/jobboard/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
 
         
         <div class="clearfix"></div>
-        <div class="MidContent_Wrapper FloatLeft marginBottom10">
+        <div class="MidContent_Wrapper ">
                   <div class="ResumeHeader"> <span class="FontSize18"><c:out value="${createResume.resumeName}"/></span>
             <div class="clearfix"></div>
             <span>
@@ -61,9 +61,9 @@
                 </div>
         <!---->
 
-        <div class="MidContent_Wrapper FloatLeft marginBottom20">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Contact Info</h2>
+        <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Contact Info</h2>
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox">
@@ -100,9 +100,9 @@
                 </div>
         <div class="clearfix"></div>
         <!---->
-        <div class="MidContent_Wrapper FloatLeft">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Objective</h2>
+        <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Objective</h2>
           </div>
 
                   <div class="clearfix"></div>
@@ -111,10 +111,9 @@
           </div>
                 </div>
         <!---->
-        <div class="MidContent_Wrapper FloatLeft marginBottom20">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-
-          <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Work Experience</h2>
+        <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Work Experience</h2>
           </div>
          <div class="clearfix"></div>
          <div class="ContactInfoBox">
@@ -162,9 +161,9 @@
        </div>
       </div>
         <!---->
-        <div class="MidContent_Wrapper FloatLeft marginBottom20">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Education</h2>
+        <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Education</h2>
           </div>
            <div class="clearfix"></div>
 
@@ -202,9 +201,9 @@
           </div>
                 </div>
         <!---->
-        <div class="MidContent_Wrapper FloatLeft marginBottom20">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Certification</h2>
+        <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Certification</h2>
           </div>
            <div class="clearfix"></div>
 
@@ -232,10 +231,9 @@
           </div>
         </div>
         <!---->
-        <div class="MidContent_Wrapper FloatLeft">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Skills</h2>
+        <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Skills</h2>
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox paddingLeft15 MarginBottom10">
@@ -244,9 +242,9 @@
                 </div>
         <!---->
 
-        <div class="MidContent_Wrapper FloatLeft marginBottom20">
-          <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Languages</h2>
+        <div class="MidContent_Wrapper">
+            <div class="sectionHeaderResume">
+            <h2 class="noBorder">Languages</h2>
           </div>
            <div class="clearfix"></div>
             <div class="ContactInfoBox">
@@ -261,10 +259,9 @@
           </div> 
          </div>
           <!---->
-          <div class="MidContent_Wrapper FloatLeft">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Awards</h2>
+          <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Awards</h2>
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox paddingLeft15 MarginBottom10">
@@ -273,9 +270,9 @@
                 </div>
           <!---->
 
-           <div class="MidContent_Wrapper FloatLeft">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Memberships</h2>
+           <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">Memberships</h2>
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox paddingLeft15 MarginBottom10">
@@ -284,9 +281,9 @@
 
                 </div>
           <!---->
-           <div class="MidContent_Wrapper FloatLeft">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">Other</h2>
+           <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">>Other</h2>
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox paddingLeft15 MarginBottom10">
@@ -295,9 +292,9 @@
           </div>
                 </div>
           <!---->
-          <div class="MidContent_Wrapper FloatLeft marginBottom10">
-                  <div class="sectionHeader Padding0 Height28 LightGrayBG">
-            <h2 class="width305 marginTop5 UpperCaseNone TextColor01">References</h2>
+          <div class="MidContent_Wrapper">
+                  <div class="sectionHeaderResume">
+            <h2 class="noBorder">References</h2>
           </div>
 
            <div class="clearfix"></div>

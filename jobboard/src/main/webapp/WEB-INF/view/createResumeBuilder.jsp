@@ -100,7 +100,7 @@
            </div>
            </span> </div>
 							</span>
-						</div>
+						
 						<div class="clearfix"></div>
 					</div>
 					<!---->
@@ -116,7 +116,7 @@
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
 
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Contact
+											<h2 class="noBorder">Contact
 												Info</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
@@ -251,7 +251,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Objective</h2>
+											<h2 class="noBorder">Objective</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 									</div>
@@ -278,7 +278,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Work
+											<h2 class="noBorder">Work
 												Experience</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
@@ -418,7 +418,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Education</h2>
+											<h2 class="noBorder">Education</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 									</div>
@@ -512,7 +512,7 @@
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
 
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Certification</h2>
+											<h2 class="noBorder">Certification</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 									</div>
@@ -567,7 +567,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Skills</h2>
+											<h2 class="noBorder">Skills</h2>
 										</div>
 
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
@@ -605,7 +605,7 @@
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Languages</h2>
+											<h2 class="noBorder">Languages</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 									</div>
@@ -650,7 +650,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Awards</h2>
+											<h2 class="noBorder">Awards</h2>
 
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
@@ -680,7 +680,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Memberships</h2>
+											<h2 class="noBorder">Memberships</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 									</div>
@@ -708,7 +708,7 @@
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">Other</h2>
+											<h2 class="noBorder">Other</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 									</div>
@@ -738,7 +738,7 @@
 								<li class="searchResultsColumn1">
 									<div class="sectionHeader Padding0 Height28 LightGrayBG">
 										<div class="floatLeft">
-											<h2 class="width305 marginTop5 UpperCaseNone TextColor01">References</h2>
+											<h2 class="noBorder">References</h2>
 										</div>
 										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
 
@@ -806,7 +806,7 @@
 					</span>
 				</div>
 
-				<!--Start:MidContant-->
+				
 
 				<div class="clearfix"></div>
 				<!-- content_wrapper -->
@@ -815,7 +815,7 @@
 						src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
 				<!-- ad_wrapper -->
-
+	</div><!--Start:MidContant-->
 			</div>
 			<!-- main -->
 

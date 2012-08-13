@@ -1031,9 +1031,7 @@ p a {}
 
 /* JOB DETAILS PAGE */
 
-.jobDetails {
-    
-}
+
 
 .jobDetails div.jobDetailsEyebrow {
     background-color: lightgray;
@@ -1051,9 +1049,9 @@ p a {}
     font-weight: bold;
 }
 
-.jobDetails h1 {
+/*.jobDetails h1 {
     margin-bottom: 20px;
-}
+}*/
 
 h3.jobSummaryTitle {
     margin-bottom: 10px;
@@ -1205,11 +1203,9 @@ h3.jobSummaryTitle {
     margin-left: 0;
     padding-left: 10px;
     width: 758px;
-}
-
+}	
 	
-	
-	.content_columns_search_results .column2 .searchResults {
+.content_columns_search_results .column2 .searchResults {
 			float: left;
 			
 		}
@@ -1495,14 +1491,10 @@ div.searchResultsSubContent .btn_sm{ margin-right:5px !important }
 	
 }
 
-.requiredleft0 {
-	color: #FE9400;
-	float: left;
-	padding: 7px 0 0 0px; /* MM: changed */
-}
+
 .textBox350 { width:350px !important;}
 
-.leftFormHolder input, .popUpContainer input.job_seeker_email, .popUpContainer input.job_seeker_password, .job_seeker_email {  float: left; width:350px ; }
+.leftFormHolder input, .popUpContainer input.job_seeker_email, .popUpContainer input.job_seeker_password, .job_seeker_email {  float: left; width:350px; }
 
 .leftFormHolder input[type="checkbox"] {  float: left; width:auto !important; margin:0 5px 10px 0; }
 
@@ -1584,7 +1576,6 @@ input.textBox2 { width:220px !important;}
 .marginTop8 { margin-top:8px;}
 .marginTop10 { margin-top:10px;}
 .marginTop15 { margin-top:15px !important;}
-.marginTop20 { margin-top:20px !important;}
 
 .marginRight5 { margin-right:5px;}
 .marginRight10 { margin-right:10px;}
@@ -2139,10 +2130,10 @@ a.link_color1_emphasized, a.link_color2_emphasized, .link_color2_selected { font
 
 .img_tools { width: 60px; height: 60px; float: left; padding: 0 10px 0 0; background-image: url("../images/Jobs_Board_Sprite.png"); }
 
-.resume { background-position: -197px -251px; }
+/*.resume { background-position: -197px -251px; }
 .calculator { background-position: -342px -251px; }
 .messenger { background-position: -271px -251px; }
-.txt_tools { width: 120px; float: left; }
+.txt_tools { width: 120px; float: left; }*/
 
 .jb_input1, .jb_input2, #radius { margin: 0px 0 5px 0; height: 26px; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; background-color: #FFFFFF; border: 1px solid #CCCCCC; font-size: 15px;  }
 
@@ -2178,12 +2169,8 @@ input.job_seeker_Resume{ width: 125px; height: 25px; border-radius: 4px; float:l
 	float:left;
 	padding-right:5px;}
 
-.MidContent_Wrapper{width:100%; height:auto;}
-.MidContentBox01{ width:265px; height:auto; float:left; color:#6B7B84; background:#efefef; padding-left:20px; padding-right:20px; padding-top:20px; padding-bottom:30px;
-	border-radius: 4px 4px 4px 4px;
-	-moz-border-radius: 4px 4px 4px 4px; 
-	-webkit-border-radius: 4px 4px 4px 4px;
-}
+.MidContent_Wrapper{width:100%; height:auto; float:left; margin-bottom:10px; }
+
 .SilverBorder{border:2px solid #cdcdcd;}
 .GoldBorder{border:2px solid #d2c173;}
 .PlatinumBorder{border:2px solid #bab6b7;}
@@ -2287,6 +2274,7 @@ input.job_seeker_Resume{ width: 125px; height: 25px; border-radius: 4px; float:l
 .BlueBoxCont,.BlueBoxContA{ padding:10px 0px 10px 0px; border-bottom:1px dotted #cccccc;}
 .BlueBoxContA{padding:5px 0px 7px 0px;}
 .LeftBoxLink{width:295px; height:auto; margin-left:10px; border-top:5px solid #54a3db;}
+
 h2.more_link02 {
 	background-image:url("../images/more_orange.png");
     background-repeat:no-repeat;
@@ -2463,3 +2451,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F5F5F5', end
 	margin-top:8px;
 	
 }
+.sectionHeaderResume {
+	border-radius: 4px;
+    color: #FFFFFF;
+    float: left;
+    height: 29px;
+    margin-bottom: 10px;
+    padding:0;
+    text-transform: uppercase;
+    width: 100%;
+    background-color: #E0E0E0;}
+    
+h2.noBorder {border:none; font-size: 14px; font-weight: bold; padding:8px 10px; text-transform:none; }
