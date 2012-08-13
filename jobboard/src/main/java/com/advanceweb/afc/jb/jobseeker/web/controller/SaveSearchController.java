@@ -11,9 +11,10 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.sf.json.JSONObject;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,6 +46,9 @@ public class SaveSearchController {
 	private static final Logger LOGGER = Logger
 			.getLogger("SaveSearchController.class");
 
+	@Value("${navigationPath}")
+	private String navigationPath;
+
 	@Autowired
 	private SaveSearchService saveSearchService;
 
@@ -59,48 +63,71 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveSearchedJobs", method = RequestMethod.GET)
-	public ModelAndView saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
+	public @ResponseBody
+	JSONObject saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
 			BindingResult result, Map<String, JobSearchResultForm> model,
 			@RequestParam("searchName") String searchName, HttpSession session) {
-		
-		
+
+		JSONObject jsonObject = new JSONObject();
+
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-			return new ModelAndView("jobSeekerLogin");
+			jsonObject.put("NavigationPath", navigationPath);
 		} else {
-			int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+			int userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
 			SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-			searchedJobsDTO.setUserID(userId);
-			searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
-					+ MMJBCommonConstants.EQUAL_TO
-					+ session.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
-					+ MMJBCommonConstants.SEMICOLON
-					+ MMJBCommonConstants.KEYWORDS
-					+ MMJBCommonConstants.EQUAL_TO
-					+ session.getAttribute(MMJBCommonConstants.KEYWORDS)
-					+ MMJBCommonConstants.SEMICOLON
-					+ MMJBCommonConstants.CITY_STATE
-					+ MMJBCommonConstants.EQUAL_TO
-					+ session.getAttribute(MMJBCommonConstants.CITY_STATE)
-					+ MMJBCommonConstants.SEMICOLON
-					+ MMJBCommonConstants.RADIUS + MMJBCommonConstants.EQUAL_TO
-					+ session.getAttribute(MMJBCommonConstants.RADIUS));
+			if (StringUtils.isEmpty(searchName)) {
+				jsonObject.put("EmptySearchName", "EmptySearchName");
+			} else {
 
-			searchedJobsDTO.setSearchName(searchName);
-			searchedJobsDTO.setCreatedDate(DateUtils.getCurrentDateAndTime());
-			saveSearchService.saveSearchedJobs(searchedJobsDTO);
-			
-			model.put("jobSearchResultForm", new JobSearchResultForm());
-			return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
-			
+				boolean isSrchNameExist = saveSearchService
+						.validateSearchName(searchName);
+
+				if (isSrchNameExist) {
+					jsonObject
+							.put("DuplicateSearchName", "DuplicateSearchName");
+				} else {
+					searchedJobsDTO.setUserID(userId);
+					searchedJobsDTO
+							.setUrl(MMJBCommonConstants.SEARCH_TYPE
+									+ MMJBCommonConstants.EQUAL_TO
+									+ session
+											.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
+									+ MMJBCommonConstants.SEMICOLON
+									+ MMJBCommonConstants.KEYWORDS
+									+ MMJBCommonConstants.EQUAL_TO
+									+ session
+											.getAttribute(MMJBCommonConstants.KEYWORDS)
+									+ MMJBCommonConstants.SEMICOLON
+									+ MMJBCommonConstants.CITY_STATE
+									+ MMJBCommonConstants.EQUAL_TO
+									+ session
+											.getAttribute(MMJBCommonConstants.CITY_STATE)
+									+ MMJBCommonConstants.SEMICOLON
+									+ MMJBCommonConstants.RADIUS
+									+ MMJBCommonConstants.EQUAL_TO
+									+ session
+											.getAttribute(MMJBCommonConstants.RADIUS));
+
+					searchedJobsDTO.setSearchName(searchName);
+					searchedJobsDTO.setCreatedDate(DateUtils
+							.getCurrentDateAndTime());
+					saveSearchService.saveSearchedJobs(searchedJobsDTO);
+					jsonObject.put("LoggedInNavigationPath", "");
+				}
+			}
+
 		}
+		return jsonObject;
 
 	}
 
 	/**
 	 * This method is used to navigate the save this search pages to Login page
-	 * or pop up page depending upon whether the user is a ananymous user or 
+	 * or pop up page depending upon whether the user is a ananymous user or
 	 * registered user.
+	 * 
 	 * @param saveSearchForm
 	 * @param model
 	 * @param session
@@ -120,6 +147,17 @@ public class SaveSearchController {
 				jsonObject.put("NavigationPath",
 						"../loginFormForJobSeeker/login");
 			} else {
+				// Before user saves his search need to check save search
+				// records are more than 5 searches.
+				// if yes then delete the first saved search
+				int userId = (Integer) session.getAttribute("userId");
+				List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+						.viewMySavedSearches(userId);
+				int savedSearchCount = 0;
+				savedSearchCount = saveSearchedJobsDTOList.size();
+				if (savedSearchCount == 5) {
+					saveSearchService.deleteFirstSearch(userId);
+				}
 				model.put("SaveSearchForm", new SaveSearchForm());
 				jsonObject.put("LoggedInNavigationPath",
 						"../savedSearches/displaySaveThisSearchPopup");
@@ -133,6 +171,7 @@ public class SaveSearchController {
 
 	/**
 	 * This method is used to display the Save Search pop up.
+	 * 
 	 * @param model
 	 * @return
 	 */
