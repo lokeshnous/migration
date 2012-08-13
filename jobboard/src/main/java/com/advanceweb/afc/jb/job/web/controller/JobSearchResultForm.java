@@ -10,7 +10,17 @@ public class JobSearchResultForm {
 	private String start;
 	private String cityState;
 	private String radius;
+	private String searchtype;
 
+
+	
+	public String getSearchtype() {
+		return searchtype;
+	}
+
+	public void setSearchtype(String searchtype) {
+		this.searchtype = searchtype;
+	}
 
 	public String getRadius() {
 		return radius;
