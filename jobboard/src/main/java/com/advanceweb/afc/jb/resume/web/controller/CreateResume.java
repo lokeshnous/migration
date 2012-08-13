@@ -31,6 +31,7 @@ public class CreateResume {
 	//Creating Resume
 	private String objective;
 	private String skills;
+	private int builderSkillsId;
 	private String awards;
 	private String memberships;
 	private String otherDetails;
@@ -231,4 +232,11 @@ public class CreateResume {
 	public void setTotalProgress(Long totalProgress) {
 		this.totalProgress = totalProgress;
 	}
+	public int getBuilderSkillsId() {
+		return builderSkillsId;
+	}
+	public void setBuilderSkillsId(int builderSkillsId) {
+		this.builderSkillsId = builderSkillsId;
+	}
+	
 }

@@ -31,7 +31,7 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private String fileName;
 	private String isPublished;
 	private String updateDt;
-	
+	private int builderSkillsId;
 	//Creating Resume
 	private String objective;
 	private String skills;
@@ -353,6 +353,16 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 
 	public void setListPhoneDtl(List<PhoneDetailDTO> listPhoneDtl) {
 		this.listPhoneDtl = listPhoneDtl;
+	}
+
+
+	public int getBuilderSkillsId() {
+		return builderSkillsId;
+	}
+
+
+	public void setBuilderSkillsId(int builderSkillsId) {
+		this.builderSkillsId = builderSkillsId;
 	}
 	
 }

@@ -183,6 +183,7 @@ public class TransformCreateResume {
 				LanguageDTO dto = new LanguageDTO();
 				dto.setExpLvl(langForm.getExpLvl());
 				dto.setLanguage(langForm.getLanguage());
+				dto.setnLangId(langForm.getnLangId());
 				listWorkExpDTO.add(dto);
 			}
 		}
@@ -227,6 +228,7 @@ public class TransformCreateResume {
 			dto.setOtherDetails(form.getOtherDetails());
 			dto.setMemberships(form.getMemberships());
 			dto.setSkills(form.getSkills());
+			dto.setBuilderSkillsId(form.getBuilderSkillsId());
 			dto.setBuilderResumeId(form.getBuilderResumeId());
 			dto.setResumeName(form.getResumeName());
 			dto.setUserId(form.getUserId());
@@ -371,6 +373,8 @@ public class TransformCreateResume {
 				form.setJobTitle(dto.getJobTitle());
 				form.setStartDate(dto.getStartDate());
 				form.setYrsAtPostion(dto.getYrsAtPostion());
+				form.setCurrentCareerLevel(dto.isCurrentCareerLevel());
+				form.setPresent(dto.isPresent());
 				listWorkExpForms.add(form);
 			}
 		}else{
@@ -462,6 +466,7 @@ public class TransformCreateResume {
 //			createResume.setResumeText1(resumeDTO.get);
 			createResume.setResumeType(resumeDTO.getResumeType());
 			createResume.setSkills(resumeDTO.getSkills());
+			createResume.setBuilderSkillsId(resumeDTO.getBuilderSkillsId());
 			createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
 			createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
 			createResume.setUploadResumeId(String.valueOf(resumeDTO.getUploadResumeId()));

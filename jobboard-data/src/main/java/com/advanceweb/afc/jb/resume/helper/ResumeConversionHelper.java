@@ -27,6 +27,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderLanguage;
 import com.advanceweb.afc.jb.data.entities.ResBuilderPhone;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
+import com.advanceweb.afc.jb.data.entities.ResBuilderSkill;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
@@ -104,6 +105,12 @@ public class ResumeConversionHelper {
 					resumeBuilder.getUpdateDt().toString()));
 		}
 		resumeDTO.setUserId(resumeBuilder.getUserId());
+		
+		if(null != resumeBuilder.getResBuilderSkills() && resumeBuilder.getResBuilderSkills().size()>0){
+			ResBuilderSkill builderSkill = resumeBuilder.getResBuilderSkills().get(0);
+			resumeDTO.setBuilderSkillsId(builderSkill.getBuilderSkillId());
+			resumeDTO.setSkills(builderSkill.getSkillName());
+		}
 		
 		resumeDTO.setListCertDTO(transformResBldResToCertDTO(resumeBuilder));
 		resumeDTO.setListEduDTO(transformResEduRefToEduDTO(resumeBuilder));
@@ -622,7 +629,8 @@ public class ResumeConversionHelper {
 				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
 				workExpEntitiy.setEmploymentYears(Integer.valueOf(workExpDTO.getYrsAtPostion()));
 				workExpEntitiy.setCareerLevel(workExpDTO.getCurrentCareerLvl());
-				workExpEntitiy.setIsCurCareerLevel(workExpDTO.getIsCurrentCareerLvl());
+				workExpEntitiy.setIsCurCareerLevel(workExpDTO.isCurrentCareerLevel()?1:0);
+				workExpEntitiy.setStillEmployed(workExpDTO.isPresent()?1:0);
 				workExpEntitiy.setJobDescription(workExpDTO.getDescription());
 				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
 				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
@@ -705,6 +713,27 @@ public class ResumeConversionHelper {
 			}
 		}
 		return phoneDtlList;
+	}
+	
+	
+	/**
+	 * This method is called to convert List of References DTO to Resume Builder
+	 * References Entity
+	 * 
+	 * @param resumeDTO
+	 * @return builderResume
+	 */
+	public List<ResBuilderSkill> transformBuilderSkills(
+		ResumeDTO resumeDTO, ResBuilderResume builderResume) {
+		List<ResBuilderSkill> skillList = new ArrayList<ResBuilderSkill>();
+		if (null != resumeDTO) {
+			ResBuilderSkill entity = new ResBuilderSkill();
+			entity.setBuilderSkillId(resumeDTO.getBuilderSkillsId());
+			entity.setSkillName(resumeDTO.getSkills());
+			entity.setResBuilderResume(builderResume);
+			skillList.add(entity);
+		}
+		return skillList;
 	}
 	
 	/**

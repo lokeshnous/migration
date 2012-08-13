@@ -29,6 +29,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderLanguage;
 import com.advanceweb.afc.jb.data.entities.ResBuilderPhone;
 import com.advanceweb.afc.jb.data.entities.ResBuilderReference;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
+import com.advanceweb.afc.jb.data.entities.ResBuilderSkill;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
@@ -253,6 +254,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(),builderResume);
 		List<ResBuilderLanguage> builderLangList = resumeConversionHelper.transformBuilderLanguages(resumeDTO.getListLangDTO(),builderResume);	
 		List<ResBuilderPhone> builderPhoneList = resumeConversionHelper.transformBuilderPhoneDetails(resumeDTO.getListPhoneDtl(), builderResume);
+		List<ResBuilderSkill> builderSkillSet = resumeConversionHelper.transformBuilderSkills(resumeDTO,builderResume);
 		
 		builderResume.setResBuilderCertifications(builderCerts);
 		builderResume.setResBuilderEdus(builderEducations);
@@ -260,6 +262,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		builderResume.setResBuilderReferences(builderRefs);
 		builderResume.setResBuilderLanguages(builderLangList);
 		builderResume.setResBuilderPhones(builderPhoneList);
+		builderResume.setResBuilderSkills(builderSkillSet);
 		try {
 			hibernateTemplate.saveOrUpdate(builderResume);
 			return true;
