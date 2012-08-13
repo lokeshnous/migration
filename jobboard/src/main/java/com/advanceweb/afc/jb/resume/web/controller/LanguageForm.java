@@ -10,6 +10,7 @@ package com.advanceweb.afc.jb.resume.web.controller;
 public class LanguageForm {
 	private String language;
 	private String expLvl;
+	private int nLangId;
 	
 	
 	public String getLanguage() {
@@ -23,6 +24,12 @@ public class LanguageForm {
 	}
 	public void setExpLvl(String expLvl) {
 		this.expLvl = expLvl;
+	}
+	public int getnLangId() {
+		return nLangId;
+	}
+	public void setnLangId(int nLangId) {
+		this.nLangId = nLangId;
 	}
 	
 	

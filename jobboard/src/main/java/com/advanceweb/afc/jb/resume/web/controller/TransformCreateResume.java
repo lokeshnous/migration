@@ -426,6 +426,7 @@ public class TransformCreateResume {
 				LanguageForm form = new LanguageForm();
 				form.setExpLvl(dto.getExpLvl());
 				form.setLanguage(dto.getLanguage());
+				form.setnLangId(dto.getnLangId());
 				listLangForms.add(form);
 			}
 		}else{

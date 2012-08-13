@@ -170,5 +170,8 @@ public interface MMJBCommonConstants {
 	//For Save this 
 	public static final String SEARCH_TYPE = "searchtype";
 	public static final String SEMICOLON = ";";
+	public static final String LANGUAGE_ENGLISH="English";
+	public static final String REFERENCE_TYPE_PERSONAL="Personal";
+	
 	
 }

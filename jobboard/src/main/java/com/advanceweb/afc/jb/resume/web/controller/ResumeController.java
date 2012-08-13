@@ -435,7 +435,9 @@ public class ResumeController {
 		CertificationsForm certForm = new CertificationsForm();
 		EducationForm eduForm = new EducationForm();
 		LanguageForm langForm = new LanguageForm();
+		langForm.setLanguage(MMJBCommonConstants.LANGUAGE_ENGLISH);
 		ReferenceForm refForm = new ReferenceForm();
+		refForm.setReferenceType(MMJBCommonConstants.REFERENCE_TYPE_PERSONAL);
 		WorkExpForm workExpForm = new WorkExpForm();
 		PhoneDetailForm phoneDtlForm = new PhoneDetailForm();
 		ContactInfoForm contactInfoForm = new ContactInfoForm();

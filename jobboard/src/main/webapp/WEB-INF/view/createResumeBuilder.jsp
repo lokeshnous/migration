@@ -26,9 +26,17 @@
 <script type="text/javascript" src="../resources/js/slider.js"></script>
  <link href="../resources/js/lprogress.css" type='text/css' rel='stylesheet'>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
+    	$(function() {
+    		$( ".datepicker" ).datepicker();
+    	});
+    	
 		var per =${createResume.totalProgress};
 		var lprog;
 		 lprog =$("#progressbar").progress({ width: 100, height: 10, prog:per});
@@ -101,6 +109,13 @@
            </span> </div>
 							</span>
 						
+						
+						<c:if test="${not empty errorMessage}">
+						    	<div id="errmsg" style="color: red" align="left" >
+					    		<c:out value="${errorMessage}"></c:out>
+							</div>
+						</c:if>
+				
 						<div class="clearfix"></div>
 					</div>
 					<!---->
@@ -320,7 +335,7 @@
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3"> Start Date:</span>
 											<form:input path="listWorkExpForm[${status.index}].startDate"
-												class="job_seeker_Resume" />
+												class="job_seeker_Resume datepicker" />
 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
@@ -330,7 +345,7 @@
 										<div class="row marginTop10">
 											<span class="lableTextSelect">End Date:</span>
 											<form:input path="listWorkExpForm[${status.index}].endDate"
-												class="job_seeker_Resume" />
+												class="job_seeker_Resume datepicker" />
 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
@@ -389,7 +404,7 @@
 										</div>
 										<div class="rowEvenNewSpacing MarginBottom10">
 											<span class="lableText3"> Hourly Pay Rate:</span>
-											<form:input path="${workExp.hrlyPayRate}"
+											<form:input path="listWorkExpForm[${status.index}].hrlyPayRate"
 												class="job_seeker_Resume" />
 											<span class="required "></span>
 										</div>
@@ -462,21 +477,21 @@
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3"> Start Date:</span>
 											<form:input path="listEduForm[${status.index}].startDate"
-												class="job_seeker_Resume" />
-											<div class="calender">
+												class="job_seeker_Resume datepicker" />
+<!-- 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
-											</div>
+											</div> -->
 										</div>
 										<div class="row marginTop10">
 											<span class="lableTextSelect">End Date:</span>
 
 											<form:input path="listEduForm[${status.index}].endDate"
-												class="job_seeker_Resume" />
-											<div class="calender">
+												class="job_seeker_Resume datepicker" />
+<!-- 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
-											</div>
+											</div> -->
 										</div>
 										<div class="row MarginBottom10 ">
 
@@ -533,7 +548,7 @@
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Certifying Authority:</span>
 											<form:input
-												path="listCertForm[${status.index}].certificationName"
+												path="listCertForm[${status.index}].certifyingAuthority"
 												class="job_seeker_password textBox350" />
 										</div>
 
@@ -541,7 +556,7 @@
 											<span class="lableText3"> Received:</span>
 											<form:input
 												path="listCertForm[${status.index}].dateOfReceipt"
-												class="job_seeker_Resume" />
+												class="job_seeker_Resume datepicker" />
 										</div>
 										<div class="row MarginBottom10 ">
 											<div class="lableText3 marginTop10">Summary:</div>
@@ -612,14 +627,13 @@
 								</li>
 							</ul>
 							<div class="searchResultsSubContent">
-								<c:forEach items="${createResume.listLangForm}" var="language"
+								<c:forEach items="${createResume.listLangForm}" var="languageObj"
 									varStatus="status">
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="row">
 											<span class="lableTextSelect">Language:</span>
 											<form:select path="listLangForm[${status.index}].language"
 												class="jb_input3 jb_input_width3">
-												<form:option value="0" label="English" />
 												<form:options items="${languagelList}"
 													itemValue="optionName" itemLabel="optionName" />
 											</form:select>
@@ -779,11 +793,11 @@
 										</div>
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Reference Type:</span><span
-												class="floteleft"> <input name="Professional"
-												type="radio" value="" class="marginRight5"> <form:radiobutton
-													path="${reference.referenceType}" value="Professional" /> <label>Professional</label>
+												class="floteleft"> 
+												<form:radiobutton path="listRefForm[${status.index}].referenceType" value="Professional" /> 
+												<label>Professional</label>
 											</span>&nbsp;&nbsp;&nbsp;<span class="floteleft"> <form:radiobutton
-													path="${reference.referenceType}" value="Personal" /> <label>Personal</label>
+													path="listRefForm[${status.index}].referenceType" value="Personal" /> <label>Personal</label>
 											</span>
 										</div>
 										<div class="rowEvenNewSpacing MarginBottom10">
