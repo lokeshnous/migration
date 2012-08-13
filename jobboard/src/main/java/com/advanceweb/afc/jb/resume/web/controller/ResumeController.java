@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,9 @@ public class ResumeController {
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	@Autowired
+	private ResumeValidator resumeValidator;
 	
 	private @Value("${basedirectorypathUpload}") String basedirectorypathUpload;
 
@@ -496,6 +500,17 @@ public class ResumeController {
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
+		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
+		/*if(!StringUtils.isEmpty(errorMessage)){
+				
+			model = populateDropdowns(model);
+			
+			model.addObject("createResume", createResume);
+			model.addObject("errorMessage",errorMessage);
+			model.setViewName("createResumeBuilder");
+			return model;
+		}*/
+		
 		AddressDTO addDTO = transformJobSeekerRegistration.createAddressDTO(createResume.getContactInfoForm());
 		ContactInformationDTO contactInfoDTO = transCreateResume.transformContactInfoDTO(createResume.getContactInfoForm());
 		contactInfoDTO.setAddressDTO(addDTO);
@@ -516,7 +531,7 @@ public class ResumeController {
 		resumeService.createResumeBuilder(resumeDTO);
 		getTotalNotNullField(createResume);
 		model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
-		
+		createResume= null;
 		return model;
 
 	}
@@ -610,6 +625,31 @@ public class ResumeController {
 		List<ReferenceDTO> listRefDTO = transCreateResume.transformReferenceDTO(createResume.getListRefForm());
 		resumeService.addReference(listRefDTO);
 		return null;
+	}
+	
+	private  ModelAndView populateDropdowns(ModelAndView model){
+		
+		List<DropDownDTO> empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> phoneTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+		List<DropDownDTO> careerLvlList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
+		List<DropDownDTO> annualSalarylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
+		List<DropDownDTO> languagelList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_TYPE);
+		List<DropDownDTO> langProficiencylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
+		List<DropDownDTO> eduDegreeList = populateDropdownsService.populateEducationDegreesDropdowns();
+		List<CountryDTO>  countryList = populateDropdownsService.getCountryList();
+		List<StateDTO>    stateList = populateDropdownsService.getStateList();
+		
+		model.addObject("empTypeList",empTypeList);
+		model.addObject("phoneTypeList",phoneTypeList);
+		model.addObject("careerLvlList",careerLvlList);
+		model.addObject("annualSalarylList",annualSalarylList);
+		model.addObject("languagelList",languagelList);
+		model.addObject("langProficiencylList",langProficiencylList);
+		model.addObject("eduDegreeList",eduDegreeList);
+		model.addObject("countryList",countryList);
+		model.addObject("stateList",stateList);
+		
+		return model;
 	}
 
 	/**
