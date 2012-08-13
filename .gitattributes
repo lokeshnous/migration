@@ -123,6 +123,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SOLRSearchH
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrSearchDeleagate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/security/CustomAuthenticationManager.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServiceException.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/resources/solrConfiguration.properties -text
@@ -290,7 +291,6 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/LocationDAO.java -t
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/LocationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/SearchDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/SearchDAOImpl.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/security/CustomAuthenticationManager.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserDaoImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
