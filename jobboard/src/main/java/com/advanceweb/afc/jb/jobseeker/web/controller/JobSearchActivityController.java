@@ -355,6 +355,8 @@ public class JobSearchActivityController {
 					.getCityState().trim());
 			session.setAttribute(MMJBCommonConstants.RADIUS, jobSearchResultForm
 					.getRadius().trim());
+			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
+					.getSearchtype().trim());
 		}else{
 			LOGGER.info("Session ID is not present since it is a Anonymous user.");
 		}

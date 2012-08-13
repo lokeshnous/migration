@@ -63,10 +63,6 @@ public class SaveSearchController {
 			BindingResult result, Map<String, JobSearchResultForm> model,
 			@RequestParam("searchName") String searchName, HttpSession session) {
 		
-		/*if(result.hasErrors()){
-			return new ModelAndView("jobseekersavethissearchpopup");
-		}*/
-		
 		
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			return new ModelAndView("jobSeekerLogin");
@@ -77,7 +73,7 @@ public class SaveSearchController {
 			searchedJobsDTO.setUserID(userId);
 			searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
 					+ MMJBCommonConstants.EQUAL_TO
-					+ saveSearchForm.getSearchName()
+					+ session.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
 					+ MMJBCommonConstants.SEMICOLON
 					+ MMJBCommonConstants.KEYWORDS
 					+ MMJBCommonConstants.EQUAL_TO
@@ -94,9 +90,7 @@ public class SaveSearchController {
 			searchedJobsDTO.setCreatedDate(DateUtils.getCurrentDateAndTime());
 			saveSearchService.saveSearchedJobs(searchedJobsDTO);
 			
-			//System.out.println("ifffff");
 			model.put("jobSearchResultForm", new JobSearchResultForm());
-			//System.out.println("ifffff");
 			return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
 			
 		}
