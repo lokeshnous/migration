@@ -52,18 +52,6 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	}
 
 	/**
-	 * This method is called to delete a Saved Job Search
-	 * 
-	 * @param saveSearchId
-	 * @return
-	 */
-	@Override
-	public boolean deleteSavedSearch(int saveSearchId) {
-
-		return saveSearchDAO.deleteSavedSearch(saveSearchId);
-	}
-
-	/**
 	 * This method is called to edit a Saved Job Search
 	 * 
 	 * @param saveSearchId
@@ -71,7 +59,6 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 */
 	@Override
 	public AdmSaveSearch editSavedSearch(int saveSearchId) {
-
 		return saveSearchDAO.editSavedSearch(saveSearchId);
 	}
 
@@ -87,12 +74,36 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	}
 
 	/**
+	 * To check whether search name is already exist or not
+	 * 
+	 * @param searchName
+	 * @return
+	 */
+	@Override
+	public boolean validateSearchName(String searchName) {
+		return saveSearchDAO.validateSearchName(searchName);
+	}
+
+	/**
+	 * This method is called to delete a Saved Job Search
+	 * 
+	 * @param saveSearchId
+	 * @return
+	 */
+	@Override
+	public boolean deleteSavedSearch(int saveSearchId) {
+
+		return saveSearchDAO.deleteSavedSearch(saveSearchId);
+	}
+
+	/**
 	 * Added to delete the first saved search from the DB and allow the user to
 	 * create new search
 	 * 
 	 * @param userId
 	 * @return
 	 */
+	@Override
 	public boolean deleteFirstSearch(int userId) {
 		return saveSearchDAO.deleteFirstSearch(userId);
 	}

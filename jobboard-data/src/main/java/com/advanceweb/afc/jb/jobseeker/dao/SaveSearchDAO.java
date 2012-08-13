@@ -27,6 +27,8 @@ public interface SaveSearchDAO {
 	AdmSaveSearch editSavedSearch(int saveSearchId);
 
 	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
-	
+
+	boolean validateSearchName(String searchName);
+
 	boolean deleteFirstSearch(int userId);
 }

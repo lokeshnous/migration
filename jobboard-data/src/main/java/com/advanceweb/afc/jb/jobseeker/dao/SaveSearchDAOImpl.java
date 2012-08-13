@@ -10,9 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
-import com.advanceweb.afc.jb.data.entities.SaveSearchResults;
 import com.advanceweb.afc.jb.jobseeker.helper.SaveSearchConversionHelper;
 
 /**
@@ -121,6 +119,23 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 			hibernateTemplate.update(searchResults);
 		}
 		return true;
+	}
+
+	/**
+	 * To check whether search name is already exist or not
+	 * 
+	 * @param searchName
+	 * @return
+	 */
+	public boolean validateSearchName(String searchName) {
+		AdmSaveSearch admSaveSearch = new AdmSaveSearch();
+		List<AdmSaveSearch> searchResults = hibernateTemplate.find(
+				"from AdmSaveSearch where searchName=? and delete_dt is  NULL",
+				searchName);
+		if (searchResults.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**

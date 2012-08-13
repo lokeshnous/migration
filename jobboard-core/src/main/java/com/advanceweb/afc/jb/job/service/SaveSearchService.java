@@ -40,14 +40,6 @@ public interface SaveSearchService {
 			String searchName);
 
 	/**
-	 * This method is called to delete the Saved Searches
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	boolean deleteSavedSearch(int saveSearchId);
-
-	/**
 	 * This method is called to edit the Saved Searches
 	 * 
 	 * @param userId
@@ -62,9 +54,27 @@ public interface SaveSearchService {
 	 * @return
 	 */
 	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
-	
+
 	/**
-	 * This method is called to delete the first search if user is trying to create more than 5th search
+	 * To check whether search name is already exist or not
+	 * 
+	 * @param searchName
+	 * @return
+	 */
+	boolean validateSearchName(String searchName);
+
+	/**
+	 * This method is called to delete the Saved Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	boolean deleteSavedSearch(int saveSearchId);
+
+	/**
+	 * This method is called to delete the first search if user is trying to
+	 * create more than 5th search
+	 * 
 	 * @param userId
 	 * @return
 	 */
