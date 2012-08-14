@@ -345,7 +345,7 @@ div.searchResultsSubContent .btn_sm { margin-right:5px !important }
 .job_seeker_email { float: left; width:350px; }
 .leftFormHolder input[type="checkbox"] { float: left; width:auto !important; margin:0 5px 10px 0; }
 .leftFormHolder input[type="file"] { border:1px solid #ccc; height:25px; width:auto !important; }
-input[type="submit"] { width:auto; box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5); text-decoration: none; margin-top:-5px; height:25px; vertical-align : middle; }
+input[type="submit"],input[type="button"] { width:auto; box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5); text-decoration: none; margin-top:-5px; height:25px; vertical-align : middle; }
 input.textBox2 { width:220px !important; }
 .job_Advancedsearch_main { width: 610px; height: auto; padding: 0 15px 10px 0; /* MM: changed */ float:left; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
 .job_Advancedsearch_devider,
