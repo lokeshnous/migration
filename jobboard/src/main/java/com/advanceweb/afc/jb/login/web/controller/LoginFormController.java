@@ -45,8 +45,8 @@ public class LoginFormController {
 	@Value("${jobseekerForgotPwdBody}")
 	private String jobseekerForgotPwdBody;
 
-	@Value("$(loginvalidation.message)")
-	private String loginValidation;
+	@Value("${loginErrMsg}")
+	private String loginErrMsg;
 
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
@@ -87,9 +87,7 @@ public class LoginFormController {
 			@RequestParam(value = "error", required = false) boolean error,
 			ModelMap model) {
 		if (error) {
-			model.put(
-					"error",
-					"Login Failure.The User Name / Password you have entered is invalid or you are not authorized to Login to the site.");
+			model.put("error", loginErrMsg);
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
