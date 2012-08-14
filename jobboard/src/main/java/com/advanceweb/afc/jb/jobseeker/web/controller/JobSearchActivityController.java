@@ -80,9 +80,6 @@ public class JobSearchActivityController {
 	@Autowired
 	private JobSeekerService jobSeekerActivity;
 
-	@Value("${saveThisJobLimitsMsg}")
-	private String saveThisJobLimitsMsg;
-
 	@Value("${navigationPath}")
 	private String navigationPath;
 
@@ -465,8 +462,8 @@ public class JobSearchActivityController {
 				.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
 		if (savedJobsCount > Integer.parseInt(saveJobsLimit)) {
-			jsonObject.put(ajaxMsg, saveThisJobLimitsMsg);
-			return jsonObject;
+			int oldJobId =	savedJobDTOList.get(0).getSaveJobId();	
+			jobSeekerActivity.deleteSavedJobs(oldJobId);
 		}
 		 
 		// Get the Job details
