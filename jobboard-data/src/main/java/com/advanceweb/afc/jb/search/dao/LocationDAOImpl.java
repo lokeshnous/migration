@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.search.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -109,17 +110,21 @@ public class LocationDAOImpl implements LocationDAO{
 		LOGGER.info("The value of passes keyword is "+keywords);
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
 		
-		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(" from  JpLocation WHERE  postcode like '"+keywords+"%' ORDER BY  postcode ASC");
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.postcode like '"+keywords+"%' ORDER BY  jloc.postcode ASC");
 		query.setMaxResults(10);
 		@SuppressWarnings("unchecked")
 		List<JpLocation> jpLocationList = query.list();
 		
 		if(jpLocationList != null){
-			for(JpLocation locObj: jpLocationList){
-					LocationDTO locDTO = new LocationDTO();
-					locDTO.setPostcode(locObj.getPostcode());
-					locationList.add(locDTO);
-			}
+			Iterator<?> itr = jpLocationList.iterator();
+  			while(itr.hasNext()){
+  				String locObj = (String) itr.next();
+  				LocationDTO locDTO = new LocationDTO();
+				locDTO.setPostcode(locObj);
+				locationList.add(locDTO);
+  				
+  			}
+			
 		}
 		LOGGER.info("Location List size after Post code search is "+locationList.size());	
 		return locationList;
@@ -137,17 +142,21 @@ public class LocationDAOImpl implements LocationDAO{
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
 		
 		@SuppressWarnings("unchecked")
-		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("from  JpLocation WHERE  city like '"+keywords+"%' ORDER BY  city, state  ASC");
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("select distinct jloc.city, jloc.state from  JpLocation jloc WHERE  jloc.city like '"+keywords+"%' ORDER BY  jloc.city, jloc.state  ASC");
 		query.setMaxResults(10);
 		List<JpLocation> jpLocationList = query.list();
-  		
+		
   		if(jpLocationList != null){
-			for(JpLocation locObj: jpLocationList){
-					LocationDTO locDTO = new LocationDTO();
-					locDTO.setCity(locObj.getCity());
-					locDTO.setState(locObj.getState());
-					locationList.add(locDTO);
-			}
+  			Iterator<?> itr = jpLocationList.iterator();
+  			while(itr.hasNext()){
+  				Object[] locObj = (Object[])itr.next();
+  				LocationDTO locDTO = new LocationDTO();
+				locDTO.setCity(String.valueOf(locObj[0]));
+				locDTO.setState(String.valueOf(locObj[1]));
+				locationList.add(locDTO);
+  				
+  			}
+  			
 		}
   		
   		LOGGER.info("Location List size after city state search is "+locationList.size());
