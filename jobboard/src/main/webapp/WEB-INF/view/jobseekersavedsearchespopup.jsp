@@ -183,8 +183,9 @@ $(document).keyup(function(event) {
 						<c:forEach items="${saveSearchedJobsDTOList}"
 							var="saveSearchdtoList"  varStatus="status">
 							<tr id="${saveSearchdtoList.saveSearchID}">
-								<td><a href="${saveSearchdtoList.getUrl()}"							
-									rel="0" target="_blank" class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td>
+								<td><a href="#">${saveSearchdtoList.getSearchName()}</a></td>
+								<%-- <a href="${saveSearchdtoList.getUrl()}"							
+									rel="0" target="_blank" class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td> --%>
 								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
 								
 								<td align="center">						
