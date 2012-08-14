@@ -128,7 +128,7 @@ public class JobApplicationController {
 			List<String> attachmentpaths = new ArrayList<String>();
 			try {
 
-				attachmentpaths.add(form.getFilePath());
+				attachmentpaths.add(filepath);
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
 				//LOGGER.info("Resume not found");
