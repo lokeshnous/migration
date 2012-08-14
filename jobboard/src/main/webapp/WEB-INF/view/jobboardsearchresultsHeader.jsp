@@ -5,6 +5,27 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
+<script type="text/javascript">
+	jQuery(document).ready(
+			function() {
+				//jQuery(".megamenu").megamenu();
+				$("#viewappliedjob").displaypopup("#viewappliedjob", "775",
+						"355");
+				$("#viewsavedjob").displaypopup("#viewsavedjob", "780", "370");
+
+				$("#changePassword").displaypopup("#changePassword", "780",
+						"370");
+				$("#manageResumePopup").displaypopup("#manageResumePopup",
+						"775", "252");
+				$("#createResumePopup").displaypopup("#createResumePopup",
+						"775", "252");
+				$("#editProfileId")
+						.displaypopup("#editProfileId", "775", "252");
+				$("#modifySubs").displaypopup("#modifySubs", "775", "252");
+				$("#viewMySavedSearchesId").displaypopup(
+						"#viewMySavedSearchesId", "775", "252");
+			});
+</script>
 <head>
 	
 </head>
@@ -30,7 +51,7 @@
 	              </div>
 	                      <div class="input_grp2 marginTop10">
 	                <form:select path="radius" id="radius" cssClass="jb_input3" onchange="validateRadius();">
-	                	<form:option label="--" value=""/>
+	                	<form:option label="--" value="0"/>
 	                	<!-- USE <form:options/> while dynamically populating the values  -->
 	                	<form:option label="5 Miles" value="5"/>
 	                	<form:option label="10 Miles" value="10"/>
@@ -44,11 +65,12 @@
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
 	                      <div style="color: red;font-weight:bold;" id="findSearchInfo" ></div>
+	                      <div class="rowEvenNewSpacing">
 	                    <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" />
 	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  
                       
-                      <a href="../jobsearchactivity/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div>
+                      <a href="../jobsearchactivity/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div></div>
             <!-- search_form -->
 
 					<security:authorize access="!hasRole('ROLE_JOB_SEEKER')">
