@@ -121,6 +121,10 @@ public class ResumeValidator {
 				   MMJBCommonConstants.ZERO.equals(form.getCurrentCareerLvl())){
 					return "Please fill the required fields";
 				}
+				if((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form.getStartDate()))||
+					(!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form.getEndDate()))){
+					return "Please enter valid date format";
+				}
 			}
 		}
 		return null;
@@ -138,11 +142,16 @@ public class ResumeValidator {
 					MMJBCommonConstants.ZERO.equals(form.getDegreeLvl())){
 					return "Please fill the required fields";
 				}
+				if((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form.getStartDate()))||
+						(!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form.getEndDate()))){
+						return "Please enter valid date format";
+				}
 			}
 			
 		}
 		return null;
 	}
+	
 	
 	/**
 	 * Validate Certifications
@@ -154,6 +163,9 @@ public class ResumeValidator {
 			for(CertificationsForm form : certsList){
 				if(StringUtils.isEmpty(form.getCertificationName())){
 					return "Please fill the required fields";
+				}
+				if(!StringUtils.isEmpty(form.getDateOfReceipt()) && !validateDatePattern(form.getDateOfReceipt())){
+						return "Please enter valid date format";
 				}
 			}			
 		}
@@ -187,6 +199,18 @@ public class ResumeValidator {
 	private boolean validateEmailPattern(String emailId){
 		pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
 		matcher = pattern.matcher(emailId);
+		return matcher.matches();
+	}
+	
+	/**
+	 * Validating Date Pattern
+	 * 
+	 * @param strDate
+	 * @return
+	 */
+	private boolean validateDatePattern(String strDate){
+		pattern = Pattern.compile(MMJBCommonConstants.MMDDYYYY_PATTERN);
+		matcher = pattern.matcher(strDate);
 		return matcher.matches();
 	}
 }
