@@ -70,6 +70,10 @@ public class ResumeValidator {
 			
 			return "Please fill the required fields";
 		}
+		
+		if(!StringUtils.isEmpty(form.getPostalCode()) && form.getPostalCode().length() > 5){
+			return "Please enter valid Zip Code";
+		}
 		return null;
 	}
 	
@@ -104,6 +108,18 @@ public class ResumeValidator {
 	}
 	
 	/**
+	 * Validating Phone Number Pattern
+	 * @param mobile
+	 * @return
+	 */
+	private boolean validateNumericsPattern(String value){
+		pattern = Pattern.compile(MMJBCommonConstants.NUMERICS_PATTERN);
+		matcher = pattern.matcher(value);
+		return matcher.matches();
+	}
+	
+	
+	/**
 	 * Validating work experience
 	 * @param workExpList
 	 * @return
@@ -121,10 +137,19 @@ public class ResumeValidator {
 				   MMJBCommonConstants.ZERO.equals(form.getCurrentCareerLvl())){
 					return "Please fill the required fields";
 				}
-				if((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form.getStartDate()))||
-					(!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form.getEndDate()))){
-					return "Please enter valid date format";
+				
+				if((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form.getYrsAtPostion()))){
+					return "'Years At Position' should have only numerics'";
 				}
+				
+				if((!StringUtils.isEmpty(form.getHrlyPayRate()) && !validateNumericsPattern(form.getHrlyPayRate()))){
+					return "'Hourly Pay Rate' should have only numerics'";
+				}
+				
+				if((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form.getStartDate()))||
+						(!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form.getEndDate()))){
+						return "Please enter valid date format";
+					}
 			}
 		}
 		return null;
