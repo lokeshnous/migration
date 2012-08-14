@@ -13,7 +13,7 @@ public interface MMJBCommonConstants {
 	public static final String MOBILE_PATTERN = "\\(\\d{3}\\)\\s\\d{3}-\\d{4}";
 	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	public static final String MMDDYYYY_PATTERN="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d$";
-
+	public static final String NUMERICS_PATTERN = "[\\p{Digit}&&[123456789]]+";
 	public static final String RESUME_TYPE_RESUME_BUILDER = "ADVANCE Resume Builder";
 	public static final String RESUME_TYPE_UPLOAD = "Upload Existing Resume";
 	public static final String RESUME_TYPE_COPY_PASTE = "Copy and Paste";
