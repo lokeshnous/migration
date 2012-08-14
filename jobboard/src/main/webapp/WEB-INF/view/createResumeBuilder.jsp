@@ -590,8 +590,8 @@
 									</div>
 								</c:forEach>
 								<div id="certAjaxCallId">
-									<input type="button" value="Save and add another certification"
-										class="btn_sm orange" id="certAjaxCallIdButton" />
+<!-- 									<input type="button" value="Save and add another certification"
+										class="btn_sm orange" id="certAjaxCallIdButton" /> -->
 									<!-- <p><a href="#" class="link_color1_emphasized">Save and add another certification</a></p> -->
 								</div>
 							</div>
