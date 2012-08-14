@@ -1,11 +1,10 @@
-package com.advanceweb.afc.jb.search;
+package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.util.List;
 import java.util.Map;
 
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 public interface JobSearchDeleagate {

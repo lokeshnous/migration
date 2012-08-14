@@ -27,7 +27,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.common.util.SolrParameter;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
-import com.advanceweb.afc.jb.search.JobSearchDeleagate;
+import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
 import com.advanceweb.afc.jb.search.dao.LocationDAO;
 import com.advanceweb.afc.jb.search.dao.SearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;

@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.engine;
+package com.advanceweb.afc.jb.search.service;
 
 
 import net.sf.json.JSONObject;

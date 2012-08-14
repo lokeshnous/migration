@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.job.service.impl;
+package com.advanceweb.afc.jb.search.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.util.CheckNullUtil;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.search.engine.JSONConverterService;
+import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 
