@@ -189,9 +189,14 @@ public class JobSearchActivityController {
 			HttpSession session, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(jobId);
-		int userId = (Integer) session.getAttribute("userId");
-		String userName = (String) session.getAttribute("userName");
-		String userEmail = (String) session.getAttribute("userEmail");
+		int userId = 0;
+		String userName = null;
+		String userEmail = null;		
+		if(session.getAttribute("userId") != null){
+			userId = (Integer) session.getAttribute("userId");
+			userName = (String) session.getAttribute("userName");
+			userEmail = (String) session.getAttribute("Email");
+		}
 		form.setUseremail(userEmail);
 		try {
 
