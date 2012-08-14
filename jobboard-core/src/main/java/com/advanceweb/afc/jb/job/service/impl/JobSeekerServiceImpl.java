@@ -44,9 +44,9 @@ public class JobSeekerServiceImpl implements JobSeekerService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public boolean deleteAppliedJobs(int appliedJobId) {
+	public boolean updateAppliedSavedJobs(int jobId) {
 
-		return activityDAO.deleteAppliedJobs(appliedJobId);
+		return activityDAO.updateAppliedSavedJobs(jobId);
 
 	}
 
@@ -57,14 +57,6 @@ public class JobSeekerServiceImpl implements JobSeekerService {
 	@Override
 	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
 		return activityDAO.getSavedJobs(jobSeekerId);
-	}
-
-	/**
-	 * delete Saved job
-	 */
-	@Override
-	public boolean deleteSavedJobs(int savedJobId) {
-		return activityDAO.deleteSavedJobs(savedJobId);
 	}
 
 	public JobSeekerActivityDAO getActivityDAO() {
