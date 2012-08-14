@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -297,13 +296,14 @@ public class ResumeController {
 					.transformLanguageForm(resumeDTO.getListLangDTO());
 			ContactInfoForm contactForm = transCreateResume
 					.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-
+			List<PhoneDetailForm> listPhoneDtl = transCreateResume.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
 			createResume.setListCertForm(listCertForm);
 			createResume.setListEduForm(listEduForm);
 			createResume.setListLangForm(listLangForm);
 			createResume.setListRefForm(listRefForm);
 			createResume.setListWorkExpForm(listWorkExpForm);
 			createResume.setContactInfoForm(contactForm);
+			createResume.setListPhoneDtlForm(listPhoneDtl);
 			getTotalNotNullField(createResume);
 			// DropDowns
 			model.addObject("empTypeList", empTypeList);
@@ -571,14 +571,9 @@ public class ResumeController {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
 		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
-/*		if(!StringUtils.isEmpty(errorMessage)){
-				
-=======
-		String errorMessage = resumeValidator
-				.validateResumeBuilder(createResume);
+/*		
 		if (!StringUtils.isEmpty(errorMessage)) {
 
->>>>>>> .r1069
 			model = populateDropdowns(model);
 
 			model.addObject("createResume", createResume);
@@ -790,6 +785,7 @@ public class ResumeController {
 				.transformLanguageForm(resumeDTO.getListLangDTO());
 		ContactInfoForm contactForm = transCreateResume
 				.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+		List<PhoneDetailForm> listPhoneDtl = transCreateResume.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
 
 		createResume.setListCertForm(listCertForm);
 		createResume.setListEduForm(listEduForm);
@@ -797,6 +793,7 @@ public class ResumeController {
 		createResume.setListRefForm(listRefForm);
 		createResume.setListWorkExpForm(listWorkExpForm);
 		createResume.setContactInfoForm(contactForm);
+		createResume.setListPhoneDtlForm(listPhoneDtl);
 		resumeDTO.getContactInfoDTO();
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
 				.getResumeType())) {

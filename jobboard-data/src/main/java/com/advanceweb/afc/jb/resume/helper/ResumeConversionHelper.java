@@ -118,8 +118,7 @@ public class ResumeConversionHelper {
 		resumeDTO.setListWorkExpDTO(transformResEmpRefToWorkExpDTO(resumeBuilder));
 		resumeDTO.setContactInfoDTO(transformResBuilderToContactInfoDTO(resumeBuilder));
 		resumeDTO.setListLangDTO(transformBuilderLanguagesToDTO(resumeBuilder));
-
-
+		resumeDTO.setListPhoneDtl(transformBuilderResBuiderPhoneToDTO(resumeBuilder));
 
 		return resumeDTO;
 
@@ -717,6 +716,27 @@ public class ResumeConversionHelper {
 		return phoneDtlList;
 	}
 	
+	
+	/**
+	 * This method is called to convert List of References DTO to Resume Builder
+	 * References Entity
+	 * 
+	 * @param resumeDTO
+	 * @return builderResume
+	 */
+	public List<PhoneDetailDTO> transformBuilderResBuiderPhoneToDTO(ResBuilderResume builderResume) {
+		List<PhoneDetailDTO> phoneDtlList = new ArrayList<PhoneDetailDTO>();
+		if (null != builderResume.getResBuilderPhones()) {
+			for (ResBuilderPhone entity : builderResume.getResBuilderPhones()) {
+				PhoneDetailDTO dto = new PhoneDetailDTO();
+				dto.setBuilderPhoneId(entity.getBuilderPhoneId());
+				dto.setPhoneNumber(entity.getPhoneNumber());
+				dto.setPhoneType(entity.getPhoneType());		
+				phoneDtlList.add(dto);
+			}
+		}
+		return phoneDtlList;
+	}
 	
 	/**
 	 * This method is called to convert List of References DTO to Resume Builder

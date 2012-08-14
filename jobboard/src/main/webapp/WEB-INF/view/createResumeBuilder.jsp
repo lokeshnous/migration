@@ -254,20 +254,15 @@
 									<div class="rowEvenNewSpacing MarginBottom10">
 										<span class="lableText3">Phone Number:</span>
 										<div class="floatLeft marginRight10"></div>
-										<span class="floatLeft marginRight10"> <c:forEach
-												items="${createResume.listPhoneDtlForm}" var="phoneDtl"
-												varStatus="status">
-												<form:select
-													path="listPhoneDtlForm[${status.index}].phoneType"
+										<span class="floatLeft marginRight10">
+										<c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">
+												<form:select path="listPhoneDtlForm[${status.index}].phoneType"
 													id="exclude" class="jb_input75">
-													<form:options items="${phoneTypeList}" itemValue="optionId"
-														itemLabel="optionName" />
+													<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 												</form:select>
-												<form:input
-													path="listPhoneDtlForm[${status.index}].phoneNumber"
-													class="job_seeker_password" />
+												<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password" />
 												<span class="required ">(Required)</span>
-											</c:forEach>
+										</c:forEach>
 										</span>
 									</div>
 									<form:hidden path="uploadResumeId" />

@@ -219,6 +219,28 @@ public class TransformCreateResume {
 	}
 	
 	/**
+	 * Method to Phone Detail DTO to Phone Detail Form
+	 * @param listCertForms
+	 * @return
+	 */
+	public List<PhoneDetailForm> transformPhoneDetailDTOToForm(List<PhoneDetailDTO> phoneDetails){
+		
+		List<PhoneDetailForm> phoneDtls = new ArrayList<PhoneDetailForm>();
+		if(null != phoneDetails){
+			for(PhoneDetailDTO dto : phoneDetails){
+				PhoneDetailForm form = new PhoneDetailForm();
+				form.setBuilderPhoneId(dto.getBuilderPhoneId());
+				form.setPhoneNumber(dto.getPhoneNumber());
+				form.setPhoneType(dto.getPhoneType());
+				phoneDtls.add(form);
+			}
+		}
+		return phoneDtls;
+		
+	}
+	
+	
+	/**
 	 * Method to convert Create Resume form to Resume dto
 	 * @param listCertForms
 	 * @return
