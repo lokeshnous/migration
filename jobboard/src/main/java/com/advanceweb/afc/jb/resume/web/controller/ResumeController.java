@@ -620,41 +620,44 @@ public class ResumeController {
 	}
 
 	/**
-	 * This method is called to save work experience Ajax call
+	 * This method is called to add work experience
 	 * 
-	 * @param model
-	 * @param map
+	 * @param session
+	 * @param createResume
 	 * @return
 	 */
 	@RequestMapping(value = "/addWorkExp", method = RequestMethod.POST)
-	public String addWorkExp(HttpServletRequest request, HttpSession session,
-			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<WorkExpDTO> listWorkExpDTO = transCreateResume
-				.transformWorkExpDTO(createResume.getListWorkExpForm());
-		resumeService.addWorkExp(listWorkExpDTO);
-		return null;
+	public ModelAndView addWorkExp(HttpSession session, CreateResume createResume) {
+		
+		WorkExpForm form = new WorkExpForm();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addWorkExp");
+		model.addObject("workExpPositionId",createResume.getListWorkExpForm().size());
+		if (null != createResume.getListCertForm()) {
+			createResume.getListWorkExpForm().add(form);
+		} else {
+			List<WorkExpForm> listWorkExpForms = new ArrayList<WorkExpForm>();
+			listWorkExpForms.add(form);
+			createResume.setListWorkExpForm(listWorkExpForms);
+		}
+		return model;
 	}
 
 	/**
-	 * This method is called to delete a resume
+	 * This method is called add Certifications
 	 * 
-	 * @param model
-	 * @param map
+	 * @param session
+	 * @param createResume
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addCertifications", method = RequestMethod.POST)
-	public ModelAndView addCertifications(HttpSession session,
-			CreateResume createResume) {
-		/*
-		 * List<CertificationDTO> listCertDTO =
-		 * transCreateResume.transformCertificationDTO
-		 * (createResume.getListCertForm());
-		 */
-		// resumeService.addCertifications(listCertDTO);
+	public ModelAndView addCertifications(HttpSession session,CreateResume createResume) {
+		
 		CertificationsForm form = new CertificationsForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addCerts");
+		model.addObject("certPositionId",createResume.getListCertForm().size());
 		if (null != createResume.getListCertForm()) {
 			createResume.getListCertForm().add(form);
 		} else {
@@ -666,52 +669,98 @@ public class ResumeController {
 	}
 
 	/**
-	 * This method is called to delete a resume
+	 * This method is called to add Education Details
 	 * 
-	 * @param model
-	 * @param map
+	 * @param session
+	 * @param createResume
 	 * @return
 	 */
 	@RequestMapping(value = "/addEducationDetails", method = RequestMethod.POST)
-	public String addEducationDetails(HttpServletRequest request,
-			HttpSession session, CreateResume createResume, Model model,
-			Map<String, Object> map) {
-		List<EducationDTO> listEduDTO = transCreateResume
-				.transformEducationDTO(createResume.getListEduForm());
-		resumeService.addEducation(listEduDTO);
-		return null;
+	public ModelAndView addEducationDetails(HttpSession session, CreateResume createResume) {
+		
+		EducationForm form = new EducationForm();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addEducation");
+		model.addObject("eduPositionId",createResume.getListEduForm().size());
+		if (null != createResume.getListEduForm()) {
+			createResume.getListEduForm().add(form);
+		} else {
+			List<EducationForm> listEduForms = new ArrayList<EducationForm>();
+			listEduForms.add(form);
+			createResume.setListEduForm(listEduForms);
+		}
+		return model;
 	}
 
 	/**
-	 * This method is called to delete a resume
+	 * This method is called add Languages
 	 * 
-	 * @param model
-	 * @param map
+	 * @param session
+	 * @param createResume
 	 * @return
 	 */
 	@RequestMapping(value = "/addLanguages", method = RequestMethod.POST)
-	public String addLanguage(HttpServletRequest request, HttpSession session,
-			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<LanguageDTO> listLangDTO = transCreateResume
-				.transformLanguageDTO(createResume.getListLangForm());
-		resumeService.addLanguage(listLangDTO);
-		return null;
+	public ModelAndView addLanguage(HttpSession session, CreateResume createResume) {
+		
+		LanguageForm form = new LanguageForm();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addLanguage");
+		model.addObject("langPositionId",createResume.getListLangForm().size());
+		if (null != createResume.getListLangForm()) {
+			createResume.getListLangForm().add(form);
+		} else {
+			List<LanguageForm> listLangForms = new ArrayList<LanguageForm>();
+			listLangForms.add(form);
+			createResume.setListLangForm(listLangForms);
+		}
+		return model;
 	}
 
 	/**
-	 * This method is called to delete a resume
+	 * This method is called to add References
 	 * 
-	 * @param model
-	 * @param map
+	 * @param session
+	 * @param createResume
 	 * @return
 	 */
 	@RequestMapping(value = "/addReferences", method = RequestMethod.POST)
-	public String addReference(HttpServletRequest request, HttpSession session,
-			CreateResume createResume, Model model, Map<String, Object> map) {
-		List<ReferenceDTO> listRefDTO = transCreateResume
-				.transformReferenceDTO(createResume.getListRefForm());
-		resumeService.addReference(listRefDTO);
-		return null;
+	public ModelAndView addReference(HttpSession session, CreateResume createResume) {
+		ReferenceForm form = new ReferenceForm();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addReference");
+		model.addObject("refPositionId",createResume.getListRefForm().size());
+		if (null != createResume.getListRefForm()) {
+			createResume.getListRefForm().add(form);
+		} else {
+			List<ReferenceForm> listRefForms = new ArrayList<ReferenceForm>();
+			listRefForms.add(form);
+			createResume.setListRefForm(listRefForms);
+		}
+		return model;
+	}
+	
+	/**
+	 * This method is called to add phone Numbers
+	 * 
+	 * @param session
+	 * @param createResume
+	 * @return
+	 */
+	@RequestMapping(value = "/addPhoneNos", method = RequestMethod.POST)
+	public ModelAndView addPhoneNumbers(HttpSession session, CreateResume createResume) {
+		
+		PhoneDetailForm form = new PhoneDetailForm();
+		ModelAndView model = new ModelAndView();
+		model.setViewName("addPhoneNos");
+		model.addObject("phNoPositionId",createResume.getListPhoneDtlForm().size());
+		if (null != createResume.getListPhoneDtlForm()) {
+			createResume.getListPhoneDtlForm().add(form);
+		} else {
+			List<PhoneDetailForm> listPhDtlForms = new ArrayList<PhoneDetailForm>();
+			listPhDtlForms.add(form);
+			createResume.setListPhoneDtlForm(listPhDtlForms);
+		}
+		return model;
 	}
 
 	private ModelAndView populateDropdowns(ModelAndView model) {
