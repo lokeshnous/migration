@@ -87,7 +87,9 @@ public class LoginFormController {
 			@RequestParam(value = "error", required = false) boolean error,
 			ModelMap model) {
 		if (error) {
-			model.put("error", loginValidation);
+			model.put(
+					"error",
+					"Login Failure.The User Name / Password you have entered is invalid or you are not authorized to Login to the site.");
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
