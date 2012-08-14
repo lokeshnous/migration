@@ -21,13 +21,16 @@ $(document).keyup(function(event) {
 });
 	jQuery(document).ready(function() {
 						$("#tb_save_search img").click(function(event) {
+							
 							var action = $(this).attr("alt");
 							var rowObj = $(this).parent().parent().parent();
 							var saveSearchId = rowObj.attr("id");
 							var saveSearchedUrl = rowObj.attr("href");
-													
+							//var searchName = $("#searchName").text();
+							
+							//alert(action);
 							switch (action) {
-							 case "edit":
+							 case "edit":		
 								
 							   break; 
 							case "delete":{
@@ -54,12 +57,64 @@ $(document).keyup(function(event) {
 							}
 							}
 						});					
-						$('.newWindow').click(function (event){							 
+						$('.newWindow').click(function (event){			
+							
+	
+							
 		                    var url = $(this).attr("href");
+		                    
+		 
 		                    parent.window.location.href = url;
 		     	            parent.$.nmTop().close();
 		                   event.preventDefault();
-		                });		
+		                });	
+						
+						$("#editSavedSearch").click(function (event){	
+							var searchName = $(this).parent().parent().children().children().html();
+							
+							
+							$.ajax({url: getBaseURL()+"/savedSearches/editSavedSearch.html?searchName="+searchName,
+								success: function(data){ 
+									$.each(data, function(key, val) {
+										
+										/* if (key == "searchtype") {
+											//window.location.href = val+".html";
+											$.nmManual(val + '.html');
+											parent.$.nmTop().close();
+										}
+										
+										if (key == "LoggedInNavigationPath") {
+											parent.$.nmTop().close();
+											//$.nmManual(val + '.html');
+										}
+										
+										if(key == "EmptySearchName"){
+											$("#ErrorMsg").text("${msg.EmptySearchName}");
+										}
+										if(key == "DuplicateSearchName"){
+											$("#ErrorMsg").text("${msg.DuplicateSearchName}");
+										} */
+									}); 
+									
+								    /* if(data.success != null){
+								    	//rowObj.remove();
+								    	alert("Hi");
+								    }
+								    if(data.failure != null){
+								    	alert(data.failure);
+								    } */
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+									
+								}
+							}); 
+						 });  
+						
+											
+						
 						//For saving the data
 						
 						$("#saveData").click(function(event){						
@@ -109,7 +164,7 @@ $(document).keyup(function(event) {
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form  method="get" action = "/jobboard/savedSearches/saveSearchedNames.html" commandName="saveSearchForm">
+			<form:form  method="GET" action ="" commandName="saveSearchForm">
 				<div class="row">
 					<table id="tb_save_search" width="100%" border="0" cellspacing="0"
 						cellpadding="0" class="grid">
@@ -127,7 +182,7 @@ $(document).keyup(function(event) {
 							var="saveSearchdtoList"  varStatus="status">
 							<tr id="${saveSearchdtoList.saveSearchID}">
 								<td><a href="${saveSearchdtoList.getUrl()}"							
-									rel="0" target="_blank" class="newWindow">${saveSearchdtoList.getSearchName()}</a></td>
+									rel="0" target="_blank" class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td>
 								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
 								
 								<td align="center">						
@@ -147,9 +202,9 @@ $(document).keyup(function(event) {
 								
 								<td align="center"><a href='' class="newWindow"><img
 										src="../resources/images/View.png" width="20" height="20"
-										alt="view"></a>&nbsp;<a href='' class="newWindow"><img
-										src="../resources/images/Edit.png" width="20" height="20"
-										alt="edit"></a>&nbsp;<a href="#"><img
+										alt="view"></a>&nbsp;<a href='#' id="editSavedSearch" class="newWindow"><img
+										src="../resources/images/Edit.png"   width="20" height="20"
+										alt="edit" onclick=""></a>&nbsp;<a href="#"><img
 										src="../resources/images/Delete.png" width="20" height="20"
 										alt="delete" ></a>
 										</td>
