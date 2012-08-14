@@ -36,7 +36,7 @@ $(document).keyup(function(event) {
 							case "delete":{
 								var r=confirm("You want to delete this?");
 								if(r==true){
-									$.ajax({url: getBaseURL()+"/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
+									$.ajax({url: "${pageContext.request.contextPath}/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
 											success: function(data){ 
 											    if(data.success != null){
 											    	rowObj.remove();
@@ -57,7 +57,7 @@ $(document).keyup(function(event) {
 							}
 							}
 						});					
-						$('.newWindow').click(function (event){			
+						/* $('.newWindow').click(function (event){			
 							
 	
 							
@@ -67,22 +67,24 @@ $(document).keyup(function(event) {
 		                    parent.window.location.href = url;
 		     	            parent.$.nmTop().close();
 		                   event.preventDefault();
-		                });	
+		                });	 */
 						
 						$("#editSavedSearch").click(function (event){	
 							var searchName = $(this).parent().parent().children().children().html();
 							
 							
-							$.ajax({url: getBaseURL()+"/savedSearches/editSavedSearch.html?searchName="+searchName,
+							$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchName="+searchName,
 								success: function(data){ 
 									$.each(data, function(key, val) {
-										
-										/* if (key == "searchtype") {
+					//alert(val);
+										 if (key == "searchtype" && val == "basic") {
 											//window.location.href = val+".html";
-											$.nmManual(val + '.html');
+					//alert(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
+											parent.window.location.href = '${pageContext.request.contextPath}/jobSeeker/jobSeekerDashBoard' + '.html';
+											//$.nmManual(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
 											parent.$.nmTop().close();
 										}
-										
+										 /*
 										if (key == "LoggedInNavigationPath") {
 											parent.$.nmTop().close();
 											//$.nmManual(val + '.html');
@@ -128,7 +130,7 @@ $(document).keyup(function(event) {
 							    stringObjNew = stringObjNew +";"+ stringObj;
 							 });
 							//alert('objects are'+stringObjNew);
-							$.ajax({url:getBaseURL()+"/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
+							$.ajax({url: "${pageContext.request.contextPath}/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
 								    	//alert(data.success);
