@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -571,7 +572,7 @@ public class ResumeController {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
 		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
-/*		
+		
 		if (!StringUtils.isEmpty(errorMessage)) {
 
 			model = populateDropdowns(model);
@@ -580,7 +581,7 @@ public class ResumeController {
 			model.addObject("errorMessage", errorMessage);
 			model.setViewName("createResumeBuilder");
 			return model;
-		}*/
+		}
 
 		AddressDTO addDTO = transformJobSeekerRegistration
 				.createAddressDTO(createResume.getContactInfoForm());
