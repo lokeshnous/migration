@@ -142,7 +142,13 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>End Date:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.endDate}"/></span> 
-					<%-- <input type="checkbox" value="${workExp.bPresent}" disabled="true"/><span>&nbsp;&nbsp;&nbsp;</span>present --%>
+              <c:if test="${workExp.bPresent eq 'true'}">
+              	<input type="checkbox" value="${workExp.bPresent}" disabled="true" checked="checked"/>
+              </c:if> 
+              <c:if test="${workExp.bPresent eq 'false'}">
+              	<input type="checkbox" value="" disabled="true"/>
+              </c:if>         
+				<span>&nbsp;&nbsp;&nbsp;</span>present
 			</div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Years at Position:</strong></p>
@@ -150,9 +156,14 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Career Level:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.currentCareerLvl}"/></span> 
-<%--               <input type="checkbox" value="${workExp.bCurrentCareerLevel}" disabled="true"/><span>&nbsp;&nbsp;&nbsp;</span>This is my current career level --%>              
+               <c:if test="${workExp.bCurrentCareerLevel eq 'true'}">
+              	<input type="checkbox" value="${workExp.bCurrentCareerLevel}" disabled="true" checked="checked"/>
+              </c:if>  
+              <c:if test="${workExp.bCurrentCareerLevel eq 'false'}">
+              	<input type="checkbox" value="" disabled="true"/>
+              </c:if> 
+	               <span>&nbsp;&nbsp;&nbsp;</span>This is my current career level              
               </div>
-
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Annual Salary: </strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.annualSalary}"/></span> </div>
@@ -195,8 +206,14 @@
               </span><span class="ContactInfoAreaRight"><c:out value="${education.startDate}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>End Date:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.endDate}"/></span> 
-              <%-- <input type="checkbox" value="${education.bNotGraduatedYet}" disabled="true"/><span>&nbsp;&nbsp;&nbsp;</span>I haven't graduated yet.   --%>
+              </span><span class="ContactInfoAreaRight"><c:out value="${education.endDate}"/></span>               
+              <c:if test="${education.bNotGraduatedYet eq 'true'}">
+              	<input type="checkbox" value="${education.bNotGraduatedYet}" disabled="true" checked="checked"/>
+              </c:if> 
+              <c:if test="${education.bNotGraduatedYet eq 'false'}">
+              	<input type="checkbox" value="" disabled="true"/>
+              </c:if> 
+              <span>&nbsp;&nbsp;&nbsp;</span>I haven't graduated yet.   
               </div>
 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
