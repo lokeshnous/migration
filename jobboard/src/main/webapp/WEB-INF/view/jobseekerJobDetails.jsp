@@ -188,8 +188,12 @@
 			<h1 ><span>${jobDetail.jobTitle}</span></h1>
             <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
             </div>
-            <div class="JobDetailHeaderRight"><img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer"> </div>
-<div class="jobDetailsIntro">
+            <div class="JobDetailHeaderRight">
+            <c:if test="${isFeatureEmployer}">
+            <img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
+            </c:if> 
+            </div>
+			<div class="jobDetailsIntro">
 			    <div class="jobDetailsIntroReview">
 				<p style="width: 440px;"><c:if test="${isHideCity}" ><span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><c:if test="${isHideState}" ><span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.stateFullName}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><c:if test="${isHideCoutry}" ><span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobID}</p>
 			    </div>

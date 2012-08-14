@@ -73,8 +73,8 @@ public class JobApplicationController {
 				
 				EmailDTO toEmployer = new EmailDTO();
 				InternetAddress[] employerToAddress = new InternetAddress[1];
-				//employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());
-				employerToAddress[0] = new InternetAddress("pramodap@nousinfo.com");
+				employerToAddress[0] = new InternetAddress(searchedJobDTO.getEmployerEmailAddress());
+//				employerToAddress[0] = new InternetAddress("pramodap@nousinfo.com");
 				toEmployer.setFromAddress(advanceWebAddress);
 				toEmployer.setToAddress(employerToAddress);
 				toEmployer.setSubject(searchedJobDTO.getJobTitle());

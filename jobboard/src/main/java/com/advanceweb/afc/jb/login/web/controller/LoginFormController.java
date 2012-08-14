@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.login.web.controller;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -44,12 +45,15 @@ public class LoginFormController {
 	@Value("${jobseekerForgotPwdBody}")
 	private String jobseekerForgotPwdBody;
 
-	@Value("${jsLoginPage}")
-	private String jsLoginPage;
-
 	@SuppressWarnings("unused")
 	@Value("$(loginvalidation.message)")
 	private String loginValidation;
+	
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
+	
+	@Value("${navigationPath}")
+	private String navigationPath;
 
 	@Value("${invalidemail}")
 	private String invalidmail;
@@ -117,23 +121,24 @@ public class LoginFormController {
 	 * 
 	 * @param form
 	 * @param result
+	 * @param request 
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/jobSeekerForgotPWDPopUp", method = RequestMethod.POST)
 	public String emailThePassword(@Valid LoginForm form, BindingResult result,
-			@RequestParam("email") String email, Model model) {
+			@RequestParam("email") String email, Model model,
+			HttpServletRequest request) {
 		String emailAddress = email;
 		String finalresult = "";
 		boolean value = false;
 
-		LoginFormDTO formDTO= loginFormService
+		LoginFormDTO formDTO = loginFormService
 				.getUserEmailDetails(emailAddress);
 
 		// User Validation based on email address of user
 		if (formDTO != null) {
-			value = loginValidator.validateEmailValues(email,
-					formDTO);
+			value = loginValidator.validateEmailValues(email, formDTO);
 		}
 
 		// Sending mail to the logged in user if he is valid user
@@ -142,6 +147,14 @@ public class LoginFormController {
 					+ emptyerrormsg;
 		} else if (email.length() > 0 && value) {
 			try {
+
+				String loginPath = navigationPath.substring(2);
+				// TODO: login Url is for jobseeker. The URL should be changed
+				// after
+				// creation of employer login page
+				String jonseekerloginUrl = request.getRequestURL().toString()
+						.replace(request.getServletPath(), loginPath)+dothtmlExtention;
+
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 				jobSeekerEmailDTO.setCcAddress(null);
@@ -152,9 +165,11 @@ public class LoginFormController {
 						email);
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
 				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
-				String forgotPwdMailBody = jobseekerForgotPwdBody.replace("?temporarypassword", formDTO.getPassword());
-				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink", jsLoginPage);
-				jobSeekerEmailDTO.setBody(forgotPwdMailBody); 
+				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
+						"?temporarypassword", formDTO.getPassword());
+				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
+						jonseekerloginUrl);
+				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {

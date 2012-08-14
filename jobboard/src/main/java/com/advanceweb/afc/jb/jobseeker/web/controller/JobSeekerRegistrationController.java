@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -67,6 +68,8 @@ public class JobSeekerRegistrationController {
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
 		
+	@Value("${jobseekerRegPhoneMsg}")
+	private String jobseekerRegPhoneMsg;
 	
 	/**
 	 * This method is called to display job seeker registration page Step1
@@ -156,7 +159,7 @@ public class JobSeekerRegistrationController {
 						//validation mobile number
 						if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
 								&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
-							return new ModelAndView("jobSeekerCreateAccountInfo","message","Phone number should contain only numbers");
+							return new ModelAndView("jobSeekerCreateAccountInfo","message",jobseekerRegPhoneMsg);
 						}
 					}
 				}

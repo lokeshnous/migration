@@ -40,6 +40,7 @@ public class JobSearchActivityConversionHelper {
 			searchedJobDTO.setJobTitle(entity.getJobtitle());
 			searchedJobDTO.setJobDesc(entity.getAdtext());
 			searchedJobDTO.setJobID(entity.getJobId());
+			searchedJobDTO.setFeatureEmployer(entity.getFeatured()==1?true:false);
 
 			/**
 			 * get detail from admFacility entity

@@ -31,6 +31,7 @@ public class SearchedJobDTO {
 	private String stateFullName;
 	private String country;
 	private String areaOfInterest;
+	private boolean isFeatureEmployer;
 	
 
 
@@ -198,6 +199,14 @@ public class SearchedJobDTO {
 
 	public void setCompanyNameDisp(String companyNameDisp) {
 		this.companyNameDisp = companyNameDisp;
+	}
+
+	public boolean isFeatureEmployer() {
+		return isFeatureEmployer;
+	}
+
+	public void setFeatureEmployer(boolean isFeatureEmployer) {
+		this.isFeatureEmployer = isFeatureEmployer;
 	}
 
 }

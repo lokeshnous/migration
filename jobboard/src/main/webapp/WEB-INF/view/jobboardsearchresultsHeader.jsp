@@ -122,9 +122,5 @@
 
     </div>
     <!-- main --> 
-
-
-<!-- footer_wrapper -->
-
 </body>
 </html>
