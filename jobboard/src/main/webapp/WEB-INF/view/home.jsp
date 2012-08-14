@@ -50,7 +50,7 @@ type="text/css">
 		<div class="main_wrapper_inside">
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
-				<a href="../pgiController/callPaymentMethod.html" class="btn_sm white">Payment Order</a>
+				<!-- <a href="../pgiController/callPaymentMethod.html" class="btn_sm white">Payment Order</a> -->
 				<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
 				<div class="searchContent" style="display: none;">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
