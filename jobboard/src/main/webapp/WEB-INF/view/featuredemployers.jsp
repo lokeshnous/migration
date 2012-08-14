@@ -41,9 +41,9 @@
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
 					<br class="clearfix" />
 				
-				<div class="otherContent ">
-				<div class="row">
-					<div class="sectionHeader">
+				<div class="otherContent marginTop5">
+				<div class="row ">
+					<div class="sectionHeader marginTop15">
 						<h2>Featured Employers</h2>
 					</div>
 					<ul class="employersList">
