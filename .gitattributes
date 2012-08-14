@@ -369,6 +369,11 @@ jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addCerts.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addEducation.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addLanguage.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addPhoneNos.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addReference.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResume.jsp -text
