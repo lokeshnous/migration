@@ -45,13 +45,12 @@ public class LoginFormController {
 	@Value("${jobseekerForgotPwdBody}")
 	private String jobseekerForgotPwdBody;
 
-	@SuppressWarnings("unused")
 	@Value("$(loginvalidation.message)")
 	private String loginValidation;
-	
+
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
-	
+
 	@Value("${navigationPath}")
 	private String navigationPath;
 
@@ -60,7 +59,7 @@ public class LoginFormController {
 
 	@Value("${notempty}")
 	private String emptyerrormsg;
-	
+
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
@@ -82,17 +81,15 @@ public class LoginFormController {
 	 * @param model
 	 * @return
 	 */
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String jobSeekerLogin(
 			@RequestParam(value = "error", required = false) boolean error,
 			ModelMap model) {
-		if (error == true) {
-			model.put(
-					"error",
-					"The User Name / Password you have entered is invalid or you are not authorized to Login to the site");
+		if (error) {
+			model.put("error", loginValidation);
 		} else {
-			model.put("error", "");
+			model.put("error", MMJBCommonConstants.EMPTY);
 		}
 		return "jobSeekerLogin";
 	}
@@ -121,7 +118,7 @@ public class LoginFormController {
 	 * 
 	 * @param form
 	 * @param result
-	 * @param request 
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -153,7 +150,8 @@ public class LoginFormController {
 				// after
 				// creation of employer login page
 				String jonseekerloginUrl = request.getRequestURL().toString()
-						.replace(request.getServletPath(), loginPath)+dothtmlExtention;
+						.replace(request.getServletPath(), loginPath)
+						+ dothtmlExtention;
 
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
