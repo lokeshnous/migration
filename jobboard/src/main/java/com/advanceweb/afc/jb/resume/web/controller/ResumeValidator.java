@@ -87,9 +87,10 @@ public class ResumeValidator {
 		if(null != createResume.getListPhoneDtlForm()){
 			for(PhoneDetailForm form : createResume.getListPhoneDtlForm()){				
 				if(StringUtils.isEmpty(form.getPhoneType()) && StringUtils.isEmpty(form.getPhoneNumber())){
-					if(!validateMobileNumberPattern(form.getPhoneNumber())){
-						return "Phone number should contain only numbers";
-					}
+					return "Please fill the required fields";
+				}
+				if(!validateMobileNumberPattern(form.getPhoneNumber())){
+					return "Please enter the valid phone format(000) 000-0000.";
 				}
 			}
 		}
