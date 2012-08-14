@@ -31,6 +31,17 @@
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
+	
+	//Limit text area characters
+	function limitText(limitField, limitCount, limitNum) {
+/* 		alert(limitField.value.length+""+limitCount.value+""+limitNum); */
+		if (limitField.value.length > limitNum) {
+			limitField.value = limitField.value.substring(0, limitNum);
+		} else {
+			limitCount.value = limitNum - limitField.value.length;
+		}
+	}
+
 	jQuery(document).ready(function() {
 		
     	$(function() {
@@ -299,9 +310,11 @@
 										<div class="lableText3 marginTop10">Your Career
 											Objective:</div>
 										<div class="input_grp5 ">
-											<form:textarea path="objective" class="textareaBoxCResume"
+											<form:textarea path="objective" class="textareaBoxCResume" id="objlimitedtextarea"
+												onKeyDown="limitText(this.form.objlimitedtextarea,this.form.countdownId1,2000);"
+												onKeyUp="limitText(this.form.objlimitedtextarea,this.form.countdownId1,2000);"
 												rows="5" cols="45" />
-											<p>2000 characters remaining</p>
+												<p><input readonly type="text" name="countdownId1" size="3" value="2000" id="countdown">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -432,10 +445,12 @@
 											<div class="lableText3 marginTop10">Summary/Job
 												Description:</div>
 											<div class="input_grp5 ">
-												<form:textarea
+												<form:textarea id="workExplimitedtextarea${status.count}"
+													onKeyDown="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
+													onKeyUp="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
 													path="listWorkExpForm[${status.index}].description"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p>2000 characters remaining</p>
+												<p><input readonly type="text" name="countdownworkexp${status.count}" size="3" value="2000">characters remaining.<p>
 
 <!-- 												<p>
 													<a href="" class="link_color1_emphasized">Save and add
@@ -517,9 +532,11 @@
 
 											<div class="lableText3 marginTop10">Degrees:</div>
 											<div class="input_grp5 ">
-												<form:textarea path="listEduForm[${status.index}].degrees"
+												<form:textarea path="listEduForm[${status.index}].degrees" id="eduDeglimitedtextarea${status.count}"
+													onKeyDown="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
+													onKeyUp="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p>2000 characters remaining</p>
+												<p><input readonly type="text" name="countdowneduDeg${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 										</div>
 										<div class="row MarginBottom10 ">
@@ -527,9 +544,11 @@
 											<div class="lableText3 marginTop10">Certifications:</div>
 											<div class="input_grp5 ">
 												<form:textarea
-													path="listEduForm[${status.index}].certifications"
+													path="listEduForm[${status.index}].certifications" id="eduCertlimitedtextarea${status.count}"
+													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
+													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p>2000 characters remaining</p>
+												<p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
 												<p>
 <!-- 													<a href="" class="link_color1_emphasized">Save and add
 														another institution</a> -->
@@ -582,9 +601,11 @@
 											<div class="lableText3 marginTop10">Summary:</div>
 											<div class="input_grp5 ">
 
-												<form:textarea path="listCertForm[${status.index}].summary"
+												<form:textarea path="listCertForm[${status.index}].summary" id="Certslimitedtextarea${status.count}"
+													onKeyDown="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
+													onKeyUp="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p>2000 characters remaining</p>
+												<p><input readonly type="text" name="countdownCerts${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 										</div>
 									</div>
@@ -700,9 +721,11 @@
 											which you earned them:
 										</div>
 										<div class="input_grp5 ">
-											<form:textarea path="awards" class="textareaBoxCResume"
+											<form:textarea path="awards" class="textareaBoxCResume" id="awardsTAId"
+													onKeyDown="limitText(this.form.awardsTAId,this.form.countdownIdAwards,2000);"
+													onKeyUp="limitText(this.form.awardsTAId,this.form.countdownIdAwards,2000);"
 												rows="3" cols="45" />
-											<p>2000 characters remaining</p>
+											<p><input readonly type="text" name="countdownIdAwards" size="3" value="2000">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -727,9 +750,11 @@
 										<div class="lableText3 marginTop10">If you're a member
 											of any professionals associations, please list them here:</div>
 										<div class="input_grp5 ">
-											<form:textarea path="memberships" class="textareaBoxCResume"
+											<form:textarea path="memberships" class="textareaBoxCResume" id="membershipsTAId"
+													onKeyDown="limitText(this.form.membershipsTAId,this.form.countdownMemShip,2000);"
+													onKeyUp="limitText(this.form.membershipsTAId,this.form.countdownMemShip,2000);"
 												rows="3" cols="45" />
-											<p>2000 characters remaining</p>
+											<p><input readonly type="text" name="countdownMemShip" size="3" value="2000">characters remaining.<p>
 
 										</div>
 									</div>
@@ -758,9 +783,11 @@
 										</div>
 
 										<div class="input_grp5 ">
-											<form:textarea path="otherDetails" class="textareaBoxCResume"
-												rows="3" cols="45" />
-											<p>2000 characters remaining</p>
+											<form:textarea path="otherDetails" id="otherInterestsTAId" class="textareaBoxCResume"
+													onKeyDown="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);"
+													onKeyUp="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);" 
+													rows="3" cols="45" />
+											<p><input readonly type="text" name="countdownOtherInt" size="3" value="2000">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -822,9 +849,6 @@
 										</div>
 										<div class="rowEvenNewSpacing MarginBottom10">
 											<span class="lableText3"></span> 
-<!-- 											<a href=""
-												class="link_color1_emphasized">Save and add another
-												reference</a> -->
 										</div>
 
 									</div>
