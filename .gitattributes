@@ -120,7 +120,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDT
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SOLRSearchHelper.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrSearchDeleagate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/security/CustomAuthenticationManager.java -text
