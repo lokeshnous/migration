@@ -21,7 +21,7 @@ function closePopup() {
 		$("#saveData").click(function(event){	
 			var searchName = $.trim($("#searchTitleName").val());
 			
-			$.ajax({url: getBaseURL()+"/savedSearches/saveSearchedJobs.html?searchName="+searchName,
+			$.ajax({url: "${pageContext.request.contextPath}/savedSearches/saveSearchedJobs.html?searchName="+searchName,
 				success: function(data){ 
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
