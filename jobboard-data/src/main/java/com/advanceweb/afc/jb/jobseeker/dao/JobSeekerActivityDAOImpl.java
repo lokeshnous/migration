@@ -53,14 +53,14 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 	 * @Created:Jul 26, 2012
 	 * @Param :appliedJobId
 	 * @Return :boolean value depends on the result
-	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO#deleteAppliedJobs(int)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO#updateAppliedSavedJobs(int)
 	 */
 	@Override
-	public boolean deleteAppliedJobs(int appliedJobId) {
+	public boolean updateAppliedSavedJobs(int jobId) {
 		try {
 
 			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,
-					appliedJobId);
+					jobId);
 			job.setDeleteDt(new Date());
 			hibernateTemplate.saveOrUpdate(job);
 			return true;
@@ -94,32 +94,14 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 						.transformToApplidJobDTO(jobList);
 			}
 		} catch (HibernateException e) {
-			// waiting for exception
+			// TODO: handle exception
 		}
 
 		return appliedJobDTOList;
 
 	}
 
-	/**
-	 * deleting selected saved job
-	 */
-
-	@Override
-	public boolean deleteSavedJobs(int savedJobId) {
-		try {
-			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class,
-					savedJobId);
-			job.setDeleteDt(new Date());
-			hibernateTemplate.saveOrUpdate(job);
-			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return false;
-	}
-
-	/**
+/**
 	 * implementation of get saved jobs
 	 */
 	@Override
@@ -138,7 +120,7 @@ public class JobSeekerActivityDAOImpl implements JobSeekerActivityDAO {
 
 			}
 		} catch (HibernateException e) {
-			// waiting for exception
+			// TODO: handle exception
 		}
 
 		return appliedJobDTOList;
