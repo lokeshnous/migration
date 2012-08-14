@@ -1,10 +1,8 @@
 package com.advanceweb.afc.jb.job.web.controller;
 
-import com.advanceweb.afc.jb.search.engine.solr.SearchResultDTO;
-
 public class JobSearchResultForm {
 	
-	private SearchResultDTO searchResultDTO;
+	
 	private String keywords;
 	private String rows;
 	private String start;
@@ -62,12 +60,5 @@ public class JobSearchResultForm {
 		this.keywords = keywords;
 	}
 
-	public SearchResultDTO getSearchResultDTO() {
-		return searchResultDTO;
-	}
-
-	public void setSearchResultDTO(SearchResultDTO searchResultDTO) {
-		this.searchResultDTO = searchResultDTO;
-	}
 
 }

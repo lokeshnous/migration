@@ -47,8 +47,8 @@ import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.resume.ResumeService;
-import com.advanceweb.afc.jb.search.JobSearchService;
-import com.advanceweb.afc.jb.search.engine.JSONConverterService;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
+import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
 
 /**
