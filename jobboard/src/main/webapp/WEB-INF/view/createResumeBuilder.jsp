@@ -38,10 +38,16 @@
     	});
     	
     	$('#workExpPresentCBId').click(function(){
-    		alert($("#workExpPresentCBId").val());
-    	
+    		if($("#workExpPresentCBId").val()){
+    			$("#workExpEndDtId").val(null);    
+    		}
     	});
     	
+     	$('#graduatedCBId').click(function(){
+    		if($("#graduatedCBId").val()){
+    			$("#eduEndDateId").val(null);    
+    		}
+    	});
     	
     	$('#skillRefId').click(function() {
     	    var skillName = $('#skillId').val();
@@ -267,10 +273,10 @@
 									</div>
 									<form:hidden path="uploadResumeId" />
 									<form:hidden path="builderResumeId" />
-									<div>
+<!-- 									<div>
 										<a href="" class="link_color1_emphasized">Save and add
-											another phone number</a></span>
-									</div>
+											another phone number</a>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -359,7 +365,7 @@
 										<div class="row marginTop10">
 											<span class="lableTextSelect">End Date:</span>
 											<form:input path="listWorkExpForm[${status.index}].endDate"
-												class="job_seeker_Resume datepicker" />
+												class="job_seeker_Resume datepicker" id="workExpEndDtId"/>
 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
@@ -431,10 +437,10 @@
 													class="textareaBoxCResume" rows="3" cols="45" />
 												<p>2000 characters remaining</p>
 
-												<p>
+<!-- 												<p>
 													<a href="" class="link_color1_emphasized">Save and add
 														another work experience</a>
-												</p>
+												</p> -->
 											</div>
 										</div>
 									</div>
@@ -475,7 +481,7 @@
 											</form:select>
 
 											<span class="requiredTopmargin"> 
-											<form:checkbox path="listEduForm[${status.index}].bNotGraduatedYet"/>
+											<form:checkbox path="listEduForm[${status.index}].bNotGraduatedYet" id="graduatedCBId"/>
 											</span>
 
 											<div class=" floatLeft marginLeft10 marginTop5">
@@ -501,7 +507,7 @@
 											<span class="lableTextSelect">End Date:</span>
 
 											<form:input path="listEduForm[${status.index}].endDate"
-												class="job_seeker_Resume datepicker" />
+												class="job_seeker_Resume datepicker" id="eduEndDateId"/>
 <!-- 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
@@ -525,8 +531,8 @@
 													class="textareaBoxCResume" rows="3" cols="45" />
 												<p>2000 characters remaining</p>
 												<p>
-													<a href="" class="link_color1_emphasized">Save and add
-														another institution</a>
+<!-- 													<a href="" class="link_color1_emphasized">Save and add
+														another institution</a> -->
 												</p>
 											</div>
 
@@ -665,8 +671,8 @@
 										<div class="row MarginBottom10">
 											<span class="lableTextSelect"></span>
 											<p>
-												<a href="" class="link_color1_emphasized">Save and add
-													another language</a>
+<!-- 												<a href="" class="link_color1_emphasized">Save and add
+													another language</a> -->
 											</p>
 										</div>
 									</div>
@@ -815,9 +821,10 @@
 											</span>
 										</div>
 										<div class="rowEvenNewSpacing MarginBottom10">
-											<span class="lableText3"></span> <a href=""
+											<span class="lableText3"></span> 
+<!-- 											<a href=""
 												class="link_color1_emphasized">Save and add another
-												reference</a>
+												reference</a> -->
 										</div>
 
 									</div>
