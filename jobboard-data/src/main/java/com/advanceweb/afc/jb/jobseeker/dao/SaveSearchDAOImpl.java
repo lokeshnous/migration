@@ -95,10 +95,10 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * @return jpSaveSearch
 	 */
 	@Override
-	public AdmSaveSearch editSavedSearch(int saveSearchId) {
-		AdmSaveSearch searchResults = hibernateTemplate.get(
-				AdmSaveSearch.class, saveSearchId);
-		return searchResults;
+	public List<SaveSearchedJobsDTO> editSavedSearch(String searchName) {
+		List<AdmSaveSearch> searchResults = hibernateTemplate.find("from AdmSaveSearch where searchName=? ",searchName);
+		return saveSearchConversionHelper
+				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
 
 	/**
