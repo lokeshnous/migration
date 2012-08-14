@@ -53,10 +53,11 @@
 				});
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
-						$('#saveThisJobId').attr('target', '_blank');
-						$('#saveThisJobId').attr('href', val + '.html');
-						$("#saveThisJobId").displaypopup("#saveThisJobId",
-								"775", "252");
+						//$('#saveThisJobId').attr('target', '_blank');
+						//$('#saveThisJobId').attr('href', val + '.html');
+						//$("#saveThisJobId").displaypopup("#saveThisJobId",
+							//	"775", "252");
+						$.nmManual(val + '.html');
 
 					}
 				});
@@ -112,10 +113,11 @@
 				});
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
-						$('#btsaveThisJobId').attr('target', '_blank');
-						$('#btsaveThisJobId').attr('href', val + '.html');
-						$("#btsaveThisJobId").displaypopup("#btsaveThisJobId",
-								"775", "252");
+						//$('#btsaveThisJobId').attr('target', '_blank');
+						//$('#btsaveThisJobId').attr('href', val + '.html');
+						//$("#btsaveThisJobId").displaypopup("#btsaveThisJobId",
+						//		"775", "252");
+						$.nmManual(val + '.html');
 					}
 				});
 			},
