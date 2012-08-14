@@ -463,7 +463,7 @@ public class JobSearchActivityController {
 		savedJobsCount = savedJobDTOList.size();
 		if (savedJobsCount > Integer.parseInt(saveJobsLimit)) {
 			int oldJobId =	savedJobDTOList.get(0).getSaveJobId();	
-			jobSeekerActivity.deleteSavedJobs(oldJobId);
+			jobSeekerActivity.updateAppliedSavedJobs(oldJobId);
 		}
 		 
 		// Get the Job details

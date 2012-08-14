@@ -45,9 +45,9 @@ public class JobSeekerActivityController {
 	 */
 	@SuppressWarnings({ "unused"})
 	@RequestMapping(value = "/deleteAppliedJob")
-	public ModelAndView deleteAppliedJob(HttpSession session,@RequestParam("appliedJobId") int appliedJobId,
+	public ModelAndView deleteAppliedJob(HttpSession session,@RequestParam("appliedJobId") int jobId,
 			Map model) {
-		boolean result = jobSeekerActivity.deleteAppliedJobs(appliedJobId);
+		boolean result = jobSeekerActivity.updateAppliedSavedJobs(jobId);
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
 				.getAppliedJobs((Integer) session.getAttribute("userId"));
 		model.put("appliedJobDTOList", appliedJobDTOList);
@@ -62,10 +62,10 @@ public class JobSeekerActivityController {
 	 */
 	@SuppressWarnings({ "unused"})
 	@RequestMapping(value = "/deleteSavedJob")
-	public ModelAndView deleteSavedJob(HttpSession session,@RequestParam("appliedJobId") int appliedJobId,
+	public ModelAndView deleteSavedJob(HttpSession session,@RequestParam("appliedJobId") int jobId,
 			Map model) {
 
-		boolean result = jobSeekerActivity.deleteAppliedJobs(appliedJobId);
+		boolean result = jobSeekerActivity.updateAppliedSavedJobs(jobId);
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
 				.getSavedJobs((Integer) session.getAttribute("userId"));
 		model.put("savedJobDTOList", savedJobDTOList);
