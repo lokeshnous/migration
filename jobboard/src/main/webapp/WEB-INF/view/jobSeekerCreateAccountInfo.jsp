@@ -146,6 +146,9 @@
 										<span class="lableText3">Phone Number:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
+											<div class="toolTip marginTop5 marginLeft5">
+											<span class="classic">Valid format for Phone number is (000)000-0000</span>
+										</div>
 										<span class="required"></span>
 									</div>
 								</c:if>

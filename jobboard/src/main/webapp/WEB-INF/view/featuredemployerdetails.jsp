@@ -42,11 +42,11 @@
 			<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="clearfix"></div>
 				<div class="row">
-					<div class="sectionHeader">
-						<h2 class="width305 FloatLeft">Featured Employer Details</h2>
-						<span class="floatRight marginRight10"><a
+					<div class="sectionHeaderResume">
+						<h2 class="noBorder floatLeft">Featured Employer Details</h2>
+						<span class="floatRight marginRight10 marginTop5"><a
 							href="featuredemployers.html"
-							class="link_color2_emphasized FontSize12">View All Featured
+							class="link_color2_emphasized FontSize12 ">View All Featured
 								Employers</a></span>
 					</div>
 					<div class="featuredEmployerLeft">

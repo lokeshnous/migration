@@ -238,7 +238,7 @@ jQuery(document).ready(function() {
 									if(!validateSearch()){
 										return false;
 									}
-									var x = $("#results").val();
+									//var x = $("#results").val();
 									$("#rows").val(25000);
 									$("#start").val("0");
 									
@@ -275,6 +275,7 @@ jQuery(document).ready(function() {
 											});
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");
+									
 									return true;
 									
 								});

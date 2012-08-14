@@ -24,7 +24,17 @@
 							</span><br>
 							<div class="floatRight">
 								<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
-									${msg.commonVerticalBar}<a href="../jobSeeker/jobSeekerDashBoard.html">${msg.commonBackHome}</a></span>
+								${msg.commonVerticalBar}
+								
+								${isHome} 
+								<c:choose>
+									<c:when test="${jobSeekerDashBoardForm != null}">
+										<a href="../healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="../jobSeeker/jobSeekerDashBoard.html">${msg.commonDashboard}</a>
+									</c:otherwise>
+								</c:choose> </span>
 							</div>
 						</div>
 						<!-- loginHeader -->
@@ -50,7 +60,7 @@
 							</span><br>
 							<div class="floatRight">
 								<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
-									${msg.commonVerticalBar}<a href="">${msg.commonBackHome}</a></span>
+									${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
 							</div>
 						</div>
 						<!-- loginHeader -->
@@ -77,7 +87,7 @@
 							</span><br>
 							<div class="floatRight">
 								<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
-									${msg.commonVerticalBar}<a href="">${msg.commonBackHome}</a></span>
+									${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
 							</div>
 						</div>
 						<!-- loginHeader -->

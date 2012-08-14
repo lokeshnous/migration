@@ -420,7 +420,7 @@ select { border:1px solid #7f9db9; }
 .sectionHeader h2 { padding:0 0 0 10px; /* MM: changed */ font-size:14px; font-weight:bold; text-transform:uppercase; color:#6B7B84; border:none; }
 .chooseFile { float:left; border:#f00 solid 1px; }
 .employersList { margin-left: 4px; width: 1000px; }
-.employersList li { width:205px; height:54px; float:left; list-style-type:none; display:inline; margin:0 9px 10px 0; padding:5px; border:1px solid #999; text-align:center;vertical-align: middle; }
+.employersList li { width:218px; height:54px; float:left; list-style-type:none; display:inline; margin:0 10px 10px 0; padding:5px; border:1px solid #999; text-align:center;vertical-align: middle; }
 fieldset { border:1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
 legend { color: #6B7B84; font-size: 14px; margin:0 10px; font-weight:bold; }
 .leftFormHolder { width: 67.7%; float: left; border-right: none; margin:0; }
@@ -685,3 +685,4 @@ opacity: 0; z-index: 10; margin-left:-10px; }
 .requiredTopmargin { color: #FE9400; float: left; padding: 7px 0 0 10px; /* MM: changed */ margin-top:8px; }
 .sectionHeaderResume { border-radius: 4px; color: #FFFFFF; float: left; height: 29px; margin-bottom: 10px; padding:0; text-transform: uppercase; width: 100%; background-color: #E0E0E0; }
 h2.noBorder { border:none; font-size: 14px; font-weight: bold; padding:8px 10px; text-transform:none; }
+.employersList li img {width:218px; height:54px;}

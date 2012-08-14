@@ -192,7 +192,10 @@ public class JobSearchActivityController {
 			HttpSession session, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(jobId);
-		form.setUseremail("merion@nousinfosystems.com");
+		int userId = (Integer) session.getAttribute("userId");
+		String userName = (String) session.getAttribute("userName");
+		String userEmail = (String) session.getAttribute("userEmail");
+		form.setUseremail(userEmail);
 		try {
 
 			// Check for job seeker login
@@ -202,8 +205,6 @@ public class JobSearchActivityController {
 						navigationPath);
 				return jsonObject;
 			}
-			int userId = (Integer) session.getAttribute("userId");
-			String userName = (String) session.getAttribute("userName");
 			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchActivity
 					.viewJobDetails(form.getJobID());
@@ -245,7 +246,7 @@ public class JobSearchActivityController {
 			employerEmailDTO.setBody(employerMailBody);
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-			// TODO: Exception if resume not found
+			// TODO: Exception if resume not found. File server is not maintained
 			try {
 				ResumeDTO resumeDTO = resumeService
 						.fetchPublicResumeByUserId(userId);
