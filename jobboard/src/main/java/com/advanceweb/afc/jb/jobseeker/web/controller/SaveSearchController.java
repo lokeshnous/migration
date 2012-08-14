@@ -245,7 +245,7 @@ public class SaveSearchController {
 		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 		JSONObject jsonObject = new JSONObject();
 		
-		System.out.println("Search Name=="+searchName);
+		//System.out.println("Search Name=="+searchName);
 		
 		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService.editSavedSearch(searchName);
 		
@@ -254,11 +254,16 @@ public class SaveSearchController {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();
 			Map<String, String> urlMap = MMUtils.getUrlMap(urlString);
 			
+			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
+			session.setAttribute(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
+			session.setAttribute(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
+			session.setAttribute(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
+			
 			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
 			jsonObject.put(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
 			jsonObject.put(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
 			jsonObject.put(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
-			//deleteStatusJson.put("success", "Record Deleted Successfully");
+			
 			return jsonObject;
 		} else {
 			
