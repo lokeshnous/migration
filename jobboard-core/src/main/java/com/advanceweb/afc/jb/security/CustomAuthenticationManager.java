@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
+
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.user.dao.UserDao;
@@ -24,7 +27,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
 	@Autowired
 	UserDao userDAO;
-	
+		
 	public Authentication authenticate(Authentication auth)throws AuthenticationException {
 		MerUser user=null;		
 		
@@ -55,20 +58,20 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 				userRole.add(role.getAdmRole().getName());
 			}
 			   
-			if ( userRole.contains("merion_admin")) {
-				authList.add(new GrantedAuthorityImpl("ROLE_MERION_ADMIN"));
+			if ( userRole.contains(MMJBCommonConstants.MERION_ADMIN)) {
+				authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_MERION_ADMIN));
 			}
 			 
-			 if ( userRole.contains("jobseeker")) {
-					authList.add(new GrantedAuthorityImpl("ROLE_JOB_SEEKER"));
+			 if ( userRole.contains(MMJBCommonConstants.JOBSEEKER)) {
+					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_JOB_SEEKER));
 				}
 			 
-			 if ( userRole.contains("facility_admin")) {
-					authList.add(new GrantedAuthorityImpl("FACILITY_ADMIN"));
+			 if ( userRole.contains(MMJBCommonConstants.FACILITY_ADMIN)) {
+					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_ADMIN));
 				}
 
-			 if ( userRole.contains("facility_user")) {
-					authList.add(new GrantedAuthorityImpl("ROLE_FACILITY_USER"));
+			 if ( userRole.contains(MMJBCommonConstants.FACILITY_USER)) {
+					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_USER));
 				}
 			return authList;
 	  }
