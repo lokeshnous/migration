@@ -83,7 +83,7 @@ public class ResumeValidator {
 		if(null != createResume.getListPhoneDtlForm()){
 			for(PhoneDetailForm form : createResume.getListPhoneDtlForm()){				
 				if(StringUtils.isEmpty(form.getPhoneType()) && StringUtils.isEmpty(form.getPhoneNumber())){
-					if(validateMobileNumberPattern(form.getPhoneNumber())){
+					if(!validateMobileNumberPattern(form.getPhoneNumber())){
 						return "Phone number should contain only numbers";
 					}
 				}
@@ -180,10 +180,10 @@ public class ResumeValidator {
 	private String validateReferences(List<ReferenceForm> refList){
 		if(null != refList){
 			for(ReferenceForm form : refList){
-				if(!StringUtils.isEmpty(form.getPhoneNo()) && validateMobileNumberPattern(form.getPhoneNo())){
+				if(!StringUtils.isEmpty(form.getPhoneNo()) && !validateMobileNumberPattern(form.getPhoneNo())){
 					return "Phone number should contain only numbers";
 				}
-				if(!StringUtils.isEmpty(form.getEmail()) && validateEmailPattern(form.getEmail())){
+				if(!StringUtils.isEmpty(form.getEmail()) && !validateEmailPattern(form.getEmail())){
 					return "Please enter valid emai address";
 				}
 			}			

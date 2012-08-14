@@ -92,10 +92,14 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Country:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.country}"/></span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-              <p><strong>Phone:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${createResume.contactInfoForm.mobileNo}"/></span> </div>
-
+            <c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">
+	            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
+	            	 <c:if test="${status.count == 1}">   
+	            	 	  <p><strong>Phone:</strong></p>
+			         </c:if>   
+	              </span><span class="ContactInfoAreaRight"><c:out value="${phoneDtl.phoneNumber}"/></span>  
+	           </div>
+           </c:forEach> 
           </div>
                 </div>
         <div class="clearfix"></div>
@@ -137,14 +141,17 @@
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.startDate}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>End Date:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${workExp.endDate}"/></span> </div>
-
+              </span><span class="ContactInfoAreaRight"><c:out value="${workExp.endDate}"/></span> 
+					<%-- <input type="checkbox" value="${workExp.bPresent}" disabled="true"/><span>&nbsp;&nbsp;&nbsp;</span>present --%>
+			</div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Years at Position:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${workExp.yrsAtPostion}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Career Level:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${workExp.currentCareerLvl}"/></span> </div>
+              </span><span class="ContactInfoAreaRight"><c:out value="${workExp.currentCareerLvl}"/></span> 
+<%--               <input type="checkbox" value="${workExp.bCurrentCareerLevel}" disabled="true"/><span>&nbsp;&nbsp;&nbsp;</span>This is my current career level --%>              
+              </div>
 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Annual Salary: </strong></p>
@@ -188,7 +195,9 @@
               </span><span class="ContactInfoAreaRight"><c:out value="${education.startDate}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>End Date:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.endDate}"/></span> </div>
+              </span><span class="ContactInfoAreaRight"><c:out value="${education.endDate}"/></span> 
+              <%-- <input type="checkbox" value="${education.bNotGraduatedYet}" disabled="true"/><span>&nbsp;&nbsp;&nbsp;</span>I haven't graduated yet.   --%>
+              </div>
 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Degrees:</strong></p>
@@ -214,18 +223,17 @@
            </c:if>   
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certification Name:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.certificationName}"/></span> </div>
-<%--             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
+              </span><span class="ContactInfoAreaRight"><c:out value="${certification.certificationName}"/></span> </div>
+             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certifying Authority:</strong></p>
 
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.certifications}"/></span> </div> --%>
+              </span><span class="ContactInfoAreaRight"><c:out value="${certification.certifyingAuthority}"/></span> </div> 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Received:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.dateOfReceipt}"/></span> </div>
+              </span><span class="ContactInfoAreaRight"><c:out value="${certification.dateOfReceipt}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-
               <p><strong>Summary:</strong></p>
-              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.summary}"/></span> </div>
+              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${certification.summary}"/></span> </div>
             <div class="clearfix"></div>
 			</c:forEach>              
           </div>
@@ -283,7 +291,7 @@
           <!---->
            <div class="MidContent_Wrapper">
                   <div class="sectionHeaderResume">
-            <h2 class="noBorder">>Other</h2>
+            <h2 class="noBorder">Other</h2>
           </div>
                   <div class="clearfix"></div>
                   <div class="ContactInfoBox paddingLeft15 MarginBottom10">
@@ -322,29 +330,11 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Email Address:</strong></p>
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.email}"/></span> </div>
+            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
+              <p><strong>Reference Type:</strong></p>
+              </span><span class="ContactInfoAreaRight"><c:out value="${reference.referenceType}"/></span> </div>
             </c:forEach>
-            
-           <!--  <span>
-                    <h3 class=" marginLeft10 marginTop10 marginBottom10 FloatLeft width305">Personal References</h3>
-                    </span>
 
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-              <p><strong>Name:</strong></p>
-              </span><span class="ContactInfoAreaRight">Mark Shireman</span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-              <p><strong>Job Title:</strong></p>
-              </span><span class="ContactInfoAreaRight">Associate Art Director</span> </div>
-
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-              <p><strong>Company Name:</strong></p>
-              </span><span class="ContactInfoAreaRight">Merion Matters, Inc.</span> </div>
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-              <p><strong>Phone Number:</strong></p>
-              </span><span class="ContactInfoAreaRight">610-278-1400 x1629</span> </div>
-
-            <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
-              <p><strong>Email Address:</strong></p>
-              </span><span class="ContactInfoAreaRight">mshireman@advanceweb.com</span> </div> -->
               <div class="IconsArea"><a href="#"><img src="../resources/images/Download.png" width="20" height="20" alt=""></a>&nbsp; <a href="#"><img src="../resources/images/Print2.png" width="20" height="20" alt=""></a></div>
           </div>
                 </div>
