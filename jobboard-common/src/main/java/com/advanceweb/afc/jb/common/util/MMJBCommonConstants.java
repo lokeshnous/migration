@@ -175,5 +175,9 @@ public interface MMJBCommonConstants {
 	public static final String LANGUAGE_ENGLISH="English";
 	public static final String REFERENCE_TYPE_PERSONAL="Personal";
 	
+	// Payment Gateway
+	public static final String CREDIT_CARD = "creditCard";
+	public static final String INVOICE = "invoice";
+	
 	
 }

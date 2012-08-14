@@ -1,0 +1,142 @@
+body {
+	
+}
+
+.gateway h2 {
+	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: bold;
+	background-color: #cccccc;
+	padding: 7px;
+	border: none;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	margin-top: 15px;
+}
+
+h3.gatewayBreadcrumbs {
+	margin: 15px 0 0 10px;
+	text-transform: none;
+	font-size: 18px;
+	color: #fe9400;
+	font-weight: normal;
+}
+
+h3.gatewayBreadcrumbs.main_section {
+	color: #606566; /* Darker Gray */
+}
+
+.gateway_section_head {
+	font-weight: bold;
+	font-size: 14px;
+	color: #FE9400; /* Orange */
+	padding: 10px 0 15px 0;
+}
+
+.gateway input {
+	margin-right: 5px;
+}
+
+span.nextStep {
+	color: #c0c0c0;
+	font-weight: normal;
+	text-transform: none;
+}
+
+input.job_seeker_password {
+	float: left;
+	width: 205px;
+	height: 25px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background-color: #f0f0f0;
+	font-size: 1.2em;
+}
+
+.row {
+	width: 100%;
+	height: auto;
+	float: left;
+}
+
+.gateway .row,.gateway .rowEvenSpacing {
+	margin-left: 10px;
+}
+
+.gateway .rowEvenSpacing.reuse_address {
+	margin-left: 165px;
+}
+
+.gateway p {
+	line-height: 15px;
+}
+
+.gateway .buttonContainer {
+	clear: both;
+	padding: 25px 0 50px 0;
+}
+
+.gateway select {
+	margin: 0;
+}
+
+.form_notes {
+	margin: 3px 0 0 10px;
+}
+
+.form_notes span {
+	color: #FE9400; /* Orange */
+}
+
+.review_order {
+	width: 540px;
+}
+
+.required {
+	color: #FE9400;
+	float: left;
+	padding: 7px 0 0 10px;
+}
+
+.firstForm {
+	margin-top: 20px;
+}
+
+.twoLineFormLabel {
+	margin-top: -9px;
+}
+
+.tinyText {
+	font-size: 10px;
+}
+
+.tinyTextBox {
+	width: 50px;
+}
+
+.gateway select.add_L_margin {
+	margin-left: 20px;
+}
+
+table.gatewayTable {
+	margin-top: 10px;
+}
+
+table.gatewayTable thead tr th {
+	background-color: lightgray;
+	padding: 5px;
+}
+
+table.gatewayTable tr td {
+	padding: 5px;
+}
+
+table.gatewayTable tr td span.paymentLineHeight {
+	line-height: 20px;
+}
+
+.indent10 {
+	margin-left: 10px;
+}

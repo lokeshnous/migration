@@ -72,6 +72,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/SolrParameter.ja
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/AccountAddressDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/BillingAddressDTO.java -text
 jobboard-common/src/main/resources/HibernateSessionFactory.xml -text
 jobboard-common/src/main/resources/database.properties -text
 jobboard-common/src/main/resources/entries.properties -text
@@ -107,6 +109,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginFormService
 jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginFormServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdowns.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/FetchAdmFacilityConatact.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/FetchAdmFacilityConatactImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearch.java -text
@@ -283,6 +287,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/login/dao/LoginFormDAOImpl.jav
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/helper/PopulateDropdownConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/FetchAccountAndBillingAddressDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/FetchAccountAndBillingAddressDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/helper/AdmFacilityContactHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDaoImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/helper/ResumeConversionHelper.java -text
@@ -340,6 +347,14 @@ jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormContr
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginSuccessManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutSuccessManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/AccountAddressForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/BillingAddressForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/CreditCardInfoForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/InvoiceForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentGatewayController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentGatewayValidation.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentMethodForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/TransformPaymentMethod.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CertificationsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/EducationForm.java -text
@@ -388,6 +403,12 @@ jobboard/src/main/webapp/WEB-INF/view/empBrandTempListPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployerdetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployers.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayCreditBilling.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayCreditConfirmOrder.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayInvoiceBilling.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayInvoiceConfirmOrder.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayPaymentMethod.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayThankYou.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerActivity.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerCreateAccount.jsp -text
@@ -424,6 +445,7 @@ jobboard/src/main/webapp/WEB-INF/view/viewCopyPasteResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/web.xml -text
 jobboard/src/main/webapp/index.jsp -text
+jobboard/src/main/webapp/resources/css/Gateway.css -text
 jobboard/src/main/webapp/resources/css/JB.css -text
 jobboard/src/main/webapp/resources/css/SliderStyles.css -text
 jobboard/src/main/webapp/resources/css/basic.css -text
