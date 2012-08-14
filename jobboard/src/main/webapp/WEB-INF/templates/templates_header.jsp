@@ -25,8 +25,6 @@
 							<div class="floatRight">
 								<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}
-								
-								${isHome} 
 								<c:choose>
 									<c:when test="${jobSeekerDashBoardForm != null}">
 										<a href="../healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
