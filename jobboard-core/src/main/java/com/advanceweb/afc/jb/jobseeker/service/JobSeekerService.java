@@ -23,7 +23,7 @@ public interface JobSeekerService {
 	 * 
 	 * @return
 	 */
-	boolean deleteAppliedJobs(int appliedJobId);
+	boolean updateAppliedSavedJobs(int appliedJobId);
 
 	/**
 	 * 
@@ -32,13 +32,6 @@ public interface JobSeekerService {
 	 */
 	List<AppliedJobDTO> getAppliedJobs(int jobSeekerId);
 
-	/**
-	 * get applied job
-	 * 
-	 * @param savedJobId
-	 * @return
-	 */
-	boolean deleteSavedJobs(int savedJobId);
 	
 	/**
 	 * get saved job
