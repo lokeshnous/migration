@@ -45,7 +45,7 @@ public interface SaveSearchService {
 	 * @param userId
 	 * @return
 	 */
-	AdmSaveSearch editSavedSearch(int saveSearchId);
+	List<SaveSearchedJobsDTO> editSavedSearch(String saveSearchName);
 
 	/**
 	 * This Method saves modified notify me data to the adm_save_search table
