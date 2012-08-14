@@ -57,8 +57,7 @@
 												//validate if resume name already exist in db
 												$
 														.ajax({
-															url : getBaseURL()
-																	+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="
+															url : "${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="
 																	+ resumeName
 																	+ "&resumeId=",
 															type : "GET",
@@ -79,13 +78,8 @@
 																							+ data.duplicateResume
 																							+ "</span>");
 																} else {
-																	$("form")
-																			.attr(
-																					"action",
-																					getBaseURL()
-																							+ "jobSeekerResume/createResumeUpload.html");
-																	$("form")
-																			.submit();
+																	$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
+																	$("#resumeUploadForm").submit();
 																}
 															},
 															error : function(
@@ -117,7 +111,7 @@
 
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="createResumeUpload.html"
-				commandName="createResume" id="formtouse"
+				commandName="createResume" id="resumeUploadForm"
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>

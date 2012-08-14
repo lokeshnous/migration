@@ -12,7 +12,6 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
 		jQuery(".megamenu").megamenu();
 	
 		 $("#resumeType").change(function() {
@@ -31,7 +30,6 @@
 		});
 	
 		$("#create").click(function() {
-	
 			//validate the required fields
 			var resumeName = $.trim($("#resumeName").val());
 			var jobTitle = $.trim($("#desiredJobTitle").val());
@@ -43,7 +41,7 @@
 					$("#errorMsg").html("");
 					//validate number of resumes
 					//validate if resume name already exist in db
-					$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId=",
+					$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId=",
 						  type: "GET",
 						success : function(data) {
 							if (data.maxResume != null) {
@@ -51,8 +49,9 @@
 								} else if (data.duplicateResume != null) {
 									$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 								} else {
-									$("form").attr("action",getBaseURL()+ "jobSeekerResume/createResumeBuilder.html");
-									$("form").submit();
+									$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeBuilder.html");
+									$("form").attr("method", "GET");
+									$("#createResumeForm").submit();
 								}
 							},
 						error : function(response) {
@@ -70,6 +69,7 @@
 	});
 </script>
 </head>
+<%=request.getContextPath()%>
 <body class="job_board">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
@@ -81,7 +81,7 @@
 
 		<div class="popUpContainerWrapper">
 			<form:form method="GET" action="createResumeBuilder.html"
-				commandName="createResume" id="formtouse"
+				commandName="createResume" id="createResumeForm"
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>

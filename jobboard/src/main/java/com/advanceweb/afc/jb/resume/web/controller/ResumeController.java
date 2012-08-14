@@ -808,7 +808,8 @@ public class ResumeController {
 				e.printStackTrace();
 			}
 		} else {
-			model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+			model.addObject("createResume", createResume);
+			model.setViewName("viewCopyPasteResume");
 		}
 		return model;
 

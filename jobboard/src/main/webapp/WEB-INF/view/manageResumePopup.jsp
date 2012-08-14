@@ -15,9 +15,24 @@
 	jQuery(document).ready(function() {
 	
 		/* jQuery(".megamenu").megamenu(); */
-		$("#resumePopupId").click(function(event){
-			alert("Hi");
-			return false;
+		$("#newResumeId").click(function(event){
+			$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName=&resumeId=",
+				  type: "GET",
+				success : function(data) {
+					if (data.maxResume != null) {
+							$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+						} else {
+							$("#createResumeId").click();
+						}
+					},
+				error : function(response) {
+					alert("Server Error : "+ response.status);
+					},
+				complete : function() {
+					
+				}
+			});
+			
      	});
 		
 		$("#tb_manage_resume img").click(function(event) {
@@ -28,7 +43,7 @@
 			
 			switch (action) {
 			case "view":
-					$("form").attr("action", getBaseURL()+"jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
+					$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
 					$("form").submit();
 					break;
 			case "download":
@@ -39,7 +54,7 @@
 				break;
 			case "delete":{
 				if (confirm("Do You want to Delete?")) {
-						$.ajax({url: getBaseURL()+"/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
+						$.ajax({url: "${pageContext.request.contextPath}/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
 							type: "POST",
 							success: function(data){ 
 							    if(data.success != null){
@@ -78,6 +93,9 @@
 		<div class="popUpContainerWrapper">
 			<form:form method="POST" action="">
 				<div class="rowEvenNewSpacing margin0">
+				<div id="errorMsg">
+				
+				</div>
 					<table id="tb_manage_resume" width="100%" border="0"
 						cellspacing="0" cellpadding="0" class="grid">
 						<thead>
@@ -114,7 +132,8 @@
 				</div>
 				<div class="popUpButtonRow">
 					<span class="floatLeft ">
-						<a class="nyroModal btn_sm orange" id="resumePopupId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume">New Resume</a>
+						<a class="btn_sm orange" href="#" id="newResumeId">New Resume</a>
+						<a class="nyroModal" id="createResumeId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume"></a>
 						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	</span>				
 					<span
 						class="floatLeft"><em>*Only 1

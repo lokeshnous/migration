@@ -28,7 +28,7 @@
 						$("#errorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
-						$.ajax({url : getBaseURL()+ "/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
+						$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
 							type: "GET",
 							success : function(data) {
 								if (data.maxResume != null) {
@@ -36,7 +36,7 @@
 									} else if (data.duplicateResume != null) {
 										$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 									} else {
-										$("form").attr("action",getBaseURL()+ "jobSeekerResume/updateResumeUpload.html");
+										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
 										$("form").submit();
 									}
 								},
