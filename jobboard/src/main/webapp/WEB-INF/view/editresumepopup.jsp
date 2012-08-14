@@ -8,22 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<!-- STYLESHEETS -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"	type="text/css">
+<jsp:include page="common/include.jsp" />
 
-<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="javascripts/slider.js"></script>
-<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();

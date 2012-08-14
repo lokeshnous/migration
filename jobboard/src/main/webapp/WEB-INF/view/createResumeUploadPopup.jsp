@@ -36,22 +36,14 @@
 										function() {
 
 											//validate the required fields
-											var resumeName = $.trim($(
-													"#resumeName").val());
-											var jobTitle = $.trim($(
-													"#desiredJobTitle").val());
-											var workAuth = $
-													.trim($(
-															"#workAuthorizationUS option:selected")
-															.text());
-
-											if (resumeName != null
-													&& resumeName != ""
-													&& jobTitle != null
-													&& jobTitle != ""
-													&& workAuth != "Select"
-													&& workAuth != null
-													&& workAuth != "") {
+											var resumeName = $.trim($("#resumeName").val());
+											var jobTitle = $.trim($("#desiredJobTitle").val());
+											var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
+											var chooseFile = $.trim($("#chooseFile").val());
+											if (resumeName != null	&& resumeName != "" && 
+													jobTitle != null	&& jobTitle != ""
+													&& workAuth != "Select"	&& workAuth != null
+													&& workAuth != "" && null != chooseFile && "" != chooseFile) {
 												$("#errorMsg").html("");
 												//validate number of resumes
 												//validate if resume name already exist in db

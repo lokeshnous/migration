@@ -408,7 +408,7 @@ public class ResumeController {
 			try {
 				MultipartFile file = createResume.getFileData();
 
-				if (file.getSize() > 0) {
+				if (null != file && file.getSize() > 0) {
 					if (file.getSize() > 100000) {
 						// return "/uploadfile";
 					} else {
@@ -448,7 +448,7 @@ public class ResumeController {
 			try {
 				MultipartFile file = createResume.getFileData();
 
-				if (file.getSize() > 0) {
+				if (null != file && file.getSize() > 0) {
 					if (file.getSize() > 100000) {
 						// return "/uploadfile";
 					} else {
