@@ -46,7 +46,7 @@ public class SaveSearchController {
 	private static final Logger LOGGER = Logger
 			.getLogger("SaveSearchController.class");
 
-	@Value("${navigationPath}")
+
 	private String navigationPath;
 
 	@Autowired

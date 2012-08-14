@@ -370,7 +370,7 @@
 													width="14" height="14" alt="Datepick"></a>
 											</div>
 											<span class="required"> 
-											<%-- <form:checkbox path="listWorkExpForm[${status.index}].isPresent" id="workExpPresentCBId"/> --%>
+											<form:checkbox path="listWorkExpForm[${status.index}].bPresent" id="workExpPresentCBId"/>
 											</span>
 											<div class="floatLeft marginLeft10 marginTop8">present</div>
 
@@ -395,7 +395,7 @@
 											</form:select>
 
 											<span class="requiredTopmargin"> 
-											<%-- <form:checkbox path="listWorkExpForm[${status.index}].isCurrentCareerLevel"/> --%>
+											<form:checkbox path="listWorkExpForm[${status.index}].bCurrentCareerLevel"/> 
 											</span>
 
 											<div class=" floatLeft marginLeft10 marginTop5">
@@ -479,8 +479,8 @@
 													itemLabel="optionName" />
 											</form:select>
 
-											<span class="requiredTopmargin"> <input name=""
-												type="checkbox" value="">
+											<span class="requiredTopmargin"> 
+											<form:checkbox path="listEduForm[${status.index}].bNotGraduatedYet"/>
 											</span>
 
 											<div class=" floatLeft marginLeft10 marginTop5">

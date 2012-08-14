@@ -17,6 +17,7 @@ public class EducationForm {
 	private String degrees;
 	private String certifications;
 	private String language;
+	private boolean bNotGraduatedYet;
 	private int builderEduId;
 	
 	
@@ -73,6 +74,12 @@ public class EducationForm {
 	}
 	public void setBuilderEduId(int builderEduId) {
 		this.builderEduId = builderEduId;
+	}
+	public boolean isbNotGraduatedYet() {
+		return bNotGraduatedYet;
+	}
+	public void setbNotGraduatedYet(boolean bNotGraduatedYet) {
+		this.bNotGraduatedYet = bNotGraduatedYet;
 	}
 	
 	

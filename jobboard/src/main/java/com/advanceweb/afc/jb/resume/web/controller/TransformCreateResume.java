@@ -134,6 +134,7 @@ public class TransformCreateResume {
 				dto.setLanguage(eduForm.getLanguage());
 				dto.setStartDate(eduForm.getStartDate());
 				dto.setBuilderEduId(eduForm.getBuilderEduId());
+				dto.setbNotGraduatedYet(eduForm.isbNotGraduatedYet());
 				listEduDTO.add(dto);
 			}
 		}
@@ -163,6 +164,8 @@ public class TransformCreateResume {
 				dto.setStartDate(workExpForm.getStartDate());
 				dto.setYrsAtPostion(workExpForm.getYrsAtPostion());
 				dto.setBuilderEmpId(workExpForm.getBuilderEmpId());
+				dto.setbPresent(workExpForm.isbPresent());
+				dto.setbCurrentCareerLevel(workExpForm.isbCurrentCareerLevel());
 				listWorkExpDTO.add(dto);
 			}
 		}
@@ -309,6 +312,7 @@ public class TransformCreateResume {
 				form.setInstituteName(dto.getInstituteName());
 				form.setLanguage(dto.getLanguage());
 				form.setStartDate(dto.getStartDate());
+				form.setbNotGraduatedYet(dto.isbNotGraduatedYet());
 				listEduForms.add(form);
 			}
 		}else{
@@ -373,8 +377,8 @@ public class TransformCreateResume {
 				form.setJobTitle(dto.getJobTitle());
 				form.setStartDate(dto.getStartDate());
 				form.setYrsAtPostion(dto.getYrsAtPostion());
-				form.setCurrentCareerLevel(dto.isCurrentCareerLevel());
-				form.setPresent(dto.isPresent());
+				form.setbCurrentCareerLevel(dto.isbCurrentCareerLevel());
+				form.setbPresent(dto.isbPresent());
 				listWorkExpForms.add(form);
 			}
 		}else{

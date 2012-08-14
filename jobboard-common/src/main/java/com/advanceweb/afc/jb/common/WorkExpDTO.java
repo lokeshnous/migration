@@ -23,8 +23,8 @@ public class WorkExpDTO {
 	private String state;
 	private String country;
 	private int stillEmployed;
-	private boolean isCurrentCareerLevel;
-	private boolean isPresent;
+	private boolean bCurrentCareerLevel;
+	private boolean bPresent;
 	private int builderEmpId;
 	
 	public String getJobTitle() {
@@ -117,18 +117,18 @@ public class WorkExpDTO {
 	public void setStillEmployed(int stillEmployed) {
 		this.stillEmployed = stillEmployed;
 	}
-	
-	public boolean isCurrentCareerLevel() {
-		return isCurrentCareerLevel;
+	public boolean isbCurrentCareerLevel() {
+		return bCurrentCareerLevel;
 	}
-	public void setCurrentCareerLevel(boolean isCurrentCareerLevel) {
-		this.isCurrentCareerLevel = isCurrentCareerLevel;
+	public void setbCurrentCareerLevel(boolean bCurrentCareerLevel) {
+		this.bCurrentCareerLevel = bCurrentCareerLevel;
 	}
-	public boolean isPresent() {
-		return isPresent;
+	public boolean isbPresent() {
+		return bPresent;
 	}
-	public void setPresent(boolean isPresent) {
-		this.isPresent = isPresent;
+	public void setbPresent(boolean bPresent) {
+		this.bPresent = bPresent;
 	}
+
 	
 }

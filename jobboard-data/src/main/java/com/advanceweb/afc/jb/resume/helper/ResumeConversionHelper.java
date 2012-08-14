@@ -224,6 +224,7 @@ public class ResumeConversionHelper {
 				 dto.setEndDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getCompletionDt())));
 				 dto.setDegrees(entity.getDegrees());
 				 dto.setCertifications(entity.getCertifications());				 		 
+				 dto.setbNotGraduatedYet(entity.getIsGraduated() != 0);
 				 
 				listEduDTO.add(dto);
 			}
@@ -268,6 +269,8 @@ public class ResumeConversionHelper {
 				 dto.setHrlyPayRate(entity.getHourlyRate());
 				 dto.setDescription(entity.getJobDescription());
 				 dto.setBuilderEmpId(entity.getBuilderEmploymentId());
+				 dto.setbCurrentCareerLevel(entity.getIsCurCareerLevel() != 0);
+				 dto.setbPresent(entity.getStillEmployed() != 0);
 				 
 				 listWorkExpDTO.add(dto);
 			}
@@ -598,7 +601,7 @@ public class ResumeConversionHelper {
 				eduEntitiy.setCompletionDt(DateUtils.convertStringToSQLDate(eduDTO.getEndDate()));
 				eduEntitiy.setDegrees(eduDTO.getDegrees());
 				eduEntitiy.setCertifications(eduDTO.getCertifications());
-				eduEntitiy.setIsGraduated(eduDTO.getbGraduated());
+				eduEntitiy.setIsGraduated(eduDTO.isbNotGraduatedYet()?1:0);
 				eduEntitiy.setResBuilderResume(builderResume);
 				listEduEntity.add(eduEntitiy);
 			}
@@ -629,12 +632,11 @@ public class ResumeConversionHelper {
 				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
 				workExpEntitiy.setEmploymentYears(Integer.valueOf(workExpDTO.getYrsAtPostion()));
 				workExpEntitiy.setCareerLevel(workExpDTO.getCurrentCareerLvl());
-				workExpEntitiy.setIsCurCareerLevel(workExpDTO.isCurrentCareerLevel()?1:0);
-				workExpEntitiy.setStillEmployed(workExpDTO.isPresent()?1:0);
+				workExpEntitiy.setIsCurCareerLevel(workExpDTO.isbCurrentCareerLevel()?1:0);
+				workExpEntitiy.setStillEmployed(workExpDTO.isbPresent()?1:0);
 				workExpEntitiy.setJobDescription(workExpDTO.getDescription());
 				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
 				workExpEntitiy.setSeparationDt(DateUtils.convertStringToSQLDate(workExpDTO.getEndDate()));
-				workExpEntitiy.setStillEmployed(workExpDTO.getStillEmployed());
 				workExpEntitiy.setHourlyRate(workExpDTO.getHrlyPayRate());
 				workExpEntitiy.setResBuilderResume(builderResume);
 				listWorkExpEntity.add(workExpEntitiy);

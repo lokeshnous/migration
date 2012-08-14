@@ -18,8 +18,8 @@ public class WorkExpForm {
 	private String annualSalary;
 	private String hrlyPayRate;
 	private String description;
-	private boolean isPresent;
-	private boolean isCurrentCareerLevel;
+	private boolean bPresent;
+	private boolean bCurrentCareerLevel;
 	private int builderEmpId;
 	
 	
@@ -88,19 +88,17 @@ public class WorkExpForm {
 	}
 	public void setBuilderEmpId(int builderEmpId) {
 		this.builderEmpId = builderEmpId;
+	}	
+	public boolean isbPresent() {
+		return bPresent;
 	}
-	public boolean isPresent() {
-		return isPresent;
+	public void setbPresent(boolean bPresent) {
+		this.bPresent = bPresent;
 	}
-	public void setPresent(boolean isPresent) {
-		this.isPresent = isPresent;
+	public boolean isbCurrentCareerLevel() {
+		return bCurrentCareerLevel;
 	}
-	public boolean isCurrentCareerLevel() {
-		return isCurrentCareerLevel;
-	}
-	public void setCurrentCareerLevel(boolean isCurrentCareerLevel) {
-		this.isCurrentCareerLevel = isCurrentCareerLevel;
-	}
-
-	
+	public void setbCurrentCareerLevel(boolean bCurrentCareerLevel) {
+		this.bCurrentCareerLevel = bCurrentCareerLevel;
+	}	
 }
