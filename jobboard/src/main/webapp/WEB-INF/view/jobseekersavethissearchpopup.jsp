@@ -20,6 +20,7 @@ function closePopup() {
 		jQuery(".megamenu").megamenu();
 		$("#saveData").click(function(event){	
 			var searchName = $.trim($("#searchTitleName").val());
+			
 			$.ajax({url: getBaseURL()+"/savedSearches/saveSearchedJobs.html?searchName="+searchName,
 				success: function(data){ 
 					$.each(data, function(key, val) {
@@ -76,7 +77,7 @@ function closePopup() {
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form action="/jobboard/savedSearches/saveSearchedJobs.html" method="" commandName="saveSearchForm">
+			<form:form action="" method="GET" commandName="saveSearchForm">
 				<span class="lableText3 width505 TextAlignL">Search Title</a></span>
 				<div class="rowEvenNewSpacing margin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
