@@ -42,7 +42,7 @@ public interface MMJBCommonConstants {
 	// For SOLR search
 	int ZERO_INT = 0;
 	String NULL_STR = "null";
-	String USER_ID = "userId";
+	public static final String USER_ID = "userId";
 	String TEMP_SESSION_ID = "JS0011";
 	String SPACE_OPN_BRCKT = " (";
 	String CLSG_BRCKT = ")";
@@ -175,9 +175,28 @@ public interface MMJBCommonConstants {
 	public static final String LANGUAGE_ENGLISH="English";
 	public static final String REFERENCE_TYPE_PERSONAL="Personal";
 	
+
+	//For User Roles
+	public static final String MERION_ADMIN ="merion_admin";
+	public static final String JOBSEEKER="jobseeker";
+	public static final String FACILITY_ADMIN="facility_admin";
+	public static final String FACILITY_USER="facility_user";
+	public static final String ROLE_MERION_ADMIN="ROLE_MERION_ADMIN";
+	public static final String ROLE_JOB_SEEKER="ROLE_JOB_SEEKER";
+	public static final String ROLE_FACILITY_ADMIN="FACILITY_ADMIN";
+	public static final String ROLE_FACILITY_USER="ROLE_FACILITY_USER";
+
 	// Payment Gateway
 	public static final String CREDIT_CARD = "creditCard";
 	public static final String INVOICE = "invoice";
+
 	
+
+	//For Successful Login
+	public static final String USER_EMAIL="userEmail";
+	public static final String USER_NAME="userName";
 	
+
+	
+
 }
