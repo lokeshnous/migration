@@ -79,18 +79,6 @@ public class ResumeController {
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
 
-	private @Value("resumeWarningMsg")
-	String resumeWarningMsg;
-
-	private @Value("resumeDuplicate")
-	String resumeDuplicate;
-
-	private @Value("resumeDeleteSuccess")
-	String resumeDeleteSuccess;
-
-	private @Value("resumeDeleteFailure")
-	String resumeDeleteFailure;
-
 	// public static final String FileServerPath = "asdfasd";
 
 	/**
@@ -165,14 +153,17 @@ public class ResumeController {
 		if ("".equals(resumeId) || resumeId == null) {
 			int resumeCount = resumeService.findResumeCount(userId);
 			if (resumeCount >= 5) {
-				warningMessage.put("maxResume", resumeWarningMsg);
+				warningMessage
+						.put("maxResume",
+								"max 5 resumes (total size 750K) can be created, Please delete any existing resume and try again.");
 				return warningMessage;
 			}
 		}
 		if (!("".equals(resumeName))
 				&& resumeService.checkDuplicateResumeName(resumeId, resumeName,
 						userId)) {
-			warningMessage.put("duplicateResume", resumeDuplicate);
+			warningMessage.put("duplicateResume",
+					"Resume Name already exists, Please try again.");
 			return warningMessage;
 		}
 		return warningMessage;
@@ -231,10 +222,10 @@ public class ResumeController {
 				(Integer) session.getAttribute("userId"));
 		JSONObject deleteStatusJson = new JSONObject();
 		if (deleteStatus) {
-			deleteStatusJson.put("success", resumeDeleteSuccess);
+			deleteStatusJson.put("success", "Profile Deleted Successfully ");
 			return deleteStatusJson;
 		} else {
-			deleteStatusJson.put("failed", resumeDeleteFailure);
+			deleteStatusJson.put("failed", "Failed to Delete this record");
 			return deleteStatusJson;
 		}
 	}
@@ -297,7 +288,8 @@ public class ResumeController {
 					.transformLanguageForm(resumeDTO.getListLangDTO());
 			ContactInfoForm contactForm = transCreateResume
 					.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-			List<PhoneDetailForm> listPhoneDtl = transCreateResume.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
+			List<PhoneDetailForm> listPhoneDtl = transCreateResume
+					.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
 			createResume.setListCertForm(listCertForm);
 			createResume.setListEduForm(listEduForm);
 			createResume.setListLangForm(listLangForm);
@@ -571,8 +563,9 @@ public class ResumeController {
 
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
-		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
-		
+		String errorMessage = resumeValidator
+				.validateResumeBuilder(createResume);
+
 		if (!StringUtils.isEmpty(errorMessage)) {
 
 			model = populateDropdowns(model);
@@ -786,7 +779,8 @@ public class ResumeController {
 				.transformLanguageForm(resumeDTO.getListLangDTO());
 		ContactInfoForm contactForm = transCreateResume
 				.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-		List<PhoneDetailForm> listPhoneDtl = transCreateResume.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
+		List<PhoneDetailForm> listPhoneDtl = transCreateResume
+				.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
 
 		createResume.setListCertForm(listCertForm);
 		createResume.setListEduForm(listEduForm);
