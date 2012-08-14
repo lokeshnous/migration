@@ -58,8 +58,8 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 * @return
 	 */
 	@Override
-	public AdmSaveSearch editSavedSearch(int saveSearchId) {
-		return saveSearchDAO.editSavedSearch(saveSearchId);
+	public List<SaveSearchedJobsDTO> editSavedSearch(String saveSearchName) {
+		return saveSearchDAO.editSavedSearch(saveSearchName);
 	}
 
 	/**
