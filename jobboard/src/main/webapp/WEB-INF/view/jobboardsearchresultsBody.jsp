@@ -40,10 +40,10 @@
 </script>
 		</head>
 
-		<body class="job_board">
+		<body>
 
 					
-					<div class="row marginTop10">
+					<div class="row">
 
 						<div class="row marginTop5 paddingBottom05">
 							<div class="floatLeft">
@@ -195,7 +195,7 @@
 											<table cellpadding="0" cellspacing="0" style="width: 100%"
 												border="0" class="display" id="jsonTable">
 												<thead>
-													<tr class="searchResultsHeader">
+													<tr >
 														<th class="searchResultsColumn1">Job Title</th>
 														<th class="searchResultsColumn2">Employer</th>
 														<th class="searchResultsColumn3">Location</th>
@@ -214,9 +214,6 @@
 						</div>
 						<!-- column2-->
 
-
-
-						<BR class="clearfix">
 					</div> 
 </body>
 </html>

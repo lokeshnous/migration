@@ -25,7 +25,21 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <!-- <link rel="stylesheet" type="text/css"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /> -->
-
+<!-- 	<script type="text/javascript" src="../resources/js/jquery.simplyscroll.js"></script>
+<link rel="stylesheet" href="../resources/css/jquery.simplyscroll.css" media="all" 
+type="text/css">
+	<script type="text/javascript">
+(function($) {
+	$(function() { 
+		$("#scroller").simplyScroll({
+			customClass: 'custom',
+			autoMode: 'loop',
+        	auto: true,
+			speed: 200
+		});
+	});
+})(jQuery);
+</script> -->
 </head>
 
 <body class="job_board">
@@ -80,11 +94,7 @@
 						<div class="featured_emp_slider">
 							<div id="slider1PrevBtn"></div>
 							<div id="slider1">
-							
-							
-							
-							
-								<c:forEach var="companyProfileDTO"
+							<c:forEach var="companyProfileDTO"
 									items="${companyProfileDTOList}" varStatus="status" step="2">
 									<div class="slider1Frames">
 										<a
@@ -104,9 +114,32 @@
 										</a>
 									</div>
 								</c:forEach>
-							</div>
+									</div>
 							<div id="slider1NextBtn"></div>
-						</div>
+						</div> 
+								<!-- 	<ul id="scroller">
+									<c:forEach var="companyProfileDTO"
+									items="${companyProfileDTOList}" varStatus="status" step="1">
+									<div class="slider1Frames">
+										<li><a
+											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index].facilityid }">
+											<div class="slider1FrameA1">
+												<img src="${companyProfileDTOList[status.index].logoPath}"
+													alt="${companyProfileDTOList[status.index].companyName }"
+													width="125" height="37">
+											</div>
+										</a> <%-- <a
+											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index+1].facilityid }">
+											<div class="slider1FrameA2">
+												<img src="${companyProfileDTOList[status.index+1].logoPath}"
+													alt="${companyProfileDTOList[status.index+1].companyName }"
+													width="125" height="37">
+											</div>
+										</a> --%>
+										</li>
+									</div>
+								</c:forEach>
+										</ul>
 						<!-- featured_emp_slider -->
 
 						<a href="">

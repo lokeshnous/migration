@@ -29,29 +29,58 @@
 </head>
 
 <body class="job_board">
-	<form>
-		<div class="ad_page_top">
-			<img src="../resources/images/ads/banner_ad_fpo.png" />
-		</div>
-		<div class="main_wrapper_outside">
-			<div class="main_wrapper_inside">
-				<div class="main">
-					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
-					<div class="row">
-						<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
-					</div>
+	<div class="ad_page_top">
+		<img src="../resources/images/ads/banner_ad_fpo.png" />
+	</div>
+	<div class="main_wrapper_outside">
+		<div class="main_wrapper_inside">
+			<div class="main">
+				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+				<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
+				<div class="content_columns row">
+				<div class="searchContent" style="display: block">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
-
-					<div class="ad_wrapper">
-						<img src="../resources/images/ads/banner_ad_fpo.png" />
-					</div>
 				</div>
-				<!-- main -->
+					
+				
+				<%--<div class="otherContent">
+				 <div class="ad_col_right" style="display: none;">
+					<img class="marginTop10"
+						src="../resources/images/ads/300x250ad2.png" />
+					<div class="follow_us">
+						<h2>Follow Us</h2>
+						<p>Stay connected to the latest jobs.</p>
+						<a href="${follouplinkfacebook}" target="_blank">
+							<div class="social facebook_link">Facebook</div>
+						</a> <a href="${follouplinktwitter}" target="_blank">
+							<div class="social twitter_link">Twitter</div>
+						</a> <a href="${follouplinkyoutube}" target="_blank">
+							<div class="social youTube_link">YouTube</div>
+						</a> <a href="${follouplinklinkedin}" target="_blank">
+							<div class="last social linkedIn_link">LinkedIn</div>
+						</a>
+					</div>
+					<br class="clearfix" />
+				</div> 
+				<!-- ad_col_right -->
+				<%-- <div class="content_columns">
+					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
+				</div> 
+				</div>--%>
+				<br class="clearfix" />
+				
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
+				</div>
+				</div>
+				
 			</div>
-			<!-- end main_wrapper_inside -->
-		</div>
-		<!-- end main_wrapper_outside -->
-		<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
-	</form>
+			<!-- main -->
+			</div>
+
+		<!-- end main_wrapper_inside -->
+
+	<!-- end main_wrapper_outside -->
+	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 </body>
 </html>

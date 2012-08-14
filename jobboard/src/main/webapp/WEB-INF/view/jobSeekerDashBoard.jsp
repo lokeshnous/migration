@@ -17,61 +17,58 @@
 	type="text/css">
 <link href="../resources/css/jobsearchResults.css" rel="stylesheet"
 	type="text/css">
+<script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <!-- <link rel="stylesheet" type="text/css"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /> -->
-<script type="text/javascript">
-	jQuery(document).ready(
-			function() {
-				//jQuery(".megamenu").megamenu();
-				$("#viewappliedjob").displaypopup("#viewappliedjob", "775",
-						"355");
-				$("#viewsavedjob").displaypopup("#viewsavedjob", "780", "370");
+	<script type="text/javascript">
+jQuery(document).ready(
+		function() {
+			//jQuery(".megamenu").megamenu();
+			$("#viewappliedjob").displaypopup("#viewappliedjob", "775",
+					"355");
+			$("#viewsavedjob").displaypopup("#viewsavedjob", "780", "370");
 
-				$("#changePassword").displaypopup("#changePassword", "780",
-						"370");
-				$("#manageResumePopup").displaypopup("#manageResumePopup",
-						"775", "252");
-				$("#createResumePopup").displaypopup("#createResumePopup",
-						"775", "252");
-				$("#editProfileId")
-						.displaypopup("#editProfileId", "775", "252");
-				$("#modifySubs").displaypopup("#modifySubs", "775", "252");
-				$("#viewMySavedSearchesId").displaypopup(
-						"#viewMySavedSearchesId", "775", "252");
-			});
+			$("#changePassword").displaypopup("#changePassword", "780",
+					"370");
+			$("#manageResumePopup").displaypopup("#manageResumePopup",
+					"775", "252");
+			$("#createResumePopup").displaypopup("#createResumePopup",
+					"775", "252");
+			$("#editProfileId")
+					.displaypopup("#editProfileId", "775", "252");
+			$("#modifySubs").displaypopup("#modifySubs", "775", "252");
+			$("#viewMySavedSearchesId").displaypopup(
+					"#viewMySavedSearchesId", "775", "252");
+		});
 </script>
 </head>
 
 <body class="job_board">
-<form:form commandName="jobSeekerDashBoardForm" id="jsdashboard">
-		<div class="ad_page_top">
-			<img src="../resources/images/ads/banner_ad_fpo.png" />
-		</div>
-		<div class="main_wrapper_outside">
-			<div class="main_wrapper_inside">
-				<div class="main">
-				
-					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
-					<div class="row">
-						<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
-					</div>
-					<div class="searchContent" style="display: none;">
+	<div class="ad_page_top">
+		<img src="../resources/images/ads/banner_ad_fpo.png" />
+	</div>
+	<div class="main_wrapper_outside">
+		<div class="main_wrapper_inside">
+			<div class="main">
+				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+				<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
+				<div class="searchContent" style="display: none;">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
 					<br class="clearfix" />
-					<div class="otherContent">
-					<div class="ad_col_right">
-						<img class="marginTop10"
-							src="../resources/images/ads/300x250ad2.png" />
-
-						<div class="follow_us">
-							<h2>Follow Us</h2>
-							<p>Stay connected to the latest jobs.</p>
-
-							<a href="${follouplinkfacebook}" target="_blank">
+				
+				<div class="otherContent">
+				<div class="ad_col_right">
+					<img class="marginTop10"
+						src="../resources/images/ads/300x250ad2.png" />
+					<div class="follow_us">
+						<h2>Follow Us</h2>
+						<p>Stay connected to the latest jobs.</p>
+						<a href="${follouplinkfacebook}" target="_blank">
 							<div class="social facebook_link">Facebook</div>
 						</a> <a href="${follouplinktwitter}" target="_blank">
 							<div class="social twitter_link">Twitter</div>
@@ -79,12 +76,13 @@
 							<div class="social youTube_link">YouTube</div>
 						</a> <a href="${follouplinklinkedin}" target="_blank">
 							<div class="last social linkedIn_link">LinkedIn</div>
-						</div>
-						<br class="clearfix" />
-
+						</a>
 					</div>
-					<!-- ad_col_right -->
-						<div class="content_columns">
+					<br class="clearfix" />
+				</div>
+				<!-- ad_col_right -->
+				<div class="content_columns">
+				<form:form commandName="jobSeekerDashBoardForm" id="jsdashboard">
 							<div class="dashboardHeader">
 								<img src="../resources/images/myadvance.png" width="288"
 									height="23" alt="My advance  dashboard">
@@ -323,21 +321,23 @@
 
 
 
-						</div>
-					</div>
-					<div class=" clearfix"></div>
-					
-					<div class="ad_wrapper">
-						<img src="../resources/images/ads/banner_ad_fpo.png" />
-					</div>
-					</div>
+			</form:form>
 				</div>
-				<!-- main -->
+				</div>
+				<br class="clearfix" />
+				
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
+				</div>
+				</div>
+				
 			</div>
-			<!-- end main_wrapper_inside -->
-		</div>
-		<!-- end main_wrapper_outside -->
-		<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
-	</form:form>
+			<!-- main -->
+			</div>
+
+		<!-- end main_wrapper_inside -->
+
+	<!-- end main_wrapper_outside -->
+	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 </body>
 </html>

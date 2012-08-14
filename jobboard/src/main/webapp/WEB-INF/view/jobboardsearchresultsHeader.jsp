@@ -5,27 +5,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-<script type="text/javascript">
-	jQuery(document).ready(
-			function() {
-				//jQuery(".megamenu").megamenu();
-				$("#viewappliedjob").displaypopup("#viewappliedjob", "775",
-						"355");
-				$("#viewsavedjob").displaypopup("#viewsavedjob", "780", "370");
-
-				$("#changePassword").displaypopup("#changePassword", "780",
-						"370");
-				$("#manageResumePopup").displaypopup("#manageResumePopup",
-						"775", "252");
-				$("#createResumePopup").displaypopup("#createResumePopup",
-						"775", "252");
-				$("#editProfileId")
-						.displaypopup("#editProfileId", "775", "252");
-				$("#modifySubs").displaypopup("#modifySubs", "775", "252");
-				$("#viewMySavedSearchesId").displaypopup(
-						"#viewMySavedSearchesId", "775", "252");
-			});
-</script>
 <head>
 	
 </head>

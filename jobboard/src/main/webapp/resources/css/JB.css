@@ -156,7 +156,7 @@ p.search_message span { color: #6b7b84; }
 .content_columns { width: 641px; margin: 10px 0 0 0; }
 .column1 { width: 190px; padding-right: 10px; float: left; }
 .column1SearchResultResume { width: 160px; padding-right: 10px; float: left; }
-.column2 { width: 430px; margin-left: 200px; border-left: 1px solid #CCCCCC; padding-left: 10px; }
+.column2 { width: 430px; margin-left: 200px; border-left: 1px solid #CCCCCC; padding-left: 10px; min-height:750px; }
 .ad_col_right { float: right; width: 300px; }
 .ad_col_right img { display: block; padding-bottom: 20px; }
 /* Follow Us styles */
