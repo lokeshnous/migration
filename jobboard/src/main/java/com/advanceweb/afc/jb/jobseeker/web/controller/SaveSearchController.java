@@ -14,7 +14,6 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +27,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -238,14 +238,33 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/editSavedSearch", method = RequestMethod.GET)
-	public String editSavedSearch(@Valid SaveSearchForm form,
-			BindingResult result) {
+	public @ResponseBody
+	JSONObject editSavedSearch(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session, @RequestParam("searchName") String searchName) {
 
-		saveSearchService.editSavedSearch(1);
-
-		// System.out.println(jpSaveSearch);
-
-		return "viewMySavedSearches";
+		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
+		JSONObject jsonObject = new JSONObject();
+		
+		System.out.println("Search Name=="+searchName);
+		
+		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService.editSavedSearch(searchName);
+		
+		//JSONObject deleteStatusJson = new JSONObject();
+		if (saveSrchJobsDTOList.size() > 0) {
+			String urlString = saveSrchJobsDTOList.get(0).getUrl();
+			Map<String, String> urlMap = MMUtils.getUrlMap(urlString);
+			
+			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
+			jsonObject.put(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
+			jsonObject.put(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
+			jsonObject.put(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
+			//deleteStatusJson.put("success", "Record Deleted Successfully");
+			return jsonObject;
+		} else {
+			
+			jsonObject.put("failed", "Failed to Edit this record");
+			return jsonObject;
+		}		
 
 	}
 
