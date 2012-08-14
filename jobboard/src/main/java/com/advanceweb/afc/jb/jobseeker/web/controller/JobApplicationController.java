@@ -157,13 +157,10 @@ public class JobApplicationController {
 			//LOGGER.info("Mail has sent to Anonymous User");
 		} catch (Exception e) {
 
-			// waiting for Exception
+			//TODO:Exception handeling
 
 		}
-		/*
-		 * JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-		 * model.put("jobSearchResultForm", jobSearchResultForm);
-		 */
+		
 		return "";
 	}
 
