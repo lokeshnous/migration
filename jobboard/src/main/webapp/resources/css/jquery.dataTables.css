@@ -3,7 +3,7 @@
  * Table
  */
 table.dataTable {
-	margin: 0 auto;
+	margin: 0 auto 5px;
 	clear: both;
 	width: 100%;
 }
@@ -13,7 +13,7 @@ table.dataTable thead th {
 	font-weight: bold;
 	cursor: pointer;
 	*cursor: hand;
-	t
+
 }
 
 table.dataTable tfoot th {
@@ -213,7 +213,7 @@ table.dataTable th:active {
 	height:auto;
 	
 }
-.display {width:737px !important; float: left;}
+.display {width:737px !important; float: left; }
 .featuredEmployerRowColor {background: none repeat scroll 0 0 #FE9400 !important;
     border-radius: 4px 4px 4px 4px;
     color: #FFFFFF !important;
