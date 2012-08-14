@@ -94,7 +94,7 @@
 			<form:form method="POST" action="">
 				<div class="rowEvenNewSpacing margin0">
 				<div id="errorMsg">
-				
+					
 				</div>
 					<table id="tb_manage_resume" width="100%" border="0"
 						cellspacing="0" cellpadding="0" class="grid">

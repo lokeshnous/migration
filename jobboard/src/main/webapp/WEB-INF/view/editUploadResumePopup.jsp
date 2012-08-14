@@ -14,6 +14,13 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 		
+		 $("#downloadResume").click(function() {
+		 	var resumeId = $("#uploadResumeId").val();
+			$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume//downloadResume.html?resumeId="+resumeId);
+			$("form").attr("method","GET");
+			$("form").submit();
+		 });
+		
 		 $("#update").click(function() {
 				
 				//validate the required fields
@@ -21,10 +28,12 @@
 				var resumeId = $.trim($("#uploadResumeId").val());
 				var jobTitle = $.trim($("#desiredJobTitle").val());
 				var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
-		
+				var chooseFile = $.trim($("#chooseFile").val());
+				
 				if (resumeName != null && resumeName != ""
 					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
 					&& workAuth != null	&& workAuth != ""){
+					
 						$("#errorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
@@ -46,11 +55,23 @@
 							complete : function() {
 								
 							}
-						});
+						});		
 				} else {
 					$("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
 				}
 			});
+		 
+		 function validateResume(fileName)
+		  {
+			 if(fileName!=''){
+				  var filename = fileName.toLowerCase();
+				  if (!filename.match(/(\.doc|\.pdf|\.docx)$/)){
+					  alert("Please upload correct document like Docx, Doc, Pdf");
+					  return false;
+				    }
+				 }
+			 return true;
+		 }
 	});	 
 </script>
 </head>
@@ -70,7 +91,7 @@
 				<form:input type="hidden" path="uploadResumeId" />
 				<form:input type="hidden" path="resumeType" />
 				<div class="rowEvenNewSpacing">
-					<span>You uploaded <a href="#">${createResume.filename}</a> as your resume, you can upload an updated resume</span>
+					<span>You uploaded <a href="#" id="downloadResume">${createResume.filename}</a> as your resume, you can upload an updated resume</span>
             	</div> 
 				<!-- Choose file section -->
 				<div class="rowEvenNewSpacing">

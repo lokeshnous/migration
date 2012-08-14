@@ -79,7 +79,19 @@ public class ResumeController {
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
 
-	// public static final String FileServerPath = "asdfasd";
+	private @Value("${resumeWarningMsg}")
+	String resumeWarningMsg;
+
+	private @Value("${resumeDuplicate}")
+	String resumeDuplicate;
+
+	private @Value("${resumeDeleteSuccess}")
+	String resumeDeleteSuccess;
+
+	private @Value("${resumeDeleteFailure}")
+	String resumeDeleteFailure;
+
+	
 
 	/**
 	 * This method is called to display resume list belonging to a logged in
@@ -153,17 +165,14 @@ public class ResumeController {
 		if ("".equals(resumeId) || resumeId == null) {
 			int resumeCount = resumeService.findResumeCount(userId);
 			if (resumeCount >= 5) {
-				warningMessage
-						.put("maxResume",
-								"max 5 resumes (total size 750K) can be created, Please delete any existing resume and try again.");
+				warningMessage.put("maxResume", resumeWarningMsg);
 				return warningMessage;
 			}
 		}
 		if (!("".equals(resumeName))
 				&& resumeService.checkDuplicateResumeName(resumeId, resumeName,
 						userId)) {
-			warningMessage.put("duplicateResume",
-					"Resume Name already exists, Please try again.");
+			warningMessage.put("duplicateResume", resumeDuplicate);
 			return warningMessage;
 		}
 		return warningMessage;
@@ -222,10 +231,10 @@ public class ResumeController {
 				(Integer) session.getAttribute("userId"));
 		JSONObject deleteStatusJson = new JSONObject();
 		if (deleteStatus) {
-			deleteStatusJson.put("success", "Profile Deleted Successfully ");
+			deleteStatusJson.put("success", resumeDeleteSuccess);
 			return deleteStatusJson;
 		} else {
-			deleteStatusJson.put("failed", "Failed to Delete this record");
+			deleteStatusJson.put("failed", resumeDeleteFailure);
 			return deleteStatusJson;
 		}
 	}
@@ -323,8 +332,7 @@ public class ResumeController {
 	}
 
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
-	public ModelAndView createResumePopUp(
-			@RequestParam("resumeType") String resumeType) {
+	public ModelAndView createResumePopUp(@RequestParam("resumeType") String resumeType) {
 
 		CreateResume createResume = new CreateResume();
 
@@ -332,8 +340,7 @@ public class ResumeController {
 		// createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
 
 		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_NO);
-		createResume
-				.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
+		createResume.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
 
 		createResume.setResumeType(resumeType);
 
@@ -412,8 +419,7 @@ public class ResumeController {
 						resumeDTO.setFileName(fileName);
 						resumeDTO.setFilePath(filePath);
 						// set it from session
-						resumeDTO.setUserId((Integer) session
-								.getAttribute("userId"));
+						resumeDTO.setUserId((Integer) session.getAttribute("userId"));
 						resumeService.createResumeUpload(resumeDTO);
 					}
 				}
@@ -563,9 +569,8 @@ public class ResumeController {
 
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
-		String errorMessage = resumeValidator
-				.validateResumeBuilder(createResume);
-
+		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
+		
 		if (!StringUtils.isEmpty(errorMessage)) {
 
 			model = populateDropdowns(model);
@@ -843,10 +848,10 @@ public class ResumeController {
 				.getResumeType())) {
 			model.addObject("createResume", createResume);
 			model.setViewName("viewresume");
-		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
-				.getResumeType())) {
+		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())) {
 			try {
-				export(request, response, resumeDTO.getFileName());
+				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="+resumeDTO.getFileName());
+				return model;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -1039,20 +1044,29 @@ public class ResumeController {
 		createResume.setTotalProgress(count * 2);
 
 	}
+	
+	
 
-	public void export(HttpServletRequest request,
-			HttpServletResponse response, String fileName) throws Exception {
+	@RequestMapping(value = "/downloadResume", method = RequestMethod.GET)
+	public ModelAndView downloadResume(CreateResume createResume,BindingResult result,HttpServletRequest request,HttpServletResponse response 
+		)	throws Exception {
+		
+		ResumeDTO resumeDTO = resumeService.editResume(Integer.parseInt(createResume.getUploadResumeId()));
+		ModelAndView model = new ModelAndView();
+		model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="+resumeDTO.getFileName());
+		return model;
+
+	}	
+	
+	@RequestMapping(value = "/exportResume", method = RequestMethod.GET)
+	public void exporting(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam("fileName") String fileName) throws Exception {
 
 		response.setContentType("application/vnd.ms-word");
-		response.setHeader("Content-Disposition", "attachment; filename="
-				+ fileName);
-
-		File file = new File("D:/UploadResume/", fileName);
-		// response.setHeader("Content-Type",
-		// getServletContext().getMimeType(file.getName()));
-		// response.setHeader("Content-Length", file.length());
-		response.setHeader("Content-Disposition",
-				"inline; filename=\"" + file.getName() + "\"");
+		response.setHeader("Content-Disposition", "attachment; filename="+ fileName);
+		
+		File file = new File(basedirectorypathUpload, fileName);
+		response.setHeader("Content-Disposition","inline; filename=\"" + file.getName() + "\"");
 
 		BufferedInputStream input = null;
 		BufferedOutputStream output = null;

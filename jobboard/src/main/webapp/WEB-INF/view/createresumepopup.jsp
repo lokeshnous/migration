@@ -69,7 +69,6 @@
 	});
 </script>
 </head>
-<%=request.getContextPath()%>
 <body class="job_board">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
