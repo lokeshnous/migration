@@ -116,8 +116,7 @@ public class ResumeValidator {
 				   StringUtils.isEmpty(form.getEmployerName()) ||
 				   MMJBCommonConstants.ZERO.equals(form.getEmploymentType()) ||
 				   StringUtils.isEmpty(form.getStartDate()) ||
-				   (MMJBCommonConstants.ZERO.equals(form.isPresent()) 
-						   && StringUtils.isEmpty(form.getEndDate())) ||
+				   (!form.isbPresent() && StringUtils.isEmpty(form.getEndDate())) ||
 				   StringUtils.isEmpty(form.getYrsAtPostion()) ||
 				   MMJBCommonConstants.ZERO.equals(form.getCurrentCareerLvl())){
 					return "Please fill the required fields";

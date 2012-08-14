@@ -570,17 +570,22 @@ public class ResumeController {
 
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
+		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
+/*		if(!StringUtils.isEmpty(errorMessage)){
+				
+=======
 		String errorMessage = resumeValidator
 				.validateResumeBuilder(createResume);
 		if (!StringUtils.isEmpty(errorMessage)) {
 
+>>>>>>> .r1069
 			model = populateDropdowns(model);
 
 			model.addObject("createResume", createResume);
 			model.addObject("errorMessage", errorMessage);
 			model.setViewName("createResumeBuilder");
 			return model;
-		}
+		}*/
 
 		AddressDTO addDTO = transformJobSeekerRegistration
 				.createAddressDTO(createResume.getContactInfoForm());
