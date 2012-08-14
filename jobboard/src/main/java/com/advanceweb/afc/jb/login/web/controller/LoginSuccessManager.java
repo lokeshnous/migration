@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.login.service.LoginFormService;
 
@@ -31,10 +32,9 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 
 		MerUser user = loginFormService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
-		session.setAttribute("userId", user.getUserId());
-		session.setAttribute("userName",
-				user.getFirstName() + " " + user.getLastName());
-		session.setAttribute("userEmail", user.getEmail());
+		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
+		session.setAttribute(MMJBCommonConstants.USER_NAME,user.getFirstName() + " " + user.getLastName());
+		session.setAttribute(MMJBCommonConstants.EMAIL, user.getEmail());
 		response.sendRedirect(request.getContextPath() + getDefaultTargetUrl());
 	}
 
