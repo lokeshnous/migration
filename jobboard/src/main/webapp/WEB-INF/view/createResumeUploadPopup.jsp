@@ -11,85 +11,84 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document)
-			.ready(
-					function() {
-						jQuery(".megamenu").megamenu();
+	jQuery(document).ready(function() {
+		jQuery(".megamenu").megamenu();
 
-						$("#resumeType").change(function() {
-							var resumeType = $.trim($("#resumeType").val());
-							switch (resumeType) {
-							case "ADVANCE Resume Builder":
-								$("#resumeBuilder").click();
-								break;
-							case "Upload Existing Resume":
-								$("#uploadResume").click();
-								break;
-							case "Copy and Paste":
-								$("#copyPaste").click();
-								break;
-							}
-						});
+		$("#resumeType").change(function() {
+			var resumeType = $.trim($("#resumeType").val());
+			switch (resumeType) {
+			case "ADVANCE Resume Builder":
+				$("#resumeBuilder").click();
+				break;
+			case "Upload Existing Resume":
+				$("#uploadResume").click();
+				break;
+			case "Copy and Paste":
+				$("#copyPaste").click();
+				break;
+			}
+		});		
+		
+		$("#create").click(function() {
 
-						$("#create")
-								.click(
-										function() {
-
-											//validate the required fields
-											var resumeName = $.trim($("#resumeName").val());
-											var jobTitle = $.trim($("#desiredJobTitle").val());
-											var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
-											var chooseFile = $.trim($("#chooseFile").val());
-											if (resumeName != null	&& resumeName != "" && 
-													jobTitle != null	&& jobTitle != ""
-													&& workAuth != "Select"	&& workAuth != null
-													&& workAuth != "" && null != chooseFile && "" != chooseFile) {
-												$("#errorMsg").html("");
-												//validate number of resumes
-												//validate if resume name already exist in db
-												$
-														.ajax({
-															url : "${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="
-																	+ resumeName
-																	+ "&resumeId=",
-															type : "GET",
-															success : function(
-																	data) {
-																if (data.maxResume != null) {
-																	$(
-																			"#errorMsg")
-																			.html(
-																					"<span style='color:red'>"
-																							+ data.maxResume
-																							+ "</span>");
-																} else if (data.duplicateResume != null) {
-																	$(
-																			"#errorMsg")
-																			.append(
-																					"<br/><span style='color:red'>"
-																							+ data.duplicateResume
-																							+ "</span>");
-																} else {
-																	$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
-																	$("#resumeUploadForm").submit();
-																}
-															},
-															error : function(
-																	response) {
-																alert("Server Error : "
-																		+ response.status);
-															},
-															complete : function() {
-
-															}
-														});
+					//validate the required fields
+					var resumeName = $.trim($("#resumeName").val());
+					var jobTitle = $.trim($("#desiredJobTitle").val());
+					var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
+					var chooseFile = $.trim($("#chooseFile").val());
+					
+					if (resumeName != null	&& resumeName != "" && 
+							jobTitle != null	&& jobTitle != ""
+							&& workAuth != "Select"	&& workAuth != null
+							&& workAuth != "" && null != chooseFile && "" != chooseFile) {
+						if(validateResume(chooseFile)){
+							$("#errorMsg").html("");
+							
+							//validate number of resumes
+							//validate if resume name already exist in db
+							$.ajax({
+										url : "${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="
+												+ resumeName
+												+ "&resumeId=",
+										type : "GET",
+										success : function(data) {
+											if (data.maxResume != null) {
+												$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+											} else if (data.duplicateResume != null) {
+												$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 											} else {
-												$("#errorMsg")
-														.html(
-																"<span style='color:red'>Please enter the required parameters.</span>");
+												$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
+												$("#resumeUploadForm").submit();
 											}
-										});
-					});
+										},
+										error : function(response) {
+											alert("Server Error : "+ response.status);
+										},
+										complete : function() {
+	
+										}
+							});
+						}	
+					} else {
+						$("#errorMsg")
+								.html(
+										"<span style='color:red'>Please enter the required parameters.</span>");
+					}
+				});
+		
+		function validateResume(fileName)
+		  {
+			 if(fileName!=''){
+				  var filename = fileName.toLowerCase();
+				  if (!filename.match(/(\.doc|\.pdf|\.docx)$/)){
+					  alert("Please upload correct document like Docx, Doc, Pdf");
+					  return false;
+				    }
+				 }
+			 return true;
+		 }
+});
+						
 </script>
 </head>
 <body class="job_board">
