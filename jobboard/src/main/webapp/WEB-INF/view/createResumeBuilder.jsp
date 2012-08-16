@@ -392,6 +392,9 @@
 							<div id="listOfWorkExpId">
 								<c:forEach items="${createResume.listWorkExpForm}" var="workExp"
 									varStatus="status">
+									 <c:if test="${status.count != 1}">   
+							            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+							         </c:if>   
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Job Title:</span>
@@ -532,6 +535,9 @@
 							<div class="searchResultsSubContent">
 							<div id="listOfEduId">
 								<c:forEach items="${createResume.listEduForm}" var="education" varStatus="status">
+									 <c:if test="${status.count != 1}">   
+							            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+							         </c:if>   
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Institution Name:</span>
@@ -631,6 +637,9 @@
 							<div class="searchResultsSubContent" >
 								<div id="listOfCertsId">
 								<c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status">
+									 <c:if test="${status.count != 1}">   
+							            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+							         </c:if>   								
 									<div class="job_seeker_login leftFormHolderResumepage"
 										id="addCertDivId">
 										<div class="rowEvenNewSpacing">
@@ -728,6 +737,9 @@
 								<div id="listOfLangId">
 								<c:forEach items="${createResume.listLangForm}" var="languageObj"
 									varStatus="status">
+									 <c:if test="${status.count != 1}">   
+							            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+							         </c:if>   									
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="row">
 											<span class="lableTextSelect">Language:</span>
@@ -869,6 +881,9 @@
 							<div class="searchResultsSubContent">
 							<div id="listOfRefId">
 								<c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">
+									 <c:if test="${status.count != 1}">   
+							            <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+							         </c:if>   								
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Name:</span>

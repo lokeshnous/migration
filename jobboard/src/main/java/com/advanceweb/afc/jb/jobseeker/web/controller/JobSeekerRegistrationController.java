@@ -9,6 +9,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,20 +35,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.job.service.SaveSearchService;
-import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
-import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Controller
@@ -71,6 +63,8 @@ public class JobSeekerRegistrationController {
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	
+	private Long PLACE_KEY;
+	
 	/**
 	 * This method is called to display job seeker registration page Step1
 	 * Create Your Account
@@ -79,7 +73,7 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value="/createJobSeekerCreateYrAcct",method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistrationStep1() {
+	public ModelAndView createJobSeekerRegistrationStep1(HttpSession session) {		
 		
 		ModelAndView model = new ModelAndView();
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
@@ -100,6 +94,8 @@ public class JobSeekerRegistrationController {
 	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
 	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
 			BindingResult result) {
+		
+		PLACE_KEY = (new Random()).nextLong();
 		
 		ModelAndView model = new ModelAndView();
 				
@@ -141,25 +137,34 @@ public class JobSeekerRegistrationController {
 			ModelAndView model = new ModelAndView();
 		try {
 			
+			if (((Long) session.getAttribute("LAST_PLACE_KEY"))!=null && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals(PLACE_KEY)) {
+					model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+					return model;
+				}
+			
 				if(null != registerForm.getListProfAttribForms()){
+					model.setViewName("jobSeekerCreateAccountInfo");
 					for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
 						
 						//Checking validation for input text box
 						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue()) 
 								&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
-							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+							model.addObject("message","Please fill the Required fields");
+							return model;
 						}
 						
 						//Checking validation for dropdowns & checkboxes etc
 						if(form.getbRequired() !=0 && MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
 								&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
 								|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
-							return new ModelAndView("jobSeekerCreateAccountInfo","message","Please fill the Required fields");
+							model.addObject("message","Please fill the Required fields");
+							return model;
 						}
 						//validation mobile number
 						if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
 								&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
-							return new ModelAndView("jobSeekerCreateAccountInfo","message",jobseekerRegPhoneMsg);
+							model.addObject("message",jobseekerRegPhoneMsg);
+							return model;
 						}
 					}
 				}
@@ -177,6 +182,8 @@ public class JobSeekerRegistrationController {
 				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
 				session.setAttribute("userId", userDTO.getUserId());
 				session.setAttribute("userEmail", userDTO.getEmailId());
+				session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
+				
 				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
 			    authenticateUserAndSetSession(userDTO, request);
 		} catch (Exception e) {

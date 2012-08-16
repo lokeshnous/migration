@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 
 @Repository("transformJobSeekerRegistration")
@@ -170,9 +173,13 @@ public class TransformJobSeekerRegistration {
 		if(null != attributeList){
 			for(JobSeekerProfileAttribForm form : attributeList){
 				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
+					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
+				}else{
+					dto.setStrLabelValue(form.getStrLabelValue());
+				}
 				dto.setStrAttribType(form.getStrAttribType());
 				dto.setStrLabelName(form.getStrLabelName());
-				dto.setStrLabelValue(form.getStrLabelValue());
 				dto.setStrProfileAttribId(form.getStrProfileAttribId());				
 				dtoList.add(dto);
 			}

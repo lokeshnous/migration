@@ -16,6 +16,7 @@ public class JobSeekerProfileAttribForm {
 	private String strLabelValue;
 	private String strProfileAttribId;
 	private String strAttribType;
+	private String[] subs;
 	private int bRequired;
 	private List<DropDownDTO> dropdown;
 	
@@ -55,6 +56,12 @@ public class JobSeekerProfileAttribForm {
 	}
 	public void setbRequired(int bRequired) {
 		this.bRequired = bRequired;
+	}
+	public String[] getSubs() {
+		return subs;
+	}
+	public void setSubs(String[] subs) {
+		this.subs = subs;
 	}
 	
 }

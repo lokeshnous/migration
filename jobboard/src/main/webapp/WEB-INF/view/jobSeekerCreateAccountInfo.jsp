@@ -275,7 +275,7 @@
 											<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
 												<li>
 													<div>
-														<form:checkbox path="listProfAttribForms[${status.index}].strLabelValue"
+														<form:checkbox path="listProfAttribForms[${status.index}].subs"
 															label="${dropdown.optionName}"
 															value="${dropdown.optionId}"
 															cssStyle="width:20px" />

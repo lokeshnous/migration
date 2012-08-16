@@ -196,6 +196,9 @@ public interface MMJBCommonConstants {
 	public static final String USER_EMAIL="userEmail";
 	public static final String USER_NAME="userName";
 	
+	//For Duplicate Submission
+	public static final String LAST_PLACE_KEY="LAST_PLACE_KEY";
+	
 
 	
 
