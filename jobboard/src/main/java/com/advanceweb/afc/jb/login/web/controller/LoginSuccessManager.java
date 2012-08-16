@@ -34,7 +34,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		HttpSession session = request.getSession(false);
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,user.getFirstName() + " " + user.getLastName());
-		session.setAttribute(MMJBCommonConstants.EMAIL, user.getEmail());
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmail());
 		response.sendRedirect(request.getContextPath() + getDefaultTargetUrl());
 	}
 

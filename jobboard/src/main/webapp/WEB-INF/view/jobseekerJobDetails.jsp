@@ -184,7 +184,8 @@
 			
 			<div class="jobDetailsEyebrow">
             
-			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> <div class="floatRight"><a href="findJobPage.html" class="link_color2_emphasized">Return to Search Results &nbsp; </a></div>
+			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> <div class="floatRight">
+			<a href="findJobPage.html" class="link_color2_emphasized">Return to Search Results &nbsp; </a></div>
 			</div>
 			<div class="JobDetailHeaderLeft">
 			<h1 ><span>${jobDetail.jobTitle}</span></h1>

@@ -70,19 +70,19 @@
 						<div class="search_info_box1">
 							<div class="rowPadding borderBottomDotted">
 								<span class="rowEvenSpacing">MY RECENT SEARCHES:</span><br>
-								<a href="#">Clear All</a> | <a href="#">See All</a>
+								<!-- <a href="" ></a> -->Clear All | <!-- <a href="" ></a> -->See All
 							</div>
 							<div class="rowPadding borderBottomDotted">
-								May 16, 2012, 7:00am<br> Search by: <a href="#">Physical
-									Therapist / Philadelphia, PA</a>
+								May 16, 2012, 7:00am<br> Search by: <!-- <a href="" ></a> -->Physical
+									Therapist / Philadelphia, PA
 							</div>
 							<div class="rowPadding borderBottomDotted">
-								May 16, 2012, 7:00am<br> Search by: <a href="#">Physical
-									Therapist / Philadelphia, PA</a>
+								May 16, 2012, 7:00am<br> Search by: <!-- <a href="" ></a> -->Physical
+									Therapist / Philadelphia, PA
 							</div>
 							<div class="rowPadding">
-								May 16, 2012, 7:00am<br> Search by: <a href="#">Physical
-									Therapist / Philadelphia, PA</a>
+								May 16, 2012, 7:00am<br> Search by: <!-- <a href="" ></a> -->Physical
+									Therapist / Philadelphia, PA
 							</div>
 						</div>
 						<!-- search_info_box1 -->
@@ -91,18 +91,18 @@
 					<div class="search_info_box2">
                       <ul>
                 <li><span class="uppercase bold">My Recent Searches:</span><br/>
-                          <a href="">Clear All</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">See All</a></li>
+                          <!-- <a href="" ></a> -->Clear All&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->See All</li>
                 <li>May 16, 2012, 7:00 am<br/>
-                          Search by: <span class="jb"><a href="">Physical Therapist</a></span></li>
+                          Search by: <span class="jb"><!-- <a href="" ></a> -->Physical Therapist</span></li>
                 <li>May 17, 2012, 8:00 am<br/>
-                          Search by: <span class="jb"><a href="">Pediatric Nurse</a></span></li>
+                          Search by: <span class="jb"><!-- <a href="" ></a> -->Pediatric Nurse</span></li>
                 <li class="last">May 18, 2012, 9:00 am<br/>
-                          Search by: <span class="jb"><a href="">ER Nurse</a></span></li>
+                          Search by: <span class="jb"><!-- <a href="" ></a> -->ER Nurse</span></li>
               </ul>
                     </div>
             <!-- search_info_box2 -->
             
-            <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;<a href="">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Location</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">By Employment Type</a> </div>
+            <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;<!-- <a href="" ></a> -->By Job Title&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->By Employer&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->By Location&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->By Employment Type</div>
 
             <!-- browse_bar -->
             

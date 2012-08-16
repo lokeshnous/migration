@@ -83,7 +83,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 			if (userId != 0) {
 				@SuppressWarnings("unchecked")
 				List<AdmSaveJob> admSaveJobs = hibernateTemplate
-						.find("from AdmSaveJob where jpJob.jobId = ? and userId = ? and deleteDt = null",
+						.find("from AdmSaveJob where jpJob.jobId = ? and userId = ? and deleteDt is null",
 								jobId, userId);
 				jobDetail = jobSeekerActivityConversionHelper
 						.transformToApplidJobDTO(admSaveJobs);

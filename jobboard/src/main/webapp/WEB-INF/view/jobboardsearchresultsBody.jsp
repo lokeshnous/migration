@@ -66,21 +66,21 @@
 								<div class="buttonRow">
 									Nurse
 									<div class="floatRight">
-										<a href=""><img src="../resources/images/CloseGray.jpg"
+										<a href="" style="visibility:hidden;"><img src="../resources/images/CloseGray.jpg"
 											alt="close" width="15" height="15"> </a>
 									</div>
 								</div>
 								<div class="buttonRow">
 									10001
 									<div class="floatRight">
-										<a href=""><img src="../resources/images/CloseGray.jpg"
+										<a href="" style="visibility:hidden;"><img src="../resources/images/CloseGray.jpg"
 											alt="close"> </a>
 									</div>
 								</div>
 								<div class="buttonRow">
 									25 miles
 									<div class="floatRight">
-										<a href=""><img src="../resources/images/CloseGray.jpg"
+										<a href="" style="visibility:hidden;"><img src="../resources/images/CloseGray.jpg"
 											alt="close" width="15" height="15"> </a>
 									</div>
 								</div>
@@ -98,38 +98,38 @@
 									<span class="refineResultsItem plus">Radius</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><a href="">5 miles</a></li>
-											<li><a href="">10 miles</a></li>
-											<li><a href="">25 miles</a></li>
-											<li><a href="">50 miles</a></li>
-											<li><a href="">100 miles</a></li>
+											<li><!-- <a href="" ></a> -->5 miles</li>
+											<li><!-- <a href="" ></a> -->10 miles</li>
+											<li><!-- <a href="" ></a> -->25 miles</li>
+											<li><!-- <a href="" ></a> -->50 miles</li>
+											<li><!-- <a href="" ></a> -->100 miles</li>
 										</ul>
 									</div>
 
 									<span class="refineResultsItem plus">Employer</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><a href="">Allegiant (5)</a></li>
-											<li><a href="">Nova Care (2)</a></li>
-											<li><a href="">Mount Sinai (3)</a></li>
+											<li><!-- <a href="" ></a> -->Allegiant (5)</li>
+											<li><!-- <a href="" ></a> -->Nova Care (2)</li>
+											<li><!-- <a href="" ></a> -->Mount Sinai (3)</li>
 										</ul>
 									</div>
 
 									<span class="refineResultsItem plus">State</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><a href="">Virginia (5)</a></li>
-											<li><a href="">Maryland (2)</a></li>
-											<li><a href="">New York (3)</a></li>
+											<li><!-- <a href="" ></a> -->Virginia (5)</li>
+											<li><!-- <a href="" ></a> -->Maryland (2)</li>
+											<li><!-- <a href="" ></a> -->New York (3)</li>
 										</ul>
 									</div>
 
 									<span class="refineResultsItem plus">City</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><a href="">Alexandria (5)</a></li>
-											<li><a href="">Baltimore (2)</a></li>
-											<li><a href="">Manhattan (3)</a></li>
+											<li><!-- <a href="" ></a> -->Alexandria (5)</li>
+											<li><!-- <a href="" ></a> -->Baltimore (2)</li>
+											<li><!-- <a href="" ></a> -->Manhattan (3)</li>
 										</ul>
 									</div>
 								</div>

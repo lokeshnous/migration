@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,6 +104,9 @@ public class JobSearchActivityController {
 
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
+	
+	@Value("${defaultResumeExtension}")
+	private String defaultResumeExtension;
 
 	@Autowired
 	private ResumeService resumeService;
@@ -148,21 +155,23 @@ public class JobSearchActivityController {
 	 * job view details page.
 	 * 
 	 * @param jobId
+	 * @param request 
 	 * @return : modelandview for respected Jobid
 	 */
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
-			Map<String, Object> model) {
+			Map<String, Object> model, HttpServletRequest request) {
 		try {
-			/**
-			 * View the job with template
-			 */
+			String currentUrl = request.getRequestURL().toString();
+			
+			 // View the job with template			
 			SearchedJobDTO jobDTO = jobSearchActivity.viewJobDetails(jobId);
 			model.put("jobDetail", jobDTO);
 			model.put("isHideCity", jobDTO.getCity() != null);
 			model.put("isHideState", jobDTO.getStateFullName() != null);
 			model.put("isHideCoutry", jobDTO.getCountry() != null);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
+			model.put("returnResults", currentUrl);			
 		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("ERROR");
@@ -191,20 +200,22 @@ public class JobSearchActivityController {
 		form.setJobID(jobId);
 		int userId = 0;
 		String userName = null;
-		String userEmail = null;		
-		if(session.getAttribute("userId") != null){
-			userId = (Integer) session.getAttribute("userId");
-			userName = (String) session.getAttribute("userName");
-			userEmail = (String) session.getAttribute("Email");
+		String userEmail = null;
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+			userName = (String) session
+					.getAttribute(MMJBCommonConstants.USER_NAME);
+			userEmail = (String) session
+					.getAttribute(MMJBCommonConstants.USER_EMAIL);
 		}
 		form.setUseremail(userEmail);
 		try {
 
 			// Check for job seeker login
-			if (session.getAttribute("userId") == null) {
+			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				map.put("loginForm", new LoginForm());
-				jsonObject.put(ajaxNavigationPath,
-						navigationPath);
+				jsonObject.put(ajaxNavigationPath, navigationPath);
 				return jsonObject;
 			}
 			// Get the Job details
@@ -225,18 +236,20 @@ public class JobSearchActivityController {
 			// TODO: login Url is for jobseeker. The URL should be changed after
 			// creation of employer login page
 			String jonseekerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)+dothtmlExtention;
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention;
 			String employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)+dothtmlExtention;
-			
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention;
+
 			EmailDTO employerEmailDTO = new EmailDTO();
 			employerEmailDTO.setFromAddress(advanceWebAddress);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
-			//TODO: Remove hard codes of mails
-//			employerToAddress[0] = new InternetAddress(
-//					"pramodap@nousinfo.com");
+			// TODO: Remove hard codes of mails
+			 employerToAddress[0] = new InternetAddress(
+			 "pramodap@nousinfo.com");
 			employerEmailDTO.setToAddress(employerToAddress);
 			String employerMailSub = employeJobApplicationSub.replace(
 					"?jobseekername", userName);
@@ -248,10 +261,40 @@ public class JobSearchActivityController {
 			employerEmailDTO.setBody(employerMailBody);
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-			// TODO: Exception if resume not found. File server is not maintained
+			// TODO: Exception if resume not found. File server is not
+			// maintained
 			try {
 				ResumeDTO resumeDTO = resumeService
 						.fetchPublicResumeByUserId(userId);
+				//TODO : Add the resume as per the type
+				if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
+						.equalsIgnoreCase(resumeDTO.getResumeType())) {
+
+				} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
+						.equalsIgnoreCase(resumeDTO.getResumeType())) {
+					try {
+					    // Create temp file.
+					    File temp = File.createTempFile(resumeDTO.getResumeName(), defaultResumeExtension);
+					    File newFile = new File(resumeDTO.getResumeName()+defaultResumeExtension);
+					    //temp.delete();
+					    temp.renameTo(newFile);
+					    //source.renameTo(temp);
+
+					    // Delete temp file when program exits.
+					    temp.deleteOnExit();
+
+					    // Write to temp file
+					    BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+					    out.write(resumeDTO.getResumeText());
+					    out.close();
+					    resumeDTO.setFilePath(temp.getAbsolutePath());
+					} catch (IOException e) {
+						LOGGER.info("Copy Paste resume error");						
+					}
+				} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
+						.equalsIgnoreCase(resumeDTO.getResumeType())) {
+
+				}
 				attachmentpaths.add(resumeDTO.getFilePath());
 				employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
@@ -266,8 +309,9 @@ public class JobSearchActivityController {
 			jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
-			//TODO: Remove hard codes of mails
-			//jobSeekerToAddress[0] = new InternetAddress("pramodap@nousinfo.com");
+			// TODO: Remove hard codes of mails
+			// jobSeekerToAddress[0] = new
+			// InternetAddress("pramodap@nousinfo.com");
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 			String jobseekerMailSub = jobseekerJobApplicationSub.replace(
 					"?companyname", searchedJobDTO.getCompanyName());
@@ -323,7 +367,7 @@ public class JobSearchActivityController {
 		// Modified to delete the first saved search,allow user to
 		// create new search if he has already created 5 searches and trying to
 		// add 6th search
-		int userId = (Integer) session.getAttribute("userId");
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
 		int savedSearchCount = 0;
@@ -514,13 +558,13 @@ public class JobSearchActivityController {
 		JSONObject jsonObject = new JSONObject();
 
 		 // Check for job seeker login ,open popup if not logged in.
-		if (session.getAttribute("userId") == null) {
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put(ajaxNavigationPath,
 					"../jobsearchactivity/jobseekersaveThisJobPopUp");
 			return jsonObject;
 		}
 		form.setJobID(jobId);
-		int userId = (Integer) session.getAttribute("userId");
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
 		int savedJobsCount = 0;
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
 				.getSavedJobs(userId);
@@ -658,7 +702,7 @@ public class JobSearchActivityController {
 							sendtofriendmail.getEmail());
 					jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 					String jobseekerName = (String) session
-							.getAttribute("userName");
+							.getAttribute(MMJBCommonConstants.USER_NAME);
 					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
 							"?Jobseekername", jobseekerName);
 					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);

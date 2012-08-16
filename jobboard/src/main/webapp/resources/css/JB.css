@@ -686,3 +686,5 @@ opacity: 0; z-index: 10; margin-left:-10px; }
 .sectionHeaderResume { border-radius: 4px; color: #FFFFFF; float: left; height: 29px; margin-bottom: 10px; padding:0; text-transform: uppercase; width: 100%; background-color: #E0E0E0; }
 h2.noBorder { border:none; font-size: 14px; font-weight: bold; padding:8px 10px; text-transform:none; }
 .employersList li img {width:218px; height:54px;}
+
+a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}

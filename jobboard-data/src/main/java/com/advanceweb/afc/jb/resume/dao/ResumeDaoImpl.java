@@ -21,7 +21,6 @@ import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
@@ -174,7 +173,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	public ResumeDTO createResume(ResumeDTO resumeDTO) {
 		//if any public resumes , make it private 
 		resumeVisibilityPublicToPrivate(resumeDTO);
-		
+		ResumeDTO newResumeDTO = null;
 		Boolean result = false;
 		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
@@ -182,13 +181,13 @@ public class ResumeDaoImpl implements ResumeDao {
 			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
 			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			resumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, null);
+			newResumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, null);
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
 			e.printStackTrace();
 		}
-		return resumeDTO;
+		return newResumeDTO;
 
 	}
 	
@@ -350,15 +349,13 @@ public class ResumeDaoImpl implements ResumeDao {
 	 */
 	@Override
 	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
-		List<JpAttribList> merLookupList = hibernateTemplate
-				.find("from JpAttribList e where e.lookupCategory='"
-						+ MMJBCommonConstants.VISIBILITY_PUBLIC + "'");
-		JpAttribList JpAttribList = merLookupList.get(0);
 		List<ResUploadResume> resumes = hibernateTemplate
 				.find("from ResUploadResume where userId = " + jobSeekerId
-						+ " AND visibility = " + JpAttribList.getAttribListId());
-		ResumeDTO resumeDTO = resumeConversionHelper
-				.transformResUploadResumeListToResumeDTOList(resumes).get(0);
+						+ " AND active = " + MMJBCommonConstants.VISIBILITY_PUBLIC+ "and deleteDt is null");
+//		ResumeDTO resumeDTO = resumeConversionHelper
+//				.transformResUploadResumeToResumeDTO(resumes.get(0), null);
+		ResUploadResume resUploadResume = resumes.get(0);
+		ResumeDTO resumeDTO = editResume(resUploadResume.getUploadResumeId());
 		return resumeDTO;
 	}
 

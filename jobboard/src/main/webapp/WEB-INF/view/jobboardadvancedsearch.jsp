@@ -410,13 +410,13 @@
                         
                         <div class="section">
                         <h2>Current Search</h2>
-                        <div class="buttonRow">Nurse <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg" width="15" height="15" alt="close"> </a></div>
+                        <div class="buttonRow">Nurse <div class="floatRight"><a href="" style="visibility:hidden; "><img src="../resources/images/CloseGray.jpg" width="15" height="15" alt="close"> </a></div>
                           </div><div class="buttonRow">
                           10001
-                          <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg" width="15" height="15" alt="close"> </a></div> 
+                          <div class="floatRight"><a href="" style="visibility:hidden;" ><img src="../resources/images/CloseGray.jpg" width="15" height="15" alt="close"> </a></div> 
                           </div><div class="buttonRow">
                          25 miles 
-                         <div class="floatRight"><a href=""><img src="../resources/images/CloseGray.jpg" width="15" height="15" alt="close"> </a></div></div>
+                         <div class="floatRight"><a href="" style="visibility:hidden;" ><img src="../resources/images/CloseGray.jpg" width="15" height="15" alt="close"> </a></div></div>
                          <div class="section">
                        <div class="SaveSearchButton">
                                      		<a href="" class="btn_sm orange">Save This Search</a>
@@ -428,41 +428,41 @@
                                
                                <div class="refineResults">
                                 
-                               		<span class="refineResultsItem plus">Radius</span>
+                               		<span class="refineResultsItem plus" class="linkDisabled">Radius</span>
                                		<div class="refineResultsSubContent">
                                     	<ul>
-                                        	<li><a href="">5 miles</a></li>
-                                            <li><a href="">10 miles</a></li>
-                                            <li><a href="">25 miles</a></li>
-                                            <li><a href="">50 miles</a></li>
-                                            <li><a href="">100 miles</a></li>
+                                        	<li><a href="" class="linkDisabled">5 miles</a></li>
+                                            <li><a href="" class="linkDisabled">10 miles</a></li>
+                                            <li><a href="" class="linkDisabled">25 miles</a></li>
+                                            <li><a href="" class="linkDisabled">50 miles</a></li>
+                                            <li><a href="" class="linkDisabled">100 miles</a></li>
                                         </ul>
                                     </div>
                                     
                                     <span class="refineResultsItem plus">Employer</span>
                                		<div class="refineResultsSubContent">
                                     	<ul>
-                                        	<li><a href="">Allegiant (5)</a></li>
-                                            <li><a href="">Nova Care (2)</a></li>
-                                            <li><a href="">Mount Sinai (3)</a></li>
+                                        	<li><a href="" class="linkDisabled">Allegiant (5)</a></li>
+                                            <li><a href="" class="linkDisabled">Nova Care (2)</a></li>
+                                            <li><a href="" class="linkDisabled">Mount Sinai (3)</a></li>
                                         </ul>
                                     </div>
                                     
                                     <span class="refineResultsItem plus">State</span>
                                		<div class="refineResultsSubContent">
                                     	<ul>
-                                        	<li><a href="">Virginia (5)</a></li>
-                                            <li><a href="">Maryland (2)</a></li>
-                                            <li><a href="">New York (3)</a></li>
+                                        	<li><a href="" class="linkDisabled">Virginia (5)</a></li>
+                                            <li><a href="" class="linkDisabled">Maryland (2)</a></li>
+                                            <li><a href="" class="linkDisabled">New York (3)</a></li>
                                         </ul>
                                     </div>
                                     
-                                    <span class="refineResultsItem plus">City</span>
+                                    <span class="refineResultsItem plus LinkDisabled">City</span>
                                		<div class="refineResultsSubContent">
                                     	<ul>
-                                        	<li><a href="">Alexandria (5)</a></li>
-                                            <li><a href="">Baltimore (2)</a></li>
-                                            <li><a href="">Manhattan (3)</a></li>
+                                        	<li><a href="" class="linkDisabled">Alexandria (5)</a></li>
+                                            <li><a href="" class="linkDisabled">Baltimore (2)</a></li>
+                                            <li><a href="" class="linkDisabled">Manhattan (3)</a></li>
                                         </ul>
                                     </div>
                                 </div>
