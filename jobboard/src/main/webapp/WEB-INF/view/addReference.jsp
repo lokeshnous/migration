@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="job_seeker_login leftFormHolderResumepage">
+<p class="borderBottomDotted marginBottom15">&nbsp;</p> 
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Name:</span>
 		<form:input path="createResume.listRefForm[${refPositionId}].name"
@@ -38,7 +39,7 @@
 			<form:radiobutton path="createResume.listRefForm[${refPositionId}].referenceType" value="Professional" /> 
 			<label>Professional</label>
 		</span>&nbsp;&nbsp;&nbsp;<span class="floteleft"> <form:radiobutton
-				path="listRefForm[${refPositionId}].referenceType" value="Personal" /> <label>Personal</label>
+				path="createResume.listRefForm[${refPositionId}].referenceType" value="Personal" /> <label>Personal</label>
 		</span>
 	</div>
 	<div class="rowEvenNewSpacing MarginBottom10">

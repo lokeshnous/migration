@@ -3,7 +3,18 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script type="text/javascript">
+	jQuery(document).ready(function() {	
+				
+		//Date picker
+    	$(function() {
+    		$( ".datepicker" ).datepicker();
+    	});
+    });
+</script>
+	
 <div class="job_seeker_login leftFormHolderResumepage">
+    <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Job Title:</span>
 		<form:input path="createResume.listWorkExpForm[${workExpPositionId}].jobTitle"
@@ -73,7 +84,7 @@
 		</form:select>
 
 		<span class="requiredTopmargin"> 
-		<form:checkbox path="listWorkExpForm[${workExpPositionId}].bCurrentCareerLevel"/> 
+		<form:checkbox path="createResume.listWorkExpForm[${workExpPositionId}].bCurrentCareerLevel"/> 
 		</span>
 
 		<div class=" floatLeft marginLeft10 marginTop5">

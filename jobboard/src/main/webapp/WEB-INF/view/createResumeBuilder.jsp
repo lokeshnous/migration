@@ -31,10 +31,10 @@
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
-	
+
 	//Limit text area characters
 	function limitText(limitField, limitCount, limitNum) {
-/* 		alert(limitField.value.length+""+limitCount.value+""+limitNum); */
+	/* 		alert(limitField.value.length+""+limitCount.value+""+limitNum); */
 		if (limitField.value.length > limitNum) {
 			limitField.value = limitField.value.substring(0, limitNum);
 		} else {
@@ -42,12 +42,15 @@
 		}
 	}
 
-	jQuery(document).ready(function() {
-		
+	jQuery(document).ready(function() {	
+				
+		//Date picker
     	$(function() {
     		$( ".datepicker" ).datepicker();
     	});
     	
+		//On click of check box as 'present' 
+		//reseting end date is blank value
     	$('#workExpPresentCBId').click(function(){
     		if($("#workExpPresentCBId").val()){
     			$("#workExpEndDtId").val(null);    
@@ -82,29 +85,75 @@
 		    		lprog.color("blue");
 		    	if(per>80)
 		    		lprog.color("green");
-		//$('#certAjaxCallIdButton').click(function(){		
+		    	
+		//Adding certifications
 		$('#certAjaxCallIdButton').live('click', function() {
-			alert("hello");
 			$.ajax({
-				//data:$('#passwordChange').serialize(),
 				type : "POST",
 				url : "/jobboard/jobSeekerResume/addCertifications.html",
-
 				success : function(data) {
-
-					//alert(data);
 					$('#listOfCertsId').append(data);
-					/*if(data == ''){
-						alert("once again");
-						$('#listOfCertsId').jqprint();
-						  //$('#listOfCertsId').append($('addCertDivId'));
-					}else{
-						alert("error");
-					}*/
 				},
 			});
 		});
+		
+		//Adding work experience
+		$('#workExpAjaxCallIdButton').live('click', function() {
+			$.ajax({
+				type : "POST",
+				url : "/jobboard/jobSeekerResume/addWorkExp.html",
+				success : function(data) {
+					$('#listOfWorkExpId').append(data);
+				},
+			});
+		});
+		
+		//Adding Education
+		$('#eduAjaxCallIdButton').live('click', function() {
+			$.ajax({
+				type : "POST",
+				url : "/jobboard/jobSeekerResume/addEducationDetails.html",
+				success : function(data) {
+					$('#listOfEduId').append(data);
+				},
+			});
+		});
+		
+		//Adding References
+		$('#refAjaxCallIdButton').live('click', function() {
+			$.ajax({
+				type : "POST",
+				url : "/jobboard/jobSeekerResume/addReferences.html",
+				success : function(data) {
+					$('#listOfRefId').append(data);
+				},
+			});
+		});
+		
+		//Adding Phone Numbers
+		$('#phNoAjaxCallIdButton').live('click', function() {
+			$.ajax({
+				type : "POST",
+				url : "/jobboard/jobSeekerResume/addPhoneNos.html",
+				success : function(data) {
+					$('#listOfPhoneId').append(data);
+				},
+			});
+		});
+		
+		//Adding Languages
+		$('#langAjaxCallIdButton').live('click', function() {
+			$.ajax({
+				type : "POST",
+				url : "/jobboard/jobSeekerResume/addLanguages.html",
+				success : function(data) {
+					$('#listOfLangId').append(data);
+				},
+			});
+		});
+		
 	});
+	
 	//jQuery(".megamenu").megamenu();
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
@@ -268,7 +317,9 @@
 										<span class="lableText3"></span> <FONT color="red"><form:errors
 												path="contactInfoForm.country" /></FONT>
 									</div>
+									<div class="row">
 									<div class="rowEvenNewSpacing MarginBottom10">
+									<div id="listOfPhoneId">
 										<span class="lableText3">Phone Number:</span>
 										<div class="floatLeft marginRight10"></div>
 										<span class="floatLeft marginRight10">
@@ -282,12 +333,15 @@
 										</c:forEach>
 										</span>
 									</div>
+									</div>
+									<div id="phNoAjaxCallId">
+										<p>
+											<a href="#" class="link_color1_emphasized" id="phNoAjaxCallIdButton">Save and add another phone number</a> 
+										</p>									
+									</div>
+									</div>
 									<form:hidden path="uploadResumeId" />
 									<form:hidden path="builderResumeId" />
-<!-- 									<div>
-										<a href="" class="link_color1_emphasized">Save and add
-											another phone number</a>
-									</div> -->
 								</div>
 							</div>
 						</div>
@@ -335,6 +389,7 @@
 
 							</ul>
 							<div class="searchResultsSubContent">
+							<div id="listOfWorkExpId">
 								<c:forEach items="${createResume.listWorkExpForm}" var="workExp"
 									varStatus="status">
 									<div class="job_seeker_login leftFormHolderResumepage">
@@ -354,7 +409,6 @@
 										</div>
 										<div class="class="row"">
 											<span class="lableTextSelect ">Employment Type:</span>
-
 											<form:select
 												path="listWorkExpForm[${status.index}].employmentType"
 												class="jb_input3 jb_input_width3">
@@ -362,7 +416,6 @@
 												<form:options items="${empTypeList}" itemValue="optionName"
 													itemLabel="optionName" />
 											</form:select>
-
 											<span class="requiredTopmargin">(Required)</span>
 										</div>
 										<div class="rowEvenNewSpacing">
@@ -451,15 +504,16 @@
 													path="listWorkExpForm[${status.index}].description"
 													class="textareaBoxCResume" rows="3" cols="45" />
 												<p><input readonly type="text" name="countdownworkexp${status.count}" size="3" value="2000">characters remaining.<p>
-
-<!-- 												<p>
-													<a href="" class="link_color1_emphasized">Save and add
-														another work experience</a>
-												</p> -->
 											</div>
 										</div>
 									</div>
 								</c:forEach>
+								</div>
+								<div id="workExpAjaxCallId">
+									<p>
+										<a href="#" class="link_color1_emphasized" id="workExpAjaxCallIdButton">Save and add another work experience</a> 
+									</p>									
+								</div>
 							</div>
 						</div>
 						<div class="searchResultsItem">
@@ -476,8 +530,8 @@
 
 							</ul>
 							<div class="searchResultsSubContent">
-								<c:forEach items="${createResume.listEduForm}" var="education"
-									varStatus="status">
+							<div id="listOfEduId">
+								<c:forEach items="${createResume.listEduForm}" var="education" varStatus="status">
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Institution Name:</span>
@@ -548,16 +602,18 @@
 													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
-												<p>
-<!-- 													<a href="" class="link_color1_emphasized">Save and add
-														another institution</a> -->
-												</p>
+												p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 
 										</div>
 									</div>
 								</c:forEach>
+								</div>
+								<div id="eduAjaxCallId">
+									<p>
+										<a href="#" class="link_color1_emphasized" id="eduAjaxCallIdButton">Save and add another institution</a> 
+									</p>									
+								</div>
 							</div>
 						</div>
 						<div class="searchResultsItem">
@@ -572,9 +628,9 @@
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent" id="listOfCertsId">
-								<c:forEach items="${createResume.listCertForm}"
-									var="certification" varStatus="status">
+							<div class="searchResultsSubContent" >
+								<div id="listOfCertsId">
+								<c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status">
 									<div class="job_seeker_login leftFormHolderResumepage"
 										id="addCertDivId">
 										<div class="rowEvenNewSpacing">
@@ -610,10 +666,11 @@
 										</div>
 									</div>
 								</c:forEach>
+								</div>
 								<div id="certAjaxCallId">
 <!-- 									<input type="button" value="Save and add another certification"
 										class="btn_sm orange" id="certAjaxCallIdButton" /> -->
-									<!-- <p><a href="#" class="link_color1_emphasized">Save and add another certification</a></p> -->
+									 <p><a href="#" class="link_color1_emphasized" id="certAjaxCallIdButton" >Save and add another certification</a></p> 
 								</div>
 							</div>
 
@@ -668,6 +725,7 @@
 								</li>
 							</ul>
 							<div class="searchResultsSubContent">
+								<div id="listOfLangId">
 								<c:forEach items="${createResume.listLangForm}" var="languageObj"
 									varStatus="status">
 									<div class="job_seeker_login leftFormHolderResumepage">
@@ -691,13 +749,15 @@
 										</div>
 										<div class="row MarginBottom10">
 											<span class="lableTextSelect"></span>
-											<p>
-<!-- 												<a href="" class="link_color1_emphasized">Save and add
-													another language</a> -->
-											</p>
 										</div>
 									</div>
 								</c:forEach>
+								</div>
+								<div id="langAjaxCallId">
+									<p>
+										<a href="#" class="link_color1_emphasized" id="langAjaxCallIdButton">Save and add another language</a> 
+									</p>									
+								</div>
 							</div>
 						</div>
 						<div class="searchResultsItem">
@@ -807,8 +867,8 @@
 								</li>
 							</ul>
 							<div class="searchResultsSubContent">
-								<c:forEach items="${createResume.listRefForm}" var="reference"
-									varStatus="status">
+							<div id="listOfRefId">
+								<c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">
 									<div class="job_seeker_login leftFormHolderResumepage">
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Name:</span>
@@ -850,9 +910,14 @@
 										<div class="rowEvenNewSpacing MarginBottom10">
 											<span class="lableText3"></span> 
 										</div>
-
 									</div>
 								</c:forEach>
+								</div>
+								<div id="refAjaxCallId">
+									<p>
+										<a href="#" class="link_color1_emphasized" id="refAjaxCallIdButton">Save and add another reference</a> 
+									</p>									
+								</div>
 							</div>
 						</div>
 					</div>

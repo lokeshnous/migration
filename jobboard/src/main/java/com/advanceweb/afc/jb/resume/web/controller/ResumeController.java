@@ -317,6 +317,17 @@ public class ResumeController {
 			model.addObject("eduDegreeList", eduDegreeList);
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
+			
+			session.setAttribute("empTypeList", empTypeList);
+			session.setAttribute("phoneTypeList", phoneTypeList);
+			session.setAttribute("careerLvlList", careerLvlList);
+			session.setAttribute("annualSalarylList", annualSalarylList);
+			session.setAttribute("languagelList", languagelList);
+			session.setAttribute("langProficiencylList", langProficiencylList);
+			session.setAttribute("eduDegreeList", eduDegreeList);
+			session.setAttribute("countryList", countryList);
+			session.setAttribute("stateList", stateList);
+			
 			// DropDowns end
 			getTotalNotNullField(createResume);
 			resumeDTO.getContactInfoDTO();
@@ -637,6 +648,9 @@ public class ResumeController {
 		WorkExpForm form = new WorkExpForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addWorkExp");
+		model.addObject("empTypeList",session.getAttribute("empTypeList"));
+		model.addObject("careerLvlList",session.getAttribute("careerLvlList"));
+		model.addObject("annualSalarylList",session.getAttribute("annualSalarylList"));
 		model.addObject("workExpPositionId",createResume.getListWorkExpForm().size());
 		if (null != createResume.getListCertForm()) {
 			createResume.getListWorkExpForm().add(form);
@@ -661,7 +675,7 @@ public class ResumeController {
 		
 		CertificationsForm form = new CertificationsForm();
 		ModelAndView model = new ModelAndView();
-		model.setViewName("addCerts");
+		model.setViewName("addCerts");		
 		model.addObject("certPositionId",createResume.getListCertForm().size());
 		if (null != createResume.getListCertForm()) {
 			createResume.getListCertForm().add(form);
@@ -686,6 +700,7 @@ public class ResumeController {
 		EducationForm form = new EducationForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addEducation");
+		model.addObject("eduDegreeList", session.getAttribute("eduDegreeList"));
 		model.addObject("eduPositionId",createResume.getListEduForm().size());
 		if (null != createResume.getListEduForm()) {
 			createResume.getListEduForm().add(form);
@@ -708,8 +723,11 @@ public class ResumeController {
 	public ModelAndView addLanguage(HttpSession session, CreateResume createResume) {
 		
 		LanguageForm form = new LanguageForm();
+		form.setLanguage(MMJBCommonConstants.LANGUAGE_ENGLISH);
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addLanguage");
+		model.addObject("languagelList", session.getAttribute("languagelList"));
+		model.addObject("langProficiencylList", session.getAttribute("langProficiencylList"));
 		model.addObject("langPositionId",createResume.getListLangForm().size());
 		if (null != createResume.getListLangForm()) {
 			createResume.getListLangForm().add(form);
@@ -731,6 +749,7 @@ public class ResumeController {
 	@RequestMapping(value = "/addReferences", method = RequestMethod.POST)
 	public ModelAndView addReference(HttpSession session, CreateResume createResume) {
 		ReferenceForm form = new ReferenceForm();
+		form.setReferenceType(MMJBCommonConstants.REFERENCE_TYPE_PERSONAL);
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addReference");
 		model.addObject("refPositionId",createResume.getListRefForm().size());
@@ -757,6 +776,7 @@ public class ResumeController {
 		PhoneDetailForm form = new PhoneDetailForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addPhoneNos");
+		model.addObject("phoneTypeList", session.getAttribute("phoneTypeList"));
 		model.addObject("phNoPositionId",createResume.getListPhoneDtlForm().size());
 		if (null != createResume.getListPhoneDtlForm()) {
 			createResume.getListPhoneDtlForm().add(form);

@@ -3,7 +3,18 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<script type="text/javascript">
+	jQuery(document).ready(function() {	
+				
+		//Date picker
+    	$(function() {
+    		$( ".datepicker" ).datepicker();
+    	});
+    });
+</script>
+
 <div class="job_seeker_login leftFormHolderResumepage" id="addCertDivId">
+<p class="borderBottomDotted marginBottom15">&nbsp;</p> 
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Certification Name:</span>
 		<form:input path="createResume.listCertForm[${certPositionId}].certificationName" class="job_seeker_password textBox350" />

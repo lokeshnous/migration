@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="job_seeker_login leftFormHolderResumepage">
+<p class="borderBottomDotted marginBottom15">&nbsp;</p> 
 	<div class="row">
 		<span class="lableTextSelect">Language:</span>
 		<form:select path="createResume.listLangForm[${langPositionId}].language"

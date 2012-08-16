@@ -218,10 +218,10 @@
 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Degrees:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.degrees}"/></span> </div>
+              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.degrees}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certifications:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${education.certifications}"/></span> </div>
+              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.certifications}"/></span> </div>
             <div class="clearfix"></div>
 			</c:forEach>
           </div>
