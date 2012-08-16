@@ -618,7 +618,7 @@
 													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
+												<input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 
 										</div>
