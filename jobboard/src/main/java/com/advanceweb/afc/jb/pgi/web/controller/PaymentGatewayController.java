@@ -8,7 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,9 +24,6 @@ import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 
 /**
  * @author muralikc
- * 
- * @version 1.0
- * @since 02 Aug 2012
  * 
  */
 @Controller
@@ -46,12 +42,19 @@ public class PaymentGatewayController {
 
 	@Autowired
 	PaymentGatewayValidation paymentGatewayValidation;
+	
+	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
+	public ModelAndView callPaymentMethod(@Valid PaymentMethodForm form,
+			HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("gatewayPaymentMethod");
+		return model;
+	}
 
 	@RequestMapping(value = "/paymentMethod", method = RequestMethod.POST)
-	public ModelAndView gatewayPaymentMethod(
-			@Valid PaymentMethodForm paymentMethodForm, BindingResult result,
-			HttpSession session, Model model) {
-
+	public ModelAndView gatewayPaymentMethod(@Valid PaymentMethodForm form,
+			BindingResult result, HttpSession session) {
+		ModelAndView model = new ModelAndView();
 		// Getting the facility id from the session
 		int facilityId = 110;
 
@@ -76,97 +79,148 @@ public class PaymentGatewayController {
 		BillingAddressForm billingAddressForm = transformPaymentMethod
 				.transformBillingAddressDtoToForm(billingAddressDTO);
 
-		paymentMethodForm.setAccountAddressForm(accountAddressForm);
-		paymentMethodForm.setBillingAddressForm(billingAddressForm);
+		form.setAccountAddressForm(accountAddressForm);
+		form.setBillingAddressForm(billingAddressForm);
 
-		model.addAttribute("paymentMethodForm", paymentMethodForm);
-		model.addAttribute("countryList", countryList);
-		model.addAttribute("stateList", stateList);
+		model.addObject("paymentMethodForm", form);
+		model.addObject("countryList", countryList);
+		model.addObject("stateList", stateList);
 
-		if (paymentMethodForm.getPaymentMethod().equalsIgnoreCase(
+		if (form.getPaymentMethod().equalsIgnoreCase(
 				MMJBCommonConstants.CREDIT_CARD)) {
-			return new ModelAndView("gatewayCreditBilling");
+			model.setViewName("gatewayCreditBilling");
 		} else {
-			return new ModelAndView("gatewayInvoiceBilling");
+			model.setViewName("gatewayInvoiceBilling");
 		}
+		return model;
 	}
 
-	@RequestMapping(value = "/paymentBackMethod", method = RequestMethod.GET)
-	public ModelAndView gatewayPaymentBackMethod(
-			@Valid PaymentMethodForm paymentMethodForm, Model model,
+	@RequestMapping(value = "/paymentCreditBackMethod", method = RequestMethod.GET)
+	public ModelAndView gatewayPaymentBackMethod(@Valid PaymentMethodForm form,
 			HttpSession session) {
+		ModelAndView model = new ModelAndView();
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		model.addAttribute("countryList", countryList);
-		model.addAttribute("stateList", stateList);
-		return new ModelAndView("gatewayCreditBilling");
+		model.addObject("countryList", countryList);
+		model.addObject("stateList", stateList);
+		model.setViewName("gatewayCreditBilling");
+//		form.getCreditCardInfoForm().setCardType("");
+//		form.getCreditCardInfoForm().setCreditCardNo("");
+//		form.getCreditCardInfoForm().setExpMonth("");
+//		form.getCreditCardInfoForm().setExpYear("");
+//		form.getCreditCardInfoForm().setName("");
+		
+		return model;
 	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
-	public ModelAndView callPaymentMethod(
-			@Valid PaymentMethodForm paymentMethodForm, Map map,
+	@RequestMapping(value = "/paymentInvoiceBackMethod", method = RequestMethod.GET)
+	public ModelAndView gatewayInvoiceBackMethod(@Valid PaymentMethodForm form,
 			HttpSession session) {
-		map.put("paymentMethodForm", paymentMethodForm);
-		return new ModelAndView("gatewayPaymentMethod");
+		ModelAndView model = new ModelAndView();
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		model.addObject("countryList", countryList);
+		model.addObject("stateList", stateList);
+		model.setViewName("gatewayInvoiceBilling");
+//		form.getInvoiceForm().setPurchaseOrderNo("");
+		return model;
 	}
 
-	@SuppressWarnings("rawtypes")
+	
 	@RequestMapping(value = "/callInvoiceConfirmOrder", method = RequestMethod.POST)
-	public ModelAndView gatewayConfirmOrder(
-			@Valid PaymentMethodForm paymentMethodForm, Map map,
-			HttpSession session) {
-		return new ModelAndView("gatewayInvoiceConfirmOrder");
+	public ModelAndView gatewayConfirmOrder(@Valid PaymentMethodForm form,
+			BindingResult result, HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		paymentGatewayValidation.validateInvoice(form, result);
+
+		// Getting street address, city, state, country, zip code, purchase oder
+		// number for displaying the confirm order page
+		String stAddr = form.getBillingAddressForm().getStreetForBillingAddr();
+		String city = form.getBillingAddressForm()
+				.getCityOrTownForBillingAddr();
+		String state = form.getBillingAddressForm().getStateBillingAddress();
+		String country = form.getBillingAddressForm()
+				.getCountryForBillingAddr();
+		String zipCode = form.getBillingAddressForm()
+				.getZipCodeForBillingAddr();
+		String orderNo = form.getInvoiceForm().getPurchaseOrderNo();
+		model.addObject("stAddr", stAddr);
+		model.addObject("city", city);
+		model.addObject("state", state);
+		model.addObject("country", country);
+		model.addObject("zipCode", zipCode);
+		model.addObject("orderNo", orderNo);
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+
+		if (result.hasErrors()) {
+			model.addObject("countryList", countryList);
+			model.addObject("stateList", stateList);
+			model.setViewName("gatewayInvoiceBilling");
+			return model;
+		}
+		model.setViewName("gatewayInvoiceConfirmOrder");
+		return model;
 	}
 
 	@RequestMapping(value = "/callCreditConfirmOrder", method = RequestMethod.POST)
 	public ModelAndView gatewayCreditConfirmOrder(
-			@Valid PaymentMethodForm paymentMethodForm, Model model,
-			HttpSession session, BindingResult result) {
+			@Valid PaymentMethodForm form, HttpSession session,
+			BindingResult result) {
 		// validate the credit card information
-		paymentGatewayValidation.validate(paymentMethodForm, result);
-		// Getting street address, city, state, country, zipcode, credit card
-		// number
-		// for displaying the confirm order page
-		String stAddr = paymentMethodForm.getBillingAddressForm()
-				.getStreetForBillingAddr();
-		String city = paymentMethodForm.getBillingAddressForm()
+		ModelAndView model = new ModelAndView();
+		paymentGatewayValidation.validate(form, result);
+		// Getting street address, city, state, country, zip code, credit card
+		// number, cardType for displaying the confirm order page
+		String stAddr = form.getBillingAddressForm().getStreetForBillingAddr();
+		String city = form.getBillingAddressForm()
 				.getCityOrTownForBillingAddr();
-		String state = paymentMethodForm.getBillingAddressForm()
-				.getStateBillingAddress();
-		String country = paymentMethodForm.getBillingAddressForm()
+		String state = form.getBillingAddressForm().getStateBillingAddress();
+		String country = form.getBillingAddressForm()
 				.getCountryForBillingAddr();
-		String zipCode = paymentMethodForm.getBillingAddressForm()
+		String zipCode = form.getBillingAddressForm()
 				.getZipCodeForBillingAddr();
-		String creditCardNo = paymentMethodForm.getCreditCardInfoForm()
-				.getCreditCardNo();
+		String creditCardNo = form.getCreditCardInfoForm().getCreditCardNo();
+		String cardType = form.getCreditCardInfoForm().getCardType();
 		// Getting last 4 digits of the credit card
-		creditCardNo = creditCardNo.substring(creditCardNo.length() - 4);
-		model.addAttribute("stAddr", stAddr);
-		model.addAttribute("city", city);
-		model.addAttribute("state", state);
-		model.addAttribute("country", country);
-		model.addAttribute("zipCode", zipCode);
-		model.addAttribute("creditCardNo", creditCardNo);
-
-		if (result.hasErrors()) {
-			return new ModelAndView("gatewayCreditBilling");
+		if (creditCardNo.length() != 0) {
+			creditCardNo = creditCardNo.substring(creditCardNo.length() - 4);
 		}
-		return new ModelAndView("gatewayCreditConfirmOrder");
+		model.addObject("stAddr", stAddr);
+		model.addObject("city", city);
+		model.addObject("state", state);
+		model.addObject("country", country);
+		model.addObject("zipCode", zipCode);
+		model.addObject("creditCardNo", creditCardNo);
+		model.addObject("cardType", cardType);
+
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		if (result.hasErrors()) {
+			model.addObject("countryList", countryList);
+			model.addObject("stateList", stateList);
+			model.setViewName("gatewayCreditBilling");
+			return model;
+		}
+		model.setViewName("gatewayCreditConfirmOrder");
+		return model;
 	}
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/callThankYouPage", method = RequestMethod.POST)
-	public ModelAndView gatewayThankyouPage(@Valid PaymentMethodForm pgiMethod,
+	public ModelAndView gatewayThankyouPage(@Valid PaymentMethodForm form,
 			Map map, HttpSession session) {
+		ModelAndView model = new ModelAndView();
 		// save or updating the billing address into the database
-		BillingAddressForm billingAddressForm = pgiMethod
-				.getBillingAddressForm();
+		BillingAddressForm billingAddressForm = form.getBillingAddressForm();
 		BillingAddressDTO billingAddressDTO = transformPaymentMethod
 				.transformBillingAddreFormToDto(billingAddressForm);
 		fetchAdmFacilityConatact.saveBillingAddress(billingAddressDTO);
-		return new ModelAndView("gatewayThankYou");
+		model.setViewName("gatewayThankYou");
+		return model;
 	}
 
 }

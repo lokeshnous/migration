@@ -32,6 +32,20 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
+
+	function copyAccToBillingAddr(obj) {
+		var isSelected = obj.value;
+		//alert(isSelected);
+		if (isSelected) {
+			$("#firstname2").val($("#firstName").val());
+			$("#lastname2").val($("#lastname").val());
+			$("#streetAddress_billing1").val($("#streetAddress").val());
+			$("#cityTown2").val($("#cityTown").val());
+			$("#State2").val($("#state").val());
+			$("#Country2").val($("#country").val());
+			$("#zip2").val($("#zip").val());
+		}
+	}
 </script>
 </head>
 
@@ -141,7 +155,7 @@
 						</div>
 
 						<p class="borderBottomDotted marginBottom15">&nbsp;</p>
-
+				<!-- Billing Address -->
 						<h3 class="gatewayBreadcrumbs main_section">Billing Address</h3>
 						<p class="gateway_section_head form_notes">Accounts Payable
 							Contact</p>
@@ -154,6 +168,10 @@
 							<span class="required">(Required)</span>
 						</div>
 
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.fnameForBillingAddr" /> </font>
+						</div>
 						<div class="rowEvenSpacing">
 							<span class="lableText3">Last Name:</span>
 							<form:input path="billingAddressForm.lnameForBillingAddr"
@@ -161,10 +179,15 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.lnameForBillingAddr" /> </font>
+						</div>
 
 						<div class="rowEvenSpacing reuse_address">
-							<form:checkbox value=""
-								path="billingAddressForm.useMyAccountAddr" name="useAcctAddress" />
+							<form:checkbox onchange="copyAccToBillingAddr(this)"
+								value="false" path="billingAddressForm.useMyAccountAddr"
+								name="useAcctAddress" />
 							<span>Use my account address</span>
 						</div>
 
@@ -176,14 +199,22 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.streetForBillingAddr" /> </font>
+						</div>
 
 						<div class="rowEvenSpacing">
 							<span class="lableText3">City/Town:</span>
 							<form:input path="billingAddressForm.cityOrTownForBillingAddr"
-								type="text" name="streetAddress_billing2"
+								type="text" name="cityTown2"
 								id="streetAddress_billing2"
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.cityOrTownForBillingAddr" /> </font>
 						</div>
 
 						<div class="rowEvenSpacing">
@@ -195,6 +226,10 @@
 									itemLabel="stateValue" />
 							</form:select>
 							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.stateBillingAddress" /></font>
 						</div>
 
 						<div class="rowEvenSpacing">
@@ -208,6 +243,10 @@
 							</form:select>
 							<span class="required">(Required)</span>
 						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.countryForBillingAddr" /> </font>
+						</div>
 
 						<div class="rowEvenSpacing">
 							<span class="lableText3">ZIP Code:</span>
@@ -215,6 +254,10 @@
 								type="text" name="zip2" id="zip2"
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.zipCodeForBillingAddr" /> </font>
 						</div>
 						<form:hidden path="billingAddressForm.facilityContactId" />
 
@@ -229,6 +272,11 @@
 								name="PO_number" id="PO_number"
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"> <form:errors
+									path="invoiceForm.purchaseOrderNo" />
+							</font>
 						</div>
 
 						<div class="clearfix"></div>

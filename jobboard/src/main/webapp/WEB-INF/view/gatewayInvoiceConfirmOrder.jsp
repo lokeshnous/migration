@@ -121,13 +121,22 @@
 									</tr>
 								</thead>
 								<tr>
-									<td align="left">Kim Noble<br> <span
-										class="paymentLineHeight"> Merion Matters<br> 2900
-											Horizon Drive<br> King of Prussia, PA<br> 19406<br>
-											<a href="">Edit</a></span></td>
-									<td align="center" valign="top"><span
-										class="paymentLineHeight">Invoice #12345<br> <a
-											href="">Edit</a></span></td>
+									<td align="left">
+										<span class="paymentLineHeight">
+												${stAddr} <br> 
+												${city} <br> 
+												${state} <br>
+												${country} <br> 
+												${zipCode} <br>
+												<a href="../pgiController/paymentInvoiceBackMethod.html">Edit</a>
+										</span>
+									</td>
+									<td align="center" valign="top">
+										<span class="paymentLineHeight">
+											Invoice #${orderNo} <br> 
+											<a href="../pgiController/callPaymentMethod.html">Edit</a>
+										</span>
+									</td>
 									<td align="right" valign="top"><span
 										class="paymentLineHeight">$796.00</span></td>
 								</tr>
@@ -136,7 +145,9 @@
 						<div class="buttonContainer indent10">
 							<span class="floatLeft"> <input type="submit"
 								class="btn_sm orange" value="Place Order" /> <a href=""
-								class="btn_sm white">Cancel</a> <a href="" class="btn_sm white">Back</a>
+								class="btn_sm white">Cancel</a> <a
+								href="../pgiController/paymentInvoiceBackMethod.html"
+								class="btn_sm white">Back</a>
 							</span>
 						</div>
 					</form:form>

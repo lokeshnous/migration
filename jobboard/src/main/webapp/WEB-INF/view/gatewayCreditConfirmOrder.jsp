@@ -130,12 +130,12 @@
 											${state} <br>
 											${country} <br> 
 											${zipCode} <br> 
-											<span><a href="../pgiController/paymentBackMethod.html">Edit</a></span>
+											<span><a href="../pgiController/paymentCreditBackMethod.html">Edit</a></span>
 										</span>
 									</td>
 									<td align="center" valign="top">
 										<span class="paymentLineHeight">
-											Visa, ending in ${creditCardNo} <br>
+											${cardType}, ending in ${creditCardNo} <br>
 											<span><a href="../pgiController/callPaymentMethod.html">Edit</a></span>
 										</span>
 									</td>
@@ -147,9 +147,9 @@
 						</div>
 						<div class="buttonContainer indent10">
 							<span class="floatLeft"> <input type="submit"
-								class="btn_sm orange" value="Place Order" /> <a href=""
-								class="btn_sm white">Cancel</a> <a
-								href="../pgiController/paymentBackMethod.html"
+								class="btn_sm orange" value="Place Order" /> 
+								<a href="" class="btn_sm white">Cancel</a> 
+								<a href="../pgiController/paymentCreditBackMethod.html"
 								class="btn_sm white">Back</a>
 							</span>
 						</div>

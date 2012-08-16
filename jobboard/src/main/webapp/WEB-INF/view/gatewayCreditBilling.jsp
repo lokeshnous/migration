@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List;"%>
-	
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -36,17 +36,17 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
-	function copyAccToBillingAddr(obj){
+	function copyAccToBillingAddr(obj) {
 		var isSelected = obj.value;
 		//alert(isSelected);
-		if(isSelected){
-		$("#firstname2").val($("#firstName").val());
-		$("#lastname2").val($("#lastname").val());
-		$("#streetAddress_billing1").val($("#streetAddress").val());
-		$("#cityTown2").val($("#cityTown").val());
-		$("#State2").val($("#state").val());
-		$("#Country2").val($("#country").val());
-		$("#zip2").val($("#zip").val());
+		if (isSelected) {
+			$("#firstname2").val($("#firstName").val());
+			$("#lastname2").val($("#lastname").val());
+			$("#streetAddress_billing1").val($("#streetAddress").val());
+			$("#cityTown2").val($("#cityTown").val());
+			$("#State2").val($("#state").val());
+			$("#Country2").val($("#country").val());
+			$("#zip2").val($("#zip").val());
 		}
 	}
 </script>
@@ -167,9 +167,11 @@
 							<form:input path="billingAddressForm.fnameForBillingAddr"
 								type="text" name="firstname2" id="firstname2"
 								class="job_seeker_password textBox350 " />
-							<font color="red"><form:errors
-									path="billingAddressForm.fnameForBillingAddr"></form:errors> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.fnameForBillingAddr" /> </font>
 						</div>
 
 						<div class="rowEvenSpacing">
@@ -177,14 +179,17 @@
 							<form:input path="billingAddressForm.lnameForBillingAddr"
 								type="text" name="lastname2" id="lastname2"
 								class="job_seeker_password textBox350 " />
-							<font color="red"><form:errors
-									path="billingAddressForm.lnameForBillingAddr" /> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.lnameForBillingAddr" /> </font>
 						</div>
 
 						<div class="rowEvenSpacing reuse_address">
-							<form:checkbox onchange="copyAccToBillingAddr(this)" value="false"
-								path="billingAddressForm.useMyAccountAddr" name="useAcctAddress" />
+							<form:checkbox onchange="copyAccToBillingAddr(this)"
+								value="false" path="billingAddressForm.useMyAccountAddr"
+								name="useAcctAddress" />
 							<span>Use my account address</span>
 						</div>
 
@@ -194,20 +199,23 @@
 								type="text" name="streetAddress_billing1"
 								id="streetAddress_billing1"
 								class="job_seeker_password textBox350 " />
-							<font color="red"><form:errors
-									path="billingAddressForm.streetForBillingAddr" /> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.streetForBillingAddr" /> </font>
 						</div>
 
 						<div class="rowEvenSpacing">
 							<span class="lableText3">City/Town:</span>
 							<form:input path="billingAddressForm.cityOrTownForBillingAddr"
-								type="text" name="streetAddress_billing2"
-								id="cityTown2"
+								type="text" name="streetAddress_billing2" id="cityTown2"
 								class="job_seeker_password textBox350 " />
-							<font color="red"><form:errors
-									path="billingAddressForm.cityOrTownForBillingAddr" /> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.cityOrTownForBillingAddr" /> </font>
 						</div>
 
 						<div class="rowEvenSpacing">
@@ -218,9 +226,11 @@
 								<form:options items="${stateList}" itemValue="stateValue"
 									itemLabel="stateValue" />
 							</form:select>
-							<font color="red"><form:errors
-									path="billingAddressForm.stateBillingAddress" /> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.stateBillingAddress" /></font>
 						</div>
 
 						<div class="rowEvenSpacing">
@@ -232,9 +242,11 @@
 								<form:options items="${countryList}" itemValue="countryValue"
 									itemLabel="countryValue" />
 							</form:select>
-							<font color="red"><form:errors
-									path="billingAddressForm.countryForBillingAddr" /> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.countryForBillingAddr" /> </font>
 						</div>
 
 						<div class="rowEvenSpacing">
@@ -242,9 +254,11 @@
 							<form:input path="billingAddressForm.zipCodeForBillingAddr"
 								type="text" name="zip2" id="zip2"
 								class="job_seeker_password textBox350 " />
-							<font color="red"><form:errors
-									path="billingAddressForm.zipCodeForBillingAddr" /> </font> <span
-								class="required">(Required)</span>
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.zipCodeForBillingAddr" /> </font>
 						</div>
 						<form:hidden path="billingAddressForm.facilityContactId" />
 
@@ -315,15 +329,16 @@
 								<form:option value="11">November</form:option>
 								<form:option value="12">December</form:option>
 							</form:select>
-							
-							<% 
-							List<Integer> yearsList = new ArrayList<Integer>();
-							int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-							for (int i = 0; i < 10; i++) {
-								yearsList.add(currentYear+i);
-								
-							} %>
-							
+
+							<%
+								List<Integer> yearsList = new ArrayList<Integer>();
+									int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+									for (int i = 0; i < 10; i++) {
+										yearsList.add(currentYear + i);
+
+									}
+							%>
+
 
 							<form:select name="year" id="year"
 								path="creditCardInfoForm.expYear"
@@ -343,7 +358,7 @@
 								<form:option value="2023">2023</form:option>
 								<form:option value="2024">2024</form:option>
 								<form:option value="2025">2025</form:option>
-								 
+
 								<%-- <form:option value="0" label="Select" />
 								<form:options items="${yearsList}" itemValue="yearsValue"
 									itemLabel="yearsValue1" />  --%>
@@ -358,7 +373,7 @@
 
 						<div class="rowEvenSpacing">
 							<span class="lableText3">Security Code:</span>
-							<form:password path="creditCardInfoForm.securiyCode" 
+							<form:password path="creditCardInfoForm.securiyCode"
 								name="security_code" id="security_code"
 								class="job_seeker_password tinyTextBox " />
 							<span class="floatLeft marginTop6"><img
