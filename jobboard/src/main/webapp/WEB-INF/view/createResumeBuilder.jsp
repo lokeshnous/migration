@@ -41,6 +41,11 @@
 			limitCount.value = limitNum - limitField.value.length;
 		}
 	}
+	
+	//Limit text area characters
+	function resetEndDate(CBId) {
+
+	}
 
 	jQuery(document).ready(function() {	
 				
@@ -318,22 +323,27 @@
 												path="contactInfoForm.country" /></FONT>
 									</div>
 									<div class="row">
-									<div class="rowEvenNewSpacing MarginBottom10">
 									<div id="listOfPhoneId">
-										<span class="lableText3">Phone Number:</span>
-										<div class="floatLeft marginRight10"></div>
-										<span class="floatLeft marginRight10">
 										<c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">
-												<form:select path="listPhoneDtlForm[${status.index}].phoneType"
-													id="exclude" class="jb_input75">
+											<div class="rowEvenNewSpacing MarginBottom10">
+											<c:if test="${status.count == 1}">   
+									            <span class="lableText3">Phone Number:</span> 
+									         </c:if>   
+											<c:if test="${status.count != 1}">   
+									            <span class="lableText3"></span> 
+									         </c:if>  									         
+											<div class="floatLeft marginRight10"></div>
+											<span class="floatLeft marginRight10">
+												<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75">
 													<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 												</form:select>
 												<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password" />
 												<span class="required ">(Required)</span>
+											</div>
 										</c:forEach>
 										</span>
 									</div>
-									</div>
+
 									<div id="phNoAjaxCallId">
 										<p>
 											<a href="#" class="link_color1_emphasized" id="phNoAjaxCallIdButton">Save and add another phone number</a> 
@@ -434,13 +444,13 @@
 										<div class="row marginTop10">
 											<span class="lableTextSelect">End Date:</span>
 											<form:input path="listWorkExpForm[${status.index}].endDate"
-												class="job_seeker_Resume datepicker" id="workExpEndDtId"/>
+												class="job_seeker_Resume datepicker" />
 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
 											</div>
 											<span class="required"> 
-											<form:checkbox path="listWorkExpForm[${status.index}].bPresent" id="workExpPresentCBId"/>
+											<form:checkbox path="listWorkExpForm[${status.index}].bPresent" onclick="resetEndDate(this.id);"/>
 											</span>
 											<div class="floatLeft marginLeft10 marginTop8">present</div>
 
@@ -582,7 +592,7 @@
 											<span class="lableTextSelect">End Date:</span>
 
 											<form:input path="listEduForm[${status.index}].endDate"
-												class="job_seeker_Resume datepicker" id="eduEndDateId"/>
+												class="job_seeker_Resume datepicker" />
 <!-- 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
