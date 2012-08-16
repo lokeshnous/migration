@@ -53,7 +53,7 @@
 	<div class="row marginTop10">
 		<span class="lableTextSelect">End Date:</span>
 		<form:input path="createResume.listWorkExpForm[${workExpPositionId}].endDate"
-			class="job_seeker_Resume datepicker" id="workExpEndDtId"/>
+			class="job_seeker_Resume datepicker"/>
 		<div class="calender">
 			<a href="#"><img src="../resources/images/tranBg.png"
 				width="14" height="14" alt="Datepick"></a>

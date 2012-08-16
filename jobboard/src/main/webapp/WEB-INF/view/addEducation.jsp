@@ -58,7 +58,7 @@
 		<span class="lableTextSelect">End Date:</span>
 
 		<form:input path="createResume.listEduForm[${eduPositionId}].endDate"
-			class="job_seeker_Resume datepicker" id="eduEndDateId"/>
+			class="job_seeker_Resume datepicker" />
 <!-- 											<div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
