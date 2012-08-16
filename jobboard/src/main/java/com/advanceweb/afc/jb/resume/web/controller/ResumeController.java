@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,7 +92,7 @@ public class ResumeController {
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 
-	
+	private Long PLACE_KEY;
 
 	/**
 	 * This method is called to display resume list belonging to a logged in
@@ -249,7 +250,9 @@ public class ResumeController {
 	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.POST)
 	public ModelAndView updateResumePopup(CreateResume createResume,
 			HttpSession session) {
-
+		
+		PLACE_KEY = (new Random()).nextLong();
+		
 		ModelAndView model = new ModelAndView();
 
 		ResumeDTO resumeDTO = transCreateResume
@@ -492,7 +495,9 @@ public class ResumeController {
 	@RequestMapping(value = "/createResumeBuilder", method = RequestMethod.GET)
 	public ModelAndView createResumebuilder(CreateResume createResume,
 			HttpSession session) {
-
+		
+		PLACE_KEY = (new Random()).nextLong();
+		
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = transCreateResume
 				.transformCreateResumeToResumeDTO(createResume);
@@ -575,9 +580,13 @@ public class ResumeController {
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Save")
 	public ModelAndView saveResumeBuilder(CreateResume createResume,
 			HttpSession session) {
-
 		ModelAndView model = new ModelAndView();
-
+		
+		if (((Long) session.getAttribute("LAST_PLACE_KEY"))!=null && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals(PLACE_KEY)) {
+			model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+			return model;
+		}
+		
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute("userId"));
 		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
@@ -620,6 +629,7 @@ public class ResumeController {
 		resumeDTO.setListPhoneDtl(listPhoneDTO);
 		resumeService.createResumeBuilder(resumeDTO);
 		getTotalNotNullField(createResume);
+		session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
 		model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
 		createResume = null;
 		return model;
