@@ -426,15 +426,15 @@ public class ResumeController {
 						// return "/uploadfile";
 					} else {
 						fileName = file.getOriginalFilename();
-						filePath = basedirectorypathUpload + fileName;
-						File dest = new File(filePath);
-						file.transferTo(dest);
+						filePath = basedirectorypathUpload;
 						resumeDTO.setFileServer(basedirectorypathUpload);
 						resumeDTO.setFileName(fileName);
 						resumeDTO.setFilePath(filePath);
-						// set it from session
 						resumeDTO.setUserId((Integer) session.getAttribute("userId"));
-						resumeService.createResumeUpload(resumeDTO);
+						resumeDTO = resumeService.createResumeUpload(resumeDTO);
+						
+						File dest = new File(resumeDTO.getFilePath());
+						file.transferTo(dest);
 					}
 				}
 			} catch (Exception e) {
@@ -465,13 +465,16 @@ public class ResumeController {
 						// return "/uploadfile";
 					} else {
 						fileName = file.getOriginalFilename();
-						filePath = basedirectorypathUpload + fileName;
-						File dest = new File(filePath);
-						file.transferTo(dest);
-						resumeDTO.setFileServer(basedirectorypathUpload);
-						resumeDTO.setFileName(fileName);
-						resumeDTO.setFilePath(filePath);
-						// set it from session
+						File deleteFile = new File(resumeDTO.getFilePath());
+						if(deleteFile.delete()){
+							filePath = basedirectorypathUpload + resumeDTO.getUploadResumeId() + "_"+ fileName;
+							File dest = new File(filePath);
+							file.transferTo(dest);
+							
+							resumeDTO.setFileServer(basedirectorypathUpload);
+							resumeDTO.setFileName(fileName);
+							resumeDTO.setFilePath(filePath);
+						}
 					}
 				}
 			} catch (Exception e) {
@@ -880,7 +883,7 @@ public class ResumeController {
 			model.setViewName("viewresume");
 		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume.getResumeType())) {
 			try {
-				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="+resumeDTO.getFileName());
+				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="+resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1083,7 +1086,7 @@ public class ResumeController {
 		
 		ResumeDTO resumeDTO = resumeService.editResume(Integer.parseInt(createResume.getUploadResumeId()));
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="+resumeDTO.getFileName());
+		model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="+resumeDTO.getFilePath());
 		return model;
 
 	}	
@@ -1092,11 +1095,25 @@ public class ResumeController {
 	public void exporting(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam("fileName") String fileName) throws Exception {
 
-		response.setContentType("application/vnd.ms-word");
-		response.setHeader("Content-Disposition", "attachment; filename="+ fileName);
+		File file = new File(fileName);
 		
-		File file = new File(basedirectorypathUpload, fileName);
-		response.setHeader("Content-Disposition","inline; filename=\"" + file.getName() + "\"");
+		String fname = file.getName();
+		int index = fname.indexOf("_");
+		fname = fname.substring(index+1);
+		index = fname.lastIndexOf(".");
+		String fileExtn = fname.substring(index+1);
+		
+		if(MMJBCommonConstants.FILE_TYPE_DOC.equalsIgnoreCase(fileExtn)){
+			response.setContentType("application/vnd.ms-word");
+		}
+		else if(MMJBCommonConstants.FILE_TYPE_DOCX.equalsIgnoreCase(fileExtn)){
+			response.setContentType("application/vnd.ms-word");
+		}
+		else if(MMJBCommonConstants.FILE_TYPE_PDF.equalsIgnoreCase(fileExtn)){
+			response.setContentType("application/pdf");
+		}
+		
+		response.setHeader("Content-Disposition", "attachment; filename="+ fname);
 
 		BufferedInputStream input = null;
 		BufferedOutputStream output = null;

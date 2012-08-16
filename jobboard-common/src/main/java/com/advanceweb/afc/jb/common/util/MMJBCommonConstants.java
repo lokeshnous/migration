@@ -38,6 +38,12 @@ public interface MMJBCommonConstants {
 	//Resume Visibility
 	public static final String VISIBILITY_PUBLIC = "1" ;
 	public static final String VISIBILITY_PRIVATE = "0";
+	
+	public static final long RESUME_MAX_SIZE = 50; // 750KB
+	
+	public static final String FILE_TYPE_DOC = "doc";
+	public static final String FILE_TYPE_DOCX = "docx";
+	public static final String FILE_TYPE_PDF = "pdf";
 
 	// For SOLR search
 	int ZERO_INT = 0;

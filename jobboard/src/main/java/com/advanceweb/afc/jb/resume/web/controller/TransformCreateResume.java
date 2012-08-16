@@ -41,6 +41,7 @@ public class TransformCreateResume {
 		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
 			resumeDTO.setFileName(createResume.getFilename());
+			resumeDTO.setFilePath(createResume.getFilePath());
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
 			resumeDTO.setResumeText(createResume.getResumeText());
@@ -59,6 +60,7 @@ public class TransformCreateResume {
 		createResume.setResumeVisibility(resumeDTO.getResumeVisibility());
 		if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
 			createResume.setFilename(resumeDTO.getFileName());
+			createResume.setFilePath(resumeDTO.getFilePath());
 		}
 		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO.getResumeType())){
 			createResume.setResumeText(resumeDTO.getResumeText());

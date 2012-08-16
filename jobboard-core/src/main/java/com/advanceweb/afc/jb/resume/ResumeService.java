@@ -28,7 +28,7 @@ public interface ResumeService {
 	boolean createResumeCopyPaste(ResumeDTO resumeDTO);
 	boolean updateResumeCopyPaste(ResumeDTO resumeDTO);
 	
-	boolean createResumeUpload(ResumeDTO resumeDTO);
+	ResumeDTO createResumeUpload(ResumeDTO resumeDTO);
 	boolean updateResumeUpload(ResumeDTO resumeDTO);
 	
 	boolean addWorkExp(List<WorkExpDTO> listWorkExp);

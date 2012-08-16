@@ -11,8 +11,8 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery(".megamenu").megamenu();
+	$(document).ready(function() {
+		$(".megamenu").megamenu();
 
 		$("#resumeType").change(function() {
 			var resumeType = $.trim($("#resumeType").val());
@@ -107,7 +107,7 @@
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>
 					<div class="floatLeft marginTop5 marginRight20">How would you
-						like to create your resume?</div>
+						like to create your resume</div>
 					<form:select class="jb_input3 jb_input_width3" path="resumeType"
 						items="${resumeTypeList}" itemValue="optionValue"
 						itemLabel="optionValue" />
@@ -117,9 +117,8 @@
 				<!-- Choose file section -->
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Upload Resume:</span>
-					<form:input path="fileData" id="chooseFile" class="FloatLeft" type="file" />
+					<form:input path="fileData" id="chooseFile" class="floatLeft" type="file" />
 					<span class="required paddingTop0 marginTop5">(Required)</span>
-                	<!-- <span class="floatLeft marginTop5"><a href="" class="btn_sm orange">Choose File</a></span><span class="required paddingTop0 marginTop5 TextColorA05">No File Chosen</span><span class="required paddingTop0 marginTop4">(Required)</span> -->
             	</div>
 
 				<!-- <div class="rowEvenNewSpacing">
@@ -206,8 +205,8 @@
 				</div>
 
 				<div class="popUpButtonRow">
-					<a id="create" href="#" class="btn_sm orange">Create</a> <a
-						href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+					<a id="create" href="#" class="btn_sm orange">Create</a> 
+					<a id="cancelButton" href="#" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 				<a id="resumeBuilder"
 					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder"

@@ -26,6 +26,7 @@ public class CreateResume {
 	private String resumeText;
 	private String resumeText1;
 	private String filename;
+	private String filePath;
 	private CommonsMultipartFile fileData;
 	
 	//Creating Resume
@@ -95,6 +96,12 @@ public class CreateResume {
 	}
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	public String getResumeText1() {
 		return resumeText1;

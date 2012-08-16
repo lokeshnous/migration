@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.resume;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -103,7 +104,7 @@ public class ResumeServiceTest extends ServiceTest {
 			createResumeDTO.setFileServer(ownIP.getHostAddress());
 			createResumeDTO.setFileName("Test");
 			createResumeDTO.setFilePath("filePath");
-			assertTrue("Upload Resume", resumeService.createResumeUpload(createResumeDTO));
+			assertNull("Upload Resume", resumeService.createResumeUpload(createResumeDTO));
 
 		} catch (Exception e) {
 			e.printStackTrace();
