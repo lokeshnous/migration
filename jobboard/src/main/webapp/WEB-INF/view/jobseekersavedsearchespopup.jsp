@@ -147,10 +147,7 @@ $(document).keyup(function(event) {
 									
 								}
 							}); 
-						}); $("select").change(function () { 
-					           $('select option:eq(5)').attr('selected', true);
-				        })
-				        .trigger('change');
+						}); 
 						jQuery(".megamenu").megamenu();
 					});
 </script>
@@ -193,14 +190,7 @@ $(document).keyup(function(event) {
 								    <form:select class="jb_input3 select100"									
 										path="saveSearchedJobsDTOList[${status.index}].emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
-								    </form:select>
-								    <script>
-								    $("select").change(function () { 
-         							  $('select option:eq(5)').attr('selected', true);
-       							   })
-        						  .trigger('change');
-								    </script>
-								    										
+								    </form:select>							    										
 								</td>
 								
 								<td align="center"><a href='' class="newWindow"><img
