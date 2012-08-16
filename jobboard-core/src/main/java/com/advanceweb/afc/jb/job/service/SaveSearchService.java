@@ -42,10 +42,10 @@ public interface SaveSearchService {
 	/**
 	 * This method is called to edit the Saved Searches
 	 * 
-	 * @param userId
+	 * @param searchId
 	 * @return
 	 */
-	List<SaveSearchedJobsDTO> editSavedSearch(String saveSearchName);
+	List<SaveSearchedJobsDTO> editSavedSearch(int searchId);
 
 	/**
 	 * This Method saves modified notify me data to the adm_save_search table

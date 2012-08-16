@@ -92,11 +92,11 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * This method is called to edit a Saved Job Search
 	 * 
 	 * @param saveSearchId
-	 * @return jpSaveSearch
+	 * @return 
 	 */
 	@Override
-	public List<SaveSearchedJobsDTO> editSavedSearch(String searchName) {
-		List<AdmSaveSearch> searchResults = hibernateTemplate.find("from AdmSaveSearch where searchName=? ",searchName);
+	public List<SaveSearchedJobsDTO> editSavedSearch(int saveSearchId) {
+		List<AdmSaveSearch> searchResults = hibernateTemplate.find("from AdmSaveSearch where saveSearchId=? ",saveSearchId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}

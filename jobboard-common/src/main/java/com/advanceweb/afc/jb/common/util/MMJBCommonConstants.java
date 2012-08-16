@@ -62,6 +62,7 @@ public interface MMJBCommonConstants {
 	String KEYWORDS = "keywords";
 	String CITY_STATE = "cityState";
 	String RADIUS = "radius";
+	public static final String AUTOLOAD = "autoload";
 	String SESSION_ID = "sessionid";
 	
 	String SEARCH_SEQ = "search_seq";
@@ -174,6 +175,8 @@ public interface MMJBCommonConstants {
 	public static final String SEMICOLON = ";";
 	public static final String LANGUAGE_ENGLISH="English";
 	public static final String REFERENCE_TYPE_PERSONAL="Personal";
+	public static final String BASIC_SEARCH_TYPE = "basic";
+	public static final String SAVE_SEARCH_NAME = "saveSearchName";
 	
 
 	//For User Roles
@@ -190,8 +193,6 @@ public interface MMJBCommonConstants {
 	public static final String CREDIT_CARD = "creditCard";
 	public static final String INVOICE = "invoice";
 
-	
-
 	//For Successful Login
 	public static final String USER_EMAIL="userEmail";
 	public static final String USER_NAME="userName";
@@ -199,7 +200,4 @@ public interface MMJBCommonConstants {
 	//For Duplicate Submission
 	public static final String LAST_PLACE_KEY="LAST_PLACE_KEY";
 	
-
-	
-
 }

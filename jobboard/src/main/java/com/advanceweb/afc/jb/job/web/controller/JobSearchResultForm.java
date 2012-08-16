@@ -9,9 +9,18 @@ public class JobSearchResultForm {
 	private String cityState;
 	private String radius;
 	private String searchtype;
-
-
+	private String saveSearchName;
+	private boolean autoload;
 	
+	
+	public boolean isAutoload() {
+		return autoload;
+	}
+
+	public void setAutoload(boolean autoload) {
+		this.autoload = autoload;
+	}
+
 	public String getSearchtype() {
 		return searchtype;
 	}
@@ -58,6 +67,14 @@ public class JobSearchResultForm {
 
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
+	}
+
+	public String getSaveSearchName() {
+		return saveSearchName;
+	}
+
+	public void setSaveSearchName(String saveSearchName) {
+		this.saveSearchName = saveSearchName;
 	}
 
 

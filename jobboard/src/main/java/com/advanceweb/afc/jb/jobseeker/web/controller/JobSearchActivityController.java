@@ -318,6 +318,7 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
 			HttpSession session) {
+		ModelAndView model1 = new ModelAndView();
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		// Modified to delete the first saved search,allow user to
 		// create new search if he has already created 5 searches and trying to
@@ -329,6 +330,64 @@ public class JobSearchActivityController {
 		savedSearchCount = saveSearchedJobsDTOList.size();
 		if (savedSearchCount == 5) {
 			saveSearchService.deleteFirstSearch(userId);
+		}
+		
+		//Added for view my saved searches
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
+					&& session
+							.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
+							.toString()
+							.equalsIgnoreCase(
+									MMJBCommonConstants.BASIC_SEARCH_TYPE)) {
+
+				String searchType = session.getAttribute(
+						MMJBCommonConstants.SEARCH_TYPE).toString();
+				String radius = MMJBCommonConstants.EMPTY;
+				String cityState = MMJBCommonConstants.EMPTY;
+				String keywords = MMJBCommonConstants.EMPTY;
+				String saveSearchName = MMJBCommonConstants.EMPTY;
+				boolean autoload = false;
+				if (session.getAttribute(MMJBCommonConstants.KEYWORDS) != null) {
+					keywords = session.getAttribute(
+							MMJBCommonConstants.KEYWORDS).toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.CITY_STATE) != null) {
+					cityState = session.getAttribute(
+							MMJBCommonConstants.CITY_STATE).toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.RADIUS) != null) {
+					radius = session.getAttribute(MMJBCommonConstants.RADIUS)
+							.toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
+					saveSearchName = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME)
+							.toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.AUTOLOAD) != null) {
+					autoload = Boolean.parseBoolean(session.getAttribute(MMJBCommonConstants.AUTOLOAD).toString());
+				}
+
+				/*model1.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
+				model1.addObject(MMJBCommonConstants.SEARCH_TYPE, searchType);
+				model1.addObject(MMJBCommonConstants.KEYWORDS, keywords);
+				model1.addObject(MMJBCommonConstants.CITY_STATE, cityState);
+				model1.addObject(MMJBCommonConstants.RADIUS, radius);*/
+								
+				jobSearchResultForm.setSaveSearchName(saveSearchName);
+				jobSearchResultForm.setSearchtype(searchType);
+				jobSearchResultForm.setKeywords(keywords);
+				jobSearchResultForm.setCityState(cityState);
+				jobSearchResultForm.setRadius(radius);
+				jobSearchResultForm.setAutoload(autoload);				
+
+				LOGGER.info("Removing from session....");
+
+				session.removeAttribute(MMJBCommonConstants.KEYWORDS);
+				session.removeAttribute(MMJBCommonConstants.CITY_STATE);
+				session.removeAttribute(MMJBCommonConstants.RADIUS);
+
+			}
 		}
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardsearchresults");

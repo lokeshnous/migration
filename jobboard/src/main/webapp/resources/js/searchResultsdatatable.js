@@ -1,6 +1,15 @@
 jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
 				$(".saveThisPopup").displaypopup(".saveThisPopup","775","252");
+				
+				//alert($("#searchtypeToSavedSearch").val());
+				
+				if($("#searchtypeToSavedSearch").val() == "basic"){
+					
+		            $("#keywords").val($("#keywordsToSavedSearch").val());
+		            $("#cityState").val($("#cityStateToSavedSearch").val());
+		            $("#radius").val($("#radiusToSavedSearch").val());
+				}
 
 			});
 
@@ -233,7 +242,50 @@ jQuery(document).ready(function() {
 					.ready(
 							function() {
 								$(".megamenu").megamenu();
-								
+								generateTable();
+								var autoLoad = $("#isAutoload").val();
+								if(autoLoad == "true"){		
+									$("#isAutoload").val("false");
+									$("#rows").val(25000);
+									$("#start").val("0");
+									
+									var keywords = $("#keywords").val();
+									var cityState = $("#cityState").val();
+									var radius = $("#radius").val();
+									var rows = $("#rows").val();
+									var start = $("#start").val();
+									var searchtype = $("#searchtype").val();
+									//alert("-------"+autoLoad);
+									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
+									$("#TotalNoRecords").text("");
+									$("#TotalRecord").text("");
+									//alert("navUrl="+navUrl);
+									$.getJSON(navUrl,function(data) {
+											table.fnClearTable();
+											table.fnAddData(data.jsonRows);
+											var nNodes = table.fnGetNodes();
+											var count = 0;
+											for(var i=0;i<nNodes.length;i++)
+										        {
+												if(i  != 0 && (i % 9) == 0){
+												//nNodes[i+count] = 	 "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>";
+												//$('#jsonTable').dataTable().fnAddData(["row 3, cell 1", "row 3, cell 2","row 3, cell 1", "row 3, cell 2"]);
+												//table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
+												table.fnOpen( nNodes[i+count], "<img src='../resources/images/ads/banner_ad_fpo.png'>", "advertiseStyle" );
+												count = count+1;
+												}
+										        }
+											$("#TotalNoRecords").text(data.TotalNoRecords);
+											$("#TotalRecord").text(data.TotalNoRecords);
+											/* $("#SearchCriteria").text(keywords); */
+											});
+									$(".otherContent").attr("style","display: none");
+									$(".searchContent").attr("style","display: block");
+									
+									return true;
+								}
+								//$('#submitval').trigger('click');
 								$("#submitval").click(function(event) {
 									if(!validateSearch()){
 										return false;
@@ -279,7 +331,6 @@ jQuery(document).ready(function() {
 									return true;
 									
 								});
-								generateTable();
 								/* Add event listener for opening and closing details
 								 * Note that the indicator for showing which row is open is not controlled by DataTables,
 								 * rather it is done here

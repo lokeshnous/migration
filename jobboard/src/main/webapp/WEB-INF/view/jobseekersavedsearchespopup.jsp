@@ -68,53 +68,6 @@ $(document).keyup(function(event) {
 		     	            parent.$.nmTop().close();
 		                   event.preventDefault();
 		                });	 */
-						
-						$("#editSavedSearch").click(function (event){	
-							var searchName = $(this).parent().parent().children().children().html();
-							
-							
-							$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchName="+searchName,
-								success: function(data){ 
-									$.each(data, function(key, val) {
-					//alert(val);
-										 if (key == "searchtype" && val == "basic") {
-											//window.location.href = val+".html";
-					//alert(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
-											parent.window.location.href = '${pageContext.request.contextPath}/jobSeeker/jobSeekerDashBoard' + '.html';
-											//$.nmManual(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
-											parent.$.nmTop().close();
-										}
-										 /*
-										if (key == "LoggedInNavigationPath") {
-											parent.$.nmTop().close();
-											//$.nmManual(val + '.html');
-										}
-										
-										if(key == "EmptySearchName"){
-											$("#ErrorMsg").text("${msg.EmptySearchName}");
-										}
-										if(key == "DuplicateSearchName"){
-											$("#ErrorMsg").text("${msg.DuplicateSearchName}");
-										} */
-									}); 
-									
-								    /* if(data.success != null){
-								    	//rowObj.remove();
-								    	alert("Hi");
-								    }
-								    if(data.failure != null){
-								    	alert(data.failure);
-								    } */
-								},
-								error: function(response) {
-									alert("Server Error : "+response.status);
-								},
-								complete: function() {
-									
-								}
-							}); 
-						 });  
-						
 											
 						
 						//For saving the data
@@ -151,6 +104,60 @@ $(document).keyup(function(event) {
 						jQuery(".megamenu").megamenu();
 					});
 </script>
+<script type="text/javascript">
+
+function geteditSavedSearch(searchJobId){
+	//$("#editSavedSearch").click(function (event){	
+		//alert(searchJobId);
+		
+		//var searchName = $(searchJobId).parent().parent().children().children().html();
+		//alert($(searchJobId).parent().parent().children().children().html());
+		var id = searchJobId.replace("editSavedSearch", "");
+		//alert(id);
+		$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+id,
+			success: function(data){ 
+				$.each(data, function(key, val) {
+//alert(val);
+					 if (key == "searchtype" && val == "basic") {
+						//window.location.href = val+".html";
+//alert(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
+						parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
+						//$.nmManual(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
+						parent.$.nmTop().close();
+					}
+					 /*
+					if (key == "LoggedInNavigationPath") {
+						parent.$.nmTop().close();
+						//$.nmManual(val + '.html');
+					}
+					
+					if(key == "EmptySearchName"){
+						$("#ErrorMsg").text("${msg.EmptySearchName}");
+					}
+					if(key == "DuplicateSearchName"){
+						$("#ErrorMsg").text("${msg.DuplicateSearchName}");
+					} */
+				}); 
+				
+			    /* if(data.success != null){
+			    	//rowObj.remove();
+			    	alert("Hi");
+			    }
+			    if(data.failure != null){
+			    	alert(data.failure);
+			    } */
+			},
+			error: function(response) {
+				alert("Server Error : "+response.status);
+			},
+			complete: function() {
+				
+			}
+		}); 
+	 //});  
+    }
+</script>
+
 </head>
 
 <body class="job_board">
@@ -180,9 +187,8 @@ $(document).keyup(function(event) {
 						<c:forEach items="${saveSearchedJobsDTOList}"
 							var="saveSearchdtoList"  varStatus="status">
 							<tr id="${saveSearchdtoList.saveSearchID}">
-								<td><a href="#">${saveSearchdtoList.getSearchName()}</a></td>
-								<%-- <a href="${saveSearchdtoList.getUrl()}"							
-									rel="0" target="_blank" class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td> --%>
+								<td><a href="${saveSearchdtoList.getUrl()}"							
+									rel="0" target="_blank" class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td>
 								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
 								
 								<td align="center">						
@@ -190,12 +196,19 @@ $(document).keyup(function(event) {
 								    <form:select class="jb_input3 select100"									
 										path="saveSearchedJobsDTOList[${status.index}].emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
-								    </form:select>							    										
+								    </form:select>
+								    <script>
+								   // $("select").change(function () { 
+         							//  $('select option:eq(5)').attr('selected', true);
+       							   //})
+        						  //.trigger('change');
+								    </script>
+								    										
 								</td>
 								
 								<td align="center"><a href='' class="newWindow"><img
 										src="../resources/images/View.png" width="20" height="20"
-										alt="view"></a>&nbsp;<a href='#' id="editSavedSearch" class="newWindow"><img
+										alt="view"></a>&nbsp;<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img
 										src="../resources/images/Edit.png"   width="20" height="20"
 										alt="edit" onclick=""></a>&nbsp;<a href="#"><img
 										src="../resources/images/Delete.png" width="20" height="20"

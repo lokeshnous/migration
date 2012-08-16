@@ -12,6 +12,46 @@ public class JobSeekerDashBoardForm {
 	private int savedSearchCount;
 	private int savedJobsCount;
 	private int appliedJobsCount;
+	private String keywordsToSavedSearch;
+	
+	private String cityStateToSavedSearch;
+	
+	private String radiusToSavedSearch;
+	
+	private String searchtypeToSavedSearch;
+
+	
+	public String getKeywordsToSavedSearch() {
+		return keywordsToSavedSearch;
+	}
+
+	public void setKeywordsToSavedSearch(String keywordsToSavedSearch) {
+		this.keywordsToSavedSearch = keywordsToSavedSearch;
+	}
+
+	public String getCityStateToSavedSearch() {
+		return cityStateToSavedSearch;
+	}
+
+	public void setCityStateToSavedSearch(String cityStateToSavedSearch) {
+		this.cityStateToSavedSearch = cityStateToSavedSearch;
+	}
+
+	public String getRadiusToSavedSearch() {
+		return radiusToSavedSearch;
+	}
+
+	public void setRadiusToSavedSearch(String radiusToSavedSearch) {
+		this.radiusToSavedSearch = radiusToSavedSearch;
+	}
+
+	public String getSearchtypeToSavedSearch() {
+		return searchtypeToSavedSearch;
+	}
+
+	public void setSearchtypeToSavedSearch(String searchtypeToSavedSearch) {
+		this.searchtypeToSavedSearch = searchtypeToSavedSearch;
+	}
 
 	public String getUserName() {
 		return userName;

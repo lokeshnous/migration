@@ -15,7 +15,6 @@ public class JobSearchDTO implements Serializable{
 	
 	private static final long serialVersionUID = -2200423309708244407L;
 	
-	
 	@Field("adtext")
 	private String adText;
 	

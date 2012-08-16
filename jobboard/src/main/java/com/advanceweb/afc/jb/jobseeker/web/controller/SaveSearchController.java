@@ -142,11 +142,21 @@ public class SaveSearchController {
 		try {
 
 			// Check for job seeker login
-			if (session.getAttribute("userId") == null) {
+			if(session.getAttribute("userId") == null) {
 				model.put("SaveSearchForm", new SaveSearchForm());
 				jsonObject.put("NavigationPath",
 						"../loginFormForJobSeeker/login");
-			} else {
+			} else if(session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null 
+				&& session.getAttribute(MMJBCommonConstants.SEARCH_TYPE).toString().equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
+				&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null
+				 && session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString() != null){
+				 String name = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
+				 //saveSearchService.editSavedSearch(name);
+				 session.removeAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME);
+				 session.removeAttribute(MMJBCommonConstants.SEARCH_TYPE);
+				 jsonObject.put("NavigationPath",
+							"../jobSeeker/jobSeekerDashBoard");
+			}else{				
 				// Before user saves his search need to check save search
 				// records are more than 5 searches.
 				// if yes then delete the first saved search
@@ -240,29 +250,33 @@ public class SaveSearchController {
 	@RequestMapping(value = "/editSavedSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject editSavedSearch(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session, @RequestParam("searchName") String searchName) {
+			HttpServletResponse response, HttpSession session, @RequestParam("searchId") int searchId) {
 
 		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 		JSONObject jsonObject = new JSONObject();
 		
 		//System.out.println("Search Name=="+searchName);
 		
-		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService.editSavedSearch(searchName);
+		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService.editSavedSearch(searchId);
 		
 		//JSONObject deleteStatusJson = new JSONObject();
 		if (saveSrchJobsDTOList.size() > 0) {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();
+			String saveSearchName = saveSrchJobsDTOList.get(0).getSearchName();
 			Map<String, String> urlMap = MMUtils.getUrlMap(urlString);
 			
-			/*session.setAttribute(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
+			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
+			session.setAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
 			session.setAttribute(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
 			session.setAttribute(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
-			session.setAttribute(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));*/
+			session.setAttribute(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
+			session.setAttribute(MMJBCommonConstants.AUTOLOAD,true);
 			
 			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
 			jsonObject.put(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
 			jsonObject.put(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
 			jsonObject.put(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
+			jsonObject.put(MMJBCommonConstants.AUTOLOAD, true);
 			
 			return jsonObject;
 		} else {

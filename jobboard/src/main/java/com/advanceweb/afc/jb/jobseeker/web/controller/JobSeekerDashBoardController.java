@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +16,7 @@ import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
@@ -33,21 +35,24 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @Scope("session")
 public class JobSeekerDashBoardController {
 
-	@Autowired
-	private JobSeekerSubscriptionService	jobSeekerSubscriptionsService;
+	private static final Logger LOGGER = Logger
+			.getLogger("JobSeekerDashBoardController.class");
 
 	@Autowired
-	private TransformJobSeekerSubscription	transformJobSeekerSubscription;
+	private JobSeekerSubscriptionService jobSeekerSubscriptionsService;
 
 	@Autowired
-	private PopulateDropdowns				populateDropdownsService;
+	private TransformJobSeekerSubscription transformJobSeekerSubscription;
 
 	@Autowired
-	private SaveSearchService				saveSearchService;
+	private PopulateDropdowns populateDropdownsService;
 
 	@Autowired
-	private JobSeekerService				jobSeekerActivity;
-	
+	private SaveSearchService saveSearchService;
+
+	@Autowired
+	private JobSeekerService jobSeekerActivity;
+
 	@Value("${follouplinkfacebook}")
 	private String follouplinkfacebook;
 
@@ -101,6 +106,56 @@ public class JobSeekerDashBoardController {
 		model.addObject("jobSearchResultForm", jobSearchResultForm);
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");
+
+		/** Getting the value from the session **/
+
+		//Added for view my saved search task
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
+					&& session
+							.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
+							.toString()
+							.equalsIgnoreCase(
+									MMJBCommonConstants.BASIC_SEARCH_TYPE)) {
+
+				String searchType = session.getAttribute(
+						MMJBCommonConstants.SEARCH_TYPE).toString();
+				String radius = MMJBCommonConstants.EMPTY;
+				String cityState = MMJBCommonConstants.EMPTY;
+				String keywords = MMJBCommonConstants.EMPTY;
+				String saveSearchName = MMJBCommonConstants.EMPTY;
+				if (session.getAttribute(MMJBCommonConstants.KEYWORDS) != null) {
+					keywords = session.getAttribute(
+							MMJBCommonConstants.KEYWORDS).toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.CITY_STATE) != null) {
+					cityState = session.getAttribute(
+							MMJBCommonConstants.CITY_STATE).toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.RADIUS) != null) {
+					radius = session.getAttribute(MMJBCommonConstants.RADIUS)
+							.toString();
+				}
+				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
+					saveSearchName = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME)
+							.toString();
+				}
+
+				model.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
+				model.addObject(MMJBCommonConstants.SEARCH_TYPE, searchType);
+				model.addObject(MMJBCommonConstants.KEYWORDS, keywords);
+				model.addObject(MMJBCommonConstants.CITY_STATE, cityState);
+				model.addObject(MMJBCommonConstants.RADIUS, radius);
+
+				LOGGER.info("Removing from session....");
+
+				session.removeAttribute(MMJBCommonConstants.KEYWORDS);
+				session.removeAttribute(MMJBCommonConstants.CITY_STATE);
+				session.removeAttribute(MMJBCommonConstants.RADIUS);
+
+			}
+		}
+
 		return model;
 	}
 }
