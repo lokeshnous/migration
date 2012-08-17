@@ -105,6 +105,12 @@ public class JobSearchActivityController {
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 	
+	@Value("${jobseekerPageExtention}")
+	private String jobseekerPageExtention;
+	
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
+	
 	@Value("${defaultResumeExtension}")
 	private String defaultResumeExtension;
 
@@ -214,7 +220,8 @@ public class JobSearchActivityController {
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				map.put("loginForm", new LoginForm());
-				jsonObject.put(ajaxNavigationPath, navigationPath);
+				jsonObject.put(ajaxNavigationPath, navigationPath
+						+ dothtmlExtention + jobseekerPageExtention);
 				return jsonObject;
 			}
 			// Get the Job details
@@ -236,10 +243,10 @@ public class JobSearchActivityController {
 			// creation of employer login page
 			String jonseekerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention;
+					+ dothtmlExtention + jobseekerPageExtention;
 			String employerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention;
+					+ dothtmlExtention + employerPageExtention;
 
 			EmailDTO employerEmailDTO = new EmailDTO();
 			employerEmailDTO.setFromAddress(advanceWebAddress);

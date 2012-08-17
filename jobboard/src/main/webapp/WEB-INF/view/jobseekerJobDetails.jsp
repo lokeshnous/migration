@@ -87,7 +87,7 @@
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
 						//$(applyJobidId).attr('href', val + '.html');
-						window.location.href = val+".html";
+						window.location.href = val;
 					}
 				});
 			},
@@ -146,7 +146,7 @@
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
 						//$(applyJobidId).attr('href', val + '.html');
-						window.location.href = val+".html";
+						window.location.href = val;
 					}
 				});
 			},
