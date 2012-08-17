@@ -107,45 +107,19 @@ $(document).keyup(function(event) {
 <script type="text/javascript">
 
 function geteditSavedSearch(searchJobId){
-	//$("#editSavedSearch").click(function (event){	
-		//alert(searchJobId);
-		
-		//var searchName = $(searchJobId).parent().parent().children().children().html();
-		//alert($(searchJobId).parent().parent().children().children().html());
+	
 		var id = searchJobId.replace("editSavedSearch", "");
-		//alert(id);
 		$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+id,
 			success: function(data){ 
 				$.each(data, function(key, val) {
-//alert(val);
 					 if (key == "searchtype" && val == "basic") {
-						//window.location.href = val+".html";
-//alert(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
+						
 						parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
-						//$.nmManual(getBaseURL()+'/jobSeeker/jobSeekerDashBoard' + '.html');
 						parent.$.nmTop().close();
-					}
-					 /*
-					if (key == "LoggedInNavigationPath") {
-						parent.$.nmTop().close();
-						//$.nmManual(val + '.html');
 					}
 					
-					if(key == "EmptySearchName"){
-						$("#ErrorMsg").text("${msg.EmptySearchName}");
-					}
-					if(key == "DuplicateSearchName"){
-						$("#ErrorMsg").text("${msg.DuplicateSearchName}");
-					} */
 				}); 
 				
-			    /* if(data.success != null){
-			    	//rowObj.remove();
-			    	alert("Hi");
-			    }
-			    if(data.failure != null){
-			    	alert(data.failure);
-			    } */
 			},
 			error: function(response) {
 				alert("Server Error : "+response.status);
@@ -154,7 +128,6 @@ function geteditSavedSearch(searchJobId){
 				
 			}
 		}); 
-	 //});  
     }
 </script>
 
