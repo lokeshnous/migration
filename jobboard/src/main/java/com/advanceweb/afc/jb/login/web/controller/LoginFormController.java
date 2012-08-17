@@ -85,13 +85,21 @@ public class LoginFormController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String jobSeekerLogin(
 			@RequestParam(value = "error", required = false) boolean error,
+			@RequestParam(value = "page", required = false) String page,
 			ModelMap model) {
 		if (error) {
 			model.put("error", loginErrMsg);
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
-		return "jobSeekerLogin";
+		
+		if (page.equals("jobSeeker")) {
+			return "jobSeekerLogin";
+		} else if (page.equals("employer")) {
+			return "employerLogin";
+		} else{
+			return "agencyLogin";
+		}
 	}
 
 	/**
