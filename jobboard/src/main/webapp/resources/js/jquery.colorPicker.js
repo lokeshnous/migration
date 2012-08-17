@@ -48,11 +48,13 @@
       swatch.bind("click", function(e){ changeColor($(this).css("background-color")) });
       swatch.bind("mouseover", function(e){ 
         $(this).css("border-color", "#598FEF"); 
-        $("input#color_value").val(toHex($(this).css("background-color")));    
+        $("input#color_value").val(toHex($(this).css("background-color")));  
+        $("input#color_id").val("HEX "+toHex($(this).css("background-color")));
         }); 
       swatch.bind("mouseout", function(e){ 
         $(this).css("border-color", "#000");
         $("input#color_value").val(toHex($(selectorOwner).css("background-color")));
+        $("input#color_id").val("HEX "+toHex($(selectorOwner).css("background-color")));
         });
       
      swatch.appendTo(selector);
@@ -99,6 +101,7 @@
     }); 
     hexColor = $(selectorOwner).prev("input").val();
     $("input#color_value").val(hexColor);
+    $("input#color_id").val("HEX "+hexColor);
     selector.show();
     
     //bind close event handler
