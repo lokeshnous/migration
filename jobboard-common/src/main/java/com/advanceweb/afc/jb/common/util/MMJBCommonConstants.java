@@ -187,7 +187,8 @@ public interface MMJBCommonConstants {
 
 	//For User Roles
 	public static final String MERION_ADMIN ="merion_admin";
-	public static final String JOBSEEKER="jobSeeker";
+	public static final String JOBSEEKER="jobseeker";
+	public static final String JOB_SEEKER="jobSeeker";
 	public static final String EMPLOYER="employer";
 	public static final String AGENCY="agency";
 	public static final String FACILITY_ADMIN="facility_admin";
