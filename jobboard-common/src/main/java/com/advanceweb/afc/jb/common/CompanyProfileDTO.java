@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 
 /**
  * @author Rajeshkb
@@ -23,7 +25,22 @@ public class CompanyProfileDTO {
 	private String companyNews;
 	private String positionTitle;
 	private String logoPath;
+	private String positionalMedia;
+	private String primaryColor;
+	
+	/**
+	 * @return the primaryColor
+	 */
+	public String getPrimaryColor() {
+		return primaryColor;
+	}
 
+	/**
+	 * @param primaryColor the primaryColor to set
+	 */
+	public void setPrimaryColor(String primaryColor) {
+		this.primaryColor = primaryColor;
+	}
 
 	public String getLogoPath() {
 		return logoPath;
@@ -31,6 +48,20 @@ public class CompanyProfileDTO {
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+	/**
+	 * @return the positionalMedia
+	 */
+	public String getPositionalMedia() {
+		return positionalMedia;
+	}
+
+	/**
+	 * @param positionalMedia the positionalMedia to set
+	 */
+	public void setPositionalMedia(String positionalMedia) {
+		this.positionalMedia = positionalMedia;
 	}
 
 	public CompanyProfileDTO() {

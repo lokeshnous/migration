@@ -561,12 +561,16 @@ jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal.custom.m
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/popup.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/styles/nyroModal.css -text
 jobboard/src/main/webapp/resources/js/PIE.htc -text
+jobboard/src/main/webapp/resources/js/arrow.gif -text
+jobboard/src/main/webapp/resources/js/arrow.png -text
+jobboard/src/main/webapp/resources/js/colorPicker.css -text
 jobboard/src/main/webapp/resources/js/common/common.js -text
 jobboard/src/main/webapp/resources/js/expandCollapse.js -text
 jobboard/src/main/webapp/resources/js/html5.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.min.js -text
 jobboard/src/main/webapp/resources/js/jquery-ui.min.js -text
+jobboard/src/main/webapp/resources/js/jquery.colorPicker.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.all.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.lite.min.js -text
@@ -583,6 +587,7 @@ jobboard/src/main/webapp/resources/js/lpr.gif -text
 jobboard/src/main/webapp/resources/js/lprogress.css -text
 jobboard/src/main/webapp/resources/js/lprogress.js -text
 jobboard/src/main/webapp/resources/js/lprogress.min.js -text
+jobboard/src/main/webapp/resources/js/screenshot.png -text
 jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
 /pom.xml -text

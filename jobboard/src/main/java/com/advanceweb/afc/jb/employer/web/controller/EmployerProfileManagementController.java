@@ -1,13 +1,17 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
@@ -23,15 +27,20 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
  * 
  */
 @Controller
+@RequestMapping("/empProfile")
+@SessionAttributes("employerProfileManagementForm")
 public class EmployerProfileManagementController {
 
 	@Autowired
 	ManageFeatureEmployerProfile manageFeatureEmployerProfile;
-
+	private @Value("${baseDirectoryPathImageAndMedia}")
+	String baseDirectoryPathImageAndMedia;
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
-	public ModelAndView getEmployeeProfile(Map model) {
-
-		return new ModelAndView("manageFeatureEmpPro");
+	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm managementForm) {
+		ModelAndView model = new ModelAndView();
+		model.addObject("employerProfileManagementForm", managementForm);
+		model.setViewName("manageFeatureEmpPro");
+		return model;
 	}
 
 	/**
@@ -40,16 +49,44 @@ public class EmployerProfileManagementController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/saveemployerprofile", method = RequestMethod.GET)
-	public ModelAndView saveEmployeeProf(Map model) {
+	@RequestMapping(value = "/saveemployerprofile", method = RequestMethod.POST)
+	public ModelAndView saveEmployeeProf(EmployerProfileManagementForm managementForm) {
 		CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
-		companyProfileDTO.setCompanyName("Merion Matters");
-		companyProfileDTO.setCompanyOverview("Company1");
-		companyProfileDTO.setCompanyEmail("mm@mm.com");
-		companyProfileDTO.setCompanyWebsite("http//www.mm.com");
+		companyProfileDTO.setCompanyName(managementForm.getCompanyName());
+		companyProfileDTO.setCompanyOverview(managementForm.getCompanyOverview());
+		companyProfileDTO.setCompanyEmail(managementForm.getCompanyEmail());
+		companyProfileDTO.setCompanyWebsite(managementForm.getCompanyWebsite());
+        companyProfileDTO.setPrimaryColor(managementForm.getPrimaryColor());
+        companyProfileDTO.setCompanyNews(managementForm.getCompanyNews());
+        String fileName = null, filePath = null;
+		try {
+			MultipartFile logoUrl = managementForm.getLogoUrl();
+			MultipartFile promoMedia = managementForm.getPositionalMedia();
 
-		manageFeatureEmployerProfile.saveEmployerProfile(companyProfileDTO);
+			if (null != logoUrl && logoUrl.getSize() > 0) {
+					fileName = logoUrl.getOriginalFilename();
+					filePath = baseDirectoryPathImageAndMedia + fileName;
 
+					companyProfileDTO.setLogoPath(filePath);
+					File dest = new File(filePath);
+					logoUrl.transferTo(dest);
+				
+			}
+			if (null != promoMedia && promoMedia.getSize() > 0) {
+					fileName = promoMedia.getOriginalFilename();
+					filePath = baseDirectoryPathImageAndMedia + fileName;
+					
+					companyProfileDTO.setPositionTitle(filePath);
+					File transfer = new File(filePath);
+					promoMedia.transferTo(transfer);
+
+				
+			}
+			manageFeatureEmployerProfile.saveEmployerProfile(companyProfileDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		return new ModelAndView("manageFeatureEmpPro");
 	}
 

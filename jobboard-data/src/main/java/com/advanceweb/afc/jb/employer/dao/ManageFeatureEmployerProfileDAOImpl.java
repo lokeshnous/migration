@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,13 +9,15 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 
 /**
  * <code> ManageFeatureEmployerProfileDAOImpl </code> is a DaoIMPL class.
@@ -32,25 +35,27 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	@Autowired
+	private EmployerRegistrationConversionHelper employerRegistrationConversionHelper;
+	
 	/**
 	 * Saving Manage Featured Employer Profile
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
-
-		AdmFacility facility = new AdmFacility();
-		facility.setName(companyProfileDTO.getCompanyName());
-		// facility.setFacilityId(162);
-		// facility.setAccountNumber("347OSC002");
+		Session session = sessionFactory.getCurrentSession();
+		AdmFacility facility = employerRegistrationConversionHelper
+				.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO);
+		facility.setFacilityType("FACILITY");
 		facility.setAdminUserId(1);
+		facility.setCreateDt(new Date());
 
 		try {
 			if (companyProfileDTO != null) {
-				sessionFactory.getCurrentSession().saveOrUpdate(facility);				
+				session.saveOrUpdate(facility);
 			}
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}

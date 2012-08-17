@@ -2,7 +2,9 @@ package com.advanceweb.afc.jb.employer.helper;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
@@ -33,7 +35,24 @@ public class EmployerRegistrationConversionHelper {
 		return merUser;
 		
 	}
-	
-	
+	/**
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public AdmFacility transformMerCompanyProfileDTOToAdmFacility(CompanyProfileDTO companyProfileDTO){
+		AdmFacility admFacility = new AdmFacility();
+		admFacility.setName(companyProfileDTO.getCompanyName());
+		admFacility.setCompanyNews(companyProfileDTO.getCompanyNews());
+		admFacility.setCompanyOverview(companyProfileDTO.getCompanyOverview());
+		admFacility.setLogoPath(companyProfileDTO.getLogoPath());
+		admFacility.setPromoMediaPath(companyProfileDTO.getPositionTitle());
+		admFacility.setUrlDisplay(companyProfileDTO.getCompanyWebsite());
+		admFacility.setEmailDisplay(companyProfileDTO.getCompanyEmail());
+		admFacility.setColorPalette(companyProfileDTO.getPrimaryColor());
+		
+		return admFacility;
+		
+	}
 	
 }

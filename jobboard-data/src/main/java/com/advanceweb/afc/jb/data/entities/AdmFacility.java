@@ -1,9 +1,22 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -58,8 +71,8 @@ public class AdmFacility implements Serializable {
 	@Column(name="email_display")
 	private String emailDisplay;
 
-//	@Column(name="facility_type")
-//	private Object facilityType;
+	@Column(name="facility_type" )
+	private String facilityType;
 
 	@Column(name="logo_path")
 	private String logoPath;
@@ -227,13 +240,13 @@ public class AdmFacility implements Serializable {
 		this.emailDisplay = emailDisplay;
 	}
 
-//	public Object getFacilityType() {
-//		return this.facilityType;
-//	}
-//
-//	public void setFacilityType(Object facilityType) {
-//		this.facilityType = facilityType;
-//	}
+	public String getFacilityType() {
+		return this.facilityType;
+	}
+
+	public void setFacilityType(String facilityType) {
+		this.facilityType = facilityType;
+	}
 
 	public String getLogoPath() {
 		return this.logoPath;
