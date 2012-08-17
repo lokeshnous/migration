@@ -688,3 +688,12 @@ h2.noBorder { border:none; font-size: 14px; font-weight: bold; padding:8px 10px;
 .employersList li img {width:218px; height:54px;}
 
 a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
+
+
+.leftFormHolderLMargin {
+    border-right: medium none;
+    float: left;
+    margin: 5px 0 0 0;
+    width: 67.7%;
+}
+.width100P {width: 100% !important;}
