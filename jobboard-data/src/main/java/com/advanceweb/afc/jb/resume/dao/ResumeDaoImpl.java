@@ -241,7 +241,7 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 	
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean updateResumeUpload(ResumeDTO resumeDTO) {
 		return updateResume(resumeDTO);
 	}
@@ -359,21 +359,6 @@ public class ResumeDaoImpl implements ResumeDao {
 		return resumeDTO;
 	}
 
-	@Override
-	public ResumeDTO getProfileAttributes() {
-		ResumeDTO dto = null;
-		try {
-			List<ResResumeAttrib> listProfAttrib = hibernateTemplate
-					.find("from ResResumeAttrib");
-			dto = resumeConversionHelper.transformProfileAttrib(listProfAttrib);
-
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		}
-
-		return dto;
-	}
-	
 	@Override
 	public int findResumeCount(int userId) {
 		int resumeCount = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and deleteDt is NULL"));

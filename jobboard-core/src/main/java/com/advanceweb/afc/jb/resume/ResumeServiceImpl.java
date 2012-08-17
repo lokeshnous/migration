@@ -145,11 +145,6 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
-	public ResumeDTO getProfileAttributes() {
-		return resumeDao.getProfileAttributes();
-	}
-	
-	@Override
 	public int findResumeCount(int userId) {
 		return resumeDao.findResumeCount(userId);
 	}

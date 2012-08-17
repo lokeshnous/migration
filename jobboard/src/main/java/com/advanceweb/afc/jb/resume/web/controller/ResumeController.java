@@ -105,9 +105,8 @@ public class ResumeController {
 	@RequestMapping(value = "/manageResume", method = RequestMethod.GET)
 	public String getResumes(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
-		// set this from session
 		List<ResumeDTO> resumeDTOList = resumeService
-				.retrieveAllResumes((Integer) session.getAttribute("userId"));
+				.retrieveAllResumes((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 
 		List<ResumeVisibilityDTO> visiblityList = populateDropdownsService
 				.getResumeVisibilityList();
@@ -127,7 +126,7 @@ public class ResumeController {
 		return "manageResumePopup";
 	}
 
-	private ModelAndView populateResumeDropDowns(CreateResume createResume) {
+	private ModelAndView populateResumeDropDowns() {
 		ModelAndView model = new ModelAndView();
 		List<ResumeAttribListDTO> resumeTypeList = populateDropdownsService
 				.populateResumeDropdown(MMJBCommonConstants.RESUME_TYPE);
@@ -160,8 +159,7 @@ public class ResumeController {
 	JSONObject validateCreateResumePopUp(
 			@RequestParam("resumeName") String resumeName,
 			@RequestParam("resumeId") String resumeId, HttpSession session) {
-		// set this from session
-		int userId = (Integer) session.getAttribute("userId");
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
 		JSONObject warningMessage = new JSONObject();
 		if ("".equals(resumeId) || resumeId == null) {
 			int resumeCount = resumeService.findResumeCount(userId);
@@ -193,7 +191,7 @@ public class ResumeController {
 
 		transCreateResume.transformResumeDTOToCreateResume(createResume,
 				resumeDTO);
-		ModelAndView model = populateResumeDropDowns(createResume);
+		ModelAndView model = populateResumeDropDowns();
 		model.addObject("createResume", createResume);
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO
 				.getResumeType())) {
@@ -229,7 +227,7 @@ public class ResumeController {
 			@RequestParam("resumeId") int resumeId) {
 
 		boolean deleteStatus = resumeService.deleteResume(resumeId,
-				(Integer) session.getAttribute("userId"));
+				(Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		JSONObject deleteStatusJson = new JSONObject();
 		if (deleteStatus) {
 			deleteStatusJson.put("success", resumeDeleteSuccess);
@@ -257,11 +255,8 @@ public class ResumeController {
 
 		ResumeDTO resumeDTO = transCreateResume
 				.transformCreateResumeToResumeDTO(createResume);
-		// set it from session
-		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
-		// depending on the resume type either move to resume builder or show
-		// excel file
-
+		resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+	
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO
 				.getResumeType())) {
 			resumeService.updateResume(resumeDTO);
@@ -337,11 +332,7 @@ public class ResumeController {
 			model.addObject("createResume", createResume);
 			model.setViewName("createResumeBuilder");
 		}
-		/*
-		 * else
-		 * if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType
-		 * ())) { //Show excel file } else{ //Show copy paste resume page }
-		 */
+		
 		return model;
 	}
 
@@ -350,15 +341,12 @@ public class ResumeController {
 
 		CreateResume createResume = new CreateResume();
 
-		// ResumeDTO resumeDTO = resumeService.getProfileAttributes();
-		// createResume.setResumeProfileAttribForm(transformDTOToProfileAttribForm(resumeDTO));
-
 		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_NO);
 		createResume.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
 
 		createResume.setResumeType(resumeType);
 
-		ModelAndView model = populateResumeDropDowns(createResume);
+		ModelAndView model = populateResumeDropDowns();
 		model.addObject("createResume", createResume);
 
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeType)) {
@@ -380,14 +368,13 @@ public class ResumeController {
 	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.POST)
 	public ModelAndView createCopyPasteResume(CreateResume createResume,
 			HttpSession session) {
-		ModelAndView model = populateResumeDropDowns(createResume);
+		ModelAndView model = populateResumeDropDowns();
 		if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(createResume
 				.getResumeType())) {
 
 			ResumeDTO resumeDTO = transCreateResume
 					.transformCreateResumeToResumeDTO(createResume);
-			// set it from session
-			resumeDTO.setUserId((Integer) session.getAttribute("userId"));
+			resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 			resumeService.createResumeCopyPaste(resumeDTO);
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		}
@@ -397,11 +384,10 @@ public class ResumeController {
 	@RequestMapping(value = "/updateCopyPasteResume", method = RequestMethod.POST)
 	public ModelAndView updateCopyPasteResume(CreateResume createResume,
 			HttpSession session) {
-		ModelAndView model = populateResumeDropDowns(createResume);
+		ModelAndView model = populateResumeDropDowns();
 		ResumeDTO resumeDTO = transCreateResume
 				.transformCreateResumeToResumeDTO(createResume);
-		// set it from session
-		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
+		resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		resumeService.updateResumeCopyPaste(resumeDTO);
 		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		return model;
@@ -411,7 +397,7 @@ public class ResumeController {
 	public ModelAndView createResumeUpload(CreateResume createResume,
 			HttpSession session) {
 
-		ModelAndView model = populateResumeDropDowns(createResume);
+		ModelAndView model = populateResumeDropDowns();
 		if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
 				.getResumeType())) {
 
@@ -430,7 +416,7 @@ public class ResumeController {
 						resumeDTO.setFileServer(basedirectorypathUpload);
 						resumeDTO.setFileName(fileName);
 						resumeDTO.setFilePath(filePath);
-						resumeDTO.setUserId((Integer) session.getAttribute("userId"));
+						resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 						resumeDTO = resumeService.createResumeUpload(resumeDTO);
 						
 						File dest = new File(resumeDTO.getFilePath());
@@ -450,7 +436,7 @@ public class ResumeController {
 	public ModelAndView updateResumeUpload(CreateResume createResume,
 			HttpSession session) {
 
-		ModelAndView model = populateResumeDropDowns(createResume);
+		ModelAndView model = populateResumeDropDowns();
 		if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
 				.getResumeType())) {
 
@@ -480,7 +466,7 @@ public class ResumeController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			resumeDTO.setUserId((Integer) session.getAttribute("userId"));
+			resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 			resumeService.updateResumeUpload(resumeDTO);
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		}
@@ -504,8 +490,7 @@ public class ResumeController {
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = transCreateResume
 				.transformCreateResumeToResumeDTO(createResume);
-		// set it from session
-		resumeDTO.setUserId((Integer) session.getAttribute("userId"));
+		resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		resumeDTO = resumeService.createResume(resumeDTO);
 		createResume.setUploadResumeId(String.valueOf(resumeDTO
 				.getUploadResumeId()));
@@ -591,7 +576,7 @@ public class ResumeController {
 		}
 		
 		ResumeDTO resumeDTO = new ResumeDTO();
-		createResume.setUserId((Integer) session.getAttribute("userId"));
+		createResume.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
 		
 		if (!StringUtils.isEmpty(errorMessage)) {
@@ -634,7 +619,7 @@ public class ResumeController {
 		getTotalNotNullField(createResume);
 		session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
 		model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
-		createResume = null;
+		createResume = new CreateResume();
 		return model;
 
 	}
@@ -849,8 +834,6 @@ public class ResumeController {
 			BindingResult result, @RequestParam("resumeId") int resumeId,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		// ResumeDTO resumeDTO =
-		// resumeService.editResume(createResume.getBuilderResumeId());
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
@@ -1082,8 +1065,6 @@ public class ResumeController {
 
 	}
 	
-	
-
 	@RequestMapping(value = "/downloadResume", method = RequestMethod.GET)
 	public ModelAndView downloadResume(CreateResume createResume,BindingResult result,HttpServletRequest request,HttpServletResponse response 
 		)	throws Exception {
@@ -1102,16 +1083,16 @@ public class ResumeController {
 		File file = new File(fileName);
 		
 		String fname = file.getName();
-		int index = fname.indexOf("_");
+		int index = fname.indexOf('_');
 		fname = fname.substring(index+1);
-		index = fname.lastIndexOf(".");
+		index = fname.lastIndexOf('.');
 		String fileExtn = fname.substring(index+1);
 		
 		if(MMJBCommonConstants.FILE_TYPE_DOC.equalsIgnoreCase(fileExtn)){
 			response.setContentType("application/vnd.ms-word");
 		}
 		else if(MMJBCommonConstants.FILE_TYPE_DOCX.equalsIgnoreCase(fileExtn)){
-			response.setContentType("application/vnd.ms-word");
+			response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 		}
 		else if(MMJBCommonConstants.FILE_TYPE_PDF.equalsIgnoreCase(fileExtn)){
 			response.setContentType("application/pdf");
@@ -1140,7 +1121,7 @@ public class ResumeController {
 				try {
 					input.close();
 				} catch (IOException ignore) {
-				}
+			}
 		}
 
 	}

@@ -130,7 +130,7 @@
 				<div class="popUpButtonRow">
 					
 					<a id="update" href="#"	class="btn_sm orange">Save and Continue</a> 
-						<a href="/jobboard/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
+						<a href="<%=request.getContextPath()%>/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

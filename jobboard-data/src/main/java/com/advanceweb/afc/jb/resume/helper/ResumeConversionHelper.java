@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
@@ -30,7 +28,6 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.data.entities.ResBuilderSkill;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
-import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
 import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 
@@ -240,7 +237,6 @@ public class ResumeConversionHelper {
 			eduDTO.setDegrees(eduDegree.getName());
 			eduDegree.getDegreeEduId();
 			eduDegree.getDescription();
-			;
 		}
 
 		return eduDTO;
@@ -303,41 +299,6 @@ public class ResumeConversionHelper {
 
 		return resumeDTOList;
 
-	}
-
-	/**
-	 * This method is called to convert resumeDTO to ResUploadResume Entity for
-	 * upload
-	 * 
-	 * @param createResumeDTO
-	 * @return
-	 */
-
-	public ResUploadResume transformUploadResume(ResumeDTO createResumeDTO) {
-
-		ResUploadResume resUploadResume = new ResUploadResume();
-
-		resUploadResume.setUserId(createResumeDTO.getUserId());
-		resUploadResume.setResumeType(createResumeDTO.getResumeType());
-		resUploadResume.setResumeName(createResumeDTO.getResumeName());
-
-		// commented for the new database
-		// resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		// resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		// resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		// resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		// resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
-
-		resUploadResume.setResumeText(createResumeDTO.getResumeText());
-		resUploadResume.setIsPublished(Short.parseShort(createResumeDTO
-				.getIsPublished()));
-		resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
-
-		resUploadResume.setFileServer(createResumeDTO.getFileServer());
-		resUploadResume.setFilePath(createResumeDTO.getFilePath());
-		resUploadResume.setFileName(createResumeDTO.getFileName());
-
-		return resUploadResume;
 	}
 
 	/**
@@ -437,36 +398,6 @@ public class ResumeConversionHelper {
 		return resumeProfileList;
 	}
 	
-
-	/**
-	 * This method is called to convert resumeDTO to ResUploadResume Entity for
-	 * copy paste
-	 * 
-	 * @param createResumeDTO
-	 * @return
-	 */
-	public ResUploadResume transformCopyPasteResume(ResumeDTO createResumeDTO) {
-
-		ResUploadResume resUploadResume = new ResUploadResume();
-
-		resUploadResume.setUserId(createResumeDTO.getUserId());
-		resUploadResume.setResumeType(createResumeDTO.getResumeType());
-		resUploadResume.setResumeName(createResumeDTO.getResumeName());
-
-		// commented for the new database
-		// resUploadResume.setJobTitle(createResumeDTO.getDesired_job_title());
-		// resUploadResume.setEmpTypeLookupId(Integer.parseInt(createResumeDTO.getDesired_employment_type()));
-		// resUploadResume.setWorkAuthLookupId(Integer.parseInt(createResumeDTO.getWork_authorization_US()));
-		// resUploadResume.setRelocate(createResumeDTO.getWilling_to_relocate());
-		// resUploadResume.setVisibility___Public_Private__(createResumeDTO.getResume_visibility());
-
-		resUploadResume.setResumeText(createResumeDTO.getResumeText());
-		resUploadResume.setIsPublished(Short.parseShort(createResumeDTO
-				.getIsPublished()));
-		resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
-
-		return resUploadResume;
-	}
 
 	/**
 	 * This method is called to convert resumeDTO to Resume Builder Entity
@@ -758,54 +689,4 @@ public class ResumeConversionHelper {
 		return skillList;
 	}
 	
-	/**
-	 * 
-	 * @param listProfAttrib
-	 * @param countryList
-	 * @param stateList
-	 * @return
-	 */
-	public ResumeDTO transformProfileAttrib(List<ResResumeAttrib> listProfAttrib){
-		
-		ResumeDTO resumeDTO = new ResumeDTO();
-		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
-		if(null != listProfAttrib){
-			for(ResResumeAttrib entity : listProfAttrib){
-				MerProfileAttribDTO dto = new MerProfileAttribDTO();
-				dto.setStrAttribType(entity.getFormType());
-				dto.setStrLabelName(entity.getName());
-				dto.setStrProfileAttribId(String.valueOf(entity.getResumeAttribId()));
-				
-				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN)){
-					List<ResResumeAttribList> dropdownVals = entity.getResResumeAttribLists();
-					dto.setDropdown(transformToDropDownDTO(dropdownVals));
-				}
-				if(dto.getStrAttribType().equals(MMJBCommonConstants.RADIO_BUTTON)){
-					List<ResResumeAttribList> dropdownVals = entity.getResResumeAttribLists();
-					dto.setDropdown(transformToDropDownDTO(dropdownVals));
-				}
-				listDTO.add(dto);
-			}
-		}
-		resumeDTO.setResumeAttribList(listDTO);
-		return resumeDTO;		
-	}
-	
-	/**
-	 * Converting list of MerProfileAttribList to list of DropDownDTO's
-	 */
-	public List<DropDownDTO> transformToDropDownDTO(List<ResResumeAttribList> dropdownVals){
-		
-		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
-		if(null != dropdownVals){
-			for(ResResumeAttribList attrib : dropdownVals){
-				DropDownDTO dto = new DropDownDTO();
-				dto.setOptionId(String.valueOf(attrib.getResumeAttribListId()));
-				dto.setOptionName(attrib.getListValue());
-				dropdownList.add(dto);
-			}
-		}
-		return dropdownList;
-	}
-
 }

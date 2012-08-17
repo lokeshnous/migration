@@ -35,13 +35,7 @@ public interface ResumeDao {
 	boolean addEducation(List<EducationDTO> listEduExp);
 	boolean addLanguage(List<LanguageDTO> listLangExp);
 	boolean addCertifications(List<CertificationDTO> listLangExp);
-	public ResumeDTO getProfileAttributes();
-	/**
-	 * Get the public visibility resume of Job seeker
-	 * 
-	 * @param jobSeekerId
-	 * @return
-	 */
+	
 	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
 	int findResumeCount(int userId);
 	boolean checkDuplicateResumeName(String resumeId, String resumeName,int userId);

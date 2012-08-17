@@ -45,7 +45,6 @@ public class CreateResume {
 	private ContactInfoForm contactInfoForm;
 	private int builderResumeId;
 	private int userId;
-	List<ResumeProfileAttribForm> resumeProfileAttribForm; 
 	private Long totalProgress = 0L;
 	//Creating Resume	
 	
@@ -214,13 +213,7 @@ public class CreateResume {
 	public void setBuilderResumeId(int builderResumeId) {
 		this.builderResumeId = builderResumeId;
 	}
-	public List<ResumeProfileAttribForm> getResumeProfileAttribForm() {
-		return resumeProfileAttribForm;
-	}
-	public void setResumeProfileAttribForm(
-			List<ResumeProfileAttribForm> resumeProfileAttribForm) {
-		this.resumeProfileAttribForm = resumeProfileAttribForm;
-	}
+	
 	public List<PhoneDetailForm> getListPhoneDtlForm() {
 		return listPhoneDtlForm;
 	}

@@ -209,13 +209,13 @@
 					<a id="cancelButton" href="#" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 				<a id="resumeBuilder"
-					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder"
+					href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder"
 					class="nyroModal"></a>
 				<a id="uploadResume"
-					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume"
+					href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume"
 					class="nyroModal"></a>
 				<a id="copyPaste"
-					href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=Copy and Paste"
+					href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=Copy and Paste"
 					class="nyroModal"></a>
 				<div class="clearfix"></div>
 			</form:form>

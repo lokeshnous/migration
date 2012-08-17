@@ -116,7 +116,7 @@
 									<td align="center">${resume.updateDt}</td>
 									<td align="center"><a href="#"><img
 											src="../resources/images/View.png" width="20" height="20"
-											alt="view"></a>&nbsp;<a href='/jobboard/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal"><img 
+											alt="view"></a>&nbsp;<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal"><img 
 											src="../resources/images/Edit.png" width="20" height="20"
 											alt="edit"></a>&nbsp;<a href="#"><img
 											src="../resources/images/Download.png" width="20" height="20"
@@ -133,7 +133,7 @@
 				<div class="popUpButtonRow">
 					<span class="floatLeft ">
 						<a class="btn_sm orange" href="#" id="newResumeId">New Resume</a>
-						<a class="nyroModal" id="createResumeId" href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume"></a>
+						<a class="nyroModal" id="createResumeId" href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=createResume"></a>
 						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	</span>				
 					<span
 						class="floatLeft"><em>*Only 1
