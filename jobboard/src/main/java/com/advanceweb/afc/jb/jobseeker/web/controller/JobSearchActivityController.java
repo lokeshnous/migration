@@ -247,8 +247,8 @@ public class JobSearchActivityController {
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			// TODO: Remove hard codes of mails
-			 employerToAddress[0] = new InternetAddress(
-			 "pramodap@nousinfo.com");
+			 //employerToAddress[0] = new InternetAddress(
+			 //"pramodap@nousinfo.com");
 			employerEmailDTO.setToAddress(employerToAddress);
 			String employerMailSub = employeJobApplicationSub.replace(
 					"?jobseekername", userName);
@@ -293,7 +293,7 @@ public class JobSearchActivityController {
 					}
 				} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
-
+					//TODO: Need to clarify
 				}
 				attachmentpaths.add(resumeDTO.getFilePath());
 				employerEmailDTO.setAttachmentPaths(attachmentpaths);
