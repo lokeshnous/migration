@@ -179,12 +179,12 @@
 					<form:option value="0" label="Select" />
 					<form:options items="${jbOwnerList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
-                        <div class="toolTip marginTop15 marginLeft30"><span class="classic">Choose the person who will be responsible for this job posting.</span></div>
+                        <div class="toolTip marginTop10 marginLeft5"><span class="classic">Choose the person who will be responsible for this job posting.</span></div>
               </div>
 
               <div class="rowEvenNewSpacing"> <span class="lableText3">Customer Number:</span>
 			    <form:input path="customerNo" class="job_seeker_password textBox350"  readonly="true"/>
-                <div class="toolTip marginTop6 marginLeft20"><span class="classic">This is the customer number shown in your employer profile.</span></div>
+                <div class="toolTip marginTop10 marginLeft5"><span class="classic">This is the customer number shown in your employer profile.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
                 <form:input path="companyName" class="job_seeker_password textBox350"  readonly="true"/>
@@ -192,9 +192,9 @@
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Display Company Name:</span>
                 <form:input path="disCompanyName" class="job_seeker_password textBox350"  readonly="true"/>
-                <div class="toolTip marginTop6 marginLeft20"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
+                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
                 <div class="clearfix"></div>
-                <div class="floatLeft width300 marginLeft165"><span class="required marginTop4 marginRight10">
+                <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginTop4 marginRight10">
                   <form:checkbox path="bHideCompName"/>
                   </span>
                           <p>Hide the company name in this job posting.</p>
@@ -203,8 +203,8 @@
               </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                      <div class="row">
-                <p class="marginLeft10 FontSize16 TextColor03">Job Posting Details</p>
+                      <div class="row marginTop10">
+                <h3>Job Posting Details</h3>
               </div>
                       <div class="row"> <span class="lableTextSelect marginTop13 ">Job Posting Type:</span>
 
@@ -218,26 +218,26 @@
               <a href="#">View Job Posting Inventory</a></span> </div>
               <div class="clearfix"></div>
               <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-              <div class="row">
+              <div class="row marginTop10">
 
-                <p class="marginLeft10 FontSize16 TextColor03">Job Title and Number</p>
+                <h3>Job Title and Number</h3>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job ID:</span>
                 <form:input path="jobId" class="job_seeker_password textBox350" />
-                <div class="toolTip marginTop6 marginLeft20"><span class="classic">If you're posting multiple positions with the same job title, you can enter a 4 to 10 digit number here to help you reference this specific job posting in the future.</span></div>
+                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you're posting multiple positions with the same job title, you can enter a 4 to 10 digit number here to help you reference this specific job posting in the future.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
 
                 <form:input path="jobTitle" class="job_seeker_password textBox350" />
-      <span class="required">(Required)</span><div class="toolTip marginTop6 marginLeft10"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
+      <span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                      <div class="row">
-                <p class="marginLeft10 FontSize16 TextColor03">Application Method</p>
+                      <div class="row marginTop10">
+                <h3>Application Method</h3>
               </div>
 
                       <div class="row marginLeft30 marginTop8 width450">
-                <p>Choose your preferred method to receive application. <span class="TextColor03">(Required)</span></p>
+               		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required">(Required)</span>
               </div>
                       <div class="rowEvenNewSpacing"><span class="required">
                         <input name="Email" type="radio" value="" checked class="marginLeft30"/>
@@ -258,9 +258,9 @@
 <span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                      <div class="row">
+                      <div class="row marginTop10">
 
-                <p class="FloatLeft marginLeft10 FontSize16 TextColor03">Location</p>
+                <h3>Location</h3>
                 <p class="FloatLeft marginLeft20 FontSize12 TextColor03 marginTop13">(All fields are required)</p>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job City:</span>               
@@ -317,8 +317,8 @@
               </div>
               <div class="clearfix"></div>
                 <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                <div class="row">
-                <p class="marginLeft10 FontSize16 TextColor03">Employment Type</p>
+                <div class="row marginTop10">
+                <h3>Employment Type</h3>
               </div>
               <div class="rowEvenNewSpacing"> <span class="lableText3">Employment Type:</span>
 				<form:select path="employmentType" class="jb_input3 jb_input_width3">
@@ -328,28 +328,28 @@
               </div>
                <div class="clearfix"></div>
                <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-               <div class="row">
-                <p class="marginLeft10 FontSize16 TextColor03">Job Details</p>
+               <div class="row marginTop10">
+                <h3>Job Details</h3>
               </div>
               <div class="rowEvenNewSpacing"> <span class="lableText3">Required Skills:</span>
 
                 <form:input path="reqSkills" class="job_seeker_password textBox350" />
-                <div class="toolTip marginTop6 marginLeft20"><span class="classic">If this position requires specific skills, enter them here. Use brief keywords and phrases like "Triage" and "Emergency Care" to attract job-seekers who are including skills in their search.</span></div>
+                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If this position requires specific skills, enter them here. Use brief keywords and phrases like "Triage" and "Emergency Care" to attract job-seekers who are including skills in their search.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Description</span>
                 <div class="input_grp5 width450">
                 		<form:textarea path="jobDesc" class="textareaBoxCResume width450" rows="3" cols="45"/>
                         </div>
-                <span class="required">(Required)</span><div class="toolTip marginTop6 marginLeft10"><span class="classic">Enter all of the pertinent information regarding this position here. You can include anything from job responsibilities to education requirements to information about your facility or health system.</span></div></div>
+                <span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter all of the pertinent information regarding this position here. You can include anything from job responsibilities to education requirements to information about your facility or health system.</span></div></div>
 
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3">Tracking Pixel:</span>
                 <form:input path="trackPixel" class="job_seeker_password textBox350" />
-                <div class="toolTip marginTop6 marginLeft20"><span class="classic">If you want to track the response to this job posting independently, you can enter your tracking pixel HTML code here.</span></div>
+                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want to track the response to this job posting independently, you can enter your tracking pixel HTML code here.</span></div>
               </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                      <div class="row">
-                <p class="marginLeft10 FontSize16 TextColor03">Job Posting Branding Template</p>
+                      <div class="row marginTop10">
+                <h3>Job Posting Branding Template</h3>
 
               </div>
                       <div class="rowEvenNewSpacing MarginBottom10"><span class="lableText3 ">Branding Template:</span>
@@ -357,19 +357,19 @@
 							<form:option value="0" label="Select" />
 							<form:options items="${templateList}" itemValue="optionId" itemLabel="optionId" />
 						</form:select>
-                        <div class="toolTip marginTop6 marginLeft10"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
+                        <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
               </div>
               <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                      <div class="row">
-                <p class="marginLeft10 FontSize16 TextColor03">Auto Renew</p>
+                      <div class="row marginTop10">
+                <h3>Auto Renew</h3>
               </div>
 
                       <div class="rowEvenNewSpacing MarginBottom10">
                       <span class="lableText3">Auto Renew:</span><span class="required">
                       
                       <form:radiobutton path="autoRenew" value="Yes"/><label class="greyLabel">Yes</label></span>&nbsp;&nbsp;<span class="required"> 
-                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop6 marginLeft10"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>
+                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>
                       
    </div>
    <div class="clearfix"></div>
