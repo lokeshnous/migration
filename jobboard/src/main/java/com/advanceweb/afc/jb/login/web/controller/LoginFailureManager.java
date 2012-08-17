@@ -19,7 +19,7 @@ public class LoginFailureManager extends SimpleUrlAuthenticationFailureHandler {
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
 
 		if (pageValue != null
-				&& pageValue.equals(MMJBCommonConstants.JOBSEEKER)) {
+				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER)) {
 			super.setDefaultFailureUrl(MMJBCommonConstants.JOBSEEKER_LOGIN_FAILURE_URL);
 		}
 

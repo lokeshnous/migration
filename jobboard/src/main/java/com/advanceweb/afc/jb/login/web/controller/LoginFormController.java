@@ -93,7 +93,7 @@ public class LoginFormController {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
 		
-		if (page.equals(MMJBCommonConstants.JOBSEEKER)) {
+		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
 			return "jobSeekerLogin";
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
 			return "employerLogin";
