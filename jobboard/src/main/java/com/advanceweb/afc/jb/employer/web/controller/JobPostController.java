@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -12,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
@@ -27,7 +29,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
  */
 
 @Controller
-@RequestMapping("/postjob")
+@RequestMapping("/employer")
 public class JobPostController {
 	@Autowired
 	private JobPostService employerJobPost;
@@ -40,20 +42,33 @@ public class JobPostController {
 	
 	//@RequestParam("userId") int userId ,
 	
-	@RequestMapping(value="/postnewjob",method = RequestMethod.GET)
-	public ModelAndView showPostJob( Map model) {
-
-		JobPostForm employerJobPostForm=new JobPostForm();
-		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1);
-		List<StateDTO> stateList=employerJobPost.getStateList();
-		List<EmploymentTypeDTO> empTypeList=populateDropdownsService.getEmploymentTypeList();
-		model.put("stateList",stateList);
-		model.put("empTypeList",empTypeList);
-		employerJobPostForm.setCustomerNo(employerInfoDTO.getCustomerNo());
-		employerJobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
-		model.put("employerJobPostForm",employerJobPostForm);
+	@RequestMapping(value="/postNewJob",method = RequestMethod.GET)
+	public ModelAndView showPostJob() {
 		
-		return new ModelAndView("postnewjob");
+		ModelAndView model = new ModelAndView();
+		JobPostForm jobPostForm=new JobPostForm();		
+		
+		List<DropDownDTO> empTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> templateList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+
+		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1);
+		
+		//Populating Dropdowns
+		model.addObject("stateList",stateList);
+		model.addObject("empTypeList",empTypeList);
+		model.addObject("countryList",countryList);
+		model.addObject("templateList",templateList);
+		model.addObject("jbOwnerList", jbOwnerList);
+		model.addObject("jbPostingTypeList", jbPostingTypeList);
+		//Populating Dropdowns
+		
+		model.addObject("jobPostForm",jobPostForm);
+		model.setViewName("postNewJobs");
+		return model;
 	}
 	
 	
