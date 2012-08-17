@@ -129,7 +129,8 @@
 						</span>
 					</div>
 					<div class="floatleft">
-						<span> <a href="/jobboard/loginFormForJobSeeker/login.html">Login</a>
+					
+						<span> <a href="/jobboard/loginFormForJobSeeker/login.html?page=jobSeeker">Login</a>
 							| <a
 							href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign
 								Up</a> |
@@ -137,11 +138,11 @@
 					</div>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Employer:</span><br> <a href="">Login</a>
+					<span class="boldText">Employer:</span><br> <a href="/jobboard/loginFormForJobSeeker/login.html?page=employer">Login</a>
 					| <a href="">Post Jobs</a>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Ad Agency:</span><br> <a href="">Login</a>
+					<span class="boldText">Ad Agency:</span><br> <a href="/jobboard/loginFormForJobSeeker/login.html?page=agency">Login</a>
 					| <a href="">Post Jobs</a>
 				</div>
 
