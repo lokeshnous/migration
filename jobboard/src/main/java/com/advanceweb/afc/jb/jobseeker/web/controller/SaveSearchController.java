@@ -146,45 +146,49 @@ public class SaveSearchController {
 				model.put("SaveSearchForm", new SaveSearchForm());
 				jsonObject.put("NavigationPath",
 						"../commonLogin/login");
-			} else if(session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null 
-				&& session.getAttribute(MMJBCommonConstants.SEARCH_TYPE).toString().equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
-				&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null
-				 && session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString() != null){
-				 String name = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
-				 //saveSearchService.editSavedSearch(name);
+			} else if(!session.getAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH).toString().equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){			
+				if(session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null 
+						&& session.getAttribute(MMJBCommonConstants.SEARCH_TYPE).toString().equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
+						&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null
+						 && session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString() != null){
+					
+					//String name = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
+					 //saveSearchService.editSavedSearch(name);
+					 
+					 SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+					 
+					 searchedJobsDTO.setSearchName(session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString());
+					 searchedJobsDTO.setSaveSearchID(Integer.parseInt((session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_ID).toString())));
+					 searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+								+ MMJBCommonConstants.EQUAL_TO
+								+ session
+										.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
+								+ MMJBCommonConstants.SEMICOLON
+								+ MMJBCommonConstants.KEYWORDS
+								+ MMJBCommonConstants.EQUAL_TO
+								+ session
+										.getAttribute(MMJBCommonConstants.KEYWORDS)
+								+ MMJBCommonConstants.SEMICOLON
+								+ MMJBCommonConstants.CITY_STATE
+								+ MMJBCommonConstants.EQUAL_TO
+								+ session
+										.getAttribute(MMJBCommonConstants.CITY_STATE)
+								+ MMJBCommonConstants.SEMICOLON
+								+ MMJBCommonConstants.RADIUS
+								+ MMJBCommonConstants.EQUAL_TO
+								+ session
+										.getAttribute(MMJBCommonConstants.RADIUS));
+					 
+					 searchedJobsDTO.setUserID((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+					 
+					 saveSearchService.updateSearchDetails(searchedJobsDTO);
+					 
+					 session.removeAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME);
+					 session.removeAttribute(MMJBCommonConstants.SEARCH_TYPE);
+					 jsonObject.put("NavigationPath",
+								"../jobSeeker/jobSeekerDashBoard");
+				}
 				 
-				 SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
-				 
-				 searchedJobsDTO.setSearchName(session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString());
-				 searchedJobsDTO.setSaveSearchID(Integer.parseInt((session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_ID).toString())));
-				 searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
-							+ MMJBCommonConstants.EQUAL_TO
-							+ session
-									.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
-							+ MMJBCommonConstants.SEMICOLON
-							+ MMJBCommonConstants.KEYWORDS
-							+ MMJBCommonConstants.EQUAL_TO
-							+ session
-									.getAttribute(MMJBCommonConstants.KEYWORDS)
-							+ MMJBCommonConstants.SEMICOLON
-							+ MMJBCommonConstants.CITY_STATE
-							+ MMJBCommonConstants.EQUAL_TO
-							+ session
-									.getAttribute(MMJBCommonConstants.CITY_STATE)
-							+ MMJBCommonConstants.SEMICOLON
-							+ MMJBCommonConstants.RADIUS
-							+ MMJBCommonConstants.EQUAL_TO
-							+ session
-									.getAttribute(MMJBCommonConstants.RADIUS));
-				 
-				 searchedJobsDTO.setUserID((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
-				 
-				 saveSearchService.updateSearchDetails(searchedJobsDTO);
-				 
-				 session.removeAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME);
-				 session.removeAttribute(MMJBCommonConstants.SEARCH_TYPE);
-				 jsonObject.put("NavigationPath",
-							"../jobSeeker/jobSeekerDashBoard");
 			}else{				
 				// Before user saves his search need to check save search
 				// records are more than 5 searches.
@@ -279,16 +283,18 @@ public class SaveSearchController {
 	@RequestMapping(value = "/editSavedSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject editSavedSearch(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session, @RequestParam("searchId") int searchId) {
+			HttpServletResponse response, HttpSession session, @RequestParam("searchId") int searchId,
+			 @RequestParam("performSearch") String performSearch) {
 
 		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 		JSONObject jsonObject = new JSONObject();
 		
-		//System.out.println("Search Name=="+searchName);
+		if(performSearch != null && performSearch.equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){
+			session.setAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH, performSearch);
+		}
 		
 		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService.editSavedSearch(searchId);
 		
-		//JSONObject deleteStatusJson = new JSONObject();
 		if (saveSrchJobsDTOList.size() > 0) {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();
 			String saveSearchName = saveSrchJobsDTOList.get(0).getSearchName();

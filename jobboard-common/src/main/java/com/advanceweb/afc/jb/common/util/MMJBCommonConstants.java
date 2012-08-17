@@ -221,4 +221,6 @@ public interface MMJBCommonConstants {
 	//For Duplicate Submission
 	public static final String LAST_PLACE_KEY="LAST_PLACE_KEY";
 	
+	public static final String PERFORM_SAVED_SEARCH = "performSearch";
+	
 }

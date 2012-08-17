@@ -109,7 +109,7 @@ $(document).keyup(function(event) {
 function geteditSavedSearch(searchJobId){
 	
 		var id = searchJobId.replace("editSavedSearch", "");
-		$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+id,
+		$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+id+"&performSearch=",
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					 if (key == "searchtype" && val == "basic") {
@@ -129,6 +129,64 @@ function geteditSavedSearch(searchJobId){
 			}
 		}); 
     }
+    
+    
+    
+function performSavedSearch(searchJobId){
+	
+	var id = searchJobId.replace("performSavedSearch", "");
+	
+	$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+id+"&performSearch=performSearch",
+		success: function(data){ 
+			
+			$.each(data, function(key, val) {
+			
+				 if (key == "searchtype" && val == "basic") {
+					parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
+					parent.$.nmTop().close();
+				}
+				
+			}); 
+			
+		},
+		error: function(response) {
+			alert("Server Error : "+response.status);
+		},
+		complete: function() {
+			
+		}
+	}); 
+}
+    
+    
+function viewSavedSearch(searchJobId){
+	
+var id = searchJobId.replace("viewSavedSearch", "");
+	
+	
+	$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+id+"&performSearch=performSearch",
+		success: function(data){ 
+			$.each(data, function(key, val) {
+				
+				 if (key == "searchtype" && val == "basic") {
+					parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
+					parent.$.nmTop().close();
+				}
+				
+			}); 
+			
+		},
+		error: function(response) {
+			alert("Server Error : "+response.status);
+		},
+		complete: function() {
+			
+		}
+	}); 
+}
+    
+    
+    
 </script>
 
 </head>
@@ -160,8 +218,8 @@ function geteditSavedSearch(searchJobId){
 						<c:forEach items="${saveSearchedJobsDTOList}"
 							var="saveSearchdtoList"  varStatus="status">
 							<tr id="${saveSearchdtoList.saveSearchID}">
-								<td><a href="${saveSearchdtoList.getUrl()}"							
-									rel="0" target="_blank" class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td>
+								<td><a href="#"	id="performSavedSearch${saveSearchdtoList.saveSearchID}" onclick="performSavedSearch(this.id);"						
+									 class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td>
 								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
 								
 								<td align="center">						
@@ -179,7 +237,8 @@ function geteditSavedSearch(searchJobId){
 								    										
 								</td>
 								
-								<td align="center"><a href='' class="newWindow"><img
+								<td align="center"><a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" 
+								onclick="viewSavedSearch(this.id);" class="newWindow"><img
 										src="../resources/images/View.png" width="20" height="20"
 										alt="view"></a>&nbsp;<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img
 										src="../resources/images/Edit.png"   width="20" height="20"
