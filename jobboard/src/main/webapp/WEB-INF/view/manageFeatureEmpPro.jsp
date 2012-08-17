@@ -10,6 +10,11 @@
 <link href="../resources/js/colorPicker.css" type='text/css'
 	rel='stylesheet'>
 <jsp:include page="common/include.jsp" />
+
+<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+<script src="../resources/js/searchResultsdatatable.js"></script>
+
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('#colorPkr').colorPicker();
