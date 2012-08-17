@@ -93,9 +93,9 @@ public class LoginFormController {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
 		
-		if (page.equals("jobSeeker")) {
+		if (page.equals(MMJBCommonConstants.JOBSEEKER)) {
 			return "jobSeekerLogin";
-		} else if (page.equals("employer")) {
+		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
 			return "employerLogin";
 		} else{
 			return "agencyLogin";
