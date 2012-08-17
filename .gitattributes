@@ -343,6 +343,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJ
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobSeekerRegistration.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobSeekerSubscription.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/ChangePasswordForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFailureManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValidator.java -text
