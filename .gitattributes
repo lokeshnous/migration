@@ -463,6 +463,7 @@ jobboard/src/main/webapp/resources/css/site.css -text
 jobboard/src/main/webapp/resources/images/AccordionClose.png -text
 jobboard/src/main/webapp/resources/images/AccordionOpen.png -text
 jobboard/src/main/webapp/resources/images/Activity.jpg -text
+jobboard/src/main/webapp/resources/images/Alerts.png -text
 jobboard/src/main/webapp/resources/images/ArrowRight.png -text
 jobboard/src/main/webapp/resources/images/Browse-btn.jpg -text
 jobboard/src/main/webapp/resources/images/Close.png -text
@@ -472,12 +473,14 @@ jobboard/src/main/webapp/resources/images/Delete.png -text
 jobboard/src/main/webapp/resources/images/DownArrowTinyOrange.png -text
 jobboard/src/main/webapp/resources/images/Download.png -text
 jobboard/src/main/webapp/resources/images/Edit.png -text
+jobboard/src/main/webapp/resources/images/EmpDimg.png -text
 jobboard/src/main/webapp/resources/images/FPO_thumb_60x.jpg -text
 jobboard/src/main/webapp/resources/images/FeaturedEmp.png -text
 jobboard/src/main/webapp/resources/images/Interview_60x.jpg -text
 jobboard/src/main/webapp/resources/images/Jobs_Board_edges.png -text
 jobboard/src/main/webapp/resources/images/Jobs_Board_sprite.png -text
 jobboard/src/main/webapp/resources/images/L_In_sm.png -text
+jobboard/src/main/webapp/resources/images/ManageApplicants.png -text
 jobboard/src/main/webapp/resources/images/MercyRNlogo.jpg -text
 jobboard/src/main/webapp/resources/images/Print.png -text
 jobboard/src/main/webapp/resources/images/Print2.png -text
@@ -512,6 +515,7 @@ jobboard/src/main/webapp/resources/images/list_dot.png -text
 jobboard/src/main/webapp/resources/images/list_dot01.png -text
 jobboard/src/main/webapp/resources/images/loginFB.png -text
 jobboard/src/main/webapp/resources/images/loginIN.png -text
+jobboard/src/main/webapp/resources/images/media.png -text
 jobboard/src/main/webapp/resources/images/menubkgd_1px.png -text
 jobboard/src/main/webapp/resources/images/messenger2.jpg -text
 jobboard/src/main/webapp/resources/images/minus.png -text
@@ -521,6 +525,7 @@ jobboard/src/main/webapp/resources/images/orangedot.png -text
 jobboard/src/main/webapp/resources/images/percimg.png -text
 jobboard/src/main/webapp/resources/images/platinum_logo.png -text
 jobboard/src/main/webapp/resources/images/plus.png -text
+jobboard/src/main/webapp/resources/images/posting.png -text
 jobboard/src/main/webapp/resources/images/resume2.jpg -text
 jobboard/src/main/webapp/resources/images/silver_logo.png -text
 jobboard/src/main/webapp/resources/images/slider_leftArrow.gif -text
