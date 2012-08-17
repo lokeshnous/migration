@@ -26,11 +26,12 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 			companyProfileDTO.setCompanyOverview("overviews");
 			companyProfileDTO.setCompanyWebsite("website");
 			companyProfileDTO.setPositionTitle("title");
+			companyProfileDTO.setLogoPath("Logo Path");
 
-//			assertTrue("Saved Job",
-//					manageFeatureEmployerProfile
-//							.saveEmployerProfile(companyProfileDTO));
-//
+			assertTrue("Saved Job",
+					manageFeatureEmployerProfile
+							.saveEmployerProfile(companyProfileDTO));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
