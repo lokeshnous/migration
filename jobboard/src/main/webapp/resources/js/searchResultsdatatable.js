@@ -151,13 +151,14 @@ jQuery(document).ready(function() {
 				var jobId = aData['JobId'];
 				var jobDesc = aData['AdText'];
 				var isFeaturedEmployer = aData['IsFeatured'];
+				var currentUrl = window.location.pathname;
 				//alert(jobDesc.toLowerCase().indexOf("job description"));
 				var saveThisJobIdid= "saveThisJobId"+jobId;
 				var applyJobId= "applyJobid"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 32px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
 				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
-				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId;
+				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl;
 				sOut += '" class="btn_sm white">View Details</a>';
 				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
 				sOut += '" class="btn_sm white">Save This Job</a></div>';
@@ -245,11 +246,12 @@ jQuery(document).ready(function() {
 								generateTable();
 								var autoLoad = $("#autoload").val();
 								if(autoLoad == true || autoLoad == "true"){	
-								findJobs();
+									findJobs();
 								
 								}
 								//$('#submitval').trigger('click');
 								$("#submitval").click(function(event) {
+			//alert("submitval");
 									$("#autoload").val(false);
 									if(!validateSearch()){
 										return false;
@@ -264,6 +266,7 @@ jQuery(document).ready(function() {
 									var rows = $("#rows").val();
 									var start = $("#start").val();
 									var searchtype = $("#searchtype").val();
+			//alert("navUrl==========="+navUrl);
 									
 									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
@@ -360,7 +363,10 @@ jQuery(document).ready(function() {
 			 
 			 function findJobs() {
 				 
+				 //alert("Hi");
+				 
 				var autoLoad = $("#autoload").val();
+		//alert(autoLoad);
 				 if(autoLoad == true || autoLoad == "true"){
 				 	$("#autoload").val(false);
 					$("#rows").val(25000);
@@ -369,15 +375,16 @@ jQuery(document).ready(function() {
 					var keywords = $("#keywords").val();
 					var cityState = $("#cityState").val();
 					var radius = $("#radius").val();
+		//alert("1");
 					var rows = $("#rows").val();
 					var start = $("#start").val();
 					var searchtype = $("#searchtype").val();
-					
+			//alert("2");		
 					var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 					$("#TotalNoRecords").text("");
 					$("#TotalRecord").text("");
-					//alert("navUrl="+navUrl);
+	//alert("navUrl="+navUrl);
 					$.getJSON(navUrl,function(data) {
 							table.fnClearTable();
 							table.fnAddData(data.jsonRows);

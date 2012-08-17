@@ -72,7 +72,7 @@
 			<form action="" method="">
 				<div class="MidContent_Wrapper">
 					<span class="floatleft">You need to be
-						logged in to save jobs. <a href="../loginFormForJobSeeker/login.html" id="id">Click here to log
+						logged in to save jobs. <a href="../commonLogin/login.html?page=jobSeeker" id="id">Click here to log
 							in now.</a>
 					</span>
 				</div>

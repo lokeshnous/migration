@@ -145,7 +145,7 @@ public class SaveSearchController {
 			if(session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put("SaveSearchForm", new SaveSearchForm());
 				jsonObject.put("NavigationPath",
-						"../loginFormForJobSeeker/login");
+						"../commonLogin/login");
 			} else if(session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null 
 				&& session.getAttribute(MMJBCommonConstants.SEARCH_TYPE).toString().equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
 				&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null

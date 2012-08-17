@@ -16,7 +16,7 @@
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
-						window.location.href = val+".html";
+						window.location.href = val+".html?page=jobSeeker";
 					}
 					
 					if (key == "LoggedInNavigationPath") {

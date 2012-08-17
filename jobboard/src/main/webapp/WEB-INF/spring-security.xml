@@ -14,7 +14,7 @@
 
 		<security:intercept-url pattern="/healthcarejobs/advanceweb.html"
 			access="permitAll" />
-		<security:intercept-url pattern="/loginFormForJobSeeker/login.html"
+		<security:intercept-url pattern="/commonLogin/login.html"
 			access="permitAll" />
 		<security:intercept-url
 			pattern="/jobseekerregistration/saveJobSeekerProfile.html" access="permitAll" />
