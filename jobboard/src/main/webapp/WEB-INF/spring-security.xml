@@ -45,7 +45,7 @@
 		class="com.advanceweb.afc.jb.security.CustomAuthenticationManager" />
 
 	<bean id="customAuthenticationFailureHandler"
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager"
 		p:defaultFailureUrl="/loginFormForJobSeeker/login.html?error=true" />
 
 	<bean id="customAuthenticationSuccessHandler" class="com.advanceweb.afc.jb.login.web.controller.LoginSuccessManager"
