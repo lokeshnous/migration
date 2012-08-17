@@ -422,13 +422,14 @@ public class JobSearchActivityController {
 				jobSearchResultForm.setKeywords(keywords);
 				jobSearchResultForm.setCityState(cityState);
 				jobSearchResultForm.setRadius(radius);
-				jobSearchResultForm.setAutoload(autoload);				
+				jobSearchResultForm.setAutoload(autoload);
 
 				LOGGER.info("Removing from session....");
 
 				session.removeAttribute(MMJBCommonConstants.KEYWORDS);
 				session.removeAttribute(MMJBCommonConstants.CITY_STATE);
 				session.removeAttribute(MMJBCommonConstants.RADIUS);
+				session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
 
 			}
 		}

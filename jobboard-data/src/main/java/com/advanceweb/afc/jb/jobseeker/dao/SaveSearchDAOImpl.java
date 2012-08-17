@@ -156,5 +156,27 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		hibernateTemplate.saveOrUpdate(search);
 		return true;
 	}
+	
+	/**
+	 * This method is used to update the saved search details.
+	 * 
+	 * @param SaveSearchedJobsDTO
+	 * @return boolean
+	 */
+	
+	public boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO){
+		
+		AdmSaveSearch search = hibernateTemplate.load(AdmSaveSearch.class,
+				saveSearchedJobsDTO.getSaveSearchID());
+		search.setUrl(saveSearchedJobsDTO.getUrl());
+		search.setModifyDt(new Date());
+		search.setSearchName(saveSearchedJobsDTO.getSearchName());
+		search.setUserId(saveSearchedJobsDTO.getUserID());
+		search.setSaveSearchId(saveSearchedJobsDTO.getSaveSearchID());
+		hibernateTemplate.saveOrUpdate(search);
+		return true;
+	}
+	
+	
 
 }

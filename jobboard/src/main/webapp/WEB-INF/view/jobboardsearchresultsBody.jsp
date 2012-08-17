@@ -10,8 +10,9 @@
 	
 	function saveThisSearch() {
 		
+		
 		$.ajax({
-			url : '../savedSearches/saveThisSearch.html',
+			url : '${pageContext.request.contextPath}/savedSearches/saveThisSearch.html',
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {

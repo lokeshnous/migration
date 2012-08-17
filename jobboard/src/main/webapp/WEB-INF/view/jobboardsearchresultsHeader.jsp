@@ -13,8 +13,7 @@
               <div class="mainTwo" >
               <div class="row">
                             <div class="job_search_main job_search_main_height" style="margin-right: 10px;">
-                  <%-- <form method=""> --%>
-                 <%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
+                  
                   <form:form method="" action="" commandName="jobSearchResultForm"> 
             <div class="search_form">
             
@@ -24,7 +23,6 @@
 	                      <br/>
 	                      <div class="input_grp1 marginTop10">
 	                       <form:input path="cityState"  id="cityState" cssClass="jb_input2" />
-	                	  <!-- <input type="text" name="cityState" id="cityState" class="jb_input2" /> -->
 	                <br/>
 	                <div class="toolTipBefore"><label for="cityState">City and State or ZIP Code </label></div> <div class="toolTip"><span class="classic"><p>Enter the city and state or zip code of the location you want to search. Then select a radius to expand your search up to 100 miles from your starting point.</p></span></div>
 	              </div>
@@ -40,12 +38,13 @@
 	                </form:select>
 	                <label for="radius">Radius</label>
 	              </div>
+	              <form:hidden path="autoload" id="autoload"/>
 	              
 	              <div class="clearfix"></div>
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
 	                      <div style="color: red;font-weight:bold;" id="findSearchInfo" ></div>
 	                      <div class="rowEvenNewSpacing">
-	                    <input type="button" id= "submitval" value="Find Jobs" class="btn_sm orange jb_search_submit" />
+	                    <input type="button" id= "submitval" onclick="findJobs();" value="Find Jobs" class="btn_sm orange jb_search_submit" />
 	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  
                       
@@ -110,10 +109,8 @@
             <form:hidden path="rows" id="rows"/>
             
             <form:hidden path="searchtype" id="searchtype" value= "basic"/>
-            <!-- <input type="hidden" id="searchtype" value="basic"></input>
-            </div> -->
+          
             </form:form>    
-                <%-- </form> --%>
                 </div>
               <div class="ad_col_right"> <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
         

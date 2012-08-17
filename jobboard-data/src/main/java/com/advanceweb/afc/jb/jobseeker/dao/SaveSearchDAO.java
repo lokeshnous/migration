@@ -31,4 +31,13 @@ public interface SaveSearchDAO {
 	boolean validateSearchName(String searchName);
 
 	boolean deleteFirstSearch(int userId);
+	
+	/**
+	 * This method is used to update the saved search details.
+	 * 
+	 * @param SaveSearchedJobsDTO
+	 * @return boolean
+	 */
+	
+	boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO);
 }

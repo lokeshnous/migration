@@ -107,4 +107,16 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	public boolean deleteFirstSearch(int userId) {
 		return saveSearchDAO.deleteFirstSearch(userId);
 	}
+	
+
+	/**
+	 * This method is used to update the saved search details.
+	 * 
+	 * @param SaveSearchedJobsDTO
+	 * @return boolean
+	 */
+	public boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO){
+		return saveSearchDAO.updateSearchDetails(saveSearchedJobsDTO);
+	}
+	
 }
