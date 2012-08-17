@@ -160,10 +160,9 @@ public class JobSearchActivityController {
 	 */
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
-			Map<String, Object> model, HttpServletRequest request) {
+			Map<String, Object> model, HttpServletRequest request,
+			@RequestParam("currentUrl") String currentUrl) {
 		try {
-			String currentUrl = request.getRequestURL().toString();
-			
 			 // View the job with template			
 			SearchedJobDTO jobDTO = jobSearchActivity.viewJobDetails(jobId);
 			model.put("jobDetail", jobDTO);
@@ -275,19 +274,20 @@ public class JobSearchActivityController {
 					try {
 					    // Create temp file.
 					    File temp = File.createTempFile(resumeDTO.getResumeName(), defaultResumeExtension);
-					    File newFile = new File(resumeDTO.getResumeName()+defaultResumeExtension);
-					    //temp.delete();
-					    temp.renameTo(newFile);
-					    //source.renameTo(temp);
-
+					    File newFile = new File(temp.getParent()+"\\"+resumeDTO.getResumeName()+defaultResumeExtension);
+					     //Rename
+					    newFile.deleteOnExit();
+					   if (temp.renameTo(newFile)) {
+						   LOGGER.info("File has been renamed.");	
+					       }
 					    // Delete temp file when program exits.
 					    temp.deleteOnExit();
 
 					    // Write to temp file
-					    BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+					    BufferedWriter out = new BufferedWriter(new FileWriter(newFile));
 					    out.write(resumeDTO.getResumeText());
 					    out.close();
-					    resumeDTO.setFilePath(temp.getAbsolutePath());
+					    resumeDTO.setFilePath(newFile.getAbsolutePath());
 					} catch (IOException e) {
 						LOGGER.info("Copy Paste resume error");						
 					}
@@ -362,7 +362,6 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
 			HttpSession session) {
-		ModelAndView model1 = new ModelAndView();
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		// Modified to delete the first saved search,allow user to
 		// create new search if he has already created 5 searches and trying to

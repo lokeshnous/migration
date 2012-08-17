@@ -80,8 +80,6 @@ jQuery(document).ready(function() {
 			return status;
 		}
 		function saveThisJob(jobId) {
-			//var saveThisJobIdid = "#saveThisJobId"+jobId;
-			//alert(saveThisJobIdid);
 			$.ajax({
 				url : '../jobsearchactivity/saveThisJob.html?id='+jobId,
 				data : ({
@@ -95,20 +93,9 @@ jQuery(document).ready(function() {
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							//$(saveThisJobIdid).attr('target', '_blank');
-							//$(saveThisJobIdid).attr('href', val + '.html');
-							//$(saveThisJobIdid).displaypopup(saveThisJobIdid,
-								//	"775", "252");
 							$.nmManual(val + '.html');
-							//location.href = val+".html";
-
 						}
 					});
-					//$.each(data, function(key, val) {
-					//	if (key == "NavigationPath") {
-					//		window.location.href = val+".html";
-					//	}
-					//});
 				},
 				error : function(data) {
 					alert('Unable to process');
@@ -118,7 +105,6 @@ jQuery(document).ready(function() {
 			});
 		}
 		function applyThisJob(jobId) {
-			//var applyJobidId = "#applyJobid"+jobId;
 			$.ajax({
 				url : '../jobsearchactivity/applyJob.html?id='+jobId,
 				data : ({
@@ -133,7 +119,6 @@ jQuery(document).ready(function() {
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							//$(applyJobidId).attr('href', val + '.html');
 							window.location.href = val+".html";
 						}
 					});
@@ -147,17 +132,17 @@ jQuery(document).ready(function() {
 		}
 			function fnFormatDetails(table, nTr) {
 				var aData = table.fnGetData(nTr);
-				//alert('--' + aData['Company']+aData['JobId']);
 				var jobId = aData['JobId'];
 				var jobDesc = aData['AdText'];
+				var currentUrl = window.location.pathname;
+				//alert(currentUrl);
 				var isFeaturedEmployer = aData['IsFeatured'];
-				//alert(jobDesc.toLowerCase().indexOf("job description"));
 				var saveThisJobIdid= "saveThisJobId"+jobId;
 				var applyJobId= "applyJobid"+jobId;
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 32px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
 				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
-				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId;
+				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl;
 				sOut += '" class="btn_sm white">View Details</a>';
 				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
 				sOut += '" class="btn_sm white">Save This Job</a></div>';
@@ -180,15 +165,6 @@ jQuery(document).ready(function() {
 						.dataTable(
 								{
 									"bFilter" : false,
-								    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-								        if (iDataIndex  != 0 && (iDataIndex % 10) == 0)
-								        {
-								        //alert(iDataIndex+aData['City']+nRow+"--"+$('td:eq(4)', nRow));
-								        //nRow
-								        //$(this).fnOpen(nRow,'<tr><td>pppppppppppppppppppppp</td></tr>','details');
-								        //table.fnOpen(nTr,fnFormatDetails(table,nTr),'details');
-								        }
-								      },
 									"bProcessing" : true,
 									"sPaginationType" : "full_numbers",
 									"bJQueryUI" : true,
@@ -197,33 +173,17 @@ jQuery(document).ready(function() {
 									 "aLengthMenu": [[20, 30, 40, 50], [20, 30, 40, 50]],
 									"oLanguage" : {
 										"sLengthMenu" : "<span>Results viewable: </span>_MENU_ <span>per page</span>",
-										//"sZeroRecords" : "Nothing found - sorry",
 										"sInfo" : "",
 										//"sInfo" : "Showing _START_ to _END_ of _TOTAL_ records",
 										//"sInfoEmpty" : "Showing 0 to 0 of 0 records",
 										//"sInfoFiltered" : "(filtered from _MAX_ total records)"
 									},
 									"sEmptyTable": "No results found",
-									//"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
 									"sDom": '<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"><"searchResultsNavigationColumn2"p>>t<"bottom"i><"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn2"pr>><"clear">',
-									 //"sDom": 'T<"clear">lfrtip',
-									//"sScrollY" : 500,
 									'fnRowCallback' : function(nRow, aData, iDisplayIndex,iDisplayIndexFull) {
-									// alert(aData['IsFeatured']);
 									if (aData['IsFeatured'] == true) {
-										//$('td:eq(0)', nRow).addClass('featuredEmployerRowColor');
-										//$('td:eq(1)', nRow).addClass('featuredEmployerRowColor');
-										//$('td:eq(1)', nRow).addClass('featuredEmployerRowColor');
-										//$('td:eq(2)', nRow).addClass('featuredEmployerRowColor');
-										//$('td:eq(3)', nRow).addClass('featuredEmployerRowColor');
 										$(nRow).addClass('featuredEmployerRowColor');
 									}
-									//else{
-										//$('td:eq(0)',nRow).addClass('leftCornerBorder');
-										//$('td:eq(1)',nRow).addClass('middleBorder');
-										//$('td:eq(2)',nRow).addClass('middleBorder');
-										//$('td:eq(3)',nRow).addClass('rightCornerBorder');
-									//}
 										return nRow;
 									},
 									"aoColumns" : [ {
@@ -255,12 +215,10 @@ jQuery(document).ready(function() {
 									var rows = $("#rows").val();
 									var start = $("#start").val();
 									var searchtype = $("#searchtype").val();
-									//alert("-------"+autoLoad);
 									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
-									//alert("navUrl="+navUrl);
 									$.getJSON(navUrl,function(data) {
 											table.fnClearTable();
 											table.fnAddData(data.jsonRows);
@@ -269,23 +227,18 @@ jQuery(document).ready(function() {
 											for(var i=0;i<nNodes.length;i++)
 										        {
 												if(i  != 0 && (i % 9) == 0){
-												//nNodes[i+count] = 	 "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>";
-												//$('#jsonTable').dataTable().fnAddData(["row 3, cell 1", "row 3, cell 2","row 3, cell 1", "row 3, cell 2"]);
-												//table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
 												table.fnOpen( nNodes[i+count], "<img src='../resources/images/ads/banner_ad_fpo.png'>", "advertiseStyle" );
 												count = count+1;
 												}
 										        }
 											$("#TotalNoRecords").text(data.TotalNoRecords);
 											$("#TotalRecord").text(data.TotalNoRecords);
-											/* $("#SearchCriteria").text(keywords); */
 											});
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");
 									
 									return true;
 								}
-								//$('#submitval').trigger('click');
 								$("#submitval").click(function(event) {
 									if(!validateSearch()){
 										return false;
@@ -305,7 +258,6 @@ jQuery(document).ready(function() {
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
-									//alert("navUrl="+navUrl);
 									$.getJSON(navUrl,function(data) {
 											table.fnClearTable();
 											table.fnAddData(data.jsonRows);
@@ -314,16 +266,12 @@ jQuery(document).ready(function() {
 											for(var i=0;i<nNodes.length;i++)
 										        {
 												if(i  != 0 && (i % 9) == 0){
-												//nNodes[i+count] = 	 "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>";
-												//$('#jsonTable').dataTable().fnAddData(["row 3, cell 1", "row 3, cell 2","row 3, cell 1", "row 3, cell 2"]);
-												//table.fnOpen( nNodes[i+count], "<center><br><br>-----------------<b>Advertise"+(count+1)+" Here</b>-----------------<br><br></center>", "advertiseStyle" );
 												table.fnOpen( nNodes[i+count], "<img src='../resources/images/ads/banner_ad_fpo.png'>", "advertiseStyle" );
 												count = count+1;
 												}
 										        }
 											$("#TotalNoRecords").text(data.TotalNoRecords);
 											$("#TotalRecord").text(data.TotalNoRecords);
-											/* $("#SearchCriteria").text(keywords); */
 											});
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");
