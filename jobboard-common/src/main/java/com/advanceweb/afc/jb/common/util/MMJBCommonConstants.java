@@ -188,12 +188,25 @@ public interface MMJBCommonConstants {
 	//For User Roles
 	public static final String MERION_ADMIN ="merion_admin";
 	public static final String JOBSEEKER="jobseeker";
+	public static final String EMPLOYER="employer";
+	public static final String AGENCY="agency";
 	public static final String FACILITY_ADMIN="facility_admin";
 	public static final String FACILITY_USER="facility_user";
 	public static final String ROLE_MERION_ADMIN="ROLE_MERION_ADMIN";
 	public static final String ROLE_JOB_SEEKER="ROLE_JOB_SEEKER";
 	public static final String ROLE_FACILITY_ADMIN="FACILITY_ADMIN";
 	public static final String ROLE_FACILITY_USER="ROLE_FACILITY_USER";
+	
+	//For Login Failure URL
+	public static final String JOBSEEKER_LOGIN_FAILURE_URL="/commonLogin/login.html?error=true&page=jobSeeker";
+	public static final String EMPLOYER_LOGIN_FAILURE_URL="/commonLogin/login.html?error=true&page=employer";
+	public static final String AGENCY_LOGIN_FAILURE_URL="/commonLogin/login.html?error=true&page=agency";
+	
+	//For Logout URL
+		public static final String JOBSEEKER_LOGOUT_URL="/commonLogin/login.html?page=jobSeeker";
+		public static final String EMPLOYER_LOGOUT_URL="/commonLogin/login.html?page=employer";
+		public static final String AGENCY_LOGOUT_URL="/commonLogin/login.html?page=agency";
+	
 
 	// Payment Gateway
 	public static final String CREDIT_CARD = "creditCard";
@@ -203,6 +216,7 @@ public interface MMJBCommonConstants {
 	public static final String USER_ID = "userId";
 	public static final String USER_EMAIL="userEmail";
 	public static final String USER_NAME="userName";
+	public static final String PAGE_VALUE="pageValue";
 	
 	//For Duplicate Submission
 	public static final String LAST_PLACE_KEY="LAST_PLACE_KEY";
