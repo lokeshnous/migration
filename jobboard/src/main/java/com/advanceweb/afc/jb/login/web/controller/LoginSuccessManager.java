@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -34,8 +35,24 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		HttpSession session = request.getSession(false);
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,user.getFirstName() + " " + user.getLastName());
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmail());
-		response.sendRedirect(request.getContextPath() + getDefaultTargetUrl());
-	}
 
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmail());
+		if (authentication.getAuthorities().contains(new GrantedAuthorityImpl(
+				MMJBCommonConstants.ROLE_JOB_SEEKER))) {
+			response.sendRedirect(request.getContextPath()
+					+ "/jobSeeker/jobSeekerDashBoard.html");
+		} else if (authentication.getAuthorities().contains(new GrantedAuthorityImpl(
+				MMJBCommonConstants.ROLE_FACILITY_ADMIN))) {
+			response.sendRedirect(request.getContextPath()
+					+ "/employer/employerDashBoard.html");
+		}
+		else if (authentication.getAuthorities().contains(new GrantedAuthorityImpl(
+				MMJBCommonConstants.ROLE_FACILITY_USER))) {
+			response.sendRedirect(request.getContextPath()
+					+ "/agency/agencyDashBoard.html");
+		}
+		
+
+	}
+	
 }
