@@ -917,6 +917,7 @@ public class ResumeController {
 				if (certForm.getSummary() != null
 						&& certForm.getSummary() != "")
 					count = count + 1L;
+				break;
 			}
 		}
 		if (null != createResume.getListRefForm()) {
@@ -931,6 +932,7 @@ public class ResumeController {
 					count = count + 1L;
 				if (refForm.getName() != null && refForm.getName() != "")
 					count = count + 1L;
+				break;
 			}
 		}
 		if (null != createResume.getListEduForm()) {
@@ -957,6 +959,7 @@ public class ResumeController {
 				if (eduForm.getStartDate() != null
 						&& eduForm.getStartDate() != "")
 					count = count + 1L;
+				break;
 
 			}
 		}
@@ -1024,6 +1027,7 @@ public class ResumeController {
 				if (wrkExpForm.getYrsAtPostion() != null
 						&& wrkExpForm.getYrsAtPostion() != "")
 					count = count + 1L;
+				break;
 			}
 
 		}
@@ -1034,7 +1038,7 @@ public class ResumeController {
 				if (langForm.getLanguage() != null
 						&& langForm.getLanguage() != "")
 					count = count + 1L;
-
+				break;
 			}
 
 		}
@@ -1047,7 +1051,7 @@ public class ResumeController {
 				if (phnDtlForm.getPhoneType() != null
 						&& phnDtlForm.getPhoneType() != "")
 					count = count + 1L;
-
+				break;
 			}
 
 		}
@@ -1074,7 +1078,7 @@ public class ResumeController {
 			count = count + 1L;
 
 		}
-		createResume.setTotalProgress(count * 2);
+		createResume.setTotalProgress((long) Math.round( count * 2.08));
 
 	}
 	
