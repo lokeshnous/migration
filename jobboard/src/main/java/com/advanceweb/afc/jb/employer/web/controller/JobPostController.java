@@ -42,7 +42,7 @@ public class JobPostController {
 	
 	//@RequestParam("userId") int userId ,
 	
-	@RequestMapping(value="/postNewJob",method = RequestMethod.GET)
+	@RequestMapping(value="/postNewJobs",method = RequestMethod.GET)
 	public ModelAndView showPostJob() {
 		
 		ModelAndView model = new ModelAndView();
@@ -68,6 +68,7 @@ public class JobPostController {
 		
 		model.addObject("jobPostForm",jobPostForm);
 		model.setViewName("postNewJobs");
+		
 		return model;
 	}
 	

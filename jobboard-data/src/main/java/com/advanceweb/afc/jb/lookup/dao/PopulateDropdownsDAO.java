@@ -156,6 +156,8 @@ public interface PopulateDropdownsDAO {
 	
 	List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName);
 	
-	public List<DropDownDTO> populateEducationDegreesDropdowns(); 
+	List<DropDownDTO> populateEducationDegreesDropdowns();
+	
+	List<DropDownDTO> populateJobOwnersDropdown(int facilityId);
 	
 }

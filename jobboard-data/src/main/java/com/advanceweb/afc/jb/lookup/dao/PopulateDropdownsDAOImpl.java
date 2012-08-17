@@ -30,6 +30,7 @@ import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
@@ -46,6 +47,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
 	private final String FIND_RESBUILDER_DROPDOWNS="from ResResumeAttrib attrib where attrib.name=?";
 	private final String FIND_EDU_DEGREES="from ResDegreeEdu edu";
+	private final String FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 	
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
@@ -410,6 +412,20 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			List<ResDegreeEdu> resEduDegreeList = hibernateTemplate.find(FIND_EDU_DEGREES);
 			return dropdownHelper.transformResDegreeEduToDropDownDTO(resEduDegreeList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
+		
+		try {
+			List<AdmFacility> admFacilityList = hibernateTemplate.find(FIND_JOB_OWNERS, facilityId);
+			return null;
+//					dropdownHelper.transformAdmFacilityToDropDownDTO(admFacilityList);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
