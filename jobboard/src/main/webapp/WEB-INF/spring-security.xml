@@ -9,31 +9,46 @@
 
 
 	<security:http auto-config="false" use-expressions="true"
-	access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">
-
-    
-	<security:intercept-url pattern="/healthcarejobs/advanceweb.html" access="permitAll" />
-	<security:intercept-url pattern="/loginFormForJobSeeker/login.html"	access="permitAll" />
-	<security:intercept-url pattern="/jobseekerregistration/saveJobSeekerProfile.html" access="permitAll" />
-	<security:intercept-url pattern="/jobseekerregistration/createJobSeekerYourInfo.html" access="permitAll" />
-	<security:intercept-url pattern="/jobseekerregistration/createJobSeekerCreateYrAcct.html" access="permitAll" />
-	<security:intercept-url pattern="/jobsearchactivity/**" access="permitAll" />
-	<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html" access="hasRole('ROLE_JOB_SEEKER')" />
-    <security:intercept-url pattern="/savedSearches/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/subscriptions/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/jobSeekerActivity/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/jobSeeker/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/jobSeekerResume/**" access="hasRole('ROLE_JOB_SEEKER')" />
-	<security:intercept-url pattern="/savedSearches/**" access="permitAll" />
-	
-	
-	
-    <security:logout success-handler-ref="customLogoutSuccessHandler" invalidate-session="true" logout-url="/jobboard/logout" />
+		access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">
 
 
-	<security:custom-filter ref="authenticationFilter"
-		position="FORM_LOGIN_FILTER" />
-</security:http>
+		<security:intercept-url pattern="/healthcarejobs/advanceweb.html"
+			access="permitAll" />
+		<security:intercept-url pattern="/loginFormForJobSeeker/login.html"
+			access="permitAll" />
+		<security:intercept-url
+			pattern="/jobseekerregistration/saveJobSeekerProfile.html" access="permitAll" />
+		<security:intercept-url
+			pattern="/jobseekerregistration/createJobSeekerYourInfo.html" access="permitAll" />
+		<security:intercept-url
+			pattern="/jobseekerregistration/createJobSeekerCreateYrAcct.html"
+			access="permitAll" />
+		<security:intercept-url pattern="/jobsearchactivity/**"
+			access="permitAll" />
+		<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html"
+			access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/savedSearches/**"
+			access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/subscriptions/**"
+			access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/jobSeekerActivity/**"
+			access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/jobSeeker/**"
+			access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/jobSeekerResume/**"
+			access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/savedSearches/**"
+			access="permitAll" />
+
+
+
+		<security:logout success-handler-ref="customLogoutSuccessHandler"
+			invalidate-session="true" logout-url="/jobboard/logout" />
+
+
+		<security:custom-filter ref="authenticationFilter"
+			position="FORM_LOGIN_FILTER" />
+	</security:http>
 
 	<bean id="authenticationFilter"
 		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
@@ -45,15 +60,14 @@
 		class="com.advanceweb.afc.jb.security.CustomAuthenticationManager" />
 
 	<bean id="customAuthenticationFailureHandler"
-		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager"
-		p:defaultFailureUrl="/loginFormForJobSeeker/login.html?error=true" />
+		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager" />
 
-	<bean id="customAuthenticationSuccessHandler" class="com.advanceweb.afc.jb.login.web.controller.LoginSuccessManager"
-		p:defaultTargetUrl="/jobSeeker/jobSeekerDashBoard.html" />
+	<bean id="customAuthenticationSuccessHandler"
+		class="com.advanceweb.afc.jb.login.web.controller.LoginSuccessManager" />
 
 
-<bean id="customLogoutSuccessHandler" class="com.advanceweb.afc.jb.login.web.controller.LogoutSuccessManager"
-		p:defaultTargetUrl="/loginFormForJobSeeker/login.html" />
+	<bean id="customLogoutSuccessHandler"
+		class="com.advanceweb.afc.jb.login.web.controller.LogoutSuccessManager" />
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
