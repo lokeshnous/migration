@@ -20,13 +20,16 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
  * A custom authentication manager that allows access if the user details
- * exist in the database and if the username and password are not the same.
- * Otherwise, throw a {@link BadCredentialsException}
+ * exist in the database otherwise, throw a {@link BadCredentialsException}
  */
 public class CustomAuthenticationManager implements AuthenticationManager {
 
 	@Autowired
 	UserDao userDAO;
+	@Value("${userNotExist}")
+	private String userNotExist;
+	@Value("${wrongPassword}")
+	private String wrongPassword;
 		
 	public Authentication authenticate(Authentication auth)throws AuthenticationException {
 		MerUser user=null;		
@@ -35,13 +38,13 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 			
 			user = userDAO.getUser(auth.getName());
 			if(user==null){
-				throw new BadCredentialsException("User does not exists!");
+				throw new BadCredentialsException(userNotExist);
 			}
 		} catch (Exception e) {
-			throw new BadCredentialsException("User does not exists!");
+			throw new BadCredentialsException(userNotExist);
 		}
 		if(!(user.getPassword().equals(auth.getCredentials()))){
-			throw new BadCredentialsException("Wrong password!");
+			throw new BadCredentialsException(wrongPassword);
 		}
 			return new UsernamePasswordAuthenticationToken(
 					auth.getName(), 
