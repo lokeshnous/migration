@@ -35,7 +35,7 @@ import com.advanceweb.afc.jb.login.service.LoginFormService;
  */
 
 @Controller
-@RequestMapping(value = "/loginFormForJobSeeker")
+@RequestMapping(value = "/commonLogin")
 @SessionAttributes("loginForm")
 public class LoginFormController {
 
@@ -83,7 +83,7 @@ public class LoginFormController {
 	 */
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String jobSeekerLogin(
+	public String login(
 			@RequestParam(value = "error", required = false) boolean error,
 			@RequestParam(value = "page", required = false) String page,
 			ModelMap model) {
