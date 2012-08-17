@@ -185,7 +185,7 @@
                           <p><a href="">Manage Access Permissions</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
-                          <p><a href="">Manage Featured Employer Profile</a> </p>
+                          <p><a href="/jobboard/empProfile/employerprofile.html">Manage Featured Employer Profile</a> </p>
                         </div>
               </div>
                     </div>

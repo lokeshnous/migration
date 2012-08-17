@@ -59,6 +59,7 @@ public class EmployerProfileManagementController {
         companyProfileDTO.setPrimaryColor(managementForm.getPrimaryColor());
         companyProfileDTO.setCompanyNews(managementForm.getCompanyNews());
         String fileName = null, filePath = null;
+        ModelAndView model = new ModelAndView();
 		try {
 			MultipartFile logoUrl = managementForm.getLogoUrl();
 			MultipartFile promoMedia = managementForm.getPositionalMedia();
@@ -86,8 +87,8 @@ public class EmployerProfileManagementController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
-		return new ModelAndView("manageFeatureEmpPro");
+		model.setViewName("redirect:/employer/employerDashBoard.html");
+		return model;
 	}
 
 	/**

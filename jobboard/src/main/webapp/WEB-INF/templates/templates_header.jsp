@@ -155,7 +155,6 @@
 
 	</div>
 
-
 	<div id="nav">
 		<ul class="megamenu">
 			<li><a href="javascript:">Magazines</a>

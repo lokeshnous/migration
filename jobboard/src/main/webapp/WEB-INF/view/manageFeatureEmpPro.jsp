@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ADVANCE Heathcare Jobs</title>
+<title>ADVANCE Healthcare Jobs</title>
 <link href="../resources/js/colorPicker.css" type='text/css'
 	rel='stylesheet'>
 <jsp:include page="common/include.jsp" />
@@ -94,7 +94,7 @@
 						<div class="floatLeft marginTop5">
 										<span class="lableText3"> Primary Color:</span>
 							         	 <form:input id="color_id" path="primaryColor" readonly="true" class="jb_input2Coverletter InputActiveText" value="HEX #"/>
-							        <div class="floatRight"><input id="colorPkr" name="color1" type="text"  value="#333399" /></div></div>
+							        <div class="floatRight"><input id="colorPkr" name="color1" type="text"   /></div></div>
 							         <div class="toolTip marginTop6 marginleft5"><span class="classic">Select a color that complements your brand.</span></div>
 							         	
 									  </div>
