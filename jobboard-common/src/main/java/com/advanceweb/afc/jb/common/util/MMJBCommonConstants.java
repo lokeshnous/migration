@@ -48,7 +48,6 @@ public interface MMJBCommonConstants {
 	// For SOLR search
 	int ZERO_INT = 0;
 	String NULL_STR = "null";
-	public static final String USER_ID = "userId";
 	String TEMP_SESSION_ID = "JS0011";
 	String SPACE_OPN_BRCKT = " (";
 	String CLSG_BRCKT = ")";
@@ -200,6 +199,7 @@ public interface MMJBCommonConstants {
 	public static final String INVOICE = "invoice";
 
 	//For Successful Login
+	public static final String USER_ID = "userId";
 	public static final String USER_EMAIL="userEmail";
 	public static final String USER_NAME="userName";
 	
