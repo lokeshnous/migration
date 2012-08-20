@@ -152,9 +152,6 @@ public class SaveSearchController {
 							&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null
 							 && session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString() != null)){			
 					
-					//String name = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
-					 //saveSearchService.editSavedSearch(name);
-					 
 					 SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 					 
 					 searchedJobsDTO.setSearchName(session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString());
@@ -288,6 +285,11 @@ public class SaveSearchController {
 		SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 		JSONObject jsonObject = new JSONObject();
 		
+		if(session.getAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH) != null 
+				&& session.getAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH).toString().equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){
+			session.removeAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH);
+		}
+		
 		if(performSearch != null && performSearch.equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){
 			session.setAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH, performSearch);
 		}
@@ -312,6 +314,8 @@ public class SaveSearchController {
 			jsonObject.put(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
 			jsonObject.put(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
 			jsonObject.put(MMJBCommonConstants.AUTOLOAD, true);
+			
+			
 			
 			return jsonObject;
 		} else {
