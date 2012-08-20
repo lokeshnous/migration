@@ -79,16 +79,23 @@ public class JobApplicationController {
 		return new ModelAndView("jobseekerguestuserformpopup");
 
 	}
-	
-	
-	
 
+	/**
+	 * This method is used to save the Anonymous User record - yet to implement
+	 * along with saving need to send email for both employer and Anonymous user
+	 * 
+	 * @param form
+	 * @param result
+	 * @param filepath
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
-	  
-	  @RequestMapping(value = "/saveAnonymousUserJobapply",method=RequestMethod.POST) 
-	public String appylJob(@ModelAttribute("jobApplicationForm")
-	  JobApplicationForm form, BindingResult result,@RequestParam("filePath")
-	  String filepath,HttpServletRequest request) {
+	@RequestMapping(value = "/saveAnonymousUserJobapply", method = RequestMethod.POST)
+	public String appylJob(
+			@ModelAttribute("jobApplicationForm") JobApplicationForm form,
+			BindingResult result, @RequestParam("filePath") String filepath,
+			HttpServletRequest request) {
 		// ,@RequestParam("id") Long jobId
 		try {
 
@@ -99,8 +106,10 @@ public class JobApplicationController {
 			 * description
 			 * 
 			 */
-		//TODO:waiting for the completion fo apply job functionality for anonymous,currently using hard code jobId
-			SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(13100);
+			// TODO:waiting for the completion for apply job functionality for
+			// anonymous,currently using hard code jobId
+			SearchedJobDTO searchedJobDTO = jobSearchActivity
+					.viewJobDetails(13100);
 			// Adding path for
 			String loginPath = navigationPath.substring(2);
 			String jonseekerloginUrl = request.getRequestURL().toString()
@@ -116,7 +125,8 @@ public class JobApplicationController {
 					searchedJobDTO.getEmployerEmailAddress());
 			toEmployer.setFromAddress(advanceWebAddress);
 			toEmployer.setToAddress(employerToAddress);
-			String employerMailSub = employeJobApplicationSub.replace("?jobseekername", form.getUserName());
+			String employerMailSub = employeJobApplicationSub.replace(
+					"?jobseekername", form.getUserName());
 			toEmployer.setSubject(employerMailSub);
 
 			String employerMailBody = employeJobApplicationBody.replace(
@@ -131,10 +141,10 @@ public class JobApplicationController {
 				attachmentpaths.add(filepath);
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
-				//LOGGER.info("Resume not found");
+				// LOGGER.info("Resume not found");
 			}
-			 emailService.sendEmail(toEmployer);
-			//LOGGER.info("Mail sent to employer");
+			emailService.sendEmail(toEmployer);
+			// LOGGER.info("Mail sent to employer");
 
 			/**
 			 * send mail to anonymous job seeker email id which is given while
@@ -147,20 +157,23 @@ public class JobApplicationController {
 			jobSeekerToAddress[0] = new InternetAddress(form.getUserEmail());
 			toJobSeeker.setToAddress(jobSeekerToAddress);
 			toJobSeeker.setFromAddress(advanceWebAddress);
-			String jobseekerMailSub = jobseekerJobApplicationSub.replace("?companyname", searchedJobDTO.getCompanyName());
+			String jobseekerMailSub = jobseekerJobApplicationSub.replace(
+					"?companyname", searchedJobDTO.getCompanyName());
 			toJobSeeker.setSubject(jobseekerMailSub);
-			String jobseekerMailBody = jobseekerJobApplicationBody.replace("?jsdashboardLink", jonseekerloginUrl);
-			jobseekerMailBody = jobseekerMailBody.replace("?companyname",searchedJobDTO.getCompanyName());
+			String jobseekerMailBody = jobseekerJobApplicationBody.replace(
+					"?jsdashboardLink", jonseekerloginUrl);
+			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
+					searchedJobDTO.getCompanyName());
 			toJobSeeker.setBody(jobseekerMailBody);
 			toJobSeeker.setHtmlFormat(true);
 			emailService.sendEmail(toJobSeeker);
-			//LOGGER.info("Mail has sent to Anonymous User");
+			// LOGGER.info("Mail has sent to Anonymous User");
 		} catch (Exception e) {
 
-			//TODO:Exception handeling
+			// TODO:Exception handeling
 
 		}
-		
+
 		return "";
 	}
 
