@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
 
-import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 
@@ -120,7 +120,7 @@ public class LoginFormValidator {
 	 * @return
 	 */
 	public boolean validateLoginValues(LoginForm form,
-			LoginFormDTO loginFormDTOForUser) {
+			LoginDTO loginFormDTOForUser) {
 
 		// we need to first check for the role id of logged in user.
 		// if value for role id stored in adm_user_role table is same as
@@ -146,7 +146,7 @@ public class LoginFormValidator {
 	 * @return
 	 */
 	public boolean validateEmailValues(String email,
-			LoginFormDTO userDetailsLoginFormDTO) {
+			LoginDTO userDetailsLoginFormDTO) {
 
 		if (email != null && userDetailsLoginFormDTO != null) {
 			if (email.equals(

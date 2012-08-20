@@ -2,8 +2,8 @@ package com.advanceweb.afc.jb.login.service;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.AdminUserRoleDTO;
-import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 
 /**
@@ -24,16 +24,16 @@ public interface LoginService {
 	 * @param password
 	 * @return
 	 */
-	LoginFormDTO validateLoginFormValues(String emailAddress, String password);
+	LoginDTO validateLoginFormValues(String emailAddress, String password);
 
 	/**
 	 * This method is to get the user email details
 	 * 
 	 * @param emailAddress
 	 */
-	LoginFormDTO getUserEmailDetails(String emailAddress);
+	LoginDTO getUserEmailDetails(String emailAddress);
 
 	MerUserDTO getUser(String email);
 
-	List<AdminUserRoleDTO> getUserRole(int userId);
+	List<UserRoleDTO> getUserRole(int userId);
 }

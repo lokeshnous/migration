@@ -9,7 +9,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.AdminUserRoleDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -44,13 +44,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<AdminUserRoleDTO> getUserRole(int userId) {
+	public List<UserRoleDTO> getUserRole(int userId) {
 		List<AdmUserRole> roleList= hibernateTemplate.find("from AdmUserRole a where a.id.userId=?",userId);
-		List<AdminUserRoleDTO> userRoleDTOList=new ArrayList<AdminUserRoleDTO>();
+		List<UserRoleDTO> userRoleDTOList=new ArrayList<UserRoleDTO>();
 		
 		
 		for(AdmUserRole role:roleList){
-			AdminUserRoleDTO userRole=new AdminUserRoleDTO();
+			UserRoleDTO userRole=new UserRoleDTO();
 			userRole.setRoleId(role.getAdmRole().getRoleId());
 			userRole.setRoleName(role.getAdmRole().getName());
 			userRoleDTOList.add(userRole);

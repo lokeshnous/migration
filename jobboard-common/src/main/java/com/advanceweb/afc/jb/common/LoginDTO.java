@@ -7,7 +7,7 @@ package com.advanceweb.afc.jb.common;
  * @since 19th July 2012
  */
 
-public class LoginFormDTO {
+public class LoginDTO {
 
 	private String emailAddress;
 	private String password;

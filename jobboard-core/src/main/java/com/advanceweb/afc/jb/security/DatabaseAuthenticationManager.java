@@ -14,7 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 
-import com.advanceweb.afc.jb.common.AdminUserRoleDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.user.dao.UserDao;
@@ -23,7 +23,7 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
  * A custom authentication manager that allows access if the user details
  * exist in the database otherwise, throw a {@link BadCredentialsException}
  */
-public class CustomAuthenticationManager implements AuthenticationManager {
+public class DatabaseAuthenticationManager implements AuthenticationManager {
 
 	@Autowired
 	UserDao userDAO;
@@ -56,8 +56,8 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 	 public Collection<GrantedAuthority> getAuthorities(int userId) {
 			List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 			
-			List<AdminUserRoleDTO> roleList=userDAO.getUserRole(userId);
-			for(AdminUserRoleDTO userRole:roleList){
+			List<UserRoleDTO> roleList=userDAO.getUserRole(userId);
+			for(UserRoleDTO userRole:roleList){
 			if ( userRole.getRoleName().equals(MMJBCommonConstants.MERION_ADMIN)) {
 				authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_MERION_ADMIN));
 			}

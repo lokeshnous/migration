@@ -2,7 +2,6 @@
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmBrndngTempDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdminUserRoleDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
@@ -35,7 +34,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistration
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerSubscriptionsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LanguageDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LocationDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginFormDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MMXmlResumeParserImpl.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MagazinesDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MerProfileAttribDTO.java -text
@@ -61,6 +60,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchedJobDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/StateDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionsDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/UserRoleDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VeteranStatusDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/WorkExpDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java -text
@@ -128,7 +128,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JSONConverterSe
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JSONConverterServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JobSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JobSearchServiceImpl.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/security/CustomAuthenticationManager.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/security/DatabaseAuthenticationManager.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServiceException.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/resources/solrConfiguration.properties -text

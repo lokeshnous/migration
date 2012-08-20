@@ -57,7 +57,7 @@
 		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
 
 	<bean id="customAuthenticationManager"
-		class="com.advanceweb.afc.jb.security.CustomAuthenticationManager" />
+		class="com.advanceweb.afc.jb.security.DatabaseAuthenticationManager " />
 
 	<bean id="customAuthenticationFailureHandler"
 		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager" />

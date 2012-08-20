@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -141,7 +141,7 @@ public class LoginFormController {
 		String finalresult = "";
 		boolean value = false;
 		String page = form.getPage();
-		LoginFormDTO formDTO = loginService.getUserEmailDetails(emailAddress);
+		LoginDTO formDTO = loginService.getUserEmailDetails(emailAddress);
 
 		// User Validation based on email address of user
 		if (formDTO != null) {

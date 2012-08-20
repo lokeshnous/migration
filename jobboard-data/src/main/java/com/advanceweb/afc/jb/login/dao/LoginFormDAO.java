@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.login.dao;
 
-import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.common.LoginDTO;
 
 /**
  * 
@@ -16,7 +16,7 @@ public interface LoginFormDAO {
 	 * @param password
 	 * @return
 	 */
-	LoginFormDTO validateLoginFormValues(String emailAddress,
+	LoginDTO validateLoginFormValues(String emailAddress,
 			String password);
 	
 	/**
@@ -24,5 +24,5 @@ public interface LoginFormDAO {
 	 * @param emailAddress
 	 * @return
 	 */
-	LoginFormDTO getUserEmailDetails(String emailAddress);
+	LoginDTO getUserEmailDetails(String emailAddress);
 }

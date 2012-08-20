@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.advanceweb.afc.jb.common.LoginFormDTO;
+import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
@@ -42,12 +42,12 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 	 * @param password
 	 * 
 	 */
-	public LoginFormDTO validateLoginFormValues(String email, String password) {
+	public LoginDTO validateLoginFormValues(String email, String password) {
 
 		// Get the user id by passing the email address of user by passing the
 		// email address from MerUser entity
 		int loggedinUserId = 0;
-		LoginFormDTO loginFormDTO = new LoginFormDTO();
+		LoginDTO loginFormDTO = new LoginDTO();
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
 
@@ -80,8 +80,8 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 	 * @param email
 	 * @return
 	 */
-	public LoginFormDTO getUserEmailDetails(String email){
-		LoginFormDTO userDetailsLoginFormDTO = new LoginFormDTO();
+	public LoginDTO getUserEmailDetails(String email){
+		LoginDTO userDetailsLoginFormDTO = new LoginDTO();
 		
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");

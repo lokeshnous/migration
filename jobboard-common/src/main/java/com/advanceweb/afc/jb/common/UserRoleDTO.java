@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.common;
 
-public class AdminUserRoleDTO {
+public class UserRoleDTO {
 
 	private int roleId;
 	private String roleName;
