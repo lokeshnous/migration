@@ -180,7 +180,7 @@
 					<div class="clearfix"></div>
 
 					<!--Start:MidContant-->
-					<div class="MidContent_Wrapper floatLeft">
+					<div class="MidContent_Wrapper">
 						<div class="popupHeader Padding0  OrangeBG">
 							<h2>CREATE YOUR RESUME</h2>
 							<span class="floatRight marginRight10"><a
@@ -189,15 +189,14 @@
 									Dashboard</a></span>
 						</div>
 						<div class="clearfix"></div>
-						<div class="MidContent_Wrapper">
+						<div class="row">
 							<span>
-								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume
-									Name:</h2>
+								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume Name:</h2>
 
-								 <div class=" floatRight width255"><span class="FloatLeft"><div id="progressbar"></div><c:out value="${createResume.totalProgress}"/>% Complete</h3></span>
+								 <div class="progressBarContainer"><span class="floatLeft"><div id="progressbar"></div></span><h3 class="floatLeft marginLeft5"><c:out value="${createResume.totalProgress}"/>% Complete</h3>
            </div>
            </span> </div>
-							</span>
+							
 						
 						
 						<c:if test="${not empty errorMessage}">
@@ -209,22 +208,19 @@
 						<div class="clearfix"></div>
 					</div>
 					<!---->
-					<div class="clearfix"></div>
-
-					<div class="searchResultsListing"></div>
 
 					<!--Test-->
 					<div class="searchResultsListing">
 						<div class="searchResultsItem MarginBottom10">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 
 											<h2 class="noBorder">Contact
 												Info</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class=" accord-open">&nbsp;</div>
 									</div>
 								</li>
 							</ul>
@@ -322,8 +318,15 @@
 										<span class="lableText3"></span> <FONT color="red"><form:errors
 												path="contactInfoForm.country" /></FONT>
 									</div>
+<<<<<<< .mine
+									<div class="rowEvenTB10Spacing">
+										<span class="lableText3">Phone Number:</span>
+										<div class="floatLeft marginRight10"></div>
+										<span class="floatLeft marginRight10">
+=======
 									<div class="row">
 									<div id="listOfPhoneId">
+>>>>>>> .r1212
 										<c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">
 											<div class="rowEvenNewSpacing MarginBottom10">
 											<c:if test="${status.count == 1}">   
@@ -359,11 +362,11 @@
 							<ul class="searchResultsJobInfo closed">
 
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Objective</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class=" accord-open">&nbsp;</div>
 									</div>
 								</li>
 
@@ -388,12 +391,12 @@
 							<ul class="searchResultsJobInfo closed">
 
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Work
 												Experience</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class=" accord-open">&nbsp;</div>
 									</div>
 								</li>
 
@@ -501,7 +504,7 @@
 											</div>
 											<span class="requiredTopmargin"></span>
 										</div>
-										<div class="rowEvenNewSpacing MarginBottom10">
+										<div class="rowEvenTB10Spacing">
 											<span class="lableText3"> Hourly Pay Rate:</span>
 											<form:input path="listWorkExpForm[${status.index}].hrlyPayRate"
 												class="job_seeker_Resume" />
@@ -533,11 +536,11 @@
 							<ul class="searchResultsJobInfo closed">
 
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Education</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 
@@ -635,12 +638,12 @@
 						<div class="searchResultsItem">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 
 											<h2 class="noBorder">Certification</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 							</ul>
@@ -697,12 +700,12 @@
 						<div class="searchResultsItem">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Skills</h2>
 										</div>
 
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 							</ul>
@@ -734,12 +737,12 @@
 						<div class="searchResultsItem">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 
 										<div class="floatLeft">
 											<h2 class="noBorder">Languages</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 							</ul>
@@ -785,12 +788,12 @@
 						<div class="searchResultsItem">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Awards</h2>
 
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 							</ul>
@@ -817,11 +820,11 @@
 							<ul class="searchResultsJobInfo closed">
 
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Memberships</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 
@@ -846,12 +849,12 @@
 						<div class="searchResultsItem">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 
 										<div class="floatLeft">
 											<h2 class="noBorder">Other</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 									</div>
 								</li>
 							</ul>
@@ -879,11 +882,11 @@
 						<div class="searchResultsItem MarginBottom10">
 							<ul class="searchResultsJobInfo closed">
 								<li class="searchResultsColumn1">
-									<div class="sectionHeader Padding0 Height28 LightGrayBG">
+									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">References</h2>
 										</div>
-										<div class="floatRight marginTop5 marginRight5 accord-open">&nbsp;</div>
+										<div class="accord-open">&nbsp;</div>
 
 									</div>
 								</li>
@@ -932,7 +935,7 @@
 													path="listRefForm[${status.index}].referenceType" value="Personal" /> <label>Personal</label>
 											</span>
 										</div>
-										<div class="rowEvenNewSpacing MarginBottom10">
+										<div class="rowEvenTB10Spacing">
 											<span class="lableText3"></span> 
 										</div>
 									</div>
