@@ -63,7 +63,7 @@
 							
 				    	<input type="submit" class="btn_sm orange" value="Login"/>				    
 										
-                    	<a href="forgrtPasswordLogin.html" id="forgrtpassword">Forgot your password?</a>
+                    	<a href="forgrtPasswordLogin.html?page=jobSeeker" id="forgrtpassword">Forgot your password?</a>
 			
 				</div>
 				<div class="row">

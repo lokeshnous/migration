@@ -96,7 +96,7 @@
 					</td>
 					<td>
 											
-                    	<a href="forgrtPasswordLogin.html" id="forgrtpassword">Forgot your password?</a>
+                    	<a href="forgrtPasswordLogin.html?page=employer" id="forgrtpassword">Forgot your password?</a>
 					</td>
 				</tr>	
 				</table>

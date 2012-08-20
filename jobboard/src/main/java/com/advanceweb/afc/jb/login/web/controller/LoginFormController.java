@@ -92,12 +92,12 @@ public class LoginFormController {
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
-		
+
 		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
 			return "jobSeekerLogin";
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
 			return "employerLogin";
-		} else{
+		} else {
 			return "agencyLogin";
 		}
 	}
@@ -110,9 +110,12 @@ public class LoginFormController {
 	 */
 	@RequestMapping(value = "/forgrtPasswordLogin", method = RequestMethod.GET)
 	public ModelAndView jobSeekerForgotYourPasswordPagePopUp(
-			Map<String, LoginForm> model, Model modelconstants) {
-
-		model.put("loginForm", new LoginForm());
+			Map<String, LoginForm> model,
+			@RequestParam(value = "page", required = false) String page,
+			Model modelconstants) {
+		LoginForm loginForm = new LoginForm();
+		loginForm.setPage(page);
+		model.put("loginForm", loginForm);
 		modelconstants.addAttribute("MMJBCommonConstantserror",
 				MMJBCommonConstants.ERROR_STRING);
 		modelconstants.addAttribute("MMJBCommonConstantsok",
@@ -137,7 +140,7 @@ public class LoginFormController {
 		String emailAddress = email;
 		String finalresult = "";
 		boolean value = false;
-
+		String page = form.getPage();
 		LoginFormDTO formDTO = loginFormService
 				.getUserEmailDetails(emailAddress);
 
@@ -152,32 +155,33 @@ public class LoginFormController {
 					+ emptyerrormsg;
 		} else if (email.length() > 0 && value) {
 			try {
+				//Based on the login user need to send the email
+				if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
+					String loginPath = navigationPath.substring(2);
+					String jonseekerloginUrl = request.getRequestURL()
+							.toString()
+							.replace(request.getServletPath(), loginPath)
+							+ dothtmlExtention;
 
-				String loginPath = navigationPath.substring(2);
-				// TODO: login Url is for jobseeker. The URL should be changed
-				// after
-				// creation of employer login page
-				String jonseekerloginUrl = request.getRequestURL().toString()
-						.replace(request.getServletPath(), loginPath)
-						+ dothtmlExtention;
+					EmailDTO jobSeekerEmailDTO = new EmailDTO();
+					jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
+					jobSeekerEmailDTO.setCcAddress(null);
+					jobSeekerEmailDTO.setBccAddress(null);
+					InternetAddress[] jobSeekerToAdd = new InternetAddress[1];
+					jobSeekerToAdd[0] = new InternetAddress(email);
+					jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
+					jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
+					String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
+							"?temporarypassword", formDTO.getPassword());
+					forgotPwdMailBody = forgotPwdMailBody.replace(
+							"?jsLoginLink", jonseekerloginUrl);
+					jobSeekerEmailDTO.setBody(forgotPwdMailBody);
+					jobSeekerEmailDTO.setHtmlFormat(true);
+					emailService.sendEmail(jobSeekerEmailDTO);
+				} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
 
-				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
-				jobSeekerEmailDTO.setCcAddress(null);
-				jobSeekerEmailDTO.setBccAddress(null);
-				InternetAddress[] jobSeekerToAdd = new InternetAddress[1];
-				jobSeekerToAdd[0] = new InternetAddress(
-				// form.getEmailAddress());
-						email);
-				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
-				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
-				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
-						"?temporarypassword", formDTO.getPassword());
-				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
-						jonseekerloginUrl);
-				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
-				jobSeekerEmailDTO.setHtmlFormat(true);
-				emailService.sendEmail(jobSeekerEmailDTO);
+				}
+
 			} catch (Exception e) {
 				// loggers call
 				LOGGER.info("ERROR");

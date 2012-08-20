@@ -3,22 +3,12 @@
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
-
-		<!-- STYLESHEETS -->
-		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
-		<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
-		<!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
+		<jsp:include page="common/include.jsp" />
 		    jQuery(document).ready(function(){
+		    	$("#changePassword").displaypopup("#changePassword", "780",
+				"370");
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -33,8 +23,11 @@
                 <div class="logo"></div>
                 </a>
         <div class="headerLoginSection">
-                  <div class="headerLoginSectionColumns"> <span class="boldText">Welcome, (Employer Name)!</span><br>
-            <div class="floatRight"> <span class="floatLeft"> <a href="">Log Out</a> | <a href="">Home</a></span></div>
+                  <div class="headerLoginSectionColumns"> 
+                  	<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
+							${msg.commonExclamationMark}
+                  	</span><br>
+            <div class="floatRight"> <span class="floatLeft"> <a href="../jobboard/logout">Log Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span></div>
           </div>
                   <!-- loginHeader --><!-- loginHeader --> 
                   
@@ -176,7 +169,7 @@
                       <div class="dashboardPanalcontent marginTop5">
                 <h2 class="noTopBorder">Profile Management</h2>
                 <div class="lableTextDashBoard">
-                          <p><a href="">Change Password</a> </p>
+                          <p><a href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html" id="changePassword">Change Password</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
                           <p><a href="">Account Settings</a> </p>

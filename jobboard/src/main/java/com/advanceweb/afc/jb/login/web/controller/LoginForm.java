@@ -20,6 +20,7 @@ public class LoginForm {
 	private int userID;
 	private int roleId;
 	private String message;
+	private String page;
 	
 
 	/**
@@ -92,6 +93,20 @@ public class LoginForm {
 	 */
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	/**
+	 * @return the page
+	 */
+	public String getPage() {
+		return page;
+	}
+
+	/**
+	 * @param page the page to set
+	 */
+	public void setPage(String page) {
+		this.page = page;
 	}
 
 }
