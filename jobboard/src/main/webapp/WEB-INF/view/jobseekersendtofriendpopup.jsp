@@ -96,7 +96,7 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Message:</span>
-				    <form:textarea path="message" id="Body Text:" cols="45" rows="5" class="textareaBoxMessege" />
+				    <form:textarea path="message" id="Body Text:" cols="45" rows="5" class="textareaBoxCResume" />
 				</div>
 				<div class="popUpButtonRow">					
 					<a href="#"	class="btn_sm orange" id="send" >Send</a> <a href="" class="btn_sm orange" id="cancel">Cancel</a>

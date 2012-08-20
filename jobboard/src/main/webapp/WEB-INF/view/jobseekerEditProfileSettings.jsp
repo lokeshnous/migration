@@ -77,7 +77,7 @@
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'Street Address1'}">
-							<div class="rowEvenSpacing">
+							<div class="rowEvenNewSpacing">
 								<span class="lableText3"></span>
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 									class="job_seeker_password textBox350" />
@@ -138,7 +138,7 @@
 							<div class="rowH3Holder">
 								<h3>Employment Information</h3>
 							</div>		
-							<div class="rowEvenNewSpacing marginTop15">
+							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Industry:</span> 
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
 								<div class="toolTip marginTop5 marginLeft5">

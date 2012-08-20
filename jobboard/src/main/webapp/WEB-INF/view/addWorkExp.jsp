@@ -110,7 +110,7 @@
 		</div>
 		<span class="requiredTopmargin"></span>
 	</div>
-	<div class="rowEvenNewSpacing MarginBottom10">
+	<div class="rowEvenTB10Spacing">
 		<span class="lableText3"> Hourly Pay Rate:</span>
 		<form:input path="createResume.listWorkExpForm[${workExpPositionId}].hrlyPayRate"
 			class="job_seeker_Resume" />

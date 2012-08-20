@@ -59,7 +59,7 @@
                   <img src="../resources/images/Close.png" width="19" height="19" onclick="closePopup();"></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
-            <div class="rowEvenNewSpacing margin0">
+            <div class="rowEvenSpacingMargin0">
             
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
               <tr class="borderTopNone">

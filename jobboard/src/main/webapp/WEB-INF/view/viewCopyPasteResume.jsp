@@ -40,8 +40,8 @@
 						<div class="clearfix"></div>
 						<div class="MidContent_Wrapper FloatLeft marginBottom10">
 							<div class="ResumeHeader">
-								<span class="FontSize18"><c:out
-										value="${createResume.resumeName}" /></span>
+								<h2 class="noTopBottomBorder "><c:out
+										value="${createResume.resumeName}" /></h2>
 								<div class="clearfix"></div>
 								<span>
 									<h3 class="marginTop3">
@@ -61,7 +61,7 @@
 							</div> -->
 						</div>
 						<div class="rowEvenNewSpacing">
-							<span class="FontSize18">Resume:</span><br>
+							<h2 class="noTopBottomBorder ">Resume:</h2><br>
 							<br>
 							<div class="clearfix"></div>
 							<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>

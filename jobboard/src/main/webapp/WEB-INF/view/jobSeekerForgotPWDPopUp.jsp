@@ -66,7 +66,7 @@
 		<div class="popUpContainerWrapper">
 		<div style="color: red">${message}</div>
 			<form:form method="" action="" commandName="loginForm">
-				<div class="rowEvenNewSpacing borderBottomDotted paddingBottom10 margin0">
+				<div class="rowEvenSpacingMargin0 borderBottomDotted paddingBottom10">
 					<p>Enter the email address you use for this account and click
 						the 'SEND' button. We'll email your password.</p>
 				</div>

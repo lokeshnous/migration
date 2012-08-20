@@ -402,7 +402,7 @@
                 </div><!-- content_wrapper -->
 
                 <div class="content_columns_search_results">
-							<div class="topDotedLine">
+							<div >
 							<h1>200 Nurse jobs match your results</h1>
                             </div>
                         <div class="column1">

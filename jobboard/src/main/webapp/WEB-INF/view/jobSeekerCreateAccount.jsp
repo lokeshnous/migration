@@ -87,7 +87,7 @@
         <div id="jobSeekerRegister1" class="job_seeker_login leftFormHolder" style="display:block">
            <h2 class="sectionSubHeader">Step 1: Create Your Account</h2>
            <form:form method="Post" action="createJobSeekerYourInfo.html" commandName="registerForm" enctype="multipart/form-data">
-	            <div class="rowEvenNewSpacing margin0"> <span class="lableText3">Email Address:</span>
+	            <div class="rowEvenSpacingMargin0"> <span class="lableText3">Email Address:</span>
 	                      <form:input path="emailId" class="job_seeker_password textBox350"/>
 	                      <span class="required">(Required)</span> 
 	            </div>

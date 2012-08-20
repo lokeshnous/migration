@@ -84,7 +84,7 @@
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="errorMsg"></div>
-					<div class="floatLeft marginTop5 marginRight20">How would you
+					<div class="splLableText">How would you
 						like to create your resume?</div>
 					<form:select class="jb_input3 jb_input_width3"
 						path="resumeType" items="${resumeTypeList}"

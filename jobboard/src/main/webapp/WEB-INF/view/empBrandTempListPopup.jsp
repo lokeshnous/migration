@@ -29,7 +29,7 @@
             <a href="cancelEmpBrandTemp.html"><img src="../resources/images/Close.png" width="19" height="19" alt="Close"></a></div>
           <div class="popUpContainerWrapper">
             <form action="" method="get">
-              <div class="rowEvenNewSpacing margin0">
+              <div class="rowEvenSpacingMargin0">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
                 <thead>
                  <tr  class="borderTopNone">

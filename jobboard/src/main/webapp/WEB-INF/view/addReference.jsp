@@ -42,7 +42,7 @@
 				path="createResume.listRefForm[${refPositionId}].referenceType" value="Personal" /> <label>Personal</label>
 		</span>
 	</div>
-	<div class="rowEvenNewSpacing MarginBottom10">
+	<div class="rowEvenTB10Spacing">
 		<span class="lableText3"></span> 
 	</div>
 </div>

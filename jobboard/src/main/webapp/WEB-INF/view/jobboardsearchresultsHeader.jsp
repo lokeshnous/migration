@@ -70,7 +70,7 @@
 					<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
 						<div class="search_info_box1">
 							<div class="rowPadding borderBottomDotted">
-								<span class="rowEvenSpacing">MY RECENT SEARCHES:</span><br>
+								<span class="rowEvenNewSpacing">MY RECENT SEARCHES:</span><br>
 								<!-- <a href="" ></a> -->Clear All | <!-- <a href="" ></a> -->See All
 							</div>
 							<div class="rowPadding borderBottomDotted">

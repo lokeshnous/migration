@@ -61,7 +61,7 @@
 							<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">							
 		
 								<c:if test="${profAttrib.strLabelName == 'First Name'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3">First Name:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
@@ -70,14 +70,14 @@
 								</c:if>
 		
 								<c:if test="${profAttrib.strLabelName == 'Middle Name'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Middle Name:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Last Name'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Last Name:</span>
 		
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
@@ -86,7 +86,7 @@
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Street Address'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Street Address:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
@@ -95,7 +95,7 @@
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Street Address1'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3"></span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
@@ -103,7 +103,7 @@
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Zip Code'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Zip Code:</span>
 		
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
@@ -112,7 +112,7 @@
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'City'}">
-									<div class="rowEvenSpacing">
+									<div class="rowEvenNewSpacing">
 										<span class="lableText3">City:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
 										<span class="required">(Required)</span>

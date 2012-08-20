@@ -47,7 +47,7 @@
         
         <div class="clearfix"></div>
         <div class="MidContent_Wrapper ">
-                  <div class="ResumeHeader"> <span class="FontSize18"><c:out value="${createResume.resumeName}"/></span>
+                  <div class="ResumeHeader"> <h2 class="noTopBottomBorder"><c:out value="${createResume.resumeName}"/></h2>
             <div class="clearfix"></div>
             <span>
                     <h3 class="marginTop3"><c:out value="${createResume.desiredJobTitle}"/></h3>

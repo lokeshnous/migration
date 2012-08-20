@@ -92,7 +92,7 @@
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="POST" action="">
-				<div class="rowEvenNewSpacing margin0">
+				<div class="rowEvenSpacingMargin0">
 				<div id="errorMsg">
 					
 				</div>

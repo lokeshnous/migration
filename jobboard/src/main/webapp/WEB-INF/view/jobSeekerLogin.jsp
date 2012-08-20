@@ -47,35 +47,29 @@
 			<b>${error}</b>
 			</div>
 			<form method="post" action="../j_spring_security_check">
-			    <div class="rowEvenSpacing margin0">
+			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> <input type="text" id="j_username" name="j_username" class="job_seeker_email" />
 			    </div>
-			    <div class="rowEvenSpacing">
+			    <div class="rowEvenNewSpacing">
 				<span class="lableText1">Password:</span> <input id="j_password" name="j_password" type="password" class="job_seeker_password" />
 			    </div>
                 <input type="hidden" name="pageValue" value="jobSeeker"/>
 			    <div class="loginOptions">
-				<div class="rowEvenSpacing marginTopBottom10">
+				<div class="rowEvenNewSpacing">
 				    <input type="checkbox" name='_spring_security_remember_me'
 										id="_spring_security_remember_me"  value="stayLoggedIn" /> Stay Logged In<br />
 				</div>		    
-				<div class="rowEvenSpacing">
-				<table>
-				<tr>
-					<td>					
+				<div class="rowEvenNewSpacing">
+							
 				    	<input type="submit" class="btn_sm orange" value="Login"/>				    
-					</td>
-					<td>
-						<br>					
+										
                     	<a href="forgrtPasswordLogin.html" id="forgrtpassword">Forgot your password?</a>
-					</td>
-				</tr>	
-				</table>
+			
 				</div>
-				<div class="rowEvenSpacing">
+				<div class="row">
 				    <p><span class="bold">Not a member?</span> <a href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign up now!</a></p>
 				</div>
-				<div class="rowEvenSpacing marginTopBottom10">
+				<div class="rowEvenNewSpacing ">
 			      <span class="bold">Or </span> <a id="guestUser" target="_blank"  href="/jobboard/anonymoususerjobapply/anonymousUser.html">continue as a guest.</a></div>
                   <div class="clearfix"></div>
 			    </div>

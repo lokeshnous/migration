@@ -76,21 +76,21 @@
                   <a href="#"><img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();" width="19" height="19" alt=""></a></div>
                  <div id="errmsg" style="color: red" align="middle"></div>
 <div class="popUpContainerWrapper"><form:form id="applyJobForm" action=""  method="POST" commandName="jobApplicationForm" enctype="multipart/form-data" >
-            <div class="rowEvenSpacing"> <h3>Send Resume</h3></div>
-            <div class="rowEvenSpacing">
+            <div class="rowEvenNewSpacing"> <h3>Send Resume</h3></div>
+            <div class="rowEvenNewSpacing">
 <span class="lableText3">Name:</span>   
                 <form:input id="userName" path="userName" class="job_seeker_email" />
                 <span class="required">(Required)</span>
                 <div style="color: red" align="center"><form:errors path="userName"/></div>
                <div id="userNameError" style="color: red" align="center"></div>
             </div>
-            <div class="rowEvenSpacing"><span class="lableText3">Email Address:</span>
+            <div class="rowEvenNewSpacing"><span class="lableText3">Email Address:</span>
               <form:input id="userEmail" path="userEmail"  class="job_seeker_email" />
               <span class="required">(Required)</span>
               <div style="color: red" align="center"><form:errors path="userEmail"/></div>
               <div style="color: red" align="center" id="userEmailError"></div>
     </div>
-            <div class="rowEvenSpacing"> <span class="lableText3">Upload Resume File:</span>
+            <div class="rowEvenNewSpacing"> <span class="lableText3">Upload Resume File:</span>
             <div class="floatLeft"><form:input path="filePath" type="file" id="filePath" size="20" class="job_seeker_login_email fileType" />
             </div>
             <span class="required">(Required)</span>

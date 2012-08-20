@@ -61,11 +61,11 @@ input.job_seeker_password {
 	float: left;
 }
 
-.gateway .row,.gateway .rowEvenSpacing {
+.gateway .row,.gateway .rowEvenNewSpacing {
 	margin-left: 10px;
 }
 
-.gateway .rowEvenSpacing.reuse_address {
+.gateway .rowEvenNewSpacing.reuse_address {
 	margin-left: 165px;
 }
 

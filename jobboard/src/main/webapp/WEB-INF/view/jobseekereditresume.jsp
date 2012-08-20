@@ -38,10 +38,10 @@
 					<div class="clearfix"></div>
 					<div class="MidContent_Wrapper ">
 						<span>
-							<h1
-								class="marginTop3 marginLeft10 FloatLeft FontSize18 color1">Resume
-								Name:&nbsp;</h1>
-							<h1 class="FontSize18 marginTop3">Registered Nurse Resume</h1>
+							<h2
+								class="noTopBottomBorder">Resume
+								Name:&nbsp;</h2>
+							<h2 class="noTopBottomBorder">Registered Nurse Resume</h2>
 
 						</span>
 					</div>
@@ -57,7 +57,7 @@
 					<div class="searchResultsItem MarginBottom10">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Contact
 											Info</h2>
@@ -400,7 +400,7 @@
 									</select> <span class="requiredTopmargin">(Required)</span>
 								</div>
 
-								<div class="rowEvenNewSpacing MarginBottom10">
+								<div class="rowEvenTB10Spacing">
 									<span class="lableText3">Phone Number:</span>
 									<div class="floatLeft marginRight10"></div>
 									<span class="floatLeft marginRight10"> <select
@@ -427,7 +427,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Objective</h2>
 									</div>
@@ -468,7 +468,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Work
 											Experience</h2>
@@ -582,7 +582,7 @@
 									<span class="requiredTopmargin"></span>
 								</div>
 
-								<div class="rowEvenNewSpacing MarginBottom10">
+								<div class="rowEvenTB10Spacing">
 									<span class="lableText3"> Hourly Pay Rate:</span> <input
 										type="text" name="healthCareSubSplty"
 										class="job_seeker_Resume" /> <span class="required "></span>
@@ -613,7 +613,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Education</h2>
 									</div>
@@ -725,7 +725,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Certification</h2>
 									</div>
@@ -787,7 +787,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Skills</h2>
 									</div>
@@ -839,7 +839,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Languages</h2>
 									</div>
@@ -908,7 +908,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Awards</h2>
 									</div>
@@ -952,7 +952,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Memberships</h2>
 									</div>
@@ -993,7 +993,7 @@
 					<div class="searchResultsItem">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">Other</h2>
 									</div>
@@ -1035,7 +1035,7 @@
 					<div class="searchResultsItem MarginBottom10">
 						<ul class="searchResultsJobInfo closed">
 							<li class="searchResultsColumn1">
-								<div class="sectionHeader Padding0 Height28 LightGrayBG">
+								<div class="sectionHeaderCreateResume">
 									<div class="floatLeft">
 										<h2 class="noBorder">References</h2>
 									</div>
@@ -1087,7 +1087,7 @@
 										type="radio" value="" checked> <label
 										class="greyLabel">Personal</label></span>
 								</div>
-								<div class="rowEvenNewSpacing MarginBottom10">
+								<div class="rowEvenTB10Spacing">
 									<span class="lableText3"></span> <a href=""
 										class="link_color1_emphasized">Save and add another
 										reference</a>
