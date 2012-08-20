@@ -204,9 +204,14 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId) {
+		return populateDropdownsDAO.populateJobOwnersDropdown(facilityId, userId);
+	}
+
+	@Override
+	public List<DropDownDTO> populateBrandingTemplateDropdown() {
+
+		return populateDropdownsDAO.populateBrandingTemplateDropdown();
 	}	
 
 }

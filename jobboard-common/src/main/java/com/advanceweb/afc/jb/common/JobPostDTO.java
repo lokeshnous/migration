@@ -17,6 +17,7 @@ public class JobPostDTO implements Serializable {
 	private String customerNo;
 	private String companyName;
 	private String disCompanyName;
+	private boolean bHideCompName;
 	
 	private String jobPostingType;
 	private String applicationMethod;
@@ -29,9 +30,13 @@ public class JobPostDTO implements Serializable {
 	private String atsUrl;
 	
 	private String jobCity;
-	private int jobState;
+	private String jobState;
 	private String jobCountry;
 	private String jobZip;
+	private boolean bHideCity;
+	private boolean bHideState;
+	private boolean bHideCountry;
+	private boolean bHideZipCode;
 	
 	private String employmentType;
 	
@@ -145,13 +150,53 @@ public class JobPostDTO implements Serializable {
 	public void setJobCity(String jobCity) {
 		this.jobCity = jobCity;
 	}
+	
+	public boolean isbHideCompName() {
+		return bHideCompName;
+	}
 
-	public int getJobState() {
+	public void setbHideCompName(boolean bHideCompName) {
+		this.bHideCompName = bHideCompName;
+	}
+
+	public String getJobState() {
 		return jobState;
 	}
 
-	public void setJobState(int jobState) {
+	public void setJobState(String jobState) {
 		this.jobState = jobState;
+	}
+
+	public boolean isbHideCity() {
+		return bHideCity;
+	}
+
+	public void setbHideCity(boolean bHideCity) {
+		this.bHideCity = bHideCity;
+	}
+
+	public boolean isbHideState() {
+		return bHideState;
+	}
+
+	public void setbHideState(boolean bHideState) {
+		this.bHideState = bHideState;
+	}
+
+	public boolean isbHideCountry() {
+		return bHideCountry;
+	}
+
+	public void setbHideCountry(boolean bHideCountry) {
+		this.bHideCountry = bHideCountry;
+	}
+
+	public boolean isbHideZipCode() {
+		return bHideZipCode;
+	}
+
+	public void setbHideZipCode(boolean bHideZipCode) {
+		this.bHideZipCode = bHideZipCode;
 	}
 
 	public String getJobCountry() {

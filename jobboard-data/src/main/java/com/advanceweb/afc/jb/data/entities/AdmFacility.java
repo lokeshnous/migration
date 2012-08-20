@@ -97,13 +97,12 @@ public class AdmFacility implements Serializable {
 	private String urlDisplay;
 
 	//bi-directional many-to-one association to AdmFacility
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="facility_parent_id")
-	private AdmFacility admFacility;
+	@Column(name="facility_parent_id")
+	private int  facilityParentId;
 
 	//bi-directional many-to-one association to AdmFacility
-	@OneToMany(mappedBy="admFacility")
-	private List<AdmFacility> admFacilities;
+//	@OneToMany(mappedBy="admFacility")
+//	private List<AdmFacility> admFacilities;
 
 	//bi-directional many-to-one association to AdmFacilityContact
 	@OneToMany(mappedBy="admFacility")
@@ -318,23 +317,23 @@ public class AdmFacility implements Serializable {
 
 	public void setUrlDisplay(String urlDisplay) {
 		this.urlDisplay = urlDisplay;
-	}
-
-	public AdmFacility getAdmFacility() {
-		return this.admFacility;
-	}
-
-	public void setAdmFacility(AdmFacility admFacility) {
-		this.admFacility = admFacility;
-	}
+	}	
 	
-	public List<AdmFacility> getAdmFacilities() {
-		return this.admFacilities;
+	public int getFacilityParentId() {
+		return facilityParentId;
 	}
 
-	public void setAdmFacilities(List<AdmFacility> admFacilities) {
-		this.admFacilities = admFacilities;
+	public void setFacilityParentId(int facilityParentId) {
+		this.facilityParentId = facilityParentId;
 	}
+
+//	public List<AdmFacility> getAdmFacilities() {
+//		return this.admFacilities;
+//	}
+//
+//	public void setAdmFacilities(List<AdmFacility> admFacilities) {
+//		this.admFacilities = admFacilities;
+//	}
 	
 	public List<AdmFacilityContact> getAdmFacilityContacts() {
 		return this.admFacilityContacts;

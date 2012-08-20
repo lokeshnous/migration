@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -38,9 +39,7 @@ public class JobPostController {
 	private TransformJobPost transformJobPost;
 	
 	@Autowired
-	private PopulateDropdowns populateDropdownsService;
-	
-	//@RequestParam("userId") int userId ,
+	private PopulateDropdowns populateDropdownsService;	
 	
 	@RequestMapping(value="/postNewJobs",method = RequestMethod.GET)
 	public ModelAndView showPostJob() {
@@ -49,12 +48,15 @@ public class JobPostController {
 		JobPostForm jobPostForm=new JobPostForm();		
 		
 		List<DropDownDTO> empTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> templateList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown();
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(110, 1);
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
-
+		
+		jobPostForm.setCustomerNo("CT"+String.valueOf((new Random()).nextLong()));
+		jobPostForm.setJobId("JB"+String.valueOf((new Random()).nextLong()));
+		
 		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1);
 		
 		//Populating Dropdowns
@@ -73,12 +75,12 @@ public class JobPostController {
 	}
 	
 	
-	@RequestMapping(value="/savenewjob",method = RequestMethod.GET)
-	public ModelAndView savePostJob( @Valid JobPostForm form,BindingResult result) {
+	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST)
+	public ModelAndView savePostJob(JobPostForm form,BindingResult result) {
 
-		if (result.hasErrors()) {
+/*		if (result.hasErrors()) {
 			return new ModelAndView("postnewjob");
-		}
+		}*/
 		
 		
 		JobPostDTO dto=new JobPostDTO();

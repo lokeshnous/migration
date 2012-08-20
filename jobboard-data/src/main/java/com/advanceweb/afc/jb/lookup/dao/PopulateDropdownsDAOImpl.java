@@ -32,8 +32,11 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
@@ -420,12 +423,42 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId) {
 		
 		try {
-			List<AdmFacility> admFacilityList = hibernateTemplate.find(FIND_JOB_OWNERS, facilityId);
-			return null;
-//					dropdownHelper.transformAdmFacilityToDropDownDTO(admFacilityList);
+			List<MerUser> merUsers = new ArrayList<MerUser>();
+			List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
+			List<AdmUserFacility> userFacilityList = hibernateTemplate.find("from AdmUserFacility facility where facility.id.userId=?",userId);
+			for(AdmUserFacility userFacility : userFacilityList){				
+				List<AdmFacility> admFacilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityParentId=?", userFacility.getId().getFacilityId());	
+				facilityList.addAll(admFacilityList);
+			}
+
+			int roleId=4;		
+			for(AdmFacility facility : facilityList){
+				Object[] inputs = {facility.getFacilityId(), roleId}; 				
+				List<AdmUserFacility> admUsersList = hibernateTemplate.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and admFacility.id.roleId=?", inputs);		
+				if(null != admUsersList && admUsersList.size()>0){
+					AdmUserFacility admUserFacility = admUsersList.get(0);
+					List<MerUser> merUserList = hibernateTemplateTracker.find("from MerUser user where user.userId=?",admUserFacility.getId().getUserId());
+					merUsers.addAll(merUserList);
+				}
+
+			}
+			return dropdownHelper.transformAdmFacilityToDropDownDTO(merUsers);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<DropDownDTO> populateBrandingTemplateDropdown() {
+		
+		try {
+			List<JpTemplate> templateList = hibernateTemplate.find("from JpTemplate");
+			return dropdownHelper.transformJpTemplateToDropDownDTO(templateList);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -33,7 +33,7 @@
 		</head>
 
 <body class="job_board">
-<form:form action="postNewJob.html" commandName="jobPostForm" id="postNewJobId">
+<form:form action="saveNewJob.html" commandName="jobPostForm" id="postNewJobId">
 <div class="ad_page_top"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
 <div class="main_wrapper_outside">
           <div class="main_wrapper_inside">
@@ -323,7 +323,7 @@
               <div class="rowEvenNewSpacing"> <span class="lableText3">Employment Type:</span>
 				<form:select path="employmentType" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
-					<form:options items="${empTypeList}" itemValue="optionId" itemLabel="optionId" />
+					<form:options items="${empTypeList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
               </div>
                <div class="clearfix"></div>
@@ -355,7 +355,7 @@
                       <div class="rowEvenNewSpacing MarginBottom10"><span class="lableText3 ">Branding Template:</span>
 						<form:select path="brandTemplate" class="jb_input3 jb_input_width3">
 							<form:option value="0" label="Select" />
-							<form:options items="${templateList}" itemValue="optionId" itemLabel="optionId" />
+							<form:options items="${templateList}" itemValue="optionId" itemLabel="optionName" />
 						</form:select>
                         <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
               </div>

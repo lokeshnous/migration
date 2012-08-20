@@ -158,6 +158,8 @@ public interface PopulateDropdownsDAO {
 	
 	List<DropDownDTO> populateEducationDegreesDropdowns();
 	
-	List<DropDownDTO> populateJobOwnersDropdown(int facilityId);
+	List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId);
+	
+	List<DropDownDTO> populateBrandingTemplateDropdown();
 	
 }

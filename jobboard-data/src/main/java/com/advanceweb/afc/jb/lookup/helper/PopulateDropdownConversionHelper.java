@@ -23,8 +23,11 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
@@ -305,10 +308,12 @@ public class PopulateDropdownConversionHelper {
 		List<EmploymentTypeDTO> list = new ArrayList<EmploymentTypeDTO>();
 		
 		for(JpAttribList JpAttribList : merLookupList){
-			employmentTypeDTO = new EmploymentTypeDTO();
-			employmentTypeDTO.setEmploymentTypeId(JpAttribList.getAttribListId());
-			employmentTypeDTO.setEmploymentTypeValue(JpAttribList.getAttribValue());
-			list.add(employmentTypeDTO);
+			if(!MMJBCommonConstants.SELECT.equalsIgnoreCase(JpAttribList.getAttribValue())){
+				employmentTypeDTO = new EmploymentTypeDTO();
+				employmentTypeDTO.setEmploymentTypeId(JpAttribList.getAttribListId());
+				employmentTypeDTO.setEmploymentTypeValue(JpAttribList.getAttribValue());
+				list.add(employmentTypeDTO);
+			}
 		}
 		return list;}
 	
@@ -432,11 +437,13 @@ public class PopulateDropdownConversionHelper {
 	public List<DropDownDTO> transformResumeAttribListToDropDownDTO(List<ResResumeAttribList> resResumeAttribList){
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
 		for(ResResumeAttribList resResumeAttrib: resResumeAttribList){
-			DropDownDTO dropdownDTO = new DropDownDTO();
-			dropdownDTO.setOptionId(String.valueOf(resResumeAttrib.getResumeAttribListId()));
-			dropdownDTO.setOptionName(resResumeAttrib.getListValue());
-			
-			dropdownList.add(dropdownDTO);
+			if(!MMJBCommonConstants.SELECT.equalsIgnoreCase(resResumeAttrib.getListValue())){
+				DropDownDTO dropdownDTO = new DropDownDTO();
+				dropdownDTO.setOptionId(String.valueOf(resResumeAttrib.getResumeAttribListId()));
+				dropdownDTO.setOptionName(resResumeAttrib.getListValue());
+				
+				dropdownList.add(dropdownDTO);
+			}
 		}
 		return dropdownList;		
 		
@@ -455,4 +462,30 @@ public class PopulateDropdownConversionHelper {
 		
 	}
 	
+	
+	public List<DropDownDTO> transformAdmFacilityToDropDownDTO(List<MerUser> merUsers){
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		for(MerUser merUser: merUsers){
+			DropDownDTO dropdownDTO = new DropDownDTO();
+			dropdownDTO.setOptionId(String.valueOf(merUser.getUserId()));
+			dropdownDTO.setOptionName(merUser.getFirstName());
+			
+			dropdownList.add(dropdownDTO);
+		}
+		return dropdownList;		
+		
+	}
+	
+	public List<DropDownDTO> transformJpTemplateToDropDownDTO(List<JpTemplate> templateList){
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		for(JpTemplate template: templateList){
+			DropDownDTO dropdownDTO = new DropDownDTO();
+			dropdownDTO.setOptionId(String.valueOf(template.getTemplateId()));
+			dropdownDTO.setOptionName(template.getTemplateName());
+			
+			dropdownList.add(dropdownDTO);
+		}
+		return dropdownList;		
+		
+	}
 }
