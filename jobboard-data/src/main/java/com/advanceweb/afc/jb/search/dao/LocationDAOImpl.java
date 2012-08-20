@@ -111,7 +111,7 @@ public class LocationDAOImpl implements LocationDAO{
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
 		
 		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.postcode like '"+keywords+"%' ORDER BY  jloc.postcode ASC");
-		query.setMaxResults(10);
+		//query.setMaxResults(10);
 		@SuppressWarnings("unchecked")
 		List<JpLocation> jpLocationList = query.list();
 		
@@ -143,7 +143,7 @@ public class LocationDAOImpl implements LocationDAO{
 		
 		@SuppressWarnings("unchecked")
 		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("select distinct jloc.city, jloc.state from  JpLocation jloc WHERE  jloc.city like '"+keywords+"%' ORDER BY  jloc.city, jloc.state  ASC");
-		query.setMaxResults(10);
+		//query.setMaxResults(10);
 		List<JpLocation> jpLocationList = query.list();
 		
   		if(jpLocationList != null){
