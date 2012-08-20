@@ -13,6 +13,7 @@ public class EmployerInfoDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private int userId;
+	private int facilityId;
 	private String customerNo;
 	private String customerName;
 	
@@ -52,6 +53,12 @@ public class EmployerInfoDTO implements Serializable {
 	 */
 	public void setCustomerNamel(String customerName) {
 		this.customerName = customerName;
+	}
+	public int getFacilityId() {
+		return facilityId;
+	}
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 	
 	

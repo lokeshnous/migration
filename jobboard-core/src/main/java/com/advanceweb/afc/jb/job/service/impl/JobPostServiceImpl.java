@@ -35,8 +35,8 @@ public class JobPostServiceImpl implements JobPostService {
 	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getEmployerInfo(int)
 	 */
 	@Override
-	public EmployerInfoDTO getEmployerInfo(int userId) {
-		return employerJobPostDAO.getEmployerInfo(userId);
+	public EmployerInfoDTO getEmployerInfo(int userId, String roleName) {
+		return employerJobPostDAO.getEmployerInfo(userId, roleName);
 		
 	}
 

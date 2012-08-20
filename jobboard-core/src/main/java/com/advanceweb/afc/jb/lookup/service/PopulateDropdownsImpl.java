@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -27,6 +29,7 @@ import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 
 @Service("populateDropdownsService")
+@Transactional(propagation=Propagation.SUPPORTS, readOnly=false)
 public class PopulateDropdownsImpl implements PopulateDropdowns{
 
 	@Autowired
@@ -209,9 +212,10 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	@Override
-	public List<DropDownDTO> populateBrandingTemplateDropdown() {
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId) {
 
-		return populateDropdownsDAO.populateBrandingTemplateDropdown();
+		return populateDropdownsDAO.populateBrandingTemplateDropdown(facilityId, userId);
 	}	
 
 }

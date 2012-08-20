@@ -239,31 +239,47 @@ public class RegistrationConversionHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Properties profileAttributes = null;
+		List<String> profileAttribs = new ArrayList<String>();
+		try {
+				profileAttributes = PropertiesLoaderUtils.loadAllProperties("jobSeekerProfile.properties");
+				set = profileAttributes.keySet(); 
+				Iterator itr = set.iterator(); 
+				while(itr.hasNext()) { 
+					profileAttribs.add(profileAttributes.getProperty((String) itr.next())); 
+				}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		JobSeekerRegistrationDTO registerDTO = new JobSeekerRegistrationDTO();
 		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
 		if(null != listProfAttrib){
 			for(MerProfileAttrib entity : listProfAttrib){
-				MerProfileAttribDTO dto = new MerProfileAttribDTO();
-				dto.setStrAttribType(entity.getFormType());
-				dto.setStrLabelName(entity.getName());
-				dto.setStrProfileAttribId(String.valueOf(entity.getProfileAttribId()));
-				dto.setbRequired((labels.contains(dto.getStrLabelName())? 1 : 0));
-				if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN) || dto.getStrAttribType().equals(MMJBCommonConstants.CHECK_BOX)){
-					//populating countries
-					if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_COUNTRY)){
-						dto.setDropdown(countryList);
-						
-					}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_STATE)){
-						dto.setDropdown(stateList);	//populating states
-						
-					}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_SUSBSCRIPTION)){
-						dto.setDropdown(subsList);	//populating states
-					}else{
-						List<MerProfileAttribList> dropdownVals = entity.getMerProfileAttribLists();
-						dto.setDropdown(transformToDropDownDTO(dropdownVals));
-					}
-				}							
-				listDTO.add(dto);
+				if(profileAttribs.contains(entity.getName())){
+					MerProfileAttribDTO dto = new MerProfileAttribDTO();
+					dto.setStrAttribType(entity.getFormType());
+					dto.setStrLabelName(entity.getName());
+					dto.setStrProfileAttribId(String.valueOf(entity.getProfileAttribId()));
+					dto.setbRequired((labels.contains(dto.getStrLabelName())? 1 : 0));
+					if(dto.getStrAttribType().equals(MMJBCommonConstants.DROP_DOWN) || dto.getStrAttribType().equals(MMJBCommonConstants.CHECK_BOX)){
+						//populating countries
+						if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_COUNTRY)){
+							dto.setDropdown(countryList);
+							
+						}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_STATE)){
+							dto.setDropdown(stateList);	//populating states
+							
+						}else if(dto.getStrLabelName().equals(MMJBCommonConstants.LABEL_SUSBSCRIPTION)){
+							dto.setDropdown(subsList);	//populating states
+						}else{
+							List<MerProfileAttribList> dropdownVals = entity.getMerProfileAttribLists();
+							dto.setDropdown(transformToDropDownDTO(dropdownVals));
+						}
+					}							
+					listDTO.add(dto);
+				}
 			}
 		}
 		registerDTO.setAttribList(listDTO);

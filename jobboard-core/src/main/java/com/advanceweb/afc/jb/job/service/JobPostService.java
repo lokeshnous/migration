@@ -14,7 +14,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
  */
 public interface JobPostService {
 
-	EmployerInfoDTO getEmployerInfo(int userId);
+	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 	List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto);
 }

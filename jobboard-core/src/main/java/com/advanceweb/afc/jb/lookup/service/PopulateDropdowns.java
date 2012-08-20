@@ -155,5 +155,5 @@ public interface PopulateDropdowns {
 	
 	List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId);
 	
-	List<DropDownDTO> populateBrandingTemplateDropdown();
+	List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId);
 }

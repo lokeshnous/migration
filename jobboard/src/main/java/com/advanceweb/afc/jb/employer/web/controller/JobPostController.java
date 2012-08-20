@@ -46,18 +46,17 @@ public class JobPostController {
 		
 		ModelAndView model = new ModelAndView();
 		JobPostForm jobPostForm=new JobPostForm();		
-		
+		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1,"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown();
+		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown(employerInfoDTO.getFacilityId(),1);
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(110, 1);
+		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), 1);
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		
+		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
 		jobPostForm.setCustomerNo("CT"+String.valueOf((new Random()).nextLong()));
-		jobPostForm.setJobId("JB"+String.valueOf((new Random()).nextLong()));
-		
-		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1);
+		jobPostForm.setJobId("JB"+String.valueOf((new Random()).nextLong()));	
 		
 		//Populating Dropdowns
 		model.addObject("stateList",stateList);

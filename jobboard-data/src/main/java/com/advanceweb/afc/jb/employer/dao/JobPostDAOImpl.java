@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
@@ -55,14 +57,25 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getEmployerInfo(int)
 	 */
 	@Override
-	public EmployerInfoDTO getEmployerInfo(int userId) {
+	public EmployerInfoDTO getEmployerInfo(int userId, String roleName) {
 		
 		EmployerInfoDTO employerInfoDTO=new EmployerInfoDTO();
 		
-		//MerUser empEntity=hibernateTemplateTracker.get(MerUser.class, userId);
-		
-		employerInfoDTO.setCustomerNo("ABC12345");
-		employerInfoDTO.setCustomerNamel("Merion Matters");
+		if(null != roleName){
+			Object[] inputs= {userId, roleName};
+			List<AdmUserFacility> facilityList = hibernateTemplate.find(" select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?", inputs);
+			
+			if(null != facilityList && facilityList.size()>0){
+				AdmUserFacility userFacility = facilityList.get(0);
+				AdmFacility facility = userFacility.getAdmFacility();
+				if(null != facility){
+					employerInfoDTO.setCustomerNamel(facility.getName());
+					employerInfoDTO.setUserId(userFacility.getId().getUserId());
+					employerInfoDTO.setFacilityId(userFacility.getId().getFacilityId());
+				}
+						
+			}
+		}
 		
 		return employerInfoDTO;
 	}

@@ -454,11 +454,15 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<DropDownDTO> populateBrandingTemplateDropdown() {
+	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId) {
 		
 		try {
-			List<JpTemplate> templateList = hibernateTemplate.find("from JpTemplate");
-			return dropdownHelper.transformJpTemplateToDropDownDTO(templateList);
+			List<AdmFacility> facilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityId=?", facilityId);
+			if(null != facilityList && facilityList.size()>0){
+				AdmFacility facility = facilityList.get(0);
+				List<JpTemplate> templateList = facility.getJpTemplates();
+				return dropdownHelper.transformJpTemplateToDropDownDTO(templateList);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -129,7 +130,7 @@ public class AdmFacility implements Serializable {
 	private List<JpJob> jpJobs;
 
 	//bi-directional many-to-one association to JpTemplate
-	@OneToMany(mappedBy="admFacility")
+	@OneToMany(mappedBy="admFacility",cascade=CascadeType.ALL)
 	private List<JpTemplate> jpTemplates;
 
     public AdmFacility() {
