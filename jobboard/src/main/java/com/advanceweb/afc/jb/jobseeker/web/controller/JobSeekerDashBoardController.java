@@ -53,17 +53,17 @@ public class JobSeekerDashBoardController {
 	@Autowired
 	private JobSeekerService jobSeekerActivity;
 
-	@Value("${follouplinkfacebook}")
-	private String follouplinkfacebook;
+	@Value("${followuplinkfacebook}")
+	private String followuplinkfacebook;
 
-	@Value("${follouplinktwitter}")
-	private String follouplinktwitter;
+	@Value("${followuplinktwitter}")
+	private String followuplinktwitter;
 
-	@Value("${follouplinkyoutube}")
-	private String follouplinkyoutube;
+	@Value("${followuplinkyoutube}")
+	private String followuplinkyoutube;
 
-	@Value("${follouplinklinkedin}")
-	private String follouplinklinkedin;
+	@Value("${followuplinklinkedin}")
+	private String followuplinklinkedin;
 
 	@RequestMapping("/jobSeekerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session) {
@@ -99,10 +99,10 @@ public class JobSeekerDashBoardController {
 		appliedJobsCount = appliedJobDTOList.size();
 		form.setAppliedJobsCount(appliedJobsCount);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-		model.addObject("follouplinkfacebook", follouplinkfacebook);
-		model.addObject("follouplinktwitter", follouplinktwitter);
-		model.addObject("follouplinkyoutube", follouplinkyoutube);
-		model.addObject("follouplinklinkedin", follouplinklinkedin);
+		model.addObject("followuplinkfacebook", followuplinkfacebook);
+		model.addObject("followuplinktwitter", followuplinktwitter);
+		model.addObject("followuplinkyoutube", followuplinkyoutube);
+		model.addObject("followuplinklinkedin", followuplinklinkedin);
 		model.addObject("jobSearchResultForm", jobSearchResultForm);
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");
