@@ -14,11 +14,11 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.MerUser;
-import com.advanceweb.afc.jb.login.service.LoginFormService;
+import com.advanceweb.afc.jb.login.service.LoginService;
 
 public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
-	private LoginFormService loginFormService;
+	private LoginService loginService;
 
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -31,7 +31,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		response.setHeader("Cache-Control", "must-revalidate");
 		response.setDateHeader("Expires", 0);
 
-		MerUser user = loginFormService.getUser(authentication.getName());
+		MerUser user = loginService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,user.getFirstName() + " " + user.getLastName());

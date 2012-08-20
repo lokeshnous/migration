@@ -24,7 +24,7 @@ import com.advanceweb.afc.jb.common.LoginFormDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.login.service.LoginFormService;
+import com.advanceweb.afc.jb.login.service.LoginService;
 
 /**
  * This Class validates the login form
@@ -70,7 +70,7 @@ public class LoginFormController {
 	private MMEmailService emailService;
 
 	@Autowired
-	private LoginFormService loginFormService;
+	private LoginService loginService;
 
 	@Autowired
 	private LoginFormValidator loginValidator;
@@ -141,8 +141,7 @@ public class LoginFormController {
 		String finalresult = "";
 		boolean value = false;
 		String page = form.getPage();
-		LoginFormDTO formDTO = loginFormService
-				.getUserEmailDetails(emailAddress);
+		LoginFormDTO formDTO = loginService.getUserEmailDetails(emailAddress);
 
 		// User Validation based on email address of user
 		if (formDTO != null) {
@@ -155,32 +154,33 @@ public class LoginFormController {
 					+ emptyerrormsg;
 		} else if (email.length() > 0 && value) {
 			try {
-				//Based on the login user need to send the email
-				if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
-					String loginPath = navigationPath.substring(2);
-					String jonseekerloginUrl = request.getRequestURL()
-							.toString()
-							.replace(request.getServletPath(), loginPath)
-							+ dothtmlExtention;
+				// Based on the login user need to send the email
+				// if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
+				String loginPath = navigationPath.substring(2);
+				String jonseekerloginUrl = request.getRequestURL().toString()
+						.replace(request.getServletPath(), loginPath)
+						+ dothtmlExtention;
 
-					EmailDTO jobSeekerEmailDTO = new EmailDTO();
-					jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
-					jobSeekerEmailDTO.setCcAddress(null);
-					jobSeekerEmailDTO.setBccAddress(null);
-					InternetAddress[] jobSeekerToAdd = new InternetAddress[1];
-					jobSeekerToAdd[0] = new InternetAddress(email);
-					jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
-					jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
-					String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
-							"?temporarypassword", formDTO.getPassword());
-					forgotPwdMailBody = forgotPwdMailBody.replace(
-							"?jsLoginLink", jonseekerloginUrl);
-					jobSeekerEmailDTO.setBody(forgotPwdMailBody);
-					jobSeekerEmailDTO.setHtmlFormat(true);
-					emailService.sendEmail(jobSeekerEmailDTO);
-				} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
-
-				}
+				EmailDTO jobSeekerEmailDTO = new EmailDTO();
+				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
+				jobSeekerEmailDTO.setCcAddress(null);
+				jobSeekerEmailDTO.setBccAddress(null);
+				InternetAddress[] jobSeekerToAdd = new InternetAddress[1];
+				jobSeekerToAdd[0] = new InternetAddress(email);
+				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
+				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
+				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
+						"?temporarypassword", formDTO.getPassword());
+				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
+						jonseekerloginUrl);
+				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
+				jobSeekerEmailDTO.setHtmlFormat(true);
+				emailService.sendEmail(jobSeekerEmailDTO);
+				/*
+				 * } else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
+				 * 
+				 * }
+				 */
 
 			} catch (Exception e) {
 				// loggers call
