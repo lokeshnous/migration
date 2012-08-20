@@ -83,7 +83,7 @@
 								name="firstName" readonly="true" id="firstName"
 								class="job_seeker_password textBox350" />
 						</div>
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Middle Name:</span>
 							<form:input path="accountAddressForm.middleName" type="text"
 								name="middlename" readonly="true" id="middlename"
@@ -91,63 +91,63 @@
 							<!-- <span class="required">(Optional)</span> -->
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Last Name:</span>
 							<form:input path="accountAddressForm.lastName" type="text"
 								name="lastname" readonly="true" id="lastname"
 								class="job_seeker_password textBox350" />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Email Address:</span>
 							<form:input path="accountAddressForm.email" type="text"
 								name="email" id="email" readonly="true"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Company</span>
 							<form:input path="accountAddressForm.company" type="text"
 								name="company" readonly="true" id="company"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Street Address:</span>
 							<form:input path="accountAddressForm.streetAddress" type="text"
 								name="streetAddress" readonly="true" id="streetAddress"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">City / Town:</span>
 							<form:input path="accountAddressForm.cityOrTown" type="text"
 								name="cityTown" readonly="true" id="cityTown"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">State / Province:</span>
 							<form:input path="accountAddressForm.state" type="text"
 								name="cityTown" readonly="true" id="state"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Country:</span>
 							<form:input path="accountAddressForm.country" type="text"
 								name="cityTown" readonly="true" id="country"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">ZIP Code:</span>
 							<form:input path="accountAddressForm.zipCode" type="text"
 								name="zip" id="zip" readonly="true"
 								class="job_seeker_password textBox350 " />
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Phone:</span>
 							<form:input path="accountAddressForm.phone" type="text"
 								name="phone" readonly="true"
@@ -162,7 +162,7 @@
 						<p class="gateway_section_head form_notes">Accounts Payable
 							Contact</p>
 
-						<div class="rowEvenSpacing marginTop0">
+						<div class="rowEvenSpacingMargin0">
 							<span class="lableText3">First Name:</span>
 							<form:input path="billingAddressForm.fnameForBillingAddr"
 								type="text" name="firstname2" id="firstname2"
@@ -174,7 +174,7 @@
 									path="billingAddressForm.fnameForBillingAddr" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Last Name:</span>
 							<form:input path="billingAddressForm.lnameForBillingAddr"
 								type="text" name="lastname2" id="lastname2"
@@ -186,14 +186,14 @@
 									path="billingAddressForm.lnameForBillingAddr" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing reuse_address">
+						<div class="rowEvenNewSpacing reuse_address">
 							<form:checkbox onchange="copyAccToBillingAddr(this)"
 								value="false" path="billingAddressForm.useMyAccountAddr"
 								name="useAcctAddress" />
 							<span>Use my account address</span>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Street Address:</span>
 							<form:input path="billingAddressForm.streetForBillingAddr"
 								type="text" name="streetAddress_billing1"
@@ -206,7 +206,7 @@
 									path="billingAddressForm.streetForBillingAddr" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">City/Town:</span>
 							<form:input path="billingAddressForm.cityOrTownForBillingAddr"
 								type="text" name="streetAddress_billing2" id="cityTown2"
@@ -218,7 +218,7 @@
 									path="billingAddressForm.cityOrTownForBillingAddr" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">State / Province:</span>
 							<form:select path="billingAddressForm.stateBillingAddress"
 								name="State2" id="State2" class="jb_input3 jb_input_width3">
@@ -233,7 +233,7 @@
 									path="billingAddressForm.stateBillingAddress" /></font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Country:</span>
 							<form:select name="Country2"
 								path="billingAddressForm.countryForBillingAddr" id="Country2"
@@ -249,7 +249,7 @@
 									path="billingAddressForm.countryForBillingAddr" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">ZIP Code:</span>
 							<form:input path="billingAddressForm.zipCodeForBillingAddr"
 								type="text" name="zip2" id="zip2"
@@ -266,7 +266,7 @@
 						<!-- payment info -->
 						<h3 class="gatewayBreadcrumbs main_section">Payment
 							Information</h3>
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3 twoLineFormLabel">Name:<br /> <span
 								class="tinyText">(as it appears on card)</span></span>
 							<form:input path="creditCardInfoForm.name" type="text"
@@ -280,7 +280,7 @@
 									path="creditCardInfoForm.name" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Card Type:</span>
 							<form:select path="creditCardInfoForm.cardType" name="card_type"
 								id="card_type" class="jb_input3 jb_input_width3">
@@ -299,7 +299,7 @@
 									path="creditCardInfoForm.cardType" /></font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Card Number:</span>
 							<form:input path="creditCardInfoForm.creditCardNo" type="text"
 								maxlength="16" name="card_number" id="card_number"
@@ -311,7 +311,7 @@
 									path="creditCardInfoForm.creditCardNo" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Expiration Date:</span>
 							<form:select path="creditCardInfoForm.expMonth" name="expiration"
 								id="expiration" class="jb_input3 jb_input_width3">
@@ -371,7 +371,7 @@
 									path="creditCardInfoForm.expYear" /> </font>
 						</div>
 
-						<div class="rowEvenSpacing">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Security Code:</span>
 							<form:password path="creditCardInfoForm.securiyCode"
 								name="security_code" id="security_code"
