@@ -106,8 +106,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSer
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/impl/JobSeekerSubscriptionServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/impl/SaveSearchServiceImpl.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginFormService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginFormServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/impl/LoginServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdowns.java -text
@@ -142,7 +140,6 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerActivityS
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistrationTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionsTest.java -text
-jobboard-core/src/test/java/com/advanceweb/afc/jb/login/service/LoginFormServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/login/service/LoginServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
