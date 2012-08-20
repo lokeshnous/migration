@@ -2,10 +2,10 @@ package com.advanceweb.afc.jb.user.dao;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.data.entities.AdmUserRole;
-import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.common.AdminUserRoleDTO;
+import com.advanceweb.afc.jb.common.MerUserDTO;
 
 public interface UserDao {
-	MerUser getUser(String email);
-	List<AdmUserRole> getUserRole(int userId);
+	MerUserDTO getUser(String email);
+	List<AdminUserRoleDTO> getUserRole(int userId);
 }

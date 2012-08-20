@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.user.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -8,6 +9,9 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AdminUserRoleDTO;
+import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 @Transactional
@@ -24,20 +28,46 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public MerUser getUser(String email) {
-		
+	public MerUserDTO getUser(String email) {
+		MerUserDTO userDTO=new MerUserDTO();
 		List<MerUser> userList =hibernateTemplateTracker.find(" from  MerUser user where user.email=?",email);
 		MerUser user=null;
 		if(userList!= null && userList.size() > 0){
 		user=userList.get(0);
 		}
-		return user;
+		userDTO.setEmailId(user.getEmail());
+		userDTO.setFirstName(user.getFirstName());
+		userDTO.setLastName(user.getLastName());
+		userDTO.setUserId(user.getUserId());
+		userDTO.setPassword(user.getPassword());
+		return userDTO;
 	}
 
 	@Override
-	public List<AdmUserRole> getUserRole(int userId) {
+	public List<AdminUserRoleDTO> getUserRole(int userId) {
 		List<AdmUserRole> roleList= hibernateTemplate.find("from AdmUserRole a where a.id.userId=?",userId);
-		return roleList;
+		List<AdminUserRoleDTO> userRoleDTOList=new ArrayList<AdminUserRoleDTO>();
+		
+		
+		for(AdmUserRole role:roleList){
+			/*if(role.getId().getRoleId()==3){
+				AdminUserRoleDTO userRole=new AdminUserRoleDTO();
+				for(AdmUserFacility sub:role.getAdmRole().getAdmUserFacilities()){
+					userRole.setRoleId(sub.getAdmFacility().getFacilityId());
+					userRole.setRoleName(sub.getAdmFacility().getFacilityType());
+					userRoleDTOList.add(userRole);
+				}
+				otherRole.add(role.getAdmRole().getAdmUserFacilities().get(0).getAdmFacility().getFacilityType());
+				}*/
+			AdminUserRoleDTO userRole=new AdminUserRoleDTO();
+			userRole.setRoleId(role.getAdmRole().getRoleId());
+			userRole.setRoleName(role.getAdmRole().getName());
+			userRoleDTOList.add(userRole);
+		}
+		
+		
+		
+		return userRoleDTOList;
 	}
 
 }
