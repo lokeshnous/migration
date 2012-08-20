@@ -12,8 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.login.service.LoginService;
 
 public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
@@ -31,12 +31,12 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		response.setHeader("Cache-Control", "must-revalidate");
 		response.setDateHeader("Expires", 0);
 
-		MerUser user = loginService.getUser(authentication.getName());
+		MerUserDTO user = loginService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,user.getFirstName() + " " + user.getLastName());
 
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmail());
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
 		if (authentication.getAuthorities().contains(new GrantedAuthorityImpl(
 				MMJBCommonConstants.ROLE_JOB_SEEKER))) {
 			response.sendRedirect(request.getContextPath()
