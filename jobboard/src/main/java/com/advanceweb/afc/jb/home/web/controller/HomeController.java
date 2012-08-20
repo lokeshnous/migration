@@ -63,17 +63,17 @@ public class HomeController {
 	@Value("${windowmediaplayerfilepath}")
 	private String windowmediaplayerfilepath;
 
-	@Value("${follouplinkfacebook}")
-	private String follouplinkfacebook;
+	@Value("${followuplinkfacebook}")
+	private String followuplinkfacebook;
 
-	@Value("${follouplinktwitter}")
-	private String follouplinktwitter;
+	@Value("${followuplinktwitter}")
+	private String followuplinktwitter;
 
-	@Value("${follouplinkyoutube}")
-	private String follouplinkyoutube;
+	@Value("${followuplinkyoutube}")
+	private String followuplinkyoutube;
 
-	@Value("${follouplinklinkedin}")
-	private String follouplinklinkedin;
+	@Value("${followuplinklinkedin}")
+	private String followuplinklinkedin;
 
     
 	
@@ -101,10 +101,10 @@ public class HomeController {
 
 			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
 			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
-			model.addAttribute("follouplinkfacebook", follouplinkfacebook);
-			model.addAttribute("follouplinktwitter", follouplinktwitter);
-			model.addAttribute("follouplinkyoutube", follouplinkyoutube);
-			model.addAttribute("follouplinklinkedin", follouplinklinkedin);
+			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
+			model.addAttribute("followuplinktwitter", followuplinktwitter);
+			model.addAttribute("followuplinkyoutube", followuplinkyoutube);
+			model.addAttribute("followuplinklinkedin", followuplinklinkedin);
 			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 		} catch (Exception e) {
