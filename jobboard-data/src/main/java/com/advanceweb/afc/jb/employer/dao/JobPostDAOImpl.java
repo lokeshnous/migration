@@ -32,8 +32,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
 	
-	@Autowired
-	private PopulateDropdownConversionHelper dropdownHelper;
+
 	
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
@@ -61,21 +60,20 @@ public class JobPostDAOImpl implements JobPostDAO {
 		
 		EmployerInfoDTO employerInfoDTO=new EmployerInfoDTO();
 		
-		if(null != roleName){
-			Object[] inputs= {userId, roleName};
-			List<AdmUserFacility> facilityList = hibernateTemplate.find(" select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?", inputs);
-			
-			if(null != facilityList && facilityList.size()>0){
-				AdmUserFacility userFacility = facilityList.get(0);
-				AdmFacility facility = userFacility.getAdmFacility();
-				if(null != facility){
-					employerInfoDTO.setCustomerNamel(facility.getName());
-					employerInfoDTO.setUserId(userFacility.getId().getUserId());
-					employerInfoDTO.setFacilityId(userFacility.getId().getFacilityId());
-				}
-						
-			}
+		Object[] inputs= {userId, roleName};
+		List<AdmUserFacility> facilityList = hibernateTemplate.find(" select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?", inputs);
+		
+		if(null != facilityList && facilityList.size() != 0){
+			AdmUserFacility userFacility = facilityList.get(0);
+			AdmFacility facility = userFacility.getAdmFacility();
+			if(null != facility){
+				employerInfoDTO.setCustomerNamel(facility.getName());
+				employerInfoDTO.setUserId(userFacility.getId().getUserId());
+				employerInfoDTO.setFacilityId(userFacility.getId().getFacilityId());
+				employerInfoDTO.setRoleId(userFacility.getId().getRoleId());
+			}					
 		}
+		
 		
 		return employerInfoDTO;
 	}
@@ -89,31 +87,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	public List<StateDTO> getStateList() {
 		
-		/*List<StateDTO> stateList=new ArrayList<StateDTO>();
-		try {
-			List<MerLocation> merLocation =(List<MerLocation>) hibernateTemplateTracker.find("from MerLocation m");
-			
-			StateDTO state=null;
-			for(MerLocation merLok:merLocation)
-			{
-				state=new StateDTO();
-				state.setStateId(merLok.getLocationId());
-				state.setStateValue(merLok.getState());
-				stateList.add(state);
-			}
-			return stateList;
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		}
-		return null;*/
-		
-		try {
-			List<JpAttribList> merLookupList =  hibernateTemplateTracker.find("from JpAttribList e where e.lookupCategory='State' and e.lookupStatus='1'");
-			return null;
-//					dropdownHelper.convertMerLookupToStateListDTO(merLookupList);
-		} catch (HibernateException e) {
-			
-		}
+		List<JpAttribList> merLookupList =  hibernateTemplateTracker.find("from JpAttribList e where e.lookupCategory='State' and e.lookupStatus='1'");	
+
 		return null;
 	}
 	/**
@@ -127,13 +102,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	@Transactional(readOnly=false)
 	public boolean savePostJob(JobPostDTO dto) {
-		try {
+
 			JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto);
 			hibernateTemplate.save(jobob);
-			return true;
-		} catch (HibernateException e) {
-			
-		}
+
+
 
 		return false;
 	}
