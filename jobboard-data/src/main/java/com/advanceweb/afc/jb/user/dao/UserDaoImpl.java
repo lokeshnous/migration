@@ -50,15 +50,6 @@ public class UserDaoImpl implements UserDao {
 		
 		
 		for(AdmUserRole role:roleList){
-			/*if(role.getId().getRoleId()==3){
-				AdminUserRoleDTO userRole=new AdminUserRoleDTO();
-				for(AdmUserFacility sub:role.getAdmRole().getAdmUserFacilities()){
-					userRole.setRoleId(sub.getAdmFacility().getFacilityId());
-					userRole.setRoleName(sub.getAdmFacility().getFacilityType());
-					userRoleDTOList.add(userRole);
-				}
-				otherRole.add(role.getAdmRole().getAdmUserFacilities().get(0).getAdmFacility().getFacilityType());
-				}*/
 			AdminUserRoleDTO userRole=new AdminUserRoleDTO();
 			userRole.setRoleId(role.getAdmRole().getRoleId());
 			userRole.setRoleName(role.getAdmRole().getName());
