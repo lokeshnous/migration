@@ -423,18 +423,18 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId) {
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId, int roleId) {
 		
 		try {
 			List<MerUser> merUsers = new ArrayList<MerUser>();
 			List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
-			List<AdmUserFacility> userFacilityList = hibernateTemplate.find("from AdmUserFacility facility where facility.id.userId=?",userId);
-			for(AdmUserFacility userFacility : userFacilityList){				
-				List<AdmFacility> admFacilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityParentId=?", userFacility.getId().getFacilityId());	
+//			List<AdmUserFacility> userFacilityList = hibernateTemplate.find("from AdmUserFacility facility where facility.id.userId=?",userId);
+//			for(AdmUserFacility userFacility : userFacilityList){				
+				List<AdmFacility> admFacilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityParentId=?", facilityId);	
 				facilityList.addAll(admFacilityList);
-			}
+//			}
 
-			int roleId=4;		
+		
 			for(AdmFacility facility : facilityList){
 				Object[] inputs = {facility.getFacilityId(), roleId}; 				
 				List<AdmUserFacility> admUsersList = hibernateTemplate.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and admFacility.id.roleId=?", inputs);		

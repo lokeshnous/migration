@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -48,9 +49,9 @@ public class JobPostController {
 		JobPostForm jobPostForm=new JobPostForm();		
 		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1,"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown(employerInfoDTO.getFacilityId(),1);
+		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown(employerInfoDTO.getFacilityId(),employerInfoDTO.getUserId());
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), 1);
+		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), employerInfoDTO.getUserId(), employerInfoDTO.getRoleId());
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		
@@ -73,19 +74,48 @@ public class JobPostController {
 		return model;
 	}
 	
-	
+	/**
+	 * This method is called to save the job details
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST)
 	public ModelAndView savePostJob(JobPostForm form,BindingResult result) {
 
-/*		if (result.hasErrors()) {
-			return new ModelAndView("postnewjob");
-		}*/
-		
-		
-		JobPostDTO dto=new JobPostDTO();
-		dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		ModelAndView  model = new ModelAndView();
+		String errMessage = validateJobPostDetails(form);
+		if(!StringUtils.isEmpty(errMessage)){
+			model.setViewName("postNewJobs");
+			model.addObject("errorMessage", errMessage);
+			return model;
+		}
+		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
-		return new ModelAndView("postnewjob");
+		model.setViewName("postNewJobs");
+		return model;
 	}	
+	
+	/**
+	 * This method is called to validate the form
+	 * 
+	 * @param form
+	 * @return
+	 */
+	private String validateJobPostDetails(JobPostForm form){
+		
+		if(null != form){
+			if(StringUtils.isEmpty(form.getJobTitle()) || 
+					StringUtils.isEmpty(form.getJobDesc()) ||
+					(StringUtils.isEmpty(form.getApplyUrl()) && 
+							StringUtils.isEmpty(form.getAtsUrl()) && 
+							StringUtils.isEmpty(form.getApplyEmail()) )){
+				return "Please fill the required fields";
+			}
+		}
+		
+		return null;
+	}
 	
 }

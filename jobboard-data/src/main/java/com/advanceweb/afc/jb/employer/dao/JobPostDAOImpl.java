@@ -27,8 +27,11 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
  */
 @Transactional 
 @Repository("employerJobPostDAO")
+@SuppressWarnings("unchecked")
 public class JobPostDAOImpl implements JobPostDAO {
 
+	private static final String FIND_ADM_USER_FACILITY="select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
+	
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
 	
@@ -61,7 +64,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 		EmployerInfoDTO employerInfoDTO=new EmployerInfoDTO();
 		
 		Object[] inputs= {userId, roleName};
-		List<AdmUserFacility> facilityList = hibernateTemplate.find(" select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?", inputs);
+
+		List<AdmUserFacility> facilityList = hibernateTemplate.find(FIND_ADM_USER_FACILITY, inputs);
 		
 		if(null != facilityList && facilityList.size() != 0){
 			AdmUserFacility userFacility = facilityList.get(0);
@@ -100,7 +104,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
 	 */
 	@Override
-	@Transactional(readOnly=false)
 	public boolean savePostJob(JobPostDTO dto) {
 
 			JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto);

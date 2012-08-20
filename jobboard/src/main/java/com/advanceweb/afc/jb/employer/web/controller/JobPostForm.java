@@ -21,6 +21,7 @@ public class JobPostForm {
 	private String jobNumber;
 	private String jobTitle;
 	
+	private String applMethod;
 	private String applyEmail;
 	private String applyUrl;
 	private String atsUrl;
@@ -260,6 +261,14 @@ public class JobPostForm {
 
 	public void setbHideZipCode(boolean bHideZipCode) {
 		this.bHideZipCode = bHideZipCode;
+	}
+
+	public String getApplMethod() {
+		return applMethod;
+	}
+
+	public void setApplMethod(String applMethod) {
+		this.applMethod = applMethod;
 	}
 	
 }

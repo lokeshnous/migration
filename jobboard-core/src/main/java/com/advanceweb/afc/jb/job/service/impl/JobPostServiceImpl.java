@@ -20,7 +20,7 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
    @Purpose: This class will implement all the methods of EmployerJobPost interface 
  */
 @Service("JobPostService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobPostServiceImpl implements JobPostService {
 	
 	@Autowired
@@ -63,6 +63,7 @@ public class JobPostServiceImpl implements JobPostService {
 	 * @see com.advanceweb.afc.jb.job.service.JobPostService#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public boolean savePostJob(JobPostDTO dto) {
 		return employerJobPostDAO.savePostJob(dto);
 	}

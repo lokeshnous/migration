@@ -153,7 +153,7 @@ public interface PopulateDropdowns {
 	
 	List<DropDownDTO> populateEducationDegreesDropdowns(); 
 	
-	List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId);
+	List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId, int roleId);
 	
 	List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId);
 }

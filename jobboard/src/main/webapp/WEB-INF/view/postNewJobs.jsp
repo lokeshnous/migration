@@ -162,6 +162,11 @@
                 </ul>
 
       </div>
+      <c:if test="${not empty errorMessage}">
+  			<div style="color: red;font-weight:bold" align="left">
+				<b>${errorMessage}</b>
+			</div>      
+      </c:if>
               <!--nav-->
               <div class="clearfix"></div>
               <!--Start:MidContant-->
@@ -191,7 +196,7 @@
               </div>
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Display Company Name:</span>
-                <form:input path="disCompanyName" class="job_seeker_password textBox350"  readonly="true"/>
+                <form:input path="disCompanyName" class="job_seeker_password textBox350"  />
                 <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
                 <div class="clearfix"></div>
                 <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginTop4 marginRight10">
@@ -240,22 +245,22 @@
                		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required">(Required)</span>
               </div>
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <input name="Email" type="radio" value="" checked class="marginLeft30"/>
+                      <form:radiobutton path="applMethod" class="marginLeft30"/>
                         </span><span class="lableText3 width105">Apply-to Email:</span>
-                <input type="text" name="healthCareSubSplty" class="job_seeker_password textBox350" />
+                <form:input path="applyEmail" class="job_seeker_password textBox350" />
 
                 <span class="required TextColor01">Enter the email address where you would like resumes to be sent.</span> </div>
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <input name="Email" type="radio" value="" checked class="marginLeft30"/>
+                        <form:radiobutton path="applMethod" class="marginLeft30"/>
                         </span><span class="lableText3 width105">Apply-to URL</span>
-                <input type="text" name="healthCareSubSplty" class="job_seeker_password textBox350" />
+                <form:input path="applyUrl" class="job_seeker_password textBox350" />
                 <span class="required TextColor01">Enter the URL where you would like to send job-seekers to apply.</span> </div>
 
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <input name="Email" type="radio" value="" checked class="marginLeft30"/>
+                        <form:radiobutton path="applMethod" class="marginLeft30"/>
                         </span><span  class="lableText3 width105">Apply-to URL</span>
-                <input type="text" name="healthCareSubSplty" class="job_seeker_password textBox350" />
-<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
+               <form:input path="atsUrl" class="job_seeker_password textBox350" />
+				<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
                       <div class="row marginTop10">
@@ -391,7 +396,17 @@
               <!--Test-->
               <div class="clearfix"></div>
               <br />
-              <span class="marginBottom50 FloatLeft"><a href="#" class="btn_sm white">Post new job</a> <a href="#" class="btn_sm white">Schedule job</a> <a href="#" class="btn_sm white">save as draft</a> <a href="#" class="btn_sm white">Cancel</a></span> </div>
+	              <span class="marginBottom50 FloatLeft" >
+	              <input type="submit" value="Post new job" class="btn_sm white">
+	              <input type="submit" value="Schedule job" class="btn_sm white">
+	              <input type="submit" value="Save as draft" class="btn_sm white">
+	              <input type="submit" value="Cancel" class="btn_sm white">
+<!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
+	              	<a href="#" class="btn_sm white">Schedule job</a> 
+	              	<a href="#" class="btn_sm white">save as draft</a> 
+	              	<a href="#" class="btn_sm white">Cancel</a> -->
+	              </span> 
+             </div>
 
     
     <!--Start:MidContant-->
