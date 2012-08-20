@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.AdminUserRoleDTO;
 import com.advanceweb.afc.jb.common.LoginFormDTO;
-import com.advanceweb.afc.jb.data.entities.AdmUserRole;
-import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.user.dao.UserDao;
@@ -24,7 +24,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private LoginFormDAO loginFormDAO;
-	
+
 	@Autowired
 	UserDao userDAO;
 
@@ -51,12 +51,12 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public MerUser getUser(String email) {
+	public MerUserDTO getUser(String email) {
 		return userDAO.getUser(email);
 	}
 
 	@Override
-	public List<AdmUserRole> getUserRole(int userId) {
+	public List<AdminUserRoleDTO> getUserRole(int userId) {
 		return userDAO.getUserRole(userId);
 	}
 }
