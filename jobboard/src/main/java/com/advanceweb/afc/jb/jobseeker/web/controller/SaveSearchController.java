@@ -146,11 +146,11 @@ public class SaveSearchController {
 				model.put("SaveSearchForm", new SaveSearchForm());
 				jsonObject.put("NavigationPath",
 						"../commonLogin/login");
-			} else if(!session.getAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH).toString().equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){			
-				if(session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null 
-						&& session.getAttribute(MMJBCommonConstants.SEARCH_TYPE).toString().equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
-						&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null
-						 && session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString() != null){
+			} else if((session.getAttribute(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null) 
+					&& (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null 
+							&& session.getAttribute(MMJBCommonConstants.SEARCH_TYPE).toString().equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
+							&& session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null
+							 && session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString() != null)){			
 					
 					//String name = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
 					 //saveSearchService.editSavedSearch(name);
@@ -187,7 +187,6 @@ public class SaveSearchController {
 					 session.removeAttribute(MMJBCommonConstants.SEARCH_TYPE);
 					 jsonObject.put("NavigationPath",
 								"../jobSeeker/jobSeekerDashBoard");
-				}
 				 
 			}else{				
 				// Before user saves his search need to check save search
