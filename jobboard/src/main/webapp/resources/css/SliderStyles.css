@@ -42,6 +42,7 @@
 	width: 388px;
 	height: 90px;
 	background-color: white;
+	z-index: -3;
 }
 
 /* each div inside each sliding Framees: A1 & A2, B1 & B2, ... */

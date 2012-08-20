@@ -417,4 +417,4 @@
 }
 
 .display dataTable {width:735px !important;}
-.ui-autocomplete {width:500px;}
+.ui-autocomplete {width:250px; max-height:390px; overflow:auto; z-index: 100!important; display:block;background-color: #fff;  }
