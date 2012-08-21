@@ -49,7 +49,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		else if (authentication.getAuthorities().contains(new GrantedAuthorityImpl(
 				MMJBCommonConstants.ROLE_FACILITY_USER))) {
 			response.sendRedirect(request.getContextPath()
-					+ "/agency/agencyDashBoard.html");
+					+ "/agency/agencyDashboard.html");
 		}
 		
 

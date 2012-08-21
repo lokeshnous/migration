@@ -5,11 +5,11 @@
 		<title>ADVANCE Heathcare Jobs</title>
 		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
-		<jsp:include page="common/include.jsp" />
-		    jQuery(document).ready(function(){
+		    jQuery(document).ready(
+		    function(){
 		    	$("#changePassword").displaypopup("#changePassword", "780",
 				"370");
-		    jQuery(".megamenu").megamenu();
+		    	jQuery(".megamenu").megamenu();
 		});
 		</script>
 		</head>
