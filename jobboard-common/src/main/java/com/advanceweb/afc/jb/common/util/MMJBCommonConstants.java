@@ -110,7 +110,7 @@ public interface MMJBCommonConstants {
 	public static final String URL = "url";
 	
 	public static final String TOTAL_NO_RECORDS = "TotalNoRecords";
-	public static final String JSON_ROWS = "jsonRows";
+	public static final String JSON_ARRAY = "jsonArray";
 	
 	public static final String DEF_TYPE = "defType";
 	public static final String SELECT = "select";
