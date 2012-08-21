@@ -380,7 +380,7 @@
 												onKeyDown="limitText(this.form.objlimitedtextarea,this.form.countdownId1,2000);"
 												onKeyUp="limitText(this.form.objlimitedtextarea,this.form.countdownId1,2000);"
 												rows="5" cols="45" />
-												<p><input readonly type="text" name="countdownId1" size="3" value="2000" id="countdown">characters remaining.<p>
+												<p><input readonly type="text" name="countdownId1" size="3" value="2000" id="countdown"> characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -518,7 +518,7 @@
 													onKeyUp="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
 													path="listWorkExpForm[${status.index}].description"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdownworkexp${status.count}" size="3" value="2000">characters remaining.<p>
+												<p><input readonly type="text" name="countdownworkexp${status.count}" size="3" value="2000"> characters remaining.<p>
 											</div>
 										</div>
 									</div>
@@ -608,7 +608,7 @@
 													onKeyDown="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
 													onKeyUp="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdowneduDeg${status.count}" size="3" value="2000">characters remaining.<p>
+												<p><input readonly type="text" name="countdowneduDeg${status.count}" size="3" value="2000"> characters remaining.<p>
 											</div>
 										</div>
 										<div class="row MarginBottom10 ">
@@ -620,7 +620,7 @@
 													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
+												<p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000"> characters remaining.<p>
 											</div>
 
 										</div>
@@ -682,7 +682,7 @@
 													onKeyDown="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
 													onKeyUp="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdownCerts${status.count}" size="3" value="2000">characters remaining.<p>
+												<p><input readonly type="text" name="countdownCerts${status.count}" size="3" value="2000"> characters remaining.<p>
 											</div>
 										</div>
 									</div>
@@ -809,7 +809,7 @@
 													onKeyDown="limitText(this.form.awardsTAId,this.form.countdownIdAwards,2000);"
 													onKeyUp="limitText(this.form.awardsTAId,this.form.countdownIdAwards,2000);"
 												rows="3" cols="45" />
-											<p><input readonly type="text" name="countdownIdAwards" size="3" value="2000">characters remaining.<p>
+											<p><input readonly type="text" name="countdownIdAwards" size="3" value="2000"> characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -838,7 +838,7 @@
 													onKeyDown="limitText(this.form.membershipsTAId,this.form.countdownMemShip,2000);"
 													onKeyUp="limitText(this.form.membershipsTAId,this.form.countdownMemShip,2000);"
 												rows="3" cols="45" />
-											<p><input readonly type="text" name="countdownMemShip" size="3" value="2000">characters remaining.<p>
+											<p><input readonly type="text" name="countdownMemShip" size="3" value="2000"> characters remaining.<p>
 
 										</div>
 									</div>
@@ -871,7 +871,7 @@
 													onKeyDown="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);"
 													onKeyUp="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);" 
 													rows="3" cols="45" />
-											<p><input readonly type="text" name="countdownOtherInt" size="3" value="2000">characters remaining.<p>
+											<p><input readonly type="text" name="countdownOtherInt" size="3" value="2000"> characters remaining.<p>
 										</div>
 									</div>
 								</div>
