@@ -161,7 +161,7 @@ public class JobSeekerRegistrationController {
 							return model;
 						}
 						//validation mobile number
-						if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
+						if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) && !StringUtils.isEmpty(form.getStrLabelValue())
 								&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
 							model.addObject("message",jobseekerRegPhoneMsg);
 							return model;

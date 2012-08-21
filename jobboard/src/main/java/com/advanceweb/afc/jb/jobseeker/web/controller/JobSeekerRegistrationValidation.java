@@ -37,11 +37,11 @@ public class JobSeekerRegistrationValidation {
 	public void validateEmail(JobSeekerRegistrationForm registerForm, Errors errors){
 		
 		 if(StringUtils.isEmpty(registerForm.getEmailId())){
-			 errors.rejectValue("emailId", "NotEmpty", "Email Id Should not be empty");
+			 errors.rejectValue("emailId", "NotEmpty", "Email id should not be blank");
 		 }
 		 
 		 if(StringUtils.isEmpty(registerForm.getConfirmEmailId())){
-			 errors.rejectValue("confirmEmailId", "NotEmpty", "Email Id Should not be empty");
+			 errors.rejectValue("confirmEmailId", "NotEmpty", "Email id should not be blank");
 		 }
 		 
 		 if(!StringUtils.isEmpty(registerForm.getEmailId()) 
@@ -56,7 +56,7 @@ public class JobSeekerRegistrationValidation {
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", "NotEmpty", "Please enter the correct E-Mail Address");
+				errors.rejectValue("confirmEmailId", "NotEmpty", "E-Mail addresses doesn’t match");
 			 }
 		 }
 	}
@@ -106,11 +106,11 @@ public class JobSeekerRegistrationValidation {
 	public void validatePassoword(String password, String retypePassword, Errors errors){
 		
 		 if(StringUtils.isEmpty(password)){
-			 errors.rejectValue("password", "NotEmpty", "Password Should not be empty");
+			 errors.rejectValue("password", "NotEmpty", "Password should not be blank");
 		 }
 		 
 		 if(StringUtils.isEmpty(retypePassword)){
-			 errors.rejectValue("retypepassword", "NotEmpty", "Password Should not be empty");
+			 errors.rejectValue("retypepassword", "NotEmpty", "Password should not be blank");
 		 }
 		 
 		 if(!StringUtils.isEmpty(password) 
@@ -125,7 +125,7 @@ public class JobSeekerRegistrationValidation {
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				errors.rejectValue("retypepassword", "NotEmpty","Passwords are not equal");
+				errors.rejectValue("retypepassword", "NotEmpty","Passwords doesn’t match");
 			 }
 		 }
 	}
