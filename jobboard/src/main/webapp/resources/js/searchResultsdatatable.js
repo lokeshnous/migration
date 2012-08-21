@@ -275,7 +275,7 @@ jQuery(document).ready(function() {
 									//alert("navUrl="+navUrl);
 									$.getJSON(navUrl,function(data) {
 											table.fnClearTable();
-											table.fnAddData(data.jsonRows);
+											table.fnAddData(data.jsonArray);
 											var nNodes = table.fnGetNodes();
 											var count = 0;
 											for(var i=0;i<nNodes.length;i++)
@@ -387,7 +387,7 @@ jQuery(document).ready(function() {
 	//alert("navUrl="+navUrl);
 					$.getJSON(navUrl,function(data) {
 							table.fnClearTable();
-							table.fnAddData(data.jsonRows);
+							table.fnAddData(data.jsonArray);
 							var nNodes = table.fnGetNodes();
 							var count = 0;
 							for(var i=0;i<nNodes.length;i++)
