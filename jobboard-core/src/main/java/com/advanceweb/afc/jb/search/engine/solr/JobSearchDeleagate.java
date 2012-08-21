@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.util.Map;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
-import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 public interface JobSearchDeleagate {
@@ -15,7 +14,7 @@ public interface JobSearchDeleagate {
 	 * @param start
 	 * @return JobSearchResultDTO
 	 */
-	JobSearchResultDTO jobSearch(String searchName, Map<String, String> paramMap, long start, long rows) throws JobBoardServiceException, JobBoardDataException;
+	JobSearchResultDTO jobSearch(String searchName, Map<String, String> paramMap, long start, long rows) throws JobBoardServiceException;
 	
 	
 }

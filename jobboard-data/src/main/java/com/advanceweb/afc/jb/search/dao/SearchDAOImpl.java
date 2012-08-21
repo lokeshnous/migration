@@ -73,7 +73,7 @@ public class SearchDAOImpl implements SearchDAO{
 			
 		} catch (HibernateException e) {
 			LOGGER.debug(e);
-			throw new JobBoardDataException("Error while fetching the SOLR parameters from the Database...");
+			throw new JobBoardDataException("Error while fetching the SOLR parameters from the Database..."+e);
 		}
 		return queryDTO;
 	}

@@ -84,15 +84,13 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents the starting point of the search
 	 * @return JobSearchResultDTO
 	 * @throws JobBoardServiceException
-	 * @throws JobBoardDataException
 	 * @throws UnsupportedEncodingException
 	 */
 
 	@Override
 	public JobSearchResultDTO jobSearch(final String searchName,
 			final Map<String, String> paramMap, final long start,
-			final long rows) throws JobBoardServiceException,
-			JobBoardDataException {
+			final long rows) throws JobBoardServiceException {
 
 		QueryResponse response = null;
 		QueryDTO queryDTO = null;
@@ -121,10 +119,14 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			 * Calling the DAO layer to get the QueryDTO which contains all the
 			 * details of the solr search query with server details.
 			 */
-			queryDTO = searchDAO.getSearchQueryDTO(
-					solrParameter.getSearchIndexName(),
-					solrParameter.getEnvironment(),
-					solrParameter.getSearchIndexGroup(), searchName);
+			try {
+				queryDTO = searchDAO.getSearchQueryDTO(
+						solrParameter.getSearchIndexName(),
+						solrParameter.getEnvironment(),
+						solrParameter.getSearchIndexGroup(), searchName);
+			} catch (JobBoardDataException e) {
+				throw new JobBoardServiceException("Error while fetching the SOLR parameters from the Database..."+e);
+			}
 
 			/** Creation of server url to check whether it is accessible or not. */
 			String serverURlToCheck = queryDTO.getSearchHost()
@@ -197,7 +199,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	private QueryResponse getSolrResponse(
 			final Map<String, String> serverDetailsMap, QueryDTO queryDTO,
 			Map<String, String> paramMap, long rows, long start)
-			throws JobBoardServiceException, JobBoardDataException {
+			throws JobBoardServiceException {
 
 		SolrQuery searchquery = null;
 		QueryResponse response = null;
@@ -350,23 +352,41 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 	private List<SearchParamDTO> createParamsForLocationSearch(
 			QueryDTO queryDTO, Map<String, String> paramMap, long rows,
-			long start) throws JobBoardDataException {
+			long start) {
 
 		List<SearchParamDTO> srchReplacedParamDTOList = new ArrayList<SearchParamDTO>();
 
 		List<LocationDTO> latLonList = null;
 		if (MMUtils.isIntNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
 
-			latLonList = locationDAO.getLocationByPostcode(paramMap
-					.get(MMJBCommonConstants.CITY_STATE));
+			try {
+				latLonList = locationDAO.getLocationByPostcode(paramMap
+						.get(MMJBCommonConstants.CITY_STATE));
+			} catch (JobBoardDataException e) {
+				try {
+					throw new JobBoardServiceException("Error while fetching the postcode details..."+e);
+				} catch (JobBoardServiceException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 
 		} else {
 
 			String[] cityState = paramMap.get(MMJBCommonConstants.CITY_STATE)
 					.trim().split(MMJBCommonConstants.COMMA);
 			if (cityState.length >= 2) {
-				latLonList = locationDAO.getLocationByCityState(
-						cityState[0].trim(), cityState[1].trim());
+				try {
+					latLonList = locationDAO.getLocationByCityState(
+							cityState[0].trim(), cityState[1].trim());
+				} catch (JobBoardDataException e) {
+					try {
+						throw new JobBoardServiceException("Error while fetching the city state details..."+e);
+					} catch (JobBoardServiceException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 			} else {
 				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
 			}

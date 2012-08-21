@@ -62,7 +62,7 @@ public class LocationDAOImpl implements LocationDAO{
 
 		} catch (HibernateException e) {
 			LOGGER.debug(e);
-			throw new JobBoardDataException("Error while fetching the Latitude Longitude by Postcode from the Database...");
+			throw new JobBoardDataException("Error while fetching the Latitude Longitude by Postcode from the Database..."+e);
 		}
 		return latLonList;
 		
@@ -92,7 +92,7 @@ public class LocationDAOImpl implements LocationDAO{
 
 		} catch (HibernateException e) {
 			LOGGER.debug(e);
-			throw new JobBoardDataException("Error while fetching the latitude and longitude By CityState from the Database...");
+			throw new JobBoardDataException("Error while fetching the latitude and longitude By CityState from the Database..."+e);
 		}
 		return latLonList;
 		
