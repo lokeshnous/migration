@@ -10,9 +10,9 @@
 	
 	function saveThisSearch() {
 		
-		
-		$.ajax({
-			url : '${pageContext.request.contextPath}/savedSearches/saveThisSearch.html',
+		var keywords = $.trim($("#keywords").val());
+		alert("keywords"+keywords);
+		$.ajax({url : "${pageContext.request.contextPath}/savedSearches/saveThisSearch.html?keywords="+keywords,
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {

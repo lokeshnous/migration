@@ -23,6 +23,7 @@ public class SaveSearchForm {
 	private Date deletedDate;
 	private String notifyMe;
 	List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
+	private String keywords;
 
 	/**
 	 * @return the userID
@@ -99,8 +100,6 @@ public class SaveSearchForm {
 		this.createdDate = createdDate;
 	}
 
-	
-
 	/**
 	 * @return the deletedDate
 	 */
@@ -124,7 +123,8 @@ public class SaveSearchForm {
 	}
 
 	/**
-	 * @param modifyDate the modifyDate to set
+	 * @param modifyDate
+	 *            the modifyDate to set
 	 */
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
@@ -138,7 +138,8 @@ public class SaveSearchForm {
 	}
 
 	/**
-	 * @param notifyMe the notifyMe to set
+	 * @param notifyMe
+	 *            the notifyMe to set
 	 */
 	public void setNotifyMe(String notifyMe) {
 		this.notifyMe = notifyMe;
@@ -151,6 +152,21 @@ public class SaveSearchForm {
 	public void setSaveSearchedJobsDTOList(
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList) {
 		this.saveSearchedJobsDTOList = saveSearchedJobsDTOList;
+	}
+
+	/**
+	 * @return the keywords
+	 */
+	public String getKeywords() {
+		return keywords;
+	}
+
+	/**
+	 * @param keywords
+	 *            the keywords to set
+	 */
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 }

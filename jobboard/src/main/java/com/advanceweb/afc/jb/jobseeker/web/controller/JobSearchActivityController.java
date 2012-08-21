@@ -382,9 +382,9 @@ public class JobSearchActivityController {
 				.viewMySavedSearches(userId);
 		int savedSearchCount = 0;
 		savedSearchCount = saveSearchedJobsDTOList.size();
-		if (savedSearchCount == 5) {
+		/*if (savedSearchCount == 5) {
 			saveSearchService.deleteFirstSearch(userId);
-		}
+		}*/
 		
 		//Added for view my saved searches
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {

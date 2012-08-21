@@ -137,7 +137,8 @@ public class SaveSearchController {
 	@RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
-			Map<String, SaveSearchForm> model, HttpSession session) {
+			Map<String, SaveSearchForm> model, HttpSession session,
+			 @RequestParam("keywords") String keywords) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 
