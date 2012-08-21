@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,10 +107,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean savePostJob(JobPostDTO dto) {
 
+		try {
 			JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto);
 			hibernateTemplate.save(jobob);
-
-
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 
 		return false;
 	}

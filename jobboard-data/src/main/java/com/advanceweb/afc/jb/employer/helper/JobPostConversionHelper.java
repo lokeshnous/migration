@@ -20,6 +20,10 @@ public class JobPostConversionHelper {
 		 jpJob.setName(dto.getCompanyName());
 		 jpJob.setJobNumber(dto.getJobNumber());
 		 jpJob.setJobtitle(dto.getJobTitle());
+		 jpJob.setSkills(dto.getReqSkills());
+		 jpJob.setTrackingPixel(dto.getTrackPixel());
+		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);
+//		 jpJob.setPositionType(positionType)
 		 
 		 return jpJob;
 	 }

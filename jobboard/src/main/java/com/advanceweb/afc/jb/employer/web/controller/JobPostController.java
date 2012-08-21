@@ -3,9 +3,8 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.List;
 import java.util.Random;
 
-import javax.validation.Valid;
-
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -105,6 +103,7 @@ public class JobPostController {
 	 */
 	private String validateJobPostDetails(JobPostForm form){
 		
+		 UrlValidator urlValidator = new UrlValidator();
 		if(null != form){
 			if(StringUtils.isEmpty(form.getJobTitle()) || 
 					StringUtils.isEmpty(form.getJobDesc()) ||
@@ -112,6 +111,14 @@ public class JobPostController {
 							StringUtils.isEmpty(form.getAtsUrl()) && 
 							StringUtils.isEmpty(form.getApplyEmail()) )){
 				return "Please fill the required fields";
+			}
+			
+			//Validating URL
+			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
+				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
+				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail())) ){
+				
+				return "Please enter valid URL";
 			}
 		}
 		
