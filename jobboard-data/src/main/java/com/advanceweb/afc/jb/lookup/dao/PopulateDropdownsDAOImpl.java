@@ -34,6 +34,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -464,6 +465,18 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				return dropdownHelper.transformJpTemplateToDropDownDTO(templateList);
 			}
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<DropDownDTO> populateJobPostingTypeDropdowns() {
+		
+		try {
+			List<JpJobType> jobTypeList = hibernateTemplate.find("from JpJobType");
+			return dropdownHelper.transformJpJobTypeToDropDownDTO(jobTypeList);					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

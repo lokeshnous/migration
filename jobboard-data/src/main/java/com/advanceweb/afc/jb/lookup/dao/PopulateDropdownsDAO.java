@@ -162,4 +162,5 @@ public interface PopulateDropdownsDAO {
 	
 	List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId);
 	
+	List<DropDownDTO> populateJobPostingTypeDropdowns();
 }

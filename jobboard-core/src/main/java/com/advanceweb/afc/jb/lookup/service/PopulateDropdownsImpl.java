@@ -216,6 +216,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId) {
 
 		return populateDropdownsDAO.populateBrandingTemplateDropdown(facilityId, userId);
+	}
+
+	@Override
+	public List<DropDownDTO> populateJobPostingTypeDropdowns() {
+		
+		return populateDropdownsDAO.populateJobPostingTypeDropdowns();
 	}	
 
 }

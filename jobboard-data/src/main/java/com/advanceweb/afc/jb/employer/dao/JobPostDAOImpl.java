@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -17,8 +16,10 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobType;
+import com.advanceweb.afc.jb.data.entities.JpLocation;
+import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
-import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
 /**
  * @Author : Prince Mathew
@@ -77,11 +78,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 				employerInfoDTO.setFacilityId(userFacility.getId().getFacilityId());
 				employerInfoDTO.setRoleId(userFacility.getId().getRoleId());
 			}					
-		}
-		
+		}		
 		
 		return employerInfoDTO;
 	}
+	
 	/**
 	   @Author :Prince Mathew
 	   @Purpose:to get the List of the State for the drop down of state for Post New Job Screen 
@@ -96,6 +97,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		return null;
 	}
+	
 	/**
 	   @Author :Prince Mathew
 	   @Purpose:This method is called to post the new job
@@ -106,10 +108,23 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	public boolean savePostJob(JobPostDTO dto) {
-
-		try {
-			JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto);
-			hibernateTemplate.save(jobob);
+		
+		try {			
+				JpLocation location = null;			
+				//Retrieving location Id based on the data selection while posting the new job
+				Object[] inputs = {dto.getJobCountry(), dto.getJobState(), dto.getJobCity(),dto.getJobZip()};
+				List<JpLocation> locationList = hibernateTemplate.find("from JpLocation loc where loc.country=? and loc.state=? and loc.city=? and loc.postcode=?",inputs);
+				if(null != locationList && locationList.size() != 0){
+					location = locationList.get(0);
+				}
+				
+				//Retrieving the template object selected based on the template id selected by the user
+				JpTemplate template = hibernateTemplate.load(JpTemplate.class,dto.getBrandTemplate());
+				
+				JpJobType jobType = hibernateTemplate.load(JpJobType.class, dto.getJobPostingType());
+				
+				JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto, location, template, jobType);
+				hibernateTemplate.save(jobob);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}

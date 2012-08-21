@@ -6,6 +6,10 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
+import com.advanceweb.afc.jb.data.entities.JpJobLocationPK;
+import com.advanceweb.afc.jb.data.entities.JpJobType;
+import com.advanceweb.afc.jb.data.entities.JpLocation;
+import com.advanceweb.afc.jb.data.entities.JpTemplate;
 
 /**
  * @Author : Prince Mathew
@@ -16,19 +20,19 @@ import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 @Repository("jobPostConversionHelper")
 public class JobPostConversionHelper {
 	
-	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto){
+	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, JpLocation location, 
+			 JpTemplate template, JpJobType jobType){
 		
 		 JpJob jpJob=new JpJob();
 		 //Post New Job
 		 jpJob.setName(dto.getCompanyName());
-		 jpJob.setJobNumber(dto.getJobNumber());
+		 jpJob.setJobNumber(dto.getCustomerNo());
 		 jpJob.setFacility(dto.getDisCompanyName());
-		 jpJob.setJobNumber(dto.getJobNumber());
 		 jpJob.setAdminUserId(Integer.valueOf(dto.getJobOwner()));
 		 jpJob.setBlindAd(dto.isbHideCompName()?1:0);
 		 
 		 //Job Posting Details
-//		 jpJob.setJpJobType(jpJobType)
+		 jpJob.setJpJobType(jobType);
 		 
 		 //Job Title and Number
 		 jpJob.setJobtitle(dto.getJobTitle());
@@ -44,19 +48,27 @@ public class JobPostConversionHelper {
 			 jobApply.setApplyLink(dto.getAtsUrl());
 			 
 		 //Location
-		 JpJobLocation location = new JpJobLocation();
-		 location.setHideCity(dto.isbHideCity()?1:0);
-		 location.setHideCountry(dto.isbHideCountry()?1:0);
-		 location.setHidePostcode(dto.isbHideZipCode()?1:0);
-		 location.setHideState(dto.isbHideState()?1:0);
+		 JpJobLocation jobLocation = new JpJobLocation();
+		 JpJobLocationPK pKey = new JpJobLocationPK();
+		 pKey.setJobId(dto.getJobId());
+		 pKey.setLocationId(location.getLocationId());
 		 
-//		 jpJob.set
-		 
+		 jobLocation.setHideCity(dto.isbHideCity()?1:0);
+		 jobLocation.setHideCountry(dto.isbHideCountry()?1:0);
+		 jobLocation.setHidePostcode(dto.isbHideZipCode()?1:0);
+		 jobLocation.setHideState(dto.isbHideState()?1:0);
+		 jobLocation.setJpLocation(location);
+		 jobLocation.setId(pKey);
+		 		 
+		 //Job Details
 		 jpJob.setSkills(dto.getReqSkills());
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
-		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);
-//		 jpJob.setJpTemplate(Integer.valueOf(dto.getBrandTemplate()));
+		 jpJob.setAdtext(dto.getJobDesc());
 		 
+		 jpJob.setJpTemplate(template);
+		 
+		 //Auto Renew
+		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		 
 		 
 		 return jpJob;
 	 }

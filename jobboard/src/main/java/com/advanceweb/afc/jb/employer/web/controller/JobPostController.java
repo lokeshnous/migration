@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 
@@ -48,14 +50,21 @@ public class JobPostController {
 		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1,"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown(employerInfoDTO.getFacilityId(),employerInfoDTO.getUserId());
-		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateJobPostingTypeDropdowns();
 		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), employerInfoDTO.getUserId(), employerInfoDTO.getRoleId());
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		
 		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
-		jobPostForm.setCustomerNo("CT"+String.valueOf((new Random()).nextLong()));
-		jobPostForm.setJobId("JB"+String.valueOf((new Random()).nextLong()));	
+		SecureRandom random=null;
+		try {
+			random = SecureRandom.getInstance("SHA1PRNG");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		int myInt = random.nextInt();
+		jobPostForm.setCustomerNo("MMCN"+Math.abs(myInt));
+		jobPostForm.setJobId("JT"+Math.abs(myInt));	
 		
 		//Populating Dropdowns
 		model.addObject("stateList",stateList);

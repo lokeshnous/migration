@@ -26,6 +26,7 @@ import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
+import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
@@ -488,4 +489,19 @@ public class PopulateDropdownConversionHelper {
 		return dropdownList;		
 		
 	}
+	
+	public List<DropDownDTO> transformJpJobTypeToDropDownDTO(List<JpJobType> jpJobTypeList){
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		if(null != jpJobTypeList){
+			for(JpJobType jobType: jpJobTypeList){
+				DropDownDTO dropdownDTO = new DropDownDTO();
+				dropdownDTO.setOptionId(String.valueOf(jobType.getJobTypeId()));
+				dropdownDTO.setOptionName(jobType.getName());				
+				dropdownList.add(dropdownDTO);
+			}
+		}
+		return dropdownList;		
+		
+	}
+	
 }
