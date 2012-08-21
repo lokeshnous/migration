@@ -712,6 +712,13 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 	}
 	
+	/**
+	 * This method is used to copy the content of JobSearchDTO list 
+	 * to JobDTO list to make the returning list independent of Solr.
+	 * @param jobSearchDTOList
+	 * @return List<JobDTO>
+	 */
+	
 	private List<JobDTO> copyToJobDTO(List<JobSearchDTO> jobSearchDTOList ){
 		
 		List<JobDTO> jobDTOList = new ArrayList<JobDTO>();
@@ -745,7 +752,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			
 			jobDTOList.add(jobDTO);
 		}
-		
 		
 		return jobDTOList;
 		
