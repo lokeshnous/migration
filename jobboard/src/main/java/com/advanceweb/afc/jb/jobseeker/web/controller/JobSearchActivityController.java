@@ -80,7 +80,7 @@ public class JobSearchActivityController {
 	private MMEmailService emailService;
 
 	@Autowired
-	private JSONConverterService jSONConverterService;
+	private JSONConverterService jsonConverterService;
 
 	@Autowired
 	private JobSeekerService jobSeekerActivity;
@@ -544,7 +544,7 @@ public class JobSearchActivityController {
 			 * Calling the service layer for converting the JobSearchResultDTO
 			 * object into JSON Object
 			 */
-			jobSrchJsonObj = jSONConverterService
+			jobSrchJsonObj = jsonConverterService
 					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
 		}
