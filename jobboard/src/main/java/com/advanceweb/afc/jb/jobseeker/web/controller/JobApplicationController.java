@@ -24,7 +24,6 @@ import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
-import com.sun.xml.bind.v2.TODO;
 
 /**
  * @Author : Prince Mathew
@@ -38,34 +37,34 @@ import com.sun.xml.bind.v2.TODO;
 public class JobApplicationController {
 
 	@Autowired
-	private JobSearchActivity jobSearchActivity;
+	private  JobSearchActivity jobSearchActivity;
 
 	@Autowired
-	private MMEmailService emailService;
+	private  MMEmailService emailService;
 
 	private static final Logger LOGGER = Logger
 			.getLogger("JobApplicationController.class");
 
 	@Value("${advanceWebAddress}")
-	private String advanceWebAddress;
+	private  String advanceWebAddress;
 
 	@Value("${employeJobApplicationSub}")
-	private String employeJobApplicationSub;
+	private  String empJobAppSub;
 
 	@Value("${employeJobApplicationBody}")
-	private String employeJobApplicationBody;
+	private  String empJobAppBody;
 
 	@Value("${navigationPath}")
-	private String navigationPath;
+	private  String navigationPath;
 
 	@Value("${dothtmlExtention}")
-	private String dothtmlExtention;
+	private  String dothtmlExtention;
 
 	@Value("${jobseekerJobApplicationSub}")
-	private String jobseekerJobApplicationSub;
+	private String jobAppSub;
 
 	@Value("${jobseekerJobApplicationBody}")
-	private String jobseekerJobApplicationBody;
+	private  String jobAppBody;
 
 	/*
 	 * @Autowired private TransformAnonymousUserJobApply
@@ -73,7 +72,7 @@ public class JobApplicationController {
 	 */
 
 	@RequestMapping(value = "/anonymousUser", method = RequestMethod.GET)
-	public ModelAndView showAnoUserForm(Map model) {
+	public ModelAndView showAnoUserForm(Map<String, JobApplicationForm> model) {
 
 		model.put("jobApplicationForm", new JobApplicationForm());
 		return new ModelAndView("jobseekerguestuserformpopup");
@@ -125,11 +124,11 @@ public class JobApplicationController {
 					searchedJobDTO.getEmployerEmailAddress());
 			toEmployer.setFromAddress(advanceWebAddress);
 			toEmployer.setToAddress(employerToAddress);
-			String employerMailSub = employeJobApplicationSub.replace(
+			String employerMailSub = empJobAppSub.replace(
 					"?jobseekername", form.getUserName());
 			toEmployer.setSubject(employerMailSub);
 
-			String employerMailBody = employeJobApplicationBody.replace(
+			String employerMailBody = empJobAppBody.replace(
 					"?empDashboardLink", employerloginUrl);
 			employerMailBody = employerMailBody.replace("?jobseekername",
 					form.getUserName());
@@ -142,6 +141,7 @@ public class JobApplicationController {
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
 				// LOGGER.info("Resume not found");
+				// TODO:Exception handeling
 			}
 			emailService.sendEmail(toEmployer);
 			// LOGGER.info("Mail sent to employer");
@@ -153,14 +153,14 @@ public class JobApplicationController {
 			 */
 
 			EmailDTO toJobSeeker = new EmailDTO();
-			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-			jobSeekerToAddress[0] = new InternetAddress(form.getUserEmail());
-			toJobSeeker.setToAddress(jobSeekerToAddress);
+			InternetAddress[] jsToAddress = new InternetAddress[1];
+			jsToAddress[0] = new InternetAddress(form.getUserEmail());
+			toJobSeeker.setToAddress(jsToAddress);
 			toJobSeeker.setFromAddress(advanceWebAddress);
-			String jobseekerMailSub = jobseekerJobApplicationSub.replace(
+			String jobseekerMailSub = jobAppSub.replace(
 					"?companyname", searchedJobDTO.getCompanyName());
 			toJobSeeker.setSubject(jobseekerMailSub);
-			String jobseekerMailBody = jobseekerJobApplicationBody.replace(
+			String jobseekerMailBody = jobAppBody.replace(
 					"?jsdashboardLink", jonseekerloginUrl);
 			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
 					searchedJobDTO.getCompanyName());
@@ -173,7 +173,6 @@ public class JobApplicationController {
 			// TODO:Exception handeling
 
 		}
-
 		return "";
 	}
 
