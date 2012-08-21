@@ -121,6 +121,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearch.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearchAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDeleagate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/LookupService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/LookupServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SOLRSearchHelper.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text

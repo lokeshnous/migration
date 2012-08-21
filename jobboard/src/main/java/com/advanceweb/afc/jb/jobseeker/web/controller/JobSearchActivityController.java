@@ -51,6 +51,7 @@ import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.resume.ResumeService;
+import com.advanceweb.afc.jb.search.engine.solr.LookupService;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
@@ -155,6 +156,9 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private SaveSearchService saveSearchService;
+	
+	@Autowired
+	private LookupService lookupService;
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -770,7 +774,7 @@ public class JobSearchActivityController {
 	public @ResponseBody
 	List<String> findLocation(@RequestParam("term") String keyword) {
 
-		List<LocationDTO> locationDTOList = jobSearchService
+		List<LocationDTO> locationDTOList = lookupService
 				.locationSearch(keyword.trim());
 
 		if (locationDTOList != null) {

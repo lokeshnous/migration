@@ -1,12 +1,10 @@
 package com.advanceweb.afc.jb.search.service;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
@@ -32,17 +30,5 @@ public class JobSearchServiceImpl implements JobSearchService{
 		return jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
 	}
 	
-	/**
-	 * * This method is used to do the location Search for autocomplete
-	 *  by taking the following parameters.
-	 * @param keywords	represents the search keyword for autocomplete of city state
-	 * @return List<LocationDTO>
-	 */
-	
-	
-	public List<LocationDTO> locationSearch(String keywords){
-		return jobSearchDeleagate.locationSearch(keywords);
-		
-	}
 
 }

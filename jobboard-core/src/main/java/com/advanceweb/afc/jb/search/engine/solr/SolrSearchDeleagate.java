@@ -703,35 +703,5 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		
 	}
 	
-	
-	
-	/**
-	 * This method will do the location search for city and state
-	 * to display in the auto complete box in the UI.
-	 * @param keywords represents  search word for auto complete
-	 * @return List<LocationDTO> which contains the city and state or postcode 
-	 */
-	
-	public List<LocationDTO> locationSearch(String keywords){
-		
-		if(MMUtils.isIntNumber(keywords)){
-			return locationDAO.getPostcodeLocationByKeyword(keywords);
-		}else{
-			return locationDAO.getCityStateLocationByKeyword(keywords);
-		}
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
