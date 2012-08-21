@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 
@@ -28,7 +27,7 @@ import com.advanceweb.afc.jb.common.JobSearchResultDTO;
  * @since 31ST July 2012
  */
 
-@Service("jSONConverterService")
+@Service("jsonConverterService")
 public class JSONConverterServiceImpl implements JSONConverterService {
 
 	private static final Logger LOGGER = Logger
@@ -42,7 +41,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 	 */
 	public JSONObject convertToJSON(final JobSearchResultDTO jSResultDTO) {
 		final JSONObject jobSrchJsonObj = new JSONObject();
-		final JSONArray jsonArray = new JSONArray();
+		final JSONArray jsonRows = new JSONArray();
 
 		final List<JobDTO> jobDTOList = jSResultDTO
 				.getJobResultList();
@@ -100,13 +99,13 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					MMUtils.isNull(jobDTO.getUrl()));
 			
 			
-			jsonArray.add(jobSrchJson);
+			jsonRows.add(jobSrchJson);
 
 		}
 
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jSResultDTO.getTotalNumSearchResult());
-		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ARRAY, jsonArray);
+		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
 
 		return jobSrchJsonObj;
 	}
