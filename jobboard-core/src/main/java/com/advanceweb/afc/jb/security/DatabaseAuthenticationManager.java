@@ -73,14 +73,14 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 			 if ( userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_USER)) {
 					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_USER));
 				}
-			 if(userRole.getRoleName().equals("FACILITY")){
-				 authList.add(new GrantedAuthorityImpl("ROLE_FACILITY"));
+			 if(userRole.getRoleName().equals(MMJBCommonConstants.FACILITY)){
+				 authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY));
 			 }
-		    if (userRole.getRoleName().equals("FACILITY_GROUP")) {
-		    	 authList.add(new GrantedAuthorityImpl("FACILITY_GROUP"));
+		    if (userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_GROUP)) {
+		    	 authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_GROUP));
 		     }
-		   if (userRole.getRoleName().equals("FACILITY_SYSTEM")) {
-			   authList.add(new GrantedAuthorityImpl("FACILITY_SYSTEM"));
+		   if (userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_SYSTEM)) {
+			   authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
 		    }
 			}
 			return authList;
