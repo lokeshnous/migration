@@ -460,9 +460,9 @@ public class JobSearchActivityController {
 	 * 
 	 */
 
-	@RequestMapping(value = "/findJobSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/searchJob", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject findJobSearch(HttpSession session,
+	JSONObject searchJob(HttpSession session,
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap) {
 

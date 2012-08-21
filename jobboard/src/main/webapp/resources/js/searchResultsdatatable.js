@@ -268,7 +268,7 @@ jQuery(document).ready(function() {
 									var searchtype = $("#searchtype").val();
 			//alert("navUrl==========="+navUrl);
 									
-									var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+									var navUrl =  "../jobsearchactivity/searchJob.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
@@ -380,7 +380,7 @@ jQuery(document).ready(function() {
 					var start = $("#start").val();
 					var searchtype = $("#searchtype").val();
 			//alert("2");		
-					var navUrl =  "../jobsearchactivity/findJobSearch.html?keywords="+keywords+"&cityState="
+					var navUrl =  "../jobsearchactivity/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 					$("#TotalNoRecords").text("");
 					$("#TotalRecord").text("");
