@@ -18,6 +18,7 @@
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
+						alert("Data saved successfully !");
 						parent.$.nmTop().close();
 					}else{
 						$("#errmsg").html(data);
