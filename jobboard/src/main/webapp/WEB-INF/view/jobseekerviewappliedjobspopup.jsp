@@ -43,7 +43,7 @@
    </script>
       <script type="text/javascript">
 	    function confirmDelete() {
-		if (confirm("You want to delete this?")) {
+		if (confirm("Are you sure you want to Delete")) {
 			return true;
 		} else {
 			return false;
