@@ -96,6 +96,20 @@ public class MMUtils {
 		return urlMap;
 	}
 	
+	/**
+	 * This method will check if the passed String is Null or not and 
+	 * depending on the condition it will return the string.
+	 * @param checkStr
+	 * @return
+	 */
+	public static String isNull(String checkStr){
+		if(checkStr == null){
+			return "N/A";
+		}else{
+			return checkStr;
+		}
+	}
+	
 	
 
 }
