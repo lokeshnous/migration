@@ -135,7 +135,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					.concat(MMJBCommonConstants.SLASH)
 					.concat(MMJBCommonConstants.SELECT);
 
-			LOGGER.info("Server URL To Check===>" + serverURlToCheck);
+			LOGGER.info("Server URL To Check is " + serverURlToCheck);
 
 			/** Checking whether server url is accessible. */
 			boolean serverAccessible = solrSrchHelper
