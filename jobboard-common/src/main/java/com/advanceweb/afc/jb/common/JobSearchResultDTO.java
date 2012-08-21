@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.engine.solr;
+package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,10 +14,14 @@ public class JobSearchResultDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<JobSearchDTO> searchResultList;
-	private Map<String, List<String>> facetMap;
+	private List<JobDTO> jobResultList;
+	
+	private Map<String, List<SearchFacetDTO>> facetMap;
+	
 	private long totalNumSearchResult;
+	
 	private long start;
+	
 	private long rows;
 	
 	public long getStart() {
@@ -38,16 +42,17 @@ public class JobSearchResultDTO implements Serializable{
 	public void setTotalNumSearchResult(long totalNumSearchResult) {
 		this.totalNumSearchResult = totalNumSearchResult;
 	}
-	public List<JobSearchDTO> getSearchResultList() {
-		return searchResultList;
+
+	public List<JobDTO> getJobResultList() {
+		return jobResultList;
 	}
-	public void setSearchResultList(List<JobSearchDTO> searchResultList) {
-		this.searchResultList = searchResultList;
+	public void setJobResultList(List<JobDTO> jobResultList) {
+		this.jobResultList = jobResultList;
 	}
-	public Map<String, List<String>> getFacetMap() {
+	public Map<String, List<SearchFacetDTO>> getFacetMap() {
 		return facetMap;
 	}
-	public void setFacetMap(Map<String, List<String>> facetMap) {
+	public void setFacetMap(Map<String, List<SearchFacetDTO>> facetMap) {
 		this.facetMap = facetMap;
 	}
 	

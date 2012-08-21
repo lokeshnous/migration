@@ -3,9 +3,17 @@ package com.advanceweb.afc.jb.common;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author ReeteshRN
+ * @version 1.0
+ * @Date 10th Aug 2012 onwards
+ */
 
 public class JobDTO implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	private String adText;
 	
 	private int applyOnline;

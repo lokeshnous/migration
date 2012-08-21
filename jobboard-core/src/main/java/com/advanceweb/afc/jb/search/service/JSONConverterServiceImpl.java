@@ -16,7 +16,8 @@ import com.advanceweb.afc.jb.common.util.CheckNullUtil;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDTO;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
+import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 
 /**
  * This class has been created as a service interface for converting to JSON
@@ -43,60 +44,60 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		final JSONObject jobSrchJsonObj = new JSONObject();
 		final JSONArray jsonRows = new JSONArray();
 
-		final List<JobSearchDTO> jobSearchDTOList = jSResultDTO
-				.getSearchResultList();
+		final List<JobDTO> jobDTOList = jSResultDTO
+				.getJobResultList();
 
-		for (JobSearchDTO jobSrchDTO : jobSearchDTOList) {
+		for (JobDTO jobDTO : jobDTOList) {
 
 			final JSONObject jobSrchJson = new JSONObject();
 
 			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
-					CheckNullUtil.isNull(jobSrchDTO.getAdText()));
+					CheckNullUtil.isNull(jobDTO.getAdText()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
-					CheckNullUtil.isNull(jobSrchDTO.getCompany()));
+					CheckNullUtil.isNull(jobDTO.getCompany()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
-					CheckNullUtil.isNull(jobSrchDTO.getJobTitle()));
+					CheckNullUtil.isNull(jobDTO.getJobTitle()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_CITY,
-					CheckNullUtil.isNull(jobSrchDTO.getCity()));
+					CheckNullUtil.isNull(jobDTO.getCity()));
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
-					convertToReqdDateString(jobSrchDTO.getPostedDate()
+					convertToReqdDateString(jobDTO.getPostedDate()
 							.toString()));
 			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,
-					jobSrchDTO.getApplyOnline());
+					jobDTO.getApplyOnline());
 			jobSrchJson.put(MMJBCommonConstants.BLIND_AD,
-					jobSrchDTO.getBlindAd());
+					jobDTO.getBlindAd());
 			jobSrchJson.put(MMJBCommonConstants.FACILITY_NAME,
-					CheckNullUtil.isNull(jobSrchDTO.getFacilityName()));
+					CheckNullUtil.isNull(jobDTO.getFacilityName()));
 			jobSrchJson.put(MMJBCommonConstants.EMAIL_DISPLAY,
-					CheckNullUtil.isNull(jobSrchDTO.getEmailDisplay()));
+					CheckNullUtil.isNull(jobDTO.getEmailDisplay()));
 			jobSrchJson.put(MMJBCommonConstants.EMAIL,
-					CheckNullUtil.isNull(jobSrchDTO.getEmail()));
+					CheckNullUtil.isNull(jobDTO.getEmail()));
 			jobSrchJson.put(MMJBCommonConstants.IS_INTERNATIONAL,
-					jobSrchDTO.isInternationalJob());
+					jobDTO.isInternationalJob());
 			jobSrchJson.put(MMJBCommonConstants.IS_NATIONAL,
-					jobSrchDTO.isNationalJob());
+					jobDTO.isNationalJob());
 			jobSrchJson.put(MMJBCommonConstants.IS_FEATURED,
-					jobSrchDTO.isFeatured());
+					jobDTO.isFeatured());
 			jobSrchJson.put(MMJBCommonConstants.JOB_COUNT,
-					jobSrchDTO.getJobCount());
+					jobDTO.getJobCount());
 			jobSrchJson.put(MMJBCommonConstants.JOB_ID,
-					CheckNullUtil.isNull(jobSrchDTO.getJobId()));
+					CheckNullUtil.isNull(jobDTO.getJobId()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_NUMBER,
-					CheckNullUtil.isNull(jobSrchDTO.getJobNumber()));
+					CheckNullUtil.isNull(jobDTO.getJobNumber()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_GEO,
-					CheckNullUtil.isNull(jobSrchDTO.getJobGeo()));
+					CheckNullUtil.isNull(jobDTO.getJobGeo()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_POSITION,
-					CheckNullUtil.isNull(jobSrchDTO.getJobPosition()));
+					CheckNullUtil.isNull(jobDTO.getJobPosition()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_GEO_0_LATLON,
-					CheckNullUtil.isNull(jobSrchDTO.getJobGeo0LatLon()));
+					CheckNullUtil.isNull(jobDTO.getJobGeo0LatLon()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_GEO_1_LATLON,
-					CheckNullUtil.isNull(jobSrchDTO.getJobGeo1LatLon()));
+					CheckNullUtil.isNull(jobDTO.getJobGeo1LatLon()));
 			jobSrchJson.put(MMJBCommonConstants.URL_DISPLAY,
-					CheckNullUtil.isNull(jobSrchDTO.getUrlDisplay()));
+					CheckNullUtil.isNull(jobDTO.getUrlDisplay()));
 			jobSrchJson.put(MMJBCommonConstants.STATE,
-					CheckNullUtil.isNull(jobSrchDTO.getState()));
+					CheckNullUtil.isNull(jobDTO.getState()));
 			jobSrchJson.put(MMJBCommonConstants.URL,
-					CheckNullUtil.isNull(jobSrchDTO.getUrl()));
+					CheckNullUtil.isNull(jobDTO.getUrl()));
 			
 			
 			jsonRows.add(jobSrchJson);

@@ -10,7 +10,7 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
+import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 @Service("jobSearchService")

@@ -29,6 +29,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobApplicationDTO.jav
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostedDateDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSearchResultDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerSubscriptionsDTO.java -text
@@ -55,6 +56,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveOrApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveSearchedJobsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchFacetDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchParamDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/StateDTO.java -text
@@ -119,7 +121,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearch.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearchAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchDeleagate.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/JobSearchResultDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SOLRSearchHelper.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrAdapter.java -text

@@ -20,7 +20,10 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.JobDTO;
+import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
+import com.advanceweb.afc.jb.common.SearchFacetDTO;
 import com.advanceweb.afc.jb.common.SearchParamDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -502,7 +505,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents the instance of QueryResponse
 	 * @return JobSearchResultDTO
 	 */
-	private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
+	/*private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
 
 		JobSearchResultDTO jobSResultDTO = new JobSearchResultDTO();
 		LOGGER.info("Number of search records===>"
@@ -512,17 +515,22 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				.getNumFound());
 
 		List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
+		
+		
 
-		/** Binding the JobSearchDTO.class into the QueryResponse object **/
+		*//** Binding the JobSearchDTO.class into the QueryResponse object **//*
 		jobSearchDTOList = response.getBeans(JobSearchDTO.class);
+		
+		*//** Copying the JobSearchDTO list to JobDTO list to separate the dependency on solr.**//*
+		List<JobDTO> jobDTOList = copyToJobDTO(jobSearchDTOList);
 
 		final Map<String, List<String>> facetMap = new HashMap<String, List<String>>();
 		final List<FacetField> facetFieldList = response.getFacetFields();
 
-		/**
+		*//**
 		 * Creating Lists of Facets(List<String>) by iterating the
 		 * FaceeFieldList
-		 **/
+		 **//*
 		for (FacetField facetField : facetFieldList) {
 			List<String> facetsList = new ArrayList<String>();
 			List<Count> facetFieldValList = facetField.getValues();
@@ -537,16 +545,73 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 							.concat(MMJBCommonConstants.CLSG_BRCKT));
 				}
 			}
-			LOGGER.info("facetsList===>" + facetsList);
+			LOGGER.info("facetsList is" + facetsList);
 			facetMap.put(facetField.getName(), facetsList);
 
 		}
 		jobSResultDTO.setFacetMap(facetMap);
-		jobSResultDTO.setSearchResultList(jobSearchDTOList);
+		jobSResultDTO.setJobResultList(jobDTOList);
+
+		return jobSResultDTO;
+	}*/
+
+	private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
+
+		JobSearchResultDTO jobSResultDTO = new JobSearchResultDTO();
+		LOGGER.info("Number of search records===>"
+				+ response.getResults().getNumFound());
+
+		jobSResultDTO.setTotalNumSearchResult(response.getResults()
+				.getNumFound());
+
+		List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
+		
+		
+
+		/** Binding the JobSearchDTO.class into the QueryResponse object **/
+		jobSearchDTOList = response.getBeans(JobSearchDTO.class);
+		
+		/** Copying the JobSearchDTO list to JobDTO list to separate the dependency on solr.**/
+		List<JobDTO> jobDTOList = copyToJobDTO(jobSearchDTOList);
+
+		final Map<String, List<SearchFacetDTO>> facetMap = new HashMap<String, List<SearchFacetDTO>>();
+		final List<FacetField> facetFieldList = response.getFacetFields();
+
+		/**
+		 * Creating Lists of Facets(List<String>) by iterating the
+		 * FacetFieldList
+		 **/
+		for (FacetField facetField : facetFieldList) {
+			List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
+			List<Count> facetFieldValList = facetField.getValues();
+
+			if(facetFieldValList != null){
+				for (Count countObj : facetFieldValList) {
+					SearchFacetDTO searchFacetDTO = new SearchFacetDTO();
+					String facetValue = countObj.getName().toString();
+					searchFacetDTO.setFacetValue(facetValue);
+					
+					long count = countObj.getCount();
+					searchFacetDTO.setCount(count);
+					
+					/*facetsList.add(facetVal
+							.concat(MMJBCommonConstants.SPACE_OPN_BRCKT)
+							.concat(String.valueOf(count))
+							.concat(MMJBCommonConstants.CLSG_BRCKT));*/
+					searchFacetDTOList.add(searchFacetDTO);
+				}
+			}
+			LOGGER.info("facetsList is" + searchFacetDTOList);
+			facetMap.put(facetField.getName(), searchFacetDTOList);
+
+		}
+		jobSResultDTO.setFacetMap(facetMap);
+		jobSResultDTO.setJobResultList(jobDTOList);
 
 		return jobSResultDTO;
 	}
-
+	
+	
 	/**
 	 * This method creates a HttpSolrServer instance by setting all the required
 	 * server parameters.
@@ -646,6 +711,46 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		return strValue;
 
 	}
+	
+	private List<JobDTO> copyToJobDTO(List<JobSearchDTO> jobSearchDTOList ){
+		
+		List<JobDTO> jobDTOList = new ArrayList<JobDTO>();
+		
+		for(JobSearchDTO jobSearchDTO: jobSearchDTOList){
+			JobDTO jobDTO = new JobDTO();
+			jobDTO.setAdText(jobSearchDTO.getAdText());
+			jobDTO.setApplyOnline(jobSearchDTO.getApplyOnline());
+			jobDTO.setBlindAd(jobSearchDTO.getBlindAd());
+			jobDTO.setCity(jobSearchDTO.getCity());
+			jobDTO.setCompany(jobSearchDTO.getCompany());
+			jobDTO.setEmail(jobSearchDTO.getEmail());
+			jobDTO.setEmailDisplay(jobSearchDTO.getEmailDisplay());
+			jobDTO.setFacilityName(jobSearchDTO.getFacilityName());
+			jobDTO.setFeatured(jobSearchDTO.isFeatured());
+			jobDTO.setInternationalJob(jobSearchDTO.isInternationalJob());
+			jobDTO.setJobCount(jobSearchDTO.getJobCount());
+			jobDTO.setJobGeo(jobSearchDTO.getJobGeo());
+			jobDTO.setJobGeo0LatLon(jobSearchDTO.getJobGeo0LatLon());
+			jobDTO.setJobGeo1LatLon(jobSearchDTO.getJobGeo1LatLon());
+			jobDTO.setJobId(jobSearchDTO.getJobId());
+			jobDTO.setJobNumber(jobSearchDTO.getJobNumber());
+			jobDTO.setJobPosition(jobSearchDTO.getJobPosition());
+			jobDTO.setJobTitle(jobSearchDTO.getJobTitle());
+			jobDTO.setNationalJob(jobSearchDTO.isNationalJob());
+			jobDTO.setPostCode(jobSearchDTO.getPostCode());
+			jobDTO.setPostedDate(jobSearchDTO.getPostedDate());
+			jobDTO.setState(jobSearchDTO.getState());
+			jobDTO.setUrl(jobSearchDTO.getUrl());
+			jobDTO.setUrlDisplay(jobSearchDTO.getUrlDisplay());
+			
+			jobDTOList.add(jobDTO);
+		}
+		
+		
+		return jobDTOList;
+		
+	}
+	
 	
 	
 	/**
