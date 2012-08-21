@@ -105,13 +105,13 @@ public class JobSearchActivityController {
 
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
-	
+
 	@Value("${jobseekerPageExtention}")
 	private String jobseekerPageExtention;
-	
+
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
-	
+
 	@Value("${defaultResumeExtension}")
 	private String defaultResumeExtension;
 
@@ -156,7 +156,7 @@ public class JobSearchActivityController {
 
 	@Autowired
 	private SaveSearchService saveSearchService;
-	
+
 	@Autowired
 	private LookupService lookupService;
 
@@ -165,7 +165,7 @@ public class JobSearchActivityController {
 	 * job view details page.
 	 * 
 	 * @param jobId
-	 * @param request 
+	 * @param request
 	 * @return : modelandview for respected Jobid
 	 */
 	@RequestMapping(value = "/viewJobDetails")
@@ -173,14 +173,14 @@ public class JobSearchActivityController {
 			Map<String, Object> model, HttpServletRequest request,
 			@RequestParam("currentUrl") String currentUrl) {
 		try {
-			 // View the job with template			
+			// View the job with template
 			SearchedJobDTO jobDTO = jobSearchActivity.viewJobDetails(jobId);
 			model.put("jobDetail", jobDTO);
 			model.put("isHideCity", jobDTO.getCity() != null);
 			model.put("isHideState", jobDTO.getStateFullName() != null);
 			model.put("isHideCoutry", jobDTO.getCountry() != null);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
-			model.put("returnResults", currentUrl);			
+			model.put("returnResults", currentUrl);
 		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("ERROR");
@@ -197,7 +197,7 @@ public class JobSearchActivityController {
 	 * @param form
 	 * @param jobId
 	 * @param session
-	 * @param request 
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
@@ -258,8 +258,8 @@ public class JobSearchActivityController {
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			// TODO: Remove hard codes of mails
-			 //employerToAddress[0] = new InternetAddress(
-			 //"pramodap@nousinfo.com");
+			// employerToAddress[0] = new InternetAddress(
+			// "pramodap@nousinfo.com");
 			employerEmailDTO.setToAddress(employerToAddress);
 			String employerMailSub = employeJobApplicationSub.replace(
 					"?jobseekername", userName);
@@ -276,35 +276,40 @@ public class JobSearchActivityController {
 			try {
 				ResumeDTO resumeDTO = resumeService
 						.fetchPublicResumeByUserId(userId);
-				//TODO : Add the resume as per the type
+				// TODO : Add the resume as per the type
 				if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
 
 				} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
 					try {
-					    // Create temp file.
-					    File temp = File.createTempFile(resumeDTO.getResumeName(), defaultResumeExtension);
-					    File newFile = new File(temp.getParent()+"\\"+resumeDTO.getResumeName()+defaultResumeExtension);
-					     //Rename
-					    newFile.deleteOnExit();
-					   if (temp.renameTo(newFile)) {
-						   LOGGER.info("File has been renamed.");	
-					       }
-					    // Delete temp file when program exits.
-					    temp.deleteOnExit();
+						// Create temp file.
+						File temp = File.createTempFile(
+								resumeDTO.getResumeName(),
+								defaultResumeExtension);
+						File newFile = new File(temp.getParent() + "\\"
+								+ resumeDTO.getResumeName()
+								+ defaultResumeExtension);
+						// Rename
+						newFile.deleteOnExit();
+						if (temp.renameTo(newFile)) {
+							LOGGER.info("File has been renamed.");
+						}
+						// Delete temp file when program exits.
+						temp.deleteOnExit();
 
-					    // Write to temp file
-					    BufferedWriter out = new BufferedWriter(new FileWriter(newFile));
-					    out.write(resumeDTO.getResumeText());
-					    out.close();
-					    resumeDTO.setFilePath(newFile.getAbsolutePath());
+						// Write to temp file
+						BufferedWriter out = new BufferedWriter(new FileWriter(
+								newFile));
+						out.write(resumeDTO.getResumeText());
+						out.close();
+						resumeDTO.setFilePath(newFile.getAbsolutePath());
 					} catch (IOException e) {
-						LOGGER.info("Copy Paste resume error");						
+						LOGGER.info("Copy Paste resume error");
 					}
 				} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
-					//TODO: Need to clarify
+					// TODO: Need to clarify
 				}
 				attachmentpaths.add(resumeDTO.getFilePath());
 				employerEmailDTO.setAttachmentPaths(attachmentpaths);
@@ -377,16 +382,18 @@ public class JobSearchActivityController {
 		// Modified to delete the first saved search,allow user to
 		// create new search if he has already created 5 searches and trying to
 		// add 6th search
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
-		//int savedSearchCount = 0;
-		//savedSearchCount = saveSearchedJobsDTOList.size();
-		/*if (savedSearchCount == 5) {
-			saveSearchService.deleteFirstSearch(userId);
-		}*/
-		
-		//Added for view my saved searches
+		// int savedSearchCount = 0;
+		// savedSearchCount = saveSearchedJobsDTOList.size();
+		/*
+		 * if (savedSearchCount == 5) {
+		 * saveSearchService.deleteFirstSearch(userId); }
+		 */
+
+		// Added for view my saved searches
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
 					&& session
@@ -415,19 +422,24 @@ public class JobSearchActivityController {
 							.toString();
 				}
 				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
-					saveSearchName = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME)
-							.toString();
+					saveSearchName = session.getAttribute(
+							MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
 				}
 				if (session.getAttribute(MMJBCommonConstants.AUTOLOAD) != null) {
-					autoload = Boolean.parseBoolean(session.getAttribute(MMJBCommonConstants.AUTOLOAD).toString());
+					autoload = Boolean.parseBoolean(session.getAttribute(
+							MMJBCommonConstants.AUTOLOAD).toString());
 				}
 
-				/*model1.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
-				model1.addObject(MMJBCommonConstants.SEARCH_TYPE, searchType);
-				model1.addObject(MMJBCommonConstants.KEYWORDS, keywords);
-				model1.addObject(MMJBCommonConstants.CITY_STATE, cityState);
-				model1.addObject(MMJBCommonConstants.RADIUS, radius);*/
-								
+				/*
+				 * model1.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME,
+				 * saveSearchName);
+				 * model1.addObject(MMJBCommonConstants.SEARCH_TYPE,
+				 * searchType); model1.addObject(MMJBCommonConstants.KEYWORDS,
+				 * keywords); model1.addObject(MMJBCommonConstants.CITY_STATE,
+				 * cityState); model1.addObject(MMJBCommonConstants.RADIUS,
+				 * radius);
+				 */
+
 				jobSearchResultForm.setSaveSearchName(saveSearchName);
 				jobSearchResultForm.setSearchtype(searchType);
 				jobSearchResultForm.setKeywords(keywords);
@@ -491,10 +503,20 @@ public class JobSearchActivityController {
 		// happening for a session
 		int searchSeq = MMJBCommonConstants.ZERO_INT;
 		// String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
-		
-		String sessionId  = null;
+
+		String sessionId = null;
 		if (session != null) {
-			sessionId  = session.getId();
+			sessionId = session.getId();
+
+			if (session.getAttribute(MMJBCommonConstants.SEARCH_SEQ) == null) {
+				session.setAttribute(MMJBCommonConstants.SEARCH_SEQ,
+						searchSeq + 1);
+			} else {
+				session.setAttribute(
+						MMJBCommonConstants.SEARCH_SEQ,
+						Integer.parseInt(session.getAttribute(
+								MMJBCommonConstants.SEARCH_SEQ).toString()) + 1);
+			}
 			session.setAttribute(MMJBCommonConstants.KEYWORDS,
 					jobSearchResultForm.getKeywords().trim());
 			session.setAttribute(MMJBCommonConstants.CITY_STATE,
@@ -519,7 +541,8 @@ public class JobSearchActivityController {
 		paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm
 				.getRadius().trim());
 		paramMap.put(MMJBCommonConstants.SESSION_ID, sessionId.trim());
-		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, String.valueOf(searchSeq));
+		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, session.getAttribute(
+				MMJBCommonConstants.SEARCH_SEQ).toString());
 		paramMap.put(MMJBCommonConstants.SEARCH_NAME, searchName.trim());
 
 		try {
@@ -564,28 +587,29 @@ public class JobSearchActivityController {
 			@RequestParam("id") int jobId, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 
-		 // Check for job seeker login ,open popup if not logged in.
+		// Check for job seeker login ,open popup if not logged in.
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put(ajaxNavigationPath,
 					"../jobsearchactivity/jobseekersaveThisJobPopUp");
 			return jsonObject;
 		}
 		form.setJobID(jobId);
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		int savedJobsCount = 0;
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
 				.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
 		if (savedJobsCount > Integer.parseInt(saveJobsLimit)) {
-			int oldJobId =	savedJobDTOList.get(0).getSaveJobId();	
+			int oldJobId = savedJobDTOList.get(0).getSaveJobId();
 			jobSeekerActivity.updateAppliedSavedJobs(oldJobId);
 		}
-		 
+
 		// Get the Job details
 		SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(form
 				.getJobID());
 
-		 // Validate if job is already applied
+		// Validate if job is already applied
 		AppliedJobDTO appliedJobDTO = jobSearchActivity.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
@@ -667,7 +691,7 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public String sendToFriend(HttpServletRequest request, Model model) {
 		try {
-			model.addAttribute("joburl",  request.getRequestURL().toString());
+			model.addAttribute("joburl", request.getRequestURL().toString());
 			model.addAttribute("jobId", request.getParameter("id"));
 			model.addAttribute("sendtofriendmail", new SendToFriend());
 		} catch (Exception e) {// Catch exception if any
@@ -683,21 +707,20 @@ public class JobSearchActivityController {
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
 	public String sendToFriendPost(
 			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
-			BindingResult result, Model model, HttpServletRequest request, HttpSession session) {
+			BindingResult result, Model model, HttpServletRequest request,
+			HttpSession session) {
 
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
-		/*if (sendtofriendmail.getMessage().length() > 0) {
-			finalmailbody = commonupperbody + "<a href="
-					+ sendtofriendmail.getJoburl() + ">"
-					+ sendtofriendmail.getJoburl() + "</a>"
-					+ commonbeforefriendmsgbody + sendtofriendmail.getMessage()
-					+ commonlowerbody;
-		} else {
-			finalmailbody = commonupperbody + "<a href="
-					+ sendtofriendmail.getJoburl() + ">"
-					+ sendtofriendmail.getJoburl() + "</a>" + commonlowerbody;
-		}*/
+		/*
+		 * if (sendtofriendmail.getMessage().length() > 0) { finalmailbody =
+		 * commonupperbody + "<a href=" + sendtofriendmail.getJoburl() + ">" +
+		 * sendtofriendmail.getJoburl() + "</a>" + commonbeforefriendmsgbody +
+		 * sendtofriendmail.getMessage() + commonlowerbody; } else {
+		 * finalmailbody = commonupperbody + "<a href=" +
+		 * sendtofriendmail.getJoburl() + ">" + sendtofriendmail.getJoburl() +
+		 * "</a>" + commonlowerbody; }
+		 */
 		try {
 			if (sendtofriendmail.getEmail().length() > 0
 					&& validateEmailPattern(sendtofriendmail.getEmail())) {
