@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 
 /**
@@ -32,7 +33,7 @@ public class JobSeekerActivityController {
 	@RequestMapping(value = "/viewAppliedJob")
 	public ModelAndView getAppliedJob(HttpSession session,Map model) {
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
-				.getAppliedJobs((Integer) session.getAttribute("userId"));
+				.getAppliedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("appliedJobDTOList", appliedJobDTOList);
 		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
@@ -49,7 +50,7 @@ public class JobSeekerActivityController {
 			Map model) {
 		boolean result = jobSeekerActivity.updateAppliedSavedJobs(jobId);
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
-				.getAppliedJobs((Integer) session.getAttribute("userId"));
+				.getAppliedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("appliedJobDTOList", appliedJobDTOList);
 		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
@@ -67,7 +68,7 @@ public class JobSeekerActivityController {
 
 		boolean result = jobSeekerActivity.updateAppliedSavedJobs(jobId);
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs((Integer) session.getAttribute("userId"));
+				.getSavedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("savedJobDTOList", savedJobDTOList);
 
 		return new ModelAndView("jobseekermysavedjobspopup");
@@ -83,7 +84,7 @@ public class JobSeekerActivityController {
 	@RequestMapping(value = "/viewSavedJob")
 	public ModelAndView getSavedJob(HttpSession session,Map model) {
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs((Integer) session.getAttribute("userId"));
+				.getSavedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("savedJobDTOList", savedJobDTOList);
 		return new ModelAndView("jobseekermysavedjobspopup");
 	}
