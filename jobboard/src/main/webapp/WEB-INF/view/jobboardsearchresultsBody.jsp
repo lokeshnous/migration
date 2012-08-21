@@ -11,7 +11,6 @@
 	function saveThisSearch() {
 		
 		var keywords = $.trim($("#keywords").val());
-		alert("keywords"+keywords);
 		$.ajax({url : "${pageContext.request.contextPath}/savedSearches/saveThisSearch.html?keywords="+keywords,
 			success: function(data){ 
 				$.each(data, function(key, val) {
@@ -26,6 +25,8 @@
 			    if(data.success != null){
 			    }
 			    if(data.failure != null){
+			    	//alert(data.failure);
+			    	$("#errorMsg").html("<span style='color:red'><b>Please enter the required parameters.</b></span>");
 			    }
 			},
 			error: function(response) {
@@ -47,6 +48,7 @@
 					<div class="row">
 
 						<div class="row marginTop5 paddingBottom05">
+						<div id="errorMsg"></div>
 							<div class="floatLeft">
 								<h1 >
 									<span id="TotalRecord"></span> jobs match your search criteria.

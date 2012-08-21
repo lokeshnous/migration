@@ -14,6 +14,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,6 +55,9 @@ public class SaveSearchController {
 
 	@Autowired
 	PopulateDropdowns populateDropdownsService;
+		
+	@Value("${saveThisSearchErrMsg}")
+	private String saveThisSearchErrMsg;
 
 	/**
 	 * This method is used to save the searches in adm_save_search table
@@ -194,13 +198,18 @@ public class SaveSearchController {
 				List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 						.viewMySavedSearches(userId);
 				int savedSearchCount = 0;
-				savedSearchCount = saveSearchedJobsDTOList.size();
-				if (savedSearchCount == 5) {
-					saveSearchService.deleteFirstSearch(userId);
+				if(keywords != null && keywords != MMJBCommonConstants.EMPTY){
+					savedSearchCount = saveSearchedJobsDTOList.size();
+					if (savedSearchCount == 5) {
+						saveSearchService.deleteFirstSearch(userId);
+					}
+					model.put("SaveSearchForm", new SaveSearchForm());
+					jsonObject.put("LoggedInNavigationPath",
+							"../savedSearches/displaySaveThisSearchPopup");
+				}else{
+					jsonObject.put("failure", saveThisSearchErrMsg);
 				}
-				model.put("SaveSearchForm", new SaveSearchForm());
-				jsonObject.put("LoggedInNavigationPath",
-						"../savedSearches/displaySaveThisSearchPopup");
+				
 			}
 
 		} catch (Exception e) {
