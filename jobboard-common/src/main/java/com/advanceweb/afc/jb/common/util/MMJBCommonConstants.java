@@ -201,8 +201,17 @@ public interface MMJBCommonConstants {
 	public static final String FACILITY_USER="facility_user";
 	public static final String ROLE_MERION_ADMIN="ROLE_MERION_ADMIN";
 	public static final String ROLE_JOB_SEEKER="ROLE_JOB_SEEKER";
-	public static final String ROLE_FACILITY_ADMIN="FACILITY_ADMIN";
+	public static final String ROLE_FACILITY_ADMIN="ROLE_FACILITY_ADMIN";
 	public static final String ROLE_FACILITY_USER="ROLE_FACILITY_USER";
+	public static final String FACILITY="FACILITY";
+	public static final String FACILITY_GROUP="FACILITY_GROUP";
+	public static final String FACILITY_SYSTEM="FACILITY_SYSTEM";
+	public static final String ROLE_FACILITY="ROLE_FACILITY";
+	public static final String ROLE_FACILITY_GROUP="ROLE_FACILITY_GROUP";
+	public static final String ROLE_FACILITY_SYSTEM="ROLE_FACILITY_SYSTEM";
+	
+	
+	
 	
 	//For Login Failure URL
 	public static final String JOBSEEKER_LOGIN_FAILURE_URL="/commonLogin/login.html?error=true&page=jobSeeker";
