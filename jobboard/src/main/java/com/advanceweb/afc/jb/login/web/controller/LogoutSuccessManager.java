@@ -15,8 +15,8 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 
 	@Override
-	public void onLogoutSuccess(HttpServletRequest request,
-			HttpServletResponse response, Authentication authentication)
+	public void onLogoutSuccess( HttpServletRequest request,
+			 HttpServletResponse response,  Authentication authentication)
 			throws IOException, ServletException {
 		response.reset();
 		response.setHeader("Cache-Control", "no-cache");
@@ -31,13 +31,13 @@ public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 					+ MMJBCommonConstants.JOBSEEKER_LOGOUT_URL);
 		} else if (authentication.getAuthorities().contains(
 				new GrantedAuthorityImpl(
-						MMJBCommonConstants.ROLE_FACILITY_ADMIN))) {
+						MMJBCommonConstants.ROLE_FACILITY))) {
 			response.sendRedirect(request.getContextPath()
 					+ MMJBCommonConstants.EMPLOYER_LOGOUT_URL);
 		} else if (authentication.getAuthorities()
 				.contains(
 						new GrantedAuthorityImpl(
-								MMJBCommonConstants.ROLE_FACILITY_USER))) {
+								MMJBCommonConstants.ROLE_FACILITY_GROUP))) {
 			response.sendRedirect(request.getContextPath()
 					+ MMJBCommonConstants.AGENCY_LOGOUT_URL);
 		}
