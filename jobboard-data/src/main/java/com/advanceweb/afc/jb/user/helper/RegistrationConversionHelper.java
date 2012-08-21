@@ -12,6 +12,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
@@ -288,6 +289,67 @@ public class RegistrationConversionHelper {
 		}
 		registerDTO.setAttribList(listDTO);
 		return registerDTO;		
+	}
+	
+	/**
+	 * 
+	 * @param listProfAttrib
+	 * @param countryList
+	 * @param stateList
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public EmployerProfileDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,
+			List<DropDownDTO> countryList, List<DropDownDTO> stateList) {
+		Properties entries = null;
+		Set set = null;
+		List<String> labels = new ArrayList<String>();
+		try {
+			entries = PropertiesLoaderUtils
+					.loadAllProperties("entries.properties");
+			set = entries.keySet();
+			Iterator itr = set.iterator();
+			while (itr.hasNext()) {
+				labels.add(entries.getProperty((String) itr.next()));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		EmployerProfileDTO registerDTO = new EmployerProfileDTO();
+		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
+		if (null != listProfAttrib) {
+			for (MerProfileAttrib entity : listProfAttrib) {
+				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				dto.setStrAttribType(entity.getFormType());
+				dto.setStrLabelName(entity.getName());
+				dto.setStrProfileAttribId(String.valueOf(entity
+						.getProfileAttribId()));
+				dto.setbRequired((labels.contains(dto.getStrLabelName()) ? 1
+						: 0));
+				if (dto.getStrAttribType()
+						.equals(MMJBCommonConstants.DROP_DOWN)
+						|| dto.getStrAttribType().equals(
+								MMJBCommonConstants.CHECK_BOX)) {
+					// populating countries
+					if (dto.getStrLabelName().equals(
+							MMJBCommonConstants.LABEL_COUNTRY)) {
+						dto.setDropdown(countryList);
+
+					} else if (dto.getStrLabelName().equals(
+							MMJBCommonConstants.LABEL_STATE)) {
+						dto.setDropdown(stateList); // populating states
+
+					} else {
+						List<MerProfileAttribList> dropdownVals = entity
+								.getMerProfileAttribLists();
+						dto.setDropdown(transformToDropDownDTO(dropdownVals));
+					}
+				}
+				listDTO.add(dto);
+			}
+		}
+		registerDTO.setAttribList(listDTO);
+		return registerDTO;
 	}
 	
 	

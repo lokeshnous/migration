@@ -174,6 +174,12 @@ public interface MMJBCommonConstants {
 	public static final String EMAIL_ADDRESS="E-Mail Address";
 	public static final String PHONE_NUMBER="Phone Number";
 	public static final String ZERO = "0";
+	//for employer 
+	public static final String position_title = "Position Title";
+	public static final String street_add = "Street Address";
+	public static final String zip_code = "Zip Code";
+	public static final String primary_phone = "Primary Phone";
+	public static final String secondary_phone = "Secondary Phone";
 	
 	
 	//For Save this 

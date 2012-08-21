@@ -1,10 +1,17 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
 
 /**
  * 
@@ -41,14 +48,13 @@ public class TransformEmployerRegistration {
 	 */
 	public AddressDTO transformEmpFormToAddressDTO(EmployerRegistrationForm form){
 		AddressDTO dto = new AddressDTO();
-		dto.setAddress1(form.getAddressLine1());
-		dto.setAddress2(form.getAddressLine2());
+		dto.setAddress1(form.getAddress());
 		dto.setCity(form.getCity());
 		dto.setCountry(form.getCountry());
-		dto.setMobileNumber(form.getMobileNo());
-		dto.setPhone(form.getPhoneNo());
+		dto.setMobileNumber(form.getPrimaryPhone());
+		dto.setPhone(form.getSecondryPhone());
 		dto.setState(form.getState());
-		dto.setStreet(form.getStreet());
+		dto.setStreet(form.getAddress());
 		dto.setZipCode(form.getPostalCode());
 		return dto;		
 	}
@@ -68,6 +74,27 @@ public class TransformEmployerRegistration {
 //		dto.setCompanyOverview(companyOverview);
 //		dto.setCompanyWebsite(companyWebsite);
 		return dto;		
+	}
+	
+public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO){
+		
+		List<EmployerProfileAttribForm> listForms = new ArrayList<EmployerProfileAttribForm>();
+		
+		if(null != registerDTO.getAttribList()){
+			for(MerProfileAttribDTO dto : registerDTO.getAttribList()){
+				EmployerProfileAttribForm form = new EmployerProfileAttribForm();
+				form.setDropdown(dto.getDropdown());
+				form.setStrAttribType(dto.getStrAttribType());
+				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrLabelValue(dto.getStrLabelValue());
+				form.setStrProfileAttribId(dto.getStrProfileAttribId());
+				form.setbRequired(dto.getbRequired());
+				form.setbRequired(dto.getbRequired());
+				listForms.add(form);
+			}
+		}
+		
+		return listForms;		
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.domain.Employer;
 
@@ -43,5 +44,13 @@ public interface EmployerRegistrationDAO {
 	 * @return boolean
 	 */
 	public boolean changePassword(EmployerProfileDTO empDTO);
+	
+	
+	/**
+	 * To change password
+	 * @param jobSeekerRegistrationDTO
+	 * @return
+	 */
+	public EmployerProfileDTO getProfileAttributes();
 
 }

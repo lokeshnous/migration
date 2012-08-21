@@ -32,6 +32,13 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
+	
+	/* $('#edit').click(function(){
+		url = "../pgiController/paymentCreditBackMethod.html";
+	    $('#firstname2').focus();
+	}); */
+	
+	
 </script>
 </head>
 
@@ -130,7 +137,7 @@
 											${state} <br>
 											${country} <br> 
 											${zipCode} <br> 
-											<span><a href="../pgiController/paymentCreditBackMethod.html">Edit</a></span>
+											<span><a id="edit" href="../pgiController/paymentCreditBackMethod.html">Edit</a></span>
 										</span>
 									</td>
 									<td align="center" valign="top">

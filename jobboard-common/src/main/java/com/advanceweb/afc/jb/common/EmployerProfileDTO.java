@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
+import java.util.List;
+
 /**
  * @author rajeshkb
  * @version 1.0
@@ -7,6 +9,7 @@ package com.advanceweb.afc.jb.common;
  */
 public class EmployerProfileDTO extends BaseProfileDTO {
 
+	private static final long serialVersionUID = 1L;
 	private long employerId;
 	private PackageInformationDTO packageInformationDTO;
 	private MetricsDTO metricsDTO;
@@ -14,6 +17,21 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 	private CompanyProfileDTO compProfileDTO;
 	private AddressDTO addDTO;
 	private String profileType;
+	private List<MerProfileAttribDTO> attribList;
+
+	/**
+	 * @return the attribList
+	 */
+	public List<MerProfileAttribDTO> getAttribList() {
+		return attribList;
+	}
+
+	/**
+	 * @param attribList the attribList to set
+	 */
+	public void setAttribList(List<MerProfileAttribDTO> attribList) {
+		this.attribList = attribList;
+	}
 
 	public EmployerProfileDTO(){
 

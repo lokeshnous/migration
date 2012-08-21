@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.employer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
@@ -16,6 +18,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @created 21-Jun-2012 2:22:44 PM
  */
 @Service("employerRegistration")
+@Transactional(propagation=Propagation.SUPPORTS, readOnly=false)
 public class EmployerRegistration implements ProfileRegistration {
 	
 	@Autowired
@@ -37,6 +40,8 @@ public class EmployerRegistration implements ProfileRegistration {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerRegistrationDAO.createNewEmployer(empProfileDTO);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,9 +96,9 @@ public class EmployerRegistration implements ProfileRegistration {
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
 	public ProfileDTO getProfileAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return employerRegistrationDAO.getProfileAttributes();
 	}
 
 }

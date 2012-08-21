@@ -398,7 +398,7 @@ public class JobSeekerRegistrationController {
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				return "Passwords are not incorrect";
+				return "Passwords Doesn't match.";
 			 }
 		 }
 		 

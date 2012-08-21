@@ -139,7 +139,7 @@
 				</div>
 				<div class="headerLoginSectionColumns">
 					<span class="boldText">Employer:</span><br> <a href="/jobboard/commonLogin/login.html?page=employer">Login</a>
-					| <a href="">Post Jobs</a>
+					| <a href="/jobboard/employerRegistration/employerregistration.html">Post Jobs</a>
 				</div>
 				<div class="headerLoginSectionColumns">
 					<span class="boldText">Ad Agency:</span><br> <a href="/jobboard/commonLogin/login.html?page=agency">Login</a>

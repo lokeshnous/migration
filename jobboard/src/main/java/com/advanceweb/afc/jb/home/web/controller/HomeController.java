@@ -1,4 +1,5 @@
 package com.advanceweb.afc.jb.home.web.controller;
+
 /**
  * @author nishantn
  */
@@ -34,10 +35,8 @@ import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
 
 @Controller
-@RequestMapping(value="/healthcarejobs")
-
+@RequestMapping(value = "/healthcarejobs")
 public class HomeController {
-
 
 	@Value("${IMG_WIDTH}")
 	private String imgwidth;
@@ -75,31 +74,35 @@ public class HomeController {
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
 
-    
-	
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
-
-
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
-	public String gethtmlContents(HttpServletRequest request,Model model) {
+	public String gethtmlContents(HttpServletRequest request, Model model) {
 		model.addAttribute("viewhtml", true);
 		try {
 
-			if(new File(basedirectorypath+directory+healthcarenewsfilename).exists()){
-				String htmlhealthcontent=ReadFile.htmlReader(basedirectorypath+directory+healthcarenewsfilename);
+			if (new File(basedirectorypath + directory + healthcarenewsfilename)
+					.exists()) {
+				String htmlhealthcontent = ReadFile
+						.htmlReader(basedirectorypath + directory
+								+ healthcarenewsfilename);
 				model.addAttribute("healthcarenew", htmlhealthcontent);
-			}else{
-				model.addAttribute("healthcarenew", "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+			} else {
+				model.addAttribute("healthcarenew",
+						"<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
 			}
 
-			if(new File(basedirectorypath+directory+careertoolfilename).exists()){
-				String htmlcareercontent=ReadFile.htmlReader(basedirectorypath+directory+careertoolfilename);
+			if (new File(basedirectorypath + directory + careertoolfilename)
+					.exists()) {
+				String htmlcareercontent = ReadFile
+						.htmlReader(basedirectorypath + directory
+								+ careertoolfilename);
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
 
-			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
+					.getEmployerList();
 			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
 			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
@@ -109,17 +112,20 @@ public class HomeController {
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			model.addAttribute("healthcarenew", "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+			model.addAttribute("healthcarenew",
+					"<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
 			model.addAttribute("careerstoolresource", "");
 			e.printStackTrace();
 		}
-		//return "jspviewcontent";
+		// return "jspviewcontent";
 		return "home";
 	}
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
-	public String getfeaturedemployerslist(HttpServletRequest request,Model model) {
-		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile.getEmployerList();
+	public String getfeaturedemployerslist(HttpServletRequest request,
+			Model model) {
+		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
+				.getEmployerList();
 		model.addAttribute("companyProfileDTOList", companyProfileDTOList);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.addAttribute("jobSearchResultForm", jobSearchResultForm);
@@ -127,121 +133,126 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/featuredemployerdetails", method = RequestMethod.GET)
-	public String getfeaturedemployerbyid(EmployerProfileManagementForm employerProfileManagementForm,HttpServletRequest request,Model model) {
-		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerDetails(Integer.parseInt(request.getParameter("id")));
-		employerProfileManagementForm.setCompanyName(companyProfileDTO.getCompanyName());
-		employerProfileManagementForm.setCompanyNews(companyProfileDTO.getCompanyNews());
-		employerProfileManagementForm.setCompanyOverview(companyProfileDTO.getCompanyOverview());
-		employerProfileManagementForm.setCompanyWebsite(companyProfileDTO.getCompanyWebsite());
-		employerProfileManagementForm.setCompanyEmail(companyProfileDTO.getCompanyEmail());
-		employerProfileManagementForm.setPositionTitle(companyProfileDTO.getPositionTitle());
-		employerProfileManagementForm.setLogoPath(companyProfileDTO.getLogoPath());
-		model.addAttribute("windowmediaplayerfilepath", windowmediaplayerfilepath);
-		model.addAttribute("employerProfileManagementForm", employerProfileManagementForm);
+	public String getfeaturedemployerbyid(
+			EmployerProfileManagementForm employerProfileManagementForm,
+			HttpServletRequest request, Model model) {
+		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+				.getEmployerDetails(Integer.parseInt(request.getParameter("id")));
+		employerProfileManagementForm.setCompanyName(companyProfileDTO
+				.getCompanyName());
+		employerProfileManagementForm.setCompanyNews(companyProfileDTO
+				.getCompanyNews());
+		employerProfileManagementForm.setCompanyOverview(companyProfileDTO
+				.getCompanyOverview());
+		employerProfileManagementForm.setCompanyWebsite(companyProfileDTO
+				.getCompanyWebsite());
+		employerProfileManagementForm.setCompanyEmail(companyProfileDTO
+				.getCompanyEmail());
+		employerProfileManagementForm.setPositionTitle(companyProfileDTO
+				.getPositionTitle());
+		employerProfileManagementForm.setLogoPath(companyProfileDTO
+				.getLogoPath());
+		model.addAttribute("windowmediaplayerfilepath",
+				windowmediaplayerfilepath);
+		model.addAttribute("employerProfileManagementForm",
+				employerProfileManagementForm);
 		return "featuredemployerdetails";
 	}
 
-
 	@RequestMapping("/logo")
-	public void getPhoto(@RequestParam("id") Long id, HttpServletResponse response,HttpServletRequest request) {
-		try{
-			BufferedImage originalImage = 
-					ImageIO.read(new File(logoPath+request.getParameter("id")+".jpg"));
+	public void getPhoto(@RequestParam("id") Long id,
+			HttpServletResponse response, HttpServletRequest request) {
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(logoPath
+					+ request.getParameter("id") + ".jpg"));
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write( originalImage, "jpg", baos );
+			ImageIO.write(originalImage, "jpg", baos);
 			baos.flush();
 			byte[] imageInByte = baos.toByteArray();
 			baos.close();
 
-			ResponseEntity<byte[]> result =handleGetMyBytesRequest(imageInByte); 
+			ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
 			// Display the image
 			write(response, result.getBody());
-		}catch(Exception e){
+		} catch (Exception e) {
 
 		}
 	}
 
-	public ResponseEntity< byte[] > handleGetMyBytesRequest(byte[] imageInByte)
-	{
+	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
 		// Get bytes from somewhere...
 		byte[] byteData = imageInByte;
 
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.setContentType( MediaType.IMAGE_PNG );
-		responseHeaders.setContentLength( byteData.length );
+		responseHeaders.setContentType(MediaType.IMAGE_PNG);
+		responseHeaders.setContentLength(byteData.length);
 
-		return new ResponseEntity< byte[] >( byteData, responseHeaders, HttpStatus.OK );
+		return new ResponseEntity<byte[]>(byteData, responseHeaders,
+				HttpStatus.OK);
 	}
 
-
-
-	/*	public void getPhoto( HttpServletResponse response) {
-		try{
-//			BufferedImage originalImage = 
-//					ImageIO.read(new File("C:\\Users\\SHISHER\\Desktop\\images\\123.jpg"));
-//			System.out.println("in photo////////////////");
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			ImageIO.write( originalImage, "jpg", baos );
-//			baos.flush();
-//			byte[] imageInByte = baos.toByteArray();
-//			baos.close();
-
-			// Send the request as GET
-			//ResponseEntity<byte[]> result = restTemplate.exchange("http://localhost:8080/spring-rest-provider/krams/person/{id}", HttpMethod.GET, entity, byte[].class, id);
-			ResponseEntity<byte[]> result =retriveLogo(); 
-			// Display the image
-			write(response, result.getBody());
-		}catch(Exception e){
-
-		}
-	}
-
-
-
-	public ResponseEntity<byte[]> retriveLogo() throws IOException {
-		byte[] data = extractBytes("D:\\images\\MercyRNlogo.jpg");
-		final HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.IMAGE_JPEG);
-		return new ResponseEntity<byte[]>(data, headers, HttpStatus.OK);
-	}
-
-
-	public byte[] extractBytes (String ImageName) throws IOException {
-		// open image
-		File imgPath = new File(ImageName);
-		BufferedImage bufferedImage = ImageIO.read(imgPath);
-		int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-
-		BufferedImage resizeImageHintJpg = resizeImageWithHint(bufferedImage, type);
-
-		// get DataBufferBytes from Raster
-		WritableRaster raster = resizeImageHintJpg .getRaster();
-		DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
-
-		return ( data.getData() );
-	}
-
-
-	private BufferedImage resizeImageWithHint(BufferedImage originalImage, int type){
-
-		BufferedImage resizedImage = new BufferedImage(Integer.parseInt(imgwidth), Integer.parseInt(imgheight), type);
-		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(originalImage, 0, 0, Integer.parseInt(imgwidth), Integer.parseInt(imgheight), null);
-		g.dispose();	
-		g.setComposite(AlphaComposite.Src);
-
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g.setRenderingHint(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		return resizedImage;
-	}	
-
+	/*
+	 * public void getPhoto( HttpServletResponse response) { try{ //
+	 * BufferedImage originalImage = // ImageIO.read(new
+	 * File("C:\\Users\\SHISHER\\Desktop\\images\\123.jpg")); //
+	 * System.out.println("in photo////////////////"); // ByteArrayOutputStream
+	 * baos = new ByteArrayOutputStream(); // ImageIO.write( originalImage,
+	 * "jpg", baos ); // baos.flush(); // byte[] imageInByte =
+	 * baos.toByteArray(); // baos.close();
+	 * 
+	 * // Send the request as GET //ResponseEntity<byte[]> result =
+	 * restTemplate.
+	 * exchange("http://localhost:8080/spring-rest-provider/krams/person/{id}",
+	 * HttpMethod.GET, entity, byte[].class, id); ResponseEntity<byte[]> result
+	 * =retriveLogo(); // Display the image write(response, result.getBody());
+	 * }catch(Exception e){
+	 * 
+	 * } }
+	 * 
+	 * 
+	 * 
+	 * public ResponseEntity<byte[]> retriveLogo() throws IOException { byte[]
+	 * data = extractBytes("D:\\images\\MercyRNlogo.jpg"); final HttpHeaders
+	 * headers = new HttpHeaders();
+	 * headers.setContentType(MediaType.IMAGE_JPEG); return new
+	 * ResponseEntity<byte[]>(data, headers, HttpStatus.OK); }
+	 * 
+	 * 
+	 * public byte[] extractBytes (String ImageName) throws IOException { //
+	 * open image File imgPath = new File(ImageName); BufferedImage
+	 * bufferedImage = ImageIO.read(imgPath); int type = bufferedImage.getType()
+	 * == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+	 * 
+	 * BufferedImage resizeImageHintJpg = resizeImageWithHint(bufferedImage,
+	 * type);
+	 * 
+	 * // get DataBufferBytes from Raster WritableRaster raster =
+	 * resizeImageHintJpg .getRaster(); DataBufferByte data = (DataBufferByte)
+	 * raster.getDataBuffer();
+	 * 
+	 * return ( data.getData() ); }
+	 * 
+	 * 
+	 * private BufferedImage resizeImageWithHint(BufferedImage originalImage,
+	 * int type){
+	 * 
+	 * BufferedImage resizedImage = new
+	 * BufferedImage(Integer.parseInt(imgwidth), Integer.parseInt(imgheight),
+	 * type); Graphics2D g = resizedImage.createGraphics();
+	 * g.drawImage(originalImage, 0, 0, Integer.parseInt(imgwidth),
+	 * Integer.parseInt(imgheight), null); g.dispose();
+	 * g.setComposite(AlphaComposite.Src);
+	 * 
+	 * g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+	 * RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	 * g.setRenderingHint(RenderingHints.KEY_RENDERING,
+	 * RenderingHints.VALUE_RENDER_QUALITY);
+	 * g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	 * RenderingHints.VALUE_ANTIALIAS_ON);
+	 * 
+	 * return resizedImage; }
 	 */
-	public  void write(HttpServletResponse response, ByteArrayOutputStream bao) {
+	public void write(HttpServletResponse response, ByteArrayOutputStream bao) {
 
 		try {
 			// Retrieve the output stream
@@ -260,7 +271,7 @@ public class HomeController {
 	/**
 	 * Writes the report to the output stream
 	 */
-	public  void write(HttpServletResponse response, byte[] byteArray) {
+	public void write(HttpServletResponse response, byte[] byteArray) {
 
 		try {
 			// Retrieve the output stream
@@ -274,22 +285,20 @@ public class HomeController {
 
 		} catch (Exception e) {
 		}
-	}	
-
-	
+	}
 
 	@RequestMapping(value = "/copyhtmltolocal", method = RequestMethod.GET)
-	public String copyHtmlFiles(HttpServletRequest request,Model model) {
-		try{
-			File directorycreation=new File(basedirectorypath+directory);
+	public String copyHtmlFiles(HttpServletRequest request, Model model) {
+		try {
+			File directorycreation = new File(basedirectorypath + directory);
 			directorycreation.mkdir();
-			List<String> li=new ArrayList<String>();
+			List<String> li = new ArrayList<String>();
 			li.add(healthcarenewsfilename);
 			li.add(careertoolfilename);
-			CopyUtil.copy(li,basedirectorypath+directory);
+			CopyUtil.copy(li, basedirectorypath + directory);
 			model.addAttribute("copyhtml", true);
-		}catch (Exception e){//Catch exception if any
-			//System.err.println("Error: " + e.getMessage());
+		} catch (Exception e) {// Catch exception if any
+			// System.err.println("Error: " + e.getMessage());
 			model.addAttribute("copyhtml", "");
 			e.printStackTrace();
 		}

@@ -313,10 +313,12 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTem
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAlertsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
@@ -421,6 +423,7 @@ jobboard/src/main/webapp/WEB-INF/view/gatewayInvoiceConfirmOrder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/gatewayPaymentMethod.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/gatewayThankYou.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobBoardEmployerPostJobs01.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerActivity.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerCreateAccount.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerCreateAccountInfo.jsp -text

@@ -1,167 +1,286 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="en">
 <head>
-<title>JobSeekerRegistration</title>
-	<link rel="stylesheet" href="../tabs.css" type="text/css" media="screen, projection"/>
-	<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" ></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js" ></script>
-	<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
-	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<jsp:include page="common/include.jsp" />
+<title>ADVANCE Heathcare Jobs</title>
 
+<!-- ../resources/css -->
+<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
+	type="text/css" />
+<link href="../resources/css/SliderStyles.css" rel="stylesheet"
+	type="text/css">
 
-</script> 
-<style type="text/css">
-.Header2 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight: bold;
-	font-size: 12px;
-}
-
-fieldset {
-    border-color: #EEEEEE;
-    padding: 5px;
-}
-
-</style>
+<!-- JAVASCRIPT FILES -->
+<script type="text/javascript" src="../resources/js/slider.js"></script>
+<link href="../resources/css/jquery.dataTables.css" rel="stylesheet"
+	type="text/css">
+<link href="../resources/css/jquery-ui.css" rel="stylesheet"
+	type="text/css">
+<link href="../resources/css/jobsearchResults.css" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>
+<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+<script src="../resources/js/searchResultsdatatable.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery(".megamenu").megamenu();
+		
+		$("#save").click(function() {
+			$("form").submit();
+		});
+		
+	});
+</script>
 </head>
-<body>
 
 
-<form:form method="Post" action="saveEmployerProfile.html" 
-commandName="employerRegistrationForm" enctype="multipart/form-data">
-    <div id="fragment-1"> 	
-	<table border="0" width="50%">
-	 	<tr>
-			<td>First Name :</td>
-			<td><form:input path="firstName" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="firstName" cssClass="error" /></FONT></td>
-		</tr>
-		<tr>
-			<td>Middle Name :</td>
-			<td><form:input path="middleName" /></td>
-			<td><form:errors path="middleName" cssClass="error" /></td>
-		</tr>
-    	<tr>
-			<td>Last Name :</td>
-			<td><form:input path="lastName" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="lastName" cssClass="error" /></FONT></td>
-		</tr>
-	
- 		<tr>
-			<td>Email Address:</td>
-			<td><form:input path="emailId" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="emailId" /></FONT></td>
-		</tr> 
-		
-		<tr>
-			<td>Confirm Email Address:</td>
-			<td><form:input path="confirmEmailId" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="confirmEmailId" /></FONT></td>
-		</tr> 
-		
-		<tr>
-			<td>Position Title:</td>
-			<td><form:input path="positionTitle" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="positionTitle" /></FONT></td>
-		</tr> 
-
-		<tr>
-			<td>Password:</td>			
-			<td><form:password path="password" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="password" /></FONT></td>
-		</tr>
-
- 		<tr>
-			<td>Confirm Password:</td>
-			<td><form:password path="confirmPassword" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="confirmPassword" /></FONT></td>
-		</tr>
-		
-		<tr>
-			<td>Company :</td>
-			<td><form:input path="company" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="company" /></FONT></td>
-		</tr> 
-
-		<tr>
-			<td>Phone :</td>
-			<td><form:input path="phoneNo" /></td>
-			<td><FONT color="red"><form:errors path="phoneNo" cssClass="error" /></FONT></td>
-		</tr> 
-		
-		<tr>
-			<td>Mobile No :</td>
-			<td><form:input path="mobileNo" /></td>
-			<td><FONT color="red"><form:errors path="mobileNo" cssClass="error" /></FONT></td>
-		</tr> 
-		
-		<tr>
-			<td>Street :</td>
-			<td><form:input path="street" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="street" cssClass="error" /></FONT></td>
-		</tr>
-		
-		<tr>
-			<td>City :</td>
-			<td><form:input path="city" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="city" cssClass="error" /></FONT></td>
-		</tr>
-		
-		<tr>
-			<td>State/Province :</td>
-			<td><form:input path="state" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="state" cssClass="error" /></FONT></td>
-		</tr>
-		
-		<tr>
-			<td>Country :</td>
-			
-			<td><form:select path="country">
-				<form:option value="0" label="Select" />
-				<form:options items="${countryList}" itemValue="countryId" itemLabel="countryValue" />
-				</form:select>
-			</td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="country" cssClass="error" /></FONT></td>
-		</tr>
-		
-		<tr>
-			<td>Zip Code :</td>
-			<td><form:input path="postalCode" /></td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
-			<td><FONT color="red"><form:errors path="postalCode" cssClass="error" /></FONT></td>
-		</tr>
-		
-		<tr>
-<%--			<td>Security Check:</td>
-			<td><FONT color="red">[Mandatory]</FONT></td>
- 			<td><form:password path="retypepassword" /></td>
-			<td><FONT color="red"><form:errors path="retypepassword" /></FONT></td> --%>
-		</tr>
-		
-		<tr>
-			<input type="submit" value="save" />
-		</tr>
-		
-	</table>
+<body class="job_board">
+	<div class="ad_page_top">
+		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
-	
-</form:form>
+	<div class="main_wrapper_outside">
+		<div class="main_wrapper_inside">
+			<div class="main">
+				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+				<div class="row">
+					<!-- Step 1 -->
+					<div id="jobSeekerRegister1"
+						class="job_seeker_login leftFormHolder" style="display: block">
+						<h2 class="sectionSubHeader">To register as an employer,
+							please fill out these fields.</h2>
+						<form:form method="post" action="../employerRegistration/saveEmployerProfile.html"
+							commandName="empRegisterForm" enctype="multipart/form-data">
+
+							<c:forEach items="${empRegisterForm.listProfAttribForms}"
+								var="profAttrib" varStatus="status">
+
+								<c:if test="${profAttrib.strLabelName == 'First Name'}">
+									<div class="row">
+										<span class="lableText3">First Name:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="firstName"
+											class="job_seeker_password textBox350" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+
+								<c:if test="${profAttrib.strLabelName == 'Middle Name'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Middle Name:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="lastname"
+											class="job_seeker_password textBox350" />
+
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Last Name'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Last Name:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty2"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+							</c:forEach>
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Email Address:</span>
+								<form:input path="emailId" type="text" name="mobileNo"
+									class="job_seeker_password textBox350 
+" />
+								<span class="required">(Required)</span>
+							</div>
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Confirm Email Address:</span>
+								<form:input path="confirmEmailId" type="text" name="JobTitle"
+									class="job_seeker_password textBox350 
+" />
+								<span class="required">(Required)</span>
+							</div>
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Password:</span>
+								<form:input path="password" type="password"
+									name="healthCareSubSplty"
+									class="job_seeker_password textBox350 
+" />
+								<span class="required">(Required)</span>
+								<div class="row marginTop5">
+									<span class="lableText3"></span>(8-20 characters, including at
+									least 1 number)
+								</div>
+							</div>
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3">Confirm Password:</span>
+								<form:input path="confirmPassword" type="password"
+									name="healthCareSubSplty"
+									class="job_seeker_password textBox350 
+" />
+								<span class="required">(Required)</span>
+							<p style="padding-top: 27px;" class="borderBottomDotted marginBottom15">&nbsp;</p>
+							</div>
+							<c:forEach items="${empRegisterForm.listProfAttribForms}"
+								var="profAttrib" varStatus="status">
+								<c:if test="${profAttrib.strLabelName == 'Position Title'}">
+									<div class="rowEvenNewSpacing marginTop0">
+										<span class="lableText3">Position Title:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Company'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Company:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Street Address'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Street Address:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'City'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">City / Town:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'State / Province'}">
+									<div class="row">
+										<span class="lableTextSelect marginTop13 ">State /
+											Province:</span>
+										<form:select name="Country" id="Country"
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											class="jb_input3 jb_input_width3">
+											<form:option value="0" label="Select" />
+											<form:options items="${profAttrib.dropdown}"
+												itemValue="optionId" itemLabel="optionName" />
+										</form:select>
+										<span class="required marginTop8">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Zip Code'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Zip:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Country'}">
+									<div class="row">
+										<span class="lableTextSelect marginTop13 ">Country:</span>
+										<form:select
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											name="Country" id="Country" class="jb_input3 jb_input_width3">
+											<form:option value="0" label="Select" />
+											<form:options items="${profAttrib.dropdown}"
+												itemValue="optionId" itemLabel="optionName" />
+										</form:select>
+										<span class="required marginTop8">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Primary Phone'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Primary Phone:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+										<span class="required">(Required)</span>
+									</div>
+								</c:if>
+								<c:if test="${profAttrib.strLabelName == 'Secondary Phone'}">
+									<div class="rowEvenNewSpacing">
+										<span class="lableText3">Secondary Phone:</span>
+										<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="healthCareSubSplty"
+											class="job_seeker_password textBox350 
+" />
+									</div>
+								</c:if>
+							</c:forEach>
+
+							<%-- <div class="rowEvenNewSpacing"></div>
+							<div class="row">
+								<img src="images/SecureText.jpg" width="294" height="48" alt="">
+							</div>
+							<div class="rowEvenNewSpacing marginTop30">
+								<span class="lableText3">Type the two words:</span>
+								<form:input path="" type="text" name="healthCareSubSplty"
+									class="job_seeker_password textBox350 
+" />
+								<span class="required">(Required)</span>
+							</div>
+ --%>
+							<div class="clearfix"></div>
+
+						</form:form>
+						<div class="clearfix"></div>
+					</div>
+					<div class="rowEvenNewSpacing marginTop25 paddingBottom30">
+						<span class="floatLeft marginTop10 marginRight60">
+						<a id="save" href="#"
+							class="btn_sm orange">Save &amp; Continue</a> <a href=""
+							class="btn_sm orange">Cancel</a></span> <span
+							class="floatLeft marginTop10">I'll set up my profile
+							later. <a href="#">Continue</a> to the site now.
+						</span>
+					</div>
+					<!-- Step 2 -->
+				</div>
+				<div class="clearfix"></div>
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
+				</div>
+			</div>
+			<!-- main -->
+
+		</div>
+		<!-- end main_wrapper_inside -->
+	</div>
+	<!-- end main_wrapper_outside -->
+
+	<!-- footer_wrapper -->
+	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 </body>
 </html>
