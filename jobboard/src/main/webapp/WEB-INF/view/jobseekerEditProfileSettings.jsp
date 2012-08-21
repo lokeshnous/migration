@@ -228,10 +228,11 @@
 						</c:if>
 				</c:forEach>
 				<div class="popUpButtonRow">
-				<!-- 					<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
+					<!--<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
-						<input type="button" value="Save" class="btn_sm orange" id="save"/>
-						<a href="#" class="btn_sm orange" onclick="parent.$.nmTop().close();">Cancel</a>
+					<input type="button" value="Save" class="btn_sm orange" id="save" style="margin-bottom:3px"/>
+					<a href="#" class="btn_sm orange"
+						onclick="parent.$.nmTop().close();">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
