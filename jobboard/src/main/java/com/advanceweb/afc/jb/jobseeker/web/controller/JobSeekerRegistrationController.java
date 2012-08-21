@@ -299,7 +299,7 @@ public class JobSeekerRegistrationController {
 					//validation mobile number
 					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
 							&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
-						return "Phone number should contain only numbers";
+						return jobseekerRegPhoneMsg;
 					}
 					
 					//validation mobile number
