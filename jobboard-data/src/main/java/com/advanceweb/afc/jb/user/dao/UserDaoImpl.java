@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
 		MerUserDTO userDTO=new MerUserDTO();
 		List<MerUser> userList =hibernateTemplateTracker.find(" from  MerUser user where user.email=?",email);
 		MerUser user=null;
-		if(userList!= null && userList.size() > 0){
+		if(userList!= null && !userList.isEmpty()){
 		user=userList.get(0);
 		}
 		userDTO.setEmailId(user.getEmail());
@@ -50,6 +50,17 @@ public class UserDaoImpl implements UserDao {
 		
 		
 		for(AdmUserRole role:roleList){
+			
+			List<AdmUserFacility> userFacilityList=hibernateTemplate.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",role.getId().getUserId(),role.getId().getRoleId());
+			
+			for(AdmUserFacility facility:userFacilityList){
+				UserRoleDTO dto=new UserRoleDTO();
+				dto.setRoleId(facility.getAdmFacility().getFacilityId());
+				dto.setRoleName(facility.getAdmFacility().getFacilityType());
+				userRoleDTOList.add(dto);
+				
+			}
+			
 			UserRoleDTO userRole=new UserRoleDTO();
 			userRole.setRoleId(role.getAdmRole().getRoleId());
 			userRole.setRoleName(role.getAdmRole().getName());
