@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
+
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
@@ -115,7 +115,7 @@ public class SaveSearchController {
 											.getAttribute(MMJBCommonConstants.RADIUS));
 
 					searchedJobsDTO.setSearchName(searchName);
-					searchedJobsDTO.setCreatedDate(DateUtils
+					searchedJobsDTO.setCreatedDate(MMUtils
 							.getCurrentDateAndTime());
 					saveSearchService.saveSearchedJobs(searchedJobsDTO);
 					jsonObject.put("LoggedInNavigationPath", "");
