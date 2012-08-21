@@ -13,10 +13,5 @@ public class JobApplicationDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-
-	/*private String employerEmail;
-	private String jobTitle;
-	private String jobDescription;*/
-	
-	// currently not using 
+	// TODO:currently not using
 }
