@@ -505,55 +505,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents the instance of QueryResponse
 	 * @return JobSearchResultDTO
 	 */
-	/*private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
-
-		JobSearchResultDTO jobSResultDTO = new JobSearchResultDTO();
-		LOGGER.info("Number of search records===>"
-				+ response.getResults().getNumFound());
-
-		jobSResultDTO.setTotalNumSearchResult(response.getResults()
-				.getNumFound());
-
-		List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
-		
-		
-
-		*//** Binding the JobSearchDTO.class into the QueryResponse object **//*
-		jobSearchDTOList = response.getBeans(JobSearchDTO.class);
-		
-		*//** Copying the JobSearchDTO list to JobDTO list to separate the dependency on solr.**//*
-		List<JobDTO> jobDTOList = copyToJobDTO(jobSearchDTOList);
-
-		final Map<String, List<String>> facetMap = new HashMap<String, List<String>>();
-		final List<FacetField> facetFieldList = response.getFacetFields();
-
-		*//**
-		 * Creating Lists of Facets(List<String>) by iterating the
-		 * FaceeFieldList
-		 **//*
-		for (FacetField facetField : facetFieldList) {
-			List<String> facetsList = new ArrayList<String>();
-			List<Count> facetFieldValList = facetField.getValues();
-
-			if(facetFieldValList != null){
-				for (Count countObj : facetFieldValList) {
-					String facetVal = countObj.getName().toString();
-					long count = countObj.getCount();
-					facetsList.add(facetVal
-							.concat(MMJBCommonConstants.SPACE_OPN_BRCKT)
-							.concat(String.valueOf(count))
-							.concat(MMJBCommonConstants.CLSG_BRCKT));
-				}
-			}
-			LOGGER.info("facetsList is" + facetsList);
-			facetMap.put(facetField.getName(), facetsList);
-
-		}
-		jobSResultDTO.setFacetMap(facetMap);
-		jobSResultDTO.setJobResultList(jobDTOList);
-
-		return jobSResultDTO;
-	}*/
 
 	private JobSearchResultDTO getSolrJSResult(QueryResponse response) {
 
@@ -594,14 +545,9 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					long count = countObj.getCount();
 					searchFacetDTO.setCount(count);
 					
-					/*facetsList.add(facetVal
-							.concat(MMJBCommonConstants.SPACE_OPN_BRCKT)
-							.concat(String.valueOf(count))
-							.concat(MMJBCommonConstants.CLSG_BRCKT));*/
 					searchFacetDTOList.add(searchFacetDTO);
 				}
 			}
-			LOGGER.info("facetsList is" + searchFacetDTOList);
 			facetMap.put(facetField.getName(), searchFacetDTOList);
 
 		}
