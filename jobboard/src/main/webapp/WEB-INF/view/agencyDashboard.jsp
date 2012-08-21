@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +18,7 @@
 
 <body class="job_board">
 	<div class="ad_page_top">
-		<img src="images/ads/banner_ad_fpo.png" />
+		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
@@ -132,7 +136,7 @@
 						<div class="row width467 marginRight12">
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="images/UserProfile.jpg" width="30" height="30"
+									<img src="../resources/images/UserProfile.jpg" width="30" height="30"
 										alt="User Profile">
 								</div>
 
@@ -160,7 +164,7 @@
 							<!---->
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="images/Subscriptions.jpg" width="30" height="30"
+									<img src="../resources/images/Subscriptions.jpg" width="30" height="30"
 										alt="Subscription">
 								</div>
 
@@ -182,7 +186,7 @@
 							<!---->
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="images/media.png" width="30" height="30"
+									<img src="../resources/images/media.png" width="30" height="30"
 										alt="Subscription">
 								</div>
 
@@ -203,7 +207,7 @@
 						<div class="row width467 paddingLeft12 BorderLeft">
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="images/Resume.jpg" width="30" height="30"
+									<img src="../resources/images/Resume.jpg" width="30" height="30"
 										alt="Resume">
 								</div>
 
@@ -289,7 +293,7 @@
 				<div class="clearfix"></div>
 				<!-- content_wrapper -->
 				<div class="ad_wrapper">
-					<img src="images/ads/banner_ad_fpo.png" />
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
 				<!-- ad_wrapper -->
 
@@ -342,13 +346,13 @@
 			<ul>
 				<li><a href="#">ADVANCE Healthcare Jobs</a></li>
 				<li><a href="#">Subscribe</a></li>
-				<li><img src="images/email.png" class="foot_icon" /><a href="#">Sign
+				<li><img src="../resources/images/email.png" class="foot_icon" /><a href="#">Sign
 						Up for Enewsletter</a></li>
-				<li><img src="images/fbook_sm.png" class="foot_icon" /><a
+				<li><img src="../resources/images/fbook_sm.png" class="foot_icon" /><a
 					href="#">Connect on Facebook</a></li>
-				<li><img src="images/L_In_sm.png" class="foot_icon" /><a
+				<li><img src="../resources/images/L_In_sm.png" class="foot_icon" /><a
 					href="#">Connect on LinkedIn</a></li>
-				<li><img src="images/twitter_sm.png" class="foot_icon" /><a
+				<li><img src="../resources/images/twitter_sm.png" class="foot_icon" /><a
 					href="#">Connect on Twitter</a></li>
 				<li><a href="#">Download the Mobile App</a></li>
 				<li><a href="#">Order Promotional Items</a></li>
