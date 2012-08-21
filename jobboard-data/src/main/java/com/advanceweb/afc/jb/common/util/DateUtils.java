@@ -127,26 +127,7 @@ public class DateUtils {
 	}
 	
 	
-	/**
-	 * This method will return current Date.
-	 * @return Date object
-	 */
-	
-	public static java.util.Date getCurrentDateAndTime(){
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
-		java.util.Date date = new java.util.Date();
-		SimpleDateFormat parser = new SimpleDateFormat(	"yyyy/MM/dd HH:mm:ss", Locale.US);
-		
-		try {
-			date = parser.parse(dateFormat.format(date));
-		} catch (ParseException e) {
-			LOGGER.info("getCurrentDateAndTime Exception");
-		}
-		return date;
-		
-	}
-	
+
 	
 	/**
 	 * This method helps to convert UtilDate To SQLDate
