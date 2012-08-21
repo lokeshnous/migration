@@ -50,7 +50,7 @@
 					<!-- loginHeader -->
 				</div>
 			</security:authorize>
-			<security:authorize access="hasRole('ROLE_MERION_ADMIN')">
+			<security:authorize access="hasRole('ROLE_FACILITY')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
@@ -77,7 +77,7 @@
 				</div>
 			</security:authorize>
 			<!-- loginHeader -->
-			<security:authorize access="hasRole('ROLE_FACILITY_USER')">
+			<security:authorize access="hasRole('ROLE_FACILITY_GROUP')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
@@ -105,7 +105,7 @@
 			</security:authorize>
 			<%-- <c:if test="${sessionScope.userId == null}">  --%>
 			<security:authorize
-				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_MERION_ADMIN') and !hasRole('ROLE_MERION_ADMIN')">
+				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP')">
 				<div class="headerLoginSectionColumns width205">
 					<span class="boldText">Job Seeker:</span><br>
 					<div class="PopUpToolTip">
