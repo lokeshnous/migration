@@ -53,7 +53,7 @@
 				alert("print");
 				break;
 			case "delete":{
-				if (confirm("Do You want to Delete?")) {
+				if (confirm("Are you sure you want to delete?")) {
 						$.ajax({url: "${pageContext.request.contextPath}/jobSeekerResume/deleteResume.html?resumeId="+resumeId,
 							type: "POST",
 							success: function(data){ 
