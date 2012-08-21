@@ -489,7 +489,7 @@ public class JobSearchActivityController {
 		// is done.
 		// This value needs to be increased every time when there is a search
 		// happening for a session
-		int search_seq = MMJBCommonConstants.ZERO_INT;
+		int searchSeq = MMJBCommonConstants.ZERO_INT;
 		// String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 		
 		String sessionId  = null;
@@ -519,8 +519,8 @@ public class JobSearchActivityController {
 		paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm
 				.getRadius().trim());
 		paramMap.put(MMJBCommonConstants.SESSION_ID, sessionId.trim());
-		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, String.valueOf(search_seq));
-		paramMap.put(MMJBCommonConstants.QUERY_TYPE, searchName.trim());
+		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, String.valueOf(searchSeq));
+		paramMap.put(MMJBCommonConstants.SEARCH_NAME, searchName.trim());
 
 		try {
 

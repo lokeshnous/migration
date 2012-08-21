@@ -72,7 +72,7 @@ public interface MMJBCommonConstants {
 	public static final String SESSION_ID = "sessionid";
 	
 	public static final String SEARCH_SEQ = "search_seq";
-	public static final String QUERY_TYPE = "queryType";
+	public static final String SEARCH_NAME = "searchName";
 	public static final String CITY = "city";
 	public static final String STATE = "state";
 	public static final String COMPANY = "company";

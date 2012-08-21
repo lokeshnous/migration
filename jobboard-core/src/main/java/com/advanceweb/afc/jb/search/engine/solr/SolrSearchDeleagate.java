@@ -212,7 +212,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				serverDetailsMap);
 
 		if (MMJBCommonConstants.LOCATION.equalsIgnoreCase(paramMap
-				.get(MMJBCommonConstants.QUERY_TYPE))) {
+				.get(MMJBCommonConstants.SEARCH_NAME))) {
 
 			srchParamRlpcdDTOList = createParamsForLocationSearch(queryDTO,
 					paramMap, rows, start);
@@ -306,7 +306,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 						break;
 					case 5:
 						mSrchParamDTO.setParameterValue(paramMap
-								.get(MMJBCommonConstants.QUERY_TYPE));
+								.get(MMJBCommonConstants.SEARCH_NAME));
 						break;
 					case 6:
 						mSrchParamDTO.setParameterValue(paramMap
@@ -437,7 +437,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 								break;
 							case 7:
 								mSrchParamDTO.setParameterValue(paramMap
-										.get(MMJBCommonConstants.QUERY_TYPE));
+										.get(MMJBCommonConstants.SEARCH_NAME));
 								break;
 							case 8:
 								mSrchParamDTO.setParameterValue(paramMap
