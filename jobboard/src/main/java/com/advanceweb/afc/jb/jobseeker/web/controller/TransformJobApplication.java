@@ -11,15 +11,15 @@ import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
  */
 public class TransformJobApplication {
 
-public JobApplicationDTO transformAnonymousUserJobApplyDTO(JobApplicationForm anoUserForm){
+public JobApplicationDTO transformAnonymousUserJobApplyDTO(final JobApplicationForm anoUserForm){
 		
 		
                 JobApplicationDTO dto = new JobApplicationDTO();
+                //TODO:currently not using
 /*				dto.setUserName(anoUserForm.getUserName());
 				dto.setUserEmail(anoUserForm.getEmail());
 				dto.setFileContent(anoUserForm.getFileContent());
 */				
-
 		return dto;
 		
 	}
