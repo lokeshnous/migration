@@ -8,7 +8,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
  */
 public class JobPostForm {
 
-	private String jobId;
+	private int jobId;
 	private String jobOwner;
 	private String customerNo;
 	private String companyName;
@@ -46,12 +46,13 @@ public class JobPostForm {
 	private boolean autoRenew;
 
 	
+	
 
-	public String getJobId() {
+	public int getJobId() {
 		return jobId;
 	}
 
-	public void setJobId(String jobId) {
+	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
 

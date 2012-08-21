@@ -16,6 +16,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
@@ -119,12 +120,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 				}
 				
 				//Retrieving the template object selected based on the template id selected by the user
-				JpTemplate template = hibernateTemplate.load(JpTemplate.class,dto.getBrandTemplate());
+				JpTemplate template = hibernateTemplate.load(JpTemplate.class,Integer.valueOf(dto.getBrandTemplate()));
 				
-				JpJobType jobType = hibernateTemplate.load(JpJobType.class, dto.getJobPostingType());
+				JpJobType jobType = hibernateTemplate.load(JpJobType.class, Integer.valueOf(dto.getJobPostingType()));
 				
-				JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto, location, template, jobType);
+				JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto, template, jobType);
 				hibernateTemplate.save(jobob);
+				List<JpJobLocation> locList = jobPostConversionHelper.transformJobPostDTOToJpJbLocation(dto, jobob, location);
+				hibernateTemplate.saveOrUpdateAll(locList);				
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}

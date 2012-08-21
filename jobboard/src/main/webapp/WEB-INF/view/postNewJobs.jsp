@@ -180,7 +180,7 @@
         <div class="row">
                   <div class="job_seeker_login leftFormHolderLMargin width100P" style="display:block">
                       <div class="row"> <span class="lableTextSelect marginTop13 ">Job Owner:</span>
- 				<form:select path="jobState" class="jb_input3 jb_input_width3">
+ 				<form:select path="jobOwner" class="jb_input3 jb_input_width3">
 					<form:option value="0" label="Select" />
 					<form:options items="${jbOwnerList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
@@ -228,7 +228,7 @@
                 <h3>Job Title and Number</h3>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job ID:</span>
-                <form:input path="jobId" class="job_seeker_password textBox350" />
+                <form:input path="jobNumber" class="job_seeker_password textBox350" />
                 <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you're posting multiple positions with the same job title, you can enter a 4 to 10 digit number here to help you reference this specific job posting in the future.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
@@ -245,19 +245,19 @@
                		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required">(Required)</span>
               </div>
                       <div class="rowEvenNewSpacing"><span class="required">
-                      <form:radiobutton path="applMethod" class="marginLeft30"/>
+                      <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail"/>
                         </span><span class="lableText3 width105">Apply-to Email:</span>
                 <form:input path="applyEmail" class="job_seeker_password textBox350" />
 
                 <span class="required TextColor01">Enter the email address where you would like resumes to be sent.</span> </div>
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <form:radiobutton path="applMethod" class="marginLeft30"/>
+                        <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToURL"/>
                         </span><span class="lableText3 width105">Apply-to URL</span>
                 <form:input path="applyUrl" class="job_seeker_password textBox350" />
                 <span class="required TextColor01">Enter the URL where you would like to send job-seekers to apply.</span> </div>
 
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <form:radiobutton path="applMethod" class="marginLeft30"/>
+                        <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS"/>
                         </span><span  class="lableText3 width105">Apply-to URL</span>
                <form:input path="atsUrl" class="job_seeker_password textBox350" />
 				<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>

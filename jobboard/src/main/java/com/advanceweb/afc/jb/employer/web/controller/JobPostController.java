@@ -64,7 +64,7 @@ public class JobPostController {
 		}
 		int myInt = random.nextInt();
 		jobPostForm.setCustomerNo("MMCN"+Math.abs(myInt));
-		jobPostForm.setJobId("JT"+Math.abs(myInt));	
+		jobPostForm.setJobNumber("JT"+Math.abs(myInt));	
 		
 		//Populating Dropdowns
 		model.addObject("stateList",stateList);
@@ -94,6 +94,7 @@ public class JobPostController {
 		ModelAndView  model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
 		if(!StringUtils.isEmpty(errMessage)){
+			model=populateDropdowns(model);
 			model.setViewName("postNewJobs");
 			model.addObject("errorMessage", errMessage);
 			return model;
@@ -123,15 +124,36 @@ public class JobPostController {
 			}
 			
 			//Validating URL
-			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
-				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
-				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail())) ){
-				
-				return "Please enter valid URL";
-			}
+//			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
+//				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
+//				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail()))){
+//				
+//				return "Please enter valid URL";
+//			}
 		}
 		
 		return null;
+	}
+	
+	private ModelAndView populateDropdowns(ModelAndView  model){
+		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1,"facility_admin");
+		List<DropDownDTO> empTypeList = populateDropdownsService .populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown(employerInfoDTO.getFacilityId(),employerInfoDTO.getUserId());
+		List<DropDownDTO> jbPostingTypeList = populateDropdownsService .populateJobPostingTypeDropdowns();
+		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), employerInfoDTO.getUserId(), employerInfoDTO.getRoleId());
+		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		
+		//Populating Dropdowns
+		model.addObject("stateList",stateList);
+		model.addObject("empTypeList",empTypeList);
+		model.addObject("countryList",countryList);
+		model.addObject("templateList",templateList);
+		model.addObject("jbOwnerList", jbOwnerList);
+		model.addObject("jbPostingTypeList", jbPostingTypeList);
+		//Populating Dropdowns
+		
+		return model;
 	}
 	
 }

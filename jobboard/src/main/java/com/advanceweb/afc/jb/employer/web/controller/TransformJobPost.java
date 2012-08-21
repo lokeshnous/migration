@@ -36,7 +36,8 @@ public class TransformJobPost {
 		//Job Posting Details
 		jobPostDTO.setJobNumber(form.getJobNumber());
 		jobPostDTO.setJobTitle(form.getJobTitle());
-		jobPostDTO.setJobId(Integer.valueOf(form.getJobId()));
+		jobPostDTO.setJobId(form.getJobId());
+		jobPostDTO.setJobPostingType(form.getJobPostingType());
 		
 		//Post Title and Number
 		jobPostDTO.setApplyEmail(form.getApplyEmail());

@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.employer.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
@@ -20,7 +23,7 @@ import com.advanceweb.afc.jb.data.entities.JpTemplate;
 @Repository("jobPostConversionHelper")
 public class JobPostConversionHelper {
 	
-	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, JpLocation location, 
+	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, 
 			 JpTemplate template, JpJobType jobType){
 		
 		 JpJob jpJob=new JpJob();
@@ -48,18 +51,8 @@ public class JobPostConversionHelper {
 			 jobApply.setApplyLink(dto.getAtsUrl());
 			 
 		 //Location
-		 JpJobLocation jobLocation = new JpJobLocation();
-		 JpJobLocationPK pKey = new JpJobLocationPK();
-		 pKey.setJobId(dto.getJobId());
-		 pKey.setLocationId(location.getLocationId());
+		 //Handled separately
 		 
-		 jobLocation.setHideCity(dto.isbHideCity()?1:0);
-		 jobLocation.setHideCountry(dto.isbHideCountry()?1:0);
-		 jobLocation.setHidePostcode(dto.isbHideZipCode()?1:0);
-		 jobLocation.setHideState(dto.isbHideState()?1:0);
-		 jobLocation.setJpLocation(location);
-		 jobLocation.setId(pKey);
-		 		 
 		 //Job Details
 		 jpJob.setSkills(dto.getReqSkills());
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
@@ -71,6 +64,26 @@ public class JobPostConversionHelper {
 		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		 
 		 
 		 return jpJob;
+	 }
+	 
+	 public List<JpJobLocation> transformJobPostDTOToJpJbLocation(JobPostDTO dto, 
+			 JpJob jobob, JpLocation location){
+		 List<JpJobLocation> locList = new ArrayList<JpJobLocation>();
+		 
+		 JpJobLocation jobLocation = new JpJobLocation();
+		 JpJobLocationPK pKey = new JpJobLocationPK();
+		 pKey.setJobId(jobob.getJobId());
+		 pKey.setLocationId(location.getLocationId());
+		 
+		 jobLocation.setHideCity(dto.isbHideCity()?1:0);
+		 jobLocation.setHideCountry(dto.isbHideCountry()?1:0);
+		 jobLocation.setHidePostcode(dto.isbHideZipCode()?1:0);
+		 jobLocation.setHideState(dto.isbHideState()?1:0);
+		 jobLocation.setJpLocation(location);
+		 jobLocation.setId(pKey);
+		 locList.add(jobLocation);
+		 
+		return locList;
 	 }
 	 
 	 public JobPostDTO  transformToJpJobDTO(JpJob dto){

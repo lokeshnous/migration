@@ -63,7 +63,7 @@ public class JobPostServiceImpl implements JobPostService {
 	 * @see com.advanceweb.afc.jb.job.service.JobPostService#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
 	 */
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean savePostJob(JobPostDTO dto) {
 		return employerJobPostDAO.savePostJob(dto);
 	}
