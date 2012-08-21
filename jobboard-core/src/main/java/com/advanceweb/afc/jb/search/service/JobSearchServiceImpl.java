@@ -5,7 +5,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -25,7 +24,7 @@ public class JobSearchServiceImpl implements JobSearchService{
 	 * @return JobSearchResultDTO
 	 */
 	public JobSearchResultDTO jobSearch(final String searchName,
-			final Map<String, String> paramMap, final long start, final long rows) throws JobBoardServiceException, JobBoardDataException {
+			final Map<String, String> paramMap, final long start, final long rows) throws JobBoardServiceException {
 		return jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
 	}
 	

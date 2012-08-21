@@ -192,7 +192,6 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents how many rows will be displayed
 	 * @return QueryResponse represents the solr query object
 	 * @throws JobBoardServiceException
-	 * @throws JobBoardDataException
 	 * @throws UnsupportedEncodingException
 	 */
 	private QueryResponse getSolrResponse(
@@ -347,7 +346,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents the starting point of the search
 	 * @return object of SolrQuery
 	 * @throws JobBoardServiceException 
-	 * @throws JobBoardDataException
+	 
 	 */
 
 	private List<SearchParamDTO> createParamsForLocationSearch(
