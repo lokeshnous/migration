@@ -496,7 +496,7 @@ public class PopulateDropdownConversionHelper {
 			for(JpJobType jobType: jpJobTypeList){
 				DropDownDTO dropdownDTO = new DropDownDTO();
 				dropdownDTO.setOptionId(String.valueOf(jobType.getJobTypeId()));
-				dropdownDTO.setOptionName(jobType.getName());				
+				dropdownDTO.setOptionName(jobType.getDescription());				
 				dropdownList.add(dropdownDTO);
 			}
 		}
