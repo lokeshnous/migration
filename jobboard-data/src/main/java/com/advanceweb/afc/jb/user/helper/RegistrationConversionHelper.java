@@ -49,45 +49,50 @@ public class RegistrationConversionHelper {
 		}
 	
 		if(null != dto.getAttribList()){
-			
-			for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
-				
-				MerUserProfilePK pk = new MerUserProfilePK();
-				MerUserProfile profile = new MerUserProfile();
-				
-				profile.setAttribValue(attribDTO.getStrLabelValue());
-				
-				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
-					entity.setFirstName(attribDTO.getStrLabelValue());
-				}
-				
-				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
-					entity.setMiddleName(attribDTO.getStrLabelValue());
-				}
-				
-				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
-					entity.setLastName(attribDTO.getStrLabelValue());
-				}
-				
-				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.EMAIL_ADDRESS)
-						&& null != attribDTO.getStrLabelValue() && !attribDTO.getStrLabelValue().isEmpty()){
-					entity.setEmail(attribDTO.getStrLabelValue());
-				}
-				
-				if(null != attribDTO.getStrProfileAttribId() && !attribDTO.getStrProfileAttribId().isEmpty()){
-					pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
-				}
-				
-				if(userDTO.getUserId() != 0){
-					entity.setUserId(userDTO.getUserId());
-				}
-				
-			}						
+			return createMerUser(entity, dto, userDTO);					
 		}		
 
 				
 		return entity;
 
+	}
+	
+	private MerUser createMerUser( MerUser entity, JobSeekerRegistrationDTO dto, MerUserDTO userDTO){
+		
+		for(MerProfileAttribDTO attribDTO : dto.getAttribList()){
+			
+			MerUserProfilePK pk = new MerUserProfilePK();
+			MerUserProfile profile = new MerUserProfile();
+			
+			profile.setAttribValue(attribDTO.getStrLabelValue());
+			
+			if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+				entity.setFirstName(attribDTO.getStrLabelValue());
+			}
+			
+			if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
+				entity.setMiddleName(attribDTO.getStrLabelValue());
+			}
+			
+			if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+				entity.setLastName(attribDTO.getStrLabelValue());
+			}
+			
+			if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.EMAIL_ADDRESS)
+					&& null != attribDTO.getStrLabelValue() && !attribDTO.getStrLabelValue().isEmpty()){
+				entity.setEmail(attribDTO.getStrLabelValue());
+			}
+			
+			if(null != attribDTO.getStrProfileAttribId() && !attribDTO.getStrProfileAttribId().isEmpty()){
+				pk.setProfileAttribId(Integer.valueOf(attribDTO.getStrProfileAttribId()));
+			}
+			
+			if(userDTO.getUserId() != 0){
+				entity.setUserId(userDTO.getUserId());
+			}
+			
+		}	
+		return entity;
 	}
 	
 	
