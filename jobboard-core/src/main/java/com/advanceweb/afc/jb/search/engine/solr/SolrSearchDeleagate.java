@@ -30,7 +30,6 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.common.util.SolrParameter;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
 import com.advanceweb.afc.jb.search.dao.LocationDAO;
 import com.advanceweb.afc.jb.search.dao.SearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -347,12 +346,13 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 * @param start
 	 *            represents the starting point of the search
 	 * @return object of SolrQuery
+	 * @throws JobBoardServiceException 
 	 * @throws JobBoardDataException
 	 */
 
 	private List<SearchParamDTO> createParamsForLocationSearch(
 			QueryDTO queryDTO, Map<String, String> paramMap, long rows,
-			long start) {
+			long start) throws JobBoardServiceException {
 
 		List<SearchParamDTO> srchReplacedParamDTOList = new ArrayList<SearchParamDTO>();
 
@@ -363,12 +363,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				latLonList = locationDAO.getLocationByPostcode(paramMap
 						.get(MMJBCommonConstants.CITY_STATE));
 			} catch (JobBoardDataException e) {
-				try {
-					throw new JobBoardServiceException("Error while fetching the postcode details..."+e);
-				} catch (JobBoardServiceException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				throw new JobBoardServiceException("Error while fetching the postcode details..."+e);
 			}
 
 		} else {
@@ -380,12 +375,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 					latLonList = locationDAO.getLocationByCityState(
 							cityState[0].trim(), cityState[1].trim());
 				} catch (JobBoardDataException e) {
-					try {
-						throw new JobBoardServiceException("Error while fetching the city state details..."+e);
-					} catch (JobBoardServiceException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					throw new JobBoardServiceException("Error while fetching the city state details..."+e);
 				}
 			} else {
 				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");

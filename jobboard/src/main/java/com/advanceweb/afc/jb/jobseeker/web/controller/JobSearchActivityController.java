@@ -380,8 +380,8 @@ public class JobSearchActivityController {
 		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
-		int savedSearchCount = 0;
-		savedSearchCount = saveSearchedJobsDTOList.size();
+		//int savedSearchCount = 0;
+		//savedSearchCount = saveSearchedJobsDTOList.size();
 		/*if (savedSearchCount == 5) {
 			saveSearchService.deleteFirstSearch(userId);
 		}*/

@@ -160,7 +160,7 @@ public class SaveSearchController {
 					 SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 					 
 					 searchedJobsDTO.setSearchName(session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME).toString());
-					 searchedJobsDTO.setSaveSearchID(Integer.parseInt((session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_ID).toString())));
+					 searchedJobsDTO.setSaveSearchID(Integer.parseInt(session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_ID).toString()));
 					 searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
 								+ MMJBCommonConstants.EQUAL_TO
 								+ session

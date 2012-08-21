@@ -55,9 +55,9 @@ public class MMUtils {
 	public static Map<String, String> getUrlMap(String url){
 		
 		Map<String, String> urlMap = new HashMap<String, String>();
-		StringTokenizer st = new StringTokenizer(url, ";");
-		while(st.hasMoreTokens()) {
-			String key = st.nextToken();
+		StringTokenizer stoken = new StringTokenizer(url, ";");
+		while(stoken.hasMoreTokens()) {
+			String key = stoken.nextToken();
 			
 			StringTokenizer str = new StringTokenizer(key, "=");
 			while(str.hasMoreTokens()){
@@ -75,7 +75,7 @@ public class MMUtils {
 				urlMap.put(nameStr, valStr);
 			}
 			
-			String val = st.nextToken();
+			String val = stoken.nextToken();
 			StringTokenizer strFrst = new StringTokenizer(val, "=");
 			while(strFrst.hasMoreTokens()){
 				String nameStr1 = strFrst.nextToken();

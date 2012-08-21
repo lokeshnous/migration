@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
-import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 
