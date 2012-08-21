@@ -61,6 +61,7 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 @Controller
 @RequestMapping(value = "/jobSeekerResume")
 @SessionAttributes("createResume")
+@SuppressWarnings("unchecked")
 public class ResumeController {
 
 	@Autowired
@@ -687,10 +688,25 @@ public class ResumeController {
 		WorkExpForm form = new WorkExpForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addWorkExp");
-		model.addObject("empTypeList", session.getAttribute("empTypeList"));
-		model.addObject("careerLvlList", session.getAttribute("careerLvlList"));
-		model.addObject("annualSalarylList",
-				session.getAttribute("annualSalarylList"));
+		
+		List<DropDownDTO> empTypeList = (List<DropDownDTO>) session.getAttribute("empTypeList");
+		List<DropDownDTO> careerLvlList = (List<DropDownDTO>) session.getAttribute("careerLvlList");
+		List<DropDownDTO> annualSalarylList = (List<DropDownDTO>) session.getAttribute("annualSalarylList");
+		if(null == empTypeList){
+			empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		}
+				
+		if(null == careerLvlList){
+			careerLvlList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
+		}
+		
+		if(null == annualSalarylList){
+			annualSalarylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
+		}
+		
+		model.addObject("careerLvlList", careerLvlList);
+		model.addObject("empTypeList", empTypeList);
+		model.addObject("annualSalarylList",annualSalarylList);
 		model.addObject("workExpPositionId", createResume.getListWorkExpForm()
 				.size());
 		if (null != createResume.getListCertForm()) {
@@ -743,7 +759,13 @@ public class ResumeController {
 		EducationForm form = new EducationForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addEducation");
-		model.addObject("eduDegreeList", session.getAttribute("eduDegreeList"));
+		
+		List<DropDownDTO> eduDegreeList = (List<DropDownDTO>) session.getAttribute("eduDegreeList");
+		
+		if(null == eduDegreeList){
+			eduDegreeList = populateDropdownsService.populateEducationDegreesDropdowns();
+		}
+		model.addObject("eduDegreeList",eduDegreeList);
 		model.addObject("eduPositionId", createResume.getListEduForm().size());
 		if (null != createResume.getListEduForm()) {
 			createResume.getListEduForm().add(form);
@@ -770,10 +792,24 @@ public class ResumeController {
 		form.setLanguage(MMJBCommonConstants.LANGUAGE_ENGLISH);
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addLanguage");
-		model.addObject("languagelList", session.getAttribute("languagelList"));
-		model.addObject("langProficiencylList",
-				session.getAttribute("langProficiencylList"));
+
+		List<DropDownDTO> langProficiencylList = (List<DropDownDTO>) session.getAttribute("langProficiencylList");				
+		List<DropDownDTO> languagelList =(List<DropDownDTO>) session.getAttribute("languagelList");
+		
+		if(null == languagelList){
+			languagelList = populateDropdownsService
+					.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_TYPE);
+		}
+		
+		if(null == langProficiencylList){
+			langProficiencylList = populateDropdownsService
+					.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
+		}
+		
+		model.addObject("languagelList", languagelList);	
+		model.addObject("langProficiencylList",langProficiencylList);
 		model.addObject("langPositionId", createResume.getListLangForm().size());
+		
 		if (null != createResume.getListLangForm()) {
 			createResume.getListLangForm().add(form);
 		} else {
@@ -822,10 +858,15 @@ public class ResumeController {
 
 		PhoneDetailForm form = new PhoneDetailForm();
 		ModelAndView model = new ModelAndView();
-		model.setViewName("addPhoneNos");
-		model.addObject("phoneTypeList", session.getAttribute("phoneTypeList"));
-		model.addObject("phNoPositionId", createResume.getListPhoneDtlForm()
-				.size());
+		model.setViewName("addPhoneNos");		
+		
+		List<DropDownDTO> phoneTypeList = (List<DropDownDTO>) session.getAttribute("phoneTypeList");
+		if(null == phoneTypeList){
+			phoneTypeList = populateDropdownsService
+					.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+		}
+		model.addObject("phoneTypeList", phoneTypeList);
+		model.addObject("phNoPositionId", createResume.getListPhoneDtlForm().size());
 		if (null != createResume.getListPhoneDtlForm()) {
 			createResume.getListPhoneDtlForm().add(form);
 		} else {
