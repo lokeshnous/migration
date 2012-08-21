@@ -53,7 +53,7 @@ import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchResultDTO;
+import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all
