@@ -92,14 +92,15 @@ public class LoginFormController {
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
-
+       String pageValue="";
 		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
-			return "jobSeekerLogin";
+			pageValue ="jobSeekerLogin";
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
-			return "employerLogin";
+			pageValue ="employerLogin";
 		} else {
-			return "agencyLogin";
+			pageValue= "agencyLogin";
 		}
+		return pageValue;
 	}
 
 	/**
