@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -89,6 +90,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			if(null != roleList && roleList.size()>0){
 				AdmRole role = roleList.get(0);
 				AdmUserRole userRole = new AdmUserRole();
+				userRole.setCreateUserId(MMJBCommonConstants.ZERO_INT);
 				AdmUserRolePK pk = new AdmUserRolePK();
 					pk.setUserId(merUser.getUserId());
 					pk.setRoleId(role.getRoleId());

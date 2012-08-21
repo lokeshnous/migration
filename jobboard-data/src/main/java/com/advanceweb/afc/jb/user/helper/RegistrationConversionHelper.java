@@ -51,7 +51,6 @@ public class RegistrationConversionHelper {
 		if(null != dto.getAttribList()){
 			return createMerUser(entity, dto, userDTO);					
 		}		
-
 				
 		return entity;
 
