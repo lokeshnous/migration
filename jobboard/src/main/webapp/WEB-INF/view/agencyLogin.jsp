@@ -44,39 +44,30 @@
 			<b>${error}</b>
 			</div>
 			<form method="post" action="../j_spring_security_check">
-			    <div class="rowEvenSpacing marginTop0">
+			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> <input type="text" id="j_username" name="j_username" class="job_seeker_email" />
 			    </div>
-			    <div class="rowEvenSpacing">
+			    <div class="rowEvenNewSpacing">
 				<span class="lableText1">Password:</span> <input id="j_password" name="j_password" type="password" class="job_seeker_password" />
 			    </div>
-			    <input type="hidden" name="pageValue" value="agency"/>
+                <input type="hidden" name="pageValue" value="jobSeeker"/>
 			    <div class="loginOptions">
-				<div class="rowEvenSpacing marginTopBottom10">
+				<div class="rowEvenNewSpacing">
 				    <input type="checkbox" name='_spring_security_remember_me'
 										id="_spring_security_remember_me"  value="stayLoggedIn" /> Stay Logged In<br />
 				</div>		    
-				<div class="rowEvenSpacing">
-				    <!-- <span class="floatLeft"><a href="" class="btn_sm orange">Login</a></span>
-                    <span class="floatLeft"><a href="#">Forgot your password?</a></span> -->
-                    <table>
-				<tr>
-					<td>					
+				<div class="rowEvenNewSpacing">
+							
 				    	<input type="submit" class="btn_sm orange" value="Login"/>				    
-					</td>
-					<td>
-											
-                    	<a href="forgrtPasswordLogin.html" id="forgrtpassword">Forgot your password?</a>
-					</td>
-				</tr>	
-				</table>
+										
+                    	<a href="forgrtPasswordLogin.html?page=agency" id="forgrtpassword">Forgot your password?</a>
+			
 				</div>
-				<div class="rowEvenSpacing">
+				<div class="row">
 				    <p><span class="bold">Not a member?</span> <a href="">Sign up now!</a></p>
 				</div>
-                <div class="clearfix"></div>
+				<div class="clearfix"></div>
 			    </div>
-                
 			</form>
 		    </div>
             <div class="job_seeker_social_login">
