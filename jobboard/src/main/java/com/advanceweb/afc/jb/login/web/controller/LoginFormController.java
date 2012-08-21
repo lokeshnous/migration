@@ -155,12 +155,21 @@ public class LoginFormController {
 		} else if (email.length() > 0 && value) {
 			try {
 				// Based on the login user need to send the email
-				// if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
 				String loginPath = navigationPath.substring(2);
-				String jonseekerloginUrl = request.getRequestURL().toString()
-						.replace(request.getServletPath(), loginPath)
-						+ dothtmlExtention;
-
+				String jonseekerloginUrl = MMJBCommonConstants.EMPTY;
+				if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
+					jonseekerloginUrl = request.getRequestURL().toString()
+							.replace(request.getServletPath(), loginPath)
+							+ dothtmlExtention + "?page=jobSeeker";
+				} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
+					jonseekerloginUrl = request.getRequestURL().toString()
+							.replace(request.getServletPath(), loginPath)
+							+ dothtmlExtention + "?page=employer";
+				} else if (page.equals(MMJBCommonConstants.AGENCY)) {
+					jonseekerloginUrl = request.getRequestURL().toString()
+							.replace(request.getServletPath(), loginPath)
+							+ dothtmlExtention + "?page=agency";
+				}
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 				jobSeekerEmailDTO.setCcAddress(null);
@@ -176,11 +185,6 @@ public class LoginFormController {
 				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
-				/*
-				 * } else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
-				 * 
-				 * }
-				 */
 
 			} catch (Exception e) {
 				// loggers call
