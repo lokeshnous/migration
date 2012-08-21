@@ -318,15 +318,14 @@
 										<span class="lableText3"></span> <FONT color="red"><form:errors
 												path="contactInfoForm.country" /></FONT>
 									</div>
-<<<<<<< .mine
+
 									<div class="rowEvenTB10Spacing">
 										<span class="lableText3">Phone Number:</span>
 										<div class="floatLeft marginRight10"></div>
 										<span class="floatLeft marginRight10">
-=======
+
 									<div class="row">
 									<div id="listOfPhoneId">
->>>>>>> .r1212
 										<c:forEach items="${createResume.listPhoneDtlForm}" var="phoneDtl" varStatus="status">
 											<div class="rowEvenNewSpacing MarginBottom10">
 											<c:if test="${status.count == 1}">   

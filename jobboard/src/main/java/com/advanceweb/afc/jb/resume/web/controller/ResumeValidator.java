@@ -140,11 +140,11 @@ public class ResumeValidator {
 				}
 				
 				if((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form.getYrsAtPostion()))){
-					return "'Years At Position' should have only numerics'";
+					return "Years at Position should contain only numeric values";
 				}
 				
 				if((!StringUtils.isEmpty(form.getHrlyPayRate()) && !validateNumericsPattern(form.getHrlyPayRate()))){
-					return "'Hourly Pay Rate' should have only numerics'";
+					return "Hourly Pay Rate should contain only numeric values";
 				}
 				
 				if((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form.getStartDate()))||
