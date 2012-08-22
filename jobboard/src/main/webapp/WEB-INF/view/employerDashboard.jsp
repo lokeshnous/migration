@@ -194,7 +194,7 @@
                           <p><a href="/jobboard/employer/postNewJobs.html">Post New Job</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
-                          <p><a href="">Manage / Edit Job Postings</a> </p>
+                          <p><a href="/jobboard/employer/manageJobPost.html">Manage / Edit Job Postings</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
                           <p><a href="">Manage Job Posting Branding Templates</a> </p>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 
 /**
@@ -17,4 +18,6 @@ public interface JobPostService {
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 	List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto);
+	List<JobPostDTO> retrieveAllJobPost(int employerId);
+	JobPostDTO editJob(int jobId);
 }

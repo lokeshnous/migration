@@ -55,17 +55,33 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To save the new job
-	   @Created:Jul 20, 2012
-	   @Param  :EmployerInfoDTO object
-	   @Return :boolean result
+	 * @Author :Prince Mathew
+	 * @Purpose:To save the new job
+	 * @Created:Jul 20, 2012
+	 * @Param :EmployerInfoDTO object
+	 * @Return :boolean result
 	 * @see com.advanceweb.afc.jb.job.service.JobPostService#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean savePostJob(JobPostDTO dto) {
 		return employerJobPostDAO.savePostJob(dto);
+	}
+
+	/**
+	 * Method to retrieve all job Posted by the Employer
+	 * 
+	 * @param : employerId
+	 */
+	@Override
+	public List<JobPostDTO> retrieveAllJobPost(int employerId) {
+		// TODO Auto-generated method stub
+		return employerJobPostDAO.retrieveAllJobPost(employerId);
+	}
+
+	@Override
+	public JobPostDTO editJob(int jobId) {
+		return employerJobPostDAO.editJob(jobId);
 	}
 
 }

@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
@@ -21,6 +23,9 @@ import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
+import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
+import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 
 /**
@@ -137,7 +142,31 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		return true;
 	}
-	
+
+	@Override
+	public List<JobPostDTO> retrieveAllJobPost(int employerId) {
+		List<JpJob> jobs = hibernateTemplate
+				.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+						+ employerId + "and a.deleteDt is NULL");
+		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+
+	}
+
+	@Override
+	public JobPostDTO editJob(int jobId) {
+		JobPostDTO dto = new JobPostDTO();
+		JpJob job =  hibernateTemplate.get(JpJob.class,
+				jobId);
+
+		if (job != null) {
+
+			dto =  jobPostConversionHelper
+					.transformJpJobToJobPostDTO(job);
+
+		}
+
+		return dto;
+	}
 	
 	
 }

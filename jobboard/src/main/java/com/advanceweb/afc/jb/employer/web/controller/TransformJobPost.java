@@ -90,4 +90,27 @@ public class TransformJobPost {
 		
 		return dto;
 	}
+	public JobPostForm  transformJobPostDTOToCreateResume(JobPostForm jobPostform,JobPostDTO jobPostDTO){
+		jobPostform.setJobOwner(jobPostDTO.getJobOwner());
+		jobPostform.setCustomerNo(jobPostDTO.getCustomerNo());
+		jobPostform.setCompanyName(jobPostDTO.getCompanyName());
+		jobPostform.setDisCompanyName(jobPostDTO.getDisCompanyName());
+		jobPostform.setJobPostingType(jobPostDTO.getJobPostingType());
+		jobPostform.setJobNumber(jobPostDTO.getJobNumber());
+		jobPostform.setJobTitle(jobPostDTO.getJobTitle());
+		jobPostform.setApplMethod(jobPostDTO.getApplicationMethod());
+		jobPostform.setApplyEmail(jobPostDTO.getApplyEmail());
+		jobPostform.setApplyUrl(jobPostDTO.getApplyUrl());
+		jobPostform.setJobCity(jobPostDTO.getJobCity());
+		jobPostform.setJobState(jobPostDTO.getJobState());
+		jobPostform.setJobZipCode(jobPostDTO.getJobZip());
+		jobPostform.setJobCountry(jobPostDTO.getJobCountry());
+		jobPostform.setEmploymentType(jobPostDTO.getEmploymentType());
+		jobPostform.setReqSkills(jobPostDTO.getReqSkills());
+		jobPostform.setJobDesc(jobPostDTO.getJobDesc());
+		jobPostform.setTrackPixel(jobPostDTO.getTrackPixel());
+		jobPostform.setBrandTemplate(jobPostDTO.getBrandTemplate());
+		return jobPostform;
+		
+	}
 }

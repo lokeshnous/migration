@@ -1,11 +1,14 @@
 package com.advanceweb.afc.jb.employer.helper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
@@ -14,14 +17,16 @@ import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 
+
 /**
+ * @param <JobPostForm>
  * @Author : Prince Mathew
    @Version: 1.0
    @Created: Jul 18, 2012
    @Purpose: This class will work as a converter from EmployerJobPostDTO to Entity class Object or from Entity class Object to EmployerJobPostDTO
  */
 @Repository("jobPostConversionHelper")
-public class JobPostConversionHelper {
+public class JobPostConversionHelper<JobPostForm> {
 	
 	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, 
 			 JpTemplate template, JpJobType jobType){
@@ -104,5 +109,60 @@ public class JobPostConversionHelper {
 		 return jobPostDTO;
 	 }
 
+	 /**
+		 * This method transforms JpJob list to JobPostDTO list
+		 * 
+		 * @param resumes
+		 * @return resumeDTOList
+		 */
+	public List<JobPostDTO> transformJpJobListToJobPostDTOList(List<JpJob> jobs) {
+		List<JobPostDTO> jobPostDTOList = new ArrayList<JobPostDTO>();
+		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
+		for (JpJob job : jobs) {
+			JobPostDTO jobPostDTO = new JobPostDTO();
+			jobPostDTO.setJobId(job.getJobId());
+			jobPostDTO.setJobTitle(job.getJobtitle());
+			jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
+			jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
+			int compareEndDate = job.getEndDt().compareTo(new Date());
+			int compareStartDate = job.getStartDt().compareTo(new Date());
+			if (compareEndDate >= 0) {
+				jobPostDTO.setJobStatus("Active");
+			} else {
+				jobPostDTO.setJobStatus("Expired");
+			}
+			if (compareStartDate > 0) {
+				jobPostDTO.setJobStatus("Scheduled");
+			}
+			/*
+			 * if (job.getUpdateDt() != null) { //
+			 * jobPostDTO.setUpdateDt(job.getUpdateDt());
+			 * 
+			 * }
+			 */
+			jobPostDTOList.add(jobPostDTO);
+		}
 
+		return jobPostDTOList;
+
+	}
+	 
+	/**
+	 * This method transforms JpJob list to JobPostDTO list
+	 * 
+	 * @param resumes
+	 * @return resumeDTOList
+	 */
+	public JobPostDTO transformJpJobToJobPostDTO(JpJob jpJob) {
+		JobPostDTO jobPostDTO = new JobPostDTO();
+		jobPostDTO.setCompanyName(jpJob.getName());
+		jobPostDTO.setCustomerNo( jpJob.getJobNumber());
+		jobPostDTO.setDisCompanyName(jpJob.getFacility());
+		jobPostDTO.setJobOwner(String.valueOf(jpJob.getAdminUserId()));
+		
+		jobPostDTO.setJobTitle(jpJob.getJobtitle());
+			 		
+		return jobPostDTO;
+
+	}
 }

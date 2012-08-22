@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Author : Prince Mathew
@@ -46,7 +47,10 @@ public class JobPostDTO implements Serializable {
 	private String brandTemplate;
 	
 	private boolean autoRenew;
-
+	private String startDt;
+	private String endDt;
+	private String jobStatus;
+	private String location;
 	public int getJobId() {
 		return jobId;
 	}
@@ -261,6 +265,62 @@ public class JobPostDTO implements Serializable {
 
 	public void setBrandTemplate(String brandTemplate) {
 		this.brandTemplate = brandTemplate;
+	}
+
+	/**
+	 * @return the startDt
+	 */
+	public String getStartDt() {
+		return startDt;
+	}
+
+	/**
+	 * @param startDt the startDt to set
+	 */
+	public void setStartDt(String startDt) {
+		this.startDt = startDt;
+	}
+
+	/**
+	 * @return the endDt
+	 */
+	public String getEndDt() {
+		return endDt;
+	}
+
+	/**
+	 * @param endDt the endDt to set
+	 */
+	public void setEndDt(String endDt) {
+		this.endDt = endDt;
+	}
+
+	/**
+	 * @return the jobStatus
+	 */
+	public String getJobStatus() {
+		return jobStatus;
+	}
+
+	/**
+	 * @param jobStatus the jobStatus to set
+	 */
+	public void setJobStatus(String jobStatus) {
+		this.jobStatus = jobStatus;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 }

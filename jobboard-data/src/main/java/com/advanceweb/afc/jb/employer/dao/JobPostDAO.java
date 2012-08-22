@@ -17,5 +17,7 @@ public interface JobPostDAO {
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 	List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto) ;
+	List<JobPostDTO> retrieveAllJobPost(int employerId);
+	JobPostDTO editJob(int jobId);
 
 }

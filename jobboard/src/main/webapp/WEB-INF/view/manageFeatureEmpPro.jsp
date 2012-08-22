@@ -152,7 +152,7 @@
 							<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 								<span class="floatLeft marginTop10"> <input
 						type="submit" value="Save" name="Save" class="btn_sm orange" />
-						<a href="#"
+						<a href="/jobboard/employer/employerDashBoard.html"
 						class="btn_sm orange">Cancel</a></span>
 							</div>
 

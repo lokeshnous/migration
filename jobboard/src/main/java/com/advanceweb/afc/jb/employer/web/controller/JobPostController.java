@@ -2,26 +2,35 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.resume.web.controller.CreateResume;
 
 /**
  * @Author : Prince Mathew
@@ -41,6 +50,7 @@ public class JobPostController {
 	
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;	
+	
 	
 	@RequestMapping(value="/postNewJobs",method = RequestMethod.GET)
 	public ModelAndView showPostJob() {
@@ -221,5 +231,45 @@ public class JobPostController {
 		
 		return model;
 	}
-	
+	/**
+	 * This method is called to display resume list belonging to a logged in
+	 * jobSeeker
+	 * 
+	 * @param model
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value = "/manageJobPost", method = RequestMethod.GET)
+	public String getJobPostDetails(HttpServletRequest request,
+			HttpSession session, Model model, Map<String, Object> map) {
+		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
+		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			postedJobList = employerJobPost
+					.retrieveAllJobPost((Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
+		}
+
+		map.put("jobList", postedJobList);
+		return "manageJobPosting";
+	}
+	/**
+	 * This method is called to fetch the resume data to edit
+	 * @param createResume
+	 * @param resumeId
+	 * @return model
+	 */
+	@RequestMapping(value = "/editJob", method = RequestMethod.GET)
+	public ModelAndView editJob(JobPostForm jobPostform,
+			@RequestParam("jobId") int jobId) {
+		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId);
+
+		transformJobPost.transformJobPostDTOToCreateResume(jobPostform,
+				jobPostDTO);
+		ModelAndView model = new ModelAndView();
+		model.addObject("jobPostForm", jobPostform);
+		
+		model.setViewName("postNewJobs");
+		return model;
+	}
+
 }
