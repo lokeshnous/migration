@@ -9,6 +9,7 @@
 		    function(){
 		    	$("#changePassword").displaypopup("#changePassword", "780",
 				"370");
+				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp","770","360");
 		    	jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -172,7 +173,8 @@
                           <p><a href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html" id="changePassword">Change Password</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
-                          <p><a href="">Account Settings</a> </p>
+                                 <p><a href="/jobboard/employerRegistration/viewEmpAccountProfile.html"
+													 id="accountSettingpopUp">Account Settings</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
                           <p><a href="">Manage Access Permissions</a> </p>
