@@ -26,7 +26,9 @@ public class EmpBrandTempDTO {
 //	private String updatedDate;
 	private String companyOverview;
 	private int facilityId;
-//	private CommonsMultipartFile fileData;
+	private CommonsMultipartFile fileData;
+	private String fileServer;
+	private String fileName;
 	
 
 	public String getLogoPath() {
@@ -116,5 +118,22 @@ public class EmpBrandTempDTO {
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
+
+	public CommonsMultipartFile getFileData() {
+		return fileData;
+	}
+
+	public void setFileData(CommonsMultipartFile fileData) {
+		this.fileData = fileData;
+	}
+
+	public String getFileServer() {
+		return fileServer;
+	}
+
+	public void setFileServer(String fileServer) {
+		this.fileServer = fileServer;
+	}
+
 
 }
