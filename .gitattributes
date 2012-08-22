@@ -135,6 +135,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java 
 jobboard-core/src/main/resources/solrConfiguration.properties -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/postjobs/JobPostServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/EmpBrandTempServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchActivityServiceTest.java -text
