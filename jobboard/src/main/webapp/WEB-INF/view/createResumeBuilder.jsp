@@ -380,7 +380,7 @@
 												onKeyDown="limitText(this.form.objlimitedtextarea,this.form.countdownId1,2000);"
 												onKeyUp="limitText(this.form.objlimitedtextarea,this.form.countdownId1,2000);"
 												rows="5" cols="45" />
-												<p><input readonly type="text" name="countdownId1" size="3" value="2000" id="countdown"> characters remaining.<p>
+												<p class="magrin_top0" ><input readonly type="text" class="input2000_width" name="countdownId1" size="3" value="2000" id="countdown">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -510,15 +510,15 @@
 											<span class="required "></span>
 										</div>
 										<div class="row MarginBottom10 ">
-											<div class="lableText3 marginTop10">Summary/Job
+											<div class="lableText3">Summary/Job
 												Description:</div>
 											<div class="input_grp5 ">
 												<form:textarea id="workExplimitedtextarea${status.count}"
 													onKeyDown="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
 													onKeyUp="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
 													path="listWorkExpForm[${status.index}].description"
-													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdownworkexp${status.count}" size="3" value="2000"> characters remaining.<p>
+													class="textareaBoxCResume magrin_top0" rows="3" cols="45" />
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownworkexp${status.count}" size="3" value="2000" >characters remaining.<p>
 											</div>
 										</div>
 									</div>
@@ -608,19 +608,19 @@
 													onKeyDown="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
 													onKeyUp="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdowneduDeg${status.count}" size="3" value="2000"> characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduDeg${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 										</div>
 										<div class="row MarginBottom10 ">
 
 											<div class="lableText3 marginTop10">Certifications:</div>
-											<div class="input_grp5 ">
+											<div class="input_grp5">
 												<form:textarea
 													path="listEduForm[${status.index}].certifications" id="eduCertlimitedtextarea${status.count}"
 													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
 													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
-													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdowneduCert${status.count}" size="3" value="2000"> characters remaining.<p>
+													class="textareaBoxCResume magrin_top0" rows="3" cols="45" />
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 
 										</div>
@@ -682,7 +682,7 @@
 													onKeyDown="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
 													onKeyUp="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p><input readonly type="text" name="countdownCerts${status.count}" size="3" value="2000"> characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${status.count}" size="3" value="2000">characters remaining.<p>
 											</div>
 										</div>
 									</div>
@@ -809,7 +809,7 @@
 													onKeyDown="limitText(this.form.awardsTAId,this.form.countdownIdAwards,2000);"
 													onKeyUp="limitText(this.form.awardsTAId,this.form.countdownIdAwards,2000);"
 												rows="3" cols="45" />
-											<p><input readonly type="text" name="countdownIdAwards" size="3" value="2000"> characters remaining.<p>
+											<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownIdAwards" size="3" value="2000">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -838,7 +838,7 @@
 													onKeyDown="limitText(this.form.membershipsTAId,this.form.countdownMemShip,2000);"
 													onKeyUp="limitText(this.form.membershipsTAId,this.form.countdownMemShip,2000);"
 												rows="3" cols="45" />
-											<p><input readonly type="text" name="countdownMemShip" size="3" value="2000"> characters remaining.<p>
+											<p  class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownMemShip" size="3" value="2000">characters remaining.<p>
 
 										</div>
 									</div>
@@ -871,7 +871,7 @@
 													onKeyDown="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);"
 													onKeyUp="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);" 
 													rows="3" cols="45" />
-											<p><input readonly type="text" name="countdownOtherInt" size="3" value="2000"> characters remaining.<p>
+											<p><input readonly type="text" class="input2000_width" name="countdownOtherInt" size="3" value="2000">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -926,7 +926,7 @@
 											<span class="required"></span>
 										</div>
 										<div class="rowEvenNewSpacing">
-											<span class="lableText3">Reference Type:</span><span
+											<span class="lign_height padding_top">Reference Type:</span><span
 												class="floteleft"> 
 												<form:radiobutton path="listRefForm[${status.index}].referenceType" value="Professional" /> 
 												<label>Professional</label>
@@ -934,8 +934,8 @@
 													path="listRefForm[${status.index}].referenceType" value="Personal" /> <label>Personal</label>
 											</span>
 										</div>
-										<div class="rowEvenTB10Spacing">
-											<span class="lableText3"></span> 
+										<div class="rowEvenTB10Spacing magrin_top0">
+											<span class="lableText3"> </span> 
 										</div>
 									</div>
 								</c:forEach>
@@ -950,10 +950,10 @@
 					</div>
 					<div class="clearfix"></div>
 					<br /> <span class="marginBottom10 FloatLeft"> <input
-						type="submit" value="Save" name="Save" class="btn_sm orange" /> <input
-						type="submit" value="Preview" name="Preview" class="btn_sm orange" />
+						type="submit" value="Save" name="Save" class="btn_sm orange inputleft" /> <input
+						type="submit" value="Preview" name="Preview" class="btn_sm orange inputleft" />
 						<a href="/jobboard/jobSeeker/jobSeekerDashBoard.html"
-						class="btn_sm orange">Cancel</a>
+						class="btn_sm orange cancelacount">Cancel</a>
 					</span>
 				</div>
 
