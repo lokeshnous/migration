@@ -289,12 +289,12 @@
 							<div
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
-								<input type="submit" value="Back" class="btn_sm orange"
+								<input type="submit" value="Back" class="btn_sm orange nextacount"
 									name="Back" /> 
 									<input type="submit" value="Finish"
-									class="btn_sm orange" name="Finish" /> <a
+									class="btn_sm orange nextacount" name="Finish" /> <a
 									href="/jobboard/healthcarejobs/advanceweb.html"
-									class="btn_sm orange">Cancel</a>
+									class="btn_sm orange cancelacount">Cancel</a>
 								<!-- <input type="submit" value="Cancel" class="btn_sm orange" name="Cancel"/>  -->
 							</div>
 							<div class="clearfix"></div>

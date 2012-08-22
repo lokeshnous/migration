@@ -335,6 +335,8 @@ div.searchResultsSubContent .btn_sm { margin-right:5px !important }
 .leftFormHolder input[type="file"] { border:1px solid #ccc; height:25px; width:auto !important; }
 input[type="submit"],input[type="button"] { width:auto; box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5); text-decoration: none; margin-top:0px; height:25px; vertical-align : middle; }
 input.textBox2 { width:220px !important; }
+.cancelacount{float:left;margin-top:0px!important;}
+.nextacount{padding-top:0px!important;}
 .job_Advancedsearch_main { width: 610px; height: auto; padding: 0 15px 10px 0; /* MM: changed */ float:left; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
 .job_Advancedsearch_devider,
 .job_Advancedsearch_devider_border_none { width: 595px; height: auto; float:left; padding: 0 15px 10px 0; /* MM: change */ min-height:25px; border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; }
