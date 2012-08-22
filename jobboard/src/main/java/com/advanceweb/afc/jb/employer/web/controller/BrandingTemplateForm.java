@@ -13,12 +13,16 @@ import java.util.Date;
 public class BrandingTemplateForm {
 
 	private long employerId;
-	private String description;
+//	private String description;
 	private String imageTemplatePath;
 	private String logoPath;
-	private int color;
+	private String color;
 	private Date createdDate;
 	private Date updatedDate;
+	private String templateName;
+	private String companyOverview;
+	private String mainImage;
+	
 	
 
 	public long getEmployerId() {
@@ -50,12 +54,12 @@ public class BrandingTemplateForm {
 	}
 
 
-	public int getColor() {
+	public String getColor() {
 		return color;
 	}
 
 
-	public void setColor(int color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
@@ -80,13 +84,43 @@ public class BrandingTemplateForm {
 	}
 
 
-	public String getDescription() {
-		return description;
+//	public String getDescription() {
+//		return description;
+//	}
+//
+//
+//	public void setDescription(String description) {
+//		this.description = description;
+//	}
+
+
+	public String getTemplateName() {
+		return templateName;
 	}
 
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+
+	public String getCompanyOverview() {
+		return companyOverview;
+	}
+
+
+	public void setCompanyOverview(String companyOverview) {
+		this.companyOverview = companyOverview;
+	}
+
+
+	public String getMainImage() {
+		return mainImage;
+	}
+
+
+	public void setMainImage(String mainImage) {
+		this.mainImage = mainImage;
 	}
 
 }
