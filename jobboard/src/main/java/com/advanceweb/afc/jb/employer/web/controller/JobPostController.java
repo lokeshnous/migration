@@ -68,7 +68,10 @@ public class JobPostController {
 		List<FromZipcodeDTO> zipCodeList = populateDropdownsService.getFromZipcodeList();
 		
 		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
-		SecureRandom random=null;
+		
+		//The following commented section can be deleted.
+		
+/*		SecureRandom random=null;
 		try {
 			random = SecureRandom.getInstance("SHA1PRNG");
 		} catch (NoSuchAlgorithmException e) {
@@ -76,7 +79,7 @@ public class JobPostController {
 		}
 		int myInt = random.nextInt();
 		jobPostForm.setCustomerNo("MMCN"+Math.abs(myInt));
-		jobPostForm.setJobNumber("JT"+Math.abs(myInt));	
+		jobPostForm.setJobNumber("JT"+Math.abs(myInt));	*/
 		
 		//Populating Dropdowns
 		model.addObject("stateList",stateList);
@@ -114,7 +117,7 @@ public class JobPostController {
 		}
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
-		model.setViewName("postNewJobs");
+		model.setViewName("manageJobPosting");
 		return model;
 	}	
 	
@@ -203,12 +206,12 @@ public class JobPostController {
 									
 			
 			//Validating URL
-//			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
-//				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
-//				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail()))){
-//				
-//				return "Please enter valid URL";
-//			}
+			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
+				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
+				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail()))){
+				
+				return "Please enter valid URL";
+			}
 		}
 		
 		return null;

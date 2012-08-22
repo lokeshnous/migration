@@ -378,7 +378,7 @@
                 <div class="rowEvenNewSpacing"> <span class="lableText3">Job Zip Code:</span>
                 <form:input path="jobZipCode" class="job_seeker_password textBox350"  id="zipCodeITId"/>
                 <div id="hideZipCodeDdId">
-                <form:select path="jobZipCode" class="jb_input3 jb_input_width3" id="zipCodeSelectId">
+                <form:select path="" class="jb_input3 jb_input_width3" id="zipCodeSelectId">
 					<form:option value="0" label="Select" />
 					<form:options items="${zipCodeList}" itemValue="fromZipcodeId" itemLabel="fromZipcodeValue" id="zipCodeSelectedId"/>
 				</form:select>

@@ -34,7 +34,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 JpJob jpJob=new JpJob();
 		 //Post New Job
 		 jpJob.setName(dto.getCompanyName());
-		 jpJob.setJobNumber(dto.getCustomerNo());
+		 jpJob.setAccountNum(dto.getCustomerNo());
+		 jpJob.setJobNumber(dto.getJobNumber());
 		 jpJob.setFacility(dto.getDisCompanyName());
 		 jpJob.setAdminUserId(Integer.valueOf(dto.getJobOwner()));
 		 jpJob.setBlindAd(dto.isbHideCompName()?1:0);
