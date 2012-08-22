@@ -191,7 +191,7 @@
                           <p><a href="">Purchase Job Postings</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
-                          <p><a href="">Post New Job</a> </p>
+                          <p><a href="/jobboard/employer/postNewJobs.html">Post New Job</a> </p>
                         </div>
                 <div class="lableTextDashBoard">
                           <p><a href="">Manage / Edit Job Postings</a> </p>
