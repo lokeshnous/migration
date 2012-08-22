@@ -1,21 +1,41 @@
 package com.advanceweb.afc.jb.employer.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import java.util.List;
 
 import org.hibernate.HibernateException;
+
 import org.hibernate.SessionFactory;
+
+import org.hibernate.validator.util.NewInstance;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
+
 import com.advanceweb.afc.jb.common.DropDownDTO;
+
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.domain.Employer;
+
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
+
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
@@ -23,6 +43,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
+
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
@@ -35,12 +56,19 @@ import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
  */
 @Repository("employerRegistrationDAO")
 public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
+
+	private static final Logger LOGGER = Logger
+			.getLogger("EmployerRegistrationDAOImpl.class");
+
 	
 	private final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
 	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
 	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
 
+
 	private HibernateTemplate hibernateTemplateTracker;
+	
+	private HibernateTemplate hibernateTemplate;
 	
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
@@ -53,6 +81,11 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
 	}
 
+	@Autowired
+	public void setHibernateTemplateCareers(SessionFactory sessionFactory) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	}
+	
 	public EmployerRegistrationDAOImpl(){
 
 	}
@@ -131,7 +164,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 * @param empDTO
 	 * @return boolean
 	 */
-	@Override
+		@Override
 // TODO: Parameter 'empDTO' is not assigned and could be declared final
 	public boolean changePassword(EmployerProfileDTO empDTO) {
 		try {
@@ -202,4 +235,75 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return dto;
 	}
 
+
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AdmFacilityContact> getEmployeeData(int userId,
+			String contactType) {
+		List<AdmFacilityContact> accountProfileDTO = new ArrayList<AdmFacilityContact>();
+		try {
+			if (userId > 0) {
+
+				AdmFacility admFacility = new AdmFacility();
+				admFacility.setFacilityId(userId);
+				accountProfileDTO = hibernateTemplate
+						.find("from AdmFacilityContact af where af.admFacility = ? and af.contactType=?",
+								admFacility, contactType);
+
+			}
+
+		} catch (DataAccessException e) {
+			LOGGER.info("Error for update of employee data");
+		}
+		return accountProfileDTO;
+	}
+
+	@Override
+	public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid) {
+				
+		AdmFacilityContact facility=hibernateTemplate.get(AdmFacilityContact.class,  admfacilityid);
+		facility.setFirstName(apd.getFirstName());
+		facility.setCompany(apd.getCompanyName());
+		facility.setStreet(apd.getStreet());
+		facility.setCity(apd.getCity());
+		facility.setState(apd.getState());
+		facility.setPostcode(apd.getZipCode());
+		facility.setCountry(apd.getCountry());
+		facility.setEmail(apd.getEmail());
+		facility.setPhone(apd.getPhone());
+		hibernateTemplate.update(facility);
+		
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+			String contactType) {
+
+		List<AdmFacilityContact> accountProfileDTO=null;
+		try {
+			if (userId > 0) {
+				 accountProfileDTO = hibernateTemplate
+						.find("select a from AdmFacilityContact a,AdmFacility b,AdmUserFacility c where a.admFacility.facilityId= b.facilityId and a.admFacility.facilityId=c.id.facilityId "
+								+"and c.id.userId="
+								+ userId
+								+ "and a.contactType= '" + contactType +"'");
+
+				
+				if(null != accountProfileDTO && accountProfileDTO.size() !=0){
+					
+				}
+			}
+
+		} catch (DataAccessException e) {
+			LOGGER.info("Error for update of employee data");
+		}
+		return accountProfileDTO;
+	}
+
+
+	
 }
