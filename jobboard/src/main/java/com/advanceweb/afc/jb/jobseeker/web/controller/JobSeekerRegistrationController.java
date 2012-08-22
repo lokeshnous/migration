@@ -192,20 +192,15 @@ public class JobSeekerRegistrationController {
 		return model;
 	}
 	
-	
 	 private void authenticateUserAndSetSession(MerUserDTO user,
 		        HttpServletRequest request)
 		{
 		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		 authList.add(new GrantedAuthorityImpl("ROLE_JOB_SEEKER"));
+		 authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_JOB_SEEKER));
 		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 		            user.getEmailId(), user.getPassword(),authList);
-
-		    request.getSession();
-
 		    token.setDetails(new WebAuthenticationDetails(request));
 		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
-
 		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 		}
 	
