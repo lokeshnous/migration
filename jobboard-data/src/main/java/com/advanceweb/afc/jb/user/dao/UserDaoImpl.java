@@ -29,17 +29,19 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public MerUserDTO getUser(String email) {
-		MerUserDTO userDTO=new MerUserDTO();
+		MerUserDTO userDTO=null;
 		List<MerUser> userList =hibernateTemplateTracker.find(" from  MerUser user where user.email=?",email);
 		MerUser user=null;
 		if(userList!= null && !userList.isEmpty()){
 		user=userList.get(0);
-		}
+		userDTO=new MerUserDTO();
+		
 		userDTO.setEmailId(user.getEmail());
 		userDTO.setFirstName(user.getFirstName());
 		userDTO.setLastName(user.getLastName());
 		userDTO.setUserId(user.getUserId());
 		userDTO.setPassword(user.getPassword());
+		}
 		return userDTO;
 	}
 
