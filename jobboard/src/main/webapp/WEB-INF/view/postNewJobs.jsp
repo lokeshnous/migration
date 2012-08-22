@@ -35,7 +35,13 @@
 		    		$("#postNewJobButHideId").click();
 		    	}
 		    });
-		    	    	
+		    
+		    $('#zipCodeSelectId').change(function() {
+		    		$("#zipCodeITId").val($(this).find(":selected").val());
+		    		$("#lookUpZipCode").show();
+			    	$("#hideZipCodeDdId").hide();	
+		   	});
+		    
 			//Date picker
 	    	$(function() {
 	    		$( ".datepicker" ).datepicker({
@@ -59,6 +65,7 @@
 		    
 		    $("#lookUpZipCode").click(function(){
 		    	$("#hideZipCodeDdId").show();
+		    	$("#lookUpZipCode").hide();
 		    	$("#zipCodeITId").focus();
 		    });
 		    $("#zipCodeSelectedId").click(function(){
@@ -371,7 +378,7 @@
                 <div class="rowEvenNewSpacing"> <span class="lableText3">Job Zip Code:</span>
                 <form:input path="jobZipCode" class="job_seeker_password textBox350"  id="zipCodeITId"/>
                 <div id="hideZipCodeDdId">
-                <form:select path="" class="jb_input3 jb_input_width3">
+                <form:select path="jobZipCode" class="jb_input3 jb_input_width3" id="zipCodeSelectId">
 					<form:option value="0" label="Select" />
 					<form:options items="${zipCodeList}" itemValue="fromZipcodeId" itemLabel="fromZipcodeValue" id="zipCodeSelectedId"/>
 				</form:select>
