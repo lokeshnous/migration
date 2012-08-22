@@ -15,12 +15,16 @@ public class EmpBrandTempDTO {
 
 	private int jpBrandTempId;
 	private int employerId;
-	private String description;
+	private String templateName;
+//	private String description;
 	private String imagePath;
 	private String logoPath;
 	private String color;
 	private Date createdDate;
-	private String updatedDate;
+//	private String updatedDate;
+	private String companyOverview;
+	private int facilityId;
+	
 
 	public String getLogoPath() {
 		return logoPath;
@@ -38,21 +42,21 @@ public class EmpBrandTempDTO {
 		this.createdDate = createdDate;
 	}
 
-	public String getUpdatedDate() {
-		return updatedDate;
-	}
+//	public String getUpdatedDate() {
+//		return updatedDate;
+//	}
+//
+//	public void setUpdatedDate(String updatedDate) {
+//		this.updatedDate = updatedDate;
+//	}
 
-	public void setUpdatedDate(String updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
+//	public String getDescription() {
+//		return templateName;
+//	}
+//
+//	public void setDescription(String description) {
+//		this.description = description;
+//	}
 
 	public String getColor() {
 		return color;
@@ -84,6 +88,30 @@ public class EmpBrandTempDTO {
 
 	public void setEmployerId(int employerId) {
 		this.employerId = employerId;
+	}
+
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+	public String getCompanyOverview() {
+		return companyOverview;
+	}
+
+	public void setCompanyOverview(String companyOverview) {
+		this.companyOverview = companyOverview;
+	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 }
