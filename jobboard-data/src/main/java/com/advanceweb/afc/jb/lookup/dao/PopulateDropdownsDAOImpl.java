@@ -220,10 +220,15 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	@Override
 	public List<FromZipcodeDTO> getFromZipcodeList() {
 		try {
-			List<JpAttribList> merLookupList = hibernateTemplate
-					.find("from JpAttribList e where e.lookupCategory='FromZipcode' and e.lookupStatus='1'");
+			DetachedCriteria criteria = DetachedCriteria
+					.forClass(MerLocation.class);
+			criteria.setProjection(Projections.distinct(Projections
+					.property("postcode")));
+			criteria.addOrder(Order.asc("postcode"));
+			List<Object> merUtilityList = hibernateTemplateTracker
+					.findByCriteria(criteria);
 			return dropdownHelper
-					.convertMerLookupToFromZipcodeListDTO(merLookupList);
+					.convertMerLookupToFromZipcodeListDTO(merUtilityList);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}

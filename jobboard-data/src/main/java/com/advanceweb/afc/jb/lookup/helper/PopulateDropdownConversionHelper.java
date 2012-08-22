@@ -237,16 +237,17 @@ public class PopulateDropdownConversionHelper {
 	   @Return :List of FromZipcodeDTO
 	 * 
 	 */
-	public List<FromZipcodeDTO> convertMerLookupToFromZipcodeListDTO(List<JpAttribList> merLookupList){
-		FromZipcodeDTO fromZipcodeDTO=null;
+	public List<FromZipcodeDTO> convertMerLookupToFromZipcodeListDTO(List<Object> merLookupList){
+		FromZipcodeDTO zipCodeDTO=null;
 		List<FromZipcodeDTO> list = new ArrayList<FromZipcodeDTO>();
 		
-		for(JpAttribList JpAttribList : merLookupList){
-			fromZipcodeDTO = new FromZipcodeDTO();
-			fromZipcodeDTO.setFromZipcodeId(String.valueOf(JpAttribList.getAttribListId()));
-			fromZipcodeDTO.setFromZipcodeValue(JpAttribList.getAttribValue());
-			list.add(fromZipcodeDTO);
+		for(Object object : merLookupList){
+			zipCodeDTO = new FromZipcodeDTO();
+			zipCodeDTO.setFromZipcodeId((String)object);
+			zipCodeDTO.setFromZipcodeValue((String)object);
+			list.add(zipCodeDTO);
 		}
+		
 		return list;
 		
 	}
