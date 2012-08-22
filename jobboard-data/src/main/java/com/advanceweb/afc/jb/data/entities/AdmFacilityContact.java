@@ -18,7 +18,7 @@ public class AdmFacilityContact implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="facility_contact_id")
 	private int facilityContactId;
-
+	
 	private int active;
 
 	private String city;
@@ -65,7 +65,7 @@ public class AdmFacilityContact implements Serializable {
 	private String street2;
 
 	//bi-directional many-to-one association to AdmFacility
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="facility_id")
 	private AdmFacility admFacility;
 
@@ -123,18 +123,18 @@ public class AdmFacilityContact implements Serializable {
 	public Date getCreateDt() {
 		return this.createDt;
 	}
-
-	public void setCreateDt(Date createDt) {
-		this.createDt = createDt;
+	public void setCreateDt(Date createDt) {		
+	    	 this.createDt = createDt;	
 	}
 
 	public Date getDeleteDt() {
 		return this.deleteDt;
 	}
 
-	public void setDeleteDt(Date deleteDt) {
-		this.deleteDt = deleteDt;
-	}
+	public void setDeleteDt(final Date deleteDt) {
+		    	 this.deleteDt = deleteDt;
+	     }
+	
 
 	public String getEmail() {
 		return this.email;
