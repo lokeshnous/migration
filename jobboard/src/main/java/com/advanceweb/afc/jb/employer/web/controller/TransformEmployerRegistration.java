@@ -1,18 +1,17 @@
 package com.advanceweb.afc.jb.employer.web.controller;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
-
 /**
  * 
  * @author Sasibhushana
@@ -76,7 +75,7 @@ public class TransformEmployerRegistration {
 		return dto;		
 	}
 	
-public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO){
+	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO){
 		
 		List<EmployerProfileAttribForm> listForms = new ArrayList<EmployerProfileAttribForm>();
 		
@@ -95,6 +94,20 @@ public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerP
 		}
 		
 		return listForms;		
+	}
+	public AccountProfileDTO transformAccountProfileFormToDto(EmployeeAccountForm form){
+		AccountProfileDTO dto = new AccountProfileDTO();
+		dto.setFirstName(form.getFirstName());
+		dto.setCompanyName(form.getCompany());
+		dto.setState(form.getState());
+		dto.setStreet(form.getStreetAddress());
+		dto.setCountry(form.getCountry());
+		dto.setEmail(form.getEmail());
+		dto.setZipCode(form.getZipCode());
+		dto.setPhone(form.getPhone());
+		dto.setCity(form.getCityOrTown());
+		
+		return dto;
 	}
 	
 }
