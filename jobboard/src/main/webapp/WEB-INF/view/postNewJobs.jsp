@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -12,7 +12,7 @@ DOCTYPE html>
 		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
-
+	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 		<!--[if IE]>
 	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
 <![endif]-->
@@ -22,21 +22,14 @@ DOCTYPE html>
 		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/ui/1.8.13/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	
-			//Date picker
-	    	$(function() {
-	    		$( ".datepicker" ).datepicker();
-	    	}); 	
-		    	
-		    	
+	    	$("#hideZipCodeDdId").hide();	
+			
 			$( "#scheduleStartDivId" ).hide();
 		    
 		    $("#postNewJobButId").click(function(){
@@ -44,12 +37,26 @@ DOCTYPE html>
 		    		$("#postNewJobButHideId").click();
 		    	}
 		    });
+		    	    	
+			//Date picker
+	    	$(function() {
+	    		$( ".datepicker" ).datepicker();
+	    	}); 	
 		    
-		    $("#scheduleNewJobButId").click(function() {
+		    $("#lookUpZipCode").click(function(){
+		    	$("#hideZipCodeDdId").show();
+		    	$("#zipCodeITId").focus();
+		    });
+		    $("#zipCodeSelectedId").click(function(){
+		    	alert("hi");
+		    	$("#hideZipCodeDdId").hide();	
+		    });
+  		    $("#scheduleNewJobButId").click(function() {
 				$( "#scheduleStartDivId" ).dialog({
 					resizable: false,
 					height:400,
-					width:400,
+					width:500,
+					zIndex: -1,
 					modal: true,
 					buttons: {
 						"Schedule": function() {
@@ -61,9 +68,10 @@ DOCTYPE html>
 					},
 					modal: true
 				});
-			});
-		    
-		    
+			});  
+		  
+			
+			
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -311,7 +319,7 @@ DOCTYPE html>
 				<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-                      <div class="row marginTop10">
+                 <div class="row marginTop10">
 
                 <h3>Location</h3>
                 <p class="FloatLeft marginLeft20 FontSize12 TextColor03 marginTop13">(All fields are required)</p>
@@ -344,8 +352,14 @@ DOCTYPE html>
 
               </div>
                 <div class="rowEvenNewSpacing"> <span class="lableText3">Job Zip Code:</span>
-                <form:input path="jobZipCode" class="job_seeker_password textBox350" />
-                <span class="required "><a href="#">Look Up Zip Code</a></span>
+                <form:input path="jobZipCode" class="job_seeker_password textBox350"  id="zipCodeITId"/>
+                <div id="hideZipCodeDdId">
+                <form:select path="" class="jb_input3 jb_input_width3">
+					<form:option value="0" label="Select" />
+					<form:options items="${zipCodeList}" itemValue="fromZipcodeId" itemLabel="fromZipcodeValue" id="zipCodeSelectedId"/>
+				</form:select>
+				</div>
+                <span class="required "><a href="#" id="lookUpZipCode">Look Up Zip Code</a></span>
                 <div class="floatLeft width210"><span class="required marginRight10">
                   <form:checkbox path="bHideZipCode"/>
                   </span>
