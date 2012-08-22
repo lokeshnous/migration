@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 /**
  * <code>EmpBrandTempDTO</code>is a DTO class. The purpose of this class to hold
  * the required information of employer branding Templates.
@@ -24,6 +26,7 @@ public class EmpBrandTempDTO {
 //	private String updatedDate;
 	private String companyOverview;
 	private int facilityId;
+//	private CommonsMultipartFile fileData;
 	
 
 	public String getLogoPath() {
