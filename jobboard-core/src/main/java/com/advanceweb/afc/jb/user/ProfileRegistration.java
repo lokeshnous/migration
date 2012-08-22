@@ -1,7 +1,13 @@
 package com.advanceweb.afc.jb.user;
 
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+
+
 
 /**
  * @author rajeshkb
@@ -60,5 +66,24 @@ public interface ProfileRegistration {
 	 * @param profileDTO
 	 */
 	public ProfileDTO getProfileAttributes();
+	
+	/**
+	 * 
+	 * @param userId
+	 * @return List
+	 */
+    public List<AdmFacilityContact> getEmployeeData(int userId,String contactType);
+    /**
+     * 
+     * @param userId
+     * @return userid
+     */
+     public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,String contactType);
+    /**
+     * 	
+     * @param apd apd.
+     * @param admfacilityid admfacilityid.
+     */
+    public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid);
 
 }
