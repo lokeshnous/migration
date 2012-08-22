@@ -132,7 +132,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			e.printStackTrace();
 		}
 
-		return false;
+		return true;
 	}
 	
 	
