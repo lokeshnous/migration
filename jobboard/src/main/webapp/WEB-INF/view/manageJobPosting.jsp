@@ -273,7 +273,7 @@
 									<td align="center" valign="middle"><input type="checkbox"
 										name="checkbox" id="checkbox"></td>
 									<td align="center" valign="middle"><a href="/jobboard/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
-									<td align="left" valign="middle"><a href="#">${job.jobTitle}</a></td>
+									<td align="left" valign="middle"><a href="/jobboard/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
 									<td align="center" valign="middle">Wissahickon, MO</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
