@@ -54,6 +54,10 @@ public class MerUser implements Serializable {
 	@OneToMany(mappedBy="merUser")
 	private List<VstSessioninfo> vstSessioninfos;
 
+//	bi-directional many-to-one association to JpTemplate
+//	@OneToMany(mappedBy="merUser")
+//	private List<JpTemplate> jpTemplates;
+	
     public MerUser() {
     }
 
@@ -144,5 +148,13 @@ public class MerUser implements Serializable {
 	public void setVstSessioninfos(List<VstSessioninfo> vstSessioninfos) {
 		this.vstSessioninfos = vstSessioninfos;
 	}
+
+//	public List<JpTemplate> getJpTemplates() {
+//		return jpTemplates;
+//	}
+//
+//	public void setJpTemplates(List<JpTemplate> jpTemplates) {
+//		this.jpTemplates = jpTemplates;
+//	}
 	
 }
