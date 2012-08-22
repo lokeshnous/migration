@@ -428,10 +428,10 @@ DOCTYPE html>
 			   
 			   <div id="scheduleStartDivId"   title="Schedule the post new job"> 
               	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Start Date:</span>               
-               			<form:input path="scheduleStartDate" class="datepicker" />
+               			<form:input path="scheduleStartDate" class="job_seeker_password textBox350 datepicker" />
                		</div>
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule End Date:</span>               
-               			<form:input path="scheduleEndDate" class="datepicker" />
+               			<form:input path="scheduleEndDate" class="job_seeker_password textBox350 datepicker" />
                		</div>
 		 	  </div> 
 			   
@@ -453,10 +453,10 @@ DOCTYPE html>
               <div class="clearfix"></div>
               <br />
 	              <span class="marginBottom50 FloatLeft" >
-	              <input type="button" value="Post new job" class="btn_sm white" id="postNewJobButId"/>
-	              <input type="button" value="Schedule job" class="btn_sm white" id="scheduleNewJobButId">
-	              <input type="submit" value="Save as draft" class="btn_sm white">
-	              <input type="submit" value="Cancel" class="btn_sm white">
+	              <input type="button" value="Post new job" class="btn_sm white" name="PostNewJob" id="postNewJobButId"/>
+	              <input type="button" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleNewJobButId">
+	              <input type="submit" value="Save as draft" class="btn_sm white" name="SaveAsDraft">
+	              <input type="submit" value="Cancel" class="btn_sm white" name="Cancel">
 	              <input type="submit" value="Post new job" class="btn_sm white" id="postNewJobButHideId" style="visibility: hidden;"/>
 <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
 	              	<a href="#" class="btn_sm white">Schedule job</a> 

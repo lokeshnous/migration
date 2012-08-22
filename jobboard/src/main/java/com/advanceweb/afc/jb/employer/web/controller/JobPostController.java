@@ -88,7 +88,7 @@ public class JobPostController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST)
+	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="PostNewJob")
 	public ModelAndView savePostJob(JobPostForm form,BindingResult result) {
 
 		ModelAndView  model = new ModelAndView();
@@ -106,6 +106,67 @@ public class JobPostController {
 	}	
 	
 	/**
+	 * This method is called to save the job details
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="ScheduleJob")
+	public ModelAndView schedulePostJob(JobPostForm form,BindingResult result) {
+
+		ModelAndView  model = new ModelAndView();
+		String errMessage = validateJobPostDetails(form);
+		if(!StringUtils.isEmpty(errMessage)){
+			model=populateDropdowns(model);
+			model.setViewName("postNewJobs");
+			model.addObject("errorMessage", errMessage);
+			return model;
+		}
+		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		employerJobPost.savePostJob(dto);
+		model.setViewName("postNewJobs");
+		return model;
+	}	
+	
+	/**
+	 * This method is called to save the job details
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="SaveAsDraft")
+	public ModelAndView savePostJobAsDraft(JobPostForm form,BindingResult result) {
+
+		ModelAndView  model = new ModelAndView();
+		String errMessage = validateJobPostDetails(form);
+		if(!StringUtils.isEmpty(errMessage)){
+			model=populateDropdowns(model);
+			model.setViewName("postNewJobs");
+			model.addObject("errorMessage", errMessage);
+			return model;
+		}
+		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		employerJobPost.savePostJob(dto);
+		model.setViewName("postNewJobs");
+		return model;
+	}
+	
+	/**
+	 * This method is called to save the job details
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="Cancel")
+	public ModelAndView cancelPostJob(JobPostForm form,BindingResult result) {
+
+		return new ModelAndView("forward:/employer/employerDashBoard.html","", "");
+	}
+	
+	/**
 	 * This method is called to validate the form
 	 * 
 	 * @param form
@@ -116,12 +177,17 @@ public class JobPostController {
 		 UrlValidator urlValidator = new UrlValidator();
 		if(null != form){
 			if(StringUtils.isEmpty(form.getJobTitle()) || 
+					StringUtils.isEmpty(form.getJobCity()) ||
+					StringUtils.isEmpty(form.getJobZipCode()) ||
+					MMJBCommonConstants.ZERO.equals(form.getJobCountry()) ||
+					MMJBCommonConstants.ZERO.equals(form.getJobState()) ||
 					StringUtils.isEmpty(form.getJobDesc()) ||
 					(StringUtils.isEmpty(form.getApplyUrl()) && 
 							StringUtils.isEmpty(form.getAtsUrl()) && 
 							StringUtils.isEmpty(form.getApplyEmail()) )){
 				return "Please fill the required fields";
 			}
+									
 			
 			//Validating URL
 //			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
