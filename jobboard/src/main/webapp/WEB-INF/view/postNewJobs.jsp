@@ -28,10 +28,8 @@
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	
-	    	$("#hideZipCodeDdId").hide();	
-			
-			$( "#scheduleStartDivId" ).hide();
-		    
+	    	$("#hideZipCodeDdId").hide();				
+			$( "#scheduleStartDivId" ).hide();		    
 		    $("#postNewJobButId").click(function(){
 		    	if(confirm("Do you want to post this job?")){
 		    		$("#postNewJobButHideId").click();
@@ -40,7 +38,23 @@
 		    	    	
 			//Date picker
 	    	$(function() {
-	    		$( ".datepicker" ).datepicker();
+	    		$( ".datepicker" ).datepicker({
+	    			onSelect: function(dateText, inst) { 
+	    				 var datepicker = $("#startDate").val();
+	    		            var joindate = new Date(datepicker);
+	    		            var numberOfDaysToAdd = 30;
+	    		            joindate.setDate(joindate.getDate() + numberOfDaysToAdd);
+	    		            var dd = joindate.getDate();
+    		            	if(dd<10)
+    		            		dd='0'+dd;    		            	
+	    		            var mm = joindate.getMonth() + 1;
+    		            	if(mm<10)
+    		            		mm='0'+mm;  
+	    		            var y = joindate.getFullYear();
+	    		            var joinFormattedDate = mm + '/' + dd + '/' + y;
+	    		            $("#endDate").val(joinFormattedDate);
+	    		      }
+	    		});
 	    	}); 	
 		    
 		    $("#lookUpZipCode").click(function(){
@@ -60,7 +74,10 @@
 					modal: true,
 					buttons: {
 						"Schedule": function() {
-							$( this ).dialog( "close" );
+							if($("#startDate").val() != ''){
+								$( this ).dialog( "close" );
+								$("#scheduleJobButHideId").click();
+							}
 						},
 						"Cancel": function() {
 							$( this ).dialog( "close" );
@@ -229,7 +246,7 @@
               <div class="MidContent_Wrapper floatLeft">
         <div class="popupHeader Padding0  OrangeBG">
                   <h2>POST NEW JOB</h2>
-                  <span class="floatRight marginRight10"><a href="/jobboard/employer/manageJobPost.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Manage / Edit Job Postings</a></span></div>
+                  <span class="floatRight marginRight10"><a href="#" class="link_color3_emphasized FontSize12 FontWeight">Back to Manage / Edit Job Postings</a></span></div>
 
         <div class="clearfix"></div>
         <!--*-->
@@ -442,10 +459,10 @@
 			   
 			   <div id="scheduleStartDivId"   title="Schedule the post new job"> 
               	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Start Date:</span>               
-               			<form:input path="scheduleStartDate" class="job_seeker_password textBox350 datepicker" />
+               			<form:input path="scheduleStartDate" class="job_seeker_password textBox350 datepicker" id="startDate"/>
                		</div>
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule End Date:</span>               
-               			<form:input path="scheduleEndDate" class="job_seeker_password textBox350 datepicker" />
+               			<form:input path="scheduleEndDate" class="job_seeker_password textBox350 datepicker" id="endDate"/>
                		</div>
 		 	  </div> 
 			   
@@ -468,10 +485,11 @@
               <br />
 	              <span class="marginBottom50 FloatLeft" >
 	              <input type="button" value="Post new job" class="btn_sm white"  id="postNewJobButId"/>
-	              <input type="button" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleNewJobButId">
+	              <input type="button" value="Schedule job" class="btn_sm white"  id="scheduleNewJobButId">
 	              <input type="submit" value="Save as draft" class="btn_sm white" name="SaveAsDraft">
 	              <input type="submit" value="Cancel" class="btn_sm white" name="Cancel">
 	              <input type="submit" value="Post new job" class="btn_sm white" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;"/>
+	              <input type="submit" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;"/>
 <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
 	              	<a href="#" class="btn_sm white">Schedule job</a> 
 	              	<a href="#" class="btn_sm white">save as draft</a> 
