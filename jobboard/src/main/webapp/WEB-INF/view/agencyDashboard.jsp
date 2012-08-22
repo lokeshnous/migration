@@ -146,7 +146,7 @@
 										<p>
 											<a
 												href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html"
-												id="changePassword"">Change Password</a>
+												id="changePassword"">${msg.jsChangePwd}</a>
 										</p>
 									</div>
 									<div class="lableTextDashBoard">
