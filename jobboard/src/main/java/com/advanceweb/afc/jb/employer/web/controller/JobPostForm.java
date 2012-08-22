@@ -45,7 +45,8 @@ public class JobPostForm {
 	
 	private boolean autoRenew;
 
-	
+	private String scheduleStartDate;
+	private String scheduleEndDate;
 	
 
 	public int getJobId() {
@@ -271,5 +272,20 @@ public class JobPostForm {
 	public void setApplMethod(String applMethod) {
 		this.applMethod = applMethod;
 	}
-	
+
+	public String getScheduleStartDate() {
+		return scheduleStartDate;
+	}
+
+	public void setScheduleStartDate(String scheduleStartDate) {
+		this.scheduleStartDate = scheduleStartDate;
+	}
+
+	public String getScheduleEndDate() {
+		return scheduleEndDate;
+	}
+
+	public void setScheduleEndDate(String scheduleEndDate) {
+		this.scheduleEndDate = scheduleEndDate;
+	}	
 }

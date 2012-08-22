@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -23,13 +22,62 @@
 		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.8.13/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	
+			//Date picker
+	    	$(function() {
+	    		$( ".datepicker" ).datepicker();
+	    	}); 	
+		    	
+		    	
+			$( "#scheduleStartDivId" ).hide();
+		    
+		    $("#postNewJobButId").click(function(){
+		    	if(confirm("Do you want to post this job?")){
+		    		$("#postNewJobButHideId").click();
+		    	}
+		    });
+		    
+		    $("#scheduleNewJobButId").click(function() {
+				$( "#scheduleStartDivId" ).dialog({
+					resizable: false,
+					height:400,
+					width:400,
+					modal: true,
+					buttons: {
+						"Schedule": function() {
+							$( this ).dialog( "close" );
+						},
+						"Cancel": function() {
+							$( this ).dialog( "close" );
+						}
+					},
+					modal: true
+				});
+			});
+		    
+		    
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
 		<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+		<style type="text/css">
+		#boxes .window {
+			  position:fixed;
+			  width:440px;
+			  height:200px;
+			  display:none;
+			  z-index:9999;
+			  padding:20px;
+}
+		</style>
 		</head>
 
 <body class="job_board">
@@ -376,12 +424,20 @@
                       <form:radiobutton path="autoRenew" value="Yes"/><label class="greyLabel">Yes</label></span>&nbsp;&nbsp;<span class="required"> 
                       <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>
                       
-   </div>
-   <div class="clearfix"></div>
-                      <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
-
-                      <div class="clearfix"></div>
-
+			   </div>
+			   
+			   <div id="scheduleStartDivId"   title="Schedule the post new job"> 
+              	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Start Date:</span>               
+               			<form:input path="scheduleStartDate" class="datepicker" />
+               		</div>
+               		<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule End Date:</span>               
+               			<form:input path="scheduleEndDate" class="datepicker" />
+               		</div>
+		 	  </div> 
+			   
+			   <div class="clearfix"></div>
+               <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
+               <div class="clearfix"></div>
             <div class="clearfix"></div>
           </div>
                 </div>
@@ -397,15 +453,16 @@
               <div class="clearfix"></div>
               <br />
 	              <span class="marginBottom50 FloatLeft" >
-	              <input type="submit" value="Post new job" class="btn_sm white">
-	              <input type="submit" value="Schedule job" class="btn_sm white">
+	              <input type="button" value="Post new job" class="btn_sm white" id="postNewJobButId"/>
+	              <input type="button" value="Schedule job" class="btn_sm white" id="scheduleNewJobButId">
 	              <input type="submit" value="Save as draft" class="btn_sm white">
 	              <input type="submit" value="Cancel" class="btn_sm white">
+	              <input type="submit" value="Post new job" class="btn_sm white" id="postNewJobButHideId" style="visibility: hidden;"/>
 <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
 	              	<a href="#" class="btn_sm white">Schedule job</a> 
 	              	<a href="#" class="btn_sm white">save as draft</a> 
 	              	<a href="#" class="btn_sm white">Cancel</a> -->
-	              </span> 
+	              </span> 	              
              </div>
 
     
