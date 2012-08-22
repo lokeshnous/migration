@@ -1,8 +1,12 @@
 package com.advanceweb.afc.jb.employer.dao;
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.domain.Employer;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 
 /**
  * @author rajeshkb
@@ -44,6 +48,15 @@ public interface EmployerRegistrationDAO {
 	 * @return boolean
 	 */
 	public boolean changePassword(EmployerProfileDTO empDTO);
+
+	
+	
+	/**
+	 * to display account of employee
+	 * @param userId userId.
+	 * @return List.
+	 */
+
 	
 	
 	/**
@@ -52,5 +65,24 @@ public interface EmployerRegistrationDAO {
 	 * @return
 	 */
 	public EmployerProfileDTO getProfileAttributes();
+
+
+	public List<AdmFacilityContact> getEmployeeData(int userId,String contactType);
+	/**
+	 * 
+	 * @param userId userId.
+	 * @return userid.
+	 */
+	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+			String contactType);
+	/**
+	 * 
+	 * @param apd apd.
+	 * @param admfacilityid admfacilityid.
+	 */
+	
+	public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid);
+
+	
 
 }
