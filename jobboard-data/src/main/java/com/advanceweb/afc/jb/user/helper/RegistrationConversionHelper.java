@@ -33,11 +33,7 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 @Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
 
-	/**
-	 * Transform MerUserDTO to entity MerUser	 
-	 * @param dto
-	 * @return
-	 */
+	
 	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto, MerUser entity) {
 
 		MerUserDTO userDTO = dto.getMerUserDTO();		
