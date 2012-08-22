@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,12 @@ public class JpTemplate implements Serializable {
 	@Column(name="create_dt")
 	private Date createDt;
 
+//    MUST be changed to JoinColumn
+    	
+//    @ManyToOne(fetch=FetchType.LAZY)
+//	@JoinColumn(name="create_user_id")
+//    private MerUser merUser;
+    
 	@Column(name="create_user_id")
 	private int createUserId;
 
@@ -38,7 +45,7 @@ public class JpTemplate implements Serializable {
 	private String logoPath;
 
 	@Column(name="main_image_path")
-	private int mainImagePath;
+	private String mainImagePath;
 
 	@Column(name="template_name")
 	private String templateName;
@@ -103,19 +110,28 @@ public class JpTemplate implements Serializable {
 		this.createUserId = createUserId;
 	}
 
+//	public MerUser getMerUser() {
+//		return merUser;
+//	}
+//
+//	public void setMerUser(MerUser merUser) {
+//		this.merUser = merUser;
+//	}
+
 	public String getLogoPath() {
 		return this.logoPath;
 	}
 
+	
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
 	}
 
-	public int getMainImagePath() {
+	public String getMainImagePath() {
 		return this.mainImagePath;
 	}
 
-	public void setMainImagePath(int mainImagePath) {
+	public void setMainImagePath(String mainImagePath) {
 		this.mainImagePath = mainImagePath;
 	}
 
