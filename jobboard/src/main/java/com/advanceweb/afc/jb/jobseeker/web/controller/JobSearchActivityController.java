@@ -314,7 +314,9 @@ public class JobSearchActivityController {
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
 					// TODO: Need to clarify
 				}
-				attachmentpaths.add(resumeDTO.getFilePath());
+				if(resumeDTO.getFilePath() != null){
+					attachmentpaths.add(resumeDTO.getFilePath());
+				}
 				employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
 				// TODO: handle exception

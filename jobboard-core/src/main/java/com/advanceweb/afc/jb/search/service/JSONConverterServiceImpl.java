@@ -55,11 +55,17 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					MMUtils.isNull(jobDTO.getCompany()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
 					MMUtils.isNull(jobDTO.getJobTitle()));
+			String location = null;
+			if (jobDTO.getCity() != null && jobDTO.getState() != null) {
+				location = jobDTO.getCity() + MMJBCommonConstants.COMMA
+						+ jobDTO.getState();
+			} else if (jobDTO.getCity() != null && jobDTO.getState() == null) {
+				location = jobDTO.getCity();
+			}
 			jobSrchJson.put(MMJBCommonConstants.CAP_CITY,
-					MMUtils.isNull(jobDTO.getCity()));
+					MMUtils.isNull(location));
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
-					convertToReqdDateString(jobDTO.getPostedDate()
-							.toString()));
+					convertToReqdDateString(jobDTO.getPostedDate().toString()));
 			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,
 					jobDTO.getApplyOnline());
 			jobSrchJson.put(MMJBCommonConstants.BLIND_AD,
