@@ -89,8 +89,8 @@ jQuery(document).ready(
 							</div>
 							<div class="dashboardcolumn1">
 								<div class="dashboardPanal">
-									<div class="dashboardPanalIconHolder">
-										<img src="../resources/images/UserProfile.jpg" width="30"
+									<div class="profile">
+										<img src="../resources/images/tranBg.png" width="30"
 											height="30" alt="User Profile">
 									</div>
 
@@ -116,8 +116,8 @@ jQuery(document).ready(
 									</div>
 								</div>
 								<div class="dashboardPanal">
-									<div class="dashboardPanalIconHolder">
-										<img src="../resources/images/SearchAgents.jpg" width="30"
+									<div class="search">
+										<img src="../resources/images/tranBg.png" width="30"
 											height="30" alt="Search">
 									</div>
 
@@ -144,8 +144,8 @@ jQuery(document).ready(
 									</div>
 								</div>
 								<div class="dashboardPanal">
-									<div class="dashboardPanalIconHolder">
-										<img src="../resources/images/Activity.jpg" width="30"
+									<div class="activity">
+										<img src="../resources/images/tranBg.png" width="30"
 											height="30" alt="Activity">
 									</div>
 
@@ -182,8 +182,8 @@ jQuery(document).ready(
 
 							<div class="dashboardcolumn2">
 								<div class="dashboardPanal">
-									<div class="dashboardPanalIconHolder">
-										<img src="../resources/images/Resume.jpg" width="30"
+									<div class="resume">
+										<img src="../resources/images/tranBg.png" width="30"
 											height="30" alt="Resume">
 									</div>
 
@@ -236,8 +236,8 @@ jQuery(document).ready(
 								</div>
 								<div class="dashboardPanal">
 
-									<div class="dashboardPanalIconHolder">
-										<img src="../resources/images/Subscriptions.jpg" width="30"
+									<div class="subscriptions">
+										<img src="../resources/images/tranBg.png" width="30"
 											height="30" alt="Subscription">
 									</div>
 

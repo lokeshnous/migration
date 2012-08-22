@@ -31,7 +31,7 @@
 
 
             <div class="main">
-<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+			<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
                     <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
 
@@ -61,7 +61,7 @@
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
-				    	<input type="submit" class="btn_sm orange" value="Login"/>				    
+				    	<input type="submit" class="orange" value="Login"/>				    
 										
                     	<a href="forgrtPasswordLogin.html?page=jobSeeker" id="forgrtpassword">Forgot your password?</a>
 			
