@@ -981,19 +981,19 @@ public class ResumeController {
 		Long count = 0L;
 		if (null != createResume.getListCertForm()) {
 			for (CertificationsForm certForm : createResume.getListCertForm()) {
-				if (!certForm.getCertificationName().equals(null)
+				if (null != certForm.getCertificationName()
 						&& !certForm.getCertificationName().equals("")){
 					count = count + 1L;
 				}
-				if (!certForm.getDateOfReceipt().equals(null)
+				if (null !=certForm.getDateOfReceipt()
 						&& !certForm.getDateOfReceipt().equals("")){
 					count = count + 1L;
 				}
-				if (!certForm.getInstituteName().equals(null)
+				if (null !=certForm.getInstituteName()
 						&& !certForm.getInstituteName().equals("")){
 					count = count + 1L;
 				}
-				if (!certForm.getSummary().equals(null)
+				if (null !=certForm.getSummary()
 						&& !certForm.getSummary().equals("")){
 					count = count + 1L;
 				}
@@ -1002,11 +1002,11 @@ public class ResumeController {
 		}
 		if (null != createResume.getListRefForm()) {
 			for (ReferenceForm refForm : createResume.getListRefForm()) {
-				if (!refForm.getCompanyName().equals(null)
+				if (null !=refForm.getCompanyName()
 						&& !refForm.getCompanyName().equals("")){
 					count = count + 1L;
 				}
-				if (!refForm.getEmail().equals(null) && !refForm.getEmail().equals("")){
+				if (null !=refForm.getEmail() && !refForm.getEmail().equals("")){
 					count = count + 1L;
 				}
 				if (refForm.getJobTitle() != null
@@ -1021,30 +1021,30 @@ public class ResumeController {
 		}
 		if (null != createResume.getListEduForm()) {
 			for (EducationForm eduForm : createResume.getListEduForm()) {
-				if (!eduForm.getCertifications().equals(null)
+				if (null !=eduForm.getCertifications()
 						&& !eduForm.getCertifications().equals("")){
 					count = count + 1L;
 				}
-				if (!eduForm.getDegreeLvl().equals(null)
+				if (null !=eduForm.getDegreeLvl()
 						&& !eduForm.getDegreeLvl().equals("")){
 					count = count + 1L;
 				}
-				if (!eduForm.getDegrees().equals(null)
+				if (null !=eduForm.getDegrees()
 						&& !eduForm.getDegrees().equals("")){
 					count = count + 1L;
 				}
 				if (eduForm.getEndDate() != null && eduForm.getEndDate() != ""){
 					count = count + 1L;
 				}
-				if (!eduForm.getFieldOfStudy().equals(null)
+				if (null != eduForm.getFieldOfStudy()
 						&& !eduForm.getFieldOfStudy().equals("")){
 					count = count + 1L;
 				}
-				if (!eduForm.getInstituteName().equals(null)
+				if (null != eduForm.getInstituteName()
 						&& !eduForm.getInstituteName().equals("")){
 					count = count + 1L;
 				}
-				if (!eduForm.getLanguage().equals(null)
+				if (null !=eduForm.getLanguage()
 						&& !eduForm.getLanguage().equals("")){
 					count = count + 1L;
 				}
@@ -1058,41 +1058,41 @@ public class ResumeController {
 		}
 		if (null != createResume.getContactInfoForm()) {
 			ContactInfoForm cntInfoForm = createResume.getContactInfoForm();
-			if (!cntInfoForm.getAddressLine1().equals(null)
+			if (null !=cntInfoForm.getAddressLine1()
 					&& !cntInfoForm.getAddressLine1().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getAddressLine2().equals(null)
+			if (null !=cntInfoForm.getAddressLine2()
 					&& !cntInfoForm.getAddressLine2().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getCity().equals(null) && !cntInfoForm.getCity().equals("")){
+			if (null !=cntInfoForm.getCity() && !cntInfoForm.getCity().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getCountry().equals(null)
+			if (null !=cntInfoForm.getCountry()
 					&& !cntInfoForm.getCountry().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getPhoneNo().equals(null)
+			if (null !=cntInfoForm.getPhoneNo()
 					&& !cntInfoForm.getPhoneNo().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getState().equals(null) && !cntInfoForm.getState().equals("")){
+			if (null !=cntInfoForm.getState() && !cntInfoForm.getState().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getPostalCode().equals(null)
+			if (null != cntInfoForm.getPostalCode()
 					&& !cntInfoForm.getPostalCode().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getFirstName().equals(null)
+			if (null !=cntInfoForm.getFirstName()
 					&& !cntInfoForm.getMiddleName().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getMiddleName().equals(null)
+			if (null !=cntInfoForm.getMiddleName()
 					&& !cntInfoForm.getMiddleName().equals("")){
 				count = count + 1L;
 			}
-			if (!cntInfoForm.getLastName().equals(null)
+			if (null !=cntInfoForm.getLastName()
 					&& !cntInfoForm.getMiddleName().equals("")){
 				count = count + 1L;
 			}
@@ -1100,23 +1100,23 @@ public class ResumeController {
 		}
 		if (null != createResume.getListWorkExpForm()) {
 			for (WorkExpForm wrkExpForm : createResume.getListWorkExpForm()) {
-				if (!wrkExpForm.getAnnualSalary().equals(null)
+				if (null !=wrkExpForm.getAnnualSalary()
 						&& !wrkExpForm.getAnnualSalary().equals("")){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getCurrentCareerLvl().equals(null)
+				if (null !=wrkExpForm.getCurrentCareerLvl()
 						&& !wrkExpForm.getCurrentCareerLvl().equals("")){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getDescription().equals(null)
+				if (null !=wrkExpForm.getDescription()
 						&& !wrkExpForm.getDescription().equals("")){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getEmployerName().equals(null)
+				if (null !=wrkExpForm.getEmployerName()
 						&& !wrkExpForm.getEmployerName().equals("")){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getEmploymentType().equals(null)
+				if (null !=wrkExpForm.getEmploymentType()
 						&& !wrkExpForm.getEmploymentType().equals("")){
 					count = count + 1L;
 				}
@@ -1124,19 +1124,19 @@ public class ResumeController {
 						&& wrkExpForm.getEndDate() != ""){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getHrlyPayRate().equals(null)
+				if (null !=wrkExpForm.getHrlyPayRate()
 						&& !wrkExpForm.getHrlyPayRate().equals("")){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getJobTitle().equals(null)
+				if (null !=wrkExpForm.getJobTitle()
 						&& !wrkExpForm.getJobTitle().equals("")){
 					count = count + 1L;
 				}
-				if (wrkExpForm.getStartDate() != null
+				if (null !=wrkExpForm.getStartDate()
 						&& wrkExpForm.getStartDate() != ""){
 					count = count + 1L;
 				}
-				if (!wrkExpForm.getYrsAtPostion().equals(null)
+				if (null !=wrkExpForm.getYrsAtPostion()
 						&& !wrkExpForm.getYrsAtPostion().equals("")){
 					count = count + 1L;
 				}
@@ -1146,10 +1146,10 @@ public class ResumeController {
 		}
 		if (null != createResume.getListLangForm()) {
 			for (LanguageForm langForm : createResume.getListLangForm()) {
-				if (!langForm.getExpLvl().equals(null) && !langForm.getExpLvl().equals("")){
+				if (null !=langForm.getExpLvl() && !langForm.getExpLvl().equals("")){
 					count = count + 1L;
 				}
-				if (!langForm.getLanguage().equals(null)
+				if (null !=langForm.getLanguage()
 						&& !langForm.getLanguage().equals("")){
 					count = count + 1L;
 				}
@@ -1160,11 +1160,11 @@ public class ResumeController {
 		if (null != createResume.getListPhoneDtlForm()) {
 			for (PhoneDetailForm phnDtlForm : createResume
 					.getListPhoneDtlForm()) {
-				if (!phnDtlForm.getPhoneNumber().equals(null)
+				if (null !=phnDtlForm.getPhoneNumber()
 						&& !phnDtlForm.getPhoneNumber().equals("")){
 					count = count + 1L;
 				}
-				if (!phnDtlForm.getPhoneType().equals(null)
+				if (null !=phnDtlForm.getPhoneType()
 						&& !phnDtlForm.getPhoneType().equals("")){
 					count = count + 1L;
 				}
@@ -1172,25 +1172,25 @@ public class ResumeController {
 			}
 
 		}
-		if (!createResume.getObjective().equals(null)
+		if (null !=createResume.getObjective()
 				&& !createResume.getObjective().equals("")) {
 			count = count + 1L;
 
 		}
-		if (!createResume.getSkills().equals(null) && !createResume.getSkills().equals("")) {
+		if (null !=createResume.getSkills() && !createResume.getSkills().equals("")) {
 			count = count + 1L;
 
 		}
-		if (!createResume.getAwards().equals(null) && !createResume.getAwards().equals("")) {
+		if (null !=createResume.getAwards() && !createResume.getAwards().equals("")) {
 			count = count + 1L;
 
 		}
-		if (!createResume.getMemberships().equals(null)
+		if (null !=createResume.getMemberships()
 				&& !createResume.getMemberships().equals("")) {
 			count = count + 1L;
 
 		}
-		if (!createResume.getOtherDetails().equals(null)
+		if (null !=createResume.getOtherDetails()
 				&& !createResume.getOtherDetails().equals("")) {
 			count = count + 1L;
 
