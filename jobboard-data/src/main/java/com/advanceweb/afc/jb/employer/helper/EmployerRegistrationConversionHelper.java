@@ -5,7 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
+
 import com.advanceweb.afc.jb.common.AddressDTO;
+
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
@@ -13,6 +17,7 @@ import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
@@ -66,6 +71,34 @@ public class EmployerRegistrationConversionHelper {
 		return admFacility;
 
 	}
+
+	/**
+	 * 
+	 * @param apd
+	 * @return admFacilityContact.
+	 */
+	public AdmFacilityContact transformEmpAccDTOToAdmAccEntity(AccountProfileDTO apd){
+		AdmFacilityContact admFacilityContact = new AdmFacilityContact();
+		AdmFacility admFacility = new AdmFacility();
+		admFacility.setAdminUserId(apd.getFacilityId());		
+		//admFacilityContact.setAdmFacility(apd.getFacilityId());
+		admFacilityContact.setContactType(apd.getContactType());
+		admFacilityContact.setFirstName(apd.getFirstName());
+		admFacilityContact.setCompany(apd.getCompanyName());
+		admFacilityContact.setStreet(apd.getStreet());
+		admFacilityContact.setCity(apd.getCity());
+		admFacilityContact.setState(apd.getState());
+		admFacilityContact.setPostcode(apd.getZipCode());
+		admFacilityContact.setCountry(apd.getCountry());
+		admFacilityContact.setEmail(apd.getEmail());
+		admFacilityContact.setPhone(apd.getPhone());
+		
+		
+		return admFacilityContact;
+		
+	}
+	
+
 
 	/**
 	 * Transform MerUserDTO to entity MerUser
@@ -165,4 +198,26 @@ public class EmployerRegistrationConversionHelper {
 
 	}
 
+
+	
+	public AdmFacilityContact transformEmpAccDTOToAdmAccEntityData(AdmFacilityContact admFacilityContact,AccountProfileDTO apd){
+		//AdmFacilityContact admFacilityContact = new AdmFacilityContact();
+		//AdmFacility admFacility = new AdmFacility();
+		//admFacility.setAdminUserId(apd.getFacilityId());		
+		//admFacilityContact.setAdmFacility(admFacility);
+		//admFacilityContact.setContactType(apd.getContactType());
+		admFacilityContact.setFirstName(apd.getFirstName());
+		admFacilityContact.setCompany(apd.getCompanyName());
+		admFacilityContact.setStreet(apd.getStreet());
+		admFacilityContact.setCity(apd.getCity());
+		admFacilityContact.setState(apd.getState());
+		admFacilityContact.setPostcode(apd.getZipCode());
+		admFacilityContact.setCountry(apd.getCountry());
+		admFacilityContact.setEmail(apd.getEmail());
+		admFacilityContact.setPhone(apd.getPhone());
+		
+		
+		return admFacilityContact;
+	}
+	
 }
