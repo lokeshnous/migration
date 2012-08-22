@@ -221,7 +221,7 @@ DOCTYPE html>
               <div class="MidContent_Wrapper floatLeft">
         <div class="popupHeader Padding0  OrangeBG">
                   <h2>POST NEW JOB</h2>
-                  <span class="floatRight marginRight10"><a href="#" class="link_color3_emphasized FontSize12 FontWeight">Back to Manage / Edit Job Postings</a></span></div>
+                  <span class="floatRight marginRight10"><a href="/jobboard/employer/manageJobPost.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Manage / Edit Job Postings</a></span></div>
 
         <div class="clearfix"></div>
         <!--*-->
