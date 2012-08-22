@@ -239,4 +239,8 @@ public interface MMJBCommonConstants {
 	
 	public static final String PERFORM_SAVED_SEARCH = "performSearch";
 	
+	//For Account Setting 
+	public static final String PRIMARY="PRIMARY";	
+	public static final String BILLING = "BILLING";
+	
 }
