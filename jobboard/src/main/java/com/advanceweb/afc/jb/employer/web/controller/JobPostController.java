@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -64,6 +65,7 @@ public class JobPostController {
 		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), employerInfoDTO.getUserId(), employerInfoDTO.getRoleId());
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		List<FromZipcodeDTO> zipCodeList = populateDropdownsService.getFromZipcodeList();
 		
 		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
 		SecureRandom random=null;
@@ -82,6 +84,7 @@ public class JobPostController {
 		model.addObject("countryList",countryList);
 		model.addObject("templateList",templateList);
 		model.addObject("jbOwnerList", jbOwnerList);
+		model.addObject("zipCodeList",zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		//Populating Dropdowns
 		
@@ -219,13 +222,14 @@ public class JobPostController {
 		List<DropDownDTO> jbOwnerList = populateDropdownsService .populateJobOwnersDropdown(employerInfoDTO.getFacilityId(), employerInfoDTO.getUserId(), employerInfoDTO.getRoleId());
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		
+		List<FromZipcodeDTO> zipCodeList = populateDropdownsService.getFromZipcodeList();
 		//Populating Dropdowns
 		model.addObject("stateList",stateList);
 		model.addObject("empTypeList",empTypeList);
 		model.addObject("countryList",countryList);
 		model.addObject("templateList",templateList);
 		model.addObject("jbOwnerList", jbOwnerList);
+		model.addObject("zipCodeList",zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		//Populating Dropdowns
 		
