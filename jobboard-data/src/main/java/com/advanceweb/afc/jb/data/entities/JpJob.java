@@ -155,7 +155,7 @@ public class JpJob implements Serializable {
 	private List<JpJobAddon> jpJobAddons;
 
 	//bi-directional many-to-one association to JpJobApply
-	@OneToMany(mappedBy="jpJob")
+	@OneToMany(mappedBy="jpJob", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<JpJobApply> jpJobApplies;
 
 	//bi-directional many-to-one association to JpJobLocation

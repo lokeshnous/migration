@@ -16,7 +16,6 @@ public class JobPostForm {
 	private boolean bHideCompName;
 	
 	private String jobPostingType;
-	private String applicationMethod;
 	
 	private String jobNumber;
 	private String jobTitle;
@@ -103,14 +102,6 @@ public class JobPostForm {
 
 	public void setJobPostingType(String jobPostingType) {
 		this.jobPostingType = jobPostingType;
-	}
-
-	public String getApplicationMethod() {
-		return applicationMethod;
-	}
-
-	public void setApplicationMethod(String applicationMethod) {
-		this.applicationMethod = applicationMethod;
 	}
 
 	public String getJobNumber() {

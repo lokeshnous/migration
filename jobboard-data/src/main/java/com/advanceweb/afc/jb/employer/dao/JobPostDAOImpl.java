@@ -16,6 +16,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
@@ -124,9 +125,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 				
 				JpJobType jobType = hibernateTemplate.load(JpJobType.class, Integer.valueOf(dto.getJobPostingType()));
 				
-				JpJob jobob=jobPostConversionHelper.transformJobDtoToJpJob(dto, template, jobType);
-				hibernateTemplate.save(jobob);
-				List<JpJobLocation> locList = jobPostConversionHelper.transformJobPostDTOToJpJbLocation(dto, jobob, location);
+				JpJob jpJob=jobPostConversionHelper.transformJobDtoToJpJob(dto, template, jobType);
+				hibernateTemplate.save(jpJob);
+				List<JpJobApply> applyJobList = jobPostConversionHelper.transformJobPostDTOToJpJobApply(dto, jpJob);
+				hibernateTemplate.saveOrUpdateAll(applyJobList);
+				List<JpJobLocation> locList = jobPostConversionHelper.transformJobPostDTOToJpJbLocation(dto, jpJob, location);
 				hibernateTemplate.saveOrUpdateAll(locList);				
 		} catch (DataAccessException e) {
 			e.printStackTrace();

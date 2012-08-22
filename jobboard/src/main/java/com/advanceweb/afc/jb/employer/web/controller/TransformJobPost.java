@@ -43,7 +43,7 @@ public class TransformJobPost {
 		jobPostDTO.setApplyEmail(form.getApplyEmail());
 		jobPostDTO.setApplyUrl(form.getApplyUrl());
 		jobPostDTO.setAtsUrl(form.getAtsUrl());
-		jobPostDTO.setApplicationMethod(form.getApplicationMethod());
+		jobPostDTO.setApplicationMethod(form.getApplMethod());
 		
 		//Location
 		jobPostDTO.setJobCity(form.getJobCity());

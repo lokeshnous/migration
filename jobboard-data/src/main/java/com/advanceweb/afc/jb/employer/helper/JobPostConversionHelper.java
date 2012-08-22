@@ -39,17 +39,7 @@ public class JobPostConversionHelper {
 		 
 		 //Job Title and Number
 		 jpJob.setJobtitle(dto.getJobTitle());
-		 
-		 //Application Method
-		 JpJobApply jobApply = new JpJobApply();
-		 jobApply.setApplyMethod(dto.getApplicationMethod());
-		 if(null != dto.getApplyEmail() && dto.getApplyEmail().length() != 0)
-			 jobApply.setApplyLink(dto.getApplyEmail());
-		 if(null != dto.getApplyUrl() && dto.getApplyUrl().length() != 0)
-			 jobApply.setApplyLink(dto.getApplyUrl());
-		 if(null != dto.getAtsUrl() && dto.getAtsUrl().length() != 0)
-			 jobApply.setApplyLink(dto.getAtsUrl());
-			 
+					
 		 //Location
 		 //Handled separately
 		 
@@ -67,12 +57,12 @@ public class JobPostConversionHelper {
 	 }
 	 
 	 public List<JpJobLocation> transformJobPostDTOToJpJbLocation(JobPostDTO dto, 
-			 JpJob jobob, JpLocation location){
+			 JpJob jpJob, JpLocation location){
 		 List<JpJobLocation> locList = new ArrayList<JpJobLocation>();
 		 
 		 JpJobLocation jobLocation = new JpJobLocation();
 		 JpJobLocationPK pKey = new JpJobLocationPK();
-		 pKey.setJobId(jobob.getJobId());
+		 pKey.setJobId(jpJob.getJobId());
 		 pKey.setLocationId(location.getLocationId());
 		 
 		 jobLocation.setHideCity(dto.isbHideCity()?1:0);
@@ -85,6 +75,24 @@ public class JobPostConversionHelper {
 		 
 		return locList;
 	 }
+	 
+	 public List<JpJobApply> transformJobPostDTOToJpJobApply(JobPostDTO dto, JpJob jpJob){
+		 //Application Method
+		 List<JpJobApply> jobList = new ArrayList<JpJobApply>();
+		 JpJobApply jobApply = new JpJobApply();
+		 jobApply.setApplyMethod(dto.getApplicationMethod());
+		 jobApply.setJpJob(jpJob);
+		 if(null != dto.getApplyEmail() && dto.getApplyEmail().length() != 0)
+			 jobApply.setApplyLink(dto.getApplyEmail());
+		 if(null != dto.getApplyUrl() && dto.getApplyUrl().length() != 0)
+			 jobApply.setApplyLink(dto.getApplyUrl());
+		 if(null != dto.getAtsUrl() && dto.getAtsUrl().length() != 0)
+			 jobApply.setApplyLink(dto.getAtsUrl());
+		 jobList.add(jobApply);
+		 
+		return jobList;
+	 }
+	 
 	 
 	 public JobPostDTO  transformToJpJobDTO(JpJob dto){
 			
