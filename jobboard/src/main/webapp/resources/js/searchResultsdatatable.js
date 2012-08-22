@@ -191,6 +191,7 @@ jQuery(document).ready(function() {
 								$(".megamenu").megamenu();
 								generateTable();
 								var autoLoad = $("#autoload").val();
+								
 								if(autoLoad == true || autoLoad == "true"){	
 									findJobs();
 								

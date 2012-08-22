@@ -170,7 +170,7 @@ public class JobSearchActivityController {
 	 */
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
-			Map<String, Object> model, HttpServletRequest request,
+			Map<String, Object> model, HttpServletRequest request, HttpSession session,
 			@RequestParam("currentUrl") String currentUrl) {
 		try {
 			// View the job with template
@@ -181,6 +181,9 @@ public class JobSearchActivityController {
 			model.put("isHideCoutry", jobDTO.getCountry() != null);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
 			model.put("returnResults", currentUrl);
+			
+			session.setAttribute(MMJBCommonConstants.AUTOLOAD,true);
+			
 		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("ERROR");
@@ -379,22 +382,9 @@ public class JobSearchActivityController {
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
 			HttpSession session) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-		// Modified to delete the first saved search,allow user to
-		// create new search if he has already created 5 searches and trying to
-		// add 6th search
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-				.viewMySavedSearches(userId);
-		// int savedSearchCount = 0;
-		// savedSearchCount = saveSearchedJobsDTOList.size();
-		/*
-		 * if (savedSearchCount == 5) {
-		 * saveSearchService.deleteFirstSearch(userId); }
-		 */
 
 		// Added for view my saved searches
-		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+		//if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
 					&& session
 							.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
@@ -430,15 +420,6 @@ public class JobSearchActivityController {
 							MMJBCommonConstants.AUTOLOAD).toString());
 				}
 
-				/*
-				 * model1.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME,
-				 * saveSearchName);
-				 * model1.addObject(MMJBCommonConstants.SEARCH_TYPE,
-				 * searchType); model1.addObject(MMJBCommonConstants.KEYWORDS,
-				 * keywords); model1.addObject(MMJBCommonConstants.CITY_STATE,
-				 * cityState); model1.addObject(MMJBCommonConstants.RADIUS,
-				 * radius);
-				 */
 
 				jobSearchResultForm.setSaveSearchName(saveSearchName);
 				jobSearchResultForm.setSearchtype(searchType);
@@ -447,7 +428,7 @@ public class JobSearchActivityController {
 				jobSearchResultForm.setRadius(radius);
 				jobSearchResultForm.setAutoload(autoload);
 
-				LOGGER.info("Removing from session....");
+				LOGGER.info("Removing keywords, city,state, autoload from session....");
 
 				session.removeAttribute(MMJBCommonConstants.KEYWORDS);
 				session.removeAttribute(MMJBCommonConstants.CITY_STATE);
@@ -455,7 +436,7 @@ public class JobSearchActivityController {
 				session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
 
 			}
-		}
+		//}
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardsearchresults");
 	}
