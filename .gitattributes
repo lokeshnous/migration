@@ -3,6 +3,7 @@ jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmBrndngTempDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityContactDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
