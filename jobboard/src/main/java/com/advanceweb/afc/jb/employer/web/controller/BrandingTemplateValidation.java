@@ -1,147 +1,47 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-
 /**
  * 
- * @author Sasibhushana
+ * @author Harsha
  *
  * @Version 1.0
- * @Since 2nd July, 2012
+ * @Since 22nd August, 2012
  */
-@Component("brandingValidation")
+@Component("brandingTemplateValidation")
 public class BrandingTemplateValidation {
-	
-	private Pattern pattern;
-	private Matcher matcher;
-	
-	
+		
 	  public boolean supports(Class<?> form) {
 		    return BrandingTemplateValidation.class.isAssignableFrom(form);
 		  }
 	
-	  
-	  
-	
-	  /**
-		 * Validating the emailId
-		 * @param registerForm
-		 * @return 
-		 * @return
+	  	/**
+		 * Validating the image file
+		 * @param brandingForm
+		 * @param errors
+		 * @return void
 		 */
 		public void validateImage(BrandingTemplateForm brandingForm, Errors errors){
 		
-//			brandingForm.getMainImage().su
+			int imageLength = brandingForm.getMainImage().length();
+			String fileExtension = brandingForm.getMainImage().substring(imageLength-4, imageLength);
+			
+			if (!(fileExtension.contains(".jpg") || fileExtension.contains(".gif") || fileExtension.contains(".png") || fileExtension.contains(".tif")))
+			{
+				errors.rejectValue("mainImage", "NotEmpty", "Please select the appropriate Image");
+			}
+			
+			imageLength = brandingForm.getLogoPath().length();
+			fileExtension = brandingForm.getLogoPath().substring(imageLength-4, imageLength);
+			
+			if (!(fileExtension.contains(".jpg") || fileExtension.contains(".gif") || fileExtension.contains(".png") || fileExtension.contains(".tif")))
+			{
+				errors.rejectValue("logoPath", "NotEmpty", "Please select the appropriate Logo");
+			}
 		}
 	
-	/**
-	 * Validating the emailId
-	 * @param registerForm
-	 * @return 
-	 * @return
-	 */
-	public void validateEmail(BrandingTemplateForm brandingForm, Errors errors){
-		
-//		 if(StringUtils.isEmpty(brandingForm.getEmailId())){
-//			 errors.rejectValue("emailId", "NotEmpty", "Email Id Should not be empty");
-//		 }
-//		 
-//		 if(StringUtils.isEmpty(brandingForm.getConfirmEmailId())){
-//			 errors.rejectValue("confirmEmailId", "NotEmpty", "Email Id Should not be empty");
-//		 }
-//		 
-//		 if(!StringUtils.isEmpty(brandingForm.getEmailId()) 
-//				 && !StringUtils.isEmpty(registerForm.getConfirmEmailId())){
-//			 
-//			 if(!validateEmailPattern(brandingForm.getEmailId())){
-//				 errors.rejectValue("emailId", "NotEmpty", "Invalid Email Id"); 
-//			 }
-//			 
-//			 if(!validateEmailPattern(brandingForm.getConfirmEmailId())){
-//				 errors.rejectValue("confirmEmailId", "NotEmpty", "Invalid Email Id"); 
-//			 }
-//			 
-//			 if(!brandingForm.getEmailId().equals(brandingForm.getConfirmEmailId())){
-//				errors.rejectValue("confirmEmailId", "NotEmpty", "Please enter the correct E-Mail Address");
-//			 }
-//		 }
-	}
-	
-	/**
-	 * Validating Email Pattern
-	 * @param emailId
-	 * @return
-	 */
-	public boolean validateEmailPattern(String emailId){
-		pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
-		matcher = pattern.matcher(emailId);
-		return matcher.matches();
-	}
-	
-	/**
-	 * Validating Email Pattern
-	 * @param emailId
-	 * @return
-	 */
-	public boolean validatePasswordPattern(String password){
-		pattern = Pattern.compile(MMJBCommonConstants.PASSWORD_PATTERN);
-		matcher = pattern.matcher(password);
-		return matcher.matches();
-	}	
-	
-	
-	/**
-	 * Validating Email Pattern
-	 * @param emailId
-	 * @return
-	 */
-	public boolean validateMobileNumberPattern(String mobile){
-		pattern = Pattern.compile(MMJBCommonConstants.MOBILE_PATTERN);
-		matcher = pattern.matcher(mobile);
-		return matcher.matches();
-	}
-	 
-	/**
-	 * Validating the password as per the following format
-	 * 
-	 * (8-20 characters, including at least 1 number) 
-	 * 
-	 * @param registerForm
-	 * @return
-	 */
-	public void validatePassoword(String password, String retypePassword, Errors errors){
-		
-		 if(StringUtils.isEmpty(password)){
-			 errors.rejectValue("password", "NotEmpty", "Password Should not be empty");
-		 }
-		 
-		 if(StringUtils.isEmpty(retypePassword)){
-			 errors.rejectValue("retypepassword", "NotEmpty", "Password Should not be empty");
-		 }
-		 
-		 if(!StringUtils.isEmpty(password) 
-				 && !StringUtils.isEmpty(retypePassword)){
-			 
-			 if(!validatePasswordPattern(password)){
-				 errors.rejectValue("password", "NotEmpty", "Password should contain 8-20 characters, including at least 1 number"); 
-			 }
-			 
-			 if(!validatePasswordPattern(retypePassword)){
-				 errors.rejectValue("retypepassword", "NotEmpty", "Password should contain  8-20 characters, including at least 1 number"); 
-			 }
-			 
-			 if(!password.equals(retypePassword)){
-				errors.rejectValue("retypepassword", "NotEmpty","Passwords are not equal");
-			 }
-		 }
-	}
 	
 	/**
 	 * Validating form
@@ -149,10 +49,8 @@ public class BrandingTemplateValidation {
 	 * @param errors
 	 */
 	public void validate(Object target, Errors errors) {
-		 
-//		 JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
-//		 
-//		 validateEmail(registerForm, errors);
-//		 validatePassoword(registerForm.getPassword(), registerForm.getRetypepassword(), errors);
+		BrandingTemplateForm brandingTemplateForm = (BrandingTemplateForm) target;
+		validateImage(brandingTemplateForm, errors);
+		
 	}	
 }
