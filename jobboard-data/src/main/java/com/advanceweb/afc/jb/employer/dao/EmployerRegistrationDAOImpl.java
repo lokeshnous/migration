@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import java.util.List;
+//import java.util.List;
 
 import org.hibernate.HibernateException;
 
 import org.hibernate.SessionFactory;
 
-import org.hibernate.validator.util.NewInstance;
+//import org.hibernate.validator.util.NewInstance;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -28,17 +28,14 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.data.domain.Employer;
 
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
-import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
-
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
-import com.advanceweb.afc.jb.data.entities.AdmSubscription;
+
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
