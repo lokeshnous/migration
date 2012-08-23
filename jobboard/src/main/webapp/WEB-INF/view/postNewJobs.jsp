@@ -475,7 +475,7 @@
                			<form:input path="scheduleStartDate" class="job_seeker_password datepicker" id="startDate" readonly="true"/>
                		</div>
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Expiry Date:</span>               
-               			<form:input path="scheduleEndDate" class="job_seeker_password datepicker" id="endDate" readonly="true"/>
+               			<form:input path="scheduleEndDate" class="job_seeker_password" id="endDate" readonly="true"/>
                		</div>
 		 	  </div> 
 			   
