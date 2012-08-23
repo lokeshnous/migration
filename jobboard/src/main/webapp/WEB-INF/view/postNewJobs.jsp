@@ -12,7 +12,7 @@
 		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 		<!--[if IE]>
 	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
 <![endif]-->
@@ -85,6 +85,7 @@
 					width:500,
 					zIndex: -1,
 					modal: true,
+					backgroundColor:'#F0F0F0',
 					buttons: {
 						"Schedule": function() {
 							if($("#startDate").val() != ''){
@@ -98,6 +99,7 @@
 					},
 					modal: true
 				});
+
 			});  
 		  
 			
@@ -107,13 +109,10 @@
 		</script>
 		<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 		<style type="text/css">
-		#boxes .window {
-			  position:fixed;
-			  width:440px;
-			  height:200px;
-			  display:none;
-			  z-index:9999;
-			  padding:20px;
+		 .ui-widget input  { background-color: #F0F0F0; border-radius: 4px 4px 4px 4px; height: 25px; border: 1px solid #CCCCCC;}  
+    	.ui-widget-header { background:#FE9400; border: 1px solid #AAAAAA; color: #222222;font-weight: bold;}
+    	.ui-state-default, .ui-widget-content .ui-state-default { background: #FE9400; border: 1px solid #D3D3D3; color: #555555; font-weight: normal; outline: medium none;
+    	
 }
 		</style>
 		</head>
@@ -470,12 +469,13 @@
                       
 			   </div>
 			   
-			   <div id="scheduleStartDivId"   title="Schedule the post new job"> 
+			   <div id="scheduleStartDivId" title="Schedule the post new job"  > 
+			   
               	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Start Date:</span>               
-               			<form:input path="scheduleStartDate" class="job_seeker_password textBox350 datepicker" id="startDate" readonly="true"/>
+               			<form:input path="scheduleStartDate" class="job_seeker_password datepicker" id="startDate" readonly="true"/>
                		</div>
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule End Date:</span>               
-               			<form:input path="scheduleEndDate" class="job_seeker_password textBox350 datepicker" id="endDate" readonly="true"/>
+               			<form:input path="scheduleEndDate" class="job_seeker_password datepicker" id="endDate" readonly="true"/>
                		</div>
 		 	  </div> 
 			   
