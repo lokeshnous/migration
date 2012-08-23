@@ -1,7 +1,5 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +22,10 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
-import com.advanceweb.afc.jb.resume.web.controller.CreateResume;
 
 /**
  * @Author : Prince Mathew
@@ -190,7 +184,7 @@ public class JobPostController {
 	 */
 	private String validateJobPostDetails(JobPostForm form){
 		
-		 UrlValidator urlValidator = new UrlValidator();
+//		 UrlValidator urlValidator = new UrlValidator();
 		if(null != form){
 			if(StringUtils.isEmpty(form.getJobTitle()) || 
 					StringUtils.isEmpty(form.getJobCity()) ||
@@ -206,12 +200,12 @@ public class JobPostController {
 									
 			
 			//Validating URL
-			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
+/*			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
 				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
 				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail()))){
 				
 				return "Please enter valid URL";
-			}
+			}*/
 		}
 		
 		return null;

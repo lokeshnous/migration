@@ -129,7 +129,7 @@ public class ResumeValidator {
 		
 		if(null != workExpList){
 			for(WorkExpForm form : workExpList){
-				if(StringUtils.isEmpty(form.getJobTitle()) ||
+/*				if(StringUtils.isEmpty(form.getJobTitle()) ||
 				   StringUtils.isEmpty(form.getEmployerName()) ||
 				   MMJBCommonConstants.ZERO.equals(form.getEmploymentType()) ||
 				   StringUtils.isEmpty(form.getStartDate()) ||
@@ -138,7 +138,7 @@ public class ResumeValidator {
 				   MMJBCommonConstants.ZERO.equals(form.getCurrentCareerLvl())){
 					return "Please fill the required fields";
 				}
-				
+				*/
 				if((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form.getYrsAtPostion()))){
 					return "Years at Position should contain only numeric values";
 				}
@@ -164,10 +164,10 @@ public class ResumeValidator {
 	private String validateEducation(List<EducationForm> eduList){
 		if(null != eduList){
 			for(EducationForm form : eduList){
-				if(StringUtils.isEmpty(form.getInstituteName()) ||
+/*				if(StringUtils.isEmpty(form.getInstituteName()) ||
 					MMJBCommonConstants.ZERO.equals(form.getDegreeLvl())){
 					return "Please fill the required fields";
-				}
+				}*/
 				if((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form.getStartDate()))||
 						(!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form.getEndDate()))){
 						return "Please enter valid date format";
@@ -187,9 +187,9 @@ public class ResumeValidator {
 	private String validateCertifications(List<CertificationsForm> certsList){
 		if(null != certsList){
 			for(CertificationsForm form : certsList){
-				if(StringUtils.isEmpty(form.getCertificationName())){
+/*				if(StringUtils.isEmpty(form.getCertificationName())){
 					return "Please fill the required fields";
-				}
+				}*/
 				if(!StringUtils.isEmpty(form.getDateOfReceipt()) && !validateDatePattern(form.getDateOfReceipt())){
 						return "Please enter valid date format";
 				}

@@ -258,7 +258,7 @@ public class ResumeConversionHelper {
 				 dto.setEmploymentType(entity.getEmploymentType());
 				 dto.setStartDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getEmploymentDt())));
 				 dto.setEndDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getSeparationDt())));
-				 dto.setYrsAtPostion(String.valueOf(entity.getEmploymentYears()));
+				 dto.setYrsAtPostion(entity.getEmploymentYears() != 0 ?String.valueOf(entity.getEmploymentYears()):"");
 				 dto.setCurrentCareerLvl(entity.getCareerLevel());
 				 dto.setAnnualSalary(entity.getAnnualSalary());
 				 dto.setHrlyPayRate(entity.getHourlyRate());
@@ -560,7 +560,7 @@ public class ResumeConversionHelper {
 				workExpEntitiy.setEmployerName(workExpDTO.getEmployerName());
 				workExpEntitiy.setEmploymentType(workExpDTO.getEmploymentType());
 				workExpEntitiy.setEmploymentDt(DateUtils.convertStringToSQLDate(workExpDTO.getStartDate()));
-				workExpEntitiy.setEmploymentYears(Integer.valueOf(workExpDTO.getYrsAtPostion()));
+				workExpEntitiy.setEmploymentYears(workExpDTO.getYrsAtPostion().length() != 0 ? Integer.valueOf(workExpDTO.getYrsAtPostion()) : 0);
 				workExpEntitiy.setCareerLevel(workExpDTO.getCurrentCareerLvl());
 				workExpEntitiy.setIsCurCareerLevel(workExpDTO.isbCurrentCareerLevel()?1:0);
 				workExpEntitiy.setStillEmployed(workExpDTO.isbPresent()?1:0);
