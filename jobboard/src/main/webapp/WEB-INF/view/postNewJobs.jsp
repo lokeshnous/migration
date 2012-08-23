@@ -471,10 +471,10 @@
 			   
 			   <div id="scheduleStartDivId" title="Schedule the post new job"  > 
 			   
-              	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Start Date:</span>               
+              	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Date:</span>               
                			<form:input path="scheduleStartDate" class="job_seeker_password datepicker" id="startDate" readonly="true"/>
                		</div>
-               		<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule End Date:</span>               
+               		<div class="rowEvenNewSpacing"> <span class="lableText3">Expiry Date:</span>               
                			<form:input path="scheduleEndDate" class="job_seeker_password datepicker" id="endDate" readonly="true"/>
                		</div>
 		 	  </div> 
