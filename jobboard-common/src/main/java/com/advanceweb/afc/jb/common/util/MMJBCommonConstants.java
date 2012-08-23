@@ -99,8 +99,7 @@ public interface MMJBCommonConstants {
 	public static final String KEYWORD_SEARCH = "KEYWORD";
 
 	//Solr Date pattern	
-	public static final String SOLR_DATE_PATTERN = "E MMM dd hh:mm:ss Z yyyy";
-	public static final String REQ_SOLR_DATE_PATTERN = "MMM-dd-yyyy";
+	public static final String JSON_DATE_FORMAT = "MMM-dd-yyyy";
 	//For Resume
 	
 	public static final String POST_RESUME = "postresume";

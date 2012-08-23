@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.search.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -12,10 +11,10 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 
 /**
  * This class has been created as a service interface for converting to JSON
@@ -42,8 +41,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		final JSONObject jobSrchJsonObj = new JSONObject();
 		final JSONArray jsonRows = new JSONArray();
 
-		final List<JobDTO> jobDTOList = jSResultDTO
-				.getJobResultList();
+		final List<JobDTO> jobDTOList = jSResultDTO.getJobResultList();
 
 		for (JobDTO jobDTO : jobDTOList) {
 
@@ -65,11 +63,10 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 			jobSrchJson.put(MMJBCommonConstants.CAP_CITY,
 					MMUtils.isNull(location));
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
-					convertToReqdDateString(jobDTO.getPostedDate().toString()));
+					convertToReqdDateString(jobDTO.getPostedDate()));
 			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,
 					jobDTO.getApplyOnline());
-			jobSrchJson.put(MMJBCommonConstants.BLIND_AD,
-					jobDTO.getBlindAd());
+			jobSrchJson.put(MMJBCommonConstants.BLIND_AD, jobDTO.getBlindAd());
 			jobSrchJson.put(MMJBCommonConstants.FACILITY_NAME,
 					MMUtils.isNull(jobDTO.getFacilityName()));
 			jobSrchJson.put(MMJBCommonConstants.EMAIL_DISPLAY,
@@ -82,8 +79,8 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					jobDTO.isNationalJob());
 			jobSrchJson.put(MMJBCommonConstants.IS_FEATURED,
 					jobDTO.isFeatured());
-			jobSrchJson.put(MMJBCommonConstants.JOB_COUNT,
-					jobDTO.getJobCount());
+			jobSrchJson
+					.put(MMJBCommonConstants.JOB_COUNT, jobDTO.getJobCount());
 			jobSrchJson.put(MMJBCommonConstants.JOB_ID,
 					MMUtils.isNull(jobDTO.getJobId()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_NUMBER,
@@ -102,8 +99,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					MMUtils.isNull(jobDTO.getState()));
 			jobSrchJson.put(MMJBCommonConstants.URL,
 					MMUtils.isNull(jobDTO.getUrl()));
-			
-			
+
 			jsonRows.add(jobSrchJson);
 
 		}
@@ -115,31 +111,17 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		return jobSrchJsonObj;
 	}
 
-	
 	/**
-	 * This method converts the date in string format to required format
-	 * for displaying it in the job search result page.
+	 * This method converts the date in string format to required format for
+	 * displaying it in the job search result page.
+	 * 
 	 * @param dateString
 	 * @return String
 	 */
 
-	private String convertToReqdDateString(String dateString) {
-
-		Date date = new Date();
-		String dateStr = "";
-		SimpleDateFormat parser = new SimpleDateFormat(
-				MMJBCommonConstants.SOLR_DATE_PATTERN, Locale.US);
-		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.REQ_SOLR_DATE_PATTERN, Locale.US);
-		try {
-			date = parser.parse(dateString);
-			dateStr = formatter.format(date);
-
-		} catch (ParseException e) {
-			LOGGER.info(e + " Error while converting the date.");
-		}
-
-		return dateStr;
-
+	private String convertToReqdDateString(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				MMJBCommonConstants.JSON_DATE_FORMAT, Locale.US);
+		return formatter.format(date);
 	}
-
 }
