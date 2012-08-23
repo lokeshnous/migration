@@ -67,10 +67,10 @@
 			
 				</div>
 				<div class="row">
-				    <p><span class="bold">Not a member?</span> <a href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign up now!</a></p>
+				    <p><span class="bold">Not a member?</span> <a href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign up now!</a></p>
 				</div>
 				<div class="rowEvenNewSpacing ">
-			      <span class="bold">Or </span> <a id="guestUser" target="_blank"  href="/jobboard/anonymoususerjobapply/anonymousUser.html">continue as a guest.</a></div>
+			      <span class="bold">Or </span> <a id="guestUser" target="_blank"  href="<%=request.getContextPath()%>/anonymoususerjobapply/anonymousUser.html">continue as a guest.</a></div>
                   <div class="clearfix"></div>
 			    </div>
 			</form>

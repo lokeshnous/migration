@@ -149,6 +149,7 @@ type="text/css">
 
 					</div>
 					<!-- column2-->
+					<!--<a href="<%=request.getContextPath()%>/employer/postNewJobs.html">Post New Job</a>-->
 				</div>
 				</div>
 				<br class="clearfix" />

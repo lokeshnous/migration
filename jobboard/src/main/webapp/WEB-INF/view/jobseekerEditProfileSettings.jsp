@@ -13,7 +13,7 @@
 		
  		$('#save').click(function(){			
  			
-			$.ajax({url:"/jobboard/jobseekerregistration/updateJobSeekerProfile.html",
+			$.ajax({url:"${pageContext.request.contextPath}/jobseekerregistration/updateJobSeekerProfile.html",
 				data:$('#editProfileSettingsId').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -44,7 +44,7 @@
 		<div class="popUpContainerWrapper">
 			<div id="errmsg" style="color: red" align="middle">
 				</div>
-			<form:form action="/jobboard/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
+			<form:form action="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
 				commandName="registerForm"  id="editProfileSettingsId">
 					<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">
 						<c:if test="${profAttrib.strLabelName == 'First Name'}">
@@ -228,7 +228,7 @@
 						</c:if>
 				</c:forEach>
 				<div class="popUpButtonRow">
-					<!--<a href="/jobboard/jobseekerregistration/updateJobSeekerProfile.html"
+					<!--<a href="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
 					<input type="button" value="Save" class="btn_sm orange" id="save" style="margin-bottom:3px"/>
 					<a href="#" class="btn_sm orange"

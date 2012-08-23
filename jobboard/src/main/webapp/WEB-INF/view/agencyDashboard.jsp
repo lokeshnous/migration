@@ -33,7 +33,7 @@
 								${msg.commonExclamationMark}
 							</span><br>
 							<div class="floatRight">
-								<span class="floatLeft"> <a href="../jobboard/logout">Log
+								<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">Log
 										Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span>
 							</div>
 						</div>
@@ -145,7 +145,7 @@
 									<div class="lableTextDashBoard">
 										<p>
 											<a
-												href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html"
+												href="<%=request.getContextPath()%>jobseekerregistration/jobSeekerChangePassword.html"
 												id="changePassword"">${msg.jsChangePwd}</a>
 										</p>
 									</div>

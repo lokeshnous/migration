@@ -297,7 +297,7 @@
 								class="btn_sm white">Preview</a> 
 								<input type="submit" value="Save" class="btn_sm white"  name="Save"/>
 								
-								<!-- <a href="/jobboard/brandingTemplates/saveEmpBrandTemp.html"
+								<!-- <a href="<%=request.getContextPath()%>/brandingTemplates/saveEmpBrandTemp.html"
 								class="btn_sm white">Save</a> --> 
 								
 								<a href="" class="btn_sm white">Cancel</a></span>

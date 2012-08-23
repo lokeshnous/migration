@@ -24,7 +24,7 @@
 
 						</span><br>
 						<div class="floatRight">
-							<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar} <c:choose>
 									<c:when test="${jobSeekerDashBoardForm != null}">
 										<a href="../healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
@@ -58,7 +58,7 @@
 
 						</span><br>
 						<div class="floatRight">
-							<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
@@ -85,7 +85,7 @@
 
 						</span><br>
 						<div class="floatRight">
-							<span class="floatLeft"> <a href="../jobboard/logout">${msg.commonLogOut}</a>
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
@@ -130,19 +130,19 @@
 					</div>
 					<div class="floatleft">
 					
-						<span> <a href="/jobboard/commonLogin/login.html?page=jobSeeker">Login</a>
+						<span> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=jobSeeker">Login</a>
 							| <a
-							href="/jobboard/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign
+							href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign
 								Up</a> |
 						</span>
 					</div>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Employer:</span><br> <a href="/jobboard/commonLogin/login.html?page=employer">Login</a>
-					| <a href="/jobboard/employerRegistration/employerregistration.html">Post Jobs</a>
+					<span class="boldText">Employer:</span><br> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=employer">Login</a>
+					| <a href="<%=request.getContextPath()%>/employerRegistration/employerregistration.html">Post Jobs</a>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Ad Agency:</span><br> <a href="/jobboard/commonLogin/login.html?page=agency">Login</a>
+					<span class="boldText">Ad Agency:</span><br> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=agency">Login</a>
 					| <a href="">Post Jobs</a>
 				</div>
 

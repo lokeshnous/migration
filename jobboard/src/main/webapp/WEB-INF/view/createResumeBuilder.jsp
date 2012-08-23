@@ -95,7 +95,7 @@
 		$('#certAjaxCallIdButton').live('click', function() {
 			$.ajax({
 				type : "POST",
-				url : "/jobboard/jobSeekerResume/addCertifications.html",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/addCertifications.html",
 				success : function(data) {
 					$('#listOfCertsId').append(data);
 				},
@@ -106,7 +106,7 @@
 		$('#workExpAjaxCallIdButton').live('click', function() {
 			$.ajax({
 				type : "POST",
-				url : "/jobboard/jobSeekerResume/addWorkExp.html",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/addWorkExp.html",
 				success : function(data) {
 					$('#listOfWorkExpId').append(data);
 				},
@@ -117,7 +117,7 @@
 		$('#eduAjaxCallIdButton').live('click', function() {
 			$.ajax({
 				type : "POST",
-				url : "/jobboard/jobSeekerResume/addEducationDetails.html",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/addEducationDetails.html",
 				success : function(data) {
 					$('#listOfEduId').append(data);
 				},
@@ -128,7 +128,7 @@
 		$('#refAjaxCallIdButton').live('click', function() {
 			$.ajax({
 				type : "POST",
-				url : "/jobboard/jobSeekerResume/addReferences.html",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/addReferences.html",
 				success : function(data) {
 					$('#listOfRefId').append(data);
 				},
@@ -139,7 +139,7 @@
 		$('#phNoAjaxCallIdButton').live('click', function() {
 			$.ajax({
 				type : "POST",
-				url : "/jobboard/jobSeekerResume/addPhoneNos.html",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/addPhoneNos.html",
 				success : function(data) {
 					$('#listOfPhoneId').append(data);
 				},
@@ -150,7 +150,7 @@
 		$('#langAjaxCallIdButton').live('click', function() {
 			$.ajax({
 				type : "POST",
-				url : "/jobboard/jobSeekerResume/addLanguages.html",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/addLanguages.html",
 				success : function(data) {
 					$('#listOfLangId').append(data);
 				},
@@ -184,7 +184,7 @@
 						<div class="popupHeader Padding0  OrangeBG">
 							<h2>CREATE YOUR RESUME</h2>
 							<span class="floatRight marginRight10"><a
-								href="/jobboard/jobSeeker/jobSeekerDashBoard.html"
+								href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html"
 								class="link_color3_emphasized FontSize12 FontWeight">Back to
 									Dashboard</a></span>
 						</div>
@@ -952,7 +952,7 @@
 					<br /> <span class="marginBottom10 FloatLeft"> <input
 						type="submit" value="Save" name="Save" class="btn_sm orange inputleft" /> <input
 						type="submit" value="Preview" name="Preview" class="btn_sm orange inputleft" />
-						<a href="/jobboard/jobSeeker/jobSeekerDashBoard.html"
+						<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html"
 						class="btn_sm orange cancelacount">Cancel</a>
 					</span>
 				</div>

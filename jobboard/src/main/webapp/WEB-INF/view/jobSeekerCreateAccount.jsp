@@ -128,7 +128,7 @@
 				<div class="popUpButtonRow">
 				
 	               <input type="submit" value="Next" class="btn_sm orange nextacount"  name="Next"/>
-	               <a href="/jobboard/healthcarejobs/advanceweb.html" class="btn_sm orange cancelacount">Cancel</a>
+	               <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange cancelacount">Cancel</a>
 	               <!-- <input type="submit" value="Cancel" class="btn_sm orange"  name="Cancel"/> -->  
 	            </div>
 	            <div class="clearfix"></div>

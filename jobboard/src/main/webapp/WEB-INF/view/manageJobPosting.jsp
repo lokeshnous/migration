@@ -32,7 +32,7 @@
 
 <style type="text/css" media="screen">
 @import
-	url("/jobboard/resources/jquery.nyroModal/styles/nyroModal.css");
+	url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
 </style>
 <!-- -------------------------------------------------------------------------- -->
 
@@ -61,7 +61,7 @@
                   	<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
 							${msg.commonExclamationMark}
                   	</span><br>
-            <div class="floatRight"> <span class="floatLeft"> <a href="../jobboard/logout">Log Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span></div>
+            <div class="floatRight"> <span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">Log Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span></div>
           </div>
                   <!-- loginHeader --><!-- loginHeader --> 
                   
@@ -157,7 +157,7 @@
 				<!--nav-->
 				<div class="popupHeader Padding0  OrangeBG marginBottom5">
 					<h2>MANAGE / EDIT JOB POSTINGS</h2>
-					<span class="floatRight marginRight10"><a href="/jobboard/employer/employerDashBoard.html"
+					<span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
 						class="link_color3_emphasized FontSize12 FontWeight">Back to
 							Dashboard</a></span>
 				</div>
@@ -272,8 +272,8 @@
 								<tr class="Height35">
 									<td align="center" valign="middle"><input type="checkbox"
 										name="checkbox" id="checkbox"></td>
-									<td align="center" valign="middle"><a href="/jobboard/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
-									<td align="left" valign="middle"><a href="/jobboard/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
+									<td align="center" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
+									<td align="left" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
 									<td align="center" valign="middle">Wissahickon, MO</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
@@ -294,7 +294,7 @@
 									</select></td>
 									<td align="center" valign="middle"><div
 											class="row width80">
-											<a href="/jobboard/employer/editJob.html?jobId=${job.jobId}"><img src="../resources/images/Edit.png"
+											<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><img src="../resources/images/Edit.png"
 												width="20" height="20" alt=""></a>&nbsp;<a href="#"><img
 												src="../resources/images/View.png" width="20" height="20"
 												alt=""></a>&nbsp;<a href="#"><img

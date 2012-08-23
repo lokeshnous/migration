@@ -12,7 +12,7 @@
 		
  		$('#save').click(function(){			
  			
-			$.ajax({url:"/jobboard/employerRegistration/employeeAccountSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -33,7 +33,7 @@
 		
  		$('#save').click(function(){			
  			
-			$.ajax({url:"/jobboard/employerRegistration/employeeAccountSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeAccountSetting.html",
 				data:$('#editBillingSettingData').serialize(),
 				type:"POST",
 				success: function(data) {

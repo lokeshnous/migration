@@ -252,7 +252,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 					</table>
 				</div>
 				<div class="popUpButtonRow">
-					<a href="/jobboard/jobsearchactivity/findJobPage.html">
+					<a href="<%=request.getContextPath()%>/jobsearchactivity/findJobPage.html">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			

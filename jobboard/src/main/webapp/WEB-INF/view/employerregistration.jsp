@@ -123,8 +123,8 @@
 							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Password:</span>
-								<form:input path="password" type="password"
-									name="healthCareSubSplty"
+								<form:password path="password" 
+									name="healthCareSubSplty" 
 									class="job_seeker_password textBox350 
 " />
 								<span class="required">(Required)</span>
@@ -139,7 +139,7 @@
 							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Password:</span>
-								<form:input path="confirmPassword" type="password"
+								<form:password path="confirmPassword" 
 									name="healthCareSubSplty"
 									class="job_seeker_password textBox350 
 " />
@@ -278,7 +278,7 @@
 						<!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
 							<input type="submit" style="margin-top: -4px;" value="Save & Continue" class="btn_sm orange">
-							<a href="/jobboard/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a></span> <span
+							<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a></span> <span
 							class="floatLeft marginTop10">I'll set up my profile
 							later. <a href="#">Continue</a> to the site now.
 						</span>

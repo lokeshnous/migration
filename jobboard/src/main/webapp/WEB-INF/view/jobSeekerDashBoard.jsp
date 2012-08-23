@@ -100,14 +100,14 @@ jQuery(document).ready(
 										<div class="lableTextDashBoard">
 											<p>
 												<a
-													href="/jobboard/jobseekerregistration/viewJobSeekerProfile.html"
+													href="<%=request.getContextPath()%>/jobseekerregistration/viewJobSeekerProfile.html"
 													id="editProfileId">${msg.jsEditProfileSettings}</a>
 											</p>
 										</div>
 										<div class="lableTextDashBoard" id="jsChangePassword">
 											<p>
 												<a
-													href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html"
+													href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
 													id="changePassword">${msg.jsChangePwd}</a>
 											</p>
 
@@ -125,7 +125,7 @@ jQuery(document).ready(
 										<h2 class="noTopBorder">${msg.jsSavedSearches}</h2>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="/jobboard/savedSearches/viewMySavedSearches.html"
+												<a href="<%=request.getContextPath()%>/savedSearches/viewMySavedSearches.html"
 													id="viewMySavedSearchesId">${msg.jsViewSavedSearches}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.savedSearchCount}" />${msg.commonCloseBrace}
 												</a>
@@ -153,7 +153,7 @@ jQuery(document).ready(
 										<h2 class="noTopBorder">${msg.jsActivity}</h2>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="/jobboard/jobSeekerActivity/viewSavedJob.html"
+												<a href="<%=request.getContextPath()%>/jobSeekerActivity/viewSavedJob.html"
 													target="_blank" id="viewsavedjob">${msg.jsViewSavedjobs}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.savedJobsCount}" />${msg.commonCloseBrace}
 												</a>
@@ -162,7 +162,7 @@ jQuery(document).ready(
 
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="/jobboard/jobSeekerActivity/viewAppliedJob.html"
+												<a href="<%=request.getContextPath()%>/jobSeekerActivity/viewAppliedJob.html"
 													target="_blank" id="viewappliedjob">${msg.jsViewJobsApplied}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.appliedJobsCount}" />${msg.commonCloseBrace}
 												</a>
@@ -197,14 +197,14 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="/jobboard/jobSeekerResume/manageResume.html"
+												<a href="<%=request.getContextPath()%>/jobSeekerResume/manageResume.html"
 													id="manageResumePopup">${msg.jsManageExistingResumes}</a>
 											</p>
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
 												<a
-													href="/jobboard/jobSeekerResume/createResumePopUp.html?resumeType=createResume"
+													href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=createResume"
 													id="createResumePopup">${msg.jsCreateNewResume}</a>
 											</p>
 										</div>
@@ -246,7 +246,7 @@ jQuery(document).ready(
 										<div class="lableTextDashBoard">
 											<p>
 												<a id="modifySubs"
-													href="/jobboard/subscriptions/modifySubscription.html">${msg.jsModifySubscriptions}</a>
+													href="<%=request.getContextPath()%>/subscriptions/modifySubscription.html">${msg.jsModifySubscriptions}</a>
 											</p>
 										</div>
 										<div class="lableTextDashBoard">

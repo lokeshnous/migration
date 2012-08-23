@@ -53,7 +53,7 @@
                 </table>
               </div>
               <div class="row marginTop10 paddingBottom10"> 
-              <a href="/jobboard/brandingTemplates/newEmpBrandTemp.html" class="btn_sm orange">New  Branding TEMPLATE</a> 
+              <a href="<%=request.getContextPath()%>/brandingTemplates/newEmpBrandTemp.html" class="btn_sm orange">New  Branding TEMPLATE</a> 
               <a href="cancelEmpBrandTemp.html" class="btn_sm orange">Cancel</a>
               </div>
             </form>
