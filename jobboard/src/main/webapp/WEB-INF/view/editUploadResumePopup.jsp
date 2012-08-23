@@ -34,16 +34,16 @@
 					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
 					&& workAuth != null	&& workAuth != ""){
 					
-						$("#errorMsg").html("");
+						$("#resumeErrorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
 						$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
 							type: "GET",
 							success : function(data) {
 								if (data.maxResume != null) {
-										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+										$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
 									} else if (data.duplicateResume != null) {
-										$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+										$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 									} else {
 										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
 										$("form").submit();
@@ -57,7 +57,7 @@
 							}
 						});		
 				} else {
-					$("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
 				}
 			});
 		 
@@ -86,7 +86,7 @@
 
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="updateResumeUpload.html" commandName="createResume" id="formtouse" enctype="multipart/form-data">
-				<div id="errorMsg"></div>
+				<div id="resumeErrorMsg"></div>
 				
 				<form:input type="hidden" path="uploadResumeId" />
 				<form:input type="hidden" path="resumeType" />

@@ -349,8 +349,12 @@ public class ResumeController {
 	 */
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
 	public ModelAndView createResumePopUp(
-			@RequestParam("resumeType") String resumeType) {
-
+			@RequestParam("resumeType") String resumeType,HttpSession session) {
+		
+		session.setAttribute("PLACE_KEY", null);
+		
+		PLACE_KEY = (new Random()).nextLong();
+		
 		CreateResume createResume = new CreateResume();
 
 		createResume.setWillingToRelocate(MMJBCommonConstants.RELOCATE_NO);
@@ -511,7 +515,44 @@ public class ResumeController {
 		}
 		return model;
 	}
-
+	
+	/**
+	 * This method is called to save resume resume pop up & move to Advanced Resume Builder. 
+	 * @param createResume
+	 * @return model
+	 */
+	@RequestMapping(value = "/saveCreateResume", method = RequestMethod.GET)
+	public ModelAndView saveCreateResume(CreateResume createResume,
+			HttpSession session) {
+		ResumeDTO resumeDTO = new ResumeDTO();
+		ModelAndView model = new ModelAndView();
+		
+		if (null != (Long) session.getAttribute("PLACE_KEY") && null != (Long) session.getAttribute("LAST_PLACE_KEY") && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals((Long) session.getAttribute("PLACE_KEY"))) {
+			resumeDTO = resumeService.editResume(Integer.parseInt(createResume.getUploadResumeId()));
+			transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
+			model.addObject("createResume", createResume);
+			model.setViewName("forward:/jobSeekerResume/createResumeBuilder.html");
+            return model;
+		}
+		
+		resumeDTO = transCreateResume
+				.transformCreateResumeToResumeDTO(createResume);
+		resumeDTO.setUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
+		resumeDTO = resumeService.createResume(resumeDTO);
+		
+		transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
+		
+		session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
+		session.setAttribute("PLACE_KEY", PLACE_KEY);
+		PLACE_KEY = (new Random()).nextLong();
+		
+		model.addObject("createResume", createResume);
+		model.setViewName("forward:/jobSeekerResume/createResumeBuilder.html");
+		
+		return model;
+	}	
+	
 	/**
 	 * This method is called to save resume resume pop up & move to Advanced Resume Builder. 
 	 * @param createResume
@@ -521,15 +562,9 @@ public class ResumeController {
 	public ModelAndView createResumebuilder(CreateResume createResume,
 			HttpSession session) {
 
-		PLACE_KEY = (new Random()).nextLong();
-
 		ModelAndView model = new ModelAndView();
-		ResumeDTO resumeDTO = transCreateResume
-				.transformCreateResumeToResumeDTO(createResume);
-		resumeDTO.setUserId((Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID));
-		resumeDTO = resumeService.createResume(resumeDTO);
-		createResume.setUploadResumeId(String.valueOf(resumeDTO
+		
+		createResume.setUploadResumeId(String.valueOf(createResume
 				.getUploadResumeId()));
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);

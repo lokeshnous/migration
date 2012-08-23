@@ -20,7 +20,7 @@
 				  type: "GET",
 				success : function(data) {
 					if (data.maxResume != null) {
-							$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+							$("#manageResumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
 						} else {
 							$("#createResumeId").click();
 						}
@@ -93,7 +93,8 @@
 		<div class="popUpContainerWrapper">
 			<form:form method="POST" action="">
 				<div class="rowEvenSpacingMargin0">
-				<div id="errorMsg">
+				<div id="manageResumeErrorMsg">
+					
 				</div>
 					<table id="tb_manage_resume" width="100%" border="0"
 						cellspacing="0" cellpadding="0" class="grid">

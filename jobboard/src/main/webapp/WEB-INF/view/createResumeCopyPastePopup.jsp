@@ -39,16 +39,16 @@
 				if (resumeName != null && resumeName != ""
 					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
 					&& workAuth != null	&& workAuth != ""){
-						$("#errorMsg").html("");
+						$("#resumeErrorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
 						$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId=",
 							type: "GET",
 							success : function(data) {
 								if (data.maxResume != null) {
-										$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+										$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
 									} else if (data.duplicateResume != null) {
-										$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+										$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 									} else {
 										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html");
 										$("#copyPastResume").submit();
@@ -62,7 +62,7 @@
 							}
 						});
 				} else {
-					$("#errorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
 				}
 			});
 	});	 
@@ -80,7 +80,7 @@
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="copyPasteResume.html" commandName="createResume" id="copyPastResume" enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
-					<div id="errorMsg"></div>
+					<div id="resumeErrorMsg"></div>
 					<div class="splLableText">How would you
 						like to create your resume?</div>
 					<form:select class="jb_input3 jb_input_width3"

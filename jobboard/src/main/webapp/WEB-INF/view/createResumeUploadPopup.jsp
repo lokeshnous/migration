@@ -42,7 +42,7 @@
 							&& workAuth != "Select"	&& workAuth != null
 							&& workAuth != "" && null != chooseFile && "" != chooseFile) {
 						if(validateResume(chooseFile)){
-							$("#errorMsg").html("");
+							$("#resumeErrorMsg").html("");
 							
 							//validate number of resumes
 							//validate if resume name already exist in db
@@ -53,9 +53,9 @@
 										type : "GET",
 										success : function(data) {
 											if (data.maxResume != null) {
-												$("#errorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+												$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
 											} else if (data.duplicateResume != null) {
-												$("#errorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+												$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 											} else {
 												$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
 												$("#resumeUploadForm").submit();
@@ -70,7 +70,7 @@
 							});
 						}	
 					} else {
-						$("#errorMsg")
+						$("#resumeErrorMsg")
 								.html(
 										"<span style='color:red'>Please enter the required parameters.</span>");
 					}
@@ -105,7 +105,7 @@
 				commandName="createResume" id="resumeUploadForm"
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
-					<div id="errorMsg"></div>
+					<div id="resumeErrorMsg"></div>
 					<div class="splLableText">How would you
 						like to create your resume</div>
 					<form:select class="jb_input3 jb_input_width3" path="resumeType"

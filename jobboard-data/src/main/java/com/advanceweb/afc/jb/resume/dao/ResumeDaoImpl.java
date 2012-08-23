@@ -174,7 +174,6 @@ public class ResumeDaoImpl implements ResumeDao {
 		//if any public resumes , make it private 
 		resumeVisibilityPublicToPrivate(resumeDTO);
 		ResumeDTO newResumeDTO = null;
-		Boolean result = false;
 		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
 			hibernateTemplate.save(resUploadResume);
@@ -182,9 +181,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
 			newResumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, null);
-			result = true;
 		} catch (HibernateException e) {
-			result = false;
 			e.printStackTrace();
 		}
 		return newResumeDTO;
