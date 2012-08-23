@@ -443,10 +443,13 @@ jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotPWDPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotYourPasswordPagePopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobboardemployerdashboardcontent.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresults.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsBody.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsHeader.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsresume.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresumeheader.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresumeresultbody.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerEditProfileSettings.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerJobDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerchangepassword.jsp -text
