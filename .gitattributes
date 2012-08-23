@@ -328,6 +328,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostCont
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/SearchResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmpoyerBrandTemp.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformJobPost.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/home/web/controller/ClickController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/home/web/controller/HomeController.java -text
