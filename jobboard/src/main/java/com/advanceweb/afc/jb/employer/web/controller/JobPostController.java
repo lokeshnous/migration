@@ -111,7 +111,7 @@ public class JobPostController {
 		}
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
-		model.setViewName("manageJobPosting");
+		model.setViewName("forward:/employer/manageJobPost.html");
 		return model;
 	}	
 	
@@ -135,7 +135,7 @@ public class JobPostController {
 		}
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
-		model.setViewName("postNewJobs");
+		model.setViewName("forward:/employer/manageJobPost.html");
 		return model;
 	}	
 	
@@ -159,7 +159,7 @@ public class JobPostController {
 		}
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
-		model.setViewName("postNewJobs");
+		model.setViewName("forward:/employer/manageJobPost.html");
 		return model;
 	}
 	
@@ -200,12 +200,12 @@ public class JobPostController {
 									
 			
 			//Validating URL
-/*			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
+			if((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl())) || 
 				(!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())) || 
 				(!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator.isValid(form.getApplyEmail()))){
 				
 				return "Please enter valid URL";
-			}*/
+			}
 		}
 		
 		return null;
@@ -240,7 +240,7 @@ public class JobPostController {
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value = "/manageJobPost", method = RequestMethod.GET)
+	@RequestMapping(value = "/manageJobPost")
 	public String getJobPostDetails(HttpServletRequest request,
 			HttpSession session, Model model, Map<String, Object> map) {
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
