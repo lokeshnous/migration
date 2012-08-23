@@ -23,7 +23,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
@@ -196,7 +196,7 @@ public class JobSeekerRegistrationController {
 		        HttpServletRequest request)
 		{
 		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		 authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_JOB_SEEKER));
+		 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_JOB_SEEKER));
 		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 		            user.getEmailId(), user.getPassword(),authList);
 		    token.setDetails(new WebAuthenticationDetails(request));
