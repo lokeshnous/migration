@@ -214,7 +214,7 @@ public class ResumeConversionHelper {
 				
 				 dto.setBuilderEduId(entity.getBuilderEduId());
 				 dto.setInstituteName(entity.getInstitutionName());
-				 dto.setDegreeLvl(String.valueOf(entity.getDegreeLevel()));
+				 dto.setDegreeLvl(entity.getDegreeLevel().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getDegreeLevel());
 				 dto.setFieldOfStudy(entity.getCourseOfStudy());	
 				 dto.setStartDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getStartDt())));
 				 dto.setEndDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getCompletionDt())));
@@ -255,12 +255,12 @@ public class ResumeConversionHelper {
 				
 				 dto.setJobTitle(entity.getPositionName());
 				 dto.setEmployerName(entity.getEmployerName());
-				 dto.setEmploymentType(entity.getEmploymentType());
+				 dto.setEmploymentType(entity.getEmploymentType().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getEmploymentType());
 				 dto.setStartDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getEmploymentDt())));
 				 dto.setEndDate(DateUtils.convertSQLDateToStdDateString(String.valueOf(entity.getSeparationDt())));
 				 dto.setYrsAtPostion(entity.getEmploymentYears() != 0 ?String.valueOf(entity.getEmploymentYears()):"");
-				 dto.setCurrentCareerLvl(entity.getCareerLevel());
-				 dto.setAnnualSalary(entity.getAnnualSalary());
+				 dto.setCurrentCareerLvl(entity.getCareerLevel().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getCareerLevel());
+				 dto.setAnnualSalary(entity.getAnnualSalary().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getAnnualSalary());
 				 dto.setHrlyPayRate(entity.getHourlyRate());
 				 dto.setDescription(entity.getJobDescription());
 				 dto.setBuilderEmpId(entity.getBuilderEmploymentId());
@@ -612,7 +612,7 @@ public class ResumeConversionHelper {
 		if (null != builderResume.getResBuilderLanguages()) {
 			for (ResBuilderLanguage entity : builderResume.getResBuilderLanguages()) {
 				LanguageDTO dto = new LanguageDTO();
-				dto.setExpLvl(entity.getExpLevel());
+				dto.setExpLvl(entity.getExpLevel().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getExpLevel());
 				dto.setLanguage(entity.getLanguageName());
 				dto.setnLangId(entity.getBuilderLanguageId());
 				langList.add(dto);
