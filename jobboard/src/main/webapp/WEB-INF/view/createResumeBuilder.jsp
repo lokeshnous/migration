@@ -157,6 +157,23 @@
 			});
 		});
 		
+		//Retreiving the percentage of resume builder completed from controller
+		$("#saveResBuilderBtId").click(function(){
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/jobSeekerResume/getResumeProgress.html",
+				success : function(data) {					
+					if(data != '100'){
+						if(confirm("You have completed only "+data+"% of information. Do you want to continue?")){
+							$("#saveResBuilderHdBtId").click();
+						}
+					}else{
+						$("#saveResBuilderHdBtId").click();
+					}
+				},
+			});
+		});
+		
 	});
 	
 	//jQuery(".megamenu").megamenu();
@@ -949,11 +966,11 @@
 						</div>
 					</div>
 					<div class="clearfix"></div>
-					<br /> <span class="marginBottom10 FloatLeft"> <input
-						type="submit" value="Save" name="Save" class="btn_sm orange inputleft" /> <input
-						type="submit" value="Preview" name="Preview" class="btn_sm orange inputleft" />
-						<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html"
-						class="btn_sm orange cancelacount">Cancel</a>
+					<br /> <span class="marginBottom10 FloatLeft"> 
+					<input type="button" value="Save" name="Save" class="btn_sm orange inputleft"  id="saveResBuilderBtId"/>
+					<input type="submit" value="Preview" name="Preview" class="btn_sm orange inputleft" />
+					<a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="btn_sm orange cancelacount">Cancel</a>
+					<input type="submit" value="Save" name="Save" class="btn_sm orange inputleft"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
 					</span>
 				</div>
 
