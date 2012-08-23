@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -63,7 +64,6 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	
 	private HibernateTemplate hibernateTemplateCareers;
 	
-	private HibernateTemplate hibernateTemplate;
 	
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
@@ -79,11 +79,6 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 	
 
-	@Autowired
-	public void setHibernateTemplateCareers(SessionFactory sessionFactory) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
-	}
-	
 	public EmployerRegistrationDAOImpl(){
 
 	}
@@ -105,11 +100,10 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO,
 					null);
 			if (merUser != null) {
+				//saving employer credentials
 				hibernateTemplateTracker.save(merUser);
 			}
-			// AdmFacility facility =
-			// registrationConversionHelper.transformMerUserToUserDTO(merUser);
-
+			//saving the employer profile
 			List<MerUserProfile> merUserProfiles = empHelper
 					.transformMerUserDTOToMerUserProfiles(empDTO, merUser);
 			if (merUserProfiles != null) {
@@ -130,9 +124,37 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				userRole.setId(pk);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
+			//saving the data in adm_facility
+			AdmFacility facility = empHelper.transformEmpDTOToAdmFAcility(empDTO);
+			facility.setFacilityType(MMJBCommonConstants.FACILITY);
+			//TODO: Remove hard code values
+			facility.setEmail(empDTO.getMerUserDTO().getEmailId());
+			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
+			facility.setCreateDt(new Date());
+			facility.setCreateUserId(null);
+			facility.setAccountNumber(null);
+			facility.setNameDisplay(null);
+			facility.setUrl(null);
+			facility.setUrlDisplay(null);
+			facility.setEmailDisplay(null);
+			facility.setLogoPath(null);
+			facility.setAdminUserId(null);
+			facility.setCreateUserId(0);
+			facility.setPromoMediaPath(null);
+			facility.setColorPalette(null);
+			facility.setCompanyNews(null);
+			facility.setCompanyOverview(null);
+			hibernateTemplateCareers.save(facility);
+			
+			//saving the data in adm_facility_contact
+			AdmFacilityContact contact = empHelper.transformEmpDTOToAdmFacilityContact(empDTO,facility);
+			contact.setContactType(MMJBCommonConstants.PRIMARY);
+			contact.setCreateDt(new Date());
+			contact.setEmail(empDTO.getMerUserDTO().getEmailId());
+			contact.setActive(1);
+			hibernateTemplateCareers.save(contact);
+			
 			return empHelper.transformMerUserToUserDTO(merUser);
-			// AdmFacility admFacility = new AdmFacility();
-			// admFacility.setFacilityType("FACILITY");
 
 		} catch (DataAccessException e) {
 			e.printStackTrace();
@@ -286,7 +308,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
 				AdmFacility admFacility = new AdmFacility();
 				admFacility.setFacilityId(userId);
-				accountProfileDTO = hibernateTemplate
+				accountProfileDTO = hibernateTemplateCareers
 						.find("from AdmFacilityContact af where af.admFacility = ? and af.contactType=?",
 								admFacility, contactType);
 
@@ -301,7 +323,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	@Override
 	public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid) {
 				
-		AdmFacilityContact facility=hibernateTemplate.get(AdmFacilityContact.class,  admfacilityid);
+		AdmFacilityContact facility=hibernateTemplateCareers.get(AdmFacilityContact.class,  admfacilityid);
 		facility.setFirstName(apd.getFirstName());
 		facility.setCompany(apd.getCompanyName());
 		facility.setStreet(apd.getStreet());
@@ -311,7 +333,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		facility.setCountry(apd.getCountry());
 		facility.setEmail(apd.getEmail());
 		facility.setPhone(apd.getPhone());
-		hibernateTemplate.update(facility);
+		hibernateTemplateCareers.update(facility);
 		
 	}
 
@@ -324,7 +346,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		List<AdmFacilityContact> accountProfileDTO=null;
 		try {
 			if (userId > 0) {
-				 accountProfileDTO = hibernateTemplate
+				 accountProfileDTO = hibernateTemplateCareers
 						.find("select a from AdmFacilityContact a,AdmFacility b,AdmUserFacility c where a.admFacility.facilityId= b.facilityId and a.admFacility.facilityId=c.id.facilityId "
 								+"and c.id.userId="
 								+ userId

@@ -184,6 +184,18 @@ public class EmployerRegistrationConversionHelper {
 						&& !MMJBCommonConstants.LAST_NAME.equals(attribDTO
 								.getStrLabelName())
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
+								.getStrLabelName())
+						&& !MMJBCommonConstants.STREET_ADD.equals(attribDTO
+								.getStrLabelName())
+						&& !MMJBCommonConstants.CITY_EMP.equals(attribDTO
+								.getStrLabelName())
+						&& !MMJBCommonConstants.STATE_PROVINCE.equals(attribDTO
+								.getStrLabelName())
+						&& !MMJBCommonConstants.ZIP_CODE.equals(attribDTO
+								.getStrLabelName())
+						&& !MMJBCommonConstants.COUNTRY.equals(attribDTO
+								.getStrLabelName())
+						&& !MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
 								.getStrLabelName())) {
 
 					pk = new MerUserProfilePK();
@@ -210,53 +222,115 @@ public class EmployerRegistrationConversionHelper {
 		return listProfiles;
 
 	}
-
+	
 	/**
 	 * Transform MerUserDTO to entity MerUser
 	 * 
 	 * @param dto
 	 * @return
 	 */
-	public List<MerUserProfile> transformMerUserDTOToAdmFacility(
-			EmployerProfileDTO dto, MerUser user) {
+	public AdmFacility transformEmpDTOToAdmFAcility(
+			EmployerProfileDTO dto) {
 
-		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
-		MerUserProfilePK pk = null;
-
+		AdmFacility admFacility= new AdmFacility();
+		
+		
 		if (null != dto.getAttribList()) {
-
 			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
-
-				MerUserProfile profile = new MerUserProfile();
-				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
+				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
 						.getStrLabelName())) {
-					pk = new MerUserProfilePK();
-					profile.setAttribValue(attribDTO.getStrLabelValue());
-				}
-				if (MMJBCommonConstants.CITY
-						.equals(attribDTO.getStrLabelName())) {
-					profile.setAttribValue(attribDTO.getStrLabelValue());
-				}
-				if (MMJBCommonConstants.STATE.equals(attribDTO
+					admFacility.setEmail(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.STREET_ADD.equals(attribDTO
 						.getStrLabelName())) {
-					profile.setAttribValue(attribDTO.getStrLabelValue());
-				}
-				if (MMJBCommonConstants.LABEL_COUNTRY.equals(attribDTO
+					admFacility.setStreet(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.CITY_EMP.equals(attribDTO
 						.getStrLabelName())) {
-					profile.setAttribValue(attribDTO.getStrLabelValue());
-				}
-				if (MMJBCommonConstants.EMAIL.equals(attribDTO
+					admFacility.setCity(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.STATE_PROVINCE.equals(attribDTO
 						.getStrLabelName())) {
-					profile.setAttribValue(attribDTO.getStrLabelValue());
+					admFacility.setState(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.ZIP_CODE.equals(attribDTO
+						.getStrLabelName())) {
+					admFacility.setPostcode(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.COUNTRY.equals(attribDTO
+						.getStrLabelName())) {
+					admFacility.setCountry(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
+						.getStrLabelName())) {
+					admFacility.setName(attribDTO.getStrLabelValue());
 				}
 
 			}
 		}
 
-		return listProfiles;
+		return admFacility;
 
 	}
 	
+	/**
+	 * Transform MerUserDTO to entity MerUser
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public AdmFacilityContact transformEmpDTOToAdmFacilityContact(
+			EmployerProfileDTO dto,AdmFacility facility) {
+
+		AdmFacilityContact facilityContact = new AdmFacilityContact();
+
+		if (null != dto.getAttribList()) {
+			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setEmail(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.STREET_ADD.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setStreet(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.CITY_EMP.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setCity(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.STATE_PROVINCE.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setState(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.ZIP_CODE.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setPostcode(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.COUNTRY.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setCountry(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.FIRST_NAME.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setFirstName(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.LAST_NAME.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setLastName(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.MIDDLE_NAME.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setMiddleName(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setCompany(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.POSITION_TITLE.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setJobTitle(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.PRIMARY_PHONE.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setPhone(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.SECONDARY_PHONE.equals(attribDTO
+						.getStrLabelName())) {
+					facilityContact.setPhone2(attribDTO.getStrLabelValue());
+				}
+				AdmFacility admFacility = new AdmFacility();
+				admFacility.setFacilityId(facility.getFacilityId());
+				facilityContact.setAdmFacility(admFacility);
+			}
+		}
+
+		return facilityContact;
+
+	}
+
+
 	
 	/**
 	 * Converting list of MerProfileAttribList to list of DropDownDTO's

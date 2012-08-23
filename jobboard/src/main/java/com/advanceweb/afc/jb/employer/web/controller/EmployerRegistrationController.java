@@ -163,7 +163,15 @@ public class EmployerRegistrationController {
 					return model;
 				}
 				// validation mobile number
-				if (MMJBCommonConstants.PHONE_NUMBER.equals(form
+				if (MMJBCommonConstants.PRIMARY_PHONE.equals(form
+						.getStrLabelName())
+						&& !StringUtils.isEmpty(form.getStrLabelValue())
+						&& !registerValidation.validateMobileNumberPattern(form
+								.getStrLabelValue())) {
+					model.addObject("message", jobseekerRegPhoneMsg);
+					return model;
+				}
+				if (MMJBCommonConstants.SECONDARY_PHONE.equals(form
 						.getStrLabelName())
 						&& !StringUtils.isEmpty(form.getStrLabelValue())
 						&& !registerValidation.validateMobileNumberPattern(form

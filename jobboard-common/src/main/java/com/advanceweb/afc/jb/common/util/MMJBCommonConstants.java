@@ -133,11 +133,15 @@ public interface MMJBCommonConstants {
 	public static final String PHONE_NUMBER="Phone Number";
 	public static final String ZERO = "0";
 	//for employer 
-	public static final String position_title = "Position Title";
-	public static final String street_add = "Street Address";
-	public static final String zip_code = "Zip Code";
-	public static final String primary_phone = "Primary Phone";
-	public static final String secondary_phone = "Secondary Phone";
+	public static final String POSITION_TITLE = "Position Title";
+	public static final String STREET_ADD = "Street Address";
+	public static final String ZIP_CODE = "Zip Code";
+	public static final String PRIMARY_PHONE = "Primary Phone";
+	public static final String SECONDARY_PHONE = "Secondary Phone";
+	public static final String COUNTRY = "Country";
+	public static final String CITY_EMP = "City";
+	public static final String STATE_PROVINCE ="State / Province";
+	public static final String COMPANY_EMP = "Company";
 	
 	
 	//For Save this 
