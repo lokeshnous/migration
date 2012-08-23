@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+//import com.advanceweb.afc.jb.common.AddressDTO;
+//import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
@@ -41,7 +43,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-
+import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 
 /**
  * 
@@ -51,6 +53,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @Since 2nd July 2012
  */
 
+@SuppressWarnings("deprecation")
 @Controller
 @RequestMapping("/employerRegistration")
 @SessionAttributes("empRegisterForm")
@@ -84,6 +87,9 @@ public class EmployerRegistrationController {
 
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
+	@Autowired
+	@Transient
+	private EmloyerRegistartionService emloyerRegistartionService;
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
@@ -258,7 +264,7 @@ public class EmployerRegistrationController {
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session.getAttribute("userId");
-		List<AdmFacilityContact> listProfAttribForms = employerRegistration
+		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 		if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
 			int admfacilityid = listProfAttribForms.get(0)
@@ -266,7 +272,7 @@ public class EmployerRegistrationController {
 
 			AccountProfileDTO dto = transformEmployerRegistration
 					.transformAccountProfileFormToDto(employeeAccountForm);
-			employerRegistration.editEmployeeAccount(dto, admfacilityid);
+			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
 		} else {
 			model.setViewName("employerDashboard");
 			return model;
@@ -290,7 +296,7 @@ public class EmployerRegistrationController {
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session.getAttribute("userId");
-		List<AdmFacilityContact> listProfAttribForms = employerRegistration
+		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 
 		if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
@@ -298,7 +304,7 @@ public class EmployerRegistrationController {
 					.getFacilityContactId();
 			AccountProfileDTO dto = transformEmployerRegistration
 					.transformAccountProfileFormToDto(employeeBillingForm);
-			employerRegistration.editEmployeeAccount(dto, admfacilityid);
+			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
 
 		} else {
 			model.setViewName("employerDashboard");
@@ -333,7 +339,7 @@ public class EmployerRegistrationController {
 
 			List<StateDTO> stateList = populateDropdownsService.getStateList();
 
-			List<AdmFacilityContact> listProfAttribForms = employerRegistration
+			List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 
 			employeeAccountForm.setFirstName(listProfAttribForms.get(0)
@@ -353,7 +359,7 @@ public class EmployerRegistrationController {
 			 * this is for billing pages
 			 */
 
-			List<AdmFacilityContact> listBillingForms = employerRegistration
+			List<AdmFacilityContact> listBillingForms = emloyerRegistartionService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 			employeeBillingForm.setFirstName(listBillingForms.get(0)
 					.getFirstName());
