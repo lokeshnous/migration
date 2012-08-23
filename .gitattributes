@@ -79,6 +79,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/AccountAddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/BillingAddressDTO.java -text
+jobboard-common/src/main/resources/employerProfile.properties -text
 jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/mailServer.properties -text

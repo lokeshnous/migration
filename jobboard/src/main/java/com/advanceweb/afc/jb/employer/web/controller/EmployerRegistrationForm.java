@@ -16,107 +16,50 @@ public class EmployerRegistrationForm {
 
 	@NotEmpty
 	private String emailId;
+
 	@NotEmpty
 	private String confirmEmailId;
 	@NotEmpty
 	private String positionTitle;
+
 	@NotEmpty
 	private String password;
+
 	@NotEmpty
 	private String confirmPassword;
-	@NotEmpty
+
+	@NotEmpty(message = "Company should not be empty")
 	private String company;
+
+	@NotEmpty(message = "Street should not be empty")
+	private String street;
+
 	@NotEmpty(message = "First Name should not be empty")
 	private String firstName;
+
+	private String MiddleName;
+
 	@NotEmpty(message = "Last Name should not be empty")
 	private String lastName;
+
 	@NotEmpty(message = "City should not be empty")
 	private String city;
-	@NotEmpty(message = "Country should not be empty")
-	private String country;
+
 	@NotEmpty(message = "State should not be empty")
 	private String state;
+
 	@NotEmpty(message = "Zip Code should not be empty")
-	private String postalCode;
-	@NotEmpty(message = "Address should not be empty")
-	private String address;
-	private String middleName;
+	private String zipCode;
+
+	@NotEmpty(message = "Primary Phone should not be empty")
 	private String primaryPhone;
+
 	private String secondryPhone;
 
+	@NotEmpty(message = "Country should not be empty")
+	private String country;
+
 	private List<EmployerProfileAttribForm> listProfAttribForms;
-
-	/**
-	 * @return the listProfAttribForms
-	 */
-	public List<EmployerProfileAttribForm> getListProfAttribForms() {
-		return listProfAttribForms;
-	}
-
-	/**
-	 * @param listProfAttribForms
-	 *            the listProfAttribForms to set
-	 */
-	public void setListProfAttribForms(
-			List<EmployerProfileAttribForm> listProfAttribForms) {
-		this.listProfAttribForms = listProfAttribForms;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getConfirmEmailId() {
-		return confirmEmailId;
-	}
-
-	public void setConfirmEmailId(String confirmEmailId) {
-		this.confirmEmailId = confirmEmailId;
-	}
-
-	public String getPositionTitle() {
-		return positionTitle;
-	}
-
-	public void setPositionTitle(String positionTitle) {
-		this.positionTitle = positionTitle;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
 
 	/**
 	 * @return the firstName
@@ -131,6 +74,21 @@ public class EmployerRegistrationForm {
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the middleName
+	 */
+	public String getMiddleName() {
+		return MiddleName;
+	}
+
+	/**
+	 * @param middleName
+	 *            the middleName to set
+	 */
+	public void setMiddleName(String middleName) {
+		MiddleName = middleName;
 	}
 
 	/**
@@ -164,21 +122,6 @@ public class EmployerRegistrationForm {
 	}
 
 	/**
-	 * @return the country
-	 */
-	public String getCountry() {
-		return country;
-	}
-
-	/**
-	 * @param country
-	 *            the country to set
-	 */
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	/**
 	 * @return the state
 	 */
 	public String getState() {
@@ -194,47 +137,18 @@ public class EmployerRegistrationForm {
 	}
 
 	/**
-	 * @return the postalCode
+	 * @return the zipCode
 	 */
-	public String getPostalCode() {
-		return postalCode;
+	public String getZipCode() {
+		return zipCode;
 	}
 
 	/**
-	 * @param postalCode
-	 *            the postalCode to set
+	 * @param zipCode
+	 *            the zipCode to set
 	 */
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
-	/**
-	 * @return the middleName
-	 */
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
-	 * @param middleName
-	 *            the middleName to set
-	 */
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	/**
@@ -267,4 +181,146 @@ public class EmployerRegistrationForm {
 		this.secondryPhone = secondryPhone;
 	}
 
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return country;
+	}
+
+	/**
+	 * @param country
+	 *            the country to set
+	 */
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	/**
+	 * @return the listProfAttribForms
+	 */
+	public List<EmployerProfileAttribForm> getListProfAttribForms() {
+		return listProfAttribForms;
+	}
+
+	/**
+	 * @param listProfAttribForms
+	 *            the listProfAttribForms to set
+	 */
+	public void setListProfAttribForms(
+			List<EmployerProfileAttribForm> listProfAttribForms) {
+		this.listProfAttribForms = listProfAttribForms;
+	}
+
+	/**
+	 * @return
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getEmailId() {
+		return emailId;
+	}
+
+	/**
+	 * @param emailId
+	 */
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getConfirmEmailId() {
+		return confirmEmailId;
+	}
+
+	/**
+	 * @param confirmEmailId
+	 */
+	public void setConfirmEmailId(String confirmEmailId) {
+		this.confirmEmailId = confirmEmailId;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getPositionTitle() {
+		return positionTitle;
+	}
+
+	/**
+	 * @param positionTitle
+	 */
+	public void setPositionTitle(String positionTitle) {
+		this.positionTitle = positionTitle;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	/**
+	 * @param confirmPassword
+	 */
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getCompany() {
+		return company;
+	}
+
+	/**
+	 * @param company
+	 */
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getStreet() {
+		return street;
+	}
+
+	/**
+	 * @param street
+	 */
+	public void setStreet(String street) {
+		this.street = street;
+	}
 }

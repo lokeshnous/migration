@@ -34,17 +34,16 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-		
-		$("#save").click(function() {
-			$("form").submit();
-		});
-		
+
 	});
 </script>
 </head>
 
 
 <body class="job_board">
+						<form:form method="post"
+							action="../employerRegistration/saveEmployerProfile.html"
+							commandName="empRegisterForm" enctype="multipart/form-data">
 	<div class="ad_page_top">
 		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
@@ -58,18 +57,21 @@
 						class="job_seeker_login leftFormHolder" style="display: block">
 						<h2 class="sectionSubHeader">To register as an employer,
 							please fill out these fields.</h2>
-						<form:form method="post" action="../employerRegistration/saveEmployerProfile.html"
-							commandName="empRegisterForm" enctype="multipart/form-data">
+						<c:if test="${not empty message}">
+							<div style="color: red" align="middle">
+								<b>${message}</b>
+							</div>
+						</c:if>
+
 
 							<c:forEach items="${empRegisterForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
-
 								<c:if test="${profAttrib.strLabelName == 'First Name'}">
 									<div class="row">
 										<span class="lableText3">First Name:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
-											type="text" name="firstName"
+										
 											class="job_seeker_password textBox350" />
 										<span class="required">(Required)</span>
 									</div>
@@ -104,12 +106,20 @@
 " />
 								<span class="required">(Required)</span>
 							</div>
+							<div>
+								<span class="lableText3"></span> <FONT color="red"><form:errors
+										path="emailId" /></FONT>
+							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Email Address:</span>
 								<form:input path="confirmEmailId" type="text" name="JobTitle"
 									class="job_seeker_password textBox350 
 " />
 								<span class="required">(Required)</span>
+							</div>
+							<div>
+								<span class="lableText3"></span> <FONT color="red"><form:errors
+										path="confirmEmailId" /></FONT>
 							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Password:</span>
@@ -123,6 +133,10 @@
 									least 1 number)
 								</div>
 							</div>
+							<div>
+								<span class="lableText3"></span> <FONT color="red"><form:errors
+										path="password" /></FONT>
+							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Password:</span>
 								<form:input path="confirmPassword" type="password"
@@ -130,9 +144,12 @@
 									class="job_seeker_password textBox350 
 " />
 								<span class="required">(Required)</span>
-							<p style="padding-top: 27px;" class="borderBottomDotted marginBottom15">&nbsp;</p>
 							</div>
-							<c:forEach items="${empRegisterForm.listProfAttribForms}"
+							<div>
+								<span class="lableText3"></span> <FONT color="red"><form:errors
+										path="confirmPassword" /></FONT>
+							</div>
+						<c:forEach items="${empRegisterForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'Position Title'}">
 									<div class="rowEvenNewSpacing marginTop0">
@@ -254,20 +271,21 @@
  --%>
 							<div class="clearfix"></div>
 
-						</form:form>
 						<div class="clearfix"></div>
 					</div>
 					<div class="rowEvenNewSpacing marginTop25 paddingBottom30">
-						<span class="floatLeft marginTop10 marginRight60">
-						<a id="save" href="#"
-							class="btn_sm orange">Save &amp; Continue</a> <a href=""
-							class="btn_sm orange">Cancel</a></span> <span
+						<span class="floatLeft marginTop10 marginRight60"> 
+						<!-- <a
+							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
+							<input type="submit" style="margin-top: -4px;" value="Save & Continue" class="btn_sm orange">
+							<a href="/jobboard/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a></span> <span
 							class="floatLeft marginTop10">I'll set up my profile
 							later. <a href="#">Continue</a> to the site now.
 						</span>
 					</div>
 					<!-- Step 2 -->
 				</div>
+
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
 					<img src="../resources/images/ads/banner_ad_fpo.png" />
@@ -282,5 +300,6 @@
 
 	<!-- footer_wrapper -->
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
+			</form:form>
 </body>
 </html>

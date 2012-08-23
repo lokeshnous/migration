@@ -290,8 +290,7 @@
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
 								<input type="submit" value="Back" class="btn_sm orange nextacount"
-									name="Back" /> 
-									<input type="submit" value="Finish"
+									name="Back" /> <input type="submit" value="Finish"
 									class="btn_sm orange nextacount" name="Finish" /> <a
 									href="/jobboard/healthcarejobs/advanceweb.html"
 									class="btn_sm orange cancelacount">Cancel</a>

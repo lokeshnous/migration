@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AddressDTO;
@@ -10,77 +11,83 @@ import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
+
 /**
  * 
  * @author Sasibhushana
- *
+ * 
  * @Version 1.0
  * @Since 2nd July, 2012
  */
 @Repository("transformEmployerRegistration")
 public class TransformEmployerRegistration {
-	
+
 	/**
 	 * Converting into MerUserDTO from EmployeeRegistrationForm
 	 * 
 	 * @param form
 	 * @return MerUserDTO
 	 */
-	public MerUserDTO transformEmpFormToMerUserDTO(EmployerRegistrationForm form){
+	public MerUserDTO transformEmpFormToMerUserDTO(EmployerRegistrationForm form) {
 		MerUserDTO dto = new MerUserDTO();
+		form.getListProfAttribForms();
 		dto.setEmailId(form.getEmailId());
 		dto.setFirstName(form.getFirstName());
 		dto.setLastName(form.getLastName());
 		dto.setMiddleName(form.getMiddleName());
 		dto.setPassword(form.getPassword());
-		dto.setUserId(form.getUserId());		
-		return dto;		
+		dto.setUserId(form.getUserId());
+		return dto;
 	}
-	
+
 	/**
 	 * Converting into AddressDTO from EmployeeRegistrationForm
 	 * 
 	 * @param form
 	 * @return AddressDTO
 	 */
-	public AddressDTO transformEmpFormToAddressDTO(EmployerRegistrationForm form){
+	public AddressDTO transformEmpFormToAddressDTO(EmployerRegistrationForm form) {
 		AddressDTO dto = new AddressDTO();
-		dto.setAddress1(form.getAddress());
 		dto.setCity(form.getCity());
 		dto.setCountry(form.getCountry());
 		dto.setMobileNumber(form.getPrimaryPhone());
 		dto.setPhone(form.getSecondryPhone());
 		dto.setState(form.getState());
-		dto.setStreet(form.getAddress());
-		dto.setZipCode(form.getPostalCode());
-		return dto;		
+		dto.setStreet(form.getStreet());
+		dto.setZipCode(form.getZipCode());
+		return dto;
 	}
-	
+
 	/**
 	 * Converting into CompanyProfileDTO from EmployeeRegistrationForm
 	 * 
 	 * @param form
 	 * @return CompanyProfileDTO
 	 */
-	public CompanyProfileDTO transformEmpFormToCompProfileDTO(EmployerRegistrationForm form){
+	public CompanyProfileDTO transformEmpFormToCompProfileDTO(
+			EmployerRegistrationForm form) {
 		CompanyProfileDTO dto = new CompanyProfileDTO();
-//		dto.setCompanyEmail(companyEmail);
+		// dto.setCompanyEmail(companyEmail);
 		dto.setCompanyName(form.getCompany());
 		dto.setPositionTitle(form.getPositionTitle());
-//		dto.setCompanyNews(companyNews);
-//		dto.setCompanyOverview(companyOverview);
-//		dto.setCompanyWebsite(companyWebsite);
-		return dto;		
+		// dto.setCompanyNews(companyNews);
+		// dto.setCompanyOverview(companyOverview);
+		// dto.setCompanyWebsite(companyWebsite);
+		return dto;
 	}
+
+
 	
 	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO){
 		
 		List<EmployerProfileAttribForm> listForms = new ArrayList<EmployerProfileAttribForm>();
-		
-		if(null != registerDTO.getAttribList()){
-			for(MerProfileAttribDTO dto : registerDTO.getAttribList()){
+
+		if (null != registerDTO.getAttribList()) {
+			for (MerProfileAttribDTO dto : registerDTO.getAttribList()) {
 				EmployerProfileAttribForm form = new EmployerProfileAttribForm();
 				form.setDropdown(dto.getDropdown());
 				form.setStrAttribType(dto.getStrAttribType());
@@ -92,8 +99,54 @@ public class TransformEmployerRegistration {
 				listForms.add(form);
 			}
 		}
+
+		return listForms;
+	}
+
+	/**
+	 * Converting Job Seeker Registration Form to MerUserDTO
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public MerUserDTO createUserDTO(EmployerRegistrationForm form) {
+
+		MerUserDTO dto = new MerUserDTO();
+		dto.setFirstName(form.getFirstName());
+		dto.setLastName(form.getLastName());
+		dto.setMiddleName(form.getMiddleName());
+		dto.setPassword(form.getPassword());
+		dto.setEmailId(form.getEmailId());
+
+		return dto;
+	}
+
+	
+	/**
+	 * 
+	 * @param attributeList
+	 * @return
+	 */
+	public List<MerProfileAttribDTO> transformProfileAttribFormToDTO(List<EmployerProfileAttribForm> attributeList){
 		
-		return listForms;		
+		List<MerProfileAttribDTO> dtoList = new ArrayList<MerProfileAttribDTO>();
+		
+		if(null != attributeList){
+			for(EmployerProfileAttribForm form : attributeList){
+				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
+					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
+				}else{
+					dto.setStrLabelValue(form.getStrLabelValue());
+				}
+				dto.setStrAttribType(form.getStrAttribType());
+				dto.setStrLabelName(form.getStrLabelName());
+				dto.setStrProfileAttribId(form.getStrProfileAttribId());				
+				dtoList.add(dto);
+			}
+		}
+		
+		return dtoList;		
 	}
 	public AccountProfileDTO transformAccountProfileFormToDto(EmployeeAccountForm form){
 		AccountProfileDTO dto = new AccountProfileDTO();

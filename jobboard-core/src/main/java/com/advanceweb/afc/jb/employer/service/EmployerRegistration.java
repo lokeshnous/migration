@@ -41,7 +41,7 @@ public class EmployerRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public MerUserDTO createNewProfile(ProfileDTO profileDTO){
+	public MerUserDTO createNewProfile(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerRegistrationDAO.createNewEmployer(empProfileDTO);
@@ -94,9 +94,8 @@ public class EmployerRegistration implements ProfileRegistration {
 
 	@Override
 	public boolean validateEmail(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		return employerRegistrationDAO.validateEmail(email);
+		}
 
 	@Override
 	@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)

@@ -1,41 +1,52 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Transient;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
-import com.advanceweb.afc.jb.common.AddressDTO;
-import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import org.apache.log4j.Logger;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 
 
 /**
  * 
  * @author Sasibhushana
- *
+ * 
  * @Version 1.0
  * @Since 2nd July 2012
  */
@@ -44,7 +55,6 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 @RequestMapping("/employerRegistration")
 @SessionAttributes("empRegisterForm")
 @Scope("session")
-
 public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
@@ -56,10 +66,11 @@ public class EmployerRegistrationController {
 	@Autowired
 	@Transient
 	private TransformEmployerRegistration transformEmployerRegistration;
-	
+
 	@Autowired
 	@Transient
 	private PopulateDropdowns populateDropdownsService;
+
 
 	
 	@Autowired
@@ -71,6 +82,12 @@ public class EmployerRegistrationController {
 	@Autowired
 	EmployerRegistrationValidation registerValidation;
 
+	@Autowired
+	protected AuthenticationManager customAuthenticationManager;
+
+	@Value("${jobseekerRegPhoneMsg}")
+	private String jobseekerRegPhoneMsg;
+
 
 	/**
 	 * This method is called to display job seeker registration page
@@ -78,25 +95,28 @@ public class EmployerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/employerregistration",method = RequestMethod.GET)
+	@RequestMapping(value = "/employerregistration", method = RequestMethod.GET)
 	public ModelAndView employerregistration() {
 		ModelAndView model = new ModelAndView();
-		EmployerRegistrationForm form = new EmployerRegistrationForm();
-		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration.getProfileAttributes();
-		List<EmployerProfileAttribForm> listProfAttribForms = 
-				transformEmployerRegistration.transformDTOToProfileAttribForm(registerDTO);
-		form.setListProfAttribForms(listProfAttribForms);
-		model.addObject("listProfAttribForms", listProfAttribForms);
-		model.addObject("empRegisterForm", form);
-		List<CountryDTO> countryList= populateDropdownsService.getCountryList();
+
+		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
+
+		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
+				.getProfileAttributes();
+		List<EmployerProfileAttribForm> listProfAttribForms = transformEmployerRegistration
+				.transformDTOToProfileAttribForm(registerDTO);
+		empRegisterForm.setListProfAttribForms(listProfAttribForms);
+		model.addObject("empRegisterForm", empRegisterForm);
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
-//		map.put("empRegisterForm", empRegisterForm);
+		// map.put("empRegisterForm", empRegisterForm);
 		model.setViewName("employerregistration");
 		return model;
 	}
-	
+
 	/**
 	 * This method is called to display job seeker registration page
 	 * 
@@ -105,39 +125,99 @@ public class EmployerRegistrationController {
 	 */
 	@RequestMapping(value = "/saveEmployerProfile", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
-			@Valid EmployerRegistrationForm empRegisterForm, Map map,
-			BindingResult result) {
+			@ModelAttribute("empRegisterForm") EmployerRegistrationForm empRegisterForm,
+			HttpServletRequest request, Map map, BindingResult result) {
 		ModelAndView model = new ModelAndView();
+	
+
+		if (null != empRegisterForm.getListProfAttribForms()) {
+			model.setViewName("employerregistration");
+			for (EmployerProfileAttribForm form : empRegisterForm
+					.getListProfAttribForms()) {
+
+				// Checking validation for input text box
+				if (form.getbRequired() != 0
+						&& StringUtils.isEmpty(form.getStrLabelValue())
+						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
+								.getStrLabelName())) {
+					model.addObject("message",
+							"Please fill the Required fields");
+					return model;
+				}
+
+				// Checking validation for dropdowns & checkboxes etc
+				if (form.getbRequired() != 0
+						&& MMJBCommonConstants.ZERO.equals(form
+								.getStrLabelValue())
+						&& (MMJBCommonConstants.DROP_DOWN.equals(form
+								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
+								.equals(form.getStrAttribType()))) {
+					model.addObject("message",
+							"Please fill the Required fields");
+					return model;
+				}
+				// validation mobile number
+				if (MMJBCommonConstants.PHONE_NUMBER.equals(form
+						.getStrLabelName())
+						&& !StringUtils.isEmpty(form.getStrLabelValue())
+						&& !registerValidation.validateMobileNumberPattern(form
+								.getStrLabelValue())) {
+					model.addObject("message", jobseekerRegPhoneMsg);
+					return model;
+				}
+			}
+		}
 		registerValidation.validate(empRegisterForm, result);
 
 		if (result.hasErrors()) {
 			model.setViewName("employerregistration");
 			return model;
 		}
-
 		if (employerRegistration.validateEmail(empRegisterForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
 			model.setViewName("employerregistration");
 			return model;
 		}
+
 		EmployerProfileDTO empDTO = new EmployerProfileDTO();
-		AddressDTO addDTO = transformEmployerRegistration
-				.transformEmpFormToAddressDTO(empRegisterForm);
-		CompanyProfileDTO compProfileDTO = transformEmployerRegistration
-				.transformEmpFormToCompProfileDTO(empRegisterForm);
-		MerUserDTO merUserDTO = transformEmployerRegistration
-				.transformEmpFormToMerUserDTO(empRegisterForm);
-		empDTO.setAddDTO(addDTO);
-		empDTO.setCompProfileDTO(compProfileDTO);
-		empDTO.setMerUserDTO(merUserDTO);
+		MerUserDTO userDTO = transformEmployerRegistration
+				.createUserDTO(empRegisterForm);
+		List<MerProfileAttribDTO> attribLists = transformEmployerRegistration
+				.transformProfileAttribFormToDTO(empRegisterForm
+						.getListProfAttribForms());
+		empDTO.setAttribList(attribLists);
+		empDTO.setMerUserDTO(userDTO);
 		employerRegistration.createNewProfile(empDTO);
 
 		model.setViewName("jobBoardEmployerPostJobs01");
+		model.addObject("empRegisterForm", empRegisterForm);
+		authenticateUserAndSetSession(userDTO, request);
+
 		return model;
 	}
-	
-	
+
+	/**
+	 * @param user
+	 * @param request
+	 */
+	@SuppressWarnings("deprecation")
+	private void authenticateUserAndSetSession(MerUserDTO user,
+			HttpServletRequest request) {
+		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_ADMIN));
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				user.getEmailId(), user.getPassword(), authList);
+
+		request.getSession();
+
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authenticatedUser = customAuthenticationManager
+				.authenticate(token);
+
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+	}
+
 	/**
 	 * This method is called to view/modify job seeker profile settings
 	 * 
@@ -146,16 +226,18 @@ public class EmployerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/changePassword",method = RequestMethod.GET)
-	public String jsChangePassword(@Valid EmployerRegistrationForm form, Map model,BindingResult result) {
-		
-		try {			
+	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+	public String jsChangePassword(@Valid EmployerRegistrationForm form,
+			Map model, BindingResult result) {
+
+		try {
 			EmployerProfileDTO empDTO = new EmployerProfileDTO();
-			MerUserDTO merUserDTO = transformEmployerRegistration.transformEmpFormToMerUserDTO(form);
+			MerUserDTO merUserDTO = transformEmployerRegistration
+					.transformEmpFormToMerUserDTO(form);
 			empDTO.setMerUserDTO(merUserDTO);
 			// Call to service layer
 			employerRegistration.changePassword(empDTO);
-//			model.put("jobSeekerRegistrationForm", jsRegistrationForm);
+			// model.put("jobSeekerRegistrationForm", jsRegistrationForm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

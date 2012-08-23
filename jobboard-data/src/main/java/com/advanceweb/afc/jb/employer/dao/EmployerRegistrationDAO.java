@@ -1,11 +1,10 @@
 package com.advanceweb.afc.jb.employer.dao;
+
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.data.domain.Employer;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 
 /**
@@ -31,7 +30,7 @@ public interface EmployerRegistrationDAO {
 	 * 
 	 * @param employerId
 	 */
-	public Employer getEmployerDetails(long employerId);
+	public EmployerProfileDTO getEmployerDetails(int employerId);
 
 	/**
 	 * Updating employer details
@@ -40,7 +39,7 @@ public interface EmployerRegistrationDAO {
 	 * @return
 	 */
 	public boolean updateEmployerDetails(EmployerProfileDTO empDTO);
-	
+
 	/**
 	 * To change the password
 	 * 
@@ -49,22 +48,19 @@ public interface EmployerRegistrationDAO {
 	 */
 	public boolean changePassword(EmployerProfileDTO empDTO);
 
-	
-	
-	/**
-	 * to display account of employee
-	 * @param userId userId.
-	 * @return List.
-	 */
-
-	
-	
 	/**
 	 * To change password
+	 * 
 	 * @param jobSeekerRegistrationDTO
 	 * @return
 	 */
 	public EmployerProfileDTO getProfileAttributes();
+
+	/**
+	 * @param email
+	 * @return
+	 */
+	public boolean validateEmail(String email);
 
 
 	public List<AdmFacilityContact> getEmployeeData(int userId,String contactType);

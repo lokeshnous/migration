@@ -40,7 +40,7 @@ public class EmployerRegistrationValidation {
 
 		if (StringUtils.isEmpty(registerForm.getConfirmEmailId())) {
 			errors.rejectValue("confirmEmailId", "NotEmpty",
-					"Email Id Should not be empty");
+					"Confirm Email Id Should not be empty");
 		}
 
 		if (!StringUtils.isEmpty(registerForm.getEmailId())
@@ -117,7 +117,7 @@ public class EmployerRegistrationValidation {
 
 		if (StringUtils.isEmpty(confirmPassword)) {
 			errors.rejectValue("confirmPassword", "NotEmpty",
-					"Password Should not be empty");
+					"Confirm Password Should not be empty");
 		}
 
 		if (!StringUtils.isEmpty(password)
