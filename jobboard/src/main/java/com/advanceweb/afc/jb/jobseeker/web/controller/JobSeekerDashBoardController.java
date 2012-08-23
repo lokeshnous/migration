@@ -22,6 +22,7 @@ import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 
 /**
  * 
@@ -124,16 +125,16 @@ public class JobSeekerDashBoardController {
 				String cityState = MMJBCommonConstants.EMPTY;
 				String keywords = MMJBCommonConstants.EMPTY;
 				String saveSearchName = MMJBCommonConstants.EMPTY;
-				if (session.getAttribute(MMJBCommonConstants.KEYWORDS) != null) {
+				if (session.getAttribute(SearchParamDTO.KEYWORDS) != null) {
 					keywords = session.getAttribute(
-							MMJBCommonConstants.KEYWORDS).toString();
+							SearchParamDTO.KEYWORDS).toString();
 				}
-				if (session.getAttribute(MMJBCommonConstants.CITY_STATE) != null) {
+				if (session.getAttribute(SearchParamDTO.CITY_STATE) != null) {
 					cityState = session.getAttribute(
-							MMJBCommonConstants.CITY_STATE).toString();
+							SearchParamDTO.CITY_STATE).toString();
 				}
-				if (session.getAttribute(MMJBCommonConstants.RADIUS) != null) {
-					radius = session.getAttribute(MMJBCommonConstants.RADIUS)
+				if (session.getAttribute(SearchParamDTO.RADIUS) != null) {
+					radius = session.getAttribute(SearchParamDTO.RADIUS)
 							.toString();
 				}
 				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
@@ -143,15 +144,15 @@ public class JobSeekerDashBoardController {
 
 				model.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
 				model.addObject(MMJBCommonConstants.SEARCH_TYPE, searchType);
-				model.addObject(MMJBCommonConstants.KEYWORDS, keywords);
-				model.addObject(MMJBCommonConstants.CITY_STATE, cityState);
-				model.addObject(MMJBCommonConstants.RADIUS, radius);
+				model.addObject(SearchParamDTO.KEYWORDS, keywords);
+				model.addObject(SearchParamDTO.CITY_STATE, cityState);
+				model.addObject(SearchParamDTO.RADIUS, radius);
 
 				LOGGER.info("Removing from session....");
 
-				session.removeAttribute(MMJBCommonConstants.KEYWORDS);
-				session.removeAttribute(MMJBCommonConstants.CITY_STATE);
-				session.removeAttribute(MMJBCommonConstants.RADIUS);
+				session.removeAttribute(SearchParamDTO.KEYWORDS);
+				session.removeAttribute(SearchParamDTO.CITY_STATE);
+				session.removeAttribute(SearchParamDTO.RADIUS);
 
 			}
 		}

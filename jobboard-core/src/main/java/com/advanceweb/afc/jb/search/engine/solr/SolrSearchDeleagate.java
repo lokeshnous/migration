@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -23,13 +21,14 @@ import org.springframework.stereotype.Service;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
-import com.advanceweb.afc.jb.common.SearchFacetDTO;
-import com.advanceweb.afc.jb.common.SearchParamDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.common.util.SolrParameter;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.advanceweb.afc.jb.search.SearchFacetDTO;
+import com.advanceweb.afc.jb.search.SearchParamBuilder;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.dao.LocationDAO;
 import com.advanceweb.afc.jb.search.dao.SearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -43,26 +42,26 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
  */
 
 @Service("jobSearchDeleagate")
-public class SolrSearchDeleagate implements JobSearchDeleagate {
+public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
+		JobSearchDeleagate {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("JobSearchDeleagateImpl.class");
+			.getLogger(SolrSearchDeleagate.class);
 
 	@Autowired
 	private SOLRSearchHelper solrSrchHelper;
 
 	@Autowired
-	@Resource(name = "solrConfiguration")
-	private Properties solrConfiguration;
+	private LocationDAO locationDAO;
 
 	@Autowired
 	private SearchDAO searchDAO;
 
 	@Autowired
-	private LocationDAO locationDAO;
+	private SolrParameter solrParameter;
 
 	@Autowired
-	private SolrParameter solrParameter;
+	private SearchParamBuilder searchParamBuilder;
 
 	@PostConstruct
 	public void init() {
@@ -75,7 +74,7 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 * 
 	 * @param searchName
 	 *            represents the type of the job search
-	 * @param paramMap
+	 * @param inputParams
 	 *            contains the input parameters from the UI
 	 * @param rows
 	 *            represents how many rows will be displayed
@@ -83,96 +82,152 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents the starting point of the search
 	 * @return JobSearchResultDTO
 	 * @throws JobBoardServiceException
-	 * @throws UnsupportedEncodingException
+	 * @throws JobBoardServiceException
 	 */
 
 	@Override
 	public JobSearchResultDTO jobSearch(final String searchName,
-			final Map<String, String> paramMap, final long start,
+			final Map<String, String> inputParams, final long start,
 			final long rows) throws JobBoardServiceException {
 
-		QueryResponse response = null;
+		/*
+		 * Check whether all the parameters coming from the UI is blank or not.
+		 */
+		if (validateInputParams(searchName, inputParams)) {
+			LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
+			return null;
+		}
+
+		/*
+		 * Get the QueryDTO which contains all the details of the solr search
+		 * query with server details.
+		 */
 		QueryDTO queryDTO = null;
 
-		
-		if (StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.SEARCH_SEQ))) {
+		try {
+			queryDTO = searchDAO.getSearchQueryDTO(
+					solrParameter.getSearchIndexName(),
+					solrParameter.getEnvironment(),
+					solrParameter.getSearchIndexGroup(), searchName);
+		} catch (JobBoardDataException e) {
+			LOGGER.debug(e);
+			throw new JobBoardServiceException(
+					"Error while fetching the q parameters from the Database..."
+							+ e);
+		}
+
+		// Create the solr url and check if it is accessible
+		String solrServerURL = createSolrBaseURL(queryDTO);
+
+		boolean serverAccessible = solrSrchHelper
+				.isServerAccessible(solrServerURL);
+
+		if (serverAccessible) {
+
+			List<SearchParamDTO> queryParams = prepaerQueryParams(
+					queryDTO.getmSrchParamList(), inputParams, start, rows);
+
+			// Get the SOLR query response by execution of the query.
+			QueryResponse response = null;
+			response = executeSolrQuery(solrServerURL, queryParams);
+
+			if (response == null) {
+
+				LOGGER.info("No Results Found...");
+				return null;
+
+			} else {
+
+				/*
+				 * Calling getSolrJSResult()by passing the response object and
+				 * returning the JobSearchResultDTO object into service layer.
+				 */
+				return getSolrJSResult(response);
+			}
+
+		} else {
+			LOGGER.info("The SOLR Server " + solrServerURL
+					+ " is not accesible. Check the url");
+			return null;
+		}
+
+	}
+
+	/**
+	 * This method prepares the query parameters to be passed into the solr
+	 * search query. This method retrieve the query information from the
+	 * database and replace the positional parameters in the query parametes
+	 * with those from the user inputs
+	 * 
+	 * @param searchParams
+	 *            The search parameters with placehoders
+	 * @param inputParams
+	 *            the user inputs
+	 * @param start
+	 *            The start parameters from input. This will be added to the
+	 *            result as another item
+	 * @param rows
+	 *            The number of rows parameter. This will be added tot he result
+	 *            as another item
+	 * @return The list of parmaeters after replacing the placeholders with
+	 *         appropriate user inputs
+	 * @throws JobBoardServiceException
+	 */
+	private List<SearchParamDTO> prepaerQueryParams(
+			List<SearchParamDTO> searchParams,
+			final Map<String, String> inputParams, final long start,
+			final long rows) throws JobBoardServiceException {
+
+		// Prepare the parameters to be replaced in the buildParams method
+		inputParams.put(SearchParamDTO.ROWS, Long.toString(rows));
+		inputParams.put(SearchParamDTO.START, Long.toString(start));
+
+		// The query parameter related to location is received as a name of a
+		// city / state or as a pincode. The search parameter requires a position
+		// represented as a sting of latitude and longitude in the format
+		// "(latitude, longitude)". If a parameter of type cityState is found we
+		// calculate the position and add it to the list
+		String cityState = inputParams.get(SearchParamDTO.CITY_STATE);
+		if (!StringUtils.isEmpty(cityState)) {
+			LocationDTO location = getLocationFromCityStateOrZipCode(cityState);
+			String position = location.getLatitude() + ","
+					+ location.getLongitude();
+			inputParams.put("position", position);
+		}
+
+		// Merge the parameters
+		List<SearchParamDTO> queryParams = searchParamBuilder.buildParams(
+				searchParams, inputParams);
+
+		return queryParams;
+	}
+
+	/**
+	 * Validate the input parameters passed to the search service from the UI
+	 * 
+	 * @param searchName
+	 *            - The name of the search to be used
+	 * @param inputParams
+	 *            - The user input parameters
+	 * @return true if the parameters are valid, else false
+	 */
+	private boolean validateInputParams(final String searchName,
+			final Map<String, String> inputParams) {
+
+		if (StringUtils.isEmpty(inputParams.get(SearchParamDTO.SEARCH_SEQ))) {
 			LOGGER.info(" Sequence ID is not present in the Search query.");
 		}
 
-		/**
-		 * It is checking whether all the parameters coming from the UI is blank
-		 * or not.
-		 */
-		if ((StringUtils.isEmpty(paramMap.get(MMJBCommonConstants.KEYWORDS)))
-				&& (StringUtils.isEmpty(paramMap
-						.get(MMJBCommonConstants.CITY_STATE)))
-				&& (StringUtils.isEmpty(paramMap
-						.get(MMJBCommonConstants.RADIUS)))) {
-
-			LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
-			return null;
-
-		} else {
-
-			/**
-			 * Calling the DAO layer to get the QueryDTO which contains all the
-			 * details of the solr search query with server details.
-			 */
-			try {
-				queryDTO = searchDAO.getSearchQueryDTO(
-						solrParameter.getSearchIndexName(),
-						solrParameter.getEnvironment(),
-						solrParameter.getSearchIndexGroup(), searchName);
-			} catch (JobBoardDataException e) {
-				throw new JobBoardServiceException("Error while fetching the SOLR parameters from the Database..."+e);
-			}
-
-			/** Creation of server url to check whether it is accessible or not. */
-			String serverURlToCheck = queryDTO.getSearchHost()
-					.concat(MMJBCommonConstants.SLASH)
-					.concat(queryDTO.getSearchIndexGroup())
-					.concat(MMJBCommonConstants.SLASH)
-					.concat(queryDTO.getSearchIndexName())
-					.concat(MMJBCommonConstants.SLASH)
-					.concat(MMJBCommonConstants.SELECT);
-
-			LOGGER.info("Server URL To Check is " + serverURlToCheck);
-
-			/** Checking whether server url is accessible. */
-			boolean serverAccessible = solrSrchHelper
-					.isServerAccessible(serverURlToCheck);
-
-			if (serverAccessible) {
-
-				/** Getting the Server details from the properties file **/
-				final Map<String, String> serverDetailsMap = solrSrchHelper
-						.getServerDetails(solrConfiguration);
-
-				/** Getting the SOLR query response by execution of the query. **/
-				response = getSolrResponse(serverDetailsMap, queryDTO,
-						paramMap, rows, start);
-
-				if (response == null) {
-
-					LOGGER.info("No Results Found...");
-					return null;
-
-				} else {
-
-					/**
-					 * Calling getSolrJSResult()by passing the response object
-					 * and returning the JobSearchResultDTO object into service
-					 * layer.
-					 **/
-					return getSolrJSResult(response);
-				}
-
-			} else {
-				LOGGER.info("Server url is not correct. Please check the url.");
-				return null;
-			}
-		}
-
+		LOGGER.info("Validating search inputs"
+				+ inputParams.get(SearchParamDTO.KEYWORDS) + ","
+				+ inputParams.get(SearchParamDTO.CITY_STATE) + ","
+				+ inputParams.get(SearchParamDTO.RADIUS));
+		
+		// TODO implement searchName specific validations as appropriate
+		return (StringUtils.isEmpty(inputParams.get(SearchParamDTO.KEYWORDS)))
+				&& (StringUtils.isEmpty(inputParams
+						.get(SearchParamDTO.CITY_STATE)))
+				&& (StringUtils.isEmpty(inputParams.get(SearchParamDTO.RADIUS)));
 	}
 
 	/**
@@ -192,51 +247,26 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 *            represents how many rows will be displayed
 	 * @return QueryResponse represents the solr query object
 	 * @throws JobBoardServiceException
-	 * @throws UnsupportedEncodingException
+	 * @throws JobBoardServiceException
 	 */
-	private QueryResponse getSolrResponse(
-			final Map<String, String> serverDetailsMap, QueryDTO queryDTO,
-			Map<String, String> paramMap, long rows, long start)
-			throws JobBoardServiceException {
+	private QueryResponse executeSolrQuery(String solrServerURL,
+			List<SearchParamDTO> queryParams) throws JobBoardServiceException {
 
-		SolrQuery searchquery = null;
-		QueryResponse response = null;
-
-		List<SearchParamDTO> srchParamRlpcdDTOList = null;
-
-		/**
+		/*
 		 * Get the instance of the HttpSolrServer by passing the QueryDTO and
 		 * values read from the properties file.
-		 **/
-		HttpSolrServer server = getSolrServerInstance(queryDTO,
-				serverDetailsMap);
+		 */
+		HttpSolrServer server = solrSrchHelper
+				.getSolrServerInstance(solrServerURL);
 
-		if (MMJBCommonConstants.LOCATION.equalsIgnoreCase(paramMap
-				.get(MMJBCommonConstants.SEARCH_NAME))) {
-
-			srchParamRlpcdDTOList = createParamsForLocationSearch(queryDTO,
-					paramMap, rows, start);
-
-		} else {
-
-			/**
-			 * Creating and getting the search parameter list from the QueryDTO
-			 * got from the DB and then creating the Search Parameter list by
-			 * the replacing the parameter values.
-			 **/
-			srchParamRlpcdDTOList = createParamsForKeywordSearch(queryDTO,
-					paramMap, rows, start);
-
-		}
-
-		/**
+		/*
 		 * Creating the SOLR query by passing the replaced searched parameter
 		 * list.
-		 * **/
-		searchquery = creatSOLRQuery(srchParamRlpcdDTOList);
+		 */
+		SolrQuery searchquery = creatSOLRQuery(queryParams);
 
-		LOGGER.info("Search query===>>>" + searchquery);
-
+		// Execute the query
+		QueryResponse response;
 		try {
 			/** Execution of the SOLR query */
 			response = server.query(searchquery);
@@ -246,233 +276,8 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			throw new JobBoardServiceException(
 					"Error occurred while trying to Execute the SOLR query...");
 		}
+
 		return response;
-
-	}
-
-	/**
-	 * This method creates the search SOLR query.
-	 * 
-	 * @param queryDTO
-	 *            Represents the QueryDTO object which contains all the details
-	 *            of the solr query parameters taken from the DB
-	 * @param paramMap
-	 *            Contains all the input parameters from the UI
-	 * @param rows
-	 *            represents number of rows will be displayed
-	 * @param start
-	 *            represents the starting point of the search
-	 * @return object of SolrQuery
-	 */
-
-	private List<SearchParamDTO> createParamsForKeywordSearch(
-			QueryDTO queryDTO, Map<String, String> paramMap, long rows,
-			long start) {
-
-		List<SearchParamDTO> srchReplacedParamDTOList = new ArrayList<SearchParamDTO>();
-
-		/** Getting the Search parameter List from QueryDTO. **/
-		List<SearchParamDTO> srchParamDTOList = queryDTO.getmSrchParamList();
-
-		for (SearchParamDTO mSrchParamDTO : srchParamDTOList) {
-
-			int value = MMJBCommonConstants.ZERO_INT;
-			String temp = MMJBCommonConstants.EMPTY;
-			if (mSrchParamDTO.getParameterValue().contains(
-					MMJBCommonConstants.B)) {
-				temp = mSrchParamDTO.getParameterValue().substring(
-						mSrchParamDTO.getParameterValue().indexOf(
-								MMJBCommonConstants.B)
-								+ MMJBCommonConstants.B.length(),
-						mSrchParamDTO.getParameterValue().length());
-
-				if (MMUtils.isIntNumber(temp)) {
-					value = Integer.parseInt(temp);
-
-					switch (value) {
-					case 1:
-						mSrchParamDTO.setParameterValue(paramMap
-								.get(MMJBCommonConstants.KEYWORDS));
-						break;
-					case 2:
-						mSrchParamDTO.setParameterValue(String.valueOf(rows));
-						break;
-					case 3:
-						mSrchParamDTO.setParameterValue(String.valueOf(start));
-						break;
-					case 4:
-						mSrchParamDTO.setParameterValue(paramMap
-								.get(MMJBCommonConstants.SESSION_ID));
-						break;
-					case 5:
-						mSrchParamDTO.setParameterValue(paramMap
-								.get(MMJBCommonConstants.SEARCH_NAME));
-						break;
-					case 6:
-						mSrchParamDTO.setParameterValue(paramMap
-								.get(MMJBCommonConstants.SEARCH_SEQ));
-						break;
-					default:
-						LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
-						break;
-					}
-
-				}
-
-			}
-			/**
-			 * Adding the SearchParamDTO to the ReplacedSearchParamDTO list to
-			 * return it back.
-			 **/
-			srchReplacedParamDTOList.add(mSrchParamDTO);
-
-		}
-
-		return srchReplacedParamDTOList;
-
-	}
-
-	/**
-	 * This method creates the search SOLR query.
-	 * 
-	 * @param queryDTO
-	 *            Represents the QueryDTO object which contains all the details
-	 *            of the solr query parameters taken from the DB
-	 * @param paramMap
-	 *            Contains all the input parameters from the UI
-	 * @param rows
-	 *            represents number of rows will be displayed
-	 * @param start
-	 *            represents the starting point of the search
-	 * @return object of SolrQuery
-	 * @throws JobBoardServiceException 
-	 
-	 */
-
-	private List<SearchParamDTO> createParamsForLocationSearch(
-			QueryDTO queryDTO, Map<String, String> paramMap, long rows,
-			long start) throws JobBoardServiceException {
-
-		List<SearchParamDTO> srchReplacedParamDTOList = new ArrayList<SearchParamDTO>();
-
-		List<LocationDTO> latLonList = null;
-		if (MMUtils.isIntNumber(paramMap.get(MMJBCommonConstants.CITY_STATE))) {
-
-			try {
-				latLonList = locationDAO.getLocationByPostcode(paramMap
-						.get(MMJBCommonConstants.CITY_STATE));
-			} catch (JobBoardDataException e) {
-				throw new JobBoardServiceException("Error while fetching the postcode details..."+e);
-			}
-
-		} else {
-
-			String[] cityState = paramMap.get(MMJBCommonConstants.CITY_STATE)
-					.trim().split(MMJBCommonConstants.COMMA);
-			if (cityState.length >= 2) {
-				try {
-					latLonList = locationDAO.getLocationByCityState(
-							cityState[0].trim(), cityState[1].trim());
-				} catch (JobBoardDataException e) {
-					throw new JobBoardServiceException("Error while fetching the city state details..."+e);
-				}
-			} else {
-				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
-			}
-
-		}
-
-		if (latLonList == null || latLonList.isEmpty()) {
-
-			LOGGER.info("Latitude and Longitude not found in the DB for the provided City State..");
-
-		} else {
-
-			/** Getting the Search parameter List from QueryDTO. **/
-			List<SearchParamDTO> srchParamDTOList = queryDTO
-					.getmSrchParamList();
-
-			for (SearchParamDTO mSrchParamDTO : srchParamDTOList) {
-
-				int value = MMJBCommonConstants.ZERO_INT;
-				String strValue = mSrchParamDTO.getParameterValue();
-				String tStrValue = MMJBCommonConstants.EMPTY;
-
-				if (mSrchParamDTO.getParameterName().equalsIgnoreCase(
-						MMJBCommonConstants.FQ)) {
-
-					/**
-					 * Calling the method to replace the :b01 and :b02 value for
-					 * fq filed
-					 **/
-					strValue = formAndRepalceFQParam(strValue, latLonList,
-							paramMap);
-					mSrchParamDTO.setParameterValue(strValue);
-
-				} else {
-
-					if (mSrchParamDTO.getParameterValue().contains(
-							MMJBCommonConstants.B)) {
-						tStrValue = mSrchParamDTO
-								.getParameterValue()
-								.substring(
-										mSrchParamDTO.getParameterValue()
-												.indexOf(MMJBCommonConstants.B)
-												+ MMJBCommonConstants.B
-														.length(),
-										mSrchParamDTO.getParameterValue()
-												.length());
-
-						if (MMUtils.isIntNumber(tStrValue)) {
-							value = Integer.parseInt(tStrValue);
-
-							switch (value) {
-
-							case 3:
-								mSrchParamDTO.setParameterValue(paramMap
-										.get(MMJBCommonConstants.KEYWORDS));
-								break;
-							case 4:
-								mSrchParamDTO.setParameterValue(String
-										.valueOf(rows));
-								break;
-							case 5:
-								mSrchParamDTO.setParameterValue(String
-										.valueOf(start));
-								break;
-							case 6:
-								mSrchParamDTO.setParameterValue(paramMap
-										.get(MMJBCommonConstants.SESSION_ID));
-								break;
-							case 7:
-								mSrchParamDTO.setParameterValue(paramMap
-										.get(MMJBCommonConstants.SEARCH_NAME));
-								break;
-							case 8:
-								mSrchParamDTO.setParameterValue(paramMap
-										.get(MMJBCommonConstants.SEARCH_SEQ));
-								break;
-							default:
-								LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
-								break;
-							}
-
-						}
-
-					}
-				}
-
-				/**
-				 * Adding the SearchParamDTO to the ReplacedSearchParamDTO list
-				 * to return it back.
-				 **/
-
-				srchReplacedParamDTOList.add(mSrchParamDTO);
-
-			}
-		}
-
-		return srchReplacedParamDTOList;
 
 	}
 
@@ -496,12 +301,13 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 		}
 
 		/** Adding the facets to SOLR query */
-		searchquery.addFacetField(MMJBCommonConstants.CITY);
-		searchquery.addFacetField(MMJBCommonConstants.COMPANY);
+		searchquery.addFacetField(SearchFacetDTO.FACET_CITY);
+		searchquery.addFacetField(SearchFacetDTO.FACET_COMPANY);
 		// searchquery.addFacetField(MMJBCommonConstants.RADIUS);
-		searchquery.addFacetField(MMJBCommonConstants.POSTED_DT);
-		searchquery.addFacetField(MMJBCommonConstants.STATE);
+		searchquery.addFacetField(SearchFacetDTO.FACET_POSTED_DATE);
+		searchquery.addFacetField(SearchFacetDTO.FACET_STATE);
 
+		LOGGER.info("Search query===>>>" + searchquery);
 		return searchquery;
 
 	}
@@ -525,36 +331,31 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 				.getNumFound());
 
 		List<JobSearchDTO> jobSearchDTOList = new ArrayList<JobSearchDTO>();
-		
-		
 
-		/** Binding the JobSearchDTO.class into the QueryResponse object **/
+		/* Binding the JobSearchDTO.class into the QueryResponse object * */
 		jobSearchDTOList = response.getBeans(JobSearchDTO.class);
-		
-		/** Copying the JobSearchDTO list to JobDTO list to separate the dependency on solr.**/
+
+		/*
+		 * Copying the JobSearchDTO list to JobDTO list to separate the
+		 * dependency on solr.
+		 */
 		List<JobDTO> jobDTOList = copyToJobDTO(jobSearchDTOList);
 
 		final Map<String, List<SearchFacetDTO>> facetMap = new HashMap<String, List<SearchFacetDTO>>();
 		final List<FacetField> facetFieldList = response.getFacetFields();
 
-		/**
+		/*
 		 * Creating Lists of Facets(List<String>) by iterating the
 		 * FacetFieldList
-		 **/
+		 */
 		for (FacetField facetField : facetFieldList) {
 			List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
 			List<Count> facetFieldValList = facetField.getValues();
 
-			if(facetFieldValList != null){
+			if (facetFieldValList != null) {
 				for (Count countObj : facetFieldValList) {
-					SearchFacetDTO searchFacetDTO = new SearchFacetDTO();
-					String facetValue = countObj.getName().toString();
-					searchFacetDTO.setFacetValue(facetValue);
-					
-					long count = countObj.getCount();
-					searchFacetDTO.setCount(count);
-					
-					searchFacetDTOList.add(searchFacetDTO);
+					searchFacetDTOList.add(new SearchFacetDTO(countObj
+							.getName(), countObj.getCount()));
 				}
 			}
 			facetMap.put(facetField.getName(), searchFacetDTOList);
@@ -565,121 +366,20 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 
 		return jobSResultDTO;
 	}
-	
-	
+
 	/**
-	 * This method creates a HttpSolrServer instance by setting all the required
-	 * server parameters.
+	 * This method is used to copy the content of JobSearchDTO list to JobDTO
+	 * list to make the returning list independent of Solr.
 	 * 
-	 * @param queryDTO
-	 *            represents all the SOLR server parameter values from the DB.
-	 * @param serverDetailsMap
-	 *            contains all the server details being red from the property
-	 *            file.
-	 * @return instance of HttpSolrServer
-	 */
-
-	private HttpSolrServer getSolrServerInstance(QueryDTO queryDTO,
-			Map<String, String> serverDetailsMap) {
-
-		HttpSolrServer server = new HttpSolrServer(queryDTO.getSearchHost()
-				.concat(MMJBCommonConstants.SLASH)
-				.concat(queryDTO.getSearchIndexGroup())
-				.concat(MMJBCommonConstants.SLASH)
-				.concat(queryDTO.getSearchIndexName())
-				.concat(MMJBCommonConstants.SLASH));
-
-		server.setSoTimeout(Integer.parseInt(serverDetailsMap
-				.get(MMJBCommonConstants.SO_TIMEOUT)));
-		server.setConnectionTimeout(Integer.parseInt(serverDetailsMap
-				.get(MMJBCommonConstants.CONNECTION_TIMEOUT)));
-		server.setDefaultMaxConnectionsPerHost(Integer
-				.parseInt(serverDetailsMap
-						.get(MMJBCommonConstants.MAX_CONNECTION_HOST)));
-		server.setMaxTotalConnections(Integer.parseInt(serverDetailsMap
-				.get(MMJBCommonConstants.MAX_TOTAL_CONNECTION)));
-
-		server.setFollowRedirects(Boolean.parseBoolean(serverDetailsMap
-				.get(MMJBCommonConstants.FOLLOW_REDIRECTS))); // defaults to
-																// false
-		server.setAllowCompression(Boolean.parseBoolean(serverDetailsMap
-				.get(MMJBCommonConstants.ALLOW_COMPRESSION)));
-		server.setMaxRetries(Integer.parseInt(serverDetailsMap
-				.get(MMJBCommonConstants.MAX_RETRIES)));
-		server.setParser(new XMLResponseParser());
-
-		return server;
-
-	}
-
-	/**
-	 * This method parse the passed string and replace the :b01 and :b02
-	 * occurrence with Lat long value and radius.
-	 * 
-	 * @param strValue
-	 * @param latLonList
-	 * @param paramMap
-	 * @return String which contains the replaced value for FQ parameter
-	 */
-
-	private String formAndRepalceFQParam(String stringValue,
-			List<LocationDTO> latLonList, Map<String, String> paramMap) {
-		
-		String strValue = stringValue;
-		/** Checking for how many occurrence are there for :b in the string **/
-		for (int i = 0; i <= StringUtils.countMatches(strValue,
-				MMJBCommonConstants.B); i++) {
-			/** Checking if :b is present or not **/
-			if (strValue.contains(MMJBCommonConstants.B)) {
-				/** Getting the next string after :b **/
-				String tStrValue = strValue.substring(
-						strValue.indexOf(MMJBCommonConstants.B)
-								+ MMJBCommonConstants.B.length(),
-						strValue.length());
-				String valStr = tStrValue.split(MMJBCommonConstants.SPACE)[0];
-				if (valStr.contains(MMJBCommonConstants.CLSD_BRACES)) {
-					valStr = valStr
-							.replace(MMJBCommonConstants.CLSD_BRACES, "");
-				}
-				if (MMUtils.isIntNumber(valStr)) {
-					int value = Integer.parseInt(valStr);
-					switch (value) {
-					case 1:
-						strValue = strValue.replace(MMJBCommonConstants.B_01,
-								latLonList.get(0).getLatitude() + ","
-										+ latLonList.get(0).getLongitude());
-						break;
-					case 2:
-						strValue = strValue.replace(MMJBCommonConstants.B_02,
-								paramMap.get(MMJBCommonConstants.RADIUS));
-						break;
-					default:
-						LOGGER.debug("No Matching found for param value from Search parameters got from DB.");
-						break;
-
-					}
-
-				}
-
-			}
-
-		}
-		return strValue;
-
-	}
-	
-	/**
-	 * This method is used to copy the content of JobSearchDTO list 
-	 * to JobDTO list to make the returning list independent of Solr.
 	 * @param jobSearchDTOList
 	 * @return List<JobDTO>
 	 */
-	
-	private List<JobDTO> copyToJobDTO(List<JobSearchDTO> jobSearchDTOList ){
-		
+
+	private List<JobDTO> copyToJobDTO(List<JobSearchDTO> jobSearchDTOList) {
+
 		List<JobDTO> jobDTOList = new ArrayList<JobDTO>();
-		
-		for(JobSearchDTO jobSearchDTO: jobSearchDTOList){
+
+		for (JobSearchDTO jobSearchDTO : jobSearchDTOList) {
 			JobDTO jobDTO = new JobDTO();
 			jobDTO.setAdText(jobSearchDTO.getAdText());
 			jobDTO.setApplyOnline(jobSearchDTO.getApplyOnline());
@@ -705,13 +405,58 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 			jobDTO.setState(jobSearchDTO.getState());
 			jobDTO.setUrl(jobSearchDTO.getUrl());
 			jobDTO.setUrlDisplay(jobSearchDTO.getUrlDisplay());
-			
+
 			jobDTOList.add(jobDTO);
 		}
-		
+
 		return jobDTOList;
-		
+
 	}
-	
+
+	/**
+	 * Finds a city from the given combination of city and state or zip code. If
+	 * multiple results are found matching the result, the first result is
+	 * returned.
+	 * 
+	 * @param cityState
+	 *            String representing the city and state in the format
+	 *            <city>,<state> or a zip code
+	 * @return The Location representing the input parameter. Returns null if no
+	 *         match is found
+	 * @throws JobBoardServiceException
+	 *             TODO Ideally be part of a location service
+	 */
+	private LocationDTO getLocationFromCityStateOrZipCode(String cityState)
+			throws JobBoardServiceException {
+		List<LocationDTO> locations = null;
+		if (MMUtils.isIntNumber(cityState)) {
+			try {
+				locations = locationDAO.getLocationByPostcode(cityState);
+			} catch (JobBoardDataException e) {
+				throw new JobBoardServiceException(
+						"Error while fetching the postcode details..." + e);
+			}
+
+		} else {
+
+			String[] tokens = cityState.split(MMJBCommonConstants.COMMA);
+			if (tokens.length >= 2) {
+				try {
+					locations = locationDAO.getLocationByCityState(
+							tokens[0].trim(), tokens[1].trim());
+				} catch (JobBoardDataException e) {
+					throw new JobBoardServiceException(
+							"Error while fetching the city state details..."
+									+ e);
+				}
+			} else {
+				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
+			}
+
+		}
+
+		return (locations.isEmpty()) ? null : locations.get(0);
+
+	}
 
 }

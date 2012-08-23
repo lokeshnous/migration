@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.common;
+package com.advanceweb.afc.jb.search;
 
 /**
  * @Author : Reetesh RN
@@ -8,7 +8,16 @@ package com.advanceweb.afc.jb.common;
  */
 
 public class SearchParamDTO {
-	
+
+	public static final String KEYWORDS = "keywords";
+	public static final String CITY_STATE = "cityState";
+	public static final String RADIUS = "radius";
+	public static final String SEARCH_SEQ = "search_seq";
+	public static final String SEARCH_NAME = "searchName";
+	public static final String SESSION_ID = "sessionid";
+	public static final String ROWS = "rows";
+	public static final String START = "start";
+
 	private int searchParamId;
 
 	private String parameterName;

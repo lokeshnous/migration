@@ -50,8 +50,9 @@ import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.resume.ResumeService;
-import com.advanceweb.afc.jb.search.engine.solr.LookupService;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
@@ -401,16 +402,16 @@ public class JobSearchActivityController {
 				String keywords = MMJBCommonConstants.EMPTY;
 				String saveSearchName = MMJBCommonConstants.EMPTY;
 				boolean autoload = false;
-				if (session.getAttribute(MMJBCommonConstants.KEYWORDS) != null) {
+				if (session.getAttribute(SearchParamDTO.KEYWORDS) != null) {
 					keywords = session.getAttribute(
-							MMJBCommonConstants.KEYWORDS).toString();
+							SearchParamDTO.KEYWORDS).toString();
 				}
-				if (session.getAttribute(MMJBCommonConstants.CITY_STATE) != null) {
+				if (session.getAttribute(SearchParamDTO.CITY_STATE) != null) {
 					cityState = session.getAttribute(
-							MMJBCommonConstants.CITY_STATE).toString();
+							SearchParamDTO.CITY_STATE).toString();
 				}
-				if (session.getAttribute(MMJBCommonConstants.RADIUS) != null) {
-					radius = session.getAttribute(MMJBCommonConstants.RADIUS)
+				if (session.getAttribute(SearchParamDTO.RADIUS) != null) {
+					radius = session.getAttribute(SearchParamDTO.RADIUS)
 							.toString();
 				}
 				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
@@ -432,9 +433,9 @@ public class JobSearchActivityController {
 
 				LOGGER.info("Removing keywords, city,state, autoload from session....");
 
-				session.removeAttribute(MMJBCommonConstants.KEYWORDS);
-				session.removeAttribute(MMJBCommonConstants.CITY_STATE);
-				session.removeAttribute(MMJBCommonConstants.RADIUS);
+				session.removeAttribute(SearchParamDTO.KEYWORDS);
+				session.removeAttribute(SearchParamDTO.CITY_STATE);
+				session.removeAttribute(SearchParamDTO.RADIUS);
 				session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
 
 			}
@@ -474,10 +475,10 @@ public class JobSearchActivityController {
 		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
 
 			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
-				searchName = MMJBCommonConstants.KEYWORD;
+				searchName = MMJBCommonConstants.KEYWORD_SEARCH;
 			}
 		} else {
-			searchName = MMJBCommonConstants.LOCATION;
+			searchName = MMJBCommonConstants.LOCATION_SEARCH;
 		}
 
 		// The value of Search_seq will be changed when the session management
@@ -491,20 +492,20 @@ public class JobSearchActivityController {
 		if (session != null) {
 			sessionId = session.getId();
 
-			if (session.getAttribute(MMJBCommonConstants.SEARCH_SEQ) == null) {
-				session.setAttribute(MMJBCommonConstants.SEARCH_SEQ,
+			if (session.getAttribute(SearchParamDTO.SEARCH_SEQ) == null) {
+				session.setAttribute(SearchParamDTO.SEARCH_SEQ,
 						searchSeq + 1);
 			} else {
 				session.setAttribute(
-						MMJBCommonConstants.SEARCH_SEQ,
+						SearchParamDTO.SEARCH_SEQ,
 						Integer.parseInt(session.getAttribute(
-								MMJBCommonConstants.SEARCH_SEQ).toString()) + 1);
+								SearchParamDTO.SEARCH_SEQ).toString()) + 1);
 			}
-			session.setAttribute(MMJBCommonConstants.KEYWORDS,
+			session.setAttribute(SearchParamDTO.KEYWORDS,
 					jobSearchResultForm.getKeywords().trim());
-			session.setAttribute(MMJBCommonConstants.CITY_STATE,
+			session.setAttribute(SearchParamDTO.CITY_STATE,
 					jobSearchResultForm.getCityState().trim());
-			session.setAttribute(MMJBCommonConstants.RADIUS,
+			session.setAttribute(SearchParamDTO.RADIUS,
 					jobSearchResultForm.getRadius().trim());
 			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE,
 					jobSearchResultForm.getSearchtype().trim());
@@ -517,16 +518,16 @@ public class JobSearchActivityController {
 		 * Putting all the parameters coming from the UI into a Map for further
 		 * processing
 		 */
-		paramMap.put(MMJBCommonConstants.KEYWORDS, jobSearchResultForm
+		paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm
 				.getKeywords().trim());
-		paramMap.put(MMJBCommonConstants.CITY_STATE, jobSearchResultForm
+		paramMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
 				.getCityState().trim());
-		paramMap.put(MMJBCommonConstants.RADIUS, jobSearchResultForm
+		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm
 				.getRadius().trim());
-		paramMap.put(MMJBCommonConstants.SESSION_ID, sessionId.trim());
-		paramMap.put(MMJBCommonConstants.SEARCH_SEQ, session.getAttribute(
-				MMJBCommonConstants.SEARCH_SEQ).toString());
-		paramMap.put(MMJBCommonConstants.SEARCH_NAME, searchName.trim());
+		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
+		paramMap.put(SearchParamDTO.SEARCH_SEQ, session.getAttribute(
+				SearchParamDTO.SEARCH_SEQ).toString());
+		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
 
 		try {
 

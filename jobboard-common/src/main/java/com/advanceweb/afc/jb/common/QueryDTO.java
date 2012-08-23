@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.common;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.search.SearchParamDTO;
+
 /**
  * This class has been created for reading the values from the Database which will be
  * used for creating the SOLR query  

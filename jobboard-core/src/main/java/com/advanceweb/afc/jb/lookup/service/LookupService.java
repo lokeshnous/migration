@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.engine.solr;
+package com.advanceweb.afc.jb.lookup.service;
 
 import java.util.List;
 

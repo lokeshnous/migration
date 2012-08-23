@@ -32,6 +32,7 @@ import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 
 /**
  * 
@@ -99,20 +100,20 @@ public class SaveSearchController {
 									+ session
 											.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
 									+ MMJBCommonConstants.SEMICOLON
-									+ MMJBCommonConstants.KEYWORDS
+									+ SearchParamDTO.KEYWORDS
 									+ MMJBCommonConstants.EQUAL_TO
 									+ session
-											.getAttribute(MMJBCommonConstants.KEYWORDS)
+											.getAttribute(SearchParamDTO.KEYWORDS)
 									+ MMJBCommonConstants.SEMICOLON
-									+ MMJBCommonConstants.CITY_STATE
+									+ SearchParamDTO.CITY_STATE
 									+ MMJBCommonConstants.EQUAL_TO
 									+ session
-											.getAttribute(MMJBCommonConstants.CITY_STATE)
+											.getAttribute(SearchParamDTO.CITY_STATE)
 									+ MMJBCommonConstants.SEMICOLON
-									+ MMJBCommonConstants.RADIUS
+									+ SearchParamDTO.RADIUS
 									+ MMJBCommonConstants.EQUAL_TO
 									+ session
-											.getAttribute(MMJBCommonConstants.RADIUS));
+											.getAttribute(SearchParamDTO.RADIUS));
 
 					searchedJobsDTO.setSearchName(searchName);
 					searchedJobsDTO.setCreatedDate(MMUtils
@@ -166,20 +167,20 @@ public class SaveSearchController {
 								+ session
 										.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
 								+ MMJBCommonConstants.SEMICOLON
-								+ MMJBCommonConstants.KEYWORDS
+								+ SearchParamDTO.KEYWORDS
 								+ MMJBCommonConstants.EQUAL_TO
 								+ session
-										.getAttribute(MMJBCommonConstants.KEYWORDS)
+										.getAttribute(SearchParamDTO.KEYWORDS)
 								+ MMJBCommonConstants.SEMICOLON
-								+ MMJBCommonConstants.CITY_STATE
+								+ SearchParamDTO.CITY_STATE
 								+ MMJBCommonConstants.EQUAL_TO
 								+ session
-										.getAttribute(MMJBCommonConstants.CITY_STATE)
+										.getAttribute(SearchParamDTO.CITY_STATE)
 								+ MMJBCommonConstants.SEMICOLON
-								+ MMJBCommonConstants.RADIUS
+								+ SearchParamDTO.RADIUS
 								+ MMJBCommonConstants.EQUAL_TO
 								+ session
-										.getAttribute(MMJBCommonConstants.RADIUS));
+										.getAttribute(SearchParamDTO.RADIUS));
 					 
 					 searchedJobsDTO.setUserID((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 					 
@@ -313,16 +314,16 @@ public class SaveSearchController {
 			
 			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
 			session.setAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
-			session.setAttribute(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
-			session.setAttribute(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
-			session.setAttribute(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
+			session.setAttribute(SearchParamDTO.KEYWORDS, urlMap.get(SearchParamDTO.KEYWORDS));
+			session.setAttribute(SearchParamDTO.CITY_STATE, urlMap.get(SearchParamDTO.CITY_STATE));
+			session.setAttribute(SearchParamDTO.RADIUS, urlMap.get(SearchParamDTO.RADIUS));
 			session.setAttribute(MMJBCommonConstants.AUTOLOAD,true);
 			session.setAttribute(MMJBCommonConstants.SAVE_SEARCH_ID, searchId);
 			
 			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
-			jsonObject.put(MMJBCommonConstants.KEYWORDS, urlMap.get(MMJBCommonConstants.KEYWORDS));
-			jsonObject.put(MMJBCommonConstants.CITY_STATE, urlMap.get(MMJBCommonConstants.CITY_STATE));
-			jsonObject.put(MMJBCommonConstants.RADIUS, urlMap.get(MMJBCommonConstants.RADIUS));
+			jsonObject.put(SearchParamDTO.KEYWORDS, urlMap.get(SearchParamDTO.KEYWORDS));
+			jsonObject.put(SearchParamDTO.CITY_STATE, urlMap.get(SearchParamDTO.CITY_STATE));
+			jsonObject.put(SearchParamDTO.RADIUS, urlMap.get(SearchParamDTO.RADIUS));
 			jsonObject.put(MMJBCommonConstants.AUTOLOAD, true);
 			
 			

@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.engine.solr;
+package com.advanceweb.afc.jb.lookup.service.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.search.dao.LocationDAO;
 
 /**

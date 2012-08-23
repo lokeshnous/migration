@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Repository;
+import javax.annotation.Resource;
 
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.impl.XMLResponseParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * This class has been created as a helper class for the Solr related Job search
@@ -26,37 +27,64 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 public class SOLRSearchHelper {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("SOLRSearchHelper.class");
+			.getLogger(SOLRSearchHelper.class);
+
+	private static final String SO_TIMEOUT = "sotimeout";
+	private static final String CONNECTION_TIMEOUT = "connectiontimeout";
+	private static final String MAX_CONNECTION_HOST = "maxconnectionperhost";
+	private static final String MAX_TOTAL_CONNECTION = "maxtotalconnection";
+	private static final String FOLLOW_REDIRECTS = "followredirects";
+	private static final String ALLOW_COMPRESSION = "allowcompression";
+	private static final String MAX_RETRIES = "maxretries";
+
+	@Autowired
+	@Resource(name = "solrConfiguration")
+	private Properties solrConfiguration;
 
 	/**
-	 * Reads Solr Server details from the property file and put it into the Map
-	 * @param solrConfiguration		represents the Object of the Property file
-	 * @return Map<String, String> which contains all the details in key and value pair
+	 * This method creates a HttpSolrServer instance by setting all the required
+	 * server parameters.
+	 * 
+	 * @param queryDTO
+	 *            represents all the SOLR server parameter values from the DB.
+	 * @param serverDetailsMap
+	 *            contains all the server details being red from the property
+	 *            file.
+	 * @return instance of HttpSolrServer
 	 */
-	public Map<String, String> getServerDetails(
-			final Properties solrConfiguration) {
-		final Map<String, String> serverDetailsMap = new HashMap<String, String>();
-		serverDetailsMap.put(MMJBCommonConstants.SO_TIMEOUT,
-				solrConfiguration.getProperty(MMJBCommonConstants.SO_TIMEOUT));
-		serverDetailsMap.put(MMJBCommonConstants.CONNECTION_TIMEOUT,
-				solrConfiguration.getProperty(MMJBCommonConstants.CONNECTION_TIMEOUT));
-		serverDetailsMap.put(MMJBCommonConstants.MAX_CONNECTION_HOST,
-				solrConfiguration.getProperty(MMJBCommonConstants.MAX_CONNECTION_HOST));
-		serverDetailsMap.put(MMJBCommonConstants.MAX_TOTAL_CONNECTION,
-				solrConfiguration.getProperty(MMJBCommonConstants.MAX_TOTAL_CONNECTION));
-		serverDetailsMap.put(MMJBCommonConstants.FOLLOW_REDIRECTS,
-				solrConfiguration.getProperty(MMJBCommonConstants.FOLLOW_REDIRECTS));
-		serverDetailsMap.put(MMJBCommonConstants.ALLOW_COMPRESSION,
-				solrConfiguration.getProperty(MMJBCommonConstants.ALLOW_COMPRESSION));
-		serverDetailsMap.put(MMJBCommonConstants.MAX_RETRIES,
-				solrConfiguration.getProperty(MMJBCommonConstants.MAX_RETRIES));
-		return serverDetailsMap;
+
+	public HttpSolrServer getSolrServerInstance(String baseURL) {
+
+		HttpSolrServer server = new HttpSolrServer(baseURL);
+
+		server.setSoTimeout(Integer.parseInt(solrConfiguration
+				.getProperty(SO_TIMEOUT)));
+		server.setConnectionTimeout(Integer.parseInt(solrConfiguration
+				.getProperty(CONNECTION_TIMEOUT)));
+		server.setDefaultMaxConnectionsPerHost(Integer
+				.parseInt(solrConfiguration.getProperty(MAX_CONNECTION_HOST)));
+		server.setMaxTotalConnections(Integer.parseInt(solrConfiguration
+				.getProperty(MAX_TOTAL_CONNECTION)));
+		server.setFollowRedirects(Boolean.parseBoolean(solrConfiguration
+				.getProperty(FOLLOW_REDIRECTS)));
+		// defaults to false
+		server.setAllowCompression(Boolean.parseBoolean(solrConfiguration
+				.getProperty(ALLOW_COMPRESSION)));
+		server.setMaxRetries(Integer.parseInt(solrConfiguration
+				.getProperty(MAX_RETRIES)));
+		server.setParser(new XMLResponseParser());
+
+		return server;
+
 	}
 
 	/**
 	 * This method will check whether the SOLR server url is accessible or not
-	 * @param url		represents the SOLR server url
-	 * @return boolean	represents whether server is accessible or not by returning true or false.
+	 * 
+	 * @param url
+	 *            represents the SOLR server url
+	 * @return boolean represents whether server is accessible or not by
+	 *         returning true or false.
 	 */
 
 	public boolean isServerAccessible(String url) {
@@ -64,8 +92,12 @@ public class SOLRSearchHelper {
 		boolean serverAccessible = false;
 
 		try {
+
+			String testURL = url + "/select";
+			LOGGER.info("Server URL To Check is " + testURL);
+
 			final HttpURLConnection connection = (HttpURLConnection) new URL(
-					url).openConnection();
+					testURL).openConnection();
 			connection.connect();
 
 			if (connection.getResponseCode() == 200) {
@@ -84,6 +116,4 @@ public class SOLRSearchHelper {
 		return serverAccessible;
 
 	}
-
-
 }

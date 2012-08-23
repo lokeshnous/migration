@@ -49,42 +49,22 @@ public interface MMJBCommonConstants {
 	public static final int ZERO_INT = 0;
 	public static final String NULL_STR = "null";
 	public static final String TEMP_SESSION_ID = "JS0011";
-	public static final String SPACE_OPN_BRCKT = " (";
-	public static final String CLSG_BRCKT = ")";
+//	public static final String SPACE_OPN_BRCKT = " (";
+//	public static final String CLSG_BRCKT = ")";
 	public static final String EMPTY = "";
-	public static final String SLASH = "/";
-	public static final String PLUS = "+";
-	public static final String SLASH_SELECT_SLASH = "/select/?";
-	public static final String AMP = "&";
-	public static final String QUESTION_MARK = "?";
-	public static final String CLSD_BRACES = "}";
-	public static final String SPACE = " ";
+//	public static final String CLSD_BRACES = "}";
+//	public static final String SPACE = " ";
 	public static final String EQUAL_TO = "=";
 	public static final String USER = "admin";
-	public static final String SELECT_SLASH_QUESTIONMARK = "select/?";
+//	public static final String SELECT_SLASH_QUESTIONMARK = "select/?";
 	public static final String COMMA = ",";
 	
-	public static final String KEYWORDS = "keywords";
-	public static final String CITY_STATE = "cityState";
-	public static final String RADIUS = "radius";
 	public static final String AUTOLOAD = "autoload";
 	public static final String SAVE_SEARCH_ID = "saveSearchId";
-	public static final String SESSION_ID = "sessionid";
 	
-	public static final String SEARCH_SEQ = "search_seq";
-	public static final String SEARCH_NAME = "searchName";
 	public static final String CITY = "city";
 	public static final String STATE = "state";
-	public static final String COMPANY = "company";
-	public static final String POSTED_DT = "posted_dt";
-	
-	public static final String B = ":b";
-	public static final String B_01 = ":b01";
-	public static final String B_02 = ":b02";
-	public static final String B_03 = ":b03";
-	public static final String B_04 = ":b04";
-	public static final String B_05 = ":b05";
-	public static final String B_06 = ":b06";
+//	public static final String COMPANY = "company";
 	
 	public static final String AD_TEXT = "AdText";
 	public static final String CAP_COMPANY = "Company";
@@ -112,34 +92,13 @@ public interface MMJBCommonConstants {
 	public static final String TOTAL_NO_RECORDS = "TotalNoRecords";
 	public static final String JSON_ROWS = "jsonRows";
 	
-	public static final String DEF_TYPE = "defType";
-	public static final String SELECT = "select";
-	public static final String SO_TIMEOUT = "sotimeout";
-	public static final String CONNECTION_TIMEOUT = "connectiontimeout";
-	public static final String MAX_CONNECTION_HOST = "maxconnectionperhost";
-	public static final String MAX_TOTAL_CONNECTION = "maxtotalconnection";
-	public static final String FOLLOW_REDIRECTS = "followredirects";
-	public static final String ALLOW_COMPRESSION = "allowcompression";
-	public static final String MAX_RETRIES = "maxretries";
+	public static final String SELECT = "select";	
 	
-	public static final String QF = "qf";
-	public static final String PF = "pf";
-	public static final String PS = "ps";
-	public static final String MM = "mm";
-	public static final String BQ = "bq";
-	public static final String BF = "bf";
-	public static final String SORT = "sort";
-	public static final String Q_ALT = "q.alt";
-	public static final String ROWS = "rows";
-	public static final String START = "start";
-	public static final String Q = "q";
-	public static final String FQ = "fq";
-	
-	public static final String LOCATION = "LOCATION";
-	public static final String KEYWORD = "KEYWORD";
+	// Search type Names
+	public static final String LOCATION_SEARCH = "LOCATION";
+	public static final String KEYWORD_SEARCH = "KEYWORD";
 
-	//Solr Date pattern
-	
+	//Solr Date pattern	
 	public static final String SOLR_DATE_PATTERN = "E MMM dd hh:mm:ss Z yyyy";
 	public static final String REQ_SOLR_DATE_PATTERN = "MMM-dd-yyyy";
 	//For Resume
@@ -219,9 +178,9 @@ public interface MMJBCommonConstants {
 	public static final String AGENCY_LOGIN_FAILURE_URL="/commonLogin/login.html?error=true&page=agency";
 	
 	//For Logout URL
-		public static final String JOBSEEKER_LOGOUT_URL="/commonLogin/login.html?page=jobSeeker";
-		public static final String EMPLOYER_LOGOUT_URL="/commonLogin/login.html?page=employer";
-		public static final String AGENCY_LOGOUT_URL="/commonLogin/login.html?page=agency";
+	public static final String JOBSEEKER_LOGOUT_URL="/commonLogin/login.html?page=jobSeeker";
+	public static final String EMPLOYER_LOGOUT_URL="/commonLogin/login.html?page=employer";
+	public static final String AGENCY_LOGOUT_URL="/commonLogin/login.html?page=agency";
 	
 
 	// Payment Gateway

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.advanceweb.afc.jb.search.SearchFacetDTO;
+
 /**
  * @author ReeteshRN
  * @version 1.0

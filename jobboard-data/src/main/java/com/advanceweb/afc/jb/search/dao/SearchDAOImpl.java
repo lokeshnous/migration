@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.advanceweb.afc.jb.common.SearchParamDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.data.entities.MetaSearchParam;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 
 /**
  * @Author : Reetesh RN
