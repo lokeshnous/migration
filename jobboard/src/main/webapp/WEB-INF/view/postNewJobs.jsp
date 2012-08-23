@@ -36,6 +36,12 @@
 		    	}
 		    });
 		    
+		    $("#saveAsDraftJobButId").click(function(){
+		    	if(confirm("Do you want to save this job as Draft?")){
+		    		$("#savePostJobButHideId").click();
+		    	}
+		    });
+		    
 		    $('#zipCodeSelectId').change(function() {
 		    		$("#zipCodeITId").val($(this).find(":selected").val());
 		    		$("#lookUpZipCode").show();
@@ -493,10 +499,11 @@
 	              <span class="marginBottom50 FloatLeft" >
 	              <input type="button" value="Post new job" class="btn_sm white"  id="postNewJobButId"/>
 	              <input type="button" value="Schedule job" class="btn_sm white"  id="scheduleNewJobButId">
-	              <input type="submit" value="Save as draft" class="btn_sm white" name="SaveAsDraft">
+	              <input type="button" value="Save as draft" class="btn_sm white" name="SaveAsDraft" id="saveAsDraftJobButId">
 	              <input type="submit" value="Cancel" class="btn_sm white" name="Cancel">
 	              <input type="submit" value="Post new job" class="btn_sm white" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;"/>
 	              <input type="submit" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;"/>
+	              <input type="submit" value="Save as draft" class="btn_sm white" name="SaveAsDraft" id="savePostJobButHideId" style="visibility: hidden;"/>
 <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
 	              	<a href="#" class="btn_sm white">Schedule job</a> 
 	              	<a href="#" class="btn_sm white">save as draft</a> 
