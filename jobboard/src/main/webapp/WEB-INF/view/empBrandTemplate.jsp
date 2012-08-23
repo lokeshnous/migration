@@ -150,14 +150,16 @@
 							Dashboard</a></span>
 				</div>
 				<div class="row ">
-					<form:form method="Post" action="saveEmpBrandTemp.html"
-						commandName="brandingTemplateForm" enctype="multipart/form-data">
+					<form:form method="Post" action="saveEmpBrandTemp.html"	commandName="brandingTemplateForm" enctype="multipart/form-data">
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Template Name:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="templateName" 
-										class="jb_input2Coverletter FontSize15" />
+									<form:input path="templateName" id="templateName" class="jb_input2Coverletter FontSize15" />
+								</div>
+								<div>
+									<span class="lableText3"></span> <FONT color="red"><form:errors
+											path="templateName" /></FONT>
 								</div>
 							</div>
 						</div>
@@ -174,7 +176,7 @@
 							<div class="lableTextCoverletter width150">Company Logo:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="logoPath" name="textfield4" type="file"
+									<form:input path="logoFileData" name="textfield4" type="file"
 										id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
 								</div>
@@ -183,6 +185,10 @@
 										to feature on this job posting template. The file size limit
 										is XX KB at 72 dpi. Accepted file types include .jpg, .gif,
 										.png and .tif.</span>
+								</div>
+								<div>
+									<span class="lableText3"></span> <FONT color="red"><form:errors
+											path="logoPath" /></FONT>
 								</div>
 							</div>
 						</div>
@@ -208,7 +214,7 @@
 							<div class="lableTextCoverletter width150">Main Image:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="mainImage" name="textfield4" type="file"
+									<form:input path="mainImageFileData" name="textfield4" type="file"
 										id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
 								</div>
@@ -217,6 +223,9 @@
 										appear at the top of your job posting template. The file size
 										limit is XX KB at 72 dpi. Accepted file types include .jpg,
 										.gif, .png and .tif.</span>
+								</div>
+								<span class="lableText3"></span> <FONT color="red"><form:errors
+											path="mainImage" /></FONT>
 								</div>
 							</div>
 						</div>
@@ -285,9 +294,13 @@
 
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10"><a href=""
-								class="btn_sm white">Preview</a> <a
-								href="/jobboard/brandingTemplates/saveEmpBrandTemp.html"
-								class="btn_sm white">Save</a> <a href="" class="btn_sm white">Cancel</a></span>
+								class="btn_sm white">Preview</a> 
+								<input type="submit" value="Save" class="btn_sm white"  name="Save"/>
+								
+								<!-- <a href="/jobboard/brandingTemplates/saveEmpBrandTemp.html"
+								class="btn_sm white">Save</a> --> 
+								
+								<a href="" class="btn_sm white">Cancel</a></span>
 						</div>
 						</form:form>
 				</div>
