@@ -51,6 +51,10 @@ public class JobPostDTO implements Serializable {
 	private String endDt;
 	private String jobStatus;
 	private String location;
+	
+	private String scheduleStartDt;
+	private String scheduleExpiryDt;
+	
 	public int getJobId() {
 		return jobId;
 	}
@@ -321,6 +325,22 @@ public class JobPostDTO implements Serializable {
 	 */
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getScheduleStartDt() {
+		return scheduleStartDt;
+	}
+
+	public void setScheduleStartDt(String scheduleStartDt) {
+		this.scheduleStartDt = scheduleStartDt;
+	}
+
+	public String getScheduleExpiryDt() {
+		return scheduleExpiryDt;
+	}
+
+	public void setScheduleExpiryDt(String scheduleExpiryDt) {
+		this.scheduleExpiryDt = scheduleExpiryDt;
 	}
 	
 }

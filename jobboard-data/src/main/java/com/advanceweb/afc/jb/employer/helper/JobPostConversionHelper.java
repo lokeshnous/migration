@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
@@ -53,7 +54,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setSkills(dto.getReqSkills());
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
 		 jpJob.setAdtext(dto.getJobDesc());
-		 
+		 jpJob.setStartDt(DateUtils.convertStringToSQLDate(dto.getScheduleStartDt()));
+		 jpJob.setEndDt(DateUtils.convertDateStringToSQLDate(dto.getScheduleExpiryDt()));
 		 jpJob.setJpTemplate(template);
 		 
 		 //Auto Renew
