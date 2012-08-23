@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.advanceweb.afc.jb.common.MerUserDTO;
@@ -21,9 +21,8 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	private LoginService loginService;
 
 	public void onAuthenticationSuccess(HttpServletRequest request,
-			HttpServletResponse response,
-			Authentication authentication) throws IOException,
-			ServletException {
+			HttpServletResponse response, Authentication authentication)
+			throws IOException, ServletException {
 		response.reset();
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
@@ -36,16 +35,18 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
 				+ " " + user.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
-		if (authentication.getAuthorities().contains(
-				new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_JOB_SEEKER))) {
+		if (authentication.getAuthorities()
+				.contains(
+						new SimpleGrantedAuthority(
+								MMJBCommonConstants.ROLE_JOB_SEEKER))) {
 			response.sendRedirect(request.getContextPath()
 					+ "/jobSeeker/jobSeekerDashBoard.html");
 		} else if (authentication.getAuthorities().contains(
-				new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY))) {
+				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))) {
 			response.sendRedirect(request.getContextPath()
 					+ "/employer/employerDashBoard.html");
 		} else if (authentication.getAuthorities().contains(
-				new GrantedAuthorityImpl(
+				new SimpleGrantedAuthority(
 						MMJBCommonConstants.ROLE_FACILITY_GROUP))) {
 			response.sendRedirect(request.getContextPath()
 					+ "/agency/agencyDashboard.html");
