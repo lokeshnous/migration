@@ -55,7 +55,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
 		 jpJob.setAdtext(dto.getJobDesc());
 		 jpJob.setStartDt(DateUtils.convertStringToSQLDate(dto.getScheduleStartDt()));
-		 jpJob.setEndDt(DateUtils.convertDateStringToSQLDate(dto.getScheduleExpiryDt()));
+		 jpJob.setEndDt(DateUtils.convertStringToSQLDate(dto.getScheduleExpiryDt()));
+		 
 		 jpJob.setJpTemplate(template);
 		 
 		 //Auto Renew

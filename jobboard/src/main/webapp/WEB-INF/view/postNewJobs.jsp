@@ -65,6 +65,8 @@
 	    		            var y = joindate.getFullYear();
 	    		            var joinFormattedDate = mm + '/' + dd + '/' + y;
 	    		            $("#endDate").val(joinFormattedDate);
+	    		            $("#startDateHdId").val(datepicker);
+	    		            $("#endDateHdId").val(joinFormattedDate);
 	    		      }
 	    		});
 	    	}); 	
@@ -85,6 +87,7 @@
 					width:500,
 					zIndex: -1,
 					modal: true,
+					data:$('#postNewJobFormId').serialize(),
 					backgroundColor:'#F0F0F0',
 					buttons: {
 						"Schedule": function() {
@@ -99,7 +102,8 @@
 					},
 					modal: true
 				});
-
+				$("#startDate").val( $("#startDateHdId").val());
+				$("#endDate").val($("#endDateHdId").val());
 			});  
 		  
 			
@@ -118,7 +122,7 @@
 		</head>
 
 <body class="job_board">
-<form:form action="saveNewJob.html" commandName="jobPostForm" id="postNewJobId">
+<form:form action="saveNewJob.html" commandName="jobPostForm" id="postNewJobFormId">
 <div class="ad_page_top"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
 <div class="main_wrapper_outside">
           <div class="main_wrapper_inside">
@@ -465,17 +469,17 @@
                       <span class="lableText3">Auto Renew:</span><span class="required">
                       
                       <form:radiobutton path="autoRenew" value="Yes"/><label class="greyLabel">Yes</label></span>&nbsp;&nbsp;<span class="required"> 
-                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>
-                      
+                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>                      
 			   </div>
-			   
+			   <form:hidden path="scheduleStartDate" class="job_seeker_password datepicker" id="startDateHdId" readonly="true"/>
+			   <form:hidden path="scheduleEndDate" class="job_seeker_password" id="endDateHdId" readonly="true"/>
 			   <div id="scheduleStartDivId" title="Schedule the post new job"  > 
 			   
               	  	<div class="rowEvenNewSpacing"> <span class="lableText3">Schedule Date:</span>               
-               			<form:input path="scheduleStartDate" class="job_seeker_password datepicker" id="startDate" readonly="true"/>
+               			<form:input path="" class="job_seeker_password datepicker" id="startDate" readonly="true"/>
                		</div>
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Expiry Date:</span>               
-               			<form:input path="scheduleEndDate" class="job_seeker_password" id="endDate" readonly="true"/>
+               			<form:input path="" class="job_seeker_password" id="endDate" readonly="true"/>
                		</div>
 		 	  </div> 
 			   
