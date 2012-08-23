@@ -63,7 +63,7 @@ public class JobSeekerRegistrationController {
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	
-	private Long PLACE_KEY;
+	private Long placeKey;
 	
 	/**
 	 * This method is called to display job seeker registration page Step1
@@ -95,7 +95,7 @@ public class JobSeekerRegistrationController {
 	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
 			BindingResult result) {
 		
-		PLACE_KEY = (new Random()).nextLong();
+		placeKey = (new Random()).nextLong();
 		
 		ModelAndView model = new ModelAndView();
 				
@@ -137,7 +137,7 @@ public class JobSeekerRegistrationController {
 			ModelAndView model = new ModelAndView();
 		try {
 			
-			if (((Long) session.getAttribute("LAST_PLACE_KEY"))!=null && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals(PLACE_KEY)) {
+			if (((Long) session.getAttribute("LAST_PLACE_KEY"))!=null && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals(placeKey)) {
 					model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
 					return model;
 				}
@@ -182,7 +182,7 @@ public class JobSeekerRegistrationController {
 				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
 				session.setAttribute("userId", userDTO.getUserId());
 				session.setAttribute("userEmail", userDTO.getEmailId());
-				session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
+				session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
 				
 				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
 			    authenticateUserAndSetSession(userDTO, request);
