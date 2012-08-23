@@ -11,11 +11,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.user.dao.UserDao;
 
@@ -53,34 +52,34 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 					getAuthorities(user.getUserId()));
 	}
 	
-	 public Collection<GrantedAuthority> getAuthorities(int userId) {
-			List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+	 public Collection<SimpleGrantedAuthority> getAuthorities(int userId) {
+			List<SimpleGrantedAuthority> authList = new ArrayList<SimpleGrantedAuthority>();
 			
 			List<UserRoleDTO> roleList=userDAO.getUserRole(userId);
 			for(UserRoleDTO userRole:roleList){
 			if ( userRole.getRoleName().equals(MMJBCommonConstants.MERION_ADMIN)) {
-				authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_MERION_ADMIN));
+				authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_MERION_ADMIN));
 			}
 			 
 			 if ( userRole.getRoleName().equals(MMJBCommonConstants.JOBSEEKER)) {
-					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_JOB_SEEKER));
+					authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_JOB_SEEKER));
 				}
 			 
 			 if (userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_ADMIN)) {
-					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_ADMIN));
+					authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_ADMIN));
 				}
 
 			 if ( userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_USER)) {
-					authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_USER));
+					authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_USER));
 				}
 			 if(userRole.getRoleName().equals(MMJBCommonConstants.FACILITY)){
-				 authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY));
+				 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY));
 			 }
 		    if (userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_GROUP)) {
-		    	 authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_GROUP));
+		    	 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP));
 		     }
 		   if (userRole.getRoleName().equals(MMJBCommonConstants.FACILITY_SYSTEM)) {
-			   authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
+			   authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
 		    }
 			}
 			return authList;
