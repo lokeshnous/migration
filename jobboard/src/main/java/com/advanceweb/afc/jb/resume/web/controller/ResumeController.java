@@ -93,7 +93,7 @@ public class ResumeController {
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 
-	private Long PLACE_KEY;
+	
 
 	/**
 	 * This method is called to display resume list belonging to a logged in
@@ -254,8 +254,6 @@ public class ResumeController {
 	public ModelAndView updateResumePopup(CreateResume createResume,
 			HttpSession session) {
 
-		PLACE_KEY = (new Random()).nextLong();
-
 		ModelAndView model = new ModelAndView();
 
 		ResumeDTO resumeDTO = transCreateResume
@@ -350,10 +348,6 @@ public class ResumeController {
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
 	public ModelAndView createResumePopUp(
 			@RequestParam("resumeType") String resumeType,HttpSession session) {
-		
-		session.setAttribute("PLACE_KEY", null);
-		
-		PLACE_KEY = (new Random()).nextLong();
 		
 		CreateResume createResume = new CreateResume();
 
@@ -527,14 +521,6 @@ public class ResumeController {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		ModelAndView model = new ModelAndView();
 		
-		if (null != (Long) session.getAttribute("PLACE_KEY") && null != (Long) session.getAttribute("LAST_PLACE_KEY") && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals((Long) session.getAttribute("PLACE_KEY"))) {
-			resumeDTO = resumeService.editResume(Integer.parseInt(createResume.getUploadResumeId()));
-			transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
-			model.addObject("createResume", createResume);
-			model.setViewName("forward:/jobSeekerResume/createResumeBuilder.html");
-            return model;
-		}
-		
 		resumeDTO = transCreateResume
 				.transformCreateResumeToResumeDTO(createResume);
 		resumeDTO.setUserId((Integer) session
@@ -542,13 +528,9 @@ public class ResumeController {
 		resumeDTO = resumeService.createResume(resumeDTO);
 		
 		transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
-		
-		session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
-		session.setAttribute("PLACE_KEY", PLACE_KEY);
-		PLACE_KEY = (new Random()).nextLong();
-		
+				
 		model.addObject("createResume", createResume);
-		model.setViewName("forward:/jobSeekerResume/createResumeBuilder.html");
+		model.setViewName("redirect:/jobSeekerResume/createResumeBuilder.html");
 		
 		return model;
 	}	
@@ -642,13 +624,6 @@ public class ResumeController {
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 
-		if (((Long) session.getAttribute("LAST_PLACE_KEY")) != null
-				&& ((Long) session.getAttribute("LAST_PLACE_KEY"))
-						.equals(PLACE_KEY)) {
-			model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
-			return model;
-		}
-
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID));
@@ -693,8 +668,7 @@ public class ResumeController {
 		resumeDTO.setListPhoneDtl(listPhoneDTO);
 		resumeService.createResumeBuilder(resumeDTO);
 		getTotalNotNullField(createResume);
-		session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, PLACE_KEY);
-		model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		createResume = new CreateResume();
 		return model;
 
