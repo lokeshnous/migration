@@ -12,26 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationValidation;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -45,15 +37,11 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
  * @author Sasibhushana
  *
  * @Version 1.0
- * @Since 2nd July, 2012
+ * @Since 2nd July 2012
  */
 
 @Controller
 @RequestMapping("/employerRegistration")
-
-
-//@SessionAttributes("employeeAccountForm")
-
 @SessionAttributes("empRegisterForm")
 @Scope("session")
 
