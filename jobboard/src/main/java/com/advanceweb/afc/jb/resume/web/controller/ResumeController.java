@@ -1308,5 +1308,21 @@ public class ResumeController {
 		}
 
 	}
+	
+	/**
+	* This method is called to retrieve resume builder progress status
+	* on click of save button
+	* 
+	* @param session
+	* @param createResume
+	* @return
+	*/
+	@ResponseBody
+	@RequestMapping(value = "/getResumeProgress", method = RequestMethod.POST)
+	public String getResumeProgess(HttpSession session, CreateResume createResume) {
+		
+		getTotalNotNullField(createResume);		
+		return String.valueOf(createResume.getTotalProgress());
+	}
 
 }
