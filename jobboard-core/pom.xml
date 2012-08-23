@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>3.0.7.RELEASE</version>
+			<version>3.1.0.RELEASE</version>
 		</dependency>
 
 		<!-- Java Mail API -->
