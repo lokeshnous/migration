@@ -26,11 +26,15 @@ public class EmpBrandTempDTO {
 //	private String updatedDate;
 	private String companyOverview;
 	private int facilityId;
-	private CommonsMultipartFile fileData;
+	private CommonsMultipartFile logoFileData;
+	private CommonsMultipartFile mainImageFileData;
 	private String fileServer;
-	private String fileName;
-	
+	private String logoFileName;
+	private String logoFilePath;	
+	private String mainImageFileName;
+	private String mainImageFilePath;	
 
+	
 	public String getLogoPath() {
 		return logoPath;
 	}
@@ -119,12 +123,21 @@ public class EmpBrandTempDTO {
 		this.facilityId = facilityId;
 	}
 
-	public CommonsMultipartFile getFileData() {
-		return fileData;
+
+	public CommonsMultipartFile getLogoFileData() {
+		return logoFileData;
 	}
 
-	public void setFileData(CommonsMultipartFile fileData) {
-		this.fileData = fileData;
+	public void setLogoFileData(CommonsMultipartFile logoFileData) {
+		this.logoFileData = logoFileData;
+	}
+
+	public CommonsMultipartFile getMainImageFileData() {
+		return mainImageFileData;
+	}
+
+	public void setMainImageFileData(CommonsMultipartFile mainImageFileData) {
+		this.mainImageFileData = mainImageFileData;
 	}
 
 	public String getFileServer() {
@@ -135,5 +148,38 @@ public class EmpBrandTempDTO {
 		this.fileServer = fileServer;
 	}
 
+	public String getLogoFileName() {
+		return logoFileName;
+	}
+
+	public void setLogoFileName(String logoFileName) {
+		this.logoFileName = logoFileName;
+	}
+
+	public String getLogoFilePath() {
+		return logoFilePath;
+	}
+
+	public void setLogoFilePath(String logoFilePath) {
+		this.logoFilePath = logoFilePath;
+	}
+
+	public String getMainImageFileName() {
+		return mainImageFileName;
+	}
+
+	public void setMainImageFileName(String mainImageFileName) {
+		this.mainImageFileName = mainImageFileName;
+	}
+
+	public String getMainImageFilePath() {
+		return mainImageFilePath;
+	}
+
+	public void setMainImageFilePath(String mainImageFilePath) {
+		this.mainImageFilePath = mainImageFilePath;
+	}
+
+	
 
 }
