@@ -15,6 +15,7 @@ import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 
 /**
@@ -23,7 +24,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
  * @created 21-Jun-2012 2:22:44 PM
  */
 @Service("employerRegistration")
-public class EmployerRegistration implements ProfileRegistration {
+public class EmployerRegistration implements ProfileRegistration,EmloyerRegistartionService {
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistration.class");
 	@Autowired
