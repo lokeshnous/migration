@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 /**
  * <code>EmpBrandTempForm</code> is a form bean to employer branding Templates.
  * 
@@ -13,18 +15,19 @@ import java.util.Date;
 public class BrandingTemplateForm {
 
 	private long employerId;
-//	private String description;
-	private String imageTemplatePath;
 	private String logoPath;
 	private String color;
 	private Date createdDate;
-	private Date updatedDate;
 	private String templateName;
 	private String companyOverview;
 	private String mainImage;
+	private CommonsMultipartFile logoFileData;
+	private CommonsMultipartFile mainImageFileData;
+	private String logoFileName;
+	private String logoFilePath;	
+	private String mainImageFileName;
+	private String mainImageFilePath;
 	
-	
-
 	public long getEmployerId() {
 		return employerId;
 	}
@@ -32,15 +35,6 @@ public class BrandingTemplateForm {
 
 	public void setEmployerId(long employerId) {
 		this.employerId = employerId;
-	}
-
-	public String getImageTemplatePath() {
-		return imageTemplatePath;
-	}
-
-
-	public void setImageTemplatePath(String imageTemplatePath) {
-		this.imageTemplatePath = imageTemplatePath;
 	}
 
 
@@ -74,26 +68,6 @@ public class BrandingTemplateForm {
 	}
 
 
-	public Date getUpdatedDate() {
-		return updatedDate;
-	}
-
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
-
-
-//	public String getDescription() {
-//		return description;
-//	}
-//
-//
-//	public void setDescription(String description) {
-//		this.description = description;
-//	}
-
-
 	public String getTemplateName() {
 		return templateName;
 	}
@@ -122,5 +96,68 @@ public class BrandingTemplateForm {
 	public void setMainImage(String mainImage) {
 		this.mainImage = mainImage;
 	}
+
+
+	public CommonsMultipartFile getLogoFileData() {
+		return logoFileData;
+	}
+
+
+	public void setLogoFileData(CommonsMultipartFile logoFileData) {
+		this.logoFileData = logoFileData;
+	}
+
+
+	public CommonsMultipartFile getMainImageFileData() {
+		return mainImageFileData;
+	}
+
+
+	public void setMainImageFileData(CommonsMultipartFile mainImageFileData) {
+		this.mainImageFileData = mainImageFileData;
+	}
+
+
+	public String getLogoFileName() {
+		return logoFileName;
+	}
+
+
+	public void setLogoFileName(String logoFileName) {
+		this.logoFileName = logoFileName;
+	}
+
+
+	public String getLogoFilePath() {
+		return logoFilePath;
+	}
+
+
+	public void setLogoFilePath(String logoFilePath) {
+		this.logoFilePath = logoFilePath;
+	}
+
+
+	public String getMainImageFileName() {
+		return mainImageFileName;
+	}
+
+
+	public void setMainImageFileName(String mainImageFileName) {
+		this.mainImageFileName = mainImageFileName;
+	}
+
+
+	public String getMainImageFilePath() {
+		return mainImageFilePath;
+	}
+
+
+	public void setMainImageFilePath(String mainImageFilePath) {
+		this.mainImageFilePath = mainImageFilePath;
+	}
+
+
+	
 
 }
