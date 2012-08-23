@@ -24,7 +24,8 @@
 
 						</span><br>
 						<div class="floatRight">
-							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">${msg.commonLogOut}</a>
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
+
 								${msg.commonVerticalBar} <c:choose>
 									<c:when test="${jobSeekerDashBoardForm != null}">
 										<a href="../healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
@@ -58,7 +59,7 @@
 
 						</span><br>
 						<div class="floatRight">
-							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">${msg.commonLogOut}</a>
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
@@ -85,7 +86,7 @@
 
 						</span><br>
 						<div class="floatRight">
-							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">${msg.commonLogOut}</a>
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
