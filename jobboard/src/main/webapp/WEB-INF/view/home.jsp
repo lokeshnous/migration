@@ -149,7 +149,6 @@ type="text/css">
 
 					</div>
 					<!-- column2-->
-					<a href="/jobboard/employer/postNewJobs.html">Post New Job</a>
 				</div>
 				</div>
 				<br class="clearfix" />
