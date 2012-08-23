@@ -622,9 +622,10 @@ public class SolrSearchDeleagate implements JobSearchDeleagate {
 	 * @return String which contains the replaced value for FQ parameter
 	 */
 
-	private String formAndRepalceFQParam(String strValue,
+	private String formAndRepalceFQParam(String stringValue,
 			List<LocationDTO> latLonList, Map<String, String> paramMap) {
-
+		
+		String strValue = stringValue;
 		/** Checking for how many occurrence are there for :b in the string **/
 		for (int i = 0; i <= StringUtils.countMatches(strValue,
 				MMJBCommonConstants.B); i++) {
