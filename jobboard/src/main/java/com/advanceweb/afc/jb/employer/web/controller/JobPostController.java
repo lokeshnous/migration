@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -184,7 +185,7 @@ public class JobPostController {
 	 */
 	private String validateJobPostDetails(JobPostForm form){
 		
-//		 UrlValidator urlValidator = new UrlValidator();
+		 UrlValidator urlValidator = new UrlValidator();
 		if(null != form){
 			if(StringUtils.isEmpty(form.getJobTitle()) || 
 					StringUtils.isEmpty(form.getJobCity()) ||
