@@ -29,7 +29,7 @@ import com.advanceweb.afc.jb.common.util.MMUtils;
 public class JSONConverterServiceImpl implements JSONConverterService {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("JSONConverterServiceImpl.class");
+			.getLogger(JSONConverterServiceImpl.class);
 
 	/**
 	 * This method will convert the JobSearchResultDTO to JSON object
