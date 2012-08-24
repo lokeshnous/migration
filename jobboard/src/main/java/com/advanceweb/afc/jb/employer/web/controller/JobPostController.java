@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
@@ -190,6 +191,7 @@ public class JobPostController {
 			if(StringUtils.isEmpty(form.getJobTitle()) || 
 					StringUtils.isEmpty(form.getJobCity()) ||
 					StringUtils.isEmpty(form.getJobZipCode()) ||
+					MMJBCommonConstants.ZERO.equals(form.getJobTitle())||
 					MMJBCommonConstants.ZERO.equals(form.getJobCountry()) ||
 					MMJBCommonConstants.ZERO.equals(form.getJobState()) ||
 					StringUtils.isEmpty(form.getJobDesc()) ||
@@ -274,4 +276,50 @@ public class JobPostController {
 		return model;
 	}
 
+	@RequestMapping(value = "/getCityList", method = RequestMethod.GET, headers="Accept=*/*")
+	@ResponseBody 
+	public List<String> getCityList(@RequestParam("term") String query) {
+		  
+	  List<String > countryList = populateDropdownsService.populateCityAutoComplete(query);
+	   
+	  return countryList;
+	}
+	
+	@RequestMapping(value = "/getState")
+	@ResponseBody 
+	public String getState(@RequestParam("city") String city) {
+		  
+	  String state = populateDropdownsService.populateStateAutoComplete(city);
+	   
+	  return state;
+	}
+	
+	@RequestMapping(value = "/getPostalCodeAutoPopulation")
+	@ResponseBody 
+	public List<String> getPostalCodeAutoPopulation(@RequestParam("postalCode") String postalCode) {
+		  
+	  List<String> postalCodeList = populateDropdownsService.populatePostalCodeAutoComplete(postalCode);
+	   
+	  return postalCodeList;
+	}
+	
+	@RequestMapping(value = "/getPostalCode")
+	@ResponseBody 
+	public String getPostalCode(@RequestParam("city") String city, @RequestParam("state") String state) {
+		  
+	  String postalCode = populateDropdownsService.getPostalCode(city,state);
+	   
+	  return postalCode;
+	}
+	
+	@RequestMapping(value = "/getCountry")
+	@ResponseBody 
+	public String getCountry(@RequestParam("city") String city, @RequestParam("state") String state, 
+			@RequestParam("postalCode") String postalCode) {
+		  
+	  String country = populateDropdownsService.getCountry(city,state, postalCode);
+	   
+	  return country;
+	}
+	
 }

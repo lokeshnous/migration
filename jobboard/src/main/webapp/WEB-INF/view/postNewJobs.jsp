@@ -28,7 +28,7 @@
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	
-	    	$("#hideZipCodeDdId").hide();				
+	    	/* $("#hideZipCodeDdId").hide();		 */		
 			$( "#scheduleStartDivId" ).hide();		    
 		    $("#postNewJobButId").click(function(){
 		    	if(confirm("Do you want to post this job?")){
@@ -42,11 +42,11 @@
 		    	}
 		    });
 		    
-		    $('#zipCodeSelectId').change(function() {
+/* 		    $('#zipCodeSelectId').change(function() {
 		    		$("#zipCodeITId").val($(this).find(":selected").val());
 		    		$("#lookUpZipCode").show();
 			    	$("#hideZipCodeDdId").hide();	
-		   	});
+		   	}); */
 		    
 			//Date picker
 	    	$(function() {
@@ -71,15 +71,15 @@
 	    		});
 	    	}); 	
 		    
-		    $("#lookUpZipCode").click(function(){
+/* 		    $("#lookUpZipCode").click(function(){
 		    	$("#hideZipCodeDdId").show();
 		    	$("#lookUpZipCode").hide();
 		    	$("#zipCodeITId").focus();
-		    });
+		    }); 
 		    $("#zipCodeSelectedId").click(function(){
 		    	alert("hi");
 		    	$("#hideZipCodeDdId").hide();	
-		    });
+		    });*/
   		    $("#scheduleNewJobButId").click(function() {
 				$( "#scheduleStartDivId" ).dialog({
 					resizable: false,
@@ -106,7 +106,59 @@
 				$("#endDate").val($("#endDateHdId").val());
 			});  
 		  
+			$("#cityAutoPopulation").autocomplete({
+				source: '${pageContext.request.contextPath}/employer/getCityList.html',
+				select: function(event, ui) {
+					$("#cityAutoPopulation").val(ui.item.value);				
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityAutoPopulation").val(),
+					success : function(data) {
+						$('#stateDpId').val(data);
+						
+						var city = $("#cityAutoPopulation").val();
+						var state = $("#stateDpId").val();
+
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val(),
+						success : function(data) {
+							$('#zipCodeITId').val(data);
+						},
+						});
+						alert("");
+						$.ajax({
+							url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCodeITId").val(),
+							success : function(country) {
+								$('#countryDpId').val(country);
+							}
+						});
+						
+					},
+					});
+				}
+			});
 			
+			/* $("#cityAutoPopulation").change(function(){
+				var city = $("#cityAutoPopulation").val();
+				//alert("asdff"+city);
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getState.html?city='+city,
+				success : function(data) {
+					$('#stateDpId').val(data);
+				},
+				});
+			});	 */	
+			
+/*   			$("#stateDpId").change(function(){
+  				alert("hi");
+				var city = $("#cityAutoPopulation").val();
+				var state = $("#stateDpId").val();
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+city+'&state='+state,
+				success : function(data) {
+					$('#zipCodeSelectId').val(data);
+				},
+				});
+			});  */	 
 			
 		    jQuery(".megamenu").megamenu();
 		});
@@ -306,8 +358,9 @@
 					<form:option value="0" label="Select" />
 					<form:options items="${jbPostingTypeList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
+				<span class="required">(Required)</span>
               </div>
-              
+
               <div class="rowEvenNewSpacing"> <span class="lableText3">Job Posting Inventory:</span> <span class=" FloatLeft marginTop6">
               <a href="#">View Job Posting Inventory</a></span> </div>
               <div class="clearfix"></div>
@@ -323,7 +376,7 @@
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
 
                 <form:input path="jobTitle" class="job_seeker_password textBox350" />
-      <span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
+      			<span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
                       <div class="row marginTop10">
@@ -357,8 +410,8 @@
                 <h3>Location</h3>
                 <p class="FloatLeft marginLeft20 FontSize12 TextColor03 marginTop13">(All fields are required)</p>
               </div>
-                      <div class="rowEvenNewSpacing"> <span class="lableText3">Job City:</span>               
-                <form:input path="jobCity" class="job_seeker_password textBox350" />
+                      <div class="rowEvenNewSpacing" id="divCityAutoPopulate"> <span class="lableText3">Job City:</span>               
+                <form:input path="jobCity" class="job_seeker_password textBox350"  id="cityAutoPopulation"/>
                 <div class="floatLeft width210"><span class="required marginRight10">
                   <form:checkbox path="bHideCity"/>
                   </span>
@@ -369,7 +422,7 @@
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job State:</span>
 
-				<form:select path="jobState" class="jb_input3 jb_input_width3">
+				<form:select path="jobState" class="jb_input3 jb_input_width3" id="stateDpId">
 					<form:option value="0" label="Select" />
 					<form:options items="${stateList}" itemValue="stateValue"
 						itemLabel="stateValue" />
@@ -386,13 +439,13 @@
               </div>
                 <div class="rowEvenNewSpacing"> <span class="lableText3">Job Zip Code:</span>
                 <form:input path="jobZipCode" class="job_seeker_password textBox350"  id="zipCodeITId"/>
-                <div id="hideZipCodeDdId">
+<%--                 <div id="hideZipCodeDdId">
                 <form:select path="" class="jb_input3 jb_input_width3" id="zipCodeSelectId">
 					<form:option value="0" label="Select" />
 					<form:options items="${zipCodeList}" itemValue="fromZipcodeId" itemLabel="fromZipcodeValue" id="zipCodeSelectedId"/>
 				</form:select>
 				</div>
-                <span class="required "><a href="#" id="lookUpZipCode">Look Up Zip Code</a></span>
+                <span class="required "><a href="#" id="lookUpZipCode">Look Up Zip Code</a></span> --%>
                 <div class="floatLeft width210"><span class="required marginRight10">
                   <form:checkbox path="bHideZipCode"/>
                   </span>
@@ -402,7 +455,7 @@
                 </div>
               </div>
                 <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3">Job Country:</span>
-				<form:select path="jobCountry" class="jb_input3 jb_input_width3">
+				<form:select path="jobCountry" class="jb_input3 jb_input_width3" id="countryDpId">
 					<form:option value="0" label="Select" />
 					<form:options items="${countryList}" itemValue="countryValue"
 						itemLabel="countryValue" />

@@ -1,9 +1,11 @@
 package com.advanceweb.afc.jb.lookup.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -23,6 +25,7 @@ import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
@@ -35,6 +38,7 @@ import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
+import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -487,6 +491,101 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		}
 		return null;
 	}
+
+	@Override
+	public List<String> populateCityAutoComplete(String city) {
+		
+		List<String> locationList = new ArrayList<String>();
+
+		try {
+			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.city from  JpLocation jloc WHERE  jloc.city like '"+ city+ "%' ORDER BY  jloc.city ASC");
+
+			if (jpLocationList != null) {
+				for(Object obj : jpLocationList){
+					locationList.add((String)obj);
+				}
+			}
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		return locationList;
+	}
+
+	@Override
+	public String populateStateAutoComplete(String city) {
+		
+		try {
+			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.state from  JpLocation jloc WHERE  jloc.city='"+ city+"' ORDER BY  jloc.state ASC");
+
+			if (jpLocationList != null && jpLocationList.size() !=0) {			
+				Object obj = jpLocationList.get(0);
+				return (String)obj;
+			}
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<String> populatePostalCodeAutoComplete(String postalCode) {
+		List<String> postalCodeList = new ArrayList<String>();
+		try {
+			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.postcode like'"+postalCode+"%' ORDER BY  jloc.postcode ASC");
+
+			if (jpLocationList != null) {
+				for(Object obj : jpLocationList){
+					postalCodeList.add((String)obj);
+				}
+			}
+			return postalCodeList;
+			
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public String getPostalCode(String city, String state) {
+
+		try {
+			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
+
+			if (jpLocationList != null && jpLocationList.size() !=0) {			
+				Object obj = jpLocationList.get(0);
+				return (String)obj;
+			}			
+			
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public String getCountry(String city, String state, String postalCode) {
+
+		try {
+			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' " +
+					"and jloc.postcode='"+postalCode+"'  ORDER BY  jloc.postcode ASC");
+
+			if (jpLocationList != null && jpLocationList.size() !=0) {			
+				Object obj = jpLocationList.get(0);
+				return (String)obj;
+			}			
+			
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}	
 	
 	
 }
