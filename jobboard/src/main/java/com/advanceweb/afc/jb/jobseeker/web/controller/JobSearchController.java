@@ -226,6 +226,8 @@ public class JobSearchController {
 		}
 		form.setUseremail(userEmail);
 		try {
+			
+//			TODO: apply job through ATS, by web URL is pending
 
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
@@ -444,7 +446,7 @@ public class JobSearchController {
 	public @ResponseBody
 	JSONObject searchJob(HttpSession session,
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
-			Map<String, JSONObject> modelMap) {
+			Map<String, JSONObject> modelMap, HttpServletRequest request) {
 
 		JobSearchResultDTO jobSearchResultDTO = null;
 		// Map<String, String> paramMap = new HashMap<String, String>();

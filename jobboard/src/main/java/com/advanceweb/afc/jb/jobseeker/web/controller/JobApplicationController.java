@@ -65,13 +65,10 @@ public class JobApplicationController {
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
 	
-	@Value("${jobseekerPageExtention}")
-	private String jobseekerPageExtention;
-
 	@Value("${jobseekerJobApplicationSub}")
 	private String jobAppSub;
 
-	@Value("${jobseekerJobApplicationBody}")
+	@Value("${anonymousJobApplicationBody}")
 	private  String jobAppBody;
 
 	/*
@@ -119,9 +116,6 @@ public class JobApplicationController {
 			
 			// Adding path for
 			String loginPath = navigationPath.substring(2);
-			String jonseekerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + jobseekerPageExtention;
 			String employerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
 					+ dothtmlExtention + employerPageExtention;
@@ -168,8 +162,7 @@ public class JobApplicationController {
 			String jobseekerMailSub = jobAppSub.replace(
 					"?companyname", searchedJobDTO.getCompanyName());
 			toJobSeeker.setSubject(jobseekerMailSub);
-			String jobseekerMailBody = jobAppBody.replace(
-					"?jsdashboardLink", jonseekerloginUrl);
+			String jobseekerMailBody = jobAppBody;
 			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
 					searchedJobDTO.getCompanyName());
 			toJobSeeker.setBody(jobseekerMailBody);
