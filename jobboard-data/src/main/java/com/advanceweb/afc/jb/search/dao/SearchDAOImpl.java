@@ -25,7 +25,7 @@ import com.advanceweb.afc.jb.search.SearchParamDTO;
 public class SearchDAOImpl implements SearchDAO{
 	
 	private static final Logger LOGGER = Logger
-			.getLogger("SearchDAOImpl.class");
+			.getLogger(SearchDAOImpl.class);
 	
 	private HibernateTemplate hibernateTemplate;
 
