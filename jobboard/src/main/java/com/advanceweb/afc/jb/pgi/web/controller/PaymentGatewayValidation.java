@@ -20,7 +20,7 @@ public class PaymentGatewayValidation {
 	public void validateCreditCardInfo(CreditCardInfoForm form, Errors errors) {
 		if (StringUtils.isEmpty(form.getCreditCardNo())) {
 			errors.rejectValue("creditCardInfoForm.creditCardNo", "NotEmpty",
-					"Credit Card Number Should not be empty");
+					"Credit card number should not be empty");
 		} else if (!(form.getCreditCardNo().length() == 13)
 				&& !(form.getCreditCardNo().length() == 16)) {
 			errors.rejectValue("creditCardInfoForm.creditCardNo", "NotEmpty",
@@ -28,16 +28,16 @@ public class PaymentGatewayValidation {
 		}
 		if (StringUtils.isEmpty(form.getName())) {
 			errors.rejectValue("creditCardInfoForm.name", "NotEmpty",
-					"Name Should not be empty");
+					"Name should not be empty");
 		}
 		if (StringUtils.isEmpty(form.getExpMonth())
 				|| StringUtils.isEmpty(form.getExpYear())) {
 			errors.rejectValue("creditCardInfoForm.expMonth", "NotEmpty",
-					"Expiry Month, Year Should not be empty ");
+					"Expiry Month, Year should not be empty ");
 		}
 		if (StringUtils.isEmpty(form.getSecuriyCode())) {
 			errors.rejectValue("creditCardInfoForm.securiyCode", "NotEmpty",
-					"Security Code Should not be empty");
+					"Security code should not be empty");
 		} else if (!(form.getSecuriyCode().length() == 3)
 				&& !(form.getSecuriyCode().length() == 4)) {
 			errors.rejectValue("creditCardInfoForm.securiyCode", "NotEmpty",
@@ -45,7 +45,7 @@ public class PaymentGatewayValidation {
 		}
 		if (StringUtils.isEmpty(form.getCardType())) {
 			errors.rejectValue("creditCardInfoForm.cardType", "NotEmpty",
-					"Card Type Should not be empty");
+					"Card type Should not be empty");
 		}
 	}
 
@@ -57,36 +57,36 @@ public class PaymentGatewayValidation {
 
 		if (StringUtils.isEmpty(form.getFnameForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.fnameForBillingAddr",
-					"NotEmpty", "First Name Should not be empty");
+					"NotEmpty", "First name should not be empty");
 		}
 		if (StringUtils.isEmpty(form.getLnameForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.lnameForBillingAddr",
-					"NotEmpty", "Last Name Should not be empty");
+					"NotEmpty", "Last name should not be empty");
 		}
 		if (StringUtils.isEmpty(form.getStreetForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.streetForBillingAddr",
-					"NotEmpty", "Street Should not be empty");
+					"NotEmpty", "Street should not be empty");
 		}
 		if (StringUtils.isEmpty(form.getCityOrTownForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.cityOrTownForBillingAddr",
-					"NotEmpty", "City Should not be empty");
+					"NotEmpty", "City should not be empty");
 		}
 
 		if (StringUtils.isEmpty(form.getStateBillingAddress())
 				|| MMJBCommonConstants.ZERO.equals(form
 						.getStateBillingAddress())) {
 			errors.rejectValue("billingAddressForm.stateBillingAddress",
-					"NotEmpty", "State Should not be empty");
+					"NotEmpty", "State should not be empty");
 		}
 		if (StringUtils.isEmpty(form.getCountryForBillingAddr())
 				|| MMJBCommonConstants.ZERO.equals(form
 						.getCountryForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.countryForBillingAddr",
-					"NotEmpty", "Country Should not be empty");
+					"NotEmpty", "Country should not be empty");
 		}
 		if (StringUtils.isEmpty(form.getZipCodeForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.zipCodeForBillingAddr",
-					"NotEmpty", "Zipcode Should not be empty");
+					"NotEmpty", "Zipcode should not be empty");
 		}
 	}
 
