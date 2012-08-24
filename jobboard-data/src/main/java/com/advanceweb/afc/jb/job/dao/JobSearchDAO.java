@@ -1,20 +1,17 @@
-package com.advanceweb.afc.jb.job.service;
-
-/*import org.apache.solr.client.solrj.impl.HttpSolrServer;
- import org.apache.solr.client.solrj.response.QueryResponse;*/
+package com.advanceweb.afc.jb.job.dao;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
 /**
- * <code> JobSearchActivity </code> is a Service class.
+ * <code> JobSearchDAO </code> is a DAO.
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 10 July 2012
  * 
  */
-public interface JobSearchActivity {
+public interface JobSearchDAO {
 
 	/**
 	 * get job details by job ID
@@ -25,11 +22,10 @@ public interface JobSearchActivity {
 	SearchedJobDTO viewJobDetails(long jobId);
 
 	/**
-	 * validating job for save/apply.
+	 * get job details by job ID
 	 * 
-	 * @param searchedJobDTO
-	 * @param userId
-	 * @return <true> if job is saved/Applied <false> not saved/Applied
+	 * @param jobId
+	 * @return
 	 */
 	AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
 			int userId);
@@ -51,10 +47,10 @@ public interface JobSearchActivity {
 	boolean updateSaveOrApplyJob(AppliedJobDTO jobDTO);
 
 	/**
-	 * saves the job for logged in user
+	 * To Save the save job details to DB
 	 * 
 	 * @param searchedJobDTO
 	 */
-	void saveJob(SearchedJobDTO searchedJobDTO);
+	void saveTheJob(SearchedJobDTO searchedJobDTO);
 
 }

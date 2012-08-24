@@ -20,9 +20,10 @@ import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
  * @author sharadk
  * 
  */
-@Repository("jobSeekerActivityConversionHelper")
-public class JobSeekerActivityConversionHelper {
+@Repository("jobSeekerJobDetailConversionHelper")
+public class JobSeekerJobDetailConversionHelper {
 
+	@SuppressWarnings("rawtypes")
 	@Autowired
 	JobPostConversionHelper jobPostConversionHelper;
 

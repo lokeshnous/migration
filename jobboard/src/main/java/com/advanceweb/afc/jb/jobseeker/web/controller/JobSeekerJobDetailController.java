@@ -13,27 +13,28 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 
 /**
- * This controller belongs to all jobseekers activity
+ * This controller belongs to all JobSeeker JobDetails 
  * 
  * @author sharadk
  * 
  */
 
 @Controller
-@RequestMapping(value = "/jobSeekerActivity")
+@RequestMapping(value = "/jobSeekerJobDetail")
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class JobSeekerActivityController {
+public class JobSeekerJobDetailController {
 
 	@Autowired
-	private JobSeekerService jobSeekerActivity;
+	private JobSeekerJobDetailService jobSeekerJobDetailService;
 
 	@RequestMapping(value = "/viewAppliedJob")
-	public ModelAndView getAppliedJob(HttpSession session,Map model) {
-		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
-				.getAppliedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+	public ModelAndView getAppliedJob(HttpSession session, Map model) {
+		List<AppliedJobDTO> appliedJobDTOList = jobSeekerJobDetailService
+				.getAppliedJobs((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("appliedJobDTOList", appliedJobDTOList);
 		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
@@ -44,13 +45,14 @@ public class JobSeekerActivityController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings({ "unused"})
+	@SuppressWarnings({ "unused" })
 	@RequestMapping(value = "/deleteAppliedJob")
-	public ModelAndView deleteAppliedJob(HttpSession session,@RequestParam("appliedJobId") int jobId,
-			Map model) {
-		boolean result = jobSeekerActivity.updateAppliedSavedJobs(jobId);
-		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
-				.getAppliedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+	public ModelAndView deleteAppliedJob(HttpSession session,
+			@RequestParam("appliedJobId") int jobId, Map model) {
+		boolean result = jobSeekerJobDetailService.updateAppliedSavedJobs(jobId);
+		List<AppliedJobDTO> appliedJobDTOList = jobSeekerJobDetailService
+				.getAppliedJobs((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("appliedJobDTOList", appliedJobDTOList);
 		return new ModelAndView("jobseekerviewappliedjobspopup");
 	}
@@ -61,14 +63,15 @@ public class JobSeekerActivityController {
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings({ "unused"})
+	@SuppressWarnings({ "unused" })
 	@RequestMapping(value = "/deleteSavedJob")
-	public ModelAndView deleteSavedJob(HttpSession session,@RequestParam("appliedJobId") int jobId,
-			Map model) {
+	public ModelAndView deleteSavedJob(HttpSession session,
+			@RequestParam("appliedJobId") int jobId, Map model) {
 
-		boolean result = jobSeekerActivity.updateAppliedSavedJobs(jobId);
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+		boolean result = jobSeekerJobDetailService.updateAppliedSavedJobs(jobId);
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
+				.getSavedJobs((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("savedJobDTOList", savedJobDTOList);
 
 		return new ModelAndView("jobseekermysavedjobspopup");
@@ -82,9 +85,10 @@ public class JobSeekerActivityController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewSavedJob")
-	public ModelAndView getSavedJob(HttpSession session,Map model) {
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
-				.getSavedJobs((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+	public ModelAndView getSavedJob(HttpSession session, Map model) {
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
+				.getSavedJobs((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
 		model.put("savedJobDTOList", savedJobDTOList);
 		return new ModelAndView("jobseekermysavedjobspopup");
 	}

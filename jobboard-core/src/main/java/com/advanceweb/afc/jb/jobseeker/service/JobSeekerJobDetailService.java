@@ -5,7 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 
 /**
- * <code> JobSeekerActivity </code> is a Service class. 
+ * <code> JobSeekerService </code> is a Service class. 
  * 
  * 
  * @author sharad kumar
@@ -14,7 +14,7 @@ import com.advanceweb.afc.jb.common.AppliedJobDTO;
  * 
  * 
  */
-public interface JobSeekerService {
+public interface JobSeekerJobDetailService {
 
 	/**
 	 * Applied job methods

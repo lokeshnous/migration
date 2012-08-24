@@ -133,7 +133,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="../jobsearchactivity/findJobPage.html">${msg.jsCreateNewSavedSearch}</a>
+												<a href="../jobsearch/findJobPage.html">${msg.jsCreateNewSavedSearch}</a>
 											</p>
 										</div>
 										<div class="lableTextDashBoard">
@@ -153,7 +153,7 @@ jQuery(document).ready(
 										<h2 class="noTopBorder">${msg.jsActivity}</h2>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="<%=request.getContextPath()%>/jobSeekerActivity/viewSavedJob.html"
+												<a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewSavedJob.html"
 													target="_blank" id="viewsavedjob">${msg.jsViewSavedjobs}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.savedJobsCount}" />${msg.commonCloseBrace}
 												</a>
@@ -162,7 +162,7 @@ jQuery(document).ready(
 
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="<%=request.getContextPath()%>/jobSeekerActivity/viewAppliedJob.html"
+												<a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewAppliedJob.html"
 													target="_blank" id="viewappliedjob">${msg.jsViewJobsApplied}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.appliedJobsCount}" />${msg.commonCloseBrace}
 												</a>

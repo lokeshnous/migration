@@ -5,7 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 
 /**
- * <code> JobSeekerActivity </code> is a Service class.
+ * <code> JobSeekerSubscriptionService </code> is a Service class.
  * 
  * 
  * @author sharad kumar

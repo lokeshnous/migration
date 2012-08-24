@@ -45,9 +45,8 @@ import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
-import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -56,8 +55,8 @@ import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 /**
- * <code>JobSearchDetailsController</code>This controller belongs to all
- * searched jobs details.
+ * <code>JobSearchController</code>This controller belongs to all
+ * searched jobs.
  * 
  * @author Pramoda Patil
  * @version 1.0
@@ -66,15 +65,11 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
  */
 
 @Controller
-@RequestMapping("/jobsearchactivity")
-@SuppressWarnings("unchecked")
-public class JobSearchActivityController {
-
-	@Autowired
-	private JobSearchActivity jobSearchActivity;
+@RequestMapping("/jobsearch")
+public class JobSearchController {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(JobSearchActivityController.class);
+			.getLogger(JobSearchController.class);
 
 	@Autowired
 	private MMEmailService emailService;
@@ -83,7 +78,16 @@ public class JobSearchActivityController {
 	private JSONConverterService jsonConverterService;
 
 	@Autowired
-	private JobSeekerService jobSeekerActivity;
+	private JobSeekerJobDetailService jobSeekerService;
+	
+	@Autowired
+	private JobSearchService jobSearchService;
+
+	@Autowired
+	private LookupService lookupService;
+
+	@Autowired
+	private CheckSessionMap checkSessionMap;
 
 	@Value("${navigationPath}")
 	private String navigationPath;
@@ -151,15 +155,6 @@ public class JobSearchActivityController {
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
-	@Autowired
-	private JobSearchService jobSearchService;
-
-	@Autowired
-	private LookupService lookupService;
-
-	@Autowired
-	private CheckSessionMap checkSessionMap;
-
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -168,6 +163,7 @@ public class JobSearchActivityController {
 	 * @param request
 	 * @return : modelandview for respected Jobid
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
 			Map<String, Object> model, HttpServletRequest request,
@@ -180,7 +176,7 @@ public class JobSearchActivityController {
 						.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
 			}
 			// View the job with template
-			SearchedJobDTO jobDTO = jobSearchActivity.viewJobDetails(jobId);
+			SearchedJobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 			model.put("jobDetail", jobDTO);
 			model.put("isHideCity", jobDTO.getCity() != null);
 			model.put("isHideState", jobDTO.getStateFullName() != null);
@@ -236,13 +232,14 @@ public class JobSearchActivityController {
 				map.put("loginForm", new LoginForm());
 				jsonObject.put(ajaxNavigationPath, navigationPath
 						+ dothtmlExtention + jobseekerPageExtention);
+				session.setAttribute("jobId", jobId);
 				return jsonObject;
 			}
 			// Get the Job details
-			SearchedJobDTO searchedJobDTO = jobSearchActivity
+			SearchedJobDTO searchedJobDTO = jobSearchService
 					.viewJobDetails(form.getJobID());
 			// Validate if job is already applied
-			AppliedJobDTO appliedJobDTO = jobSearchActivity
+			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(searchedJobDTO, userId);
 			if (appliedJobDTO != null && appliedJobDTO.getAppliedDt() != null) {
 				applyJobErrMsg = applyJobErrMsg.replace("?",
@@ -281,8 +278,6 @@ public class JobSearchActivityController {
 			employerEmailDTO.setBody(employerMailBody);
 			employerEmailDTO.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-			// TODO: Exception if resume not found. File server is not
-			// maintained
 			try {
 				ResumeDTO resumeDTO = resumeService
 						.fetchPublicResumeByUserId(userId);
@@ -305,7 +300,6 @@ public class JobSearchActivityController {
 						if (temp.renameTo(newFile)) {
 							LOGGER.info("File has been renamed.");
 						}
-						// Delete temp file when program exits.
 						temp.deleteOnExit();
 
 						// Write to temp file
@@ -367,11 +361,11 @@ public class JobSearchActivityController {
 				applyJobDTO.setCreateDt(currentDate.toString());
 				applyJobDTO.setAppliedDt(currentDate.toString());
 				applyJobDTO.setDeleteDt(null);
-				jobSearchActivity.saveOrApplyJob(applyJobDTO);
+				jobSearchService.saveOrApplyJob(applyJobDTO);
 			} else {
 				applyJobDTO = appliedJobDTO;
 				applyJobDTO.setAppliedDt(currentDate.toString());
-				jobSearchActivity.updateSaveOrApplyJob(applyJobDTO);
+				jobSearchService.updateSaveOrApplyJob(applyJobDTO);
 			}
 			jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		} catch (Exception e) {
@@ -507,10 +501,6 @@ public class JobSearchActivityController {
 		return null;
 	}
 
-	public void setJobSearchActivity(JobSearchActivity jobSearchActivity) {
-		this.jobSearchActivity = jobSearchActivity;
-	}
-
 	/**
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
 	 * 
@@ -527,27 +517,27 @@ public class JobSearchActivityController {
 		// Check for job seeker login ,open popup if not logged in.
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put(ajaxNavigationPath,
-					"../jobsearchactivity/jobseekersaveThisJobPopUp");
+					"../jobsearch/jobseekersaveThisJobPopUp");
 			return jsonObject;
 		}
 		form.setJobID(jobId);
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int savedJobsCount = 0;
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerService
 				.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
 		if (savedJobsCount > Integer.parseInt(saveJobsLimit)) {
 			int oldJobId = savedJobDTOList.get(0).getSaveJobId();
-			jobSeekerActivity.updateAppliedSavedJobs(oldJobId);
+			jobSeekerService.updateAppliedSavedJobs(oldJobId);
 		}
 
 		// Get the Job details
-		SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(form
+		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(form
 				.getJobID());
 
 		// Validate if job is already applied
-		AppliedJobDTO appliedJobDTO = jobSearchActivity.fetchSavedOrAppliedJob(
+		AppliedJobDTO appliedJobDTO = jobSearchService.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
 			if (appliedJobDTO.getAppliedDt() != null) {
@@ -575,7 +565,7 @@ public class JobSearchActivityController {
 		saveJobDTO.setCreateDt(currentDate.toString());
 		saveJobDTO.setAppliedDt(null);
 		saveJobDTO.setDeleteDt(null);
-		jobSearchActivity.saveOrApplyJob(saveJobDTO);
+		jobSearchService.saveOrApplyJob(saveJobDTO);
 		jsonObject.put(ajaxMsg, saveThisJobSuccessMsg);
 		return jsonObject;
 	}
@@ -663,7 +653,7 @@ public class JobSearchActivityController {
 					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
 							"?Jobseekername", jobseekerName);
 					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
-					SearchedJobDTO searchedJobDTO = jobSearchActivity
+					SearchedJobDTO searchedJobDTO = jobSearchService
 							.viewJobDetails(sendtofriendmail.getJobId());
 					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
 							"?Jobtitle", searchedJobDTO.getJobTitle());

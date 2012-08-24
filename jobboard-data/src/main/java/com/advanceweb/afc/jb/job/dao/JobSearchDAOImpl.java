@@ -14,19 +14,19 @@ import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
-import com.advanceweb.afc.jb.jobseeker.helper.JobSearchActivityConversionHelper;
-import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerActivityConversionHelper;
+import com.advanceweb.afc.jb.jobseeker.helper.JobSearchConversionHelper;
+import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper;
 
 /**
- * <code> JobSearchActivityDAOImpl </code> is a DAO implementation class.
+ * <code> JobSearchDAOImpl </code> is a DAO implementation class.
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 10 July 2012
  * 
  */
-@Repository("jobSearchActivityDAO")
-public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
+@Repository("jobSearchDAO")
+public class JobSearchDAOImpl implements JobSearchDAO {
 
 	private HibernateTemplate hibernateTemplate;
 
@@ -36,13 +36,13 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	}
 
 	private static final Logger LOGGER = Logger
-			.getLogger(JobSearchActivityDAOImpl.class);
+			.getLogger(JobSearchDAOImpl.class);
 
 	@Autowired
-	private JobSearchActivityConversionHelper jobSearchActivityConversionHelper;
+	private JobSearchConversionHelper jobSearchConversionHelper;
 
 	@Autowired
-	private JobSeekerActivityConversionHelper jobSeekerActivityConversionHelper;
+	private JobSeekerJobDetailConversionHelper jobSeekerJobDetailConversionHelper;
 
 	/**
 	 * implementation of viewJobDetails
@@ -56,7 +56,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 			if (jobId != 0) {
 				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
 						(int) jobId);
-				SearchedJobDTO searchedJobDTO = jobSearchActivityConversionHelper
+				SearchedJobDTO searchedJobDTO = jobSearchConversionHelper
 						.transformJpJobToSearchedJobDTO(jpJob);
 				jobDetail = searchedJobDTO;
 			}
@@ -85,7 +85,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 				List<AdmSaveJob> admSaveJobs = hibernateTemplate
 						.find("from AdmSaveJob where jpJob.jobId = ? and userId = ? and deleteDt is null",
 								jobId, userId);
-				jobDetail = jobSeekerActivityConversionHelper
+				jobDetail = jobSeekerJobDetailConversionHelper
 						.transformToApplidJobDTO(admSaveJobs);
 			}
 		} catch (HibernateException e) {
@@ -110,11 +110,8 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	public boolean saveOrApplyJob(AppliedJobDTO jobDTO) {
 		boolean status = false;
 		try {
-			/**
-			 * save the job in DB
-			 * 
-			 */
-			AdmSaveJob admSaveJob = jobSearchActivityConversionHelper
+			// save the job in DB
+			AdmSaveJob admSaveJob = jobSearchConversionHelper
 					.transformJobDTOToAdmSaveJob(jobDTO);
 			hibernateTemplate.save(admSaveJob);
 			status = true;
@@ -134,10 +131,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	public boolean updateSaveOrApplyJob(AppliedJobDTO jobDTO) {
 		boolean status = false;
 		try {
-			/**
-			 * save the job in DB
-			 * 
-			 */
+			// save the job in DB
 			AdmSaveJob admSaveJob = (AdmSaveJob) hibernateTemplate.load(
 					AdmSaveJob.class, jobDTO.getSaveJobId());
 			
@@ -156,7 +150,7 @@ public class JobSearchActivityDAOImpl implements JobSearchActivityDAO {
 	@Override
 	public void saveTheJob(SearchedJobDTO searchedJobDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
-		AdmSaveJob jpSaveJob = jobSearchActivityConversionHelper
+		AdmSaveJob jpSaveJob = jobSearchConversionHelper
 				.transformSearchedJobDTOtoJpSaveJob(searchedJobDTO);
 		hibernateTemplate.saveOrUpdate(jpSaveJob);
 	}

@@ -98,7 +98,7 @@ function geteditSavedSearch(searchJobId){
 				$.each(data, function(key, val) {
 					 if (key == "searchtype" && val == "basic") {
 						
-						parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
+						parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
 						parent.$.nmTop().close();
 					}
 					
@@ -126,7 +126,7 @@ function performSavedSearch(searchJobId){
 			$.each(data, function(key, val) {
 			
 				 if (key == "searchtype" && val == "basic") {
-					parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
+					parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
 					parent.$.nmTop().close();
 				}
 				
@@ -153,7 +153,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 			$.each(data, function(key, val) {
 				
 				 if (key == "searchtype" && val == "basic") {
-					parent.window.location.href = '${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html';
+					parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
 					parent.$.nmTop().close();
 				}
 				
@@ -229,7 +229,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 					</table>
 				</div>
 				<div class="popUpButtonRow">
-					<a href="<%=request.getContextPath()%>/jobsearchactivity/findJobPage.html">
+					<a href="<%=request.getContextPath()%>/jobsearch/findJobPage.html">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			

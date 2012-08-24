@@ -20,7 +20,7 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
@@ -53,7 +53,7 @@ public class JobSeekerDashBoardController {
 	private SaveSearchService saveSearchService;
 
 	@Autowired
-	private JobSeekerService jobSeekerActivity;
+	private JobSeekerJobDetailService jobSeekerService;
 
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
@@ -95,11 +95,11 @@ public class JobSeekerDashBoardController {
 				.viewMySavedSearches(nUserId);
 		savedSearchCount = saveSearchedJobsDTOList.size();
 		form.setSavedSearchCount(savedSearchCount);
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerActivity
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerService
 				.getSavedJobs(nUserId);
 		savedJobsCount = savedJobDTOList.size();
 		form.setSavedJobsCount(savedJobsCount);
-		List<AppliedJobDTO> appliedJobDTOList = jobSeekerActivity
+		List<AppliedJobDTO> appliedJobDTOList = jobSeekerService
 				.getAppliedJobs(nUserId);
 		appliedJobsCount = appliedJobDTOList.size();
 		form.setAppliedJobsCount(appliedJobsCount);

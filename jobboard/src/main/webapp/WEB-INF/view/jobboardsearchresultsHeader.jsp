@@ -50,7 +50,7 @@
 	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  
                       
-                      <a href="../jobsearchactivity/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div></div>
+                      <a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div></div>
             <!-- search_form -->
 
 					<security:authorize access="!hasRole('ROLE_JOB_SEEKER')">

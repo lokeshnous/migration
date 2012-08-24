@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 		function saveThisJob(jobId) {
 			
 			$.ajax({
-				url : '../jobsearchactivity/saveThisJob.html?id='+jobId,
+				url : '../jobsearch/saveThisJob.html?id='+jobId,
 				data : ({
 					userID : "userID"
 				}),
@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
 		function applyThisJob(jobId) {
 			
 			$.ajax({
-				url : '../jobsearchactivity/applyJob.html?id='+jobId,
+				url : '../jobsearch/applyJob.html?id='+jobId,
 				data : ({
 					userID : "userID"
 				}),
@@ -118,7 +118,7 @@ jQuery(document).ready(function() {
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 32px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
 				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
-				sOut += '<a href="../jobsearchactivity/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl;
+				sOut += '<a href="../jobsearch/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl;
 				sOut += '" class="btn_sm white">View Details</a>';
 				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
 				sOut += '" class="btn_sm white">Save This Job</a></div>';
@@ -213,7 +213,7 @@ jQuery(document).ready(function() {
 									var start = $("#start").val();
 									var searchtype = $("#searchtype").val();
 									
-									var navUrl =  "../jobsearchactivity/searchJob.html?keywords="+keywords+"&cityState="
+									var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
@@ -295,7 +295,7 @@ jQuery(document).ready(function() {
 			
 			 $(document).ready(function() {
 				var cityState = $("#cityState").val();
-				var url = "../jobsearchactivity/findLocation.html?cityState="+cityState;
+				var url = "../jobsearch/findLocation.html?cityState="+cityState;
 				$( "#cityState" ).autocomplete({
 					source: url
 				});
@@ -316,7 +316,7 @@ jQuery(document).ready(function() {
 					var rows = $("#rows").val();
 					var start = $("#start").val();
 					var searchtype = $("#searchtype").val();
-					var navUrl =  "../jobsearchactivity/searchJob.html?keywords="+keywords+"&cityState="
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 					$("#TotalNoRecords").text("");
 					$("#TotalRecord").text("");

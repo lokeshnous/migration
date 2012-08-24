@@ -21,27 +21,28 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.resume.ResumeService;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 /**
- * <code> JobSearchActivityServiceTest </code> is a Test class for
- * JobSearchActivity
+ * <code> JobSearchServiceTest </code> is a Test class for
+ * JobSearchService
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 17 July 2012
  * 
  */
-public class JobSearchActivityServiceTest extends ServiceTest {
+public class JobSearchServiceTest extends ServiceTest {
 
 	@Autowired
-	public JobSearchActivity jobSearchActivity;
+	private JobSearchService jobSearchService;
 
 	/*
 	 * @Autowired private MMEmailService emailService;
 	 */
 
 	private static final Logger LOGGER = Logger
-			.getLogger("JobSearchActivityController.class");
+			.getLogger(JobSearchServiceTest.class);
 
 	@Autowired
 	private ResumeService resumeService;
@@ -53,7 +54,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 	@Test
 	public void testViewJobDetails() {
 		Long jobId = 13100L;
-		SearchedJobDTO searchedJobDTO = jobSearchActivity.viewJobDetails(jobId);
+		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(jobId);
 		assertNotNull("View SearchedJob", searchedJobDTO);
 	}
 
@@ -67,7 +68,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 		try {
 			int jobId = 13100;
 			int userId = 30;
-			SearchedJobDTO searchedJobDTO = jobSearchActivity
+			SearchedJobDTO searchedJobDTO = jobSearchService
 					.viewJobDetails(jobId);
 			/**
 			 * Sending mail to employer
@@ -118,7 +119,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			applyJobDTO.setCreateDt(currentDate.toString());
 			applyJobDTO.setAppliedDt(currentDate.toString());
 			applyJobDTO.setDeleteDt(null);
-			jobSearchActivity.saveOrApplyJob(applyJobDTO);
+			jobSearchService.saveOrApplyJob(applyJobDTO);
 		} catch (Exception e) {
 			// e.printStackTrace();
 			LOGGER.info("testApplyJob Exception");
@@ -140,7 +141,7 @@ public class JobSearchActivityServiceTest extends ServiceTest {
 			searchedJobDTO.setCreatedDate(new Date());
 			searchedJobDTO.setJobTitle("Project Manager");
 			searchedJobDTO.setCompanyName("XYZ");
-			jobSearchActivity.saveJob(searchedJobDTO);
+			jobSearchService.saveJob(searchedJobDTO);
 			assertTrue("Test to save the job", status);
 		} catch (Exception e) {
 			LOGGER.info("testSaveJob Exception");

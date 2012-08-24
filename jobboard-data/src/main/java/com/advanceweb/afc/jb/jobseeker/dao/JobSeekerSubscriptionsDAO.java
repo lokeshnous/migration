@@ -5,7 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 
 /**
- * Created JobSeekerActivity DAO
+ * Created JobSeekerSubscriptions DAO
  * 
  * @author sharadk
  * 

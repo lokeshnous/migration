@@ -8,24 +8,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerActivityDAO;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
+import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerJobDetailDAO;
+import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 
 /**
  * 
  * @author sharadk
  * 
  */
-@Service("jobSeekerActivity")
+@Service("jobSeekerJobDetailService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class JobSeekerServiceImpl implements JobSeekerService {
+public class JobSeekerJobDetailServiceImpl implements JobSeekerJobDetailService {
 
 	@Autowired
-	public JobSeekerActivityDAO activityDAO;
-
-	JobSeekerServiceImpl() {
-
-	}
+	private JobSeekerJobDetailDAO jobSeekerJobDetailDAO;
 
 	/**
 	 * to get list of applied job
@@ -33,8 +29,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
 
 	@Override
 	public List<AppliedJobDTO> getAppliedJobs(int jobSeekerId) {
-
-		return activityDAO.getAppliedJobs(jobSeekerId);
+		return jobSeekerJobDetailDAO.getAppliedJobs(jobSeekerId);
 
 	}
 
@@ -45,8 +40,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public boolean updateAppliedSavedJobs(int jobId) {
-
-		return activityDAO.updateAppliedSavedJobs(jobId);
+		return jobSeekerJobDetailDAO.updateAppliedSavedJobs(jobId);
 
 	}
 
@@ -56,12 +50,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
 
 	@Override
 	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
-		return activityDAO.getSavedJobs(jobSeekerId);
+		return jobSeekerJobDetailDAO.getSavedJobs(jobSeekerId);
 	}
-
-	public JobSeekerActivityDAO getActivityDAO() {
-		return activityDAO;
-	}
-
 
 }

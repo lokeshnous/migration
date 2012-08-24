@@ -13,7 +13,7 @@ import com.mysql.jdbc.StringUtils;
 public class DateUtils {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("JobSearchActivityController.class");
+			.getLogger(DateUtils.class);
 
 /*	public static Date convertStringToSQLDateTime(String stringDate) {
 		DateFormat formater = new SimpleDateFormat(

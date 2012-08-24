@@ -14,7 +14,7 @@ import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 
 /**
- * <code> JobSearchActivityConversionHelper </code> is a Conversion Helper class
+ * <code> JobSearchConversionHelper </code> is a Conversion Helper class
  * for jobs search.
  * 
  * @author Pramoda Patil
@@ -22,8 +22,8 @@ import com.advanceweb.afc.jb.data.entities.JpLocation;
  * @since 10 July 2012
  * 
  */
-@Repository("jobSearchActivityConversionHelper")
-public class JobSearchActivityConversionHelper {
+@Repository("jobSearchConversionHelper")
+public class JobSearchConversionHelper {
 
 	/**
 	 * Entity to view job dto

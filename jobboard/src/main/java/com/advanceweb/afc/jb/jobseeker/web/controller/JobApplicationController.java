@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
-import com.advanceweb.afc.jb.job.service.JobSearchActivity;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 /**
  * @Author : Prince Mathew
@@ -37,11 +38,12 @@ import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
 public class JobApplicationController {
 
 	@Autowired
-	private  JobSearchActivity jobSearchActivity;
+	private JobSearchService jobSearchService;
 
 	@Autowired
 	private  MMEmailService emailService;
 
+	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger
 			.getLogger("JobApplicationController.class");
 
@@ -59,6 +61,12 @@ public class JobApplicationController {
 
 	@Value("${dothtmlExtention}")
 	private  String dothtmlExtention;
+	
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
+	
+	@Value("${jobseekerPageExtention}")
+	private String jobseekerPageExtention;
 
 	@Value("${jobseekerJobApplicationSub}")
 	private String jobAppSub;
@@ -94,29 +102,29 @@ public class JobApplicationController {
 	public String appylJob(
 			@ModelAttribute("jobApplicationForm") JobApplicationForm form,
 			BindingResult result, @RequestParam("filePath") String filepath,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpSession session) {
 		// ,@RequestParam("id") Long jobId
 		try {
 
-			/**
-			 * send mail to employer email id which is given while posting the
-			 * job and attach the anonymous job seeker resume as
-			 * attachment,subject will be job title, body will contain short
-			 * description
-			 * 
-			 */
+			// send mail to employer email id which is given while posting the
+			 // job and attach the anonymous job seeker resume as
+			 // attachment,subject will be job title, body will contain short
+			 // description
+			 
 			// TODO:waiting for the completion for apply job functionality for
 			// anonymous,currently using hard code jobId
-			SearchedJobDTO searchedJobDTO = jobSearchActivity
-					.viewJobDetails(13100);
+			int jobId = (Integer) session.getAttribute("jobId");
+			SearchedJobDTO searchedJobDTO = jobSearchService
+					.viewJobDetails(jobId);
+			
 			// Adding path for
 			String loginPath = navigationPath.substring(2);
 			String jonseekerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention;
+					+ dothtmlExtention + jobseekerPageExtention;
 			String employerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention;
+					+ dothtmlExtention + employerPageExtention;
 
 			EmailDTO toEmployer = new EmailDTO();
 			InternetAddress[] employerToAddress = new InternetAddress[1];

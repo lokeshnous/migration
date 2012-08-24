@@ -188,7 +188,7 @@
 			<%-- <a href="${returnResults}" class="link_color2_emphasized">Return to Search Results &nbsp; </a> --%>
 			 <c:choose><c:when test="${returnResults != 'null'}">
                         <%-- <a href="${returnResults}" class="link_color2_emphasized">Return to Search Results &nbsp; </a> --%>
-                        <a href='${pageContext.request.contextPath}/jobsearchactivity/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
+                        <a href='${pageContext.request.contextPath}/jobsearch/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
                         </c:when>
                         <c:otherwise></c:otherwise>
                         </c:choose>

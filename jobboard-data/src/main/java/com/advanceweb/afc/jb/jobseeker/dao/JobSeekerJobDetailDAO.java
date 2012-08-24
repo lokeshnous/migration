@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 /**
- * Created JobSeekerActivity DAO
+ * Created JobSeekerJobDetailDAO
  * @author sharadk
  *
  */
-public interface JobSeekerActivityDAO {
+public interface JobSeekerJobDetailDAO {
 	/**
 	 * delete appliedJob
 	 * @param appliedJobId

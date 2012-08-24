@@ -1,20 +1,18 @@
 package com.advanceweb.afc.jb.job.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 
-public class JobSeekerActivityServiceTest extends ServiceTest {
+public class JobSeekerJobDetailServiceTest extends ServiceTest {
 
-	@Autowired
-	private JobSeekerService jobSeekerActivity;
+	//TODO: Need to modify as per the change of DB
+//	@Autowired
+//	private JobSeekerService jobSeekerService;
 
 	/*@Test
 	public void testGetAppliedJobs() {
 		try {
 
-			List<AppliedJobDTO> appliedJobDTO = jobSeekerActivity
+			List<AppliedJobDTO> appliedJobDTO = jobSeekerService
 					.getAppliedJobs(13100);
 			assertTrue("Get Applied Job", appliedJobDTO != null);
 
@@ -29,7 +27,7 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 		try {
 
 			assertTrue("Delete Applied Job",
-					jobSeekerActivity.deleteAppliedJobs(13100));
+					jobSeekerService.deleteAppliedJobs(13100));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +38,7 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 	public void testSavedJobs() {
 		try {
 
-			List<SavedJobDTO> savedJobDTO = jobSeekerActivity
+			List<SavedJobDTO> savedJobDTO = jobSeekerService
 					.getSavedJobs(13100);
 			assertTrue("Get Applied Job", savedJobDTO != null);
 
@@ -54,7 +52,7 @@ public class JobSeekerActivityServiceTest extends ServiceTest {
 		try {
 
 			assertTrue("Delete Applied Job",
-					jobSeekerActivity.deleteSavedJobs(13100));
+					jobSeekerService.deleteSavedJobs(13100));
 
 		} catch (Exception e) {
 			e.printStackTrace();
