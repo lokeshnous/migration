@@ -15,13 +15,13 @@
 		jQuery(document).ready(function() {
 		$("#sendButton").click(function(event){    
 			if(validate()){
-			var file=$("#filePath").val();
-			$.ajax({url: "${pageContext.request.contextPath}"+"/anonymoususerjobapply/saveAnonymousUserJobapply.html?filePath="+file,
+			var file=$("#filePath").val();		
+			$.ajax({url: "${pageContext.request.contextPath}/anonymoususerjobapply/saveAnonymousUserJobapply.html?filePath="+file,
 				data:$('#applyJobForm').serialize(),
 				type:"POST",
 				success: function(data) {
 					if(data ==''){
-						 parent.window.location.href ="${pageContext.request.contextPath}"+"/healthcarejobs/advanceweb.html?message=true";
+						 parent.window.location.href ="${pageContext.request.contextPath}/healthcarejobs/advanceweb.html?message=true";
 						 parent.$.nmTop().close();
 					}else{
 						$("#errmsg").html("Please try again");
@@ -37,34 +37,34 @@
 			var file=$("#filePath").val();
 			var x=userEmail.indexOf('@');
 			var y=userEmail.lastIndexOf('.');
+			var result=true;
 			if(userName.length == 0){
 				$("#userNameError").text("Please enter name");
-				$("#userEmailError").text("");
-				$("#filePathError").text("");
-				return false;
+				result=false;
 			}
 			else{
 				$("#userNameError").text("");
 			}
 			if(x==-1 || y==-1 || (x+2)>=y){
-				$("#userEmailError").text("Please enter the correct E-Mail Address");
-				$("#userNameError").text("");
-				$("#filePathError").text("");
-				return false;
+				$("#userEmailError").text("Please enter the correct e-mail address");
+				result=false;
 			}
 			else{
 				$("#userEmailError").text("");
 			}
-			if(file.length == 0 ){
+			if(!file.toLowerCase().match(/(\.doc|\.pdf|\.docx)$/)){
 				$("#filePathError").text("Please chose the appropriate file format");
-				$("#userNameError").text("");
-				$("#filePathError").text("");
-				return false;
+				result=false;
 			}
 			else{
 				$("#filePathError").text("");
 			}
-			return true;
+			if(!result){
+			return false;
+			}
+			else{
+				return true;
+			}
 		}
 		
         </script>
