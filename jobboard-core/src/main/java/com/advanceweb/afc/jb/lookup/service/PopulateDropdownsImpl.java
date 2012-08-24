@@ -220,6 +220,34 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	public List<DropDownDTO> populateJobPostingTypeDropdowns() {
 		
 		return populateDropdownsDAO.populateJobPostingTypeDropdowns();
+	}
+
+	@Override
+	public List<String> populateCityAutoComplete(String city) {
+		
+		return populateDropdownsDAO.populateCityAutoComplete(city);
+	}
+
+	@Override
+	public String populateStateAutoComplete(String city) {
+		
+		return populateDropdownsDAO.populateStateAutoComplete(city);
+	}
+
+	@Override
+	public List<String> populatePostalCodeAutoComplete(String postalCode) {
+		return populateDropdownsDAO.populatePostalCodeAutoComplete(postalCode);
+	}
+
+	@Override
+	public String getPostalCode(String city, String state) {
+		return populateDropdownsDAO.getPostalCode(city, state);
+	}
+
+	@Override
+	public String getCountry(String city, String state, String postalCode) {
+		
+		return populateDropdownsDAO.getCountry(city, state, postalCode);
 	}	
 
 }
