@@ -51,7 +51,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
 //		empBrandTempDTO.setDescription("Test Template Desc");
 		empBrandTempDTO.setEmployerId(33);
-		empBrandTempDTO.setImagePath("c://image2.jpg");
+		empBrandTempDTO.setMainImagePath("c://image2.jpg");
 		empBrandTempDTO.setLogoPath("c://logo2.jpg");
 		empBrandTempDTO.setColor("#ff0000");
 		empBrandTempDTO.setCreatedDate(new Date());
@@ -85,7 +85,7 @@ public class EmpBrandTempServiceTest extends ServiceTest {
 //		updatedEmpBrandTempDTO.setDescription("Test Template Desc updated");
 		updatedEmpBrandTempDTO.setEmployerId(36);
 		updatedEmpBrandTempDTO.setJpBrandTempId(11);
-		updatedEmpBrandTempDTO.setImagePath("c://imageupd2.jpg");
+		updatedEmpBrandTempDTO.setMainImagePath("c://imageupd2.jpg");
 		updatedEmpBrandTempDTO.setLogoPath("c://logoupd2.jpg");
 		updatedEmpBrandTempDTO.setColor("#ffff00");
 //		updatedEmpBrandTempDTO.setUpdatedDate(new Date().toString());
