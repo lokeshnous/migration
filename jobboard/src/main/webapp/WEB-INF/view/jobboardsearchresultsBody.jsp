@@ -25,7 +25,6 @@
 			    if(data.success != null){
 			    }
 			    if(data.failure != null){
-			    	//alert(data.failure);
 			    	$("#errorMsg").html("<span style='color:red'><b>Please enter the required parameters.</b></span>");
 			    }
 			},
@@ -148,48 +147,9 @@
 
 							<div class="searchResults">
 
-								<!-- <div class="searchResultsNavigation">
-                            
-                                     <div class="searchResultsNavigationColumn1">
-                                     	<span class="marginTop5">Results viewable:</span>
-                                        <span><select id="results" name="results" class="jb_input4">
-                                        <option value="20">20</option>
-										<option value="30">30</option>
-										<option value="40">40</option>
-                                        <option value="50">50</option>
-                                        <option value="All">All</option>
-										</select></span>
-                                        <span class="marginTop5">per page</span>
-                                     </div>
-                                     
-                                     
-                                     
-                                     <div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp; </div>
-<div class="searchResultsNavigationColumn2">
-                                     	<span>Page:</span>
-                                        <span class="active">1</span>
-                                        <span><a href="">2</a></span>
-                                        <span><a href="">3</a></span>
-                                        <span><a href="">4</a></span>
-                                        <span><a href="">5</a></span>
-                                        <span><a href="">6</a></span>
-                                        <span><a href="">7</a></span>
-                                        <span><a href="">8</a></span>
-                                        <span><a href="">9</a></span>
-                                        <span><a href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
-                                  </div>
-                              </div> -->
-
 								<table id="jobSearchResultTable">
 
-									<!-- <div class="searchResultsHeader">
-										<ul style="height: 0px;">
-											<li class="searchResultsColumn1"></li>
-											<li class="searchResultsColumn2"></li>
-											<li class="searchResultsColumn3"></li>
-											<li class="searchResultsColumn4"></li>
-										</ul>
-									</div> -->
+									
 
 									<div id="jobSearchResultDiv" class="searchResultsListing">
 
