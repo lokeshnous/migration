@@ -59,12 +59,15 @@ JAVASCRIPT FILES
 						<div class="lableTextDashBoard">
 							<p>
 								<a
-									href="/jobboard/jobseekerregistration/jobSeekerChangePassword.html"
-									id="changePassword">Change Password</a>
+									href="#"
+									>Change Password</a>
+<%-- 								<a
+									href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
+									>Change Password</a> --%>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
-                                 <p><a href="/jobboard/employerRegistration/viewEmpAccountProfile.html"
+                                 <p><a href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
 													 id="accountSettingpopUp">Account Settings</a> </p>
                         </div>
 						<div class="lableTextDashBoard">
@@ -74,7 +77,7 @@ JAVASCRIPT FILES
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="/jobboard/empProfile/employerprofile.html">Manage
+								<a href="<%=request.getContextPath()%>/empProfile/employerprofile.html">Manage
 									Featured Employer Profile</a>
 							</p>
 						</div>
@@ -95,7 +98,7 @@ JAVASCRIPT FILES
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="/jobboard/employer/postNewJobs.html">Post New Job</a>
+								<a href="<%=request.getContextPath()%>/employer/postNewJobs.html">Post New Job</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
