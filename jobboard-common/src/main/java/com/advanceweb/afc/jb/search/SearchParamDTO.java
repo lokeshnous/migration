@@ -17,6 +17,7 @@ public class SearchParamDTO {
 	public static final String SESSION_ID = "sessionid";
 	public static final String ROWS = "rows";
 	public static final String START = "start";
+	public static final String SEARCH_SESSION_MAP = "sessionMap";
 
 	private int searchParamId;
 

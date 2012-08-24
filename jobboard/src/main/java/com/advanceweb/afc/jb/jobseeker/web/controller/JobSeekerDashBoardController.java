@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -66,6 +67,9 @@ public class JobSeekerDashBoardController {
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
 
+	@Autowired
+	private CheckSessionMap checkSessionMap;
+
 	@RequestMapping("/jobSeekerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session) {
 		ModelAndView model = new ModelAndView();
@@ -110,39 +114,28 @@ public class JobSeekerDashBoardController {
 
 		/** Getting the value from the session **/
 
-		//Added for view my saved search task
+		// Added for view my saved search task
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
-					&& session
-							.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
-							.toString()
-							.equalsIgnoreCase(
-									MMJBCommonConstants.BASIC_SEARCH_TYPE)) {
 
-				String searchType = session.getAttribute(
-						MMJBCommonConstants.SEARCH_TYPE).toString();
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
+
+			if (!sessionMap.isEmpty()) {
+
+				String searchType = sessionMap
+						.get(MMJBCommonConstants.SEARCH_TYPE);
 				String radius = MMJBCommonConstants.EMPTY;
 				String cityState = MMJBCommonConstants.EMPTY;
 				String keywords = MMJBCommonConstants.EMPTY;
 				String saveSearchName = MMJBCommonConstants.EMPTY;
-				if (session.getAttribute(SearchParamDTO.KEYWORDS) != null) {
-					keywords = session.getAttribute(
-							SearchParamDTO.KEYWORDS).toString();
-				}
-				if (session.getAttribute(SearchParamDTO.CITY_STATE) != null) {
-					cityState = session.getAttribute(
-							SearchParamDTO.CITY_STATE).toString();
-				}
-				if (session.getAttribute(SearchParamDTO.RADIUS) != null) {
-					radius = session.getAttribute(SearchParamDTO.RADIUS)
-							.toString();
-				}
-				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
-					saveSearchName = session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME)
-							.toString();
-				}
 
-				model.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
+				keywords = sessionMap.get(SearchParamDTO.KEYWORDS);
+				cityState = sessionMap.get(SearchParamDTO.CITY_STATE);
+				radius = sessionMap.get(SearchParamDTO.RADIUS);
+				saveSearchName = sessionMap
+						.get(MMJBCommonConstants.SAVE_SEARCH_NAME);
+				model.addObject(MMJBCommonConstants.SAVE_SEARCH_NAME,
+						saveSearchName);
 				model.addObject(MMJBCommonConstants.SEARCH_TYPE, searchType);
 				model.addObject(SearchParamDTO.KEYWORDS, keywords);
 				model.addObject(SearchParamDTO.CITY_STATE, cityState);
@@ -150,11 +143,14 @@ public class JobSeekerDashBoardController {
 
 				LOGGER.info("Removing from session....");
 
-				session.removeAttribute(SearchParamDTO.KEYWORDS);
-				session.removeAttribute(SearchParamDTO.CITY_STATE);
-				session.removeAttribute(SearchParamDTO.RADIUS);
-
+				session.removeAttribute(sessionMap
+						.remove(SearchParamDTO.KEYWORDS));
+				session.removeAttribute(sessionMap
+						.remove(SearchParamDTO.CITY_STATE));
+				session.removeAttribute(sessionMap
+						.remove(SearchParamDTO.RADIUS));
 			}
+
 		}
 
 		return model;
