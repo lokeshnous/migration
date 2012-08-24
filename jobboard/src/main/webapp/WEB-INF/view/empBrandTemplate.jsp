@@ -6,31 +6,43 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ADVANCE Heathcare Jobs</title>
-
+<title>ADVANCE Healthcare Jobs</title>
 <jsp:include page="common/include.jsp" />
+		<script type="text/javascript">
 
-<!-- STYLESHEETS -->
-<!-- 	<link href="stylesheets/JB.css" rel="stylesheet" type="text/css" />
-		<link href="stylesheets/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="stylesheets/SliderStyles.css" rel="stylesheet" type="text/css">
- -->
+                jQuery(document).ready(
+
+                function() {                    
+
+                        $("#branding").displaypopup("#branding","770","360");
+
+                });
+
+                </script>
+
+<link href="../resources/js/colorPicker.css" type='text/css'
+	rel='stylesheet'>
+
+
 <!--[if IE]>
 	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
 	<![endif]-->
 
-<!-- JAVASCRIPT FILES -->
-<!-- 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="javascripts/slider.js"></script>
-		<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
- -->
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
-<script type="text/javascript" src="javascripts/expandCollapse.js"></script>
+<!-- <script type="text/javascript" src="javascripts/expandCollapse.js"></script> -->
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$('#colorPkr').colorPicker();
+	});
+</script>
+<script type="text/javascript"
+	src="../resources/js/jquery.colorPicker.js"></script>
+
 </head>
 
 <body class="job_board">
@@ -188,7 +200,7 @@
 								</div>
 								<div>
 									<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="logoPath" /></FONT>
+											path="logoFileData" /></FONT>
 								</div>
 							</div>
 						</div>
@@ -198,11 +210,13 @@
 							<div class="lableTextCoverletter width150">Primary Color:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="color" type="text"
+									<form:input id="color_id" path="color" type="text" readonly="true"
 										class="jb_input2Coverletter InputActiveText" value="HEX #" />
 								</div>
+								
 								<div class="required2">
-									<img src="images/Color.png" width="16" height="16" alt="Color">
+									<!-- <img src="images/Color.png" width="16" height="16" alt="Color"> -->
+									<div class="floatRight"><input id="colorPkr" name="color1" type="text"   /></div>
 								</div>
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">Select a color that complements
@@ -225,7 +239,7 @@
 										.gif, .png and .tif.</span>
 								</div>
 								<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="mainImage" /></FONT>
+											path="mainImageFileData" /></FONT>
 								</div>
 							</div>
 						</div>
@@ -278,7 +292,7 @@
 							<div class="input_grp5 AutoWidth">
 								<div class="FloatLeft">
 									<textarea id="Body Text:" class="textareaBoxCResume Height256"
-										rows="5" cols="45" name="Body Text:"></textarea>
+										rows="5" cols="45" name="Body Text:" readonly="readonly"></textarea>
 								</div>
 								<span class="required"><a href="#">Add Another
 										Testimonial</a></span>
@@ -293,8 +307,10 @@
 
 
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
-							<span class="floatLeft marginTop10"><a href=""
-								class="btn_sm white">Preview</a> 
+							<span class="floatLeft marginTop10">
+							<%-- <a href="<%=request.getContextPath()%>/brandingTemplates/empBrandTemplatePreview.html" id="branding"
+								class="btn_sm white" target="">Preview</a> --%> 
+								<input type="submit" value="Preview" class="btn_sm white"  name="Preview" id="branding"/>
 								<input type="submit" value="Save" class="btn_sm white"  name="Save"/>
 								
 								<!-- <a href="<%=request.getContextPath()%>/brandingTemplates/saveEmpBrandTemp.html"
