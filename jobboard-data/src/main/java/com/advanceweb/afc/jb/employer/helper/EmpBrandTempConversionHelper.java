@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
+
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.JpTemplateMedia;
 import com.advanceweb.afc.jb.data.entities.JpTemplateTestimonial;
@@ -56,7 +56,7 @@ public class EmpBrandTempConversionHelper {
 //		To be removed after mapping
 		
 //		jpBrandTempDTO.setEmployerId(jpBrandingTemp.getMerUser().getUserId());
-		jpBrandTempDTO.setImagePath(jpBrandingTemp.getMainImagePath());
+		jpBrandTempDTO.setMainImagePath(jpBrandingTemp.getMainImagePath());
 		jpBrandTempDTO.setLogoPath(jpBrandingTemp.getLogoPath());
 		jpBrandTempDTO.setColor(jpBrandingTemp.getColorPalette());
 		jpBrandTempDTO.setCreatedDate(jpBrandingTemp.getCreateDt());
@@ -108,7 +108,7 @@ public class EmpBrandTempConversionHelper {
 //		MerUser merUser = new MerUser();
 //		merUser.setUserId(brandingTemplatesDTO.getEmployerId());
 //		jpBrandTemp.setMerUser(merUser);
-		jpBrandTemp.setMainImagePath(brandingTemplatesDTO.getImagePath());
+		jpBrandTemp.setMainImagePath(brandingTemplatesDTO.getMainImagePath());
 		jpBrandTemp.setLogoPath(brandingTemplatesDTO.getLogoPath());
 		jpBrandTemp.setColorPalette(brandingTemplatesDTO.getColor());
 		jpBrandTemp.setCreateDt(brandingTemplatesDTO.getCreatedDate());
@@ -123,34 +123,45 @@ public class EmpBrandTempConversionHelper {
 		facility.setFacilityId(111);
 		jpBrandTemp.setAdmFacility(facility);
 		
-		JpJob jpJob1 = new JpJob();
-		jpJob1.setJobId(13100);
-		JpJob jpJob2 = new JpJob();
-		jpJob2.setJobId(13101);
-		ArrayList<JpJob> jpjobList = new ArrayList<JpJob>();
-		jpjobList.add(jpJob1);
-		jpjobList.add(jpJob2);
-		jpBrandTemp.setJpJobs(jpjobList);
+//		JP job does not seem to be requiring to persist
+//		JpJob jpJob1 = new JpJob();
+//		jpJob1.setJobId(13100);
+//		JpJob jpJob2 = new JpJob();
+//		jpJob2.setJobId(13101);
+//		jpBrandTemp.getJpJobs().add(jpJob1);
+//		jpBrandTemp.getJpJobs().add(jpJob2);
 		
+		
+
+//		Create dummy media
 		JpTemplateMedia media1 = new JpTemplateMedia();
-		media1.setTemplateMediaId(1);
+//		media1.setMediaPath("Media path1");
+//		media1.setMediaType("Additional Image");
 		JpTemplateMedia media2 = new JpTemplateMedia();
-		media2.setTemplateMediaId(2);
+//		media2.setMediaPath("Media path2");
+//		media2.setMediaType("Video");
+		
 		ArrayList<JpTemplateMedia> mediaList = new ArrayList<JpTemplateMedia>();
 		mediaList.add(media1);
 		mediaList.add(media2);
 		jpBrandTemp.setJpTemplateMedias(mediaList);
-
+		
+		media1.setJpTemplate(jpBrandTemp);
+		media2.setJpTemplate(jpBrandTemp);
+		
+//		Create dummy testimony
 		JpTemplateTestimonial testimony1 = new JpTemplateTestimonial();
-		testimony1.setTemplateTestimonialId(1);
+//		testimony1.setTestimonial("Testimonial 1");
 		JpTemplateTestimonial testimony2 = new JpTemplateTestimonial();
-		testimony2.setTemplateTestimonialId(2);
+//		testimony2.setTestimonial("Testimonial 2");
+		
 		ArrayList<JpTemplateTestimonial> testimonyList = new ArrayList<JpTemplateTestimonial>();
 		testimonyList.add(testimony1);
 		testimonyList.add(testimony2);
 		jpBrandTemp.setJpTemplateTestimonials(testimonyList);
-		
-		
+				
+		testimony1.setJpTemplate(jpBrandTemp);
+		testimony2.setJpTemplate(jpBrandTemp);
 		
 		return jpBrandTemp;
 
