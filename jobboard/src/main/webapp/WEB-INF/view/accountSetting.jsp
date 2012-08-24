@@ -29,7 +29,7 @@
 	});
 </script>	
 <script type="text/javascript">
-	jQuery(document).ready(function() {
+	 jQuery(document).ready(function() {
 		
  		$('#save').click(function(){			
  			
@@ -47,7 +47,7 @@
 		}); 
 		
 		jQuery(".megamenu").megamenu();
-	});
+	}); 
 </script>	
 	</head>
 	<body class="job_board">
@@ -61,7 +61,7 @@
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">
-				<form:form action="'<%=request.getContextPath( )%>'/employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="../employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
@@ -135,12 +135,14 @@
 						</span>
 					</div>
 					</form:form>
-					<div class="borderBottomDotted row">
+					 <div class="borderBottomDotted row">
 					</div>
-					<form:form action="'<%=request.getContextPath( )%>'/employerRegistration/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
+					<form:form action="../employerRegistration/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
 					<div class="row marginLeft20 marginTop25">
-						<h3>Billing Contact</h3>
-					</div>
+					  <h3>Billing Contact</h3>
+					  </div>				  
+					
+					<c:if test="${count == '1'}">									
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Contact Name:
@@ -212,6 +214,8 @@
 					</div>
 					<div class="clearfix">
 					</div>
+					  
+					  </c:if>
 				</form:form>
 			</div>
 			<div class="clearfix">
