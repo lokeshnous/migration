@@ -106,6 +106,8 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 					.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
 //			hibernateTemplateTracker.save(jpBrandingTemp);
 			hibernateTemplateCareer.save(jpBrandingTemp);
+//			hibernateTemplateCareer.save(jpBrandingTemp.getJpTemplateMedias());
+//			hibernateTemplateCareer.save(jpBrandingTemp.getJpTemplateTestimonials());
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
