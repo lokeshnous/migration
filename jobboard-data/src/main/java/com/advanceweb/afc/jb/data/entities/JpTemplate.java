@@ -51,8 +51,8 @@ public class JpTemplate implements Serializable {
 	private String templateName;
 
 	//bi-directional many-to-one association to JpJob
-	@OneToMany(mappedBy="jpTemplate")
-	private List<JpJob> jpJobs;
+//	@OneToMany(mappedBy="jpTemplate")
+//	private List<JpJob> jpJobs;
 
 	//bi-directional many-to-one association to AdmFacility
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -67,8 +67,8 @@ public class JpTemplate implements Serializable {
 	@OneToMany(mappedBy="jpTemplate")
 	private List<JpTemplateTestimonial> jpTemplateTestimonials;
 
-    public JpTemplate() {
-    }
+//    public JpTemplate() {
+//    }
 
 	public int getTemplateId() {
 		return this.templateId;
@@ -143,13 +143,13 @@ public class JpTemplate implements Serializable {
 		this.templateName = templateName;
 	}
 
-	public List<JpJob> getJpJobs() {
-		return this.jpJobs;
-	}
-
-	public void setJpJobs(List<JpJob> jpJobs) {
-		this.jpJobs = jpJobs;
-	}
+//	public List<JpJob> getJpJobs() {
+//		return this.jpJobs;
+//	}
+//
+//	public void setJpJobs(List<JpJob> jpJobs) {
+//		this.jpJobs = jpJobs;
+//	}
 	
 	public AdmFacility getAdmFacility() {
 		return this.admFacility;
