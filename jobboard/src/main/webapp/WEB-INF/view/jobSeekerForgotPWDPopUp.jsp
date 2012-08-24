@@ -76,7 +76,7 @@
 					<span class="required">(Required)</span>
 				</div>
 				<span class="lableText3"></span>
-				<span style="color: red;font-style:italic; "><div id="emailmsg"></div></span>  
+				<span style="color: red;font-style:bold; "><div id="emailmsg"></div></span>  
 				
 				<div class="popUpButtonRow">					 
 					     <input type="button" id="emailbutton" class="btn_sm orange" value="Send"/>
