@@ -21,18 +21,21 @@ public class TransformEmpoyerBrandTemp {
 
 		EmpBrandTempDTO dto = new EmpBrandTempDTO();
 
-		dto.setTemplateName(brandingTemplateForm.getTemplateName());
+		
 
 		// int userId = (Integer)session.getAttribute(MMJBCommonConstants.USER_ID);
 		dto.setEmployerId(26);
-		dto.setImagePath(brandingTemplateForm.getMainImage());
+		dto.setFacilityId(1);
+		
 		dto.setLogoPath(brandingTemplateForm.getLogoPath());
 		dto.setColor(brandingTemplateForm.getColor());
 		dto.setCreatedDate(new Date());
+		dto.setTemplateName(brandingTemplateForm.getTemplateName());
 		dto.setCompanyOverview(brandingTemplateForm.getCompanyOverview());
-		dto.setFacilityId(1);
+		dto.setMainImagePath(brandingTemplateForm.getMainImagePath());
 		dto.setLogoFileData(brandingTemplateForm.getLogoFileData());
 		dto.setMainImageFileData(brandingTemplateForm.getMainImageFileData());
+		
 		return dto;
 	}
 
