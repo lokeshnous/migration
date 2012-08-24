@@ -4,13 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-
-//import org.hibernate.validator.util.NewInstance;
-
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
@@ -24,14 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
-
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;

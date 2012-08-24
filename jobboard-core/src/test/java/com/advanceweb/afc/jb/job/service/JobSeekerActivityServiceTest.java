@@ -1,16 +1,8 @@
 package com.advanceweb.afc.jb.job.service;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.Ignore;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.SavedJobDTO;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 
 public class JobSeekerActivityServiceTest extends ServiceTest {

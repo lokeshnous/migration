@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Author : Prince Mathew

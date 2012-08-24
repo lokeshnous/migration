@@ -36,9 +36,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
-import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
@@ -53,9 +53,8 @@ import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
-import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
-import com.advanceweb.afc.jb.common.JobSearchResultDTO;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 /**
  * <code>JobSearchDetailsController</code>This controller belongs to all

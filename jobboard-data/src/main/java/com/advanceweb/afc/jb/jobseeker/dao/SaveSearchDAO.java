@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
  * 

@@ -1,19 +1,15 @@
 package com.advanceweb.afc.jb.employer.helper;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.JpTemplateMedia;
 import com.advanceweb.afc.jb.data.entities.JpTemplateTestimonial;
-import com.advanceweb.afc.jb.data.entities.MerJpBrandingTemp;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
  * <code>EmpBrandTempConversionHelper</code> is a Conversion Helper class

@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -8,13 +9,9 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 
 /**
  * 

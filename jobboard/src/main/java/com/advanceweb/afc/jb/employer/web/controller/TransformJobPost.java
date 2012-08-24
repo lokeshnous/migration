@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 
 /**
  * @Author : Prince Mathew

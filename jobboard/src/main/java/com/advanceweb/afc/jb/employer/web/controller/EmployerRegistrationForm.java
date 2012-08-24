@@ -37,7 +37,7 @@ public class EmployerRegistrationForm {
 	@NotEmpty(message = "First Name should not be empty")
 	private String firstName;
 
-	private String MiddleName;
+	private String middleName;
 
 	@NotEmpty(message = "Last Name should not be empty")
 	private String lastName;
@@ -80,7 +80,7 @@ public class EmployerRegistrationForm {
 	 * @return the middleName
 	 */
 	public String getMiddleName() {
-		return MiddleName;
+		return middleName;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class EmployerRegistrationForm {
 	 *            the middleName to set
 	 */
 	public void setMiddleName(String middleName) {
-		MiddleName = middleName;
+		this.middleName = middleName;
 	}
 
 	/**

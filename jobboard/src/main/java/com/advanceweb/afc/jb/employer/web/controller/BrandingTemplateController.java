@@ -2,14 +2,9 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,13 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
-import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 
 /**
  * <code>EmpBrandTempController</code>This controller belongs to manage job

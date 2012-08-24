@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.job.service;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 public class SaveSearchServiceTest extends ServiceTest {
 

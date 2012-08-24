@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
@@ -23,9 +21,6 @@ import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
-import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
-import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
-import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 
 /**

@@ -9,7 +9,6 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
-import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 
 @Repository("transformJobSeekerSubscription")
 public class TransformJobSeekerSubscription {

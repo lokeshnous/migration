@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.common;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 
 /**

@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
-import com.advanceweb.afc.jb.data.entities.MerUserAlerts;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
 
 /**

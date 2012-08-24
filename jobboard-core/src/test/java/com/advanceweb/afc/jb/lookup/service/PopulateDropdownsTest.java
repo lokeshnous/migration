@@ -25,7 +25,6 @@ import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.common.SubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 
 /**
