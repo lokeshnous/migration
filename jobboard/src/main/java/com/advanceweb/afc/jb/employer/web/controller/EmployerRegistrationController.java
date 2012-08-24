@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Transient;
+//import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -63,21 +63,21 @@ public class EmployerRegistrationController {
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
 	@Autowired
-	@Transient
+	
 	private ProfileRegistration employerRegistration;
 
 	@Autowired
-	@Transient
+	
 	private TransformEmployerRegistration transformEmployerRegistration;
 
 	@Autowired
-	@Transient
+	
 	private PopulateDropdowns populateDropdownsService;
 
 
 	
 	@Autowired
-	@Transient
+	
 	FetchAdmFacilityConatact fetchAdmFacilityConatact;
 	
 
@@ -88,7 +88,7 @@ public class EmployerRegistrationController {
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 	@Autowired
-	@Transient
+	
 	private EmloyerRegistartionService emloyerRegistartionService;
 
 	@Value("${jobseekerRegPhoneMsg}")
@@ -366,9 +366,16 @@ public class EmployerRegistrationController {
 			/**
 			 * this is for billing pages
 			 */
-
+			int count=0;
 			List<AdmFacilityContact> listBillingForms = emloyerRegistartionService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
+			if((listBillingForms.size()<=0)||("".equals(listBillingForms)))
+			{
+				count=listBillingForms.size();
+				
+			}
+			else
+			{
 			employeeBillingForm.setFirstName(listBillingForms.get(0)
 					.getFirstName());
 			employeeBillingForm
@@ -381,13 +388,15 @@ public class EmployerRegistrationController {
 			employeeBillingForm.setZipCode(listBillingForms.get(0)
 					.getPostcode());
 			employeeBillingForm.setPhone(listBillingForms.get(0).getPhone());
-
+			}
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
 			model.addObject("listProfAttribForms", listProfAttribForms);
+			model.addObject("count", count);
 			model.setViewName("accountSetting");
 			model.addObject("employeeAccountForm", employeeAccountForm);
 			model.addObject("employeeBillingForm", employeeBillingForm);
+			
 
 		} catch (Exception e) {
 			LOGGER.info("Error For controller");
