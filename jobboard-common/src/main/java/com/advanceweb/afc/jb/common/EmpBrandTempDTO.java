@@ -16,25 +16,17 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class EmpBrandTempDTO {
 
 	private int jpBrandTempId;
+	private int facilityId;
 	private int employerId;
 	private String templateName;
-//	private String description;
-	private String imagePath;
+	private String mainImagePath;
 	private String logoPath;
 	private String color;
 	private Date createdDate;
-//	private String updatedDate;
 	private String companyOverview;
-	private int facilityId;
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
-	private String fileServer;
-	private String logoFileName;
-	private String logoFilePath;	
-	private String mainImageFileName;
-	private String mainImageFilePath;	
 
-	
 	public String getLogoPath() {
 		return logoPath;
 	}
@@ -51,36 +43,12 @@ public class EmpBrandTempDTO {
 		this.createdDate = createdDate;
 	}
 
-//	public String getUpdatedDate() {
-//		return updatedDate;
-//	}
-//
-//	public void setUpdatedDate(String updatedDate) {
-//		this.updatedDate = updatedDate;
-//	}
-
-//	public String getDescription() {
-//		return templateName;
-//	}
-//
-//	public void setDescription(String description) {
-//		this.description = description;
-//	}
-
 	public String getColor() {
 		return color;
 	}
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
 	}
 
 	public int getJpBrandTempId() {
@@ -107,6 +75,14 @@ public class EmpBrandTempDTO {
 		this.templateName = templateName;
 	}
 
+	public String getMainImagePath() {
+		return mainImagePath;
+	}
+
+	public void setMainImagePath(String mainImagePath) {
+		this.mainImagePath = mainImagePath;
+	}
+
 	public String getCompanyOverview() {
 		return companyOverview;
 	}
@@ -123,7 +99,6 @@ public class EmpBrandTempDTO {
 		this.facilityId = facilityId;
 	}
 
-
 	public CommonsMultipartFile getLogoFileData() {
 		return logoFileData;
 	}
@@ -139,47 +114,5 @@ public class EmpBrandTempDTO {
 	public void setMainImageFileData(CommonsMultipartFile mainImageFileData) {
 		this.mainImageFileData = mainImageFileData;
 	}
-
-	public String getFileServer() {
-		return fileServer;
-	}
-
-	public void setFileServer(String fileServer) {
-		this.fileServer = fileServer;
-	}
-
-	public String getLogoFileName() {
-		return logoFileName;
-	}
-
-	public void setLogoFileName(String logoFileName) {
-		this.logoFileName = logoFileName;
-	}
-
-	public String getLogoFilePath() {
-		return logoFilePath;
-	}
-
-	public void setLogoFilePath(String logoFilePath) {
-		this.logoFilePath = logoFilePath;
-	}
-
-	public String getMainImageFileName() {
-		return mainImageFileName;
-	}
-
-	public void setMainImageFileName(String mainImageFileName) {
-		this.mainImageFileName = mainImageFileName;
-	}
-
-	public String getMainImageFilePath() {
-		return mainImageFilePath;
-	}
-
-	public void setMainImageFilePath(String mainImageFilePath) {
-		this.mainImageFilePath = mainImageFilePath;
-	}
-
-	
 
 }
