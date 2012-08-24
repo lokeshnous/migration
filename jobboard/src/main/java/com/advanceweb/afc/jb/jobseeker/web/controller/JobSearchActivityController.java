@@ -46,7 +46,6 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobSearchActivity;
-import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
@@ -68,6 +67,7 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 @Controller
 @RequestMapping("/jobsearchactivity")
+@SuppressWarnings("unchecked")
 public class JobSearchActivityController {
 
 	@Autowired
@@ -155,10 +155,10 @@ public class JobSearchActivityController {
 	private JobSearchService jobSearchService;
 
 	@Autowired
-	private SaveSearchService saveSearchService;
+	private LookupService lookupService;
 
 	@Autowired
-	private LookupService lookupService;
+	private CheckSessionMap checkSessionMap;
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -173,6 +173,12 @@ public class JobSearchActivityController {
 			Map<String, Object> model, HttpServletRequest request,
 			HttpSession session, @RequestParam("currentUrl") String currentUrl) {
 		try {
+
+			Map<String, String> sessionMap = null;
+			if (session.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP) != null) {
+				sessionMap = (Map<String, String>) session
+						.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+			}
 			// View the job with template
 			SearchedJobDTO jobDTO = jobSearchActivity.viewJobDetails(jobId);
 			model.put("jobDetail", jobDTO);
@@ -182,7 +188,8 @@ public class JobSearchActivityController {
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
 			model.put("returnResults", currentUrl);
 
-			session.setAttribute(MMJBCommonConstants.AUTOLOAD, true);
+			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 
 		} catch (Exception e) {
 			// loggers call
@@ -385,40 +392,25 @@ public class JobSearchActivityController {
 			HttpSession session) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 
-		// Added for view my saved searches
-		// if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-		if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
-				&& session
-						.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
-						.toString()
-						.equalsIgnoreCase(MMJBCommonConstants.BASIC_SEARCH_TYPE)) {
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
 
-			String searchType = session.getAttribute(
-					MMJBCommonConstants.SEARCH_TYPE).toString();
+		if (!sessionMap.isEmpty()) {
+
+			String searchType = sessionMap.get(MMJBCommonConstants.SEARCH_TYPE);
 			String radius = MMJBCommonConstants.EMPTY;
 			String cityState = MMJBCommonConstants.EMPTY;
 			String keywords = MMJBCommonConstants.EMPTY;
 			String saveSearchName = MMJBCommonConstants.EMPTY;
 			boolean autoload = false;
-			if (session.getAttribute(SearchParamDTO.KEYWORDS) != null) {
-				keywords = session.getAttribute(SearchParamDTO.KEYWORDS)
-						.toString();
-			}
-			if (session.getAttribute(SearchParamDTO.CITY_STATE) != null) {
-				cityState = session.getAttribute(SearchParamDTO.CITY_STATE)
-						.toString();
-			}
-			if (session.getAttribute(SearchParamDTO.RADIUS) != null) {
-				radius = session.getAttribute(SearchParamDTO.RADIUS).toString();
-			}
-			if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
-				saveSearchName = session.getAttribute(
-						MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
-			}
-			if (session.getAttribute(MMJBCommonConstants.AUTOLOAD) != null) {
-				autoload = Boolean.parseBoolean(session.getAttribute(
-						MMJBCommonConstants.AUTOLOAD).toString());
-			}
+
+			keywords = sessionMap.get(SearchParamDTO.KEYWORDS);
+			cityState = sessionMap.get(SearchParamDTO.CITY_STATE);
+			radius = sessionMap.get(SearchParamDTO.RADIUS);
+			saveSearchName = sessionMap
+					.get(MMJBCommonConstants.SAVE_SEARCH_NAME);
+			autoload = Boolean.parseBoolean(sessionMap
+					.get(MMJBCommonConstants.AUTOLOAD));
 
 			jobSearchResultForm.setSaveSearchName(saveSearchName);
 			jobSearchResultForm.setSearchtype(searchType);
@@ -429,13 +421,15 @@ public class JobSearchActivityController {
 
 			LOGGER.info("Removing keywords, city,state, autoload from session....");
 
-			session.removeAttribute(SearchParamDTO.KEYWORDS);
-			session.removeAttribute(SearchParamDTO.CITY_STATE);
-			session.removeAttribute(SearchParamDTO.RADIUS);
-			session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
+			session.removeAttribute(sessionMap.remove(SearchParamDTO.KEYWORDS));
+			session.removeAttribute(sessionMap
+					.remove(SearchParamDTO.CITY_STATE));
+			session.removeAttribute(sessionMap.remove(SearchParamDTO.RADIUS));
+			session.removeAttribute(sessionMap
+					.remove(MMJBCommonConstants.AUTOLOAD));
 
 		}
-		// }
+
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardsearchresults");
 	}
@@ -460,14 +454,14 @@ public class JobSearchActivityController {
 
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> paramMap = new HashMap<String, String>();
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
 
-		String searchName = MMJBCommonConstants.EMPTY;// will be replaced by
-														// BASIC_SEARCH
+		String searchName = MMJBCommonConstants.EMPTY;
 
-		/**
-		 * Check if city state and radius field is not empty to check for
-		 * LOCATION search
-		 **/
+		// Check if city state and radius field is not empty to check for
+		// LOCATION search
+
 		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
 
 			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
@@ -477,59 +471,57 @@ public class JobSearchActivityController {
 			searchName = MMJBCommonConstants.LOCATION_SEARCH;
 		}
 
-		// The value of Search_seq will be changed when the session management
-		// is done.
-		// This value needs to be increased every time when there is a search
-		// happening for a session
 		int searchSeq = MMJBCommonConstants.ZERO_INT;
-		// String sessionId = MMJBCommonConstants.TEMP_SESSION_ID;
 
 		String sessionId = null;
 		if (session != null) {
 			sessionId = session.getId();
 
-			if (session.getAttribute(SearchParamDTO.SEARCH_SEQ) == null) {
-				session.setAttribute(SearchParamDTO.SEARCH_SEQ, searchSeq + 1);
+			if (sessionMap.get(SearchParamDTO.SEARCH_SEQ) == null) {
+				sessionMap.put(SearchParamDTO.SEARCH_SEQ,
+						String.valueOf(searchSeq + 1));
 			} else {
-				session.setAttribute(
-						SearchParamDTO.SEARCH_SEQ,
-						Integer.parseInt(session.getAttribute(
-								SearchParamDTO.SEARCH_SEQ).toString()) + 1);
+				sessionMap.put(SearchParamDTO.SEARCH_SEQ, String
+						.valueOf(Integer.parseInt(sessionMap
+								.get(SearchParamDTO.SEARCH_SEQ)) + 1));
 			}
-			session.setAttribute(SearchParamDTO.KEYWORDS, jobSearchResultForm
+
+			sessionMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm
 					.getKeywords().trim());
-			session.setAttribute(SearchParamDTO.CITY_STATE, jobSearchResultForm
+			sessionMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
 					.getCityState().trim());
-			session.setAttribute(SearchParamDTO.RADIUS, jobSearchResultForm
+			sessionMap.put(SearchParamDTO.RADIUS, jobSearchResultForm
 					.getRadius().trim());
-			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE,
-					jobSearchResultForm.getSearchtype().trim());
+			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
+					.getSearchtype().trim());
+
+			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
+
 		}
 
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
 
-		/**
-		 * Putting all the parameters coming from the UI into a Map for further
-		 * processing
-		 */
+		// Putting all the parameters coming from the UI into a Map for further
+		// processing
+
 		paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm.getKeywords()
 				.trim());
+
 		paramMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
 				.getCityState().trim());
 		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
 				.trim());
 		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
 		paramMap.put(SearchParamDTO.SEARCH_SEQ,
-				session.getAttribute(SearchParamDTO.SEARCH_SEQ).toString());
+				sessionMap.get(SearchParamDTO.SEARCH_SEQ));
 		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
 
 		try {
 
-			/**
-			 * Calling the jobSearch() of Service layer from getting the object
-			 * of JobSearchResultDTO
-			 */
+			// Calling the jobSearch() of Service layer from getting the object
+			// of JobSearchResultDTO
+
 			jobSearchResultDTO = jobSearchService.jobSearch(searchName,
 					paramMap, start, rows);
 
@@ -538,10 +530,10 @@ public class JobSearchActivityController {
 		}
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
-			/**
-			 * Calling the service layer for converting the JobSearchResultDTO
-			 * object into JSON Object
-			 */
+
+			// Calling the service layer for converting the JobSearchResultDTO
+			// object into JSON Object
+
 			jobSrchJsonObj = jsonConverterService
 					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
