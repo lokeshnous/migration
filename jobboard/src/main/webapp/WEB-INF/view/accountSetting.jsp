@@ -33,7 +33,7 @@
 		
  		$('#save').click(function(){			
  			
-			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeAccountSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeBillingSetting.html",
 				data:$('#editBillingSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -57,11 +57,11 @@
 					ACCOUNT SETTINGS
 				</h2>
 				<a href="#">
-				<img width="19" height="19" alt="" src="../resources/images/Close.png" class="nyroModalClose" alt="Close">
+				<img width="19" height="19" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">
-				<form:form action="../employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="'<%=request.getContextPath( )%>'/employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
@@ -137,7 +137,7 @@
 					</form:form>
 					<div class="borderBottomDotted row">
 					</div>
-					<form:form action="../employerRegistration/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
+					<form:form action="'<%=request.getContextPath( )%>'/employerRegistration/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
 					<div class="row marginLeft20 marginTop25">
 						<h3>Billing Contact</h3>
 					</div>
