@@ -453,69 +453,37 @@ public class JobSearchActivityController {
 			Map<String, JSONObject> modelMap) {
 
 		JobSearchResultDTO jobSearchResultDTO = null;
-		Map<String, String> paramMap = new HashMap<String, String>();
+		// Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
-
 		String searchName = MMJBCommonConstants.EMPTY;
 
 		// Check if city state and radius field is not empty to check for
 		// LOCATION search
-
 		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
-
 			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
 				searchName = MMJBCommonConstants.KEYWORD_SEARCH;
 			}
 		} else {
 			searchName = MMJBCommonConstants.LOCATION_SEARCH;
 		}
-
 		int searchSeq = MMJBCommonConstants.ZERO_INT;
-
 		String sessionId = null;
 		if (session != null) {
 			sessionId = session.getId();
-
-			if (sessionMap.get(SearchParamDTO.SEARCH_SEQ) == null) {
-				sessionMap.put(SearchParamDTO.SEARCH_SEQ,
-						String.valueOf(searchSeq + 1));
-			} else {
-				sessionMap.put(SearchParamDTO.SEARCH_SEQ, String
-						.valueOf(Integer.parseInt(sessionMap
-								.get(SearchParamDTO.SEARCH_SEQ)) + 1));
-			}
-
-			sessionMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm
-					.getKeywords().trim());
-			sessionMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
-					.getCityState().trim());
-			sessionMap.put(SearchParamDTO.RADIUS, jobSearchResultForm
-					.getRadius().trim());
-			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
-					.getSearchtype().trim());
-
+			// Setting the values into sessionMap
+			sessionMap = setValuesToSessionMap(sessionMap, searchSeq,
+					jobSearchResultForm);
 			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 
 		}
-
 		long start = Long.parseLong(jobSearchResultForm.getStart());
 		long rows = Long.parseLong(jobSearchResultForm.getRows());
 
 		// Putting all the parameters coming from the UI into a Map for further
-		// processing
-
-		paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm.getKeywords()
-				.trim());
-
-		paramMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
-				.getCityState().trim());
-		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
-				.trim());
-		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
-		paramMap.put(SearchParamDTO.SEARCH_SEQ,
-				sessionMap.get(SearchParamDTO.SEARCH_SEQ));
-		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
+		// processing.
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				sessionId, searchName, sessionMap);
 
 		try {
 
@@ -530,10 +498,8 @@ public class JobSearchActivityController {
 		}
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
-
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
-
 			jobSrchJsonObj = jsonConverterService
 					.convertToJSON(jobSearchResultDTO);
 			return jobSrchJsonObj;
@@ -768,6 +734,73 @@ public class JobSearchActivityController {
 		}
 
 		return null;
+	}
+
+	/**
+	 * This method is used to create parameter map and populate the required
+	 * values into it.
+	 * 
+	 * @param jobSearchResultForm
+	 * @param sessionId
+	 * @param searchName
+	 * @param sessionMap
+	 * @return Map<String, String>
+	 */
+
+	private Map<String, String> getParameterMap(
+			JobSearchResultForm jobSearchResultForm, String sessionId,
+			String searchName, Map<String, String> sessionMap) {
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+
+		paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm.getKeywords()
+				.trim());
+
+		paramMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
+				.getCityState().trim());
+		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
+				.trim());
+		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
+		paramMap.put(SearchParamDTO.SEARCH_SEQ,
+				sessionMap.get(SearchParamDTO.SEARCH_SEQ));
+		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
+
+		return paramMap;
+
+	}
+
+	/**
+	 * This method is used to set values into the session map.
+	 * 
+	 * @param sessionMap
+	 * @param searchSeq
+	 * @param jobSearchResultForm
+	 * @return Map<String, String>
+	 */
+
+	private Map<String, String> setValuesToSessionMap(
+			Map<String, String> sessionMap, int searchSeq,
+			JobSearchResultForm jobSearchResultForm) {
+
+		if (sessionMap.get(SearchParamDTO.SEARCH_SEQ) == null) {
+			sessionMap.put(SearchParamDTO.SEARCH_SEQ,
+					String.valueOf(searchSeq + 1));
+		} else {
+			sessionMap.put(SearchParamDTO.SEARCH_SEQ, String.valueOf(Integer
+					.parseInt(sessionMap.get(SearchParamDTO.SEARCH_SEQ)) + 1));
+		}
+
+		sessionMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm
+				.getKeywords().trim());
+		sessionMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
+				.getCityState().trim());
+		sessionMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
+				.trim());
+		sessionMap.put(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
+				.getSearchtype().trim());
+
+		return sessionMap;
+
 	}
 
 }
