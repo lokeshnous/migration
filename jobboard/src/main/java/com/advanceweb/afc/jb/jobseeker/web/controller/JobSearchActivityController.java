@@ -74,7 +74,7 @@ public class JobSearchActivityController {
 	private JobSearchActivity jobSearchActivity;
 
 	private static final Logger LOGGER = Logger
-			.getLogger("JobSearchActivityController.class");
+			.getLogger(JobSearchActivityController.class);
 
 	@Autowired
 	private MMEmailService emailService;
