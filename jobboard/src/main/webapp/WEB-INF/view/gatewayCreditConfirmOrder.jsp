@@ -163,6 +163,10 @@
 					</form:form>
 				</div>
 				<!-- gateway -->
+				<div class="clearfix"></div>
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
+				</div>
 			</div>
 			<!-- main -->
 

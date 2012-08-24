@@ -32,6 +32,8 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
@@ -113,6 +115,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			@SuppressWarnings("unchecked")
 			List<AdmRole> roleList = hibernateTemplateCareers.find(
 					FIND_EMPLOYER_ROLE_ID, "facility_admin");
+			int roleId = 0;
 			if (null != roleList && roleList.size() > 0) {
 				AdmRole role = roleList.get(0);
 				AdmUserRole userRole = new AdmUserRole();
@@ -123,6 +126,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				pk.setRoleId(role.getRoleId());
 				userRole.setId(pk);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
+				roleId = role.getRoleId();
 			}
 			//saving the data in adm_facility
 			AdmFacility facility = empHelper.transformEmpDTOToAdmFAcility(empDTO);
@@ -154,6 +158,17 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			contact.setActive(1);
 			hibernateTemplateCareers.save(contact);
 			
+			//saving the data in the adm_user_facility
+			AdmUserFacility userfacility = new AdmUserFacility();
+			AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
+			facilityPK.setFacilityId(facility.getFacilityId());
+			facilityPK.setUserId(merUser.getUserId());
+			facilityPK.setRoleId(roleId);
+			userfacility.setId(facilityPK);
+			userfacility.setCreateUserId(0);
+//			userfacility.setAdmRole();
+			userfacility.setCreateDt(new Date());			
+			hibernateTemplateCareers.save(userfacility);
 			return empHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {

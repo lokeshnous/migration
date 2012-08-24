@@ -131,14 +131,14 @@
 							<span class="lableText3">State / Province:</span>
 
 							<form:input path="accountAddressForm.state" type="text"
-								name="state" id="streetAddress"
+								name="state" id="state"
 								class="job_seeker_password textBox350 " />
 						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Country:</span>
 							<form:input path="accountAddressForm.country" type="text"
-								name="country" id="streetAddress"
+								name="country" id="country"
 								class="job_seeker_password textBox350 " />
 						</div>
 
@@ -160,7 +160,7 @@
 						<p class="gateway_section_head form_notes">Accounts Payable
 							Contact</p>
 
-						<div class="rowEvenSpacingMargin0">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">First Name:</span>
 							<form:input path="billingAddressForm.fnameForBillingAddr"
 								type="text" name="firstname2" id="firstname2"
@@ -168,15 +168,11 @@
 							<span class="required">(Required)</span>
 						</div>
 
-<<<<<<< .mine
-						<div class="rowEvenNewSpacing">
-=======
 						<div>
 							<font color="red" style="padding-left: 185px"><form:errors
 									path="billingAddressForm.fnameForBillingAddr" /> </font>
 						</div>
 						<div class="rowEvenSpacing">
->>>>>>> .r1212
 							<span class="lableText3">Last Name:</span>
 							<form:input path="billingAddressForm.lnameForBillingAddr"
 								type="text" name="lastname2" id="lastname2"
@@ -212,7 +208,7 @@
 							<span class="lableText3">City/Town:</span>
 							<form:input path="billingAddressForm.cityOrTownForBillingAddr"
 								type="text" name="cityTown2"
-								id="streetAddress_billing2"
+								id="cityTown2"
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
@@ -296,6 +292,10 @@
 					</form:form>
 				</div>
 				<!-- gateway -->
+				<div class="clearfix"></div>
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
+				</div>
 			</div>
 			<!-- main -->
 

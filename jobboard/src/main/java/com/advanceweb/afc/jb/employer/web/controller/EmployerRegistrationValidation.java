@@ -32,35 +32,30 @@ public class EmployerRegistrationValidation {
 	 */
 	public void validateEmail(EmployerRegistrationForm registerForm,
 			Errors errors) {
-
-		if (StringUtils.isEmpty(registerForm.getEmailId())) {
-			errors.rejectValue("emailId", "NotEmpty",
-					"Email Id Should not be empty");
-		}
-
-		if (StringUtils.isEmpty(registerForm.getConfirmEmailId())) {
-			errors.rejectValue("confirmEmailId", "NotEmpty",
-					"Confirm Email Id Should not be empty");
-		}
-
-		if (!StringUtils.isEmpty(registerForm.getEmailId())
-				&& !StringUtils.isEmpty(registerForm.getConfirmEmailId())) {
-
-			if (!validateEmailPattern(registerForm.getEmailId())) {
-				errors.rejectValue("emailId", "NotEmpty", "Invalid Email Id");
-			}
-
-			if (!validateEmailPattern(registerForm.getConfirmEmailId())) {
-				errors.rejectValue("confirmEmailId", "NotEmpty",
-						"Invalid Email Id");
-			}
-
-			if (!registerForm.getEmailId().equals(
-					registerForm.getConfirmEmailId())) {
-				errors.rejectValue("confirmEmailId", "NotEmpty",
-						"Please enter the correct E-Mail Address");
-			}
-		}
+		
+		 if(StringUtils.isEmpty(registerForm.getEmailId())){
+			 errors.rejectValue("emailId", "NotEmpty", "Email id should not be blank");
+		 }
+		 
+		 if(StringUtils.isEmpty(registerForm.getConfirmEmailId())){
+			 errors.rejectValue("confirmEmailId", "NotEmpty", "Confirm Email id should not be blank");
+		 }
+		 
+		 if(!StringUtils.isEmpty(registerForm.getEmailId()) 
+				 && !StringUtils.isEmpty(registerForm.getConfirmEmailId())){
+			 
+			 if(!validateEmailPattern(registerForm.getEmailId())){
+				 errors.rejectValue("emailId", "NotEmpty", "Invalid Email Id"); 
+			 }
+			 
+			 if(!validateEmailPattern(registerForm.getConfirmEmailId())){
+				 errors.rejectValue("confirmEmailId", "NotEmpty", "Invalid Email Id"); 
+			 }
+			 
+			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
+				errors.rejectValue("confirmEmailId", "NotEmpty", "E-Mail addresses doesn’t match");
+			 }
+		 }
 	}
 
 	/**
@@ -139,7 +134,7 @@ public class EmployerRegistrationValidation {
 			}
 		}
 	}
-
+ 
 	/**
 	 * Validating form
 	 * 
