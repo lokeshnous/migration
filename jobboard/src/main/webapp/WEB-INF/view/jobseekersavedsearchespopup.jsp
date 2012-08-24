@@ -56,22 +56,8 @@ $(document).keyup(function(event) {
 									break;
 							}
 							}
-						});					
-						/* $('.newWindow').click(function (event){			
-							
-	
-							
-		                    var url = $(this).attr("href");
-		                    
-		 
-		                    parent.window.location.href = url;
-		     	            parent.$.nmTop().close();
-		                   event.preventDefault();
-		                });	 */
-											
-						
-						//For saving the data
-						
+						});											
+						//For saving the data					
 						$("#saveData").click(function(event){						
 							var stringObj;
 							var stringObjNew = '';
@@ -82,15 +68,13 @@ $(document).keyup(function(event) {
 							    stringObj = saveSearchId +"="+ notifyMe;
 							    stringObjNew = stringObjNew +";"+ stringObj;
 							 });
-							//alert('objects are'+stringObjNew);
 							$.ajax({url: "${pageContext.request.contextPath}/savedSearches/saveSearchedNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
-								    	//alert(data.success);
 								    	parent.$.nmTop().close();
 								    }
 								    if(data.failure != null){
-								    	//alert(data.failure);
+			
 								    }
 								},
 								error: function(response) {
@@ -227,14 +211,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 								    <form:select class="jb_input3 select100"									
 										path="saveSearchedJobsDTOList[${status.index}].emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
-								    </form:select>
-								    <script>
-								   // $("select").change(function () { 
-         							//  $('select option:eq(5)').attr('selected', true);
-       							   //})
-        						  //.trigger('change');
-								    </script>
-								    										
+								    </form:select>							    										
 								</td>
 								
 								<td align="center"><a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" 

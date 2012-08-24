@@ -25,14 +25,12 @@ function closePopup() {
 				success: function(data){ 
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							//window.location.href = val+".html";
 							$.nmManual(val + '.html');
 							parent.$.nmTop().close();
 						}
 						
 						if (key == "LoggedInNavigationPath") {
 							parent.$.nmTop().close();
-							//$.nmManual(val + '.html');
 						}
 						
 						if(key == "EmptySearchName"){
