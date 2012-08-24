@@ -171,8 +171,8 @@ public class JobSearchActivityController {
 	 */
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
-			Map<String, Object> model, HttpServletRequest request, HttpSession session,
-			@RequestParam("currentUrl") String currentUrl) {
+			Map<String, Object> model, HttpServletRequest request,
+			HttpSession session, @RequestParam("currentUrl") String currentUrl) {
 		try {
 			// View the job with template
 			SearchedJobDTO jobDTO = jobSearchActivity.viewJobDetails(jobId);
@@ -182,9 +182,9 @@ public class JobSearchActivityController {
 			model.put("isHideCoutry", jobDTO.getCountry() != null);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
 			model.put("returnResults", currentUrl);
-			
-			session.setAttribute(MMJBCommonConstants.AUTOLOAD,true);
-			
+
+			session.setAttribute(MMJBCommonConstants.AUTOLOAD, true);
+
 		} catch (Exception e) {
 			// loggers call
 			LOGGER.info("ERROR");
@@ -315,7 +315,7 @@ public class JobSearchActivityController {
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
 					// TODO: Need to clarify
 				}
-				if(resumeDTO.getFilePath() != null){
+				if (resumeDTO.getFilePath() != null) {
 					attachmentpaths.add(resumeDTO.getFilePath());
 				}
 				employerEmailDTO.setAttachmentPaths(attachmentpaths);
@@ -387,59 +387,56 @@ public class JobSearchActivityController {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 
 		// Added for view my saved searches
-		//if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
-					&& session
-							.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
-							.toString()
-							.equalsIgnoreCase(
-									MMJBCommonConstants.BASIC_SEARCH_TYPE)) {
+		// if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+		if (session.getAttribute(MMJBCommonConstants.SEARCH_TYPE) != null
+				&& session
+						.getAttribute(MMJBCommonConstants.SEARCH_TYPE)
+						.toString()
+						.equalsIgnoreCase(MMJBCommonConstants.BASIC_SEARCH_TYPE)) {
 
-				String searchType = session.getAttribute(
-						MMJBCommonConstants.SEARCH_TYPE).toString();
-				String radius = MMJBCommonConstants.EMPTY;
-				String cityState = MMJBCommonConstants.EMPTY;
-				String keywords = MMJBCommonConstants.EMPTY;
-				String saveSearchName = MMJBCommonConstants.EMPTY;
-				boolean autoload = false;
-				if (session.getAttribute(SearchParamDTO.KEYWORDS) != null) {
-					keywords = session.getAttribute(
-							SearchParamDTO.KEYWORDS).toString();
-				}
-				if (session.getAttribute(SearchParamDTO.CITY_STATE) != null) {
-					cityState = session.getAttribute(
-							SearchParamDTO.CITY_STATE).toString();
-				}
-				if (session.getAttribute(SearchParamDTO.RADIUS) != null) {
-					radius = session.getAttribute(SearchParamDTO.RADIUS)
-							.toString();
-				}
-				if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
-					saveSearchName = session.getAttribute(
-							MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
-				}
-				if (session.getAttribute(MMJBCommonConstants.AUTOLOAD) != null) {
-					autoload = Boolean.parseBoolean(session.getAttribute(
-							MMJBCommonConstants.AUTOLOAD).toString());
-				}
-
-
-				jobSearchResultForm.setSaveSearchName(saveSearchName);
-				jobSearchResultForm.setSearchtype(searchType);
-				jobSearchResultForm.setKeywords(keywords);
-				jobSearchResultForm.setCityState(cityState);
-				jobSearchResultForm.setRadius(radius);
-				jobSearchResultForm.setAutoload(autoload);
-
-				LOGGER.info("Removing keywords, city,state, autoload from session....");
-
-				session.removeAttribute(SearchParamDTO.KEYWORDS);
-				session.removeAttribute(SearchParamDTO.CITY_STATE);
-				session.removeAttribute(SearchParamDTO.RADIUS);
-				session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
-
+			String searchType = session.getAttribute(
+					MMJBCommonConstants.SEARCH_TYPE).toString();
+			String radius = MMJBCommonConstants.EMPTY;
+			String cityState = MMJBCommonConstants.EMPTY;
+			String keywords = MMJBCommonConstants.EMPTY;
+			String saveSearchName = MMJBCommonConstants.EMPTY;
+			boolean autoload = false;
+			if (session.getAttribute(SearchParamDTO.KEYWORDS) != null) {
+				keywords = session.getAttribute(SearchParamDTO.KEYWORDS)
+						.toString();
 			}
-		//}
+			if (session.getAttribute(SearchParamDTO.CITY_STATE) != null) {
+				cityState = session.getAttribute(SearchParamDTO.CITY_STATE)
+						.toString();
+			}
+			if (session.getAttribute(SearchParamDTO.RADIUS) != null) {
+				radius = session.getAttribute(SearchParamDTO.RADIUS).toString();
+			}
+			if (session.getAttribute(MMJBCommonConstants.SAVE_SEARCH_NAME) != null) {
+				saveSearchName = session.getAttribute(
+						MMJBCommonConstants.SAVE_SEARCH_NAME).toString();
+			}
+			if (session.getAttribute(MMJBCommonConstants.AUTOLOAD) != null) {
+				autoload = Boolean.parseBoolean(session.getAttribute(
+						MMJBCommonConstants.AUTOLOAD).toString());
+			}
+
+			jobSearchResultForm.setSaveSearchName(saveSearchName);
+			jobSearchResultForm.setSearchtype(searchType);
+			jobSearchResultForm.setKeywords(keywords);
+			jobSearchResultForm.setCityState(cityState);
+			jobSearchResultForm.setRadius(radius);
+			jobSearchResultForm.setAutoload(autoload);
+
+			LOGGER.info("Removing keywords, city,state, autoload from session....");
+
+			session.removeAttribute(SearchParamDTO.KEYWORDS);
+			session.removeAttribute(SearchParamDTO.CITY_STATE);
+			session.removeAttribute(SearchParamDTO.RADIUS);
+			session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
+
+		}
+		// }
 		model.put("jobSearchResultForm", jobSearchResultForm);
 		return new ModelAndView("jobboardsearchresults");
 	}
@@ -493,20 +490,19 @@ public class JobSearchActivityController {
 			sessionId = session.getId();
 
 			if (session.getAttribute(SearchParamDTO.SEARCH_SEQ) == null) {
-				session.setAttribute(SearchParamDTO.SEARCH_SEQ,
-						searchSeq + 1);
+				session.setAttribute(SearchParamDTO.SEARCH_SEQ, searchSeq + 1);
 			} else {
 				session.setAttribute(
 						SearchParamDTO.SEARCH_SEQ,
 						Integer.parseInt(session.getAttribute(
 								SearchParamDTO.SEARCH_SEQ).toString()) + 1);
 			}
-			session.setAttribute(SearchParamDTO.KEYWORDS,
-					jobSearchResultForm.getKeywords().trim());
-			session.setAttribute(SearchParamDTO.CITY_STATE,
-					jobSearchResultForm.getCityState().trim());
-			session.setAttribute(SearchParamDTO.RADIUS,
-					jobSearchResultForm.getRadius().trim());
+			session.setAttribute(SearchParamDTO.KEYWORDS, jobSearchResultForm
+					.getKeywords().trim());
+			session.setAttribute(SearchParamDTO.CITY_STATE, jobSearchResultForm
+					.getCityState().trim());
+			session.setAttribute(SearchParamDTO.RADIUS, jobSearchResultForm
+					.getRadius().trim());
 			session.setAttribute(MMJBCommonConstants.SEARCH_TYPE,
 					jobSearchResultForm.getSearchtype().trim());
 		}
@@ -518,15 +514,15 @@ public class JobSearchActivityController {
 		 * Putting all the parameters coming from the UI into a Map for further
 		 * processing
 		 */
-		paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm
-				.getKeywords().trim());
+		paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm.getKeywords()
+				.trim());
 		paramMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
 				.getCityState().trim());
-		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm
-				.getRadius().trim());
+		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
+				.trim());
 		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
-		paramMap.put(SearchParamDTO.SEARCH_SEQ, session.getAttribute(
-				SearchParamDTO.SEARCH_SEQ).toString());
+		paramMap.put(SearchParamDTO.SEARCH_SEQ,
+				session.getAttribute(SearchParamDTO.SEARCH_SEQ).toString());
 		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
 
 		try {
@@ -679,8 +675,6 @@ public class JobSearchActivityController {
 			model.addAttribute("jobId", request.getParameter("id"));
 			model.addAttribute("sendtofriendmail", new SendToFriend());
 		} catch (Exception e) {// Catch exception if any
-			// System.err.println("Error: " + e.getMessage());
-			// e.printStackTrace();
 			LOGGER.info("ERROR");
 		}
 
@@ -696,15 +690,7 @@ public class JobSearchActivityController {
 
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
-		/*
-		 * if (sendtofriendmail.getMessage().length() > 0) { finalmailbody =
-		 * commonupperbody + "<a href=" + sendtofriendmail.getJoburl() + ">" +
-		 * sendtofriendmail.getJoburl() + "</a>" + commonbeforefriendmsgbody +
-		 * sendtofriendmail.getMessage() + commonlowerbody; } else {
-		 * finalmailbody = commonupperbody + "<a href=" +
-		 * sendtofriendmail.getJoburl() + ">" + sendtofriendmail.getJoburl() +
-		 * "</a>" + commonlowerbody; }
-		 */
+
 		try {
 			if (sendtofriendmail.getEmail().length() > 0
 					&& validateEmailPattern(sendtofriendmail.getEmail())) {
@@ -720,7 +706,6 @@ public class JobSearchActivityController {
 					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
 							"?Jobseekername", jobseekerName);
 					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
-					// ?Jobtitle</b><br/>?Companyname
 					SearchedJobDTO searchedJobDTO = jobSearchActivity
 							.viewJobDetails(sendtofriendmail.getJobId());
 					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
@@ -744,11 +729,9 @@ public class JobSearchActivityController {
 					&& !validateEmailPattern(sendtofriendmail.getEmail())) {
 				model.addAttribute("visible", false);
 				model.addAttribute("invalidemail", invalidemail);
-				// return "jobseekersendtofriendpopup";
 			} else {
 				model.addAttribute("visible", false);
 				model.addAttribute("notempty", notempty);
-				// return "jobseekersendtofriendpopup";
 			}
 
 		} catch (Exception e) {
@@ -781,10 +764,11 @@ public class JobSearchActivityController {
 				.locationSearch(keyword.trim());
 
 		if (locationDTOList != null) {
-			/**
+			/*
 			 * Returning the List<String> based on Post code search or CityState
 			 * search
 			 */
+
 			if (MMUtils.isIntNumber(keyword)) {
 				return MMUtils.convertToPostcodeStringList(locationDTOList);
 			} else {
