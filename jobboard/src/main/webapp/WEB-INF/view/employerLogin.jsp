@@ -54,7 +54,7 @@
 			    <div class="rowEvenNewSpacing">
 				<span class="lableText1">Password:</span> <input id="j_password" name="j_password" type="password" class="job_seeker_password" />
 			    </div>
-                <input type="hidden" name="pageValue" value="jobSeeker"/>
+                <input type="hidden" name="pageValue" value="employer"/>
 			    <div class="loginOptions">
 				<div class="rowEvenNewSpacing">
 				    <input type="checkbox" name='_spring_security_remember_me'
