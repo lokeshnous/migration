@@ -39,7 +39,7 @@
 			var y=userEmail.lastIndexOf('.');
 			var result=true;
 			if(userName.length == 0){
-				$("#userNameError").text("Please enter name");
+				$("#userNameError").text("Please the enter name");
 				result=false;
 			}
 			else{
@@ -81,21 +81,18 @@
 <span class="lableText3">Name:</span>   
                 <form:input id="userName" path="userName" class="job_seeker_email" />
                 <span class="required">(Required)</span>
-                <div style="color: red" align="center"><form:errors path="userName"/></div>
-               <div id="userNameError" style="color: red" align="center"></div>
+               <div id="userNameError" style="color: red" align="left"></div>
             </div>
             <div class="rowEvenNewSpacing"><span class="lableText3">Email Address:</span>
               <form:input id="userEmail" path="userEmail"  class="job_seeker_email" />
               <span class="required">(Required)</span>
-              <div style="color: red" align="center"><form:errors path="userEmail"/></div>
-              <div style="color: red" align="center" id="userEmailError"></div>
+              <div style="color: red" align="right" id="userEmailError"></div>
     </div>
             <div class="rowEvenNewSpacing"> <span class="lableText3">Upload Resume File:</span>
             <div class="floatLeft"><form:input path="filePath" type="file" id="filePath" size="20" class="job_seeker_login_email fileType" />
             </div>
             <span class="required">(Required)</span>
-             <div style="color: red" align="center"><form:errors path="filePath"/></div>
-             <div style="color: red" align="center" id="filePathError"></div>
+             <div style="color: red" align="left" id="filePathError"></div>
 </div>
       <div class="popUpButtonRow">
                          
