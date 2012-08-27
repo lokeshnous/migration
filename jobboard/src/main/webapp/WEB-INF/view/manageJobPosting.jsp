@@ -35,7 +35,59 @@
 	url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
 </style>
 <!-- -------------------------------------------------------------------------- -->
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+	$('#deactivated').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					$('#selectedRow').val(val);
+					alert(val);
 
+				});
+				$('#repost').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					$('#selectedRow').val(val);
+					alert(val);
+
+				});
+				$('#delete').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					$('#selectedRow').val(val);
+					if (confirm("Are you sure you want to delete?")) {
+						$("#deleteHidden").click();
+
+					}
+
+				});
+				$("#tb_manage_job img").click(
+						function(event) {
+							var action = $(this).attr("alt");
+							var val = 0;
+							switch (action) {
+							case "check": {
+								val = $(this).attr("id");
+								
+				                 $("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/updateJobs.html?jobId=${job.jobId}"
+												+ val);
+								$("form").submit(); 
+
+							}
+								break;
+							}
+
+						});
+			});
+</script>
 
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
@@ -43,7 +95,7 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 </head>
 <body class="job_board">
-<form:form action="manageJobPost.html" commandName="jobPostForm">
+<form:form action="deleteJobs.html" commandName="jobPostForm">
 	<div class="ad_page_top">
 		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
@@ -191,10 +243,17 @@
 				</div>
 				<!--button-->
 				<div class="row">
-					<span><a href="#" class="btn_sm white jb_search_submit">REPOST</a><a
-						href="#" class="btn_sm white jb_search_submit">DEACTIVATED</a><a
-						href="#" class="btn_sm white jb_search_submit">DELETE</a><a
-						href="#" class="btn_sm white jb_search_submit">POST NEW JOB</a>
+					<span>	<input
+						type="submit" id="repost" value="REPOST" name="REPOST" class="btn_sm white" />
+						<input
+						type="submit" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" />
+						<input
+						type="button" id="delete" value="DELETE" name="DELETE" class="btn_sm white" />
+						<a
+						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
+						
+						<input
+						type="submit" id="deleteHidden" value="DELETE" name="DELETE" class="btn_sm white" style="visibility: hidden;" />
 						<div class="floatRight marginTop15">
 							<span class=" FloatLeft marginTop3">View by Job Status</span> <select
 								id="select14" class="jb_input3  marginTop0 width150 marginLeft5"
@@ -239,8 +298,9 @@
 
 
 						</display:table> --%>
+						<form:hidden path="selectedRow"  id="selectedRow"/>
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
-							class="grid">
+							class="grid" id="tb_manage_job">
 							<tr class="LightGrayBG Height35">
 								<td width="2%" align="center" valign="middle" class="">&nbsp;</td>
 								<td width="6%" align="center" valign="middle"><strong>Job
@@ -268,37 +328,43 @@
 								</strong></td>
 								<td width="9%" align="center" valign="middle"><strong>Actions</strong></td>
 							</tr>
-							<c:forEach items="${jobList}" var="job" varStatus="status">
+							<c:forEach items="${jobPostForm.jobPostDTOList}" var="job" varStatus="status">
 								<tr class="Height35">
 									<td align="center" valign="middle"><input type="checkbox"
-										name="checkbox" id="checkbox"></td>
+										name="checkbox" id=${job.jobId} value="${job.jobId}"></td>
 									<td align="center" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
 									<td align="left" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
-									<td align="center" valign="middle">Wissahickon, MO</td>
+									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
 									<td align="center" valign="middle">${job.endDt}</td>
-									<td align="center" valign="middle">10</td>
-									<td align="center" valign="middle">7</td>
-									<td align="center" valign="middle">3</td>
-									<td align="center" valign="middle"><select id="select"
-										class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-										name="select">
-											<option selected="">Yes</option>
-											<option>No</option>
-									</select></td>
-									<td align="center" valign="middle"><select id="select"
-										class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
-										name="select">
-											<option selected="" value="Public">Select One</option>
-									</select></td>
+									<td align="center" valign="middle">${job.views}</td>
+									<td align="center" valign="middle">${job.clicks}</td>
+									<td align="center" valign="middle">${job.applies}</td>
+									<td align="center" valign="middle">
+									<form:select
+											path="autoRenew" id="selectAutoRenew"
+											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
+											name="select1">
+											<form:option value="0" label="No" />
+											<form:option value="1" label="Yes" />
+											
+										</form:select>
+										
+									<td align="center" valign="middle"><form:select
+											path="brandTemplate" id="selectTemplate"
+											class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
+											name="select">											
+											<form:option value="0" label="Select One" />											
+											<form:options items="${templateList}"/>
+										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80">
 											<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><img src="../resources/images/Edit.png"
-												width="20" height="20" alt=""></a>&nbsp;<a href="#"><img
+												width="20" height="20" alt=""></a>&nbsp;<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><img
 												src="../resources/images/View.png" width="20" height="20"
-												alt=""></a>&nbsp;<a href="#"><img
-												src="images/check.png" width="20" height="20" alt=""></a>
+												alt=""></a>&nbsp;<a href=""><img
+												src="../resources/images/check.png" width="20" height="20" alt="check" id="${job.jobId}" ></a>
 										</div></td>
 								</tr>
 							</c:forEach>
@@ -306,10 +372,17 @@
 						</table>
 					</div>
 					<div class="row FloatLeft">
-					<span><a href="#" class="btn_sm white jb_search_submit">REPOST</a><a
-						href="#" class="btn_sm white jb_search_submit">DEACTIVATED</a><a
-						href="#" class="btn_sm white jb_search_submit">DELETE</a><a
-						href="#" class="btn_sm white jb_search_submit">POST NEW JOB</a> </span>
+					<span><input
+						type="submit" id="repost" value="REPOST" name="REPOST" class="btn_sm white"/>
+						<input
+						type="submit" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" />
+						<input
+						type="button" id="delete" value="DELETE" name="DELETE" class="btn_sm white" />
+						<a
+						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
+						
+						<input
+						type="submit" id="deleteHidden" value="DELETE" name="DELETE" class="btn_sm white" style="visibility: hidden;" />
 				</div>
 				<div class="clearfix"></div>
 				<div class="searchResultsNavigation width98P FloatLeft marginTop20">

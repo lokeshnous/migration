@@ -103,7 +103,7 @@ JAVASCRIPT FILES
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="">Manage / Edit Job Postings</a>
+								<a href="<%=request.getContextPath()%>/employer/manageJobPost.html">Manage / Edit Job Postings</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">

@@ -75,13 +75,40 @@ public class JobPostServiceImpl implements JobPostService {
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobPost(int employerId) {
-		// TODO Auto-generated method stub
 		return employerJobPostDAO.retrieveAllJobPost(employerId);
 	}
 
 	@Override
 	public JobPostDTO editJob(int jobId) {
 		return employerJobPostDAO.editJob(jobId);
+	}
+
+	@Override
+	public boolean deleteJob(int jobId, int userId) {
+		return employerJobPostDAO.deleteJob(jobId, userId);
+		
+	}
+
+	@Override
+	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
+			int jobId, int userId) {
+		return employerJobPostDAO.updateManageJob(autoRenew,brandTemplate,jobId, userId);
+	}
+
+	@Override
+	public boolean deactivateJob(int jobId, int userId) {
+		return employerJobPostDAO.deactivateJob(jobId, userId);
+	}
+
+	@Override
+	public boolean repostJob(int jobId, int userId) {
+		return employerJobPostDAO.repostJob(jobId, userId);
+	}
+
+	@Override
+	public List<JobPostDTO> retrieveAllJobByStatus(String Status, int employerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

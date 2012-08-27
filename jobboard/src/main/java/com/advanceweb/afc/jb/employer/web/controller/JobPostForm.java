@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.JobPostDTO;
+
 /**
  * @Author : Prince Mathew
    @Version: 1.0
@@ -48,7 +52,10 @@ public class JobPostForm {
 	private String scheduleEndDate;
 	
 	private String jobStatus;
-	
+	private String selectedRow;
+    private boolean readOnly= false;
+    
+    private List<JobPostDTO> jobPostDTOList;
 	public int getJobId() {
 		return jobId;
 	}
@@ -287,6 +294,48 @@ public class JobPostForm {
 
 	public void setJobStatus(String jobStatus) {
 		this.jobStatus = jobStatus;
+	}
+
+	/**
+	 * @return the selectedRow
+	 */
+	public String getSelectedRow() {
+		return selectedRow;
+	}
+
+	/**
+	 * @param selectedRow the selectedRow to set
+	 */
+	public void setSelectedRow(String selectedRow) {
+		this.selectedRow = selectedRow;
+	}
+
+	/**
+	 * @return the readOnly
+	 */
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	/**
+	 * @param readOnly the readOnly to set
+	 */
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	/**
+	 * @return the jobPostDTOList
+	 */
+	public List<JobPostDTO> getJobPostDTOList() {
+		return jobPostDTOList;
+	}
+
+	/**
+	 * @param jobPostDTOList the jobPostDTOList to set
+	 */
+	public void setJobPostDTOList(List<JobPostDTO> jobPostDTOList) {
+		this.jobPostDTOList = jobPostDTOList;
 	}
 	
 	

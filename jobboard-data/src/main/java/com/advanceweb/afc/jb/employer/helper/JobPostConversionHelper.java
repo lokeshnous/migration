@@ -124,29 +124,44 @@ public class JobPostConversionHelper<JobPostForm> {
 	public List<JobPostDTO> transformJpJobListToJobPostDTOList(List<JpJob> jobs) {
 		List<JobPostDTO> jobPostDTOList = new ArrayList<JobPostDTO>();
 		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
-		for (JpJob job : jobs) {
-			JobPostDTO jobPostDTO = new JobPostDTO();
-			jobPostDTO.setJobId(job.getJobId());
-			jobPostDTO.setJobTitle(job.getJobtitle());
-			jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
-			jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-			int compareEndDate = job.getEndDt().compareTo(new Date());
-			int compareStartDate = job.getStartDt().compareTo(new Date());
-			if (compareEndDate >= 0) {
-				jobPostDTO.setJobStatus("Active");
-			} else {
-				jobPostDTO.setJobStatus("Expired");
+		String location=null;
+		if(null !=jobs){
+			for (JpJob job : jobs) {
+				JobPostDTO jobPostDTO = new JobPostDTO();
+				jobPostDTO.setJobId(job.getJobId());
+				jobPostDTO.setJobTitle(job.getJobtitle());
+				jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
+				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
+				jobPostDTO.setAutoRenew(job.getAutoRenew()==0?false:true);
+				if(null !=job.getJpTemplate() && null != job.getJpTemplate().getTemplateName()){
+				jobPostDTO.setBrandTemplate(job.getJpTemplate().getTemplateName());
+				}
+				int compareEndDate = job.getEndDt().compareTo(new Date());
+				int compareStartDate = job.getStartDt().compareTo(new Date());
+				if (compareEndDate >= 0) {
+					jobPostDTO.setJobStatus("Active");
+				} else {
+					jobPostDTO.setJobStatus("Expired");
+				}
+				if (compareStartDate > 0) {
+					jobPostDTO.setJobStatus("Scheduled");
+				}
+				 List<JpJobLocation> jobLocationList= job.getJpJobLocations();
+				 if(null !=jobLocationList){
+					 for(JpJobLocation jobLocation:jobLocationList){
+						 location = jobLocation.getJpLocation().getCity() +","+ jobLocation.getJpLocation().getState();
+						 jobPostDTO.setLocation(location);
+					 }
+				 }
+				if (null != job.getJpJobStat()) {
+					
+						jobPostDTO.setViews(job.getJpJobStat().getViews());
+						jobPostDTO.setApplies(job.getJpJobStat().getApplies());
+						jobPostDTO.setClicks(job.getJpJobStat().getClicks());
+					
+				}
+				jobPostDTOList.add(jobPostDTO);
 			}
-			if (compareStartDate > 0) {
-				jobPostDTO.setJobStatus("Scheduled");
-			}
-			/*
-			 * if (job.getUpdateDt() != null) { //
-			 * jobPostDTO.setUpdateDt(job.getUpdateDt());
-			 * 
-			 * }
-			 */
-			jobPostDTOList.add(jobPostDTO);
 		}
 
 		return jobPostDTOList;

@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.employer.dao;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -163,5 +166,78 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return dto;
 	}
 	
+	/**
+	 * This method is called to delete the Job
+	 * 
+	 * @param jobId
+	 * @param userId
+	 * @return delete status
+	 */
+	@Override
+	public boolean deleteJob(int jobId, int userId) {
+		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+		int compareEndDate = job.getEndDt().compareTo(new Date());
+		if (compareEndDate < 0) {
+			// System deletes the job postings which are in “Expired” status
+			job.setDeleteDt(new Timestamp(new Date().getTime()));
+			hibernateTemplate.save(job);
+		}
+		return true;
+	}
+	/**
+	 * This method is called to update the Job
+	 * 
+	 * @param jobId
+	 * @param userId
+	 * @return delete status
+	 */
+	@Override
+	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
+			int jobId, int userId) {
+		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+			// System deletes the job postings which are in “Expired” status
+			job.setUpdateDt(new Timestamp(new Date().getTime()));
+			job.setAutoRenew(autoRenew?1:0);
+			JpTemplate template = hibernateTemplate.load(JpTemplate.class,Integer.valueOf(brandTemplate));
+			job.setJpTemplate(template);
+			hibernateTemplate.save(job);
+		return true;
+	}
+	/**
+	 * This method is called to Deactivate the Job
+	 * 
+	 * @param jobId
+	 * @param userId
+	 * @return delete status
+	 */
+	@Override
+	public boolean deactivateJob(int jobId, int userId) {
+		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+		int compareEndDate = job.getEndDt().compareTo(new Date());
+		if (compareEndDate < 0) {
+			// System deletes the job postings which are in “Expired” status
+			job.setDeleteDt(new Timestamp(new Date().getTime()));
+			hibernateTemplate.save(job);
+		}
+		return true;
+	}
+	/**
+	 * This method is called to delete the Job
+	 * 
+	 * @param jobId
+	 * @param userId
+	 * @return delete status
+	 */
+	@Override
+	public boolean repostJob(int jobId, int userId) {
+		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+		int compareEndDate = job.getEndDt().compareTo(new Date());
+		if (compareEndDate < 0) {
+			// System deletes the job postings which are in “Expired” status
+			job.setDeleteDt(new Timestamp(new Date().getTime()));
+			hibernateTemplate.save(job);
+		}
+		return true;
+	}
 	
 }

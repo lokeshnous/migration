@@ -53,7 +53,12 @@ public class JobPostDTO implements Serializable {
 	
 	private String scheduleStartDt;
 	private String scheduleExpiryDt;
-	
+	private int applies;
+	private int clicks;
+	private int views;
+
+	private String selectedRow;
+    private boolean readOnly= false;
 	public int getJobId() {
 		return jobId;
 	}
@@ -341,5 +346,76 @@ public class JobPostDTO implements Serializable {
 	public void setScheduleExpiryDt(String scheduleExpiryDt) {
 		this.scheduleExpiryDt = scheduleExpiryDt;
 	}
-	
+
+	/**
+	 * @return the applies
+	 */
+	public int getApplies() {
+		return applies;
+	}
+
+	/**
+	 * @param applies the applies to set
+	 */
+	public void setApplies(int applies) {
+		this.applies = applies;
+	}
+
+	/**
+	 * @return the clicks
+	 */
+	public int getClicks() {
+		return clicks;
+	}
+
+	/**
+	 * @param clicks the clicks to set
+	 */
+	public void setClicks(int clicks) {
+		this.clicks = clicks;
+	}
+
+	/**
+	 * @return the views
+	 */
+	public int getViews() {
+		return views;
+	}
+
+	/**
+	 * @param views the views to set
+	 */
+	public void setViews(int views) {
+		this.views = views;
+	}
+
+	/**
+	 * @return the selectedRow
+	 */
+	public String getSelectedRow() {
+		return selectedRow;
+	}
+
+	/**
+	 * @param selectedRow the selectedRow to set
+	 */
+	public void setSelectedRow(String selectedRow) {
+		this.selectedRow = selectedRow;
+	}
+
+	/**
+	 * @return the readOnly
+	 */
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	/**
+	 * @param readOnly the readOnly to set
+	 */
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+		
 }
