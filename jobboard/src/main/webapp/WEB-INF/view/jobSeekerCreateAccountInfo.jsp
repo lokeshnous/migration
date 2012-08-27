@@ -33,6 +33,11 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
+		<script type="text/javascript">
+		    function cancelProcess(){
+		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
+		    }		
+		</script>
 </head>
 
 <body class="job_board">
@@ -52,7 +57,8 @@
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
 						<h3 class="marginLeft10"> Contact Information </h3>
 						<c:if test="${not empty message}">
-							<div style="color: red" align="middle">
+							<div class="rowEvenNewSpacing" style="color: red">
+							<span class="lableText3"></span>
 								<b>${message}</b>
 							</div>
 						</c:if>
@@ -147,7 +153,7 @@
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
 											class="job_seeker_password textBox350" />
 											<div class="toolTip marginTop5 marginLeft5">
-											<span class="classic">Valid format for Phone number is (000)000-0000</span>
+											<span class="classic">Valid format for Phone number is (xxx)xxx-xxxx</span>
 										</div>
 										<span class="required"></span>
 									</div>
@@ -291,9 +297,12 @@
 								<!-- <a href="" class="btn_sm white">Back</a> -->
 								<input type="submit" value="Back" class="btn_sm orange nextacount"
 									name="Back" /> <input type="submit" value="Finish"
-									class="btn_sm orange nextacount" name="Finish" /> <a
+									class="btn_sm orange nextacount" name="Finish" /> 
+									<input type="button" value="Cancel" onclick="cancelProcess();"
+									class="btn_sm orange nextacount" name="Cancel" />
+									<%-- <a
 									href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html"
-									class="btn_sm orange cancelacount">Cancel</a>
+									class="btn_sm orange cancelacount">Cancel</a> --%>
 								<!-- <input type="submit" value="Cancel" class="btn_sm orange" name="Cancel"/>  -->
 							</div>
 							<div class="clearfix"></div>

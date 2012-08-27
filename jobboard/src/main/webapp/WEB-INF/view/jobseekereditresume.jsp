@@ -589,7 +589,7 @@
 								</div>
 
 								<div class="row MarginBottom10 ">
-									<div class="lableText3 marginTop10">Summary/Job
+									<div class="lableText3 marginTop10">Summary / Job
 										Description:</div>
 									<div class="input_grp5 ">
 										<textarea id="Body Text:" class="textareaBoxCResume" rows="3"

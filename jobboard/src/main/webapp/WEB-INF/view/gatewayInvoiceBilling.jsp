@@ -47,6 +47,14 @@
 		}
 	}
 </script>
+<script type="text/javascript">
+		    function cancelProcess(){
+		    	//window.location.href = '';
+		    }		
+		    function backProcess(){
+		    	window.location.href = '../pgiController/callPaymentMethod.html';
+		    }		
+		</script>
 </head>
 
 <body class="job_board">
@@ -283,10 +291,15 @@
 
 						<div class="buttonContainer">
 							<span class="floatLeft"><input type="submit"
-								class="btn_sm orange" value="Continue to Next Step" /> <a
+								class="btn_sm orange" value="Continue to Next Step" /> 
+								<input type="button" value="Cancel" onclick="cancelProcess()"
+									class="btn_sm white" name="Cancel" />
+								<input type="button" value="Back" onclick="backProcess()"
+									class="btn_sm white" name="Back" />
+								<!-- <a
 								href="" class="btn_sm white">Cancel</a> <a
 								href="../pgiController/callPaymentMethod.html"
-								class="btn_sm white">Back</a> </span>
+								class="btn_sm white">Back</a> --> </span>
 						</div>
 
 					</form:form>

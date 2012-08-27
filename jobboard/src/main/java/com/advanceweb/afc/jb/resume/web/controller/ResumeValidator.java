@@ -90,7 +90,7 @@ public class ResumeValidator {
 					return "Please fill the required fields";
 				}
 				if(!validateMobileNumberPattern(form.getPhoneNumber())){
-					return "Please enter the valid phone format(000) 000-0000.";
+					return "Please enter the valid phone format(xxx) xxx-xxxx.";
 				}
 			}
 		}

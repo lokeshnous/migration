@@ -315,8 +315,10 @@
 								
 								<!-- <a href="<%=request.getContextPath()%>/brandingTemplates/saveEmpBrandTemp.html"
 								class="btn_sm white">Save</a> --> 
+								<input type="button" value="Cancel" 
+									class="btn_sm white" name="Cancel" />
 								
-								<a href="" class="btn_sm white">Cancel</a></span>
+								<!-- <a href="" class="btn_sm white">Cancel</a> --></span>
 						</div>
 						</form:form>
 				</div>

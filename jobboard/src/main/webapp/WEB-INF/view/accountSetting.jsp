@@ -129,9 +129,8 @@
 								Edit
 							</a> -->
 							<input class="btn_sm orange" type="submit" value="Edit">
-							<a class="btn_sm orange" href="">
-								Cancel
-							</a>
+							<input type="button" name="Cancel" class="btn_sm orange" />
+								
 						</span>
 					</div>
 					</form:form>

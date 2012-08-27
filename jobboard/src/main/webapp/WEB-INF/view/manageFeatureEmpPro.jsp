@@ -23,6 +23,12 @@
 
 <script type="text/javascript"
 	src="../resources/js/jquery.colorPicker.js"></script>
+	<script type="text/javascript">
+		    function cancelProcess(){
+		    	window.location.href = '${pageContext.request.contextPath}/employer/employerDashBoard.html';
+		    }		
+		</script>
+	
 </head>
 
 <body class="job_board">
@@ -152,8 +158,11 @@
 							<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 								<span class="floatLeft marginTop10"> <input
 						type="submit" value="Save" name="Save" class="btn_sm orange" />
-						<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
-						class="btn_sm orange">Cancel</a></span>
+						<input type="button" value="Cancel" onclick="cancelProcess()"
+									class="btn_sm orange" name="Cancel" />
+						
+						<%-- <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
+						class="btn_sm orange">Cancel</a> --%></span>
 							</div>
 
 						</div>

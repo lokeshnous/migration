@@ -42,7 +42,8 @@
 				<form:textarea path="resumeText" id="styled" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')" rows="20" cols="100" />
 			</div>
 			<div style="text-align: center;">
-				<input type="submit" value="create" /><input type="button"
+				<input type="submit" value="create" />
+				<input type="button"
 					value="cancel" />
 			</div>
 

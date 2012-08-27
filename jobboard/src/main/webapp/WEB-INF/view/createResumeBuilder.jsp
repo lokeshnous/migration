@@ -178,6 +178,12 @@
 	
 	//jQuery(".megamenu").megamenu();
 </script>
+<script type="text/javascript">
+		    function cancelProcess(){
+		    	window.location.href = '${pageContext.request.contextPath}/jobSeeker/jobSeekerDashBoard.html';
+		    }		
+		</script>
+
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 <script type="text/javascript" src="../resources/js/lprogress.min.js"></script>
 <script type="text/javascript" src="../resources/js/lprogress.js"></script>
@@ -528,7 +534,7 @@
 											<span class="required "></span>
 										</div>
 										<div class="row MarginBottom10 ">
-											<div class="lableText3">Summary/Job
+											<div class="lableText3">Summary / Job
 												Description:</div>
 											<div class="input_grp5 ">
 												<form:textarea id="workExplimitedtextarea${status.count}"
@@ -889,7 +895,7 @@
 													onKeyDown="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);"
 													onKeyUp="limitText(this.form.otherInterestsTAId,this.form.countdownOtherInt,2000);" 
 													rows="3" cols="45" />
-											<p><input readonly type="text" class="input2000_width" name="countdownOtherInt" size="3" value="2000">characters remaining.<p>
+											<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownOtherInt" size="3" value="2000">characters remaining.<p>
 										</div>
 									</div>
 								</div>
@@ -970,7 +976,8 @@
 					<br /> <span class="marginBottom10 FloatLeft"> 
 					<input type="button" value="Save" name="Save" class="btn_sm orange inputleft"  id="saveResBuilderBtId"/>
 					<input type="submit" value="Preview" name="Preview" class="btn_sm orange inputleft" />
-					<a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="btn_sm orange cancelacount">Cancel</a>
+					<input type="button" value="Cancel" class="orange" name="Cancel" onclick="cancelProcess()" />
+					<%-- <a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="btn_sm orange cancelacount">Cancel</a> --%>
 					<input type="submit" value="Save" name="Save" class="btn_sm orange inputleft"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
 					</span>
 				</div>

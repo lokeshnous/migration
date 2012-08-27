@@ -33,6 +33,12 @@
 		jQuery(".megamenu").megamenu();
 	});
 </script>
+<script type="text/javascript">
+		    function cancelProcess(){
+		    	//window.location.href = '';
+		    }		
+		</script>
+
 </head>
 
 <body class="job_board">
@@ -69,8 +75,12 @@
 						<form:errors path="paymentMethod" />
 						<div class="buttonContainer">
 							<span class="floatLeft"><input type="submit"
-								class="btn_sm orange" value="Continue to Next Step" /> <a
-								href="" class="btn_sm orange">Cancel</a></span>
+								class="btn_sm orange" value="Continue to Next Step" />
+								<input type="button" value="Cancel" onclick="cancelProcess()"
+									class="btn_sm orange" name="Cancel" />
+								
+								<!--  <a
+								href="" class="btn_sm orange">Cancel</a> --></span>
 						</div>
 
 					</form:form>

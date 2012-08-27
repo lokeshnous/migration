@@ -117,7 +117,7 @@
 		<span class="required "></span>
 	</div>
 	<div class="row MarginBottom10 ">
-		<div class="lableText3 marginTop10">Summary/Job
+		<div class="lableText3 marginTop10">Summary / Job
 			Description:</div>
 		<div class="input_grp5 ">
 			<form:textarea

@@ -28,6 +28,11 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
+		<script type="text/javascript">
+		    function cancelProcess(){
+		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
+		    }		
+		</script>
 		</head>
 		
 	<body class="job_board">
@@ -127,8 +132,11 @@
 	                      <span class="required">(Required)</span> </div>--%>
 				<div class="popUpButtonRow">
 				
-	               <input type="submit" value="Next" class="btn_sm orange nextacount"  name="Next"/>
-	               <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange cancelacount">Cancel</a>
+	               <input type="submit" value="Next" class="orange"  name="Next"/>
+	               <input type="button" value="Cancel" onclick="cancelProcess()"
+									class="orange" name="Cancel" />
+	               
+	               <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange cancelacount">Cancel</a> --%>
 	               <!-- <input type="submit" value="Cancel" class="btn_sm orange"  name="Cancel"/> -->  
 	            </div>
 	            <div class="clearfix"></div>

@@ -167,7 +167,8 @@
 				</div>
 				<div class="popUpButtonRow">
 					<a id="Save" href="#"
-						class="btn_sm orange">Save</a> <a href="#"
+						class="btn_sm orange">Save</a> 
+						<a href="#"
 						class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 				<a id="resumeBuilder" href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder" class="nyroModal"></a>
