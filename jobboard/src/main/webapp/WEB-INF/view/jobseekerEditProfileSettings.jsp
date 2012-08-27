@@ -30,6 +30,12 @@
 		jQuery(".megamenu").megamenu();
 	});
 </script>
+<script type="text/javascript">
+		    function cancelProcess(){
+		    	parent.$.nmTop().close();
+		    }		
+		</script>
+
 </head>
 
 <body class="job_board">
@@ -232,8 +238,12 @@
 					<!--<a href="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
 					<input type="button" value="Save" class="btn_sm orange" id="save" style="margin-bottom:3px"/>
-					<a href="#" class="btn_sm orange"
-						onclick="parent.$.nmTop().close();">Cancel</a>
+					<input type="button" value="Cancel" onclick="cancelProcess()"
+									class="btn_sm orange" name="Cancel" />
+
+					
+					<!-- <a href="#" class="btn_sm orange"
+						onclick="parent.$.nmTop().close();">Cancel</a> -->
 				</div>
 				<div class="clearfix"></div>
 			</form:form>
