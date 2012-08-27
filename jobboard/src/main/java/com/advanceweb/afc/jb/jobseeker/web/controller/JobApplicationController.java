@@ -100,7 +100,6 @@ public class JobApplicationController {
 			@ModelAttribute("jobApplicationForm") JobApplicationForm form,
 			BindingResult result, @RequestParam("filePath") String filepath,
 			HttpServletRequest request, HttpSession session) {
-		// ,@RequestParam("id") Long jobId
 		try {
 
 			// send mail to employer email id which is given while posting the
@@ -138,22 +137,18 @@ public class JobApplicationController {
 			toEmployer.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
 			try {
-
 				attachmentpaths.add(filepath);
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
 				// LOGGER.info("Resume not found");
-				// TODO:Exception handeling
+				// TODO:Exception Handling
 			}
 			emailService.sendEmail(toEmployer);
 			// LOGGER.info("Mail sent to employer");
 
-			/**
-			 * send mail to anonymous job seeker email id which is given while
-			 * applying the job, subject will be job title, body will contain
-			 * short description
-			 */
-
+			 // send mail to anonymous job seeker email id which is given while
+			 // applying the job, subject will be job title, body will contain
+			 // short description
 			EmailDTO toJobSeeker = new EmailDTO();
 			InternetAddress[] jsToAddress = new InternetAddress[1];
 			jsToAddress[0] = new InternetAddress(form.getUserEmail());
@@ -168,11 +163,12 @@ public class JobApplicationController {
 			toJobSeeker.setBody(jobseekerMailBody);
 			toJobSeeker.setHtmlFormat(true);
 			emailService.sendEmail(toJobSeeker);
+			session.removeAttribute("jobId");
 			// LOGGER.info("Mail has sent to Anonymous User");
 		} catch (Exception e) {
-
-			// TODO:Exception handeling
-
+			session.removeAttribute("jobId");
+			return "error";
+			// TODO:Exception Handling
 		}
 		return "";
 	}
