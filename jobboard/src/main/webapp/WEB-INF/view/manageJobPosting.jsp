@@ -53,7 +53,6 @@
 						val[i] = $(this).val();
 					});
 					$('#selectedRow').val(val);
-					alert(val);
 					$("#repostHidden").click();
 
 				});
@@ -67,6 +66,36 @@
 						$("#deleteHidden").click();
 
 					}
+
+				});
+				$('#repost_lower').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					$('#selectedRow').val(val);
+					$("#repostHidden").click();
+
+				});
+				$('#delete_lower').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					$('#selectedRow').val(val);
+					if (confirm("Are you sure you want to delete?")) {
+						$("#deleteHidden").click();
+
+					}
+
+				});
+				$('#deactivated_lower').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					$('#selectedRow').val(val);
+					$("#deactivateHidden").click();
 
 				});
 				$("#tb_manage_job img").click(
@@ -363,8 +392,8 @@
 											path="autoRenew" id="selectAutoRenew"
 											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
 											name="select1">
-											<form:option value="0" label="No" />
-											<form:option value="1" label="Yes" />
+											<form:option value="false" label="No" />
+											<form:option value="true" label="Yes" />
 											
 										</form:select>
 										
@@ -390,11 +419,11 @@
 					</div>
 					<div class="row FloatLeft">
 					<span><a
-						href="#" id="repost" value="REPOST" name="REPOST" class="btn_sm white jb_search_submit">REPOST</a>
+						href="#" id="repost_lower" value="REPOST" name="REPOST" class="btn_sm white jb_search_submit">REPOST</a>
 					<a
-						href="#" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATED</a>
+						href="#" id="deactivated_lower" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATED</a>
 						<a
-						href="#" id="delete" value="DELETE" name="DELETE" class="btn_sm white jb_search_submit">DELETE</a>
+						href="#" id="delete_lower" value="DELETE" name="DELETE" class="btn_sm white jb_search_submit">DELETE</a>
 					
 						<a
 						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
