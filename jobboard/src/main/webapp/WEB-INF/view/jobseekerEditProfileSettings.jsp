@@ -227,6 +227,7 @@
 							</div>
 						</c:if>
 				</c:forEach>
+				<form:hidden path="emailId"/>
 				<div class="popUpButtonRow">
 					<!--<a href="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->

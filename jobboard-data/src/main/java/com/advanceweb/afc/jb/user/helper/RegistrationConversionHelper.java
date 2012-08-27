@@ -188,6 +188,7 @@ public class RegistrationConversionHelper {
 					attribDTO.setStrLabelValue(user.getMiddleName());
 				}else if(MMJBCommonConstants.EMAIL_ADDRESS.equalsIgnoreCase(attribDTO.getStrLabelName())){
 					attribDTO.setStrLabelValue(user.getEmail());
+					jsDTO.setEmailId(user.getEmail());
 				}else{
 					attribDTO.setStrLabelValue(retrieveLabelValue(attribDTO, profiles));
 				}

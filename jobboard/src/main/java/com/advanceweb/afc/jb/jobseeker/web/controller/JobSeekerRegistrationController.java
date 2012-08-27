@@ -253,6 +253,7 @@ public class JobSeekerRegistrationController {
 			List<JobSeekerProfileAttribForm> listProfAttribForms = 
 					transformJobSeekerRegistration.transformDTOToProfileAttribForm(jsRegistrationDTO);
 			form.setListProfAttribForms(listProfAttribForms);
+			form.setEmailId(jsRegistrationDTO.getEmailId());
 			model.addObject("registerForm", form);
 			model.setViewName("jobseekerEditProfileSettings");
 			
@@ -301,11 +302,12 @@ public class JobSeekerRegistrationController {
 					if(MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
 						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){
 							return "Please enter the correct E-Mail Address";
-						}/*else{
-							if(profileRegistration.validateEmail(form.getStrLabelValue())){
-								return "Email Id already Exists!";
+						}else{
+							if(!(registerForm.getEmailId().equals(form.getStrLabelValue())) 
+									&& profileRegistration.validateEmail(form.getStrLabelValue())){
+								return "Email address already exists";
 							}
-						}*/
+						}
 					}					
 				}
 			}

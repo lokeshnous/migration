@@ -8,7 +8,8 @@ public class JobSeekerRegistrationDTO extends ProfileDTO {
 	private JobSeekerProfileDTO jobSeekerProfileDTO;
 	private MerUserDTO merUserDTO;
 	private List<MerProfileAttribDTO> attribList;
-
+	private String emailId;
+	
 	public AddressDTO getAddressDTO() {
 		return addressDTO;
 	}
@@ -39,6 +40,14 @@ public class JobSeekerRegistrationDTO extends ProfileDTO {
 
 	public void setAttribList(List<MerProfileAttribDTO> attribList) {
 		this.attribList = attribList;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 }
