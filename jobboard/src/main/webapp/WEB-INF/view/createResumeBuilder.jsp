@@ -206,13 +206,14 @@
 									Dashboard</a></span>
 						</div>
 						<div class="clearfix"></div>
-						<div class="row">
+						
+ 						<div class="row">
 							<span>
-								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume Name:</h2>
+								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume Name:</h2><c:out value="${createResume.resumeName}"/>
 
-								 <div class="progressBarContainer"><span class="floatLeft"><div id="progressbar"></div></span><h3 class="floatLeft marginLeft5"><c:out value="${createResume.totalProgress}"/>% Complete</h3>
+								 <div class="progressBarContainer"><span class="floatLeft"><div id="progressbar"></div></span><h3 class="floatLeft marginLeft5"><c:out value="${createResume.resumeName}"/></h3>
            </div>
-           </span> </div>
+           </span> </div> 
 							
 						
 						
