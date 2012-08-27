@@ -301,17 +301,12 @@
 									name="select9">
 
 									<form:option value="" label="--- Job Status ---" />
-									<%-- <form:options items="${jobStatusList}" /> --%>
-											<form:option value="Active" label="Active" />
-											<form:option value="Scheduled" label="Scheduled" />
-											<form:option value="Draft" label="Draft" />
-											<form:option value="Expired" label="Expired" />
-											<form:option value="Inactive" label="Inactive" />
-											
+									<form:options items="${jobStatusList}" />
+
 								</form:select>
 
 
-						</div> </span>
+							</div> </span>
 				</div>
 					<div class="clearfix"></div>
 					<div class="row marginTop10 FontSize11">

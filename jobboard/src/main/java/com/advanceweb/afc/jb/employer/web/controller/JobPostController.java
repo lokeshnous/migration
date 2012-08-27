@@ -337,13 +337,12 @@ public class JobPostController {
 				.populateBrandingTemplateDropdown(
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
-		// jobPostform.setAutoRenew(autoRenew)
 		jobPostform.setJobPostDTOList(postedJobList);
 		model.addObject("jobPostForm", jobPostform);
 		model.addObject("templateList", templateList);
-		// model.addObject("jobStatusList",populateDropdownsService.getJobStatusList());
+		model.addObject("jobStatusList",
+				populateDropdownsService.getJobStatusList());
 		model.setViewName("manageJobPosting");
-		/* map.put("jobList", postedJobList); */
 
 		return model;
 	}

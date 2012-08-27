@@ -620,7 +620,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 				Iterator itr = dataList.iterator();
 				while (itr.hasNext()) {
-					//String[] row = (String[]) itr.next();
 					String key = String.valueOf(itr.next());
 					resultMap.put(key, key);
 				}
