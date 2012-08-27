@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.user.dao.UserDao;
@@ -35,8 +36,7 @@ public class LoginServiceImpl implements LoginService {
 	 * @return
 	 */
 	@Override
-	public LoginDTO validateLoginFormValues(String emailAddress,
-			String password) {
+	public LoginDTO validateLoginFormValues(String emailAddress, String password) {
 		return loginFormDAO.validateLoginFormValues(emailAddress, password);
 	}
 
@@ -58,5 +58,16 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public List<UserRoleDTO> getUserRole(int userId) {
 		return userDAO.getUserRole(userId);
+	}
+
+	/**
+	 * This method is to get the facilityId for logged in user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public EmployerInfoDTO facilityDetails(int userId) {
+		return userDAO.facilityDetails(userId);
 	}
 }

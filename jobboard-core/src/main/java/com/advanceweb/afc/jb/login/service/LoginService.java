@@ -2,9 +2,10 @@ package com.advanceweb.afc.jb.login.service;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 
 /**
  * This Interface defines the required methods for login form
@@ -34,6 +35,14 @@ public interface LoginService {
 	LoginDTO getUserEmailDetails(String emailAddress);
 
 	MerUserDTO getUser(String email);
+
+	/**
+	 * This method is to get the facilityId for logged in user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	EmployerInfoDTO facilityDetails(int userId);
 
 	List<UserRoleDTO> getUserRole(int userId);
 }

@@ -76,11 +76,11 @@ function closePopup() {
 
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="GET" commandName="saveSearchForm">
-				<span class="lableText3 width505 TextAlignL">Search Title</a></span>
+				<span class="lableText3 width505 TextAlignL">Search Title</span>
 				<div class="rowEvenSpacingMargin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
 				</div>
-				<span id="ErrorMsg" style="color: red; font: bold; font-size: 15px;" ></span>
+				<span id="ErrorMsg" style="color: red; font: bold; font-size: 15px;" align="left" ></span>
 				<div class="popUpButtonRow">
 				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
 				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>					
