@@ -353,7 +353,7 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/updateJob", method = RequestMethod.POST,params="DELETE")
+	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST,params="DELETE")
 	public @ResponseBody
 	ModelAndView deleteJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
@@ -396,7 +396,7 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/updateJob", method = RequestMethod.POST,params="DEACTIVATED")
+	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST,params="DEACTIVATED")
 	public @ResponseBody
 	ModelAndView deactivateJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
@@ -419,7 +419,7 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/updateJob", method = RequestMethod.POST,params="REPOST")
+	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST,params="REPOST")
 	public @ResponseBody
 	ModelAndView repostJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {

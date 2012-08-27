@@ -134,7 +134,7 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 </head>
 <body class="job_board">
-<form:form action="updateJob.html" commandName="jobPostForm">
+<form:form action="updateJobs.html" commandName="jobPostForm">
 	<div class="ad_page_top">
 		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
@@ -392,9 +392,17 @@
 											path="autoRenew" id="selectAutoRenew"
 											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
 											name="select1">
-											<form:option value="false" label="No" />
-											<form:option value="true" label="Yes" />
+											<c:choose>
+											<c:when test="${job.autoRenew == true }">											
+											<form:option  value="Yes" id="${job.autoRenew}"/>
+											<form:option value="No" id="false" />
+											</c:when>
+											<c:otherwise>
+											<form:option value="No"  />
+											<form:option value="Yes"  />
+											</c:otherwise>
 											
+											</c:choose>
 										</form:select>
 										
 									<td align="center" valign="middle"><form:select
@@ -402,7 +410,8 @@
 											class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
 											name="select">											
 											<form:option value="0" label="Select One" />											
-											<form:options items="${templateList}"/>
+											<form:options items="${templateList}" itemValue="optionId"
+												itemLabel="optionName"/>
 										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80">
