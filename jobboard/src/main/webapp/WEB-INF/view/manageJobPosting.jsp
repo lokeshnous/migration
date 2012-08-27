@@ -43,6 +43,8 @@
 						val[i] = $(this).val();
 					});
 					$('#selectedRow').val(val);
+					$("#deactivateHidden").click();
+					
 					alert(val);
 
 				});
@@ -113,7 +115,7 @@
                   	<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
 							${msg.commonExclamationMark}
                   	</span><br>
-            <div class="floatRight"> <span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">Log Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span></div>
+            <div class="floatRight"> <span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">Log Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span></div>
           </div>
                   <!-- loginHeader --><!-- loginHeader --> 
                   
@@ -251,7 +253,9 @@
 						type="button" id="delete" value="DELETE" name="DELETE" class="btn_sm white" />
 						<a
 						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
-						
+						<input
+						type="submit" id="repostHidden" value="REPOST" name="REPOST" class="btn_sm white" style="visibility: hidden;" /><input
+						type="submit" id="deactivateHidden" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" style="visibility: hidden;" />
 						<input
 						type="submit" id="deleteHidden" value="DELETE" name="DELETE" class="btn_sm white" style="visibility: hidden;" />
 						<div class="floatRight marginTop15">
@@ -380,7 +384,9 @@
 						type="button" id="delete" value="DELETE" name="DELETE" class="btn_sm white" />
 						<a
 						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
-						
+						<input
+						type="submit" id="repostHidden" value="REPOST" name="REPOST" class="btn_sm white" style="visibility: hidden;" /><input
+						type="submit" id="deactivateHidden" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" style="visibility: hidden;" />
 						<input
 						type="submit" id="deleteHidden" value="DELETE" name="DELETE" class="btn_sm white" style="visibility: hidden;" />
 				</div>

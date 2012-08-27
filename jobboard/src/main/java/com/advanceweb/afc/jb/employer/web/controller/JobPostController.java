@@ -409,7 +409,7 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/deactivateJobs", method = RequestMethod.POST,params="DEACTIVATED")
+	@RequestMapping(value = "/repostJobs", method = RequestMethod.POST,params="REPOST")
 	public @ResponseBody
 	ModelAndView repostJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {

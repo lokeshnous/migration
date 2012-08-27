@@ -133,10 +133,11 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 				jobPostDTO.setAutoRenew(job.getAutoRenew()==0?false:true);
+				jobPostDTO.setJobStatus(job.getJobStatus());
 				if(null !=job.getJpTemplate() && null != job.getJpTemplate().getTemplateName()){
 				jobPostDTO.setBrandTemplate(job.getJpTemplate().getTemplateName());
 				}
-				int compareEndDate = job.getEndDt().compareTo(new Date());
+				/*int compareEndDate = job.getEndDt().compareTo(new Date());
 				int compareStartDate = job.getStartDt().compareTo(new Date());
 				if (compareEndDate >= 0) {
 					jobPostDTO.setJobStatus("Active");
@@ -145,7 +146,7 @@ public class JobPostConversionHelper<JobPostForm> {
 				}
 				if (compareStartDate > 0) {
 					jobPostDTO.setJobStatus("Scheduled");
-				}
+				}*/
 				 List<JpJobLocation> jobLocationList= job.getJpJobLocations();
 				 if(null !=jobLocationList){
 					 for(JpJobLocation jobLocation:jobLocationList){

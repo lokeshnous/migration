@@ -84,8 +84,8 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public boolean deleteJob(int jobId, int userId) {
-		return employerJobPostDAO.deleteJob(jobId, userId);
+	public boolean deleteJob(String status,int jobId, int userId) {
+		return employerJobPostDAO.deleteJob(status,jobId, userId);
 		
 	}
 
@@ -96,19 +96,18 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public boolean deactivateJob(int jobId, int userId) {
-		return employerJobPostDAO.deactivateJob(jobId, userId);
+	public boolean deactivateJob(String status,int jobId, int userId) {
+		return employerJobPostDAO.deactivateJob(status,jobId, userId);
 	}
 
 	@Override
-	public boolean repostJob(int jobId, int userId) {
-		return employerJobPostDAO.repostJob(jobId, userId);
+	public boolean repostJob(String status,int jobId, int userId) {
+		return employerJobPostDAO.repostJob(status,jobId, userId);
 	}
 
 	@Override
-	public List<JobPostDTO> retrieveAllJobByStatus(String Status, int employerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<JobPostDTO> retrieveAllJobByStatus(String Status,int jobId, int userId) {
+		return employerJobPostDAO.retrieveAllJobByStatus(Status,jobId, userId);
 	}
 
 }

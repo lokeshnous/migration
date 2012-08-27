@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
@@ -174,10 +175,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean deleteJob(int jobId, int userId) {
+	public boolean deleteJob(String status,int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		int compareEndDate = job.getEndDt().compareTo(new Date());
-		if (compareEndDate < 0) {
+		if (null != status && status.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
 			// System deletes the job postings which are in “Expired” status
 			job.setDeleteDt(new Timestamp(new Date().getTime()));
 			hibernateTemplate.save(job);
@@ -211,12 +212,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean deactivateJob(int jobId, int userId) {
+	public boolean deactivateJob(String status,int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		int compareEndDate = job.getEndDt().compareTo(new Date());
-		if (compareEndDate < 0) {
-			// System deletes the job postings which are in “Expired” status
-			job.setDeleteDt(new Timestamp(new Date().getTime()));
+		if (null != status && status.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
+			// System should deactivate the job posting which are in “Active” status
+			job.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
 			hibernateTemplate.save(job);
 		}
 		return true;
@@ -229,15 +229,25 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean repostJob(int jobId, int userId) {
+	public boolean repostJob(String status,int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		int compareEndDate = job.getEndDt().compareTo(new Date());
-		if (compareEndDate < 0) {
-			// System deletes the job postings which are in “Expired” status
-			job.setDeleteDt(new Timestamp(new Date().getTime()));
+		if (null != status && status.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
+			// Repost the inactive job and extend the end date to one month
+			Calendar now = Calendar.getInstance();
+			now.setTime(job.getEndDt());
+			now.add(Calendar.MONTH,1);
+			job.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
+			job.setEndDt(now.getTime());
 			hibernateTemplate.save(job);
 		}
 		return true;
+	}
+
+	@Override
+	public List<JobPostDTO> retrieveAllJobByStatus(String status, int jobId,
+			int userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
