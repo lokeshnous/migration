@@ -11,7 +11,9 @@
 
 		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
-		
+		function closePopup() {
+			parent.window.location.reload();
+		}
 		jQuery(document).ready(function() {
 		$("#sendButton").click(function(event){    
 			if(validate()){
@@ -21,10 +23,10 @@
 				type:"POST",
 				success: function(data) {
 					if(data ==''){
-						 parent.window.location.href ="${pageContext.request.contextPath}/healthcarejobs/advanceweb.html?message=true";
+						 parent.window.location.href ="${pageContext.request.contextPath}/jobsearch/findJobPage.html";
 						 parent.$.nmTop().close();
 					}else{
-						$("#errmsg").html("Please try again");
+						$("#errmsg").html("Some problem happned,please try again");
 					}
 				 },
 			});
@@ -39,7 +41,7 @@
 			var y=userEmail.lastIndexOf('.');
 			var result=true;
 			if(userName.length == 0){
-				$("#userNameError").text("Please the enter name");
+				$("#userNameError").text("Please enter the name");
 				result=false;
 			}
 			else{
@@ -53,7 +55,7 @@
 				$("#userEmailError").text("");
 			}
 			if(!file.toLowerCase().match(/(\.doc|\.pdf|\.docx)$/)){
-				$("#filePathError").text("Please chose the appropriate file format");
+				$("#filePathError").text("Please choose the appropriate file format");
 				result=false;
 			}
 			else{
@@ -73,8 +75,8 @@
 <body class="job_board">
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader"><h2>GUEST USER FORM</h2>
-                  <a href="#"><img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();" width="19" height="19" alt=""></a></div>
-                 <div id="errmsg" style="color: red" align="middle"></div>
+                  <a href=""><img src="../resources/images/Close.png" onclick="closePopup();" width="19" height="19" alt=""></a></div>
+                 <div id="errmsg" style="font:bold; color: red" align="left"></div>
 <div class="popUpContainerWrapper"><form:form id="applyJobForm" action=""  method="POST" commandName="jobApplicationForm" enctype="multipart/form-data" >
             <div class="rowEvenNewSpacing"> <h3>Send Resume</h3></div>
             <div class="rowEvenNewSpacing">
@@ -86,7 +88,7 @@
             <div class="rowEvenNewSpacing"><span class="lableText3">Email Address:</span>
               <form:input id="userEmail" path="userEmail"  class="job_seeker_email" />
               <span class="required">(Required)</span>
-              <div style="color: red" align="right" id="userEmailError"></div>
+              <div style="color: red" align="left" id="userEmailError"></div>
     </div>
             <div class="rowEvenNewSpacing"> <span class="lableText3">Upload Resume File:</span>
             <div class="floatLeft"><form:input path="filePath" type="file" id="filePath" size="20" class="job_seeker_login_email fileType" />
@@ -96,7 +98,7 @@
 </div>
       <div class="popUpButtonRow">
                          
-             <input type="button" class="btn_sm orange" id="sendButton" value="Send"/> <a href="" onclick="parent.$.nmTop().close();" class="btn_sm orange">Cancel</a></span>
+             <input type="button" class="btn_sm orange" id="sendButton" value="Send"/> <a href="" onclick="closePopup();" class="btn_sm orange">Cancel</a>
              
 </div>
                     <div class="clearfix"></div>
