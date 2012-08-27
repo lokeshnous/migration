@@ -292,7 +292,7 @@ public class JobSeekerRegistrationController {
 						return "Please fill the Required fields";
 					}
 					//validation mobile number
-					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) 
+					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) && !StringUtils.isEmpty(form.getStrLabelValue()) 
 							&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
 						return jobseekerRegPhoneMsg;
 					}
