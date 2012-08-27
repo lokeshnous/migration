@@ -129,7 +129,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 				
 				JpJobType jobType = hibernateTemplate.load(JpJobType.class, Integer.valueOf(dto.getJobPostingType()));
 				
-				JpJob jpJob=jobPostConversionHelper.transformJobDtoToJpJob(dto, template, jobType);
+				AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class, Integer.valueOf(dto.getFacilityId()));
+				
+				JpJob jpJob=jobPostConversionHelper.transformJobDtoToJpJob(dto, template, jobType, admFacility);
 				hibernateTemplate.save(jpJob);
 				List<JpJobApply> applyJobList = jobPostConversionHelper.transformJobPostDTOToJpJobApply(dto, jpJob);
 				hibernateTemplate.saveOrUpdateAll(applyJobList);

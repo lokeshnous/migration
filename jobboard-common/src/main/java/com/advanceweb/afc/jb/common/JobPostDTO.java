@@ -56,6 +56,7 @@ public class JobPostDTO implements Serializable {
 	private int applies;
 	private int clicks;
 	private int views;
+	private int facilityId;
 
 	private String selectedRow;
     private boolean readOnly= false;
@@ -415,6 +416,14 @@ public class JobPostDTO implements Serializable {
 	 */
 	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
+	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 		

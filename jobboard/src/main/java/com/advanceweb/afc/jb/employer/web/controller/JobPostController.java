@@ -102,7 +102,7 @@ public class JobPostController {
 	 * @return
 	 */
 	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="PostNewJob")
-	public ModelAndView savePostJob(JobPostForm form,BindingResult result) {
+	public ModelAndView savePostJob(JobPostForm form,BindingResult result, HttpSession session) {
 
 		ModelAndView  model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
@@ -112,7 +112,9 @@ public class JobPostController {
 			model.addObject("errorMessage", errMessage);
 			return model;
 		}
+		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		dto.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");
 		return model;
@@ -126,7 +128,7 @@ public class JobPostController {
 	 * @return
 	 */
 	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="ScheduleJob")
-	public ModelAndView schedulePostJob(JobPostForm form,BindingResult result) {
+	public ModelAndView schedulePostJob(JobPostForm form,BindingResult result, HttpSession session) {
 
 		ModelAndView  model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
@@ -136,7 +138,9 @@ public class JobPostController {
 			model.addObject("errorMessage", errMessage);
 			return model;
 		}
+		form.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		dto.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");
 		return model;
@@ -150,7 +154,7 @@ public class JobPostController {
 	 * @return
 	 */
 	@RequestMapping(value="/saveNewJob",method = RequestMethod.POST, params="SaveAsDraft")
-	public ModelAndView savePostJobAsDraft(JobPostForm form,BindingResult result) {
+	public ModelAndView savePostJobAsDraft(JobPostForm form,BindingResult result, HttpSession session) {
 
 		ModelAndView  model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
@@ -160,7 +164,9 @@ public class JobPostController {
 			model.addObject("errorMessage", errMessage);
 			return model;
 		}
+		form.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		dto.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");
 		return model;

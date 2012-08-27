@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
@@ -29,7 +30,7 @@ import com.advanceweb.afc.jb.data.entities.JpTemplate;
 public class JobPostConversionHelper<JobPostForm> {
 	
 	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, 
-			 JpTemplate template, JpJobType jobType){
+			 JpTemplate template, JpJobType jobType, AdmFacility admFacility){
 		
 		 JpJob jpJob=new JpJob();
 		 //Post New Job
@@ -62,6 +63,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		
 		 
 		 jpJob.setJobStatus(dto.getJobStatus());
+		 jpJob.setAdmFacility(admFacility);
 		 
 		 return jpJob;
 	 }
