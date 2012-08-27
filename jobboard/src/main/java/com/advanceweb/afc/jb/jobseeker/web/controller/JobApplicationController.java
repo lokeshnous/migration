@@ -71,10 +71,10 @@ public class JobApplicationController {
 	@Value("${anonymousJobApplicationBody}")
 	private  String jobAppBody;
 
-	/*
-	 * @Autowired private TransformAnonymousUserJobApply
-	 * transformAnonymousUserJobApply;
-	 */
+	 //TODO:this will we used for saving the anonymous user record
+	 //@Autowired private TransformAnonymousUserJobApply
+	 //transformAnonymousUserJobApply;
+	 
 
 	@RequestMapping(value = "/anonymousUser", method = RequestMethod.GET)
 	public ModelAndView showAnoUserForm(Map<String, JobApplicationForm> model) {
