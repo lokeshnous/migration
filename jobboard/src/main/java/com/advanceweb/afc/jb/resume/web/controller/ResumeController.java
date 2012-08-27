@@ -435,9 +435,6 @@ public class ResumeController {
 				MultipartFile file = createResume.getFileData();
 
 				if (null != file && file.getSize() > 0) {
-					if (file.getSize() > 100000) {
-						// return "/uploadfile";
-					} else {
 						fileName = file.getOriginalFilename();
 						filePath = basedirectorypathUpload;
 						resumeDTO.setFileServer(basedirectorypathUpload);
@@ -449,7 +446,6 @@ public class ResumeController {
 
 						File dest = new File(resumeDTO.getFilePath());
 						file.transferTo(dest);
-					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -480,9 +476,7 @@ public class ResumeController {
 				MultipartFile file = createResume.getFileData();
 
 				if (null != file && file.getSize() > 0) {
-					if (file.getSize() > 100000) {
-						// return "/uploadfile";
-					} else {
+					
 						fileName = file.getOriginalFilename();
 						File deleteFile = new File(resumeDTO.getFilePath());
 						if (deleteFile.delete()) {
@@ -495,7 +489,6 @@ public class ResumeController {
 							resumeDTO.setFileServer(basedirectorypathUpload);
 							resumeDTO.setFileName(fileName);
 							resumeDTO.setFilePath(filePath);
-						}
 					}
 				}
 			} catch (Exception e) {
@@ -1017,11 +1010,11 @@ public class ResumeController {
 				if (null !=refForm.getEmail() && !refForm.getEmail().equals("")){
 					count = count + 1L;
 				}
-				if (refForm.getJobTitle() != null
-						&& refForm.getJobTitle() != ""){
+				if (null != refForm.getJobTitle()
+						&& refForm.getJobTitle().equals("")){
 					count = count + 1L;
 				}
-				if (refForm.getName() != null && refForm.getName() != ""){
+				if (refForm.getName() != null && refForm.getName().equals("")){
 					count = count + 1L;
 				}
 				break;
@@ -1041,7 +1034,7 @@ public class ResumeController {
 						&& !eduForm.getDegrees().equals("")){
 					count = count + 1L;
 				}
-				if (eduForm.getEndDate() != null && eduForm.getEndDate() != ""){
+				if (null != eduForm.getEndDate() && eduForm.getEndDate().equals("")){
 					count = count + 1L;
 				}
 				if (null != eduForm.getFieldOfStudy()
@@ -1056,8 +1049,8 @@ public class ResumeController {
 						&& !eduForm.getLanguage().equals("")){
 					count = count + 1L;
 				}
-				if (eduForm.getStartDate() != null
-						&& eduForm.getStartDate() != ""){
+				if (null != eduForm.getStartDate()
+						&& eduForm.getStartDate().equals("")){
 					count = count + 1L;
 				}
 				break;
@@ -1129,7 +1122,7 @@ public class ResumeController {
 					count = count + 1L;
 				}
 				if (wrkExpForm.getEndDate() != null
-						&& wrkExpForm.getEndDate() != ""){
+						&& wrkExpForm.getEndDate().equals("")){
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getHrlyPayRate()
@@ -1141,7 +1134,7 @@ public class ResumeController {
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getStartDate()
-						&& wrkExpForm.getStartDate() != ""){
+						&& wrkExpForm.getStartDate().equals("")){
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getYrsAtPostion()
@@ -1268,16 +1261,20 @@ public class ResumeController {
 				output.write(buffer, 0, length);
 			}
 		} finally {
-			if (output != null)
+			if (output != null){
 				try {
-					output.close();
-				} catch (IOException ignore) {
-				}
-			if (input != null)
+						output.close();
+					} catch (IOException ignore) {
+					
+					}
+			}	
+			if (input != null){
 				try {
-					input.close();
-				} catch (IOException ignore) {
-				}
+						input.close();
+					}catch (IOException ignore) {
+					
+					}
+			}	
 		}
 
 	}
