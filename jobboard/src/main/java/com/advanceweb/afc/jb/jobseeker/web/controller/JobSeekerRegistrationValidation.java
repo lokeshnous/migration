@@ -125,7 +125,7 @@ public class JobSeekerRegistrationValidation {
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				errors.rejectValue("retypepassword", "NotEmpty","Passwords doesn’t match");
+				errors.rejectValue("retypepassword", "NotEmpty","Password's doesn't match");
 			 }
 		 }
 	}

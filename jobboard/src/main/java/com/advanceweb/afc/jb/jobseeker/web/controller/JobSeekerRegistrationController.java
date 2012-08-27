@@ -108,7 +108,7 @@ public class JobSeekerRegistrationController {
 		
 		if(profileRegistration.validateEmail(registerForm.getEmailId())){
 			model.setViewName("jobSeekerCreateAccount");
-			result.rejectValue("emailId", "NotEmpty", "Email Id already Exists!");
+			result.rejectValue("emailId", "NotEmpty", "Email address already exists");
 			return model;
 		}
 		
@@ -374,11 +374,11 @@ public class JobSeekerRegistrationController {
 	 */
 	private String validatePasswords(String password, String retypePassword){
 		 if(StringUtils.isEmpty(password)){
-			 return "Password Should not be empty";
+			 return "Password should not be blank";
 		 }
 		 
 		 if(StringUtils.isEmpty(retypePassword)){
-			 return "Password Should not be empty";
+			 return "Password should not be blank";
 		 }
 		 
 		 if(!StringUtils.isEmpty(password) 
@@ -393,7 +393,7 @@ public class JobSeekerRegistrationController {
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				return "Passwords Doesn't match.";
+				return "Password's doesn't match";
 			 }
 		 }
 		 
