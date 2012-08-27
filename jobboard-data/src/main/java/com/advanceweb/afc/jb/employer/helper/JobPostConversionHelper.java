@@ -131,8 +131,12 @@ public class JobPostConversionHelper<JobPostForm> {
 				JobPostDTO jobPostDTO = new JobPostDTO();
 				jobPostDTO.setJobId(job.getJobId());
 				jobPostDTO.setJobTitle(job.getJobtitle());
-				jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
-				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
+				if(null != job.getStartDt()){
+					jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
+				}
+				if(null != job.getEndDt()){
+					jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
+				}				
 				jobPostDTO.setAutoRenew(job.getAutoRenew()==0?false:true);
 				jobPostDTO.setJobStatus(job.getJobStatus());
 				if(null !=job.getJpTemplate() && null != job.getJpTemplate().getTemplateName()){
