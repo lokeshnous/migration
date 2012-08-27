@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
@@ -46,6 +47,9 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		} else if (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER)) {
+			//Added to put facility id in the session
+			EmployerInfoDTO infoDTO = loginService.facilityDetails(user.getUserId());			
+			session.setAttribute(MMJBCommonConstants.FACILITY_ID, infoDTO.getFacilityId());
 			response.sendRedirect(request.getContextPath()
 					+ "/employer/employerDashBoard.html");
 		} else if (authentication.getAuthorities().contains(
