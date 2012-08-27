@@ -250,7 +250,7 @@ public class JobPostController {
 		if(null !=readOnly && readOnly.equalsIgnoreCase("true")){
 			jobPostform.setReadOnly(true);
 		}
-		transformJobPost.transformJobPostDTOToCreateResume(jobPostform,
+		transformJobPost.transformJobPostDTOToForm(jobPostform,
 				jobPostDTO);
 		ModelAndView model = new ModelAndView();
 		model.addObject("jobPostForm", jobPostform);
@@ -346,6 +346,7 @@ public class JobPostController {
 	ModelAndView deleteJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
+		String jobStatus=jobPostform.getJobStatus();
 		int jobId=0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
@@ -353,7 +354,7 @@ public class JobPostController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			 employerJobPost
-					.deleteJob(jobId, (Integer) session
+					.deleteJob(jobStatus,jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));			
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");
@@ -389,6 +390,7 @@ public class JobPostController {
 	ModelAndView deactivateJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
+		String jobStatus=jobPostform.getJobStatus();
 		int jobId=0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
@@ -396,7 +398,7 @@ public class JobPostController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			 employerJobPost
-					.deactivateJob(jobId, (Integer) session
+					.deactivateJob(jobStatus,jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));			
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");
@@ -412,6 +414,7 @@ public class JobPostController {
 	ModelAndView repostJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
+		String jobStatus=jobPostform.getJobStatus();
 		int jobId=0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
@@ -419,7 +422,7 @@ public class JobPostController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			 employerJobPost
-					.repostJob(jobId, (Integer) session
+					.repostJob(jobStatus,jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));			
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");

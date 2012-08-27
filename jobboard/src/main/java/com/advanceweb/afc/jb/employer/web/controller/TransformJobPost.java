@@ -93,7 +93,7 @@ public class TransformJobPost {
 		
 		return dto;
 	}
-	public JobPostForm  transformJobPostDTOToCreateResume(JobPostForm jobPostform,JobPostDTO jobPostDTO){
+	public JobPostForm  transformJobPostDTOToForm(JobPostForm jobPostform,JobPostDTO jobPostDTO){
 		jobPostform.setJobOwner(jobPostDTO.getJobOwner());
 		jobPostform.setCustomerNo(jobPostDTO.getCustomerNo());
 		jobPostform.setCompanyName(jobPostDTO.getCompanyName());
