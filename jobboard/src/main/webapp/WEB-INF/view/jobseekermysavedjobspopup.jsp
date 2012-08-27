@@ -55,7 +55,7 @@
    </script>
       <script type="text/javascript">
 	    function confirmDelete() {
-		if (confirm("Are you sure you want to Delete")) {
+		if (confirm("Are you sure you want to delete?")) {
 			return true;
 		} else {
 			return false;

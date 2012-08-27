@@ -44,7 +44,7 @@
 		<div class="popUpContainerWrapper">
 			<div id="errmsg" style="color: red" align="middle">
 				</div>
-			<form:form action="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html" method="POST"
+			<form:form action="../jobseekerregistration/updateJobSeekerProfile.html" method="POST"
 				commandName="registerForm"  id="editProfileSettingsId">
 					<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">
 						<c:if test="${profAttrib.strLabelName == 'First Name'}">
