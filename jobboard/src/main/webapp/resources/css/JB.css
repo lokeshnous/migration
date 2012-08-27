@@ -291,7 +291,7 @@ h3.jobSummaryTitle { margin-bottom: 10px; }
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn2 img,
 .searchResultsNavigationColumn2 img { margin-left:6px; }
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn3,
-.searchResultsNavigationColumn3 { color: #6B7B84; float: left; font-size: 12px; margin-bottom: 0px; padding: 0px 0px; width: 266px; }
+.searchResultsNavigationColumn3 { color: #6B7B84; float: left; font-size: 12px; margin-bottom: 0px; padding: 6px 0px 0px 0px; width: 256px; }
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn3 .SaveButton { clear: both; float: left; margin:0px; padding: 0px; }
 .content_columns_search_results .column2 .searchResults .searchResultsNavigationBottom { margin: 5px 0 10px 0; }
 .content_columns_search_results .column2 .searchResults .searchResultsHeader ul { background-color: #ECECEC; border-radius: 4px; display: block; color: #6B7B84; float: left; font-size: 12px; font-weight: bold; margin-bottom: 5px; padding: 0px 0px; }

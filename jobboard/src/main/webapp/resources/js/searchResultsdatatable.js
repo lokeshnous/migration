@@ -152,16 +152,16 @@ jQuery(document).ready(function() {
 									"bJQueryUI" : true,
 									"bSort" : true,
 									"iDisplayLength": 30,
-									 "aLengthMenu": [[20, 30, 40, 50], [20, 30, 40, 50]],
+									"aLengthMenu": [[20, 30, 40, 50], [20, 30, 40, 50]],
 									"oLanguage" : {
 										"sLengthMenu" : "<span>Results viewable: </span>_MENU_ <span>per page</span>",
-										//"sZeroRecords" : "Nothing found - sorry",
-										"sInfo" : "",
+										//"sZeroRecords" : "Nothing found - sorry",										
+										"sInfo" : "_START_ - _END_ of _TOTAL_",
 										
 									},
 									"sEmptyTable": "No results found",
 									//"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
-									"sDom": '<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"><"searchResultsNavigationColumn2"p>>t<"bottom"i><"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn2"pr>><"clear">',
+									"sDom": '<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"i><"searchResultsNavigationColumn2"p>>t<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"i><"searchResultsNavigationColumn2"pr>><"clear">',
 									 //"sDom": 'T<"clear">lfrtip',
 									//"sScrollY" : 500,
 									'fnRowCallback' : function(nRow, aData, iDisplayIndex,iDisplayIndexFull) {
