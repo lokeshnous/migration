@@ -572,12 +572,34 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public String getCountry(String city, String state, String postalCode) {
 
 		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' " +
-					"and jloc.postcode='"+postalCode+"'  ORDER BY  jloc.postcode ASC");
+			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
 
 			if (jpLocationList != null && jpLocationList.size() !=0) {			
 				Object obj = jpLocationList.get(0);
 				return (String)obj;
+			}			
+			
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public LocationDTO populateLocation(String postalCode) {
+
+		try {
+			List<Object> jpLocationList = hibernateTemplate.find("select jloc.country,jloc.state,jloc.city from  JpLocation jloc WHERE jloc.postcode='"+postalCode+"' ORDER BY  jloc.postcode ASC");
+
+			if (jpLocationList != null && jpLocationList.size() !=0) {		
+				LocationDTO dto = new LocationDTO();				
+				Object[] obj = (Object[]) jpLocationList.get(0);
+				dto.setCountry(String.valueOf(obj[0]));
+				dto.setState(String.valueOf(obj[1]));
+				dto.setCity(String.valueOf(obj[2]));
+								
+				return dto;
 			}			
 			
 		} catch (DataAccessException e) {

@@ -19,6 +19,7 @@ import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
@@ -171,4 +172,6 @@ public interface PopulateDropdownsDAO {
 	String getPostalCode(String city, String state); 
 	
 	String getCountry(String city, String state, String postalCode);
+	
+	LocationDTO populateLocation(String postalCode);
 }

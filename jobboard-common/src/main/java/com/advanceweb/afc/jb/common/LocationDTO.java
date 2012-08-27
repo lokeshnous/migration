@@ -20,6 +20,8 @@ public class LocationDTO {
 	
 	private float longitude;
 	
+	private String country;
+	
 
 	public String getCity() {
 		return city;
@@ -59,6 +61,14 @@ public class LocationDTO {
 
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 

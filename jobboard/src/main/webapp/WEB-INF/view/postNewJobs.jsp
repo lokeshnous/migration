@@ -28,7 +28,6 @@
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	
-	    	/* $("#hideZipCodeDdId").hide();		 */		
 			$( "#scheduleStartDivId" ).hide();		    
 		    $("#postNewJobButId").click(function(){
 		    	if(confirm("Do you want to post this job?")){
@@ -40,13 +39,7 @@
 		    	if(confirm("Do you want to save this job as Draft?")){
 		    		$("#savePostJobButHideId").click();
 		    	}
-		    });
-		    
-/* 		    $('#zipCodeSelectId').change(function() {
-		    		$("#zipCodeITId").val($(this).find(":selected").val());
-		    		$("#lookUpZipCode").show();
-			    	$("#hideZipCodeDdId").hide();	
-		   	}); */
+		    });		    
 		    
 			//Date picker
 	    	$(function() {
@@ -71,15 +64,7 @@
 	    		});
 	    	}); 	
 		    
-/* 		    $("#lookUpZipCode").click(function(){
-		    	$("#hideZipCodeDdId").show();
-		    	$("#lookUpZipCode").hide();
-		    	$("#zipCodeITId").focus();
-		    }); 
-		    $("#zipCodeSelectedId").click(function(){
-		    	alert("hi");
-		    	$("#hideZipCodeDdId").hide();	
-		    });*/
+			//Popup on click of schedule button
   		    $("#scheduleNewJobButId").click(function() {
 				$( "#scheduleStartDivId" ).dialog({
 					resizable: false,
@@ -106,6 +91,7 @@
 				$("#endDate").val($("#endDateHdId").val());
 			});  
 		  
+			//Auto complete on selecting city
 			$("#cityAutoPopulation").autocomplete({
 				source: '${pageContext.request.contextPath}/employer/getCityList.html',
 				select: function(event, ui) {
@@ -114,52 +100,43 @@
 					url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityAutoPopulation").val(),
 					success : function(data) {
 						$('#stateDpId').val(data);
-						
-						var city = $("#cityAutoPopulation").val();
-						var state = $("#stateDpId").val();
 
 						$.ajax({
 						url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val(),
 						success : function(data) {
 							$('#zipCodeITId').val(data);
 						},
-						});
-						alert("");
-						$.ajax({
+						});						
+ 						$.ajax({
 							url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCodeITId").val(),
 							success : function(country) {
 								$('#countryDpId').val(country);
-							}
-						});
-						
+							},
+						}); 						
 					},
 					});
+				},
+			}); 
+
+			//Auto complete on selecting zipcode			
+			$("#zipCodeITId").autocomplete({
+				source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+				select: function(event, ui) {
+					$("#zipCodeITId").val(ui.item.value);	
+					$('#cityAutoPopulation').val("");
+					$('#stateDpId').val("");
+					$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zipCodeITId").val(),
+						success : function(data) {
+							$('#stateDpId').val(data.state);
+							$('#countryDpId').val(data.country);
+							$("#cityAutoPopulation").val(data.city);
+						},
+					});		
 				}
 			});
 			
-			/* $("#cityAutoPopulation").change(function(){
-				var city = $("#cityAutoPopulation").val();
-				//alert("asdff"+city);
-				$.ajax({
-				url: '${pageContext.request.contextPath}/employer/getState.html?city='+city,
-				success : function(data) {
-					$('#stateDpId').val(data);
-				},
-				});
-			});	 */	
-			
-/*   			$("#stateDpId").change(function(){
-  				alert("hi");
-				var city = $("#cityAutoPopulation").val();
-				var state = $("#stateDpId").val();
-				$.ajax({
-				url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+city+'&state='+state,
-				success : function(data) {
-					$('#zipCodeSelectId').val(data);
-				},
-				});
-			});  */	 
-			
+
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>

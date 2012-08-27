@@ -17,6 +17,7 @@ import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.RadiusDTO;
@@ -248,6 +249,11 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	public String getCountry(String city, String state, String postalCode) {
 		
 		return populateDropdownsDAO.getCountry(city, state, postalCode);
+	}
+
+	@Override
+	public LocationDTO populateLocation(String postalCode) {
+		return populateDropdownsDAO.populateLocation(postalCode);
 	}	
 
 }

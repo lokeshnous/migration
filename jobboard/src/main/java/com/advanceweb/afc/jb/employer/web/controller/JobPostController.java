@@ -24,6 +24,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.JobPostService;
@@ -296,9 +297,9 @@ public class JobPostController {
 	
 	@RequestMapping(value = "/getPostalCodeAutoPopulation")
 	@ResponseBody 
-	public List<String> getPostalCodeAutoPopulation(@RequestParam("postalCode") String postalCode) {
+	public List<String> getPostalCodeAutoPopulation(@RequestParam("term") String query) {
 		  
-	  List<String> postalCodeList = populateDropdownsService.populatePostalCodeAutoComplete(postalCode);
+	  List<String> postalCodeList = populateDropdownsService.populatePostalCodeAutoComplete(query);
 	   
 	  return postalCodeList;
 	}
@@ -320,6 +321,15 @@ public class JobPostController {
 	  String country = populateDropdownsService.getCountry(city,state, postalCode);
 	   
 	  return country;
+	}
+	
+	@RequestMapping(value = "/getLocations")
+	@ResponseBody 
+	public LocationDTO populateLocation(@RequestParam("zipCode") String zipCode) {
+		  
+	  LocationDTO dto = populateDropdownsService.populateLocation(zipCode);
+	   
+	  return dto;
 	}
 	
 }
