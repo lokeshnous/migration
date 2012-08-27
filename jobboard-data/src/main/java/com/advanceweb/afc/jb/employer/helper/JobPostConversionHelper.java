@@ -60,7 +60,9 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setJpTemplate(template);
 		 
 		 //Auto Renew
-		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		 
+		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		
+		 
+		 jpJob.setJobStatus(dto.getJobStatus());
 		 
 		 return jpJob;
 	 }

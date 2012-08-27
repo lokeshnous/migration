@@ -200,5 +200,12 @@ public interface MMJBCommonConstants {
 	// For Account Setting
 	public static final String PRIMARY = "PRIMARY";
 	public static final String BILLING = "BILLING";
+	
+	//For Post New Job
+	
+	public static final String POST_NEW_JOB="Active";
+	public static final String POST_JOB_SCHEDULED="Schedule";
+	public static final String POST_JOB_DRAFT="Draft";
+	
 
 }

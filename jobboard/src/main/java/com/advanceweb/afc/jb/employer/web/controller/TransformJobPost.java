@@ -70,6 +70,8 @@ public class TransformJobPost {
 		jobPostDTO.setScheduleStartDt(form.getScheduleStartDate());
 		jobPostDTO.setScheduleExpiryDt(form.getScheduleEndDate());
 		
+		jobPostDTO.setJobStatus(form.getJobStatus());
+		
 		return jobPostDTO;
 		
 	}

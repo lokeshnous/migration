@@ -112,6 +112,7 @@ public class JobPostController {
 			model.addObject("errorMessage", errMessage);
 			return model;
 		}
+		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");
@@ -136,6 +137,7 @@ public class JobPostController {
 			model.addObject("errorMessage", errMessage);
 			return model;
 		}
+		form.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");
@@ -160,6 +162,7 @@ public class JobPostController {
 			model.addObject("errorMessage", errMessage);
 			return model;
 		}
+		form.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");

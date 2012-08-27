@@ -47,7 +47,8 @@ public class JobPostForm {
 	private String scheduleStartDate;
 	private String scheduleEndDate;
 	
-
+	private String jobStatus;
+	
 	public int getJobId() {
 		return jobId;
 	}
@@ -278,5 +279,15 @@ public class JobPostForm {
 
 	public void setScheduleEndDate(String scheduleEndDate) {
 		this.scheduleEndDate = scheduleEndDate;
-	}	
+	}
+
+	public String getJobStatus() {
+		return jobStatus;
+	}
+
+	public void setJobStatus(String jobStatus) {
+		this.jobStatus = jobStatus;
+	}
+	
+	
 }
