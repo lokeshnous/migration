@@ -56,7 +56,7 @@ public class JobSeekerRegistrationValidation {
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", "NotEmpty", "E-Mail addresses doesn’t match");
+				errors.rejectValue("confirmEmailId", "NotEmpty", "Email address's doesn’t match");
 			 }
 		 }
 	}
