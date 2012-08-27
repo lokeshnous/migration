@@ -45,7 +45,6 @@
 					$('#selectedRow').val(val);
 					$("#deactivateHidden").click();
 					
-					alert(val);
 
 				});
 				$('#repost').click(function() {
@@ -55,6 +54,7 @@
 					});
 					$('#selectedRow').val(val);
 					alert(val);
+					$("#repostHidden").click();
 
 				});
 				$('#delete').click(function() {
@@ -88,6 +88,14 @@
 							}
 
 						});
+				$('#jobStatusDD').change(function() {
+					val = $(this).val();
+	                 $("form").attr(
+							"action",
+							"${pageContext.request.contextPath}/employer/manageJobPost.html?jobStatus="
+									+ val);
+					$("form").submit(); 
+					});
 			});
 </script>
 
@@ -97,7 +105,7 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 </head>
 <body class="job_board">
-<form:form action="deleteJobs.html" commandName="jobPostForm">
+<form:form action="updateJob.html" commandName="jobPostForm">
 	<div class="ad_page_top">
 		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
@@ -245,30 +253,35 @@
 				</div>
 				<!--button-->
 				<div class="row">
-					<span>	<input
-						type="submit" id="repost" value="REPOST" name="REPOST" class="btn_sm white" />
-						<input
-						type="submit" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" />
-						<input
-						type="button" id="delete" value="DELETE" name="DELETE" class="btn_sm white" />
+					<span>	
+					<a
+						href="#" id="repost" value="REPOST" name="REPOST" class="btn_sm white jb_search_submit">REPOST</a>
+					<a
+						href="#" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATED</a>
+						<a
+						href="#" id="delete" value="DELETE" name="DELETE" class="btn_sm white jb_search_submit">DELETE</a>
+					
 						<a
 						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
-						<input
-						type="submit" id="repostHidden" value="REPOST" name="REPOST" class="btn_sm white" style="visibility: hidden;" /><input
-						type="submit" id="deactivateHidden" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" style="visibility: hidden;" />
-						<input
-						type="submit" id="deleteHidden" value="DELETE" name="DELETE" class="btn_sm white" style="visibility: hidden;" />
+						
 						<div class="floatRight marginTop15">
-							<span class=" FloatLeft marginTop3">View by Job Status</span> <select
-								id="select14" class="jb_input3  marginTop0 width150 marginLeft5"
-								name="select9">
-								<option selected="selected">--- Job Status ---</option>
-								<option>Active</option>
-								<option>Scheduled</option>
-								<option>Draft</option>
-								<option>Expired</option>
-								<option>Inactive</option>
-							</select>
+							<span class=" FloatLeft marginTop3">View by Job Status</span>
+
+								<form:select path="statusValue" id="jobStatusDD"
+									class="jb_input3  marginTop0 width150 marginLeft5"
+									name="select9">
+
+									<form:option value="" label="--- Job Status ---" />
+									<%-- <form:options items="${jobStatusList}" /> --%>
+											<form:option value="Active" label="Active" />
+											<form:option value="Scheduled" label="Scheduled" />
+											<form:option value="Draft" label="Draft" />
+											<form:option value="Expired" label="Expired" />
+											<form:option value="Inactive" label="Inactive" />
+											
+								</form:select>
+
+
 						</div> </span>
 				</div>
 					<div class="clearfix"></div>
@@ -376,14 +389,16 @@
 						</table>
 					</div>
 					<div class="row FloatLeft">
-					<span><input
-						type="submit" id="repost" value="REPOST" name="REPOST" class="btn_sm white"/>
-						<input
-						type="submit" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" />
-						<input
-						type="button" id="delete" value="DELETE" name="DELETE" class="btn_sm white" />
+					<span><a
+						href="#" id="repost" value="REPOST" name="REPOST" class="btn_sm white jb_search_submit">REPOST</a>
+					<a
+						href="#" id="deactivated" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATED</a>
+						<a
+						href="#" id="delete" value="DELETE" name="DELETE" class="btn_sm white jb_search_submit">DELETE</a>
+					
 						<a
 						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
+						
 						<input
 						type="submit" id="repostHidden" value="REPOST" name="REPOST" class="btn_sm white" style="visibility: hidden;" /><input
 						type="submit" id="deactivateHidden" value="DEACTIVATED" name="DEACTIVATED" class="btn_sm white" style="visibility: hidden;" />

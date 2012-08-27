@@ -56,6 +56,7 @@ public class JobPostForm {
     private boolean readOnly= false;
     
     private List<JobPostDTO> jobPostDTOList;
+    private String statusValue;
 	public int getJobId() {
 		return jobId;
 	}
@@ -336,6 +337,20 @@ public class JobPostForm {
 	 */
 	public void setJobPostDTOList(List<JobPostDTO> jobPostDTOList) {
 		this.jobPostDTOList = jobPostDTOList;
+	}
+
+	/**
+	 * @return the statusValue
+	 */
+	public String getStatusValue() {
+		return statusValue;
+	}
+
+	/**
+	 * @param statusValue the statusValue to set
+	 */
+	public void setStatusValue(String statusValue) {
+		this.statusValue = statusValue;
 	}
 	
 	

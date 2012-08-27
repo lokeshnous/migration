@@ -315,23 +315,35 @@ public class JobPostController {
 	 */
 	@RequestMapping(value = "/manageJobPost")
 	public ModelAndView getJobPostDetails(HttpServletRequest request,
-			HttpSession session, JobPostForm jobPostform, Map<String, Object> map) {
+			HttpSession session, JobPostForm jobPostform) {
 		ModelAndView model = new ModelAndView();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
+		String jobStatus = request.getParameter("jobStatus");
 		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			postedJobList = employerJobPost
-					.retrieveAllJobPost((Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));
+			if (null == jobStatus || jobStatus.isEmpty()) {
+				postedJobList = employerJobPost
+						.retrieveAllJobPost((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+			} else {
+				postedJobList = employerJobPost.retrieveAllJobByStatus(
+						jobStatus, (Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+			}
 		}
 
-		EmployerInfoDTO employerInfoDTO=employerJobPost.getEmployerInfo(1,"facility_admin");
-		List<DropDownDTO> templateList = populateDropdownsService .populateBrandingTemplateDropdown(employerInfoDTO.getFacilityId(),employerInfoDTO.getUserId());
-		//jobPostform.setAutoRenew(autoRenew)
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(1,
+				"facility_admin");
+		List<DropDownDTO> templateList = populateDropdownsService
+				.populateBrandingTemplateDropdown(
+						employerInfoDTO.getFacilityId(),
+						employerInfoDTO.getUserId());
+		// jobPostform.setAutoRenew(autoRenew)
 		jobPostform.setJobPostDTOList(postedJobList);
-		model.addObject("jobPostForm",jobPostform);	
+		model.addObject("jobPostForm", jobPostform);
 		model.addObject("templateList", templateList);
+		// model.addObject("jobStatusList",populateDropdownsService.getJobStatusList());
 		model.setViewName("manageJobPosting");
-		/*map.put("jobList", postedJobList);*/
+		/* map.put("jobList", postedJobList); */
 
 		return model;
 	}
@@ -341,12 +353,11 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/deleteJobs", method = RequestMethod.POST,params="DELETE")
+	@RequestMapping(value = "/updateJob", method = RequestMethod.POST,params="DELETE")
 	public @ResponseBody
 	ModelAndView deleteJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
-		String jobStatus=jobPostform.getJobStatus();
 		int jobId=0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
@@ -354,7 +365,7 @@ public class JobPostController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			 employerJobPost
-					.deleteJob(jobStatus,jobId, (Integer) session
+					.deleteJob(jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));			
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");
@@ -385,12 +396,11 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/deactivateJobs", method = RequestMethod.POST,params="DEACTIVATED")
+	@RequestMapping(value = "/updateJob", method = RequestMethod.POST,params="DEACTIVATED")
 	public @ResponseBody
 	ModelAndView deactivateJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
-		String jobStatus=jobPostform.getJobStatus();
 		int jobId=0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
@@ -398,7 +408,7 @@ public class JobPostController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			 employerJobPost
-					.deactivateJob(jobStatus,jobId, (Integer) session
+					.deactivateJob(jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));			
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");
@@ -409,12 +419,11 @@ public class JobPostController {
 	 * @param resumeId
 	 * @return deleteStatusJson
 	 */
-	@RequestMapping(value = "/repostJobs", method = RequestMethod.POST,params="REPOST")
+	@RequestMapping(value = "/updateJob", method = RequestMethod.POST,params="REPOST")
 	public @ResponseBody
 	ModelAndView repostJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
-		String jobStatus=jobPostform.getJobStatus();
 		int jobId=0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
@@ -422,11 +431,10 @@ public class JobPostController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			 employerJobPost
-					.repostJob(jobStatus,jobId, (Integer) session
+					.repostJob(jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));			
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");
 	}
-	
 	
 }

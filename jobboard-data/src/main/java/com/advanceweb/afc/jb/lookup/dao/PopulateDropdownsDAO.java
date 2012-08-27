@@ -8,6 +8,7 @@ package com.advanceweb.afc.jb.lookup.dao;
  */
 
 import java.util.List;
+import java.util.Map;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -174,4 +175,6 @@ public interface PopulateDropdownsDAO {
 	String getCountry(String city, String state, String postalCode);
 	
 	LocationDTO populateLocation(String postalCode);
+
+	Map<String,String> getJobStatusList();
 }

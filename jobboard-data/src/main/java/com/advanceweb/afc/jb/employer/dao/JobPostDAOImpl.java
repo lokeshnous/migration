@@ -175,10 +175,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean deleteJob(String status,int jobId, int userId) {
+	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		int compareEndDate = job.getEndDt().compareTo(new Date());
-		if (null != status && status.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+		if (null != job.getJobStatus() && job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
 			// System deletes the job postings which are in “Expired” status
 			job.setDeleteDt(new Timestamp(new Date().getTime()));
 			hibernateTemplate.save(job);
@@ -212,9 +211,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean deactivateJob(String status,int jobId, int userId) {
+	public boolean deactivateJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != status && status.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
+		if (null != job.getJobStatus() && job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
 			// System should deactivate the job posting which are in “Active” status
 			job.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
 			hibernateTemplate.save(job);
@@ -229,13 +228,13 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean repostJob(String status,int jobId, int userId) {
+	public boolean repostJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != status && status.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
+		if (null != job.getJobStatus() && job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
 			// Repost the inactive job and extend the end date to one month
 			Calendar now = Calendar.getInstance();
 			now.setTime(job.getEndDt());
-			now.add(Calendar.MONTH,1);
+			now.add(Calendar.DAY_OF_MONTH,30);
 			job.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 			job.setEndDt(now.getTime());
 			hibernateTemplate.save(job);
@@ -244,10 +243,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	@Override
-	public List<JobPostDTO> retrieveAllJobByStatus(String status, int jobId,
-			int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
+			int userId) {List<JpJob> jobs = hibernateTemplate
+			.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+					+ userId +" and a.jobStatus = '"+jobStatus+ "' and a.deleteDt is NULL");
+	return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 	}
 	
 }

@@ -1,11 +1,13 @@
 package com.advanceweb.afc.jb.lookup.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -38,7 +40,6 @@ import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
-import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -609,5 +610,28 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}	
 	
+	@Override
+	public Map<String,String> getJobStatusList() {			
+		
+			Map<String,String> resultMap = new HashMap<String,String>();
+			List dataList = hibernateTemplate.find("select jpa.attribValue from JpAttribList jpa where jpa.attribType='JobStatus' order by jpa.position");
+			resultMap = new LinkedHashMap<String, String>(dataList.size());
+			if (dataList != null && dataList.size() > 0) {
+
+				Iterator itr = dataList.iterator();
+				while (itr.hasNext()) {
+					//String[] row = (String[]) itr.next();
+					String key = String.valueOf(itr.next());
+					resultMap.put(key, key);
+				}
+			} else {
+				resultMap = new LinkedHashMap<String, String>(1);
+			}
+		return resultMap;
+
+			
+		
+
+	}
 	
 }
