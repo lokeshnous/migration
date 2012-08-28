@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.employer.postjobs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +56,49 @@ public class JobPostServiceTest extends ServiceTest{
 		Assert.assertTrue("Data Saved Successfully", bSaved);
 		
 	}
+	@Test
+	public void editJob(){
+		JobPostDTO dto = new JobPostDTO();
+		dto = employerJobPost.editJob(13101);
+		Assert.assertEquals(dto.getJobId(), 13101);
+	}
+	@Test
+	public void retrieveAllJobPost(){
+		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
+		dto = employerJobPost.retrieveAllJobPost(13101);
+		Assert.assertTrue("Total Record Found", dto.size()>0?true:false);
+	}
+	@Test
+	public void retrieveAllJobPostByStatus(){
+		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
+		dto = employerJobPost.retrieveAllJobByStatus("Active", 1606);
+		Assert.assertTrue("Total Record Found", dto.size()>0?true:false);
+	}
+	
+	@Test
+	public void deleteJobs(){
+		
+		boolean deleted = employerJobPost.deleteJob(13101, 1606);
+		Assert.assertTrue("Data Deleted Successfully", deleted);
+	}
+	@Test
+	public void updateJobs(){
+		
+		boolean updated = employerJobPost.updateManageJob(false, "template 2", 13101, 1606);
+		Assert.assertTrue("Data Updated Successfully", updated);
+	}
+	@Test
+	public void deactivateJobs(){
+		
+		boolean deactivated = employerJobPost.deactivateJob(13101, 1606);
+		Assert.assertTrue("Deactivated Successfully", deactivated);
+	}
+	
+	@Test
+	public void repostJobs(){
+		
+		boolean repost = employerJobPost.repostJob(13101, 1606);
+		Assert.assertTrue("Job Reposted Successfully", repost);
+	}
+	
 }

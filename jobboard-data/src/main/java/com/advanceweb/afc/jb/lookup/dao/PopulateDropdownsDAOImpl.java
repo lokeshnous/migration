@@ -612,13 +612,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	
 	@Override
 	public Map<String,String> getJobStatusList() {			
-		
+		try {
 			Map<String,String> resultMap = new HashMap<String,String>();
-			List dataList = hibernateTemplate.find("select jpa.attribValue from JpAttribList jpa where jpa.attribType='JobStatus' order by jpa.position");
+			List<?> dataList = hibernateTemplate.find("select jpa.attribValue from JpAttribList jpa where jpa.attribType='JobStatus' order by jpa.position");
 			resultMap = new LinkedHashMap<String, String>(dataList.size());
 			if (dataList != null && dataList.size() > 0) {
 
-				Iterator itr = dataList.iterator();
+				Iterator<?> itr = dataList.iterator();
 				while (itr.hasNext()) {
 					String key = String.valueOf(itr.next());
 					resultMap.put(key, key);
@@ -628,8 +628,11 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			}
 		return resultMap;
 
-			
-		
+		} catch (DataAccessException e) {
+
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 	

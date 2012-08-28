@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.helper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Repository;
 
@@ -117,14 +118,13 @@ public class JobPostConversionHelper<JobPostForm> {
 	 }
 
 	 /**
-		 * This method transforms JpJob list to JobPostDTO list
-		 * 
+		 * This method transforms JpJob list to JobPostDTO list		 * 
 		 * @param resumes
 		 * @return resumeDTOList
 		 */
 	public List<JobPostDTO> transformJpJobListToJobPostDTOList(List<JpJob> jobs) {
 		List<JobPostDTO> jobPostDTOList = new ArrayList<JobPostDTO>();
-		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
+		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN,Locale.US);
 		String location=null;
 		if(null !=jobs){
 			for (JpJob job : jobs) {
@@ -139,8 +139,8 @@ public class JobPostConversionHelper<JobPostForm> {
 				}				
 				jobPostDTO.setAutoRenew(job.getAutoRenew()==0?false:true);
 				jobPostDTO.setJobStatus(job.getJobStatus());
-				if(null !=job.getJpTemplate() && null != job.getJpTemplate().getTemplateName()){
-				jobPostDTO.setBrandTemplate(job.getJpTemplate().getTemplateName());
+				if(null !=job.getJpTemplate()){
+				jobPostDTO.setBrandTemplate(String.valueOf(job.getJpTemplate().getTemplateId()));
 				}
 				/*int compareEndDate = job.getEndDt().compareTo(new Date());
 				int compareStartDate = job.getStartDt().compareTo(new Date());

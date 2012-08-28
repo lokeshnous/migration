@@ -370,9 +370,10 @@
 								<td width="9%" align="center" valign="middle"><strong>Actions</strong></td>
 							</tr>
 							<c:forEach items="${jobPostForm.jobPostDTOList}" var="job" varStatus="status">
+							<form:hidden path="jobPostDTOList[${status.index}].jobId"/>
 								<tr class="Height35">
 									<td align="center" valign="middle"><input type="checkbox"
-										name="checkbox" id=${job.jobId} value="${job.jobId}"></td>
+										name="checkbox"  id=${job.jobId} value="${job.jobId}"></td>
 									<td align="center" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
 									<td align="left" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
 									<td align="center" valign="middle">${job.location}</td>
@@ -394,7 +395,7 @@
 											class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
 											name="select">											
 											<form:option value="0" label="Select One" />											
-											<form:options items="${templateList}" itemLabel="optionName" itemValue="optionName"/>
+											<form:options items="${templateList}" itemLabel="optionName" itemValue="optionId"/>
 										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80">

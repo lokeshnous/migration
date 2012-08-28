@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -348,13 +347,13 @@ public class JobPostController {
 		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
 		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
 		
-		DropDownDTO dto1 = new DropDownDTO();
-		dto1.setOptionId(MMJBCommonConstants.RELOCATE_NO);
-		dto1.setOptionName(MMJBCommonConstants.RELOCATE_NO);
+		DropDownDTO downDTO = new DropDownDTO();
+		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
+		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
 		
 		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
 		autoRenewList.add(dto);
-		autoRenewList.add(dto1);
+		autoRenewList.add(downDTO);
 		
 		model.addObject("jobPostForm", jobPostform);
 		model.addObject("templateList", templateList);
@@ -399,12 +398,21 @@ public class JobPostController {
 	ModelAndView updateJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			JobPostForm jobPostform, @RequestParam("jobId") int jobId) {
-         String template=jobPostform.getBrandTemplate();
-        template= template.replace(",0", "");
-        template= template.replace("0,", "");
-		employerJobPost.updateManageJob(jobPostform.isAutoRenew(),
-				template, jobId,
-				(Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+		String template = null;
+		boolean autoRenew = false;
+		for (JobPostDTO jobPostDTO : jobPostform.getJobPostDTOList()) {
+			if (jobPostDTO.getJobId() == jobId) {
+				template = jobPostDTO.getBrandTemplate();
+				autoRenew = jobPostDTO.isAutoRenew();
+			}
+		}
+
+		if (null != template) {
+			employerJobPost
+					.updateManageJob(autoRenew, template, jobId,
+							(Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID));
+		}
 
 		return new ModelAndView("forward:/employer/manageJobPost.html");
 	}

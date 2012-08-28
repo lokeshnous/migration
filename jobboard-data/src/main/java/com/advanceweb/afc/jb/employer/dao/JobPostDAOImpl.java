@@ -197,12 +197,18 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
 			int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-			// System deletes the job postings which are in “Expired” status
-			job.setUpdateDt(new Timestamp(new Date().getTime()));
-			job.setAutoRenew(autoRenew?1:0);
-			JpTemplate template = hibernateTemplate.load(JpTemplate.class,Integer.valueOf(brandTemplate));
-			job.setJpTemplate(template);
-			hibernateTemplate.save(job);
+		// System deletes the job postings which are in “Expired” status
+		job.setUpdateDt(new Timestamp(new Date().getTime()));
+		job.setAutoRenew(autoRenew ? 1 : 0);
+		JpTemplate template = null;
+		if (Integer.valueOf(brandTemplate) > 0) {
+			template = hibernateTemplate.load(JpTemplate.class,
+					Integer.valueOf(brandTemplate));
+		}
+
+		job.setJpTemplate(template);
+		hibernateTemplate.saveOrUpdate(job);
+
 		return true;
 	}
 	/**
