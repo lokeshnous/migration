@@ -413,7 +413,7 @@ public class JobPostController {
 							(Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID));
 		}
-
+		
 		return new ModelAndView("forward:/employer/manageJobPost.html");
 	}
 	/**
@@ -428,16 +428,22 @@ public class JobPostController {
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
 		int jobId=0;
+		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
 		model.addObject("jobPostForm", jobPostform);
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
-			 employerJobPost
+			boolean result= employerJobPost
 					.deactivateJob(jobId, (Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));			
+							.getAttribute(MMJBCommonConstants.USER_ID));
+			if(result==false){
+				errorMsg="Please Select Only Active Jobs For Deactivation";
+			}
 		}
-	 return new ModelAndView("forward:/employer/manageJobPost.html");
+		model.addObject("errorMessage", errorMsg);
+		model.setViewName("forward:/employer/manageJobPost.html");
+	 return model;
 	}
 	/**
 	 * This method is called to Repost job(s)

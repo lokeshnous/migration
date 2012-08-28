@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
@@ -179,7 +180,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != job.getJobStatus() && job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+		if (null != job.getJobStatus()
+				&& (job.getJobStatus().equalsIgnoreCase(
+						MMJBCommonConstants.POST_JOB_EXPIRED) || job
+						.getJobStatus().equalsIgnoreCase(
+								MMJBCommonConstants.POST_JOB_INACTIVE))) {
 			// System deletes the job postings which are in “Expired” status
 			job.setDeleteDt(new Timestamp(new Date().getTime()));
 			hibernateTemplate.save(job);
@@ -194,6 +199,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
 			int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
@@ -208,7 +214,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		job.setJpTemplate(template);
 		hibernateTemplate.saveOrUpdate(job);
-
 		return true;
 	}
 	/**
@@ -225,8 +230,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// System should deactivate the job posting which are in “Active” status
 			job.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
 			hibernateTemplate.save(job);
+			return true;
 		}
-		return true;
+		else {
+			return false;
+		}
+		
 	}
 	/**
 	 * This method is called to delete the Job
@@ -238,7 +247,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean repostJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != job.getJobStatus() && job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
+		if (null != job.getJobStatus() && (job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)||
+				job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED))) {
 			// Repost the inactive job and extend the end date to one month
 			Calendar now = Calendar.getInstance();
 			now.setTime(job.getEndDt());

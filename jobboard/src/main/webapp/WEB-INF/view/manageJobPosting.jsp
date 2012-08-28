@@ -42,8 +42,13 @@
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
+					if(val != ""){
 					$('#selectedRow').val(val);
 					$("#deactivateHidden").click();
+					}
+					else{
+						alert("Please Select A Job");
+					}
 					
 
 				});
@@ -52,9 +57,13 @@
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
+					if(val != ""){
 					$('#selectedRow').val(val);
 					$("#repostHidden").click();
-
+					}
+					else{
+						alert("Please Select A Job");
+					}
 				});
 				$('#delete').click(function() {
 					var val = [];
@@ -62,9 +71,11 @@
 						val[i] = $(this).val();
 					});
 					$('#selectedRow').val(val);
-					if (confirm("Are you sure you want to delete?")) {
+					if (val != "" && confirm("Are you sure you want to delete?")) {
 						$("#deleteHidden").click();
-
+					}
+					else{
+						alert("Please Select A Job");
 					}
 
 				});
@@ -73,8 +84,13 @@
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
+					if(val != ""){
 					$('#selectedRow').val(val);
 					$("#repostHidden").click();
+					}
+					else{
+						alert("Please Select A Job");
+					}
 
 				});
 				$('#delete_lower').click(function() {
@@ -83,9 +99,12 @@
 						val[i] = $(this).val();
 					});
 					$('#selectedRow').val(val);
-					if (confirm("Are you sure you want to delete?")) {
+					if (val != "" && confirm("Are you sure you want to delete?")) {
 						$("#deleteHidden").click();
 
+					}
+					else{
+						alert("Please Select A Job");
 					}
 
 				});
@@ -94,8 +113,13 @@
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
+					if(val != ""){
 					$('#selectedRow').val(val);
 					$("#deactivateHidden").click();
+					}
+					else{
+						alert("Please Select A Job");
+					}
 
 				});
 				$("#tb_manage_job img").click(
@@ -280,6 +304,8 @@
 							href="">Next<img src="images/ArrowRight.png"></a></span>
 					</div>
 				</div>
+				
+		
 				<!--button-->
 				<div class="row">
 					<span>	
@@ -309,6 +335,11 @@
 							</div> </span>
 				</div>
 					<div class="clearfix"></div>
+					<c:if test="${not empty errorMessage}">
+						    	<div id="errmsg" style="color: red" align="left" >
+					    		<c:out value="${errorMessage}"></c:out>
+							</div>
+						</c:if>
 					<div class="row marginTop10 FontSize11">
 						<%-- <display:table name="${jobList}" sort="external" id="row"  
 						 pagesize="10" cellspacing="5"	size="10" cellpadding="10"
