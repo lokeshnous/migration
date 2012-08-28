@@ -344,8 +344,21 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		jobPostform.setJobPostDTOList(postedJobList);
+		DropDownDTO dto = new DropDownDTO();
+		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
+		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
+		
+		DropDownDTO dto1 = new DropDownDTO();
+		dto1.setOptionId(MMJBCommonConstants.RELOCATE_NO);
+		dto1.setOptionName(MMJBCommonConstants.RELOCATE_NO);
+		
+		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
+		autoRenewList.add(dto);
+		autoRenewList.add(dto1);
+		
 		model.addObject("jobPostForm", jobPostform);
 		model.addObject("templateList", templateList);
+		model.addObject("autoRenewList", autoRenewList);
 		model.addObject("jobStatusList",
 				populateDropdownsService.getJobStatusList());
 		model.setViewName("manageJobPosting");

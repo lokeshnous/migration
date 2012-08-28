@@ -383,30 +383,18 @@
 									<td align="center" valign="middle">${job.clicks}</td>
 									<td align="center" valign="middle">${job.applies}</td>
 									<td align="center" valign="middle">
-									<form:select
-											path="autoRenew" id="selectAutoRenew"
-											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-											name="select1">
-											<c:choose>
-											<c:when test="${job.autoRenew == true }">											
-											<form:option  value="Yes" id="${job.autoRenew}"/>
-											<form:option value="No" id="false" />
-											</c:when>
-											<c:otherwise>
-											<form:option value="No"  />
-											<form:option value="Yes"  />
-											</c:otherwise>
-											
-											</c:choose>
-										</form:select>
+									<form:select path="jobPostDTOList[${status.index}].autoRenew" id="selectAutoRenew" class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
+											name="select1">	
+											<form:option value="0" label="Select One" />		
+											<form:options items="${autoRenewList}" itemLabel="optionId" itemValue="optionName"/>							
+									</form:select>
 										
-									<td align="center" valign="middle"><form:select
-											path="brandTemplate" id="selectTemplate"
+									<td align="center" valign="middle">
+									<form:select path="jobPostDTOList[${status.index}].brandTemplate" id="selectTemplate"
 											class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
 											name="select">											
 											<form:option value="0" label="Select One" />											
-											<form:options items="${templateList}" itemValue="optionId"
-												itemLabel="optionName"/>
+											<form:options items="${templateList}" itemLabel="optionName" itemValue="optionName"/>
 										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80">
