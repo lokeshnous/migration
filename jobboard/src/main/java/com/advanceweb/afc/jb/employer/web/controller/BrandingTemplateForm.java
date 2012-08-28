@@ -23,6 +23,14 @@ public class BrandingTemplateForm {
 	private String mainImagePath;
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
+//	Muli media section
+	private String addImagePath;
+	private String videoPath;
+	private String testimony;
+	private CommonsMultipartFile addImageFileData;
+	private CommonsMultipartFile videoFileData;
+	
+	private Boolean isSilverCustomer=null;
 	
 	public long getEmployerId() {
 		return employerId;
@@ -94,6 +102,54 @@ public class BrandingTemplateForm {
 
 	public void setMainImageFileData(CommonsMultipartFile mainImageFileData) {
 		this.mainImageFileData = mainImageFileData;
+	}
+
+	public String getAddImagePath() {
+		return addImagePath;
+	}
+
+	public void setAddImagePath(String addImagePath) {
+		this.addImagePath = addImagePath;
+	}
+
+	public String getVideoPath() {
+		return videoPath;
+	}
+
+	public void setVideoPath(String videoPath) {
+		this.videoPath = videoPath;
+	}
+
+	public String getTestimony() {
+		return testimony;
+	}
+
+	public void setTestimony(String testimony) {
+		this.testimony = testimony;
+	}
+
+	public CommonsMultipartFile getAddImageFileData() {
+		return addImageFileData;
+	}
+
+	public void setAddImageFileData(CommonsMultipartFile addImageFileData) {
+		this.addImageFileData = addImageFileData;
+	}
+
+	public CommonsMultipartFile getVideoFileData() {
+		return videoFileData;
+	}
+
+	public void setVideoFileData(CommonsMultipartFile videoFileData) {
+		this.videoFileData = videoFileData;
+	}
+
+	public Boolean getIsSilverCustomer() {
+		return isSilverCustomer;
+	}
+
+	public void setIsSilverCustomer(Boolean isSilverCustomer) {
+		this.isSilverCustomer = isSilverCustomer;
 	}
 
 }
