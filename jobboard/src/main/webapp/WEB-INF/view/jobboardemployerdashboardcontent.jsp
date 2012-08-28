@@ -32,11 +32,14 @@ JAVASCRIPT FILES
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		$("#changePassword").displaypopup("#changePassword", "780", "370");
-		 $("#accountSettingpopUp").displaypopup("#accountSettingpopUp","770","360");
-		jQuery(".megamenu").megamenu();
-	});
+	jQuery(document).ready(
+			function() {
+				$("#changePassword").displaypopup("#changePassword", "780",
+						"370");
+				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
+						"770", "360");
+				jQuery(".megamenu").megamenu();
+			});
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -58,18 +61,19 @@ JAVASCRIPT FILES
 						<h2 class="noTopBorder">Profile Management</h2>
 						<div class="lableTextDashBoard">
 							<p>
-								<a
-									href="#"
-									>Change Password</a>
-<%-- 								<a
+								<a href="#">Change Password</a>
+								<%-- 								<a
 									href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
 									>Change Password</a> --%>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
-                                 <p><a href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
-													 id="accountSettingpopUp">Account Settings</a> </p>
-                        </div>
+							<p>
+								<a
+									href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
+									id="accountSettingpopUp">Account Settings</a>
+							</p>
+						</div>
 						<div class="lableTextDashBoard">
 							<p>
 								<a href="">Manage Access Permissions</a>
@@ -77,7 +81,8 @@ JAVASCRIPT FILES
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="<%=request.getContextPath()%>/empProfile/employerprofile.html">Manage
+								<a
+									href="<%=request.getContextPath()%>/empProfile/employerprofile.html">Manage
 									Featured Employer Profile</a>
 							</p>
 						</div>
@@ -98,12 +103,16 @@ JAVASCRIPT FILES
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="<%=request.getContextPath()%>/employer/postNewJobs.html">Post New Job</a>
+								<a
+									href="<%=request.getContextPath()%>/employer/postNewJobs.html">Post
+									New Job</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="<%=request.getContextPath()%>/employer/manageJobPost.html">Manage / Edit Job Postings</a>
+								<a
+									href="<%=request.getContextPath()%>/employer/manageJobPost.html">Manage
+									/ Edit Job Postings</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
@@ -179,25 +188,31 @@ JAVASCRIPT FILES
 						<div class="rowEvenNewSpacing marginTop10">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0"
 								class="grid marginTop3">
-								<tr class="borderTopNone">
-									<th width="46%" align="left" scope="col"><h2
-											class="noTopBorder noTopBottomBorder">Metrics</h2></th>
-									<th width="18%" align="center" scope="col"
-										class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
-									<th width="18%" align="center" scope="col"
-										class="BorderLeftWhite"><div class="EDPriceA">CLICKS</div></th>
-									<th width="18%" align="center" scope="col"
-										class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
-								</tr>
-								<tr class="gridB">
-									<td><input name="radio2" type="radio" id="radio4"
-										value="radio" class="marginLeft10 marginRight10"> <label
-										for="radio2">Your Job Posting Totals</label></td>
-									<td align="center" valign="middle" class="BorderLeft TcolorA">1000</td>
-									<td align="center" valign="middle" class="BorderLeft TcolorB">100</td>
-									<td align="center" valign="middle" class="BorderLeft TcolorC">10</td>
-								</tr>
-								<tr class="gridB">
+								<thead>
+									<tr class="borderTopNone">
+										<th width="46%" align="left" scope="col"><h2
+												class="noTopBorder noTopBottomBorder">Metrics</h2></th>
+										<th width="18%" align="center" scope="col"
+											class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
+										<th width="18%" align="center" scope="col"
+											class="BorderLeftWhite"><div class="EDPriceA">CLICKS</div></th>
+										<th width="18%" align="center" scope="col"
+											class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${jbPostTotalList}" var="jobList">
+										<tr class="gridB">
+											<td><input name="radio2" type="radio" id="radio4"
+												value="radio" class="marginLeft10 marginRight10"> <label
+												for="radio2">${jobList.getMetricsName()}</label></td>
+											<td align="center" valign="middle" class="BorderLeft TcolorA">${jobList.getViews()}</td>
+											<td align="center" valign="middle" class="BorderLeft TcolorB">${jobList.getClicks()}</td>
+											<td align="center" valign="middle" class="BorderLeft TcolorC">${jobList.getApplies()}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+								<!-- <tr class="gridB">
 									<td><input name="radio2" type="radio" id="radio4"
 										value="radio" class="marginLeft10 marginRight10"> <label
 										for="radio2">Your Averages Per Job Posting</label></td>
@@ -215,7 +230,7 @@ JAVASCRIPT FILES
 										class="BorderLeft TcolorB TBorderNone">30</td>
 									<td align="center" valign="middle"
 										class="BorderLeft TcolorC TBorderNone">3</td>
-								</tr>
+								</tr> -->
 							</table>
 						</div>
 						<!--T-->

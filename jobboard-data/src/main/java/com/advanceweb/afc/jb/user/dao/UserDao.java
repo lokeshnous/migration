@@ -27,4 +27,6 @@ public interface UserDao {
 	 * @return metricsDTO
 	 */
 	List<MetricsDTO> getJobPostTotal(int facilityId);
+	
+	int getEmployerCount();
 }

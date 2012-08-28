@@ -80,4 +80,8 @@ public class LoginServiceImpl implements LoginService {
 	public List<MetricsDTO> getJobPostTotal(int facilityId){
 		return userDAO.getJobPostTotal(facilityId);
 	}
+	
+	public int getEmployerCount(){
+		return userDAO.getEmployerCount();
+	}
 }

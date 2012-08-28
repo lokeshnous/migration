@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -33,31 +34,39 @@ public class EmployerDashBoardController {
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session) {
-
+		ModelAndView model = new ModelAndView();
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		MetricsDTO metricsDTO = new MetricsDTO();
+
 		// Get the job post details of logged in employer
 		List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
-		MetricsDTO dto = new MetricsDTO();
-		MetricsDTO jbPostTotalList = new MetricsDTO();
+
 		// Geting mtrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
 				.populateDropdown("Metrics");
+
 		// jbPostTotalList will be having job post total details for metrics
 		int views = 0;
 		int clicks = 0;
 		int applies = 0;
 		int size = metricsDTOs.size();
 		for (int i = 0; i < metricsDTOs.size(); i++) {
+			MetricsDTO dto = new MetricsDTO();
 			dto = (MetricsDTO) metricsDTOs.get(i);
 			views = views + dto.getViews();
 			clicks = clicks + dto.getClicks();
 			applies = applies + dto.getApplies();
 		}
-		//jbPostTotalList.setMetricsName(metricsList.indexOf(0));
-		jbPostTotalList.setViews(views);
-		jbPostTotalList.setClicks(clicks);
-		jbPostTotalList.setApplies(applies);
+		metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
+		metricsDTO.setViews(views);
+		metricsDTO.setClicks(clicks);
+		metricsDTO.setApplies(applies);
+		jbPostTotalList.add(0, metricsDTO);
+		metricsDTO = new MetricsDTO();
+
+		// Calculating average per job posting
 		int avgViews = 0;
 		int avgClicks = 0;
 		int avgApplies = 0;
@@ -66,6 +75,31 @@ public class EmployerDashBoardController {
 			avgClicks = clicks / size;
 			avgApplies = applies / size;
 		}
-		return new ModelAndView("employerDashboard");
+		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+		metricsDTO.setViews(avgViews);
+		metricsDTO.setClicks(avgClicks);
+		metricsDTO.setApplies(avgApplies);
+		jbPostTotalList.add(1, metricsDTO);
+		metricsDTO = new MetricsDTO();
+
+		// Calculating site - wide average per job posting
+		int swAvgViews = 0;
+		int swAvgClicks = 0;
+		int swAvgApplies = 0;
+		int count = loginService.getEmployerCount();
+		if (size > 0) {
+			swAvgViews = views / size;
+			swAvgClicks = clicks / size;
+			swAvgApplies = applies / 2;
+		}
+		metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
+		metricsDTO.setViews(swAvgViews);
+		metricsDTO.setClicks(swAvgClicks);
+		metricsDTO.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, metricsDTO);
+
+		model.addObject("jbPostTotalList", jbPostTotalList);
+		model.setViewName("employerDashboard");
+		return model;
 	}
 }

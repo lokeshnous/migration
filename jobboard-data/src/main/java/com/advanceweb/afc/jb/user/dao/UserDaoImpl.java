@@ -13,6 +13,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
@@ -124,5 +125,11 @@ public class UserDaoImpl implements UserDao {
 		"jb.jobId = js.jobId and " + "jb.admFacility.facilityId	= "+facilityId);
 		
 		return empMetricsConversionHelper.transformJpJobStatToMetricsDTO(jobStatsList);		
+	}
+	
+	public int getEmployerCount(){
+		int count = 0;
+		AdmFacility adm = (AdmFacility) hibernateTemplate.find("SELECT count(facilityId) from AdmFacility");
+		return count;
 	}
 }
