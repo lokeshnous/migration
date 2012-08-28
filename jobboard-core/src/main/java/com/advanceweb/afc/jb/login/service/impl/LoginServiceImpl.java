@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
 import com.advanceweb.afc.jb.login.service.LoginService;
@@ -69,5 +70,14 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public EmployerInfoDTO facilityDetails(int userId) {
 		return userDAO.facilityDetails(userId);
+	}
+	
+	/**
+	 * This method is get the metrics details for logged in employer
+	 * @param facilityId
+	 * @return metricsDTO
+	 */
+	public List<MetricsDTO> getJobPostTotal(int facilityId){
+		return userDAO.getJobPostTotal(facilityId);
 	}
 }

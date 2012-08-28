@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 
 /**
@@ -45,4 +46,11 @@ public interface LoginService {
 	EmployerInfoDTO facilityDetails(int userId);
 
 	List<UserRoleDTO> getUserRole(int userId);
+	
+	/**
+	 * This method is get the metrics details for logged in employer
+	 * @param facilityId
+	 * @return
+	 */
+	List<MetricsDTO> getJobPostTotal(int facilityId);
 }

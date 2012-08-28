@@ -82,7 +82,7 @@
 					     <input type="button" id="emailbutton" class="btn_sm orange" value="Send"/>
 					     <input type="button" id="cancelbutton" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 				</div>
-				<span  style="font-size: 18px;font:bold; "><div id="waitmsg" >Please Wait..Your password is being sent to your email address</div></span>
+				<span  style="font-size: 18px;font:bold; "><div id="waitmsg" >Please Wait..Your password is being sent to your Email address</div></span>
 				
 				<div class="clearfix"></div>
 			</form:form>

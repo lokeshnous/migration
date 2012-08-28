@@ -11,10 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.employer.helper.EmpMetricsConversionHelper;
 
 @Transactional
 @Repository("userDAO")
@@ -23,6 +26,9 @@ public class UserDaoImpl implements UserDao {
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
 
+	@Autowired
+	private EmpMetricsConversionHelper empMetricsConversionHelper;
+	
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -79,7 +85,7 @@ public class UserDaoImpl implements UserDao {
 
 		return userRoleDTOList;
 	}
-	
+
 	/**
 	 * This method is to get the facility id and role for a particular user
 	 * 
@@ -103,5 +109,20 @@ public class UserDaoImpl implements UserDao {
 
 		}
 		return employerInfoDTO;
+	}
+
+	/**
+	 * This method is get the metrics details for logged in employer
+	 * 
+	 * @param facilityId
+	 * @return metricsDTO
+	 */
+	@Override
+	public List<MetricsDTO> getJobPostTotal(int facilityId) {
+				
+		List<JpJobStat> jobStatsList = hibernateTemplate.find("SELECT js from JpJobStat js, JpJob jb where "+
+		"jb.jobId = js.jobId and " + "jb.admFacility.facilityId	= "+facilityId);
+		
+		return empMetricsConversionHelper.transformJpJobStatToMetricsDTO(jobStatsList);		
 	}
 }
