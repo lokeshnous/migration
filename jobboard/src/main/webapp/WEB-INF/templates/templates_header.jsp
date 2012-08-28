@@ -60,7 +60,7 @@
 						</span><br>
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
-								${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
+								${msg.commonVerticalBar}<a href="../employer/employerDashBoard.html">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
 					<!-- loginHeader -->

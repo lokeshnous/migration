@@ -310,7 +310,7 @@
 									<strong>MEDIA KIT</strong>
 								</h1>
 							</div>
-							<span class="floatRight"><a href="#"
+							<span class="floatRight"><a href="../employer/employerDashBoard.html"
 								class="btn_sm orange marginRight5">RETURN TO MY DASHBOARD</a></span>
 						</div>
 					</div>

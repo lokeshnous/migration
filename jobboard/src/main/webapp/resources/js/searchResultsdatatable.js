@@ -155,7 +155,7 @@ jQuery(document).ready(function() {
 									"sPaginationType" : "full_numbers",
 									"bJQueryUI" : true,
 									"bSort" : true,
-									"iDisplayLength": 30,
+									"iDisplayLength": 20,
 									"aLengthMenu": [[20, 30, 40, 50], [20, 30, 40, 50]],
 									"oLanguage" : {
 										"sLengthMenu" : "<span>Results viewable: </span>_MENU_ <span>per page</span>",
