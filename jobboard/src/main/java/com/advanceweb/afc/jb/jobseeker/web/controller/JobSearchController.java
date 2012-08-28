@@ -398,22 +398,17 @@ public class JobSearchController {
 			String cityState = MMJBCommonConstants.EMPTY;
 			String keywords = MMJBCommonConstants.EMPTY;
 			String saveSearchName = MMJBCommonConstants.EMPTY;
-			boolean autoload = false;
-
 			keywords = sessionMap.get(SearchParamDTO.KEYWORDS);
 			cityState = sessionMap.get(SearchParamDTO.CITY_STATE);
 			radius = sessionMap.get(SearchParamDTO.RADIUS);
 			saveSearchName = sessionMap
 					.get(MMJBCommonConstants.SAVE_SEARCH_NAME);
-			autoload = Boolean.parseBoolean(sessionMap
-					.get(MMJBCommonConstants.AUTOLOAD));
-
 			jobSearchResultForm.setSaveSearchName(saveSearchName);
 			jobSearchResultForm.setSearchtype(searchType);
 			jobSearchResultForm.setKeywords(keywords);
 			jobSearchResultForm.setCityState(cityState);
 			jobSearchResultForm.setRadius(radius);
-			jobSearchResultForm.setAutoload(autoload);
+			jobSearchResultForm.setAutoload(true);
 
 			LOGGER.info("Removing keywords, city,state, autoload from session....");
 
@@ -790,7 +785,6 @@ public class JobSearchController {
 				.trim());
 		sessionMap.put(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
 				.getSearchtype().trim());
-
 		return sessionMap;
 
 	}
