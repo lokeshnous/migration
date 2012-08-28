@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
+import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
@@ -20,19 +20,19 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
  * @since 17 July 2012
  * 
  */
-@Service("empBrandTemp")
+@Service("brandingTemplateService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
 	@Autowired
-	private BrandingTemplateDAO empBrandTempDAO;
+	private BrandingTemplateDAO brandingTemplateDAO;
 
 	/**
 	 * Fetch the job posting Branding Templates
 	 */
 	@Override
-	public List<EmpBrandTempDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO) {
-		List<EmpBrandTempDTO> templatesDTOs = empBrandTempDAO
+	public List<BrandingTemplateDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO) {
+		List<BrandingTemplateDTO> templatesDTOs = brandingTemplateDAO
 				.fetchEmpBrandTemp(merUserDTO);
 		return templatesDTOs;
 	}
@@ -41,9 +41,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Create the job posting Branding Template.
 	 */
 	@Override
-	public Boolean createEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
+	public Boolean createEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
 		Boolean status = null;
-		status = empBrandTempDAO.createEmpBrandTemp(brandingTemplatesDTO);
+		status = brandingTemplateDAO.createEmpBrandTemp(brandingTemplatesDTO);
 		return status;
 	}
 
@@ -51,9 +51,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * View the job posting Branding Template.
 	 */
 	@Override
-	public EmpBrandTempDTO viewEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
-		EmpBrandTempDTO empBrandTempDTO = null;
-		empBrandTempDTO = empBrandTempDAO
+	public BrandingTemplateDTO viewEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
+		BrandingTemplateDTO empBrandTempDTO = null;
+		empBrandTempDTO = brandingTemplateDAO
 				.viewEmpBrandTemp(brandingTemplatesDTO);
 		return empBrandTempDTO;
 	}
@@ -62,9 +62,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Edit the job posting Branding Template.
 	 */
 	@Override
-	public EmpBrandTempDTO editEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
-		EmpBrandTempDTO empBrandTempDTO = null;
-		empBrandTempDTO = empBrandTempDAO
+	public BrandingTemplateDTO editEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
+		BrandingTemplateDTO empBrandTempDTO = null;
+		empBrandTempDTO = brandingTemplateDAO
 				.editEmpBrandTemp(brandingTemplatesDTO);
 		return empBrandTempDTO;
 	}
@@ -73,9 +73,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Delete the job posting Branding Template.
 	 */
 	@Override
-	public Boolean deleteEmpBrandTemp(EmpBrandTempDTO brandingTemplatesDTO) {
+	public Boolean deleteEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
 		Boolean status = null;
-		status = empBrandTempDAO.deleteEmpBrandTemp(brandingTemplatesDTO);
+		status = brandingTemplateDAO.deleteEmpBrandTemp(brandingTemplatesDTO);
 		return status;
 	}
 
