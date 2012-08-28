@@ -537,12 +537,12 @@
 											<div class="lableText3">Summary / Job
 												Description:</div>
 											<div class="input_grp5 ">
-												<form:textarea id="workExplimitedtextarea${status.count}"
-													onKeyDown="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
-													onKeyUp="limitText(this.form.workExplimitedtextarea${status.count},this.form.countdownworkexp${status.count},2000);"
+												<form:textarea id="workExplimitedtextarea${status.index}"
+													onKeyDown="limitText(this.form.workExplimitedtextarea${status.index},this.form.countdownworkexp${status.index},2000);"
+													onKeyUp="limitText(this.form.workExplimitedtextarea${status.index},this.form.countdownworkexp${status.index},2000);"
 													path="listWorkExpForm[${status.index}].description"
 													class="textareaBoxCResume magrin_top0" rows="3" cols="45" />
-												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownworkexp${status.count}" size="3" value="2000" >characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownworkexp${status.index}" size="3" value="2000" >characters remaining.<p>
 											</div>
 										</div>
 									</div>
@@ -628,11 +628,11 @@
 
 											<div class="lableText3 marginTop10">Degrees:</div>
 											<div class="input_grp5 ">
-												<form:textarea path="listEduForm[${status.index}].degrees" id="eduDeglimitedtextarea${status.count}"
-													onKeyDown="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
-													onKeyUp="limitText(this.form.eduDeglimitedtextarea${status.count},this.form.countdowneduDeg${status.count},2000);"
+												<form:textarea path="listEduForm[${status.index}].degrees" id="eduDeglimitedtextarea${status.index}"
+													onKeyDown="limitText(this.form.eduDeglimitedtextarea${status.index},this.form.countdowneduDeg${status.index},2000);"
+													onKeyUp="limitText(this.form.eduDeglimitedtextarea${status.index},this.form.countdowneduDeg${status.index},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduDeg${status.count}" size="3" value="2000">characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduDeg${status.index}" size="3" value="2000">characters remaining.<p>
 											</div>
 										</div>
 										<div class="row MarginBottom10 ">
@@ -640,11 +640,11 @@
 											<div class="lableText3 marginTop10">Certifications:</div>
 											<div class="input_grp5">
 												<form:textarea
-													path="listEduForm[${status.index}].certifications" id="eduCertlimitedtextarea${status.count}"
-													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
-													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.count},this.form.countdowneduCert${status.count},2000);"
+													path="listEduForm[${status.index}].certifications" id="eduCertlimitedtextarea${status.index}"
+													onKeyDown="limitText(this.form.eduCertlimitedtextarea${status.index},this.form.countdowneduCert${status.index},2000);"
+													onKeyUp="limitText(this.form.eduCertlimitedtextarea${status.index},this.form.countdowneduCert${status.index},2000);"
 													class="textareaBoxCResume magrin_top0" rows="3" cols="45" />
-												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduCert${status.count}" size="3" value="2000">characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduCert${status.index}" size="3" value="2000">characters remaining.<p>
 											</div>
 
 										</div>
@@ -702,11 +702,11 @@
 											<div class="lableText3 marginTop10">Summary:</div>
 											<div class="input_grp5 ">
 
-												<form:textarea path="listCertForm[${status.index}].summary" id="Certslimitedtextarea${status.count}"
-													onKeyDown="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
-													onKeyUp="limitText(this.form.Certslimitedtextarea${status.count},this.form.countdownCerts${status.count},2000);"
+												<form:textarea path="listCertForm[${status.index}].summary" id="Certslimitedtextarea${status.index}"
+													onKeyDown="limitText(this.form.Certslimitedtextarea${status.index},this.form.countdownCerts${status.index},2000);"
+													onKeyUp="limitText(this.form.Certslimitedtextarea${status.index},this.form.countdownCerts${status.index},2000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${status.count}" size="3" value="2000">characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${status.index}" size="3" value="2000">characters remaining.<p>
 											</div>
 										</div>
 									</div>
