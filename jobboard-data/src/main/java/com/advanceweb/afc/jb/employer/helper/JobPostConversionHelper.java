@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.helper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +65,11 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		
 		 
 		 jpJob.setJobStatus(dto.getJobStatus());
+		 
+		 if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())){
+			   jpJob.setStartDt(new Date());
+		 }
+		 
 		 jpJob.setAdmFacility(admFacility);
 		 
 		 return jpJob;
