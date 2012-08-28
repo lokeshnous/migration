@@ -132,7 +132,7 @@ public class EmployerRegistrationController {
 	@RequestMapping(value = "/saveEmployerProfile", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute("empRegisterForm") EmployerRegistrationForm empRegisterForm,
-			HttpServletRequest request, Map map, BindingResult result) {
+			HttpServletRequest request, Map map,HttpSession session, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 	
 
@@ -202,10 +202,13 @@ public class EmployerRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		employerRegistration.createNewProfile(empDTO);
+		userDTO = employerRegistration.createNewProfile(empDTO);
 
-		model.setViewName("jobBoardEmployerPostJobs01");
 		model.addObject("empRegisterForm", empRegisterForm);
+		session.setAttribute(MMJBCommonConstants.USER_NAME, userDTO.getFirstName()+" "+userDTO.getLastName());
+		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL, userDTO.getEmailId());
+		model.setViewName("jobBoardEmployerPostJobs01");
 		authenticateUserAndSetSession(userDTO, request);
 
 		return model;

@@ -326,6 +326,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployeeAcc
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAlertsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerPostJobsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementForm.java -text
@@ -555,6 +556,9 @@ jobboard/src/main/webapp/resources/images/email.png -text
 jobboard/src/main/webapp/resources/images/emslogo.jpg -text
 jobboard/src/main/webapp/resources/images/fbook_sm.png -text
 jobboard/src/main/webapp/resources/images/gold_logo.png -text
+jobboard/src/main/webapp/resources/images/img01.png -text
+jobboard/src/main/webapp/resources/images/img02.png -text
+jobboard/src/main/webapp/resources/images/img03.png -text
 jobboard/src/main/webapp/resources/images/list_dot.png -text
 jobboard/src/main/webapp/resources/images/list_dot01.png -text
 jobboard/src/main/webapp/resources/images/loginFB.png -text
