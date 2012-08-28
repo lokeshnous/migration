@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Repository;
 
-import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
+import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 
 /**
  * 
@@ -17,9 +17,9 @@ import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
 @Repository("transformEmpoyerBrandTemp")
 public class TransformEmpoyerBrandTemp {
 
-	public EmpBrandTempDTO createEmpBrandTempDTO(BrandingTemplateForm brandingTemplateForm) {
+	public BrandingTemplateDTO createEmpBrandTempDTO(BrandingTemplateForm brandingTemplateForm) {
 
-		EmpBrandTempDTO dto = new EmpBrandTempDTO();
+		BrandingTemplateDTO dto = new BrandingTemplateDTO();
 
 		
 
@@ -35,6 +35,15 @@ public class TransformEmpoyerBrandTemp {
 		dto.setMainImagePath(brandingTemplateForm.getMainImagePath());
 		dto.setLogoFileData(brandingTemplateForm.getLogoFileData());
 		dto.setMainImageFileData(brandingTemplateForm.getMainImageFileData());
+		
+//		Multi media section
+		dto.setTestimony(brandingTemplateForm.getTestimony());
+		dto.setAddImagePath(brandingTemplateForm.getAddImagePath());
+		dto.setAddImageFileData(brandingTemplateForm.getAddImageFileData());
+		dto.setVideoPath(brandingTemplateForm.getVideoPath());
+		dto.setVideoFileData(brandingTemplateForm.getVideoFileData());
+		
+		dto.setIsSilverCustomer(brandingTemplateForm.getIsSilverCustomer());
 		
 		return dto;
 	}
