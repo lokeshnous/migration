@@ -17,6 +17,7 @@ public class MetricsDTO {
 	private int clicks;
 	private int applies;
 	private Date statsDate;
+	private String metricsName;
 
 	/**
 	 * @return the jobId
@@ -91,6 +92,20 @@ public class MetricsDTO {
 	 */
 	public void setStatsDate(Date statsDate) {
 		this.statsDate = statsDate;
+	}
+
+	/**
+	 * @return the metricsName
+	 */
+	public String getMetricsName() {
+		return metricsName;
+	}
+
+	/**
+	 * @param metricsName the metricsName to set
+	 */
+	public void setMetricsName(String metricsName) {
+		this.metricsName = metricsName;
 	}
 
 }
