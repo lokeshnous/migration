@@ -209,6 +209,11 @@ public interface MMJBCommonConstants {
 	public static final String POST_JOB_EXPIRED="Expired";
 	public static final String POST_JOB_INACTIVE="Inactive";
 	
+	// For Apply job type
+	public static final String APPLY_TO_URL = "ApplyToURL";
+	public static final String APPLY_TO_ATS = "ApplyToATS";
+	public static final String APPLY_TO_EMAIL = "ApplyToEMail";
+	
 	//for packages
 	public static final String PACKAGE_ESPOST = "ezpost";
 	public static final String PACKAGE_GOLD = "gold";
