@@ -129,6 +129,27 @@
 			<scope>compile</scope>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf</artifactId>
+			<version>2.5.2</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt</artifactId>
+			<version>2.5.2</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>2.5.2</version>
+		</dependency>
+
 		<!-- End of dependencies for JUnit -->
 
 	</dependencies>
