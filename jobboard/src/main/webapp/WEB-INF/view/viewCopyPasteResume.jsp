@@ -40,28 +40,18 @@
 						<div class="clearfix"></div>
 						<div class="MidContent_Wrapper FloatLeft marginBottom10">
 							<div class="ResumeHeader">
-								<h2 class="noTopBottomBorder "><c:out
-										value="${createResume.resumeName}" /></h2>
+								<%-- <h2 class="noTopBottomBorder "><c:out
+										value="${createResume.resumeName}" /></h2> --%>
 								<div class="clearfix"></div>
-								<span>
+							</div>
+						</div>
+						<div class="rowEvenNewSpacing">
+							<h2 class="noTopBottomBorder ">Resume: ${createResume.resumeName}</h2><br>
+							<span>
 									<h3 class="marginTop3">
 										<c:out value="${createResume.desiredJobTitle}" />
 									</h3>
-								</span>
-
-								<div class="clearfix"></div>
-								<span> <!--  <p class="marginTop3">Available 08/01/2012</p> -->
-								</span>
-							</div>
-							<!-- <div class="IconsArea">
-								<a href="#"><img src="../resources/images/Download.png"
-									width="20" height="20" alt=""></a>&nbsp; <a href="#"><img
-									src="../resources/images/Print2.png" width="20" height="20"
-									alt=""></a>
-							</div> -->
-						</div>
-						<div class="rowEvenNewSpacing">
-							<h2 class="noTopBottomBorder ">Resume:</h2><br>
+							</span>
 							<br>
 							<div class="clearfix"></div>
 							<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>
