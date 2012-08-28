@@ -127,9 +127,9 @@ public class UserDaoImpl implements UserDao {
 		return empMetricsConversionHelper.transformJpJobStatToMetricsDTO(jobStatsList);		
 	}
 	
-	public int getEmployerCount(){
+	/*public int getEmployerCount(){
 		int count = 0;
-		AdmFacility adm = (AdmFacility) hibernateTemplate.find("SELECT count(facilityId) from AdmFacility");
+		AdmFacility adm = hibernateTemplate.find("SELECT count(facilityId) from AdmFacility");
 		return count;
-	}
+	}*/
 }

@@ -86,7 +86,7 @@ public class EmployerDashBoardController {
 		int swAvgViews = 0;
 		int swAvgClicks = 0;
 		int swAvgApplies = 0;
-		int count = loginService.getEmployerCount();
+		//int count = loginService.getEmployerCount();
 		if (size > 0) {
 			swAvgViews = views / size;
 			swAvgClicks = clicks / size;

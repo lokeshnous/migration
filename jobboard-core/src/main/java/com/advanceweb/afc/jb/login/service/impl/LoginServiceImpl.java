@@ -81,7 +81,7 @@ public class LoginServiceImpl implements LoginService {
 		return userDAO.getJobPostTotal(facilityId);
 	}
 	
-	public int getEmployerCount(){
+	/*public int getEmployerCount(){
 		return userDAO.getEmployerCount();
-	}
+	}*/
 }

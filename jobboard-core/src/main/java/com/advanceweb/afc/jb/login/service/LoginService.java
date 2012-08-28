@@ -54,5 +54,5 @@ public interface LoginService {
 	 */
 	List<MetricsDTO> getJobPostTotal(int facilityId);
 	
-	int getEmployerCount();
+	//int getEmployerCount();
 }
