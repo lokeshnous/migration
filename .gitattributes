@@ -473,6 +473,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobseekersavethissearchpopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekersendtofriendpopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekersubscription.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerviewappliedjobspopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/manageBrandingTemplatePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageFeatureEmpPro.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text
