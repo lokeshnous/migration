@@ -52,6 +52,7 @@ public class EmployerPostJobsController {
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
 		}
 		try {
+			jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 			if (packageId.equalsIgnoreCase(MMJBCommonConstants.PACKAGE_SILVER)
 					|| packageId
 							.equalsIgnoreCase(MMJBCommonConstants.PACKAGE_STJOBPOSTING)
@@ -62,14 +63,12 @@ public class EmployerPostJobsController {
 
 			} else if (packageId
 					.equalsIgnoreCase(MMJBCommonConstants.PACKAGE_ESPOST)) {
-				jobSeekerEmailDTO.setFromAddress(userEmail);
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
 				// employerToAddress[0] = new InternetAddress(userEmail);
 				// TODO: Remove hard codes of mails
-				employerToAddress[0] = new InternetAddress(
-						"muralikc@nousinfo.com");
+				employerToAddress[0] = new InternetAddress(userEmail);
 				jobSeekerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = jobseekerJobApplicationSub
 				// .replace(
@@ -89,14 +88,13 @@ public class EmployerPostJobsController {
 
 			} else if (packageId
 					.equalsIgnoreCase(MMJBCommonConstants.PACKAGE_GOLD)) {
-				jobSeekerEmailDTO.setFromAddress(userEmail);
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
 				// employerToAddress[0] = new InternetAddress(userEmail);
 				// TODO: Remove hard codes of mails
 				employerToAddress[0] = new InternetAddress(
-						"muralikc@nousinfo.com");
+						userEmail);
 				jobSeekerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = jobseekerJobApplicationSub
 				// .replace(
@@ -116,7 +114,6 @@ public class EmployerPostJobsController {
 
 			} else if (packageId
 					.equalsIgnoreCase(MMJBCommonConstants.PACKAGE_PLATINUM)) {
-				jobSeekerEmailDTO.setFromAddress(userEmail);
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
@@ -147,7 +144,8 @@ public class EmployerPostJobsController {
 			// TODO: handle exception
 			System.out.println("Error");
 		}
-		return null;
+		model.setViewName("redirect:/employer/employerDashBoard.html");
+		return model;
 	}
 
 }

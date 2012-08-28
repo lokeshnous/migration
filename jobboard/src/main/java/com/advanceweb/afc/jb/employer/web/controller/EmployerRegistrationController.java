@@ -208,6 +208,7 @@ public class EmployerRegistrationController {
 		session.setAttribute(MMJBCommonConstants.USER_NAME, userDTO.getFirstName()+" "+userDTO.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, userDTO.getEmailId());
+		session.setAttribute(MMJBCommonConstants.FACILITY_ID, 0);
 		model.setViewName("jobBoardEmployerPostJobs01");
 		authenticateUserAndSetSession(userDTO, request);
 
