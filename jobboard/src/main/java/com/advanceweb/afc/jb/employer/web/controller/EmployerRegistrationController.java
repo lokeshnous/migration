@@ -34,12 +34,14 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 //import com.advanceweb.afc.jb.common.AddressDTO;
 //import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -93,6 +95,9 @@ public class EmployerRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	@Autowired
+	private LoginService loginService;
 
 
 	/**
@@ -208,7 +213,8 @@ public class EmployerRegistrationController {
 		session.setAttribute(MMJBCommonConstants.USER_NAME, userDTO.getFirstName()+" "+userDTO.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, userDTO.getEmailId());
-		session.setAttribute(MMJBCommonConstants.FACILITY_ID, 0);
+		EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO.getUserId());	
+		session.setAttribute(MMJBCommonConstants.FACILITY_ID, infoDTO.getFacilityId());
 		model.setViewName("jobBoardEmployerPostJobs01");
 		authenticateUserAndSetSession(userDTO, request);
 
