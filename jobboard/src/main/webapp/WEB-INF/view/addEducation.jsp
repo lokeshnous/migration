@@ -68,9 +68,11 @@
 
 		<div class="lableText3 marginTop10">Degrees:</div>
 		<div class="input_grp5 ">
-			<form:textarea path="createResume.listEduForm[${eduPositionId}].degrees"
+			<form:textarea path="createResume.listEduForm[${eduPositionId}].degrees" id="eduDeglimitedtextarea${eduPositionId}"
+				onKeyDown="limitText(this.form.eduDeglimitedtextarea${eduPositionId},this.form.countdowneduDeg${eduPositionId},2000);"
+				onKeyUp="limitText(this.form.eduDeglimitedtextarea${eduPositionId},this.form.countdowneduDeg${eduPositionId},2000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p>2000 characters remaining</p>
+			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduDeg${eduPositionId}" size="3" value="2000">characters remaining.<p>
 		</div>
 	</div>
 	<div class="row MarginBottom10 ">
@@ -78,9 +80,11 @@
 		<div class="lableText3 marginTop10">Certifications:</div>
 		<div class="input_grp5 ">
 			<form:textarea
-				path="createResume.listEduForm[${eduPositionId}].certifications"
+				path="createResume.listEduForm[${eduPositionId}].certifications" id="eduCertlimitedtextarea${eduPositionId}"
+				onKeyDown="limitText(this.form.eduCertlimitedtextarea${eduPositionId},this.form.countdowneduCert${eduPositionId},2000);"
+				onKeyUp="limitText(this.form.eduCertlimitedtextarea${eduPositionId},this.form.countdowneduCert${eduPositionId},2000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p>2000 characters remaining</p>
+			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduCert${eduPositionId}" size="3" value="2000">characters remaining.<p>
 		</div>
 
 	</div>

@@ -4,6 +4,18 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script type="text/javascript">
+
+	//Limit text area characters
+/* 	function limitText(limitField, limitCount, limitNum) {
+	 		alert(limitField.value.length+""+limitCount.value+""+limitNum); 
+		if (limitField.value.length > limitNum) {
+			limitField.value = limitField.value.substring(0, limitNum);
+		} else {
+			limitCount.value = limitNum - limitField.value.length;
+		}
+	} */
+
+
 	jQuery(document).ready(function() {	
 				
 		//Date picker
@@ -120,10 +132,12 @@
 		<div class="lableText3 marginTop10">Summary / Job
 			Description:</div>
 		<div class="input_grp5 ">
-			<form:textarea
+			<form:textarea id="workExplimitedtextarea${workExpPositionId}"
 				path="createResume.listWorkExpForm[${workExpPositionId}].description"
+				onKeyDown="limitText(this.form.workExplimitedtextarea${workExpPositionId},this.form.countdownworkexp${workExpPositionId},2000);"
+				onKeyUp="limitText(this.form.workExplimitedtextarea${workExpPositionId},this.form.countdownworkexp${workExpPositionId},2000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p>2000 characters remaining</p>
+			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownworkexp${workExpPositionId}" size="3" value="2000" >characters remaining.<p>
 		</div>
 	</div>
 </div>
