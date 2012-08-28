@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
@@ -55,8 +56,7 @@ import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 /**
- * <code>JobSearchController</code>This controller belongs to all
- * searched jobs.
+ * <code>JobSearchController</code>This controller belongs to all searched jobs.
  * 
  * @author Pramoda Patil
  * @version 1.0
@@ -79,7 +79,7 @@ public class JobSearchController {
 
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerService;
-	
+
 	@Autowired
 	private JobSearchService jobSearchService;
 
@@ -202,15 +202,19 @@ public class JobSearchController {
 	 * 
 	 * @param form
 	 * @param jobId
+	 * @param map
 	 * @param session
 	 * @param request
+	 * @param currentUrl
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
 			@RequestParam String userID, @RequestParam("id") int jobId,
-			HttpSession session, HttpServletRequest request) {
+			@RequestParam("currentUrl") String currentUrl, HttpSession session,
+			HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		form.setJobID(jobId);
 		int userId = 0;
@@ -226,8 +230,24 @@ public class JobSearchController {
 		}
 		form.setUseremail(userEmail);
 		try {
-			
-//			TODO: apply job through ATS, by web URL is pending
+			// Get the Job details
+			SearchedJobDTO searchedJobDTO = jobSearchService
+					.viewJobDetails(form.getJobID());
+
+			// apply job by apply type like by ATS, Website or Email
+			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
+					.applyJobDetails(form.getJobID());
+			if (jobApplyTypeDTO != null) {
+				if (jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
+						MMJBCommonConstants.APPLY_TO_ATS)
+						|| jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
+								MMJBCommonConstants.APPLY_TO_URL)) {
+					jsonObject.put("applyMethod",
+							jobApplyTypeDTO.getApplyMethod());
+					jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
+					return jsonObject;
+				}
+			}
 
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
@@ -235,11 +255,9 @@ public class JobSearchController {
 				jsonObject.put(ajaxNavigationPath, navigationPath
 						+ dothtmlExtention + jobseekerPageExtention);
 				session.setAttribute("jobId", jobId);
+				session.setAttribute("currentUrl", currentUrl);
 				return jsonObject;
 			}
-			// Get the Job details
-			SearchedJobDTO searchedJobDTO = jobSearchService
-					.viewJobDetails(form.getJobID());
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(searchedJobDTO, userId);
@@ -252,8 +270,6 @@ public class JobSearchController {
 
 			// Send mail to Employer regarding job application
 			String loginPath = navigationPath.substring(2);
-			// TODO: login Url is for jobseeker. The URL should be changed after
-			// creation of employer login page
 			String jonseekerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
 					+ dothtmlExtention + jobseekerPageExtention;
@@ -267,8 +283,8 @@ public class JobSearchController {
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			// TODO: Remove hard codes of mails
-			// employerToAddress[0] = new InternetAddress(
-			// "pramodap@nousinfo.com");
+//			 employerToAddress[0] = new InternetAddress(
+//			 "pramodap@nousinfo.com");
 			employerEmailDTO.setToAddress(employerToAddress);
 			String employerMailSub = employeJobApplicationSub.replace(
 					"?jobseekername", userName);
@@ -283,10 +299,10 @@ public class JobSearchController {
 			try {
 				ResumeDTO resumeDTO = resumeService
 						.fetchPublicResumeByUserId(userId);
-				// TODO : Add the resume as per the type
 				if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
-
+					// TODO: Need to clarify
+					
 				} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
 					try {
@@ -313,16 +329,16 @@ public class JobSearchController {
 					} catch (IOException e) {
 						LOGGER.info("Copy Paste resume error");
 					}
-				} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
+				}else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
 						.equalsIgnoreCase(resumeDTO.getResumeType())) {
 					// TODO: Need to clarify
+					
 				}
 				if (resumeDTO.getFilePath() != null) {
 					attachmentpaths.add(resumeDTO.getFilePath());
 				}
 				employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
-				// TODO: handle exception
 				LOGGER.info("Resume not found");
 			}
 			emailService.sendEmail(employerEmailDTO);
@@ -524,7 +540,7 @@ public class JobSearchController {
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerService
 				.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
-		if (savedJobsCount > Integer.parseInt(saveJobsLimit)) {
+		if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
 			int oldJobId = savedJobDTOList.get(0).getSaveJobId();
 			jobSeekerService.updateAppliedSavedJobs(oldJobId);
 		}

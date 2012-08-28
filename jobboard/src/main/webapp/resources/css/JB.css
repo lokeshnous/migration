@@ -331,7 +331,7 @@ div.searchResultsSubContent .btn_sm { margin-right:5px !important }
 .job_seeker_email { float: left; width:350px; }
 .leftFormHolder input[type="checkbox"] { float: left; width:auto !important; margin:0 5px 10px 0; }
 .leftFormHolder input[type="file"] { border:1px solid #ccc; height:25px; width:auto !important; }
-input[type="submit"],input[type="button"] { width:auto; box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5); text-decoration: none; margin-top:0px; height:25px; vertical-align : middle; border-radius: 4px 4px 4px 4px; font-size: 12px; font-weight: bold; padding: 3px 13px 5px; margin-right:5px; text-transform: uppercase;}
+input[type="submit"],input[type="button"] { width:auto; box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5); text-decoration: none; margin-top:0px; /*height:25px;*/ vertical-align : middle; border-radius: 4px 4px 4px 4px; font-size: 12px; font-weight: bold; padding: 5px 13px; margin-right:5px; text-transform: uppercase;}
 input.textBox2 { width:220px !important; }
 .cancelacount{float:left;margin-top:0px!important; cursor: default}
 .nextacount{padding-top:0px!important;}

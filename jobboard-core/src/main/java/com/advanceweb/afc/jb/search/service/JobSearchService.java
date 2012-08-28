@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.search.service;
 import java.util.Map;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -76,4 +77,11 @@ public interface JobSearchService {
 	 * @param searchedJobDTO
 	 */
 	void saveJob(SearchedJobDTO searchedJobDTO);
+
+	/**
+	 * Fetch the apply type of job
+	 * 
+	 * @param jobId
+	 */
+	JobApplyTypeDTO applyJobDetails(int jobId);
 }

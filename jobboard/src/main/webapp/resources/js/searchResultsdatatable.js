@@ -78,14 +78,18 @@ jQuery(document).ready(function() {
 			});
 		}
 		function applyThisJob(jobId) {
-			
 			$.ajax({
-				url : '../jobsearch/applyJob.html?id='+jobId,
+				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 				data : ({
 					userID : "userID"
 				}),
 
 				success : function(data) {
+					$.each(data, function(key, val) {
+						if (key == "applyLink") {
+							window.open(val, '_blank');
+						}
+					});
 					$.each(data, function(key, val) {
 						if (key == "AjaxMSG") {
 							$('#topjobActionInfo'+jobId).html(val);

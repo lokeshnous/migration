@@ -13,9 +13,7 @@
 		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
 
-		<!--[if IE]>
-        <link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
-	<![endif]-->
+		
 
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>

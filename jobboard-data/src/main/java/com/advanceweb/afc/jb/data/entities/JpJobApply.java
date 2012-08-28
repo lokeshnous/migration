@@ -27,7 +27,7 @@ public class JpJobApply implements Serializable {
 	private String applyMethod;
 
 	//bi-directional many-to-one association to JpJob
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="job_id")
 	private JpJob jpJob;
 

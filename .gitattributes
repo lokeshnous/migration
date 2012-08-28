@@ -29,6 +29,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/FromZipcodeDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/GenderDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobAlertsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobApplicationDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobApplyTypeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostedDateDTO.java -text

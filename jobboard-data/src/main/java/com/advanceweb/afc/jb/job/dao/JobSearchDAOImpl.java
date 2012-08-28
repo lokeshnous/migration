@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSearchConversionHelper;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper;
 
@@ -153,6 +155,29 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		AdmSaveJob jpSaveJob = jobSearchConversionHelper
 				.transformSearchedJobDTOtoJpSaveJob(searchedJobDTO);
 		hibernateTemplate.saveOrUpdate(jpSaveJob);
+	}
+
+	/**
+	 * Fetch the apply type of job
+	 * 
+	 * @param jobId
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public JobApplyTypeDTO applyJobDetails(int jobId) {
+		JobApplyTypeDTO jobApplyTypeDTO = null;
+		try{
+		JpJob jpJob = new JpJob();
+		jpJob.setJobId(jobId);
+		List<JpJobApply> jpJobApply = hibernateTemplate.find(
+				"from JpJobApply where jpJob = ? and active = 1", jpJob);
+		List<JobApplyTypeDTO> jobApplyTypeDTOs = jobSearchConversionHelper
+				.transformJpJobApplytoJobApplyTypeDTO(jpJobApply);
+		jobApplyTypeDTO = jobApplyTypeDTOs.get(0);
+		}catch (Exception e) {
+			LOGGER.info("applyJobDetails : ERROR");
+		}
+		return jobApplyTypeDTO;
 	}
 
 }

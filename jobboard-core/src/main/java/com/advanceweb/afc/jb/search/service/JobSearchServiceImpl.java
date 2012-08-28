@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
- * <code> JobSearchServiceImpl </code> is a implementation for Service
- * class.
+ * <code> JobSearchServiceImpl </code> is a implementation for Service class.
  * 
  * @author Pramoda Patil
  * @version 1.0
@@ -28,7 +28,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 
 	@Autowired
 	private JobSearchDeleagate jobSearchDeleagate;
-	
+
 	@Autowired
 	private JobSearchDAO jobSearchDAO;
 
@@ -60,8 +60,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
 			int userId) {
 
-		return jobSearchDAO.fetchSavedOrAppliedJob(searchedJobDTO,
-				userId);
+		return jobSearchDAO.fetchSavedOrAppliedJob(searchedJobDTO, userId);
 
 	}
 
@@ -106,6 +105,17 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Override
 	public void saveJob(SearchedJobDTO searchedJobDTO) {
 		jobSearchDAO.saveTheJob(searchedJobDTO);
+	}
+
+	/**
+	 * Fetch the apply type of job
+	 * 
+	 * @param jobId
+	 */
+	@Override
+	public JobApplyTypeDTO applyJobDetails(int jobId) {
+		JobApplyTypeDTO jobApplyTypeDTO = jobSearchDAO.applyJobDetails(jobId);
+		return jobApplyTypeDTO;
 	}
 
 }

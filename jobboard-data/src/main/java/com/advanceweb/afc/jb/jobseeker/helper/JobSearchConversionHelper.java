@@ -1,21 +1,25 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 
 /**
- * <code> JobSearchConversionHelper </code> is a Conversion Helper class
- * for jobs search.
+ * <code> JobSearchConversionHelper </code> is a Conversion Helper class for
+ * jobs search.
  * 
  * @author Pramoda Patil
  * @version 1.0
@@ -40,7 +44,8 @@ public class JobSearchConversionHelper {
 			searchedJobDTO.setJobTitle(entity.getJobtitle());
 			searchedJobDTO.setJobDesc(entity.getAdtext());
 			searchedJobDTO.setJobID(entity.getJobId());
-			searchedJobDTO.setFeatureEmployer(entity.getFeatured()==1?true:false);
+			searchedJobDTO.setFeatureEmployer(entity.getFeatured() == 1 ? true
+					: false);
 
 			/**
 			 * get detail from admFacility entity
@@ -114,14 +119,14 @@ public class JobSearchConversionHelper {
 				appliedDate = DateUtils
 						.convertDateStringToSQLDate(strAppliedDate);
 			}
-//			admSaveJob.setAppliedDt(appliedDate);
+			// admSaveJob.setAppliedDt(appliedDate);
 			String strDeleteDt = jobDTO.getDeleteDt();
 			java.sql.Date deleteDtDate = null;
 			if (strDeleteDt != null) {
 				deleteDtDate = DateUtils
 						.convertDateStringToSQLDate(strDeleteDt);
 			}
-//			admSaveJob.setAppliedDt(appliedDate);
+			// admSaveJob.setAppliedDt(appliedDate);
 			admSaveJob.setDeleteDt(deleteDtDate);
 		}
 		return admSaveJob;
@@ -143,6 +148,33 @@ public class JobSearchConversionHelper {
 		// jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
 		jpSaveJob.setCreateDt(searchedJobDTO.getCreatedDate());
 		return jpSaveJob;
+	}
+
+	/**
+	 * This method is called to convert JpJobApply entity to JpJobApply DTO
+	 * 
+	 * @param jpJobApplys
+	 * @return List<JobApplyTypeDTO>
+	 */
+	public List<JobApplyTypeDTO> transformJpJobApplytoJobApplyTypeDTO(
+			List<JpJobApply> jpJobApplys) {
+		List<JobApplyTypeDTO> jobApplyTypeDTOs = new ArrayList<JobApplyTypeDTO>();
+		for (JpJobApply jpJobApply : jpJobApplys) {
+			JobApplyTypeDTO jobApplyTypeDTO = new JobApplyTypeDTO();
+			JobPostDTO job = new JobPostDTO();
+			job.setJobId(jpJobApply.getJpJob().getJobId());
+			jobApplyTypeDTO.setJobID(job);
+			jobApplyTypeDTO.setJobApplyID(jpJobApply.getJobApplyId());
+			jobApplyTypeDTO.setApplyMethod(jpJobApply.getApplyMethod());
+			jobApplyTypeDTO.setApplyLink(jpJobApply.getApplyLink());
+			boolean active = false;
+			if(jpJobApply.getActive() == 1){
+				active = true;
+			}
+			jobApplyTypeDTO.setActive(active);
+			jobApplyTypeDTOs.add(jobApplyTypeDTO);
+		}
+		return jobApplyTypeDTOs;
 	}
 
 }

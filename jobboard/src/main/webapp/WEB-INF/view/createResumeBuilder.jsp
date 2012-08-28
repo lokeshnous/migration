@@ -974,11 +974,11 @@
 					</div>
 					<div class="clearfix"></div>
 					<br /> <span class="marginBottom10 FloatLeft"> 
-					<input type="button" value="Save" name="Save" class="btn_sm orange inputleft"  id="saveResBuilderBtId"/>
-					<input type="submit" value="Preview" name="Preview" class="btn_sm orange inputleft" />
-					<input type="button" value="Cancel" class="orange" name="Cancel" onclick="cancelProcess()" />
+					<input type="button" value="Save" name="Save" class="btn_sm orange"  id="saveResBuilderBtId"/>
+					<input type="submit" value="Preview" name="Preview" class="btn_sm orange" />
+					<input type="button" value="Cancel" class="btn_sm orange" name="Cancel" onclick="cancelProcess()" />
 					<%-- <a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="btn_sm orange cancelacount">Cancel</a> --%>
-					<input type="submit" value="Save" name="Save" class="btn_sm orange inputleft"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
+					<input type="submit" value="Save" name="Save" class="btn_sm orange"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
 					</span>
 				</div>
 
