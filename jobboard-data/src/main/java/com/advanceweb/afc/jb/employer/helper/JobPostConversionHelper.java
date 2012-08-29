@@ -62,9 +62,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setJpTemplate(template);
 		 
 		 //Auto Renew
-		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);		
-		 
-		 jpJob.setJobStatus(dto.getJobStatus());
+		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);				
 		 
 		 if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())){
 			   jpJob.setStartDt(new Date());
