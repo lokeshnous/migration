@@ -15,6 +15,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class BrandingTemplateForm {
 
 	private long employerId;
+	private String templateId;
+	private int facilityId;
 	private String logoPath;
 	private String color;
 	private Date createdDate;
@@ -23,15 +25,31 @@ public class BrandingTemplateForm {
 	private String mainImagePath;
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
-//	Muli media section
+	// Muli media section
 	private String addImagePath;
 	private String videoPath;
 	private String testimony;
 	private CommonsMultipartFile addImageFileData;
 	private CommonsMultipartFile videoFileData;
-	
-	private Boolean isSilverCustomer=null;
-	
+
+	private Boolean isSilverCustomer = null;
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
+
+	public String getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
 	public long getEmployerId() {
 		return employerId;
 	}
