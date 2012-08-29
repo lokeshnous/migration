@@ -47,7 +47,7 @@
        <a href="#"><img src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();" alt=""></a></div>
                  
        <div class="popUpContainerWrapper">
-       <form:form method="Get" action="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 
+       <form:form method="Get" action="/<%=request.getContextPath()%>/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 
        		<div id="errmsg" style="color: red" align="left"> </div>
             <div class="rowEvenNewSpacing">
               	<span class="lableText3">Email Address:</span> 

@@ -145,8 +145,8 @@
 									<div class="lableTextDashBoard">
 										<p>
 											<a
-												href="<%=request.getContextPath()%>jobseekerregistration/jobSeekerChangePassword.html"
-												id="changePassword"">${msg.jsChangePwd}</a>
+												href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
+												id="changePassword">${msg.jsChangePwd}</a>
 										</p>
 									</div>
 									<div class="lableTextDashBoard">
