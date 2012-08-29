@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,9 +12,9 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
+import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
-import com.advanceweb.afc.jb.data.entities.MerJpBrandingTemp;
 import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 
 /**
@@ -25,31 +27,18 @@ import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
  */
 @Repository("brandingTemplateDAO")
 public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
-
-//	private HibernateTemplate hibernateTemplateTracker;
-//	
-//	@Autowired
-//	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
-//		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
-//	}
 	@Autowired
 	private BrandTemplateConversionHelper brandTemplateConversionHelper;
 
 	private static final Logger LOGGER = Logger
 			.getLogger(BrandingTemplateDAOImpl.class);
 
-//	@Autowired
-//	public void setHibernateTemplate(SessionFactory sessionFactory) {
-//		this.hibernateTemplateTracker = new HibernateTemplate(
-//				sessionFactory);
-//	}
-
-	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplateCareer;
 
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
 		this.hibernateTemplateCareer = new HibernateTemplate(sessionFactory);
 	}
 
@@ -58,27 +47,31 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BrandingTemplateDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO) {
-		List<BrandingTemplateDTO> templatesDTOs = null;
-
-//		try {
-//			int userId = merUserDTO.getUserId();
-//			if (userId != 0) {
-//				List<MerJpBrandingTemp> merJpBrandingTemp = hibernateTemplateTracker
-//						.find("from  MerJpBrandingTemp where userId = "
-//								+ userId);
-//				List<EmpBrandTempDTO> brandingTemplatesDTOs = new ArrayList<EmpBrandTempDTO>();
-//				for (MerJpBrandingTemp jpBrandingTemp : merJpBrandingTemp) {
-//					brandingTemplatesDTOs.add(empBrandTempConversionHelper
-//							.transformEmpTempToEmpTempDTO(jpBrandingTemp));
-//				}
-//				templatesDTOs = brandingTemplatesDTOs;
-//			}
-//		} catch (HibernateException e) {
-//			// logger call
-//			LOGGER.info("ERROR1");
-//		}
-		return templatesDTOs;
+	public List<BrandingTemplateDTO> getBrandingTemplate(int userId) {
+		List<BrandingTemplateDTO> templatesDTO = null;
+		try {
+			if (userId != 0) {
+				AdmUserRole userRole = (AdmUserRole) hibernateTemplateCareer
+						.find("from AdmUserRole a where a.id.userId=?", userId)
+						.get(0);
+				AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplateCareer
+						.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
+								userRole.getId().getUserId(),
+								userRole.getId().getRoleId()).get(0);
+				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
+						.find("from  JpTemplate where admFacility.facilityId=?",
+								userFacility.getAdmFacility().getFacilityId());
+				templatesDTO = new ArrayList<BrandingTemplateDTO>();
+				for (JpTemplate template : brandingTemplateList) {
+					templatesDTO.add(brandTemplateConversionHelper
+							.convertToBrandTemplateDTO(template));
+				}
+			}
+		} catch (HibernateException e) {
+			// logger call
+			LOGGER.info("ERROR1");
+		}
+		return templatesDTO;
 	}
 
 	/**
@@ -86,31 +79,33 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 */
 	@Override
 	public Boolean createEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-//		Boolean status = null;
-//		try {
-//			MerJpBrandingTemp merJpBrandingTemp = empBrandTempConversionHelper
-//					.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
-//			hibernateTemplateTracker.save(merJpBrandingTemp);
-//			status = Boolean.TRUE;
-//		} catch (HibernateException e) {
-//			status = Boolean.FALSE;
-//			// logger call
-//			LOGGER.info("ERROR2");
-//		}
-//		return status;
-//		
-		
+		// Boolean status = null;
+		// try {
+		// MerJpBrandingTemp merJpBrandingTemp = empBrandTempConversionHelper
+		// .transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
+		// hibernateTemplateTracker.save(merJpBrandingTemp);
+		// status = Boolean.TRUE;
+		// } catch (HibernateException e) {
+		// status = Boolean.FALSE;
+		// // logger call
+		// LOGGER.info("ERROR2");
+		// }
+		// return status;
+		//
+
 		Boolean status = null;
 		try {
 			JpTemplate jpBrandingTemp = brandTemplateConversionHelper
-					.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
-//			hibernateTemplateTracker.save(jpBrandingTemp);
+					.convertToJPTemplate(brandingTemplatesDTO);
+			// hibernateTemplateTracker.save(jpBrandingTemp);
 			hibernateTemplateCareer.save(jpBrandingTemp);
-			if(!brandingTemplatesDTO.getIsSilverCustomer())
-			{	
-				hibernateTemplateCareer.save(jpBrandingTemp.getJpTemplateMedias().get(0));
-				hibernateTemplateCareer.save(jpBrandingTemp.getJpTemplateMedias().get(1));
-				hibernateTemplateCareer.save(jpBrandingTemp.getJpTemplateTestimonials().get(0));
+			if (!brandingTemplatesDTO.getIsSilverCustomer()) {
+				hibernateTemplateCareer.save(jpBrandingTemp
+						.getJpTemplateMedias().get(0));
+				hibernateTemplateCareer.save(jpBrandingTemp
+						.getJpTemplateMedias().get(1));
+				hibernateTemplateCareer.save(jpBrandingTemp
+						.getJpTemplateTestimonials().get(0));
 			}
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
@@ -119,28 +114,29 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			LOGGER.info("ERROR2");
 		}
 		return status;
-		
-		
+
 	}
 
 	/**
 	 * View the job posting Branding Template.
 	 */
 	@Override
-	public BrandingTemplateDTO viewEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
+	public BrandingTemplateDTO viewEmpBrandTemp(
+			BrandingTemplateDTO brandingTemplatesDTO) {
 		BrandingTemplateDTO templatesDTO = null;
-//		try {
-//			long tempId = brandingTemplatesDTO.getJpBrandTempId();
-//			if (tempId != 0) {
-//				MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp) hibernateTemplateTracker
-//						.get(MerJpBrandingTemp.class, (int) tempId);
-//				templatesDTO = empBrandTempConversionHelper
-//						.transformEmpTempToEmpTempDTO(merJpBrandingTemp);
-//			}
-//		} catch (HibernateException e) {
-//			// logger call
-//			LOGGER.info("ERROR3");
-//		}
+		// try {
+		// long tempId = brandingTemplatesDTO.getJpBrandTempId();
+		// if (tempId != 0) {
+		// MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp)
+		// hibernateTemplateTracker
+		// .get(MerJpBrandingTemp.class, (int) tempId);
+		// templatesDTO = empBrandTempConversionHelper
+		// .transformEmpTempToEmpTempDTO(merJpBrandingTemp);
+		// }
+		// } catch (HibernateException e) {
+		// // logger call
+		// LOGGER.info("ERROR3");
+		// }
 		return templatesDTO;
 	}
 
@@ -148,55 +144,61 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 * Edit the job posting Branding Template.
 	 */
 	@Override
-	public BrandingTemplateDTO editEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-		BrandingTemplateDTO templatesDTO = null;
-//		try {
-//			/**
-//			 * Get the details of template
-//			 */
-//			long tempId = brandingTemplatesDTO.getJpBrandTempId();
-//			if (tempId != 0) {
-//				MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp) hibernateTemplateTracker
-//						.get(MerJpBrandingTemp.class, (int) tempId);
-//				templatesDTO = empBrandTempConversionHelper
-//						.transformEmpTempToEmpTempDTO(merJpBrandingTemp);
-//			}
-//			/**
-//			 * update the template
-//			 */
-//			MerJpBrandingTemp merJpBrandingTemp = empBrandTempConversionHelper
-//					.transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
-//			merJpBrandingTemp.setCreatedDate(templatesDTO.getCreatedDate());
-//			hibernateTemplateTracker.merge(merJpBrandingTemp);
-//			templatesDTO = empBrandTempConversionHelper
-//					.transformEmpTempToEmpTempDTO(merJpBrandingTemp);
-//		} catch (HibernateException e) {
-//			// logger call
-//			LOGGER.info("ERROR4");
-//		}
+	public BrandingTemplateDTO editBrandingTemplate(int templateId) {
+		BrandingTemplateDTO templatesDTO = new BrandingTemplateDTO();
+		try {
+			if (templateId != 0) {
+				JpTemplate template = (JpTemplate) hibernateTemplateCareer.get(
+						JpTemplate.class, templateId);
+				templatesDTO = brandTemplateConversionHelper
+						.convertToBrandTemplateDTO(template);
+			}
+		} catch (HibernateException e) {
+			// logger call
+			LOGGER.info("ERROR4");
+		}
 		return templatesDTO;
 	}
 
 	/**
-	 * Delete the job posting Branding Template.
+	 * update the delete_dt column for the corresponding job posting Branding
+	 * Template.
 	 */
 	@Override
-	public Boolean deleteEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-		Boolean status = null;
+	public boolean deleteBrandingTemplate(int templateId) {
+		boolean status = false;
 		try {
-			long tempId = brandingTemplatesDTO.getJpBrandTempId();
-			if (tempId != 0) {
-				MerJpBrandingTemp merJpBrandingTemp = (MerJpBrandingTemp) hibernateTemplateTracker
-						.get(MerJpBrandingTemp.class, (int) tempId);
-				hibernateTemplateTracker.delete(merJpBrandingTemp);
-				status = Boolean.TRUE;
+			if (templateId != 0) {
+				JpTemplate template = hibernateTemplateCareer.get(
+						JpTemplate.class, templateId);
+				template.setDeleteDt(new Date());
+				hibernateTemplateCareer.update(template);
+				status = true;
 			}
 		} catch (HibernateException e) {
-			status = Boolean.FALSE;
+			status = false;
 			// logger call
 			LOGGER.info("ERROR5");
 		}
 		return status;
+	}
+
+	/**
+	 * update the job posting Branding Template.
+	 */
+	@Override
+	public boolean updateBrandingTemplate(
+			BrandingTemplateDTO brandingTemplatesDTO) {
+		JpTemplate template = hibernateTemplateCareer.load(JpTemplate.class,
+				brandingTemplatesDTO.getJpBrandTempId());
+		template.setColorPalette(brandingTemplatesDTO.getColor());
+		template.setCompanyOverview(brandingTemplatesDTO.getCompanyOverview());
+		template.setCreateDt(brandingTemplatesDTO.getCreatedDate());
+		template.setTemplateName(brandingTemplatesDTO.getTemplateName());
+		template.setMainImagePath(brandingTemplatesDTO.getMainImagePath());
+		template.setLogoPath(brandingTemplatesDTO.getLogoPath());
+		hibernateTemplateCareer.update(template);
+		return true;
 	}
 
 }
