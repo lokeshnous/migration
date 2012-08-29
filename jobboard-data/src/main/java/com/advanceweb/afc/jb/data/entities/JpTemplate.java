@@ -31,6 +31,10 @@ public class JpTemplate implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
 	private Date createDt;
+    
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="delete_dt")
+	private Date deleteDt;
 
 //    MUST be changed to JoinColumn
     	
@@ -70,8 +74,17 @@ public class JpTemplate implements Serializable {
 //    public JpTemplate() {
 //    }
 
+	
 	public int getTemplateId() {
 		return this.templateId;
+	}
+
+	public Date getDeleteDt() {
+		return deleteDt;
+	}
+
+	public void setDeleteDt(Date deleteDt) {
+		this.deleteDt = deleteDt;
 	}
 
 	public void setTemplateId(int templateId) {
