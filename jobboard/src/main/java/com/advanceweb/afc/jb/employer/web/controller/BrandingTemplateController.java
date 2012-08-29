@@ -55,7 +55,7 @@ public class BrandingTemplateController {
 	private BrandingTemplateService brandingTemplateService;
 
 	@Autowired
-	private TransformEmpoyerBrandTemplate transformEmpoyerBrandTemplate;
+	private TransformEmployerBrandTemplate transformEmpoyerBrandTemplate;
 
 	@Autowired
 	private BrandingTemplateValidation brandingTemplateValidation;
