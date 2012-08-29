@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import antlr.StringUtils;
+
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -298,10 +300,23 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
-			int userId) {List<JpJob> jobs = hibernateTemplate
-			.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-					+ userId +" and a.jobStatus = '"+jobStatus+ "' and a.deleteDt is NULL");
-	return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+ int userId) {
+		List<JpJob> jobs = new ArrayList<JpJob>();
+		if (null != jobStatus
+				&& jobStatus.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
+			jobs = hibernateTemplate
+					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							+ userId
+							+ " and a.active = 1 and a.deleteDt is NULL");
+		} else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
+			jobs = hibernateTemplate
+					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							+ userId
+							+ " and a.active = 0 and a.deleteDt is NULL");
+		}
+		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 	}
 	
 }
