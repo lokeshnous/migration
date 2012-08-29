@@ -243,9 +243,10 @@ public class JobPostController {
 		return model;
 	}
 	/**
-	 * This method is called to fetch the resume data to edit
-	 * @param createResume
-	 * @param resumeId
+	 * This method is called to fetch the job data to edit
+	 * @param request
+	 * @param jobPostform
+	 * @param jobId
 	 * @return model
 	 */
 	@RequestMapping(value = "/editJob", method = RequestMethod.GET)
@@ -312,11 +313,11 @@ public class JobPostController {
 	}
 
 	/**
-	 * This method is called to display resume list belonging to a logged in
-	 * jobSeeker
-	 * 
-	 * @param model
-	 * @param map
+	 * This method is called to display jobs list belonging to a logged in
+	 * employer
+	 * @param request
+	 * @param session
+	 * @param jobPostform
 	 * @return
 	 */
 	@RequestMapping(value = "/manageJobPost")
@@ -325,6 +326,17 @@ public class JobPostController {
 		ModelAndView model = new ModelAndView();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
 		String jobStatus = request.getParameter("jobStatus");
+		DropDownDTO dto = new DropDownDTO();
+		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
+		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
+		
+		DropDownDTO downDTO = new DropDownDTO();
+		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
+		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
+		
+		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
+		autoRenewList.add(dto);
+		autoRenewList.add(downDTO);
 		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			if (null == jobStatus || jobStatus.isEmpty()) {
 				postedJobList = employerJobPost
@@ -344,17 +356,7 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		jobPostform.setJobPostDTOList(postedJobList);
-		DropDownDTO dto = new DropDownDTO();
-		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
-		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
 		
-		DropDownDTO downDTO = new DropDownDTO();
-		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
-		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
-		
-		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
-		autoRenewList.add(dto);
-		autoRenewList.add(downDTO);
 		
 		model.addObject("jobPostForm", jobPostform);
 		model.addObject("templateList", templateList);
@@ -366,10 +368,12 @@ public class JobPostController {
 		return model;
 	}
 	/**
-	 * This method is called to delete job(s)
-	 * 
-	 * @param resumeId
-	 * @return deleteStatusJson
+	 *  Method is used to delete selected job
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param jobPostform
+	 * @return
 	 */
 	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST,params="DELETE")
 	public @ResponseBody
@@ -377,22 +381,32 @@ public class JobPostController {
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
 		int jobId=0;
+		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
 		model.addObject("jobPostForm", jobPostform);
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
-			 employerJobPost
+			boolean result= employerJobPost
 					.deleteJob(jobId, (Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));			
+							.getAttribute(MMJBCommonConstants.USER_ID));
+			if(result==false){
+				errorMsg="Only inactive and expired  jobs can be deleted";
+			}
+		}
+		if(null == errorMsg){
+			errorMsg="Jobs deleted Successfully";
 		}
 	 return new ModelAndView("forward:/employer/manageJobPost.html");
 	}
 	/**
-	 * This method is called to delete job(s)
-	 * 
-	 * @param resumeId
-	 * @return deleteStatusJson
+	 * Method is called to update the job details
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param jobPostform
+	 * @param jobId
+	 * @return
 	 */
 	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST)
 	public @ResponseBody
@@ -419,9 +433,11 @@ public class JobPostController {
 	}
 	/**
 	 * This method is called to deactivate job(s)
-	 * 
-	 * @param resumeId
-	 * @return deleteStatusJson
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param jobPostform
+	 * @return
 	 */
 	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST,params="DEACTIVATED")
 	public @ResponseBody
@@ -447,10 +463,12 @@ public class JobPostController {
 	 return model;
 	}
 	/**
-	 * This method is called to Repost job(s)
-	 * 
-	 * @param resumeId
-	 * @return deleteStatusJson
+	 *  This method is called to Repost job(s)
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param jobPostform
+	 * @return
 	 */
 	@RequestMapping(value = "/updateJobs", method = RequestMethod.POST,params="REPOST")
 	public @ResponseBody
@@ -458,16 +476,25 @@ public class JobPostController {
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
 		int jobId=0;
+		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
 		model.addObject("jobPostForm", jobPostform);
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
-			 employerJobPost
+			boolean result= employerJobPost
 					.repostJob(jobId, (Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));			
+							.getAttribute(MMJBCommonConstants.USER_ID));	
+			System.out.println("HI" + result);
+			if(result==false){
+				errorMsg="Only inactive and expired  jobs can be reposted";
+			}
+			
 		}
-	 return new ModelAndView("forward:/employer/manageJobPost.html");
+		//model.addObject("valiedJobId",valiedJobId);
+		model.addObject("errorMessage", errorMsg);
+		model.setViewName("forward:/employer/manageJobPost.html");
+	 return model;
 	}
 	
 }
