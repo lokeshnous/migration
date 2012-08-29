@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.employer.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
 
 /**
  * <code>EmpBrandTemp</code>This interface help to manage job posting Branding
@@ -22,7 +21,7 @@ public interface BrandingTemplateService {
 	 * @param merUserDTO
 	 * @return
 	 */
-	List<BrandingTemplateDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO);
+	List<BrandingTemplateDTO> getBrandingTemplate(int userId);
 
 	/**
 	 * Create the job posting Branding Template.
@@ -38,7 +37,8 @@ public interface BrandingTemplateService {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	BrandingTemplateDTO viewEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO);
+	BrandingTemplateDTO viewEmpBrandTemp(
+			BrandingTemplateDTO brandingTemplatesDTO);
 
 	/**
 	 * Edit the job posting Branding Template.
@@ -46,7 +46,15 @@ public interface BrandingTemplateService {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	BrandingTemplateDTO editEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO);
+	BrandingTemplateDTO editBrandingTemplate(int templateId);
+
+	/**
+	 * Update the job posting Branding Template.
+	 * 
+	 * @param brandingTemplatesDTO
+	 * @return <true> if successfully updated otherwise <false>
+	 */
+	boolean updateBrandingTemplate(BrandingTemplateDTO brandingTemplatesDTO);
 
 	/**
 	 * Delete the job posting Branding Template.
@@ -54,6 +62,6 @@ public interface BrandingTemplateService {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	Boolean deleteEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO);
+	boolean deleteBrandingTemplate(int templateId);
 
 }

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
@@ -31,12 +30,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Fetch the job posting Branding Templates
 	 */
 	@Override
-	public List<BrandingTemplateDTO> fetchEmpBrandTemp(MerUserDTO merUserDTO) {
-		List<BrandingTemplateDTO> templatesDTOs = brandingTemplateDAO
-				.fetchEmpBrandTemp(merUserDTO);
-		return templatesDTOs;
+	public List<BrandingTemplateDTO> getBrandingTemplate(int userId) {
+		return brandingTemplateDAO.getBrandingTemplate(userId);
 	}
-
 	/**
 	 * Create the job posting Branding Template.
 	 */
@@ -62,21 +58,23 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Edit the job posting Branding Template.
 	 */
 	@Override
-	public BrandingTemplateDTO editEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-		BrandingTemplateDTO empBrandTempDTO = null;
-		empBrandTempDTO = brandingTemplateDAO
-				.editEmpBrandTemp(brandingTemplatesDTO);
-		return empBrandTempDTO;
+	public BrandingTemplateDTO editBrandingTemplate(int templateId) {
+		return brandingTemplateDAO.editBrandingTemplate(templateId);
 	}
-
+	
+	/**
+	 * Update the job posting Branding Template.
+	 */
+	@Override
+	public boolean updateBrandingTemplate(BrandingTemplateDTO brandingTemplatesDTO){
+		return brandingTemplateDAO.updateBrandingTemplate(brandingTemplatesDTO);
+	}
 	/**
 	 * Delete the job posting Branding Template.
 	 */
 	@Override
-	public Boolean deleteEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-		Boolean status = null;
-		status = brandingTemplateDAO.deleteEmpBrandTemp(brandingTemplatesDTO);
-		return status;
+	public boolean deleteBrandingTemplate(int templateId) {
+		return brandingTemplateDAO.deleteBrandingTemplate(templateId);
 	}
 
 }
