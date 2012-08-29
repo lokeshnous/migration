@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -142,7 +143,15 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		return true;
 	}
-
+ 
+	/**
+	 * @Author :devi mishra
+	   @Purpose:This method is called to retrieve all posted job
+	   @Created:Aug 29, 2012
+	   @Param  :employerId
+	   @Return :List<JobPostDTO>
+	 *
+	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobPost(int employerId) {
 		List<JpJob> jobs = hibernateTemplate
@@ -151,7 +160,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
-
+	/**
+	 * @Author :devi mishra
+	   @Purpose:This method is called to retrieve job as per the selected job id
+	   @Created:Aug 29, 2012
+	   @Param  :jobid
+	   @Return :JobPostDTO
+	 *
+	 */
 	@Override
 	public JobPostDTO editJob(int jobId) {
 		JobPostDTO dto = new JobPostDTO();
@@ -178,16 +194,21 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != job.getJobStatus()
-				&& (job.getJobStatus().equalsIgnoreCase(
-						MMJBCommonConstants.POST_JOB_EXPIRED) || job
-						.getJobStatus().equalsIgnoreCase(
-								MMJBCommonConstants.POST_JOB_INACTIVE))) {
-			// System deletes the job postings which are in “Expired” status
-			job.setDeleteDt(new Timestamp(new Date().getTime()));
-			hibernateTemplate.save(job);
-		}
-		return true;
+          boolean bDelete=false;
+		if (null != job.getEndDt() && null != job.getStartDt()) {
+			int compareEndDate = job.getEndDt().compareTo(new Date());
+			if ((job.getActive() == 1 && compareEndDate < 0) || (job
+							.getActive()==MMJBCommonConstants.INACTIVE)) {
+				// System deletes the job postings which are in "inactive" or “Expired” status
+				job.setDeleteDt(new Timestamp(new Date().getTime()));
+				hibernateTemplate.save(job);
+				bDelete=true;
+			}
+			else {
+				bDelete= false;
+			}
+		} 
+		return bDelete;
 	}
 	/**
 	 * This method is called to update the Job
@@ -223,20 +244,24 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	public boolean deactivateJob(int jobId, int userId) {
+		boolean bDeactivate = false;
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != job.getJobStatus() && job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
-			// System should deactivate the job posting which are in “Active” status
-			job.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
+
+		if (job.getActive() == MMJBCommonConstants.ACTIVE) {
+			// System should deactivate the job posting which are in
+			// “Active”
+			// status
+			job.setActive(MMJBCommonConstants.INACTIVE);
 			hibernateTemplate.save(job);
-			return true;
+			bDeactivate = true;
+		} else {
+			bDeactivate = false;
 		}
-		else {
-			return false;
-		}
-		
+
+		return bDeactivate;
 	}
 	/**
-	 * This method is called to delete the Job
+	 * This method is called to repost the Job
 	 * 
 	 * @param jobId
 	 * @param userId
@@ -245,19 +270,32 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean repostJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		if (null != job.getJobStatus() && (job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)||
-				job.getJobStatus().equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED))) {
-			// Repost the inactive job and extend the end date to one month
-			Calendar now = Calendar.getInstance();
-			now.setTime(job.getEndDt());
-			now.add(Calendar.DAY_OF_MONTH,30);
-			job.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
-			job.setEndDt(now.getTime());
-			hibernateTemplate.save(job);
+		boolean bRepost = false;
+		if (null != job.getEndDt() && null != job.getStartDt()) {
+			int compareEndDate = job.getEndDt().compareTo(new Date());
+			if ((job.getActive() == 1 && compareEndDate < 0 )|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+				// Repost the inactive and expired job and extend the end date to one month
+				Calendar now = Calendar.getInstance();
+				now.setTime(job.getEndDt());
+				now.add(Calendar.DAY_OF_MONTH, 30);
+				job.setActive(MMJBCommonConstants.ACTIVE);
+				job.setEndDt(now.getTime());
+				hibernateTemplate.save(job);
+				bRepost = true;
+			} else {
+				bRepost = false;
+			}
 		}
-		return true;
+		return bRepost;
 	}
-
+	/**
+	 * @Author :devi mishra
+	   @Purpose:This method is called to retrieve all posted job by Status
+	   @Created:Aug 29, 2012
+	   @Param  :employerId
+	   @Return :List<JobPostDTO>
+	 *
+	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
 			int userId) {List<JpJob> jobs = hibernateTemplate
