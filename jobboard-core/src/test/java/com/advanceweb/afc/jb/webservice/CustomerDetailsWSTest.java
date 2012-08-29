@@ -1,12 +1,5 @@
 package com.advanceweb.afc.jb.webservice;
 
-/*import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.util.Assert;
-import org.springframework.web.client.RestTemplate;*/
-
 import java.io.IOException;
 import java.io.InputStream;
 import javax.ws.rs.core.Response;
@@ -37,8 +30,9 @@ public class CustomerDetailsWSTest extends ServiceTest{
 	public String getCustomerDetails(){
 		
 		WebClient client = WebClient.create("https://rest.netsuite.com/app/site/hosting/restlet.nl?script=65&deploy=1");
-		client.replaceHeader("Authorization","NLAuth nlauth_account=TSTDRV617993, nlauth_email=dharmarajns@nous.soft.net, nlauth_signature=dharma123, nlauth_role=3");
-        Response response = client.accept("application/json").type("application/json").get();
+		client.header("Authorization", "NLAuth nlauth_account=TSTDRV617993, nlauth_email=dharmarajns@nous.soft.net, nlauth_signature=dharma123, nlauth_role=3");
+		client.header("Content-Type", "application/json");
+        Response response = client.get();
         String jsonResponseString= null;
 
         try {
@@ -61,8 +55,9 @@ public class CustomerDetailsWSTest extends ServiceTest{
 	public String authorizeUser(){
 		
 		WebClient client = WebClient.create("https://rest.netsuite.com/app/site/hosting/restlet.nl?script=85&deploy=1");
-		client.replaceHeader("Authorization","NLAuth nlauth_account=TSTDRV617993, nlauth_email=dharmarajns@nous.soft.net, nlauth_signature=dharma123, nlauth_role=3");
-        Response response = client.accept("application/json").type("application/json").get();
+		client.header("Authorization", "NLAuth nlauth_account=TSTDRV617993, nlauth_email=dharmarajns@nous.soft.net, nlauth_signature=dharma123, nlauth_role=3");
+		client.header("Content-Type", "application/json");
+        Response response = client.get();
         String jsonResponseString= null;
 
         try {
