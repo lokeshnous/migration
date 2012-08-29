@@ -10,36 +10,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<!-- STYLESHEETS -->
-<!-- 
-<link href="stylesheets/JB.css" rel="stylesheet" type="text/css" />
-<link href="stylesheets/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="stylesheets/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
-[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]
-
-
-JAVASCRIPT FILES
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="javascripts/slider.js"></script>
-<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document).ready(
-			function() {
-				$("#changePassword").displaypopup("#changePassword", "780",
-						"370");
-				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
-						"770", "360");
-				jQuery(".megamenu").megamenu();
-			});
+	jQuery(document).ready(function() {
+		$("#changePassword").displaypopup("#changePassword", "780", "370");
+		 $("#accountSettingpopUp").displaypopup("#accountSettingpopUp","770","360");
+		jQuery(".megamenu").megamenu();
+		$("#manageBrandingTemplatePopup").displaypopup("#manageBrandingTemplatePopup",
+					"775", "252");
+	});
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -117,7 +97,7 @@ JAVASCRIPT FILES
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="">Manage Job Posting Branding Templates</a>
+								<a href="<%=request.getContextPath()%>/brandingTemplates/employer/manageBrandingTemplate.html" id="manageBrandingTemplatePopup">Manage Job Posting Branding Templates</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
