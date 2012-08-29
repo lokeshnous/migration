@@ -194,15 +194,4 @@
 	
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 	
-	
-	<util:properties id="solrConfiguration" location="classpath:solrConfiguration.properties" />
-	
-	<!-- For SOLR search -->
-	<bean id="solrParameter" class="com.advanceweb.afc.jb.common.util.SolrParameter">
-		<property name="searchIndexName" value="jobPost" />
-		<property name="searchIndexGroup" value="careers" />
-		<property name="environment" value="DEV" />
-	</bean>
-	
-	
 </beans>
