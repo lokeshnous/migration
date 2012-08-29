@@ -44,6 +44,7 @@
 			//Date picker
 	    	$(function() {
 	    		$( ".datepicker" ).datepicker({
+	    			 minDate: 0,
 	    			onSelect: function(dateText, inst) { 
 	    				 var datepicker = $("#startDate").val();
 	    		            var joindate = new Date(datepicker);
