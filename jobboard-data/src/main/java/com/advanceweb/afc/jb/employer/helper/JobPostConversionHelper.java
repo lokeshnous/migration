@@ -69,6 +69,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 }
 		 
 		 jpJob.setAdmFacility(admFacility);
+		 jpJob.setActive((byte)(dto.isbActive()?1:0));
 		 
 		 return jpJob;
 	 }

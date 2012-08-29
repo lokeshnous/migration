@@ -43,9 +43,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
-	
 
-	
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
 	

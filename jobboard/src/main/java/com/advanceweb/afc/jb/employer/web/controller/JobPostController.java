@@ -113,6 +113,7 @@ public class JobPostController {
 		}
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto=transformJobPost.jobPostFormToJobPostDTO(form);
+		dto.setbActive(true);
 		dto.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName("forward:/employer/manageJobPost.html");

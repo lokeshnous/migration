@@ -60,6 +60,9 @@ public class JobPostDTO implements Serializable {
 
 	private String selectedRow;
     private boolean readOnly= false;
+    
+    private boolean bActive;
+    
 	public int getJobId() {
 		return jobId;
 	}
@@ -424,6 +427,14 @@ public class JobPostDTO implements Serializable {
 
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	public boolean isbActive() {
+		return bActive;
+	}
+
+	public void setbActive(boolean bActive) {
+		this.bActive = bActive;
 	}
 
 		
