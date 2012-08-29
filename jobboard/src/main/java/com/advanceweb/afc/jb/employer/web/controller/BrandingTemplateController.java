@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,37 +50,18 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 @SessionAttributes("brandingTemplateForm")
 @SuppressWarnings("rawtypes")
 public class BrandingTemplateController {
-	
+
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
-	
+
 	@Autowired
-	private TransformEmpoyerBrandTemp transformEmpoyerBrandTemp;
+	private TransformEmpoyerBrandTemplate transformEmpoyerBrandTemplate;
 
 	@Autowired
 	private BrandingTemplateValidation brandingTemplateValidation;
-	
+
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
-	
-	/**
-	 * The method is called to fetch the job posting Branding Templates
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/manageBrandingTemplate", method = RequestMethod.GET)
-	public ModelAndView fetchEmpBrandTemp(Map<String, Object> model) {
-
-//		MerUserDTO merUserDTO = new MerUserDTO();
-//		merUserDTO.setUserId(36);
-//		List<EmpBrandTempDTO> empBrandTempDTOs = empBrandTemp
-//				.fetchEmpBrandTemp(merUserDTO);
-//		
-//		model.put("templatesList", empBrandTempDTOs);
-
-		return new ModelAndView("manageBrandingTemplatePopup");
-	}
 
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -89,48 +70,49 @@ public class BrandingTemplateController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params="Save")
-	public ModelAndView createEmpBrandTemp( @ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm, 
-			BindingResult result, HttpSession session) 
-	{
+	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.GET, params = "Save")
+	public ModelAndView createEmpBrandTemp(
+			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm,
+			BindingResult result, HttpSession session) {
 		Boolean status = null;
 		BrandingTemplateDTO empBrandTempDTO = new BrandingTemplateDTO();
 		ModelAndView model = new ModelAndView();
-		
-//		facility id will be available in session. Similarly take user id.
-//		session.getAttribute(MMJBCommonConstants.FACILITY_ID)
-		
-//		Verify if the employer is of Siver caegory
+
+		// facility id will be available in session. Similarly take user id.
+		// session.getAttribute(MMJBCommonConstants.FACILITY_ID)
+
+		// Verify if the employer is of Siver caegory
 		brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
-		
-//		Modify the names of media files to save on File server
+
+		// Modify the names of media files to save on File server
 		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
 
-//		Validate the form data
+		// Validate the form data
 		brandingTemplateValidation.validate(brandingTemplateForm, result);
-		
-		if(result.hasErrors()){
+
+		if (result.hasErrors()) {
 			model.setViewName("createBrandingTemplate");
 			return model;
 		}
 
-//		Upload the media files to File server
-		status=uploadMedia(brandingTemplateForm);
-		if(!status)
-		{
-			result.rejectValue("logoFileData", "NotEmpty", "An error occured while saving the file");
+		// Upload the media files to File server
+		status = uploadMedia(brandingTemplateForm);
+		if (!status) {
+			result.rejectValue("logoFileData", "NotEmpty",
+					"An error occured while saving the file");
 			model.setViewName("createBrandingTemplate");
-			status=null;
+			status = null;
 			return model;
 		}
-		
-//		Transform form data to DTO
-		empBrandTempDTO = transformEmpoyerBrandTemp.createEmpBrandTempDTO(brandingTemplateForm);
 
-		model.addObject("brandingTemplateForm",brandingTemplateForm);
+		// Transform form data to DTO
+		empBrandTempDTO = transformEmpoyerBrandTemplate
+				.createEmpBrandTempDTO(brandingTemplateForm);
+
+		model.addObject("brandingTemplateForm", brandingTemplateForm);
 		model.setViewName("manageBrandingTemplatePopup");
-		
-//		Call to service layer and DAO		
+
+		// Call to service layer and DAO
 		status = brandingTemplateService.createEmpBrandTemp(empBrandTempDTO);
 		if (status) {
 
@@ -138,93 +120,93 @@ public class BrandingTemplateController {
 		}
 
 		return model;
-		
+
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params="Preview")
-	public ModelAndView previewEmpBrandTemp( @ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm, 
-			BindingResult result, HttpSession session, HttpServletRequest request, HttpServletResponse response) 
-	{
+	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.GET)
+	public ModelAndView previewEmpBrandTemp(
+			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm,
+			BindingResult result, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 		Boolean status = null;
 		ModelAndView model = new ModelAndView();
-		
-//		Verify if the employer is of Siver caegory
+
+		// Verify if the employer is of Siver caegory
 		brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
-		
-//		Modify the names of media files to save on File server
+
+		// Modify the names of media files to save on File server
 		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
 
-//		Validate the form data
+		// Validate the form data
 		brandingTemplateValidation.validate(brandingTemplateForm, result);
-		
-		if(result.hasErrors()){
+
+		if (result.hasErrors()) {
 			model.setViewName("createBrandingTemplate");
 			return model;
 		}
 
-//		Upload the media files to File server
-		status=uploadMedia(brandingTemplateForm);
-		if(!status)
-		{
-			result.rejectValue("logoFileData", "NotEmpty", "An error occured while saving the file");
+		// Upload the media files to File server
+		status = uploadMedia(brandingTemplateForm);
+		if (!status) {
+			result.rejectValue("logoFileData", "NotEmpty",
+					"An error occured while saving the file");
 			model.setViewName("createBrandingTemplate");
-			status=null;
+			status = null;
 			return model;
 		}
-		
-		if (brandingTemplateForm.getIsSilverCustomer()) 
-		{
+
+		if (brandingTemplateForm.getIsSilverCustomer()) {
 			model.setViewName("brandTemplateSilverPreview");
-		}
-		else 
-		{
+		} else {
 			model.setViewName("brandTemplateGoldPreview");
 		}
-		
-		
-//		BrandingTemplateForm btf = (BrandingTemplateForm)session.getAttribute("brandingTemplateForm");
-//		System.out.println("SESSION ATTRIBUTE->"+btf.getLogoPath());
-//		request.setAttribute("logoImageSource", brandingTemplateForm.getLogoPath());
-		
-//		try{
-//			BufferedImage originalImage = 
-//					ImageIO.read(new File(brandingTemplateForm.getLogoPath()));
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			ImageIO.write( originalImage, "jpg", baos );
-//			baos.flush();
-//			byte[] imageInByte = baos.toByteArray();
-//			baos.close();
-//
-//			ResponseEntity<byte[]> result2 =handleGetMyBytesRequest(imageInByte); 
-//			// Display the image
-//			write(response, result2.getBody());
-//			
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-		
-		
+
+		// BrandingTemplateForm btf =
+		// (BrandingTemplateForm)session.getAttribute("brandingTemplateForm");
+		// System.out.println("SESSION ATTRIBUTE->"+btf.getLogoPath());
+		// request.setAttribute("logoImageSource",
+		// brandingTemplateForm.getLogoPath());
+
+		// try{
+		// BufferedImage originalImage =
+		// ImageIO.read(new File(brandingTemplateForm.getLogoPath()));
+		// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		// ImageIO.write( originalImage, "jpg", baos );
+		// baos.flush();
+		// byte[] imageInByte = baos.toByteArray();
+		// baos.close();
+		//
+		// ResponseEntity<byte[]> result2 =handleGetMyBytesRequest(imageInByte);
+		// // Display the image
+		// write(response, result2.getBody());
+		//
+		// }catch(Exception e){
+		// e.printStackTrace();
+		// }
+
 		return model;
 	}
-	
-	
+
 	@RequestMapping("/viewImage")
-	public void getPhoto(@RequestParam("id") String imageId, HttpServletResponse response,HttpServletRequest request, BrandingTemplateForm brandingTemplateForm) {
-		
-		try{
-			BufferedImage originalImage = 
-					ImageIO.read(new File(imageId));
+	public void getPhoto(@RequestParam("id") String imageId,
+			HttpServletResponse response, HttpServletRequest request,
+			BrandingTemplateForm brandingTemplateForm) {
+
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(imageId));
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write( originalImage, imageId.substring(imageId.length()-3, imageId.length()), baos );
+			ImageIO.write(originalImage,
+					imageId.substring(imageId.length() - 3, imageId.length()),
+					baos);
 			baos.flush();
 			byte[] imageInByte = baos.toByteArray();
 			baos.close();
 
-			ResponseEntity<byte[]> result =handleGetMyBytesRequest(imageInByte); 
+			ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
 			// Display the image
 			write(response, result.getBody());
-		}catch(Exception e){
+		} catch (Exception e) {
 
 		}
 	}
@@ -232,7 +214,7 @@ public class BrandingTemplateController {
 	/**
 	 * Writes the report to the output stream
 	 */
-	public  void write(HttpServletResponse response, byte[] byteArray) {
+	public void write(HttpServletResponse response, byte[] byteArray) {
 
 		try {
 			// Retrieve the output stream
@@ -247,102 +229,115 @@ public class BrandingTemplateController {
 		} catch (Exception e) {
 		}
 	}
-	
-	public ResponseEntity< byte[] > handleGetMyBytesRequest(byte[] imageInByte)
-	{
+
+	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
 		// Get bytes from somewhere...
 		byte[] byteData = imageInByte;
 
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.setContentType( MediaType.IMAGE_PNG );
-		responseHeaders.setContentLength( byteData.length );
+		responseHeaders.setContentType(MediaType.IMAGE_PNG);
+		responseHeaders.setContentLength(byteData.length);
 
-		return new ResponseEntity< byte[] >( byteData, responseHeaders, HttpStatus.OK );
+		return new ResponseEntity<byte[]>(byteData, responseHeaders,
+				HttpStatus.OK);
 	}
-	
-	
+
 	/**
 	 * The method is is used to create unique media file names.
 	 * 
 	 * @param brandingTemplateForm
 	 * @return brandingTemplateForm
 	 */
-	public BrandingTemplateForm modifyMediaName(BrandingTemplateForm brandingTemplateForm)
-	{
-		String logoOrigName=null;
-		String mainImageOrigName=null;
-		String logoModifiedName=null;
-		String mainImageModifiedName=null;
-		
-		String addImageOrigName=null;
-		String videoOrigName=null;
-		String addImageModifiedName=null;
-		String videoModifiedName=null;
-		
-		
+	public BrandingTemplateForm modifyMediaName(
+			BrandingTemplateForm brandingTemplateForm) {
+		String logoOrigName = null;
+		String mainImageOrigName = null;
+		String logoModifiedName = null;
+		String mainImageModifiedName = null;
+
+		String addImageOrigName = null;
+		String videoOrigName = null;
+		String addImageModifiedName = null;
+		String videoModifiedName = null;
+
 		Random random = new Random();
-		
-//		MultipartFile logoFile = brandingTemplateForm.getLogoFileData()
-//		MultipartFile mainImageFile = brandingTemplateForm.getMainImageFileData();
-				
-		logoOrigName=brandingTemplateForm.getLogoFileData().getOriginalFilename();
-		mainImageOrigName=brandingTemplateForm.getMainImageFileData().getOriginalFilename();
-		
-		logoModifiedName = "Template_"+random.nextInt(10000)+"_"+logoOrigName;
-		mainImageModifiedName = "Template_"+random.nextInt(10000)+"_"+mainImageOrigName;
-		
-		brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia+logoModifiedName);
-		brandingTemplateForm.setMainImagePath(baseDirectoryPathImageAndMedia+mainImageModifiedName);
-		
-//		Only for Multi media section
-		if(!brandingTemplateForm.getIsSilverCustomer())
-		{
-			addImageOrigName=brandingTemplateForm.getAddImageFileData().getOriginalFilename();
-			videoOrigName=brandingTemplateForm.getVideoFileData().getOriginalFilename();
-			
-			addImageModifiedName = "Template_"+random.nextInt(10000)+"_"+addImageOrigName;
-			videoModifiedName = "Template_"+random.nextInt(10000)+"_"+videoOrigName;
-			
-			brandingTemplateForm.setAddImagePath(baseDirectoryPathImageAndMedia+addImageModifiedName);
-			brandingTemplateForm.setVideoPath(baseDirectoryPathImageAndMedia+videoModifiedName);
+
+		// MultipartFile logoFile = brandingTemplateForm.getLogoFileData()
+		// MultipartFile mainImageFile =
+		// brandingTemplateForm.getMainImageFileData();
+
+		logoOrigName = brandingTemplateForm.getLogoFileData()
+				.getOriginalFilename();
+		mainImageOrigName = brandingTemplateForm.getMainImageFileData()
+				.getOriginalFilename();
+
+		logoModifiedName = "Template_" + random.nextInt(10000) + "_"
+				+ logoOrigName;
+		mainImageModifiedName = "Template_" + random.nextInt(10000) + "_"
+				+ mainImageOrigName;
+
+		brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia
+				+ logoModifiedName);
+		brandingTemplateForm.setMainImagePath(baseDirectoryPathImageAndMedia
+				+ mainImageModifiedName);
+
+		// Only for Multi media section
+		if (!brandingTemplateForm.getIsSilverCustomer()) {
+			addImageOrigName = brandingTemplateForm.getAddImageFileData()
+					.getOriginalFilename();
+			videoOrigName = brandingTemplateForm.getVideoFileData()
+					.getOriginalFilename();
+
+			addImageModifiedName = "Template_" + random.nextInt(10000) + "_"
+					+ addImageOrigName;
+			videoModifiedName = "Template_" + random.nextInt(10000) + "_"
+					+ videoOrigName;
+
+			brandingTemplateForm.setAddImagePath(baseDirectoryPathImageAndMedia
+					+ addImageModifiedName);
+			brandingTemplateForm.setVideoPath(baseDirectoryPathImageAndMedia
+					+ videoModifiedName);
 		}
-		
+
 		return brandingTemplateForm;
-		
+
 	}
-	
-	
+
 	/**
 	 * The method is is used to upload the media file to file server.
 	 * 
 	 * @param brandingTemplateForm
 	 * @return Boolean
 	 */
-	public Boolean uploadMedia(BrandingTemplateForm brandingTemplateForm)
-	{
-		Boolean status=null;
+	public Boolean uploadMedia(BrandingTemplateForm brandingTemplateForm) {
+		Boolean status = null;
 		File logoFileDest = new File(brandingTemplateForm.getLogoPath());
-		File mainImageFileDest = new File(brandingTemplateForm.getMainImagePath());
+		File mainImageFileDest = new File(
+				brandingTemplateForm.getMainImagePath());
 		try {
-			
+
 			MultipartFile logoFile = brandingTemplateForm.getLogoFileData();
-			MultipartFile mainImageFile = brandingTemplateForm.getMainImageFileData();
+			MultipartFile mainImageFile = brandingTemplateForm
+					.getMainImageFileData();
 			logoFile.transferTo(logoFileDest);
 			mainImageFile.transferTo(mainImageFileDest);
-			
-			if(!brandingTemplateForm.getIsSilverCustomer())
-			{
-				File addImageFileDest = new File(brandingTemplateForm.getAddImagePath());
-				File videoFileDest = new File(brandingTemplateForm.getVideoPath());
-			
-				MultipartFile addImageFile = brandingTemplateForm.getAddImageFileData();
-				MultipartFile videoFile = brandingTemplateForm.getVideoFileData();
+
+			if (!brandingTemplateForm.getIsSilverCustomer()) {
+				File addImageFileDest = new File(
+						brandingTemplateForm.getAddImagePath());
+				File videoFileDest = new File(
+						brandingTemplateForm.getVideoPath());
+
+				MultipartFile addImageFile = brandingTemplateForm
+						.getAddImageFileData();
+				MultipartFile videoFile = brandingTemplateForm
+						.getVideoFileData();
 				addImageFile.transferTo(addImageFileDest);
 				videoFile.transferTo(videoFileDest);
-				
+
 			}
 			status = Boolean.TRUE;
-			
+
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			status = Boolean.FALSE;
@@ -354,7 +349,7 @@ public class BrandingTemplateController {
 		}
 
 		return status;
-		
+
 	}
 
 	/**
@@ -363,13 +358,13 @@ public class BrandingTemplateController {
 	 * @param model
 	 * @return
 	 */
-//	@RequestMapping(value = "/viewEmpBrandTemp", method = RequestMethod.POST)
-//	public ModelAndView viewEmpBrandTemp(Map model) {
-//		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-//		empBrandTempDTO.setJpBrandTempId(1);
-//		empBrandTempDTO = empBrandTemp.viewEmpBrandTemp(empBrandTempDTO);
-//		return new ModelAndView("empBrandTempView");
-//	}
+	// @RequestMapping(value = "/viewEmpBrandTemp", method = RequestMethod.POST)
+	// public ModelAndView viewEmpBrandTemp(Map model) {
+	// EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
+	// empBrandTempDTO.setJpBrandTempId(1);
+	// empBrandTempDTO = empBrandTemp.viewEmpBrandTemp(empBrandTempDTO);
+	// return new ModelAndView("empBrandTempView");
+	// }
 
 	/**
 	 * The method is called to edit the job posting Branding Template.
@@ -377,19 +372,19 @@ public class BrandingTemplateController {
 	 * @param model
 	 * @return
 	 */
-//	@RequestMapping(value = "/editEmpBrandTemp", method = RequestMethod.POST)
-//	public ModelAndView editEmpBrandTemp(Map model) {
-//		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-//		empBrandTempDTO.setTemplateName("Test Template Desc updated");
-//		empBrandTempDTO.setEmployerId(30);
-//		empBrandTempDTO.setJpBrandTempId(9);
-//		empBrandTempDTO.setImagePath("c://imageupd2.jpg");
-//		empBrandTempDTO.setLogoPath("c://logoupd2.jpg");
-//		empBrandTempDTO.setColor("#ffff00");
-////		empBrandTempDTO.setUpdatedDate(new Date().toString());
-//		empBrandTempDTO = empBrandTemp.editEmpBrandTemp(empBrandTempDTO);
-//		return new ModelAndView("empBrandTempEdit");
-//	}
+	// @RequestMapping(value = "/editEmpBrandTemp", method = RequestMethod.POST)
+	// public ModelAndView editEmpBrandTemp(Map model) {
+	// EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
+	// empBrandTempDTO.setTemplateName("Test Template Desc updated");
+	// empBrandTempDTO.setEmployerId(30);
+	// empBrandTempDTO.setJpBrandTempId(9);
+	// empBrandTempDTO.setImagePath("c://imageupd2.jpg");
+	// empBrandTempDTO.setLogoPath("c://logoupd2.jpg");
+	// empBrandTempDTO.setColor("#ffff00");
+	// // empBrandTempDTO.setUpdatedDate(new Date().toString());
+	// empBrandTempDTO = empBrandTemp.editEmpBrandTemp(empBrandTempDTO);
+	// return new ModelAndView("empBrandTempEdit");
+	// }
 
 	/**
 	 * The method is called to delete the job posting Branding Template.
@@ -397,18 +392,19 @@ public class BrandingTemplateController {
 	 * @param model
 	 * @return
 	 */
-//	@RequestMapping(value = "/deleteEmpBrandTemp", method = RequestMethod.POST)
-//	public ModelAndView deleteEmpBrandTemp(Map model) {
-//		Boolean status = null;
-//		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-//
-//		empBrandTempDTO.setJpBrandTempId(11);
-//		status = empBrandTemp.deleteEmpBrandTemp(empBrandTempDTO);
-//		if (status) {
-//			return null;
-//		}
-//		return new ModelAndView("empBrandTempListPopup");
-//	}
+	// @RequestMapping(value = "/deleteEmpBrandTemp", method =
+	// RequestMethod.POST)
+	// public ModelAndView deleteEmpBrandTemp(Map model) {
+	// Boolean status = null;
+	// EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
+	//
+	// empBrandTempDTO.setJpBrandTempId(11);
+	// status = empBrandTemp.deleteEmpBrandTemp(empBrandTempDTO);
+	// if (status) {
+	// return null;
+	// }
+	// return new ModelAndView("empBrandTempListPopup");
+	// }
 
 	/**
 	 * The method is called to close the empBrandTempList popup.
@@ -416,12 +412,14 @@ public class BrandingTemplateController {
 	 * @param model
 	 * @return
 	 */
-//	@RequestMapping(value = "/cancelEmpBrandTemp", method = RequestMethod.POST)
-//	public ModelAndView cancelEmpBrandTemp(Map model) {
-////		return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
-//		return new ModelAndView("redirect:/employer/employerDashBoard.html");
-//	}
-	
+	// @RequestMapping(value = "/cancelEmpBrandTemp", method =
+	// RequestMethod.POST)
+	// public ModelAndView cancelEmpBrandTemp(Map model) {
+	// // return new
+	// ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
+	// return new ModelAndView("redirect:/employer/employerDashBoard.html");
+	// }
+
 	/**
 	 * The method is called to create a the empBrandTempList popup.
 	 * 
@@ -440,65 +438,176 @@ public class BrandingTemplateController {
 	 * @param model
 	 * @return
 	 */
-//	@RequestMapping(value = "/empBrandTemplatePreview", method = RequestMethod.GET)
-//	public ModelAndView previewBrandingTemplate(Map model) {
-//		model.put("brandingTemplateForm", new BrandingTemplateForm());
-//		return new ModelAndView("empBrandTemplatePreview");
-//	}
-	
-	
-//	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
-//	public ModelAndView viewResumeBuilder(BrandingTemplateForm brandingTemplateForm,
-//			BindingResult result, @RequestParam("resumeId") int resumeId,
-//			HttpServletRequest request, HttpServletResponse response) {
-//
-//		ModelAndView model = new ModelAndView();
-//		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-//		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
-//		List<CertificationsForm> listCertForm = transCreateResume
-//				.transformCertForm(resumeDTO.getListCertDTO());
-//		List<ReferenceForm> listRefForm = transCreateResume
-//				.transformReferenceForm(resumeDTO.getListRefDTO());
-//		List<EducationForm> listEduForm = transCreateResume
-//				.transformEducationForm(resumeDTO.getListEduDTO());
-//		List<WorkExpForm> listWorkExpForm = transCreateResume
-//				.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
-//		List<LanguageForm> listLangForm = transCreateResume
-//				.transformLanguageForm(resumeDTO.getListLangDTO());
-//		ContactInfoForm contactForm = transCreateResume
-//				.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-//		List<PhoneDetailForm> listPhoneDtl = transCreateResume
-//				.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
-//
-//		createResume.setListCertForm(listCertForm);
-//		createResume.setListEduForm(listEduForm);
-//		createResume.setListLangForm(listLangForm);
-//		createResume.setListRefForm(listRefForm);
-//		createResume.setListWorkExpForm(listWorkExpForm);
-//		createResume.setContactInfoForm(contactForm);
-//		createResume.setListPhoneDtlForm(listPhoneDtl);
-//		resumeDTO.getContactInfoDTO();
-//		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
-//				.getResumeType())) {
-//			model.addObject("createResume", createResume);
-//			model.setViewName("viewresume");
-//		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
-//				.getResumeType())) {
-//			try {
-//				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
-//						+ resumeDTO.getFilePath());
-//				return model;
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			model.addObject("createResume", createResume);
-//			model.setViewName("viewCopyPasteResume");
-//		}
-//		return model;
-//
-//	}
+	// @RequestMapping(value = "/empBrandTemplatePreview", method =
+	// RequestMethod.GET)
+	// public ModelAndView previewBrandingTemplate(Map model) {
+	// model.put("brandingTemplateForm", new BrandingTemplateForm());
+	// return new ModelAndView("empBrandTemplatePreview");
+	// }
 
-	
+	// @RequestMapping(value = "/viewResumeBuilder", method =
+	// RequestMethod.POST)
+	// public ModelAndView viewResumeBuilder(BrandingTemplateForm
+	// brandingTemplateForm,
+	// BindingResult result, @RequestParam("resumeId") int resumeId,
+	// HttpServletRequest request, HttpServletResponse response) {
+	//
+	// ModelAndView model = new ModelAndView();
+	// ResumeDTO resumeDTO = resumeService.editResume(resumeId);
+	// createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
+	// List<CertificationsForm> listCertForm = transCreateResume
+	// .transformCertForm(resumeDTO.getListCertDTO());
+	// List<ReferenceForm> listRefForm = transCreateResume
+	// .transformReferenceForm(resumeDTO.getListRefDTO());
+	// List<EducationForm> listEduForm = transCreateResume
+	// .transformEducationForm(resumeDTO.getListEduDTO());
+	// List<WorkExpForm> listWorkExpForm = transCreateResume
+	// .transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+	// List<LanguageForm> listLangForm = transCreateResume
+	// .transformLanguageForm(resumeDTO.getListLangDTO());
+	// ContactInfoForm contactForm = transCreateResume
+	// .transformContactInfoForm(resumeDTO.getContactInfoDTO());
+	// List<PhoneDetailForm> listPhoneDtl = transCreateResume
+	// .transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
+	//
+	// createResume.setListCertForm(listCertForm);
+	// createResume.setListEduForm(listEduForm);
+	// createResume.setListLangForm(listLangForm);
+	// createResume.setListRefForm(listRefForm);
+	// createResume.setListWorkExpForm(listWorkExpForm);
+	// createResume.setContactInfoForm(contactForm);
+	// createResume.setListPhoneDtlForm(listPhoneDtl);
+	// resumeDTO.getContactInfoDTO();
+	// if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
+	// .getResumeType())) {
+	// model.addObject("createResume", createResume);
+	// model.setViewName("viewresume");
+	// } else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
+	// .getResumeType())) {
+	// try {
+	// model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+	// + resumeDTO.getFilePath());
+	// return model;
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// } else {
+	// model.addObject("createResume", createResume);
+	// model.setViewName("viewCopyPasteResume");
+	// }
+	// return model;
+	//
+	// }
+
+	/**
+	 * The method is called to fetch the job posting Branding Templates
+	 * 
+	 * @param Map
+	 *            <String, List<BrandingTemplateDTO>>
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/employer/manageBrandingTemplate", method = RequestMethod.GET)
+	public ModelAndView fetchEmpBrandTemp(
+			Map<String, List<BrandingTemplateDTO>> model) {
+		List<BrandingTemplateDTO> brandTemplateList = brandingTemplateService
+				.getBrandingTemplate(1606);
+		model.put("templatesList", brandTemplateList);
+		return new ModelAndView("manageBrandingTemplatePopup");
+	}
+
+	/**
+	 * The method is called to edit the job posting Branding Template.
+	 * 
+	 * @param templateId
+	 * @param BrandingTemplateForm
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/employer/editTemplate", method = RequestMethod.GET)
+	public ModelAndView editEmpBrandTemp(
+			BrandingTemplateForm brandingTemplateForm,
+			@RequestParam("templateId") int templateId) {
+		BrandingTemplateDTO templateDTO = brandingTemplateService
+				.editBrandingTemplate(templateId);
+		ModelAndView model = new ModelAndView();
+		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
+				brandingTemplateForm, templateDTO);
+		model.addObject("brandingTemplateForm", brandingTemplateForm);
+		model.setViewName("editBrandingTemplate");
+		return model;
+	}
+
+	/**
+	 * The method is called to update the job posting Branding Template.
+	 * 
+	 * @param BrandingTemplateForm
+	 * @param HttpSession
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/employer/updateBrandingTemplate", method = RequestMethod.POST)
+	public ModelAndView updateBrandingTemplate(
+			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm,
+			BindingResult result, HttpSession session) {
+		Boolean status = null;
+		BrandingTemplateDTO templateDTO = new BrandingTemplateDTO();
+		ModelAndView model = new ModelAndView();
+
+		brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
+
+		// Modify the names of media files to save on File server
+		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
+
+		// Validate the form data
+		brandingTemplateValidation.validate(brandingTemplateForm, result);
+
+		if (result.hasErrors()) {
+			model.setViewName("editBrandingTemplate");
+			return model;
+		}
+
+		// Upload the media files to File server
+		status = uploadMedia(brandingTemplateForm);
+		if (!status) {
+			result.rejectValue("logoFileData", "NotEmpty",
+					"An error occured while saving the file");
+			model.setViewName("editBrandingTemplate");
+			status = null;
+			return model;
+		}
+
+		// Transform form form data to DTO
+		templateDTO = transformEmpoyerBrandTemplate
+				.createEmpBrandTempDTO(brandingTemplateForm);
+
+		// call to service layer
+		status = brandingTemplateService.updateBrandingTemplate(templateDTO);
+		if (status) {
+
+		}
+		model.setViewName("redirect:/employer/employerDashBoard.html");
+		return model;
+	}
+
+	/**
+	 * The method is called to delete the job posting Branding Template.
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/employer/deleteBrandingTemplate", method = RequestMethod.POST)
+	public @ResponseBody
+	JSONObject deleteEmpBrandTemp(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			@RequestParam("templateId") int templateId) {
+		boolean status = brandingTemplateService
+				.deleteBrandingTemplate(templateId);
+		JSONObject statusJson = new JSONObject();
+		if (status) {
+			statusJson.put("success", "template deleted successfull");
+			return statusJson;
+		} else {
+			statusJson.put("failed", "failed");
+			return statusJson;
+		}
+	}
 
 }
