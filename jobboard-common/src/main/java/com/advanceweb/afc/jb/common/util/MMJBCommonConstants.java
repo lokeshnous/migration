@@ -208,6 +208,8 @@ public interface MMJBCommonConstants {
 	public static final String POST_JOB_DRAFT="Draft";
 	public static final String POST_JOB_EXPIRED="Expired";
 	public static final String POST_JOB_INACTIVE="Inactive";
+	public static final byte ACTIVE=1;
+	public static final byte INACTIVE=0;
 	
 	// For Apply job type
 	public static final String APPLY_TO_URL = "ApplyToURL";

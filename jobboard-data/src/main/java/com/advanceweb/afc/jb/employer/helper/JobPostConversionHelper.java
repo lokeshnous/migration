@@ -143,20 +143,36 @@ public class JobPostConversionHelper<JobPostForm> {
 					jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 				}				
 				jobPostDTO.setAutoRenew(job.getAutoRenew()==0?false:true);
-				jobPostDTO.setJobStatus(job.getJobStatus());
+				//jobPostDTO.setJobStatus(job.getJobStatus());
 				if(null !=job.getJpTemplate()){
 				jobPostDTO.setBrandTemplate(String.valueOf(job.getJpTemplate().getTemplateId()));
 				}
-				/*int compareEndDate = job.getEndDt().compareTo(new Date());
-				int compareStartDate = job.getStartDt().compareTo(new Date());
-				if (compareEndDate >= 0) {
-					jobPostDTO.setJobStatus("Active");
-				} else {
-					jobPostDTO.setJobStatus("Expired");
+				if (null != job.getEndDt() && null != job.getStartDt()) {
+					int compareEndDate = job.getEndDt().compareTo(new Date());
+					int compareStartDate = job.getStartDt().compareTo(
+							new Date());
+					if (job.getActive() == 1 && compareStartDate < 0
+							&& compareEndDate > 0) {
+						jobPostDTO
+								.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
+					}
+					if (job.getActive() == 1 && compareEndDate < 0) {
+						jobPostDTO
+								.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
+					}
+					if (job.getActive() == 0) {
+						jobPostDTO
+								.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
+					}
+					if (job.getActive() == 1 && compareStartDate > 0) {
+						jobPostDTO
+								.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
+					}
+					if (job.getActive() == 0 && compareStartDate > 0) {
+						jobPostDTO
+								.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
+					}
 				}
-				if (compareStartDate > 0) {
-					jobPostDTO.setJobStatus("Scheduled");
-				}*/
 				 List<JpJobLocation> jobLocationList= job.getJpJobLocations();
 				 if(null !=jobLocationList){
 					 for(JpJobLocation jobLocation:jobLocationList){
