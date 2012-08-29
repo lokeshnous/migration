@@ -32,6 +32,7 @@ public class BrandTemplateServiceTest extends ServiceTest {/*
 	 * Test method for
 	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#fetchEmpBrandTemp(MerUserDTO)}
 	 *//*
+	 *TODO:need to change after the table changes
 	@Test
 	public void fetchEmpBrandTemp() {
 		MerUserDTO merUserDTO = new MerUserDTO();
@@ -45,6 +46,7 @@ public class BrandTemplateServiceTest extends ServiceTest {/*
 	 * Test method for
 	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#createEmpBrandTemp(EmpBrandTempDTO)}
 	 *//*
+	 *TODO:need to change after the table changes
 	@Test
 	public void createEmpBrandTemp() {
 		Boolean status = null;
@@ -64,6 +66,7 @@ public class BrandTemplateServiceTest extends ServiceTest {/*
 	 * Test method for
 	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#viewEmpBrandTemp(EmpBrandTempDTO)}
 	 *//*
+	 *TODO:need to change after the table changes
 	@Test
 	public void viewEmpBrandTemp() {
 		EmpBrandTempDTO empBrandTempDTO = null;
@@ -78,6 +81,7 @@ public class BrandTemplateServiceTest extends ServiceTest {/*
 	 * Test method for
 	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#editEmpBrandTemp(EmpBrandTempDTO)}
 	 *//*
+	 *TODO:need to change after the table changes
 	@Test
 	public void editEmpBrandTemp() {
 		EmpBrandTempDTO empBrandTempDTO = null;
@@ -99,6 +103,7 @@ public class BrandTemplateServiceTest extends ServiceTest {/*
 	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#deleteEmpBrandTemp(EmpBrandTempDTO)}
 	 * .
 	 *//*
+	 *TODO:need to change after the table changes
 	@Ignore("Test fails if repeatedly deleting deleted record")
 	@Test
 	public void deleteEmpBrandTemp() {
