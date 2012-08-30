@@ -332,6 +332,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				
 		AdmFacilityContact facility=hibernateTemplateCareers.get(AdmFacilityContact.class,  admfacilityid);
 		facility.setFirstName(apd.getFirstName());
+		facility.setLastName(apd.getLastName());
 		facility.setCompany(apd.getCompanyName());
 		facility.setStreet(apd.getStreet());
 		facility.setCity(apd.getCity());
