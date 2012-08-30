@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,14 @@ public class JobPostController {
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;	
 	
-	
+	@Value("${deleteFail}")
+	String deleteFailErrMsg;
+	@Value("${repostFail}")
+	String repostFail;
+	@Value("${deactivationFail}")
+	String deactivateMsg;
+	@Value("${deleteSuccess}")
+	String deleteSuccessMsg;
 	@RequestMapping(value="/postNewJobs",method = RequestMethod.GET)
 	public ModelAndView showPostJob() {
 		
@@ -326,11 +334,9 @@ public class JobPostController {
 		ModelAndView model = new ModelAndView();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
 		String jobStatus = jobPostform.getStatusValue();
-	//	String jobStatus = request.getParameter("jobStatus");
 		DropDownDTO dto = new DropDownDTO();
 		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
 		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
-		
 		DropDownDTO downDTO = new DropDownDTO();
 		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
 		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
@@ -385,20 +391,22 @@ public class JobPostController {
 		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
-		model.addObject("jobPostForm", jobPostform);
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			boolean result= employerJobPost
 					.deleteJob(jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));
 			if(result==false){
-				errorMsg="Only inactive and expired  jobs can be deleted";
+				errorMsg=deleteFailErrMsg;
 			}
 		}
 		if(null == errorMsg){
-			errorMsg="Jobs deleted Successfully";
+			errorMsg=deleteSuccessMsg;
 		}
-	 return new ModelAndView("forward:/employer/manageJobPost.html");
+		model.addObject("errorMessage", errorMsg);
+		model.addObject("jobPostForm", jobPostform);
+		model.setViewName("forward:/employer/manageJobPost.html");
+	 return model;
 	}
 	/**
 	 * Method is called to update the job details
@@ -448,7 +456,6 @@ public class JobPostController {
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
 		int jobId=0;
-		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
 		model.addObject("jobPostForm", jobPostform);
@@ -458,11 +465,11 @@ public class JobPostController {
 					.deactivateJob(jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));
 			if(result==false){
-				errorMsg="Please Select Only Active Jobs For Deactivation";
+				model.addObject("errorMessage", deactivateMsg);
 			}
 		}
 		model.addObject("jobPostForm", jobPostform);
-		model.addObject("errorMessage", errorMsg);
+		
 		model.setViewName("forward:/employer/manageJobPost.html");
 	 return model;
 	}
@@ -480,23 +487,19 @@ public class JobPostController {
 			HttpServletResponse response, HttpSession session,JobPostForm jobPostform) {
 		String selectedRows= jobPostform.getSelectedRow();
 		int jobId=0;
-		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			boolean result= employerJobPost
 					.repostJob(jobId, (Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));	
-			System.out.println("HI" + result);
+							.getAttribute(MMJBCommonConstants.USER_ID));
 			if(result==false){
-				errorMsg="Only inactive and expired  jobs can be reposted";
+				model.addObject("errorMessage", repostFail);
 			}
 			
 		}
 		model.addObject("jobPostForm", jobPostform);
-		//model.addObject("valiedJobId",valiedJobId);
-		model.addObject("errorMessage", errorMsg);
 		model.setViewName("forward:/employer/manageJobPost.html");
 	 return model;
 	}

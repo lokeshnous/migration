@@ -135,6 +135,7 @@
 										"action",
 										"${pageContext.request.contextPath}/employer/updateJobs.html?jobId=${job.jobId}"
 												+ val);
+				                 $("form").attr("method","POST");
 								$("form").submit(); 
 
 							}
@@ -336,6 +337,7 @@
 							</div> </span>
 				</div>
 					<div class="clearfix"></div>
+					<br>
 					<c:if test="${not empty errorMessage}">
 						    	<div id="errmsg" style="color: red" align="left" >
 					    		<c:out value="${errorMessage}"></c:out>
@@ -458,8 +460,7 @@
 									<td align="center" valign="middle">${job.applies}</td>
 									<td align="center" valign="middle">
 									<form:select path="jobPostDTOList[${status.index}].autoRenew" id="selectAutoRenew" class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-											name="select1">	
-											<form:option value="0" label="Select One" />		
+											name="select1">			
 											<form:options items="${autoRenewList}" itemLabel="optionId" itemValue="optionName"/>							
 									</form:select>
 										
