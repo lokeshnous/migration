@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 
 /**
@@ -101,4 +102,9 @@ public class JobPostServiceTest extends ServiceTest{
 		Assert.assertTrue("Job Reposted Successfully", repost);
 	}
 	
+	@Test
+	public void getJobPostingPlansTest(){
+		List<JobPostingPlanDTO> jobPostingPlanDTOList = employerJobPost.getJobPostingPlans();
+		Assert.assertNotNull(jobPostingPlanDTOList);
+	}
 }

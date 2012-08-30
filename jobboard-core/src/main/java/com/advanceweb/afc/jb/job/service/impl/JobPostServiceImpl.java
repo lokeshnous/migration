@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
@@ -108,6 +109,11 @@ public class JobPostServiceImpl implements JobPostService {
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId) {
 		return employerJobPostDAO.retrieveAllJobByStatus(jobStatus, userId);
+	}
+	
+	@Override
+	public List<JobPostingPlanDTO> getJobPostingPlans() {
+		return employerJobPostDAO.getJobPostingPlans();
 	}
 
 }

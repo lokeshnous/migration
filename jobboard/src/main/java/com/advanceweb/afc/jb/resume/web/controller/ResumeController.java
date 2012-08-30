@@ -88,7 +88,7 @@ public class ResumeController {
 
 	private @Value("${resumeDeleteSuccess}")
 	String resumeDeleteSuccess;
-
+	
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 

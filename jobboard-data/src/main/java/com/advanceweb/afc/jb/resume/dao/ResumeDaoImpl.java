@@ -135,10 +135,10 @@ public class ResumeDaoImpl implements ResumeDao {
 							+ resumeDTO.getUploadResumeId()
 							+ " and active='"
 							+ MMJBCommonConstants.VISIBILITY_PUBLIC + "'");
-			if (resumes.size() > 0) {
-				resumes.get(0).setActive(Integer.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
-				resumes.get(0).setIsPublished(Integer.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
-				hibernateTemplate.update(resumes.get(0));
+			for(ResUploadResume resume : resumes){
+				resume.setActive(Integer.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
+				resume.setIsPublished(Integer.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
+				hibernateTemplate.update(resume);
 			}
 		}
 	}

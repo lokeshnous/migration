@@ -2,7 +2,10 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 /**
@@ -29,6 +32,15 @@ public class JpJobType implements Serializable {
 	//bi-directional many-to-one association to JpJob
 	@OneToMany(mappedBy="jpJobType")
 	private List<JpJob> jpJobs;
+	
+
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "jp_type_addon_xref",joinColumns = { 
+			@JoinColumn(name = "job_type_id", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "addon_id", 
+					nullable = false, updatable = false) })
+	private Set<JpAddon> jpAddons = new TreeSet<JpAddon>();
 
     public JpJobType() {
     }
@@ -71,6 +83,19 @@ public class JpJobType implements Serializable {
 
 	public void setJpJobs(List<JpJob> jpJobs) {
 		this.jpJobs = jpJobs;
+	}
+
+
+	public Set<JpAddon> getJpAddons() {
+		return jpAddons;
+	}
+
+	public void setJpAddons(Set<JpAddon> jpAddons) {
+		this.jpAddons = jpAddons;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

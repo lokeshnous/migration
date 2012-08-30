@@ -2,16 +2,21 @@ package com.advanceweb.afc.jb.employer.helper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.JpAddon;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
@@ -213,4 +218,51 @@ public class JobPostConversionHelper<JobPostForm> {
 		return jobPostDTO;
 
 	}
+	
+	/**
+	 * This method transforms JpJob list to JobPostDTO list
+	 * 
+	 * @param resumes
+	 * @return resumeDTOList
+	 */
+	public List<JobPostingPlanDTO> transformToJobPostingPlanDTOList(List<JpJobType> jobTypes) {
+		List<JobPostingPlanDTO> jobPostingPlanDTOList = new ArrayList<JobPostingPlanDTO>();
+		
+		for(JpJobType jobType : jobTypes){
+			JobPostingPlanDTO jobPostingPlanDTO = new JobPostingPlanDTO();
+			jobPostingPlanDTO.setJobPostPlanId(String.valueOf(jobType.getJobTypeId()));
+			jobPostingPlanDTO.setJobPostPlanName(jobType.getName());
+			jobPostingPlanDTO.setJobPostPlanDescr(jobType.getDescription());
+			jobPostingPlanDTO.setJobPostPlanCretitAmt(String.valueOf(jobType.getCreditAmt()));
+			List<AddOnDTO> addOnDTOList = new ArrayList<AddOnDTO>();
+			for(JpAddon jpAddon : jobType.getJpAddons()){
+				addOnDTOList.add(transformJpAddOnToAddOnDTO(jpAddon));
+			}
+			Collections.sort(addOnDTOList,new AddOnComparable());
+			jobPostingPlanDTO.setAddOnDTOList(addOnDTOList);
+			jobPostingPlanDTOList.add(jobPostingPlanDTO);
+		}
+		return jobPostingPlanDTOList;
+	}
+
+	/**
+	 * This method transforms JpJob list to JobPostDTO list
+	 * 
+	 * @param resumes
+	 * @return resumeDTOList
+	 */
+	private AddOnDTO transformJpAddOnToAddOnDTO(JpAddon jpAddon) {
+		AddOnDTO addOnDTO = new AddOnDTO();
+		addOnDTO.setAddOnId(String.valueOf(jpAddon.getAddonId()));
+		addOnDTO.setAddOnName(jpAddon.getName());
+		addOnDTO.setAddOnDescription(jpAddon.getDescription());
+		addOnDTO.setAddOnCreditAmt(String.valueOf(jpAddon.getCreditAmt()));
+		return addOnDTO;
+	}
+}
+class AddOnComparable implements Comparator<AddOnDTO>{
+    @Override
+    public int compare(AddOnDTO obj1, AddOnDTO obj2) {
+        return (Integer.parseInt(obj1.getAddOnId()) < Integer.parseInt(obj2.getAddOnId()) ? -1 : (Integer.parseInt(obj1.getAddOnId()) == Integer.parseInt(obj2.getAddOnId())) ? 0 : 1);
+    }
 }

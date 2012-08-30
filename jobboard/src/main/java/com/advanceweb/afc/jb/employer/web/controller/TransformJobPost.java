@@ -1,8 +1,13 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 
 /**
@@ -115,5 +120,35 @@ public class TransformJobPost {
 		jobPostform.setBrandTemplate(jobPostDTO.getBrandTemplate());
 		return jobPostform;
 		
+	}
+	
+	public List<JobPostingsForm> transformToJobPostingsFormList(List<JobPostingPlanDTO> jobPostingPlanDTOList)
+	{
+		List<JobPostingsForm> jobPostingsFormList = new ArrayList<JobPostingsForm>();
+		
+		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
+			JobPostingsForm jobPostingsForm = new JobPostingsForm();
+			jobPostingsForm.setJobPostPlanId(jobPostingPlanDTO.getJobPostPlanId());
+			jobPostingsForm.setJobPostPlanName(jobPostingPlanDTO.getJobPostPlanName());
+			jobPostingsForm.setJobPostPlanDescr(jobPostingPlanDTO.getJobPostPlanDescr());
+			jobPostingsForm.setJobPostPlanCretitAmt(jobPostingPlanDTO.getJobPostPlanCretitAmt());
+			List<AddOnForm> AddOnFormList = new ArrayList<AddOnForm>();
+			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
+				AddOnFormList.add(transformAddOnDTOToAddOnForm(addOnDTO));
+			}
+			jobPostingsForm.setAddOnForm(AddOnFormList);
+			jobPostingsFormList.add(jobPostingsForm);
+		}
+		return jobPostingsFormList;
+		
+	}
+	
+	private AddOnForm transformAddOnDTOToAddOnForm(AddOnDTO addOnDTO) {
+		AddOnForm addOnForm = new AddOnForm();
+		addOnForm.setAddOnId(addOnDTO.getAddOnId());
+		addOnForm.setAddOnName(addOnDTO.getAddOnName());
+		addOnForm.setAddOnDescription(addOnDTO.getAddOnDescription());
+		addOnForm.setAddOnCreditAmt(addOnDTO.getAddOnCreditAmt());
+		return addOnForm;
 	}
 }

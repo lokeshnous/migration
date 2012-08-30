@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 
 /**
@@ -25,5 +26,7 @@ public interface JobPostDAO {
 	boolean deactivateJob(int jobId, int userId);
 	boolean repostJob(int jobId, int userId);
 	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId);
+	
+	List<JobPostingPlanDTO> getJobPostingPlans();
 
 }

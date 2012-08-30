@@ -18,6 +18,7 @@ import antlr.StringUtils;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
@@ -184,6 +185,13 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 
 		return dto;
+	}
+
+	@Override
+	public List<JobPostingPlanDTO> getJobPostingPlans() {
+		List<JpJobType> jobTypeList = hibernateTemplate.find("from JpJobType");
+		List<JobPostingPlanDTO> jobPostingPlanDTOList = jobPostConversionHelper.transformToJobPostingPlanDTOList(jobTypeList);
+		return jobPostingPlanDTOList;
 	}
 	
 	/**

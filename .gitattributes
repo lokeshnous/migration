@@ -1,6 +1,7 @@
 * text=auto !eol
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountProfileDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddOnDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmBrndngTempDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityContactDTO.java -text
@@ -33,6 +34,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobApplyTypeDTO.java 
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostedDateDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostingPlanDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSearchResultDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
@@ -319,6 +321,7 @@ jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
 jobboard/src/main/java/Messages_IN.properties -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddOnForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateValidation.java -text
@@ -337,6 +340,9 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/InventoryFo
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostingInventoryController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostingsForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostingController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/SearchResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerBrandTemplate.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
@@ -434,6 +440,7 @@ jobboard/src/main/webapp/WEB-INF/view/editresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empBrandTempListPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empBrandTemplate.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empBrandTemplatePreview.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/empPurchaseJobPostingsPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
