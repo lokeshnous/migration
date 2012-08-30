@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,21 +31,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
-//import com.advanceweb.afc.jb.common.AddressDTO;
-//import com.advanceweb.afc.jb.common.CompanyProfileDTO;
-import com.advanceweb.afc.jb.common.CountryDTO;
-import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
-import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.*;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+//import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
+import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
+import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
+//import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+//import com.advanceweb.afc.jb.employer.service.AdmManagePermission;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 
 /**
@@ -64,7 +62,6 @@ public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
-	
 	@Autowired
 	private ProfileRegistration employerRegistration;
 
@@ -76,15 +73,22 @@ public class EmployerRegistrationController {
 
 	@Autowired
 	FetchAdmFacilityConatact fetchAdmFacilityConatact;
-
+	
 	@Autowired
 	EmployerRegistrationValidation registerValidation;
-
+	
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 	
-	@Autowired
+	@Autowired	
 	private EmloyerRegistartionService emloyerRegistartionService;
+	
+	//@Autowired
+	//private AdmManagePermission admManagePermission;
+	
+	@Autowired
+	TransformPaymentMethod transformPaymentMethod;
+	
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
@@ -286,6 +290,16 @@ public class EmployerRegistrationController {
 
 			AccountProfileDTO dto = transformEmployerRegistration
 					.transformAccountProfileFormToDto(employeeAccountForm);
+			
+			
+			
+			if (!registerValidation.accountValidate(employeeAccountForm, result)) {
+				result.rejectValue("email", "NotEmpty",
+						"Email Id already Exists!");
+				model.setViewName("accountSetting");
+				return model;
+			}
+			
 			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
 		} else {
 			model.setViewName("employerDashboard");
@@ -295,7 +309,6 @@ public class EmployerRegistrationController {
 		model.setViewName("employerDashboard");
 		return model;
 	}
-
 	/**
 	 * This method is called to Account Setting update page
 	 * 
@@ -310,6 +323,8 @@ public class EmployerRegistrationController {
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session.getAttribute("userId");
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 
@@ -317,12 +332,23 @@ public class EmployerRegistrationController {
 			int admfacilityid = listProfAttribForms.get(0)
 					.getFacilityContactId();
 			AccountProfileDTO dto = transformEmployerRegistration
-					.transformAccountProfileFormToDto(employeeBillingForm);
+					.transformBillingProfileFormToDto(employeeBillingForm);
 			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
 
 		} else {
-			model.setViewName("employerDashboard");
-			return model;
+
+			BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
+			AccountBillingDTO billingAddressDTO = transformPaymentMethod
+					.transformDataBillingAddreFormToDto(billingAddressForm);
+			billingAddressDTO.setFacilityId(facilityId);
+			billingAddressDTO.setCompanyName(employeeBillingForm.getCompany());
+			billingAddressDTO.setEmail(employeeBillingForm.getEmail());
+			billingAddressDTO.setPhone(employeeBillingForm.getPhone());
+			billingAddressDTO.setCreateDate(new Date());
+			fetchAdmFacilityConatact.saveDataBillingAddress(billingAddressDTO);
+
+			// model.setViewName("employerDashboard");
+			// return model;
 		}
 
 		model.setViewName("employerDashboard");
@@ -343,6 +369,7 @@ public class EmployerRegistrationController {
 		try {
 			EmployeeAccountForm employeeAccountForm = new EmployeeAccountForm();
 			EmployeeAccountForm employeeBillingForm = new EmployeeAccountForm();
+			employeeBillingForm.setBillingAddressForm(new BillingAddressForm());
 
 			int userId = (Integer) session.getAttribute("userId");
 
@@ -356,12 +383,17 @@ public class EmployerRegistrationController {
 
 			employeeAccountForm.setFirstName(listProfAttribForms.get(0)
 					.getFirstName());
+			employeeAccountForm.setLastName(listProfAttribForms.get(0)
+					.getLastName());
 			employeeAccountForm.setCompany(listProfAttribForms.get(0)
 					.getCompany());
 			employeeAccountForm.setStreetAddress(listProfAttribForms.get(0)
 					.getStreet());
 			employeeAccountForm.setCityOrTown(listProfAttribForms.get(0)
 					.getCity());
+			employeeAccountForm.setState(listProfAttribForms.get(0).getState());
+			employeeAccountForm.setCountry(listProfAttribForms.get(0)
+					.getCountry());
 			employeeAccountForm.setEmail(listProfAttribForms.get(0).getEmail());
 			employeeAccountForm.setZipCode(listProfAttribForms.get(0)
 					.getPostcode());
@@ -377,20 +409,33 @@ public class EmployerRegistrationController {
 				count = listBillingForms.size();
 
 			} else {
-				employeeBillingForm.setFirstName(listBillingForms.get(0)
-						.getFirstName());
+				employeeBillingForm.getBillingAddressForm()
+						.setFnameForBillingAddr(
+								listBillingForms.get(0).getFirstName());
+				employeeBillingForm.getBillingAddressForm()
+						.setLnameForBillingAddr(
+								listProfAttribForms.get(0).getLastName());
 				employeeBillingForm.setCompany(listBillingForms.get(0)
 						.getCompany());
-				employeeBillingForm.setStreetAddress(listBillingForms.get(0)
-						.getStreet());
-				employeeBillingForm.setCityOrTown(listBillingForms.get(0)
-						.getCity());
+				employeeBillingForm.getBillingAddressForm()
+						.setStreetForBillingAddr(
+								listBillingForms.get(0).getStreet());
+				employeeBillingForm.getBillingAddressForm()
+						.setCityOrTownForBillingAddr(
+								listBillingForms.get(0).getCity());
 				employeeBillingForm
 						.setEmail(listBillingForms.get(0).getEmail());
-				employeeBillingForm.setZipCode(listBillingForms.get(0)
-						.getPostcode());
+				employeeBillingForm.getBillingAddressForm()
+						.setZipCodeForBillingAddr(
+								listBillingForms.get(0).getPostcode());
 				employeeBillingForm
 						.setPhone(listBillingForms.get(0).getPhone());
+				employeeBillingForm.getBillingAddressForm()
+						.setStateBillingAddress(
+								listBillingForms.get(0).getState());
+				employeeBillingForm.getBillingAddressForm()
+						.setCountryForBillingAddr(
+								listBillingForms.get(0).getCountry());
 			}
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
@@ -406,5 +451,6 @@ public class EmployerRegistrationController {
 
 		return model;
 	}
-
+	
+	
 }
