@@ -148,7 +148,7 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Industry:</span> 
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
-								<div class="toolTip marginTop5 marginLeft5">
+								<div class="toolTip01 marginTop5 marginLeft5">
 									<span class="classic">Enter the industry you serve.
 										Example: Healthcare</span>
 								</div>
@@ -159,7 +159,7 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Profession:</span> 
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
-								<div class="toolTip marginTop5 marginLeft5">
+								<div class="toolTip01 marginTop5 marginLeft5">
 									<span class="classic">Enter the general field in which you
 										work. Example: Respiratory Therapy</span>
 								</div>
@@ -170,7 +170,7 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Specialty:</span> 
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
-								<div class="toolTip marginTop5 marginLeft5">
+								<div class="toolTip01 marginTop5 marginLeft5">
 									<span class="classic">Enter the area in which you
 										specialize. Example: Neonatal/Pediatrics</span>
 								</div>
@@ -181,7 +181,7 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Job Title:</span> 
 								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
-								<div class="toolTip marginTop5 marginLeft5">
+								<div class="toolTip01 marginTop5 marginLeft5">
 									<span class="classic">Enter your official job title.
 										Example: Registered Respiratory Therapist</span>
 								</div>
