@@ -64,41 +64,33 @@ public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
-	@Autowired
 	
+	@Autowired
 	private ProfileRegistration employerRegistration;
 
 	@Autowired
-	
 	private TransformEmployerRegistration transformEmployerRegistration;
 
 	@Autowired
-	
 	private PopulateDropdowns populateDropdownsService;
 
-
-	
 	@Autowired
-	
 	FetchAdmFacilityConatact fetchAdmFacilityConatact;
-	
 
-	
 	@Autowired
 	EmployerRegistrationValidation registerValidation;
 
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
-	@Autowired
 	
+	@Autowired
 	private EmloyerRegistartionService emloyerRegistartionService;
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-	
+
 	@Autowired
 	private LoginService loginService;
-
 
 	/**
 	 * This method is called to display job seeker registration page
@@ -137,9 +129,9 @@ public class EmployerRegistrationController {
 	@RequestMapping(value = "/saveEmployerProfile", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute("empRegisterForm") EmployerRegistrationForm empRegisterForm,
-			HttpServletRequest request, Map map,HttpSession session, BindingResult result) {
+			HttpServletRequest request, Map map, HttpSession session,
+			BindingResult result) {
 		ModelAndView model = new ModelAndView();
-	
 
 		if (null != empRegisterForm.getListProfAttribForms()) {
 			model.setViewName("employerregistration");
@@ -210,11 +202,15 @@ public class EmployerRegistrationController {
 		userDTO = employerRegistration.createNewProfile(empDTO);
 
 		model.addObject("empRegisterForm", empRegisterForm);
-		session.setAttribute(MMJBCommonConstants.USER_NAME, userDTO.getFirstName()+" "+userDTO.getLastName());
+		session.setAttribute(MMJBCommonConstants.USER_NAME,
+				userDTO.getFirstName() + " " + userDTO.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL, userDTO.getEmailId());
-		EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO.getUserId());	
-		session.setAttribute(MMJBCommonConstants.FACILITY_ID, infoDTO.getFacilityId());
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL,
+				userDTO.getEmailId());
+		EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
+				.getUserId());
+		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
+				infoDTO.getFacilityId());
 		model.setViewName("jobBoardEmployerPostJobs01");
 		authenticateUserAndSetSession(userDTO, request);
 
@@ -225,11 +221,11 @@ public class EmployerRegistrationController {
 	 * @param user
 	 * @param request
 	 */
-	@SuppressWarnings("deprecation")
 	private void authenticateUserAndSetSession(MerUserDTO user,
 			HttpServletRequest request) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		authList.add(new GrantedAuthorityImpl(MMJBCommonConstants.ROLE_FACILITY_ADMIN));
+		authList.add(new GrantedAuthorityImpl(
+				MMJBCommonConstants.ROLE_FACILITY_ADMIN));
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				user.getEmailId(), user.getPassword(), authList);
 
@@ -267,7 +263,7 @@ public class EmployerRegistrationController {
 		}
 		return "registrationsuccess";
 	}
-	
+
 	/**
 	 * This method is called to Account Setting update page
 	 * 
@@ -347,10 +343,8 @@ public class EmployerRegistrationController {
 		try {
 			EmployeeAccountForm employeeAccountForm = new EmployeeAccountForm();
 			EmployeeAccountForm employeeBillingForm = new EmployeeAccountForm();
-			
 
 			int userId = (Integer) session.getAttribute("userId");
-			
 
 			List<CountryDTO> countryList = populateDropdownsService
 					.getCountryList();
@@ -376,28 +370,27 @@ public class EmployerRegistrationController {
 			/**
 			 * this is for billing pages
 			 */
-			int count=0;
+			int count = 0;
 			List<AdmFacilityContact> listBillingForms = emloyerRegistartionService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-			if((listBillingForms.size()<=0)||("".equals(listBillingForms)))
-			{
-				count=listBillingForms.size();
-				
-			}
-			else
-			{
-			employeeBillingForm.setFirstName(listBillingForms.get(0)
-					.getFirstName());
-			employeeBillingForm
-					.setCompany(listBillingForms.get(0).getCompany());
-			employeeBillingForm.setStreetAddress(listBillingForms.get(0)
-					.getStreet());
-			employeeBillingForm
-					.setCityOrTown(listBillingForms.get(0).getCity());
-			employeeBillingForm.setEmail(listBillingForms.get(0).getEmail());
-			employeeBillingForm.setZipCode(listBillingForms.get(0)
-					.getPostcode());
-			employeeBillingForm.setPhone(listBillingForms.get(0).getPhone());
+			if ((listBillingForms.size() <= 0) || ("".equals(listBillingForms))) {
+				count = listBillingForms.size();
+
+			} else {
+				employeeBillingForm.setFirstName(listBillingForms.get(0)
+						.getFirstName());
+				employeeBillingForm.setCompany(listBillingForms.get(0)
+						.getCompany());
+				employeeBillingForm.setStreetAddress(listBillingForms.get(0)
+						.getStreet());
+				employeeBillingForm.setCityOrTown(listBillingForms.get(0)
+						.getCity());
+				employeeBillingForm
+						.setEmail(listBillingForms.get(0).getEmail());
+				employeeBillingForm.setZipCode(listBillingForms.get(0)
+						.getPostcode());
+				employeeBillingForm
+						.setPhone(listBillingForms.get(0).getPhone());
 			}
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
@@ -406,7 +399,6 @@ public class EmployerRegistrationController {
 			model.setViewName("accountSetting");
 			model.addObject("employeeAccountForm", employeeAccountForm);
 			model.addObject("employeeBillingForm", employeeBillingForm);
-			
 
 		} catch (Exception e) {
 			LOGGER.info("Error For controller");
@@ -414,5 +406,5 @@ public class EmployerRegistrationController {
 
 		return model;
 	}
-	
+
 }
