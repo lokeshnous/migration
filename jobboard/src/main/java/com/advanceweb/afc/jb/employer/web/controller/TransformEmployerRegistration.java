@@ -148,6 +148,7 @@ public class TransformEmployerRegistration {
 	public AccountProfileDTO transformAccountProfileFormToDto(EmployeeAccountForm form){
 		AccountProfileDTO dto = new AccountProfileDTO();
 		dto.setFirstName(form.getFirstName());
+		dto.setLastName(form.getLastName());
 		dto.setCompanyName(form.getCompany());
 		dto.setState(form.getState());
 		dto.setStreet(form.getStreetAddress());
@@ -156,6 +157,23 @@ public class TransformEmployerRegistration {
 		dto.setZipCode(form.getZipCode());
 		dto.setPhone(form.getPhone());
 		dto.setCity(form.getCityOrTown());
+		
+		return dto;
+	}
+	
+	
+	public AccountProfileDTO transformBillingProfileFormToDto(EmployeeAccountForm form){
+		AccountProfileDTO dto = new AccountProfileDTO();
+		dto.setFirstName(form.billingAddressForm.getFnameForBillingAddr());
+		dto.setLastName(form.billingAddressForm.getLnameForBillingAddr());
+		dto.setCompanyName(form.getCompany());
+		dto.setState(form.billingAddressForm.getStateBillingAddress());
+		dto.setStreet(form.billingAddressForm.getStreetForBillingAddr());
+		dto.setCountry(form.billingAddressForm.getCountryForBillingAddr());
+		dto.setEmail(form.getEmail());
+		dto.setZipCode(form.billingAddressForm.getZipCodeForBillingAddr());
+		dto.setPhone(form.getPhone());
+		dto.setCity(form.billingAddressForm.getCityOrTownForBillingAddr());
 		
 		return dto;
 	}
