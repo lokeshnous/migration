@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-		
+		 var sizeInKB = 0;
 		 $("#downloadResume").click(function() {
 		 	var resumeId = $("#uploadResumeId").val();
 			$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume//downloadResume.html?resumeId="+resumeId);
@@ -21,19 +21,26 @@
 			$("form").submit();
 		 });
 		
+		 $('#fileData').bind('change', function() {
+			 $("#resumeErrorMsg").html("");	
+			  sizeInKB = Math.round(parseInt(this.files[0].size)/1024);
+			  if(parseInt(sizeInKB) > 750){
+				  alert("File size should not exceed more than 750KB. Please try again.");
+			  }
+		});
+		 
 		 $("#update").click(function() {
-				
 				//validate the required fields
 				var resumeName = $.trim($("#resumeName").val());
 				var resumeId = $.trim($("#uploadResumeId").val());
 				var jobTitle = $.trim($("#desiredJobTitle").val());
 				var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
-				var chooseFile = $.trim($("#chooseFile").val());
 				
 				if (resumeName != null && resumeName != ""
 					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
-					&& workAuth != null	&& workAuth != ""){
+					&& workAuth != null	&& workAuth != "" && parseInt(sizeInKB) < 750){
 					
+					if(parseInt(sizeInKB) > 0 && validateResume($.trim($("#fileData").val()))){
 						$("#resumeErrorMsg").html("");
 						//validate number of resumes
 						//validate if resume name already exist in db
@@ -55,8 +62,13 @@
 							complete : function() {
 								
 							}
-						});		
-				} else {
+						});
+					}		
+				}  
+				else if(parseInt(sizeInKB) > 750){
+					$("#resumeErrorMsg").html("<span style='color:red'>File size should not exceed more than 750KB. Please try again.</span>");
+				}
+				else {
 					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
 				}
 			});

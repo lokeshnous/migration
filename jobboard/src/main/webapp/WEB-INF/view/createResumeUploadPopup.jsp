@@ -13,7 +13,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".megamenu").megamenu();
-
+		
+		var sizeInKB = 0;
+		
 		$("#resumeType").change(function() {
 			var resumeType = $.trim($("#resumeType").val());
 			switch (resumeType) {
@@ -29,18 +31,25 @@
 			}
 		});		
 		
+		$('#fileData').bind('change', function() {
+			  sizeInKB = Math.round(parseInt(this.files[0].size)/1024);
+			  if(parseInt(sizeInKB) > 750){
+				  alert("File size should not exceed more than 750KB. Please try again.");
+			  }
+		});
+		
 		$("#create").click(function() {
 
 					//validate the required fields
 					var resumeName = $.trim($("#resumeName").val());
 					var jobTitle = $.trim($("#desiredJobTitle").val());
 					var workAuth = $.trim($("#workAuthorizationUS option:selected").text());
-					var chooseFile = $.trim($("#chooseFile").val());
+					var chooseFile = $.trim($("#fileData").val());
 					
 					if (resumeName != null	&& resumeName != "" && 
 							jobTitle != null	&& jobTitle != ""
 							&& workAuth != "Select"	&& workAuth != null
-							&& workAuth != "" && null != chooseFile && "" != chooseFile) {
+							&& workAuth != "" && parseInt(sizeInKB) < 750 ) {
 						if(validateResume(chooseFile)){
 							$("#resumeErrorMsg").html("");
 							
@@ -69,6 +78,8 @@
 										}
 							});
 						}	
+					}else if(parseInt(sizeInKB) > 750){
+						$("#resumeErrorMsg").html("<span style='color:red'>File size should not exceed more than 750KB. Please try again.</span>");
 					} else {
 						$("#resumeErrorMsg")
 								.html(
@@ -117,24 +128,10 @@
 				<!-- Choose file section -->
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Upload Resume:</span>
-					<form:input path="fileData" id="chooseFile" class="floatLeft" type="file" />
+					<form:input path="fileData" class="floatLeft" type="file" />
 					<span class="required paddingTop0 marginTop5">(Required)</span>
             	</div>
-
-				<!-- <div class="rowEvenNewSpacing">
-					<span class="lableText4">Upload Resume:</span>
-					<div id="FileUpload">
-						<input type="file" size="24" id="BrowserHidden"
-							onchange="getElementById('FileField').value = getElementById('BrowserHidden').value;" />
-						<div id="BrowserVisible">
-							<input type="text" id="FileField" readonly="readonly"  value="No file chosen"/>
-							<span class="required paddingTop0 marginTop5">(Required)</span>
-						</div>
-					</div>
-					
-				</div> -->
-
-
+            	
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Name:</span>
 					<!-- <input type="text" name="lastname" class="job_seeker_password textBox2" /><span class="required">(Required)</span> -->
