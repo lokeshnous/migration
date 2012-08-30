@@ -1,20 +1,28 @@
-
-.borderBottomDotted {border-bottom:1px dotted #ccc; background:none;}
-
-.job_seeker_login input.job_seeker_email, .job_seeker_login input.job_seeker_password { width: 189px; height:19px; float:left; padding:3px;}
-
-input.job_seeker_email, input.job_seeker_password { height:19px; float:left; padding:3px;}
-
-
-.jb_input1, .jb_input2 {height:19px !important; padding:3px}
-
-.jb_input1 { width: 394px; }
-.jb_input2 { width: 244px; }
-
-
-.leftFormHolder input{  float: left; width:344px !important; }
-.leftFormHolder select{ height:27px; padding:3px;  float: left; width:350px !important; }
-
-.leftFormHolder input, .popUpContainer input.job_seeker_email, .popUpContainer input.job_seeker_password {  float: left; width:350px ; }
-
-input.fileType { width:auto !important; background:inherit !important; border:1px solid #ccc !important; }
+.job_seeker_login input.job_seeker_email, .job_seeker_login input.job_seeker_password{
+	 width: 205px; 
+	 height: 15px; 
+	 padding-top:5px;
+	 padding-bottom:5px;
+	 border-radius: 4px; 
+	 -moz-border-radius: 4px; 
+	 -webkit-border-radius: 4px; 
+	 background-color: #f0f0f0; 
+	 font-size: 15px; 
+	 }
+.jb_input1, .jb_input2, .jb_input3, .jb_input4,#radius,.jb_input75 { 
+	 
+	height: 15px; 
+	padding-top:5px;
+	padding-bottom:5px;
+	border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px; 
+	background-color: #ffffff; 
+	border: 1px solid #CCCCCC; 
+	font-size:14px; 
+	}
+#radius{
+	height: 27px !important;
+	padding-top:0px;
+	padding-bottom:0px;
+	}

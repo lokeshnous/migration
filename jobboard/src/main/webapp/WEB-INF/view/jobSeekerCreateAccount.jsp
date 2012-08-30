@@ -6,20 +6,21 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
 		<!-- ../resources/css -->
-		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+		<!-- <link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
 		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
+		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css"> -->
 
 		
 
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script> -->
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
@@ -94,33 +95,29 @@
 	                      <form:input path="emailId" class="job_seeker_password textBox350"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-				<div>
-				<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="emailId" /></FONT> 
+				<div class="FormErrorDisplay">
+					<form:errors path="emailId" /> 
 				</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Email Address:</span>
 	                      <form:input path="confirmEmailId" class="job_seeker_password textBox350"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-	            <div>
-				<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="confirmEmailId" /></FONT> 
+	            <div class="FormErrorDisplay">				
+					<form:errors path="confirmEmailId"/>
 				</div>         
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Password:</span>
 	                      <form:password path="password" class="job_seeker_password textBox350"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-				<div>
-				<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="password" /></FONT> 
+				<div class="FormErrorDisplay">
+					<form:errors path="password" /> 
 				</div>
 	            <div class="row marginTop5"> <span class="lableText3"></span> (8-20 characters, including at least 1 number)</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Password:</span>
 	            		  <form:password path="retypepassword" class="job_seeker_password textBox350" />
 	                      <span class="required">(Required)</span> </div>
-	            <div>
-				<span class="lableText3"></span>
-					<FONT color="red"><form:errors path="retypepassword" /></FONT> 
+	            <div class="FormErrorDisplay">
+					<form:errors path="retypepassword" /> 
 				</div>
 	            <%-- <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> <img src="../resources/images/SecureText.jpg" width="294" height="48" alt=""> </div>
 	
@@ -134,8 +131,8 @@
 	               <input type="button" value="Cancel" onclick="cancelProcess()"
 									class="orange" name="Cancel" />
 	               
-	               <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange cancelacount">Cancel</a> --%>
-	               <!-- <input type="submit" value="Cancel" class="btn_sm orange"  name="Cancel"/> -->  
+	               <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="orange">Cancel</a> --%>
+	               <!-- <input type="submit" value="Cancel" class="orange"  name="Cancel"/> -->  
 	            </div>
 	            <div class="clearfix"></div>
           </form:form>

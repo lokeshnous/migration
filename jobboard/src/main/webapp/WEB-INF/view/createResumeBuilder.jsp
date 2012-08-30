@@ -215,9 +215,12 @@
 						
  						<div class="row">
 							<span>
-								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume Name:</h2><c:out value="${createResume.resumeName}"/>
+								<h2 class="marginLeft10 noTopBottomBorder floatLeft color1">Resume Name:</h2>&#160;
+								<span class="DisplayResumeName"><c:out value="${createResume.resumeName}"/></span>
 
-								 <div class="progressBarContainer"><span class="floatLeft"><div id="progressbar"></div></span><h3 class="floatLeft marginLeft5"><c:out value="${createResume.resumeName}"/></h3>
+								 <div class="progressBarContainer"><span class="floatLeft"><div id="progressbar"></div></span>
+								 <h3 class="floatLeft marginLeft5"><c:out value="${createResume.totalProgress}"/>% Complete</h3>
+								 <%-- <h3 class="floatLeft marginLeft5"><c:out value="${createResume.resumeName}"/></h3> --%>
            </div>
            </span> </div> 
 							
@@ -714,7 +717,7 @@
 								</div>
 								<div id="certAjaxCallId">
 <!-- 									<input type="button" value="Save and add another certification"
-										class="btn_sm orange" id="certAjaxCallIdButton" /> -->
+										class="orange" id="certAjaxCallIdButton" /> -->
 									 <p><a href="#" class="link_color1_emphasized" id="certAjaxCallIdButton" >Save and add another certification</a></p> 
 								</div>
 							</div>
@@ -974,11 +977,11 @@
 					</div>
 					<div class="clearfix"></div>
 					<br /> <span class="marginBottom10 FloatLeft"> 
-					<input type="button" value="Save" name="Save" class="btn_sm orange"  id="saveResBuilderBtId"/>
-					<input type="submit" value="Preview" name="Preview" class="btn_sm orange" />
-					<input type="button" value="Cancel" class="btn_sm orange" name="Cancel" onclick="cancelProcess()" />
-					<%-- <a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="btn_sm orange cancelacount">Cancel</a> --%>
-					<input type="submit" value="Save" name="Save" class="btn_sm orange"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
+					<input type="button" value="Save" name="Save" class="orange"  id="saveResBuilderBtId"/>
+					<input type="submit" value="Preview" name="Preview" class="orange" />
+					<input type="button" value="Cancel" class="orange" name="Cancel" onclick="cancelProcess()" />
+					<%-- <a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="orange cancelacount">Cancel</a> --%>
+					<input type="submit" value="Save" name="Save" class="orange"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
 					</span>
 				</div>
 

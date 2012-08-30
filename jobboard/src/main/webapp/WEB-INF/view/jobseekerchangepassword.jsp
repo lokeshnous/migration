@@ -85,9 +85,9 @@
 				<FONT color="red"><form:errors path="retypepassword" /></FONT>
 			</div>
             <div class="popUpButtonRow">
-             <input type="button" id="save" value="Save" class="btn_sm orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> 
+             <input type="button" id="save" value="Save" class="orange"/><!-- <a href="" class="btn_sm orange">Save</a> --> 
              <input type="button" value="Cancel" onclick="cancelProcess()"
-									class="btn_sm orange" name="Cancel" />
+									class="orange" name="Cancel" />
              
              <!-- <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a> -->
 

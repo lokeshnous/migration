@@ -152,11 +152,11 @@
 						</div>
 						<div class="buttonContainer indent10">
 							<span class="floatLeft"> <input type="submit"
-								class="btn_sm orange" value="Place Order" /> 
+								class="orange" value="Place Order" /> 
 								<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="btn_sm white" name="Cancel" />
+									class="white" name="Cancel" />
 								<input type="button" value="Back" onclick="backProcess()"
-									class="btn_sm white" name="Back" />
+									class="white" name="Back" />
 								<!-- <a href=""
 								class="btn_sm white">Cancel</a> <a
 								href="../pgiController/paymentInvoiceBackMethod.html"

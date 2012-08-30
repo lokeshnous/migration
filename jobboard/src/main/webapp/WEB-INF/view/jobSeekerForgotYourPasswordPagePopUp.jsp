@@ -80,8 +80,8 @@
 				
 				<div class="popUpButtonRow">
 					
-					     <input type="button" id="emailbutton" class="btn_sm orange" value="Send"/>
-					     <input type="button" id="cancelbutton" class="btn_sm orange" value="Cancel" onclick="parent.$.nmTop().close();" />
+					     <input type="button" id="emailbutton" class="orange" value="Send"/>
+					     <input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 					
 				</div>
 				<span  style="font-size: 25px;font:bold; "><div id="waitmsg" >${msg.forgotPassword}</div></span>

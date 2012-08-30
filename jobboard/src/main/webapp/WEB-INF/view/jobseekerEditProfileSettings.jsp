@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<div id="errmsg" style="color: red" align="middle">
+			<div id="errmsg" class="FormErrorDisplay">
 				</div>
 			<form:form action="../jobseekerregistration/updateJobSeekerProfile.html" method="POST"
 				commandName="registerForm"  id="editProfileSettingsId">
@@ -237,9 +237,9 @@
 				<div class="popUpButtonRow">
 					<!--<a href="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
-					<input type="button" value="Save" class="btn_sm orange" id="save" style="margin-bottom:3px"/>
+					<input type="button" value="Save" class="orange" id="save"/>
 					<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="btn_sm orange" name="Cancel" />
+									class="orange" name="Cancel" />
 
 					
 					<!-- <a href="#" class="btn_sm orange"

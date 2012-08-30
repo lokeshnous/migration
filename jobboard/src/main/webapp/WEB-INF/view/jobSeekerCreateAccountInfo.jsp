@@ -295,15 +295,15 @@
 							<div
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
-								<input type="submit" value="Back" class="btn_sm orange nextacount"
+								<input type="submit" value="Back" class="orange"
 									name="Back" /> <input type="submit" value="Finish"
-									class="btn_sm orange nextacount" name="Finish" /> 
+									class="orange" name="Finish" /> 
 									<input type="button" value="Cancel" onclick="cancelProcess();"
-									class="btn_sm orange nextacount" name="Cancel" />
+									class="orange" name="Cancel" />
 									<%-- <a
 									href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html"
 									class="btn_sm orange cancelacount">Cancel</a> --%>
-								<!-- <input type="submit" value="Cancel" class="btn_sm orange" name="Cancel"/>  -->
+								<!-- <input type="submit" value="Cancel" class="orange" name="Cancel"/>  -->
 							</div>
 							<div class="clearfix"></div>
 						</form:form>

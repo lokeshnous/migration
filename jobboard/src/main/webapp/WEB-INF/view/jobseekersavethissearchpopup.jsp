@@ -82,8 +82,8 @@ function closePopup() {
 				</div>
 				<span id="ErrorMsg" style="color: red; font: bold; font-size: 15px;" align="left" ></span>
 				<div class="popUpButtonRow">
-				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
-				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>					
+				<input type="button" id="saveData" class="orange" value="Save"/>
+				<input type="button" onclick="closePopup();" class="orange" value="Cancel"/>					
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

@@ -40,7 +40,7 @@ jQuery(document).ready(
 			$("#createResumePopup").displaypopup("#createResumePopup",
 					"775", "252");
 			$("#editProfileId")
-					.displaypopup("#editProfileId", "775", "252");
+					.displaypopup("#editProfileId", "790", "252");
 			$("#modifySubs").displaypopup("#modifySubs", "775", "252");
 			$("#viewMySavedSearchesId").displaypopup(
 					"#viewMySavedSearchesId", "775", "252");

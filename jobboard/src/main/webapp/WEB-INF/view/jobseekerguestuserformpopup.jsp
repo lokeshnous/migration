@@ -11,9 +11,9 @@
 
 		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
-		function closePopup() {
+		/* function closePopup() {
 			parent.window.location.reload();
-		}
+		} */
 		jQuery(document).ready(function() {
 		$("#sendButton").click(function(event){    
 			if(validate()){
@@ -70,12 +70,17 @@
 		}
 		
         </script>
+        <script type="text/javascript">
+		    function cancelProcess(){
+		    	parent.window.location.reload();
+		    }		
+		</script>
 		</head>
 
 <body class="job_board">
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader"><h2>GUEST USER FORM</h2>
-                  <a href=""><img src="../resources/images/Close.png" onclick="closePopup();" width="19" height="19" alt=""></a></div>
+                  <a href=""><img src="../resources/images/Close.png" onclick="cancelProcess();" width="19" height="19" alt=""></a></div>
                  <div id="errmsg" style="font:bold; color: red" align="left"></div>
 <div class="popUpContainerWrapper"><form:form id="applyJobForm" action=""  method="POST" commandName="jobApplicationForm" enctype="multipart/form-data" >
             <div class="rowEvenNewSpacing"> <h3>Send Resume</h3></div>
@@ -91,14 +96,17 @@
               <div style="color: red" align="left" id="userEmailError"></div>
     </div>
             <div class="rowEvenNewSpacing"> <span class="lableText3">Upload Resume File:</span>
-            <div class="floatLeft"><form:input path="filePath" type="file" id="filePath" size="20" class="job_seeker_login_email fileType" />
+            <div class="FileTypeWidth"><form:input path="filePath" type="file" id="filePath" size="17" class="job_seeker_login_email fileType" />
             </div>
             <span class="required">(Required)</span>
              <div style="color: red" align="left" id="filePathError"></div>
 </div>
       <div class="popUpButtonRow">
                          
-             <input type="button" class="btn_sm orange" id="sendButton" value="Send"/> <a href="" onclick="closePopup();" class="btn_sm orange">Cancel</a>
+             <input type="button" class="orange" id="sendButton" value="Send"/> 
+              <input type="button" value="Cancel" onclick="cancelProcess()"
+									class="orange" name="Cancel" />
+             <!-- <a href="" onclick="closePopup();" class="btn_sm orange">Cancel</a> -->
              
 </div>
                     <div class="clearfix"></div>

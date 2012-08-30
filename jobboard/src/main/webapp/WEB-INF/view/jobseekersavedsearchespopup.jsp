@@ -234,8 +234,8 @@ var id = searchJobId.replace("viewSavedSearch", "");
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			
 			<div class="popUpButtonRow">
-				<input type="button" id="saveData" class="btn_sm orange" value="Save"/>
-				<input type="button" onclick="closePopup();" class="btn_sm orange" value="Cancel"/>
+				<input type="button" id="saveData" class="orange" value="Save"/>
+				<input type="button" onclick="closePopup();" class="orange" value="Cancel"/>
 			</div>
 			</form:form>
 		</div>

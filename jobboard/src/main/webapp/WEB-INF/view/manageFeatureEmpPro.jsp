@@ -157,9 +157,9 @@
 						<div class="row paddingBottom10">
 							<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 								<span class="floatLeft marginTop10"> <input
-						type="submit" value="Save" name="Save" class="btn_sm orange" />
+						type="submit" value="Save" name="Save" class="orange" />
 						<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="btn_sm orange" name="Cancel" />
+									class="orange" name="Cancel" />
 						
 						<%-- <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
 						class="btn_sm orange">Cancel</a> --%></span>

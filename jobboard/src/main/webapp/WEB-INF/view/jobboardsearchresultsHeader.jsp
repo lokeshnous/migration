@@ -46,8 +46,8 @@
 	                      <!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
 	                      <div style="color: red;font-weight:bold;" id="findSearchInfo" ></div>
 	                      <div class="rowEvenNewSpacing">
-	                    <input type="button" id= "submitval" onclick="findJobs();" value="Find Jobs" class="btn_sm orange jb_search_submit" />
-	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="btn_sm orange jb_search_submit" /> -->
+	                    <input type="button" id= "submitval" onclick="findJobs();" value="Find Jobs" class="orange jb_search_submit" />
+	                    <!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->
              <%-- </form:form>     --%>  
                       
                       <a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Post Your Resume</a></div></div>

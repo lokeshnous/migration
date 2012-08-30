@@ -291,11 +291,11 @@
 
 						<div class="buttonContainer">
 							<span class="floatLeft"><input type="submit"
-								class="btn_sm orange" value="Continue to Next Step" /> 
+								class="orange" value="Continue to Next Step" /> 
 								<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="btn_sm white" name="Cancel" />
+									class="white" name="Cancel" />
 								<input type="button" value="Back" onclick="backProcess()"
-									class="btn_sm white" name="Back" />
+									class="white" name="Back" />
 								<!-- <a
 								href="" class="btn_sm white">Cancel</a> <a
 								href="../pgiController/callPaymentMethod.html"

@@ -128,8 +128,8 @@
 							<!-- <a class="btn_sm orange" href="../employerRegistration/employeeAccountSetting.html">
 								Edit
 							</a> -->
-							<input class="btn_sm orange" type="submit" value="Edit">
-							<input type="button" name="Cancel" class="btn_sm orange" />
+							<input class="orange" type="submit" value="Edit">
+							<input type="button" name="Cancel" class="orange" />
 								
 						</span>
 					</div>
@@ -205,7 +205,7 @@
 							<!-- <a class="btn_sm orange" href="">
 								Edit
 							</a> -->
-							<input class="btn_sm orange" type="submit" value="Edit">
+							<input class="orange" type="submit" value="Edit">
 							<a class="btn_sm orange" href="">
 								Cancel
 							</a>

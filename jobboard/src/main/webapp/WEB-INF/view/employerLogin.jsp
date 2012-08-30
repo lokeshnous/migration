@@ -62,7 +62,7 @@
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
-				    	<input type="submit" class="btn_sm orange" value="Login"/>				    
+				    	<input type="submit" class="orange" value="Login"/>				    
 										
                     	<a href="forgrtPasswordLogin.html?page=employer" id="forgrtpassword">Forgot your password?</a>
 			

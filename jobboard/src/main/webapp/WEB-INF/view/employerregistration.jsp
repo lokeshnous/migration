@@ -283,9 +283,9 @@
 						<span class="floatLeft marginTop10 marginRight60"> 
 						<!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
-							<input type="submit" style="margin-top: -4px;" value="Save & Continue" class="btn_sm orange">
+							<input type="submit" style="margin-top: -4px;" value="Save & Continue" class="orange">
 							<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="btn_sm orange" name="Cancel" />
+									class="orange" name="Cancel" />
 							
 							<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span> <span
 							class="floatLeft marginTop10">I'll set up my profile
