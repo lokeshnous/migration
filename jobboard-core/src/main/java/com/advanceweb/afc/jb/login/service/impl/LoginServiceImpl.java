@@ -10,8 +10,10 @@ import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
 import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
@@ -71,17 +73,24 @@ public class LoginServiceImpl implements LoginService {
 	public EmployerInfoDTO facilityDetails(int userId) {
 		return userDAO.facilityDetails(userId);
 	}
-	
+
 	/**
 	 * This method is get the metrics details for logged in employer
+	 * 
 	 * @param facilityId
 	 * @return metricsDTO
 	 */
-	public List<MetricsDTO> getJobPostTotal(int facilityId){
+	public List<MetricsDTO> getJobPostTotal(int facilityId) {
 		return userDAO.getJobPostTotal(facilityId);
 	}
-	
-	/*public int getEmployerCount(){
-		return userDAO.getEmployerCount();
-	}*/
+
+	public long getEmployerCount() throws JobBoardServiceException {
+		long returnVal = 0;
+		try{
+			returnVal = userDAO.getEmployerCount();
+		}catch(JobBoardDataException jde){
+			throw new JobBoardServiceException("Error occured while getting the Result from Database"+jde);
+		}
+		return returnVal;
+	}
 }

@@ -7,6 +7,7 @@ import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * This Interface defines the required methods for login form
@@ -54,5 +55,5 @@ public interface LoginService {
 	 */
 	List<MetricsDTO> getJobPostTotal(int facilityId);
 	
-	//int getEmployerCount();
+	long getEmployerCount() throws JobBoardServiceException;
 }

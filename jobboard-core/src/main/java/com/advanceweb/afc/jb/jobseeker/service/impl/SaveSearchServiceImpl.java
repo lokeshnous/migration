@@ -79,8 +79,8 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 * @return
 	 */
 	@Override
-	public boolean validateSearchName(String searchName) {
-		return saveSearchDAO.validateSearchName(searchName);
+	public boolean validateSearchName(String searchName, int userId) {
+		return saveSearchDAO.validateSearchName(searchName, userId);
 	}
 
 	/**
@@ -106,7 +106,6 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	public boolean deleteFirstSearch(int userId) {
 		return saveSearchDAO.deleteFirstSearch(userId);
 	}
-	
 
 	/**
 	 * This method is used to update the saved search details.
@@ -114,8 +113,8 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 * @param SaveSearchedJobsDTO
 	 * @return boolean
 	 */
-	public boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO){
+	public boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		return saveSearchDAO.updateSearchDetails(saveSearchedJobsDTO);
 	}
-	
+
 }

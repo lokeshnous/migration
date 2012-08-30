@@ -6,6 +6,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 public interface UserDao {
 	MerUserDTO getUser(String email);
@@ -28,5 +29,5 @@ public interface UserDao {
 	 */
 	List<MetricsDTO> getJobPostTotal(int facilityId);
 	
-	//int getEmployerCount();
+	long getEmployerCount() throws  JobBoardDataException;
 }

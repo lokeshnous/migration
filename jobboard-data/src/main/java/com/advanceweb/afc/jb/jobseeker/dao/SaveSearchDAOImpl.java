@@ -92,11 +92,12 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * This method is called to edit a Saved Job Search
 	 * 
 	 * @param saveSearchId
-	 * @return 
+	 * @return
 	 */
 	@Override
 	public List<SaveSearchedJobsDTO> editSavedSearch(int saveSearchId) {
-		List<AdmSaveSearch> searchResults = hibernateTemplate.find("from AdmSaveSearch where saveSearchId=? ",saveSearchId);
+		List<AdmSaveSearch> searchResults = hibernateTemplate.find(
+				"from AdmSaveSearch where saveSearchId=? ", saveSearchId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
@@ -127,11 +128,10 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * @param searchName
 	 * @return
 	 */
-	public boolean validateSearchName(String searchName) {
-		AdmSaveSearch admSaveSearch = new AdmSaveSearch();
-		List<AdmSaveSearch> searchResults = hibernateTemplate.find(
-				"from AdmSaveSearch where searchName=? and delete_dt is  NULL",
-				searchName);
+	public boolean validateSearchName(String searchName, int userId) {
+		List<AdmSaveSearch> searchResults = hibernateTemplate
+				.find("from AdmSaveSearch where searchName=? and userId=? and delete_dt is  NULL",
+						searchName, userId);
 		if (searchResults.isEmpty()) {
 			return false;
 		}
@@ -156,16 +156,16 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		hibernateTemplate.saveOrUpdate(search);
 		return true;
 	}
-	
+
 	/**
 	 * This method is used to update the saved search details.
 	 * 
 	 * @param SaveSearchedJobsDTO
 	 * @return boolean
 	 */
-	
-	public boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO){
-		
+
+	public boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO) {
+
 		AdmSaveSearch search = hibernateTemplate.load(AdmSaveSearch.class,
 				saveSearchedJobsDTO.getSaveSearchID());
 		search.setUrl(saveSearchedJobsDTO.getUrl());
@@ -176,7 +176,5 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		hibernateTemplate.saveOrUpdate(search);
 		return true;
 	}
-	
-	
 
 }

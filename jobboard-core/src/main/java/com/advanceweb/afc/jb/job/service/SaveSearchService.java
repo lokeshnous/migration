@@ -60,7 +60,7 @@ public interface SaveSearchService {
 	 * @param searchName
 	 * @return
 	 */
-	boolean validateSearchName(String searchName);
+	boolean validateSearchName(String searchName, int userId);
 
 	/**
 	 * This method is called to delete the Saved Searches

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
@@ -25,6 +27,9 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @Controller
 @RequestMapping("/employer")
 public class EmployerDashBoardController {
+
+	private static final Logger LOGGER = Logger
+			.getLogger(EmployerDashBoardController.class);
 
 	@Autowired
 	private LoginService loginService;
@@ -86,11 +91,17 @@ public class EmployerDashBoardController {
 		int swAvgViews = 0;
 		int swAvgClicks = 0;
 		int swAvgApplies = 0;
-		//int count = loginService.getEmployerCount();
-		if (size > 0) {
-			swAvgViews = views / size;
-			swAvgClicks = clicks / size;
-			swAvgApplies = applies / 2;
+		long count = 0;
+		try {
+			count = loginService.getEmployerCount();
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occured while getting the Result from Database");
+		}
+
+		if (count > 0) {
+			swAvgViews = (int) (views / count);
+			swAvgClicks = (int) (clicks / count);
+			swAvgApplies = (int) (applies / count);
 		}
 		metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
 		metricsDTO.setViews(swAvgViews);

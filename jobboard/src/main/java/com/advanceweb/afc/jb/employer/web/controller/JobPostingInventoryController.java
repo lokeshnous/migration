@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.login.web.controller.LoginForm;
-
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 /**
  * 
@@ -19,7 +20,7 @@ import com.advanceweb.afc.jb.login.web.controller.LoginForm;
  * @since 23rd August, 2012
  */
 
-@Controller 
+@Controller
 @RequestMapping("/inventory")
 public class JobPostingInventoryController {
 
@@ -30,10 +31,14 @@ public class JobPostingInventoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employer/jobInventory", method = RequestMethod.GET)
-	public ModelAndView jobInventory(Map<String, LoginForm> model,
+	public ModelAndView jobInventory(Map<String, InventoryForm> model,
 			@RequestParam(value = "page", required = false) String page,
-			Model modelconstants) {
-		//model.put("loginForm", loginForm);
+			Model modelconstants, HttpSession session) {
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		
 		return new ModelAndView("jobPostingInventoryPopup");
 	}
 }

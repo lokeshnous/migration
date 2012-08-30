@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -49,7 +48,6 @@ public class SaveSearchController {
 	private static final Logger LOGGER = Logger
 			.getLogger("SaveSearchController.class");
 
-
 	private String navigationPath;
 
 	@Autowired
@@ -57,10 +55,10 @@ public class SaveSearchController {
 
 	@Autowired
 	PopulateDropdowns populateDropdownsService;
-		
+
 	@Value("${saveThisSearchErrMsg}")
 	private String saveThisSearchErrMsg;
-	
+
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
@@ -78,8 +76,9 @@ public class SaveSearchController {
 			@RequestParam("searchName") String searchName, HttpSession session) {
 
 		JSONObject jsonObject = new JSONObject();
-		Map<String, String> sessionMap = checkSessionMap.getSearchSessionMap(session);
-		
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put("NavigationPath", navigationPath);
 		} else {
@@ -91,30 +90,29 @@ public class SaveSearchController {
 				jsonObject.put("EmptySearchName", "EmptySearchName");
 			} else {
 
-				boolean isSrchNameExist = saveSearchService
-						.validateSearchName(searchName);
+				boolean isSrchNameExist = saveSearchService.validateSearchName(
+						searchName, userId);
 
 				if (isSrchNameExist) {
 					jsonObject
 							.put("DuplicateSearchName", "DuplicateSearchName");
 				} else {
 					searchedJobsDTO.setUserID(userId);
-					searchedJobsDTO
-							.setUrl(MMJBCommonConstants.SEARCH_TYPE
-									+ MMJBCommonConstants.EQUAL_TO
-									+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
-									+ MMJBCommonConstants.SEMICOLON
-									+ SearchParamDTO.KEYWORDS
-									+ MMJBCommonConstants.EQUAL_TO
-									+ sessionMap.get(SearchParamDTO.KEYWORDS)
-									+ MMJBCommonConstants.SEMICOLON
-									+ SearchParamDTO.CITY_STATE
-									+ MMJBCommonConstants.EQUAL_TO
-									+ sessionMap.get(SearchParamDTO.CITY_STATE)
-									+ MMJBCommonConstants.SEMICOLON
-									+ SearchParamDTO.RADIUS
-									+ MMJBCommonConstants.EQUAL_TO
-									+ sessionMap.get(SearchParamDTO.RADIUS));
+					searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+							+ MMJBCommonConstants.EQUAL_TO
+							+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
+							+ MMJBCommonConstants.SEMICOLON
+							+ SearchParamDTO.KEYWORDS
+							+ MMJBCommonConstants.EQUAL_TO
+							+ sessionMap.get(SearchParamDTO.KEYWORDS)
+							+ MMJBCommonConstants.SEMICOLON
+							+ SearchParamDTO.CITY_STATE
+							+ MMJBCommonConstants.EQUAL_TO
+							+ sessionMap.get(SearchParamDTO.CITY_STATE)
+							+ MMJBCommonConstants.SEMICOLON
+							+ SearchParamDTO.RADIUS
+							+ MMJBCommonConstants.EQUAL_TO
+							+ sessionMap.get(SearchParamDTO.RADIUS));
 
 					searchedJobsDTO.setSearchName(searchName);
 					searchedJobsDTO.setCreatedDate(MMUtils
@@ -144,53 +142,60 @@ public class SaveSearchController {
 	public @ResponseBody
 	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
 			Map<String, SaveSearchForm> model, HttpSession session,
-			 @RequestParam("keywords") String keywords) {
+			@RequestParam("keywords") String keywords) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 
-			Map<String, String> sessionMap = checkSessionMap.getSearchSessionMap(session);
-			
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
+
 			// Check for job seeker login
-			if(session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put("SaveSearchForm", new SaveSearchForm());
+				jsonObject.put("NavigationPath", "../commonLogin/login");
+			} else if ((sessionMap
+					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
+					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
+							&& sessionMap
+									.get(MMJBCommonConstants.SEARCH_TYPE)
+									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE) && sessionMap
+							.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)) {
+
+				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+
+				searchedJobsDTO.setSearchName(sessionMap
+						.get(MMJBCommonConstants.SAVE_SEARCH_NAME));
+				searchedJobsDTO.setSaveSearchID(Integer.parseInt(sessionMap
+						.get(MMJBCommonConstants.SAVE_SEARCH_ID)));
+				searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
+						+ MMJBCommonConstants.SEMICOLON
+						+ SearchParamDTO.KEYWORDS
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(SearchParamDTO.KEYWORDS)
+						+ MMJBCommonConstants.SEMICOLON
+						+ SearchParamDTO.CITY_STATE
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(SearchParamDTO.CITY_STATE)
+						+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.RADIUS
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(SearchParamDTO.RADIUS));
+
+				searchedJobsDTO.setUserID((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
+
+				saveSearchService.updateSearchDetails(searchedJobsDTO);
+
+				session.removeAttribute(sessionMap
+						.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
+				session.removeAttribute(sessionMap
+						.remove(MMJBCommonConstants.SEARCH_TYPE));
+
 				jsonObject.put("NavigationPath",
-						"../commonLogin/login");
-			} else if((sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null) 
-					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null 
-							&& sessionMap.get(MMJBCommonConstants.SEARCH_TYPE).equals(MMJBCommonConstants.BASIC_SEARCH_TYPE)
-							&& sessionMap.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)){			
-					
-					 SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
-					 
-					 searchedJobsDTO.setSearchName(sessionMap.get(MMJBCommonConstants.SAVE_SEARCH_NAME));
-					 searchedJobsDTO.setSaveSearchID(Integer.parseInt(sessionMap.get(MMJBCommonConstants.SAVE_SEARCH_ID)));
-					 searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
-								+ MMJBCommonConstants.EQUAL_TO
-								+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
-								+ MMJBCommonConstants.SEMICOLON
-								+ SearchParamDTO.KEYWORDS
-								+ MMJBCommonConstants.EQUAL_TO
-								+ sessionMap.get(SearchParamDTO.KEYWORDS)
-								+ MMJBCommonConstants.SEMICOLON
-								+ SearchParamDTO.CITY_STATE
-								+ MMJBCommonConstants.EQUAL_TO
-								+ sessionMap.get(SearchParamDTO.CITY_STATE)
-								+ MMJBCommonConstants.SEMICOLON
-								+ SearchParamDTO.RADIUS
-								+ MMJBCommonConstants.EQUAL_TO
-								+ sessionMap.get(SearchParamDTO.RADIUS));
-					 
-					 searchedJobsDTO.setUserID((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
-					 
-					 saveSearchService.updateSearchDetails(searchedJobsDTO);
-					 
-					 session.removeAttribute(sessionMap.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
-					 session.removeAttribute(sessionMap.remove(MMJBCommonConstants.SEARCH_TYPE));
-					 
-					 jsonObject.put("NavigationPath",
-								"../jobSeeker/jobSeekerDashBoard");
-				 
-			}else{				
+						"../jobSeeker/jobSeekerDashBoard");
+
+			} else {
 				// Before user saves his search need to check save search
 				// records are more than 5 searches.
 				// if yes then delete the first saved search
@@ -198,19 +203,19 @@ public class SaveSearchController {
 				List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 						.viewMySavedSearches(userId);
 				int savedSearchCount = 0;
-				if(keywords != null && keywords != MMJBCommonConstants.EMPTY){
+				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
 					savedSearchCount = saveSearchedJobsDTOList.size();
 					if (savedSearchCount == 5) {
 						saveSearchService.deleteFirstSearch(userId);
 					}
-					
+
 					model.put("SaveSearchForm", new SaveSearchForm());
 					jsonObject.put("LoggedInNavigationPath",
 							"../savedSearches/displaySaveThisSearchPopup");
-				}else{
+				} else {
 					jsonObject.put("failure", saveThisSearchErrMsg);
 				}
-				
+
 			}
 
 		} catch (Exception e) {
@@ -244,7 +249,8 @@ public class SaveSearchController {
 			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		saveSearchForm.setUserID(userId);
 		if (saveSearchForm.getUserID() != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
@@ -290,53 +296,71 @@ public class SaveSearchController {
 	@RequestMapping(value = "/editSavedSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject editSavedSearch(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session, @RequestParam("searchId") int searchId,
-			 @RequestParam("performSearch") String performSearch) {
+			HttpServletResponse response, HttpSession session,
+			@RequestParam("searchId") int searchId,
+			@RequestParam("performSearch") String performSearch) {
 
 		JSONObject jsonObject = new JSONObject();
-		
-		Map<String, String> sessionMap = checkSessionMap.getSearchSessionMap(session);
-		
-		if(sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) != null 
-				&& sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH).equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){
-			session.removeAttribute(sessionMap.remove(MMJBCommonConstants.PERFORM_SAVED_SEARCH));
+
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+
+		if (sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) != null
+				&& sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH)
+						.equalsIgnoreCase(
+								MMJBCommonConstants.PERFORM_SAVED_SEARCH)) {
+			session.removeAttribute(sessionMap
+					.remove(MMJBCommonConstants.PERFORM_SAVED_SEARCH));
 		}
-		
-		if(performSearch != null && performSearch.equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)){
-			sessionMap.put(MMJBCommonConstants.PERFORM_SAVED_SEARCH, performSearch);
+
+		if (performSearch != null
+				&& performSearch
+						.equalsIgnoreCase(MMJBCommonConstants.PERFORM_SAVED_SEARCH)) {
+			sessionMap.put(MMJBCommonConstants.PERFORM_SAVED_SEARCH,
+					performSearch);
 		}
-		
-		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService.editSavedSearch(searchId);
-		
+
+		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService
+				.editSavedSearch(searchId);
+
 		if (saveSrchJobsDTOList.size() > 0) {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();
 			String saveSearchName = saveSrchJobsDTOList.get(0).getSearchName();
 			Map<String, String> urlMap = MMUtils.getUrlMap(urlString);
-			
-			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
-			sessionMap.put(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
-			sessionMap.put(SearchParamDTO.KEYWORDS, urlMap.get(SearchParamDTO.KEYWORDS));
-			sessionMap.put(SearchParamDTO.CITY_STATE, urlMap.get(SearchParamDTO.CITY_STATE));
-			sessionMap.put(SearchParamDTO.RADIUS, urlMap.get(SearchParamDTO.RADIUS));
+
+			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
+					urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
+			sessionMap
+					.put(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
+			sessionMap.put(SearchParamDTO.KEYWORDS,
+					urlMap.get(SearchParamDTO.KEYWORDS));
+			sessionMap.put(SearchParamDTO.CITY_STATE,
+					urlMap.get(SearchParamDTO.CITY_STATE));
+			sessionMap.put(SearchParamDTO.RADIUS,
+					urlMap.get(SearchParamDTO.RADIUS));
 			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
-			sessionMap.put(MMJBCommonConstants.SAVE_SEARCH_ID, String.valueOf(searchId));
-			
+			sessionMap.put(MMJBCommonConstants.SAVE_SEARCH_ID,
+					String.valueOf(searchId));
+
 			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
-			
-			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE, urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
-			jsonObject.put(SearchParamDTO.KEYWORDS, urlMap.get(SearchParamDTO.KEYWORDS));
-			jsonObject.put(SearchParamDTO.CITY_STATE, urlMap.get(SearchParamDTO.CITY_STATE));
-			jsonObject.put(SearchParamDTO.RADIUS, urlMap.get(SearchParamDTO.RADIUS));
+
+			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
+					urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
+			jsonObject.put(SearchParamDTO.KEYWORDS,
+					urlMap.get(SearchParamDTO.KEYWORDS));
+			jsonObject.put(SearchParamDTO.CITY_STATE,
+					urlMap.get(SearchParamDTO.CITY_STATE));
+			jsonObject.put(SearchParamDTO.RADIUS,
+					urlMap.get(SearchParamDTO.RADIUS));
 			jsonObject.put(MMJBCommonConstants.AUTOLOAD, true);
-			
+
 			return jsonObject;
-		
+
 		} else {
-			
+
 			jsonObject.put("failed", "Failed to Edit this record");
 			return jsonObject;
-		}		
-		
+		}
 
 	}
 
