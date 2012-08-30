@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.pgi.service;
 
+import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
 
@@ -27,5 +28,11 @@ public interface FetchAdmFacilityConatact {
 	 * @return
 	 */
 	BillingAddressDTO getBillingAddByFacilityId(int facilityId);
-
+	
+	/**
+	 * @param billingAddressDTO
+	 * @return
+	 */
+	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO);
+	
 }
