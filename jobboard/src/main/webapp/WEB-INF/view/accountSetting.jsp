@@ -312,7 +312,7 @@ function copyAccToBillingAddr(obj) {
 						<span class="floatLeft marginTop10">
 							<input type="submit" value="Save" name="Save" id="btn-submit" class="btn_sm orange" />
 							<!-- <input class="btn_sm orange" type="submit" id="btn-submit" value="Edit"> -->
-							<input type="button" name="Cancel" class="orange" />
+							<input type="button" name="Cancel" class="orange" value="Cancel"/>
 								
 						</span>
 					</div>
@@ -396,7 +396,7 @@ function copyAccToBillingAddr(obj) {
 							 <!-- <input class="btn_sm orange" type="submit"
 							id="btn-submit2" value="Edit">  -->
 							<input type="submit" value="Save" name="Save" id="btn-submit2" class="btn_sm orange" />
-							<input type="button" name="Cancel" class="orange" />
+							<input type="button" name="Cancel" class="orange" value="Cancel" />
 						</span>
 					</div>
 					<div class="clearfix"></div>
