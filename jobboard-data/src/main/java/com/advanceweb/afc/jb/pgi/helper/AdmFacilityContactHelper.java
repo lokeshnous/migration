@@ -2,9 +2,12 @@ package com.advanceweb.afc.jb.pgi.helper;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AccountBillingDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
+
 
 /**
  * @author muralikc
@@ -85,6 +88,40 @@ public class AdmFacilityContactHelper {
 			admFacilityContact.setStreet(billingAddressDTO
 					.getBillStreetAddress());
 			admFacilityContact.setPostcode(billingAddressDTO.getBillZipCode());
+		}
+
+		return admFacilityContact;
+
+	}
+	
+	
+	/**
+	 * Converting BillingAddressDTO to Entity
+	 * 
+	 * @param billingAddressDTO
+	 * @return
+	 */
+	public AdmFacilityContact convertBillingDataAddressDtoToEntity(
+			AccountBillingDTO billingAddressDTO) {
+		AdmFacilityContact admFacilityContact = new AdmFacilityContact();
+		
+		admFacilityContact.setAdmFacility(new AdmFacility());
+		if (billingAddressDTO != null) {
+			admFacilityContact.setFirstName(billingAddressDTO.getFirstName());
+			admFacilityContact.setLastName(billingAddressDTO.getLastName());
+			admFacilityContact.setCity(billingAddressDTO.getCity());
+			admFacilityContact.setCountry(billingAddressDTO.getCountry());
+			admFacilityContact.setState(billingAddressDTO.getState());
+			admFacilityContact.setStreet(billingAddressDTO.getStreet());
+			admFacilityContact.setPostcode(billingAddressDTO.getZipCode());
+			admFacilityContact.setEmail(billingAddressDTO.getEmail());
+			admFacilityContact.setPhone(billingAddressDTO.getPhone());
+			admFacilityContact.setCompany(billingAddressDTO.getCompanyName());
+			admFacilityContact.setCreateDt(billingAddressDTO.getCreateDate());
+		
+//			admFacilityContact.getAdmFacility().setFacilityId(billingAddressDTO.getFacilityId());
+			
+			//System.err.println("dhfgg");
 		}
 
 		return admFacilityContact;
