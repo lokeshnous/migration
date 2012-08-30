@@ -34,7 +34,7 @@
 							</span><br>
 							<div class="floatRight">
 								<span class="floatLeft"> <a
-									href="<%=request.getContextPath()%>/logout">Log Out</a> | <a
+									href="<%=request.getContextPath()%>/logout.html">Log Out</a> | <a
 									href="../healthcarejobs/advanceweb.html">Home</a></span>
 							</div>
 						</div>
