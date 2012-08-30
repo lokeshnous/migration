@@ -11,7 +11,7 @@ import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 public class EmployeeAccountForm {
 
 	// Account Address information
-	BillingAddressForm billingAddressForm;
+	public BillingAddressForm billingAddressForm;
 	private String firstName;
 	private String middleName;
 	private String lastName;
