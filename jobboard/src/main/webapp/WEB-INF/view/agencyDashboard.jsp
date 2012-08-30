@@ -33,8 +33,9 @@
 								${msg.commonExclamationMark}
 							</span><br>
 							<div class="floatRight">
-								<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout">Log
-										Out</a> | <a href="../healthcarejobs/advanceweb.html">Home</a></span>
+								<span class="floatLeft"> <a
+									href="<%=request.getContextPath()%>/logout">Log Out</a> | <a
+									href="../healthcarejobs/advanceweb.html">Home</a></span>
 							</div>
 						</div>
 						<!-- loginHeader -->
@@ -133,14 +134,14 @@
 						<h1 class=" FontSize20">[Ad Agency Name] Dashboard</h1>
 					</div>
 					<div class="MidContent_Wrapper FloatLeft">
-						<div class="row width467 marginRight12">
+						<div class="dashboardcolumn1">
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/UserProfile.jpg" width="30" height="30"
-										alt="User Profile">
+									<img src="../resources/images/UserProfile.jpg" width="30"
+										height="30" alt="User Profile">
 								</div>
 
-								<div class="dashboardPanalcontent marginTop5">
+								<div class="dashboardPanalAGCcontent marginTop5">
 									<h2 class="noTopBorder">Profile Management</h2>
 									<div class="lableTextDashBoard">
 										<p>
@@ -164,11 +165,11 @@
 							<!---->
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/Subscriptions.jpg" width="30" height="30"
-										alt="Subscription">
+									<img src="../resources/images/Subscriptions.jpg" width="30"
+										height="30" alt="Subscription">
 								</div>
 
-								<div class="dashboardPanalcontent marginTop5">
+								<div class="dashboardPanalAGCcontent marginTop5">
 									<h2 class="noTopBorder">Current Subscriptions</h2>
 									<div class="lableTextDashBoard">
 										<p>E-newsletters</p>
@@ -190,7 +191,7 @@
 										alt="Subscription">
 								</div>
 
-								<div class="dashboardPanalcontent marginTop5">
+								<div class="dashboardPanalAGCcontent marginTop5">
 									<h2 class="noTopBorder">Media</h2>
 
 
@@ -204,14 +205,14 @@
 							</div>
 						</div>
 						<!--Right-->
-						<div class="row width467 paddingLeft12 BorderLeft">
+						<div class="dashboardcolumn2">
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/Resume.jpg" width="30" height="30"
-										alt="Resume">
+									<img src="../resources/images/Resume.jpg" width="30"
+										height="30" alt="Resume">
 								</div>
 
-								<div class="dashboardPanalcontent marginTop5 FloatLeft">
+								<div class="dashboardPanalAGCcontent marginTop5 FloatLeft">
 									<h2 class="noTopBorder">Employers</h2>
 									<div class="lableTextDashBoard">
 										<h3 class="TextColor01">Colorado</h3>
@@ -248,11 +249,16 @@
 											<a href="">Howard County General Hospital</a>
 										</p>
 									</div>
-									<div class="row marginTop45">
+									<div class="rowEvenTB10Spacing">
+									</div>
+									<div class="rowEvenTB10Spacing">
+									</div>
+									<div class="rowEvenNewSpacing">
 										<a href="#" class="btn_sm orange">ADD EMPLOYER</a><a href="#"
 											class="btn_sm orange">MANAGE EMPLOYERS</a>
 									</div>
 								</div>
+								
 							</div>
 							<!---->
 
@@ -346,14 +352,14 @@
 			<ul>
 				<li><a href="#">ADVANCE Healthcare Jobs</a></li>
 				<li><a href="#">Subscribe</a></li>
-				<li><img src="../resources/images/email.png" class="foot_icon" /><a href="#">Sign
-						Up for Enewsletter</a></li>
-				<li><img src="../resources/images/fbook_sm.png" class="foot_icon" /><a
-					href="#">Connect on Facebook</a></li>
-				<li><img src="../resources/images/L_In_sm.png" class="foot_icon" /><a
-					href="#">Connect on LinkedIn</a></li>
-				<li><img src="../resources/images/twitter_sm.png" class="foot_icon" /><a
-					href="#">Connect on Twitter</a></li>
+				<li><img src="../resources/images/email.png" class="foot_icon" /><a
+					href="#">Sign Up for Enewsletter</a></li>
+				<li><img src="../resources/images/fbook_sm.png"
+					class="foot_icon" /><a href="#">Connect on Facebook</a></li>
+				<li><img src="../resources/images/L_In_sm.png"
+					class="foot_icon" /><a href="#">Connect on LinkedIn</a></li>
+				<li><img src="../resources/images/twitter_sm.png"
+					class="foot_icon" /><a href="#">Connect on Twitter</a></li>
 				<li><a href="#">Download the Mobile App</a></li>
 				<li><a href="#">Order Promotional Items</a></li>
 			</ul>

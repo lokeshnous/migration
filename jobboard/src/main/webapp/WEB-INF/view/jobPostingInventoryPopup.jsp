@@ -31,7 +31,7 @@
             <th width="13%" align="center"  valign="top"scope="col">Duration</th>
             <th width="13%" align="center"  valign="top"scope="col">Purchased</th>
             <th width="11%" align="center" valign="top" scope="col">Available</th>
-            <th width="10%" align="center"  valign="top"scope="col">Status</th>
+            <!-- <th width="10%" align="center"  valign="top"scope="col">Status</th> -->
             <th width="12%" align="center"  valign="top"scope="col">Action</th>
           </tr>
           <tr class="Height30">
@@ -39,7 +39,7 @@
             <td align="center">30 days</td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">In Use</td>
+           <!--  <td align="center">In Use</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
           <tr class="Height30">
@@ -47,7 +47,7 @@
             <td align="center"></td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">&nbsp;</td>
+            <!-- <td align="center">&nbsp;</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
           <tr class="Height30">
@@ -55,7 +55,7 @@
             <td align="center"></td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">&nbsp;</td>
+           <!--  <td align="center">&nbsp;</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
           <tr class="Height30">
@@ -63,7 +63,7 @@
             <td align="center"></td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">&nbsp;</td>
+           <!--  <td align="center">&nbsp;</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
           <tr class="Height30">
@@ -71,7 +71,7 @@
             <td align="center"></td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">&nbsp;</td>
+            <!-- <td align="center">&nbsp;</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
           <tr class="Height30">
@@ -79,7 +79,7 @@
             <td align="center"></td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">&nbsp;</td>
+            <!-- <td align="center">&nbsp;</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
           <tr class="Height30">
@@ -87,7 +87,7 @@
             <td align="center"></td>
             <td align="center">3</td>
             <td align="center">1</td>
-            <td align="center">&nbsp;</td>
+            <!-- <td align="center">&nbsp;</td> -->
             <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
           </tr>
         </table>
@@ -100,7 +100,7 @@
               <th width="13%" align="center"  valign="top"scope="col">Duration</th>
               <th width="13%" align="center"  valign="top"scope="col">Purchased</th>
               <th width="11%" align="center" valign="top" scope="col">Available</th>
-              <th width="10%" align="center"  valign="top"scope="col">Status</th>
+              <!-- <th width="10%" align="center"  valign="top"scope="col">Status</th> -->
               <th width="12%" align="center"  valign="top"scope="col">Action</th>
             </tr>
             <tr class="Height30">
@@ -108,7 +108,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">1</td>
-              <td align="center">In Use</td>
+              <!-- <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
             <tr class="Height30">
@@ -116,7 +116,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">1</td>
-              <td align="center">In Use</td>
+              <!-- <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
             <tr class="Height30">
@@ -124,7 +124,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">1</td>
-              <td align="center">In Use</td>
+              <!-- <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
             <tr class="Height30">
@@ -132,7 +132,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">1</td>
-              <td align="center">In Use</td>
+              <!-- <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
             <tr class="Height30">
@@ -140,7 +140,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">3</td>
-              <td align="center">In Use</td>
+              <!-- <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
             <tr class="Height30">
@@ -148,7 +148,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">1</td>
-              <td align="center">In Use</td>
+            <!--   <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
             <tr class="Height30">
@@ -156,7 +156,7 @@
               <td align="center"></td>
               <td align="center">3</td>
               <td align="center">1</td>
-              <td align="center">In Use</td>
+              <!-- <td align="center">In Use</td> -->
               <td align="center"><a href="#"><img src="../resources/images/Addbutton.png" width="20" height="20" alt="Add Button"></a></td>
             </tr>
         </table>

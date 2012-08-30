@@ -6,11 +6,14 @@
 <title>ADVANCE Heathcare Jobs</title>
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		$("#changePassword").displaypopup("#changePassword", "780", "370");
-		 $("#accountSettingpopUp").displaypopup("#accountSettingpopUp","770","360");
-		jQuery(".megamenu").megamenu();
-	});
+	jQuery(document).ready(
+			function() {
+				$("#changePassword").displaypopup("#changePassword", "780",
+						"370");
+				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
+						"770", "360");
+				jQuery(".megamenu").megamenu();
+			});
 </script>
 
 </head>
@@ -22,14 +25,13 @@
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
 			<div class="main">
-			<jsp:include page="../templates/templates_header.jsp"></jsp:include>
-				
+				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+
 				<div class="clearfix"></div>
 				<!--Start:MidContant-->
-				<div class="MidContent_Wrapper floatLeft">
-					<div class="job_search_Resume">
-						<form method="">
-							<div class="row ">
+				<div class="row">
+					<form method="">
+						
 
 								<!-- Include the resume header page -->
 
@@ -39,44 +41,44 @@
 									<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
 								</div>
 
-							</div>
+							
+						<!-- search_info_box2 -->
+						<!-- browse_bar -->
 
-							<!-- search_info_box2 -->
-							<!-- browse_bar -->
 
-						</form>
-						<div class="clearfix"></div>
-					</div>
-					
-					<!-- Add include for employee dashboard content -->
-					
-					<div class="otherContent" style="display: block">
-									<jsp:include page="jobboardemployerdashboardcontent.jsp"></jsp:include>
-					</div>
-					
+
+					</form>
 				</div>
-				<div class="clearfix"></div>
+
+				<!-- Add include for employee dashboard content -->
+
+				<div class="mainTwo" style="display: block">
+					<jsp:include page="jobboardemployerdashboardcontent.jsp"></jsp:include>
+				</div>
+
 
 				<div class="clearfix"></div>
-				
-			</div>
 
-			<!--Start:MidContant-->
-			<div class="clearfix"></div>
-			<!-- content_wrapper -->
-			<div class="ad_wrapper">
-				<img src="../resources/images/ads/banner_ad_fpo.png" />
-			</div>
-			<!-- ad_wrapper -->
 
+
+
+
+				<!--Start:MidContant-->
+				<div class="clearfix"></div>
+				<!-- content_wrapper -->
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
+				</div>
+				<!-- ad_wrapper -->
+			</div>
 		</div>
 		<!-- main -->
 
 	</div>
 	<!-- end main_wrapper_inside -->
-	</div>
+
 	<!-- end main_wrapper_outside -->
-	
+
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 	<!-- footer_wrapper -->
 

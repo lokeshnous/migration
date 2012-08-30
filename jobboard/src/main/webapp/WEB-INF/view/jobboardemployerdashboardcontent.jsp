@@ -31,12 +31,12 @@
 
 <body class="job_board">
 
-	<div class=" mainTwo">
+
 		<div class="dashboardHeader">
-			<h1 class=" FontSize20">[Employer Name] Dashboard</h1>
+			<h1 >[Employer Name] Dashboard</h1>
 		</div>
 		<div class="MidContent_Wrapper FloatLeft">
-			<div class="row width320 marginRight12">
+			<div class="dashboardColumns">
 				<div class="dashboardPanal">
 					<div class="dashboardPanalIconHolder">
 						<img src="../resources/images/UserProfile.jpg" width="30"
@@ -167,13 +167,15 @@
 
 			</div>
 			<!--Right-->
-			<div class="row width615 paddingLeft12 BorderLeft">
+			<div class="dBEmpRightColumns BorderLeft">
 				<div class="dashboardPanal">
+				<div class="empDBPanalTableIcon">
 					<div class="dashboardPanalIconHolder width8P">
 						<img src="../resources/images/Activity.jpg" width="30" height="30"
 							alt="Resume">
 					</div>
-					<div class="dashboardPanalcontent width92P FloatLeft">
+					</div>
+					<div class="empDBPanalTablecontent">
 						<!--T-->
 						<div class="rowEvenNewSpacing marginTop10">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0"
@@ -282,12 +284,14 @@
 
 					</div>
 					<div class=" rowBox Padding0">
-						<div class="dashboardPanal width285 marginRight15">
+					<div class="innerColumn marginRight10">
+						<div class="dashboardPanal ">
 							<div class="dashboardPanalIconHolder ">
 								<img src="../resources/images/Alerts.png" width="30" height="30"
 									alt="Subscription">
 							</div>
-							<div class="dashboardPanalcontent marginTop5">
+							<div class="dashboardPanalcontentTwo">
+							<div class="dashboardPanalcontentTwo marginTop5">
 								<h2 class="noTopBorder">Alerts</h2>
 								<div class="lableTextDashBoard ">
 									<p>
@@ -300,13 +304,16 @@
 									</p>
 								</div>
 							</div>
+							</div>
 						</div>
-						<div class="dashboardPanal width285 paddingLeft10 FloatLeft">
+						</div>
+						<div class="innerColumn ">
+						<div class="dashboardPanal ">
 							<div class="dashboardPanalIconHolder">
 								<img src="../resources/images/media.png" width="30" height="30"
 									alt="Subscription">
 							</div>
-							<div class="dashboardPanalcontent marginTop5">
+							<div class="dashboardPanalcontentTwo marginTop5">
 								<h2 class="noTopBorder">Solutions</h2>
 								<div class="lableTextDashBoard">
 									<p>
@@ -316,6 +323,7 @@
 								</div>
 							</div>
 						</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -324,6 +332,6 @@
 			<!---->
 
 		</div>
-	</div>
+
 </body>
 </html>

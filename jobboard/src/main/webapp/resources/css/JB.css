@@ -71,7 +71,7 @@ a.white:hover { color: #FE9400; /* Orange */ border-color: #b3b3b3; background: 
 .header_wrapper a:hover { text-decoration: underline; }
 .loginHeader { border-right: 1px solid #cccccc; border-bottom: 1px solid #cccccc; border-left: 1px solid #cccccc; border-radius: 0px 0px 4px 4px; -moz-border-radius: 0px 0px 4px 4px; -webkit-border-radius: 0px 0px 4px 4px; float: right; width: 155px; text-align: center; padding: 8px 2px; margin: 0 0 0 4px; font-size: 11px; }
 .employer { width: 200px; }
-.logo { background-repeat: no-repeat; background-position: -23px -81px; width: 397px; height: 74px; float:left; clear: both; position: relative; top: 30px; float:left; }
+.logo { background-repeat: no-repeat; background-position: -23px -81px; width: 397px; height: 70px; float:left; clear: both; position: relative; top: 30px; float:left; }
 /* END Job Board page header styles */
 /* Nav Styles */
 #nav { font-size: 1.28em; font-weight: 700; text-transform: uppercase; margin: 10px auto; height: 31px; background-color: gray; /* fpo */ border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
@@ -423,7 +423,7 @@ h2.sectionSubHeader2 { color: #6b7b84; font-size: 18px; font-weight: normal; pad
 .popupHeader { height:14px; padding:4px 0 6px 0 !important; }
 .popupHeader h2 { float:left; font-size: 14px; font-weight:bold; text-transform:uppercase; color:#fff; border:none; padding:0px 0 0px 10px; }
 .popupHeader img { float:right; margin:0px 10px 0px 0; vertical-align: middle; }
-.dashboardHeader h1 span { font-size: 26px; color:#fff; font-weight:bold; }
+.dashboardHeader h1 { font-size: 20px; color:#fff; font-weight:normal; }
 .dashboardcolumn1, .dashboardcolumn2 { width:48%; height:auto; float:left; }
 .dashboardcolumn1 { padding-right:10px; }
 .dashboardcolumn2 { border-left:1px solid #999; border-left: 1px solid #CCCCCC; padding-left: 10px; min-height:350px; }
@@ -435,6 +435,7 @@ h2.sectionSubHeader2 { color: #6b7b84; font-size: 18px; font-weight: normal; pad
 .activity {background-position:-284px -250px;}
 .subscriptions {background-position:-315px -250px;}
 .dashboardPanalcontent { width:257px; float:left; }
+.dashboardPanalAGCcontent { width:88%; float:left; }
 h2.noTopBorder { color: #6b7b84; font-size: 18px; font-weight: normal; border-top:none; border-bottom: 1px dotted #CCCCCC; padding: 10px 0 5px 0; }
 .lableTextDashBoard, .lableTextBLineDashBoard { width: 98%; padding:5px 5px 0 0; float:left; }
 .lableTextBLineDashBoard { padding-bottom:10px; border-bottom: 1px dotted #CCCCCC; }
@@ -667,8 +668,6 @@ h2.noBorder { border:none; font-size: 14px; font-weight: bold; padding:8px 10px;
 .employersList li img {width:218px; height:54px;}
 
 a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
-
-
 .leftFormHolderLMargin {
     border-right: medium none;
     float: left;
@@ -700,3 +699,28 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
 .FontSize19{ font-size:19px !important;}
 .width255 { width:255px !important;}
 .marginLeft15 { margin-left:15px !important;}
+.dashboardColumns {
+	width:315px; 
+	margin-right:15px;
+	height:auto;
+	float:left;
+	}
+.dBEmpRightColumns {
+	width:615px; 
+	padding-left:10px;
+	height:auto;
+	float:left}
+.innerColumn {
+	width:297px;
+	float:left;
+	padding-top:3px;
+}
+.empDBPanalTableIcon {
+	width:8%;
+	float:left;
+}
+.empDBPanalTablecontent {
+    float: left;
+    width: 92%;
+}
+.dashboardPanalcontentTwo { width:247px; float:left; }

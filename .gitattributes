@@ -333,6 +333,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerPro
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerRegistrationValidation.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/InventoryForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostingInventoryController.java -text
