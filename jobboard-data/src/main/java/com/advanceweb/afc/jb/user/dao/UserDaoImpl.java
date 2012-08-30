@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -17,6 +18,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpMetricsConversionHelper;
 
 @Transactional
@@ -28,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	private EmpMetricsConversionHelper empMetricsConversionHelper;
-	
+
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -119,16 +121,24 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public List<MetricsDTO> getJobPostTotal(int facilityId) {
-				
-		List<JpJobStat> jobStatsList = hibernateTemplate.find("SELECT js from JpJobStat js, JpJob jb where "+
-		"jb.jobId = js.jobId and " + "jb.admFacility.facilityId	= "+facilityId);
-		
-		return empMetricsConversionHelper.transformJpJobStatToMetricsDTO(jobStatsList);		
+
+		List<JpJobStat> jobStatsList = hibernateTemplate
+				.find("SELECT js from JpJobStat js, JpJob jb where "
+						+ "jb.jobId = js.jobId and "
+						+ "jb.admFacility.facilityId	= " + facilityId);
+
+		return empMetricsConversionHelper
+				.transformJpJobStatToMetricsDTO(jobStatsList);
 	}
-	
-	/*public int getEmployerCount(){
-		int count = 0;
-		AdmFacility adm = hibernateTemplate.find("SELECT count(facilityId) from AdmFacility");
+
+	public long getEmployerCount() throws JobBoardDataException {
+		long count = 0;
+		try {
+			count = hibernateTemplate.find("from AdmFacility").size();
+		} catch (HibernateException he) {
+			throw new JobBoardDataException(
+					"Error occured while getting the Result from Database" + he);
+		}
 		return count;
-	}*/
+	}
 }
