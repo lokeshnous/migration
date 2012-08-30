@@ -40,7 +40,7 @@
 <script type="text/javascript">
 	function saveThisJob(jobId) {
 		$.ajax({
-			url : 'saveThisJob.html?id='+jobId,
+			url : '../jobsearch/saveThisJob.html?id='+jobId,
 			data : ({
 				userID : "userID"
 			}),
@@ -72,7 +72,7 @@
 
 	function applyThisJob(jobId) {
 		$.ajax({
-			url : 'applyJob.html?id='+jobId+'&currentUrl=null',
+			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 			data : ({
 				userID : "userID"
 			}),
@@ -105,7 +105,7 @@
 	}
 	function btsaveThisJob(jobId) {
 		$.ajax({
-			url : 'saveThisJob.html?id='+jobId,
+			url : '../jobsearch/saveThisJob.html?id='+jobId,
 			data : ({
 				userID : "userID"
 			}),
@@ -136,11 +136,11 @@
 
 	function btapplyThisJob(jobId) {
 		$.ajax({
-			url : 'applyJob.html?id='+jobId+'&currentUrl=null',
+			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 			data : ({
 				userID : "userID"
 			}),
-
+			
 			success : function(data) {
 				$.each(data, function(key, val) {
 					if (key == "applyLink") {
