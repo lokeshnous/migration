@@ -126,10 +126,11 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	@Override
 	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
 			String contactType) {
-		List<AdmFacilityContact> accountProfileDTO= new ArrayList<AdmFacilityContact>();
+		List<AdmFacilityContact> accountProfileDTO = new ArrayList<AdmFacilityContact>();
 		try {
-			
-			accountProfileDTO=employerRegistrationDAO.getEmployeePrimaryKey(userId,contactType);
+
+			accountProfileDTO = employerRegistrationDAO.getEmployeePrimaryKey(
+					userId, contactType);
 		} catch (Exception e) {
 			LOGGER.info("Error for employee registration edit");
 		}
