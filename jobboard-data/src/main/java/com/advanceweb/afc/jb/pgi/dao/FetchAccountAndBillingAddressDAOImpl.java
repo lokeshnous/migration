@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
@@ -132,5 +133,29 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 
 		return false;
 	}
+	
+	
+	@Override
+	@Transactional(readOnly = false)
+	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
+		try {
+			AdmFacilityContact admFacilityContact = admFacilityContactHelper
+					.convertBillingDataAddressDtoToEntity(billingAddressDTO);
+			AdmFacility admFacility = new AdmFacility();
+			admFacilityContact.setActive(1);
+			admFacility.setFacilityId(billingAddressDTO.getFacilityId());
+			admFacilityContact.setAdmFacility(admFacility);
+			admFacilityContact.setContactType("BILLING");
+			admFacilityContact.setJobTitle("BLANK");
+			if (billingAddressDTO != null) {				
+				hibernateTemplate.save(admFacilityContact);
+			}
+		} catch (HibernateException e) {
+			LOGGER.info("ex-ERROR");
+		}
+
+		return false;
+	}
+	
 
 }
