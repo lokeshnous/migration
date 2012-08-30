@@ -1,5 +1,6 @@
 * text=auto !eol
 jobboard-common/pom.xml -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountBillingDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddOnDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
