@@ -202,6 +202,7 @@ jQuery(document).ready(function() {
 								}
 								//$('#submitval').trigger('click');
 								$("#submitval").click(function(event) {
+									$("#errorMsg").html("");
 									$("#autoload").val(false);
 									if(!validateSearch()){
 										return false;
