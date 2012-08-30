@@ -149,7 +149,7 @@ public class JobSeekerRegistrationController {
 						//Checking validation for input text box
 						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue()) 
 								&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
-							model.addObject("message","Please fill the Required fields");
+							model.addObject("message","Please fill the required fields");
 							return model;
 						}
 						
@@ -157,7 +157,7 @@ public class JobSeekerRegistrationController {
 						if(form.getbRequired() !=0 && MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
 								&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
 								|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
-							model.addObject("message","Please fill the Required fields");
+							model.addObject("message","Please fill the required fields");
 							return model;
 						}
 						//validation mobile number
@@ -282,7 +282,7 @@ public class JobSeekerRegistrationController {
 					
 					//Checking validation for input text box
 					if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
-						return "Please fill the Required fields";
+						return "Please fill the required fields";
 					}
 					
 					//Checking validation for dropdowns & checkboxes etc
@@ -290,7 +290,7 @@ public class JobSeekerRegistrationController {
 							&& MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
 							&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
 							|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
-						return "Please fill the Required fields";
+						return "Please fill the required fields";
 					}
 					//validation mobile number
 					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) && !StringUtils.isEmpty(form.getStrLabelValue()) 

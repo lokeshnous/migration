@@ -152,7 +152,7 @@ public class EmployerRegistrationController {
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 								.getStrLabelName())) {
 					model.addObject("message",
-							"Please fill the Required fields");
+							"Please fill the required fields");
 					return model;
 				}
 
@@ -164,7 +164,7 @@ public class EmployerRegistrationController {
 								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
 								.equals(form.getStrAttribType()))) {
 					model.addObject("message",
-							"Please fill the Required fields");
+							"Please fill the required fields");
 					return model;
 				}
 				// validation mobile number
