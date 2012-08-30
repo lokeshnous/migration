@@ -415,6 +415,7 @@ public class JobPostController {
 			JobPostForm jobPostform, @RequestParam("jobId") int jobId) {
 		String template = null;
 		boolean autoRenew = false;
+		ModelAndView model = new ModelAndView();
 		for (JobPostDTO jobPostDTO : jobPostform.getJobPostDTOList()) {
 			if (jobPostDTO.getJobId() == jobId) {
 				template = jobPostDTO.getBrandTemplate();
@@ -428,8 +429,9 @@ public class JobPostController {
 							(Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID));
 		}
-		
-		return new ModelAndView("forward:/employer/manageJobPost.html");
+		model.addObject("jobPostForm", jobPostform);
+		model.setViewName("redirect:/employer/manageJobPost.html");
+		return model;
 	}
 	/**
 	 * This method is called to deactivate job(s)
