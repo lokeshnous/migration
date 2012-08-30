@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
+import com.advanceweb.afc.jb.common.AccountBillingDTO;
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 
 /**
  * @author muralikc
@@ -96,5 +98,26 @@ public class TransformPaymentMethod {
 				.getZipCodeForBillingAddr());
 		billingAddressDTO.setCreateDate(billingAddressForm.getCreateDate());
 		return billingAddressDTO;
+	}
+	
+	/**
+	 * Converting BillingAddressForm To DTO for saving the data
+	 * 
+	 * @param billingAddressForm
+	 * @return
+	 */
+	public AccountBillingDTO transformDataBillingAddreFormToDto(
+			BillingAddressForm billingAddressForm) {
+		AccountBillingDTO accountBillingDTO = new AccountBillingDTO();
+//		accountBillingDTO.setFacilityContactId(billingAddressForm.getFacilityContactId());
+		accountBillingDTO.setFirstName(billingAddressForm.getFnameForBillingAddr());		
+		accountBillingDTO.setLastName(billingAddressForm.getLnameForBillingAddr());
+		accountBillingDTO.setStreet(billingAddressForm.getStreetForBillingAddr());
+		accountBillingDTO.setCity(billingAddressForm.getCityOrTownForBillingAddr());
+		accountBillingDTO.setState(billingAddressForm.getStateBillingAddress());
+		accountBillingDTO.setCountry(billingAddressForm.getCountryForBillingAddr());
+		accountBillingDTO.setZipCode(billingAddressForm.getZipCodeForBillingAddr());
+		//accountBillingDTO.setCreateDate(billingAddressForm.getCreateDate());
+		return accountBillingDTO;
 	}
 }
