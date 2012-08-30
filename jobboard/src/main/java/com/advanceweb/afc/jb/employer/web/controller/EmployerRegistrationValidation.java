@@ -22,6 +22,9 @@ public class EmployerRegistrationValidation {
 	public boolean supports(Class<?> form) {
 		return EmployerRegistrationForm.class.isAssignableFrom(form);
 	}
+	public boolean support(Class<?> form) {
+		return EmployeeAccountForm.class.isAssignableFrom(form);
+	}
 
 	/**
 	 * Validating the emailId
@@ -149,4 +152,49 @@ public class EmployerRegistrationValidation {
 		validatePassoword(registerForm.getPassword(),
 				registerForm.getConfirmPassword(), errors);
 	}
+	
+	
+	/**
+	 * Validating the emailId
+	 * 
+	 * @param registerForm
+	 * @return
+	 * @return
+	 */
+	public void checkEmail(EmployeeAccountForm registerForm,
+			Errors errors) {
+		
+		 if(StringUtils.isEmpty(registerForm.getEmail())){
+			 errors.rejectValue("emailId", "NotEmpty", "Email id should not be blank");
+		 }
+			 
+		 if(!StringUtils.isEmpty(registerForm.getEmail()))
+				 {
+			 if(!validateEmailPattern(registerForm.getEmail())){
+				 errors.rejectValue("emailId", "NotEmpty", "Invalid Email Id"); 
+			 }
+			 
+		 }
+	}
+	
+	/**
+	 * Validating form
+	 * 
+	 * @param target
+	 * @param errors
+	 * @return 
+	 */
+	public boolean accountValidate(Object target, Errors errors) {
+
+		EmployeeAccountForm registerForm = (EmployeeAccountForm) target;
+
+		if(StringUtils.isEmpty(registerForm.getEmail()))
+			return false;
+		else
+			return true;
+		
+		
+	}
+	
+
 }
