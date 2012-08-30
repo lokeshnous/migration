@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
 import com.advanceweb.afc.jb.pgi.dao.FetchAccountAndBillingAddressDAO;
@@ -40,5 +41,9 @@ public class FetchAdmFacilityConatactImpl implements FetchAdmFacilityConatact {
 		return fetchAccountAndBillingAddressDAO
 				.saveBillingAddress(billingAddressDTO);
 	}
-
+	@Override
+	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
+		return fetchAccountAndBillingAddressDAO
+				.saveDataBillingAddress(billingAddressDTO);
+	}
 }
