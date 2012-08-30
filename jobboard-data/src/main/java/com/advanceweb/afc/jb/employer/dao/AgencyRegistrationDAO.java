@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
+import com.advanceweb.afc.jb.common.MerUserDTO;
 
 /**
  * @author rajeshkb
@@ -12,7 +13,7 @@ public interface AgencyRegistrationDAO {
 	 * 
 	 * @param agency
 	 */
-	public boolean createNewAgency(AgencyProfileDTO agency);
+	public MerUserDTO createNewAgency(AgencyProfileDTO agency);
 
 	/**
 	 * 
@@ -31,5 +32,10 @@ public interface AgencyRegistrationDAO {
 	 * @param agency
 	 */
 	public boolean updateAgencyDetails(AgencyProfileDTO agency);
+
+	/**
+	 * @return
+	 */
+	public AgencyProfileDTO getProfileAttributes();
 
 }

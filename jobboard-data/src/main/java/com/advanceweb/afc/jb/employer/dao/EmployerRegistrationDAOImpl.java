@@ -69,7 +69,6 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
 		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
-		
 	}
 	
 

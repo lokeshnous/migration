@@ -292,12 +292,16 @@ public class JobSeekerRegistrationController {
 							|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
 						return "Please fill the required fields";
 					}
-					//validation mobile number
-					if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) && !StringUtils.isEmpty(form.getStrLabelValue()) 
-							&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
+					// validation mobile number
+					if (MMJBCommonConstants.PHONE_NUMBER.equals(form
+							.getStrLabelName())
+							&& !StringUtils.isEmpty(form.getStrLabelValue())
+							&& !registerValidation
+									.validateMobileNumberPattern(form
+											.getStrLabelValue())) {
 						return jobseekerRegPhoneMsg;
 					}
-					
+
 					//validation mobile number
 					if(MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
 						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){

@@ -702,6 +702,9 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
 .FontSize19{ font-size:19px !important;}
 .width255 { width:255px !important;}
 .marginLeft15 { margin-left:15px !important;}
+
+.validationMsg{ width:auto; height:auto; float:left; margin-left:175px; color: red; }
+.validationMsgPadding {width: auto; height: auto; float: left; margin-left: 175px;}=======
 .errorRow{width:auto; height:auto; float:left; padding-left:175px; line-height:16px;}
 .FormErrorDisplay{margin-left:175px; color:red;}
 .FormErrorDisplayText{float:left; color:red; }

@@ -144,7 +144,7 @@
 				</div>
 				<div class="headerLoginSectionColumns">
 					<span class="boldText">Ad Agency:</span><br> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=agency">Login</a>
-					| <a href="">Post Jobs</a>
+					| <a href="../agencyRegistration/agencyregistration.html">Post Jobs</a>
 				</div>
 
 			</security:authorize>

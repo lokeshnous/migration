@@ -147,6 +147,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/postjobs/JobPostServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/BrandTemplateServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/EmployerRegistrationTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerJobDetailServiceTest.java -text
@@ -159,6 +160,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java 
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
 jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/helper/AgencyRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -text
@@ -322,6 +324,11 @@ jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
 jobboard/src/main/java/Messages_IN.properties -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyProfileAttribForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationValidation.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/TransformAgencyRegistration.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddOnForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateForm.java -text
@@ -416,6 +423,7 @@ jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/accountSetting.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addAjecncyRegistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addCerts.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addEducation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addLanguage.jsp -text

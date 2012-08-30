@@ -62,6 +62,7 @@ public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
+
 	@Autowired
 	private ProfileRegistration employerRegistration;
 
@@ -79,7 +80,7 @@ public class EmployerRegistrationController {
 	
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
-	
+
 	@Autowired	
 	private EmloyerRegistartionService emloyerRegistartionService;
 	

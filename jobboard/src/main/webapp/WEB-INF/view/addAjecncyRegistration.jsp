@@ -48,8 +48,8 @@
 
 <body class="job_board">
 	<form:form method="post"
-		action="../employerRegistration/saveEmployerProfile.html"
-		commandName="empRegisterForm" enctype="multipart/form-data">
+		action="../agencyRegistration/saveAgencyRegistraion.html"
+		commandName="agencyRegForm" enctype="multipart/form-data">
 		<div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
 		</div>
@@ -70,7 +70,7 @@
 							</c:if>
 
 
-							<c:forEach items="${empRegisterForm.listProfAttribForms}"
+							<c:forEach items="${agencyRegForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'First Name'}">
 									<div class="row">
@@ -152,7 +152,7 @@
 								<FONT class="validationMsgPadding" color="red"><form:errors
 										path="confirmPassword" /></FONT>
 							</div>
-							<c:forEach items="${empRegisterForm.listProfAttribForms}"
+							<c:forEach items="${agencyRegForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'Position Title'}">
 									<div class="rowEvenNewSpacing marginTop0">
@@ -288,14 +288,6 @@
 							</span>
 						</div>
 						<!-- Step 2 -->
-							<input type="submit" style="margin-top: -4px;" value="Save & Continue" class="orange">
-							<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="orange" name="Cancel" />
-							
-							<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span> <span
-							class="floatLeft marginTop10">I'll set up my profile
-							later. <a href="#">Continue</a> to the site now.
-						</span>
 					</div>
 
 					<div class="clearfix"></div>

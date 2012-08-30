@@ -1,10 +1,16 @@
 package com.advanceweb.afc.jb.employer.service;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AgencyProfileDTO;
+import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
+import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
+import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -12,14 +18,16 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @version 1.0
  * @created 21-Jun-2012 2:22:44 PM
  */
-@Service("profileAgencyRegistration")
+@Service("agencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
 
-	private AgencyRegistration agencyRegistration;
+	@Autowired
+	public AgencyRegistrationDAO agencyRegistrationDAO;
 
-
-
-	public AgencyRegistration(){
+	/**
+	 * 
+	 */
+	public AgencyRegistration() {
 
 	}
 
@@ -31,7 +39,13 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public MerUserDTO createNewProfile(ProfileDTO profileDTO){
+	public MerUserDTO createNewProfile(ProfileDTO profileDTO) {
+		try {
+			AgencyProfileDTO agencyProfileDTO = (AgencyProfileDTO) profileDTO;
+			return agencyRegistrationDAO.createNewAgency(agencyProfileDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -39,7 +53,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileId
 	 */
-	public boolean deleteProfile(int profileId){
+	public boolean deleteProfile(int profileId) {
 		return false;
 	}
 
@@ -47,7 +61,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean modifyProfile(ProfileDTO profileDTO){
+	public boolean modifyProfile(ProfileDTO profileDTO) {
 		return false;
 	}
 
@@ -55,7 +69,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileId
 	 */
-	public ProfileDTO viewProfile(int profileId){
+	public ProfileDTO viewProfile(int profileId) {
 		return null;
 	}
 
@@ -78,9 +92,9 @@ public class AgencyRegistration implements ProfileRegistration {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ProfileDTO getProfileAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return agencyRegistrationDAO.getProfileAttributes();
 	}
 
 }
