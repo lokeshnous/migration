@@ -56,7 +56,7 @@ public class PaymentGatewayController {
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		// Getting the facility id from the session
-		int facilityId = 110;
+		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 
 		// Fetching the Account address from the database
 		AccountAddressDTO accountAddressDTO = fetchAdmFacilityConatact
@@ -214,10 +214,12 @@ public class PaymentGatewayController {
 	public ModelAndView gatewayThankyouPage(@Valid PaymentMethodForm form,
 			Map map, HttpSession session) {
 		ModelAndView model = new ModelAndView();
+		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// save or updating the billing address into the database
 		BillingAddressForm billingAddressForm = form.getBillingAddressForm();
 		BillingAddressDTO billingAddressDTO = transformPaymentMethod
 				.transformBillingAddreFormToDto(billingAddressForm);
+		billingAddressDTO.setFacilityId(facilityId);
 		fetchAdmFacilityConatact.saveBillingAddress(billingAddressDTO);
 		model.setViewName("gatewayThankYou");
 		return model;

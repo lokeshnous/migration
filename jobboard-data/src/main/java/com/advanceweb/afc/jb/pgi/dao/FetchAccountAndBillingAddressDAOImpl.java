@@ -104,7 +104,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 			AdmFacilityContact admFacilityContact = admFacilityContactHelper
 					.convertBillingAddressDtoToEntity(billingAddressDTO);
 			AdmFacility admFacility = new AdmFacility();
-			admFacility.setFacilityId(110);
+//			admFacility.setFacilityId(110);
 			admFacilityContact.setActive(1);
 			admFacilityContact.setAdmFacility(admFacility);
 			admFacilityContact.setContactType("BILLING");

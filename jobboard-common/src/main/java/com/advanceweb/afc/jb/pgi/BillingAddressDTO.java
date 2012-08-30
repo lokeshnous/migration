@@ -17,6 +17,21 @@ public class BillingAddressDTO {
 	private String billZipCode;
 	private int facilityContactId;
 	private Date createDate;
+	private int facilityId;
+
+	/**
+	 * @return the facilityId
+	 */
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	/**
+	 * @param facilityId the facilityId to set
+	 */
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
 
 	/**
 	 * @return the createDate

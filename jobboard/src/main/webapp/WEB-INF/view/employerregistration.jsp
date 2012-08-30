@@ -223,7 +223,7 @@
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
 											class="job_seeker_password textBox350 
-" />
+" maxlength="10"/>
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>

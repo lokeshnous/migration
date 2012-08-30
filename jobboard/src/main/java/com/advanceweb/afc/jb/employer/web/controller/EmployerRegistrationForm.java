@@ -19,7 +19,8 @@ public class EmployerRegistrationForm {
 
 	@NotEmpty
 	private String confirmEmailId;
-	@NotEmpty
+	
+	@NotEmpty(message = "Position Tilte should not be empty")
 	private String positionTitle;
 
 	@NotEmpty

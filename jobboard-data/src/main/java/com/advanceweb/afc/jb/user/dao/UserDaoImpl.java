@@ -13,7 +13,6 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;

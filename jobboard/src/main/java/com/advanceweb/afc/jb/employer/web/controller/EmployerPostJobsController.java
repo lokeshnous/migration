@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.Date;
+
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
+import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 
 /**
  * @author muralikc
@@ -25,14 +29,17 @@ public class EmployerPostJobsController {
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
-	@Value("${jobseekerJobApplicationBody}")
-	private String jobseekerJobApplicationBody;
+	@Value("${goldOrPlatinumPricingReqBody}")
+	private String goldOrPlatinumPricingReqBody;
+
+	@Value("${goldOrPlatinumPricingReqSub}")
+	private String goldOrPlatinumPricingReqSub;
 
 	@Autowired
 	private MMEmailService emailService;
 
-	@Value("${jobseekerJobApplicationSub}")
-	private String jobseekerJobApplicationSub;
+	@Autowired
+	FetchAdmFacilityConatact fetchAdmFacilityConatact;
 
 	@RequestMapping(value = "/sendEmailForGold")
 	public ModelAndView sendEmailForGold(HttpSession session,
@@ -40,6 +47,15 @@ public class EmployerPostJobsController {
 		// Send confirmation mail to job seeker regarding job application
 		EmailDTO jobSeekerEmailDTO = new EmailDTO();
 		ModelAndView model = new ModelAndView();
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
+		// Fetching the Account address from the database
+		AccountAddressDTO accountAddressDTO = fetchAdmFacilityConatact
+				.getConatactByFacilityId(facilityId);
+		String companyName = accountAddressDTO.getCompany();
+		String phoneNo = accountAddressDTO.getPhone();
+
 		int userId = 0;
 		String userName = "";
 		String userEmail = "";
@@ -66,21 +82,20 @@ public class EmployerPostJobsController {
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
-				// employerToAddress[0] = new InternetAddress(userEmail);
-				// TODO: Remove hard codes of mails
-				employerToAddress[0] = new InternetAddress(userEmail);
+				employerToAddress[0] = new InternetAddress("muralikc@nousinfo.com");
 				jobSeekerEmailDTO.setToAddress(employerToAddress);
-				String jobseekerMailSub = jobseekerJobApplicationSub
-				// .replace(
-				// "?companyname", searchedJobDTO.getCompanyName())
-				;
+				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
+						"?Companyname", companyName);
 				jobSeekerEmailDTO.setSubject(jobseekerMailSub);
-				String jobseekerMailBody = jobseekerJobApplicationBody
-				// .replace(
-				// "?jsdashboardLink", jonseekerloginUrl)
-				;
-				// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-				// searchedJobDTO.getCompanyName());
+				String jobseekerMailBody = goldOrPlatinumPricingReqBody
+						.replace("?Date", new Date().toString())
+						.replace("?Employername", userName)
+						.replace("?Companyname", companyName)
+						.replace("?Emailaddress", userEmail)
+						.replace("?Phonenumber", phoneNo)
+						.replace("?Mailingaddress", userEmail)
+						.replace("?Packagetype",
+								MMJBCommonConstants.PACKAGE_ESPOST);
 				jobSeekerEmailDTO.setBody(jobseekerMailBody);
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
@@ -91,22 +106,20 @@ public class EmployerPostJobsController {
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
-				// employerToAddress[0] = new InternetAddress(userEmail);
-				// TODO: Remove hard codes of mails
-				employerToAddress[0] = new InternetAddress(
-						userEmail);
+				employerToAddress[0] = new InternetAddress("muralikc@nousinfo.com");
 				jobSeekerEmailDTO.setToAddress(employerToAddress);
-				String jobseekerMailSub = jobseekerJobApplicationSub
-				// .replace(
-				// "?companyname", searchedJobDTO.getCompanyName())
-				;
+				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
+						"?Companyname", companyName);
 				jobSeekerEmailDTO.setSubject(jobseekerMailSub);
-				String jobseekerMailBody = jobseekerJobApplicationBody
-				// .replace(
-				// "?jsdashboardLink", jonseekerloginUrl)
-				;
-				// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-				// searchedJobDTO.getCompanyName());
+				String jobseekerMailBody = goldOrPlatinumPricingReqBody
+						.replace("?Date", new Date().toString())
+						.replace("?Employername", userName)
+						.replace("?Companyname", companyName)
+						.replace("?Emailaddress", userEmail)
+						.replace("?Phonenumber", phoneNo)
+						.replace("?Mailingaddress", userEmail)
+						.replace("?Packagetype",
+								MMJBCommonConstants.PACKAGE_GOLD);
 				jobSeekerEmailDTO.setBody(jobseekerMailBody);
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
@@ -117,20 +130,21 @@ public class EmployerPostJobsController {
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
-				// employerToAddress[0] = new InternetAddress(userEmail);
-				// TODO: Remove hard codes of mails
 				employerToAddress[0] = new InternetAddress(
 						"muralikc@nousinfo.com");
 				jobSeekerEmailDTO.setToAddress(employerToAddress);
-				String jobseekerMailSub = jobseekerJobApplicationSub
-				// .replace(
-				// "?companyname", searchedJobDTO.getCompanyName())
-				;
+				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
+						"?Companyname", companyName);
 				jobSeekerEmailDTO.setSubject(jobseekerMailSub);
-				String jobseekerMailBody = jobseekerJobApplicationBody
-				// .replace(
-				// "?jsdashboardLink", jonseekerloginUrl)
-				;
+				String jobseekerMailBody = goldOrPlatinumPricingReqBody
+						.replace("?Date", new java.util.Date().toString())
+						.replace("?Employername", userName)
+						.replace("?Companyname", companyName)
+						.replace("?Emailaddress", userEmail)
+						.replace("?Phonenumber", phoneNo)
+						.replace("?Mailingaddress", userEmail)
+						.replace("?Packagetype",
+								MMJBCommonConstants.PACKAGE_PLATINUM);
 				// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
 				// searchedJobDTO.getCompanyName());
 				jobSeekerEmailDTO.setBody(jobseekerMailBody);
