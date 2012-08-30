@@ -702,6 +702,7 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
 .FontSize19{ font-size:19px !important;}
 .width255 { width:255px !important;}
 .marginLeft15 { margin-left:15px !important;}
+.errorRow{width:auto; height:auto; float:left; padding-left:175px; line-height:16px;}
 .FormErrorDisplay{margin-left:175px; color:red;}
 .DisplayResumeName{font-size: 18px !important; color: #6B7B84;}
 .dashboardColumns {
@@ -729,3 +730,4 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
     width: 92%;
 }
 .dashboardPanalcontentTwo { width:247px; float:left; }
+
