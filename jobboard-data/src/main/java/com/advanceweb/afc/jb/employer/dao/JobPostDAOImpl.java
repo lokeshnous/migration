@@ -307,7 +307,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			jobs = hibernateTemplate
 					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
-							+ " and a.active = 1 and a.deleteDt is NULL");
+							+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
 		} else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
@@ -315,6 +315,29 @@ public class JobPostDAOImpl implements JobPostDAO {
 					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
 							+ " and a.active = 0 and a.deleteDt is NULL");
+		}else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
+			jobs = hibernateTemplate
+					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							+ userId
+							+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+		}
+		else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+			jobs = hibernateTemplate
+					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							+ userId
+							+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
+		}
+		else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+			jobs = hibernateTemplate
+					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							+ userId
+							+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
 		}
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 	}

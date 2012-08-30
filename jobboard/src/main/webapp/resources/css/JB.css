@@ -273,7 +273,8 @@ h3.jobSummaryTitle { margin-bottom: 10px; }
 .content_columns_search_results .column2 { border-left: 1px solid #CCCCCC; float: left; margin-left: 0; padding-left: 10px; width: 758px; }
 .content_columns_search_results .column2 .searchResults { float: left; }
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation,
-.searchResultsNavigation { background-color: #ECECEC; border-radius: 4px; display: block; float: left; margin-bottom: 5px; padding: 5px 10px; }
+.searchResultsNavigation, .manageJobPostingNavigation { background-color: #ECECEC; border-radius: 4px; display: block; float: left; margin-bottom: 5px; padding: 5px 10px; }
+.manageJobPostingNavigation {width:98%; margin-top:10px;}
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn1,
 .searchResultsNavigationColumn1 { color: #6B7B84; float: left; font-size: 12px; width: 290px; height:25px; }
 .content_columns_search_results .column2 .searchResults .searchResultsNavigation .searchResultsNavigationColumn1 select,

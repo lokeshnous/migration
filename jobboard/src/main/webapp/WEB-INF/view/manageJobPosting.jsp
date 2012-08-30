@@ -47,7 +47,7 @@
 					$("#deactivateHidden").click();
 					}
 					else{
-						alert("Please Select A Job");
+						alert("Please select a job");
 					}
 					
 
@@ -62,7 +62,7 @@
 					$("#repostHidden").click();
 					}
 					else{
-						alert("Please Select A Job");
+						alert("Please select a job");
 					}
 				});
 				$('#delete').click(function() {
@@ -70,14 +70,16 @@
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
-					$('#selectedRow').val(val);
-					if (val != "" && confirm("Are you sure you want to delete?")) {
-						$("#deleteHidden").click();
-					}
-					else{
-						alert("Please Select A Job");
+					if (val == ""){
+						alert("Please select a job");
 					}
 
+					$('#selectedRow').val(val);
+					if (val != "" && confirm("Are you sure you want to delete?")) {
+						$('#statusValue').val($('#statusValue').val())
+						$("#deleteHidden").click();
+					}
+					
 				});
 				$('#repost_lower').click(function() {
 					var val = [];
@@ -89,24 +91,24 @@
 					$("#repostHidden").click();
 					}
 					else{
-						alert("Please Select A Job");
+						alert("Please select a job");
 					}
-
 				});
 				$('#delete_lower').click(function() {
 					var val = [];
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
+					if (val == ""){
+						alert("Please select a job");
+					}
+
 					$('#selectedRow').val(val);
 					if (val != "" && confirm("Are you sure you want to delete?")) {
+						$('#statusValue').val($('#statusValue').val())
 						$("#deleteHidden").click();
-
 					}
-					else{
-						alert("Please Select A Job");
-					}
-
+					
 				});
 				$('#deactivated_lower').click(function() {
 					var val = [];
@@ -118,9 +120,8 @@
 					$("#deactivateHidden").click();
 					}
 					else{
-						alert("Please Select A Job");
+						alert("Please select a job");
 					}
-
 				});
 				$("#tb_manage_job img").click(
 						function(event) {
@@ -141,7 +142,7 @@
 							}
 
 						});
-				$('#jobStatusDD').change(function() {
+				$('#statusValue').change(function() {
 					val = $(this).val();
 	                 $("form").attr(
 							"action",
@@ -277,12 +278,12 @@
 							Dashboard</a></span>
 				</div>
 				<div class="clearfix"></div>
-				<div class="searchResultsNavigation width98P">
+				<div class="manageJobPostingNavigation">
 					<div class="searchResultsNavigationColumn1">
 
 						<!--Added Class "marginTop5"-->
-						<span class="marginTop5">Results viewable:</span> <span> <select
-							name="results" class="jb_input4">
+						<span >Results viewable:</span> <span class="Padding0"> <select
+							name="results" class="jb_input4 margin0">
 								<option value="20">20</option>
 								<option value="30">30</option>
 								<option value="40">40</option>
@@ -291,7 +292,7 @@
 						</select>
 						</span>
 						<!--Added Class "marginTop5"-->
-						<span class="marginTop5">per page</span>
+						<span >per page</span>
 					</div>
 					<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 					</div>
@@ -301,7 +302,7 @@
 							href="">4</a></span> <span><a href="">5</a></span> <span><a
 							href="">6</a></span> <span><a href="">7</a></span> <span><a
 							href="">8</a></span> <span><a href="">9</a></span> <span><a
-							href="">Next<img src="images/ArrowRight.png"></a></span>
+							href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
 					</div>
 				</div>
 				
@@ -320,10 +321,10 @@
 						href="/jobboard/employer/postNewJobs.html" class="btn_sm white jb_search_submit">POST NEW JOB</a>
 						
 						<div class="floatRight marginTop15">
-							<span class=" FloatLeft marginTop3">View by Job Status</span>
+							<span class=" FloatLeft marginTop5">View by Job Status</span>
 
-								<form:select path="statusValue" id="jobStatusDD"
-									class="jb_input3  marginTop0 width150 marginLeft5"
+								<form:select path="statusValue" 
+									class="jb_input3  margin0 width150 marginLeft5"
 									name="select9">
 
 									<form:option value="" label="--- Job Status ---" />
@@ -341,9 +342,10 @@
 							</div>
 						</c:if>
 					<div class="row marginTop10 FontSize11">
-						<%-- <display:table name="${jobList}" sort="external" id="row"  
-						 pagesize="10" cellspacing="5"	size="10" cellpadding="10"
-								requestURI="" defaultsort="1" style="border:2 solid #236FBD;" class="grid" >
+						<%-- <display:table name="${jobPostForm.jobPostDTOList}" sort="external"  pagesize="10" size="10" 
+								requestURI="" defaultsort="1" style="border:2 solid #236FBD;" 
+								cellpadding="0" cellspacing="0"
+							class="grid" id="tb_manage_job" >
 
 							<display:setProperty name="paging.banner.placement"
 								value="bottom" />
@@ -355,19 +357,59 @@
 							<display:setProperty name="paging.banner.some_items_found"
 								value="" />
 							<display:setProperty name="paging.banner.page.separator"
-								value=" | " />
+								value="  " />
 							<display:setProperty name="paging.banner.group_size" value="10" />
 							<display:setProperty name="paging.banner.first"
 								value='<center><span class="pagelinks">{0}</span></center>' />
 							<display:caption>&nbsp;</display:caption>
 							<display:column class="Height35" ><input type="checkbox"
-										name="checkbox" id="checkbox"></display:column>
+										name="checkbox"  id=${jobId} value="${jobId}"></display:column>
 							<display:column property="jobId" sortName="jobId" title="Job ID"
 								sortable="true" class="Height35"/>
 								
 							<display:column property="jobTitle" sortName="jobTitle"
-								title="Job Title" sortable="true" class="Height35" />
-
+								title="Job Title" sortable="true" class="Height35" style="{align:center}" />
+								<display:column property="location" 
+								title="Location"  class="Height35" style="{align:center}"/>
+								<display:column property="jobStatus" 
+								title="Job Status" class="Height35" style="{align:center}" />
+								<display:column property="startDt" 
+								title="Start Date" class="Height35" />
+								<display:column property="endDt" 
+								title="End Date" class="Height35" />
+								<display:column property="views"
+								title="Views" class="Height35" />
+								<display:column property="clicks"
+								title="Clicks" class="Height35" />
+								<display:column property="applies" 
+								title="Applies" class="Height35" />
+								<display:column 
+								title="Auto Renew" class="Height35" >
+								<form:select  id="selectAutoRenew" path="jobPostDTOList[0].autoRenew" class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
+											name="select1">	
+											<form:option value="0" label="Select One" />		
+																	
+									</form:select>
+								</display:column>
+								<display:column 
+								title="Job Template " class="Height35" >
+								<form:select  id="selectAutoRenew" path="jobPostDTOList[0].autoRenew" class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
+											name="select1">	
+											<form:option value="0" label="Select One" />		
+																	
+									</form:select>
+								</display:column>
+								<display:column 
+								title="Action " class="Height35" >
+								<div
+											class="row width80">
+											<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><img src="../resources/images/Edit.png"
+												width="20" height="20" alt=""></a>&nbsp;<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><img
+												src="../resources/images/View.png" width="20" height="20"
+												alt=""></a>&nbsp;<a href=""><img
+												src="../resources/images/check.png" width="20" height="20" alt="check" id="${job.jobId}" ></a>
+										</div>
+								</display:column>
 
 						</display:table> --%>
 						<form:hidden path="selectedRow"  id="selectedRow"/>
@@ -377,10 +419,10 @@
 								<td width="2%" align="center" valign="middle" class="">&nbsp;</td>
 								<td width="6%" align="center" valign="middle"><strong>Job
 										ID</strong></td>
-								<td width="22%" align="center" valign="middle"><strong>Job
+								<td width="18%" align="center" valign="middle"><strong>Job
 										Title</strong></td>
 								<td width="11%" align="center" valign="middle"><strong>Location</strong></td>
-								<td width="6%" align="center" valign="middle"><strong>Job<br />
+								<td width="8%" align="center" valign="middle"><strong>Job<br />
 										Status
 								</strong></td>
 								<td width="7%" align="center" valign="middle"><strong>Start<br />
@@ -392,10 +434,10 @@
 								<td width="5%" align="center" valign="middle"><strong>Views</strong></td>
 								<td width="4%" align="center" valign="middle"><strong>Clicks</strong></td>
 								<td width="5%" align="center" valign="middle"><strong>Applies</strong></td>
-								<td width="6%" align="center" valign="middle"><strong>Auto<br />
+								<td width="7%" align="center" valign="middle"><strong>Auto<br />
 										Renew
 								</strong></td>
-								<td width="10%" align="center" valign="middle"><strong>Job<br />
+								<td width="11%" align="center" valign="middle"><strong>Job<br />
 										Template
 								</strong></td>
 								<td width="9%" align="center" valign="middle"><strong>Actions</strong></td>
@@ -406,7 +448,7 @@
 									<td align="center" valign="middle"><input type="checkbox"
 										name="checkbox"  id=${job.jobId} value="${job.jobId}"></td>
 									<td align="center" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
-									<td align="left" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
+									<td align="center" valign="middle"><a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
@@ -459,11 +501,11 @@
 						type="submit" id="deleteHidden" value="DELETE" name="DELETE" class="btn_sm white" style="visibility: hidden;" />
 				</div>
 				<div class="clearfix"></div>
-				<div class="searchResultsNavigation width98P FloatLeft marginTop20">
+				<div class="manageJobPostingNavigation ">
 					<div class="searchResultsNavigationColumn1">
 
 						<!--Added Class "marginTop5"-->
-						<span class="marginTop5">Results viewable:</span> <span> <select
+						<span ">Results viewable:</span> <span class="Padding0"> <select
 							name="results" class="jb_input4">
 								<option value="20">20</option>
 								<option value="30">30</option>
@@ -473,7 +515,7 @@
 						</select>
 						</span>
 						<!--Added Class "marginTop5"-->
-						<span class="marginTop5">per page</span>
+						<span >per page</span>
 					</div>
 					<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 					</div>
@@ -483,7 +525,7 @@
 							href="">4</a></span> <span><a href="">5</a></span> <span><a
 							href="">6</a></span> <span><a href="">7</a></span> <span><a
 							href="">8</a></span> <span><a href="">9</a></span> <span><a
-							href="">Next<img src="images/ArrowRight.png"></a></span>
+							href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
 					</div>
 				</div>
 			</div>

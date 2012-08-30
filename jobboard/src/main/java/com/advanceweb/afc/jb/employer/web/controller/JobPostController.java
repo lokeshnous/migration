@@ -325,7 +325,8 @@ public class JobPostController {
 			HttpSession session, JobPostForm jobPostform) {
 		ModelAndView model = new ModelAndView();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
-		String jobStatus = request.getParameter("jobStatus");
+		String jobStatus = jobPostform.getStatusValue();
+	//	String jobStatus = request.getParameter("jobStatus");
 		DropDownDTO dto = new DropDownDTO();
 		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
 		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
@@ -460,6 +461,7 @@ public class JobPostController {
 				errorMsg="Please Select Only Active Jobs For Deactivation";
 			}
 		}
+		model.addObject("jobPostForm", jobPostform);
 		model.addObject("errorMessage", errorMsg);
 		model.setViewName("forward:/employer/manageJobPost.html");
 	 return model;
@@ -481,7 +483,6 @@ public class JobPostController {
 		String errorMsg=null;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ","); 
 		ModelAndView model = new ModelAndView();
-		model.addObject("jobPostForm", jobPostform);
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			boolean result= employerJobPost
@@ -493,6 +494,7 @@ public class JobPostController {
 			}
 			
 		}
+		model.addObject("jobPostForm", jobPostform);
 		//model.addObject("valiedJobId",valiedJobId);
 		model.addObject("errorMessage", errorMsg);
 		model.setViewName("forward:/employer/manageJobPost.html");
