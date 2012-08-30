@@ -72,12 +72,17 @@
 
 	function applyThisJob(jobId) {
 		$.ajax({
-			url : 'applyJob.html?id='+jobId,
+			url : 'applyJob.html?id='+jobId+'&currentUrl=null',
 			data : ({
 				userID : "userID"
 			}),
 
 			success : function(data) {
+				$.each(data, function(key, val) {
+					if (key == "applyLink") {
+						window.open(val, '_blank');
+					}
+				});
 				$.each(data, function(key, val) {
 					if (key == "AjaxMSG") {
 						$('#topjobActionInfo').html(val);
@@ -131,12 +136,17 @@
 
 	function btapplyThisJob(jobId) {
 		$.ajax({
-			url : 'applyJob.html?id='+jobId,
+			url : 'applyJob.html?id='+jobId+'&currentUrl=null',
 			data : ({
 				userID : "userID"
 			}),
 
 			success : function(data) {
+				$.each(data, function(key, val) {
+					if (key == "applyLink") {
+						window.open(val, '_blank');
+					}
+				});
 				$.each(data, function(key, val) {
 					if (key == "AjaxMSG") {
 						$('#bottomjobActionInfo').html(val);
