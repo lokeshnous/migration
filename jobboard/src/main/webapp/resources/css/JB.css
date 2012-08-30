@@ -704,6 +704,7 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
 .marginLeft15 { margin-left:15px !important;}
 .errorRow{width:auto; height:auto; float:left; padding-left:175px; line-height:16px;}
 .FormErrorDisplay{margin-left:175px; color:red;}
+.FormErrorDisplayText{float:left; color:red; }
 .DisplayResumeName{font-size: 18px !important; color: #6B7B84;}
 .dashboardColumns {
 	width:315px; 

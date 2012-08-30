@@ -80,7 +80,7 @@ function closePopup() {
 				<div class="rowEvenSpacingMargin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
 				</div>
-				<span id="ErrorMsg" style="color: red; font: bold; font-size: 15px;" align="left" ></span>
+				<span id="ErrorMsg" class="FormErrorDisplayText"></span>
 				<div class="popUpButtonRow">
 				<input type="button" id="saveData" class="orange" value="Save"/>
 				<input type="button" onclick="closePopup();" class="orange" value="Cancel"/>					
