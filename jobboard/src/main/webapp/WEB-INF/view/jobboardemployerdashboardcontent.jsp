@@ -13,13 +13,18 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		$("#changePassword").displaypopup("#changePassword", "780", "370");
-		 $("#accountSettingpopUp").displaypopup("#accountSettingpopUp","770","360");
-		jQuery(".megamenu").megamenu();
-		$("#manageBrandingTemplatePopup").displaypopup("#manageBrandingTemplatePopup",
-					"775", "252");
-	});
+	jQuery(document).ready(
+			function() {
+				$("#changePassword").displaypopup("#changePassword", "780",
+						"370");
+				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
+						"770", "360");
+				jQuery(".megamenu").megamenu();
+				$("#manageBrandingTemplatePopup").displaypopup(
+						"#manageBrandingTemplatePopup", "775", "252");
+				$("#postingInventory").displaypopup("#postingInventory", "780",
+						"370");
+			});
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -41,10 +46,10 @@
 						<h2 class="noTopBorder">Profile Management</h2>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="#">Change Password</a>
-								<%-- 								<a
+								<a
 									href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
-									>Change Password</a> --%>
+									id="changePassword">${msg.jsChangePwd}</a>
+
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
@@ -97,12 +102,17 @@
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="<%=request.getContextPath()%>/brandingTemplates/employer/manageBrandingTemplate.html" id="manageBrandingTemplatePopup">Manage Job Posting Branding Templates</a>
+								<a
+									href="<%=request.getContextPath()%>/brandingTemplates/employer/manageBrandingTemplate.html"
+									id="manageBrandingTemplatePopup">Manage Job Posting
+									Branding Templates</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="">Job Posting Inventory</a>
+								<a
+									href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html"
+									id="postingInventory">Job Posting Inventory</a>
 							</p>
 						</div>
 					</div>
