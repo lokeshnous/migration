@@ -60,13 +60,13 @@ public class JobPostServiceTest extends ServiceTest{
 	@Test
 	public void editJob(){
 		JobPostDTO dto = new JobPostDTO();
-		dto = employerJobPost.editJob(13101);
-		Assert.assertEquals(dto.getJobId(), 13101);
+		dto = employerJobPost.editJob(1606);
+		Assert.assertEquals(dto.getJobId(), 1606);
 	}
 	@Test
 	public void retrieveAllJobPost(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
-		dto = employerJobPost.retrieveAllJobPost(13101);
+		dto = employerJobPost.retrieveAllJobPost(1606);
 		Assert.assertTrue("Total Record Found", dto.size()>0?true:false);
 	}
 	@Test
@@ -85,7 +85,7 @@ public class JobPostServiceTest extends ServiceTest{
 	@Test
 	public void updateJobs(){
 		
-		boolean updated = employerJobPost.updateManageJob(false, "template 2", 13101, 1606);
+		boolean updated = employerJobPost.updateManageJob(false, "2", 13101, 1606);
 		Assert.assertTrue("Data Updated Successfully", updated);
 	}
 	@Test
