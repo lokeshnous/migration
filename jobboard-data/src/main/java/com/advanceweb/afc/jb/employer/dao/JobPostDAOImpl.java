@@ -317,72 +317,117 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
- int userId, int offset, int noOfRecords) {
+			int userId, int offset, int noOfRecords) {
 		List<JpJob> jobs = new ArrayList<JpJob>();
-		List<JpJob> jobCount = new ArrayList<JpJob>();
-		Query query=null;
+		Long jobCount = 0L;
+		Query query = null;
 		if (null != jobStatus
 				&& jobStatus.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
 			query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-							+ userId
-							+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
+					.createQuery(
+							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
+			jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL")
+					.uniqueResult();
+
 		} else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
 			query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-							+ userId
-							+ " and a.active = 0 and a.deleteDt is NULL");
-		}else if (null != jobStatus
+					.createQuery(
+							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and a.active = 0 and a.deleteDt is NULL");
+			jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and a.active = 0 and a.deleteDt is NULL")
+					.uniqueResult();
+		} else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
 			query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-							+ userId
-							+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
-		}
-		else if (null != jobStatus
+					.createQuery(
+							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+			jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
+					.uniqueResult();
+		} else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
 			query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-							+ userId
-							+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
-		}
-		else if (null != jobStatus
+					.createQuery(
+							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
+			jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL")
+					.uniqueResult();
+		} else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
 			query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-							+ userId
-							+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+					.createQuery(
+							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+			jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ userId
+									+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
+					.uniqueResult();
 		}
-		
-		jobCount=query.list();
+
 		query.setFirstResult(offset);
 		query.setMaxResults(noOfRecords);
 		jobs = query.list();
-		setNumberOfJobRecordsByStatus(jobCount.size());
+		setNumberOfJobRecordsByStatus(jobCount.intValue());
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 	}
 
 	@Override
 	public int getTotalNumberOfJobRecords(int employerId) {
-		List<JpJob> jobs = hibernateTemplate
-				.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-						+ employerId + "and a.deleteDt is NULL");
-		return jobs.size();
+		Long jobCount= (Long)hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+						+ employerId + "and a.deleteDt is NULL").uniqueResult();
+		return jobCount.intValue();
 		
 	}
 
@@ -405,7 +450,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	@Override
 	public int getTotalNumberOfJobRecordsByStatus() {
-		// TODO Auto-generated method stub
 		return this.numberOfJobRecordsByStatus;
 	}
 	
