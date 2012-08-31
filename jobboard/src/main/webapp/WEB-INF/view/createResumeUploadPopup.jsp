@@ -118,6 +118,9 @@
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="rowEvenNewSpacing">
 					<div class="splLableText">How would you
 						like to create your resume</div>
 					<form:select class="jb_input3 jb_input_width3" path="resumeType"

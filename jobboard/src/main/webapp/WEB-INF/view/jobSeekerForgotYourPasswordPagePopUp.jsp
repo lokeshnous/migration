@@ -64,7 +64,7 @@
 		</div>
         <input type="hidden" class="testField" value="${MMJBCommonConstantsok}" >
 		<div class="popUpContainerWrapper">
-		<div style="color: red">${message}</div>
+		<div class="FormErrorDisplayText">${message}</div>
 			<form:form method="" action="" commandName="loginForm">
 				<div class="rowEvenSpacingMargin0 borderBottomDotted paddingBottom10">
 					<p>Enter the email address you use for this account and click
@@ -76,7 +76,7 @@
 					<span class="required">(Required)</span>
 				</div>
 				<span class="lableText3"></span>
-				<span style="color: red;font-style:italic; "><div id="emailmsg"></div></span>  
+				<span class="FormErrorDisplayText"><div id="emailmsg"></div></span>  
 				
 				<div class="popUpButtonRow">
 					

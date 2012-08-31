@@ -43,8 +43,8 @@
 
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Employer Login</h2>
-			<div style="color: red" align="left">
-			<b>${error}</b>
+			<div class="FormErrorDisplayText">
+			${error}
 			</div>
 			
 			<form method="post" action="../j_spring_security_check">
