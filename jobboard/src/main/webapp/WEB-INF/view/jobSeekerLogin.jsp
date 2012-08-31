@@ -71,7 +71,7 @@
 				</div>
 				<c:if test="<%=session.getAttribute(\"jobId\")!=null%>">
 				<div class="rowEvenNewSpacing ">
-			      <span class="bold">Or </span> <a id="guestUser" target="_blank"  href="<%=request.getContextPath()%>/anonymoususerjobapply/anonymousUser.html">continue as a guest.</a>
+			      <span class="bold">Or </span> <a id="guestUser" class="nyroModal"  href="<%=request.getContextPath()%>/anonymoususerjobapply/anonymousUser.html">continue as a guest.</a>
 			     </div>
 			     </c:if>
                   <div class="clearfix"></div>
