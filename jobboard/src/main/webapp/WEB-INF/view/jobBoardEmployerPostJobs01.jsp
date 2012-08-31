@@ -9,27 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
-<!-- STYLESHEETS -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
-<!--[if IE]>
-                <link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-        <![endif]-->
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+		$("#purchaseJobPostingId").displaypopup("#purchaseJobPostingId",
+				"770", "360");
 	});
 </script>
 </head>
@@ -77,8 +62,8 @@
 									rep.
 								</p>
 								<div class="clearfix"></div>
-								<span class="FloatLeft marginTop25"><a href="../employerPostJobs/sendEmailForGold.html?package=stJobPosting"
-									name="standardJob" class="btn_sm orange">BUY ONLINE NOW</a></span>
+								<span class="FloatLeft marginTop25"><a id="purchaseJobPostingId" class="btn_sm orange" href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
+									name="standardJob" >BUY ONLINE NOW</a></span>
 								<div class="PlayDemo marginTop15">
 									<a
 										href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
