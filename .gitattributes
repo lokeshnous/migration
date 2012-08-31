@@ -433,6 +433,7 @@ jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyLogin.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/anonymousSaveThisSearchPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateGoldPreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplatePlatinumPreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateSilverPreview.jsp -text

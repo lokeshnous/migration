@@ -63,9 +63,8 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE THIS JOB</h2>
-			<a href=""><img
-				src="../resources/images/Close.png" width="19" height="19"
-				onclick="parent.$.nmTop().close();" alt="close"></a>
+			<img src="../resources/images/Close.png" width="19" class="nyroModalClose"
+				height="19" alt="Close">
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -78,9 +77,7 @@
 				</div>
 
 				<div class="popUpButtonRow">
-					 <a
-						href="" onclick="parent.$.nmTop().close();"
-						class="btn_sm orange">Cancel</a>
+					<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>
 				</div>
 				<div class="clearfix"></div>
 			</form>

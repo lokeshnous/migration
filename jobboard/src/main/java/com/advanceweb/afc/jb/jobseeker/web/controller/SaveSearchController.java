@@ -152,7 +152,7 @@ public class SaveSearchController {
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put("SaveSearchForm", new SaveSearchForm());
-				jsonObject.put("NavigationPath", "../commonLogin/login");
+				jsonObject.put("NavigationPath", "../savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
@@ -222,6 +222,19 @@ public class SaveSearchController {
 			LOGGER.info("Save this search ERROR");
 		}
 		return jsonObject;
+	}
+	
+	
+	/**
+	 * The method is called to close the SaveThisJob popup
+	 * 
+	 * @param JobSearchViewDetailForm
+	 * @return
+	 */
+	@RequestMapping(value = "/anonymousSaveThisSearchPopUp")
+	public ModelAndView callanonymousSaveThisSearchPopUp(
+			Map<String, JobSearchResultForm> model) {
+		return new ModelAndView("anonymousSaveThisSearchPopUp");
 	}
 
 	/**
