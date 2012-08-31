@@ -210,6 +210,7 @@ public class JobPostController {
 					MMJBCommonConstants.ZERO.equals(form.getJobTitle())||
 					MMJBCommonConstants.ZERO.equals(form.getJobCountry()) ||
 					MMJBCommonConstants.ZERO.equals(form.getJobState()) ||
+					MMJBCommonConstants.ZERO.equals(form.getBrandTemplate())||
 					StringUtils.isEmpty(form.getJobDesc()) ||
 					(StringUtils.isEmpty(form.getApplyUrl()) && 
 							StringUtils.isEmpty(form.getAtsUrl()) && 
