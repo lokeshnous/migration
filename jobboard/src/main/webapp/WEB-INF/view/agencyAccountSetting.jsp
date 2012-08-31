@@ -196,7 +196,7 @@ function copyAccToBillingAddr(obj) {
 		});
  		
  		$('[id^=zipCode]').keypress(validateNumber);
- 		 		
+ 		$('[id^=zipCode2]').keypress(validateNumber); 		
 		jQuery(".megamenu").megamenu();
 	});
 </script>
