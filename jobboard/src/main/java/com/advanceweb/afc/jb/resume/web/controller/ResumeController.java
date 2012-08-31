@@ -659,7 +659,7 @@ public class ResumeController {
 		resumeDTO.setListWorkExpDTO(listWorkExpDTO);
 		resumeDTO.setListPhoneDtl(listPhoneDTO);
 		resumeService.createResumeBuilder(resumeDTO);
-		//getTotalNotNullField(createResume);
+		getTotalNotNullField(createResume);
 		model.addObject("totalProgress", createResume.getTotalProgress());
 		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		//createResume is a session variable & we have make it null once the resume is saved, 
@@ -1038,7 +1038,7 @@ public class ResumeController {
 						&& !eduForm.getDegrees().equals("")){
 					count = count + 1L;
 				}
-				if (null != eduForm.getEndDate() && eduForm.getEndDate().equals("")){
+				if (null != eduForm.getEndDate() && !eduForm.getEndDate().equals("")){
 					count = count + 1L;
 				}
 				if (null != eduForm.getFieldOfStudy()
@@ -1054,7 +1054,7 @@ public class ResumeController {
 					count = count + 1L;
 				}
 				if (null != eduForm.getStartDate()
-						&& eduForm.getStartDate().equals("")){
+						&& !eduForm.getStartDate().equals("")){
 					count = count + 1L;
 				}
 				break;
@@ -1105,8 +1105,9 @@ public class ResumeController {
 		}
 		if (null != createResume.getListWorkExpForm()) {
 			for (WorkExpForm wrkExpForm : createResume.getListWorkExpForm()) {
-				if (null !=wrkExpForm.getAnnualSalary()
-						&& !wrkExpForm.getAnnualSalary().equals("")){
+				if (null != wrkExpForm.getAnnualSalary()
+						&& !wrkExpForm.getAnnualSalary().equals("")
+						&& !wrkExpForm.getAnnualSalary().equals("0")) {
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getCurrentCareerLvl()
@@ -1125,8 +1126,8 @@ public class ResumeController {
 						&& !wrkExpForm.getEmploymentType().equals("")){
 					count = count + 1L;
 				}
-				if (wrkExpForm.getEndDate() != null
-						&& wrkExpForm.getEndDate().equals("")){
+				if (null != wrkExpForm.getEndDate() 
+						&& !wrkExpForm.getEndDate().equals("")){
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getHrlyPayRate()
@@ -1138,7 +1139,7 @@ public class ResumeController {
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getStartDate()
-						&& wrkExpForm.getStartDate().equals("")){
+						&& !wrkExpForm.getStartDate().equals("")){
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getYrsAtPostion()
