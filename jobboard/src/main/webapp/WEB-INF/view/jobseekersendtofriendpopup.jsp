@@ -3,43 +3,9 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ADVANCE Heathcare Jobs</title>
-
-<!-- STYLESHEETS -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
-<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
-        	<!-- js files for modalpopup------------------------------------------------- -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
-<script src="../resources/js/jquery-1.7.1.min.js"></script>
-		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
-		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
-
-        <style type="text/css" media="screen">
-           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
-        </style>
-<!-- -------------------------------------------------------------------------- -->
-
-
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+	<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 
@@ -69,43 +35,49 @@
 	}
 </script>
 </head>
-
 <body class="job_board">
-	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
-		style="display: block">
+	<div class="job_seeker_login popUpContainer" id="jobSeekerRegister1" style="display: block;">
 		<div class="popupHeader">
 			<h2>SEND TO A FRIEND</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19" onclick="parent.$.nmTop().close();"
-				height="19" alt=""></a>
+			<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
 		</div>
-           
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
-			    <input type="hidden" name="joburl" value="${joburl}" />
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Your Friend's Email Address:</span> 
-                      <form:input path="email" class="job_seeker_email"/>
- 					<span class="required">(Required)</span>
+					<span class="lableText3">
+						Your Friend's Email Address:
+					</span>
+					<form:input path="email" name="EmailAddress" class="job_seeker_email" type="text"/>
+					<span class="required">
+					(Required)
+					</span>
 				</div>
-				<div>
-				  <span class="lableText3"></span> 
-				  <span style="color: red;font-style:italic;" >
-				 	<c:if test="${fn:length(notempty) gt 0}">*${notempty}</c:if>
- 					<c:if test="${fn:length(invalidemail) gt 0}">*${invalidemail}</c:if>
- 				  </span>
-				</div>
+					<div class="rowEvenNewSpacing">
+						<span class="lableText3">
+							<c:if test="${fn:length(notempty) gt 0}">*${notempty}</c:if>
+	 						<c:if test="${fn:length(invalidemail) gt 0}">*${invalidemail}</c:if>
+ 						</span>
+					</div>
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Message:</span>
-				    <form:textarea path="message" id="Body Text:" cols="45" rows="5" class="textareaBoxCResume" />
+					<span class="lableText3">
+						Message:
+					</span>
+					<form:textarea path="message" name="message" class="textareaBoxMessege" id="message" rows="5" cols="45" resize="none" />				
 				</div>
-				<div class="popUpButtonRow">					
-					<a href="#"	class="btn_sm orange" id="send" >Send</a> <a href="" class="btn_sm orange" id="cancel">Cancel</a>
+				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
+						<span class="floatLeft marginTop10">
+							<input type="submit" value="Send" name="Send" id="btn-submit" class="btn_sm orange" />
+							<input type="button" name="Cancel" class="orange" value="Cancel"/>
+								
+						</span>
+					</div>
+				<div class="clearfix">
 				</div>
-				<div class="clearfix"></div>
 			</form:form>
 		</div>
-		<div class="clearfix"></div>
+		<div class="clearfix">
+		</div>
 	</div>
-
 </body>
+
 </html>
