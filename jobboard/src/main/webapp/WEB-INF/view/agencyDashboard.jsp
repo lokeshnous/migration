@@ -11,6 +11,8 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$("#changePassword").displaypopup("#changePassword", "780", "370");
+		$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
+				"770", "360");
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -152,7 +154,9 @@
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a href="">Account Settings</a>
+											<a
+									href="<%=request.getContextPath()%>/agency/viewEmpAccountProfile.html"
+									id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
 									<div class="lableTextDashBoard">
