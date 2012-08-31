@@ -118,7 +118,7 @@ function validatePhone(phone) {
             $('#spnPhoneStatu').css('color', 'green');
         }
         else {
-            $('#spnPhoneStatu').html('Invalid');
+            $('#spnPhoneStatu').html('Please enter the correct Phone Number (XXX-XXX-XXXX)');
             $('#spnPhoneStatu').css('color', 'red');
         }
     });
