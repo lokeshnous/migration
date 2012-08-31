@@ -1,8 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -144,24 +141,14 @@ public class JobApplicationController {
 			List<String> attachmentpaths = new ArrayList<String>();
 			
                 MultipartFile file = form.getFileContent();
-            
-                File temp = File.createTempFile(file.getOriginalFilename(),"");
-				File newFile = new File(temp.getParent() + "\\"
-						+ file.getOriginalFilename());
-				// Rename
-				newFile.deleteOnExit();
-				if (temp.renameTo(newFile)) {
-					LOGGER.info("File has been renamed.");
-				}
-				temp.deleteOnExit();
-
-				// Write to temp file
-				BufferedWriter out = new BufferedWriter(new FileWriter(
-						newFile));
-				out.write(form.getFileContent().toString());
-				out.close();
+                File upLoadedfile = new File(file.getOriginalFilename());
+                upLoadedfile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(upLoadedfile);
+                fos.write(file.getBytes());
+                fos.close(); 
+                upLoadedfile.deleteOnExit();
 			try {
-				attachmentpaths.add(newFile.getAbsolutePath());
+				attachmentpaths.add(upLoadedfile.getAbsolutePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
 				// LOGGER.info("Resume not found");
