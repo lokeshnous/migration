@@ -22,28 +22,8 @@
 										function(event) {
 											if (validate()) {
 												var file = $("#filePath").val();
-												$
-														.ajax({
-															url : "${pageContext.request.contextPath}/anonymoususerjobapply/saveAnonymousUserJobapply.html?filePath="
-																	+ file,
-															data : $(
-																	'#applyJobForm')
-																	.serialize(),
-															type : "POST",
-															success : function(
-																	data) {
-																if (data == '') {
-																	parent.window.location.href = "${pageContext.request.contextPath}/jobsearch/findJobPage.html";
-																	parent.$
-																			.nmTop()
-																			.close();
-																} else {
-																	$("#errmsg")
-																			.html(
-																					"Some problem happend,please try again");
-																}
-															},
-														});
+												$("form").attr("action","${pageContext.request.contextPath}/anonymoususerjobapply/saveAnonymousUserJobapply.html");
+												$("#applyJobForm").submit();
 											}
 										});
 					});
@@ -93,7 +73,7 @@
 		</div>
 		<div id="errmsg" style="font: bold; color: red" align="left"></div>
 		<div class="popUpContainerWrapper">
-			<form:form id="applyJobForm" action="" method="POST"
+			<form:form id="applyJobForm" action="saveAnonymousUserJobapply.html" method="POST"
 				commandName="jobApplicationForm" enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<h3>Send Resume</h3>
@@ -119,7 +99,7 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Upload Resume File:</span>
 					<div class="floatLeft">
-						<form:input path="filePath" type="file" id="filePath" size="20"
+						<form:input path="fileContent" type="file" id="filePath" size="20"
 							class="job_seeker_login_email fileType" />
 					</div>
 					<span class="required">(Required)</span>
