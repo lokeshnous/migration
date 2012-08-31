@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
@@ -55,6 +59,9 @@ public class JobApplicationController {
 
 	@Value("${employeJobApplicationBody}")
 	private  String empJobAppBody;
+	
+	@Value("${defaultResumeExtension}")
+	private String defaultResumeExtension;
 
 	@Value("${navigationPath}")
 	private  String navigationPath;
@@ -94,14 +101,14 @@ public class JobApplicationController {
 	 * @param request
 	 * @return
 	 */
-	@ResponseBody
+	
 	@RequestMapping(value = "/saveAnonymousUserJobapply", method = RequestMethod.POST)
-	public String appylJob(
+	public ModelAndView appylJob(
 			@ModelAttribute("jobApplicationForm") JobApplicationForm form,
-			BindingResult result, @RequestParam("filePath") String filepath,
+			BindingResult result,
 			HttpServletRequest request, HttpSession session) {
+		ModelAndView model=new ModelAndView();
 		try {
-
 			// send mail to employer email id which is given while posting the
 			 // job and attach the anonymous job seeker resume as
 			 // attachment,subject will be job title, body will contain short
@@ -112,7 +119,6 @@ public class JobApplicationController {
 			int jobId = (Integer) session.getAttribute("jobId");
 			SearchedJobDTO searchedJobDTO = jobSearchService
 					.viewJobDetails(jobId);
-			
 			// Adding path for
 			String loginPath = navigationPath.substring(2);
 			String employerloginUrl = request.getRequestURL().toString()
@@ -136,8 +142,26 @@ public class JobApplicationController {
 			toEmployer.setBody(employerMailBody);
 			toEmployer.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
+			
+                MultipartFile file = form.getFileContent();
+            
+                File temp = File.createTempFile(file.getOriginalFilename(),"");
+				File newFile = new File(temp.getParent() + "\\"
+						+ file.getOriginalFilename());
+				// Rename
+				newFile.deleteOnExit();
+				if (temp.renameTo(newFile)) {
+					LOGGER.info("File has been renamed.");
+				}
+				temp.deleteOnExit();
+
+				// Write to temp file
+				BufferedWriter out = new BufferedWriter(new FileWriter(
+						newFile));
+				out.write(form.getFileContent().toString());
+				out.close();
 			try {
-				attachmentpaths.add(filepath);
+				attachmentpaths.add(newFile.getAbsolutePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
 				// LOGGER.info("Resume not found");
@@ -164,13 +188,15 @@ public class JobApplicationController {
 			toJobSeeker.setHtmlFormat(true);
 			emailService.sendEmail(toJobSeeker);
 			session.removeAttribute("jobId");
+			model.setViewName("redirect:/jobsearch/findJobPage.html");
 			// LOGGER.info("Mail has sent to Anonymous User");
 		} catch (Exception e) {
 			session.removeAttribute("jobId");
-			return "error";
+			model.setViewName("redirect:/jobsearch/findJobPage.html");
+			return model;
 			// TODO:Exception Handling
 		}
-		return "";
+		return model;
 	}
 
 }
