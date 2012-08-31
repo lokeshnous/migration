@@ -41,10 +41,12 @@
 					&& workAuth != null	&& workAuth != "" && parseInt(sizeInKB) < 750){
 					
 					if(parseInt(sizeInKB) == 0){
+						alert("size 0");
 						$("#resumeErrorMsg").html("");
 						updateResume(resumeName, resumeId);	
 					}
 					if(parseInt(sizeInKB) > 0 && validateResume($.trim($("#fileData").val()))){
+						alert("size more");
 						$("#resumeErrorMsg").html("");
 						updateResume(resumeName, resumeId);						
 					}		
@@ -69,7 +71,7 @@
 								$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 							} else {
 								$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
-								$("form").submit();
+								$("#uploadResumeForm").submit();
 							}
 						},
 					error : function(response) {
@@ -105,7 +107,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="post" action="updateResumeUpload.html" commandName="createResume" id="formtouse" enctype="multipart/form-data">
+			<form:form method="post" action="updateResumeUpload.html" commandName="createResume" id="uploadResumeForm" enctype="multipart/form-data">
 				<div id="resumeErrorMsg"></div>
 				
 				<form:input type="hidden" path="uploadResumeId" />

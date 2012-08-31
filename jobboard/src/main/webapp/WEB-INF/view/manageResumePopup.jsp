@@ -59,7 +59,7 @@
 							success: function(data){ 
 							    if(data.success != null){
 							    	rowObj.remove();
-							    	//alert(data.success);
+							    	$("#manageResumeErrorMsg").html("");
 							    }
 							    if(data.failure != null){
 							    	alert(data.failure);
