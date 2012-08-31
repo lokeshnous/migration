@@ -236,6 +236,9 @@ public class TransformCreateResume {
 				form.setPhoneType(dto.getPhoneType());
 				phoneDtls.add(form);
 			}
+		}else{
+			PhoneDetailForm form = new PhoneDetailForm();
+			phoneDtls.add(form);
 		}
 		return phoneDtls;
 		
@@ -371,6 +374,7 @@ public class TransformCreateResume {
 			}
 		}else{
 			ReferenceForm refForm = new ReferenceForm();
+			refForm.setReferenceType(MMJBCommonConstants.REFERENCE_TYPE_PERSONAL);
 			listWorkExpForms.add(refForm);
 		}
 		return listWorkExpForms;
