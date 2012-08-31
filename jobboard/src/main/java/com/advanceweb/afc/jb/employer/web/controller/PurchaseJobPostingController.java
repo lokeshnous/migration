@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -107,11 +108,13 @@ public class PurchaseJobPostingController {
 		return 	model;
 	}
 	
-	@RequestMapping(value="/proceedToCheckOut",method = RequestMethod.POST)
-	public ModelAndView checkOut(PurchaseJobPostForm purchaseJobPostForm) {
+	@RequestMapping(value="/proceedToCheckOut",method = RequestMethod.GET)
+	public ModelAndView checkOut(PurchaseJobPostForm purchaseJobPostForm,HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName("empPurchaseJobPostingsPopup");
+		//model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		session.setAttribute("purchaseJobPostCart", purchaseJobPostForm);
+		
+		model.setViewName("redirect:/pgiController/callPaymentMethod.html");
 		return 	model;
 	}
 }

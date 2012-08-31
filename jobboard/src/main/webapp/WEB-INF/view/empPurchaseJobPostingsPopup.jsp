@@ -270,7 +270,7 @@
 					</div>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href="#"
+					<span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/purchaseJobPosting/proceedToCheckOut.html" id="proceedToCheckout"
 						class="btn_sm orange">Proceed to Checkout</a> <a href="#"
 						class="nyroModalClose btn_sm orange">Cancel</a></span> <span
 						class="floatLeft marginTop10 marginLeft5"></span>

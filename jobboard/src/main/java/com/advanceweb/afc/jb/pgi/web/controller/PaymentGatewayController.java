@@ -205,6 +205,8 @@ public class PaymentGatewayController {
 			model.setViewName("gatewayCreditBilling");
 			return model;
 		}
+		
+		model.addObject("purchaseJobPostForm", session.getAttribute("purchaseJobPostCart"));
 		model.setViewName("gatewayCreditConfirmOrder");
 		return model;
 	}
