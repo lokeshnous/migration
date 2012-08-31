@@ -88,7 +88,7 @@
 									For more than 8 slots, contact your <em>ADVANCE</em> sales rep.
 								</p>
 								<div class="clearfix"></div>
-								<span class="FloatLeft marginTop40"><a href="../employerPostJobs/sendEmailForGold.html?package=jbPostSlot"
+								<span class="FloatLeft marginTop40"><a href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
 									name="jobPostingSlot" class="btn_sm orange">BUY ONLINE NOW</a></span>
 								<div class="PlayDemo marginTop30">
 									<a
@@ -179,7 +179,7 @@
 										</table>
 									</div>
 									<span class="FloatLeft marginTop20"><a
-										href="../employerPostJobs/sendEmailForGold.html?package=silver" name="silver"
+										href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html" name="silver"
 										class="btn_sm orange">BUY ONLINE NOW</a></span>
 									<div class="PlayDemo marginTop10">
 										<a

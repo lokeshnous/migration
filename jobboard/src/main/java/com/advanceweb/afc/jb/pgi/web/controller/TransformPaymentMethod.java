@@ -2,10 +2,9 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
-import com.advanceweb.afc.jb.common.AccountBillingDTO;
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
 
 /**
  * @author muralikc

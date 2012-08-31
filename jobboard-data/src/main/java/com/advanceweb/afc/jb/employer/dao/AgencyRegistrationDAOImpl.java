@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.agency.helper.AgencyRegistrationConversionHelper;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
@@ -30,7 +29,6 @@ import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
-import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 
 /**

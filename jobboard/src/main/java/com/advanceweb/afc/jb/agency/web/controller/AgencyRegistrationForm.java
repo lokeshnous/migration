@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileAttribForm;
-
 /**
  * @author muralikc
  *

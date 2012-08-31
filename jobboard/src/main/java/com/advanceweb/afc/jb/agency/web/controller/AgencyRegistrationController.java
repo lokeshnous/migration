@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
@@ -36,12 +35,11 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
-import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
  * @author muralikc
- *
+ * 
  */
 @Controller
 @RequestMapping("/agencyRegistration")
@@ -62,10 +60,7 @@ public class AgencyRegistrationController {
 	private PopulateDropdowns populateDropdownsService;
 
 	@Autowired
-	FetchAdmFacilityConatact fetchAdmFacilityConatact;
-
-	@Autowired
-	AgencyRegistrationValidation registerValidation;
+	private AgencyRegistrationValidation registerValidation;
 
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
@@ -75,6 +70,8 @@ public class AgencyRegistrationController {
 
 	@Autowired
 	private LoginService loginService;
+
+	private final static String agencyReg = "addAjecncyRegistration";
 
 	/**
 	 * This method is called to display job seeker registration page
@@ -99,7 +96,7 @@ public class AgencyRegistrationController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
-		model.setViewName("addAjecncyRegistration");
+		model.setViewName(agencyReg);
 		return model;
 	}
 
@@ -117,61 +114,10 @@ public class AgencyRegistrationController {
 		ModelAndView model = new ModelAndView();
 
 		if (null != agencyRegForm.getListProfAttribForms()) {
-			model.setViewName("addAjecncyRegistration");
-			for (AgencyProfileAttribForm form : agencyRegForm
-					.getListProfAttribForms()) {
-
-				// Checking validation for input text box
-				if (form.getbRequired() != 0
-						&& StringUtils.isEmpty(form.getStrLabelValue())
-						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
-								.getStrLabelName())) {
-					model.addObject("message",
-							"Please fill the Required fields");
-					return model;
-				}
-
-				// Checking validation for dropdowns & checkboxes etc
-				if (form.getbRequired() != 0
-						&& MMJBCommonConstants.ZERO.equals(form
-								.getStrLabelValue())
-						&& (MMJBCommonConstants.DROP_DOWN.equals(form
-								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
-								.equals(form.getStrAttribType()))) {
-					model.addObject("message",
-							"Please fill the Required fields");
-					return model;
-				}
-				// validation mobile number
-				if (MMJBCommonConstants.PRIMARY_PHONE.equals(form
-						.getStrLabelName())
-						&& !StringUtils.isEmpty(form.getStrLabelValue())
-						&& !registerValidation.validateMobileNumberPattern(form
-								.getStrLabelValue())) {
-					model.addObject("message", jobseekerRegPhoneMsg);
-					return model;
-				}
-				if (MMJBCommonConstants.SECONDARY_PHONE.equals(form
-						.getStrLabelName())
-						&& !StringUtils.isEmpty(form.getStrLabelValue())
-						&& !registerValidation.validateMobileNumberPattern(form
-								.getStrLabelValue())) {
-					model.addObject("message", jobseekerRegPhoneMsg);
-					return model;
-				}
+			model.setViewName(agencyReg);
+			if (!validateEmpRegForm(agencyRegForm, model, result)) {
+				return model;
 			}
-		}
-		registerValidation.validate(agencyRegForm, result);
-
-		if (result.hasErrors()) {
-			model.setViewName("addAjecncyRegistration");
-			return model;
-		}
-		if (agencyRegistration.validateEmail(agencyRegForm.getEmailId())) {
-			result.rejectValue("emailId", "NotEmpty",
-					"Email Id already Exists!");
-			model.setViewName("addAjecncyRegistration");
-			return model;
 		}
 
 		AgencyProfileDTO empDTO = new AgencyProfileDTO();
@@ -183,6 +129,7 @@ public class AgencyRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createNewProfile(empDTO);
+		LOGGER.info("REGISTRATION IS SUCCESSFULL");
 
 		model.addObject("agencyRegForm", agencyRegForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
@@ -198,6 +145,71 @@ public class AgencyRegistrationController {
 		authenticateUserAndSetSession(userDTO, request);
 
 		return model;
+	}
+
+	private boolean validateEmpRegForm(AgencyRegistrationForm agencyRegForm,
+			ModelAndView model, BindingResult result) {
+		boolean status = true;
+
+		if (null != agencyRegForm.getListProfAttribForms()) {
+			model.setViewName("addAjecncyRegistration");
+			for (AgencyProfileAttribForm form : agencyRegForm
+					.getListProfAttribForms()) {
+
+				// Checking validation for input text box
+				if (form.getbRequired() != 0
+						&& StringUtils.isEmpty(form.getStrLabelValue())
+						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
+								.getStrLabelName())) {
+					model.addObject("message",
+							"Please fill the Required fields");
+					return false;
+				}
+
+				// Checking validation for dropdowns & checkboxes etc
+				if (form.getbRequired() != 0
+						&& MMJBCommonConstants.ZERO.equals(form
+								.getStrLabelValue())
+						&& (MMJBCommonConstants.DROP_DOWN.equals(form
+								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
+								.equals(form.getStrAttribType()))) {
+					model.addObject("message",
+							"Please fill the Required fields");
+					return false;
+				}
+				// validation mobile number
+				if (MMJBCommonConstants.PRIMARY_PHONE.equals(form
+						.getStrLabelName())
+						&& !StringUtils.isEmpty(form.getStrLabelValue())
+						&& !registerValidation.validateMobileNumberPattern(form
+								.getStrLabelValue())) {
+					model.addObject("message", jobseekerRegPhoneMsg);
+					return false;
+				}
+				if (MMJBCommonConstants.SECONDARY_PHONE.equals(form
+						.getStrLabelName())
+						&& !StringUtils.isEmpty(form.getStrLabelValue())
+						&& !registerValidation.validateMobileNumberPattern(form
+								.getStrLabelValue())) {
+					model.addObject("message", jobseekerRegPhoneMsg);
+					return false;
+				}
+			}
+		}
+		registerValidation.validate(agencyRegForm, result);
+
+		if (result.hasErrors()) {
+			// model.setViewName(agencyReg);
+			return false;
+		}
+		if (agencyRegistration.validateEmail(agencyRegForm.getEmailId())) {
+			result.rejectValue("emailId", "NotEmpty",
+					"Email Id already Exists!");
+			// model.setViewName(agencyReg);
+			return false;
+		}
+
+		return status;
 	}
 
 	/**

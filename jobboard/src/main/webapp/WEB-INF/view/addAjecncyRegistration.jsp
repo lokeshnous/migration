@@ -61,7 +61,7 @@
 						<!-- Step 1 -->
 						<div id="jobSeekerRegister1"
 							class="job_seeker_login leftFormHolder" style="display: block">
-							<h2 class="sectionSubHeader">To register as an employer,
+							<h2 class="sectionSubHeader">To register as an agency,
 								please fill out these fields.</h2>
 							<c:if test="${not empty message}">
 								<div class="validationMsg">

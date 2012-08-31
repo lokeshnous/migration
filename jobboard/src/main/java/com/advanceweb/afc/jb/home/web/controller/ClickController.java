@@ -20,45 +20,53 @@ import com.advanceweb.afc.jb.event.service.ClickService;
 public class ClickController {
 
 	@Autowired
-	private  ClickService clickService;
-	
-	private static final Logger LOGGER = Logger.getLogger("ClickController.class");
+	private ClickService clickService;
+
+	private static final Logger LOGGER = Logger
+			.getLogger("ClickController.class");
 
 	@ResponseBody
 	@RequestMapping(value = "/clickevent", method = RequestMethod.GET)
-	public String getclickevent(@RequestParam("jobid") String jobid,@RequestParam("type") String type, HttpServletRequest request,HttpServletResponse response,Model model) {
-		String finalresult=MMJBCommonConstants.ERROR_STRING;
-		
-		try{
-			if(type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)){
-				//System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(jobid),clickService,MMJBCommonConstants.CLICKTYPE_CLICK);
-			}else if(type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)){
-				//System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(jobid),clickService,MMJBCommonConstants.CLICKTYPE_APPLY);
-			}else if(type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)){
-				//System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(jobid),clickService,MMJBCommonConstants.CLICKTYPE_VIEW);
+	public String getclickevent(@RequestParam("jobid") String jobid,
+			@RequestParam("type") String type, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+		String finalresult = MMJBCommonConstants.ERROR_STRING;
+
+		try {
+			if (type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)) {
+				// System.out.println(request.getParameter("type"));
+				update(Integer.parseInt(jobid), clickService,
+						MMJBCommonConstants.CLICKTYPE_CLICK);
+			} else if (type
+					.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)) {
+				// System.out.println(request.getParameter("type"));
+				update(Integer.parseInt(jobid), clickService,
+						MMJBCommonConstants.CLICKTYPE_APPLY);
+			} else if (type
+					.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)) {
+				// System.out.println(request.getParameter("type"));
+				update(Integer.parseInt(jobid), clickService,
+						MMJBCommonConstants.CLICKTYPE_VIEW);
 			}
-			finalresult=MMJBCommonConstants.OK_STRING;
+			finalresult = MMJBCommonConstants.OK_STRING;
 			response.setStatus(response.SC_OK);
-		}catch (Exception e) {
-			finalresult=MMJBCommonConstants.ERROR_STRING;
+		} catch (Exception e) {
+			finalresult = MMJBCommonConstants.ERROR_STRING;
 			response.setStatus(response.SC_NOT_FOUND);
 			LOGGER.info("ERROR");
 		}
 		return finalresult;
 	}
-     
-	
-	private static final synchronized void update(int jobid,ClickService clickService,String type){
-		ClickEventDTO clickEventDTO=clickService.retrieveAllClicks(jobid);
-		if(type.equals(MMJBCommonConstants.CLICKTYPE_CLICK)){
-			clickEventDTO.setClicks(clickEventDTO.getClicks()+1);
-		}else if(type.equals(MMJBCommonConstants.CLICKTYPE_APPLY)){
-			clickEventDTO.setApplies(clickEventDTO.getApplies()+1);
-		}else if(type.equals(MMJBCommonConstants.CLICKTYPE_VIEW)){
-			clickEventDTO.setViews(clickEventDTO.getViews()+1);
+
+	private static final synchronized void update(int jobid,
+			ClickService clickService, String type) {
+		ClickEventDTO clickEventDTO = clickService.retrieveAllClicks(jobid);
+		if (type.equals(MMJBCommonConstants.CLICKTYPE_CLICK)) {
+			clickEventDTO.setClicks(clickEventDTO.getClicks() + 1);
+		} else if (type.equals(MMJBCommonConstants.CLICKTYPE_APPLY)) {
+			clickEventDTO.setApplies(clickEventDTO.getApplies() + 1);
+		} else if (type.equals(MMJBCommonConstants.CLICKTYPE_VIEW)) {
+			clickEventDTO.setViews(clickEventDTO.getViews() + 1);
 		}
 		clickService.saveClickEvent(clickEventDTO);
 	}

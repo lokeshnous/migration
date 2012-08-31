@@ -6,11 +6,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
-import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
-import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
