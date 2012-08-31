@@ -16,7 +16,7 @@
 		 var sizeInKB = 0;
 		 $("#downloadResume").click(function() {
 		 	var resumeId = $("#uploadResumeId").val();
-			$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume//downloadResume.html?resumeId="+resumeId);
+			$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
 			$("form").attr("method","GET");
 			$("form").submit();
 		 });
@@ -40,29 +40,13 @@
 					&& jobTitle != null	&& jobTitle != "" && workAuth != "Select"
 					&& workAuth != null	&& workAuth != "" && parseInt(sizeInKB) < 750){
 					
+					if(parseInt(sizeInKB) == 0){
+						$("#resumeErrorMsg").html("");
+						updateResume(resumeName, resumeId);	
+					}
 					if(parseInt(sizeInKB) > 0 && validateResume($.trim($("#fileData").val()))){
 						$("#resumeErrorMsg").html("");
-						//validate number of resumes
-						//validate if resume name already exist in db
-						$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
-							type: "GET",
-							success : function(data) {
-								if (data.maxResume != null) {
-										$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
-									} else if (data.duplicateResume != null) {
-										$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
-									} else {
-										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
-										$("form").submit();
-									}
-								},
-							error : function(response) {
-								alert("Server Error : "+ response.status);
-								},
-							complete : function() {
-								
-							}
-						});
+						updateResume(resumeName, resumeId);						
 					}		
 				}  
 				else if(parseInt(sizeInKB) > 750){
@@ -72,6 +56,30 @@
 					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
 				}
 			});
+		 
+		 function updateResume(resumeName, resumeId){
+			//validate number of resumes
+			//validate if resume name already exist in db
+				$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
+					type: "GET",
+					success : function(data) {
+						if (data.maxResume != null) {
+								$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+							} else if (data.duplicateResume != null) {
+								$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+							} else {
+								$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
+								$("form").submit();
+							}
+						},
+					error : function(response) {
+						alert("Server Error : "+ response.status);
+						},
+					complete : function() {
+						
+					}
+				});
+		 }
 		 
 		 function validateResume(fileName)
 		  {
