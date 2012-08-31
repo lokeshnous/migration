@@ -75,10 +75,10 @@ public class JobPostServiceImpl implements JobPostService {
 	 * @param : employerId
 	 */
 	@Override
-	public List<JobPostDTO> retrieveAllJobPost(int employerId) {
-		return employerJobPostDAO.retrieveAllJobPost(employerId);
+	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords) {
+		return employerJobPostDAO.retrieveAllJobPost(employerId,offset,noOfRecords);
 	}
-
+	
 	@Override
 	public JobPostDTO editJob(int jobId) {
 		return employerJobPostDAO.editJob(jobId);
@@ -107,13 +107,24 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId) {
-		return employerJobPostDAO.retrieveAllJobByStatus(jobStatus, userId);
+	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId, int offset, int noOfRecords) {
+		return employerJobPostDAO.retrieveAllJobByStatus(jobStatus, userId,offset,noOfRecords);
 	}
 	
 	@Override
 	public List<JobPostingPlanDTO> getJobPostingPlans() {
 		return employerJobPostDAO.getJobPostingPlans();
+	}
+
+	@Override
+	public int getTotalNumberOfJobRecords(int userId) {
+		return employerJobPostDAO.getTotalNumberOfJobRecords(userId);
+		
+	}
+
+	@Override
+	public int getTotalNumberOfJobRecordsByStatus() {
+		return employerJobPostDAO.getTotalNumberOfJobRecordsByStatus();
 	}
 
 }

@@ -18,14 +18,16 @@ public interface JobPostService {
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 	List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto);
-	List<JobPostDTO> retrieveAllJobPost(int employerId);
+	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords);
 	JobPostDTO editJob(int jobId);
 	boolean deleteJob(int jobId , int userId);
 	boolean updateManageJob(boolean autoRenew,String brandTemplate,int jobId , int userId);
 	boolean deactivateJob(int jobId , int userId);
 	boolean repostJob(int jobId , int userId);
 	List<JobPostDTO> retrieveAllJobByStatus( String jobStatus,
-			int userId);
+			int employerId, int offset, int noOfRecords);
 	
 	List<JobPostingPlanDTO> getJobPostingPlans();
+	int getTotalNumberOfJobRecords(int employerId);
+	int getTotalNumberOfJobRecordsByStatus();
 }

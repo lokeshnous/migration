@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -13,8 +14,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import antlr.StringUtils;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
@@ -47,7 +46,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
-
+	private int numberOfJobRecordsByStatus;
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
 	
@@ -156,10 +155,20 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 *
 	 */
 	@Override
-	public List<JobPostDTO> retrieveAllJobPost(int employerId) {
-		List<JpJob> jobs = hibernateTemplate
-				.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-						+ employerId + "and a.deleteDt is NULL");
+	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
+			int noOfRecords) {
+		List<JpJob> jobs = new ArrayList<JpJob>();
+
+		Query query = hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								+ employerId + "and a.deleteDt is NULL ");
+		query.setFirstResult(offset);
+		query.setMaxResults(noOfRecords);
+		jobs = query.list();
+
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
@@ -308,46 +317,96 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
- int userId) {
+ int userId, int offset, int noOfRecords) {
 		List<JpJob> jobs = new ArrayList<JpJob>();
+		List<JpJob> jobCount = new ArrayList<JpJob>();
+		Query query=null;
 		if (null != jobStatus
 				&& jobStatus.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
-			jobs = hibernateTemplate
-					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+			query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
 							+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
 		} else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
-			jobs = hibernateTemplate
-					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+			query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
 							+ " and a.active = 0 and a.deleteDt is NULL");
 		}else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
-			jobs = hibernateTemplate
-					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+			query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
 							+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
 		}
 		else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
-			jobs = hibernateTemplate
-					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+			query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
 							+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
 		}
 		else if (null != jobStatus
 				&& jobStatus
 						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
-			jobs = hibernateTemplate
-					.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+			query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 							+ userId
 							+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
 		}
+		
+		jobCount=query.list();
+		query.setFirstResult(offset);
+		query.setMaxResults(noOfRecords);
+		jobs = query.list();
+		setNumberOfJobRecordsByStatus(jobCount.size());
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+	}
+
+	@Override
+	public int getTotalNumberOfJobRecords(int employerId) {
+		List<JpJob> jobs = hibernateTemplate
+				.find("SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+						+ employerId + "and a.deleteDt is NULL");
+		return jobs.size();
+		
+	}
+
+	
+
+	/**
+	 * @return the totalNumberOfJobRecordsByStatus
+	 */
+	public int getNumberOfJobRecordsByStatus() {
+		return numberOfJobRecordsByStatus;
+	}
+
+	/**
+	 * @param totalNumberOfJobRecordsByStatus the totalNumberOfJobRecordsByStatus to set
+	 */
+	public void setNumberOfJobRecordsByStatus(
+			int numberOfJobRecordsByStatus) {
+		this.numberOfJobRecordsByStatus = numberOfJobRecordsByStatus;
+	}
+
+	@Override
+	public int getTotalNumberOfJobRecordsByStatus() {
+		// TODO Auto-generated method stub
+		return this.numberOfJobRecordsByStatus;
 	}
 	
 }

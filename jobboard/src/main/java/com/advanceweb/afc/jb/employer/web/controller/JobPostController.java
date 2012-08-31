@@ -57,6 +57,7 @@ public class JobPostController {
 	String deactivateMsg;
 	@Value("${deleteSuccess}")
 	String deleteSuccessMsg;
+	
 	@RequestMapping(value="/postNewJobs",method = RequestMethod.GET)
 	public ModelAndView showPostJob() {
 		
@@ -340,19 +341,41 @@ public class JobPostController {
 		DropDownDTO downDTO = new DropDownDTO();
 		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
 		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
-		
+
 		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
 		autoRenewList.add(dto);
 		autoRenewList.add(downDTO);
+		int page = 1;
+		String displayRecordsPerPage = jobPostform.getNoOfPage();
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int recordsPerPage = 0;
+
+		int noOfRecords = 0;
+		if (null == displayRecordsPerPage) {
+			displayRecordsPerPage = "20";
+		}
 		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			if (null == jobStatus || jobStatus.isEmpty()) {
-				postedJobList = employerJobPost
-						.retrieveAllJobPost((Integer) session
+
+				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
+				postedJobList = employerJobPost.retrieveAllJobPost(
+						(Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID),
+						(page - 1) * recordsPerPage, recordsPerPage);
+
+				noOfRecords = employerJobPost
+						.getTotalNumberOfJobRecords((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 			} else {
+				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
 				postedJobList = employerJobPost.retrieveAllJobByStatus(
 						jobStatus, (Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
+								.getAttribute(MMJBCommonConstants.USER_ID),
+						(page - 1) * recordsPerPage, recordsPerPage);
+				noOfRecords = employerJobPost
+						.getTotalNumberOfJobRecordsByStatus();
 			}
 		}
 
@@ -363,8 +386,11 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		jobPostform.setJobPostDTOList(postedJobList);
-		
-		
+
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+
+		model.addObject("noOfPages", noOfPages);
+		model.addObject("currentPage", page);
 		model.addObject("jobPostForm", jobPostform);
 		model.addObject("templateList", templateList);
 		model.addObject("autoRenewList", autoRenewList);

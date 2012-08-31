@@ -57,6 +57,8 @@ public class JobPostForm {
     
     private List<JobPostDTO> jobPostDTOList;
     private String statusValue;
+    private String noOfPage;
+    private String noOfPageLower;
 	public int getJobId() {
 		return jobId;
 	}
@@ -351,6 +353,34 @@ public class JobPostForm {
 	 */
 	public void setStatusValue(String statusValue) {
 		this.statusValue = statusValue;
+	}
+
+	/**
+	 * @return the noOfPage
+	 */
+	public String getNoOfPage() {
+		return noOfPage;
+	}
+
+	/**
+	 * @param noOfPage the noOfPage to set
+	 */
+	public void setNoOfPage(String noOfPage) {
+		this.noOfPage = noOfPage;
+	}
+
+	/**
+	 * @return the noOfPageLower
+	 */
+	public String getNoOfPageLower() {
+		return noOfPageLower;
+	}
+
+	/**
+	 * @param noOfPageLower the noOfPageLower to set
+	 */
+	public void setNoOfPageLower(String noOfPageLower) {
+		this.noOfPageLower = noOfPageLower;
 	}
 	
 	

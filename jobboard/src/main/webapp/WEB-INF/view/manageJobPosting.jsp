@@ -4,7 +4,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,7 +12,6 @@
 <link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
 <link href="../resources/css/jquery.megamenu.css" rel="stylesheet"	type="text/css" />
 <link href="../resources/css/SliderStyles.css" rel="stylesheet"	type="text/css">
-<link rel="stylesheet" href="css/displaytag.css" type="text/css">
 <!-- Common js files  -->
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
 
@@ -151,6 +149,24 @@
 									+ val);
 					$("form").submit(); 
 					});
+				$('#noOfPage').change(function() {
+					val = $(this).val();
+					$('#noOfPageLower').val(val);
+	                 $("form").attr(
+							"action",
+							"${pageContext.request.contextPath}/employer/manageJobPost.html?jobStatus="
+									+ val);
+					$("form").submit(); 
+					});
+				$('#noOfPageLower').change(function() {
+						val = $(this).val();
+						$('#noOfPage').val(val);
+		                 $("form").attr(
+								"action",
+								"${pageContext.request.contextPath}/employer/manageJobPost.html?jobStatus="
+										+ val);
+						$("form").submit(); 
+						});
 			});
 </script>
 
@@ -283,14 +299,15 @@
 					<div class="searchResultsNavigationColumn1">
 
 						<!--Added Class "marginTop5"-->
-						<span >Results viewable:</span> <span class="Padding0"> <select
+						<span >Results viewable:</span> <span class="Padding0"> 
+						<form:select path="noOfPage"
 							name="results" class="jb_input4 margin0">
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option>
-								<option value="All">All</option>
-						</select>
+								<form:option value="20">20</form:option>
+								<form:option value="30">30</form:option>
+								<form:option value="40">40</form:option>
+								<form:option value="50">50</form:option>
+								<form:option value="All">All</form:option>
+						</form:select>
 						</span>
 						<!--Added Class "marginTop5"-->
 						<span >per page</span>
@@ -298,12 +315,25 @@
 					<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 					</div>
 					<div class="searchResultsNavigationColumn2 floatRight">
-						<span>Page:</span> <span class="active">1</span> <span><a
-							href="">2</a></span> <span><a href="">3</a></span> <span><a
-							href="">4</a></span> <span><a href="">5</a></span> <span><a
-							href="">6</a></span> <span><a href="">7</a></span> <span><a
-							href="">8</a></span> <span><a href="">9</a></span> <span><a
-							href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
+						<span>Page:</span> 
+						 <c:forEach begin="1" end="${noOfPages}" var="i">
+               				 <c:choose>
+                  				  <c:when test="${currentPage eq i}">
+									<span class="active">${i}</span>
+									</c:when>
+                   				 <c:otherwise>
+                       				 <span class="active"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a></span>
+                   				 </c:otherwise>
+               				 </c:choose> 
+           				 </c:forEach>
+           				 <c:if test="${currentPage lt noOfPages}">
+           				 <span><a
+							href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}">Next<img src="../resources/images/ArrowRight.png">
+							</a></span>
+       					</c:if>
+
+           				 
+									 
 					</div>
 				</div>
 				
@@ -344,78 +374,8 @@
 							</div>
 						</c:if>
 					<div class="row marginTop10 FontSize11">
-						<%-- <display:table name="${jobPostForm.jobPostDTOList}" sort="external"  pagesize="10" size="10" 
-								requestURI="" defaultsort="1" style="border:2 solid #236FBD;" 
-								cellpadding="0" cellspacing="0"
-							class="grid" id="tb_manage_job" >
-
-							<display:setProperty name="paging.banner.placement"
-								value="bottom" />
-							<display:setProperty name="paging.banner.no_items_found" value="" />
-							<display:setProperty name="paging.banner.onepage" value="" />
-							<display:setProperty name="paging.banner.one_item_found" value="" />
-							<display:setProperty name="paging.banner.all_items_found"
-								value="" />
-							<display:setProperty name="paging.banner.some_items_found"
-								value="" />
-							<display:setProperty name="paging.banner.page.separator"
-								value="  " />
-							<display:setProperty name="paging.banner.group_size" value="10" />
-							<display:setProperty name="paging.banner.first"
-								value='<center><span class="pagelinks">{0}</span></center>' />
-							<display:caption>&nbsp;</display:caption>
-							<display:column class="Height35" ><input type="checkbox"
-										name="checkbox"  id=${jobId} value="${jobId}"></display:column>
-							<display:column property="jobId" sortName="jobId" title="Job ID"
-								sortable="true" class="Height35"/>
-								
-							<display:column property="jobTitle" sortName="jobTitle"
-								title="Job Title" sortable="true" class="Height35" style="{align:center}" />
-								<display:column property="location" 
-								title="Location"  class="Height35" style="{align:center}"/>
-								<display:column property="jobStatus" 
-								title="Job Status" class="Height35" style="{align:center}" />
-								<display:column property="startDt" 
-								title="Start Date" class="Height35" />
-								<display:column property="endDt" 
-								title="End Date" class="Height35" />
-								<display:column property="views"
-								title="Views" class="Height35" />
-								<display:column property="clicks"
-								title="Clicks" class="Height35" />
-								<display:column property="applies" 
-								title="Applies" class="Height35" />
-								<display:column 
-								title="Auto Renew" class="Height35" >
-								<form:select  id="selectAutoRenew" path="jobPostDTOList[0].autoRenew" class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-											name="select1">	
-											<form:option value="0" label="Select One" />		
-																	
-									</form:select>
-								</display:column>
-								<display:column 
-								title="Job Template " class="Height35" >
-								<form:select  id="selectAutoRenew" path="jobPostDTOList[0].autoRenew" class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-											name="select1">	
-											<form:option value="0" label="Select One" />		
-																	
-									</form:select>
-								</display:column>
-								<display:column 
-								title="Action " class="Height35" >
-								<div
-											class="row width80">
-											<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><img src="../resources/images/Edit.png"
-												width="20" height="20" alt=""></a>&nbsp;<a href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><img
-												src="../resources/images/View.png" width="20" height="20"
-												alt=""></a>&nbsp;<a href=""><img
-												src="../resources/images/check.png" width="20" height="20" alt="check" id="${job.jobId}" ></a>
-										</div>
-								</display:column>
-
-						</display:table> --%>
 						<form:hidden path="selectedRow"  id="selectedRow"/>
-						<table width="100%" border="0" cellpadding="0" cellspacing="0"
+						 <table width="100%" border="0" cellpadding="0" cellspacing="0"
 							class="grid" id="tb_manage_job">
 							<tr class="LightGrayBG Height35">
 								<td width="2%" align="center" valign="middle" class="">&nbsp;</td>
@@ -506,14 +466,14 @@
 					<div class="searchResultsNavigationColumn1">
 
 						<!--Added Class "marginTop5"-->
-						<span ">Results viewable:</span> <span class="Padding0"> <select
-							name="results" class="jb_input4">
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option>
-								<option value="All">All</option>
-						</select>
+						<span ">Results viewable:</span> <span class="Padding0"><form:select path="noOfPageLower"
+							name="results" class="jb_input4 margin0">
+								<form:option value="20">20</form:option>
+								<form:option value="30">30</form:option>
+								<form:option value="40">40</form:option>
+								<form:option value="50">50</form:option>
+								<form:option value="All">All</form:option>
+						</form:select>
 						</span>
 						<!--Added Class "marginTop5"-->
 						<span >per page</span>
@@ -521,12 +481,21 @@
 					<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 					</div>
 					<div class="searchResultsNavigationColumn2 floatRight">
-						<span>Page:</span> <span class="active">1</span> <span><a
-							href="">2</a></span> <span><a href="">3</a></span> <span><a
-							href="">4</a></span> <span><a href="">5</a></span> <span><a
-							href="">6</a></span> <span><a href="">7</a></span> <span><a
-							href="">8</a></span> <span><a href="">9</a></span> <span><a
-							href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
+						<span>Page: <c:forEach begin="1" end="${noOfPages}" var="i">
+               				 <c:choose>
+                  				  <c:when test="${currentPage eq i}">
+									<span class="active">${i}</span>
+									</c:when>
+                   				 <c:otherwise>
+                       				 <span class="active"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a></span>
+                   				 </c:otherwise>
+               				 </c:choose> 
+           				 </c:forEach>
+           				 <c:if test="${currentPage lt noOfPages}">
+           				 <span><a
+							href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}">Next<img src="../resources/images/ArrowRight.png">
+							</a></span>
+       					</c:if>
 					</div>
 				</div>
 			</div>
