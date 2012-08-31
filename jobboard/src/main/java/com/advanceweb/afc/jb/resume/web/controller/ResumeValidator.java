@@ -207,10 +207,10 @@ public class ResumeValidator {
 		if(null != refList){
 			for(ReferenceForm form : refList){
 				if(!StringUtils.isEmpty(form.getPhoneNo()) && !validateMobileNumberPattern(form.getPhoneNo())){
-					return "Phone number should contain only numbers";
+					return "Please enter the valid phone format(xxx) xxx-xxxx.";
 				}
 				if(!StringUtils.isEmpty(form.getEmail()) && !validateEmailPattern(form.getEmail())){
-					return "Please enter valid emai address";
+					return "Please enter valid Email address";
 				}
 			}			
 		}
