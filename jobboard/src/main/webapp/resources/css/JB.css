@@ -734,4 +734,14 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
     width: 92%;
 }
 .dashboardPanalcontentTwo { width:247px; float:left; }
+.textareaBoxMessege{
+	background-color: #F0F0F0;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    height: 150px;
+    margin: 10px 0 5px;
+    width: 350px;
+    resize:none;
+	
+}
 
