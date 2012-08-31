@@ -430,6 +430,7 @@ jobboard/src/main/webapp/WEB-INF/view/addLanguage.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addPhoneNos.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addReference.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateGoldPreview.jsp -text
