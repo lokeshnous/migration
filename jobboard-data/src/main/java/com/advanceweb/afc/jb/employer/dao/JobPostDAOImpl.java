@@ -395,7 +395,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 					.uniqueResult();
 		} else if (null != jobStatus
 				&& jobStatus
-						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_SCHEDULED)) {
 			query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()

@@ -161,14 +161,17 @@ public class JobPostConversionHelper<JobPostForm> {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 					}
+
+				} else if (null != job.getEndDt()) {
+					int compareEndDate = job.getEndDt().compareTo(new Date());
 					if (job.getActive() == 1 && compareEndDate < 0) {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
 					}
-					if (job.getActive() == 0) {
-						jobPostDTO
-								.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
-					}
+
+				} else if (null != job.getStartDt()) {
+					int compareStartDate = job.getStartDt().compareTo(
+							new Date());
 					if (job.getActive() == 1 && compareStartDate > 0) {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
@@ -177,6 +180,10 @@ public class JobPostConversionHelper<JobPostForm> {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 					}
+				}
+				if (job.getActive() == 0) {
+					jobPostDTO
+							.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
 				}
 				 List<JpJobLocation> jobLocationList= job.getJpJobLocations();
 				 if(null !=jobLocationList){

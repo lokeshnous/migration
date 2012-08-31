@@ -163,13 +163,8 @@
 				type : "POST",
 				url : "${pageContext.request.contextPath}/jobSeekerResume/getResumeProgress.html",
 				success : function(data) {					
-					if(data != '100'){
-						if(confirm("You have completed only "+data+"% of information. Do you want to continue?")){
-							$("#saveResBuilderHdBtId").click();
-						}
-					}else{
 						$("#saveResBuilderHdBtId").click();
-					}
+					
 				},
 			});
 		});

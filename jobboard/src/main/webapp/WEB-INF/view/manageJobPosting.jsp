@@ -306,7 +306,6 @@
 								<form:option value="30">30</form:option>
 								<form:option value="40">40</form:option>
 								<form:option value="50">50</form:option>
-								<form:option value="All">All</form:option>
 						</form:select>
 						</span>
 						<!--Added Class "marginTop5"-->
@@ -472,7 +471,6 @@
 								<form:option value="30">30</form:option>
 								<form:option value="40">40</form:option>
 								<form:option value="50">50</form:option>
-								<form:option value="All">All</form:option>
 						</form:select>
 						</span>
 						<!--Added Class "marginTop5"-->
