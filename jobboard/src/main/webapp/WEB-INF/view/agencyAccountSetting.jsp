@@ -46,6 +46,16 @@ function validateNumber(event) {
       hasError = true
     } */
  
+    var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
+    var phone=$("#phone").val();
+    if(phone==''){
+    	 $("#phone").after('<span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span>');
+         hasError = true;
+    }else if(!filter.test(phone)){
+    	 $("#phone").after('<span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span>');
+         hasError = true;
+    }
+ 
     if(hasError == true) { return false; }
  
     });	
@@ -75,66 +85,20 @@ function validateNumber(event) {
       hasError = true
     }
  
+    var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
+    var phone=$("#phone2").val();
+    if(phone==''){
+    	 $("#phone2").after('<span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span>');
+         hasError = true;
+    }else if(!filter.test(phone)){
+    	 $("#phone2").after('<span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span>');
+         hasError = true;
+    }
+ 
     if(hasError == true) { return false; }
  
     });	
   </script>
-  <script type="text/javascript">
-  $(document).ready(function() {
-	  $(".error").hide();
-	    var hasError = false;
-    $('#phone').blur(function(e) {
-        if (validatePhone('phone')) {
-            $('#spnPhoneStatus').html('Valid');
-            $('#spnPhoneStatus').css('color', 'green');
-        }
-        else {
-            $('#spnPhoneStatus').html('Please enter the correct Phone Number (XXX-XXX-XXXX)');
-            $('#spnPhoneStatus').css('color', 'red');
-            hasError = true
-        }
-        if(hasError == true) { return false; }
-    });
-    
-});
-
-function validatePhone(phone) {
-    var a = document.getElementById(phone).value;
-    var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/;  
-    if (filter.test(a)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-</script>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#phone2').blur(function(e) {
-        if (validatePhone('phone2')) {
-            $('#spnPhoneStatu').html('Valid');
-            $('#spnPhoneStatu').css('color', 'green');
-        }
-        else {
-            $('#spnPhoneStatu').html('Please enter the correct Phone Number (XXX-XXX-XXXX)');
-            $('#spnPhoneStatu').css('color', 'red');
-        }
-    });
-});
-
-function validatePhone(phone2) {
-    var a = document.getElementById(phone2).value;
-    var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/;  
-    if (filter.test(a)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-</script>
 
 <script type="text/javascript">
 function copyAccToBillingAddr(obj) {            	
@@ -308,7 +272,7 @@ function copyAccToBillingAddr(obj) {
 						<span class="lableText3">
 							Phone:
 						</span>
-						<form:input path="phone" id="phone" name="phone" class="job_seeker_password" type="text"/><span id="spnPhoneStatus"></span>
+						<form:input path="phone" id="phone" name="phone" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
@@ -389,7 +353,7 @@ function copyAccToBillingAddr(obj) {
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Phone: </span>
 						<form:input path="phone" name="phone2" id="phone2" class="job_seeker_password"
-							type="text"/><span id="spnPhoneStatu"></span>
+							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10"> <!-- <a class="btn_sm orange" href="">
