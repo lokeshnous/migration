@@ -154,6 +154,8 @@ function copyAccToBillingAddr(obj) {
            		$("#company2").val($("#company").val());
            		$("#streetAddress2").val($("#streetAddress").val());
            		$("#cityOrTown2").val($("#cityOrTown").val());
+           		$("#state2").val($("#state").val());
+           		$("#country2").val($("#country").val());
            		$("#zipCode2").val($("#zipCode").val());
            		$("#email2").val($("#email").val());
            		$("#phone2").val($("#phone").val());
