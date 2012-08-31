@@ -48,7 +48,7 @@
                  
        <div class="popUpContainerWrapper">
        <form:form method="Get" action="/<%=request.getContextPath()%>/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 
-       		<div id="errmsg" style="color: red" align="left"> </div>
+       		<div class="FormErrorDisplay" id="errmsg"> </div>
             <div class="rowEvenNewSpacing">
               	<span class="lableText3">Email Address:</span> 
 	            <form:input path="emailId" class="job_seeker_email textBox2" readonly="true"/>

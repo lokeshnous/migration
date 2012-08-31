@@ -57,9 +57,9 @@
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
 						<h3 class="marginLeft10"> Contact Information </h3>
 						<c:if test="${not empty message}">
-							<div class="rowEvenNewSpacing" style="color: red">
-							<span class="lableText3"></span>
-								<b>${message}</b>
+							<div class="rowEvenNewSpacing">
+							<span class="FormErrorDisplay">${message}</span>
+								
 							</div>
 						</c:if>
 						<form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">

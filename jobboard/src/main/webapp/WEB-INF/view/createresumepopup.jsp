@@ -45,9 +45,9 @@
 						  type: "GET",
 						success : function(data) {
 							if (data.maxResume != null) {
-									$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+									$("#resumeErrorMsg").html("<span>"+ data.maxResume+ "</span>");
 								} else if (data.duplicateResume != null) {
-									$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+									$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 								} else {
 									$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/saveCreateResume.html");
 									$("form").attr("method", "GET");
@@ -62,7 +62,7 @@
 						}
 					});
 			} else {
-				$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+				$("#resumeErrorMsg").html("<span>Please enter the required parameters.</span>");
 			}
 		});
 	
@@ -83,7 +83,7 @@
 				commandName="createResume" id="createResumeForm"
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
-					<div id="resumeErrorMsg"></div>
+					<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
 					<div class="splLableText">How would you
 						like to create your resume?</div>
 					<form:select class="jb_input3 jb_input_width3"

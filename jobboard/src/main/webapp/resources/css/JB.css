@@ -387,7 +387,7 @@ input.textBox2 { width:220px !important; }
 .capsText { font-size:12px; text-transform:uppercase; font-weight:bold; }
 .row { width: 100%; height: auto; float:left; }
 .rowEvenSpacingMargin0 { width: 99.5%; height: auto; float:left; margin:0px; }
-.rowEvenNewSpacing { width: 99.5%; height: auto; float:left; margin-top:10px; }
+.rowEvenNewSpacing { width: 100%; height: auto; float:left; margin-top:10px; }
 .rowEvenTB10Spacing { width: 99.5%; height: auto; float:left; margin:10px 0; }
 .rowPadding { width: 100%; height: auto; float:left; padding:6px 0; line-height:14px; }
 .borderBottom { border-bottom:1px solid #ccc; }
@@ -704,7 +704,7 @@ a.linkDisabled, a:hover.linkDisabled {color:#cccccc;}
 .marginLeft15 { margin-left:15px !important;}
 
 .validationMsg{ width:auto; height:auto; float:left; margin-left:175px; color: red; }
-.validationMsgPadding {width: auto; height: auto; float: left; margin-left: 175px;}=======
+.validationMsgPadding {width: auto; height: auto; float: left; margin-left: 175px;}
 .errorRow{width:auto; height:auto; float:left; padding-left:175px; line-height:16px;}
 .FormErrorDisplay{margin-left:175px; color:red;}
 .FormErrorDisplayText{float:left; color:red; }

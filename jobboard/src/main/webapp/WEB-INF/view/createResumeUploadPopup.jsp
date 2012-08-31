@@ -32,6 +32,7 @@
 		});		
 		
 		$('#fileData').bind('change', function() {
+				debugger;
 			  sizeInKB = Math.round(parseInt(this.files[0].size)/1024);
 			  if(parseInt(sizeInKB) > 750){
 				  alert("File size should not exceed more than 750KB. Please try again.");
@@ -62,9 +63,9 @@
 										type : "GET",
 										success : function(data) {
 											if (data.maxResume != null) {
-												$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+												$("#resumeErrorMsg").html("<span>"+ data.maxResume+ "</span>");
 											} else if (data.duplicateResume != null) {
-												$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+												$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 											} else {
 												$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
 												$("#resumeUploadForm").submit();
@@ -79,11 +80,11 @@
 							});
 						}	
 					}else if(parseInt(sizeInKB) > 750){
-						$("#resumeErrorMsg").html("<span style='color:red'>File size should not exceed more than 750KB. Please try again.</span>");
+						$("#resumeErrorMsg").html("<span>File size should not exceed more than 750KB. Please try again.</span>");
 					} else {
 						$("#resumeErrorMsg")
 								.html(
-										"<span style='color:red'>Please enter the required parameters.</span>");
+										"<span>Please enter the required parameters.</span>");
 					}
 				});
 		
@@ -116,7 +117,7 @@
 				commandName="createResume" id="resumeUploadForm"
 				enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
-					<div id="resumeErrorMsg"></div>
+					<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
 					<div class="splLableText">How would you
 						like to create your resume</div>
 					<form:select class="jb_input3 jb_input_width3" path="resumeType"

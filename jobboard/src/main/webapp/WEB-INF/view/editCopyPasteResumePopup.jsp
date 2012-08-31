@@ -33,9 +33,9 @@
 							type: "GET",
 							success : function(data) {
 								if (data.maxResume != null) {
-										$("#resumeErrorMsg").html("<span style='color:red'>"+ data.maxResume+ "</span>");
+										$("#resumeErrorMsg").html("<span>"+ data.maxResume+ "</span>");
 									} else if (data.duplicateResume != null) {
-										$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
+										$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 									} else {
 										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateCopyPasteResume.html");
 										$("#copyPastResumeForm").submit();
@@ -49,7 +49,7 @@
 							}
 						});
 				} else {
-					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+					$("#resumeErrorMsg").html("<span>Please enter the required parameters.</span>");
 				}
 			 });
 	});	 
@@ -66,7 +66,7 @@
 
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="updateCopyPasteResume.html" commandName="createResume" id="copyPastResumeForm" enctype="multipart/form-data">
-				<div id="resumeErrorMsg">
+				<div id="resumeErrorMsg" class="FormErrorDisplayText">
 				</div>
 				<div class="rowEvenNewSpacing">
 					<form:input type="hidden" path="uploadResumeId" />
