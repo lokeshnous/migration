@@ -15,6 +15,10 @@
 		
 		$("#purchaseJobPostingId").displaypopup("#purchaseJobPostingId",
 				"770", "360");
+		$("#purchaseJobPostingId2").displaypopup("#purchaseJobPostingId2",
+				"770", "360");
+		$("#purchaseJobPostingId3").displaypopup("#purchaseJobPostingId3",
+				"770", "360");
 	});
 </script>
 </head>
@@ -88,7 +92,7 @@
 									For more than 8 slots, contact your <em>ADVANCE</em> sales rep.
 								</p>
 								<div class="clearfix"></div>
-								<span class="FloatLeft marginTop40"><a href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
+								<span class="FloatLeft marginTop40"><a id="purchaseJobPostingId2" href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
 									name="jobPostingSlot" class="btn_sm orange">BUY ONLINE NOW</a></span>
 								<div class="PlayDemo marginTop30">
 									<a
@@ -108,7 +112,7 @@
 									scraping, we pull them over from your website each week.
 									Contact us today for pricing!
 								<div class="clearfix"></div>
-								<span class="FloatLeft marginTop40"><a
+								<span class="FloatLeft marginTop40"><a name="purchaseJobPostingId2"
 									href="../employerPostJobs/sendEmailForGold.html?package=ezpost"
 									class="btn_sm orange">REQUEST PRICING</a></span>
 								<div class="PlayDemo marginTop30">
@@ -178,7 +182,7 @@
 											</tr>
 										</table>
 									</div>
-									<span class="FloatLeft marginTop20"><a
+									<span class="FloatLeft marginTop20"><a id="purchaseJobPostingId3"
 										href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html" name="silver"
 										class="btn_sm orange">BUY ONLINE NOW</a></span>
 									<div class="PlayDemo marginTop10">
