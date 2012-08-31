@@ -80,10 +80,10 @@ function validateNumber(event) {
       hasError = true;
     }
  
-    else if(!emailblockReg.test(emailaddressVal)) {
+   /*  else if(!emailblockReg.test(emailaddressVal)) {
       $("#email2").after('<span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail Address</span>');
       hasError = true
-    }
+    } */
  
     var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
     var phone=$("#phone2").val();
