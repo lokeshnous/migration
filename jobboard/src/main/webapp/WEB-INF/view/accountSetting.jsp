@@ -41,10 +41,10 @@ function validateNumber(event) {
       hasError = true;
     }
  
-    else if(!emailblockReg.test(emailaddressVal)) {
+   /*  else if(!emailblockReg.test(emailaddressVal)) {
       $("#email").after('<span class="error" STYLE="color: red; font-size: 10pt">No yahoo, gmail or hotmail emails.</span>');
       hasError = true
-    }
+    } */
  
     if(hasError == true) { return false; }
  
