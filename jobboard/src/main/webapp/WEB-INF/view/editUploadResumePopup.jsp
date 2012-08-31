@@ -41,12 +41,10 @@
 					&& workAuth != null	&& workAuth != "" && parseInt(sizeInKB) < 750){
 					
 					if(parseInt(sizeInKB) == 0){
-						alert("size 0");
 						$("#resumeErrorMsg").html("");
 						updateResume(resumeName, resumeId);	
 					}
 					if(parseInt(sizeInKB) > 0 && validateResume($.trim($("#fileData").val()))){
-						alert("size more");
 						$("#resumeErrorMsg").html("");
 						updateResume(resumeName, resumeId);						
 					}		
