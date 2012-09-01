@@ -51,7 +51,8 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
 
-		if (listMerUser != null && listMerUser.size() > 0) {
+		if (listMerUser != null && !listMerUser.isEmpty())
+		{
 			MerUser merUserNew = listMerUser.get(0);
 			loggedinUserId = merUserNew.getUserId();
 			loginFormDTO.setEmailAddress(merUserNew.getEmail());
@@ -67,7 +68,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 							+ loggedinUserId);
 			
 			
-			if (listAdmUserRole != null && listAdmUserRole.size() > 0) {
+			if (listAdmUserRole != null && !listAdmUserRole.isEmpty()) {
 				AdmUserRole admUserRoleNew = listAdmUserRole.get(0);
 				loginFormDTO.setRoleId(admUserRoleNew.getRolePK().getRoleId());
 			}
@@ -86,7 +87,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
 		
-		if (!(listMerUser.isEmpty()) && listMerUser.size() > 0) {
+		if (!(listMerUser.isEmpty()) && !listMerUser.isEmpty()) {
 			MerUser merUserNew = listMerUser.get(0);
 			//loggedinUserId = merUserNew.getUserId();
 			userDetailsLoginFormDTO.setEmailAddress(merUserNew.getEmail());

@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -52,11 +53,14 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 @Repository("populateDropdownsDAO")
 @SuppressWarnings("unchecked")
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(PopulateDropdownsDAOImpl.class);
 
-	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
-	private final String FIND_RESBUILDER_DROPDOWNS="from ResResumeAttrib attrib where attrib.name=?";
-	private final String FIND_EDU_DEGREES="from ResDegreeEdu edu";
-	private final String FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
+	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
+	private static final String FIND_RESBUILDER_DROPDOWNS="from ResResumeAttrib attrib where attrib.name=?";
+	private static final String FIND_EDU_DEGREES="from ResDegreeEdu edu";
+//	private static final String FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 	
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
@@ -88,7 +92,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper.convertMerUtilityToCountryDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -103,7 +108,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					.convertMerUtilityToEmploymentInfoDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -115,7 +120,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<AdmSubscription> subsList = hibernateTemplate.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
 			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return null;
@@ -131,7 +136,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper.convertMerUtilityToGenderDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -148,7 +153,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					.convertMerUtilityToVeteranStatusDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -164,7 +169,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					.convertMerUtilityToEthenticityDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -186,7 +191,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToRadiusListDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -208,7 +213,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToExcludeFromListDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -235,7 +240,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToFromZipcodeListDTO(merUtilityList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -261,7 +266,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToStateListDTO(merUtilityList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -283,7 +288,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToMetroAreaListDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -305,7 +310,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToEmploymentTypeListDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -327,7 +332,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper
 					.convertMerLookupToJobPostedDateListDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -340,7 +345,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					.find("from JpAttribList e where e.lookupCategory='JobAlerts' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToJobAlertsDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -352,7 +357,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					.find("from JpAttribList e where e.lookupCategory='Magazines' and e.lookupStatus='1'");
 			return dropdownHelper.convertMerLookupToMagazinesDTO(merLookupList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -378,14 +383,14 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<ResResumeAttrib> resResumeAttrib = hibernateTemplate
 					.find("from ResResumeAttrib where name='" + dropdownName
 							+ "'");
-			if (resResumeAttrib.size() > 0) {
+			if (!resResumeAttrib.isEmpty()) {
 				List<ResResumeAttribList> resResumeAttribList = resResumeAttrib
 						.get(0).getResResumeAttribLists();
 				resumeAttribListDTOList = dropdownHelper
 						.transformResumeAttribListToDTO(resResumeAttribList);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return resumeAttribListDTOList;
 	}
@@ -410,12 +415,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		
 		try {
 			List<ResResumeAttrib> resResumeAttrib = hibernateTemplate.find(FIND_RESBUILDER_DROPDOWNS, dropdownName);
-			if (resResumeAttrib.size() > 0) {
+			if (!resResumeAttrib.isEmpty()) {
 				List<ResResumeAttribList> resResumeAttribList = resResumeAttrib.get(0).getResResumeAttribLists();
 				return dropdownHelper.transformResumeAttribListToDropDownDTO(resResumeAttribList);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -428,7 +433,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper.transformResDegreeEduToDropDownDTO(resEduDegreeList);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -454,7 +459,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				List<AdmUserFacility> admUsersList = hibernateTemplate
 						.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and admFacility.id.roleId=?",
 								inputs);
-				if (null != admUsersList && admUsersList.size() > 0) {
+				if (null != admUsersList && !admUsersList.isEmpty()) {
 					AdmUserFacility admUserFacility = admUsersList.get(0);
 					List<MerUser> merUserList = hibernateTemplateTracker.find(
 							"from MerUser user where user.userId=?",
@@ -466,7 +471,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper.transformAdmFacilityToDropDownDTO(merUsers);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -483,7 +488,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -495,7 +500,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<JpJobType> jobTypeList = hibernateTemplate.find("from JpJobType");
 			return dropdownHelper.transformJpJobTypeToDropDownDTO(jobTypeList);					
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -515,7 +520,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			}
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return locationList;
 	}
@@ -526,13 +531,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.state from  JpLocation jloc WHERE  jloc.city='"+ city+"' ORDER BY  jloc.state ASC");
 
-			if (jpLocationList != null && jpLocationList.size() !=0) {			
-				Object obj = jpLocationList.get(0);
-				return (String)obj;
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {			
+				String obj = (String)jpLocationList.get(0);
+				return obj;
 			}
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return null;
@@ -553,7 +558,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -565,13 +570,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
 
 			if (jpLocationList != null && jpLocationList.size() !=0) {			
-				Object obj = jpLocationList.get(0);
-				return (String)obj;
+				String obj = (String)jpLocationList.get(0);
+				return obj;
 			}			
 			
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -583,13 +588,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
 
 			if (jpLocationList != null && jpLocationList.size() !=0) {			
-				Object obj = jpLocationList.get(0);
-				return (String)obj;
+				String obj = (String)jpLocationList.get(0);
+				return obj;
 			}			
 			
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -612,7 +617,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}	
@@ -637,7 +642,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 		} catch (DataAccessException e) {
 
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 
