@@ -32,12 +32,12 @@ public interface FetchAccountAndBillingAddressDAO {
 	 * @param billingAddressDTO
 	 * @return
 	 */
-	public boolean saveBillingAddress(BillingAddressDTO billingAddressDTO);
+	boolean saveBillingAddress(BillingAddressDTO billingAddressDTO);
 	/**
 	 * saving the billing address
 	 * 
 	 * @param billingAddressDTO
 	 * @return
 	 */
-	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO);
+	boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO);
 }

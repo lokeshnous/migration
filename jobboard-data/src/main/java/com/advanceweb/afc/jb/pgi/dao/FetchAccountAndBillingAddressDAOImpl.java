@@ -32,6 +32,8 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 
 	private HibernateTemplate hibernateTemplate;
 
+	private static final String BLANK= "BLANK";
+	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -63,7 +65,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 			LOGGER.info("getAccountAddressByFacilityId ERROR");
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info("ex-ERROR");
+			LOGGER.info(ex);
 		}
 		// TODO Auto-generated method stub
 		return contactDTO;
@@ -109,23 +111,24 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 			admFacilityContact.setActive(1);
 			admFacilityContact.setAdmFacility(admFacility);
 			admFacilityContact.setContactType("BILLING");
-			admFacilityContact.setCompany("BLANK");
-			admFacilityContact.setEmail("BLANK");
-			admFacilityContact.setJobTitle("BLANK");
-			admFacilityContact.setPhone("BLANK");
+			admFacilityContact.setCompany(BLANK);
+			admFacilityContact.setEmail(BLANK);
+			admFacilityContact.setJobTitle(BLANK);
+			admFacilityContact.setPhone(BLANK);
 
 			admFacilityContact.setFacilityContactId(billingAddressDTO
 					.getFacilityContactId());
-			if (billingAddressDTO != null
-					&& billingAddressDTO.getFacilityContactId() != 0) {
-				// update
-				admFacilityContact.setCreateDt(billingAddressDTO
-						.getCreateDate());
-				hibernateTemplate.update(admFacilityContact);
-			} else {
+			if (billingAddressDTO == null
+					|| billingAddressDTO.getFacilityContactId() == 0) {
 				admFacilityContact.setCreateDt(new Date());
 				// save
 				hibernateTemplate.save(admFacilityContact);
+
+			} else { // update
+				admFacilityContact.setCreateDt(billingAddressDTO
+						.getCreateDate());
+				hibernateTemplate.update(admFacilityContact);
+
 			}
 		} catch (HibernateException e) {
 			LOGGER.info("ex-ERROR");
