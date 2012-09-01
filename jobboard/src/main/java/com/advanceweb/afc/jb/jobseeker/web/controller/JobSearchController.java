@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -46,6 +47,7 @@ import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
+import com.advanceweb.afc.jb.home.web.controller.ClickController;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
@@ -155,6 +157,8 @@ public class JobSearchController {
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
+	@Autowired
+	ClickController clickController;
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -165,10 +169,16 @@ public class JobSearchController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/viewJobDetails")
-	public ModelAndView viewJobDetails(@RequestParam("id") Long jobId,
-			Map<String, Object> model, HttpServletRequest request,
-			HttpSession session, @RequestParam("currentUrl") String currentUrl) {
+	public ModelAndView viewJobDetails(@RequestParam("id") int jobId,
+			Map<String, Object> model, HttpServletRequest request, Model model1,
+			HttpSession session,HttpServletResponse response, @RequestParam("currentUrl") String currentUrl,
+			@RequestParam("clickType") String clickType) {
+		
 		try {
+			
+			if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)){
+				clickController.getclickevent(jobId, clickType, request, response, model1);
+			}
 
 			Map<String, String> sessionMap = null;
 			if (session.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP) != null) {
@@ -193,6 +203,17 @@ public class JobSearchController {
 		}
 		return new ModelAndView("jobseekerJobDetails");
 	}
+	
+	@RequestMapping(value = "/clicksTrack")
+	public ModelAndView trackClicks(HttpServletResponse response,
+			HttpServletRequest request, Model model,@RequestParam("id") int jobId,
+			@RequestParam("clickType") String clickType){
+		ModelAndView modelAndView = new ModelAndView();
+		if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)){
+			clickController.getclickevent(jobId, clickType, request, response, model);
+		}
+		return modelAndView;
+	}
 
 	/**
 	 * The apply for job action is called as per the conditions and getting
@@ -213,9 +234,15 @@ public class JobSearchController {
 	public @ResponseBody
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
 			@RequestParam String userID, @RequestParam("id") int jobId,
-			@RequestParam("currentUrl") String currentUrl, HttpSession session,
+			@RequestParam("currentUrl") String currentUrl, HttpServletResponse response,
+			Model model1,
+			@RequestParam("clickType") String clickType, HttpSession session,
 			HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
+		if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)){
+			clickController.getclickevent(jobId, clickType, request, response, model1);
+		}
+		
 		form.setJobID(jobId);
 		int userId = 0;
 		String userName = null;

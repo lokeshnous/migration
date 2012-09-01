@@ -12,13 +12,4 @@ public class ResumeSearchAdapter implements ResumeSearch {
 
 
 
-	public ResumeSearchAdapter() {
-
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
-	}
-
 }

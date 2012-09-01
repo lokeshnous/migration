@@ -27,12 +27,12 @@ public class JobBoardUIException extends JobBoardException {
 	/**
 	 * Creates a JobBoardUIException object from an exiting exception object.
 	 * 
-	 * @param ex
+	 * @param exce
 	 *            The exception from which the new exceptio object is created.
 	 */
 
-	public JobBoardUIException(Exception ex) {
-		super(ex);
+	public JobBoardUIException(Exception exce) {
+		super(exce);
 	}
 
 }

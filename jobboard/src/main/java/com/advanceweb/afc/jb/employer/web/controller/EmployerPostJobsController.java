@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSearchController;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 

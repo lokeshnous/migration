@@ -12,10 +12,7 @@ import com.advanceweb.afc.jb.common.ResumeWordDocumentDTO;
  */
 public class ResumeService {
 
-
-
 	public ResumeService() {
-
 	}
 
 	/**
@@ -51,10 +48,7 @@ public class ResumeService {
 		return null;
 	}
 
-	/**
-	 * 
-	 * @param jobSeekerId
-	 */
+	
 	/**
 	 * 
 	 * @param employerId

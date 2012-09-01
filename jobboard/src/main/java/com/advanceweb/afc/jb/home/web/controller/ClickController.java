@@ -27,7 +27,7 @@ public class ClickController {
 
 	@ResponseBody
 	@RequestMapping(value = "/clickevent", method = RequestMethod.GET)
-	public String getclickevent(@RequestParam("jobid") String jobid,
+	public String getclickevent(@RequestParam("jobid") int jobid,
 			@RequestParam("type") String type, HttpServletRequest request,
 			HttpServletResponse response, Model model) {
 		String finalresult = MMJBCommonConstants.ERROR_STRING;
@@ -35,17 +35,17 @@ public class ClickController {
 		try {
 			if (type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)) {
 				// System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(jobid), clickService,
+				update(jobid, clickService,
 						MMJBCommonConstants.CLICKTYPE_CLICK);
 			} else if (type
 					.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)) {
 				// System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(jobid), clickService,
+				update(jobid, clickService,
 						MMJBCommonConstants.CLICKTYPE_APPLY);
 			} else if (type
 					.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)) {
 				// System.out.println(request.getParameter("type"));
-				update(Integer.parseInt(jobid), clickService,
+				update(jobid, clickService,
 						MMJBCommonConstants.CLICKTYPE_VIEW);
 			}
 			finalresult = MMJBCommonConstants.OK_STRING;
@@ -61,6 +61,7 @@ public class ClickController {
 	private static final synchronized void update(int jobid,
 			ClickService clickService, String type) {
 		ClickEventDTO clickEventDTO = clickService.retrieveAllClicks(jobid);
+		clickEventDTO.setJobid(jobid);
 		if (type.equals(MMJBCommonConstants.CLICKTYPE_CLICK)) {
 			clickEventDTO.setClicks(clickEventDTO.getClicks() + 1);
 		} else if (type.equals(MMJBCommonConstants.CLICKTYPE_APPLY)) {

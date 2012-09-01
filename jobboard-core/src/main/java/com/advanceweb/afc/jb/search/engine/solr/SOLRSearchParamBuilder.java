@@ -55,11 +55,9 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 
 		// Iterate through the search parameters and replace the placehoders
 		List<SearchParamDTO> result = new ArrayList<SearchParamDTO>();
-
+		SearchParamDTO resultParam = new SearchParamDTO();
 		for (SearchParamDTO param : searchParams) {
-
 			// TODO create and use a constructor
-			SearchParamDTO resultParam = new SearchParamDTO();
 			resultParam.setParameterName(param.getParameterName());
 			resultParam.setParameterValue(replacePlaceholders(
 					param.getParameterValue(), inputParams));

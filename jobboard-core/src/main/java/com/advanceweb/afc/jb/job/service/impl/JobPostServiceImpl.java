@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 
@@ -49,11 +48,11 @@ public class JobPostServiceImpl implements JobPostService {
 	   @Return :List of the StateDTO
 	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getStateList()
 	 */
-	@Override
+	/*@Override
 	public List<StateDTO> getStateList() {
 		return employerJobPostDAO.getStateList();
 		
-	}
+	}*/
 
 	/**
 	 * @Author :Prince Mathew

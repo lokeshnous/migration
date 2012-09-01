@@ -79,7 +79,7 @@ jQuery(document).ready(function() {
 		}
 		function applyThisJob(jobId) {
 			$.ajax({
-				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
+				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
 				data : ({
 					userID : "userID"
 				}),
@@ -122,21 +122,19 @@ jQuery(document).ready(function() {
 				var sOut = '<div class="searchResultsSubContent">';	
 				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 32px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
 				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
-				sOut += '<a href="../jobsearch/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl;
+				sOut += '<a href="../jobsearch/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl+'&clickType=view';
 				sOut += '" class="btn_sm white">View Details</a>';
 				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
 				sOut += '" class="btn_sm white">Save This Job</a></div>';
 				if(isFeaturedEmployer){
 					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				}else{
-					sOut += '<div class="featured_empButton"><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></div>';
+					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				}
 				sOut += '';
-				//sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span></div>';
-				//sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span></div>';
-				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft"> Send to Friend:&nbsp;</span><span><img src="../resources/images/email.png"></span></div>';
-				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft">Share:&nbsp;</span> <span><img src="../resources/images/fbook_sm.png"></span> <span><img src="../resources/images/L_In_sm.png"></span> <span><img src="../resources/images/twitter_sm.png"></span></div>';
-				sOut += '<div class="FormErrorDisplayText" id="topjobActionInfo'+jobId+'" ></div>';
+				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span></div>';
+				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span></div>';
+				sOut += '<h4><div style="color: red" id="topjobActionInfo'+jobId+'" ></div></h4>';
 				sOut += '</div>';
 				return sOut;
 			}
@@ -256,6 +254,22 @@ jQuery(document).ready(function() {
 												'click',
 												function() {
 													var nTr = this;
+													var aData = table.fnGetData(nTr);
+													var jobId = aData['JobId'];
+													$.ajax({
+														url : '../jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
+														data : ({
+															userID : "userID"
+														}),
+														/*success : function(data) {
+														},
+														;error : function(data) {
+															alert('Unable to process');
+														},
+														complete : function(data) {
+														}
+*/
+													});
 													if ($(this).attr('popup')) {
 													} else {
 														$(this).attr('popup',
@@ -351,5 +365,10 @@ jQuery(document).ready(function() {
 				 }
 				
 			}
+
+			 
+			 
+
+
 
 	

@@ -8,34 +8,34 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class CopyUtil {
 
-	public static void copy(List<String> li, String basedirectorypath)
-			throws Exception {
+	private static final Logger LOGGER = Logger.getLogger(CopyUtil.class);
 
-		new CopyUtil().doTheCopy(li, basedirectorypath);
+	public static void copy(List<String> list, String basedirectorypath) throws IOException{
+		new CopyUtil().doTheCopy(list, basedirectorypath);
 	}
 
-	public void doTheCopy(List<String> resourceNames, String basedirectorypath)
-			throws Exception {
+	public void doTheCopy(List<String> resourceNames, String basedirectorypath){
 		try {
 			for (String resource : resourceNames) {
-				InputStream is = this.getClass().getClassLoader()
+				InputStream stream = this.getClass().getClassLoader()
 						.getResourceAsStream(resource);
 				FileOutputStream fos = new FileOutputStream(new File(
 						basedirectorypath, resource));
 				byte[] buffer = new byte[1024];
-				int read = -1;
-				while ((read = is.read(buffer)) != -1) {
+				int read = stream.read(buffer);
+				while (read != -1) {
 					fos.write(buffer, 0, read);
 				}
 				fos.flush();
 				fos.close();
-				is.close();
+				stream.close();
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw e;
+		} catch (IOException e) {
+			LOGGER.info("ERROR");
 		}
 	}
 
@@ -55,12 +55,10 @@ public class CopyUtil {
 
 			byte[] buffer = new byte[1024];
 
-			int length;
+			int length =inStream.read(buffer);
 			// copy the file content in bytes
-			while ((length = inStream.read(buffer)) > 0) {
-
+			while (length > 0) {
 				outStream.write(buffer, 0, length);
-
 			}
 
 			inStream.close();
@@ -70,7 +68,7 @@ public class CopyUtil {
 			afile.delete();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.info("ERROR");
 		}
 	}
 

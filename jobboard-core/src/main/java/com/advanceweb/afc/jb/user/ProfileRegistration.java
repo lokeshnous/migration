@@ -1,11 +1,7 @@
 package com.advanceweb.afc.jb.user;
 
-
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
-
-
-
 
 /**
  * @author rajeshkb
@@ -13,8 +9,6 @@ import com.advanceweb.afc.jb.common.ProfileDTO;
  * @created 21-Jun-2012 2:22:43 PM
  */
 public interface ProfileRegistration {
-
-
 
 	/**
 	 * 
@@ -39,32 +33,29 @@ public interface ProfileRegistration {
 	 * @param profileId
 	 */
 	public ProfileDTO viewProfile(int profileId);
-	
-	
+
 	/**
 	 * 
 	 * @param profileDTO
 	 */
 	public boolean changePassword(ProfileDTO profileDTO);
-	
+
 	/**
 	 * 
 	 * @param profileDTO
 	 */
 	public boolean validatePassword(ProfileDTO profileDTO);
-	
+
 	/**
 	 * 
 	 * @param profileDTO
 	 */
 	public boolean validateEmail(String email);
-	
+
 	/**
 	 * 
 	 * @param profileDTO
 	 */
 	public ProfileDTO getProfileAttributes();
-	
-	
 
 }

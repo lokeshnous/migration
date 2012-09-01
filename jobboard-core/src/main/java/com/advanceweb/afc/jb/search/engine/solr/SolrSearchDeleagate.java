@@ -183,7 +183,8 @@ public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
 		inputParams.put(SearchParamDTO.START, Long.toString(start));
 
 		// The query parameter related to location is received as a name of a
-		// city / state or as a pincode. The search parameter requires a position
+		// city / state or as a pincode. The search parameter requires a
+		// position
 		// represented as a sting of latitude and longitude in the format
 		// "(latitude, longitude)". If a parameter of type cityState is found we
 		// calculate the position and add it to the list
@@ -222,7 +223,7 @@ public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
 				+ inputParams.get(SearchParamDTO.KEYWORDS) + ","
 				+ inputParams.get(SearchParamDTO.CITY_STATE) + ","
 				+ inputParams.get(SearchParamDTO.RADIUS));
-		
+
 		// TODO implement searchName specific validations as appropriate
 		return (StringUtils.isEmpty(inputParams.get(SearchParamDTO.KEYWORDS)))
 				&& (StringUtils.isEmpty(inputParams
@@ -348,10 +349,9 @@ public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
 		 * Creating Lists of Facets(List<String>) by iterating the
 		 * FacetFieldList
 		 */
+		List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
 		for (FacetField facetField : facetFieldList) {
-			List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
 			List<Count> facetFieldValList = facetField.getValues();
-
 			if (facetFieldValList != null) {
 				for (Count countObj : facetFieldValList) {
 					searchFacetDTOList.add(new SearchFacetDTO(countObj
@@ -359,11 +359,9 @@ public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
 				}
 			}
 			facetMap.put(facetField.getName(), searchFacetDTOList);
-
 		}
 		jobSResultDTO.setFacetMap(facetMap);
 		jobSResultDTO.setJobResultList(jobDTOList);
-
 		return jobSResultDTO;
 	}
 
@@ -378,9 +376,10 @@ public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
 	private List<JobDTO> copyToJobDTO(List<JobSearchDTO> jobSearchDTOList) {
 
 		List<JobDTO> jobDTOList = new ArrayList<JobDTO>();
+		JobDTO jobDTO = new JobDTO();
 
 		for (JobSearchDTO jobSearchDTO : jobSearchDTOList) {
-			JobDTO jobDTO = new JobDTO();
+			
 			jobDTO.setAdText(jobSearchDTO.getAdText());
 			jobDTO.setApplyOnline(jobSearchDTO.getApplyOnline());
 			jobDTO.setBlindAd(jobSearchDTO.getBlindAd());
@@ -452,11 +451,7 @@ public class SolrSearchDeleagate extends AbstractSolrSearchDelegate implements
 			} else {
 				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
 			}
-
 		}
-
 		return (locations.isEmpty()) ? null : locations.get(0);
-
 	}
-
 }

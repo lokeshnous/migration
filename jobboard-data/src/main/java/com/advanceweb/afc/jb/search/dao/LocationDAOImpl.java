@@ -45,12 +45,12 @@ public class LocationDAOImpl implements LocationDAO {
 	 *            Postcode
 	 * @return List<LocationDTO> of latitude and longitude
 	 */
+	@SuppressWarnings("unchecked")
 	public List<LocationDTO> getLocationByPostcode(String postcode)
 			throws JobBoardDataException {
 
 		List<LocationDTO> latLonList = new ArrayList<LocationDTO>();
 		try {
-			@SuppressWarnings("unchecked")
 			List<JpLocation> joLocationList = hibernateTemplate
 					.find(" from  JpLocation WHERE  postcode  = '" + postcode
 							+ "'");
@@ -81,20 +81,20 @@ public class LocationDAOImpl implements LocationDAO {
 	 *            city and state
 	 * @return List<LocationDTO> of latitude and longitude
 	 */
+	@SuppressWarnings("unchecked")
 	public List<LocationDTO> getLocationByCityState(String city, String state)
 			throws JobBoardDataException {
 
 		LOGGER.info("City=[" + city + "], State=[" + state + "]");
 		List<LocationDTO> latLonList = new ArrayList<LocationDTO>();
 		try {
-			@SuppressWarnings("unchecked")
+			LocationDTO locDTO = new LocationDTO();
 			List<JpLocation> jpLocationList = hibernateTemplate
 					.find(" from  JpLocation WHERE  city  = '" + city
 							+ "' and state = '" + state + "'");
 
 			if (jpLocationList != null) {
 				for (JpLocation locObj : jpLocationList) {
-					LocationDTO locDTO = new LocationDTO();
 					locDTO.setLatitude(locObj.getLatitude());
 					locDTO.setLongitude(locObj.getLongitude());
 					latLonList.add(locDTO);
@@ -133,12 +133,11 @@ public class LocationDAOImpl implements LocationDAO {
 		// query.setMaxResults(10);
 		@SuppressWarnings("unchecked")
 		List<JpLocation> jpLocationList = query.list();
-
+		LocationDTO locDTO = new LocationDTO();
 		if (jpLocationList != null) {
 			Iterator<?> itr = jpLocationList.iterator();
 			while (itr.hasNext()) {
 				String locObj = (String) itr.next();
-				LocationDTO locDTO = new LocationDTO();
 				locDTO.setPostcode(locObj);
 				locationList.add(locDTO);
 
@@ -158,12 +157,11 @@ public class LocationDAOImpl implements LocationDAO {
 	 * @return List<LocationDTO> of city and state
 	 */
 
+	@SuppressWarnings("unchecked")
 	public List<LocationDTO> getCityStateLocationByKeyword(String keywords) {
 
 		LOGGER.info("The value of passes keyword is " + keywords);
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
-
-		@SuppressWarnings("unchecked")
 		Query query = hibernateTemplate
 				.getSessionFactory()
 				.getCurrentSession()
@@ -173,24 +171,20 @@ public class LocationDAOImpl implements LocationDAO {
 								+ "%' ORDER BY  jloc.city, jloc.state  ASC");
 		// query.setMaxResults(10);
 		List<JpLocation> jpLocationList = query.list();
-
+		LocationDTO locDTO = new LocationDTO();
 		if (jpLocationList != null) {
 			Iterator<?> itr = jpLocationList.iterator();
 			while (itr.hasNext()) {
 				Object[] locObj = (Object[]) itr.next();
-				LocationDTO locDTO = new LocationDTO();
 				locDTO.setCity(String.valueOf(locObj[0]));
 				locDTO.setState(String.valueOf(locObj[1]));
 				locationList.add(locDTO);
-
 			}
 
 		}
-
 		LOGGER.info("Location List size after city state search is "
 				+ locationList.size());
 		return locationList;
-
 	}
 
 }

@@ -10,10 +10,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ClickEventDTO;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
 
 @SuppressWarnings("unchecked")
@@ -31,19 +31,28 @@ public class ClickDAOImpl implements ClickDAO {
 	}
 
 	@Override
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	//@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public boolean saveClickEvent(ClickEventDTO clickEventDTO) {
 		Boolean result=false;
-		JpJobStat jpJobStat=new JpJobStat ();
+		JpJobStat jpJobStat=new JpJobStat();
 		try {
 			jpJobStat.setJobId(clickEventDTO.getJobid());
+			
+			JpJob jpJob = new JpJob();
+			jpJob.setJobId(clickEventDTO.getJobid());
+			jpJobStat.setJpJob(jpJob );
+			
 			jpJobStat.setApplies(clickEventDTO.getApplies());
 			jpJobStat.setClicks(clickEventDTO.getClicks());
 			//jpJobStat.setStatsDt(clickEventDTO.getStatdate());
 
 			jpJobStat.setStatsDt(new Timestamp(new Date().getTime()));
 			jpJobStat.setViews(clickEventDTO.getViews());
-			hibernateTemplate.saveOrUpdate(jpJobStat);
+			if(jpJobStat.getClicks() > 0){
+				hibernateTemplate.saveOrUpdate(jpJobStat);
+			}else{
+				hibernateTemplate.save(jpJobStat);
+			}
 			result=true;
 		} catch (HibernateException e) {
 			result=false;

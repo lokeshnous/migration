@@ -28,12 +28,12 @@ public class JobBoardServiceException extends JobBoardException {
 	 * Creates a JobBoardServiceException object from an exiting exception
 	 * object.
 	 * 
-	 * @param ex
+	 * @param exce
 	 *            The exception from which the new exceptio object is created.
 	 */
 
-	public JobBoardServiceException(Exception ex) {
-		super(ex);
+	public JobBoardServiceException(Exception exce) {
+		super(exce);
 	}
 
 }
