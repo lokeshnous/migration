@@ -15,7 +15,7 @@ public class AdmUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AdmUserRolePK id;
+	private AdmUserRolePK rolePK;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
@@ -36,17 +36,6 @@ public class AdmUserRole implements Serializable {
 	@JoinColumn(name="role_id", insertable=false, updatable=false)
 	private AdmRole admRole;
 
-    public AdmUserRole() {
-    }
-
-	public AdmUserRolePK getId() {
-		return this.id;
-	}
-
-	public void setId(AdmUserRolePK id) {
-		this.id = id;
-	}
-	
 	public Date getCreateDt() {
 		return this.createDt;
 	}
@@ -85,6 +74,20 @@ public class AdmUserRole implements Serializable {
 
 	public void setAdmRole(AdmRole admRole) {
 		this.admRole = admRole;
+	}
+
+	/**
+	 * @return the rolePK
+	 */
+	public AdmUserRolePK getRolePK() {
+		return rolePK;
+	}
+
+	/**
+	 * @param rolePK the rolePK to set
+	 */
+	public void setRolePK(AdmUserRolePK rolePK) {
+		this.rolePK = rolePK;
 	}
 	
 }

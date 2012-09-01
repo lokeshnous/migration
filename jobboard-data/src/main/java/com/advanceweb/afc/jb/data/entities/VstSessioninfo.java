@@ -72,9 +72,6 @@ public class VstSessioninfo implements Serializable {
 	@JoinColumn(name="user_id")
 	private MerUser merUser;
 
-    public VstSessioninfo() {
-    }
-
 	public int getSessioninfoId() {
 		return this.sessioninfoId;
 	}

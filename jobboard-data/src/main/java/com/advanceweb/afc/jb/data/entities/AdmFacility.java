@@ -25,6 +25,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="adm_facility")
 public class AdmFacility implements Serializable {
+	private static final String ADM_FACILITY = "admFacility";
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -104,35 +106,32 @@ public class AdmFacility implements Serializable {
 //	private List<AdmFacility> admFacilities;
 
 	//bi-directional many-to-one association to AdmFacilityContact
-	@OneToMany(mappedBy="admFacility")
+	@OneToMany(mappedBy=ADM_FACILITY)
 	private List<AdmFacilityContact> admFacilityContacts;
 
 	//bi-directional one-to-one association to AdmFacilityCredit
-	@OneToOne(mappedBy="admFacility", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy=ADM_FACILITY, fetch=FetchType.LAZY)
 	private AdmFacilityCredit admFacilityCredit;
 
 	//bi-directional many-to-one association to AdmFacilitySubscription
-	@OneToMany(mappedBy="admFacility")
+	@OneToMany(mappedBy=ADM_FACILITY)
 	private List<AdmFacilitySubscription> admFacilitySubscriptions;
 
 	//bi-directional many-to-one association to AdmPurchaseHistory
-	@OneToMany(mappedBy="admFacility")
+	@OneToMany(mappedBy=ADM_FACILITY)
 	private List<AdmPurchaseHistory> admPurchaseHistories;
 
 	//bi-directional many-to-one association to AdmUserFacility
-	@OneToMany(mappedBy="admFacility")
+	@OneToMany(mappedBy=ADM_FACILITY)
 	private List<AdmUserFacility> admUserFacilities;
 
 	//bi-directional many-to-one association to JpJob
-	@OneToMany(mappedBy="admFacility")
+	@OneToMany(mappedBy=ADM_FACILITY)
 	private List<JpJob> jpJobs;
 
 	//bi-directional many-to-one association to JpTemplate
-	@OneToMany(mappedBy="admFacility",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=ADM_FACILITY,cascade=CascadeType.ALL)
 	private List<JpTemplate> jpTemplates;
-
-    public AdmFacility() {
-    }
 
 	public Integer getFacilityId() {
 		return this.facilityId;

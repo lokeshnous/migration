@@ -166,9 +166,6 @@ public class JpJobTemp implements Serializable {
 	@JoinColumn(name="source_id")
 	private JpSource jpSource;
 
-    public JpJobTemp() {
-    }
-
 	public int getJobId() {
 		return this.jobId;
 	}

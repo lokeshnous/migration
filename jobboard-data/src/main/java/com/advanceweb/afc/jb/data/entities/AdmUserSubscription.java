@@ -26,7 +26,7 @@ public class AdmUserSubscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AdmUserSubscriptionPK id;
+	private AdmUserSubscriptionPK subscriptionPK;
 
 	private int active;
 
@@ -44,17 +44,6 @@ public class AdmUserSubscription implements Serializable {
 	@JoinColumn(name="subscription_id", insertable=false, updatable=false)
 	private AdmSubscription admSubscription;
 
-    public AdmUserSubscription() {
-    }
-
-	public AdmUserSubscriptionPK getId() {
-		return this.id;
-	}
-
-	public void setId(AdmUserSubscriptionPK id) {
-		this.id = id;
-	}
-	
 	public int getActive() {
 		return this.active;
 	}
@@ -93,6 +82,20 @@ public class AdmUserSubscription implements Serializable {
 
 	public Timestamp getCreateDt() {
 		return createDt;
+	}
+
+	/**
+	 * @return the subscriptionPK
+	 */
+	public AdmUserSubscriptionPK getSubscriptionPK() {
+		return subscriptionPK;
+	}
+
+	/**
+	 * @param subscriptionPK the subscriptionPK to set
+	 */
+	public void setSubscriptionPK(AdmUserSubscriptionPK subscriptionPK) {
+		this.subscriptionPK = subscriptionPK;
 	}
 	
 	

@@ -29,9 +29,6 @@ public class ResBuilderLanguage implements Serializable {
 	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
-    public ResBuilderLanguage() {
-    }
-
 	public int getBuilderLanguageId() {
 		return this.builderLanguageId;
 	}

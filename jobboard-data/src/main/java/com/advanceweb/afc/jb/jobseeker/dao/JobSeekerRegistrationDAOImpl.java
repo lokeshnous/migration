@@ -94,7 +94,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				AdmUserRolePK pk = new AdmUserRolePK();
 					pk.setUserId(merUser.getUserId());
 					pk.setRoleId(role.getRoleId());
-				userRole.setId(pk);
+				userRole.setRolePK(pk);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
 			

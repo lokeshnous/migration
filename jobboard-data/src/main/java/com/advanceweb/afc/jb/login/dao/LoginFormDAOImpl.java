@@ -69,7 +69,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 			
 			if (listAdmUserRole != null && listAdmUserRole.size() > 0) {
 				AdmUserRole admUserRoleNew = listAdmUserRole.get(0);
-				loginFormDTO.setRoleId(admUserRoleNew.getId().getRoleId());
+				loginFormDTO.setRoleId(admUserRoleNew.getRolePK().getRoleId());
 			}
 		}
 		return loginFormDTO;

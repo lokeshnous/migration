@@ -35,9 +35,6 @@ public class ResPrivacy implements Serializable {
 	@OneToMany(mappedBy="resPrivacy")
 	private List<ResPublishResumePriv> resPublishResumePrivs;
 
-    public ResPrivacy() {
-    }
-
 	public int getPrivacyId() {
 		return this.privacyId;
 	}

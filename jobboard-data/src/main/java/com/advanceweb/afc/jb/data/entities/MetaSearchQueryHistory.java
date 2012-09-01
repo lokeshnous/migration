@@ -39,9 +39,6 @@ public class MetaSearchQueryHistory implements Serializable {
 	@Column(name="search_type_name")
 	private String searchTypeName;
 
-    public MetaSearchQueryHistory() {
-    }
-
 	public int getSearchQueryHistoryId() {
 		return this.searchQueryHistoryId;
 	}

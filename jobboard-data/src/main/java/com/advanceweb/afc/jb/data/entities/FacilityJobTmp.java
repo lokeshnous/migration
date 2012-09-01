@@ -24,9 +24,6 @@ public class FacilityJobTmp implements Serializable {
 
 	private String name;
 
-    public FacilityJobTmp() {
-    }
-
 	public String getAccountNumber() {
 		return this.accountNumber;
 	}

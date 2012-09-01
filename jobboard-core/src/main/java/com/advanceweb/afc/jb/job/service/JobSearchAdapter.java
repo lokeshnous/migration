@@ -11,14 +11,11 @@ import org.springframework.stereotype.Service;
 public class JobSearchAdapter implements JobSearch {
 
 
-	public JobSearchAdapter() {
-
-	}
-
-	@Override
+	// Commented to fix PMD issue
+	/*@Override
 	public void finalize() throws Throwable {
 
-	}
+	}*/
 
 
 }

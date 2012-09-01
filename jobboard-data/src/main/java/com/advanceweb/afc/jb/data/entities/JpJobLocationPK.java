@@ -18,8 +18,6 @@ public class JpJobLocationPK implements Serializable {
 	@Column(name="location_id")
 	private int locationId;
 
-    public JpJobLocationPK() {
-    }
 	public int getJobId() {
 		return this.jobId;
 	}
@@ -48,7 +46,7 @@ public class JpJobLocationPK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.jobId;
 		hash = hash * prime + this.locationId;

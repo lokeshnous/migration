@@ -45,9 +45,6 @@ public class ResPublishResumePriv implements Serializable {
 	@JoinColumn(name="privacy_id")
 	private ResPrivacy resPrivacy;
 
-    public ResPublishResumePriv() {
-    }
-
 	public int getPublishResumePrivId() {
 		return this.publishResumePrivId;
 	}

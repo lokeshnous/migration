@@ -93,7 +93,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jobLocation.setHidePostcode(dto.isbHideZipCode()?1:0);
 		 jobLocation.setHideState(dto.isbHideState()?1:0);
 		 jobLocation.setJpLocation(location);
-		 jobLocation.setId(pKey);
+		 jobLocation.setLocationPK(pKey);
 		 locList.add(jobLocation);
 		 
 		return locList;

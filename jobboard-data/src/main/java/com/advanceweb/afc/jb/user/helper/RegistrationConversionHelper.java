@@ -127,7 +127,7 @@ public class RegistrationConversionHelper {
 						pk.setUserId(user.getUserId());
 					}
 					
-					profile.setId(pk);
+					profile.setProfilePK(pk);
 					listProfiles.add(profile);
 				}
 			}						
@@ -160,7 +160,7 @@ public class RegistrationConversionHelper {
 						AdmUserSubscription sub = new AdmUserSubscription();
 						pkey.setSubscriptionId(Integer.valueOf(idVal));
 						pkey.setUserId(user.getUserId());
-						sub.setId(pkey);
+						sub.setSubscriptionPK(pkey);
 						subsList.add(sub);						
 					}
 				}
@@ -211,7 +211,7 @@ public class RegistrationConversionHelper {
 		
 		if(null != attribDTO){
 			for(MerUserProfile profile : profiles){
-				if(attribDTO.getStrProfileAttribId().equalsIgnoreCase(String.valueOf(profile.getId().getProfileAttribId()))){
+				if(attribDTO.getStrProfileAttribId().equalsIgnoreCase(String.valueOf(profile.getProfilePK().getProfileAttribId()))){
 					return profile.getAttribValue();
 				}
 			}

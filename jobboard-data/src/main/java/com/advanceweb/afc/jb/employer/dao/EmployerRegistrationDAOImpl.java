@@ -115,7 +115,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				AdmUserRolePK pk = new AdmUserRolePK();
 				pk.setUserId(merUser.getUserId());
 				pk.setRoleId(role.getRoleId());
-				userRole.setId(pk);
+				userRole.setRolePK(pk);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 				roleId = role.getRoleId();
 			}
@@ -155,7 +155,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			facilityPK.setFacilityId(facility.getFacilityId());
 			facilityPK.setUserId(merUser.getUserId());
 			facilityPK.setRoleId(roleId);
-			userfacility.setId(facilityPK);
+			userfacility.setFacilityPK(facilityPK);
 			userfacility.setCreateUserId(0);
 //			userfacility.setAdmRole();
 			userfacility.setCreateDt(new Date());			

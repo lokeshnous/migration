@@ -44,9 +44,6 @@ public class VstClickthrough implements Serializable {
 	@JoinColumn(name="search_id")
 	private VstSearch vstSearch;
 
-    public VstClickthrough() {
-    }
-
 	public int getClickthroughId() {
 		return this.clickthroughId;
 	}

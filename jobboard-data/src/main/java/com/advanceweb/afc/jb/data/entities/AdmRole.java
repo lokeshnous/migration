@@ -12,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name="adm_role")
 public class AdmRole implements Serializable {
+	private static final String ADM_ROLE = "admRole";
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,23 +30,20 @@ public class AdmRole implements Serializable {
 	private List<AdmPermission> admPermissions;
 
 	//bi-directional many-to-one association to AdmUserFacility
-	@OneToMany(mappedBy="admRole")
+	@OneToMany(mappedBy=ADM_ROLE)
 	private List<AdmUserFacility> admUserFacilities;
 
 	//bi-directional many-to-one association to AdmUserFacilityGroup
-	@OneToMany(mappedBy="admRole")
+	@OneToMany(mappedBy=ADM_ROLE)
 	private List<AdmUserFacilityGroup> admUserFacilityGroups;
 
 	//bi-directional many-to-one association to AdmUserFacilitySystem
-	@OneToMany(mappedBy="admRole")
+	@OneToMany(mappedBy=ADM_ROLE)
 	private List<AdmUserFacilitySystem> admUserFacilitySystems;
 
 	//bi-directional many-to-one association to AdmUserRole
-	@OneToMany(mappedBy="admRole")
+	@OneToMany(mappedBy=ADM_ROLE)
 	private List<AdmUserRole> admUserRoles;
-
-    public AdmRole() {
-    }
 
 	public int getRoleId() {
 		return this.roleId;

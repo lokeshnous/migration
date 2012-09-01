@@ -82,9 +82,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 			AdmFacility facility = userFacility.getAdmFacility();
 			if(null != facility){
 				employerInfoDTO.setCustomerNamel(facility.getName());
-				employerInfoDTO.setUserId(userFacility.getId().getUserId());
-				employerInfoDTO.setFacilityId(userFacility.getId().getFacilityId());
-				employerInfoDTO.setRoleId(userFacility.getId().getRoleId());
+				employerInfoDTO.setUserId(userFacility.getFacilityPK().getUserId());
+				employerInfoDTO.setFacilityId(userFacility.getFacilityPK().getFacilityId());
+				employerInfoDTO.setRoleId(userFacility.getFacilityPK().getRoleId());
 			}					
 		}		
 		

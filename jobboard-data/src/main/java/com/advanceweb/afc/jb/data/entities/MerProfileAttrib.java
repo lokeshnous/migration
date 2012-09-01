@@ -39,9 +39,6 @@ public class MerProfileAttrib implements Serializable {
 	@OneToMany(mappedBy="merProfileAttrib")
 	private List<MerUserProfile> merUserProfiles;
 
-    public MerProfileAttrib() {
-    }
-
 	public int getProfileAttribId() {
 		return this.profileAttribId;
 	}

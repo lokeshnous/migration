@@ -45,9 +45,6 @@ public class ResResumeProfile implements Serializable {
 	@JoinColumn(name="resume_attrib_id")
 	private ResResumeAttrib resResumeAttrib;
 
-    public ResResumeProfile() {
-    }
-
 	public int getResumeProfileId() {
 		return this.resumeProfileId;
 	}

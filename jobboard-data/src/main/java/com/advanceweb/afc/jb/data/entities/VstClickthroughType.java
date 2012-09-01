@@ -27,9 +27,6 @@ public class VstClickthroughType implements Serializable {
 	@OneToMany(mappedBy="vstClickthroughType")
 	private List<VstClickthrough> vstClickthroughs;
 
-    public VstClickthroughType() {
-    }
-
 	public int getClickthroughTypeId() {
 		return this.clickthroughTypeId;
 	}

@@ -26,9 +26,6 @@ public class ResBuilderAttribList implements Serializable {
 
 	private int position;
 
-    public ResBuilderAttribList() {
-    }
-
 	public int getBuilderAttribListId() {
 		return this.builderAttribListId;
 	}

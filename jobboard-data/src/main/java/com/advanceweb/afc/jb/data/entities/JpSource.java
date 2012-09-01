@@ -35,9 +35,6 @@ public class JpSource implements Serializable {
 	@OneToMany(mappedBy="jpSource")
 	private List<JpJobTemp> jpJobTemps;
 
-    public JpSource() {
-    }
-
 	public int getSourceId() {
 		return this.sourceId;
 	}

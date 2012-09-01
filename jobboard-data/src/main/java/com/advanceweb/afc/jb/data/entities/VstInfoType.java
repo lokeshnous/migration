@@ -27,9 +27,6 @@ public class VstInfoType implements Serializable {
 	@OneToMany(mappedBy="vstInfoType")
 	private List<VstSessionEventInfo> vstSessionEventInfos;
 
-    public VstInfoType() {
-    }
-
 	public int getInfoTypeId() {
 		return this.infoTypeId;
 	}

@@ -19,36 +19,41 @@ public interface Job {
 	 * @version 1.0
 	 * @created 21-Jun-2012 2:22:08 PM
 	 */
-	public class JobApplicationDTO {
+	@SuppressWarnings("unused")
+	class JobApplicationDTO {
 
 		private long jobId;
 		private long employerId;
 		private ResumeDTO resumeDTO;
 		private CoverLetterDTO coverLetterDTO;
 
-		public JobApplicationDTO(){
+		// Commented to fix PMD issue
+		/*protected void finalize() throws Throwable {
 
-		}
-
-		public void finalize() throws Throwable {
-
-		}
+		}*/
 
 	}
 
 
 	/**
+	 * Create new Job
 	 * 
 	 * @param jobsDTO
 	 */
-	public boolean createNewJob(JobDTO jobsDTO);
+	boolean createNewJob(JobDTO jobsDTO);
 
 	/**
+	 * Apply for Job
 	 * 
 	 * @param jobApplicationDTO
 	 */
-	public boolean applyForJob(JobApplicationDTO jobApplicationDTO);
-
-	public List<JobDTO> retrieveJobPostings();
+	boolean applyForJob(JobApplicationDTO jobApplicationDTO);
+	
+	/**
+	 * Retrieve Job Postings
+	 * 
+	 * @return
+	 */
+	List<JobDTO> retrieveJobPostings();
 
 }

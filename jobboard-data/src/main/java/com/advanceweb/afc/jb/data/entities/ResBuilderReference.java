@@ -43,9 +43,6 @@ public class ResBuilderReference implements Serializable {
 	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
-    public ResBuilderReference() {
-    }
-
 	public int getBuilderReferenceId() {
 		return this.builderReferenceId;
 	}

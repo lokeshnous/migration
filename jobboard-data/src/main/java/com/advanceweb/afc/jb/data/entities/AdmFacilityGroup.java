@@ -48,9 +48,6 @@ public class AdmFacilityGroup implements Serializable {
 	@OneToMany(mappedBy="admFacilityGroup")
 	private List<AdmUserFacilityGroup> admUserFacilityGroups;
 
-    public AdmFacilityGroup() {
-    }
-
 	public int getFacilityGroupId() {
 		return this.facilityGroupId;
 	}

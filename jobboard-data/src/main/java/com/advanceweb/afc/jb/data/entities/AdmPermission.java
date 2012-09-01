@@ -36,9 +36,6 @@ public class AdmPermission implements Serializable {
 		)
 	private List<AdmRole> admRoles;
 
-    public AdmPermission() {
-    }
-
 	public int getPermissionId() {
 		return this.permissionId;
 	}

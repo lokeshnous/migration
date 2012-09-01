@@ -65,9 +65,6 @@ public class StgSessioninfo implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-    public StgSessioninfo() {
-    }
-
 	public int getStgSessioninfoId() {
 		return this.stgSessioninfoId;
 	}

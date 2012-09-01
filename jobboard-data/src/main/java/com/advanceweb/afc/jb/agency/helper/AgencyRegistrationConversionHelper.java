@@ -275,7 +275,7 @@ public class AgencyRegistrationConversionHelper {
 						pk.setUserId(user.getUserId());
 					}
 
-					profile.setId(pk);
+					profile.setProfilePK(pk);
 					listProfiles.add(profile);
 				}
 			}

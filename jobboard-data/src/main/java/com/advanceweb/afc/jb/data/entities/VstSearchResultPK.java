@@ -18,8 +18,6 @@ public class VstSearchResultPK implements Serializable {
 	@Column(name="result_seq")
 	private int resultSeq;
 
-    public VstSearchResultPK() {
-    }
 	public int getSearchId() {
 		return this.searchId;
 	}
@@ -48,7 +46,7 @@ public class VstSearchResultPK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.searchId;
 		hash = hash * prime + this.resultSeq;

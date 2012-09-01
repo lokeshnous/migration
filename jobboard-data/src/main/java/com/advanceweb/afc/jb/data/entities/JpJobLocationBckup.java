@@ -23,9 +23,6 @@ public class JpJobLocationBckup implements Serializable {
 	@Column(name="location_id")
 	private int locationId;
 
-    public JpJobLocationBckup() {
-    }
-
 	public Timestamp getCreateDt() {
 		return this.createDt;
 	}

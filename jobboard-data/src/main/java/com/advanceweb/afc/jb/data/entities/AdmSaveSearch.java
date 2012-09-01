@@ -42,9 +42,6 @@ public class AdmSaveSearch implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-    public AdmSaveSearch() {
-    }
-
 	public int getSaveSearchId() {
 		return this.saveSearchId;
 	}

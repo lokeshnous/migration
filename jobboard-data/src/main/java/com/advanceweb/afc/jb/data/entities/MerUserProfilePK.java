@@ -18,8 +18,6 @@ public class MerUserProfilePK implements Serializable {
 	@Column(name="profile_attrib_id")
 	private int profileAttribId;
 
-    public MerUserProfilePK() {
-    }
 	public int getUserId() {
 		return this.userId;
 	}
@@ -48,7 +46,7 @@ public class MerUserProfilePK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.userId;
 		hash = hash * prime + this.profileAttribId;

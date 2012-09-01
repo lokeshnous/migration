@@ -18,8 +18,6 @@ public class AdmFacilitySubscriptionPK implements Serializable {
 	@Column(name="subscription_id")
 	private int subscriptionId;
 
-    public AdmFacilitySubscriptionPK() {
-    }
 	public int getFacilityId() {
 		return this.facilityId;
 	}
@@ -48,7 +46,7 @@ public class AdmFacilitySubscriptionPK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.facilityId;
 		hash = hash * prime + this.subscriptionId;

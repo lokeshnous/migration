@@ -42,9 +42,6 @@ public class JpLocationBckup implements Serializable {
 	@Column(name="state_fullname")
 	private String stateFullname;
 
-    public JpLocationBckup() {
-    }
-
 	public String getArea() {
 		return this.area;
 	}

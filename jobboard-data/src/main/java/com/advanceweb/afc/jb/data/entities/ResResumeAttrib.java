@@ -38,9 +38,6 @@ public class ResResumeAttrib implements Serializable {
 	@OneToMany(mappedBy="resResumeAttrib")
 	private List<ResResumeProfile> resResumeProfiles;
 
-    public ResResumeAttrib() {
-    }
-
 	public int getResumeAttribId() {
 		return this.resumeAttribId;
 	}

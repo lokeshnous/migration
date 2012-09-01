@@ -16,7 +16,7 @@ public class MerUserApplication implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private MerUserApplicationPK id;
+	private MerUserApplicationPK applicationPK;
 
 	@Column(name="create_dt")
 	private Timestamp createDt;
@@ -39,17 +39,6 @@ public class MerUserApplication implements Serializable {
 	@JoinColumn(name="application_id", insertable=false, updatable=false)
 	private MerApplication merApplication;
 
-    public MerUserApplication() {
-    }
-
-	public MerUserApplicationPK getId() {
-		return this.id;
-	}
-
-	public void setId(MerUserApplicationPK id) {
-		this.id = id;
-	}
-	
 	public Timestamp getCreateDt() {
 		return this.createDt;
 	}
@@ -88,6 +77,20 @@ public class MerUserApplication implements Serializable {
 
 	public void setMerApplication(MerApplication merApplication) {
 		this.merApplication = merApplication;
+	}
+
+	/**
+	 * @return the applicationPK
+	 */
+	public MerUserApplicationPK getApplicationPK() {
+		return applicationPK;
+	}
+
+	/**
+	 * @param applicationPK the applicationPK to set
+	 */
+	public void setApplicationPK(MerUserApplicationPK applicationPK) {
+		this.applicationPK = applicationPK;
 	}
 	
 }

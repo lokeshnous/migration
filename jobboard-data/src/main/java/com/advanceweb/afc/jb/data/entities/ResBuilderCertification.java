@@ -40,9 +40,6 @@ public class ResBuilderCertification implements Serializable {
 	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
-    public ResBuilderCertification() {
-    }
-
 	public int getBuilderCertificationId() {
 		return this.builderCertificationId;
 	}

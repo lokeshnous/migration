@@ -34,9 +34,6 @@ public class AdmSubscription implements Serializable {
 	@OneToMany(mappedBy="admSubscription")
 	private List<AdmUserSubscription> admUserSubscriptions;
 
-    public AdmSubscription() {
-    }
-
 	public int getSubscriptionId() {
 		return this.subscriptionId;
 	}

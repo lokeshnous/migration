@@ -15,9 +15,9 @@ public class AdmUserFacilityGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AdmUserFacilityGroupPK id;
+	private AdmUserFacilityGroupPK groupPK;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
 	private Date createDt;
 
@@ -41,17 +41,14 @@ public class AdmUserFacilityGroup implements Serializable {
 	@JoinColumn(name="facility_group_id", insertable=false, updatable=false)
 	private AdmFacilityGroup admFacilityGroup;
 
-    public AdmUserFacilityGroup() {
-    }
-
-	public AdmUserFacilityGroupPK getId() {
-		return this.id;
+	public AdmUserFacilityGroupPK getGroupPK() {
+		return groupPK;
 	}
 
-	public void setId(AdmUserFacilityGroupPK id) {
-		this.id = id;
+	public void setGroupPK(AdmUserFacilityGroupPK groupPK) {
+		this.groupPK = groupPK;
 	}
-	
+
 	public Date getCreateDt() {
 		return this.createDt;
 	}

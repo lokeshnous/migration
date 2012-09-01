@@ -34,9 +34,6 @@ public class JpJobStat implements Serializable {
 	@JoinColumn(name="job_id")
 	private JpJob jpJob;
 
-    public JpJobStat() {
-    }
-
 	public int getJobId() {
 		return this.jobId;
 	}

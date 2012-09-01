@@ -36,8 +36,6 @@ public class MetaSearchParam implements Serializable {
 	@JoinColumn(name="search_type_id")
 	private MetaSearchType metaSearchType;
 
-    public MetaSearchParam() {
-    }
 
 	public int getSearchParamId() {
 		return this.searchParamId;

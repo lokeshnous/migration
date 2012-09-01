@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 @Table(name="res_publish_resume")
 public class ResPublishResume implements Serializable {
+	private static final String RES_PUBLISH_RESUME = "resPublishResume";
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -60,23 +62,20 @@ public class ResPublishResume implements Serializable {
 	private int userId;
 
 	//bi-directional many-to-one association to ResBuilderResume
-	@OneToMany(mappedBy="resPublishResume")
+	@OneToMany(mappedBy=RES_PUBLISH_RESUME)
 	private List<ResBuilderResume> resBuilderResumes;
 
 	//bi-directional many-to-one association to ResPublishResumePriv
-	@OneToMany(mappedBy="resPublishResume")
+	@OneToMany(mappedBy=RES_PUBLISH_RESUME)
 	private List<ResPublishResumePriv> resPublishResumePrivs;
 
 	//bi-directional one-to-one association to ResPublishResumeStat
-	@OneToOne(mappedBy="resPublishResume", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy=RES_PUBLISH_RESUME, fetch=FetchType.LAZY)
 	private ResPublishResumeStat resPublishResumeStat;
 
 	//bi-directional many-to-one association to ResUploadResume
-	@OneToMany(mappedBy="resPublishResume")
+	@OneToMany(mappedBy=RES_PUBLISH_RESUME)
 	private List<ResUploadResume> resUploadResumes;
-
-    public ResPublishResume() {
-    }
 
 	public int getPublishResumeId() {
 		return this.publishResumeId;

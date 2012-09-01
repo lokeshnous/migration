@@ -38,9 +38,6 @@ public class AdmUserAlert implements Serializable {
 	@JoinColumn(name="alert_id")
 	private AdmAlert admAlert;
 
-    public AdmUserAlert() {
-    }
-
 	public int getUserAlertId() {
 		return this.userAlertId;
 	}

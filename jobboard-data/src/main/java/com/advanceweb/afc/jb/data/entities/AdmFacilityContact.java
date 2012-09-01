@@ -69,9 +69,6 @@ public class AdmFacilityContact implements Serializable {
 	@JoinColumn(name="facility_id")
 	private AdmFacility admFacility;
 
-    public AdmFacilityContact() {
-    }
-
 	public int getFacilityContactId() {
 		return this.facilityContactId;
 	}

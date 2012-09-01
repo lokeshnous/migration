@@ -42,9 +42,6 @@ public class SaveSearchResults implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-    public SaveSearchResults() {
-    }
-
 	public int getSaveSearchId() {
 		return this.saveSearchId;
 	}

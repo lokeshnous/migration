@@ -39,9 +39,6 @@ public class AdmPurchaseHistory implements Serializable {
 	@JoinColumn(name="facility_id")
 	private AdmFacility admFacility;
 
-    public AdmPurchaseHistory() {
-    }
-
 	public int getPurchaseHistoryId() {
 		return this.purchaseHistoryId;
 	}

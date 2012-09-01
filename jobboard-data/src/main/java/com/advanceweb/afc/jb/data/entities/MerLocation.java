@@ -34,9 +34,6 @@ public class MerLocation implements Serializable {
 
 	private String state;
 
-    public MerLocation() {
-    }
-
 	public int getLocationId() {
 		return this.locationId;
 	}

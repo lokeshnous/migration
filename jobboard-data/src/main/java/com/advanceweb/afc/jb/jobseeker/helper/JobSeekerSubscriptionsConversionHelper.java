@@ -31,8 +31,8 @@ public class JobSeekerSubscriptionsConversionHelper {
 		if(null != listSubs){
 			for(AdmUserSubscription alert : listSubs){
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-				dto.setSubscriptionId(alert.getId().getSubscriptionId());
-				dto.setUserId(alert.getId().getUserId());			
+				dto.setSubscriptionId(alert.getSubscriptionPK().getSubscriptionId());
+				dto.setUserId(alert.getSubscriptionPK().getUserId());			
 				subsList.add(dto);
 			}
 		}		
@@ -57,7 +57,7 @@ public class JobSeekerSubscriptionsConversionHelper {
 						AdmUserSubscriptionPK pk = new AdmUserSubscriptionPK();
 						pk.setSubscriptionId(dto.getSubscriptionId());
 						pk.setUserId(dto.getUserId());
-					entity.setId(pk);
+					entity.setSubscriptionPK(pk);
 					entity.setActive(dto.getActive());
 					subsEntityList.add(entity);
 				}
@@ -75,8 +75,8 @@ public class JobSeekerSubscriptionsConversionHelper {
 			
 		if(null != subDTO && null != listSubsAlerts){
 			for(AdmUserSubscription entity : listSubsAlerts){
-				if(subDTO.getSubscriptionId() == entity.getId().getSubscriptionId() && 
-						subDTO.getUserId() == entity.getId().getUserId()){
+				if(subDTO.getSubscriptionId() == entity.getSubscriptionPK().getSubscriptionId() && 
+						subDTO.getUserId() == entity.getSubscriptionPK().getUserId()){
 					listSubsAlerts.remove(entity);
 					return true;
 				}

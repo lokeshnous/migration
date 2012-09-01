@@ -18,8 +18,6 @@ public class JpJobAddonPK implements Serializable {
 	@Column(name="addon_id")
 	private int addonId;
 
-    public JpJobAddonPK() {
-    }
 	public int getJobId() {
 		return this.jobId;
 	}
@@ -48,7 +46,7 @@ public class JpJobAddonPK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.jobId;
 		hash = hash * prime + this.addonId;

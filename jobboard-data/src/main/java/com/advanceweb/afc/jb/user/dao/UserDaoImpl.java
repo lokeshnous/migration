@@ -69,7 +69,7 @@ public class UserDaoImpl implements UserDao {
 
 			List<AdmUserFacility> userFacilityList = hibernateTemplate
 					.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
-							role.getId().getUserId(), role.getId().getRoleId());
+							role.getRolePK().getUserId(), role.getRolePK().getRoleId());
 
 			for (AdmUserFacility facility : userFacilityList) {
 				UserRoleDTO dto = new UserRoleDTO();

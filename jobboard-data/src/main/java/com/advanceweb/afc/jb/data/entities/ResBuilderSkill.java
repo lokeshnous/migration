@@ -26,9 +26,6 @@ public class ResBuilderSkill implements Serializable {
 	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
-    public ResBuilderSkill() {
-    }
-
 	public int getBuilderSkillId() {
 		return this.builderSkillId;
 	}

@@ -36,9 +36,6 @@ public class JpAddon implements Serializable {
 	@ElementCollection
 	private Set<JpJobType> jpJobType = new TreeSet<JpJobType>();
 
-    public JpAddon() {
-    }
-
 	public int getAddonId() {
 		return this.addonId;
 	}

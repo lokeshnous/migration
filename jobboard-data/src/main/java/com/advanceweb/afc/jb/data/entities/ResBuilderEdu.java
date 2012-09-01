@@ -59,9 +59,6 @@ public class ResBuilderEdu implements Serializable {
 	@JoinColumn(name="degree_edu_id")
 	private ResDegreeEdu resDegreeEdu;
 
-    public ResBuilderEdu() {
-    }
-
 	public int getBuilderEduId() {
 		return this.builderEduId;
 	}

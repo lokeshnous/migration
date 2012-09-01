@@ -18,8 +18,6 @@ public class VstSessionEventInfoPK implements Serializable {
 	@Column(name="info_type_id")
 	private int infoTypeId;
 
-    public VstSessionEventInfoPK() {
-    }
 	public int getSessionEventId() {
 		return this.sessionEventId;
 	}
@@ -48,7 +46,7 @@ public class VstSessionEventInfoPK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.sessionEventId;
 		hash = hash * prime + this.infoTypeId;

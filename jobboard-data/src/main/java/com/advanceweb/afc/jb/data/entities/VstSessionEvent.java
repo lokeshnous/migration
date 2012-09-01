@@ -48,9 +48,6 @@ public class VstSessionEvent implements Serializable {
 	@OneToMany(mappedBy="vstSessionEvent")
 	private List<VstSessionEventInfo> vstSessionEventInfos;
 
-    public VstSessionEvent() {
-    }
-
 	public int getSessionEventId() {
 		return this.sessionEventId;
 	}

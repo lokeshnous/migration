@@ -15,7 +15,7 @@ public class AdmFacilitySubscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AdmFacilitySubscriptionPK id;
+	private AdmFacilitySubscriptionPK admFacilitySubscriptionPK;
 
 	private int active;
 
@@ -36,18 +36,16 @@ public class AdmFacilitySubscription implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="facility_id", insertable=false, updatable=false)
 	private AdmFacility admFacility;
-
-    public AdmFacilitySubscription() {
-    }
-
-	public AdmFacilitySubscriptionPK getId() {
-		return this.id;
-	}
-
-	public void setId(AdmFacilitySubscriptionPK id) {
-		this.id = id;
-	}
 	
+	public AdmFacilitySubscriptionPK getAdmFacilitySubscriptionPK() {
+		return admFacilitySubscriptionPK;
+	}
+
+	public void setAdmFacilitySubscriptionPK(
+			AdmFacilitySubscriptionPK admFacilitySubscriptionPK) {
+		this.admFacilitySubscriptionPK = admFacilitySubscriptionPK;
+	}
+
 	public int getActive() {
 		return this.active;
 	}

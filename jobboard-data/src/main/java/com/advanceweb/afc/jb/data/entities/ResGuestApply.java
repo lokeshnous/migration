@@ -44,9 +44,6 @@ public class ResGuestApply implements Serializable {
 	@JoinColumn(name="job_id")
 	private JpJob jpJob;
 
-    public ResGuestApply() {
-    }
-
 	public int getGuestApplyId() {
 		return this.guestApplyId;
 	}

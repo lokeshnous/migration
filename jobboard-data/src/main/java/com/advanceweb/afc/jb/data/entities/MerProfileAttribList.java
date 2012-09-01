@@ -30,9 +30,6 @@ public class MerProfileAttribList implements Serializable {
 	@JoinColumn(name="profile_attrib_id")
 	private MerProfileAttrib merProfileAttrib;
 
-    public MerProfileAttribList() {
-    }
-
 	public int getProfileAttribListId() {
 		return this.profileAttribListId;
 	}

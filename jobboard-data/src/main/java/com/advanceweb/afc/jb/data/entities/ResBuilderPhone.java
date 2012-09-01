@@ -29,9 +29,6 @@ public class ResBuilderPhone implements Serializable {
 	@JoinColumn(name="builder_resume_id")
 	private ResBuilderResume resBuilderResume;
 
-    public ResBuilderPhone() {
-    }
-
 	public int getBuilderPhoneId() {
 		return this.builderPhoneId;
 	}

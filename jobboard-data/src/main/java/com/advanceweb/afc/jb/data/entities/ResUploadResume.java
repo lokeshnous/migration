@@ -72,9 +72,6 @@ public class ResUploadResume implements Serializable {
 	@JoinColumn(name="publish_resume_id")
 	private ResPublishResume resPublishResume;
 
-    public ResUploadResume() {
-    }
-
 	public int getUploadResumeId() {
 		return this.uploadResumeId;
 	}

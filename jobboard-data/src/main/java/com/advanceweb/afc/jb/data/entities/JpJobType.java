@@ -42,9 +42,6 @@ public class JpJobType implements Serializable {
 					nullable = false, updatable = false) })
 	private Set<JpAddon> jpAddons = new TreeSet<JpAddon>();
 
-    public JpJobType() {
-    }
-
 	public int getJobTypeId() {
 		return this.jobTypeId;
 	}

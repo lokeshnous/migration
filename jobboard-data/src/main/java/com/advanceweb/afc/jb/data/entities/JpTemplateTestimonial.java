@@ -26,9 +26,6 @@ public class JpTemplateTestimonial implements Serializable {
 	@JoinColumn(name="template_id")
 	private JpTemplate jpTemplate;
 
-    public JpTemplateTestimonial() {
-    }
-
 	public int getTemplateTestimonialId() {
 		return this.templateTestimonialId;
 	}

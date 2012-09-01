@@ -15,9 +15,9 @@ public class AdmUserFacility implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AdmUserFacilityPK id;
+	private AdmUserFacilityPK facilityPK;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
 	private Date createDt;
 
@@ -41,15 +41,18 @@ public class AdmUserFacility implements Serializable {
 	@JoinColumn(name="facility_id", insertable=false, updatable=false)
 	private AdmFacility admFacility;
 
-    public AdmUserFacility() {
-    }
-
-	public AdmUserFacilityPK getId() {
-		return this.id;
+	/**
+	 * @return the facilityPK
+	 */
+	public AdmUserFacilityPK getFacilityPK() {
+		return facilityPK;
 	}
 
-	public void setId(AdmUserFacilityPK id) {
-		this.id = id;
+	/**
+	 * @param facilityPK the facilityPK to set
+	 */
+	public void setFacilityPK(AdmUserFacilityPK facilityPK) {
+		this.facilityPK = facilityPK;
 	}
 	
 	public Date getCreateDt() {

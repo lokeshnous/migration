@@ -56,8 +56,8 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 						.get(0);
 				AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplateCareer
 						.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
-								userRole.getId().getUserId(),
-								userRole.getId().getRoleId()).get(0);
+								userRole.getRolePK().getUserId(),
+								userRole.getRolePK().getRoleId()).get(0);
 				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
 						.find("from  JpTemplate where admFacility.facilityId=?",
 								userFacility.getAdmFacility().getFacilityId());

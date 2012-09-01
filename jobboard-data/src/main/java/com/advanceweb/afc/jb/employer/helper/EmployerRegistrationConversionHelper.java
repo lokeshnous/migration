@@ -213,7 +213,7 @@ public class EmployerRegistrationConversionHelper {
 						pk.setUserId(user.getUserId());
 					}
 
-					profile.setId(pk);
+					profile.setProfilePK(pk);
 					listProfiles.add(profile);
 				}
 			}
@@ -464,7 +464,7 @@ public class EmployerRegistrationConversionHelper {
 		
 		if(null != attribDTO){
 			for(MerUserProfile profile : profiles){
-				if(attribDTO.getStrProfileAttribId().equalsIgnoreCase(String.valueOf(profile.getId().getProfileAttribId()))){
+				if(attribDTO.getStrProfileAttribId().equalsIgnoreCase(String.valueOf(profile.getProfilePK().getProfileAttribId()))){
 					return profile.getAttribValue();
 				}
 			}

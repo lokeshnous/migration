@@ -34,9 +34,6 @@ public class MerApplication implements Serializable {
 	@OneToMany(mappedBy="merApplication")
 	private List<VstSessioninfo> vstSessioninfos;
 
-    public MerApplication() {
-    }
-
 	public int getApplicationId() {
 		return this.applicationId;
 	}

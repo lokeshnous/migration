@@ -30,9 +30,6 @@ public class MetaSearchType implements Serializable {
 	@OneToMany(mappedBy="metaSearchType")
 	private List<MetaSearchParam> metaSearchParams;
 
-    public MetaSearchType() {
-    }
-
 	public int getSearchTypeId() {
 		return this.searchTypeId;
 	}

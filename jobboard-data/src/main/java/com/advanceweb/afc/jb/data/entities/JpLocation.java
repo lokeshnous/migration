@@ -49,9 +49,6 @@ public class JpLocation implements Serializable {
 	@OneToMany(mappedBy="jpLocation")
 	private List<JpJobLocation> jpJobLocations;
 
-    public JpLocation() {
-    }
-
 	public int getLocationId() {
 		return this.locationId;
 	}

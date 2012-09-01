@@ -29,9 +29,6 @@ public class JpTemplateMedia implements Serializable {
 	@JoinColumn(name="template_id")
 	private JpTemplate jpTemplate;
 
-    public JpTemplateMedia() {
-    }
-
 	public int getTemplateMediaId() {
 		return this.templateMediaId;
 	}

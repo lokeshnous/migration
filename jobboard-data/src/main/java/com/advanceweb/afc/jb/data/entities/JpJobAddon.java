@@ -25,7 +25,7 @@ public class JpJobAddon implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private JpJobAddonPK id;
+	private JpJobAddonPK jobAddonPK;
 
 	private byte active;
 
@@ -46,17 +46,6 @@ public class JpJobAddon implements Serializable {
 	@JoinColumn(name="addon_id", insertable=false, updatable=false)
 	private JpAddon jpAddon;
 
-    public JpJobAddon() {
-    }
-
-	public JpJobAddonPK getId() {
-		return this.id;
-	}
-
-	public void setId(JpJobAddonPK id) {
-		this.id = id;
-	}
-	
 	public byte getActive() {
 		return this.active;
 	}
@@ -95,6 +84,20 @@ public class JpJobAddon implements Serializable {
 
 	public void setJpAddon(JpAddon jpAddon) {
 		this.jpAddon = jpAddon;
+	}
+
+	/**
+	 * @return the jobAddonPK
+	 */
+	public JpJobAddonPK getJobAddonPK() {
+		return jobAddonPK;
+	}
+
+	/**
+	 * @param jobAddonPK the jobAddonPK to set
+	 */
+	public void setJobAddonPK(JpJobAddonPK jobAddonPK) {
+		this.jobAddonPK = jobAddonPK;
 	}
 	
 }

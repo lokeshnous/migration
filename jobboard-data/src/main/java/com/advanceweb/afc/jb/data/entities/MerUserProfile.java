@@ -16,7 +16,7 @@ public class MerUserProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private MerUserProfilePK id;
+	private MerUserProfilePK profilePK;
 
 	@Column(name="attrib_value")
 	private String attribValue;
@@ -42,17 +42,6 @@ public class MerUserProfile implements Serializable {
 	@JoinColumn(name="profile_attrib_id", insertable=false, updatable=false)
 	private MerProfileAttrib merProfileAttrib;
 
-    public MerUserProfile() {
-    }
-
-	public MerUserProfilePK getId() {
-		return this.id;
-	}
-
-	public void setId(MerUserProfilePK id) {
-		this.id = id;
-	}
-	
 	public String getAttribValue() {
 		return this.attribValue;
 	}
@@ -99,6 +88,20 @@ public class MerUserProfile implements Serializable {
 
 	public void setMerProfileAttrib(MerProfileAttrib merProfileAttrib) {
 		this.merProfileAttrib = merProfileAttrib;
+	}
+
+	/**
+	 * @return the profilePK
+	 */
+	public MerUserProfilePK getProfilePK() {
+		return profilePK;
+	}
+
+	/**
+	 * @param profilePK the profilePK to set
+	 */
+	public void setProfilePK(MerUserProfilePK profilePK) {
+		this.profilePK = profilePK;
 	}
 	
 }

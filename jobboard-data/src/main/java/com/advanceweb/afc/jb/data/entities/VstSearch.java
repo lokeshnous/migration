@@ -40,9 +40,6 @@ public class VstSearch implements Serializable {
 	@OneToMany(mappedBy="vstSearch")
 	private List<VstSearchResult> vstSearchResults;
 
-    public VstSearch() {
-    }
-
 	public int getSearchId() {
 		return this.searchId;
 	}

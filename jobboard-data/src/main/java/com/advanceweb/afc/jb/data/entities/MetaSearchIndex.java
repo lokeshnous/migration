@@ -38,9 +38,6 @@ public class MetaSearchIndex implements Serializable {
 	@OneToMany(mappedBy="metaSearchIndex")
 	private List<MetaSearchParam> metaSearchParams;
 
-    public MetaSearchIndex() {
-    }
-
 	public int getSearchIndexId() {
 		return this.searchIndexId;
 	}

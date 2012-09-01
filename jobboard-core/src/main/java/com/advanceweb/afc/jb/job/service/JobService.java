@@ -14,19 +14,17 @@ import com.advanceweb.afc.jb.common.email.MMEmail;
  * @created 21-Jun-2012 2:21:08 PM
  */
 @Service
+@SuppressWarnings("unused")
 public class JobService implements Job {
 
 	private MMEmail mmMailService;
 	private JobSearch jobSearchAdapter;
 
-
-	public JobService(){
-
-	}
-
+	// Commented to fix PMD issue
+	/*@Override
 	public void finalize() throws Throwable {
 
-	}
+	}*/
 
 	/**
 	 * 

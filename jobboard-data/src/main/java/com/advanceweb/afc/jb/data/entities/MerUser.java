@@ -58,9 +58,6 @@ public class MerUser implements Serializable {
 //	@OneToMany(mappedBy="merUser")
 //	private List<JpTemplate> jpTemplates;
 	
-    public MerUser() {
-    }
-
 	public int getUserId() {
 		return this.userId;
 	}

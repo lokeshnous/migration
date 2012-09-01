@@ -30,9 +30,6 @@ public class ResResumeAttribList implements Serializable {
 	@JoinColumn(name="resume_attrib_id")
 	private ResResumeAttrib resResumeAttrib;
 
-    public ResResumeAttribList() {
-    }
-
 	public int getResumeAttribListId() {
 		return this.resumeAttribListId;
 	}

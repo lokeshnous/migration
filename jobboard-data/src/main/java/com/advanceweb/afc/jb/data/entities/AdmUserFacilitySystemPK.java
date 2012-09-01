@@ -21,8 +21,6 @@ public class AdmUserFacilitySystemPK implements Serializable {
 	@Column(name="facility_system_id")
 	private int facilitySystemId;
 
-    public AdmUserFacilitySystemPK() {
-    }
 	public int getUserId() {
 		return this.userId;
 	}
@@ -58,7 +56,7 @@ public class AdmUserFacilitySystemPK implements Serializable {
     }
     
 	public int hashCode() {
-		final int prime = 31;
+		int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.userId;
 		hash = hash * prime + this.roleId;

@@ -52,9 +52,6 @@ public class AdmFacilityTmp implements Serializable {
 
 	private String street;
 
-    public AdmFacilityTmp() {
-    }
-
 	public String getAccountNumber() {
 		return this.accountNumber;
 	}

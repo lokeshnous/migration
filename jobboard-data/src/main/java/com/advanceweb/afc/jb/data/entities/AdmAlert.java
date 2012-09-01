@@ -27,9 +27,6 @@ public class AdmAlert implements Serializable {
 	@OneToMany(mappedBy="admAlert")
 	private List<AdmUserAlert> admUserAlerts;
 
-    public AdmAlert() {
-    }
-
 	public int getAlertId() {
 		return this.alertId;
 	}

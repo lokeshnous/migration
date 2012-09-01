@@ -15,7 +15,7 @@ public class AdmUserFacilitySystem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AdmUserFacilitySystemPK id;
+	private AdmUserFacilitySystemPK facilitySystemPK;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
@@ -41,17 +41,6 @@ public class AdmUserFacilitySystem implements Serializable {
 	@JoinColumn(name="facility_system_id", insertable=false, updatable=false)
 	private AdmFacilitySystem admFacilitySystem;
 
-    public AdmUserFacilitySystem() {
-    }
-
-	public AdmUserFacilitySystemPK getId() {
-		return this.id;
-	}
-
-	public void setId(AdmUserFacilitySystemPK id) {
-		this.id = id;
-	}
-	
 	public Date getCreateDt() {
 		return this.createDt;
 	}
@@ -98,6 +87,20 @@ public class AdmUserFacilitySystem implements Serializable {
 
 	public void setAdmFacilitySystem(AdmFacilitySystem admFacilitySystem) {
 		this.admFacilitySystem = admFacilitySystem;
+	}
+
+	/**
+	 * @return the facilitySystemPK
+	 */
+	public AdmUserFacilitySystemPK getFacilitySystemPK() {
+		return facilitySystemPK;
+	}
+
+	/**
+	 * @param facilitySystemPK the facilitySystemPK to set
+	 */
+	public void setFacilitySystemPK(AdmUserFacilitySystemPK facilitySystemPK) {
+		this.facilitySystemPK = facilitySystemPK;
 	}
 	
 }

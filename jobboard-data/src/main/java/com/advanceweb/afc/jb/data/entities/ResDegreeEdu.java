@@ -27,9 +27,6 @@ public class ResDegreeEdu implements Serializable {
 	@OneToMany(mappedBy="resDegreeEdu")
 	private List<ResBuilderEdu> resBuilderEdus;
 
-    public ResDegreeEdu() {
-    }
-
 	public int getDegreeEduId() {
 		return this.degreeEduId;
 	}

@@ -45,9 +45,6 @@ public class ResCoverletterPriv implements Serializable {
 	@JoinColumn(name="coverletter_id")
 	private ResCoverletter resCoverletter;
 
-    public ResCoverletterPriv() {
-    }
-
 	public int getCoverletterPrivId() {
 		return this.coverletterPrivId;
 	}

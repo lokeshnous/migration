@@ -14,7 +14,7 @@ public class VstSearchResult implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private VstSearchResultPK id;
+	private VstSearchResultPK searchResultPK;
 
 	private String result;
 
@@ -23,17 +23,14 @@ public class VstSearchResult implements Serializable {
 	@JoinColumn(name="search_id", insertable=false, updatable=false)
 	private VstSearch vstSearch;
 
-    public VstSearchResult() {
-    }
-
-	public VstSearchResultPK getId() {
-		return this.id;
+	public VstSearchResultPK getSearchResultPK() {
+		return searchResultPK;
 	}
 
-	public void setId(VstSearchResultPK id) {
-		this.id = id;
+	public void setSearchResultPK(VstSearchResultPK searchResultPK) {
+		this.searchResultPK = searchResultPK;
 	}
-	
+
 	public String getResult() {
 		return this.result;
 	}

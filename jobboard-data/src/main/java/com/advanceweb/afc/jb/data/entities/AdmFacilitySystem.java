@@ -47,9 +47,6 @@ public class AdmFacilitySystem implements Serializable {
 	@OneToMany(mappedBy="admFacilitySystem")
 	private List<AdmUserFacilitySystem> admUserFacilitySystems;
 
-    public AdmFacilitySystem() {
-    }
-
 	public int getFacilitySystemId() {
 		return this.facilitySystemId;
 	}

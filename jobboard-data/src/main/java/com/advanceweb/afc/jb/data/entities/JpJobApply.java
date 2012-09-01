@@ -31,9 +31,6 @@ public class JpJobApply implements Serializable {
 	@JoinColumn(name="job_id")
 	private JpJob jpJob;
 
-    public JpJobApply() {
-    }
-
 	public int getJobApplyId() {
 		return this.jobApplyId;
 	}

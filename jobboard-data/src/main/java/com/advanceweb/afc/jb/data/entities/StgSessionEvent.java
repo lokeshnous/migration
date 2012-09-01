@@ -55,8 +55,6 @@ public class StgSessionEvent implements Serializable {
 	@Column(name="wifi_status")
 	private int wifiStatus;
 
-    public StgSessionEvent() {
-    }
 
 	public int getStgSessionEventId() {
 		return this.stgSessionEventId;

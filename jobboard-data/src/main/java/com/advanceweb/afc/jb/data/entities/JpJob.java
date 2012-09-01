@@ -15,6 +15,8 @@ import java.util.List;
 @Table(name="jp_job")
 public class JpJob implements Serializable {
 
+	private static final String JP_JOB = "jpJob";
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -130,7 +132,7 @@ public class JpJob implements Serializable {
 	private String jobStatus;
 
 	//bi-directional many-to-one association to AdmSaveJob
-	@OneToMany(mappedBy="jpJob")
+	@OneToMany(mappedBy=JP_JOB)
 	private List<AdmSaveJob> admSaveJobs;
 
 	//bi-directional many-to-one association to JpTemplate
@@ -154,27 +156,24 @@ public class JpJob implements Serializable {
 	private JpJobType jpJobType;
 
 	//bi-directional many-to-one association to JpJobAddon
-	@OneToMany(mappedBy="jpJob")
+	@OneToMany(mappedBy=JP_JOB)
 	private List<JpJobAddon> jpJobAddons;
 
 	//bi-directional many-to-one association to JpJobApply
-	@OneToMany(mappedBy="jpJob", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=JP_JOB, fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<JpJobApply> jpJobApplies;
 
 	//bi-directional many-to-one association to JpJobLocation
-	@OneToMany(mappedBy="jpJob")
+	@OneToMany(mappedBy=JP_JOB)
 	private List<JpJobLocation> jpJobLocations;
 
 	//bi-directional one-to-one association to JpJobStat
-	@OneToOne(mappedBy="jpJob", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy=JP_JOB, fetch=FetchType.LAZY)
 	private JpJobStat jpJobStat;
 
 	//bi-directional many-to-one association to ResGuestApply
-	@OneToMany(mappedBy="jpJob")
+	@OneToMany(mappedBy=JP_JOB)
 	private List<ResGuestApply> resGuestApplies;
-
-    public JpJob() {
-    }
 
 	public int getJobId() {
 		return this.jobId;

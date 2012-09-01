@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 @Table(name="res_builder_resume")
 public class ResBuilderResume implements Serializable {
+	private static final String RES_BUILDER_RESUME = "resBuilderResume";
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -101,27 +103,27 @@ public class ResBuilderResume implements Serializable {
 	private int userId;
 
 	//bi-directional many-to-one association to ResBuilderCertification
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderCertification> resBuilderCertifications;
 
 	//bi-directional many-to-one association to ResBuilderEdu
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderEdu> resBuilderEdus;
 
 	//bi-directional many-to-one association to ResBuilderEmployment
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderEmployment> resBuilderEmployments;
 
 	//bi-directional many-to-one association to ResBuilderLanguage
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderLanguage> resBuilderLanguages;
 
 	//bi-directional many-to-one association to ResBuilderPhone
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderPhone> resBuilderPhones;
 
 	//bi-directional many-to-one association to ResBuilderReference
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderReference> resBuilderReferences;
 
 	//bi-directional many-to-one association to ResPublishResume
@@ -133,11 +135,8 @@ public class ResBuilderResume implements Serializable {
 	private int resUploadResumeId;
 
 	//bi-directional many-to-one association to ResBuilderSkill
-	@OneToMany(mappedBy="resBuilderResume", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
 	private List<ResBuilderSkill> resBuilderSkills;
-
-    public ResBuilderResume() {
-    }
 
 	public int getBuilderResumeId() {
 		return this.builderResumeId;

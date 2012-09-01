@@ -34,9 +34,6 @@ public class ResPublishResumeStat implements Serializable {
 	@JoinColumn(name="publish_resume_id")
 	private ResPublishResume resPublishResume;
 
-    public ResPublishResumeStat() {
-    }
-
 	public int getPublishResumeId() {
 		return this.publishResumeId;
 	}

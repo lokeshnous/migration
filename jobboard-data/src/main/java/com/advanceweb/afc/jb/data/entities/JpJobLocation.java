@@ -15,7 +15,7 @@ public class JpJobLocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private JpJobLocationPK id;
+	private JpJobLocationPK locationPK;
 
 	@Column(name="create_dt")
 	private Timestamp createDt;
@@ -42,17 +42,6 @@ public class JpJobLocation implements Serializable {
 	@JoinColumn(name="location_id", insertable=false, updatable=false)
 	private JpLocation jpLocation;
 
-    public JpJobLocation() {
-    }
-
-	public JpJobLocationPK getId() {
-		return this.id;
-	}
-
-	public void setId(JpJobLocationPK id) {
-		this.id = id;
-	}
-	
 	public Timestamp getCreateDt() {
 		return this.createDt;
 	}
@@ -107,6 +96,20 @@ public class JpJobLocation implements Serializable {
 
 	public void setJpLocation(JpLocation jpLocation) {
 		this.jpLocation = jpLocation;
+	}
+
+	/**
+	 * @return the locationPK
+	 */
+	public JpJobLocationPK getLocationPK() {
+		return locationPK;
+	}
+
+	/**
+	 * @param locationPK the locationPK to set
+	 */
+	public void setLocationPK(JpJobLocationPK locationPK) {
+		this.locationPK = locationPK;
 	}
 	
 }

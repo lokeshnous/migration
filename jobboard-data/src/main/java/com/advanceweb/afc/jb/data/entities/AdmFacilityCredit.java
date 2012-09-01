@@ -27,9 +27,6 @@ public class AdmFacilityCredit implements Serializable {
 	@JoinColumn(name="facility_id")
 	private AdmFacility admFacility;
 
-    public AdmFacilityCredit() {
-    }
-
 	public int getFacilityId() {
 		return this.facilityId;
 	}

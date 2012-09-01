@@ -34,9 +34,6 @@ public class MetaSearchInput implements Serializable {
 	@JoinColumn(name="search_type_id")
 	private MetaSearchType metaSearchType;
 
-    public MetaSearchInput() {
-    }
-
 	public int getSearchInputId() {
 		return this.searchInputId;
 	}

@@ -14,7 +14,7 @@ public class VstSessionEventInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private VstSessionEventInfoPK id;
+	private VstSessionEventInfoPK eventInfoPK;
 
 	@Column(name="info_value")
 	private String infoValue;
@@ -29,17 +29,6 @@ public class VstSessionEventInfo implements Serializable {
 	@JoinColumn(name="info_type_id", insertable=false, updatable=false)
 	private VstInfoType vstInfoType;
 
-    public VstSessionEventInfo() {
-    }
-
-	public VstSessionEventInfoPK getId() {
-		return this.id;
-	}
-
-	public void setId(VstSessionEventInfoPK id) {
-		this.id = id;
-	}
-	
 	public String getInfoValue() {
 		return this.infoValue;
 	}
@@ -62,6 +51,20 @@ public class VstSessionEventInfo implements Serializable {
 
 	public void setVstInfoType(VstInfoType vstInfoType) {
 		this.vstInfoType = vstInfoType;
+	}
+
+	/**
+	 * @return the eventInfoPK
+	 */
+	public VstSessionEventInfoPK getEventInfoPK() {
+		return eventInfoPK;
+	}
+
+	/**
+	 * @param eventInfoPK the eventInfoPK to set
+	 */
+	public void setEventInfoPK(VstSessionEventInfoPK eventInfoPK) {
+		this.eventInfoPK = eventInfoPK;
 	}
 	
 }

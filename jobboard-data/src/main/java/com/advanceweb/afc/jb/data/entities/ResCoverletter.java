@@ -47,9 +47,6 @@ public class ResCoverletter implements Serializable {
 	@OneToMany(mappedBy="resCoverletter")
 	private List<ResCoverletterPriv> resCoverletterPrivs;
 
-    public ResCoverletter() {
-    }
-
 	public int getCoverletterId() {
 		return this.coverletterId;
 	}
