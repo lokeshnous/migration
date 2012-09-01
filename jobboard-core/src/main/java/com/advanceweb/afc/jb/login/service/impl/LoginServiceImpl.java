@@ -30,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
 	private LoginFormDAO loginFormDAO;
 
 	@Autowired
-	UserDao userDAO;
+	private UserDao userDAO;
 
 	/**
 	 * This method is called to fetch logged in user details

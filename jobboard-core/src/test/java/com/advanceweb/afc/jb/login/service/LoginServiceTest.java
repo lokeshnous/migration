@@ -1,9 +1,12 @@
 package com.advanceweb.afc.jb.login.service;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 
@@ -13,6 +16,9 @@ import com.advanceweb.afc.jb.ServiceTest;
  */
 
 public class LoginServiceTest extends ServiceTest {
+
+	private static final Logger LOGGER = Logger
+			.getLogger(LoginServiceTest.class);
 
 	@Autowired
 	private LoginService loginService;
@@ -25,10 +31,12 @@ public class LoginServiceTest extends ServiceTest {
 		try {
 			String emailAddress = "manish@yahoo.com";
 			String password = "deo";
+			assertNotNull("Login Failed",loginService.validateLoginFormValues(emailAddress,
+					password));
 
-			loginService.validateLoginFormValues(emailAddress, password);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
+
 		}
 	}
 
@@ -39,9 +47,9 @@ public class LoginServiceTest extends ServiceTest {
 	public void testEmailThePassword() {
 		try {
 			String emailAddress = "manish@yahoo.com";
-			loginService.getUserEmailDetails(emailAddress);
+			assertNotNull("Forgot password failed",loginService.getUserEmailDetails(emailAddress));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 	}
 
