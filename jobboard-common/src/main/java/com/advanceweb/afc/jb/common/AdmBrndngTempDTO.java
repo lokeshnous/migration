@@ -9,15 +9,15 @@ import java.util.Date;
  */
 public class AdmBrndngTempDTO {
 
-	int brandTempId;
-	int userId;
-	String templateName;
-	String brandOverview;
-	byte[] templateImage;
-	byte[] templateLogo;
-	String brandColor;
-	Date createdDate;
-	Date modifiedDate;
+	private int brandTempId;
+	private int userId;
+	private String templateName;
+	private String brandOverview;
+	private byte[] templateImage;
+	private byte[] templateLogo;
+	private String brandColor;
+	private Date createdDate;
+	private Date modifiedDate;
 	
 	public int getBrandTempId() {
 		return brandTempId;

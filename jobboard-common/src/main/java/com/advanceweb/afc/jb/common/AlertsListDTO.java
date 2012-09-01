@@ -7,18 +7,12 @@ package com.advanceweb.afc.jb.common;
  */
 public class AlertsListDTO {
 
-	private boolean facebook;
+	/*private boolean facebook;
 	private boolean email;
 	private boolean linkedIn;
 	private boolean text;
-	private boolean twitter;
+	private boolean twitter;*/
 
-	public AlertsListDTO(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
+	
 
 }

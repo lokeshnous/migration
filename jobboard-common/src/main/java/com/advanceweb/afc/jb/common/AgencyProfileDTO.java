@@ -34,13 +34,6 @@ public class AgencyProfileDTO extends BaseProfileDTO {
 		this.attribList = attribList;
 	}
 
-	public AgencyProfileDTO() {
-
-	}
-
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
 
 	/**
 	 * @return the agencyId

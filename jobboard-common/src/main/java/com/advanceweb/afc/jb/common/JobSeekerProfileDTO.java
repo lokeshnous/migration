@@ -17,16 +17,6 @@ public class JobSeekerProfileDTO extends BaseProfileDTO {
 	private String fileName;
 	private int profileId;
 	
-
-	public JobSeekerProfileDTO() {
-
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
 	public String getEmploymentInformation() {
 		return employmentInformation;
 	}

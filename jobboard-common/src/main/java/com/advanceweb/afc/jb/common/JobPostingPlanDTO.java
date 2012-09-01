@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class JobPostingPlanDTO {
 	
-	String jobPostPlanId;
-	String jobPostPlanName;
-	String jobPostPlanDescr;
-	String jobPostPlanCretitAmt;
+	private String jobPostPlanId;
+	private String jobPostPlanName;
+	private String jobPostPlanDescr;
+	private String jobPostPlanCretitAmt;
 	List<AddOnDTO> addOnDTOList;
 	
 	public String getJobPostPlanId() {

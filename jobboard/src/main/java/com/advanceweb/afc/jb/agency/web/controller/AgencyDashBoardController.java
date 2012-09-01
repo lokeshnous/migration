@@ -41,25 +41,28 @@ import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 @Controller
 @RequestMapping("/agency")
 public class AgencyDashBoardController {
+	
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
-		
+	
+	private static final String _FORM_VIEW = "agencyDashboard";
+	
 	@Autowired	
 	private EmloyerRegistartionService emloyerRegistartionService;
 	@Autowired
 	private TransformEmployerRegistration transformEmployerRegistration;
 	@Autowired
-	EmployerRegistrationValidation registerValidation;
+	private EmployerRegistrationValidation registerValidation;
 	@Autowired
-	FetchAdmFacilityConatact fetchAdmFacilityConatact;
+	private FetchAdmFacilityConatact fetchAdmFacilityConatact;
 	@Autowired
-	TransformPaymentMethod transformPaymentMethod;
+	private TransformPaymentMethod transformPaymentMethod;
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 	
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard() {
-		return new ModelAndView("agencyDashboard");
+		return new ModelAndView(_FORM_VIEW);
 	}
 	
 	
@@ -80,29 +83,31 @@ public class AgencyDashBoardController {
 		int userId = (Integer) session.getAttribute("userId");
 		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
-		if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
+		if (null == listProfAttribForms || listProfAttribForms.isEmpty()) {
+
+			model.setViewName(_FORM_VIEW);
+			return model;
+		} else {
+
 			int admfacilityid = listProfAttribForms.get(0)
 					.getFacilityContactId();
 
 			AccountProfileDTO dto = transformEmployerRegistration
 					.transformAccountProfileFormToDto(employeeAccountForm);
-			
-			
-			
-			if (!registerValidation.accountValidate(employeeAccountForm, result)) {
+
+			if (!registerValidation
+					.accountValidate(employeeAccountForm, result)) {
 				result.rejectValue("email", "NotEmpty",
 						"Email Id already Exists!");
 				model.setViewName("accountSetting");
 				return model;
 			}
-			
+
 			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
-		} else {
-			model.setViewName("agencyDashboard");
-			return model;
+
 		}
 
-		model.setViewName("agencyDashboard");
+		model.setViewName(_FORM_VIEW);
 		return model;
 	}
 	/**
@@ -125,14 +130,7 @@ public class AgencyDashBoardController {
 		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 
-		if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
-			int admfacilityid = listProfAttribForms.get(0)
-					.getFacilityContactId();
-			AccountProfileDTO dto = transformEmployerRegistration
-					.transformBillingProfileFormToDto(employeeBillingForm);
-			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
-
-		} else {
+		if (null == listProfAttribForms || listProfAttribForms.isEmpty()) {
 
 			BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 			AccountBillingDTO billingAddressDTO = transformPaymentMethod
@@ -144,9 +142,15 @@ public class AgencyDashBoardController {
 			billingAddressDTO.setCreateDate(new Date());
 			fetchAdmFacilityConatact.saveDataBillingAddress(billingAddressDTO);
 
+		} else {
+			int admfacilityid = listProfAttribForms.get(0)
+					.getFacilityContactId();
+			AccountProfileDTO dto = transformEmployerRegistration
+					.transformBillingProfileFormToDto(employeeBillingForm);
+			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
 		}
 
-		model.setViewName("agencyDashboard");
+		model.setViewName(_FORM_VIEW);
 		return model;
 
 	}

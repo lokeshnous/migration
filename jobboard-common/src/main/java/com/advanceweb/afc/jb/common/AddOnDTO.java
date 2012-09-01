@@ -7,10 +7,10 @@ package com.advanceweb.afc.jb.common;
  */
 public class AddOnDTO {
 	
-	String addOnId;
-	String addOnName;
-	String addOnDescription;
-	String addOnCreditAmt;
+	private String addOnId;
+	private String addOnName;
+	private String addOnDescription;
+	private String addOnCreditAmt;
 	
 	public String getAddOnId() {
 		return addOnId;

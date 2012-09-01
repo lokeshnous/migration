@@ -14,10 +14,6 @@ public class ContactInformationDTO {
 	private String email;
 	
 
-	public void finalize() throws Throwable {
-
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}

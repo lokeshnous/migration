@@ -6,8 +6,8 @@ package com.advanceweb.afc.jb.common;
  * @created Jul 23, 2012
  */
 public class ResumeVisibilityDTO {
-	String visibilityId;
-	String visibilityName;
+	private String visibilityId;
+	private String visibilityName;
 	
 	public String getVisibilityId() {
 		return visibilityId;

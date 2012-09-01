@@ -7,18 +7,11 @@ package com.advanceweb.afc.jb.common;
  */
 public class BaseProfileDTO extends ProfileDTO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public AlertsListDTO alertsListDTO;
 	public ContactInformationDTO contactInformationDTO;
-
-
-
-	public BaseProfileDTO() {
-
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
-	}
 
 }

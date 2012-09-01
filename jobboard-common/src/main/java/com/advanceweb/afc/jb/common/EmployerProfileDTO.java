@@ -33,13 +33,6 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 		this.attribList = attribList;
 	}
 
-	public EmployerProfileDTO(){
-
-	}
-
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
 
 	public long getEmployerId() {
 		return employerId;

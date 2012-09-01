@@ -63,14 +63,6 @@ public class CompanyProfileDTO {
 		this.positionalMedia = positionalMedia;
 	}
 
-	public CompanyProfileDTO() {
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-
 	public String getCompanyName() {
 		return companyName;
 	}

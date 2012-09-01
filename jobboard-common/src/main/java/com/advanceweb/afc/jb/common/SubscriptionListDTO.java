@@ -10,13 +10,42 @@ public class SubscriptionListDTO {
 	private boolean newsLetters;
 	private boolean emailer;
 	private boolean magazines;
-
-	public SubscriptionListDTO(){
-
+	/**
+	 * @return the newsLetters
+	 */
+	public boolean isNewsLetters() {
+		return newsLetters;
+	}
+	/**
+	 * @param newsLetters the newsLetters to set
+	 */
+	public void setNewsLetters(boolean newsLetters) {
+		this.newsLetters = newsLetters;
+	}
+	/**
+	 * @return the emailer
+	 */
+	public boolean isEmailer() {
+		return emailer;
+	}
+	/**
+	 * @param emailer the emailer to set
+	 */
+	public void setEmailer(boolean emailer) {
+		this.emailer = emailer;
+	}
+	/**
+	 * @return the magazines
+	 */
+	public boolean isMagazines() {
+		return magazines;
+	}
+	/**
+	 * @param magazines the magazines to set
+	 */
+	public void setMagazines(boolean magazines) {
+		this.magazines = magazines;
 	}
 
-	public void finalize() throws Throwable {
-
-	}
 
 }

@@ -50,9 +50,10 @@ public class AgencyRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("AgencyRegistrationController.class");
-
+	private static final String AGENCY_REG_FORM = "agencyDashboard";
+	private static final String MESSAGE = "message";
 	@Autowired
-	private ProfileRegistration agencyRegistration;
+	private ProfileRegistration profileRegistration;
 
 	@Autowired
 	private TransformAgencyRegistration transformAgencyRegistration;
@@ -86,7 +87,7 @@ public class AgencyRegistrationController {
 
 		AgencyRegistrationForm agencyRegForm = new AgencyRegistrationForm();
 
-		AgencyProfileDTO registerDTO = (AgencyProfileDTO) agencyRegistration
+		AgencyProfileDTO registerDTO = (AgencyProfileDTO) profileRegistration
 				.getProfileAttributes();
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO);
@@ -109,30 +110,30 @@ public class AgencyRegistrationController {
 	 */
 	@RequestMapping(value = "/saveAgencyRegistraion", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
-			@ModelAttribute("agencyRegForm") AgencyRegistrationForm agencyRegForm,
-			HttpServletRequest request, Map map, HttpSession session,
+			@ModelAttribute(AGENCY_REG_FORM) AgencyRegistrationForm agencyRegistrationForm,
+			HttpServletRequest request, Map<?, ?> map, HttpSession session,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
 
-		if (null != agencyRegForm.getListProfAttribForms()) {
+		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
-			if (!validateEmpRegForm(agencyRegForm, model, result)) {
+			if (!validateEmpRegForm(agencyRegistrationForm, model, result)) {
 				return model;
 			}
 		}
 
 		AgencyProfileDTO empDTO = new AgencyProfileDTO();
 		MerUserDTO userDTO = transformAgencyRegistration
-				.createUserDTO(agencyRegForm);
+				.createUserDTO(agencyRegistrationForm);
 		List<MerProfileAttribDTO> attribLists = transformAgencyRegistration
-				.transformProfileAttribFormToDTO(agencyRegForm
+				.transformProfileAttribFormToDTO(agencyRegistrationForm
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = agencyRegistration.createNewProfile(empDTO);
+		userDTO = profileRegistration.createNewProfile(empDTO);
 		LOGGER.info("REGISTRATION IS SUCCESSFULL");
 
-		model.addObject("agencyRegForm", agencyRegForm);
+		model.addObject("agencyRegForm", agencyRegistrationForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
 				userDTO.getFirstName() + " " + userDTO.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
@@ -142,19 +143,19 @@ public class AgencyRegistrationController {
 				.getUserId());
 		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 				infoDTO.getFacilityId());
-		model.setViewName("agencyDashboard");
+		model.setViewName(AGENCY_REG_FORM);
 		authenticateUserAndSetSession(userDTO, request);
 
 		return model;
 	}
 
-	private boolean validateEmpRegForm(AgencyRegistrationForm agencyRegForm,
+	private boolean validateEmpRegForm(AgencyRegistrationForm agencyRegistrationForm,
 			ModelAndView model, BindingResult result) {
 		boolean status = true;
 
-		if (null != agencyRegForm.getListProfAttribForms()) {
+		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName("addAjecncyRegistration");
-			for (AgencyProfileAttribForm form : agencyRegForm
+			for (AgencyProfileAttribForm form : agencyRegistrationForm
 					.getListProfAttribForms()) {
 
 				// Checking validation for input text box
@@ -162,7 +163,7 @@ public class AgencyRegistrationController {
 						&& StringUtils.isEmpty(form.getStrLabelValue())
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 								.getStrLabelName())) {
-					model.addObject("message",
+					model.addObject(MESSAGE,
 							"Please fill the Required fields");
 					return false;
 				}
@@ -174,7 +175,7 @@ public class AgencyRegistrationController {
 						&& (MMJBCommonConstants.DROP_DOWN.equals(form
 								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
 								.equals(form.getStrAttribType()))) {
-					model.addObject("message",
+					model.addObject(MESSAGE,
 							"Please fill the Required fields");
 					return false;
 				}
@@ -184,7 +185,7 @@ public class AgencyRegistrationController {
 						&& !StringUtils.isEmpty(form.getStrLabelValue())
 						&& !registerValidation.validateMobileNumberPattern(form
 								.getStrLabelValue())) {
-					model.addObject("message", jobseekerRegPhoneMsg);
+					model.addObject(MESSAGE, jobseekerRegPhoneMsg);
 					return false;
 				}
 				if (MMJBCommonConstants.SECONDARY_PHONE.equals(form
@@ -192,18 +193,18 @@ public class AgencyRegistrationController {
 						&& !StringUtils.isEmpty(form.getStrLabelValue())
 						&& !registerValidation.validateMobileNumberPattern(form
 								.getStrLabelValue())) {
-					model.addObject("message", jobseekerRegPhoneMsg);
+					model.addObject(MESSAGE, jobseekerRegPhoneMsg);
 					return false;
 				}
 			}
 		}
-		registerValidation.validate(agencyRegForm, result);
+		registerValidation.validate(agencyRegistrationForm, result);
 
 		if (result.hasErrors()) {
 			// model.setViewName(agencyReg);
 			return false;
 		}
-		if (agencyRegistration.validateEmail(agencyRegForm.getEmailId())) {
+		if (profileRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
 			// model.setViewName(agencyReg);
@@ -217,6 +218,7 @@ public class AgencyRegistrationController {
 	 * @param user
 	 * @param request
 	 */
+	@SuppressWarnings("deprecation")
 	private void authenticateUserAndSetSession(MerUserDTO user,
 			HttpServletRequest request) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();

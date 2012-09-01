@@ -9,14 +9,7 @@ import java.util.List;
  */
 public class MMXmlResumeParserImpl implements XmlResumeParser {
 
-	public MMXmlResumeParserImpl(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-
+	
 	/**
 	 * 
 	 * @param xmlString

@@ -7,8 +7,8 @@ package com.advanceweb.afc.jb.common;
  */
 public class DropDownDTO {
 	
-	String optionId;
-	String optionName;
+	private String optionId;
+	private String optionName;
 	
 	public String getOptionId() {
 		return optionId;

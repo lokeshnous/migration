@@ -17,14 +17,6 @@ public class AddressDTO {
 	private String mobileNumber;
 	private String street;
 
-	public AddressDTO() {
-
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
-	}
 
 	public String getAddress1() {
 		return address1;
