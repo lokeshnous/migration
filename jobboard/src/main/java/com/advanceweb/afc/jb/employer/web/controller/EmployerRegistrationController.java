@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +67,7 @@ public class EmployerRegistrationController {
 			.getLogger("EmployerRegistrationController.class");
 
 	@Autowired
-	private ProfileRegistration employerRegistration;
+	private ProfileRegistration profileRegistration;
 
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
@@ -97,7 +99,7 @@ public class EmployerRegistrationController {
 	@Autowired
 	private LoginService loginService;
 
-	private final static String employerReg = "employerregistration";
+	private final static String EMPLOYERREG = "employerregistration";
 
 	/**
 	 * This method is called to display job seeker registration page
@@ -111,7 +113,7 @@ public class EmployerRegistrationController {
 
 		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
 
-		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
+		EmployerProfileDTO registerDTO = (EmployerProfileDTO) profileRegistration
 				.getProfileAttributes();
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 				.transformDTOToProfileAttribForm(registerDTO);
@@ -123,7 +125,7 @@ public class EmployerRegistrationController {
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
 		// map.put("empRegisterForm", empRegisterForm);
-		model.setViewName(employerReg);
+		model.setViewName(EMPLOYERREG);
 		return model;
 	}
 
@@ -142,7 +144,7 @@ public class EmployerRegistrationController {
 		ModelAndView model = new ModelAndView();
 
 		if (null != empRegForm.getListProfAttribForms()) {
-			model.setViewName(employerReg);
+			model.setViewName(EMPLOYERREG);
 			if (!validateEmpRegForm(empRegForm, model, result)) {
 				return model;
 			}
@@ -154,7 +156,7 @@ public class EmployerRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = employerRegistration.createNewProfile(empDTO);
+		userDTO = profileRegistration.createNewProfile(empDTO);
 
 		model.addObject("empRegisterForm", empRegForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
@@ -222,7 +224,7 @@ public class EmployerRegistrationController {
 			}
 		}
 		registerValidation.validate(empRegForm, result);
-		if (employerRegistration.validateEmail(empRegForm.getEmailId())) {
+		if (profileRegistration.validateEmail(empRegForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
 			// model.setViewName(employerReg);
@@ -276,7 +278,7 @@ public class EmployerRegistrationController {
 					.transformEmpFormToMerUserDTO(form);
 			empDTO.setMerUserDTO(merUserDTO);
 			// Call to service layer
-			employerRegistration.changePassword(empDTO);
+			profileRegistration.changePassword(empDTO);
 			// model.put("jobSeekerRegistrationForm", jsRegistrationForm);
 		} catch (Exception e) {
 			e.printStackTrace();

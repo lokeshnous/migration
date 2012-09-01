@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.email.EmailDTO;
 import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSearchController;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 
@@ -25,6 +27,9 @@ import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 @Controller
 @RequestMapping("/employerPostJobs")
 public class EmployerPostJobsController {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(EmployerPostJobsController.class);
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
@@ -154,9 +159,7 @@ public class EmployerPostJobsController {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-			System.out.println("Error");
+			LOGGER.info("Error while sending email for gold",e);;
 		}
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return model;

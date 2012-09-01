@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
@@ -71,7 +72,7 @@ public class AgencyRegistrationController {
 	@Autowired
 	private LoginService loginService;
 
-	private final static String agencyReg = "addAjecncyRegistration";
+	private final static String AGENCYREG = "addAjecncyRegistration";
 
 	/**
 	 * This method is called to display job seeker registration page
@@ -96,7 +97,7 @@ public class AgencyRegistrationController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
-		model.setViewName(agencyReg);
+		model.setViewName(AGENCYREG);
 		return model;
 	}
 
@@ -114,7 +115,7 @@ public class AgencyRegistrationController {
 		ModelAndView model = new ModelAndView();
 
 		if (null != agencyRegForm.getListProfAttribForms()) {
-			model.setViewName(agencyReg);
+			model.setViewName(AGENCYREG);
 			if (!validateEmpRegForm(agencyRegForm, model, result)) {
 				return model;
 			}
