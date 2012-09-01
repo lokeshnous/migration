@@ -171,7 +171,7 @@ public class JobSearchConversionHelper {
 			if(jpJobApply.getActive() == 1){
 				active = true;
 			}
-			jobApplyTypeDTO.setActive(active);
+			jobApplyTypeDTO.setbIsActive(active);
 			jobApplyTypeDTOs.add(jobApplyTypeDTO);
 		}
 		return jobApplyTypeDTOs;

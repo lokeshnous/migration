@@ -15,7 +15,7 @@ public class JobApplyTypeDTO {
 	private JobPostDTO jobID;
 	private String applyMethod;
 	private String applyLink;
-	private boolean isActive;
+	private boolean bIsActive;
 
 	public JobPostDTO getJobID() {
 		return jobID;
@@ -50,12 +50,19 @@ public class JobApplyTypeDTO {
 		this.applyLink = applyLink;
 	}
 
-	public boolean isActive() {
-		return isActive;
+	/**
+	 * @return the bIsActive
+	 */
+	public boolean isbIsActive() {
+		return bIsActive;
 	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	/**
+	 * @param bIsActive the bIsActive to set
+	 */
+	public void setbIsActive(boolean bIsActive) {
+		this.bIsActive = bIsActive;
 	}
+
 
 }
