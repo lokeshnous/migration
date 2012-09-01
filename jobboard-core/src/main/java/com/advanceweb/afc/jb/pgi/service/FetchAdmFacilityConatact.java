@@ -15,7 +15,7 @@ public interface FetchAdmFacilityConatact {
 	 * @param billingAddressDTO
 	 * @return
 	 */
-	public boolean saveBillingAddress(BillingAddressDTO billingAddressDTO);
+	boolean saveBillingAddress(BillingAddressDTO billingAddressDTO);
 
 	/**
 	 * @param userId
@@ -33,6 +33,6 @@ public interface FetchAdmFacilityConatact {
 	 * @param billingAddressDTO
 	 * @return
 	 */
-	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO);
+	boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO);
 	
 }
