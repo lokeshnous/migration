@@ -150,7 +150,7 @@ public class LoginFormController {
 		}
 
 		// Sending mail to the logged in user if he is valid user
-		if (!(email.length() > 0)) {
+		if (email.length() < 0) {
 			finalresult = MMJBCommonConstants.ERROR_STRING + ","
 					+ emptyerrormsg;
 		} else if (email.length() > 0 && value) {

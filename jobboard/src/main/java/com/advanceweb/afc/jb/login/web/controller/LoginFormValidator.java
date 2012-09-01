@@ -23,7 +23,8 @@ public class LoginFormValidator {
 
 	private Pattern pattern;
 	private Matcher matcher;
-
+	private static final String NOTEMPTY="NotEmpty";
+	
 	public boolean supports(Class<?> form) {
 		return JobSeekerRegistrationForm.class.isAssignableFrom(form);
 	}
@@ -38,15 +39,15 @@ public class LoginFormValidator {
 	public void validateEmail(LoginForm loginForm, Errors errors) {
 
 		if (StringUtils.isEmpty(loginForm.getEmailAddress())) {
-			errors.rejectValue("emailAddress", "NotEmpty",
+			errors.rejectValue("emailAddress", NOTEMPTY,
 					"Email Id Should not be empty");
 		}
 
-		if (!StringUtils.isEmpty(loginForm.getEmailAddress())) {
+		if (!StringUtils.isEmpty(loginForm.getEmailAddress())
+				&& !validateEmailPattern(loginForm.getEmailAddress())) {
 
-			if (!validateEmailPattern(loginForm.getEmailAddress())) {
-				errors.rejectValue("emailAddress", "NotEmpty", "Invalid Email Id");
-			}
+			errors.rejectValue("emailAddress", NOTEMPTY, "Invalid Email Id");
+
 		}
 	}
 
@@ -85,16 +86,16 @@ public class LoginFormValidator {
 	public void validatePassoword(LoginForm loginForm, Errors errors) {
 
 		if (StringUtils.isEmpty(loginForm.getPassword())) {
-			errors.rejectValue("password", "NotEmpty",
+			errors.rejectValue("password", NOTEMPTY,
 					"Password Should not be empty");
 		}
 
-		if (!StringUtils.isEmpty(loginForm.getPassword())) {
+		if (!StringUtils.isEmpty(loginForm.getPassword())
+				&& !validatePasswordPattern(loginForm.getPassword())) {
 
-			if (!validatePasswordPattern(loginForm.getPassword())) {
-				errors.rejectValue("password", "NotEmpty",
-						"(Password should contain 8-20 characters, including at least 1 number)");
-			}
+			errors.rejectValue("password", NOTEMPTY,
+					"(Password should contain 8-20 characters, including at least 1 number)");
+
 		}
 	}
 
@@ -125,15 +126,16 @@ public class LoginFormValidator {
 		// we need to first check for the role id of logged in user.
 		// if value for role id stored in adm_user_role table is same as
 		// property file value then validate for the email and password of user
-		if (form != null && loginFormDTOForUser != null) {
-			if (form.getRoleId() == loginFormDTOForUser.getRoleId()) {
-				if ((form.getEmailAddress().equals(loginFormDTOForUser
+		if (form != null
+				&& loginFormDTOForUser != null
+				&& form.getRoleId() == loginFormDTOForUser.getRoleId()
+				&& (form.getEmailAddress().equals(loginFormDTOForUser
 						.getEmailAddress()))
-						&& (form.getPassword().equals(loginFormDTOForUser
-								.getPassword()))) {
-					return true;
-				}
-			}
+				&& (form.getPassword()
+						.equals(loginFormDTOForUser.getPassword()))) {
+
+			return true;
+
 		}
 		return false;
 	}
@@ -148,11 +150,11 @@ public class LoginFormValidator {
 	public boolean validateEmailValues(String email,
 			LoginDTO userDetailsLoginFormDTO) {
 
-		if (email != null && userDetailsLoginFormDTO != null) {
-			if (email.equals(
-					userDetailsLoginFormDTO.getEmailAddress())) {
-				return true;
-			}
+		if (email != null && userDetailsLoginFormDTO != null
+				&& email.equals(userDetailsLoginFormDTO.getEmailAddress())) {
+
+			return true;
+
 		}
 		return false;
 

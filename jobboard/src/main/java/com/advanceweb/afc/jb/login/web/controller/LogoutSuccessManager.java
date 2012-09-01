@@ -24,7 +24,11 @@ public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 		response.setHeader("Cache-Control", "no-store");
 		response.setHeader("Cache-Control", "must-revalidate");
 		response.setDateHeader("Expires", 0);
-		if (authentication != null) {
+		if (null ==authentication ) {
+			response.sendRedirect(request.getContextPath()
+					+ "/healthcarejobs/advanceweb.html");
+		} else {
+
 			if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_JOB_SEEKER))) {
@@ -41,9 +45,7 @@ public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 				response.sendRedirect(request.getContextPath()
 						+ MMJBCommonConstants.AGENCY_LOGOUT_URL);
 			}
-		} else {
-			response.sendRedirect(request.getContextPath()
-					+ "/healthcarejobs/advanceweb.html");
+
 		}
 	}
 }
