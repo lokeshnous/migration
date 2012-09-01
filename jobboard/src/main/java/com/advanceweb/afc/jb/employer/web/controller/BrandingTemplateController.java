@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
 /**
@@ -74,6 +75,10 @@ public class BrandingTemplateController {
 	public ModelAndView createEmpBrandTemp(
 			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm,
 			BindingResult result, HttpSession session) {
+		/**
+		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
+		 */
+		BrandingTemplateForm templateForm =brandingTemplateForm; 
 		Boolean status = null;
 		BrandingTemplateDTO empBrandTempDTO = new BrandingTemplateDTO();
 		ModelAndView model = new ModelAndView();
@@ -82,13 +87,13 @@ public class BrandingTemplateController {
 		// session.getAttribute(MMJBCommonConstants.FACILITY_ID)
 
 		// Verify if the employer is of Siver caegory
-		brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
+		templateForm.setIsSilverCustomer(Boolean.TRUE);
 
 		// Modify the names of media files to save on File server
-		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
+		templateForm = modifyMediaName(templateForm);
 
 		// Validate the form data
-		brandingTemplateValidation.validate(brandingTemplateForm, result);
+		brandingTemplateValidation.validate(templateForm, result);
 
 		if (result.hasErrors()) {
 			model.setViewName("createBrandingTemplate");
@@ -96,7 +101,7 @@ public class BrandingTemplateController {
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplateForm);
+		status = uploadMedia(templateForm);
 		if (!status) {
 			result.rejectValue("logoFileData", "NotEmpty",
 					"An error occured while saving the file");
@@ -107,9 +112,9 @@ public class BrandingTemplateController {
 
 		// Transform form data to DTO
 		empBrandTempDTO = transformEmpoyerBrandTemplate
-				.createEmpBrandTempDTO(brandingTemplateForm);
+				.createEmpBrandTempDTO(templateForm);
 
-		model.addObject("brandingTemplateForm", brandingTemplateForm);
+		model.addObject("brandingTemplateForm", templateForm);
 		model.setViewName("manageBrandingTemplatePopup");
 
 		// Call to service layer and DAO
@@ -129,17 +134,21 @@ public class BrandingTemplateController {
 			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm,
 			BindingResult result, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
+		/**
+		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
+		 */
+		BrandingTemplateForm templateForm =brandingTemplateForm; 
 		Boolean status = null;
 		ModelAndView model = new ModelAndView();
 
 		// Verify if the employer is of Siver caegory
-		brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
+		templateForm.setIsSilverCustomer(Boolean.FALSE);
 
 		// Modify the names of media files to save on File server
-		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
+		templateForm = modifyMediaName(templateForm);
 
 		// Validate the form data
-		brandingTemplateValidation.validate(brandingTemplateForm, result);
+		brandingTemplateValidation.validate(templateForm, result);
 
 		if (result.hasErrors()) {
 			model.setViewName("createBrandingTemplate");
@@ -147,7 +156,7 @@ public class BrandingTemplateController {
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplateForm);
+		status = uploadMedia(templateForm);
 		if (!status) {
 			result.rejectValue("logoFileData", "NotEmpty",
 					"An error occured while saving the file");
@@ -156,7 +165,7 @@ public class BrandingTemplateController {
 			return model;
 		}
 
-		if (brandingTemplateForm.getIsSilverCustomer()) {
+		if (templateForm.getIsSilverCustomer()) {
 			model.setViewName("brandTemplateSilverPreview");
 		} else {
 			model.setViewName("brandTemplateGoldPreview");
@@ -547,17 +556,21 @@ public class BrandingTemplateController {
 	public ModelAndView updateBrandingTemplate(
 			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm,
 			BindingResult result, HttpSession session) {
+		/**
+		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
+		 */
+		BrandingTemplateForm templateForm =brandingTemplateForm; 
 		Boolean status = null;
 		BrandingTemplateDTO templateDTO = new BrandingTemplateDTO();
 		ModelAndView model = new ModelAndView();
 
-		brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
+		templateForm.setIsSilverCustomer(Boolean.TRUE);
 
 		// Modify the names of media files to save on File server
-		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
+		templateForm = modifyMediaName(templateForm);
 
 		// Validate the form data
-		brandingTemplateValidation.validate(brandingTemplateForm, result);
+		brandingTemplateValidation.validate(templateForm, result);
 
 		if (result.hasErrors()) {
 			model.setViewName("editBrandingTemplate");
@@ -565,7 +578,7 @@ public class BrandingTemplateController {
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplateForm);
+		status = uploadMedia(templateForm);
 		if (!status) {
 			result.rejectValue("logoFileData", "NotEmpty",
 					"An error occured while saving the file");
@@ -576,7 +589,7 @@ public class BrandingTemplateController {
 
 		// Transform form form data to DTO
 		templateDTO = transformEmpoyerBrandTemplate
-				.createEmpBrandTempDTO(brandingTemplateForm);
+				.createEmpBrandTempDTO(templateForm);
 
 		// call to service layer
 		status = brandingTemplateService.updateBrandingTemplate(templateDTO);

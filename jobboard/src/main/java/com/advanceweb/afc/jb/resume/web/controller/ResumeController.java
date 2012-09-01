@@ -17,8 +17,10 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,7 +64,9 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 @SessionAttributes("createResume")
 @SuppressWarnings("unchecked")
 public class ResumeController {
-
+	
+	private static final Logger LOGGER = Logger
+			.getLogger("ResumeController.class");
 	@Autowired
 	private ResumeService resumeService;
 
@@ -250,9 +254,12 @@ public class ResumeController {
 	 * @return 
 	 */
 	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.POST)
-	public ModelAndView updateResumePopup(CreateResume createResume,
+	public ModelAndView updateResumePopup(CreateResume createResumed,
 			HttpSession session) {
-
+		/**
+		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 */
+		CreateResume createResume =createResumed; 
 		ModelAndView model = new ModelAndView();
 
 		ResumeDTO resumeDTO = transCreateResume
@@ -612,9 +619,12 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Save")
-	public ModelAndView saveResumeBuilder(CreateResume createResume,
+	public ModelAndView saveResumeBuilder(CreateResume createResumed,
 			HttpSession session) {
-		
+		/**
+		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 */
+		CreateResume createResume =createResumed; 
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session
@@ -714,12 +724,12 @@ public class ResumeController {
 		model.addObject("annualSalarylList",annualSalarylList);
 		model.addObject("workExpPositionId", createResume.getListWorkExpForm()
 				.size());
-		if (null != createResume.getListCertForm()) {
-			createResume.getListWorkExpForm().add(form);
-		} else {
+		if (null == createResume.getListCertForm()) {
 			List<WorkExpForm> listWorkExpForms = new ArrayList<WorkExpForm>();
 			listWorkExpForms.add(form);
 			createResume.setListWorkExpForm(listWorkExpForms);
+		} else {
+			createResume.getListWorkExpForm().add(form);
 		}
 		return model;
 	}
@@ -926,10 +936,13 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
-	public ModelAndView viewResumeBuilder(CreateResume createResume,
+	public ModelAndView viewResumeBuilder(CreateResume createResumed,
 			BindingResult result, @RequestParam("resumeId") int resumeId,
 			HttpServletRequest request, HttpServletResponse response) {
-
+		/**
+		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 */
+		CreateResume createResume =createResumed; 
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
@@ -967,7 +980,7 @@ public class ResumeController {
 						+ resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.info("Error in view resume builder",e);
 			}
 		} else {
 			model.addObject("createResume", createResume);
@@ -1213,13 +1226,17 @@ public class ResumeController {
 	@RequestMapping(value = "/downloadResume", method = RequestMethod.GET)
 	public ModelAndView downloadResume(CreateResume createResume,
 			BindingResult result, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		ResumeDTO resumeDTO = resumeService.editResume(Integer
-				.parseInt(createResume.getUploadResumeId()));
+			HttpServletResponse response) {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
-				+ resumeDTO.getFilePath());
+		try {
+			ResumeDTO resumeDTO = resumeService.editResume(Integer.parseInt(createResume
+					.getUploadResumeId()));
+			
+			model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+					+ resumeDTO.getFilePath());
+		} catch (Exception e) {
+			LOGGER.info("Error in download resume", e);
+		}
 		return model;
 
 	}
@@ -1232,7 +1249,7 @@ public class ResumeController {
 	@RequestMapping(value = "/exportResume", method = RequestMethod.GET)
 	public void exporting(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("fileName") String fileName) throws Exception {
+			@RequestParam("fileName") String fileName) {
 
 		File file = new File(fileName);
 
@@ -1265,19 +1282,23 @@ public class ResumeController {
 			for (int length = 0; (length = input.read(buffer)) > 0;) {
 				output.write(buffer, 0, length);
 			}
-		} finally {
+		} 
+		 catch (Exception e) {
+			LOGGER.info("Error while exporting",e);
+		}
+		finally {
 			if (output != null){
 				try {
 						output.close();
 					} catch (IOException ignore) {
-					
+						LOGGER.info("Error while exporting",ignore);
 					}
 			}	
 			if (input != null){
 				try {
 						input.close();
 					}catch (IOException ignore) {
-					
+						LOGGER.info("Error while exporting",ignore);
 					}
 			}	
 		}

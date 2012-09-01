@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 @Repository("resumeDao")
 public class ResumeDaoImpl implements ResumeDao {
 
+	private static final Logger LOGGER = Logger
+			.getLogger("ResumeDaoImpl.class");
 	
 	private static final String FIND_RES_BUILD_RESUME="from ResBuilderResume res where res.resUploadResumeId=?";
 	
@@ -84,13 +87,13 @@ public class ResumeDaoImpl implements ResumeDao {
 		ResumeDTO dto = new ResumeDTO();
 		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,resumeId);
 		List<ResResumeProfile> resumeProfile = hibernateTemplate.find("from ResResumeProfile where resumeId = " + resumeId);
-		if(resumeProfile != null && resumeProfile.size() > 0) {
+		if(resumeProfile != null && !resumeProfile.isEmpty()) {
 			
 			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume, resumeProfile);
 
 			List<ResBuilderResume> resBuilderList = hibernateTemplate.find(FIND_RES_BUILD_RESUME, resume.getUploadResumeId());
 
-			if (resBuilderList != null && resBuilderList.size()>0) {
+			if (resBuilderList != null && !resBuilderList.isEmpty()) {
 				ResBuilderResume resBuilder = resBuilderList.get(0);
 				dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto,resBuilder);
 				return dto;
@@ -159,9 +162,10 @@ public class ResumeDaoImpl implements ResumeDao {
 		hibernateTemplate.save(resume);
 		List<ResResumeProfile> resumeProfileAttribs =hibernateTemplate.find("from ResResumeProfile where resumeId="+resumeId+" and deleteDt is NULL");
 		List<ResResumeProfile> resumeProfileList = new ArrayList<ResResumeProfile>(); 
+		Date deleteDt=new Timestamp(new Date().getTime());
 		for(ResResumeProfile resumeAttrib : resumeProfileAttribs)
 		{
-			resumeAttrib.setDeleteDt(new Timestamp(new Date().getTime()));
+			resumeAttrib.setDeleteDt(deleteDt);
 			resumeProfileList.add(resumeAttrib);
 		}
 		hibernateTemplate.saveOrUpdateAll(resumeProfileList);
@@ -182,7 +186,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
 			newResumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, null);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while Creating Resume",e);
 		}
 		return newResumeDTO;
 
@@ -203,7 +207,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
-			e.printStackTrace();
+			LOGGER.info("Error while Copy Paste",e);
 		}
 		return result;
 	}
@@ -216,25 +220,30 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ResumeDTO createResumeUpload(ResumeDTO resumeDTO) {
-		resumeVisibilityPublicToPrivate(resumeDTO);
-		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resumeDTO);
+		/**
+		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
+		 */
+		ResumeDTO resDTO =resumeDTO; 
+		
+		resumeVisibilityPublicToPrivate(resDTO);
+		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resDTO);
 		
 		try {
 			hibernateTemplate.save(resUploadResume);
 			
-			resUploadResume.setFilePath(resUploadResume.getFilePath()+resUploadResume.getUploadResumeId() + "_"+ resumeDTO.getFileName());
+			resUploadResume.setFilePath(resUploadResume.getFilePath()+resUploadResume.getUploadResumeId() + "_"+ resDTO.getFileName());
 			
 			hibernateTemplate.update(resUploadResume);
 			
 			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
-			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
+			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resDTO,resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			resumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, resumeProfileList);
+			resDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, resumeProfileList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while Resume Upload", e);
 		}
-		resumeDTO.setFilePath(resUploadResume.getFilePath());
-		return resumeDTO;
+		resDTO.setFilePath(resUploadResume.getFilePath());
+		return resDTO;
 	}
 	
 	@Override
@@ -267,7 +276,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			hibernateTemplate.saveOrUpdate(builderResume);
 			return true;
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error in create Resume Builder",e);
 		}
 		return false;
 	}
@@ -280,7 +289,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderWorkExp);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while adding work experience", e);
 		}
 		return true;
 	}
@@ -294,7 +303,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderRef);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while adding reference", e);
 		}
 		return true;
 	}
@@ -307,7 +316,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderEdu);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while adding education", e);
 		}
 		return true;
 	}
@@ -320,7 +329,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			// hibernateTemplate.saveOrUpdateAll(builderWorkExp);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while adding language", e);
 		}
 		return true;
 	}
@@ -333,7 +342,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderCerts);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.info("Error while adding certifications", e);
 		}
 		return true;
 	}
@@ -352,14 +361,12 @@ public class ResumeDaoImpl implements ResumeDao {
 //		ResumeDTO resumeDTO = resumeConversionHelper
 //				.transformResUploadResumeToResumeDTO(resumes.get(0), null);
 		ResUploadResume resUploadResume = resumes.get(0);
-		ResumeDTO resumeDTO = editResume(resUploadResume.getUploadResumeId());
-		return resumeDTO;
+		return editResume(resUploadResume.getUploadResumeId());
 	}
 
 	@Override
 	public int findResumeCount(int userId) {
-		int resumeCount = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and deleteDt is NULL"));
-		return resumeCount;
+		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and deleteDt is NULL"));
 	}
 
 	@Override

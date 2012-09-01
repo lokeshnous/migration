@@ -5,11 +5,13 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.log4j.Logger;
 
 import com.advanceweb.afc.jb.ServiceTest;
 
 public class CustomerDetailsWSTest extends ServiceTest{
-
+	private static final Logger LOGGER = Logger
+			.getLogger(CustomerDetailsWSTest.class);
 	public static void main(String[] args){
 
         CustomerDetailsWSTest customerDetailsWSTest = new CustomerDetailsWSTest();
@@ -39,10 +41,9 @@ public class CustomerDetailsWSTest extends ServiceTest{
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+             LOGGER.info("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for getCustomer details="+jsonResponseString);
+        LOGGER.info("Json Response String for getCustomer details="+jsonResponseString);
         return jsonResponseString;
 
 	}
@@ -64,10 +65,9 @@ public class CustomerDetailsWSTest extends ServiceTest{
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+           LOGGER.info("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for Authorize User="+jsonResponseString);
+        LOGGER.info("Json Response String for Authorize User="+jsonResponseString);
         return jsonResponseString;
 		
 	}

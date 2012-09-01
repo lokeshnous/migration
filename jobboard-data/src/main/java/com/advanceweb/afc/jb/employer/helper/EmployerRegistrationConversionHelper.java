@@ -43,19 +43,24 @@ public class EmployerRegistrationConversionHelper {
 	 */
 	public MerUser transformMerUserDTOToMerUser(EmployerProfileDTO dto,
 			MerUser entity) {
+		/**
+		 *  Introduced a new variable "merUSer" to resolve PMD issue. 
+		 */
+		MerUser merUser =entity; 
+		
 		MerUserDTO userDTO = dto.getMerUserDTO();
 
-		if (null != userDTO && null == entity) {
-			entity = new MerUser();
-			entity.setPassword(userDTO.getPassword());
-			entity.setEmail(userDTO.getEmailId());
+		if (null != userDTO && null == merUser) {
+			merUser = new MerUser();
+			merUser.setPassword(userDTO.getPassword());
+			merUser.setEmail(userDTO.getEmailId());
 		}
 
 		if (null != dto.getAttribList()) {
-			return createMerUser(entity, dto, userDTO);
+			return createMerUser(merUser, dto, userDTO);
 		}
 
-		return entity;
+		return merUser;
 
 	}
 
