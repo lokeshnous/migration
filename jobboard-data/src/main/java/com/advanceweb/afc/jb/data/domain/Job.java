@@ -7,12 +7,5 @@ package com.advanceweb.afc.jb.data.domain;
  */
 public class Job {
 
-	public Job(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
 
 }

@@ -16,7 +16,7 @@ public class AgencyRegistrationValidation {
 
 	private Pattern pattern;
 	private Matcher matcher;
-    private final String NOT_EMPTY= "NotEmpty";
+    private static final String NOT_EMPTY= "NotEmpty";
 	public boolean supports(Class<?> form) {
 		return AgencyRegistrationForm.class.isAssignableFrom(form);
 	}

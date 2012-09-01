@@ -9,12 +9,4 @@ public class Resume {
 
 	public JobSeeker seeker;
 
-	public Resume(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-
 }

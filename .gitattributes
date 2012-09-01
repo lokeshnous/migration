@@ -88,7 +88,6 @@ jobboard-common/src/main/resources/employerProfile.properties -text
 jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/mailServer.properties -text
-jobboard-common/src/test/java/com/advanceweb/afc/common/AppTest.java -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/AgencyRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/BrandingTemplateService.java -text

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import org.apache.log4j.Logger;
 
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
@@ -25,7 +26,8 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 
 @Repository("agencyHelper")
 public class AgencyRegistrationConversionHelper {
-
+	private static final Logger LOGGER = Logger
+			.getLogger("AgencyRegistrationConversionHelper.class");
 	/**
 	 * Converting MerUserDTO to MerUser
 	 * 
@@ -61,10 +63,10 @@ public class AgencyRegistrationConversionHelper {
 
 		for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
 
-			MerUserProfilePK pk = new MerUserProfilePK();
-			MerUserProfile profile = new MerUserProfile();
+			MerUserProfilePK merUserProfilePK = new MerUserProfilePK();
+			/*MerUserProfile profile = new MerUserProfile();
 
-			profile.setAttribValue(attribDTO.getStrLabelValue());
+			profile.setAttribValue(attribDTO.getStrLabelValue());*/
 
 			if (attribDTO.getStrLabelName().equals(
 					MMJBCommonConstants.FIRST_NAME)) {
@@ -90,7 +92,7 @@ public class AgencyRegistrationConversionHelper {
 
 			if (null != attribDTO.getStrProfileAttribId()
 					&& !attribDTO.getStrProfileAttribId().isEmpty()) {
-				pk.setProfileAttribId(Integer.valueOf(attribDTO
+				merUserProfilePK.setProfileAttribId(Integer.valueOf(attribDTO
 						.getStrProfileAttribId()));
 			}
 
@@ -231,7 +233,7 @@ public class AgencyRegistrationConversionHelper {
 			AgencyProfileDTO dto, MerUser user) {
 
 		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
-		MerUserProfilePK pk = null;
+		MerUserProfilePK merUserProfilePK = null;
 
 		if (null != dto.getAttribList()) {
 
@@ -260,22 +262,22 @@ public class AgencyRegistrationConversionHelper {
 						&& !MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
 								.getStrLabelName())) {
 
-					pk = new MerUserProfilePK();
+					merUserProfilePK = new MerUserProfilePK();
 					MerUserProfile profile = new MerUserProfile();
 
 					profile.setAttribValue(attribDTO.getStrLabelValue());
 
 					if (null != attribDTO.getStrProfileAttribId()
 							&& !attribDTO.getStrProfileAttribId().isEmpty()) {
-						pk.setProfileAttribId(Integer.valueOf(attribDTO
+						merUserProfilePK.setProfileAttribId(Integer.valueOf(attribDTO
 								.getStrProfileAttribId()));
 					}
 
 					if (user.getUserId() != 0) {
-						pk.setUserId(user.getUserId());
+						merUserProfilePK.setUserId(user.getUserId());
 					}
 
-					profile.setProfilePK(pk);
+					profile.setProfilePK(merUserProfilePK);
 					listProfiles.add(profile);
 				}
 			}
@@ -324,7 +326,7 @@ public class AgencyRegistrationConversionHelper {
 				labels.add(entries.getProperty((String) itr.next()));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.info("Error in transforming profile attribute",e);
 		}
 		Properties profileAttributes = null;
 		List<String> profileAttribs = new ArrayList<String>();
@@ -336,7 +338,7 @@ public class AgencyRegistrationConversionHelper {
 					profileAttribs.add(profileAttributes.getProperty((String) itr.next())); 
 				}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.info("Error in transforming profile attribute",e);
 		}
 		
 		AgencyProfileDTO registerDTO = new AgencyProfileDTO();

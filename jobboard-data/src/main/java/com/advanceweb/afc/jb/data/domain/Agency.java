@@ -12,12 +12,5 @@ public class Agency {
 
 	public AgencyRegistrationDAO registrationDAO;
 
-	public Agency(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
 
 }

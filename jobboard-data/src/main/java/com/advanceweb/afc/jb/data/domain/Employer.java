@@ -11,12 +11,4 @@ public class Employer {
 	public EmployerRegistrationDAO registrationDAO;
 //	public RegistrationConversionHelper m_RegistrationConversionHelper;
 
-	public Employer(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-
 }

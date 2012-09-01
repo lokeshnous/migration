@@ -11,15 +11,6 @@ public class JobSeeker {
 
 	public JobSeekerRegistrationDAO jobSeekerRegistrationDAO;
 
-	public JobSeeker() {
-
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
-	}
-
 	public JobSeekerRegistrationDAO getJobSeekerRegistrationDAO() {
 		return jobSeekerRegistrationDAO;
 	}
