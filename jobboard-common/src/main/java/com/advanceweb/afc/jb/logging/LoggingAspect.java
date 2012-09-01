@@ -22,15 +22,9 @@ import org.aspectj.lang.annotation.Pointcut;
 public class LoggingAspect {
 
 	
-//	 private Log logger = LogFactory.getLog(this.getClass());
 	 private static final Logger LOGGER = Logger.getLogger(LoggingAspect.class);
 	 
-	 @Pointcut("within(com.advanceweb.afc.jb..*) AND execution(* *(..))")
-	 protected void loggingOperation() {
-		 
-	 }
 
-	
 	@Before("loggingOperation()")
 	public void logBefore(JoinPoint joinPoint) {
 		LOGGER.info("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
