@@ -1,4 +1,5 @@
 package com.advanceweb.afc.jb.job.service.impl;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobApplicationDTO;
@@ -12,6 +13,10 @@ import com.advanceweb.afc.jb.job.service.JobApplicationService;
  */
 @Service
 public class JobApplicationServiceImpl implements JobApplicationService {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(JobApplicationServiceImpl.class);
+
 
 /*	@Autowired 
 	AnonymousUserJobApplyDAO anonymousUserJobApplyDAO;
@@ -30,7 +35,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 			//result=anonymousUserJobApplyDAO.applyJobAnonymousUser(dto);
 			return result;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("Error in applyJobAnonymousUser:",e);
 		}
 		return result;
 	}

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +14,9 @@ import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
 public class SaveSearchServiceTest extends ServiceTest {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(SaveSearchServiceTest.class);
 
 	@Autowired
 	private SaveSearchService saveSearchService;
@@ -22,28 +27,31 @@ public class SaveSearchServiceTest extends ServiceTest {
 			int userId = 1;
 			List<SaveSearchedJobsDTO> searchedJobsDTOs = saveSearchService
 					.viewMySavedSearches(userId);
-			assertTrue("View My Saved Searches",
-					searchedJobsDTOs.size() >= 0);
+			assertTrue("View My Saved Searches", searchedJobsDTOs.size() >= 0);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("Error in testViewMySavedSearches:",e);
 		}
 	}
 
-	@Test
+/*	@Test
 	public void testEditSavedSearch() {
+		boolean status = true;
 		try {
-			int saveSearchId = 16;
-			//AdmSaveSearch searchResults = saveSearchService
-					//.editSavedSearch(saveSearchId);
-			//assertNotNull(searchResults);
+			// int saveSearchId = 16;
+			// AdmSaveSearch searchResults = saveSearchService
+			// .editSavedSearch(saveSearchId);
+			// assertNotNull(searchResults);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			status = false;
+			LOGGER.info("Error in testEditSavedSearch:",e);
 		}
-	}
+		assertTrue("status of testSaveSearchedJobs",status);
+	}*/
 
-	// @Test
+	@Ignore("Not ready to test")
+	@Test
 	public void testDeleteSavedSearch() {
 		try {
 
@@ -51,13 +59,14 @@ public class SaveSearchServiceTest extends ServiceTest {
 					saveSearchService.deleteSavedSearch(17));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("Error in testDeleteSavedSearch:",e);
 		}
 	}
 
 	// Added for save this search
 	@Test
 	public void testSaveSearchedJobs() {
+		boolean status = true;
 		try {
 			SaveSearchedJobsDTO saveSearchedJobsDTO = new SaveSearchedJobsDTO();
 			saveSearchedJobsDTO.setUserID(9);
@@ -67,7 +76,9 @@ public class SaveSearchServiceTest extends ServiceTest {
 			saveSearchedJobsDTO.setCreatedDate(new Date());
 			saveSearchService.saveSearchedJobs(saveSearchedJobsDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			status = false;
+			LOGGER.info("Error in testSaveSearchedJobs:",e);
 		}
+		assertTrue("status of testSaveSearchedJobs",status);
 	}
 }
