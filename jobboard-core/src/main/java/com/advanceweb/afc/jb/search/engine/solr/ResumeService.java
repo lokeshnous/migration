@@ -12,9 +12,6 @@ import com.advanceweb.afc.jb.common.ResumeWordDocumentDTO;
  */
 public class ResumeService {
 
-	public ResumeService() {
-	}
-
 	/**
 	 * 
 	 * @param resumeId

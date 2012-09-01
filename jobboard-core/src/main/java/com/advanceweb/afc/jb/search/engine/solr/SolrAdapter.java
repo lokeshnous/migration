@@ -6,9 +6,6 @@ package com.advanceweb.afc.jb.search.engine.solr;
  * @created 21-Jun-2012 2:23:56 PM
  */
 public class SolrAdapter {
-	public SolrAdapter() {
-	}
-
 	@Override
 	public void finalize() throws Throwable {
 

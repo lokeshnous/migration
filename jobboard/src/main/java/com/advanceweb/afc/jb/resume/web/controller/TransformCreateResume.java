@@ -227,8 +227,8 @@ public class TransformCreateResume {
 
 		List<PhoneDetailDTO> phoneDtlDTO = new ArrayList<PhoneDetailDTO>();
 		if (null != phoneDetails) {
+			PhoneDetailDTO dto = new PhoneDetailDTO();
 			for (PhoneDetailForm phoneForm : phoneDetails) {
-				PhoneDetailDTO dto = new PhoneDetailDTO();
 
 				dto.setBuilderPhoneId(phoneForm.getBuilderPhoneId());
 				dto.setPhoneNumber(phoneForm.getPhoneNumber());
@@ -255,8 +255,8 @@ public class TransformCreateResume {
 			PhoneDetailForm form = new PhoneDetailForm();
 			phoneDtls.add(form);
 		} else {
+			PhoneDetailForm form = new PhoneDetailForm();
 			for (PhoneDetailDTO dto : phoneDetails) {
-				PhoneDetailForm form = new PhoneDetailForm();
 				form.setBuilderPhoneId(dto.getBuilderPhoneId());
 				form.setPhoneNumber(dto.getPhoneNumber());
 				form.setPhoneType(dto.getPhoneType());
@@ -354,8 +354,8 @@ public class TransformCreateResume {
 			EducationForm eduForm = new EducationForm();
 			listEduForms.add(eduForm);
 		} else {
+			EducationForm form = new EducationForm();
 			for (EducationDTO dto : listEduDTO) {
-				EducationForm form = new EducationForm();
 				form.setBuilderEduId(dto.getBuilderEduId());
 				form.setCertifications(dto.getCertifications());
 				form.setDegreeLvl(dto.getDegreeLvl());
@@ -389,8 +389,8 @@ public class TransformCreateResume {
 			refForm.setReferenceType(MMJBCommonConstants.REFERENCE_TYPE_PERSONAL);
 			listWorkExpForms.add(refForm);
 		} else {
+			ReferenceForm form = new ReferenceForm();
 			for (ReferenceDTO dto : listRefpDTO) {
-				ReferenceForm form = new ReferenceForm();
 				form.setBuilderRefId(dto.getBuilderRefId());
 				form.setCompanyName(dto.getCompanyName());
 				form.setEmail(dto.getEmail());
@@ -419,8 +419,8 @@ public class TransformCreateResume {
 			WorkExpForm workExpForm = new WorkExpForm();
 			listWorkExpForms.add(workExpForm);
 		} else {
+			WorkExpForm form = new WorkExpForm();
 			for (WorkExpDTO dto : listWorkExpDTO) {
-				WorkExpForm form = new WorkExpForm();
 				form.setAnnualSalary(dto.getAnnualSalary());
 				form.setBuilderEmpId(dto.getBuilderEmpId());
 				form.setCurrentCareerLvl(dto.getCurrentCareerLvl());

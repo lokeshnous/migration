@@ -33,7 +33,7 @@ public class JobSearchServiceTest extends ServiceTest {
 	/**
 	 * validating job for save/apply.
 	 */
-	@Ignore(NOT_READY_FOR_TEST)
+//	@Ignore(NOT_READY_FOR_TEST)
 	@Test
 	public void fetchSavedOrAppliedJob() {
 		int userId = 5;
