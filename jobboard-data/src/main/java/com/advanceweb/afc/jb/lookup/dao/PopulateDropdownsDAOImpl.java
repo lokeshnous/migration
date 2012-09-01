@@ -481,7 +481,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		
 		try {
 			List<AdmFacility> facilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityId=?", facilityId);
-			if(null != facilityList && facilityList.size()>0){
+			if(null != facilityList && !facilityList.isEmpty()){
 				AdmFacility facility = facilityList.get(0);
 				List<JpTemplate> templateList = facility.getJpTemplates();
 				return dropdownHelper.transformJpTemplateToDropDownDTO(templateList);
@@ -587,7 +587,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
 
-			if (jpLocationList != null && jpLocationList.size() !=0) {			
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {			
 				String obj = (String)jpLocationList.get(0);
 				return obj;
 			}			
@@ -605,7 +605,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			List<Object> jpLocationList = hibernateTemplate.find("select jloc.country,jloc.state,jloc.city from  JpLocation jloc WHERE jloc.postcode='"+postalCode+"' ORDER BY  jloc.postcode ASC");
 
-			if (jpLocationList != null && jpLocationList.size() !=0) {		
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {		
 				LocationDTO dto = new LocationDTO();				
 				Object[] obj = (Object[]) jpLocationList.get(0);
 				dto.setCountry(String.valueOf(obj[0]));
@@ -628,7 +628,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			Map<String,String> resultMap = new HashMap<String,String>();
 			List<?> dataList = hibernateTemplate.find("select jpa.attribValue from JpAttribList jpa where jpa.attribType='JobStatus' order by jpa.position");
 			resultMap = new LinkedHashMap<String, String>(dataList.size());
-			if (dataList != null && dataList.size() > 0) {
+			if (dataList != null && !dataList.isEmpty()) {
 
 				Iterator<?> itr = dataList.iterator();
 				while (itr.hasNext()) {
