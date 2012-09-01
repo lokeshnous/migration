@@ -4,17 +4,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.employer.dao.JobPostDAOImpl;
 
 public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
-
+	private static final Logger LOGGER = Logger.getLogger(ManageFeatureEmployerProfileServiceTest.class);
 	@Test
 	public void testSavedJobs() {
 		try {
@@ -33,7 +35,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 							.saveEmployerProfile(companyProfileDTO));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 	}
 
@@ -46,7 +48,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 			assertTrue("Get Employer Details", companyProfileDTO != null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 	}
 
@@ -60,7 +62,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 					employerProfileDTO != null);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,20 +19,13 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  */
 @Service("agencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
-
+	private static final Logger LOGGER = Logger.getLogger(ManageFeatureEmployerProfileServiceTest.class);
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
-
+	
 	/**
 	 * 
 	 */
-	public AgencyRegistration() {
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
 
 	/**
 	 * 
@@ -42,7 +36,7 @@ public class AgencyRegistration implements ProfileRegistration {
 			AgencyProfileDTO agencyProfileDTO = (AgencyProfileDTO) profileDTO;
 			return agencyRegistrationDAO.createNewAgency(agencyProfileDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}

@@ -67,13 +67,13 @@ public class JobPostServiceTest extends ServiceTest{
 	public void retrieveAllJobPost(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
 		dto = employerJobPost.retrieveAllJobPost(1606,1,20);
-		Assert.assertTrue("Total Record Found", dto.size()>0?true:false);
+		Assert.assertTrue("Total Record Found", !dto.isEmpty()?true:false);
 	}
 	@Test
 	public void retrieveAllJobPostByStatus(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
 		dto = employerJobPost.retrieveAllJobByStatus("Active", 1606,1,20);
-		Assert.assertTrue("Total Record Found", dto.size()>0?true:false);
+		Assert.assertTrue("Total Record Found", !dto.isEmpty()?true:false);
 	}
 	
 	@Test

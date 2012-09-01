@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class JobPostingsForm {
 	
-	String jobPostPlanId;
-	String jobPostPlanName;
-	String jobPostPlanDescr;
-	String jobPostPlanCretitAmt;
-	List<AddOnForm> addOnForm;
-	int quantity;
-	int packageSubTotal;
+	public String jobPostPlanId;
+	public String jobPostPlanName;
+	public String jobPostPlanDescr;
+	public String jobPostPlanCretitAmt;
+	public List<AddOnForm> addOnForm;
+	public int quantity;
+	public int packageSubTotal;
 	
 	public String getJobPostPlanId() {
 		return jobPostPlanId;

@@ -31,8 +31,8 @@ public class JobBoardDataException extends JobBoardException {
 	 *            The exception from which the new exceptio object is created.
 	 */
 
-	public JobBoardDataException(Exception ex) {
-		super(ex);
+	public JobBoardDataException(Exception exception) {
+		super(exception);
 	}
 
 }

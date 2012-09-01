@@ -16,12 +16,12 @@ public interface JobDAO {
 	 * 
 	 * @param job
 	 */
-	public boolean createNewJob(Job job);
+	boolean createNewJob(Job job);
 
 	/**
 	 * 
 	 * @param jobId
 	 */
-	public boolean applyForJob(long jobId);
+	boolean applyForJob(long jobId);
 
 }

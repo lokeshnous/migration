@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
-import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
@@ -33,126 +32,134 @@ import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 
 /**
  * @Author : Prince Mathew
-   @Version: 1.0
-   @Created: Jul 18, 2012
-   @Purpose: This class implements all the DAO operations related to post new job 
+ * @Version: 1.0
+ * @Created: Jul 18, 2012
+ * @Purpose: This class implements all the DAO operations related to post new
+ *           job
  */
-@Transactional 
+@Transactional
 @Repository("employerJobPostDAO")
 @SuppressWarnings("unchecked")
 public class JobPostDAOImpl implements JobPostDAO {
 
-	private static final String FIND_ADM_USER_FACILITY="select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
-	
+	private static final String FIND_ADM_USER_FACILITY = "select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
+
+	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
+
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
 	private int numberOfJobRecordsByStatus;
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
-	
+
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker,SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
-	
-/*	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactory);
-	}*/
+
+	/*
+	 * @Autowired public void setHibernateTemplate(SessionFactory
+	 * sessionFactory) { this.hibernateTemplateTracker = new
+	 * HibernateTemplate(sessionFactory); }
+	 */
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the records of the Employer by userId from the DB
-	   @Created:Jul 19, 2012
-	   @Param  :userId
-	   @Return :EmployerInfoDTO containing the information of corresponding Employer
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the records of the Employer by userId from the DB
+	 * @Created:Jul 19, 2012
+	 * @Param :userId
+	 * @Return :EmployerInfoDTO containing the information of corresponding
+	 *         Employer
 	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getEmployerInfo(int)
 	 */
 	@Override
 	public EmployerInfoDTO getEmployerInfo(int userId, String roleName) {
-		
-		EmployerInfoDTO employerInfoDTO=new EmployerInfoDTO();
-		
-		Object[] inputs= {userId, roleName};
 
-		List<AdmUserFacility> facilityList = hibernateTemplate.find(FIND_ADM_USER_FACILITY, inputs);
-		
-		if(null != facilityList && facilityList.size() != 0){
+		EmployerInfoDTO employerInfoDTO = new EmployerInfoDTO();
+
+		Object[] inputs = { userId, roleName };
+
+		List<AdmUserFacility> facilityList = hibernateTemplate.find(
+				FIND_ADM_USER_FACILITY, inputs);
+
+		if (null != facilityList && !facilityList.isEmpty()) {
 			AdmUserFacility userFacility = facilityList.get(0);
 			AdmFacility facility = userFacility.getAdmFacility();
-			if(null != facility){
+			if (null != facility) {
 				employerInfoDTO.setCustomerNamel(facility.getName());
-				employerInfoDTO.setUserId(userFacility.getFacilityPK().getUserId());
-				employerInfoDTO.setFacilityId(userFacility.getFacilityPK().getFacilityId());
-				employerInfoDTO.setRoleId(userFacility.getFacilityPK().getRoleId());
-			}					
-		}		
-		
+				employerInfoDTO.setUserId(userFacility.getFacilityPK()
+						.getUserId());
+				employerInfoDTO.setFacilityId(userFacility.getFacilityPK()
+						.getFacilityId());
+				employerInfoDTO.setRoleId(userFacility.getFacilityPK()
+						.getRoleId());
+			}
+		}
+
 		return employerInfoDTO;
 	}
-	
-	/**
-	   @Author :Prince Mathew
-	   @Purpose:to get the List of the State for the drop down of state for Post New Job Screen 
-	   @Created:Jul 19, 2012
-	   @Param  :not required
-	   @Return :List of StateDTO
-	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getStateList()
-	 */
-	public List<StateDTO> getStateList() {
-		
-		List<JpAttribList> merLookupList =  hibernateTemplateTracker.find("from JpAttribList e where e.lookupCategory='State' and e.lookupStatus='1'");	
 
-		return null;
-	}
-	
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:This method is called to post the new job
-	   @Created:Jul 20, 2012
-	   @Param  :EmployerInfoDTO object
-	   @Return :boolean result
+	 * @Author :Prince Mathew
+	 * @Purpose:This method is called to post the new job
+	 * @Created:Jul 20, 2012
+	 * @Param :EmployerInfoDTO object
+	 * @Return :boolean result
 	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#savePostJob(com.advanceweb.afc.jb.common.EmployerInfoDTO)
 	 */
 	@Override
 	public boolean savePostJob(JobPostDTO dto) {
-		
-		try {			
-				JpLocation location = null;			
-				//Retrieving location Id based on the data selection while posting the new job
-				Object[] inputs = {dto.getJobCountry(), dto.getJobState(), dto.getJobCity(),dto.getJobZip()};
-				List<JpLocation> locationList = hibernateTemplate.find("from JpLocation loc where loc.country=? and loc.state=? and loc.city=? and loc.postcode=?",inputs);
-				if(null != locationList && locationList.size() != 0){
-					location = locationList.get(0);
-				}
-				
-				//Retrieving the template object selected based on the template id selected by the user
-				JpTemplate template = hibernateTemplate.load(JpTemplate.class,Integer.valueOf(dto.getBrandTemplate()));
-				
-				JpJobType jobType = hibernateTemplate.load(JpJobType.class, Integer.valueOf(dto.getJobPostingType()));
-				
-				AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class, Integer.valueOf(dto.getFacilityId()));
-				
-				JpJob jpJob=jobPostConversionHelper.transformJobDtoToJpJob(dto, template, jobType, admFacility);
-				hibernateTemplate.save(jpJob);
-				List<JpJobApply> applyJobList = jobPostConversionHelper.transformJobPostDTOToJpJobApply(dto, jpJob);
-				hibernateTemplate.saveOrUpdateAll(applyJobList);
-				List<JpJobLocation> locList = jobPostConversionHelper.transformJobPostDTOToJpJbLocation(dto, jpJob, location);
-				hibernateTemplate.saveOrUpdateAll(locList);				
+
+		try {
+			JpLocation location = null;
+			// Retrieving location Id based on the data selection while posting
+			// the new job
+			Object[] inputs = { dto.getJobCountry(), dto.getJobState(),
+					dto.getJobCity(), dto.getJobZip() };
+			List<JpLocation> locationList = hibernateTemplate
+					.find("from JpLocation loc where loc.country=? and loc.state=? and loc.city=? and loc.postcode=?",
+							inputs);
+			if (null != locationList && !locationList.isEmpty()) {
+				location = locationList.get(0);
+			}
+
+			// Retrieving the template object selected based on the template id
+			// selected by the user
+			JpTemplate template = hibernateTemplate.load(JpTemplate.class,
+					Integer.valueOf(dto.getBrandTemplate()));
+
+			JpJobType jobType = hibernateTemplate.load(JpJobType.class,
+					Integer.valueOf(dto.getJobPostingType()));
+
+			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
+					Integer.valueOf(dto.getFacilityId()));
+
+			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
+					template, jobType, admFacility);
+			hibernateTemplate.save(jpJob);
+			List<JpJobApply> applyJobList = jobPostConversionHelper
+					.transformJobPostDTOToJpJobApply(dto, jpJob);
+			hibernateTemplate.saveOrUpdateAll(applyJobList);
+			List<JpJobLocation> locList = jobPostConversionHelper
+					.transformJobPostDTOToJpJbLocation(dto, jpJob, location);
+			hibernateTemplate.saveOrUpdateAll(locList);
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 
 		return true;
 	}
- 
+
 	/**
 	 * @Author :devi mishra
-	   @Purpose:This method is called to retrieve all posted job
-	   @Created:Aug 29, 2012
-	   @Param  :employerId
-	   @Return :List<JobPostDTO>
-	 *
+	 * @Purpose:This method is called to retrieve all posted job
+	 * @Created:Aug 29, 2012
+	 * @Param :employerId
+	 * @Return :List<JobPostDTO>
+	 * 
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
@@ -172,24 +179,23 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
+
 	/**
 	 * @Author :devi mishra
-	   @Purpose:This method is called to retrieve job as per the selected job id
-	   @Created:Aug 29, 2012
-	   @Param  :jobid
-	   @Return :JobPostDTO
-	 *
+	 * @Purpose:This method is called to retrieve job as per the selected job id
+	 * @Created:Aug 29, 2012
+	 * @Param :jobid
+	 * @Return :JobPostDTO
+	 * 
 	 */
 	@Override
 	public JobPostDTO editJob(int jobId) {
 		JobPostDTO dto = new JobPostDTO();
-		JpJob job =  hibernateTemplate.get(JpJob.class,
-				jobId);
+		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 
 		if (job != null) {
 
-			dto =  jobPostConversionHelper
-					.transformJpJobToJobPostDTO(job);
+			dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
 
 		}
 
@@ -199,10 +205,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public List<JobPostingPlanDTO> getJobPostingPlans() {
 		List<JpJobType> jobTypeList = hibernateTemplate.find("from JpJobType");
-		List<JobPostingPlanDTO> jobPostingPlanDTOList = jobPostConversionHelper.transformToJobPostingPlanDTOList(jobTypeList);
-		return jobPostingPlanDTOList;
+		return jobPostConversionHelper
+				.transformToJobPostingPlanDTOList(jobTypeList);
 	}
-	
+
 	/**
 	 * This method is called to delete the Job
 	 * 
@@ -213,22 +219,23 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-          boolean bDelete=false;
+		boolean bDelete = false;
 		if (null != job.getEndDt() && null != job.getStartDt()) {
 			int compareEndDate = job.getEndDt().compareTo(new Date());
-			if ((job.getActive() == 1 && compareEndDate < 0) || (job
-							.getActive()==MMJBCommonConstants.INACTIVE)) {
-				// System deletes the job postings which are in "inactive" or “Expired” status
+			if ((job.getActive() == 1 && compareEndDate < 0)
+					|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+				// System deletes the job postings which are in "inactive" or
+				// “Expired” status
 				job.setDeleteDt(new Timestamp(new Date().getTime()));
 				hibernateTemplate.save(job);
-				bDelete=true;
+				bDelete = true;
+			} else {
+				bDelete = false;
 			}
-			else {
-				bDelete= false;
-			}
-		} 
+		}
 		return bDelete;
 	}
+
 	/**
 	 * This method is called to update the Job
 	 * 
@@ -254,6 +261,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		hibernateTemplate.saveOrUpdate(job);
 		return true;
 	}
+
 	/**
 	 * This method is called to Deactivate the Job
 	 * 
@@ -279,6 +287,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		return bDeactivate;
 	}
+
 	/**
 	 * This method is called to repost the Job
 	 * 
@@ -292,8 +301,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 		boolean bRepost = false;
 		if (null != job.getEndDt() && null != job.getStartDt()) {
 			int compareEndDate = job.getEndDt().compareTo(new Date());
-			if ((job.getActive() == 1 && compareEndDate < 0 )|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
-				// Repost the inactive and expired job and extend the end date to one month
+			if ((job.getActive() == 1 && compareEndDate < 0)
+					|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+				// Repost the inactive and expired job and extend the end date
+				// to one month
 				Calendar now = Calendar.getInstance();
 				now.setTime(job.getEndDt());
 				now.add(Calendar.DAY_OF_MONTH, 30);
@@ -307,13 +318,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return bRepost;
 	}
+
 	/**
 	 * @Author :devi mishra
-	   @Purpose:This method is called to retrieve all posted job by Status
-	   @Created:Aug 29, 2012
-	   @Param  :employerId
-	   @Return :List<JobPostDTO>
-	 *
+	 * @Purpose:This method is called to retrieve all posted job by Status
+	 * @Created:Aug 29, 2012
+	 * @Param :employerId
+	 * @Return :List<JobPostDTO>
+	 * 
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
@@ -422,16 +434,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	@Override
 	public int getTotalNumberOfJobRecords(int employerId) {
-		Long jobCount= (Long)hibernateTemplate
+		Long jobCount = (Long) hibernateTemplate
 				.getSessionFactory()
 				.getCurrentSession()
-				.createQuery("SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-						+ employerId + "and a.deleteDt is NULL").uniqueResult();
+				.createQuery(
+						"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								+ employerId + "and a.deleteDt is NULL")
+				.uniqueResult();
 		return jobCount.intValue();
-		
-	}
 
-	
+	}
 
 	/**
 	 * @return the totalNumberOfJobRecordsByStatus
@@ -441,10 +453,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * @param totalNumberOfJobRecordsByStatus the totalNumberOfJobRecordsByStatus to set
+	 * @param totalNumberOfJobRecordsByStatus
+	 *            the totalNumberOfJobRecordsByStatus to set
 	 */
-	public void setNumberOfJobRecordsByStatus(
-			int numberOfJobRecordsByStatus) {
+	public void setNumberOfJobRecordsByStatus(int numberOfJobRecordsByStatus) {
 		this.numberOfJobRecordsByStatus = numberOfJobRecordsByStatus;
 	}
 
@@ -452,5 +464,5 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public int getTotalNumberOfJobRecordsByStatus() {
 		return this.numberOfJobRecordsByStatus;
 	}
-	
+
 }

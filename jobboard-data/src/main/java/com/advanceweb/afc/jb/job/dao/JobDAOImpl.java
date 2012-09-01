@@ -11,14 +11,6 @@ import com.advanceweb.afc.jb.data.domain.Job;
 @Repository
 public class JobDAOImpl implements JobDAO {
 
-	public JobDAOImpl(){
-
-	}
-
-	public void finalize() throws Throwable {
-
-	}
-
 	/**
 	 * 
 	 * @param job

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,6 +33,7 @@ import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelpe
 public class ManageFeatureEmployerProfileDAOImpl implements
 		ManageFeatureEmployerProfileDAO {
 
+	private static final Logger LOGGER = Logger.getLogger(ManageFeatureEmployerProfileDAOImpl.class);
 	@Autowired
 	private SessionFactory sessionFactory;
 	@Autowired
@@ -56,7 +58,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 			}
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return true;
 	}
@@ -93,7 +95,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 
 		return companyProfileDTOList;
@@ -131,7 +133,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return companyProfileDTO;
 	}
@@ -153,7 +155,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return employerProfileDTOs;
 	}

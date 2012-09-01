@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -28,9 +29,10 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 @Controller
 @RequestMapping(value = "/purchaseJobPosting")
 @SessionAttributes("purchaseJobPostForm")
-@SuppressWarnings("unchecked")
 public class PurchaseJobPostingController {
-	
+	private static final Logger LOGGER = Logger.getLogger(PurchaseJobPostingController.class);
+
+
 	@Autowired
 	private JobPostService employerJobPost;
 	
@@ -75,11 +77,11 @@ public class PurchaseJobPostingController {
 			purchaseJobPostForm.getJobPostingsCart().add(jobPostingsCart);
 			
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		ModelAndView model = new ModelAndView();

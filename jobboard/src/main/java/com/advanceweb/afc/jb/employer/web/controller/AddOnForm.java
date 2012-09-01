@@ -7,10 +7,10 @@ package com.advanceweb.afc.jb.employer.web.controller;
  */
 public class AddOnForm {
 	
-	String addOnId;
-	String addOnName;
-	String addOnDescription;
-	String addOnCreditAmt;
+	public String addOnId;
+	public String addOnName;
+	public String addOnDescription;
+	public String addOnCreditAmt;
 	
 	public String getAddOnId() {
 		return addOnId;

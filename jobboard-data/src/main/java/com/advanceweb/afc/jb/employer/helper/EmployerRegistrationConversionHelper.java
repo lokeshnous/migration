@@ -69,7 +69,7 @@ public class EmployerRegistrationConversionHelper {
 
 		for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
 
-			MerUserProfilePK pk = new MerUserProfilePK();
+			MerUserProfilePK merUserProfilePK = new MerUserProfilePK();
 			MerUserProfile profile = new MerUserProfile();
 
 			profile.setAttribValue(attribDTO.getStrLabelValue());
@@ -98,7 +98,7 @@ public class EmployerRegistrationConversionHelper {
 
 			if (null != attribDTO.getStrProfileAttribId()
 					&& !attribDTO.getStrProfileAttribId().isEmpty()) {
-				pk.setProfileAttribId(Integer.valueOf(attribDTO
+				merUserProfilePK.setProfileAttribId(Integer.valueOf(attribDTO
 						.getStrProfileAttribId()));
 			}
 
@@ -169,7 +169,7 @@ public class EmployerRegistrationConversionHelper {
 			EmployerProfileDTO dto, MerUser user) {
 
 		List<MerUserProfile> listProfiles = new ArrayList<MerUserProfile>();
-		MerUserProfilePK pk = null;
+		MerUserProfilePK merUserProfilePK = null;
 
 		if (null != dto.getAttribList()) {
 
@@ -198,22 +198,22 @@ public class EmployerRegistrationConversionHelper {
 						&& !MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
 								.getStrLabelName())) {
 
-					pk = new MerUserProfilePK();
+					merUserProfilePK = new MerUserProfilePK();
 					MerUserProfile profile = new MerUserProfile();
 
 					profile.setAttribValue(attribDTO.getStrLabelValue());
 
 					if (null != attribDTO.getStrProfileAttribId()
 							&& !attribDTO.getStrProfileAttribId().isEmpty()) {
-						pk.setProfileAttribId(Integer.valueOf(attribDTO
+						merUserProfilePK.setProfileAttribId(Integer.valueOf(attribDTO
 								.getStrProfileAttribId()));
 					}
 
 					if (user.getUserId() != 0) {
-						pk.setUserId(user.getUserId());
+						merUserProfilePK.setUserId(user.getUserId());
 					}
 
-					profile.setProfilePK(pk);
+					profile.setProfilePK(merUserProfilePK);
 					listProfiles.add(profile);
 				}
 			}

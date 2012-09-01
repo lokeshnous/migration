@@ -13,29 +13,29 @@ public interface AgencyRegistrationDAO {
 	 * 
 	 * @param agency
 	 */
-	public MerUserDTO createNewAgency(AgencyProfileDTO agency);
+	MerUserDTO createNewAgency(AgencyProfileDTO agency);
 
 	/**
 	 * 
 	 * @param agencyId
 	 */
-	public boolean deleteAgency(long agencyId);
+	boolean deleteAgency(long agencyId);
 
 	/**
 	 * 
 	 * @param agencyId
 	 */
-	public AgencyProfileDTO getAgencyDetails(long agencyId);
+	AgencyProfileDTO getAgencyDetails(long agencyId);
 
 	/**
 	 * 
 	 * @param agency
 	 */
-	public boolean updateAgencyDetails(AgencyProfileDTO agency);
+	boolean updateAgencyDetails(AgencyProfileDTO agency);
 
 	/**
 	 * @return
 	 */
-	public AgencyProfileDTO getProfileAttributes();
+	AgencyProfileDTO getProfileAttributes();
 
 }

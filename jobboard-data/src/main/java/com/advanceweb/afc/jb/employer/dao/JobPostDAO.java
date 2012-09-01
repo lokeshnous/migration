@@ -16,7 +16,6 @@ import com.advanceweb.afc.jb.common.StateDTO;
 public interface JobPostDAO {
 	
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
-	List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto) ;
 	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords);
 	JobPostDTO editJob(int jobId);

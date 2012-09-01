@@ -18,19 +18,19 @@ public interface EmployerRegistrationDAO {
 	 * 
 	 * @param employer
 	 */
-	public MerUserDTO createNewEmployer(EmployerProfileDTO empDTO);
+	MerUserDTO createNewEmployer(EmployerProfileDTO empDTO);
 
 	/**
 	 * 
 	 * @param employerId
 	 */
-	public boolean deleteEmployer(long employerId);
+	boolean deleteEmployer(long employerId);
 
 	/**
 	 * 
 	 * @param employerId
 	 */
-	public EmployerProfileDTO getEmployerDetails(int employerId);
+	EmployerProfileDTO getEmployerDetails(int employerId);
 
 	/**
 	 * Updating employer details
@@ -38,7 +38,7 @@ public interface EmployerRegistrationDAO {
 	 * @param empDTO
 	 * @return
 	 */
-	public boolean updateEmployerDetails(EmployerProfileDTO empDTO);
+	boolean updateEmployerDetails(EmployerProfileDTO empDTO);
 
 	/**
 	 * To change the password
@@ -46,7 +46,7 @@ public interface EmployerRegistrationDAO {
 	 * @param empDTO
 	 * @return boolean
 	 */
-	public boolean changePassword(EmployerProfileDTO empDTO);
+	boolean changePassword(EmployerProfileDTO empDTO);
 
 	/**
 	 * To change password
@@ -54,31 +54,33 @@ public interface EmployerRegistrationDAO {
 	 * @param jobSeekerRegistrationDTO
 	 * @return
 	 */
-	public EmployerProfileDTO getProfileAttributes();
+	EmployerProfileDTO getProfileAttributes();
 
 	/**
 	 * @param email
 	 * @return
 	 */
-	public boolean validateEmail(String email);
+	boolean validateEmail(String email);
 
+	List<AdmFacilityContact> getEmployeeData(int userId, String contactType);
 
-	public List<AdmFacilityContact> getEmployeeData(int userId,String contactType);
 	/**
 	 * 
-	 * @param userId userId.
+	 * @param userId
+	 *            userId.
 	 * @return userid.
 	 */
-	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+	List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
 			String contactType);
+
 	/**
 	 * 
-	 * @param apd apd.
-	 * @param admfacilityid admfacilityid.
+	 * @param apd
+	 *            apd.
+	 * @param admfacilityid
+	 *            admfacilityid.
 	 */
-	
-	public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid);
 
-	
+	void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid);
 
 }

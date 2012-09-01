@@ -50,13 +50,13 @@ public class JobPostController {
 	private PopulateDropdowns populateDropdownsService;	
 	
 	@Value("${deleteFail}")
-	String deleteFailErrMsg;
+	public String deleteFailErrMsg;
 	@Value("${repostFail}")
-	String repostFail;
+	public String repostFail;
 	@Value("${deactivationFail}")
-	String deactivateMsg;
+	public String deactivateMsg;
 	@Value("${deleteSuccess}")
-	String deleteSuccessMsg;
+	public String deleteSuccessMsg;
 	
 	@RequestMapping(value="/postNewJobs",method = RequestMethod.GET)
 	public ModelAndView showPostJob() {

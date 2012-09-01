@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -39,14 +40,10 @@ import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 @Repository("agencyRegistrationDAO")
 public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
-	private final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
-	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
+	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
+	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
 	@Autowired
 	private AgencyRegistrationConversionHelper agencyHelper;
-
-	public AgencyRegistrationDAOImpl() {
-
-	}
 
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
@@ -65,9 +62,9 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	}
 
-	public void finalize() throws Throwable {
+	private static final Logger LOGGER = Logger
 
-	}
+	.getLogger(AgencyRegistrationDAOImpl.class);
 
 	/**
 	 * 
@@ -88,19 +85,19 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 				hibernateTemplateTracker.saveOrUpdateAll(merUserProfiles);
 			}
 			// Getting role
-			@SuppressWarnings("unchecked")
+
 			List<AdmRole> roleList = hibernateTemplateCareers.find(
 					FIND_AGENCY_ROLE_ID, "facility_admin");
 			int roleId = 0;
-			if (null != roleList && roleList.size() > 0) {
+			if (null != roleList && !roleList.isEmpty()) {
 				AdmRole role = roleList.get(0);
 				AdmUserRole userRole = new AdmUserRole();
 				userRole.setCreateUserId(MMJBCommonConstants.ZERO_INT);
 				userRole.setCreateDt(new Date());
-				AdmUserRolePK pk = new AdmUserRolePK();
-				pk.setUserId(merUser.getUserId());
-				pk.setRoleId(role.getRoleId());
-				userRole.setRolePK(pk);
+				AdmUserRolePK admUserRolePK = new AdmUserRolePK();
+				admUserRolePK.setUserId(merUser.getUserId());
+				admUserRolePK.setRoleId(role.getRoleId());
+				userRole.setRolePK(admUserRolePK);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 				roleId = role.getRoleId();
 			}
@@ -150,7 +147,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			return agencyHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -168,7 +165,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 					.transformMerUtilityToDropDownDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -186,7 +183,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			return registrationConversionHelper
 					.transformMerUtilityToDropDownDTO(merUtilityList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -210,7 +207,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 					countryList, stateList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 
 		return dto;

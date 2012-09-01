@@ -32,7 +32,7 @@ public class JobBoardException extends Exception {
 	 * @param ex
 	 *            The exception from which the new exceptio object is created.
 	 */
-	public JobBoardException(Exception ex) {
-		super(ex);
+	public JobBoardException(Exception exception) {
+		super(exception);
 	}
 }
