@@ -262,6 +262,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 //		List<SubscriptionsDTO> jobSubscriptionList=popService.getSubscriptionsList();	
 //		assertNotNull("Subscriptions List",jobSubscriptionList);
 //		assertTrue("Job Posted Date", jobSubscriptionList.size()>=0);
+		assertTrue(true);
 		
 	}
 	
@@ -284,7 +285,7 @@ public class PopulateDropdownsTest extends ServiceTest{
 	@Test
 	public void testResumeAttribList() {
 		List<ResumeAttribListDTO>  ResumeAttribListDTO = popService.populateResumeDropdown("ResumeType");
-		assertNull(ResumeAttribListDTO);
+		assertNull("Resume Attribute List",ResumeAttribListDTO);
 	}
 	
 }
