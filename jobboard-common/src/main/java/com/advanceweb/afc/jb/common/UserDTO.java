@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.common;
 
-public class MerUserDTO {
+public class UserDTO {
 	
 	private int userId;
 	private String emailId;

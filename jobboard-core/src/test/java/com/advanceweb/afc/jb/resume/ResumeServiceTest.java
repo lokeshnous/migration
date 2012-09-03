@@ -18,7 +18,7 @@ import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
-import com.advanceweb.afc.jb.common.EduDegreeDTO;
+import com.advanceweb.afc.jb.common.EducationDegreeDTO;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
@@ -304,7 +304,7 @@ public class ResumeServiceTest extends ServiceTest {
 		dto1.setInstituteName("St Joseph");
 		dto1.setFieldOfStudy("HSC");
 		dto1.setLanguage("English");
-		EduDegreeDTO eduDegreeDTO1 = new EduDegreeDTO();
+		EducationDegreeDTO eduDegreeDTO1 = new EducationDegreeDTO();
 		eduDegreeDTO1.setDescription("Degree DTO !");
 		eduDegreeDTO1.setName("Degree Name 1");
 		dto1.setEduDegreeDTO(eduDegreeDTO1);
@@ -316,7 +316,7 @@ public class ResumeServiceTest extends ServiceTest {
 		dto2.setInstituteName("APRS");
 		dto2.setFieldOfStudy("SSC");
 		dto2.setLanguage("Telugu");
-		EduDegreeDTO eduDegreeDTO2 = new EduDegreeDTO();
+		EducationDegreeDTO eduDegreeDTO2 = new EducationDegreeDTO();
 		eduDegreeDTO2.setDescription("Degree DTO !");
 		eduDegreeDTO2.setName("Degree Name 1");
 		dto2.setEduDegreeDTO(eduDegreeDTO2);
@@ -328,7 +328,7 @@ public class ResumeServiceTest extends ServiceTest {
 		dto3.setInstituteName("SVDC");
 		dto3.setFieldOfStudy("MPC");
 		dto3.setLanguage("English");
-		EduDegreeDTO eduDegreeDTO3 = new EduDegreeDTO();
+		EducationDegreeDTO eduDegreeDTO3 = new EducationDegreeDTO();
 		eduDegreeDTO3.setDescription("Degree DTO !");
 		eduDegreeDTO3.setName("Degree Name 1");
 		dto3.setEduDegreeDTO(eduDegreeDTO3);

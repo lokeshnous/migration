@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -54,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public MerUserDTO getUser(String email) {
+	public UserDTO getUser(String email) {
 		return userDAO.getUser(email);
 	}
 

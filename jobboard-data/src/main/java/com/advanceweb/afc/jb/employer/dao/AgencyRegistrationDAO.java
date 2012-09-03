@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * @author rajeshkb
@@ -13,7 +13,7 @@ public interface AgencyRegistrationDAO {
 	 * 
 	 * @param agency
 	 */
-	MerUserDTO createNewAgency(AgencyProfileDTO agency);
+	UserDTO createNewAgency(AgencyProfileDTO agency);
 
 	/**
 	 * 

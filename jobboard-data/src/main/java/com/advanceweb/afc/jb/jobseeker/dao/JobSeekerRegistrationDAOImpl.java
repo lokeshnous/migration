@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
@@ -68,7 +68,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	 */
 	@Override
 	@Transactional(readOnly=false,propagation=Propagation.REQUIRED)
-	public MerUserDTO createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
+	public UserDTO createNewJobSeeker(JobSeekerRegistrationDTO jsDTO) {
 				
 		try {
 			MerUser merUser = registrationConversionHelper.transformMerUserDTOToMerUser(jsDTO, null);

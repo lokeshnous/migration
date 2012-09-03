@@ -18,7 +18,7 @@ public class EducationDTO {
 	private String language;
 	private boolean bNotGraduatedYet;
 	private int builderEduId;
-	private EduDegreeDTO eduDegreeDTO;
+	private EducationDegreeDTO eduDegreeDTO;
 	
 	public String getDegreeLvl() {
 		return degreeLvl;
@@ -69,10 +69,10 @@ public class EducationDTO {
 	public void setBuilderEduId(int builderEduId) {
 		this.builderEduId = builderEduId;
 	}
-	public EduDegreeDTO getEduDegreeDTO() {
+	public EducationDegreeDTO getEduDegreeDTO() {
 		return eduDegreeDTO;
 	}
-	public void setEduDegreeDTO(EduDegreeDTO eduDegreeDTO) {
+	public void setEduDegreeDTO(EducationDegreeDTO eduDegreeDTO) {
 		this.eduDegreeDTO = eduDegreeDTO;
 	}
 	public String getCertifications() {

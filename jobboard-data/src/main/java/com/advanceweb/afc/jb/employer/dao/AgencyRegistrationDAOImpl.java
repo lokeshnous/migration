@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.agency.helper.AgencyRegistrationConversionHelper;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -70,7 +70,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	 * 
 	 * @param agencyDTO
 	 */
-	public MerUserDTO createNewAgency(AgencyProfileDTO agencyDTO) {
+	public UserDTO createNewAgency(AgencyProfileDTO agencyDTO) {
 		try {
 			MerUser merUser = agencyHelper.transformMerUserDTOToMerUser(
 					agencyDTO, null);

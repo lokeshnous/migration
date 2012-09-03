@@ -40,8 +40,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -228,8 +228,8 @@ public class JobSeekerRegistrationController {
 			
 			
 				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
-				List<MerProfileAttribDTO> attribLists = transformJobSeekerRegistration.
+				UserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
+				List<ProfileAttribDTO> attribLists = transformJobSeekerRegistration.
 						transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
 				jsRegistrationDTO.setAttribList(attribLists);
 				jsRegistrationDTO.setMerUserDTO(userDTO);
@@ -251,7 +251,7 @@ public class JobSeekerRegistrationController {
 		return model;
 	}
 	
-	 private void authenticateUserAndSetSession(MerUserDTO user,
+	 private void authenticateUserAndSetSession(UserDTO user,
 		        HttpServletRequest request)
 		{
 		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
@@ -378,9 +378,9 @@ public class JobSeekerRegistrationController {
 			}
 			
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			List<MerProfileAttribDTO> attribList = transformJobSeekerRegistration.
+			List<ProfileAttribDTO> attribList = transformJobSeekerRegistration.
 					transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
-			MerUserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
+			UserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
 			userDTO.setUserId((Integer) session.getAttribute("userId"));
 			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
@@ -417,7 +417,7 @@ public class JobSeekerRegistrationController {
 				return errorMessage;
 			}
 			
-			MerUserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
+			UserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
 			userDTO.setUserId((Integer) session.getAttribute("userId"));
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 

@@ -13,23 +13,23 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 	private long employerId;
 	private PackageInformationDTO packageInformationDTO;
 	private MetricsDTO metricsDTO;
-	private MerUserDTO merUserDTO;
+	private UserDTO merUserDTO;
 	private CompanyProfileDTO compProfileDTO;
 	private AddressDTO addDTO;
 	private String profileType;
-	private List<MerProfileAttribDTO> attribList;
+	private List<ProfileAttribDTO> attribList;
 
 	/**
 	 * @return the attribList
 	 */
-	public List<MerProfileAttribDTO> getAttribList() {
+	public List<ProfileAttribDTO> getAttribList() {
 		return attribList;
 	}
 
 	/**
 	 * @param attribList the attribList to set
 	 */
-	public void setAttribList(List<MerProfileAttribDTO> attribList) {
+	public void setAttribList(List<ProfileAttribDTO> attribList) {
 		this.attribList = attribList;
 	}
 
@@ -58,11 +58,11 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 		this.metricsDTO = metricsDTO;
 	}
 
-	public MerUserDTO getMerUserDTO() {
+	public UserDTO getMerUserDTO() {
 		return merUserDTO;
 	}
 
-	public void setMerUserDTO(MerUserDTO merUserDTO) {
+	public void setMerUserDTO(UserDTO merUserDTO) {
 		this.merUserDTO = merUserDTO;
 	}
 

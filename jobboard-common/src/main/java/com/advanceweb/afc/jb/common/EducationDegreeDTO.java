@@ -7,7 +7,7 @@ package com.advanceweb.afc.jb.common;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-public class EduDegreeDTO {
+public class EducationDegreeDTO {
 	private int degreeEduId;
 	private String name;
 	private String description;

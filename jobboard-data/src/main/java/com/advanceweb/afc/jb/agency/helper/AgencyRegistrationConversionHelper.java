@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -42,7 +42,7 @@ public class AgencyRegistrationConversionHelper {
 		 */
 		MerUser merUser =entity; 
 				
-		MerUserDTO userDTO = dto.getMerUserDTO();
+		UserDTO userDTO = dto.getMerUserDTO();
 
 		if (null != userDTO && null == merUser) {
 			merUser = new MerUser();
@@ -59,9 +59,9 @@ public class AgencyRegistrationConversionHelper {
 	}
 
 	private MerUser createMerUser(MerUser entity, AgencyProfileDTO dto,
-			MerUserDTO userDTO) {
+			UserDTO userDTO) {
 
-		for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+		for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 			MerUserProfilePK merUserProfilePK = new MerUserProfilePK();
 			/*MerUserProfile profile = new MerUserProfile();
@@ -115,7 +115,7 @@ public class AgencyRegistrationConversionHelper {
 		AdmFacility admFacility = new AdmFacility();
 
 		if (null != dto.getAttribList()) {
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
 						.getStrLabelName())) {
 					admFacility.setEmail(attribDTO.getStrLabelValue());
@@ -158,7 +158,7 @@ public class AgencyRegistrationConversionHelper {
 		AdmFacilityContact facilityContact = new AdmFacilityContact();
 
 		if (null != dto.getAttribList()) {
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
 						.getStrLabelName())) {
 					facilityContact.setEmail(attribDTO.getStrLabelValue());
@@ -209,8 +209,8 @@ public class AgencyRegistrationConversionHelper {
 
 	}
 
-	public MerUserDTO transformMerUserToUserDTO(MerUser merUser) {
-		MerUserDTO userDTO = new MerUserDTO();
+	public UserDTO transformMerUserToUserDTO(MerUser merUser) {
+		UserDTO userDTO = new UserDTO();
 		if (null != merUser) {
 			userDTO.setEmailId(merUser.getEmail());
 			userDTO.setFirstName(merUser.getFirstName());
@@ -237,7 +237,7 @@ public class AgencyRegistrationConversionHelper {
 
 		if (null != dto.getAttribList()) {
 
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 				if (!MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
 						.getStrLabelName())
@@ -342,11 +342,11 @@ public class AgencyRegistrationConversionHelper {
 		}
 		
 		AgencyProfileDTO registerDTO = new AgencyProfileDTO();
-		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
+		List<ProfileAttribDTO> listDTO = new ArrayList<ProfileAttribDTO>();
 		if (null != listProfAttrib) {
 			for (MerProfileAttrib entity : listProfAttrib) {
 				if(profileAttribs.contains(entity.getName())){
-					MerProfileAttribDTO dto = new MerProfileAttribDTO();
+					ProfileAttribDTO dto = new ProfileAttribDTO();
 					dto.setStrAttribType(entity.getFormType());
 					dto.setStrLabelName(entity.getName());
 					dto.setStrProfileAttribId(String.valueOf(entity

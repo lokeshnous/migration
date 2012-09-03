@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -36,7 +36,7 @@ public interface LoginService {
 	 */
 	LoginDTO getUserEmailDetails(String emailAddress);
 
-	MerUserDTO getUser(String email);
+	UserDTO getUser(String email);
 
 	/**
 	 * This method is to get the facilityId for logged in user

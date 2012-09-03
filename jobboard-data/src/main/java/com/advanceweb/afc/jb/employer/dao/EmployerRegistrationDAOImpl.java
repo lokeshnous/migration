@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -80,7 +80,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public MerUserDTO createNewEmployer(EmployerProfileDTO empDTO) {
+	public UserDTO createNewEmployer(EmployerProfileDTO empDTO) {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO,
 					null);

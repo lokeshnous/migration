@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 
 /**
@@ -18,7 +18,7 @@ public interface EmployerRegistrationDAO {
 	 * 
 	 * @param employer
 	 */
-	MerUserDTO createNewEmployer(EmployerProfileDTO empDTO);
+	UserDTO createNewEmployer(EmployerProfileDTO empDTO);
 
 	/**
 	 * 

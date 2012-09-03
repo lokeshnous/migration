@@ -3,13 +3,13 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 public interface UserDao {
-	MerUserDTO getUser(String email);
+	UserDTO getUser(String email);
 
 	List<UserRoleDTO> getUserRole(int userId);
 

@@ -30,8 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
@@ -123,9 +123,9 @@ public class AgencyRegistrationController {
 		}
 
 		AgencyProfileDTO empDTO = new AgencyProfileDTO();
-		MerUserDTO userDTO = transformAgencyRegistration
+		UserDTO userDTO = transformAgencyRegistration
 				.createUserDTO(agencyRegistrationForm);
-		List<MerProfileAttribDTO> attribLists = transformAgencyRegistration
+		List<ProfileAttribDTO> attribLists = transformAgencyRegistration
 				.transformProfileAttribFormToDTO(agencyRegistrationForm
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
@@ -219,7 +219,7 @@ public class AgencyRegistrationController {
 	 * @param request
 	 */
 	@SuppressWarnings("deprecation")
-	private void authenticateUserAndSetSession(MerUserDTO user,
+	private void authenticateUserAndSetSession(UserDTO user,
 			HttpServletRequest request) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl(

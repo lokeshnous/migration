@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -31,7 +31,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public MerUserDTO createNewProfile(ProfileDTO profileDTO) {
+	public UserDTO createNewProfile(ProfileDTO profileDTO) {
 		try {
 			AgencyProfileDTO agencyProfileDTO = (AgencyProfileDTO) profileDTO;
 			return agencyRegistrationDAO.createNewAgency(agencyProfileDTO);

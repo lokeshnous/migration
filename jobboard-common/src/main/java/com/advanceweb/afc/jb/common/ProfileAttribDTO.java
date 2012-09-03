@@ -9,7 +9,7 @@ import java.util.List;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-public class MerProfileAttribDTO {
+public class ProfileAttribDTO {
 	
 	private String strLabelName;
 	private String strLabelValue;

@@ -9,8 +9,8 @@ import org.springframework.util.StringUtils;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 
@@ -39,7 +39,7 @@ public class TransformJobSeekerRegistration {
 		}
 		
 		if(null != jsRegistrationDTO.getMerUserDTO()){
-			MerUserDTO dto = jsRegistrationDTO.getMerUserDTO();
+			UserDTO dto = jsRegistrationDTO.getMerUserDTO();
 			form.setEmailId(dto.getEmailId());
 			form.setFirstName(dto.getFirstName());
 			form.setLastName(dto.getLastName());
@@ -92,9 +92,9 @@ public class TransformJobSeekerRegistration {
 	 * @param form
 	 * @return
 	 */
-	public MerUserDTO createUserDTO(JobSeekerRegistrationForm form){
+	public UserDTO createUserDTO(JobSeekerRegistrationForm form){
 		
-		MerUserDTO dto = new MerUserDTO();		
+		UserDTO dto = new UserDTO();		
 		dto.setFirstName(form.getFirstName());
 		dto.setLastName(form.getLastName());
 		dto.setMiddleName(form.getMiddleName());
@@ -130,8 +130,8 @@ public class TransformJobSeekerRegistration {
 	 * @param form
 	 * @return
 	 */
-	public MerUserDTO transformChangePasswordFormToMerUserDTO(ChangePasswordForm form){
-		MerUserDTO dto = new MerUserDTO();
+	public UserDTO transformChangePasswordFormToMerUserDTO(ChangePasswordForm form){
+		UserDTO dto = new UserDTO();
 		dto.setEmailId(form.getEmailId());
 		dto.setPassword(form.getPassword());
 		dto.setCurrentPassword(form.getCurrentPassword());
@@ -144,7 +144,7 @@ public class TransformJobSeekerRegistration {
 		List<JobSeekerProfileAttribForm> listForms = new ArrayList<JobSeekerProfileAttribForm>();
 		
 		if(null != registerDTO.getAttribList()){
-			for(MerProfileAttribDTO dto : registerDTO.getAttribList()){
+			for(ProfileAttribDTO dto : registerDTO.getAttribList()){
 				JobSeekerProfileAttribForm form = new JobSeekerProfileAttribForm();
 				form.setDropdown(dto.getDropdown());
 				form.setStrAttribType(dto.getStrAttribType());
@@ -165,13 +165,13 @@ public class TransformJobSeekerRegistration {
 	 * @param attributeList
 	 * @return
 	 */
-	public List<MerProfileAttribDTO> transformProfileAttribFormToDTO(List<JobSeekerProfileAttribForm> attributeList){
+	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(List<JobSeekerProfileAttribForm> attributeList){
 		
-		List<MerProfileAttribDTO> dtoList = new ArrayList<MerProfileAttribDTO>();
+		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
 		
 		if(null != attributeList){
 			for(JobSeekerProfileAttribForm form : attributeList){
-				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				ProfileAttribDTO dto = new ProfileAttribDTO();
 				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
 					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
 				}else{

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
@@ -41,15 +41,15 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public MerUserDTO getUser(String email) {
-		MerUserDTO userDTO = null;
+	public UserDTO getUser(String email) {
+		UserDTO userDTO = null;
 		MerUser user = null;
 		@SuppressWarnings("unchecked")
 		List<MerUser> userList = hibernateTemplateTracker.find(
 				" from  MerUser user where user.email=?", email);
 		if (userList != null && !userList.isEmpty()) {
 			user = userList.get(0);
-			userDTO = new MerUserDTO();
+			userDTO = new UserDTO();
 
 			userDTO.setEmailId(user.getEmail());
 			userDTO.setFirstName(user.getFirstName());

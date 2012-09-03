@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * @Author : Prince Mathew
@@ -87,9 +87,9 @@ public class TransformJobPost {
 	 * @param form
 	 * @return
 	 */
-	public MerUserDTO createUserDTO(JobPostForm form){
+	public UserDTO createUserDTO(JobPostForm form){
 		
-		MerUserDTO dto = new MerUserDTO();		
+		UserDTO dto = new UserDTO();		
 /*		dto.setFirstName(form.getFirstName());
 		dto.setLastName(form.getLastName());
 		dto.setMiddleName(form.getMiddleName());

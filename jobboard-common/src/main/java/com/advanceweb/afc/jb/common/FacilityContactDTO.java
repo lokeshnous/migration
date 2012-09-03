@@ -8,7 +8,7 @@ package com.advanceweb.afc.jb.common;
  */
 
 
-public class AdmFacilityContactDTO {
+public class FacilityContactDTO {
 
 	private String contactType;
 	private String firstName;

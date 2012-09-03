@@ -6,8 +6,8 @@ public class JobSeekerRegistrationDTO extends ProfileDTO {
 
 	private AddressDTO addressDTO;
 	private JobSeekerProfileDTO jobSeekerProfileDTO;
-	private MerUserDTO merUserDTO;
-	private List<MerProfileAttribDTO> attribList;
+	private UserDTO merUserDTO;
+	private List<ProfileAttribDTO> attribList;
 	private String emailId;
 	
 	public AddressDTO getAddressDTO() {
@@ -18,7 +18,7 @@ public class JobSeekerRegistrationDTO extends ProfileDTO {
 		return jobSeekerProfileDTO;
 	}
 
-	public MerUserDTO getMerUserDTO() {
+	public UserDTO getMerUserDTO() {
 		return merUserDTO;
 	}
 
@@ -30,15 +30,15 @@ public class JobSeekerRegistrationDTO extends ProfileDTO {
 		this.jobSeekerProfileDTO = jobSeekerProfileDTO;
 	}
 
-	public void setMerUserDTO(MerUserDTO merUserDTO) {
+	public void setMerUserDTO(UserDTO merUserDTO) {
 		this.merUserDTO = merUserDTO;
 	}
 
-	public List<MerProfileAttribDTO> getAttribList() {
+	public List<ProfileAttribDTO> getAttribList() {
 		return attribList;
 	}
 
-	public void setAttribList(List<MerProfileAttribDTO> attribList) {
+	public void setAttribList(List<ProfileAttribDTO> attribList) {
 		this.attribList = attribList;
 	}
 

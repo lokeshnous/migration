@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO;
@@ -36,7 +36,7 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	 */
 
 	@Override
-	public MerUserDTO createNewProfile(ProfileDTO profileDTO) {
+	public UserDTO createNewProfile(ProfileDTO profileDTO) {
 		try {
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
 			return jobSeekerRegistrationDAO.createNewJobSeeker(jobSeekerRegistrationDTO);

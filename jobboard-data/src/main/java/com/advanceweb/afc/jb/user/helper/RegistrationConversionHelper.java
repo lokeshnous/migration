@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
@@ -38,7 +38,7 @@ public class RegistrationConversionHelper {
 		 * Introduced a new variable "merUser" to resolve PMD issue.
 		 */
 		MerUser merUser = entity;
-		MerUserDTO userDTO = dto.getMerUserDTO();
+		UserDTO userDTO = dto.getMerUserDTO();
 
 		if (null != userDTO && null == merUser) {
 			merUser = new MerUser();
@@ -55,9 +55,9 @@ public class RegistrationConversionHelper {
 	}
 
 	private MerUser createMerUser(MerUser entity, JobSeekerRegistrationDTO dto,
-			MerUserDTO userDTO) {
+			UserDTO userDTO) {
 
-		for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+		for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 			MerUserProfilePK pk = new MerUserProfilePK();
 			MerUserProfile profile = new MerUserProfile();
@@ -114,7 +114,7 @@ public class RegistrationConversionHelper {
 
 		if (null != dto.getAttribList()) {
 
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 				if (!MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
 						.getStrLabelName())
@@ -166,7 +166,7 @@ public class RegistrationConversionHelper {
 
 		if (null != dto.getAttribList()) {
 
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
 						.getStrLabelName())
@@ -201,7 +201,7 @@ public class RegistrationConversionHelper {
 
 		if (null != jsDTO.getAttribList()) {
 
-			for (MerProfileAttribDTO attribDTO : jsDTO.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : jsDTO.getAttribList()) {
 				if (MMJBCommonConstants.FIRST_NAME.equalsIgnoreCase(attribDTO
 						.getStrLabelName())) {
 					attribDTO.setStrLabelValue(user.getFirstName());
@@ -231,7 +231,7 @@ public class RegistrationConversionHelper {
 	 * @param profiles
 	 * @return
 	 */
-	private String retrieveLabelValue(MerProfileAttribDTO attribDTO,
+	private String retrieveLabelValue(ProfileAttribDTO attribDTO,
 			List<MerUserProfile> profiles) {
 
 		if (null != attribDTO) {
@@ -261,11 +261,11 @@ public class RegistrationConversionHelper {
 		List<String> labels = getLablesByProperties("entries.properties");
 		List<String> profileAttribs = getLablesByProperties("jobSeekerProfile.properties");
 		JobSeekerRegistrationDTO registerDTO = new JobSeekerRegistrationDTO();
-		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
+		List<ProfileAttribDTO> listDTO = new ArrayList<ProfileAttribDTO>();
 		if (null != listProfAttrib) {
 			for (MerProfileAttrib entity : listProfAttrib) {
 				if (profileAttribs.contains(entity.getName())) {
-					MerProfileAttribDTO dto = new MerProfileAttribDTO();
+					ProfileAttribDTO dto = new ProfileAttribDTO();
 					dto.setStrAttribType(entity.getFormType());
 					dto.setStrLabelName(entity.getName());
 					dto.setStrProfileAttribId(String.valueOf(entity
@@ -393,9 +393,9 @@ public class RegistrationConversionHelper {
 	 * @param user
 	 * @return
 	 */
-	public MerUserDTO transformMerUserToUserDTO(MerUser user) {
+	public UserDTO transformMerUserToUserDTO(MerUser user) {
 
-		MerUserDTO userDTO = new MerUserDTO();
+		UserDTO userDTO = new UserDTO();
 		if (null != user) {
 			userDTO.setEmailId(user.getEmail());
 			userDTO.setFirstName(user.getFirstName());

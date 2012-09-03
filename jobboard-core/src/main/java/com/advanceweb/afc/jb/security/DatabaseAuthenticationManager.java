@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.user.dao.UserDao;
@@ -41,7 +41,7 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 	 */
 	public Authentication authenticate(Authentication auth)
 			throws AuthenticationException {
-		MerUserDTO user = null;
+		UserDTO user = null;
 		try {
 			user = userDAO.getUser(auth.getName());
 			if (user == null) {

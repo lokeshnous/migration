@@ -35,8 +35,8 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -150,8 +150,8 @@ public class EmployerRegistrationController {
 			}
 		}
 		EmployerProfileDTO empDTO = new EmployerProfileDTO();
-		MerUserDTO userDTO = transformEmpReg.createUserDTO(empRegForm);
-		List<MerProfileAttribDTO> attribLists = transformEmpReg
+		UserDTO userDTO = transformEmpReg.createUserDTO(empRegForm);
+		List<ProfileAttribDTO> attribLists = transformEmpReg
 				.transformProfileAttribFormToDTO(empRegForm
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
@@ -243,7 +243,7 @@ public class EmployerRegistrationController {
 	 * @param user
 	 * @param request
 	 */
-	private void authenticateUserAndSetSession(MerUserDTO user,
+	private void authenticateUserAndSetSession(UserDTO user,
 			HttpServletRequest request) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl(
@@ -274,7 +274,7 @@ public class EmployerRegistrationController {
 
 		try {
 			EmployerProfileDTO empDTO = new EmployerProfileDTO();
-			MerUserDTO merUserDTO = transformEmpReg
+			UserDTO merUserDTO = transformEmpReg
 					.transformEmpFormToMerUserDTO(form);
 			empDTO.setMerUserDTO(merUserDTO);
 			// Call to service layer

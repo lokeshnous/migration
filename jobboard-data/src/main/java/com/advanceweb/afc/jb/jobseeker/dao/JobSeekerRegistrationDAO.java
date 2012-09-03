@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * @author rajeshkb
@@ -14,7 +14,7 @@ public interface JobSeekerRegistrationDAO {
 	 * 
 	 * @param jobSeeker
 	 */
-	public MerUserDTO createNewJobSeeker(
+	public UserDTO createNewJobSeeker(
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 
 	/**

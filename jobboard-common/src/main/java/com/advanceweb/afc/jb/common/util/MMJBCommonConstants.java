@@ -8,220 +8,220 @@ package com.advanceweb.afc.jb.common.util;
  * @Since 2nd July, 2012
  */
 public interface MMJBCommonConstants {
-	public static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-zA-Z]).{8,20})";
-	// public static final String MOBILE_PATTERN = "((?=.*\\d).{10})";
-	public static final String MOBILE_PATTERN = "\\(\\d{3}\\)\\s\\d{3}-\\d{4}";
-	public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	public static final String MMDDYYYY_PATTERN = "^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d$";
-	public static final String NUMERICS_PATTERN = "[\\p{Digit}&&[123456789]]+";
-	public static final String RESUME_TYPE_RESUME_BUILDER = "ADVANCE Resume Builder";
-	public static final String RESUME_TYPE_UPLOAD = "Upload Existing Resume";
-	public static final String RESUME_TYPE_COPY_PASTE = "Copy and Paste";
+	String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-zA-Z]).{8,20})";
+	// String MOBILE_PATTERN = "((?=.*\\d).{10})";
+	String MOBILE_PATTERN = "\\(\\d{3}\\)\\s\\d{3}-\\d{4}";
+	String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	String MMDDYYYY_PATTERN = "^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d$";
+	String NUMERICS_PATTERN = "[\\p{Digit}&&[123456789]]+";
+	String RESUME_TYPE_RESUME_BUILDER = "ADVANCE Resume Builder";
+	String RESUME_TYPE_UPLOAD = "Upload Existing Resume";
+	String RESUME_TYPE_COPY_PASTE = "Copy and Paste";
 	// For DropDowns
-	public static final String RESUME_TYPE = "ResumeType";
-	public static final String DESIRED_JOB_TITLE = "JobTitle";
-	public static final String EMPLOYMENT_TYPE = "EmploymentType";
-	public static final String PHONE_TYPE = "PhoneType";
-	public static final String CAREER_LEVEL = "CareerLevel";
-	public static final String ANNUAL_SALARY = "AnnualSalary";
-	public static final String LANGUAGE_TYPE = "Language";
-	public static final String LANGUAGE_PROFICIENCY_TYPE = "LanguageProficiencyLevel";
-	public static final String WORK_AUTH_US = "WorkAuthorization";
-	public static final String RELOCATE = "Relocate";
-	public static final String RESUME_VISIBILITY = "ResumeVisibility";
-	public static final String VISIBILITY = "Visibility";
+	String RESUME_TYPE = "ResumeType";
+	String DESIRED_JOB_TITLE = "JobTitle";
+	String EMPLOYMENT_TYPE = "EmploymentType";
+	String PHONE_TYPE = "PhoneType";
+	String CAREER_LEVEL = "CareerLevel";
+	String ANNUAL_SALARY = "AnnualSalary";
+	String LANGUAGE_TYPE = "Language";
+	String LANGUAGE_PROFICIENCY_TYPE = "LanguageProficiencyLevel";
+	String WORK_AUTH_US = "WorkAuthorization";
+	String RELOCATE = "Relocate";
+	String RESUME_VISIBILITY = "ResumeVisibility";
+	String VISIBILITY = "Visibility";
 
 	// Relocate
-	public static final String RELOCATE_YES = "Yes";
-	public static final String RELOCATE_NO = "No";
+	String RELOCATE_YES = "Yes";
+	String RELOCATE_NO = "No";
 
 	// Resume Visibility
-	public static final String VISIBILITY_PUBLIC = "1";
-	public static final String VISIBILITY_PRIVATE = "0";
+	String VISIBILITY_PUBLIC = "1";
+	String VISIBILITY_PRIVATE = "0";
 
-	public static final long RESUME_MAX_SIZE = 50; // 750KB
+	long RESUME_MAX_SIZE = 50; // 750KB
 
-	public static final String FILE_TYPE_DOC = "doc";
-	public static final String FILE_TYPE_DOCX = "docx";
-	public static final String FILE_TYPE_PDF = "pdf";
+	String FILE_TYPE_DOC = "doc";
+	String FILE_TYPE_DOCX = "docx";
+	String FILE_TYPE_PDF = "pdf";
 
 	// For SOLR search
-	public static final int ZERO_INT = 0;
-	public static final String NULL_STR = "null";
-	public static final String TEMP_SESSION_ID = "JS0011";
-	// public static final String SPACE_OPN_BRCKT = " (";
-	// public static final String CLSG_BRCKT = ")";
-	public static final String EMPTY = "";
-	// public static final String CLSD_BRACES = "}";
-	// public static final String SPACE = " ";
-	public static final String EQUAL_TO = "=";
-	public static final String USER = "admin";
-	// public static final String SELECT_SLASH_QUESTIONMARK = "select/?";
-	public static final String COMMA = ",";
+	int ZERO_INT = 0;
+	String NULL_STR = "null";
+	String TEMP_SESSION_ID = "JS0011";
+	// String SPACE_OPN_BRCKT = " (";
+	// String CLSG_BRCKT = ")";
+	String EMPTY = "";
+	// String CLSD_BRACES = "}";
+	// String SPACE = " ";
+	String EQUAL_TO = "=";
+	String USER = "admin";
+	// String SELECT_SLASH_QUESTIONMARK = "select/?";
+	String COMMA = ",";
 
-	public static final String AUTOLOAD = "autoload";
-	public static final String SAVE_SEARCH_ID = "saveSearchId";
+	String AUTOLOAD = "autoload";
+	String SAVE_SEARCH_ID = "saveSearchId";
 
-	public static final String CITY = "city";
-	public static final String STATE = "state";
-	// public static final String COMPANY = "company";
+	String CITY = "city";
+	String STATE = "state";
+	// String COMPANY = "company";
 
-	public static final String AD_TEXT = "AdText";
-	public static final String CAP_COMPANY = "Company";
-	public static final String JOB_TITLE = "JobTitle";
-	public static final String CAP_CITY = "City";
-	public static final String POSTED_DATE = "PostedDate";
-	public static final String APPLY_ONLINE = "ApplyOnline";
-	public static final String BLIND_AD = "BlindAd";
-	public static final String FACILITY_NAME = "FacilityName";
-	public static final String EMAIL_DISPLAY = "EmailDisplay";
-	public static final String EMAIL = "Email";
-	public static final String IS_INTERNATIONAL = "IsInternational";
-	public static final String IS_NATIONAL = "IsNational";
-	public static final String IS_FEATURED = "IsFeatured";
-	public static final String JOB_COUNT = "JobCount";
-	public static final String JOB_ID = "JobId";
-	public static final String JOB_NUMBER = "Job Number";
-	public static final String JOB_GEO = "Job Geo";
-	public static final String JOB_POSITION = "JobPosition";
-	public static final String JOB_GEO_0_LATLON = "jobGeo0LatLon";
-	public static final String JOB_GEO_1_LATLON = "jobGeo1LatLon";
-	public static final String URL_DISPLAY = "URLDisplay";
-	public static final String URL = "url";
+	String AD_TEXT = "AdText";
+	String CAP_COMPANY = "Company";
+	String JOB_TITLE = "JobTitle";
+	String CAP_CITY = "City";
+	String POSTED_DATE = "PostedDate";
+	String APPLY_ONLINE = "ApplyOnline";
+	String BLIND_AD = "BlindAd";
+	String FACILITY_NAME = "FacilityName";
+	String EMAIL_DISPLAY = "EmailDisplay";
+	String EMAIL = "Email";
+	String IS_INTERNATIONAL = "IsInternational";
+	String IS_NATIONAL = "IsNational";
+	String IS_FEATURED = "IsFeatured";
+	String JOB_COUNT = "JobCount";
+	String JOB_ID = "JobId";
+	String JOB_NUMBER = "Job Number";
+	String JOB_GEO = "Job Geo";
+	String JOB_POSITION = "JobPosition";
+	String JOB_GEO_0_LATLON = "jobGeo0LatLon";
+	String JOB_GEO_1_LATLON = "jobGeo1LatLon";
+	String URL_DISPLAY = "URLDisplay";
+	String URL = "url";
 
-	public static final String TOTAL_NO_RECORDS = "TotalNoRecords";
-	public static final String JSON_ROWS = "jsonRows";
+	String TOTAL_NO_RECORDS = "TotalNoRecords";
+	String JSON_ROWS = "jsonRows";
 
-	public static final String SELECT = "select";
+	String SELECT = "select";
 
 	// Search type Names
-	public static final String LOCATION_SEARCH = "LOCATION";
-	public static final String KEYWORD_SEARCH = "KEYWORD";
+	String LOCATION_SEARCH = "LOCATION";
+	String KEYWORD_SEARCH = "KEYWORD";
 
 	// Solr Date pattern
-	public static final String JSON_DATE_FORMAT = "MMM-dd-yyyy";
+	String JSON_DATE_FORMAT = "MMM-dd-yyyy";
 	// For Resume
 
-	public static final String POST_RESUME = "postresume";
+	String POST_RESUME = "postresume";
 
 	// Date Patterns
-	public static final String DATE_PATTERN = "yyyy-MM-dd";
-	public static final String DISP_DATE_PATTERN = "MM/dd/yyyy";
-	public static final String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
-	public static final String SQL_DATE_PATTERN = "yyyy-MM-dd hh:mm:ss";
+	String DATE_PATTERN = "yyyy-MM-dd";
+	String DISP_DATE_PATTERN = "MM/dd/yyyy";
+	String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
+	String SQL_DATE_PATTERN = "yyyy-MM-dd hh:mm:ss";
 
-	public static final String ERROR_STRING = "error";
-	public static final String OK_STRING = "ok";
+	String ERROR_STRING = "error";
+	String OK_STRING = "ok";
 
-	public static final String CLICKTYPE_VIEW = "view";
-	public static final String CLICKTYPE_APPLY = "apply";
-	public static final String CLICKTYPE_CLICK = "click";
-	public static final String DROP_DOWN = "Dropdown";
-	public static final String CHECK_BOX = "CheckBox";
-	public static final String RADIO_BUTTON = "Radio";
-	public static final String LABEL_COUNTRY = "Country";
-	public static final String LABEL_STATE = "State / Province";
-	public static final String LABEL_SUSBSCRIPTION = "Subscriptions";
+	String CLICKTYPE_VIEW = "view";
+	String CLICKTYPE_APPLY = "apply";
+	String CLICKTYPE_CLICK = "click";
+	String DROP_DOWN = "Dropdown";
+	String CHECK_BOX = "CheckBox";
+	String RADIO_BUTTON = "Radio";
+	String LABEL_COUNTRY = "Country";
+	String LABEL_STATE = "State / Province";
+	String LABEL_SUSBSCRIPTION = "Subscriptions";
 	// If you change the following value, you should change in
 	// mer_profile_attrib as well.
 	// Colum name Screen Name
-	public static final String JOB_SEEKER_REGISTRATION = "JobSeeker Registration";
-	public static final String JOB_SEEKER_PROFILE_SETTINGS = "JobSeeker Edit Profile Settings";
-	public static final String FIRST_NAME = "First Name";
-	public static final String LAST_NAME = "Last Name";
-	public static final String MIDDLE_NAME = "Middle Name";
-	public static final String EMAIL_ADDRESS = "E-Mail Address";
-	public static final String PHONE_NUMBER = "Phone Number";
-	public static final String ZERO = "0";
+	String JOB_SEEKER_REGISTRATION = "JobSeeker Registration";
+	String JOB_SEEKER_PROFILE_SETTINGS = "JobSeeker Edit Profile Settings";
+	String FIRST_NAME = "First Name";
+	String LAST_NAME = "Last Name";
+	String MIDDLE_NAME = "Middle Name";
+	String EMAIL_ADDRESS = "E-Mail Address";
+	String PHONE_NUMBER = "Phone Number";
+	String ZERO = "0";
 	// for employer
-	public static final String POSITION_TITLE = "Position Title";
-	public static final String STREET_ADD = "Street Address";
-	public static final String ZIP_CODE = "Zip Code";
-	public static final String PRIMARY_PHONE = "Primary Phone";
-	public static final String SECONDARY_PHONE = "Secondary Phone";
-	public static final String COUNTRY = "Country";
-	public static final String CITY_EMP = "City";
-	public static final String STATE_PROVINCE = "State / Province";
-	public static final String COMPANY_EMP = "Company";
+	String POSITION_TITLE = "Position Title";
+	String STREET_ADD = "Street Address";
+	String ZIP_CODE = "Zip Code";
+	String PRIMARY_PHONE = "Primary Phone";
+	String SECONDARY_PHONE = "Secondary Phone";
+	String COUNTRY = "Country";
+	String CITY_EMP = "City";
+	String STATE_PROVINCE = "State / Province";
+	String COMPANY_EMP = "Company";
 
 	// For Save this
-	public static final String SEARCH_TYPE = "searchtype";
-	public static final String SEMICOLON = ";";
-	public static final String LANGUAGE_ENGLISH = "English";
-	public static final String REFERENCE_TYPE_PERSONAL = "Personal";
-	public static final String BASIC_SEARCH_TYPE = "basic";
-	public static final String SAVE_SEARCH_NAME = "saveSearchName";
+	String SEARCH_TYPE = "searchtype";
+	String SEMICOLON = ";";
+	String LANGUAGE_ENGLISH = "English";
+	String REFERENCE_TYPE_PERSONAL = "Personal";
+	String BASIC_SEARCH_TYPE = "basic";
+	String SAVE_SEARCH_NAME = "saveSearchName";
 
 	// For User Roles
-	public static final String MERION_ADMIN = "merion_admin";
-	public static final String JOBSEEKER = "jobseeker";
-	public static final String JOB_SEEKER = "jobSeeker";
-	public static final String EMPLOYER = "employer";
-	public static final String AGENCY = "agency";
-	public static final String FACILITY_ADMIN = "facility_admin";
-	public static final String FACILITY_USER = "facility_user";
-	public static final String ROLE_MERION_ADMIN = "ROLE_MERION_ADMIN";
-	public static final String ROLE_JOB_SEEKER = "ROLE_JOB_SEEKER";
-	public static final String ROLE_FACILITY_ADMIN = "ROLE_FACILITY_ADMIN";
-	public static final String ROLE_FACILITY_USER = "ROLE_FACILITY_USER";
-	public static final String FACILITY = "FACILITY";
-	public static final String FACILITY_GROUP = "FACILITY_GROUP";
-	public static final String FACILITY_SYSTEM = "FACILITY_SYSTEM";
-	public static final String ROLE_FACILITY = "ROLE_FACILITY";
-	public static final String ROLE_FACILITY_GROUP = "ROLE_FACILITY_GROUP";
-	public static final String ROLE_FACILITY_SYSTEM = "ROLE_FACILITY_SYSTEM";
+	String MERION_ADMIN = "merion_admin";
+	String JOBSEEKER = "jobseeker";
+	String JOB_SEEKER = "jobSeeker";
+	String EMPLOYER = "employer";
+	String AGENCY = "agency";
+	String FACILITY_ADMIN = "facility_admin";
+	String FACILITY_USER = "facility_user";
+	String ROLE_MERION_ADMIN = "ROLE_MERION_ADMIN";
+	String ROLE_JOB_SEEKER = "ROLE_JOB_SEEKER";
+	String ROLE_FACILITY_ADMIN = "ROLE_FACILITY_ADMIN";
+	String ROLE_FACILITY_USER = "ROLE_FACILITY_USER";
+	String FACILITY = "FACILITY";
+	String FACILITY_GROUP = "FACILITY_GROUP";
+	String FACILITY_SYSTEM = "FACILITY_SYSTEM";
+	String ROLE_FACILITY = "ROLE_FACILITY";
+	String ROLE_FACILITY_GROUP = "ROLE_FACILITY_GROUP";
+	String ROLE_FACILITY_SYSTEM = "ROLE_FACILITY_SYSTEM";
 
 	// For Login Failure URL
-	public static final String JOBSEEKER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=jobSeeker";
-	public static final String EMPLOYER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=employer";
-	public static final String AGENCY_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=agency";
+	String JOBSEEKER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=jobSeeker";
+	String EMPLOYER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=employer";
+	String AGENCY_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=agency";
 
 	// For Logout URL
-	public static final String JOBSEEKER_LOGOUT_URL = "/commonLogin/login.html?page=jobSeeker";
-	public static final String EMPLOYER_LOGOUT_URL = "/commonLogin/login.html?page=employer";
-	public static final String AGENCY_LOGOUT_URL = "/commonLogin/login.html?page=agency";
+	String JOBSEEKER_LOGOUT_URL = "/commonLogin/login.html?page=jobSeeker";
+	String EMPLOYER_LOGOUT_URL = "/commonLogin/login.html?page=employer";
+	String AGENCY_LOGOUT_URL = "/commonLogin/login.html?page=agency";
 
 	// Payment Gateway
-	public static final String CREDIT_CARD = "creditCard";
-	public static final String INVOICE = "invoice";
+	String CREDIT_CARD = "creditCard";
+	String INVOICE = "invoice";
 
 	// For Successful Login
-	public static final String USER_ID = "userId";
-	public static final String USER_EMAIL = "userEmail";
-	public static final String USER_NAME = "userName";
-	public static final String PAGE_VALUE = "pageValue";
-	public static final String FACILITY_ID = "facilityId";
+	String USER_ID = "userId";
+	String USER_EMAIL = "userEmail";
+	String USER_NAME = "userName";
+	String PAGE_VALUE = "pageValue";
+	String FACILITY_ID = "facilityId";
 
 	// For Duplicate Submission
-	public static final String LAST_PLACE_KEY = "LAST_PLACE_KEY";
+	String LAST_PLACE_KEY = "LAST_PLACE_KEY";
 
-	public static final String PERFORM_SAVED_SEARCH = "performSearch";
+	String PERFORM_SAVED_SEARCH = "performSearch";
 
 	// For Account Setting
-	public static final String PRIMARY = "PRIMARY";
-	public static final String BILLING = "BILLING";
+	String PRIMARY = "PRIMARY";
+	String BILLING = "BILLING";
 	
 	//For Post New Job
-	public static final String POST_NEW_JOB="Active";
-	public static final String POST_JOB_SCHEDULED="Scheduled";
-	public static final String POST_JOB_DRAFT="Draft";
-	public static final String POST_JOB_EXPIRED="Expired";
-	public static final String POST_JOB_INACTIVE="Inactive";
-	public static final byte ACTIVE=1;
-	public static final byte INACTIVE=0;
+	String POST_NEW_JOB="Active";
+	String POST_JOB_SCHEDULED="Scheduled";
+	String POST_JOB_DRAFT="Draft";
+	String POST_JOB_EXPIRED="Expired";
+	String POST_JOB_INACTIVE="Inactive";
+	byte ACTIVE=1;
+	byte INACTIVE=0;
 	
 	// For Apply job type
-	public static final String APPLY_TO_URL = "ApplyToURL";
-	public static final String APPLY_TO_ATS = "ApplyToATS";
-	public static final String APPLY_TO_EMAIL = "ApplyToEMail";
+	String APPLY_TO_URL = "ApplyToURL";
+	String APPLY_TO_ATS = "ApplyToATS";
+	String APPLY_TO_EMAIL = "ApplyToEMail";
 	
 	//for packages
-	public static final String PACKAGE_ESPOST = "ezpost";
-	public static final String PACKAGE_GOLD = "gold";
-	public static final String PACKAGE_PLATINUM = "platinum";
-	public static final String PACKAGE_JBPOSTSLOT = "jbPostSlot";
-	public static final String PACKAGE_STJOBPOSTING = "stJobPosting";
-	public static final String PACKAGE_SILVER = "silver";
+	String PACKAGE_ESPOST = "ezpost";
+	String PACKAGE_GOLD = "gold";
+	String PACKAGE_PLATINUM = "platinum";
+	String PACKAGE_JBPOSTSLOT = "jbPostSlot";
+	String PACKAGE_STJOBPOSTING = "stJobPosting";
+	String PACKAGE_SILVER = "silver";
 	
 	//for Branding template
 	public static final String IMAGE_TYPE_JPG = ".jpg";

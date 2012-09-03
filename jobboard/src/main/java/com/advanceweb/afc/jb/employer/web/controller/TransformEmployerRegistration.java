@@ -9,8 +9,8 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 /**
@@ -29,8 +29,8 @@ public class TransformEmployerRegistration {
 	 * @param form
 	 * @return MerUserDTO
 	 */
-	public MerUserDTO transformEmpFormToMerUserDTO(EmployerRegistrationForm form) {
-		MerUserDTO dto = new MerUserDTO();
+	public UserDTO transformEmpFormToMerUserDTO(EmployerRegistrationForm form) {
+		UserDTO dto = new UserDTO();
 		form.getListProfAttribForms();
 		dto.setEmailId(form.getEmailId());
 		dto.setFirstName(form.getFirstName());
@@ -84,7 +84,7 @@ public class TransformEmployerRegistration {
 		List<EmployerProfileAttribForm> listForms = new ArrayList<EmployerProfileAttribForm>();
 
 		if (null != registerDTO.getAttribList()) {
-			for (MerProfileAttribDTO dto : registerDTO.getAttribList()) {
+			for (ProfileAttribDTO dto : registerDTO.getAttribList()) {
 				EmployerProfileAttribForm form = new EmployerProfileAttribForm();
 				form.setDropdown(dto.getDropdown());
 				form.setStrAttribType(dto.getStrAttribType());
@@ -106,9 +106,9 @@ public class TransformEmployerRegistration {
 	 * @param form
 	 * @return
 	 */
-	public MerUserDTO createUserDTO(EmployerRegistrationForm form) {
+	public UserDTO createUserDTO(EmployerRegistrationForm form) {
 
-		MerUserDTO dto = new MerUserDTO();
+		UserDTO dto = new UserDTO();
 		dto.setFirstName(form.getFirstName());
 		dto.setLastName(form.getLastName());
 		dto.setMiddleName(form.getMiddleName());
@@ -124,13 +124,13 @@ public class TransformEmployerRegistration {
 	 * @param attributeList
 	 * @return
 	 */
-	public List<MerProfileAttribDTO> transformProfileAttribFormToDTO(List<EmployerProfileAttribForm> attributeList){
+	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(List<EmployerProfileAttribForm> attributeList){
 		
-		List<MerProfileAttribDTO> dtoList = new ArrayList<MerProfileAttribDTO>();
+		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
 		
 		if(null != attributeList){
 			for(EmployerProfileAttribForm form : attributeList){
-				MerProfileAttribDTO dto = new MerProfileAttribDTO();
+				ProfileAttribDTO dto = new ProfileAttribDTO();
 				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
 					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
 				}else{

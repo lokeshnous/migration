@@ -14,8 +14,8 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.ProfileAttribDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -48,7 +48,7 @@ public class EmployerRegistrationConversionHelper {
 		 */
 		MerUser merUser =entity; 
 		
-		MerUserDTO userDTO = dto.getMerUserDTO();
+		UserDTO userDTO = dto.getMerUserDTO();
 
 		if (null != userDTO && null == merUser) {
 			merUser = new MerUser();
@@ -65,9 +65,9 @@ public class EmployerRegistrationConversionHelper {
 	}
 
 	private MerUser createMerUser(MerUser entity, EmployerProfileDTO dto,
-			MerUserDTO userDTO) {
+			UserDTO userDTO) {
 
-		for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+		for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 			MerUserProfilePK merUserProfilePK = new MerUserProfilePK();
 			MerUserProfile profile = new MerUserProfile();
@@ -173,7 +173,7 @@ public class EmployerRegistrationConversionHelper {
 
 		if (null != dto.getAttribList()) {
 
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 				if (!MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
 						.getStrLabelName())
@@ -236,7 +236,7 @@ public class EmployerRegistrationConversionHelper {
 		
 		
 		if (null != dto.getAttribList()) {
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
 						.getStrLabelName())) {
 					admFacility.setEmail(attribDTO.getStrLabelValue());
@@ -279,7 +279,7 @@ public class EmployerRegistrationConversionHelper {
 		AdmFacilityContact facilityContact = new AdmFacilityContact();
 
 		if (null != dto.getAttribList()) {
-			for (MerProfileAttribDTO attribDTO : dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
 						.getStrLabelName())) {
 					facilityContact.setEmail(attribDTO.getStrLabelValue());
@@ -387,11 +387,11 @@ public class EmployerRegistrationConversionHelper {
 		}
 		
 		EmployerProfileDTO registerDTO = new EmployerProfileDTO();
-		List<MerProfileAttribDTO> listDTO = new ArrayList<MerProfileAttribDTO>();
+		List<ProfileAttribDTO> listDTO = new ArrayList<ProfileAttribDTO>();
 		if (null != listProfAttrib) {
 			for (MerProfileAttrib entity : listProfAttrib) {
 				if(profileAttribs.contains(entity.getName())){
-					MerProfileAttribDTO dto = new MerProfileAttribDTO();
+					ProfileAttribDTO dto = new ProfileAttribDTO();
 					dto.setStrAttribType(entity.getFormType());
 					dto.setStrLabelName(entity.getName());
 					dto.setStrProfileAttribId(String.valueOf(entity
@@ -435,7 +435,7 @@ public class EmployerRegistrationConversionHelper {
 		
 		if (null !=jsDTO.getAttribList()) {
 			
-			for(MerProfileAttribDTO attribDTO : jsDTO.getAttribList()){
+			for(ProfileAttribDTO attribDTO : jsDTO.getAttribList()){
 				if(MMJBCommonConstants.FIRST_NAME.equalsIgnoreCase(attribDTO.getStrLabelName())){
 					attribDTO.setStrLabelValue(user.getFirstName());
 				}else if(MMJBCommonConstants.LAST_NAME.equalsIgnoreCase(attribDTO.getStrLabelName())){
@@ -460,7 +460,7 @@ public class EmployerRegistrationConversionHelper {
 	 * @param profiles
 	 * @return
 	 */
-	private String retrieveLabelValue(MerProfileAttribDTO attribDTO, List<MerUserProfile> profiles){
+	private String retrieveLabelValue(ProfileAttribDTO attribDTO, List<MerUserProfile> profiles){
 		
 		if(null != attribDTO){
 			for(MerUserProfile profile : profiles){
@@ -473,8 +473,8 @@ public class EmployerRegistrationConversionHelper {
 		return null;		
 	}
 
-	public MerUserDTO transformMerUserToUserDTO(MerUser merUser) {
-		MerUserDTO userDTO = new MerUserDTO();
+	public UserDTO transformMerUserToUserDTO(MerUser merUser) {
+		UserDTO userDTO = new UserDTO();
 		if(null != merUser){
 			userDTO.setEmailId(merUser.getEmail());
 			userDTO.setFirstName(merUser.getFirstName());

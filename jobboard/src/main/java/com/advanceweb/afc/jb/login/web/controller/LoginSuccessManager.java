@@ -13,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
 
@@ -31,7 +31,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		response.setHeader("Cache-Control", "no-store");
 		response.setHeader("Cache-Control", "must-revalidate");
 		response.setDateHeader("Expires", 0);
-		MerUserDTO user = loginService.getUser(authentication.getName());
+		UserDTO user = loginService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()

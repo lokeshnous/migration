@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -25,7 +25,7 @@ public class JobSeekerRegistrationTest  extends ServiceTest{
 	@Test
 	public void createNewProfile(){
 		JobSeekerRegistrationDTO jsDTO = new JobSeekerRegistrationDTO();
-		MerUserDTO merUserDTO = new MerUserDTO();
+		UserDTO merUserDTO = new UserDTO();
 		merUserDTO.setEmailId("sasibhushanam@nousinfo.com");
 		merUserDTO.setFirstName("SasiBhushana");
 		merUserDTO.setLastName("Matcha");
@@ -42,7 +42,7 @@ public class JobSeekerRegistrationTest  extends ServiceTest{
 	public void getJobSeekerDetails(){
 
 		JobSeekerRegistrationDTO dto = (JobSeekerRegistrationDTO) profileRegistration.viewProfile(4);
-		MerUserDTO merDTO = dto.getMerUserDTO();
+		UserDTO merDTO = dto.getMerUserDTO();
 		Assert.assertEquals("sasibhushanam@nousinfo.com", merDTO.getEmailId());
 		Assert.assertEquals("SasiBhushana", merDTO.getFirstName());
 		Assert.assertEquals("Matcha", merDTO.getLastName());
@@ -56,7 +56,7 @@ public class JobSeekerRegistrationTest  extends ServiceTest{
 	@Test
 	public void updateJobSeekerDetails(){
 		JobSeekerRegistrationDTO jsDTO = new JobSeekerRegistrationDTO();
-		MerUserDTO merUserDTO = new MerUserDTO();
+		UserDTO merUserDTO = new UserDTO();
 		merUserDTO.setEmailId("sasibhushanam@nousinfo.com");
 		merUserDTO.setFirstName("SasiBhushana");
 		merUserDTO.setLastName("Matcha");

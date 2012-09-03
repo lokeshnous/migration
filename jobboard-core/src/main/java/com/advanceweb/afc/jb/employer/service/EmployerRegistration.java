@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -42,7 +42,7 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	 * 
 	 * @param profileDTO
 	 */
-	public MerUserDTO createNewProfile(ProfileDTO profileDTO) {
+	public UserDTO createNewProfile(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerRegistrationDAO.createNewEmployer(empProfileDTO);

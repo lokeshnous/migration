@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.MerUserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 public class EmployerRegistrationTest extends ServiceTest{
@@ -17,7 +17,7 @@ public class EmployerRegistrationTest extends ServiceTest{
 	@Test
 	public void createNewProfile(){
 		EmployerProfileDTO profileDto = new EmployerProfileDTO();
-		MerUserDTO merUserDTO = new MerUserDTO();
+		UserDTO merUserDTO = new UserDTO();
 		merUserDTO.setEmailId("murali@nousinfo.com");
 		merUserDTO.setFirstName("murali");
 		merUserDTO.setLastName("krsihna");
