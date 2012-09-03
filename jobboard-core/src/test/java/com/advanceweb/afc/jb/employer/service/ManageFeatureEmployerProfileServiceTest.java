@@ -7,10 +7,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.employer.dao.JobPostDAOImpl;
 
 public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 
