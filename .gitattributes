@@ -44,6 +44,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LocationDTO.java -tex
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MMXmlResumeParserImpl.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MagazinesDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ManageAccessPermissionDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchTypeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetricsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetroAreaDTO.java -text
@@ -105,10 +106,12 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostService.jav
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearch.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearchAdapter.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/ManageAccessPermissionService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/SaveSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobApplicationServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobSeekerJobDetailServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/ManageAccessPermissionServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerJobDetailService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionService.java -text
@@ -272,6 +275,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmployerRegistrat
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmployerRegistrationDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/JobPostDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/JobPostDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageAccessPermissionDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageAccessPermissionDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/BrandTemplateConversionHelper.java -text
@@ -351,6 +356,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostForm
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostingInventoryController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostingsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageAccessPermissionController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageAccessPermissionForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostingController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/SearchResumeController.java -text

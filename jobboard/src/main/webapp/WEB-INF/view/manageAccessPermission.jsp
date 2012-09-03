@@ -13,23 +13,50 @@
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    $("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
+		    
+		    $('#addNewJobOwnerPopUp').click(function() {
+		    	 $("form")
+					.attr(
+							"action",
+							"${pageContext.request.contextPath}/employer/addNewJobOwner.html);
+			$("form")
+					.attr("method", "POST");
+			$("form").submit();	 	
+			});
+		    }
+		    $("#managePermission a").click(function() {
+		    	
+		    	//val= this.$('#userId').val();
+				val=$(this).attr("id");
+				 $("form")
+						.attr(
+								"action",
+								"${pageContext.request.contextPath}/employer/updateJobOwner.html?update=delete&userId="
+										+ val);
+				$("form")
+						.attr("method", "POST");
+				$("form").submit();	 				
+
+		});
+		    
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
 		</head>
 
 		<body class="job_board">
+		
+		 <form:form action="updateJobOwner.html" commandName="manageAccessPermissionForm">
+		 
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
           <div class="popupHeader">
             <h2>MANAGE ACCESS PERMISSIONS</h2>
            <img src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>
           <div class="popUpContainerWrapper">
-           <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html"  id="addNewJobOwnerPopUp" class="btn_sm white">Add New Job Owner</a> </span>  </div>
-          
-            <form action="" method="">
+           <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="#"  id="addNewJobOwnerPopUp" class="btn_sm white">Add New Job Owner</a> </span>  </div>
             
               <div class="rowEvenNewSpacing marginTop10 marginTop0">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					<table id="managePermission" width="100%" border="0" cellspacing="0" cellpadding="0"
 						class="grid">
 						<tr>
 							<th width="2%" align="left" scope="col">&nbsp;</th>
@@ -42,23 +69,24 @@
 							varStatus="status">
 							<tr>
 								<td>&nbsp;</td>
-								<td>${job.optionName}</td>
+								<td>${job.optionName} </td>
 								<td width="16%" align="left"><input name="radio"
 									type="radio" id="radio1" value="radio" checked> <label
 									for="radio">Full Access</label></td>
 								<td width="31%" align="left"><input name="radio"
 									type="radio" id="radio1" value="radio"> <label
 									for="radio">Post / Edit Only</label></td>
-								<td align="left"><a href="#"> Delete User</a></td>
+								<td align="left"><a id="${job.optionId}" href="#"> Delete User</a></td>
 							</tr>
 						</c:forEach>
 
 					</table>
 				</div>
               <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="" class="btn_sm orange">Save</a> <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a></span> <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
-            </form>
+           
           </div>
           <div class="clearfix"></div>
         </div>
+        </form:form>
 </body>
 </html>

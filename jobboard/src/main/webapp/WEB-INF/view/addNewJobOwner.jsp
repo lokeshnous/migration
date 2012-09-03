@@ -13,12 +13,25 @@
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
+		    	$("#saveNewOwner").click(function() {
+							
+								$("form")
+										.attr(
+												"action",
+												"${pageContext.request.contextPath}/employer/addJobOwner.html"
+														+ val);
+								$("form")
+										.attr("method", "POST");
+								$("form").submit();							
+
+						});
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
 </head>
 
 <body class="job_board">
+<form:form action="addJobOwner.html" commandName="manageAccessPermissionForm">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
@@ -29,31 +42,31 @@
 		<div class="popUpContainerWrapper">
 			<form action="" method="">
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Job Owner Name:</span> <input type="text"
+					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
 						name="EmailAddress" class="job_seeker_email width300" />
 				</div>
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Job Owner Email Address:</span> <input
-						type="text" name="EmailAddress" class="job_seeker_email width300" />
+					<span class="lableText3">Job Owner Email Address:</span> <form:input
+						 path="ownerEmail" name="EmailAddress" class="job_seeker_email width300" />
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4"> </span>
 					<div class="floatLeft marginTop5 marginRight10">
-						<label> <input name="RadioGroup10" type="radio"
-							id="RadioGroup1_0" value="radio" checked> Full Access
+						<label> <form:radiobutton name="RadioGroup10" 
+							id="RadioGroup1_0"  path="accessTypefull"> Full Access
 						</label>
 					</div>
 
 					<div class="floatLeft marginTop5">
-						<label> <input type="radio" name="RadioGroup10"
-							value="radio" id="RadioGroup1_0"> Post / Edit Only
+						<label> <form:radiobutton name="RadioGroup10" 
+							id="RadioGroup1_0"  path="accessTypePost"> Post / Edit Only
 						</label>
 					</div>
 
 
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-						<span class="floatLeft marginTop10"><a href=""
+						<span class="floatLeft marginTop10"><a href="" id="saveNewOwner"
 							class="btn_sm orange">SAVE</a> <a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a></span>
 					</div>
 					<div class="clearfix"></div>
@@ -61,6 +74,6 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-
+</form:form>
 </body>
 </html>
