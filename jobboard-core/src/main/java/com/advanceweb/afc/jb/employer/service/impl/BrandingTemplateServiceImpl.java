@@ -73,8 +73,8 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Delete the job posting Branding Template.
 	 */
 	@Override
-	public boolean deleteBrandingTemplate(int templateId) {
-		return brandingTemplateDAO.deleteBrandingTemplate(templateId);
+	public boolean deleteBrandingTemplate(int templateId, int deleteUserId) {
+		return brandingTemplateDAO.deleteBrandingTemplate(templateId, deleteUserId);
 	}
 
 }

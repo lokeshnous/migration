@@ -62,6 +62,6 @@ public interface BrandingTemplateService {
 	 * @param brandingTemplatesDTO
 	 * @return
 	 */
-	boolean deleteBrandingTemplate(int templateId);
+	boolean deleteBrandingTemplate(int templateId, int deleteUserId);
 
 }
