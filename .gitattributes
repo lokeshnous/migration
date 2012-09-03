@@ -320,6 +320,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConver
 jobboard-data/src/main/resources/HibernateSessionFactory.xml -text
 jobboard-data/src/main/resources/database.properties -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
+jobboard-parent/pom.xml -text
 jobboard/pom.xml -text
 jobboard/src/main/java/Messages_IN.properties -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text

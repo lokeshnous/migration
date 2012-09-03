@@ -51,7 +51,7 @@ public class AgencyRegistrationValidation {
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", NOT_EMPTY, "E-Mail addresses doesn’t match");
+				errors.rejectValue("confirmEmailId", NOT_EMPTY, "E-Mail addresses do not match");
 			 }
 		 }
 	}
