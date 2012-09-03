@@ -24,7 +24,7 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 public class JobPostServiceImpl implements JobPostService {
 	
 	@Autowired
-	JobPostDAO employerJobPostDAO;
+	private JobPostDAO employerJobPostDAO;
 	
 	/**
 	   @Author :Prince Mathew
