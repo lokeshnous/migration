@@ -8,10 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddImageDTO;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.TestimonyDTO;
 import com.advanceweb.afc.jb.common.VideoDTO;
-import com.advanceweb.afc.jb.resume.web.controller.PhoneDetailForm;
 
 /**
  * 

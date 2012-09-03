@@ -50,8 +50,9 @@ public class BrandingTemplateValidation {
 				errors.rejectValue("logoFileData", "NotEmpty", "Please select the appropriate Logo");
 			}
 			
-			if(!brandingTemplateForm.getIsSilverCustomer())
-			{
+//			if(!brandingTemplateForm.getIsSilverCustomer())
+//			{
+				
 //				imageLength = brandingTemplateForm.getAddImagePath().length();
 //				fileExtension = brandingTemplateForm.getAddImagePath().substring(imageLength-4, imageLength);
 //				
@@ -59,7 +60,7 @@ public class BrandingTemplateValidation {
 //				{
 //					errors.rejectValue("addImageFileData", "NotEmpty", "Please select the appropriate Image");
 //				}
-			}
+//			}
 		}
 	
 		/**
@@ -119,7 +120,7 @@ public class BrandingTemplateValidation {
 		 */
 		public void validateVideoSize(BrandingTemplateForm brandingTemplateForm){
 			
-			long videoSizeLimit=90000000;
+//			long videoSizeLimit=90000000;
 						
 //			long videoSize = brandingTemplateForm.getVideoFileData().getSize();
 //			if (videoSize==0 || videoSize>videoSizeLimit)

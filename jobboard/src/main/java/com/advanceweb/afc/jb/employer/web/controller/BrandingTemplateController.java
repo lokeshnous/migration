@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -75,15 +74,15 @@ public class BrandingTemplateController {
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 
-	@Value("${ajaxNavigationPath}")
-	private String ajaxNavigationPath;
+//	@Value("${ajaxNavigationPath}")
+//	private String ajaxNavigationPath;
 	
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
 	private static final String STR_LOGOFILEDATA = "logoFileData";
 	private static final String STR_NOTEMPTY = "NotEmpty";
 	private static final String STR_TEMPLATE_ = "Template_";
-	
+	private static final String STR_SILVERPREVIEW = "brandTemplateSilverPreview";
 	
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -96,9 +95,6 @@ public class BrandingTemplateController {
 	public ModelAndView createEmpBrandTemp(
 			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm brandingTemplateForm,
 			BindingResult result, HttpSession session) {
-
-
-		  
 
 		/**
 		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
@@ -115,64 +111,20 @@ public class BrandingTemplateController {
 //		System.out.println("TESTIMONY LIST is -->"+brandingTemplateForm.getListTestimony().get(i).getTestimony());
 //		}
 		
-		
 //		Retrieve facilityId and userId from session.
 		int facility_id = (Integer)session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		brandingTemplate.setFacilityId(facility_id);
 		int user_id = (Integer)session.getAttribute(MMJBCommonConstants.USER_ID);
 		brandingTemplate.setEmployerId(user_id);
 		
-//		Verify if the employer is of Silver category
-
-
 		// Verify if the employer is of Siver caegory
 		brandingTemplate.setIsSilverCustomer(Boolean.TRUE);
 
-		//TODO Remove after testing
-//				List<String> addImagePath = new ArrayList<String>();
-//				addImagePath.add("ADD IMAGE PATH 1");
-//				addImagePath.add("ADD IMAGE PATH 2");
-//				
-//				List<AddImageForm> addImages = new ArrayList<AddImageForm>();
-//				AddImageForm addImageForm1 = new AddImageForm();
-//				addImageForm1.setAddImageFileData(brandingTemplate.getMainImageFileData());
-//				AddImageForm addImageForm2 = new AddImageForm();
-//				addImageForm2.setAddImageFileData(brandingTemplate.getMainImageFileData());
-//				addImages.add(addImageForm1);
-//				addImages.add(addImageForm2);
-//				
-//				List<String> videoPath = new ArrayList<String>();
-//				videoPath.add("VIDEO PATH 1");
-//				videoPath.add("VIDEO PATH 2");
-//				
-//				List<VideoForm> videos = new ArrayList<VideoForm>();
-//				VideoForm videoForm1 = new VideoForm();
-//				videoForm1.setVideoFileData(brandingTemplate.getMainImageFileData());
-//				VideoForm videoForm2 = new VideoForm();
-//				videoForm2.setVideoFileData(brandingTemplate.getMainImageFileData());
-//				videos.add(videoForm1);
-//				videos.add(videoForm2);
-//				
-//				List<TestimonyForm> testimonies = new ArrayList<TestimonyForm>();
-//				TestimonyForm testimonyForm = new TestimonyForm();
-//				testimonyForm.setTestimony("TESTIMONY 1");
-//				TestimonyForm testimonyForm2 = new TestimonyForm();
-//				testimonyForm2.setTestimony("TESTIMONY 2");
-//				testimonies.add(testimonyForm);
-//				testimonies.add(testimonyForm2);
-//				brandingTemplate.setListAddImagePath(addImagePath);
-//				brandingTemplate.setListVideoPath(videoPath);
-//				brandingTemplate.setListTestimony(testimonies);
-//				brandingTemplate.setListAddImages(addImages);
-//				brandingTemplate.setListVideos(videos);
-		
-		
 		// Modify the names of media files to save on File server
 
 		brandingTemplate = modifyMediaName(brandingTemplate);
 
 		// Validate the form data
-
 		
 		if(brandingTemplate.getIsSilverCustomer())
 		{
@@ -188,6 +140,8 @@ public class BrandingTemplateController {
 		else
 		{
 //			TODO Validation for non Silver customers
+			
+			
 //			String errorMessage = brandingTemplateValidation.validateNonSilver(brandingTemplateForm, result);
 //			if (!StringUtils.isEmpty(errorMessage)) {
 //				model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
@@ -256,8 +210,6 @@ public class BrandingTemplateController {
 			HttpServletRequest request, HttpServletResponse response) {
 
 
-//		JSONObject jsonObject = new JSONObject();
-
 		/**
 		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
 		 */
@@ -297,7 +249,7 @@ public class BrandingTemplateController {
 		}
 
 		if (brandingTemplateForm.getIsSilverCustomer()) {
-			model.setViewName("brandTemplateSilverPreview");
+			model.setViewName(STR_SILVERPREVIEW);
 		} else {
 			model.setViewName("brandTemplateGoldPreview");
 		}
@@ -315,38 +267,44 @@ public class BrandingTemplateController {
 
 		BrandingTemplateDTO templateDTO = brandingTemplateService
 				.editBrandingTemplate(templateId);
+
 		ModelAndView model = new ModelAndView();
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
-		model.setViewName("brandTemplateSilverPreview");
+		model.setViewName(STR_SILVERPREVIEW);
 		return model;
 
 	}	
 	
 	
 	@RequestMapping(value = "/preview", method = RequestMethod.GET)
-	public @ResponseBody JSONObject previewNew(BrandingTemplateForm form, Map model)
-	{
-		model = new HashMap<String, Object>();
-		ModelAndView modelAndView = new ModelAndView();
+//	public @ResponseBody JSONObject previewNew(BrandingTemplateForm form, Map model)
+	public ModelAndView previewNew(
+			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm form,
+			BindingResult result, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+
+			
+//		JSONObject jsonObject = new JSONObject();
+//		jsonObject.put(ajaxNavigationPath, "../brandingTemplates/brandTemplateSilverPreview");
+//		jsonObject.put("brandingTemplateForm",brandingTemplateForm);
+//		return jsonObject;
 		
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put(ajaxNavigationPath, "../brandingTemplates/brandTemplateSilverPreview");
-		
-		BrandingTemplateForm brandingTemplateForm = new BrandingTemplateForm();
+		BrandingTemplateForm brandingTemplateForm = form;
+		ModelAndView model = new ModelAndView();
 		brandingTemplateForm.setLogoPath("C:\\mmsource\\LogoAndMediaFiles\\Logo.jpg");
-		model.put("brandingTemplateForm",brandingTemplateForm);
-		modelAndView.addObject(brandingTemplateForm);
-		//jsonObject.put("brandingTemplateForm",brandingTemplateForm);
-		return jsonObject;
+		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
+		model.setViewName(STR_SILVERPREVIEW);
+				
+		return model;
 		
 	}
 	
 	@RequestMapping(value = "/brandTemplateSilverPreview")
 	public ModelAndView previewPopUp(
 			Map<String, BrandingTemplateForm> model) {
-		return new ModelAndView("brandTemplateSilverPreview");
+		return new ModelAndView(STR_SILVERPREVIEW);
 	}
 	
 	@RequestMapping("/viewImage")
@@ -682,7 +640,7 @@ public class BrandingTemplateController {
 
 
 	/**
-	 * The method is called to create a the empBrandTempList popup.
+	 * The method is called to create a the createBrandingTemplate.
 	 * 
 	 * @param model
 	 * @return
@@ -703,6 +661,28 @@ public class BrandingTemplateController {
 		return model;
 	}
 
+	/**
+	 * The method is called to display the createBrandingTemplate with data.
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/displayTemplate", method = RequestMethod.GET)
+	public ModelAndView displayTemplate(Map modelMap, @ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm form,
+			BindingResult result, HttpSession session) {
+		BrandingTemplateForm brandingTemplateForm = form;
+
+		ModelAndView model = new ModelAndView();
+		TestimonyForm testimonyForm= new TestimonyForm();
+		ArrayList<TestimonyForm> nonEmptyList = new ArrayList<TestimonyForm>();
+		nonEmptyList.add(testimonyForm);
+		brandingTemplateForm.setListTestimony(nonEmptyList);
+		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
+		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
+//		Dummy list created to have a non zero List
+
+		return model;
+	}
 	
 	
 	/**
@@ -832,6 +812,8 @@ public class BrandingTemplateController {
 			@RequestParam("templateId") int templateId) {
 		BrandingTemplateDTO templateDTO = brandingTemplateService
 				.editBrandingTemplate(templateId);
+//		TODO retrieve information from DB or session  if Silver/NonSilver customer
+		templateDTO.setIsSilverCustomer(Boolean.TRUE);
 		ModelAndView model = new ModelAndView();
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
