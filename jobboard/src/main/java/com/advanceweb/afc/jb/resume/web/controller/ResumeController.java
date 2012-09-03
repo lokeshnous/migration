@@ -687,6 +687,16 @@ public class ResumeController {
 		return model;
 
 	}
+	
+	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Back")
+	public ModelAndView backToResumeBuilder(CreateResume createResume) {
+		ModelAndView model = new ModelAndView();
+		model.addObject("createResume", createResume);
+		model = populateDropdowns(model);
+		model.setViewName("createResumeBuilder");
+		return model;
+
+	}
 
 	/**
 	 * This method is called to add work experience
