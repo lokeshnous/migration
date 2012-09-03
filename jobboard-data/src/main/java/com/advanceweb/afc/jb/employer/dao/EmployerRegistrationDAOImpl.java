@@ -326,7 +326,8 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	@Override
-	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid) {
+	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+			int userId, String billing) {
 
 		AdmFacilityContact facility = hibernateTemplateCareers.get(
 				AdmFacilityContact.class, admfacilityid);
@@ -341,8 +342,17 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		facility.setEmail(apd.getEmail());
 		facility.setPhone(apd.getPhone());
 		hibernateTemplateCareers.update(facility);
+		// update meruser Entity
+		if (billing.equals("PRIMARY")) {
+			MerUser mer = hibernateTemplateTracker.get(MerUser.class, userId);
+			mer.setFirstName(apd.getFirstName());
+			mer.setLastName(apd.getLastName());
+			mer.setEmail(apd.getEmail());
+			hibernateTemplateTracker.update(mer);
+		}
 
 	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override
