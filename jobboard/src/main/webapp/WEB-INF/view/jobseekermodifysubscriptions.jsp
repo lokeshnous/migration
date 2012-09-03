@@ -32,7 +32,7 @@
 </head>
 
 <body class="job_board">
-	<form:form method="Post" action="<%=request.getContextPath()%>/subscriptions/saveJobSeekerSubscription.html" id="subscriptionsId"
+	<form:form method="Post" action="../subscriptions/saveJobSeekerSubscription.html" id="subscriptionsId"
 		commandName="jobSeekerSubscriptionForm">
 		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
