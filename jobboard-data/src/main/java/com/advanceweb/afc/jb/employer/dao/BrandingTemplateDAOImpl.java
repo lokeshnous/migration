@@ -109,17 +109,20 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		Boolean status = null;
 		try {
 			JpTemplate jpTemplate = brandTemplateConversionHelper.convertToJPTemplate(brandingTemplatesDTO);
-			List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper.transformTemplateTestimony(brandingTemplatesDTO.getListTestimony(), jpTemplate);
-			List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper.transformVideo(brandingTemplatesDTO.getListVideos(), jpTemplate);
-			
-			jpTemplate.setJpTemplateTestimonials(listTestimonyEntity);
-			jpTemplate.setJpTemplateMedias(listMediaEntity);
 			
 			
 //			hibernateTemplateCareer.save(jpTemplate);
 			hibernateTemplateCareer.saveOrUpdate(jpTemplate);
 			
 			if (!brandingTemplatesDTO.getIsSilverCustomer()){
+				
+				List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper.transformTemplateTestimony(brandingTemplatesDTO.getListTestimony(), jpTemplate);
+				List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper.transformVideo(brandingTemplatesDTO.getListVideos(), jpTemplate);
+				
+				jpTemplate.setJpTemplateTestimonials(listTestimonyEntity);
+				jpTemplate.setJpTemplateMedias(listMediaEntity);
+				
+				
 			hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
 			hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
 			}
