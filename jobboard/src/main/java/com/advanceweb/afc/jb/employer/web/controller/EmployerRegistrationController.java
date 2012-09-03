@@ -317,7 +317,7 @@ public class EmployerRegistrationController {
 				return model;
 			}
 
-			empRegService.editEmployeeAccount(dto, admfacilityid);
+			empRegService.editEmployeeAccount(dto, admfacilityid,userId,MMJBCommonConstants.PRIMARY);
 		} else {
 			model.setViewName("employerDashboard");
 			return model;
@@ -351,7 +351,7 @@ public class EmployerRegistrationController {
 					.getFacilityContactId();
 			AccountProfileDTO dto = transformEmpReg
 					.transformBillingProfileFormToDto(employeeBillingForm);
-			empRegService.editEmployeeAccount(dto, admfacilityid);
+			empRegService.editEmployeeAccount(dto, admfacilityid,userId,MMJBCommonConstants.BILLING);
 
 		} else {
 
