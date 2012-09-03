@@ -13,7 +13,7 @@ public class JobPostingPlanDTO {
 	private String jobPostPlanName;
 	private String jobPostPlanDescr;
 	private String jobPostPlanCretitAmt;
-	List<AddOnDTO> addOnDTOList;
+	private List<AddOnDTO> addOnDTOList;
 	
 	public String getJobPostPlanId() {
 		return jobPostPlanId;
