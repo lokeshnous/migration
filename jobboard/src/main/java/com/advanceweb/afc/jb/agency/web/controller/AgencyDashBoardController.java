@@ -83,6 +83,7 @@ public class AgencyDashBoardController {
 		int userId = (Integer) session.getAttribute("userId");
 		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
+		try {
 		if (null == listProfAttribForms || listProfAttribForms.isEmpty()) {
 
 			model.setViewName(_FORM_VIEW);
@@ -107,11 +108,15 @@ public class AgencyDashBoardController {
 			// admfacilityid);
 			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid,
 					userId, MMJBCommonConstants.PRIMARY);
-
 		}
-
+		
+	} catch (Exception e) {
 		model.setViewName(_FORM_VIEW);
 		return model;
+	}
+		model.setViewName(_FORM_VIEW);
+		return model;
+		
 	}
 
 	/**
@@ -133,7 +138,7 @@ public class AgencyDashBoardController {
 		// int facilityId =368;
 		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-
+		try {
 		if (null == listProfAttribForms || listProfAttribForms.isEmpty()) {
 
 			BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
@@ -156,10 +161,13 @@ public class AgencyDashBoardController {
 			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid,
 					userId, MMJBCommonConstants.PRIMARY);
 		}
-
+		
+	} catch (Exception e) {
 		model.setViewName(_FORM_VIEW);
 		return model;
-
+	}
+		model.setViewName(_FORM_VIEW);
+		return model;
 	}
 
 	/**
