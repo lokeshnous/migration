@@ -23,12 +23,17 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Calling for customer details
        // customerDetailsWSTest.getCustomerDetails();
         // Calling to authorize an user
-        //customerDetailsWSTest.authorizeUser();
+        //customerDetailsWSTest.authorizeUser("customer", "NS101");
         //calling to authorise user using POST
-        customerDetailsWSTest.getCustomerDetailsPOST(1593);
+        //customerDetailsWSTest.getCustomerDetails("customer",1596);
         //Call for item services
         //customerDetailsWSTest.getItemServices();
-
+        // Call fro craeting salesorder
+        
+        customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
+        // Call for create Customer
+       // customerDetailsWSTest.createCustomer("Sample Customer");
+        customerDetailsWSTest.createCashSales();
 
 	}
 
@@ -39,7 +44,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 */
 
 	
-	public String getCustomerDetails(){
+	/*public String getCustomerDetails(){
 		
 		WebClient client = createWebClient();
 
@@ -55,7 +60,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		LOGGER.info("Json Response String for getCustomer details="
 				+ jsonResponseString);
 		return jsonResponseString;
-	}
+	}*/
 
 	/**
 	 * This method is used to authorize an user from netsuite.
@@ -64,11 +69,13 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 */
 
 	
-	public String authorizeUser(){
+	public String authorizeUser(String recdType, String entId){
 		
-		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=153&deploy=1");
-		client.header("Authorization", "NLAuth nlauth_account=TSTDRV617993, nlauth_email=dharmarajns@nous.soft.net, nlauth_signature=dharma123, nlauth_role=3");
-
+		Object recordType = recdType;
+		Object entityID = entId;
+		String authorization = getAuthString();
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=153&deploy=1&recordtype="+recordType+"&entityid="+entityID);
+		client.header("Authorization", authorization);
 		client.header("Content-Type", "application/json");
 		Response response = client.get();
 		String jsonResponseString = null;
@@ -81,25 +88,19 @@ public class CustomerDetailsWSTest extends ServiceTest {
 			LOGGER.info("Failed to get a string represenation of the response",
 					e);
 		}
-		LOGGER.info("Json Response String for Authorize User="
-				+ jsonResponseString);
+		System.out.println("Json Response String for Authorize User="+ jsonResponseString);
 		return jsonResponseString;
 	}
-	 private WebClient createWebClient() {
+	/**
+	 * This method is used to create a WebClient Object by taking the 
+	 * web services URL. 
+	 * @return WebClient obj
+	 */
+	 private WebClient createWebClient(String wsUrl) {
         String authorization = getAuthString();
-        //getCustomerDetails()
-        Object jsonval = "[{entityid:1593}]";
-		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&customerid="+jsonval);
-        //get item service
-		//WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=149&deploy=1");
-		
-
-		/*Cookie cookie = new Cookie();
-		cookie.*/
-		
+		WebClient client = WebClient.create(wsUrl);
         client.header("Authorization", authorization);
         client.header("Content-Type", "application/json");
-        //client.
         return client;
 	 }
 	 
@@ -114,20 +115,15 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 
 	 
 	 
-	 private String getCustomerDetailsPOST(int cutomerId){
-		 
-		WebClient client = createWebClient();
-		//Object jsonPayload ="{\"fiddle:FiddleSelection\":{\"xmlns:jaxb\":\"http://java.sun.com/xml/ns/jaxb\",\"xmlns:fiddle\":\"http://www.wuhutravel.com/fiddle\",\"xmlns:xsi\":\"http://www.w3.org/2001/XMLSchema-instance\",\"xsi:schemaLocation\":\"http://www.wuhutravel.com/fiddle file:/C:/wuhu/code/server/trunk/projects/Build/ServiceFrontBeans/xsd/Fiddle.xsd\",\"venue_name\":\"fly\",\"venue_code\":\"FLY\",\"venue_quantifier_selection\":{\"venue_name\":\"fly\",\"venue_code\":\"FLY\",\"quantifier_id\":[1,2,3]},\"venue_qualifier_selection\":{\"venue_name\":\"fly\",\"venue_code\":\"FLY\",\"qualifier_id\":[103]}}}";
-		//Object jsonval = "[{customerId:156}]";
-		
-		
-		//Object jsonval = "[{\"entityid\": \"1593\"}]";
+	 private String getCustomerDetails(String recdType, int custId){
+		// String authorization = getAuthString();
+		 Object recordType = recdType;
+		 Object cutomerId = custId;
+	    
+	     WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
+	     /*client.header("Authorization", authorization);
+	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
-		//Response response = client.post((Object)new Integer(cutomerId));
-		//client.query("", values)
-		//Response response = client.put(jsonval);
-		//Response response = client.invoke("GET", jsonval);;
-		//client.post(body);
 		String jsonResult = null;
 		try {
 			jsonResult = IOUtils.readStringFromStream((InputStream)response.getEntity());
@@ -136,15 +132,22 @@ public class CustomerDetailsWSTest extends ServiceTest {
 			e.printStackTrace();
 			throw new RuntimeException("Failed to get a string represenation of the response",e);
 		}
-		System.out.println("Result for POST get Customer Details user="+jsonResult);
+		System.out.println("Result for get Customer Details user="+jsonResult);
 		
 		return jsonResult;
 	 }
 	 
+	 /**
+	  * This method is used to get the item services from NetSuite
+	  * @return
+	  */
 	 
 	 private String getItemServices(){
-		 
-		WebClient client = createWebClient();
+		//String authorization = getAuthString();
+		WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=149&deploy=1");
+		/*client.header("Authorization", authorization);
+	    client.header("Content-Type", "application/json");*/
+		
         Response response = client.get();
         String jsonResponseString= null;
 
@@ -158,6 +161,91 @@ public class CustomerDetailsWSTest extends ServiceTest {
         System.out.println("Json Response String for GET ItemServices details="+jsonResponseString);
         return jsonResponseString;
 		 
+	 }
+	 
+	 
+	 public String createSalesOrder(String itemIntrnlId, int custId, int locId, int discId){
+		 String authorization = getAuthString();
+		/* Object itemInternalId = itemIntrnlId;
+		 Object customerId = custId;
+		 Object loactionId = locId;
+		 Object discountId =  discId;*/
+		 
+		 //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=151&deploy=1&customerid=1596&item=2956&entity=459468&location=1&discountitem=2930");
+		 
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=151&deploy=1");
+		client.header("Authorization", authorization);
+	    client.header("Content-Type", "application/json");
+		Object obj = "{ \"item\": [{\"item\": \"2956\",\"quantity\": \"3\", \"taxcode\" : \"2984\"}, { \"item\": \"2955\", \"quantity\": \"4\", \"taxcode\" : \"2984\" }], \"entity\" : \"459468\", \"location\" :\"1\", \"discountitem\" : \"2930\", \"paymentmethod\" : \"6\", \"ccnumber\": \"378282246310005\", \"ccexpiredate\" : \"09/2013\", \"ccname\": \"Mohammed Zubair Ahmed\", \"cczipcode\" : \"560002\", \"ccstreet\" : \"HSR Layout\" }";	
+		//Object obj ="{ item : 2956 , entity : 459468 , location : 1 , discountitem : 2930 }";
+		Response response = client.post(obj);
+		 
+		 
+		 //Response response = client.get();
+	     String jsonResponseString= null;
+		 
+	     try {
+        	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        }
+        System.out.println("Json Response String for create Sales Order ="+jsonResponseString);
+        return jsonResponseString;
+	 }
+	 
+	 
+	 public String createCustomer(String entID){
+		 String authorization = getAuthString();
+		 //update
+		 //Object entityId = "{\"entityid\": \"Sample Customer\", \"companyname\" : \"Sample Customer\",\"phone\" : \"121-456-789\"}";
+		 //Create
+		 Object entityId = "{\"entityid\": \"Sample Customer\", \"companyname\" : \"Sample Customer\"}";
+		 
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1");
+		client.header("Authorization", authorization);
+	    client.header("Content-Type", "application/json");
+	    
+	    
+		Response response = client.post(entityId);
+		 
+		 //Response response = client.get();
+	     String jsonResponseString= null;
+		 
+	     try {
+        	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        }
+        System.out.println("Json Response String for create Customer ="+jsonResponseString);
+        return jsonResponseString;
+	 }
+	 
+
+	 
+	 public String createCashSales(){
+		 String authorization = getAuthString();
+		 
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=155&deploy=1");
+		client.header("Authorization", authorization);
+	    client.header("Content-Type", "application/json");
+		Object obj = "{ \"item\": [{\"item\": \"2956\",\"quantity\": \"3\", \"taxcode\" : \"2984\"}, { \"item\": \"2955\", \"quantity\": \"4\", \"taxcode\" : \"2984\" }], \"entity\" : \"459468\", \"location\" :\"1\", \"discountitem\" : \"2930\", \"paymentmethod\" : \"6\", \"ccnumber\": \"378282246310005\", \"ccexpiredate\" : \"09/2013\", \"ccname\": \"Mohammed Zubair Ahmed\", \"cczipcode\" : \"560002\", \"ccstreet\" : \"HSR Layout\", \"saleOrderNumber\" : \"12108\" }";	
+		Response response = client.post(obj);
+		 //Response response = client.get();
+	     String jsonResponseString= null;
+		 
+	     try {
+        	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        }
+        System.out.println("Json Response String for Cash Sales ="+jsonResponseString);
+        return jsonResponseString;
 	 }
 	
 	
