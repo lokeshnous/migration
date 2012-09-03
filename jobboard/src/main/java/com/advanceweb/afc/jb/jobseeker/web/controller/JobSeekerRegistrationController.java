@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import net.tanesha.recaptcha.ReCaptchaImpl;
-import net.tanesha.recaptcha.ReCaptchaResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -127,7 +124,7 @@ public class JobSeekerRegistrationController {
 		 try {
 			// Spring Recaptcha Starts here		
 			 
-			 if(StringUtils.isEmpty(req.getParameter("recaptcha_response_field"))){
+/*			 if(StringUtils.isEmpty(req.getParameter("recaptcha_response_field"))){
 					model.setViewName("jobSeekerCreateAccount");
 					model.addObject("errorMessage","Captcha should not be blank");
 					return model;
@@ -149,7 +146,7 @@ public class JobSeekerRegistrationController {
 				model.setViewName("jobSeekerCreateAccount");
 				model.addObject("errorMessage","Captcha is invalid!");
 				return model;
-			 }		  
+			 }		  */
 			//Spring Recaptcha Ends here			
 			registerValidation.validate(registerForm, result);
 			
