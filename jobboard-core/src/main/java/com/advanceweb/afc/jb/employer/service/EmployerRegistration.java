@@ -106,11 +106,13 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	
 
 	@Override
-	public List<AdmFacilityContact> getEmployeeData(int userId,String contactType) {
-		List<AdmFacilityContact> accountProfileDTO= new ArrayList<AdmFacilityContact>();
+	public List<AdmFacilityContact> getEmployeeData(int userId,
+			String contactType) {
+		List<AdmFacilityContact> accountProfileDTO = new ArrayList<AdmFacilityContact>();
 		try {
-			
-			accountProfileDTO=employerRegistrationDAO.getEmployeeData(userId,contactType);
+
+			accountProfileDTO = employerRegistrationDAO.getEmployeeData(userId,
+					contactType);
 		} catch (Exception e) {
 			LOGGER.info("Error for employee registration edit");
 		}
@@ -118,9 +120,11 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	}
 
 	@Override
-	public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid) {
-		employerRegistrationDAO.editEmployeeAccount(apd,admfacilityid);
-		
+	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+			int userId, String billing) {
+		employerRegistrationDAO.editEmployeeAccount(apd, admfacilityid, userId,
+				billing);
+
 	}
 
 	@Override
@@ -136,7 +140,6 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 		}
 		return accountProfileDTO;
 	}
-	
 	
 	
 	
