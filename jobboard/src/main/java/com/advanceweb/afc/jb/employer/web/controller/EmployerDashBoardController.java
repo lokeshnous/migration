@@ -35,7 +35,7 @@ public class EmployerDashBoardController {
 	private LoginService loginService;
 
 	@Autowired
-	PopulateDropdowns populateDropdownsService;
+	private PopulateDropdowns populateDropdownsService;
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session) {
