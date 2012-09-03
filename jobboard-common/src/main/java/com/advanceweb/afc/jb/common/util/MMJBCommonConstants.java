@@ -224,9 +224,9 @@ public interface MMJBCommonConstants {
 	String PACKAGE_SILVER = "silver";
 	
 	//for Branding template
-	public static final String IMAGE_TYPE_JPG = ".jpg";
-	public static final String IMAGE_TYPE_GIF = ".gif";
-	public static final String IMAGE_TYPE_PNG = ".png";
-	public static final String IMAGE_TYPE_TIF = ".tif";
+	String IMAGE_TYPE_JPG = ".jpg";
+	String IMAGE_TYPE_GIF = ".gif";
+	String IMAGE_TYPE_PNG = ".png";
+	String IMAGE_TYPE_TIF = ".tif";
 
 }
