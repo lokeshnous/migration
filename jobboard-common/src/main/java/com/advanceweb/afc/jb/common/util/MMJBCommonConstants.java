@@ -223,5 +223,10 @@ public interface MMJBCommonConstants {
 	public static final String PACKAGE_STJOBPOSTING = "stJobPosting";
 	public static final String PACKAGE_SILVER = "silver";
 	
+	//for Branding template
+	public static final String IMAGE_TYPE_JPG = ".jpg";
+	public static final String IMAGE_TYPE_GIF = ".gif";
+	public static final String IMAGE_TYPE_PNG = ".png";
+	public static final String IMAGE_TYPE_TIF = ".tif";
 
 }
