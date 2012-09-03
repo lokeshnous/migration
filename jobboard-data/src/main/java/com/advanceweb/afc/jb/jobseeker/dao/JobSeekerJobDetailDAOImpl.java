@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +24,17 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper
 @Repository("jobSeekerJobDetailDAO")
 public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 
-	@SuppressWarnings("unused")
-	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
-
 	@Autowired
 	private JobSeekerJobDetailConversionHelper jobSeekerJobDetailConversionHelper;
-
+	private static final Logger LOGGER = Logger.getLogger(JobSeekerJobDetailDAOImpl.class);
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(
-				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
-	@Override
-	public void finalize() throws Throwable {
-
-	}
 
 	/**
 	 * @Author :Prince Mathew
@@ -62,6 +54,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
+			LOGGER.error(e);
 		}
 		return false;
 	}
@@ -92,6 +85,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 			}
 		} catch (HibernateException e) {
 			// TODO: handle exception
+			LOGGER.error(e);
 		}
 
 		return appliedJobDTOList;
@@ -119,6 +113,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 			}
 		} catch (HibernateException e) {
 			// TODO: handle exception
+			LOGGER.error(e);
 		}
 
 		return appliedJobDTOList;
