@@ -969,7 +969,7 @@ public class ResumeController {
 				.transformContactInfoForm(resumeDTO.getContactInfoDTO());
 		List<PhoneDetailForm> listPhoneDtl = transCreateResume
 				.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
-
+		createResume.setbHideBackButton(true);
 		createResume.setListCertForm(listCertForm);
 		createResume.setListEduForm(listEduForm);
 		createResume.setListLangForm(listLangForm);
