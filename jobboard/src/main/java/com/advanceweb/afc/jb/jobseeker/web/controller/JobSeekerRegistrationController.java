@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +34,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,6 +44,7 @@ import com.advanceweb.afc.jb.common.MerProfileAttribDTO;
 import com.advanceweb.afc.jb.common.MerUserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
+import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Controller
@@ -59,11 +64,32 @@ public class JobSeekerRegistrationController {
 	
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
+	
+	@Autowired
+	private PopulateDropdowns populateDropdownsService;	
 		
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	
+	//Spring ReCaptcha
+	private String recaptcha_response;
+	private String recaptcha_challenge;
+	private String remoteAddr;
+	
 	private Long placeKey;
+	
+	
+	
+	@RequestMapping(value = "/getPostalCodeAutoPopulation")
+	@ResponseBody 
+	public List<String> getPostalCodeAutoPopulation(@RequestParam("postalCode") int postalCode) {
+		  
+//	  List<String> postalCodeList = populateDropdownsService.populatePostalCodeAutoComplete(postalCode);
+		System.out.println("hi" +postalCode);
+	   
+	  return null;
+	}
+	
 	
 	/**
 	 * This method is called to display job seeker registration page Step1
@@ -93,32 +119,63 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
 	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
-			BindingResult result) {
+			BindingResult result, HttpServletRequest req) {
 		
-		placeKey = (new Random()).nextLong();
+		 placeKey = (new Random()).nextLong();		
+		 ModelAndView model = new ModelAndView();
 		
-		ModelAndView model = new ModelAndView();
-				
-		registerValidation.validate(registerForm, result);
-		
-		if(result.hasErrors()){
-			model.setViewName("jobSeekerCreateAccount");
-			return model;
-		}
-		
-		if(profileRegistration.validateEmail(registerForm.getEmailId())){
-			model.setViewName("jobSeekerCreateAccount");
-			result.rejectValue("emailId", "NotEmpty", "Email address already exists");
-			return model;
-		}
-		
-		JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes();
+		 try {
+			// Spring Recaptcha Starts here		
+			 
+			 if(StringUtils.isEmpty(req.getParameter("recaptcha_response_field"))){
+					model.setViewName("jobSeekerCreateAccount");
+					model.addObject("errorMessage","Captcha should not be blank");
+					return model;
+			 }
+			 
+			 if(req.getParameter("recaptcha_response_field") != null) {
+				recaptcha_response = req.getParameter("recaptcha_response_field");
+				recaptcha_challenge = req.getParameter("recaptcha_challenge_field");
+				remoteAddr = req.getRemoteAddr();	   
+			 }
+			  
+			 ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+			 reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
+			  		 
+			 ReCaptchaResponse reCaptchaResponse = 
+					 reCaptcha.checkAnswer(remoteAddr, recaptcha_challenge, recaptcha_response); // Send HTTP request to validate user's Captcha
 
-		List<JobSeekerProfileAttribForm> listProfAttribForms = 
-				transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO);
-		registerForm.setListProfAttribForms(listProfAttribForms);
-		model.setViewName("jobSeekerCreateAccountInfo");
-		model.addObject("registerForm", registerForm);
+			 if(!reCaptchaResponse.isValid()) {		  // Check if valid
+				model.setViewName("jobSeekerCreateAccount");
+				model.addObject("errorMessage","Captcha is invalid!");
+				return model;
+			 }		  
+			//Spring Recaptcha Ends here			
+			registerValidation.validate(registerForm, result);
+			
+			if(result.hasErrors()){
+				model.setViewName("jobSeekerCreateAccount");
+				return model;
+			}
+			
+			if(profileRegistration.validateEmail(registerForm.getEmailId())){
+				model.setViewName("jobSeekerCreateAccount");
+				result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+				return model;
+			}
+			
+			JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes();
+
+			List<JobSeekerProfileAttribForm> listProfAttribForms = 
+					transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO);
+			registerForm.setListProfAttribForms(listProfAttribForms);
+			model.setViewName("jobSeekerCreateAccountInfo");
+			model.addObject("registerForm", registerForm);
+			
+		} catch (Exception e) {
+			//TODO
+			e.printStackTrace();
+		}
 		return model;
 		
 	}
@@ -186,7 +243,9 @@ public class JobSeekerRegistrationController {
 				
 				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
 			    authenticateUserAndSetSession(userDTO, request);
+			    
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 		return model;
@@ -244,6 +303,7 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value="/viewJobSeekerProfile", method=RequestMethod.GET)
 	public ModelAndView viewJobSeekerProfileSettings(HttpSession session) {
+		
 		ModelAndView model = new ModelAndView();
 		try {
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
@@ -258,6 +318,7 @@ public class JobSeekerRegistrationController {
 			model.setViewName("jobseekerEditProfileSettings");
 			
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 		return model;
@@ -326,7 +387,9 @@ public class JobSeekerRegistrationController {
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
 			session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
+			
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 		
@@ -365,6 +428,7 @@ public class JobSeekerRegistrationController {
 				return "Invalid Current Password";				
 			}
 		} catch (Exception e) {
+			//TODO
 			e.printStackTrace();
 		}
 		return "";
