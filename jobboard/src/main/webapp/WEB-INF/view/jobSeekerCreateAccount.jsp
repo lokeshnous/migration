@@ -150,9 +150,10 @@
 				<div class="popUpButtonRow">
 				
 	               <input type="submit" value="Next" class="orange"  name="Next"/>
-	               <input type="button" value="Cancel" onclick="cancelProcess()" 
-									class="orange" name="Cancel"  hidden="${registerForm.bReadOnly}"/>
-	               
+	               <c:if test="${registerForm.bReadOnly == false}">
+		               <input type="button" value="Cancel" onclick="cancelProcess()" 
+										class="orange" name="Cancel" />
+	               </c:if>
 	               <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="orange">Cancel</a> --%>
 	               <!-- <input type="submit" value="Cancel" class="orange"  name="Cancel"/> -->  
 	            </div>

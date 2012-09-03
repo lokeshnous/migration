@@ -297,9 +297,11 @@
 								<!-- <a href="" class="btn_sm white">Back</a> -->
 								<input type="submit" value="Back" class="orange"
 									name="Back" /> <input type="submit" value="Finish"
-									class="orange" name="Finish" /> 
-									<input type="button" value="Cancel" onclick="cancelProcess();"
-									class="orange" name="Cancel" hidden="${registerForm.bReadOnly}"/>
+									class="orange" name="Finish" />
+									<c:if test="${registerForm.bReadOnly == false}"> 
+										<input type="button" value="Cancel" onclick="cancelProcess();"
+										class="orange" name="Cancel"/>
+									</c:if>
 									<%-- <a
 									href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html"
 									class="btn_sm orange cancelacount">Cancel</a> --%>
