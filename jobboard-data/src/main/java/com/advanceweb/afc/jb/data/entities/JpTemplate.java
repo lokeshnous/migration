@@ -58,6 +58,9 @@ public class JpTemplate implements Serializable {
 //	@OneToMany(mappedBy="jpTemplate")
 //	private List<JpJob> jpJobs;
 
+	@Column(name="delete_user_id")
+	private int deleteUserId;
+	
 	//bi-directional many-to-one association to AdmFacility
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="facility_id")
@@ -130,6 +133,14 @@ public class JpTemplate implements Serializable {
 //	public void setMerUser(MerUser merUser) {
 //		this.merUser = merUser;
 //	}
+
+	public int getDeleteUserId() {
+		return deleteUserId;
+	}
+
+	public void setDeleteUserId(int deleteUserId) {
+		this.deleteUserId = deleteUserId;
+	}
 
 	public String getLogoPath() {
 		return this.logoPath;

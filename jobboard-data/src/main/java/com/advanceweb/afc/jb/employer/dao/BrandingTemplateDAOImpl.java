@@ -15,6 +15,8 @@ import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.data.entities.JpTemplateMedia;
+import com.advanceweb.afc.jb.data.entities.JpTemplateTestimonial;
 import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 
 /**
@@ -58,8 +60,11 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 						.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
 								userRole.getRolePK().getUserId(),
 								userRole.getRolePK().getRoleId()).get(0);
+//				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
+//						.find("from  JpTemplate where admFacility.facilityId=?",
+//								userFacility.getAdmFacility().getFacilityId());
 				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
-						.find("from  JpTemplate where admFacility.facilityId=?",
+						.find("from  JpTemplate where admFacility.facilityId=? and deleteDt is null",
 								userFacility.getAdmFacility().getFacilityId());
 				templatesDTO = new ArrayList<BrandingTemplateDTO>();
 				for (JpTemplate template : brandingTemplateList) {
@@ -93,20 +98,41 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		// return status;
 		//
 
+		
+//		ResBuilderResume builderResume = resumeConversionHelper.transformBuilderResume(resumeDTO);
+//		List<ResBuilderPhone> builderPhoneList = resumeConversionHelper.transformBuilderPhoneDetails(resumeDTO.getListPhoneDtl(), builderResume);
+//		
+//		builderResume.setResBuilderPhones(builderPhoneList);
+//		
+//		hibernateTemplate.saveOrUpdate(builderResume);
+		
 		Boolean status = null;
 		try {
-			JpTemplate jpBrandingTemp = brandTemplateConversionHelper
-					.convertToJPTemplate(brandingTemplatesDTO);
-			// hibernateTemplateTracker.save(jpBrandingTemp);
-			hibernateTemplateCareer.save(jpBrandingTemp);
-			if (!brandingTemplatesDTO.getIsSilverCustomer()) {
-				hibernateTemplateCareer.save(jpBrandingTemp
-						.getJpTemplateMedias().get(0));
-				hibernateTemplateCareer.save(jpBrandingTemp
-						.getJpTemplateMedias().get(1));
-				hibernateTemplateCareer.save(jpBrandingTemp
-						.getJpTemplateTestimonials().get(0));
+			JpTemplate jpTemplate = brandTemplateConversionHelper.convertToJPTemplate(brandingTemplatesDTO);
+			List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper.transformTemplateTestimony(brandingTemplatesDTO.getListTestimony(), jpTemplate);
+			List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper.transformVideo(brandingTemplatesDTO.getListVideos(), jpTemplate);
+			
+			jpTemplate.setJpTemplateTestimonials(listTestimonyEntity);
+			jpTemplate.setJpTemplateMedias(listMediaEntity);
+			
+			
+//			hibernateTemplateCareer.save(jpTemplate);
+			hibernateTemplateCareer.saveOrUpdate(jpTemplate);
+			
+			if (!brandingTemplatesDTO.getIsSilverCustomer()){
+			hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
+			hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
 			}
+			
+//			if (!brandingTemplatesDTO.getIsSilverCustomer()) {
+//				hibernateTemplateCareer.save(jpTemplate
+//						.getJpTemplateMedias().get(0));
+//				hibernateTemplateCareer.save(jpTemplate
+//						.getJpTemplateMedias().get(1));
+//				hibernateTemplateCareer.save(jpTemplate
+//						.getJpTemplateTestimonials().get(0));
+//			}
+			
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
@@ -165,13 +191,14 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 * Template.
 	 */
 	@Override
-	public boolean deleteBrandingTemplate(int templateId) {
+	public boolean deleteBrandingTemplate(int templateId, int deleteUserId) {
 		boolean status = false;
 		try {
 			if (templateId != 0) {
 				JpTemplate template = hibernateTemplateCareer.get(
 						JpTemplate.class, templateId);
 				template.setDeleteDt(new Date());
+				template.setDeleteUserId(deleteUserId);
 				hibernateTemplateCareer.update(template);
 				status = true;
 			}

@@ -61,6 +61,6 @@ public interface BrandingTemplateDAO {
 	 * @param brandingTemplatesDTO
 	 * @return <true> If template deleted <false> If template not deleted
 	 */
-	boolean deleteBrandingTemplate(int templateId);
+	boolean deleteBrandingTemplate(int templateId, int deleteUserId);
 
 }
