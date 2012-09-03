@@ -34,12 +34,12 @@ function validateNumber(event) {
     var emailaddressVal = $("#email").val();
    
     if(emailaddressVal == '') {
-      $("#email").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter your email address.</span></div>');
+      $("#email").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
       hasError = true;
     }
  
     else if(!emailReg.test(emailaddressVal)) {
-      $("#email").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Enter a valid email address.</span></div>');
+      $("#email").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
       hasError = true;
     }
  
@@ -50,10 +50,10 @@ function validateNumber(event) {
     var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
     var phone=$("#phone").val();
     if(phone==''){
-    	 $("#phone").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
+    	 $("#phone").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
          hasError = true;
     }else if(!filter.test(phone)){
-    	 $("#phone").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
+    	 $("#phone").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
          hasError = true;
     }
  
@@ -73,12 +73,12 @@ function validateNumber(event) {
  
     var emailaddressVal = $("#email2").val();
     if(emailaddressVal == '') {
-      $("#email2").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail Address</span></div>');
+      $("#email2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
       hasError = true;
     }
  
     else if(!emailReg.test(emailaddressVal)) {
-      $("#email2").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail Address</span></div>');
+      $("#email2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
       hasError = true;
     }
  
@@ -90,10 +90,10 @@ function validateNumber(event) {
     var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
     var phone=$("#phone2").val();
     if(phone==''){
-    	 $("#phone2").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
+    	 $("#phone2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
          hasError = true;
     }else if(!filter.test(phone)){
-    	 $("#phone2").after('<div class="rowEvenNewSpacing"><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
+    	 $("#phone2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
          hasError = true;
     }
  
