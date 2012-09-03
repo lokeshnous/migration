@@ -21,7 +21,7 @@ public interface EmloyerRegistartionService {
 	 * @param userId
 	 * @return List
 	 */
-	public List<AdmFacilityContact> getEmployeeData(int userId,
+	List<AdmFacilityContact> getEmployeeData(int userId,
 			String contactType);
 
 	/**
@@ -29,7 +29,7 @@ public interface EmloyerRegistartionService {
 	 * @param userId
 	 * @return userid
 	 */
-	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+	List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
 			String contactType);
 
 	/**
@@ -39,7 +39,7 @@ public interface EmloyerRegistartionService {
 	 * @param admfacilityid
 	 *            admfacilityid.
 	 */
-	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+	void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing);
 	
 }
