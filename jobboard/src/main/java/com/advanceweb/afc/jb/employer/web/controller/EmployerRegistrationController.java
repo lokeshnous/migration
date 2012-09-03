@@ -300,31 +300,36 @@ public class EmployerRegistrationController {
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session.getAttribute("userId");
-		List<AdmFacilityContact> listProfAttribForms = empRegService
-				.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
-		if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
-			int admfacilityid = listProfAttribForms.get(0)
-					.getFacilityContactId();
+		try {
+			List<AdmFacilityContact> listProfAttribForms = empRegService
+					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
+			if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
+				int admfacilityid = listProfAttribForms.get(0)
+						.getFacilityContactId();
 
-			AccountProfileDTO dto = transformEmpReg
-					.transformAccountProfileFormToDto(employeeAccountForm);
+				AccountProfileDTO dto = transformEmpReg
+						.transformAccountProfileFormToDto(employeeAccountForm);
 
-			if (!registerValidation
-					.accountValidate(employeeAccountForm, result)) {
-				result.rejectValue("email", "NotEmpty",
-						"Email Id already Exists!");
-				model.setViewName("accountSetting");
+				if (!registerValidation.accountValidate(employeeAccountForm,
+						result)) {
+					result.rejectValue("email", "NotEmpty",
+							"Email Id already Exists!");
+					model.setViewName("accountSetting");
+					return model;
+				}
+				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
+						MMJBCommonConstants.PRIMARY);
+			} else {
+				model.setViewName("employerDashboard");
 				return model;
 			}
 
-			empRegService.editEmployeeAccount(dto, admfacilityid,userId,MMJBCommonConstants.PRIMARY);
-		} else {
+			model.setViewName("employerDashboard");
+			return model;
+		} catch (Exception e) {
 			model.setViewName("employerDashboard");
 			return model;
 		}
-
-		model.setViewName("employerDashboard");
-		return model;
 	}
 
 	/**
