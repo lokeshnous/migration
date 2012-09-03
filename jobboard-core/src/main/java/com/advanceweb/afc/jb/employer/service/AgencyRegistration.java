@@ -19,7 +19,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  */
 @Service("agencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
-	private static final Logger LOGGER = Logger.getLogger(ManageFeatureEmployerProfileServiceTest.class);
+	private static final Logger LOGGER = Logger.getLogger(AgencyRegistration.class);
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
 	
