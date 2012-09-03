@@ -16,47 +16,50 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 
 @Aspect
 public class LoggingAspect {
 
-	
-	 private static final Logger LOGGER = Logger.getLogger(LoggingAspect.class);
-	 
+	private static final Logger LOGGER = Logger.getLogger(LoggingAspect.class);
 
 	@Before("loggingOperation()")
 	public void logBefore(JoinPoint joinPoint) {
-		LOGGER.info("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		LOGGER.info("Entered Into "
+				+ joinPoint.getTarget().getClass().getName() + "."
+				+ joinPoint.getSignature().getName() + "()");
 	}
 
 	@After("loggingOperation()")
 	public void logAfter(JoinPoint joinPoint) {
-		LOGGER.info("Exited  From " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
+		LOGGER.info("Exited  From "
+				+ joinPoint.getTarget().getClass().getName() + "."
+				+ joinPoint.getSignature().getName() + "()");
 	}
-	
-	@AfterReturning(
-			pointcut = "loggingOperation()",
-			returning= "result")
+
+	@AfterReturning(pointcut = "loggingOperation()", returning = "result")
 	public void logAfterReturning(JoinPoint joinPoint, Object result) {
-		LOGGER.debug("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
-		LOGGER.debug("Result : "+result);
+		LOGGER.debug("Entered Into "
+				+ joinPoint.getTarget().getClass().getName() + "."
+				+ joinPoint.getSignature().getName() + "()");
+		LOGGER.debug("Result : " + result);
 
 	}
-	
-	@AfterThrowing(
-			pointcut = "execution(* com.advanceweb.afc.jb.*.*(..))",
-			throwing= "error")
+
+	@AfterThrowing(pointcut = "execution(* com.advanceweb.afc.jb.*.*(..))", throwing = "error")
 	public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
-		
-		LOGGER.error("An exception has been thrown in " + joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
-		LOGGER.error("Message : "+error.getMessage());
+
+		LOGGER.error("An exception has been thrown in "
+				+ joinPoint.getTarget().getClass().getName() + "."
+				+ joinPoint.getSignature().getName() + "()");
+		LOGGER.error("Message : " + error.getMessage());
 	}
-	
-	
-	/*@Around("execution(* com.advanceweb.afc.jb.employer.web.controller.*.*(..))")
-	public void logAround(ProceedingJoinPoint joinPoint) throws Throwable {
-		logger.info("Entered Into " +joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName()+"()");
-	}*/
-	
+
+	/*
+	 * @Around("execution(* com.advanceweb.afc.jb.employer.web.controller.*.*(..))"
+	 * ) public void logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+	 * logger.info("Entered Into "
+	 * +joinPoint.getTarget().getClass().getName()+"."
+	 * +joinPoint.getSignature().getName()+"()"); }
+	 */
+
 }
