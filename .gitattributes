@@ -328,6 +328,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistr
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/TransformAgencyRegistration.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddImageForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddOnForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateForm.java -text
@@ -351,9 +352,11 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/JobPostings
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostingController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/SearchResumeController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TestimonyForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerBrandTemplate.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformJobPost.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/VideoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/home/web/controller/ClickController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/home/web/controller/HomeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobApplicationForm.java -text

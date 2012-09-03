@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -325,11 +326,19 @@ public class BrandingTemplateController {
 	
 	
 	@RequestMapping(value = "/preview", method = RequestMethod.GET)
-	public @ResponseBody JSONObject previewNew(BrandingTemplateForm brandingTemplateForm)
+	public @ResponseBody JSONObject previewNew(BrandingTemplateForm form, Map model)
 	{
+		model = new HashMap<String, Object>();
+		ModelAndView modelAndView = new ModelAndView();
+		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put(ajaxNavigationPath, "../brandingTemplates/brandTemplateSilverPreview");
 		
+		BrandingTemplateForm brandingTemplateForm = new BrandingTemplateForm();
+		brandingTemplateForm.setLogoPath("C:\\mmsource\\LogoAndMediaFiles\\Logo.jpg");
+		model.put("brandingTemplateForm",brandingTemplateForm);
+		modelAndView.addObject(brandingTemplateForm);
+		//jsonObject.put("brandingTemplateForm",brandingTemplateForm);
 		return jsonObject;
 		
 	}

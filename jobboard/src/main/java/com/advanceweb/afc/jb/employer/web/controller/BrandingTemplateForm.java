@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -14,7 +15,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  */
 public class BrandingTemplateForm {
 
-	private long employerId;
+	private int employerId;
 	private String templateId;
 	private int facilityId;
 	private String logoPath;
@@ -26,11 +27,16 @@ public class BrandingTemplateForm {
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
 	// Muli media section
-	private String addImagePath;
-	private String videoPath;
-	private String testimony;
-	private CommonsMultipartFile addImageFileData;
-	private CommonsMultipartFile videoFileData;
+//	private String addImagePath;
+//	private String videoPath;
+//	private String testimony;
+//	private CommonsMultipartFile addImageFileData;
+//	private CommonsMultipartFile videoFileData;
+	private List<String> listAddImagePath;
+	private List<String> listVideoPath;
+	private List<TestimonyForm> listTestimony;
+	private List<AddImageForm> listAddImages;
+	private List<VideoForm> listVideos;
 
 	private Boolean isSilverCustomer = null;
 
@@ -50,11 +56,11 @@ public class BrandingTemplateForm {
 		this.templateId = templateId;
 	}
 
-	public long getEmployerId() {
+	public int getEmployerId() {
 		return employerId;
 	}
 
-	public void setEmployerId(long employerId) {
+	public void setEmployerId(int employerId) {
 		this.employerId = employerId;
 	}
 
@@ -122,44 +128,45 @@ public class BrandingTemplateForm {
 		this.mainImageFileData = mainImageFileData;
 	}
 
-	public String getAddImagePath() {
-		return addImagePath;
+	
+	public List<String> getListAddImagePath() {
+		return listAddImagePath;
 	}
 
-	public void setAddImagePath(String addImagePath) {
-		this.addImagePath = addImagePath;
+	public void setListAddImagePath(List<String> listAddImagePath) {
+		this.listAddImagePath = listAddImagePath;
 	}
 
-	public String getVideoPath() {
-		return videoPath;
+	public List<String> getListVideoPath() {
+		return listVideoPath;
 	}
 
-	public void setVideoPath(String videoPath) {
-		this.videoPath = videoPath;
+	public void setListVideoPath(List<String> listVideoPath) {
+		this.listVideoPath = listVideoPath;
 	}
 
-	public String getTestimony() {
-		return testimony;
+	public List<TestimonyForm> getListTestimony() {
+		return listTestimony;
 	}
 
-	public void setTestimony(String testimony) {
-		this.testimony = testimony;
+	public void setListTestimony(List<TestimonyForm> listTestimony) {
+		this.listTestimony = listTestimony;
 	}
 
-	public CommonsMultipartFile getAddImageFileData() {
-		return addImageFileData;
+	public List<AddImageForm> getListAddImages() {
+		return listAddImages;
 	}
 
-	public void setAddImageFileData(CommonsMultipartFile addImageFileData) {
-		this.addImageFileData = addImageFileData;
+	public void setListAddImages(List<AddImageForm> listAddImages) {
+		this.listAddImages = listAddImages;
 	}
 
-	public CommonsMultipartFile getVideoFileData() {
-		return videoFileData;
+	public List<VideoForm> getListVideos() {
+		return listVideos;
 	}
 
-	public void setVideoFileData(CommonsMultipartFile videoFileData) {
-		this.videoFileData = videoFileData;
+	public void setListVideos(List<VideoForm> listVideos) {
+		this.listVideos = listVideos;
 	}
 
 	public Boolean getIsSilverCustomer() {
