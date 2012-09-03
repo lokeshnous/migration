@@ -13,12 +13,12 @@ public interface XmlResumeParser {
 	 * 
 	 * @param xmlString
 	 */
-	public ResumeDTO parseXmlToResume(String xmlString);
+	ResumeDTO parseXmlToResume(String xmlString);
 
 	/**
 	 * 
 	 * @param xmlResponseObject
 	 */
-	public List<ResumeDTO> parseXmlToResumeList(String xmlResponseObject);
+	List<ResumeDTO> parseXmlToResumeList(String xmlResponseObject);
 
 }
