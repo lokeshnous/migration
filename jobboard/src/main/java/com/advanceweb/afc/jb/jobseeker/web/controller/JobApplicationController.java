@@ -44,7 +44,6 @@ public class JobApplicationController {
 	@Autowired
 	private  MMEmailService emailService;
 
-	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger
 			.getLogger("JobApplicationController.class");
 
@@ -56,9 +55,6 @@ public class JobApplicationController {
 
 	@Value("${employeJobApplicationBody}")
 	private  String empJobAppBody;
-	
-	@Value("${defaultResumeExtension}")
-	private String defaultResumeExtension;
 
 	@Value("${navigationPath}")
 	private  String navigationPath;
@@ -111,8 +107,6 @@ public class JobApplicationController {
 			 // attachment,subject will be job title, body will contain short
 			 // description
 			 
-			// TODO:waiting for the completion for apply job functionality for
-			// anonymous,currently using hard code jobId
 			int jobId = (Integer) session.getAttribute("jobId");
 			SearchedJobDTO searchedJobDTO = jobSearchService
 					.viewJobDetails(jobId);
@@ -151,7 +145,7 @@ public class JobApplicationController {
 				attachmentpaths.add(upLoadedfile.getAbsolutePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
-				// LOGGER.info("Resume not found");
+				LOGGER.info("Resume not found");
 				// TODO:Exception Handling
 			}
 			emailService.sendEmail(toEmployer);
