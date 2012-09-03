@@ -103,7 +103,7 @@ public class PurchaseJobPostingController {
 			@RequestParam("cartItemIndex") int cartItemIndex) {
 		ModelAndView model = new ModelAndView();
 		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
-		purchaseJobPostForm.grandTotal = purchaseJobPostForm.grandTotal - cartItem.getPackageSubTotal();
+		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
 		model.setViewName("empPurchaseJobPostingsPopup");
