@@ -25,7 +25,8 @@
 						"#manageBrandingTemplatePopup", "775", "252");
 				$("#postingInventory").displaypopup("#postingInventory", "780",
 						"370");
-				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings","770","360");		
+				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings","770","360");	
+				$("#accessPermissioPopUp").displaypopup("#accessPermissioPopUp","770","360");
 			});
 
 </script>
@@ -64,7 +65,7 @@
 					</div>
 					<div class="lableTextDashBoard">
 						<p>
-							<a href="">Manage Access Permissions</a>
+							<a id="accessPermissioPopUp" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage Access Permissions</a>
 						</p>
 					</div>
 					<div class="lableTextDashBoard">

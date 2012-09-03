@@ -12,7 +12,7 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    $("#addNewJobOwnerPopUp").displaypopup("#accessPermissioPopUp","770","360");
+		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -54,7 +54,7 @@
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 						<span class="floatLeft marginTop10"><a href=""
-							class="btn_sm orange">SAVE</a> <a href="" class="btn_sm orange">Cancel</a></span>
+							class="btn_sm orange">SAVE</a> <a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a></span>
 					</div>
 					<div class="clearfix"></div>
 			</form>
