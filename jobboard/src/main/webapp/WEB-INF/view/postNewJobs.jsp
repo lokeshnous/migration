@@ -329,10 +329,10 @@
                 <form:input path="disCompanyName" class="job_seeker_password textBox350"  />
                 <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
                 <div class="clearfix"></div>
-                <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginTop4 marginRight10">
+                <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginRight5">
                   <form:checkbox path="bHideCompName"/>
                   </span>
-                          <p>Hide the company name in this job posting.</p>
+                          <span class="splLableText marginTop5">Hide the company name in this job posting.</span>
 
                         </div>
               </div>
@@ -621,10 +621,10 @@
               <li><a href="#">ADVANCE Healthcare Jobs</a></li>
 
               <li><a href="#">Subscribe</a></li>
-              <li><img src="../resources/images/email.png" class="foot_icon"/><a href="#">Sign Up for Enewsletter</a></li>
-              <li><img src="../resources/images/fbook_sm.png" class="foot_icon"/><a href="#">Connect on Facebook</a></li>
-              <li><img src="../resources/images/L_In_sm.png" class="foot_icon"/><a href="#">Connect on LinkedIn</a></li>
-              <li><img src="../resources/images/twitter_sm.png" class="foot_icon"/><a href="#">Connect on Twitter</a></li>
+	<li><div class="email"></div><a href="#">Sign Up for Enewsletter</a></li>
+	<li><div class="fbook"></div><a href="#">Connect on Facebook</a></li>
+	<li><div class="linkedIn"></div><a href="#">Connect on LinkedIn</a></li>
+	<li><div class="twitter"></div><a href="#">Connect on Twitter</a></li>
               <li><a href="#">Download the Mobile App</a></li>
 
               <li><a href="#">Order Promotional Items</a></li>

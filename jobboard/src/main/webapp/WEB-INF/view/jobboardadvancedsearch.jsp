@@ -77,12 +77,12 @@
                               
                               
                               <!--these div classes were switched from lableText to radioLableText--> 
-                              <div class="RadioBox">
+                              <div class="floatLeft">
                               <div class="radioLableText"><input name="chkbNationalAds" type="checkbox" value=""></div>
                               <div class="radioLableText"><label for="chkbNationalAds">Include National Ads</label>&nbsp;&nbsp;&nbsp;</div>
                               </div>
                               <div class="clearfix"></div>
-                              <div class="RadioBox">
+                              <div class="floatLeft">
                                 <div class="radioLableText"><input name="chkbInternationalAds" type="checkbox" value=""></div>
                                 <div class="radioLableText"><label for="chkbNationalAds">Include International Ads</label></div>
                                </div>
@@ -566,11 +566,11 @@
                                             <div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>
                                             
                                           <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -612,11 +612,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -659,11 +659,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -706,11 +706,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                           <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -752,11 +752,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -799,11 +799,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -845,11 +845,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -891,11 +891,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -937,11 +937,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -983,11 +983,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1036,11 +1036,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1082,11 +1082,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1128,11 +1128,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1174,11 +1174,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1220,11 +1220,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1266,11 +1266,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1312,11 +1312,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1358,11 +1358,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1404,11 +1404,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             
@@ -1450,11 +1450,11 @@
                                             
                                             
                                            <div class="searchResultsSubContentShare">
-                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><img src="../resources/images/email.png"></a></span>
+                                           <span class="marginTop3 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span>
                                             </div>
                                             
                                             <div class="searchResultsSubContentShare">
-                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><img src="../resources/images/fbook_sm.png"></a></span> <span><a href=""><img src="../resources/images/L_In_sm.png"></a></span> <span><a href=""><img src="../resources/images/twitter_sm.png"></a></span>
+                                            <span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span>
                                             </div>
                                             
                                             

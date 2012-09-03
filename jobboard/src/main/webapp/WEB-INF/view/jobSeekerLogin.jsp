@@ -80,8 +80,8 @@
 		    </div>
 		    <div class="job_seeker_social_login">
 			<p class="bold lableLetterSpacer">Login with your social networking account</p>
-			<a href=""><img src="../resources/images/loginFB.png" alt="Login with Facebook" /></a>
-			<a href=""><img src="../resources/images/loginIN.png" alt="Login with LinkedIn" /></a>
+			<a href=""><div class="faceBooklogin"></div></a>
+			<a href=""><div class="linkedInLogin"></div></a>
 		    </div>
 		    
 		    <br class="clearfix" />

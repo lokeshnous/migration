@@ -72,8 +72,8 @@
 		    </div>
             <div class="job_seeker_social_login">
 			<p class="bold lableLetterSpacer">Login with your social networking account</p>
-			<a href=""><img src="../resources/images/loginFB.png" alt="Login with Facebook" /></a>
-			<a href=""><img src="../resources/images/loginIN.png" alt="Login with LinkedIn" /></a>
+			<a href=""><div class="faceBooklogin"></div></a>
+			<a href=""><div class="linkedInLogin"></div></a>
 		    </div>
 		    
 		    <br class="clearfix"/>
@@ -128,14 +128,10 @@
             <ul>
             <li><a href="#">ADVANCE Healthcare Jobs</a></li>
             <li><a href="#">Subscribe</a></li>
-              <li><img src="../resources/images/email.png" class="foot_icon"/><a href="#">Sign Up for E-Newsletter</a></li>
-
-            <li><img src="../resources/images/fbook_sm.png" class="foot_icon"/><a href="#">Connect on Facebook</a></li>
-
-            <li><img src="../resources/images/L_In_sm.png" class="foot_icon"/><a href="#">Connect on LinkedIn</a></li>
-
-            <li><img src="../resources/images/twitter_sm.png" class="foot_icon"/><a href="#">Connect on Twitter</a></li>
-
+			<li><div class="email"></div><a href="#">Sign Up for Enewsletter</a></li>
+			<li><div class="fbook"></div><a href="#">Connect on Facebook</a></li>
+			<li><div class="linkedIn"></div><a href="#">Connect on LinkedIn</a></li>
+			<li><div class="twitter"></div><a href="#">Connect on Twitter</a></li>
             <li><a href="#">Download the Mobile App</a></li>
 			<li><a href="#">Order Promotional Items</a></li>
             </ul>

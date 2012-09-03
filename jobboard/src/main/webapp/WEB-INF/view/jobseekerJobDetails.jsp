@@ -220,20 +220,23 @@
 				<p><c:if test="${isHideCity}" ><span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><c:if test="${isHideState}" ><span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.stateFullName}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><c:if test="${isHideCoutry}" ><span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobID}</p>
 			    </div>
 			    <div class="jobDetailsIntroOptions">
-				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
-				<a onclick="applyThisJob('+${jobDetail.jobID}+');" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				
-				<a onclick="saveThisJob('+${jobDetail.jobID}+')" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
+			    <div class="rowEvenTB10Spacing">
+				<div class="floatLeft">Send to friend:</div><a href=""><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<div class="rowEvenTB10Spacing">
+				<a onclick="applyThisJob('+${jobDetail.jobID}+');" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
+				<a onclick="saveThisJob('+${jobDetail.jobID}+')" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
 			    
-			    <br/><br/>
+			    <br/><br/><br/>
 			    <h4><div style="color: red" id="topjobActionInfo" ></div></h4>
 			    <h3 class="jobSummaryTitle"><span>Job Summary:</span></h3>
 			    <p class="article">${jobDetail.jobDesc}</p>     
 			    <div class="jobDetailsIntroOptionsTborder">
 				<div class="jobDetailsIntroOptions">
-				<p class="marginBottom15">Send to friend: <a href=""><img src="../resources/images/email.png" alt="Send to Friend"></a> |&nbsp;&nbsp;Share: <a href=""><img src="../resources/images/fbook_sm.png" alt="Share on Facebook" /></a><a href=""><img src="../resources/images/L_In_sm.png" alt="Share on LinkedIn" /></a><a href=""><img src="../resources/images/twitter_sm.png" alt="Tweet on Twitter" /></a> |&nbsp;&nbsp;Print: <a href=""><img src="../resources/images/Print.png" alt="Print" /></a></p>
+				<div class="rowEvenTB10Spacing">
+				<div class="floatLeft">Send to friend:</div><a href=""><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<div class="rowEvenTB10Spacing">
 				<a onclick="btapplyThisJob('+${jobDetail.jobID}+');" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob('+${jobDetail.jobID}+');" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a>
+				<a onclick="btsaveThisJob('+${jobDetail.jobID}+');" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
 			    <br/><br/>
 			    <h4><div style="color: red" id="bottomjobActionInfo" ></div></h4>
 			    </div>

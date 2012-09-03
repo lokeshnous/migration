@@ -88,8 +88,8 @@ jQuery(document).ready(
 				<div class="content_columns">
 				<form:form commandName="jobSeekerDashBoardForm" id="jsdashboard">
 							<div class="dashboardHeader">
-								<img src="../resources/images/myadvance.png" width="288"
-									height="23" alt="My advance  dashboard">
+								<div class="advanceDashBoardHeader"><img src="../resources/images/myadvance.png" width="288"
+									height="23" alt="My advance  dashboard"></div>
 							</div>
 							<div class="dashboardcolumn1">
 								<div class="dashboardPanal">

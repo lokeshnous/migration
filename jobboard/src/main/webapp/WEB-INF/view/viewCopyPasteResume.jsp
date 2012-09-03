@@ -46,33 +46,46 @@
 							</div>
 						</div>
 						<div class="rowEvenNewSpacing">
-							<h2 class="noTopBottomBorder ">Resume: ${createResume.resumeName}</h2><br>
-							<span>
-									<h3 class="marginTop3">
-										<c:out value="${createResume.desiredJobTitle}" />
-									</h3>
+							<h2 class="noTopBottomBorder ">Resume:
+								${createResume.resumeName}</h2>
+							<br> <span>
+								<h3 class="marginTop3">
+									<c:out value="${createResume.desiredJobTitle}" />
+								</h3>
 							</span>
-							<br>
+
+
 							<div class="clearfix"></div>
-							<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>
-							<!-- class="textareaBoxCResume Height255 marginTop5 " -->
+							<span> <!--  <p class="marginTop3">Available 08/01/2012</p> -->
+							</span>
 						</div>
+						<!-- <div class="IconsArea">
+								<a href="#"><div class="download"></div></a>&nbsp; <a href="#"><div class="printOrange"></div></a>
+							</div> -->
 					</div>
-				</form>
-				<!--Start:MidContant-->
-				<div class="clearfix"></div>
-				<!-- content_wrapper -->
-				<div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
-				</div>
-				<!-- ad_wrapper -->
-
+					<div class="rowEvenNewSpacing">
+						<h2 class="noTopBottomBorder ">Resume:</h2>
+						<br> </span> <br>
+						<div class="clearfix"></div>
+						<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>
+						<!-- class="textareaBoxCResume Height255 marginTop5 " -->
+					</div>
 			</div>
-
-			<!-- main -->
+			</form>
+			<!--Start:MidContant-->
+			<div class="clearfix"></div>
+			<!-- content_wrapper -->
+			<div class="ad_wrapper">
+				<img src="../resources/images/ads/banner_ad_fpo.png" />
+			</div>
+			<!-- ad_wrapper -->
 
 		</div>
-		<!-- end main_wrapper_inside -->
+
+		<!-- main -->
+
+	</div>
+	<!-- end main_wrapper_inside -->
 	</div>
 	<!-- end main_wrapper_outside -->
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>

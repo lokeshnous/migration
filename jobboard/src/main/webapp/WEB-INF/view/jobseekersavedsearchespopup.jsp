@@ -215,13 +215,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 								</td>
 								
 								<td align="center"><a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" 
-								onclick="viewSavedSearch(this.id);" class="newWindow"><img
-										src="../resources/images/View.png" width="20" height="20"
-										alt="view"></a>&nbsp;<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img
-										src="../resources/images/Edit.png"   width="20" height="20"
-										alt="edit" onclick=""></a>&nbsp;<a href="#"><img
-										src="../resources/images/Delete.png" width="20" height="20"
-										alt="delete" ></a>
+								onclick="viewSavedSearch(this.id);" class="newWindow"><div class="view"></div></a><a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><div class="editFile"></div></a><a href="#"><div class="delete"></div></a>
 										</td>
 							</tr>
 						</c:forEach>

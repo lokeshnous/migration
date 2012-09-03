@@ -180,13 +180,13 @@
 												Position</label></th>
 										<th width="15%" align="left" valign="top" scope="col">Applicant
 											Name</th>
-										<th width="13%" align="left" valign="top" scope="col">Location</th>
+										<th width="14%" align="left" valign="top" scope="col">Location</th>
 										<th width="6%" align="center" valign="top" scope="col">Exp.</th>
 										<th width="15%" align="center" valign="top" scope="col">Employment
 											Type</th>
 										<th width="8%" align="center" valign="top" scope="col">Relocate</th>
 										<th width="9%" align="center" valign="top" scope="col">Posted</th>
-										<th width="11%" align="center" valign="top" scope="col">Actions</th>
+										<th width="10%" align="left" valign="top" scope="col">Actions</th>
 									</tr>
 
 									<tr>
@@ -201,11 +201,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -219,11 +215,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -237,11 +229,7 @@
 										<td align="center">Per Diem</td>
 										<td>No</td>
 										<td>04/05/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -255,11 +243,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -273,11 +257,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -291,11 +271,7 @@
 										<td align="center">Per Diem</td>
 										<td>No</td>
 										<td>04/05/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -309,11 +285,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -327,11 +299,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -345,11 +313,7 @@
 										<td align="center">Per Diem</td>
 										<td>No</td>
 										<td>04/05/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -363,11 +327,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -381,11 +341,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -399,11 +355,7 @@
 										<td align="center">Per Diem</td>
 										<td>No</td>
 										<td>04/05/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -417,11 +369,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -435,11 +383,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -453,11 +397,7 @@
 										<td align="center">Per Diem</td>
 										<td>No</td>
 										<td>04/05/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -471,11 +411,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -489,11 +425,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -507,11 +439,7 @@
 										<td align="center">Per Diem</td>
 										<td>No</td>
 										<td>04/05/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -525,11 +453,7 @@
 										<td align="center">Full-Time</td>
 										<td>Yes</td>
 										<td>06/27/2012</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
@@ -543,11 +467,7 @@
 										<td align="center">Part-Time</td>
 										<td>No</td>
 										<td>05/12/2011</td>
-										<td align="center"><a href="#"><img
-												src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="Download">&nbsp;<a href="#"><img
-												src="../resources/images/Print2.png" width="20" height="20" alt="print"></a></td>
+										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
 								</table>
 							</div>

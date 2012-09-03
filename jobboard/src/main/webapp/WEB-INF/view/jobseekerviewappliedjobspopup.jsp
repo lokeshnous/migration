@@ -64,16 +64,16 @@
               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
               <tr class="borderTopNone">
                 <th width="36%" align="left" scope="col">Job Title</th>
-                <th width="32%" align="left" scope="col">Company Name</th>
+                <th width="36%" align="left" scope="col">Company Name</th>
                 <th width="20%" align="left" scope="col">Applied</th>
-                <th width="12%" align="center" scope="col">Delete</th>
+                <th width="8%" align="center" scope="col">Delete</th>
               </tr>
                  <c:forEach items="${appliedJobDTOList}" var = "dtoList" > 
                <tr>
                 <td><a href='<c:url value="/jobsearch/viewJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/><c:param name="currentUrl" value="null"/></c:url>'  rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
-                <td align="center"><a href='<c:url value="/jobSeekerJobDetail/deleteAppliedJob.html" ><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><img src="../resources/images/Delete.png" width="20" height="20" alt="" ></a></td>
+                <td align="center"><div class="centerAlignMButton"><a href='<c:url value="/jobSeekerJobDetail/deleteAppliedJob.html" ><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
               </tr>
               </c:forEach>
             </table>

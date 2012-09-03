@@ -102,8 +102,8 @@
 							<tr class="borderTopNone">
 								<th width="36%" align="left" scope="col">Resume Name</th>
 								<th width="25%" align="center" scope="col">Visibility*</th>
-								<th width="17%" align="center" scope="col">Modified</th>
-								<th width="22%" align="center" scope="col">Actions</th>
+								<th width="18%" align="center" scope="col">Modified</th>
+								<th width="20%" align="center" scope="col">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -114,17 +114,7 @@
 											${resume.resumeVisibility}
 									</label></td>
 									<td align="center">${resume.updateDt}</td>
-									<td align="center"><a href="#"><img
-											src="../resources/images/View.png" width="20" height="20"
-											alt="view"></a>&nbsp;<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal"><img 
-											src="../resources/images/Edit.png" width="20" height="20"
-											alt="edit"></a>&nbsp;<a href="#"><img
-											src="../resources/images/Download.png" width="20" height="20"
-											alt="download"></a>&nbsp;<a href="#"><img
-											src="../resources/images/Print2.png" width="20" height="20"
-											alt="print"></a>&nbsp;<a href="#"><img
-											src="../resources/images/Delete.png" width="20" height="20"
-											alt="delete"></a></td>
+									<td align="center"><a href="#"><div class="view"></div></a>&nbsp;<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal"><div class="editFile"></div></a>&nbsp;<a href="#"><div class="download"></div></a>&nbsp;<a href="#"><div class="printOrange"></div></a>&nbsp;<a href="#"><div class="delete"></div></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

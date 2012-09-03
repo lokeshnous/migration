@@ -30,7 +30,6 @@
 	function searchResume() {
 		$(".otherContent").attr("style", "display: none");
 		$(".searchContent").attr("style", "display: block");
-
 	}
 </script>
 </head>
@@ -42,12 +41,14 @@
 		<!--nav-->
 		<!--Start:MidContant-->
 		<div class="row">
-		<form method="">
-			<div class="job_search_Resume">
-				
+			<form method="">
+				<div class="job_search_Resume">
+
 					<div class="row ">
 						<div class="row marginTop10">
-							<h2 class="sectionSubHeader">Search Resumes</h3>
+							<h2 class="sectionSubHeader">
+								Search Resumes
+								</h3>
 						</div>
 						<div class="row marginTop10 marginBottom10">
 							<div class=" floatLeft  width255">
@@ -119,9 +120,9 @@
 					<!-- search_info_box2 -->
 					<!-- browse_bar -->
 
-				
-				<div class="clearfix"></div>
-			</div>
+
+					<div class="clearfix"></div>
+				</div>
 			</form>
 		</div>
 
