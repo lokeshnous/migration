@@ -360,7 +360,9 @@
       </div>
    		<div class="clearfix"></div>
 		<br /> <span class="marginBottom10 FloatLeft"> 
-		<input type="submit" value="Back" name="Back" class="orange"  id="saveResBuilderBtId"/>
+		<c:if test="${createResume.bHideBackButton == false}"> 
+			<input type="submit" value="Back" name="Back" class="orange"  id="saveResBuilderBtId"/>
+		</c:if>
 		</span>
  </form>                
               <!--Start:MidContant-->
