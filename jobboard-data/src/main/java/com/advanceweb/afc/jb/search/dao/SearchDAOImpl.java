@@ -55,8 +55,8 @@ public class SearchDAOImpl implements SearchDAO{
 					"a.metaSearchType.searchTypeId = c.searchTypeId and b.searchIndexName = '"+searchIndexName+"' and "+ 
 					"b.environment = '"+environment+"' and c.searchTypeName = '"+searchTypeName+"'and b.searchIndexGroup = '"+searchIndexGroup+"' order by a.seq");
 			
-			SearchParamDTO msParamDTO = new SearchParamDTO();
 			for(MetaSearchParam obj: mSrchParamList){
+				SearchParamDTO msParamDTO = new SearchParamDTO();
 				msParamDTO.setParameterName(obj.getParameterName());
 				msParamDTO.setParameterValue(obj.getParameterValue());
 				srchParamDTOList.add(msParamDTO);
