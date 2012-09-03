@@ -10,11 +10,10 @@ import java.util.List;
  */
 public class PurchaseJobPostForm {
 	
-	List<JobPostingsForm> jobPostingsForm;
-	List<JobPostingsForm> jobPostingsCart = new ArrayList<JobPostingsForm>();
-	int grandTotal;
-	String promotionCode;
-	
+	private List<JobPostingsForm> jobPostingsForm;
+	private List<JobPostingsForm> jobPostingsCart = new ArrayList<JobPostingsForm>();
+	private int grandTotal;
+	private String promotionCode;
 	public List<JobPostingsForm> getJobPostingsForm() {
 		return jobPostingsForm;
 	}
@@ -39,4 +38,6 @@ public class PurchaseJobPostForm {
 	public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;
 	}
+	
+
 }
