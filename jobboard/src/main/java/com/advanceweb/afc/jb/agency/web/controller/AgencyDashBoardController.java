@@ -103,13 +103,17 @@ public class AgencyDashBoardController {
 				return model;
 			}
 
-			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
+			// emloyerRegistartionService.editEmployeeAccount(dto,
+			// admfacilityid);
+			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid,
+					userId, MMJBCommonConstants.PRIMARY);
 
 		}
 
 		model.setViewName(_FORM_VIEW);
 		return model;
 	}
+
 	/**
 	 * This method is called to Account Setting update page
 	 * 
@@ -126,7 +130,7 @@ public class AgencyDashBoardController {
 		int userId = (Integer) session.getAttribute("userId");
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		//int facilityId =368;
+		// int facilityId =368;
 		List<AdmFacilityContact> listProfAttribForms = emloyerRegistartionService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 
@@ -147,7 +151,10 @@ public class AgencyDashBoardController {
 					.getFacilityContactId();
 			AccountProfileDTO dto = transformEmployerRegistration
 					.transformBillingProfileFormToDto(employeeBillingForm);
-			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid);
+			// emloyerRegistartionService.editEmployeeAccount(dto,
+			// admfacilityid);
+			emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid,
+					userId, MMJBCommonConstants.PRIMARY);
 		}
 
 		model.setViewName(_FORM_VIEW);
@@ -171,7 +178,7 @@ public class AgencyDashBoardController {
 			employeeBillingForm.setBillingAddressForm(new BillingAddressForm());
 
 			int userId = (Integer) session.getAttribute("userId");
-			//int userId=368;
+			// int userId=368;
 
 			List<CountryDTO> countryList = populateDropdownsService
 					.getCountryList();
@@ -251,5 +258,5 @@ public class AgencyDashBoardController {
 
 		return model;
 	}
-	
+
 }
