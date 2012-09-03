@@ -228,5 +228,9 @@ public interface MMJBCommonConstants {
 	String IMAGE_TYPE_GIF = ".gif";
 	String IMAGE_TYPE_PNG = ".png";
 	String IMAGE_TYPE_TIF = ".tif";
+	
+	String USER_DTO="USER_DTO";
+	
+	public static final String RECAPTCHA_PRIVATE_KEY="6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
 
 }
