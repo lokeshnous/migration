@@ -11,12 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
+import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
@@ -225,6 +229,18 @@ public class PaymentGatewayController {
 		fetchAdmFacilityConatact.saveBillingAddress(billingAddressDTO);
 		model.setViewName("gatewayThankYou");
 		return model;
+	}
+	
+	@RequestMapping(value="/removeJobPost",method = RequestMethod.POST)
+	public @ResponseBody String removeJobPostFromCart(
+			@RequestParam("cartItemIndex") int cartItemIndex, HttpSession session) {
+		PurchaseJobPostForm purchaseJobPostForm = (PurchaseJobPostForm)session.getAttribute("purchaseJobPostCart");
+		
+		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
+		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
+		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
+		session.setAttribute("purchaseJobPostCart", purchaseJobPostForm);
+		return 	"success";
 	}
 
 }

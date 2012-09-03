@@ -31,6 +31,24 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+		$("#jobPostingsCart a").click(function(){
+			if($(this).html()== "Remove"){
+				$.ajax({url: "${pageContext.request.contextPath}/pgiController/removeJobPost.html",
+					type: "POST",
+			        data: {"cartItemIndex" : parseInt($(this).attr("id"))},
+					success: function(data){ 
+						if(null != data && data == "success"){
+						    location.reload();
+						}	
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					}
+				});
+			}
+			
+		});
 	});
 
 	/* $('#edit').click(function(){
@@ -183,7 +201,8 @@
 													href="../pgiController/callPaymentMethod.html">Edit</a></span>
 										</span></td>
 										<td align="right" valign="top"><span
-											class="paymentLineHeight">$796.00</span></td>
+											class="paymentLineHeight">$</span><span
+											class="paymentLineHeight">${purchaseJobPostForm.grandTotal}</span></td>
 									</tr>
 								</table>
 							</div>
