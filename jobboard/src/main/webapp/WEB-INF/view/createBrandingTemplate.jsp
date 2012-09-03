@@ -19,7 +19,7 @@
 
                 function() {                    
 
-                        $("#branding").displaypopup("#branding","770","360");
+                        $("#brandingpreview").displaypopup("#brandingpreview","770","360");
                         
                       //Adding Testimonies
                 		$('#testimonyAjaxCallId').live('click', function() {
@@ -35,6 +35,8 @@
                 });
                 
              // function start
+             
+           
 
 
 			function preview() {          	 
@@ -236,7 +238,8 @@
 								<div class="floatLeft">
 									<form:input path="logoFileData" name="textfield4" type="file"
 										id="textfield4" size="20"
-										class="job_seeker_login_email fileType" />
+										class="job_seeker_login_email fileType"  />
+										
 								</div>
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">Select the company logo you want
@@ -277,6 +280,7 @@
 									<form:input path="mainImageFileData" name="textfield4" type="file"
 										id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
+										
 								</div>
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">This is the large image that will
@@ -387,16 +391,16 @@
 							
 							<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
-						<%-- 	<a href="<%=request.getContextPath()%>/brandingTemplates/previewBrandingTemplate.html" id="branding"
+							<%-- <a href="<%=request.getContextPath()%>/brandingTemplates/preview.html" id="brandingpreview"
 								class="btn_sm white" target="">Preview</a>  --%>
 								
 								<!--  <input type="button" id="preview" value="Preview" class="white" onclick="preview();" name="Preview"/> --> 
 								
 								<!-- working -->
-								<a onclick="preview()" id="preview" class="white" style=" cursor: default;">Preview</a>
+								<!-- <a onclick="preview()" id="preview" class="white" style=" cursor: default;">Preview</a> -->
 								
 								
-								<!-- <input type="submit" value="Preview" class="btn_sm white"  name="Preview"/> -->
+								<input type="submit" id="brandingpreview" value="Preview" class="btn_sm white"  name="Preview"/>
 								<input type="submit" value="Save" class="btn_sm white"  name="Save"/>
 								<!-- <input type="submit" value="Cancel" class="btn_sm white"  name="Cancel"/> -->
 								 <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/createBrandingTemplate.html"

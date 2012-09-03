@@ -25,11 +25,16 @@
                <!-- header_wrapper -->
               
               
-        				<div class="abc" align="right">
+        				<!-- <div class="abc" align="right">
 							<img src="../resources/images/Close.png" width="19"
 								class="nyroModalClose" height="19" alt="Close" >
-						</div>
+						</div> -->
      		 
+     		 <div class="floatRight">
+							<!-- <span class="floatRight"> <a href="../employer/employerDashBoard.html">Back To Dashboard </a></span> -->
+							<span class="floatRight"> <a href="../brandingTemplates/displayTemplate.html">Back</a></span>
+			</div>
+						
               <!--nav--> 
               
               <!-- ad_col_right -->
@@ -44,6 +49,7 @@
           <div class="row marginTop16">
                	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getLogoPath()}"  alt="logo" width="335" height="60" border="0" /></div>
           </div>
+          
           <div class="BoxText" alt="Color" width="500" height="60" border="0" style="color: #FF0000"/></div>
           </div>
                   <!--BANNER AREA-->
