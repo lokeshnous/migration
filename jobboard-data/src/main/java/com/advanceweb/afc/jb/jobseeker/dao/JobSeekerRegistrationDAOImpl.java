@@ -286,5 +286,18 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		
 		return null;
 	}
+	
+	public boolean validateProfileAttributes(int jobseekerId){
+		try {
+			List<MerUserProfile> profAttribList = hibernateTemplate.find(" from MerUserProfile prof where prof.profilePK.userId=?",jobseekerId);
+			if(null != profAttribList && !profAttribList.isEmpty()){
+				return true;
+			}
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 }

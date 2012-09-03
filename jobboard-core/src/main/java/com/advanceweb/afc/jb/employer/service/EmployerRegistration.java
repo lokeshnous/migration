@@ -140,6 +140,12 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 		}
 		return accountProfileDTO;
 	}
+
+	@Override
+	public boolean validateProfileAttributes(int jobseekerId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	

@@ -3,6 +3,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,7 +31,11 @@
 		<script type="text/javascript">
 		    function cancelProcess(){
 		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
-		    }		
+		    }	
+		    
+		    var RecaptchaOptions = {
+		    	    theme : 'clean'
+		   	};
 		</script>
 		</head>
 		
@@ -90,23 +95,25 @@
 
         <div id="jobSeekerRegister1" class="job_seeker_login leftFormHolder" style="display:block">
            <h2 class="sectionSubHeader">Step 1: Create Your Account</h2>
-           <form:form method="Post" action="createJobSeekerYourInfo.html" commandName="registerForm" enctype="multipart/form-data">
+           <form:form method="POST" action="createJobSeekerYourInfo.html" commandName="registerForm" enctype="multipart/form-data">
+           
+           	
 	            <div class="rowEvenSpacingMargin0"> <span class="lableText3">Email Address:</span>
-	                      <form:input path="emailId" class="job_seeker_password textBox350"/>
+	                      <form:input path="emailId" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
 				<div class="FormErrorDisplay">
 					<form:errors path="emailId" /> 
 				</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Email Address:</span>
-	                      <form:input path="confirmEmailId" class="job_seeker_password textBox350"/>
+	                      <form:input path="confirmEmailId" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
 	            <div class="FormErrorDisplay">				
 					<form:errors path="confirmEmailId"/>
 				</div>         
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Password:</span>
-	                      <form:password path="password" class="job_seeker_password textBox350"/>
+	                      <form:password path="password" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}" showPassword="true"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
 				<div class="FormErrorDisplay">
@@ -114,22 +121,37 @@
 				</div>
 	            <div class="row marginTop5"> <span class="lableText3"></span> (8-20 characters, including at least 1 number)</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Password:</span>
-	            		  <form:password path="retypepassword" class="job_seeker_password textBox350" />
+	            		  <form:password path="retypepassword" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}" showPassword="true"/>
 	                      <span class="required">(Required)</span> </div>
 	            <div class="FormErrorDisplay">
 					<form:errors path="retypepassword" /> 
 				</div>
-	            <%-- <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> <img src="../resources/images/SecureText.jpg" width="294" height="48" alt=""> </div>
-	
-	           <div class="rowEvenNewSpacing"> <span class="lableText3">Type the two words:</span>
-	                       <form:password path="retypepassword" class="job_seeker_password textBox350" /> 
-	                       <form:errors path="retypepassword" /> 
-	                      <span class="required">(Required)</span> </div>--%>
+
+<%-- 	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> 
+					<%
+				        /* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
+				        ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lel19USAAAAAPRKVOy7gFpRBpn6iSPONG1o9ouZ", "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN", false);
+				        out.print(c.createRecaptchaHtml(null, null));
+				    %>
+				 </div> --%>
+				 <div>
+				 	<c:out value=""></c:out>
+				 </div>
+				<div>
+					<span class="lableText3"></span>
+					<FONT color="red">
+						<c:if test="${not empty errorMessage}">
+					    	<div id="errmsg" style="color: red" align="left" >
+				    			<c:out value="${errorMessage}"></c:out>
+							</div>
+						</c:if>
+					</FONT> 
+				</div>
 				<div class="popUpButtonRow">
 				
 	               <input type="submit" value="Next" class="orange"  name="Next"/>
-	               <input type="button" value="Cancel" onclick="cancelProcess()"
-									class="orange" name="Cancel" />
+	               <input type="button" value="Cancel" onclick="cancelProcess()" 
+									class="orange" name="Cancel"  hidden="${registerForm.bReadOnly}"/>
 	               
 	               <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="orange">Cancel</a> --%>
 	               <!-- <input type="submit" value="Cancel" class="orange"  name="Cancel"/> -->  

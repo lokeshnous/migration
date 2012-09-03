@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.jobseeker.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
@@ -17,6 +19,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @created 21-Jun-2012 2:22:44 PM
  */
 @Service("profileRegistration")
+@Transactional(propagation=Propagation.SUPPORTS, readOnly=false)
 public class JobSeekerRegistration implements ProfileRegistration {
 
 	public JobSeekerProfileDTO jobSeekerProfileDTO;
@@ -102,5 +105,10 @@ public class JobSeekerRegistration implements ProfileRegistration {
 		
 		return jobSeekerRegistrationDAO.getProfileAttributes();
 	}	
+	
+
+	public boolean validateProfileAttributes(int jobseekerId){
+		return jobSeekerRegistrationDAO.validateProfileAttributes(jobseekerId);
+	}
 	
 }

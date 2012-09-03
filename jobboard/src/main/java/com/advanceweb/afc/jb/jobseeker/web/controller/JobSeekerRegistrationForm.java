@@ -31,6 +31,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private MultipartFile uploadResume;
 	private String[] currentsubs;
 	private String userId;	
+	private boolean bReadOnly;
 	private List<JobSeekerProfileAttribForm> listProfAttribForms;
 	
 	private CommonsMultipartFile fileData;
@@ -211,6 +212,14 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	public void setListProfAttribForms(
 			List<JobSeekerProfileAttribForm> listProfAttribForms) {
 		this.listProfAttribForms = listProfAttribForms;
+	}
+
+	public boolean isbReadOnly() {
+		return bReadOnly;
+	}
+
+	public void setbReadOnly(boolean bReadOnly) {
+		this.bReadOnly = bReadOnly;
 	}	
 	
 }

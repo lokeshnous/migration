@@ -52,5 +52,7 @@ public interface JobSeekerRegistrationDAO {
 	 * @return
 	 */
 	public JobSeekerRegistrationDTO getProfileAttributes();
+	
+	public boolean validateProfileAttributes(int jobseekerId);
 
 }

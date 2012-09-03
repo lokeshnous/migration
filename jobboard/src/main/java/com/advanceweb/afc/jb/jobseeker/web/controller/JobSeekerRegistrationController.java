@@ -31,7 +31,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,7 +40,6 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
-import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Controller
@@ -61,31 +59,16 @@ public class JobSeekerRegistrationController {
 	
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
-	
-	@Autowired
-	private PopulateDropdowns populateDropdownsService;	
-		
+			
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	
 	//Spring ReCaptcha
-	private String recaptcha_response;
+/*	private String recaptcha_response;
 	private String recaptcha_challenge;
-	private String remoteAddr;
+	private String remoteAddr;*/
 	
 	private Long placeKey;
-	
-	
-	
-	@RequestMapping(value = "/getPostalCodeAutoPopulation")
-	@ResponseBody 
-	public List<String> getPostalCodeAutoPopulation(@RequestParam("postalCode") int postalCode) {
-		  
-//	  List<String> postalCodeList = populateDropdownsService.populatePostalCodeAutoComplete(postalCode);
-		System.out.println("hi" +postalCode);
-	   
-	  return null;
-	}
 	
 	
 	/**
@@ -100,6 +83,22 @@ public class JobSeekerRegistrationController {
 		
 		ModelAndView model = new ModelAndView();
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
+		
+		 UserDTO userDTO=null; 
+		 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
+			 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
+			 registerForm = new JobSeekerRegistrationForm();
+			 registerForm.setPassword(userDTO.getPassword());
+			 registerForm.setRetypepassword(userDTO.getPassword());
+			 registerForm.setEmailId(userDTO.getEmailId());
+			 registerForm.setConfirmEmailId(userDTO.getEmailId());
+			 registerForm.setUserId(String.valueOf(userDTO.getUserId()));
+			 registerForm.setbReadOnly(true);
+			 session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
+			 session.setAttribute("userId", userDTO.getUserId());
+			 session.setAttribute("userEmail", userDTO.getEmailId());
+		 }
+		
 		model.setViewName("jobSeekerCreateAccount");
 		model.addObject("registerForm", registerForm);	
 		return model;
@@ -116,7 +115,7 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
 	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
-			BindingResult result, HttpServletRequest req) {
+			BindingResult result, HttpServletRequest req, HttpSession session) {
 		
 		 placeKey = (new Random()).nextLong();		
 		 ModelAndView model = new ModelAndView();
@@ -146,25 +145,31 @@ public class JobSeekerRegistrationController {
 				model.setViewName("jobSeekerCreateAccount");
 				model.addObject("errorMessage","Captcha is invalid!");
 				return model;
-			 }		  */
-			//Spring Recaptcha Ends here			
-			registerValidation.validate(registerForm, result);
-			
-			if(result.hasErrors()){
-				model.setViewName("jobSeekerCreateAccount");
-				return model;
-			}
-			
-			if(profileRegistration.validateEmail(registerForm.getEmailId())){
-				model.setViewName("jobSeekerCreateAccount");
-				result.rejectValue("emailId", "NotEmpty", "Email address already exists");
-				return model;
+			 }	*/	  
+			//Spring Recaptcha Ends here	
+			 
+			if(!registerForm.isbReadOnly()){ //it will be executed when the user come's from Sign Up page
+				registerValidation.validate(registerForm, result);
+				
+				if(result.hasErrors()){
+					model.setViewName("jobSeekerCreateAccount");
+					return model;
+				}
+				
+				if(profileRegistration.validateEmail(registerForm.getEmailId())){
+					model.setViewName("jobSeekerCreateAccount");
+					result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+					return model;
+				}
 			}
 			
 			JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes();
-
+			 UserDTO userDTO=null; 
+			 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
+				 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
+			 }
 			List<JobSeekerProfileAttribForm> listProfAttribForms = 
-					transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO);
+					transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO, userDTO);
 			registerForm.setListProfAttribForms(listProfAttribForms);
 			model.setViewName("jobSeekerCreateAccountInfo");
 			model.addObject("registerForm", registerForm);
@@ -308,7 +313,7 @@ public class JobSeekerRegistrationController {
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile
 					((Integer) session.getAttribute("userId"));
 			List<JobSeekerProfileAttribForm> listProfAttribForms = 
-					transformJobSeekerRegistration.transformDTOToProfileAttribForm(jsRegistrationDTO);
+					transformJobSeekerRegistration.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
 			form.setListProfAttribForms(listProfAttribForms);
 			form.setEmailId(jsRegistrationDTO.getEmailId());
 			model.addObject("registerForm", form);

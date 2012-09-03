@@ -57,5 +57,14 @@ public interface ProfileRegistration {
 	 * @param profileDTO
 	 */
 	public ProfileDTO getProfileAttributes();
+	
+	/**
+	 * This method will be called after the successful login by the user, 
+	 * to get the profile information in case of old user
+	 * 
+	 * @param jobseekerId
+	 * @return
+	 */
+	public boolean validateProfileAttributes(int jobseekerId);
 
 }

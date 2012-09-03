@@ -89,4 +89,10 @@ public class AgencyRegistration implements ProfileRegistration {
 		return agencyRegistrationDAO.getProfileAttributes();
 	}
 
+	@Override
+	public boolean validateProfileAttributes(int jobseekerId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

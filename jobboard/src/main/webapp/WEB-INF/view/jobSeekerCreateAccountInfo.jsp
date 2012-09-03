@@ -299,7 +299,7 @@
 									name="Back" /> <input type="submit" value="Finish"
 									class="orange" name="Finish" /> 
 									<input type="button" value="Cancel" onclick="cancelProcess();"
-									class="orange" name="Cancel" />
+									class="orange" name="Cancel" hidden="${registerForm.bReadOnly}"/>
 									<%-- <a
 									href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html"
 									class="btn_sm orange cancelacount">Cancel</a> --%>

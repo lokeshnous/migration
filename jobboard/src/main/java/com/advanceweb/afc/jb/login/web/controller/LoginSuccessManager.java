@@ -16,10 +16,14 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private ProfileRegistration profileRegistration;
 
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -37,13 +41,17 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
 				+ " " + user.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
-		if (authentication.getAuthorities()
-				.contains(
-						new SimpleGrantedAuthority(
-								MMJBCommonConstants.ROLE_JOB_SEEKER))
-				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER)) {
-			response.sendRedirect(request.getContextPath()
-					+ "/jobSeeker/jobSeekerDashBoard.html");
+		if (authentication.getAuthorities().contains(
+						new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_JOB_SEEKER))
+						&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER)) {
+			if(profileRegistration.validateProfileAttributes(user.getUserId())){
+				response.sendRedirect(request.getContextPath()
+						+ "/jobSeeker/jobSeekerDashBoard.html");//if the user already registered
+			}else{//if the logged in user is new
+				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+				response.sendRedirect(request.getContextPath()+ "/jobseekerregistration/createJobSeekerCreateYrAcct.html");
+			}
+
 		} else if (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER)) {
