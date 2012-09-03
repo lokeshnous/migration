@@ -147,7 +147,7 @@ function copyAccToBillingAddr(obj) {
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		
- 		$('#save').click(function(){			
+ 		$('#Save').click(function(){			
  			
 			$.ajax({url:"${sessionScope.contextPath}/employerRegistration/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
@@ -171,7 +171,7 @@ function copyAccToBillingAddr(obj) {
 <script type="text/javascript">
 	 jQuery(document).ready(function() {
 		
- 		$('#save').click(function(){			
+ 		$('#Save').click(function(){			
  			
 			$.ajax({url:"${sessionScope.contextPath}/employerRegistration/employeeBillingSetting.html",
 				data:$('#editBillingSettingData').serialize(),
@@ -185,7 +185,7 @@ function copyAccToBillingAddr(obj) {
 				 },
 			});
 		}); 
-		
+ 		 		
 		jQuery(".megamenu").megamenu();
 		
 		$('[id^=zipCode]').keypress(validateNumber);
@@ -193,7 +193,14 @@ function copyAccToBillingAddr(obj) {
 
 	}); 
 </script>
-
+		<script type="text/javascript">
+		$('#Cancel').click(function(){		
+			parent.$.nmTop().close();		
+		});
+		$('#CancelData').click(function(){		
+			parent.$.nmTop().close();		
+		});
+		</script>
 	
 	</head>
 	<body class="job_board">
@@ -207,7 +214,7 @@ function copyAccToBillingAddr(obj) {
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">
-				<form:form action="../employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="../employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
@@ -281,7 +288,7 @@ function copyAccToBillingAddr(obj) {
 						<span class="floatLeft marginTop10">
 							<input type="submit" value="Save" name="Save" id="btn-submit" class="btn_sm orange" />
 							<!-- <input class="btn_sm orange" type="submit" id="btn-submit" value="Edit"> -->
-							<input type="button" name="Cancel" class="orange" value="Cancel"/>
+							<input type="button" name="Cancel" id="Cancel" value="Cancel" class="btn_sm orange" />
 								
 						</span>
 					</div>
@@ -365,7 +372,7 @@ function copyAccToBillingAddr(obj) {
 							 <!-- <input class="btn_sm orange" type="submit"
 							id="btn-submit2" value="Edit">  -->
 							<input type="submit" value="Save" name="Save" id="btn-submit2" class="btn_sm orange" />
-							<input type="button" name="Cancel" class="orange" value="Cancel" />
+							<input type="button" name="CancelData"  id="CancelData" value="Cancel" class="btn_sm orange" />
 						</span>
 					</div>
 					<div class="clearfix"></div>
