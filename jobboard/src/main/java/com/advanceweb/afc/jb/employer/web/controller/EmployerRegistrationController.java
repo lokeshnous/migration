@@ -270,7 +270,7 @@ public class EmployerRegistrationController {
 	 */
 	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
 	public String jsChangePassword(@Valid EmployerRegistrationForm form,
-			Map model, BindingResult result) {
+			 BindingResult result) {
 
 		try {
 			EmployerProfileDTO empDTO = new EmployerProfileDTO();
@@ -345,32 +345,39 @@ public class EmployerRegistrationController {
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<AdmFacilityContact> listProfAttribForms = empRegService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
+		try {
+			if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
+				int admfacilityid = listProfAttribForms.get(0)
+						.getFacilityContactId();
+				AccountProfileDTO dto = transformEmpReg
+						.transformBillingProfileFormToDto(employeeBillingForm);
+				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
+						MMJBCommonConstants.BILLING);
 
-		if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
-			int admfacilityid = listProfAttribForms.get(0)
-					.getFacilityContactId();
-			AccountProfileDTO dto = transformEmpReg
-					.transformBillingProfileFormToDto(employeeBillingForm);
-			empRegService.editEmployeeAccount(dto, admfacilityid,userId,MMJBCommonConstants.BILLING);
+			} else {
 
-		} else {
+				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
+				AccountBillingDTO billingAddressDTO = transformPaymentMethod
+						.transformDataBillingAddreFormToDto(billingAddressForm);
+				billingAddressDTO.setFacilityId(facilityId);
+				billingAddressDTO.setCompanyName(employeeBillingForm
+						.getCompany());
+				billingAddressDTO.setEmail(employeeBillingForm.getEmail());
+				billingAddressDTO.setPhone(employeeBillingForm.getPhone());
+				billingAddressDTO.setCreateDate(new Date());
+				fetchAdmFacilityConatact
+						.saveDataBillingAddress(billingAddressDTO);
 
-			BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
-			AccountBillingDTO billingAddressDTO = transformPaymentMethod
-					.transformDataBillingAddreFormToDto(billingAddressForm);
-			billingAddressDTO.setFacilityId(facilityId);
-			billingAddressDTO.setCompanyName(employeeBillingForm.getCompany());
-			billingAddressDTO.setEmail(employeeBillingForm.getEmail());
-			billingAddressDTO.setPhone(employeeBillingForm.getPhone());
-			billingAddressDTO.setCreateDate(new Date());
-			fetchAdmFacilityConatact.saveDataBillingAddress(billingAddressDTO);
+				// model.setViewName("employerDashboard");
+				// return model;
+			}
 
-			// model.setViewName("employerDashboard");
-			// return model;
+			model.setViewName("employerDashboard");
+			return model;
+		} catch (Exception e) {
+			model.setViewName("employerDashboard");
+			return model;
 		}
-
-		model.setViewName("employerDashboard");
-		return model;
 
 	}
 
