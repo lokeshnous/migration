@@ -11,11 +11,11 @@ public class ReadFile {
 		FileInputStream fstream = new FileInputStream(filepath);
 		DataInputStream stream = new DataInputStream(fstream);
 		Reader reader = new InputStreamReader(stream);
-		int value = reader.read();
-		StringBuffer htmlsource = new StringBuffer();
+		int value;
+		StringBuffer htmlsource=new StringBuffer();
 		htmlsource.delete(0, htmlsource.length());
-		while (value != -1) {
-			htmlsource.append((char) value);
+		while((value = reader.read()) != -1){
+			htmlsource.append((char)value);
 		}
 		return htmlsource.toString();
 	}

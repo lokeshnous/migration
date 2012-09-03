@@ -87,9 +87,9 @@ public class TransformCreateResume {
 			List<CertificationsForm> listCertForms) {
 
 		List<CertificationDTO> listCertDTO = new ArrayList<CertificationDTO>();
-		CertificationDTO dto = new CertificationDTO();
 		if (null != listCertForms) {
 			for (CertificationsForm certForm : listCertForms) {
+				CertificationDTO dto = new CertificationDTO();
 				dto.setCertificationName(certForm.getCertificationName());
 				dto.setDateOfReceipt(certForm.getDateOfReceipt());
 				dto.setInstituteName(certForm.getInstituteName());
@@ -113,9 +113,9 @@ public class TransformCreateResume {
 			List<ReferenceForm> listRefForms) {
 
 		List<ReferenceDTO> listRefDTO = new ArrayList<ReferenceDTO>();
-		ReferenceDTO dto = new ReferenceDTO();
 		if (null != listRefForms) {
 			for (ReferenceForm refForm : listRefForms) {
+				ReferenceDTO dto = new ReferenceDTO();
 				dto.setCompanyName(refForm.getCompanyName());
 				dto.setEmail(refForm.getEmail());
 				dto.setJobTitle(refForm.getJobTitle());
@@ -140,9 +140,9 @@ public class TransformCreateResume {
 			List<EducationForm> listEduForms) {
 
 		List<EducationDTO> listEduDTO = new ArrayList<EducationDTO>();
-		EducationDTO dto = new EducationDTO();
 		if (null != listEduForms) {
 			for (EducationForm eduForm : listEduForms) {
+				EducationDTO dto = new EducationDTO();
 				dto.setCertifications(eduForm.getCertifications());
 				dto.setDegreeLvl(eduForm.getDegreeLvl());
 				dto.setDegrees(eduForm.getDegrees());
@@ -170,9 +170,9 @@ public class TransformCreateResume {
 			List<WorkExpForm> listWorkExpForms) {
 
 		List<WorkExpDTO> listWorkExpDTO = new ArrayList<WorkExpDTO>();
-		WorkExpDTO dto = new WorkExpDTO();
 		if (null != listWorkExpForms) {
 			for (WorkExpForm workExpForm : listWorkExpForms) {
+				WorkExpDTO dto = new WorkExpDTO();
 				dto.setAnnualSalary(workExpForm.getAnnualSalary());
 				dto.setCurrentCareerLvl(workExpForm.getCurrentCareerLvl());
 				dto.setDescription(workExpForm.getDescription());
@@ -203,9 +203,9 @@ public class TransformCreateResume {
 			List<LanguageForm> listLangForms) {
 
 		List<LanguageDTO> listWorkExpDTO = new ArrayList<LanguageDTO>();
-		LanguageDTO dto = new LanguageDTO();
 		if (null != listLangForms) {
 			for (LanguageForm langForm : listLangForms) {
+				LanguageDTO dto = new LanguageDTO();
 				dto.setExpLvl(langForm.getExpLvl());
 				dto.setLanguage(langForm.getLanguage());
 				dto.setnLangId(langForm.getnLangId());
@@ -227,9 +227,8 @@ public class TransformCreateResume {
 
 		List<PhoneDetailDTO> phoneDtlDTO = new ArrayList<PhoneDetailDTO>();
 		if (null != phoneDetails) {
-			PhoneDetailDTO dto = new PhoneDetailDTO();
 			for (PhoneDetailForm phoneForm : phoneDetails) {
-
+				PhoneDetailDTO dto = new PhoneDetailDTO();
 				dto.setBuilderPhoneId(phoneForm.getBuilderPhoneId());
 				dto.setPhoneNumber(phoneForm.getPhoneNumber());
 				dto.setPhoneType(phoneForm.getPhoneType());
@@ -255,8 +254,8 @@ public class TransformCreateResume {
 			PhoneDetailForm form = new PhoneDetailForm();
 			phoneDtls.add(form);
 		} else {
-			PhoneDetailForm form = new PhoneDetailForm();
 			for (PhoneDetailDTO dto : phoneDetails) {
+				PhoneDetailForm form = new PhoneDetailForm();
 				form.setBuilderPhoneId(dto.getBuilderPhoneId());
 				form.setPhoneNumber(dto.getPhoneNumber());
 				form.setPhoneType(dto.getPhoneType());
@@ -354,8 +353,8 @@ public class TransformCreateResume {
 			EducationForm eduForm = new EducationForm();
 			listEduForms.add(eduForm);
 		} else {
-			EducationForm form = new EducationForm();
 			for (EducationDTO dto : listEduDTO) {
+				EducationForm form = new EducationForm();
 				form.setBuilderEduId(dto.getBuilderEduId());
 				form.setCertifications(dto.getCertifications());
 				form.setDegreeLvl(dto.getDegreeLvl());
@@ -389,8 +388,8 @@ public class TransformCreateResume {
 			refForm.setReferenceType(MMJBCommonConstants.REFERENCE_TYPE_PERSONAL);
 			listWorkExpForms.add(refForm);
 		} else {
-			ReferenceForm form = new ReferenceForm();
 			for (ReferenceDTO dto : listRefpDTO) {
+				ReferenceForm form = new ReferenceForm();
 				form.setBuilderRefId(dto.getBuilderRefId());
 				form.setCompanyName(dto.getCompanyName());
 				form.setEmail(dto.getEmail());
@@ -419,8 +418,8 @@ public class TransformCreateResume {
 			WorkExpForm workExpForm = new WorkExpForm();
 			listWorkExpForms.add(workExpForm);
 		} else {
-			WorkExpForm form = new WorkExpForm();
 			for (WorkExpDTO dto : listWorkExpDTO) {
+				WorkExpForm form = new WorkExpForm();
 				form.setAnnualSalary(dto.getAnnualSalary());
 				form.setBuilderEmpId(dto.getBuilderEmpId());
 				form.setCurrentCareerLvl(dto.getCurrentCareerLvl());

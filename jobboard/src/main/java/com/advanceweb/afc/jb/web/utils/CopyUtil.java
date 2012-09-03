@@ -26,8 +26,8 @@ public class CopyUtil {
 				FileOutputStream fos = new FileOutputStream(new File(
 						basedirectorypath, resource));
 				byte[] buffer = new byte[1024];
-				int read = stream.read(buffer);
-				while (read != -1) {
+				int read = -1;
+				while ((read = stream.read(buffer)) != -1) {
 					fos.write(buffer, 0, read);
 				}
 				fos.flush();
@@ -55,10 +55,12 @@ public class CopyUtil {
 
 			byte[] buffer = new byte[1024];
 
-			int length =inStream.read(buffer);
+			int length;
 			// copy the file content in bytes
-			while (length > 0) {
+			while ((length = inStream.read(buffer)) > 0) {
+
 				outStream.write(buffer, 0, length);
+
 			}
 
 			inStream.close();

@@ -126,10 +126,10 @@ public class ResumeConversionHelper {
 
 		List<CertificationDTO> listCertDTO = new ArrayList<CertificationDTO>();
 		List<ResBuilderCertification> listCerts = resumeBuilder.getResBuilderCertifications();
-		CertificationDTO dto = new CertificationDTO();
 
 		if (null != listCerts) {
 			for (ResBuilderCertification entity : listCerts) {
+				CertificationDTO dto = new CertificationDTO();
 				dto.setBuilderCertId(entity.getBuilderCertificationId());
 				dto.setCertificationName(entity.getCertificationName());
 				dto.setCertifyingAuthority(entity.getCertifyingAuthority());
@@ -147,12 +147,11 @@ public class ResumeConversionHelper {
 
 		List<ReferenceDTO> listRefDTO = new ArrayList<ReferenceDTO>();
 		List<ResBuilderReference> listRefs = resumeBuilder.getResBuilderReferences();
-		ReferenceDTO dto = new ReferenceDTO();
 
 		if (null != listRefs) {
 			
 			for (ResBuilderReference entity : listRefs) {
-				
+				ReferenceDTO dto = new ReferenceDTO();
 				dto.setBuilderRefId(entity.getBuilderReferenceId());
 				dto.setName(entity.getContactName());
 				dto.setJobTitle(entity.getJobTitle());
@@ -207,11 +206,10 @@ public class ResumeConversionHelper {
 
 		List<EducationDTO> listEduDTO = new ArrayList<EducationDTO>();
 		List<ResBuilderEdu> listEdu = resumeBuilder.getResBuilderEdus();
-		EducationDTO dto = new EducationDTO();
 
 		if (null != listEdu) {
 			for (ResBuilderEdu entity : listEdu) {
-				
+				EducationDTO dto = new EducationDTO();
 				 dto.setBuilderEduId(entity.getBuilderEduId());
 				 dto.setInstituteName(entity.getInstitutionName());
 				 dto.setDegreeLvl(entity.getDegreeLevel().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getDegreeLevel());
@@ -248,11 +246,10 @@ public class ResumeConversionHelper {
 		List<WorkExpDTO> listWorkExpDTO = new ArrayList<WorkExpDTO>();
 		List<ResBuilderEmployment> listEmp = resumeBuilder
 				.getResBuilderEmployments();
-		WorkExpDTO dto = new WorkExpDTO();
 
 		if (null != listEmp) {
 			for (ResBuilderEmployment entity : listEmp) {
-				
+				WorkExpDTO dto = new WorkExpDTO();
 				 dto.setJobTitle(entity.getPositionName());
 				 dto.setEmployerName(entity.getEmployerName());
 				 dto.setEmploymentType(entity.getEmploymentType().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getEmploymentType());
@@ -283,9 +280,9 @@ public class ResumeConversionHelper {
 	public List<ResumeDTO> transformResUploadResumeListToResumeDTOList(
 			List<ResUploadResume> resumes) {
 		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
-		ResumeDTO resumeDTO = new ResumeDTO();
 
 		for (ResUploadResume resume : resumes) {
+			ResumeDTO resumeDTO = new ResumeDTO();
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResumeName(resume.getResumeName());
 			resumeDTO.setResumeVisibility(String.valueOf(resume.getIsPublished()));

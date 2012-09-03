@@ -43,9 +43,9 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		final JSONArray jsonRows = new JSONArray();
 
 		final List<JobDTO> jobDTOList = jSResultDTO.getJobResultList();
-		final JSONObject jobSrchJson = new JSONObject();
 
 		for (JobDTO jobDTO : jobDTOList) {
+			final JSONObject jobSrchJson = new JSONObject();
 			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
 					MMUtils.isNull(jobDTO.getAdText()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
