@@ -429,6 +429,7 @@ jobboard/src/main/webapp/WEB-INF/view/addEducation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addLanguage.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addPhoneNos.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addReference.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addTestimonies.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyDashboard.jsp -text
@@ -448,9 +449,6 @@ jobboard/src/main/webapp/WEB-INF/view/editBrandingTemplate.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editCopyPasteResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editUploadResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editresumepopup.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/empBrandTempListPopup.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/empBrandTemplate.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/empBrandTemplatePreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empPurchaseJobPostingsPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerLogin.jsp -text

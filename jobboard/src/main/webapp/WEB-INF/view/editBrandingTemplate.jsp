@@ -8,14 +8,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Healthcare Jobs</title>
 <jsp:include page="common/include.jsp" />
+<!-- <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+ -->
+		<script type="text/javascript">
+
+                jQuery(document).ready(
+
+                function() {                    
+
+                        $("#branding").displaypopup("#branding","770","360");
+                        
+                      //Adding Testimonies
+                		$('#testimonyAjaxCallId').live('click', function() {
+                			$.ajax({
+                				type : "POST",
+                				url : "${pageContext.request.contextPath}/brandingTemplates/addTestimonies.html",
+                				success : function(data) {
+                					$('#testimonialsSectionDivId').append(data);
+                				},
+                			});
+                		});
+
+                });
+                
+             // function start
+                function createBrandingTemplate() {
+            		$.ajax(
+            			
+            						$.nmManual(val + '.html')
+
+            				
+            			
+            		);
+            	}
+                
+                // function end
+
+                </script>
+
 <link href="../resources/js/colorPicker.css" type='text/css'
 	rel='stylesheet'>
+
+
+<!--[if IE]>
+	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
+	<![endif]-->
+
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
+<!-- <script type="text/javascript" src="javascripts/expandCollapse.js"></script> -->
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('#colorPkr').colorPicker();
@@ -139,7 +187,7 @@
 								Images:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="addImageFileData" name="textfield4" type="file" id="textfield4" size="20"
+									<form:input path="" name="textfield4" type="file" id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
 								</div>
 								<span class="required"><a href="#">Add Another Image</a></span>
@@ -150,15 +198,15 @@
 										being clicked. The file size limit is XX KB at 72 dpi.
 										Accepted file types include .jpg, .gif, .png and .tif.</span>
 								</div>
-								<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="addImageFileData" /></FONT>
+								<%-- <span class="lableText3"></span> <FONT color="red"><form:errors
+											path="addImageFileData" /></FONT> --%>
 							</div>
 						</div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Videos:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="videoFileData" name="textfield4" type="file" id="textfield4" size="20"
+									<form:input path="" name="textfield4" type="file" id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
 								</div>
 								<span class="required"><a href="#">Add Another Video</a></span>
@@ -168,15 +216,15 @@
 										full size and play upon being clicked. The file size limit is
 										XX MB. Accepted file types include .mov and .mpg.</span>
 								</div>
-								<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="videoFileData" /></FONT>
+								<%-- <span class="lableText3"></span> <FONT color="red"><form:errors
+											path="videoFileData" /></FONT> --%>
 							</div>
 						</div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter marginTop10 width150">Testimonials:</div>
 							<div class="input_grp5 AutoWidth">
 								<div class="FloatLeft">
-									<form:textarea path="testimony" id="Body Text:" class="textareaBoxCResume Height256"
+									<form:textarea path="" id="Body Text:" class="textareaBoxCResume Height256"
 										rows="5" cols="45" name="Body Text:" />
 								</div>
 								<span class="required"><a href="#">Add Another
@@ -201,7 +249,10 @@
 								<!-- <a href="<%=request.getContextPath()%>/brandingTemplates/saveEmpBrandTemp.html"
 								class="btn_sm white">Save</a> --> 
 								
-								<a href="" class="btn_sm white">Cancel</a></span>
+								<!-- <a href="" class="btn_sm">Cancel</a> -->
+								<!-- <a class="nyroModalClose btn_sm white" href="#">Cancel</a> -->
+								<a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm white" id="branding">Cancel</a>
+								</span>
 						</div>
 						</form:form>
 				</div>

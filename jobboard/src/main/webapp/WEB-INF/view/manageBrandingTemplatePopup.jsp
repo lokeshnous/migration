@@ -17,7 +17,7 @@
 			
 			switch (action) {
 			case "view":
-					$("form").attr("action", "${pageContext.request.contextPath}/brandingTemplates/createBrandingTemplate.html");
+					$("form").attr("action", "${pageContext.request.contextPath}/brandingTemplates/previewExisting.html?templateId="+templateId);
 					$("form").submit();
 					break;
 			case "delete":{
@@ -52,8 +52,13 @@
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
           <div class="popupHeader">
             <h2>MANAGE JOB POSTING BRANDING TEMPLATES </h2>
+
+            <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html"><img src="../resources/images/Close.png" width="19" height="19" alt="Close"></a></div> --%>
+<!--             <a href="#"><img src="../resources/images/Close.png" class="nyroModalClose" width="19" height="19" alt="Close"></a></div> -->
+
             <img src="../resources/images/Close.png" width="19" class="nyroModalClose"
 				height="19" alt="Close"></div>
+
           <div class="popUpContainerWrapper">
             <form:form method="POST" action="">
               <div class="rowEvenSpacingMargin0">
@@ -86,8 +91,13 @@
                 </table>
               </div>
               <div class="row marginTop10 paddingBottom10"> 
+
+<%--               <a href="<%=request.getContextPath()%>/brandingTemplates/newBrandingTemplate.html" class="btn_sm orange">New  Branding TEMPLATE</a> 
+              <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm orange">Cancel</a>
+ --%>
               <a class="btn_sm orange" href="<%=request.getContextPath()%>/brandingTemplates/newBrandingTemplate.html">New  Branding TEMPLATE</a> 
               <a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	
+
               </div>
             </form:form>
           </div>

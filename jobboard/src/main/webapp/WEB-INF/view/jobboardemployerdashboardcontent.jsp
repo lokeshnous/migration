@@ -13,6 +13,7 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
+
 		jQuery(document).ready(
 			function() {
 				$("#changePassword").displaypopup("#changePassword", "780",
@@ -26,6 +27,7 @@
 						"370");
 				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings","770","360");		
 			});
+
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -103,10 +105,13 @@
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a
-									href="<%=request.getContextPath()%>/brandingTemplates/employer/manageBrandingTemplate.html"
-									id="manageBrandingTemplatePopup">Manage Job Posting
-									Branding Templates</a>
+
+
+<%-- 								<a href="<%=request.getContextPath()%>/brandingTemplates/manageBrandingTemplate.html" id="branding">Manage Job Posting Branding Templates</a> --%>
+
+								<a href="<%=request.getContextPath()%>/brandingTemplates/employer/manageBrandingTemplate.html" id="manageBrandingTemplatePopup">Manage Job Posting Branding Templates</a>
+
+
 							</p>
 						</div>
 						<div class="lableTextDashBoard">

@@ -8,6 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Healthcare Jobs</title>
 <jsp:include page="common/include.jsp" />
+<!-- <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+ -->
 		<script type="text/javascript">
 
                 jQuery(document).ready(
@@ -15,10 +20,51 @@
                 function() {                    
 
                         $("#branding").displaypopup("#branding","770","360");
+                        
+                      //Adding Testimonies
+                		$('#testimonyAjaxCallId').live('click', function() {
+                			$.ajax({
+                				type : "POST",
+                				url : "${pageContext.request.contextPath}/brandingTemplates/addTestimonies.html",
+                				success : function(data) {
+                					$('#testimonialsSectionDivId').append(data);
+                				},
+                			});
+                		});
 
                 });
+                
+             // function start
 
-                </script>
+
+			function preview() {          	 
+            	 
+
+				$.ajax({
+					url : '../brandingTemplates/preview.html',
+					data : ({
+						userID : "userID"
+					}),
+					success : function(data) {
+						$.each(data, function(key, val) {
+							if (key == "NavigationPath") {
+								
+								$.nmManual(val + '.html');
+
+							}
+						});
+					},
+					error : function(data) {
+						alert('Unable to process');
+					},
+					complete : function(data) {
+					}
+				});
+					//	$.nmManual(val + '.html');
+			}
+
+			// function end
+		</script>
 
 <link href="../resources/js/colorPicker.css" type='text/css'
 	rel='stylesheet'>
@@ -242,7 +288,7 @@
 											path="mainImageFileData" /></FONT>
 								</div>
 							</div>
-						</div>
+						
 
 
 
@@ -258,8 +304,10 @@
 								Images:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="addImageFileData" name="textfield4" type="file" id="textfield4" size="20"
+									<form:input path="" name="textfield4" type="file" id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
+										<%-- <form:input path="addImageFileData" name="textfield4" type="file" id="textfield4" size="20"
+										class="job_seeker_login_email fileType" /> --%>
 								</div>
 								<span class="required"><a href="#">Add Another Image</a></span>
 								<div class="toolTip marginTop8 marginLeft5">
@@ -269,16 +317,18 @@
 										being clicked. The file size limit is XX KB at 72 dpi.
 										Accepted file types include .jpg, .gif, .png and .tif.</span>
 								</div>
-								<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="addImageFileData" /></FONT>
+								<%-- <span class="lableText3"></span> <FONT color="red"><form:errors
+											path="addImageFileData" /></FONT> --%>
 							</div>
 						</div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Videos:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="videoFileData" name="textfield4" type="file" id="textfield4" size="20"
+									<form:input path="" name="textfield4" type="file" id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
+										<%-- <form:input path="videoFileData" name="textfield4" type="file" id="textfield4" size="20"
+										class="job_seeker_login_email fileType" /> --%>
 								</div>
 								<span class="required"><a href="#">Add Another Video</a></span>
 								<div class="toolTip marginTop8 marginLeft5">
@@ -287,43 +337,91 @@
 										full size and play upon being clicked. The file size limit is
 										XX MB. Accepted file types include .mov and .mpg.</span>
 								</div>
-								<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="videoFileData" /></FONT>
+								<%-- <span class="lableText3"></span> <FONT color="red"><form:errors
+											path="videoFileData" /></FONT> --%>
 							</div>
 						</div>
-						<div class="row marginTop15">
+						<!-- <div class="row marginTop15">
 							<div class="lableTextCoverletter marginTop10 width150">Testimonials:</div>
 							<div class="input_grp5 AutoWidth">
-								<div class="FloatLeft">
+						 -->		<%-- <div class="FloatLeft">
 									<form:textarea path="testimony" id="Body Text:" class="textareaBoxCResume Height256"
 										rows="5" cols="45" name="Body Text:" />
-								</div>
-								<span class="required"><a href="#">Add Another
-										Testimonial</a></span>
+								</div> --%>
+								
+								<div class="row">
+							<div id="testimonialsSectionDivId">
+										<c:forEach items="${brandingTemplateForm.listTestimony}" var="testimonies" varStatus="status">
+									
+											<!-- <div class="rowEvenNewSpacing MarginBottom10"> -->
+											<div class="rowEvenNewSpacing">
+											<c:if test="${status.count == 1}">   
+									            <span class="lableTextCoverletter marginTop10 width150">Testimonials:</span> 
+									         </c:if>   
+											<c:if test="${status.count != 1}">   
+									            <span class="lableTextCoverletter marginTop10 width150"></span> 
+									         </c:if>  									         
+											<!-- <div class="floatLeft marginRight10"></div> -->
+											<span class="floatLeft marginRight10">
+											 
+												<form:textarea path="listTestimony[${status.index}].testimony" class="textareaBoxCResume" Height="200" rows="5" cols="30" />
+											</span>	
+											</div>
+										</c:forEach>
+								</div>								
+								
+								<div id="testimony">
+								<span class="required"><a href="#" id="testimonyAjaxCallId">Add Another	Testimonial</a></span>
+									</div>	
+										
+				
+									
+										
+										
 								<div class="toolTip01 marginTop10 marginLeft5">
 									<span class="classicA">If you have any testimonials that
 										you would like to include, enter them here. They will appear
 										as text in the interactive gallery.</span>
 								</div>
 							</div>
-						</div>
-
-
-
-						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
+							
+							<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
-							<%-- <a href="<%=request.getContextPath()%>/brandingTemplates/empBrandTemplatePreview.html" id="branding"
-								class="btn_sm white" target="">Preview</a> --%> 
-								<input type="submit" value="Preview" class="btn_sm white"  name="Preview" id="branding"/>
+						<%-- 	<a href="<%=request.getContextPath()%>/brandingTemplates/previewBrandingTemplate.html" id="branding"
+								class="btn_sm white" target="">Preview</a>  --%>
+								
+								<!--  <input type="button" id="preview" value="Preview" class="white" onclick="preview();" name="Preview"/> --> 
+								
+								<!-- working -->
+								<a onclick="preview()" id="preview" class="white" style=" cursor: default;">Preview</a>
+								
+								
+								<!-- <input type="submit" value="Preview" class="btn_sm white"  name="Preview"/> -->
 								<input type="submit" value="Save" class="btn_sm white"  name="Save"/>
+								<!-- <input type="submit" value="Cancel" class="btn_sm white"  name="Cancel"/> -->
+								 <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/createBrandingTemplate.html"
+								class="btn_sm white">Save</a> --%> 
 								
-								<!-- <a href="<%=request.getContextPath()%>/brandingTemplates/saveEmpBrandTemp.html"
-								class="btn_sm white">Save</a> --> 
+								<a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm white">Cancel</a>
 								
-								<a href="" class="btn_sm white">Cancel</a></span>
+								
+								</span>
 						</div>
 						</form:form>
+						</div>
+
+
+
+						
+						
 				</div>
+				
+				<c:if test="${not empty errorMessage}">
+				    	<div id="errmsg" style="color: red" align="left" >
+			    		<c:out value="${errorMessage}"></c:out>
+					</div>
+				</c:if>
+				
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
 					<img src="images/ads/banner_ad_fpo.png" />
@@ -336,7 +434,7 @@
 
 		</div>
 		<!-- end main_wrapper_inside -->
-	</div>
+
 
 	<!-- end main_wrapper_outside -->
 	<div class="footer_wrapper">
