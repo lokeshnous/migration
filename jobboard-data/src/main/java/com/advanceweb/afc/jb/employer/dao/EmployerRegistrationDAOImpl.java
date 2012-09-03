@@ -328,7 +328,15 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	@Override
 	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing) {
-
+		try{
+		if (billing.equals("PRIMARY")){
+			// update meruser Entity		
+						MerUser mer = hibernateTemplateTracker.get(MerUser.class, userId);
+						mer.setFirstName(apd.getFirstName());
+						mer.setLastName(apd.getLastName());
+						mer.setEmail(apd.getEmail());
+						hibernateTemplateTracker.update(mer);
+			//update admfacilitycontact
 		AdmFacilityContact facility = hibernateTemplateCareers.get(
 				AdmFacilityContact.class, admfacilityid);
 		facility.setFirstName(apd.getFirstName());
@@ -342,13 +350,25 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		facility.setEmail(apd.getEmail());
 		facility.setPhone(apd.getPhone());
 		hibernateTemplateCareers.update(facility);
-		// update meruser Entity
-		if (billing.equals("PRIMARY")) {
-			MerUser mer = hibernateTemplateTracker.get(MerUser.class, userId);
-			mer.setFirstName(apd.getFirstName());
-			mer.setLastName(apd.getLastName());
-			mer.setEmail(apd.getEmail());
-			hibernateTemplateTracker.update(mer);
+		
+		}else{
+			AdmFacilityContact facility = hibernateTemplateCareers.get(
+					AdmFacilityContact.class, admfacilityid);
+			facility.setFirstName(apd.getFirstName());
+			facility.setLastName(apd.getLastName());
+			facility.setCompany(apd.getCompanyName());
+			facility.setStreet(apd.getStreet());
+			facility.setCity(apd.getCity());
+			facility.setState(apd.getState());
+			facility.setPostcode(apd.getZipCode());
+			facility.setCountry(apd.getCountry());
+			facility.setEmail(apd.getEmail());
+			facility.setPhone(apd.getPhone());
+			hibernateTemplateCareers.update(facility);
+		}
+		}catch(Exception e)
+		{
+			LOGGER.info("Error im Meruser duplicate Data insert");
 		}
 
 	}
