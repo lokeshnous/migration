@@ -82,7 +82,7 @@ public interface EmployerRegistrationDAO {
 	 */
 
 	
-	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+	void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing);
 
 
