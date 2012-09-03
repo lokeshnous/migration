@@ -36,7 +36,7 @@
           <div class="main_wrapper_inside">
     <div class="main">
     <jsp:include page="../templates/templates_header.jsp"></jsp:include>
- <form action="" method="get" commandName="createResume" id="viewresumeId">
+ <form action="saveResumeBuilder.html" method="POST" commandName="createResume" id="viewresumeId">
               <div class="clearfix"></div>
               <!--Start:MidContant-->
               <div class="MidContent_Wrapper ">
@@ -358,6 +358,10 @@
 
           <!---->
       </div>
+   		<div class="clearfix"></div>
+		<br /> <span class="marginBottom10 FloatLeft"> 
+		<input type="submit" value="Back" name="Back" class="orange"  id="saveResBuilderBtId"/>
+		</span>
  </form>                
               <!--Start:MidContant-->
               <div class="clearfix"></div>
