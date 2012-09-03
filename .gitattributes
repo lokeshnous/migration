@@ -413,9 +413,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
 jobboard/src/main/java/common.properties -text
-jobboard/src/main/java/log4j.dtd -text
 jobboard/src/main/java/log4j.properties -text
-jobboard/src/main/java/log4j.xml -text
 jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
