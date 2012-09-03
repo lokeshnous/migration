@@ -25,7 +25,7 @@ public class JobSeekerJobDetailConversionHelper {
 
 	@SuppressWarnings("rawtypes")
 	@Autowired
-	JobPostConversionHelper jobPostConversionHelper;
+	private JobPostConversionHelper jobPostConversionHelper;
 
 	/**
 	 * Entity to applied job dto
@@ -77,7 +77,7 @@ public class JobSeekerJobDetailConversionHelper {
 						.getCreateDt().toString()));
 				appliedJobDTO.setFacilityName(job.getFacilityName());
 				appliedJobDTO.setJobTitle(job.getJobtitle());
-				appliedJobDTO.setJobAge(getWorkingDaysBetweenTwoDates(date,
+				appliedJobDTO.setJobAge(getJobAge(date,
 						job.getCreateDt()));
 				appliedJobDTO.setJpJob(jobPostConversionHelper
 						.transformToJpJobDTO(job.getJpJob()));
@@ -89,7 +89,7 @@ public class JobSeekerJobDetailConversionHelper {
 
 	}
 
-	private int getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
+	private int getJobAge(Date startDate, Date endDate) {
 		Calendar startCal;
 		Calendar endCal;
 		startCal = Calendar.getInstance();
