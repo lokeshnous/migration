@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -28,12 +29,17 @@ public class BrandingTemplateDTO {
 	private CommonsMultipartFile mainImageFileData;
 	
 //	Muli media section
-	private String addImagePath;
-	private String videoPath;
-	private String testimony;
-	private CommonsMultipartFile addImageFileData;
-	private CommonsMultipartFile videoFileData;
-
+//	private String addImagePath;
+//	private String videoPath;
+//	private String testimony;
+//	private CommonsMultipartFile addImageFileData;
+//	private CommonsMultipartFile videoFileData;
+	private List<String> listAddImagePath;
+	private List<String> listVideoPath;
+	private List<TestimonyDTO> listTestimony;
+	private List<AddImageDTO> listAddImages;
+	private List<VideoDTO> listVideos;
+	
 	private Boolean isSilverCustomer=null;
 	
 	public String getLogoPath() {
@@ -124,32 +130,21 @@ public class BrandingTemplateDTO {
 		this.mainImageFileData = mainImageFileData;
 	}
 
-	public String getAddImagePath() {
-		return addImagePath;
+
+	public List<String> getListAddImagePath() {
+		return listAddImagePath;
 	}
 
-	public void setAddImagePath(String addImagePath) {
-		this.addImagePath = addImagePath;
+	public void setListAddImagePath(List<String> listAddImagePath) {
+		this.listAddImagePath = listAddImagePath;
 	}
 
-	public String getVideoPath() {
-		return videoPath;
+	public List<String> getListVideoPath() {
+		return listVideoPath;
 	}
 
-	public void setVideoPath(String videoPath) {
-		this.videoPath = videoPath;
-	}
-
-	public String getTestimony() {
-		return testimony;
-	}
-
-	public void setTestimony(String testimony) {
-		this.testimony = testimony;
-	}
-
-	public CommonsMultipartFile getAddImageFileData() {
-		return addImageFileData;
+	public void setListVideoPath(List<String> listVideoPath) {
+		this.listVideoPath = listVideoPath;
 	}
 
 	public Boolean getIsSilverCustomer() {
@@ -160,16 +155,29 @@ public class BrandingTemplateDTO {
 		this.isSilverCustomer = isSilverCustomer;
 	}
 
-	public void setAddImageFileData(CommonsMultipartFile addImageFileData) {
-		this.addImageFileData = addImageFileData;
+	public List<TestimonyDTO> getListTestimony() {
+		return listTestimony;
 	}
 
-	public CommonsMultipartFile getVideoFileData() {
-		return videoFileData;
+	public void setListTestimony(List<TestimonyDTO> listTestimony) {
+		this.listTestimony = listTestimony;
 	}
 
-	public void setVideoFileData(CommonsMultipartFile videoFileData) {
-		this.videoFileData = videoFileData;
+	public List<AddImageDTO> getListAddImages() {
+		return listAddImages;
 	}
+
+	public void setListAddImages(List<AddImageDTO> listAddImages) {
+		this.listAddImages = listAddImages;
+	}
+
+	public List<VideoDTO> getListVideos() {
+		return listVideos;
+	}
+
+	public void setListVideos(List<VideoDTO> listVideos) {
+		this.listVideos = listVideos;
+	}
+
 
 }

@@ -2,6 +2,7 @@
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountBillingDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountProfileDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddImageDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddOnDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmBrndngTempDTO.java -text
@@ -20,7 +21,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/CoverLetterDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/DropDownDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EduDegreeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EducationDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmpBrandTempDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmployerInfoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmployerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/EmploymentInfoDTO.java -text
@@ -67,8 +67,10 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SearchedJobDTO.java -
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/StateDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionsDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/TestimonyDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/UserRoleDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VeteranStatusDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VideoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/WorkExpDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/email/EmailDTO.java -text
