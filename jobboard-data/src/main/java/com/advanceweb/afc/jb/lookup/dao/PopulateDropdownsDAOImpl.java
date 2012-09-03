@@ -462,7 +462,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				if (null != admUsersList && !admUsersList.isEmpty()) {
 					AdmUserFacility admUserFacility = admUsersList.get(0);
 					List<MerUser> merUserList = hibernateTemplateTracker.find(
-							"from MerUser user where user.userId=?",
+							"from MerUser user where user.userId=? and user.deleteDt is null",
 							admUserFacility.getFacilityPK().getUserId());
 					merUsers.addAll(merUserList);
 				}
