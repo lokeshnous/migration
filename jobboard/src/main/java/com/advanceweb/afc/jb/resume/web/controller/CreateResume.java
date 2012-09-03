@@ -27,6 +27,7 @@ public class CreateResume {
 	private String resumeText1;
 	private String filename;
 	private String filePath;
+	private boolean bHideBackButton;
 	private CommonsMultipartFile fileData;
 	
 	//Creating Resume
@@ -237,6 +238,12 @@ public class CreateResume {
 	}
 	public void setBuilderSkillsId(int builderSkillsId) {
 		this.builderSkillsId = builderSkillsId;
+	}
+	public boolean isbHideBackButton() {
+		return bHideBackButton;
+	}
+	public void setbHideBackButton(boolean bHideBackButton) {
+		this.bHideBackButton = bHideBackButton;
 	}
 	
 }
