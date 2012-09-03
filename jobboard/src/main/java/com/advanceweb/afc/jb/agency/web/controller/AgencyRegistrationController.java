@@ -31,8 +31,8 @@ import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -42,6 +42,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @author muralikc
  * 
  */
+@SuppressWarnings("deprecation")
 @Controller
 @RequestMapping("/agencyRegistration")
 @SessionAttributes("agencyRegForm")
@@ -53,7 +54,7 @@ public class AgencyRegistrationController {
 	private static final String AGENCY_REG_FORM = "agencyDashboard";
 	private static final String MESSAGE = "message";
 	@Autowired
-	private ProfileRegistration profileRegistration;
+	private ProfileRegistration agencyRegistration;
 
 	@Autowired
 	private TransformAgencyRegistration transformAgencyRegistration;
@@ -87,7 +88,7 @@ public class AgencyRegistrationController {
 
 		AgencyRegistrationForm agencyRegForm = new AgencyRegistrationForm();
 
-		AgencyProfileDTO registerDTO = (AgencyProfileDTO) profileRegistration
+		AgencyProfileDTO registerDTO = (AgencyProfileDTO) agencyRegistration
 				.getProfileAttributes();
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO);
@@ -130,7 +131,7 @@ public class AgencyRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = profileRegistration.createNewProfile(empDTO);
+		userDTO = agencyRegistration.createNewProfile(empDTO);
 		LOGGER.info("REGISTRATION IS SUCCESSFULL");
 
 		model.addObject("agencyRegForm", agencyRegistrationForm);
@@ -204,7 +205,7 @@ public class AgencyRegistrationController {
 			// model.setViewName(agencyReg);
 			return false;
 		}
-		if (profileRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
+		if (agencyRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
 			// model.setViewName(agencyReg);
@@ -218,7 +219,6 @@ public class AgencyRegistrationController {
 	 * @param user
 	 * @param request
 	 */
-	@SuppressWarnings("deprecation")
 	private void authenticateUserAndSetSession(UserDTO user,
 			HttpServletRequest request) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();

@@ -67,7 +67,7 @@ public class EmployerRegistrationController {
 			.getLogger("EmployerRegistrationController.class");
 
 	@Autowired
-	private ProfileRegistration profileRegistration;
+	private ProfileRegistration employerRegistration;
 
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
@@ -113,7 +113,7 @@ public class EmployerRegistrationController {
 
 		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
 
-		EmployerProfileDTO registerDTO = (EmployerProfileDTO) profileRegistration
+		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
 				.getProfileAttributes();
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 				.transformDTOToProfileAttribForm(registerDTO);
@@ -156,7 +156,7 @@ public class EmployerRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = profileRegistration.createNewProfile(empDTO);
+		userDTO = employerRegistration.createNewProfile(empDTO);
 
 		model.addObject("empRegisterForm", empRegForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
@@ -224,7 +224,7 @@ public class EmployerRegistrationController {
 			}
 		}
 		registerValidation.validate(empRegForm, result);
-		if (profileRegistration.validateEmail(empRegForm.getEmailId())) {
+		if (employerRegistration.validateEmail(empRegForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
 			// model.setViewName(employerReg);
@@ -278,7 +278,7 @@ public class EmployerRegistrationController {
 					.transformEmpFormToMerUserDTO(form);
 			empDTO.setMerUserDTO(merUserDTO);
 			// Call to service layer
-			profileRegistration.changePassword(empDTO);
+			employerRegistration.changePassword(empDTO);
 			// model.put("jobSeekerRegistrationForm", jsRegistrationForm);
 		} catch (Exception e) {
 			e.printStackTrace();
