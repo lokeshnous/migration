@@ -21,20 +21,25 @@ public interface EmloyerRegistartionService {
 	 * @param userId
 	 * @return List
 	 */
-    public List<AdmFacilityContact> getEmployeeData(int userId,String contactType);
-    /**
-     * 
-     * @param userId
-     * @return userid
-     */
-     public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,String contactType);
-    /**
-     * 	
-     * @param apd apd.
-     * @param admfacilityid admfacilityid.
-     */
-    public void editEmployeeAccount(AccountProfileDTO apd,int admfacilityid);
+	public List<AdmFacilityContact> getEmployeeData(int userId,
+			String contactType);
 
-	
+	/**
+	 * 
+	 * @param userId
+	 * @return userid
+	 */
+	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+			String contactType);
+
+	/**
+	 * 
+	 * @param apd
+	 *            apd.
+	 * @param admfacilityid
+	 *            admfacilityid.
+	 */
+	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+			int userId, String billing);
 	
 }
