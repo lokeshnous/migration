@@ -323,30 +323,30 @@
 							<thead>
 							<tr class="LightGrayBG Height35">
 								<th width="2%" align="center" valign="middle" class="">&nbsp;</th>
-								<th width="6%" align="center" valign="middle"><strong>Job
-										ID</strong></th>
-								<th width="18%" align="center" valign="middle"><strong>Job
+								<th width="6%" align="center" valign="middle" class="FontSize11">Job
+										ID</th>
+								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Title</strong></th>
-								<th width="11%" align="center" valign="middle"><strong>Location</strong></th>
-								<th width="8%" align="center" valign="middle"><strong>Job<br />
+								<th width="11%" align="center" valign="middle" class="FontSize11"><strong>Location</strong></th>
+								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Job<br />
 										Status
 								</strong></th>
-								<th width="7%" align="center" valign="middle"><strong>Start<br />
+								<th width="7%" align="center" valign="middle" class="FontSize11"><strong>Start<br />
 										Date
 								</strong></th>
-								<th width="7%" align="center" valign="middle"><strong>End<br />
+								<th width="7%" align="center" valign="middle" class="FontSize11"><strong>End<br />
 										Date
 								</strong></th>
-								<th width="5%" align="center" valign="middle"><strong>Views</strong></th>
-								<th width="4%" align="center" valign="middle"><strong>Clicks</strong></th>
-								<th width="5%" align="center" valign="middle"><strong>Applies</strong></th>
-								<th width="7%" align="center" valign="middle"><strong>Auto<br />
+								<th width="5%" align="center" valign="middle" class="FontSize11"><strong>Views</strong></th>
+								<th width="4%" align="center" valign="middle" class="FontSize11"><strong>Clicks</strong></th>
+								<th width="5%" align="center" valign="middle" class="FontSize11"><strong>Applies</strong></th>
+								<th width="7%" align="center" valign="middle" class="FontSize11"><strong>Auto<br />
 										Renew
 								</strong></th>
-								<th width="11%" align="center" valign="middle"><strong>Job<br />
+								<th width="11%" align="center" valign="middle" class="FontSize11"><strong>Job<br />
 										Template
 								</strong></th>
-								<th width="9%" align="center" valign="middle"><strong>Actions</strong></th>
+								<th width="9%" align="center" valign="middle" class="FontSize11"><strong>Actions</strong></th>
 							</tr>
 							</thead>
 							<tbody>
