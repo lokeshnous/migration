@@ -658,10 +658,15 @@ public class JobSearchController {
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public String sendToFriend(HttpServletRequest request, Model model) {
 		try {
+			SendToFriend sendToForm = new SendToFriend();
+			int jobId = Integer.parseInt(request.getParameter("id"));
+			sendToForm.setJobId(jobId);
+			sendToForm.setJoburl(request.getRequestURL().toString());
 			model.addAttribute("joburl", request.getRequestURL().toString());
 			model.addAttribute("jobId", request.getParameter("id"));
-			model.addAttribute("sendtofriendmail", new SendToFriend());
-		} catch (Exception e) {// Catch exception if any
+			model.addAttribute("currentUrl", request.getParameter("currentUrl"));
+			model.addAttribute("sendtofriendmail", sendToForm);
+		} catch (Exception e) {
 			LOGGER.info("ERROR");
 		}
 
@@ -682,16 +687,38 @@ public class JobSearchController {
 			if (sendtofriendmail.getEmail().length() > 0
 					&& validateEmailPattern(sendtofriendmail.getEmail())) {
 				try {
+
+					int userId = 0;
+					String userName = null;
+					String userEmail = null;
+					String jobseekerName = null;
+					if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+						userId = (Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID);
+						userName = (String) session
+								.getAttribute(MMJBCommonConstants.USER_NAME);
+						userEmail = (String) session
+								.getAttribute(MMJBCommonConstants.USER_EMAIL);
+					}
+
 					EmailDTO jobSeekerEmailDTO = new EmailDTO();
-					// jobSeekerEmailDTO.setFromAddress(form.getEmailAddress());
+					jobSeekerEmailDTO
+							.setFromAddress("merion@nousinfosystems.com");
+					// jobSeekerEmailDTO.setFromAddress(userEmail);
 					InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 					jobSeekerToAddress[0] = new InternetAddress(
-							sendtofriendmail.getEmail());
+							sendtofriendmail.getEmail().trim());
 					jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-					String jobseekerName = (String) session
-							.getAttribute(MMJBCommonConstants.USER_NAME);
-					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
-							"?Jobseekername", jobseekerName);
+					if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+						jobseekerName = (String) session
+								.getAttribute(MMJBCommonConstants.USER_NAME);
+						jobseekerSuggestFrdSub = jobseekerSuggestFrdSub
+								.replace("?Jobseekername", jobseekerName);
+					} else {
+						jobseekerName = sendtofriendmail.getEmail().trim();
+						jobseekerSuggestFrdSub = jobseekerSuggestFrdSub
+								.replace("?Jobseekername", jobseekerName);
+					}
 					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
 					SearchedJobDTO searchedJobDTO = jobSearchService
 							.viewJobDetails(sendtofriendmail.getJobId());
@@ -707,9 +734,7 @@ public class JobSearchController {
 					jobSeekerEmailDTO.setHtmlFormat(true);
 					emailService.sendEmail(jobSeekerEmailDTO);
 				} catch (Exception e) {
-					// loggers call
-					LOGGER.info("ERROR");
-					// e.printStackTrace();
+					LOGGER.info("ERROR" + e);
 				}
 				model.addAttribute("visible", true);
 			} else if (sendtofriendmail.getEmail().length() > 0
@@ -725,8 +750,14 @@ public class JobSearchController {
 			status = Boolean.FALSE;
 			throw new MailParseException(e);
 		}
-		return "jobseekersendtofriendpopup";
+		return "jobboardadvancedsearch";
 	}
+	
+	/**
+	 * 
+	 * @param emailAddress emailAddress.
+	 * @return true.
+	 */
 
 	private boolean validateEmailPattern(String emailAddress) {
 		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
