@@ -71,8 +71,8 @@ public class JobSeekerSubscriptionsController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveJobSeekerSubscription", method = RequestMethod.POST)
-	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm subscriptform, BindingResult result,HttpSession session) {
-		
+	public String saveJobSeekerSubscription(JobSeekerSubscriptionForm subscriptform, 
+			BindingResult result,HttpSession session) {		
 		try {
 			
 			subscriptform.setUserId(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
