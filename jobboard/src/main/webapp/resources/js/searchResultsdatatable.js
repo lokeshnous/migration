@@ -1,7 +1,7 @@
 jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
 				$(".saveThisPopup").displaypopup(".saveThisPopup","775","252");
-				
+				$(".sendtofriend").displaypopup(".sendtofriend","775","252");
 				if($("#searchtypeToSavedSearch").val() == "basic"){
 					
 		            $("#keywords").val($("#keywordsToSavedSearch").val());
@@ -10,6 +10,12 @@ jQuery(document).ready(function() {
 				}
 
 			});
+
+
+			function sendToFrd(jobId) {	
+				var currentUrl = window.location.pathname;
+				$.nmManual('../jobsearch/sendtofriend.html?id='+jobId+'&currentUrl='+currentUrl);
+			}
 
 		function validateRadius() {
 			var cityState = $.trim($("#cityState").val());
@@ -132,7 +138,7 @@ jQuery(document).ready(function() {
 					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></a> </div>';
 				}
 				sOut += '';
-				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft"> Send to Friend:&nbsp;</span><span><a href=""><div class="email"></div></a></span></div>';
+				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft"> Send to Friend:&nbsp;</span><span><a onclick="sendToFrd('+jobId+');"><div class="email"></div></a></span></div>';
 				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span></div>';
 				sOut += '<h4><div style="color: red" id="topjobActionInfo'+jobId+'" ></div></h4>';
 				sOut += '</div>';
