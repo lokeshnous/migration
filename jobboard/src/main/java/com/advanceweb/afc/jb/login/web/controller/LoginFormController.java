@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.email.EmailDTO;
-import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 
 /**
  * This Class validates the login form

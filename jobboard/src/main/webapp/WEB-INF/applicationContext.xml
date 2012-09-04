@@ -19,17 +19,8 @@
 	<context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties" />
 	
 	<import resource="classpath:HibernateSessionFactory.xml"/>
-	
-	
-	<!-- For SOLR search -->
-	<util:properties id="solrConfiguration" location="classpath:solrConfiguration.properties" />
-	
-	<bean id="solrParameter" class="com.advanceweb.afc.jb.common.util.SolrParameter">
-		<property name="searchIndexName" value="jobPost" />
-		<property name="searchIndexGroup" value="careers" />
-		<property name="environment" value="DEV" />
-	</bean>
-	
+	<import resource="classpath:JbCoreSpringBeans.xml"/>
+		
 	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
 	Logging Aspect
 	<bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" /> -->

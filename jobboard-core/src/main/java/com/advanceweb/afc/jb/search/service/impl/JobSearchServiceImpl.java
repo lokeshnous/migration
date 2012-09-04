@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.service;
+package com.advanceweb.afc.jb.search.service.impl;
 
 import java.util.Map;
 
@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.search.engine.solr.JobSearchDeleagate;
+import com.advanceweb.afc.jb.search.JobSearchResultDTO;
+import com.advanceweb.afc.jb.search.engine.solr.JobSearchDelegate;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
-import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -27,7 +28,7 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 public class JobSearchServiceImpl implements JobSearchService {
 
 	@Autowired
-	private JobSearchDeleagate jobSearchDeleagate;
+	private JobSearchDelegate jobSearchDelegate;
 
 	@Autowired
 	private JobSearchDAO jobSearchDAO;
@@ -49,7 +50,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	public JobSearchResultDTO jobSearch(final String searchName,
 			final Map<String, String> paramMap, final long start,
 			final long rows) throws JobBoardServiceException {
-		return jobSearchDeleagate.jobSearch(searchName, paramMap, start, rows);
+		return jobSearchDelegate.jobSearch(searchName, paramMap, start, rows);
 	}
 
 	/**
@@ -59,7 +60,9 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
 			int userId) {
+
 		return jobSearchDAO.fetchSavedOrAppliedJob(searchedJobDTO, userId);
+
 	}
 
 	/**
@@ -68,7 +71,9 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public SearchedJobDTO viewJobDetails(long jobId) {
+
 		return jobSearchDAO.viewJobDetails(jobId);
+
 	}
 
 	/**
@@ -88,7 +93,9 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public boolean updateSaveOrApplyJob(AppliedJobDTO jobDTO) {
-		return jobSearchDAO.updateSaveOrApplyJob(jobDTO);
+		boolean status = false;
+		status = jobSearchDAO.updateSaveOrApplyJob(jobDTO);
+		return status;
 	}
 
 	/**
@@ -108,7 +115,8 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 */
 	@Override
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
-		return jobSearchDAO.applyJobDetails(jobId);
+		JobApplyTypeDTO jobApplyTypeDTO = jobSearchDAO.applyJobDetails(jobId);
+		return jobApplyTypeDTO;
 	}
 
 }

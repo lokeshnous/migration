@@ -22,9 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
-import com.advanceweb.afc.jb.common.email.EmailDTO;
-import com.advanceweb.afc.jb.common.email.MMEmailService;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 /**

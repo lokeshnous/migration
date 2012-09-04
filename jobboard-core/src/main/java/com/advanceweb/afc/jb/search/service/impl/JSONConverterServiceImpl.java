@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.search.service;
+package com.advanceweb.afc.jb.search.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,9 +12,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobDTO;
-import com.advanceweb.afc.jb.common.JobSearchResultDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.search.JobSearchResultDTO;
+import com.advanceweb.afc.jb.search.service.JSONConverterService;
 
 /**
  * This class has been created as a service interface for converting to JSON
@@ -42,7 +43,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		final JSONObject jobSrchJsonObj = new JSONObject();
 		final JSONArray jsonRows = new JSONArray();
 
-		final List<JobDTO> jobDTOList = jSResultDTO.getJobResultList();
+		final List<JobDTO> jobDTOList = jSResultDTO.getResultList();
 
 		for (JobDTO jobDTO : jobDTOList) {
 			final JSONObject jobSrchJson = new JSONObject();
@@ -104,7 +105,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		}
 
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jSResultDTO.getTotalNumSearchResult());
+				jSResultDTO.getResultCount());
 		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
 
 		return jobSrchJsonObj;

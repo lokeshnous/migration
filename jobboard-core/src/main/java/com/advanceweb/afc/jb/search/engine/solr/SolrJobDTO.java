@@ -11,7 +11,7 @@ import org.apache.solr.client.solrj.beans.Field;
  * @Date 10th July 2012 onwards
  */
 
-public class JobSearchDTO implements Serializable{
+public class SolrJobDTO implements Serializable{
 	
 	private static final long serialVersionUID = -2200423309708244407L;
 	

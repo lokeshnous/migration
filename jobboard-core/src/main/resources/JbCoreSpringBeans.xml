@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd 
+			http://www.springframework.org/schema/util 
+			http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- For SOLR search -->
+	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
+
+	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
+		<property name="name" value="jobPost" />
+		<property name="group" value="careers" />
+		<property name="environment" value="DEV" />
+	</bean>
+
+	<bean id="jobSearchDelegate"
+		class="com.advanceweb.afc.jb.search.engine.solr.SolrJobSearchDeleagate">
+		<constructor-arg>
+			<ref bean="jobSearchIndex" />
+		</constructor-arg>
+	</bean>
+
+	<!-- Send Mail Configuration-->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.smtpHostAddress}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtpAuth}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.starttlsEnable}</prop>
+			</props>
+		</property>
+	</bean>
+	
+
+</beans>

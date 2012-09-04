@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.common.email;
+package com.advanceweb.afc.jb.mail.service;
 
 import java.util.List;
 

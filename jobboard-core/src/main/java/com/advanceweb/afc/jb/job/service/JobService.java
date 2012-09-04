@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobDTO;
-import com.advanceweb.afc.jb.common.email.MMEmail;
+import com.advanceweb.afc.jb.mail.service.MMEmail;
 
 /**
  * @author Rajeshkb

@@ -73,7 +73,7 @@ public class SOLRSearchHelper {
 		server.setMaxRetries(Integer.parseInt(solrConfiguration
 				.getProperty(MAX_RETRIES)));
 		server.setParser(new XMLResponseParser());
-
+		
 		return server;
 
 	}

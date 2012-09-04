@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.common.util;
+package com.advanceweb.afc.jb.search;
 
 import org.springframework.stereotype.Component;
 
@@ -11,29 +11,29 @@ import org.springframework.stereotype.Component;
  * @since 31st July 2012
  */
 
-@Component("solrParameter")
-public class SolrParameter {
+@Component("searchIndex")
+public class SearchIndex {
 	
-	private String searchIndexName;
+	private String name;
 	
-	private String searchIndexGroup;
+	private String group;
 	
 	private String environment;
 	
-	public String getSearchIndexName() {
-		return searchIndexName;
+	public String getName() {
+		return name;
 	}
 
-	public void setSearchIndexName(String searchIndexName) {
-		this.searchIndexName = searchIndexName;
+	public void setName(String searchIndexName) {
+		this.name = searchIndexName;
 	}
 
-	public String getSearchIndexGroup() {
-		return searchIndexGroup;
+	public String getGroup() {
+		return group;
 	}
 
-	public void setSearchIndexGroup(String searchIndexGroup) {
-		this.searchIndexGroup = searchIndexGroup;
+	public void setGroup(String searchIndexGroup) {
+		this.group = searchIndexGroup;
 	}
 
 	public String getEnvironment() {

@@ -2,7 +2,8 @@ package com.advanceweb.afc.jb.search.service;
 
 
 import net.sf.json.JSONObject;
-import com.advanceweb.afc.jb.common.JobSearchResultDTO;
+
+import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 
 /**
  * This class has been created as a service interface for converting to JSON object
