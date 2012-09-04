@@ -22,7 +22,7 @@ $(document).keyup(function(event) {
 	jQuery(document).ready(function() {
 						$("#tb_save_search img").click(function(event) {
 							
-							var action = $(this).attr("alt");
+							var action = $(this).attr("class");
 							var rowObj = $(this).parent().parent().parent();
 							var saveSearchId = rowObj.attr("id");
 							var saveSearchedUrl = rowObj.attr("href");
@@ -215,7 +215,9 @@ var id = searchJobId.replace("viewSavedSearch", "");
 								</td>
 								
 								<td align="center"><a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" 
-								onclick="viewSavedSearch(this.id);" class="newWindow"><div class="view"></div></a><a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><div class="editFile"></div></a><a href="#"><div class="delete"></div></a>
+								onclick="viewSavedSearch(this.id);" class="newWindow">
+								<img class="view"></a><a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img class="editFile"></a>
+								<a href="#"><img class="delete"></a>
 										</td>
 							</tr>
 						</c:forEach>

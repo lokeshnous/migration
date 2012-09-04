@@ -152,7 +152,7 @@ public class SaveSearchController {
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put("SaveSearchForm", new SaveSearchForm());
-				jsonObject.put("NavigationPath", "../savedSearches/anonymousSaveThisSearchPopUp");
+				jsonObject.put("LoggedInNavigationPath", "../savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
