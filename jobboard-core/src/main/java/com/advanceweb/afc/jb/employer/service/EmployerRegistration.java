@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
@@ -128,9 +129,9 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	}
 
 	@Override
-	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+	public AdmFacilityContactDTO getEmployeePrimaryKey(int userId,
 			String contactType) {
-		List<AdmFacilityContact> accountProfileDTO = new ArrayList<AdmFacilityContact>();
+		AdmFacilityContactDTO accountProfileDTO = new AdmFacilityContactDTO();
 		try {
 
 			accountProfileDTO = employerRegistrationDAO.getEmployeePrimaryKey(
