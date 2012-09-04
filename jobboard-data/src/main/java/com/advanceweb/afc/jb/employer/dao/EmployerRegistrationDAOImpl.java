@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -271,7 +272,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	public EmployerProfileDTO getProfileAttributes() {
 		EmployerProfileDTO dto = null;
 		try {
-			@SuppressWarnings("unchecked")
+		
 			List<MerProfileAttrib> listProfAttrib = hibernateTemplateTracker
 					.find(REGISTRATION_ATTRIBS);
 			List<DropDownDTO> countryList = getCountryList();
@@ -290,7 +291,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	public boolean validateEmail(String email) {
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
-				boolean result;
+			
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						VERIFY_EMAIL, email);
 				if (null != usersList && !usersList.isEmpty()) {
@@ -304,7 +305,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public List<AdmFacilityContact> getEmployeeData(int userId,
 			String contactType) {
@@ -375,22 +376,24 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	public List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+	public AdmFacilityContactDTO getEmployeePrimaryKey(int userId,
 			String contactType) {
 
-		List<AdmFacilityContact> accountProfileDTO = null;
+		AdmFacilityContactDTO accountProfileDTO = new AdmFacilityContactDTO();
+		
 		try {
+			List<AdmFacilityContact> adm=new ArrayList<AdmFacilityContact>();
 			if (userId > 0) {
-				accountProfileDTO = hibernateTemplateCareers
+				adm = hibernateTemplateCareers
 						.find("select a from AdmFacilityContact a,AdmFacility b,AdmUserFacility c where a.admFacility.facilityId= b.facilityId and a.admFacility.facilityId=c.id.facilityId "
 								+ "and c.id.userId="
 								+ userId
 								+ "and a.contactType= '" + contactType + "'");
 
 			}
-
+			accountProfileDTO=empHelper.transformListToDTOList(adm);
 		} catch (DataAccessException e) {
 			LOGGER.info("Error for update of employee data");
 		}
