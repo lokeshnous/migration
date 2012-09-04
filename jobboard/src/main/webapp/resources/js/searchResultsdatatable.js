@@ -256,20 +256,7 @@ jQuery(document).ready(function() {
 													var nTr = this;
 													var aData = table.fnGetData(nTr);
 													var jobId = aData['JobId'];
-													$.ajax({
-														url : '../jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
-														data : ({
-															userID : "userID"
-														}),
-														/*success : function(data) {
-														},
-														;error : function(data) {
-															alert('Unable to process');
-														},
-														complete : function(data) {
-														}
-*/
-													});
+													
 													if ($(this).attr('popup')) {
 													} else {
 														$(this).attr('popup',
@@ -296,6 +283,20 @@ jQuery(document).ready(function() {
 																				table,
 																				nTr),
 																		'details');
+														$.ajax({
+															url : '../jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
+															data : ({
+																userID : "userID"
+															}),
+															/*success : function(data) {
+															},
+															;error : function(data) {
+																alert('Unable to process');
+															},
+															complete : function(data) {
+															}
+	*/
+														});
 													} else {
 														$(this).attr('popup',
 																'show');
