@@ -66,12 +66,12 @@ public class JobPostController {
 	private static final String UPDATE_JOBS = "/updateJobs";
 
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
-	public ModelAndView showPostJob() {
+	public ModelAndView showPostJob(HttpSession session) {
 
 		ModelAndView model = new ModelAndView();
 		JobPostForm jobPostForm = new JobPostForm();
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(1,
-				"facility_admin");
+		
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> templateList = populateDropdownsService
