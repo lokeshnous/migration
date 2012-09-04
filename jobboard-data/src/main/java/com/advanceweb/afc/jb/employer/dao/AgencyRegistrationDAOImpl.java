@@ -105,7 +105,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			// saving the data in adm_facility
 			AdmFacility facility = agencyHelper
 					.transformEmpDTOToAdmFAcility(agencyDTO);
-			facility.setFacilityType(MMJBCommonConstants.FACILITY);
+			facility.setFacilityType(MMJBCommonConstants.FACILITY_GROUP);
 			// TODO: Remove hard code values
 			facility.setEmail(agencyDTO.getMerUserDTO().getEmailId());
 			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
