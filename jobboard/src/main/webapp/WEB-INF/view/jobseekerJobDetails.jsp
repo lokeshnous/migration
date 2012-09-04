@@ -72,7 +72,7 @@
 
 	function applyThisJob(jobId) {
 		$.ajax({
-			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
+			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
 			data : ({
 				userID : "userID"
 			}),
@@ -136,7 +136,7 @@
 
 	function btapplyThisJob(jobId) {
 		$.ajax({
-			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
+			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
 			data : ({
 				userID : "userID"
 			}),
@@ -223,8 +223,8 @@
 			    <div class="rowEvenTB10Spacing">
 				<div class="floatLeft">Send to friend:</div><a href=""><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
-				<a onclick="applyThisJob('+${jobDetail.jobID}+');" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
-				<a onclick="saveThisJob('+${jobDetail.jobID}+')" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
+				<a onclick="applyThisJob(${jobDetail.jobID});" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
+				<a onclick="saveThisJob(${jobDetail.jobID})" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
 			    
 			    <br/><br/><br/>
 			    <h4><div style="color: red" id="topjobActionInfo" ></div></h4>
@@ -235,8 +235,8 @@
 				<div class="rowEvenTB10Spacing">
 				<div class="floatLeft">Send to friend:</div><a href=""><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
-				<a onclick="btapplyThisJob('+${jobDetail.jobID}+');" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob('+${jobDetail.jobID}+');" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
+				<a onclick="btapplyThisJob(${jobDetail.jobID});" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
 			    <br/><br/>
 			    <h4><div style="color: red" id="bottomjobActionInfo" ></div></h4>
 			    </div>
