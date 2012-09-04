@@ -50,7 +50,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class AgencyRegistrationController {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("AgencyRegistrationController.class");
+			.getLogger(AgencyRegistrationController.class);
 	private static final String AGENCY_REG_FORM = "agencyDashboard";
 	private static final String MESSAGE = "message";
 	@Autowired
