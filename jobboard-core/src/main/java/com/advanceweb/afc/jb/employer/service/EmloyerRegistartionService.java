@@ -6,6 +6,7 @@ package com.advanceweb.afc.jb.employer.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 
 /**
@@ -29,7 +30,7 @@ public interface EmloyerRegistartionService {
 	 * @param userId
 	 * @return userid
 	 */
-	List<AdmFacilityContact> getEmployeePrimaryKey(int userId,
+	AdmFacilityContactDTO getEmployeePrimaryKey(int userId,
 			String contactType);
 
 	/**
