@@ -64,9 +64,9 @@ public class AgencyRegistrationConversionHelper {
 		for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
 			MerUserProfilePK merUserProfilePK = new MerUserProfilePK();
-			/*MerUserProfile profile = new MerUserProfile();
+			MerUserProfile profile = new MerUserProfile();
 
-			profile.setAttribValue(attribDTO.getStrLabelValue());*/
+			profile.setAttribValue(attribDTO.getStrLabelValue());
 
 			if (attribDTO.getStrLabelName().equals(
 					MMJBCommonConstants.FIRST_NAME)) {
