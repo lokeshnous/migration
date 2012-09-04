@@ -57,6 +57,8 @@ public class AgencyRegistrationForm {
 
 	@NotEmpty(message = "Country should not be empty")
 	private String country;
+	
+	private boolean bReadOnly;
 
 	private List<AgencyProfileAttribForm> listProfAttribForms;
 
@@ -321,6 +323,14 @@ public class AgencyRegistrationForm {
 	 */
 	public void setStreet(String street) {
 		this.street = street;
+	}
+
+	public boolean isbReadOnly() {
+		return bReadOnly;
+	}
+
+	public void setbReadOnly(boolean bReadOnly) {
+		this.bReadOnly = bReadOnly;
 	}
 
 

@@ -76,7 +76,8 @@ public class TransformAgencyRegistration {
 
 
 	
-	public List<AgencyProfileAttribForm> transformDTOToProfileAttribForm(AgencyProfileDTO registerDTO){
+	public List<AgencyProfileAttribForm> transformDTOToProfileAttribForm(
+			AgencyProfileDTO registerDTO, UserDTO userDTO){
 		
 		List<AgencyProfileAttribForm> listForms = new ArrayList<AgencyProfileAttribForm>();
 
@@ -89,7 +90,17 @@ public class TransformAgencyRegistration {
 				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setbRequired(dto.getbRequired());
-				form.setbRequired(dto.getbRequired());
+				if(null != userDTO){
+					if(form.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+						form.setStrLabelValue(userDTO.getFirstName());
+					}
+					if(form.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+						form.setStrLabelValue(userDTO.getLastName());
+					}
+					if(form.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
+						form.setStrLabelValue(userDTO.getMiddleName());
+					}
+				}
 				listForms.add(form);
 			}
 		}

@@ -37,5 +37,7 @@ public interface AgencyRegistrationDAO {
 	 * @return
 	 */
 	AgencyProfileDTO getProfileAttributes();
+	
+	boolean validateProfileAttributes(int jobseekerId);
 
 }

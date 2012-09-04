@@ -65,11 +65,14 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 				response.sendRedirect(request.getContextPath()+ "/employerRegistration/employerregistration.html");
 			}
 		} else if (authentication.getAuthorities().contains(
-				new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_GROUP))
+				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP))
 				&& pageValue.equals(MMJBCommonConstants.AGENCY)) {
-			response.sendRedirect(request.getContextPath()
-					+ "/agency/agencyDashboard.html");
+			if(profileRegistration.validateProfileAttributes(user.getUserId())){
+				response.sendRedirect(request.getContextPath()+ "/agency/agencyDashboard.html");
+			}else{
+				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+				response.sendRedirect(request.getContextPath()+ "/agencyRegistration/agencyregistration.html");
+			}
 		} else {
 			session.invalidate();
 			response.sendRedirect(request.getContextPath()

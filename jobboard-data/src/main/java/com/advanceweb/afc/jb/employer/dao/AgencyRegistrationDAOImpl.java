@@ -38,6 +38,7 @@ import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
  * @created 21-Jun-2012 2:25:52 PM
  */
 @Repository("agencyRegistrationDAO")
+@SuppressWarnings("unchecked")
 public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
@@ -234,6 +235,24 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	 * @param agencyDomain
 	 */
 	public boolean updateAgencyDetails(AgencyProfileDTO agencyDomain) {
+		return false;
+	}
+
+	/**
+	 * This method is called to check, whether registration is completed 
+	 * properly or not (To migrate old users to new application)
+	 */
+	@Override
+	public boolean validateProfileAttributes(int agencyId){
+		try {
+			List<MerUserProfile> profAttribList = hibernateTemplateTracker.find(" from MerUserProfile prof where prof.profilePK.userId=?",agencyId);
+			if(null != profAttribList && !profAttribList.isEmpty()){
+				return true;
+			}
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 

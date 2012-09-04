@@ -83,15 +83,25 @@ public class AgencyRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value = "/agencyregistration", method = RequestMethod.GET)
-	public ModelAndView agencyRegistration() {
+	public ModelAndView agencyRegistration(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 
 		AgencyRegistrationForm agencyRegForm = new AgencyRegistrationForm();
 
 		AgencyProfileDTO registerDTO = (AgencyProfileDTO) agencyRegistration
 				.getProfileAttributes();
+		 UserDTO userDTO=null; 
+		 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
+			 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
+			 agencyRegForm.setEmailId(userDTO.getEmailId());
+			 agencyRegForm.setConfirmEmailId(userDTO.getEmailId());
+			 agencyRegForm.setPassword(userDTO.getPassword());
+			 agencyRegForm.setConfirmPassword(userDTO.getPassword());
+			 agencyRegForm.setUserId(userDTO.getUserId());
+			 agencyRegForm.setbReadOnly(true);
+		 }
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
-				.transformDTOToProfileAttribForm(registerDTO);
+				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 		agencyRegForm.setListProfAttribForms(listProfAttribForms);
 		model.addObject("agencyRegForm", agencyRegForm);
 		List<CountryDTO> countryList = populateDropdownsService
