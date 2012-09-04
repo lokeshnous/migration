@@ -386,8 +386,9 @@ public class JobPostController {
 		DropDownDTO downDTO = new DropDownDTO();
 		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
 		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
-
+		
 		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
+		String next=request.getParameter("next");
 		autoRenewList.add(dto);
 		autoRenewList.add(downDTO);
 		int page = 1;
@@ -431,11 +432,19 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		jobPostform.setJobPostDTOList(postedJobList);
-
+		int begin=jobPostform.getBeginVal();
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-
+		if(null != next && !next.isEmpty()){
+			
+			jobPostform.setBeginVal(Integer.parseInt(next));
+		}
+		else{
+			jobPostform.setBeginVal((page/10)*10);
+		}
+		
 		model.addObject("noOfPages", noOfPages);
 		model.addObject("currentPage", page);
+		model.addObject("begin",(jobPostform.getBeginVal()<=0?1:jobPostform.getBeginVal()));
 		model.addObject(JOB_POST_FORM, jobPostform);
 		model.addObject("templateList", templateList);
 		model.addObject("autoRenewList", autoRenewList);

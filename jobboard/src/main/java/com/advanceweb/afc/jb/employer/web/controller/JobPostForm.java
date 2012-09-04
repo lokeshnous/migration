@@ -59,6 +59,7 @@ public class JobPostForm {
     private String statusValue;
     private String noOfPage;
     private String noOfPageLower;
+    private int beginVal=1;
 	public int getJobId() {
 		return jobId;
 	}
@@ -381,6 +382,14 @@ public class JobPostForm {
 	 */
 	public void setNoOfPageLower(String noOfPageLower) {
 		this.noOfPageLower = noOfPageLower;
+	}
+
+	public int getBeginVal() {
+		return beginVal;
+	}
+
+	public void setBeginVal(int beginVal) {
+		this.beginVal = beginVal;
 	}
 	
 	
