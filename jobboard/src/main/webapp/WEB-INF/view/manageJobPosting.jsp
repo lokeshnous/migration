@@ -246,8 +246,8 @@
 						<div class="searchResultsNavigationColumn2 floatRight">
 							<span>Page:</span>
 							<%--For displaying Previous link except for the 1st page --%>
-							<c:if test="${currentPage != 1}">
-								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&next=${begin-10}"> <img
+							<c:if test="${currentPage != 1 && noOfPages gt 10}">
+								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}"> <img
 										src="../resources/images/ArrowLeft.png"> Previous</a></td>
 							</c:if>
 
@@ -263,17 +263,18 @@
 									<c:otherwise>
 										<span class="active"> <c:if test="${i lt begin+10}">
 												<a
-													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a>
+													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
 											</c:if></span>
 
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
 							
-								<span><a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&next=${begin+10}">Next <img
+								<span>
+								<c:if test="${noOfPages gt 10}"><a
+									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next <img
 										src="../resources/images/ArrowRight.png">
-								</a></span>
+								</a></c:if></span>
 							
 
 
@@ -419,7 +420,7 @@
 						<div class="searchResultsNavigationColumn1">
 
 							<!--Added Class "marginTop5"-->
-							<span">Results viewable:</span> <span class="Padding0"><form:select
+							<span>Results viewable:</span> <span class="Padding0"><form:select
 									path="noOfPageLower" name="results" class="jb_input4 margin0">
 									<form:option value="20">20</form:option>
 									<form:option value="30">30</form:option>
@@ -432,31 +433,38 @@
 						<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 						</div>
 						<div class="searchResultsNavigationColumn2 floatRight">
-							<span>Page: <%--For displaying Previous link except for the 1st page --%>
-								<c:if test="${currentPage != 1}">
-									<td><a
-										href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&next=${begin-10}">
-											<img src="../resources/images/ArrowLeft.png"> Previous
-									</a></td>
-								</c:if> <c:forEach begin="${begin}" end="${noOfPages}" var="i">
-									<c:choose>
-										<c:when test="${currentPage eq i}">
+							<span>Page: </span>
+							
+							<%--For displaying Previous link except for the 1st page --%>
+							<c:if test="${currentPage != 1 && noOfPages gt 10}">
+								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}"> <img
+										src="../resources/images/ArrowLeft.png"> Previous</a></td>
+							</c:if>
 
+
+
+							<c:forEach begin="${begin}" end="${noOfPages}" var="i">
+								<c:choose>
+									<c:when test="${currentPage eq i}">
+										
 											<span class="active">${i}</span>
+										
+									</c:when>
+									<c:otherwise>
+										<span class="active"> <c:if test="${i lt begin+10}">
+												<a
+													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
+											</c:if></span>
 
-										</c:when>
-										<c:otherwise>
-											<span class="active"> <c:if test="${i lt begin+10}">
-													<a
-														href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a>
-												</c:if></span>
-
-										</c:otherwise>
-									</c:choose>
-								</c:forEach> <span><a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&next=${begin+10}">Next
-										<img src="../resources/images/ArrowRight.png">
-								</a></span>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+							
+								<span>
+								<c:if test="${noOfPages gt 10}"><a
+									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next <img
+										src="../resources/images/ArrowRight.png">
+								</a></c:if></span>
 						</div>
 					</div>
 				</div>

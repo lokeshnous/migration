@@ -379,7 +379,8 @@ public class JobPostController {
 			HttpSession session, JobPostForm jobPostform) {
 		ModelAndView model = new ModelAndView();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
-		String jobStatus = jobPostform.getStatusValue();
+		String jobStatus = (null!=jobPostform.getStatusValue()?jobPostform.getStatusValue():null!=request.getParameter("jobStatus")?request.getParameter("jobStatus"):null);
+		jobPostform.setStatusValue(jobStatus);
 		DropDownDTO dto = new DropDownDTO();
 		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
 		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
@@ -403,7 +404,7 @@ public class JobPostController {
 			displayRecordsPerPage = "20";
 		}
 		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			if (null == jobStatus || jobStatus.isEmpty()) {
+			if (null == jobStatus || jobStatus.isEmpty() ) {
 
 				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
 				postedJobList = employerJobPost.retrieveAllJobPost(
