@@ -50,20 +50,15 @@ public class TransformJobSeekerSubscription {
 		
 		List<String> currSubList = new ArrayList<String>();
 		List<DropDownDTO> selSubList = new ArrayList<DropDownDTO>();
-		if (null != currentSubsList) {
-			
-			for(JobSeekerSubscriptionsDTO dto :currentSubsList){
-				
-				for(DropDownDTO subdto :listSubscriptions){
-					
+		if (null != currentSubsList) {			
+			for(JobSeekerSubscriptionsDTO dto :currentSubsList){				
+				for(DropDownDTO subdto :listSubscriptions){					
 					if(subdto.getOptionId().equals(String.valueOf(dto.getSubscriptionId()))){
 						currSubList.add(subdto.getOptionId());
 						selSubList.add(subdto);
 					}
-				}
-				
-			}
-			
+				}				
+			}			
 			if(null != form){
 				form.setCurrentsubs(currSubList.toArray(new String[currSubList.size()]));
 			}
