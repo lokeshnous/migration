@@ -51,7 +51,7 @@ public class AgencyRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistrationController.class);
-	private static final String AGENCY_REG_FORM = "agencyDashboard";
+	private static final String AGENCY_REG_FORM = "agencyRegForm";
 	private static final String MESSAGE = "message";
 	@Autowired
 	private ProfileRegistration agencyRegistration;
