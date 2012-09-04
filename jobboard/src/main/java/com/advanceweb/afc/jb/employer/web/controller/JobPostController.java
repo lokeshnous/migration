@@ -438,6 +438,7 @@ public class JobPostController {
 		if(null != next && !next.isEmpty()){
 			
 			jobPostform.setBeginVal(Integer.parseInt(next));
+			page=Integer.parseInt(next);
 		}
 		else{
 			jobPostform.setBeginVal((page/10)*10);
