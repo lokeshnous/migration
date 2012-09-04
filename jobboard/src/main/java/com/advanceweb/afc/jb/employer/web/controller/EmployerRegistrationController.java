@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
@@ -39,9 +40,7 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
@@ -313,11 +312,10 @@ public class EmployerRegistrationController {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session.getAttribute("userId");
 		try {
-			List<AdmFacilityContact> listProfAttribForms = empRegService
+			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
-			if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
-				int admfacilityid = listProfAttribForms.get(0)
-						.getFacilityContactId();
+			if (listProfAttribForms.getCount() > 0) {
+				int admfacilityid = listProfAttribForms.getFacilityContactId();
 
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
@@ -360,12 +358,12 @@ public class EmployerRegistrationController {
 		int userId = (Integer) session.getAttribute("userId");
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		List<AdmFacilityContact> listProfAttribForms = empRegService
+		AdmFacilityContactDTO listProfAttribForms = empRegService
 				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
+		// int count=0;
 		try {
-			if (null != listProfAttribForms && listProfAttribForms.size() != 0) {
-				int admfacilityid = listProfAttribForms.get(0)
-						.getFacilityContactId();
+			if ((listProfAttribForms.getCount() > 0)) {
+				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
 						.transformBillingProfileFormToDto(employeeBillingForm);
 				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
@@ -420,64 +418,56 @@ public class EmployerRegistrationController {
 
 			List<StateDTO> stateList = populateDropdownsService.getStateList();
 
-			List<AdmFacilityContact> listProfAttribForms = empRegService
+			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 
-			employeeAccountForm.setFirstName(listProfAttribForms.get(0)
-					.getFirstName());
-			employeeAccountForm.setLastName(listProfAttribForms.get(0)
-					.getLastName());
-			employeeAccountForm.setCompany(listProfAttribForms.get(0)
-					.getCompany());
-			employeeAccountForm.setStreetAddress(listProfAttribForms.get(0)
+			employeeAccountForm
+					.setFirstName(listProfAttribForms.getFirstName());
+			employeeAccountForm.setLastName(listProfAttribForms.getLastName());
+			employeeAccountForm
+					.setCompany(listProfAttribForms.getCompanyName());
+			employeeAccountForm.setStreetAddress(listProfAttribForms
 					.getStreet());
-			employeeAccountForm.setCityOrTown(listProfAttribForms.get(0)
-					.getCity());
-			employeeAccountForm.setState(listProfAttribForms.get(0).getState());
-			employeeAccountForm.setCountry(listProfAttribForms.get(0)
-					.getCountry());
-			employeeAccountForm.setEmail(listProfAttribForms.get(0).getEmail());
-			employeeAccountForm.setZipCode(listProfAttribForms.get(0)
-					.getPostcode());
-			employeeAccountForm.setPhone(listProfAttribForms.get(0).getPhone());
+			employeeAccountForm.setCityOrTown(listProfAttribForms.getCity());
+			employeeAccountForm.setState(listProfAttribForms.getState());
+			employeeAccountForm.setCountry(listProfAttribForms.getCountry());
+			employeeAccountForm.setEmail(listProfAttribForms.getEmail());
+			employeeAccountForm.setZipCode(listProfAttribForms.getZipCode());
+			employeeAccountForm.setPhone(listProfAttribForms.getPhone());
 
 			/**
 			 * this is for billing pages
 			 */
 			int count = 0;
-			List<AdmFacilityContact> listBillingForms = empRegService
+			AdmFacilityContactDTO listBillingForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-			if ((listBillingForms.size() <= 0) || ("".equals(listBillingForms))) {
-				count = listBillingForms.size();
+			if ((listBillingForms.getCount() <= 0)) {
+				count = listBillingForms.getCount();
 
 			} else {
-				employeeBillingForm.getBillingAddressForm()
-						.setFnameForBillingAddr(
-								listBillingForms.get(0).getFirstName());
+				employeeBillingForm
+						.getBillingAddressForm()
+						.setFnameForBillingAddr(listBillingForms.getFirstName());
 				employeeBillingForm.getBillingAddressForm()
 						.setLnameForBillingAddr(
-								listProfAttribForms.get(0).getLastName());
-				employeeBillingForm.setCompany(listBillingForms.get(0)
-						.getCompany());
+								listProfAttribForms.getLastName());
+				employeeBillingForm.setCompany(listBillingForms
+						.getCompanyName());
 				employeeBillingForm.getBillingAddressForm()
-						.setStreetForBillingAddr(
-								listBillingForms.get(0).getStreet());
-				employeeBillingForm.getBillingAddressForm()
-						.setCityOrTownForBillingAddr(
-								listBillingForms.get(0).getCity());
+						.setStreetForBillingAddr(listBillingForms.getStreet());
 				employeeBillingForm
-						.setEmail(listBillingForms.get(0).getEmail());
-				employeeBillingForm.getBillingAddressForm()
-						.setZipCodeForBillingAddr(
-								listBillingForms.get(0).getPostcode());
+						.getBillingAddressForm()
+						.setCityOrTownForBillingAddr(listBillingForms.getCity());
+				employeeBillingForm.setEmail(listBillingForms.getEmail());
 				employeeBillingForm
-						.setPhone(listBillingForms.get(0).getPhone());
+						.getBillingAddressForm()
+						.setZipCodeForBillingAddr(listBillingForms.getZipCode());
+				employeeBillingForm.setPhone(listBillingForms.getPhone());
 				employeeBillingForm.getBillingAddressForm()
-						.setStateBillingAddress(
-								listBillingForms.get(0).getState());
-				employeeBillingForm.getBillingAddressForm()
-						.setCountryForBillingAddr(
-								listBillingForms.get(0).getCountry());
+						.setStateBillingAddress(listBillingForms.getState());
+				employeeBillingForm
+						.getBillingAddressForm()
+						.setCountryForBillingAddr(listBillingForms.getCountry());
 			}
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
