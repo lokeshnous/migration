@@ -41,6 +41,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
@@ -108,15 +109,26 @@ public class EmployerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value = "/employerregistration", method = RequestMethod.GET)
-	public ModelAndView employerregistration() {
+	public ModelAndView employerregistration(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 
 		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
 
 		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
 				.getProfileAttributes();
+		 UserDTO userDTO=null; 
+		 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
+			 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
+			 empRegisterForm.setEmailId(userDTO.getEmailId());
+			 empRegisterForm.setConfirmEmailId(userDTO.getEmailId());
+			 empRegisterForm.setPassword(userDTO.getPassword());
+			 empRegisterForm.setConfirmPassword(userDTO.getPassword());
+			 empRegisterForm.setUserId(userDTO.getUserId());
+			 empRegisterForm.setbReadOnly(true);
+		 }
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
-				.transformDTOToProfileAttribForm(registerDTO);
+				.transformDTOToProfileAttribForm(registerDTO, userDTO);
+
 		empRegisterForm.setListProfAttribForms(listProfAttribForms);
 		model.addObject("empRegisterForm", empRegisterForm);
 		List<CountryDTO> countryList = populateDropdownsService
@@ -224,7 +236,7 @@ public class EmployerRegistrationController {
 			}
 		}
 		registerValidation.validate(empRegForm, result);
-		if (employerRegistration.validateEmail(empRegForm.getEmailId())) {
+		if (!empRegForm.isbReadOnly() && employerRegistration.validateEmail(empRegForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
 			// model.setViewName(employerReg);

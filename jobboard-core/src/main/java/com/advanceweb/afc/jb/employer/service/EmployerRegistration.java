@@ -143,8 +143,8 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 
 	@Override
 	public boolean validateProfileAttributes(int jobseekerId) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return employerRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}
 	
 	

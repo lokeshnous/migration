@@ -42,6 +42,7 @@ import com.mysql.jdbc.StringUtils;
  * @version 1.0
  * @created 21-Jun-2012 2:25:55 PM
  */
+@SuppressWarnings("unchecked")
 @Repository("employerRegistrationDAO")
 public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
@@ -86,7 +87,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 					null);
 			if (merUser != null) {
 				// saving employer credentials
-				hibernateTemplateTracker.save(merUser);
+				hibernateTemplateTracker.saveOrUpdate(merUser);
 			}
 			// saving the employer profile
 			List<MerUserProfile> merUserProfiles = empHelper
@@ -142,7 +143,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			contact.setCreateDt(new Date());
 			contact.setEmail(empDTO.getMerUserDTO().getEmailId());
 			contact.setActive(1);
-			hibernateTemplateCareers.save(contact);
+			hibernateTemplateCareers.saveOrUpdate(contact);
 
 			// saving the data in the adm_user_facility
 			AdmUserFacility userfacility = new AdmUserFacility();
@@ -154,7 +155,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			userfacility.setCreateUserId(0);
 			// userfacility.setAdmRole();
 			userfacility.setCreateDt(new Date());
-			hibernateTemplateCareers.save(userfacility);
+			hibernateTemplateCareers.saveOrUpdate(userfacility);
 			return empHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {
@@ -394,6 +395,25 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			LOGGER.info("Error for update of employee data");
 		}
 		return accountProfileDTO;
+	}
+
+	
+	/**
+	 * This method is called to check, whether registration is completed 
+	 * properly or not (To migrate old users to new application)
+	 */
+	@Override
+	public boolean validateProfileAttributes(int employerId){
+		try {
+			List<MerUserProfile> profAttribList = hibernateTemplateTracker.find(" from MerUserProfile prof where prof.profilePK.userId=?",employerId);
+			if(null != profAttribList && !profAttribList.isEmpty()){
+				return true;
+			}
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }

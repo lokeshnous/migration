@@ -287,6 +287,10 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		return null;
 	}
 	
+	/**
+	 * This method is called to check, whether registration is completed 
+	 * properly or not (To migrate old users to new application)
+	 */
 	public boolean validateProfileAttributes(int jobseekerId){
 		try {
 			List<MerUserProfile> profAttribList = hibernateTemplate.find(" from MerUserProfile prof where prof.profilePK.userId=?",jobseekerId);

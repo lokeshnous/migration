@@ -61,6 +61,8 @@ public class EmployerRegistrationForm {
 	private String country;
 
 	private List<EmployerProfileAttribForm> listProfAttribForms;
+	
+	private boolean bReadOnly;
 
 	/**
 	 * @return the firstName
@@ -324,4 +326,13 @@ public class EmployerRegistrationForm {
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
+	public boolean isbReadOnly() {
+		return bReadOnly;
+	}
+
+	public void setbReadOnly(boolean bReadOnly) {
+		this.bReadOnly = bReadOnly;
+	}
+	
 }

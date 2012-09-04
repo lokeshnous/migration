@@ -58,8 +58,12 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 			//Added to put facility id in the session
 			EmployerInfoDTO infoDTO = loginService.facilityDetails(user.getUserId());			
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID, infoDTO.getFacilityId());
-			response.sendRedirect(request.getContextPath()
-					+ "/employer/employerDashBoard.html");
+			if(profileRegistration.validateProfileAttributes(user.getUserId())){
+				response.sendRedirect(request.getContextPath()+ "/employer/employerDashBoard.html");
+			}else{
+				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+				response.sendRedirect(request.getContextPath()+ "/employerRegistration/employerregistration.html");
+			}
 		} else if (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(
 						MMJBCommonConstants.ROLE_FACILITY_GROUP))

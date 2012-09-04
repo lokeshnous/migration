@@ -79,7 +79,7 @@ public class TransformEmployerRegistration {
 
 
 	
-	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO){
+	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO, UserDTO userDTO){
 		
 		List<EmployerProfileAttribForm> listForms = new ArrayList<EmployerProfileAttribForm>();
 
@@ -92,7 +92,17 @@ public class TransformEmployerRegistration {
 				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setbRequired(dto.getbRequired());
-				form.setbRequired(dto.getbRequired());
+				if(null != userDTO){
+					if(form.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+						form.setStrLabelValue(userDTO.getFirstName());
+					}
+					if(form.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+						form.setStrLabelValue(userDTO.getLastName());
+					}
+					if(form.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
+						form.setStrLabelValue(userDTO.getMiddleName());
+					}
+				}
 				listForms.add(form);
 			}
 		}
@@ -114,6 +124,7 @@ public class TransformEmployerRegistration {
 		dto.setMiddleName(form.getMiddleName());
 		dto.setPassword(form.getPassword());
 		dto.setEmailId(form.getEmailId());
+		dto.setUserId(form.getUserId());
 
 		return dto;
 	}

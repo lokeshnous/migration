@@ -100,7 +100,7 @@ public class TransformJobSeekerRegistration {
 		dto.setMiddleName(form.getMiddleName());
 		dto.setPassword(form.getPassword());
 		dto.setEmailId(form.getEmailId());
-		dto.setUserId(Integer.valueOf(form.getUserId()));
+		dto.setUserId(null != form.getUserId() ? Integer.valueOf(form.getUserId()):0);
 		
 		return dto;
 	}

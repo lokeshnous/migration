@@ -85,6 +85,6 @@ public interface EmployerRegistrationDAO {
 	void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing);
 
-
+	public boolean validateProfileAttributes(int jobseekerId); 
 
 }
