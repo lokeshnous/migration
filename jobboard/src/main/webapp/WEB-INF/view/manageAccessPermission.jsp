@@ -18,12 +18,12 @@
 		    	 $("form")
 					.attr(
 							"action",
-							"${pageContext.request.contextPath}/employer/addNewJobOwner.html);
+							"${pageContext.request.contextPath}/employer/addNewJobOwner.html");
 			$("form")
-					.attr("method", "POST");
+					.attr("method", "GET");
 			$("form").submit();	 	
 			});
-		    }
+		  
 		    $("#managePermission a").click(function() {
 		    	
 		    	//val= this.$('#userId').val();

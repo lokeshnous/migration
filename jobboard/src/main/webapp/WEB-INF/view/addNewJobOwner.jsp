@@ -40,7 +40,6 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form action="" method="">
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
 						name="EmailAddress" class="job_seeker_email width300" />
@@ -53,25 +52,23 @@
 					<span class="lableText4"> </span>
 					<div class="floatLeft marginTop5 marginRight10">
 						<label> <form:radiobutton name="RadioGroup10" 
-							id="RadioGroup1_0"  path="accessTypefull"> Full Access
+							id="RadioGroup1_0"  path="accessTypeFull" label="Full Access"/> 
 						</label>
 					</div>
 
 					<div class="floatLeft marginTop5">
 						<label> <form:radiobutton name="RadioGroup10" 
-							id="RadioGroup1_0"  path="accessTypePost"> Post / Edit Only
+							id="RadioGroup1_0"  path="accessTypePost" label="Post / Edit Only"/> 
 						</label>
 					</div>
-
-
+					</div>
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 						<span class="floatLeft marginTop10"><a href="" id="saveNewOwner"
 							class="btn_sm orange">SAVE</a> <a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a></span>
 					</div>
 					<div class="clearfix"></div>
-			</form>
-		</div>
+			</div>
 		<div class="clearfix"></div>
 	</div>
 </form:form>

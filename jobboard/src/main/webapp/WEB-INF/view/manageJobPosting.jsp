@@ -245,11 +245,15 @@
 							<c:forEach begin="1" end="${noOfPages}" var="i">
 								<c:choose>
 									<c:when test="${currentPage eq i}">
-										<span class="active">${i}</span>
+									<c:if test="${i lt 10}">
+										<span class="active">${i}</span></c:if>
 									</c:when>
 									<c:otherwise>
-										<span class="active"><a
-											href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a></span>
+										<span class="active">
+										<c:if test="${i lt 10}">
+										<a
+											href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a></c:if></span>
+											
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
@@ -417,11 +421,12 @@
 									var="i">
 									<c:choose>
 										<c:when test="${currentPage eq i}">
-											<span class="active">${i}</span>
+										<c:if test="${i lt 10}">
+											<span class="active">${i}</span></c:if>
 										</c:when>
 										<c:otherwise>
-											<span class="active"><a
-												href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a></span>
+											<span class="active"><c:if test="${i lt 10}"><a
+												href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}">${i}</a></c:if></span>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach> <c:if test="${currentPage lt noOfPages}">
