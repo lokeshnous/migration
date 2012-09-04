@@ -39,6 +39,7 @@ public class BrandingTemplateForm {
 	private List<VideoForm> listVideos;
 
 	private Boolean isSilverCustomer = null;
+	private String browsePath;
 
 	public int getFacilityId() {
 		return facilityId;
@@ -155,6 +156,14 @@ public class BrandingTemplateForm {
 
 	public List<AddImageForm> getListAddImages() {
 		return listAddImages;
+	}
+
+	public String getBrowsePath() {
+		return browsePath;
+	}
+
+	public void setBrowsePath(String browsePath) {
+		this.browsePath = browsePath;
 	}
 
 	public void setListAddImages(List<AddImageForm> listAddImages) {

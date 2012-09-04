@@ -83,6 +83,7 @@ public class BrandingTemplateController {
 	private static final String STR_NOTEMPTY = "NotEmpty";
 	private static final String STR_TEMPLATE_ = "Template_";
 	private static final String STR_SILVERPREVIEW = "brandTemplateSilverPreview";
+	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
 	
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -169,10 +170,6 @@ public class BrandingTemplateController {
 		}
 
 		
-		
-		
-		
-		
 		// Transform form data to DTO
 		empBrandTempDTO = transformEmpoyerBrandTemplate
 
@@ -208,8 +205,7 @@ public class BrandingTemplateController {
 			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm form,
 			BindingResult result, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
-
-
+		
 		/**
 		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
 		 */
@@ -221,8 +217,8 @@ public class BrandingTemplateController {
 		// Verify if the employer is of Silver category
 		brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
 
-		// Verify if the employer is of Siver caegory
-
+		brandingTemplateForm.setBrowsePath("create");
+		
 		// Modify the names of media files to save on File server
 		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
 
@@ -270,8 +266,10 @@ public class BrandingTemplateController {
 
 		ModelAndView model = new ModelAndView();
 		templateDTO.setIsSilverCustomer(Boolean.TRUE);
+		brandingTemplateForm.setBrowsePath("manage");
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
+		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_SILVERPREVIEW);
 		return model;
@@ -624,10 +622,11 @@ public class BrandingTemplateController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/cancelBrandTemp", method = RequestMethod.GET)
+//	@RequestMapping(value = "/cancelBrandTemp", method = RequestMethod.GET)
+	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params = "Cancel")
 	public ModelAndView cancelBrandTemp(Map model) {
 //		return new ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
-		return new ModelAndView("redirect:/employer/employerDashBoard.html");
+		return new ModelAndView(STR_EMPDASHBOARD);
 	}
 	
 	
@@ -636,7 +635,7 @@ public class BrandingTemplateController {
 	// public ModelAndView cancelEmpBrandTemp(Map model) {
 	// // return new
 	// ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
-	// return new ModelAndView("redirect:/employer/employerDashBoard.html");
+	// return new ModelAndView(STR_EMPDASHBOARD);
 	// }
 
 
@@ -670,7 +669,7 @@ public class BrandingTemplateController {
 	 */
 	@RequestMapping(value = "/displayTemplate", method = RequestMethod.GET)
 	public ModelAndView displayTemplate(Map modelMap, @ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm form,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session, @RequestParam("id") String browsePath) {
 		BrandingTemplateForm brandingTemplateForm = form;
 
 		ModelAndView model = new ModelAndView();
@@ -679,9 +678,18 @@ public class BrandingTemplateController {
 		nonEmptyList.add(testimonyForm);
 		brandingTemplateForm.setListTestimony(nonEmptyList);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
-		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
-//		Dummy list created to have a non zero List
+		if(brandingTemplateForm.getBrowsePath().equalsIgnoreCase("manage"))
+		{
+//			model.setViewName("redirect:/brandingTemplates/employer/manageBrandingTemplate.html");
+			model.setViewName(STR_EMPDASHBOARD);
+			
+		}else
+		{
+			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
+		}
 
+//		Dummy list created to have a non zero List
+		
 		return model;
 	}
 	
@@ -807,7 +815,7 @@ public class BrandingTemplateController {
 	 * @param BrandingTemplateForm
 	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/employer/editTemplate", method = RequestMethod.GET)
+	@RequestMapping(value = "/editTemplate", method = RequestMethod.GET)
 	public ModelAndView editEmpBrandTemp(
 			BrandingTemplateForm brandingTemplateForm,
 			@RequestParam("templateId") int templateId) {
@@ -819,7 +827,8 @@ public class BrandingTemplateController {
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
-		model.setViewName("editBrandingTemplate");
+//		model.setViewName("editBrandingTemplate");
+		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		return model;
 	}
 
@@ -878,9 +887,9 @@ public class BrandingTemplateController {
 		// call to service layer
 		status = brandingTemplateService.updateBrandingTemplate(templateDTO);
 		if (status) {
-			model.setViewName("redirect:/employer/employerDashBoard.html");
+			model.setViewName(STR_EMPDASHBOARD);
 		}
-		model.setViewName("redirect:/employer/employerDashBoard.html");
+		model.setViewName(STR_EMPDASHBOARD);
 		return model;
 	}
 

@@ -21,6 +21,8 @@ public class BrandingTemplateValidation {
 	
 	private @Value("${imageSizeLimit}")
 	long imageSizeLimit;
+	
+	private static final String STR_NOTEMPTY = "NotEmpty";
 		
 	  public boolean supports(Class<?> form) {
 		    return BrandingTemplateValidation.class.isAssignableFrom(form);
@@ -39,7 +41,7 @@ public class BrandingTemplateValidation {
 			
 			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_GIF) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_TIF)))
 			{
-				errors.rejectValue("mainImageFileData", "NotEmpty", "Please select the appropriate Image");
+				errors.rejectValue("mainImageFileData", STR_NOTEMPTY, "Please select the appropriate Image");
 			}
 			
 			imageLength = brandingTemplateForm.getLogoPath().length();
@@ -47,7 +49,7 @@ public class BrandingTemplateValidation {
 			
 			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_GIF) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_TIF)))
 			{
-				errors.rejectValue("logoFileData", "NotEmpty", "Please select the appropriate Logo");
+				errors.rejectValue("logoFileData", STR_NOTEMPTY, "Please select the appropriate Logo");
 			}
 			
 //			if(!brandingTemplateForm.getIsSilverCustomer())
@@ -58,7 +60,7 @@ public class BrandingTemplateValidation {
 //				
 //				if (!(fileExtension.contains(".jpg") || fileExtension.contains(".gif") || fileExtension.contains(".png") || fileExtension.contains(".tif")))
 //				{
-//					errors.rejectValue("addImageFileData", "NotEmpty", "Please select the appropriate Image");
+//					errors.rejectValue("addImageFileData", STR_NOTEMPTY, "Please select the appropriate Image");
 //				}
 //			}
 		}
@@ -76,12 +78,12 @@ public class BrandingTemplateValidation {
 			long imageSize = brandingTemplateForm.getMainImageFileData().getSize();
 			if (imageSize==0 || imageSize>imageSizeLimit)
 			{
-				errors.rejectValue("mainImageFileData", "NotEmpty", "Please select the appropriate Image size");
+				errors.rejectValue("mainImageFileData", STR_NOTEMPTY, "Please select the appropriate Image size");
 			}
 			imageSize = brandingTemplateForm.getLogoFileData().getSize();
 			if (imageSize==0 || imageSize>imageSizeLimit)
 			{
-				errors.rejectValue("logoFileData", "NotEmpty", "Please select the appropriate Logo size");
+				errors.rejectValue("logoFileData", STR_NOTEMPTY, "Please select the appropriate Logo size");
 			}
 			
 //			if(!brandingTemplateForm.getIsSilverCustomer())
@@ -89,7 +91,7 @@ public class BrandingTemplateValidation {
 //				imageSize = brandingTemplateForm.getAddImageFileData().getSize();
 //				if (imageSize==0 || imageSize>imageSizeLimit)
 //				{
-//					errors.rejectValue("addImageFileData", "NotEmpty", "Please select the appropriate Image size");
+//					errors.rejectValue("addImageFileData", STR_NOTEMPTY, "Please select the appropriate Image size");
 //				}
 //			}
 		}
@@ -107,7 +109,7 @@ public class BrandingTemplateValidation {
 //			
 //			if (!(fileExtension.contains(".mov") || fileExtension.contains(".mpg") ))
 //			{
-////				errors.rejectValue("videoFileData", "NotEmpty", "Please select the appropriate Video");
+////				errors.rejectValue("videoFileData", STR_NOTEMPTY, "Please select the appropriate Video");
 //			}
 			
 		}
@@ -125,7 +127,7 @@ public class BrandingTemplateValidation {
 //			long videoSize = brandingTemplateForm.getVideoFileData().getSize();
 //			if (videoSize==0 || videoSize>videoSizeLimit)
 //			{
-////				errors.rejectValue("videoFileData", "NotEmpty", "Please select the appropriate Video size");
+////				errors.rejectValue("videoFileData", STR_NOTEMPTY, "Please select the appropriate Video size");
 //			}
 			
 		}
@@ -158,7 +160,10 @@ public class BrandingTemplateValidation {
 		
 		BrandingTemplateForm brandingTemplateForm = (BrandingTemplateForm) target;
 		validateImage(brandingTemplateForm, errors);
+		if (!errors.hasErrors())
+		{
 		validateImageSize(brandingTemplateForm, errors);
+		}
 //		if(!brandingTemplateForm.getIsSilverCustomer())
 //		{
 //			String validationMessage = "";
@@ -167,7 +172,7 @@ public class BrandingTemplateValidation {
 //			validationMessage = validateTestimony(brandingTemplateForm, errors);
 //			
 //			if(!StringUtils.isEmpty(validationMessage))
-//				errors.rejectValue("listTestimony[${status.index}].testimony", "NotEmpty", validationMessage);
+//				errors.rejectValue("listTestimony[${status.index}].testimony", STR_NOTEMPTY, validationMessage);
 //			
 //		}
 		
