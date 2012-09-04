@@ -269,6 +269,7 @@ public class BrandingTemplateController {
 				.editBrandingTemplate(templateId);
 
 		ModelAndView model = new ModelAndView();
+		templateDTO.setIsSilverCustomer(Boolean.TRUE);
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
