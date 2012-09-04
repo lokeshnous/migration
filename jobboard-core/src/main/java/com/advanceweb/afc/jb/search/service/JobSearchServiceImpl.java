@@ -59,9 +59,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
 			int userId) {
-
 		return jobSearchDAO.fetchSavedOrAppliedJob(searchedJobDTO, userId);
-
 	}
 
 	/**
@@ -70,9 +68,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public SearchedJobDTO viewJobDetails(long jobId) {
-
 		return jobSearchDAO.viewJobDetails(jobId);
-
 	}
 
 	/**
@@ -92,9 +88,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public boolean updateSaveOrApplyJob(AppliedJobDTO jobDTO) {
-		boolean status = false;
-		status = jobSearchDAO.updateSaveOrApplyJob(jobDTO);
-		return status;
+		return jobSearchDAO.updateSaveOrApplyJob(jobDTO);
 	}
 
 	/**
@@ -114,8 +108,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 */
 	@Override
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
-		JobApplyTypeDTO jobApplyTypeDTO = jobSearchDAO.applyJobDetails(jobId);
-		return jobApplyTypeDTO;
+		return jobSearchDAO.applyJobDetails(jobId);
 	}
 
 }
