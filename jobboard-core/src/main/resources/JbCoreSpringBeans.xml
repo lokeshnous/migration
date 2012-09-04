@@ -11,6 +11,7 @@
 	<!-- For SOLR search -->
 	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 
+	<!--  Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 		<property name="name" value="jobPost" />
 		<property name="group" value="careers" />
@@ -18,23 +19,37 @@
 	</bean>
 
 	<bean id="jobSearchDelegate"
-		class="com.advanceweb.afc.jb.search.engine.solr.SolrJobSearchDeleagate">
+		class="com.advanceweb.afc.jb.search.engine.solr.SolrJobSearchDelegate">
 		<constructor-arg>
 			<ref bean="jobSearchIndex" />
 		</constructor-arg>
 	</bean>
 
+	<!--  Job Search Index -->
+	<bean id="resumeSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
+		<property name="name" value="resumeBuilder" />
+		<property name="group" value="careers" />
+		<property name="environment" value="DEV" />
+	</bean>
+
+	<bean id="resumeSearchDelegate"
+		class="com.advanceweb.afc.jb.search.engine.solr.SolrResumeSearchDelegate">
+		<constructor-arg>
+			<ref bean="resumeSearchIndex" />
+		</constructor-arg>
+	</bean>
+
 	<!-- Send Mail Configuration-->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${mail.smtpHostAddress}" />
+		<property name="host" value="${mail.host}" />
 		<property name="port" value="${mail.port}" />
 		<property name="username" value="${mail.username}" />
 		<property name="password" value="${mail.password}" />
 
 		<property name="javaMailProperties">
 			<props>
-				<prop key="mail.smtp.auth">${mail.smtpAuth}</prop>
-				<prop key="mail.smtp.starttls.enable">${mail.starttlsEnable}</prop>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
 			</props>
 		</property>
 	</bean>

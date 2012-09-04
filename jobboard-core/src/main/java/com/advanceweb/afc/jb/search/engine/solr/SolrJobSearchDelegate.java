@@ -13,6 +13,7 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.advanceweb.afc.jb.search.JobSearchDelegate;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchIndex;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
@@ -28,16 +29,16 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
  * @since 10 July 2012
  */
 
-public class SolrJobSearchDeleagate extends AbstractSolrSearchDelegate
+public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 		implements JobSearchDelegate {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(SolrJobSearchDeleagate.class);
+			.getLogger(SolrJobSearchDelegate.class);
 
 	@Autowired
 	private LocationDAO locationDAO;
 
-	public SolrJobSearchDeleagate(SearchIndex searchIndex) {
+	public SolrJobSearchDelegate(SearchIndex searchIndex) {
 		super(searchIndex);
 	}
 
