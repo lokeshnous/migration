@@ -3978,3 +3978,17 @@ orange:hover {
 	width: 350px;
 	resize: none;
 }
+
+/* New classes introduced to support preview pages */
+.HeadText {
+	
+	font-weight: bold ;
+}
+
+.BannerTextBoxBlank {
+	width: 430px;;
+	height: 279px;
+	float: left;
+	padding: 20px;
+	line-height: 16px;
+}
