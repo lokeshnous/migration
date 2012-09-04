@@ -25,6 +25,7 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<script type="text/javascript" src="../resources/js/jquery.tablesorter.js"></script> 
 
 <!-- js files for modalpopup------------------------------------------------- -->
 <script
@@ -44,6 +45,7 @@
 	jQuery(document)
 			.ready(
 					function() {
+						  $("#tb_manage_job").tablesorter(); 
 						$('#deactivated').click(function() {
 							var val = [];
 							$(':checkbox:checked').each(function(i) {
@@ -307,33 +309,36 @@
 						<form:hidden path="selectedRow" id="selectedRow" />
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
 							class="grid" id="tb_manage_job">
+							<thead>
 							<tr class="LightGrayBG Height35">
-								<td width="2%" align="center" valign="middle" class="">&nbsp;</td>
-								<td width="6%" align="center" valign="middle"><strong>Job
-										ID</strong></td>
-								<td width="18%" align="center" valign="middle"><strong>Job
-										Title</strong></td>
-								<td width="11%" align="center" valign="middle"><strong>Location</strong></td>
-								<td width="8%" align="center" valign="middle"><strong>Job<br />
+								<th width="2%" align="center" valign="middle" class="">&nbsp;</th>
+								<th width="6%" align="center" valign="middle"><strong>Job
+										ID</strong></th>
+								<th width="18%" align="center" valign="middle"><strong>Job
+										Title</strong></th>
+								<th width="11%" align="center" valign="middle"><strong>Location</strong></th>
+								<th width="8%" align="center" valign="middle"><strong>Job<br />
 										Status
-								</strong></td>
-								<td width="7%" align="center" valign="middle"><strong>Start<br />
+								</strong></th>
+								<th width="7%" align="center" valign="middle"><strong>Start<br />
 										Date
-								</strong></td>
-								<td width="7%" align="center" valign="middle"><strong>End<br />
+								</strong></th>
+								<th width="7%" align="center" valign="middle"><strong>End<br />
 										Date
-								</strong></td>
-								<td width="5%" align="center" valign="middle"><strong>Views</strong></td>
-								<td width="4%" align="center" valign="middle"><strong>Clicks</strong></td>
-								<td width="5%" align="center" valign="middle"><strong>Applies</strong></td>
-								<td width="7%" align="center" valign="middle"><strong>Auto<br />
+								</strong></th>
+								<th width="5%" align="center" valign="middle"><strong>Views</strong></th>
+								<th width="4%" align="center" valign="middle"><strong>Clicks</strong></th>
+								<th width="5%" align="center" valign="middle"><strong>Applies</strong></th>
+								<th width="7%" align="center" valign="middle"><strong>Auto<br />
 										Renew
-								</strong></td>
-								<td width="11%" align="center" valign="middle"><strong>Job<br />
+								</strong></th>
+								<th width="11%" align="center" valign="middle"><strong>Job<br />
 										Template
-								</strong></td>
-								<td width="9%" align="center" valign="middle"><strong>Actions</strong></td>
+								</strong></th>
+								<th width="9%" align="center" valign="middle"><strong>Actions</strong></th>
 							</tr>
+							</thead>
+							<tbody>
 							<c:forEach items="${jobPostForm.jobPostDTOList}" var="job"
 								varStatus="status">
 								<form:hidden path="jobPostDTOList[${status.index}].jobId" />
@@ -378,8 +383,8 @@
 													id="${job.jobId}"></div></a>
 										</div></td>
 								</tr>
-							</c:forEach>
-
+								</c:forEach>
+							</tbody>
 						</table>
 					</div>
 					<div class="row FloatLeft">

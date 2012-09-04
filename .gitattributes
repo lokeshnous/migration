@@ -621,6 +621,7 @@ jobboard/src/main/webapp/resources/js/jquery.displaytagdetail.js -text
 jobboard/src/main/webapp/resources/js/jquery.js -text
 jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text
 jobboard/src/main/webapp/resources/js/jquery.simplemodal.js -text
+jobboard/src/main/webapp/resources/js/jquery.tablesorter.js -text
 jobboard/src/main/webapp/resources/js/lpb.gif -text
 jobboard/src/main/webapp/resources/js/lpg.gif -text
 jobboard/src/main/webapp/resources/js/lpr.gif -text
