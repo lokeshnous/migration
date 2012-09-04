@@ -11,6 +11,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
@@ -508,5 +509,31 @@ public class EmployerRegistrationConversionHelper {
 		
 		return afc;
 	}
-	
+
+	public AdmFacilityContactDTO transformListToDTOList(
+			List<AdmFacilityContact> adm) {
+
+		AdmFacilityContactDTO afc = new AdmFacilityContactDTO();
+		int count = 0;
+		if (adm != null) {
+
+			for (AdmFacilityContact facility : adm) {
+				afc.setCity(facility.getCity());
+				afc.setFirstName(facility.getFirstName());
+				afc.setLastName(facility.getLastName());
+				afc.setCompanyName(facility.getCompany());
+				afc.setPhone(facility.getPhone());
+				afc.setZipCode(facility.getPostcode());
+				afc.setState(facility.getState());
+				afc.setCountry(facility.getCountry());
+				afc.setStreet(facility.getStreet());
+				afc.setEmail(facility.getEmail());
+				afc.setFacilityContactId(facility.getFacilityContactId());
+				count++;
+			}
+			afc.setCount(count);
+		}
+
+		return afc;
+	}
 }
