@@ -1,45 +1,55 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 /**
  * <code>EmployerAlertsController</code>This controller helps to manage the
  * alerts.
  * 
- * @author Pramoda Patil
+ * @author Bharati Umarani
  * @version 1.0
- * @since 16 July 2012
+ * @since 04th sept 2012
  * 
  */
 @Controller
-@RequestMapping("/employerAlerts")
+@RequestMapping("/alerts")
 public class EmployerAlertsController {
 
-//	@Autowired
-//	EmployerAlerts employerAlerts;
-
 	/**
-	 * The method is called to set the alerts and send mail to 
-	 * job owner.
+	 * The method is called to view the alerts.
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/setAlerts", method = RequestMethod.GET)
-	public ModelAndView setAlerts(Map model) {
-		/**
-		 * Get the events by DB or server
-		 * Get the list of  job Owners
-		 * Get the email of job owner and send mail after saving in DB
-		 */
-//		CompanyProfileDTO 
-//		employerAlerts.setAlerts(model);
-		return new ModelAndView("setAlertPopUp");
+	@RequestMapping(value = "/employer/viewAlerts", method = RequestMethod.GET)
+	public ModelAndView viewAlerts(
+			@ModelAttribute("alertForm") AlertForm alertForm,
+			BindingResult result, HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		// model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
+		model.addObject(alertForm);
+		model.setViewName("viewAlertPopup");
+		return model;
 	}
+
+	@RequestMapping(value = "/employer/setAlerts", method = RequestMethod.GET)
+	public ModelAndView setAlerts(
+			@ModelAttribute("alertForm") AlertForm alertForm,
+			BindingResult result, HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("setAlertPopup");
+		return model;
+	}
+
 }

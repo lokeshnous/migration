@@ -13,8 +13,7 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-
-		jQuery(document).ready(
+	jQuery(document).ready(
 			function() {
 				$("#changePassword").displaypopup("#changePassword", "780",
 						"370");
@@ -25,10 +24,15 @@
 						"#manageBrandingTemplatePopup", "775", "252");
 				$("#postingInventory").displaypopup("#postingInventory", "780",
 						"370");
-				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings","770","360");	
-				$("#accessPermissioPopUp").displaypopup("#accessPermissioPopUp","770","360");
+				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings",
+						"770", "360");
+				$("#accessPermissioPopUp").displaypopup(
+						"#accessPermissioPopUp", "770", "360");
+				$("#setAlertPopUp")
+						.displaypopup("#setAlertPopUp", "770", "360");
+				$("#viewAlertPopUp").displaypopup("#viewAlertPopUp", "770",
+						"360");
 			});
-
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -65,7 +69,9 @@
 					</div>
 					<div class="lableTextDashBoard">
 						<p>
-							<a id="accessPermissioPopUp" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage Access Permissions</a>
+							<a id="accessPermissioPopUp"
+								href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage
+								Access Permissions</a>
 						</p>
 					</div>
 					<div class="lableTextDashBoard">
@@ -212,25 +218,6 @@
 									</tr>
 								</c:forEach>
 							</tbody>
-							<!-- <tr class="gridB">
-									<td><input name="radio2" type="radio" id="radio4"
-										value="radio" class="marginLeft10 marginRight10"> <label
-										for="radio2">Your Averages Per Job Posting</label></td>
-									<td align="center" valign="middle" class="BorderLeft TcolorA">200</td>
-									<td align="center" valign="middle" class="BorderLeft TcolorB">20</td>
-									<td align="center" valign="middle" class="BorderLeft TcolorC">2</td>
-								</tr>
-								<tr class="gridB">
-									<td class="TBorderNone"><input name="radio2" type="radio"
-										id="radio4" value="radio" class="marginLeft10 marginRight10">
-										<label for="radio2">Site-wide Averages Per Job Posting</label></td>
-									<td align="center" valign="middle"
-										class="BorderLeft TcolorA TBorderNone">300</td>
-									<td align="center" valign="middle"
-										class="BorderLeft TcolorB TBorderNone">30</td>
-									<td align="center" valign="middle"
-										class="BorderLeft TcolorC TBorderNone">3</td>
-								</tr> -->
 						</table>
 					</div>
 					<!--T-->
@@ -303,12 +290,16 @@
 									<h2 class="noTopBorder">Alerts</h2>
 									<div class="lableTextDashBoard ">
 										<p>
-											<a href="">View Alerts</a>
+											<a
+												href="<%=request.getContextPath()%>/alerts/employer/viewAlerts.html"
+												id="viewAlertPopUp">View Alerts</a>
 										</p>
 									</div>
 									<div class="lableTextDashBoard ">
 										<p>
-											<a href="">Set Alerts</a>
+											<a
+												href="<%=request.getContextPath()%>/alerts/employer/setAlerts.html"
+												id="setAlertPopUp">Set Alerts</a>
 										</p>
 									</div>
 								</div>
