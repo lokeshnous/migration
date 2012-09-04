@@ -410,7 +410,7 @@ a.white:hover {
 	background-repeat: no-repeat;
 	background-position: -23px -81px;
 	width: 397px;
-	height: 74px;
+	height: 70px;
 	float: left;
 	clear: both;
 	position: relative;
@@ -3885,7 +3885,9 @@ orange:hover {
 .FontSize19 {
 	font-size: 19px !important;
 }
-
+.FontSize11{
+	font-size: 11px !important;
+}
 .width255 {
 	width: 255px !important;
 }
@@ -3959,7 +3961,7 @@ orange:hover {
 
 .empDBPanalTablecontent {
 	float: left;
-	width: 92%;
+	width: 90%;
 }
 
 .dashboardPanalcontentTwo {
