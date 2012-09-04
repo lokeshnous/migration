@@ -127,7 +127,7 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Password:</span>
 								<form:password path="password" name="healthCareSubSplty"
-									class="job_seeker_password textBox350 "  readonly="${agencyRegForm.bReadOnly}"/>
+									class="job_seeker_password textBox350 "  readonly="${agencyRegForm.bReadOnly}" showPassword="true"/>
 								<span class="required">(Required)</span>
 								<div class="row marginTop5">
 									<span class="lableText3"></span>(8-20 characters, including at
@@ -141,7 +141,7 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Password:</span>
 								<form:password path="confirmPassword" name="healthCareSubSplty"
-									class="job_seeker_password textBox350" readonly="${agencyRegForm.bReadOnly}"/>
+									class="job_seeker_password textBox350" readonly="${agencyRegForm.bReadOnly}" showPassword="true"/>
 								<span class="required">(Required)</span>
 							</div>
 							<div class="row">
