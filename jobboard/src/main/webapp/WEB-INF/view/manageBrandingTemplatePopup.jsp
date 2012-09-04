@@ -78,13 +78,9 @@
 									<td align="center"><label>
 											${template.createdDate}
 									</label></td>
-									<td align="center"><a href="#"><img
-											src="../resources/images/View.png" width="20" height="20"
-											alt="view"></a>&nbsp;<a href='<%=request.getContextPath()%>/brandingTemplates/employer/editTemplate.html?templateId=${template.jpBrandTempId}'><img 
-											src="../resources/images/Edit.png" width="20" height="20"
-											alt="edit"></a>&nbsp;<a href="#"><img
-											src="../resources/images/Delete.png" width="20" height="20"
-											alt="delete"></a></td>
+									<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">
+									<img src="../resources/images/tranBg.png" width="20" height="20" alt="view" class="view">
+											</a>&nbsp;<a href='<%=request.getContextPath()%>/brandingTemplates/editTemplate.html?templateId=${template.jpBrandTempId}'><img src="../resources/images/tranBg.png" width="20" height="20" alt="edit" class="editFile"></a>&nbsp;<a href="#"><img src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a></td>
 								</tr>
 							</c:forEach>
                   </tbody>

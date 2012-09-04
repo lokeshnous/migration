@@ -32,7 +32,7 @@
      		 
      		 <div class="floatRight">
 							<!-- <span class="floatRight"> <a href="../employer/employerDashBoard.html">Back To Dashboard </a></span> -->
-							<span class="floatRight"> <a href="../brandingTemplates/displayTemplate.html">Back</a></span>
+							<span class="floatRight"> <a href="../brandingTemplates/displayTemplate.html?id=${brandingTemplateForm.getBrowsePath()}">Back</a></span>
 			</div>
 						
               <!--nav--> 
@@ -40,7 +40,7 @@
               <!-- ad_col_right -->
               <!-- <div class="clearfix"></div> -->
               <!--Cont-->
-              <div class="row">
+              <div class="row" >
         <div class="row marginTop5">
 					
 
@@ -50,18 +50,18 @@
                	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getLogoPath()}"  alt="logo" width="335" height="60" border="0" /></div>
           </div>
           
-          <div class="BoxText" alt="Color" width="500" height="60" border="0" style="color: #FF0000"/></div>
+          <div class="BoxText" alt="Color" width="500" height="60" border="0" style="color: ${brandingTemplateForm.getColor().substring(4)}"/></div>
           </div>
                   <!--BANNER AREA-->
                   <div class="row">
-            <div class="BannerAreaBox" >
+            <div class="BannerAreaBox" style="background: ${brandingTemplateForm.getColor().substring(4)}">
                       <div class="BannerAreaInnerBox">
-                <div class="BannerImgBox"> <img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getMainImagePath()}" width="490" height="319" alt="Main image"></div>
-                <div class="BannerTextBox">
+                <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getMainImagePath()}" width="490" height="319" alt="Main image"></div>
+                <div class="BannerTextBoxBlank" style="background: #c0c0c0">
 							                
-                          <h1>About This Employer</h1>
+                          <h1 style="color: ${brandingTemplateForm.getColor().substring(4)}">About This Employer </h1>
                           <br />
-                          <p class="lineHeight16">${brandingTemplateForm.getCompanyOverview()}</p>
+                          <p class="lineHeight16" style="color: ${brandingTemplateForm.getColor().substring(4)}">${brandingTemplateForm.getCompanyOverview()}</p>
                           <br />
                           <!-- <p class="lineHeight16">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p> -->
                         </div>
@@ -95,35 +95,35 @@
                 <div class="row marginTop20">
                           <h3 class="TextColorA01 FontSize18">Name of Facility</h3>
                           <div class="row marginTop5">
-                    <h1 class="FloatLeft FontSize12 HeadTextBlue marginRight5"><strong>CITY :</strong></h1>
-                    <p>Baltimore</p>
+                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>CITY :</strong></h1>
+                    <!-- <p>Baltimore</p> -->
                   </div>
                           <div class="row marginTop5">
-                    <h1 class="FloatLeft FontSize12 HeadTextBlue marginRight5"><strong>STATE :</strong></h1>
-                    <p>Maryland</p>
+                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>STATE :</strong></h1>
+                    <!-- <p>Maryland</p> -->
                   </div>
                           <div class="row marginTop5">
-                    <h1 class="FloatLeft FontSize12 HeadTextBlue marginRight5"><strong>COUNTRY :</strong></h1>
-                    <p>US</p>
+                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>COUNTRY :</strong></h1>
+                    <!-- <p>US</p> -->
                   </div>
                           <div class="row marginTop5">
-                    <h1 class="FloatLeft FontSize12 HeadTextBlue marginRight5"><strong>JOB ID NUMBER :</strong></h1>
-                    <p>00000000</p>
+                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>JOB ID NUMBER :</strong></h1>
+                    <!-- <p>00000000</p> -->
                   </div>
                         </div>
               </div>
                       <!---->
                       <div class="ContantMiddleRightBox">
                 <DIV class="row">
-                <h1 class="HeadTextBlue">Manager, Home Care Coordination/Discharge Planning </h1>
+                <h1 class="HeadText" style="color: ${brandingTemplateForm.getColor().substring(4)}">HeadLine of the job </h1>
                 <br />
                 <br />
-                <h3 class="HeadTextBlue">JOB  SUMMARY:</h3>
+                <h3 class="HeadText" style="color: ${brandingTemplateForm.getColor().substring(4)}">JOB  SUMMARY:</h3>
                 <br />
                 <div class="lineHeight16">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                 <br />
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                 <br />
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                 <br />
@@ -134,7 +134,7 @@
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                 <br />
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                <br />
+                <br /> -->
                 
                 </div>
                 </div>

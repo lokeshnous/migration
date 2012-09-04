@@ -247,9 +247,9 @@
 										is XX KB at 72 dpi. Accepted file types include .jpg, .gif,
 										.png and .tif.</span>
 								</div>
-								<div>
-									<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="logoFileData" /></FONT>
+								<div class="clearfix"></div>
+								<div class="FormErrorDisplayText">
+									<form:errors path="logoFileData" />
 								</div>
 							</div>
 						</div>
@@ -260,8 +260,10 @@
 							<div class="input_grp5 ">
 								<div class="floatLeft">
 									<form:input id="color_id" path="color" type="text" readonly="true"
-										class="jb_input2Coverletter InputActiveText" value="HEX #" />
+										class="jb_input2Coverletter InputActiveText" />
 								</div>
+								
+								<!-- value="HEX #" --> 
 								
 								<div class="required2">
 									<!-- <img src="images/Color.png" width="16" height="16" alt="Color"> -->
@@ -288,8 +290,9 @@
 										limit is XX KB at 72 dpi. Accepted file types include .jpg,
 										.gif, .png and .tif.</span>
 								</div>
-								<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="mainImageFileData" /></FONT>
+								<div class="clearfix"></div>
+								<div class="FormErrorDisplayText">
+									<form:errors path="mainImageFileData" />
 								</div>
 							</div>
 						
@@ -400,13 +403,14 @@
 								<!-- <a onclick="preview()" id="preview" class="white" style=" cursor: default;">Preview</a> -->
 								
 								
-								<input type="submit" id="brandingpreview" value="Preview" class="btn_sm white"  name="Preview"/>
-								<input type="submit" value="Save" class="btn_sm white"  name="Save"/>
+								<input type="submit" id="brandingpreview" value="Preview" class="white"  name="Preview"/>
+								<input type="submit" value="Save" class="white"  name="Save"/>
 								<!-- <input type="submit" value="Cancel" class="btn_sm white"  name="Cancel"/> -->
 								 <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/createBrandingTemplate.html"
 								class="btn_sm white">Save</a> --%> 
 								
-								<a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm white">Cancel</a>
+								<%-- <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm white">Cancel</a> --%>
+								<input type="submit" value="Cancel" class="white" name="Cancel"/>
 								
 								
 								</span>
