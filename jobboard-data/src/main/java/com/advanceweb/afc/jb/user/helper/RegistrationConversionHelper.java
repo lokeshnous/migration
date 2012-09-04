@@ -64,23 +64,19 @@ public class RegistrationConversionHelper {
 
 			profile.setAttribValue(attribDTO.getStrLabelValue());
 
-			if (attribDTO.getStrLabelName().equals(
-					MMJBCommonConstants.FIRST_NAME)) {
+			if (MMJBCommonConstants.FIRST_NAME.equals(attribDTO.getStrLabelName())) {
 				entity.setFirstName(attribDTO.getStrLabelValue());
 			}
 
-			if (attribDTO.getStrLabelName().equals(
-					MMJBCommonConstants.MIDDLE_NAME)) {
+			if (MMJBCommonConstants.MIDDLE_NAME.equals(attribDTO.getStrLabelName())) {
 				entity.setMiddleName(attribDTO.getStrLabelValue());
 			}
 
-			if (attribDTO.getStrLabelName().equals(
-					MMJBCommonConstants.LAST_NAME)) {
+			if (MMJBCommonConstants.LAST_NAME.equals(attribDTO.getStrLabelName())) {
 				entity.setLastName(attribDTO.getStrLabelValue());
 			}
 
-			if (attribDTO.getStrLabelName().equals(
-					MMJBCommonConstants.EMAIL_ADDRESS)
+			if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO.getStrLabelName())
 					&& null != attribDTO.getStrLabelValue()
 					&& !attribDTO.getStrLabelValue().isEmpty()) {
 				entity.setEmail(attribDTO.getStrLabelValue());
@@ -272,21 +268,16 @@ public class RegistrationConversionHelper {
 							.getProfileAttribId()));
 					dto.setbRequired((labels.contains(dto.getStrLabelName()) ? 1
 							: 0));
-					if (dto.getStrAttribType().equals(
-							MMJBCommonConstants.DROP_DOWN)
-							|| dto.getStrAttribType().equals(
-									MMJBCommonConstants.CHECK_BOX)) {
+					if (MMJBCommonConstants.DROP_DOWN.equals(dto.getStrAttribType())
+							|| MMJBCommonConstants.CHECK_BOX.equals(dto.getStrAttribType())) {
 						// populating countries
-						if (dto.getStrLabelName().equals(
-								MMJBCommonConstants.LABEL_COUNTRY)) {
+						if (MMJBCommonConstants.LABEL_COUNTRY.equals(dto.getStrLabelName())) {
 							dto.setDropdown(countryList);
 
-						} else if (dto.getStrLabelName().equals(
-								MMJBCommonConstants.LABEL_STATE)) {
+						} else if (MMJBCommonConstants.LABEL_STATE.equals(dto.getStrLabelName())) {
 							dto.setDropdown(stateList); // populating states
 
-						} else if (dto.getStrLabelName().equals(
-								MMJBCommonConstants.LABEL_SUSBSCRIPTION)) {
+						} else if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(dto.getStrLabelName())) {
 							dto.setDropdown(subsList); // populating states
 						} else {
 							List<MerProfileAttribList> dropdownVals = entity
