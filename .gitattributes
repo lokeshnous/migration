@@ -7,7 +7,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddOnDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityContactDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/BaseProfileDTO.java -text
@@ -342,13 +341,11 @@ jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/TransformAgen
 jobboard/src/main/java/com/advanceweb/afc/jb/common/utils/JsonUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddImageForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddOnForm.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AlertForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployeeAccountForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAlertsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerPostJobsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileAttribForm.java -text
