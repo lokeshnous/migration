@@ -46,7 +46,7 @@ import com.advanceweb.afc.jb.search.SearchParamDTO;
 public class SaveSearchController {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("SaveSearchController.class");
+			.getLogger(SaveSearchController.class);
 
 	private String navigationPath;
 
@@ -54,7 +54,7 @@ public class SaveSearchController {
 	private SaveSearchService saveSearchService;
 
 	@Autowired
-	PopulateDropdowns populateDropdownsService;
+	private PopulateDropdowns populateDropdownsService;
 
 	@Value("${saveThisSearchErrMsg}")
 	private String saveThisSearchErrMsg;
@@ -152,7 +152,8 @@ public class SaveSearchController {
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put("SaveSearchForm", new SaveSearchForm());
-				jsonObject.put("LoggedInNavigationPath", "../savedSearches/anonymousSaveThisSearchPopUp");
+				jsonObject.put("LoggedInNavigationPath",
+						"../savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
@@ -223,8 +224,7 @@ public class SaveSearchController {
 		}
 		return jsonObject;
 	}
-	
-	
+
 	/**
 	 * The method is called to close the SaveThisJob popup
 	 * 
