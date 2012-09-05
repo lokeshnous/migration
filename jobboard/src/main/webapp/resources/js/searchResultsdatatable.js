@@ -372,10 +372,32 @@ jQuery(document).ready(function() {
 				 }
 				
 			}
-
 			 
-			 
-
-
+				 function postYourResume() {
+					$.ajax({
+						url : '../jobsearch/jobseekerPostYourResume.html',
+						data : ({
+							userID : "userID"
+							
+						}),
+						success : function(data) {
+							$.each(data, function(key, val) {
+								if (key == "LoggedInNavigationPath") {
+									window.location.href = val;
+								}
+							});
+							$.each(data, function(key, val) {
+								if (key == "NavigationPath") {
+									$.nmManual(val);
+								}
+							});
+						},
+						error : function(data) {
+							alert('Unable to process');
+						},
+						complete : function(data) {
+						}
+					});
+				}
 
 	

@@ -235,12 +235,12 @@ public class JobSearchController {
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
 			@RequestParam String userID, @RequestParam("id") int jobId,
 			@RequestParam("currentUrl") String currentUrl, HttpServletResponse response,
-			Model model1,
+			Model model,
 			@RequestParam("clickType") String clickType, HttpSession session,
 			HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)){
-			clickController.getclickevent(jobId, clickType, request, response, model1);
+			clickController.getclickevent(jobId, clickType, request, response, model);
 		}
 		
 		form.setJobID(jobId);
@@ -622,6 +622,28 @@ public class JobSearchController {
 		return new ModelAndView("jobseekersaveThisJobPopUp");
 	}
 
+	/**
+	 * The method is called to close the SaveThisJob popup
+	 * 
+	 * @param JobSearchViewDetailForm
+	 * @return
+	 */
+	@RequestMapping(value = "/jobseekerPostYourResume")
+	public @ResponseBody
+	JSONObject callPostYourResumePopUp(HttpSession session, Map<String, Object> map) {
+		JSONObject jsonObject = new JSONObject();
+
+		// Check for job seeker login ,open popup if not logged in.
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+			map.put("loginForm", new LoginForm());
+			jsonObject.put("LoggedInNavigationPath", navigationPath
+					+ dothtmlExtention + jobseekerPageExtention);
+			return jsonObject;
+		}
+		jsonObject.put(ajaxNavigationPath,
+				"../jobSeekerResume/createResumePopUp.html?resumeType=createResume");
+		return jsonObject;
+	}
 	/**
 	 * The method is called to navigate job seeker to login
 	 * 
