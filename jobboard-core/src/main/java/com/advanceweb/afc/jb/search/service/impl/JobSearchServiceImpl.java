@@ -115,8 +115,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 */
 	@Override
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
-		JobApplyTypeDTO jobApplyTypeDTO = jobSearchDAO.applyJobDetails(jobId);
-		return jobApplyTypeDTO;
+		return jobSearchDAO.applyJobDetails(jobId);
 	}
 
 }
