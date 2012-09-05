@@ -7,8 +7,24 @@ import java.util.List;
 public class CustomerDTO {
 
 	//refers to internalid in netSuite
-	//private int internalID;
+	private int internalID;
 	
+	public int getInternalID() {
+		return internalID;
+	}
+
+	public void setInternalID(int internalID) {
+		this.internalID = internalID;
+	}
+
+	public List<Item> getItem() {
+		return item;
+	}
+
+	public void setItem(List<Item> item) {
+		this.item = item;
+	}
+
 	private String phone;
 	
 	private String recordType;

@@ -40,13 +40,16 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.utils.JsonUtil;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.netsuite.CustomerDTO;
 import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.webservice.service.impl.NetSuiteService;
 
 /**
  * 
@@ -99,6 +102,9 @@ public class EmployerRegistrationController {
 
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private NetSuiteService netSuiteService;
 
 	private final static String EMPLOYERREG = "employerregistration";
 
@@ -169,6 +175,17 @@ public class EmployerRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createNewProfile(empDTO);
+		
+		//Added for calling WS call to NetSuite
+		CustomerDTO custDTO = new CustomerDTO();
+		//custDTO.setCustomerId(460460);
+		custDTO.setCompanyName(userDTO.getFirstName() + " " + userDTO.getLastName());
+		custDTO.setRecordType("customer");
+		
+		String jsonCustomer = JsonUtil.convertToJson(custDTO);
+		String customerID = netSuiteService.createCustomer(jsonCustomer.toLowerCase());
+		
+		LOGGER.info("customerID=>"+customerID);
 
 		model.addObject("empRegisterForm", empRegForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
