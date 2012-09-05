@@ -1,13 +1,11 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -15,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
-import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 
 /**
@@ -30,9 +27,9 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 @RequestMapping("/empProfile")
 @SessionAttributes("employerProfileManagementForm")
 public class EmployerProfileManagementController {
-
+	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
 	@Autowired
-	ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
@@ -85,65 +82,9 @@ public class EmployerProfileManagementController {
 			}
 			manageFeatureEmployerProfile.saveEmployerProfile(companyProfileDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return model;
 	}
-
-	/**
-	 * Cancel Manage Featured Employer Profile
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/cancelemployerprofile", method = RequestMethod.GET)
-	public ModelAndView cancelemployerprofile(Map model) {
-
-		return new ModelAndView("manageFeatureEmpPro");
-	}
-	
-	
-	
-	/**
-	 * to get Saved Job
-	 * 
-	 * @param model
-	 * @return
-	 */
-
-	@RequestMapping(value = "/viewEmployerDetails", method = RequestMethod.GET)
-	public ModelAndView getSavedJob(Map model) {
-		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile.getEmployerDetails(109);
-
-		return new ModelAndView("manageFeatureEmpPro");
-	}
-	
-	
-	
-	/**
-	 * This method is called to view/modify job seeker profile settings
-	 * 
-	 * @param jobSeekerRegistrationForm
-	 * @param result
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value="/editAccountSettings",method = RequestMethod.GET)
-	public String editAccountSettings(
-			BindingResult result,Map model) {		
-		try {			
-			
-			List<EmployerProfileDTO> listEmpProfile = manageFeatureEmployerProfile.getEmployerAccountDetails(2);
-			
-//			model.put("jobSeekerRegistrationForm", jsRegistrationForm);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "registrationsuccess";
-	}
-	
-	
-
 }
