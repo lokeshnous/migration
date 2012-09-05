@@ -675,14 +675,15 @@ public class JobSearchController {
 
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
-	public String sendToFriendPost(
+	public ModelAndView sendToFriendPost(
 			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
 			BindingResult result, Model model, HttpServletRequest request,
 			HttpSession session) {
-
+		ModelAndView modelData = new ModelAndView();
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
-
+		StringBuffer mesg=new StringBuffer();
+		String bodyMesg="";
 		try {
 			if (sendtofriendmail.getEmail().length() > 0
 					&& validateEmailPattern(sendtofriendmail.getEmail())) {
@@ -714,23 +715,37 @@ public class JobSearchController {
 								.getAttribute(MMJBCommonConstants.USER_NAME);
 						jobseekerSuggestFrdSub = jobseekerSuggestFrdSub
 								.replace("?Jobseekername", jobseekerName);
+						modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
 					} else {
-						jobseekerName = sendtofriendmail.getEmail().trim();
+						jobseekerName = "XXXX-XXX";
 						jobseekerSuggestFrdSub = jobseekerSuggestFrdSub
 								.replace("?Jobseekername", jobseekerName);
+						modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
 					}
 					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
 					SearchedJobDTO searchedJobDTO = jobSearchService
 							.viewJobDetails(sendtofriendmail.getJobId());
-					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
-							"?Jobtitle", searchedJobDTO.getJobTitle());
-					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
-							"?Companyname", searchedJobDTO.getCompanyName());
-					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
-							"?Jobseekername", jobseekerName);
-					jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
-							"?joburl", sendtofriendmail.getJoburl());
-					jobSeekerEmailDTO.setBody(jobseekerSuggestFrdBody);
+					/*jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
+					"?Jobtitle", searchedJobDTO.getJobTitle());*/
+					/*jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
+					"?Companyname", searchedJobDTO.getCompanyName());*/
+					
+					
+					String Subject="A job opportunity sent to you by "+jobseekerName;
+					String bodyHead1="Here’s a job opportunity that "+jobseekerName+" thought might interest you.";
+					String bodyHead2=sendtofriendmail.getMessage();
+					String jobTitle="Job title:";
+					String companyName="Company name:";
+					String jobUrl=sendtofriendmail.getJoburl();
+					String joburl="<a href=?"+jobUrl+"><b>View this job now</b></a> to learn more and submit your application.";
+					mesg=mesg.append("<TABLE><TR><TD>"+Subject+ "</TD></TR>\n");				
+					mesg=mesg.append("<TR><TD>" + bodyHead1+"\n"+bodyHead2+"</TD></TR>\n");
+					mesg=mesg.append("<TR><TD><B>[" + jobTitle+ "]</B>" + searchedJobDTO.getJobTitle() +"</TD></TR>\n");					
+					mesg=mesg.append("<TR><TD><B>[" + companyName+ "]</B>"+ searchedJobDTO.getCompanyName() +"</TD></TR>\n");
+					mesg=mesg.append("<TR><TD>" + joburl + "</TD></TR>\n\n\n");
+					mesg=mesg.append("<TR><TD>" + jobUrl + "</TD></TR></TABLE>");					
+					bodyMesg=mesg.toString();
+					jobSeekerEmailDTO.setBody(bodyMesg);
 					jobSeekerEmailDTO.setHtmlFormat(true);
 					emailService.sendEmail(jobSeekerEmailDTO);
 				} catch (Exception e) {
@@ -750,7 +765,11 @@ public class JobSearchController {
 			status = Boolean.FALSE;
 			throw new MailParseException(e);
 		}
-		return "jobboardadvancedsearch";
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			return modelData;
+		}else{
+			return modelData;
+		}
 	}
 	
 	/**
