@@ -41,6 +41,13 @@ public class AdmOrderItem implements Serializable {
 
 	@Column(name = "price")
 	private float price;
+	
+	@Column(name = "order_status")
+	private String orderStatus;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "order_id")
+	private AdmOrderHeader admOrderHeader;
 
 	/**
 	 * @return the orderItemId
@@ -141,23 +148,17 @@ public class AdmOrderItem implements Serializable {
 	}
 
 	/**
-	 * @return the orderId
+	 * @return the admOrderHeader
 	 */
-	public AdmOrderHeader getOrderId() {
-		return orderId;
+	public AdmOrderHeader getAdmOrderHeader() {
+		return admOrderHeader;
 	}
 
 	/**
-	 * @param orderId the orderId to set
+	 * @param admOrderHeader the admOrderHeader to set
 	 */
-	public void setOrderId(AdmOrderHeader orderId) {
-		this.orderId = orderId;
+	public void setAdmOrderHeader(AdmOrderHeader admOrderHeader) {
+		this.admOrderHeader = admOrderHeader;
 	}
 
-	@Column(name = "order_status")
-	private String orderStatus;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "order_id")
-	private AdmOrderHeader orderId;
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,20 +48,20 @@ public class AdmOrderHeader implements Serializable {
 	@Column(name = "status")
 	private String status;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "facility_id")
 	private AdmFacility admFacility;
 
 	// bi-directional many-to-one association to AdmOrderPayment
-	@OneToMany(mappedBy = ADM_ORDER_HEADER)
+	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private List<AdmOrderPayment> admOrderPayment;
 
 	// bi-directional many-to-one association to AdmOrderPayment
-	@OneToMany(mappedBy = ADM_ORDER_HEADER)
+	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private List<AdmOrderItem> admOrderItem;
 
 	// bi-directional many-to-one association to AdmOrderPayment
-	@OneToMany(mappedBy = ADM_ORDER_HEADER)
+	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private List<AdmOrderAddress> admOrderAddress;
 
 	/**

@@ -66,9 +66,9 @@ public class AdmOrderAddress implements Serializable{
 	@Column(name="email")
 	private String email;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="order_id")
-	private AdmOrderHeader orderId;
+	private AdmOrderHeader admOrderHeader;
 
 	/**
 	 * @return the orderAddressId
@@ -267,16 +267,18 @@ public class AdmOrderAddress implements Serializable{
 	}
 
 	/**
-	 * @return the orderId
+	 * @return the admOrderHeader
 	 */
-	public AdmOrderHeader getOrderId() {
-		return orderId;
+	public AdmOrderHeader getAdmOrderHeader() {
+		return admOrderHeader;
 	}
 
 	/**
-	 * @param orderId the orderId to set
+	 * @param admOrderHeader the admOrderHeader to set
 	 */
-	public void setOrderId(AdmOrderHeader orderId) {
-		this.orderId = orderId;
+	public void setAdmOrderHeader(AdmOrderHeader admOrderHeader) {
+		this.admOrderHeader = admOrderHeader;
 	}
+
+	
 }

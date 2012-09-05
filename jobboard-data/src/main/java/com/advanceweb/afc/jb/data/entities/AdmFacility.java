@@ -134,7 +134,7 @@ public class AdmFacility implements Serializable {
 	private List<JpTemplate> jpTemplates;
 	
 	//bi-directional many-to-one association to AdmOrderHeader
-	@OneToMany(mappedBy=ADM_FACILITY)
+	@OneToMany(mappedBy=ADM_FACILITY, cascade = CascadeType.ALL)
 	private List<AdmOrderHeader> admOrderHeader;
 
 	public Integer getFacilityId() {
