@@ -14,49 +14,49 @@ public interface ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public UserDTO createNewProfile(ProfileDTO profileDTO);
+	UserDTO createNewProfile(ProfileDTO profileDTO);
 
 	/**
 	 * 
 	 * @param profileId
 	 */
-	public boolean deleteProfile(int profileId);
+	boolean deleteProfile(int profileId);
 
 	/**
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean modifyProfile(ProfileDTO profileDTO);
+	boolean modifyProfile(ProfileDTO profileDTO);
 
 	/**
 	 * 
 	 * @param profileId
 	 */
-	public ProfileDTO viewProfile(int profileId);
+	ProfileDTO viewProfile(int profileId);
 
 	/**
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean changePassword(ProfileDTO profileDTO);
+	boolean changePassword(ProfileDTO profileDTO);
 
 	/**
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean validatePassword(ProfileDTO profileDTO);
+	boolean validatePassword(ProfileDTO profileDTO);
 
 	/**
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean validateEmail(String email);
+	boolean validateEmail(String email);
 
 	/**
 	 * 
 	 * @param profileDTO
 	 */
-	public ProfileDTO getProfileAttributes();
+	ProfileDTO getProfileAttributes();
 	
 	/**
 	 * This method will be called after the successful login by the user, 
@@ -65,6 +65,6 @@ public interface ProfileRegistration {
 	 * @param jobseekerId
 	 * @return
 	 */
-	public boolean validateProfileAttributes(int jobseekerId);
+	boolean validateProfileAttributes(int jobseekerId);
 
 }
