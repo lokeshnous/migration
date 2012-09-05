@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -40,18 +41,16 @@ import com.mysql.jdbc.StringUtils;
 @Repository("jobSeekerRegistrationDAO")
 public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
-	
+	private static final Logger LOGGER = Logger.getLogger(JobSeekerRegistrationDAOImpl.class);
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
-	
 	private HibernateTemplate hibernateTemplate;
 	private HibernateTemplate hibernateTemplateCareers;
-	
-	private final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
-	private final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
-	private final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
-	private final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
-	private final String FIND_JOBSEEKER_PROFILE="from MerUserProfile prof where prof.id.userId=?";
+	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
+	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
+	private static final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
+	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
+	private static final String FIND_JOBSEEKER_PROFILE="from MerUserProfile prof where prof.id.userId=?";
 	
 	@Autowired
 	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker, SessionFactory sessionFactory) {
@@ -87,21 +86,21 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			}
 			
 			List<AdmRole> roleList = hibernateTemplateCareers.find(FIND_JOBSEEKER_ROLE_ID,"jobseeker");
-			if(null != roleList && roleList.size()>0){
+			if(null != roleList && !roleList.isEmpty()){
 				AdmRole role = roleList.get(0);
 				AdmUserRole userRole = new AdmUserRole();
 				userRole.setCreateUserId(MMJBCommonConstants.ZERO_INT);
-				AdmUserRolePK pk = new AdmUserRolePK();
-					pk.setUserId(merUser.getUserId());
-					pk.setRoleId(role.getRoleId());
-				userRole.setRolePK(pk);
+				AdmUserRolePK admUserRolePK = new AdmUserRolePK();
+				admUserRolePK.setUserId(merUser.getUserId());
+				admUserRolePK.setRoleId(role.getRoleId());
+				userRole.setRolePK(admUserRolePK);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
 			
 			return registrationConversionHelper.transformMerUserToUserDTO(merUser);
 			
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -113,11 +112,6 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	@Override
 	public boolean deleteJobSeeker(int jobSeekerId) {
 		return false;
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
 	}
 
 	/**
@@ -137,9 +131,8 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				jsRegistrationDTO = registrationConversionHelper.transformMerUserProfilesToDTO(merUser, jsDTO, profiles);
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
-		
 		return jsRegistrationDTO;
 	}
 
@@ -165,7 +158,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				}
 				
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return true;
 	}
@@ -183,7 +176,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				hibernateTemplate.saveOrUpdate(user);				
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return true;
@@ -199,7 +192,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				}
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return false;
@@ -210,13 +203,13 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
 				List<MerUser> usersList = hibernateTemplate.find(VERIFY_EMAIL,email);
-				if(null != usersList && usersList.size()>0){
+				if(null != usersList && !usersList.isEmpty()){
 					MerUser user = usersList.get(0);
 					return (null != user ? true : false);
 				}
 			}
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return false;
 	}
@@ -232,7 +225,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			  dto = registrationConversionHelper.transformProfileAttrib(listProfAttrib, countryList, stateList, subsList);
 			
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return dto;
@@ -249,7 +242,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			return registrationConversionHelper.transformMerUtilityToDropDownDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -266,7 +259,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 					.findByCriteria(criteria);
 			return registrationConversionHelper.transformMerUtilityToDropDownDTO(merUtilityList);
 		} catch (HibernateException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -281,7 +274,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			List<AdmSubscription> subsList = hibernateTemplateCareers.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
 			return registrationConversionHelper.transformAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return null;
@@ -298,7 +291,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				return true;
 			}
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return false;
