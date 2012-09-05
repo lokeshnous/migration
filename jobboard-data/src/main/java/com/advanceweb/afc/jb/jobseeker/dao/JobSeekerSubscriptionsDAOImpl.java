@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -24,7 +25,9 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHe
 public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO {
 	
 	private static final String SELECTED_CURRENT_SUBS="from AdmUserSubscription sub where sub.id.userId=?";
-	
+	private static final Logger LOGGER = Logger.getLogger(JobSeekerSubscriptionsDAOImpl.class);
+
+
 	
 	private HibernateTemplate hibernateTemplateCareers;
 	
@@ -55,8 +58,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 				hibernateTemplateCareers.saveOrUpdateAll(userAlerts);
 			}		
 		} catch (DataAccessException e) {
-
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return true;
@@ -75,8 +77,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			List<AdmUserSubscription> listSubs= hibernateTemplateCareers.find(SELECTED_CURRENT_SUBS,userId);
 			listSubscriptiosns = jsSubscriptionHelper.transformMerUserAlertsTojsSubsDTO(listSubs);
 		} catch (DataAccessException e) {
-
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return listSubscriptiosns;
