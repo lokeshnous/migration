@@ -29,7 +29,6 @@ import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 
-
 /**
  * 
  * @author bharatiu
@@ -41,13 +40,13 @@ import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 @Controller
 @RequestMapping("/agency")
 public class AgencyDashBoardController {
-	
+
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
-	
+
 	private static final String _FORM_VIEW = "agencyDashboard";
-	
-	@Autowired	
+
+	@Autowired
 	private EmloyerRegistartionService emloyerRegistartionService;
 	@Autowired
 	private TransformEmployerRegistration transformEmployerRegistration;
@@ -59,14 +58,12 @@ public class AgencyDashBoardController {
 	private TransformPaymentMethod transformPaymentMethod;
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
-	
+
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard() {
 		return new ModelAndView(_FORM_VIEW);
 	}
-	
-	
-	
+
 	/**
 	 * This method is called to Account Setting update page
 	 * 
@@ -80,8 +77,9 @@ public class AgencyDashBoardController {
 			EmployeeAccountForm employeeAccountForm, BindingResult result,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int userId = (Integer) session.getAttribute("userId");
+
 		try {
+			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = emloyerRegistartionService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 			if (listProfAttribForms.getCount() > 0) {
@@ -97,17 +95,17 @@ public class AgencyDashBoardController {
 					model.setViewName("agencyAccountSetting");
 					return model;
 				}
-				emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid, userId,
-						MMJBCommonConstants.PRIMARY);
+				emloyerRegistartionService.editEmployeeAccount(dto,
+						admfacilityid, userId, MMJBCommonConstants.PRIMARY);
 			} else {
-				model.setViewName("_FORM_VIEW");
+				model.setViewName(_FORM_VIEW);
 				return model;
 			}
 
-			model.setViewName("_FORM_VIEW");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		} catch (Exception e) {
-			model.setViewName("_FORM_VIEW");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		}
 	}
@@ -125,19 +123,21 @@ public class AgencyDashBoardController {
 			EmployeeAccountForm employeeBillingForm, BindingResult result,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int userId = (Integer) session.getAttribute("userId");
-		int facilityId = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		AdmFacilityContactDTO listProfAttribForms = emloyerRegistartionService
-				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-		// int count=0;
 		try {
-			if ((listProfAttribForms.getCount() > 0)) {
+			int userId = (Integer) session.getAttribute("userId");
+			// int facilityId =368;
+			int facilityId = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			AdmFacilityContactDTO listProfAttribForms = emloyerRegistartionService
+					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
+			// int count=0;
+
+			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmployerRegistration
 						.transformBillingProfileFormToDto(employeeBillingForm);
-				emloyerRegistartionService.editEmployeeAccount(dto, admfacilityid, userId,
-						MMJBCommonConstants.BILLING);
+				emloyerRegistartionService.editEmployeeAccount(dto,
+						admfacilityid, userId, MMJBCommonConstants.BILLING);
 
 			} else {
 
@@ -157,10 +157,10 @@ public class AgencyDashBoardController {
 				// return model;
 			}
 
-			model.setViewName("_FORM_VIEW");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		} catch (Exception e) {
-			model.setViewName("_FORM_VIEW");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		}
 
