@@ -54,10 +54,10 @@ public class JobSeekerSubscriptionsConversionHelper {
 			for(JobSeekerSubscriptionsDTO dto : listSubsDTO){
 				if(!validateAdmUserSubscriptions(dto, listSubsAlerts)){
 					AdmUserSubscription entity = new AdmUserSubscription();
-						AdmUserSubscriptionPK pk = new AdmUserSubscriptionPK();
-						pk.setSubscriptionId(dto.getSubscriptionId());
-						pk.setUserId(dto.getUserId());
-					entity.setSubscriptionPK(pk);
+						AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
+						subscription.setSubscriptionId(dto.getSubscriptionId());
+						subscription.setUserId(dto.getUserId());
+					entity.setSubscriptionPK(subscription);
 					entity.setActive(dto.getActive());
 					subsEntityList.add(entity);
 				}
