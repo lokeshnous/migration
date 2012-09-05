@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 			http://www.springframework.org/schema/beans/spring-beans.xsd 
 			http://www.springframework.org/schema/util 
@@ -11,7 +10,22 @@
 	<!-- For SOLR search -->
 	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 
-	<!--  Job Search Index -->
+	<!-- Search parameter builder. Initialized with search name and the order 
+		of the place-holder -->
+	<bean id="searchParamBuilder"
+		class="com.advanceweb.afc.jb.search.engine.solr.SOLRSearchParamBuilder">
+		<constructor-arg>
+			<map>
+				<!-- The values should be provided with no space between field names -->
+				<entry key="KEYWORD"
+					value="keywords,rows,start,sessionid,searchName,search_seq" />
+				<entry key="LOCATION"
+					value="position,radius,keywords,rows,start,sessionid,searchName,search_seq" />
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<!-- Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 		<property name="name" value="jobPost" />
 		<property name="group" value="careers" />
@@ -25,7 +39,7 @@
 		</constructor-arg>
 	</bean>
 
-	<!--  Job Search Index -->
+	<!-- Job Search Index -->
 	<bean id="resumeSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 		<property name="name" value="resumeBuilder" />
 		<property name="group" value="careers" />
@@ -39,7 +53,7 @@
 		</constructor-arg>
 	</bean>
 
-	<!-- Send Mail Configuration-->
+	<!-- Send Mail Configuration -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${mail.host}" />
 		<property name="port" value="${mail.port}" />
@@ -53,6 +67,6 @@
 			</props>
 		</property>
 	</bean>
-	
+
 
 </beans>

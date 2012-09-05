@@ -1,8 +1,10 @@
 package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,22 +16,37 @@ import com.advanceweb.afc.jb.search.SearchParamBuilder;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
-@Component("jobSearchParamBuilder")
+//@Component("jobSearchParamBuilder")
 public class SOLRSearchParamBuilder implements SearchParamBuilder {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(SOLRSearchParamBuilder.class);
 
-	private static final String[] KEYWORD_FIELDS = { "keywords", "rows",
-			"start", "sessionid", "searchName", "search_seq" };
-	private static final String[] LOCATION_FIELDS = { "position", "radius",
-			"keywords", "rows", "start", "sessionid", "searchName",
-			"search_seq" };
-
-	private String[] fields;
+	private final Map<String, String[]> fieldMap;
 
 	private static final String REGEX_PATTERN = ":b\\d\\d";
 	private static final Pattern PATTERN = Pattern.compile(REGEX_PATTERN);
+
+	/**
+	 * Constructs the parameter builder with the field values provided in the
+	 * map. The key in the map is used to identify the name of the search. The
+	 * values passed are comma separated names of the fields. This method will
+	 * split the values using comma (",") as a delimiter and populate the
+	 * fieldMap. For better efficiency, the values are not trimmed. So care
+	 * should be taken not to leave spaces around the comma
+	 * 
+	 * @param fieldValues
+	 *            The map containing the place holder names with search name as
+	 *            key and the field names provided as a string with comma
+	 *            separated values
+	 */
+	public SOLRSearchParamBuilder(Map<String, String> fieldValues) {
+		LOGGER.info("Constructing " + getClass().getName());
+		fieldMap = new LinkedHashMap<String, String[]>();
+		for (Map.Entry<String, String> entry : fieldValues.entrySet()) {
+			fieldMap.put(entry.getKey(), entry.getValue().split(","));
+		}
+	}
 
 	/*
 	 * Method buildParams is used to replace the positional parameters in a
@@ -43,15 +60,13 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 
 		String searchName = inputParams.get(SearchParamDTO.SEARCH_NAME);
 
-		if (MMJBCommonConstants.LOCATION_SEARCH.equalsIgnoreCase(searchName)) {
-			fields = LOCATION_FIELDS;
-			// return createParamsForLocationSearch(queryDTO, paramMap, rows,
-			// start);
-		} else {
-			fields = KEYWORD_FIELDS;
-			// return createParamsForKeywordSearch(queryDTO, paramMap, rows,
-			// start);
+		// Make sure the search name is known
+		if (!fieldMap.containsKey(searchName)) {
+			throw new JobBoardServiceException("Unknown Search Name "
+					+ searchName);
 		}
+
+		String[] fields = fieldMap.get(searchName);
 
 		// Iterate through the search parameters and replace the placehoders
 		List<SearchParamDTO> result = new ArrayList<SearchParamDTO>();
@@ -62,7 +77,7 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 			SearchParamDTO resultParam = new SearchParamDTO();
 			resultParam.setParameterName(param.getParameterName());
 			resultParam.setParameterValue(replacePlaceholders(
-					param.getParameterValue(), inputParams));
+					param.getParameterValue(), fields, inputParams));
 			resultParam.setSearchParamId(param.getSearchParamId());
 			resultParam.setSeq(param.getSeq());
 
@@ -79,12 +94,16 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 	 * 
 	 * @param value
 	 *            - The string where the placeholders needs to be replaced
+	 * @param fields
+	 *            The Array of fields to be replaced based on the positional
+	 *            parameters
 	 * @param inputs
 	 *            - The user input to be used for replacing the placeholders
 	 * @return - A string with the positional parameters replaced with
 	 *         appropriate user input values
 	 */
-	private String replacePlaceholders(String value, Map<String, String> inputs) {
+	private String replacePlaceholders(String value, String[] fields,
+			Map<String, String> inputs) {
 
 		Matcher matcher = PATTERN.matcher(value);
 		List<String> patterns = new ArrayList<String>();
