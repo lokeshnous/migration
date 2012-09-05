@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +11,14 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
+	function closePopup() {
+		parent.window.location.reload();
+	}
+	$(document).keyup(function(event) {
+		if (event.keyCode == 27) {
+			parent.window.location.reload();
+		}
+	});
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
@@ -17,7 +31,7 @@
 		<div class="popupHeader marginBottom0">
 			<h2>SET ALERTS</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" alt=""></a>
+				height="19" onclick="closePopup();" alt=""></a>
 		</div>
 		<div class="popUpContainerWrapper">
 			<form action="" method="">
@@ -89,8 +103,10 @@
 					</div>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<span class="floatLeft marginTop10"><a href=""
-						class="btn_sm orange">Save</a> <a href="" class="btn_sm orange">Cancel</a></span>
+					<span class="floatLeft marginTop10"> <input type="button"
+						id="saveData" class="btn_sm orange value=" Save" /> <input
+						type="button" onclick="closePopup();" class="btn_sm orange value=" Cancel" />
+						<!-- <a href="" class="btn_sm orange">Cancel</a> --></span>
 				</div>
 			</form>
 		</div>

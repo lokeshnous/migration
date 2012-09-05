@@ -12,5 +12,21 @@ import com.advanceweb.afc.jb.common.UserAlertDTO;
  */
 
 public interface UserAlertDAO {
+
+	/**
+	 * The method is called to view the alerts for employer.
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	List<UserAlertDTO> viewalerts(int userId);
+
+	/**
+	 * This method is called to delete the alerts
+	 * 
+	 * @param userId
+	 * @param alertId
+	 * @return
+	 */
+	boolean deleteAlert(int userId, int alertId);
 }

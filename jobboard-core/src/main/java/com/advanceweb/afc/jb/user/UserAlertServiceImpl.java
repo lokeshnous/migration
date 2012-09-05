@@ -21,7 +21,24 @@ public class UserAlertServiceImpl implements UserAlertService {
 	@Autowired
 	private UserAlertDAO alertDAO;
 
+	/**
+	 * The method is called to view the alerts for employer.
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public List<UserAlertDTO> viewalerts(int userId) {
 		return alertDAO.viewalerts(userId);
+	}
+
+	/**
+	 * This method is called to delete the alerts
+	 * 
+	 * @param userId
+	 * @param alertId
+	 * @return
+	 */
+	public boolean deleteAlert(int userId, int alertId) {
+		return alertDAO.deleteAlert(userId, alertId);
 	}
 }

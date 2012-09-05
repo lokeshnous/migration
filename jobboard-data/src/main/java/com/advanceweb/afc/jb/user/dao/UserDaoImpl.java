@@ -19,7 +19,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
-import com.advanceweb.afc.jb.employer.helper.EmpMetricsConversionHelper;
+import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 
 @Transactional
 @Repository("userDAO")
@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
 	private HibernateTemplate hibernateTemplate;
 
 	@Autowired
-	private EmpMetricsConversionHelper empMetricsConversionHelper;
+	private EmpConversionHelper conversionHelper;
 
 	@Autowired
 	public void setHibernateTemplate(
@@ -129,8 +129,7 @@ public class UserDaoImpl implements UserDao {
 						+ "jb.jobId = js.jobId and "
 						+ "jb.admFacility.facilityId	= " + facilityId);
 
-		return empMetricsConversionHelper
-				.transformJpJobStatToMetricsDTO(jobStatsList);
+		return conversionHelper.transformJpJobStatToMetricsDTO(jobStatsList);
 	}
 
 	/**

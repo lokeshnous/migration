@@ -2,15 +2,22 @@ package com.advanceweb.afc.jb.user.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.UserAlertDTO;
@@ -35,8 +42,31 @@ public class UserAlertController {
 	@Autowired
 	private UserAlertService alertService;
 
+	@Value("${dataDeleteSuccess}")
+	private String dataDeleteSuccess;
+
+	@Value("${dataDeleteFailure}")
+	private String dataDeleteFailure;
+
 	/**
-	 * The method is called to view the alerts.
+	 * The method is called to set the alerts for employer.
+	 * 
+	 * @param alertForm
+	 * @param result
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/employer/setAlerts", method = RequestMethod.GET)
+	public ModelAndView setAlerts(
+			@ModelAttribute("alertForm") UserAlertForm alertForm,
+			BindingResult result, HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("setAlertPopup");
+		return model;
+	}
+
+	/**
+	 * The method is called to view the alerts for employer.
 	 * 
 	 * @param model
 	 * @return
@@ -48,20 +78,38 @@ public class UserAlertController {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
-		List<UserAlertDTO> alertDTOs = alertService.viewalerts(userId);
-		// model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
+		List<UserAlertDTO> alertList = alertService.viewalerts(userId);
+		model.addObject("alertList", alertList);
 		model.addObject(alertForm);
 		model.setViewName("viewAlertPopup");
 		return model;
 	}
 
-	@RequestMapping(value = "/employer/setAlerts", method = RequestMethod.GET)
-	public ModelAndView setAlerts(
-			@ModelAttribute("alertForm") UserAlertForm alertForm,
-			BindingResult result, HttpSession session) {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("setAlertPopup");
-		return model;
+	/**
+	 * This method is called to delete a Saved Job Search
+	 * 
+	 * @param form
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value = "/employer/deleteAlert", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject deleteResume(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			@RequestParam("alertId") int alertId) {
+
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		boolean deleteStatus = alertService.deleteAlert(userId, alertId);
+		JSONObject deleteStatusJson = new JSONObject();
+		if (deleteStatus) {
+			deleteStatusJson.put("success", dataDeleteSuccess);
+			return deleteStatusJson;
+		} else {
+			deleteStatusJson.put("failed", dataDeleteFailure);
+			return deleteStatusJson;
+		}
 	}
 
 }

@@ -291,7 +291,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageAccessPermi
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/BrandTemplateConversionHelper.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmpMetricsConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmpConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobPostConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAO.java -text

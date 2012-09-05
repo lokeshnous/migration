@@ -11,24 +11,25 @@ import java.util.Date;
  */
 public class UserAlertDTO {
 
-	private String alertTYpe;
+	private int alertId;
+	private String alertType;
 	private String jobOwner;
-	private Date setDate;
+	private String setDate;
 	private int userId;
 
 	/**
 	 * @return the alertTYpe
 	 */
-	public String getAlertTYpe() {
-		return alertTYpe;
+	public String getAlertType() {
+		return alertType;
 	}
 
 	/**
 	 * @param alertTYpe
 	 *            the alertTYpe to set
 	 */
-	public void setAlertTYpe(String alertTYpe) {
-		this.alertTYpe = alertTYpe;
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
 	}
 
 	/**
@@ -47,21 +48,6 @@ public class UserAlertDTO {
 	}
 
 	/**
-	 * @return the setDate
-	 */
-	public Date getSetDate() {
-		return setDate;
-	}
-
-	/**
-	 * @param setDate
-	 *            the setDate to set
-	 */
-	public void setSetDate(Date setDate) {
-		this.setDate = setDate;
-	}
-
-	/**
 	 * @return the userId
 	 */
 	public int getUserId() {
@@ -74,6 +60,35 @@ public class UserAlertDTO {
 	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	/**
+	 * @return the setDate
+	 */
+	public String getSetDate() {
+		return setDate;
+	}
+
+	/**
+	 * @param setDate
+	 *            the setDate to set
+	 */
+	public void setSetDate(String setDate) {
+		this.setDate = setDate;
+	}
+
+	/**
+	 * @return the alertId
+	 */
+	public int getAlertId() {
+		return alertId;
+	}
+
+	/**
+	 * @param alertId the alertId to set
+	 */
+	public void setAlertId(int alertId) {
+		this.alertId = alertId;
 	}
 
 }
