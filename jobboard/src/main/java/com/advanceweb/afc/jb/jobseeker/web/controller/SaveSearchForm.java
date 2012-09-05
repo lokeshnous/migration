@@ -22,7 +22,7 @@ public class SaveSearchForm {
 	private String modifyDate;
 	private Date deletedDate;
 	private String notifyMe;
-	List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
+	private List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
 	private String keywords;
 
 	/**
