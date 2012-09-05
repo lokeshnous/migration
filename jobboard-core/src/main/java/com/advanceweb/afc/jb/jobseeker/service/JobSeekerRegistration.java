@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -7,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -26,10 +27,8 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	@Autowired
 	public JobSeekerRegistrationDAO jobSeekerRegistrationDAO;
 	public ResumeDTO resumeDTO;
+	private static final Logger LOGGER = Logger.getLogger(JobSeekerRegistration.class);
 
-	public JobSeekerRegistration() {
-
-	}
 
 	/**
 	 * This method is called to save job seeker registration
@@ -44,7 +43,7 @@ public class JobSeekerRegistration implements ProfileRegistration {
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
 			return jobSeekerRegistrationDAO.createNewJobSeeker(jobSeekerRegistrationDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return null;
 	}
@@ -56,11 +55,6 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	@Override
 	public boolean deleteProfile(int profileId) {
 		return false;
-	}
-
-	@Override
-	public void finalize() throws Throwable {
-
 	}
 
 	/**
