@@ -10,14 +10,12 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.FacetField.Count;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
-import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchFacetDTO;
 import com.advanceweb.afc.jb.search.SearchIndex;
 import com.advanceweb.afc.jb.search.SearchParamBuilder;
