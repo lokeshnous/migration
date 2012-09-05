@@ -84,12 +84,20 @@ public class LoginServiceImpl implements LoginService {
 		return userDAO.getJobPostTotal(facilityId);
 	}
 
+	/**
+	 * This method is used to get the total count of employer
+	 * 
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
 	public long getEmployerCount() throws JobBoardServiceException {
 		long returnVal = 0;
-		try{
+		try {
 			returnVal = userDAO.getEmployerCount();
-		}catch(JobBoardDataException jde){
-			throw new JobBoardServiceException("Error occured while getting the Result from Database"+jde);
+		} catch (JobBoardDataException jde) {
+			throw new JobBoardServiceException(
+					"Error occured while getting the Result from Database"
+							+ jde);
 		}
 		return returnVal;
 	}

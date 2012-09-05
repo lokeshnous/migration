@@ -3,8 +3,8 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
@@ -28,6 +28,12 @@ public interface UserDao {
 	 * @return metricsDTO
 	 */
 	List<MetricsDTO> getJobPostTotal(int facilityId);
-	
-	long getEmployerCount() throws  JobBoardDataException;
+
+	/**
+	 * This method is used to get the total count of employer
+	 * 
+	 * @return
+	 * @throws JobBoardDataException
+	 */
+	long getEmployerCount() throws JobBoardDataException;
 }

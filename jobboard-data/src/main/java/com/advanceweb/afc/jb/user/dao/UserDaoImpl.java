@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -70,7 +70,8 @@ public class UserDaoImpl implements UserDao {
 
 			List<AdmUserFacility> userFacilityList = hibernateTemplate
 					.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
-							role.getRolePK().getUserId(), role.getRolePK().getRoleId());
+							role.getRolePK().getUserId(), role.getRolePK()
+									.getRoleId());
 
 			for (AdmUserFacility facility : userFacilityList) {
 				UserRoleDTO dto = new UserRoleDTO();
@@ -132,6 +133,12 @@ public class UserDaoImpl implements UserDao {
 				.transformJpJobStatToMetricsDTO(jobStatsList);
 	}
 
+	/**
+	 * This method is used to get the total count of employer
+	 * 
+	 * @return
+	 * @throws JobBoardDataException
+	 */
 	public long getEmployerCount() throws JobBoardDataException {
 		long count = 0;
 		try {

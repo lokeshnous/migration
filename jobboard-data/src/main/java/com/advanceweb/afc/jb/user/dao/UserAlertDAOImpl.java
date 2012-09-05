@@ -31,6 +31,7 @@ public class UserAlertDAOImpl implements UserAlertDAO{
 	}
 
 	public List<UserAlertDTO> viewalerts(int userId) {
+		
 
 		return null;
 	}

@@ -47,13 +47,20 @@ public interface LoginService {
 	EmployerInfoDTO facilityDetails(int userId);
 
 	List<UserRoleDTO> getUserRole(int userId);
-	
+
 	/**
 	 * This method is get the metrics details for logged in employer
+	 * 
 	 * @param facilityId
 	 * @return
 	 */
 	List<MetricsDTO> getJobPostTotal(int facilityId);
-	
+
+	/**
+	 * This method is used to get the total count of employer
+	 * 
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
 	long getEmployerCount() throws JobBoardServiceException;
 }
