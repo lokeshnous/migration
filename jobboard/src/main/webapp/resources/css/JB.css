@@ -1558,6 +1558,12 @@ input[type="submit"]:hover,input[type="button"]:hover {
 	border-color: #D87E00;
 }
 
+input.white:hover,input.white:hover {
+	background: -moz-linear-gradient(center top, #F5F5F5 65%, #c5ccd3 100%)
+		repeat scroll 0 0 transparent;
+	border-color: #D87E00;
+}
+
 input.textBox2 {
 	width: 220px !important;
 }
@@ -3365,45 +3371,16 @@ a.btn_smB,.btn_smC {
 	text-decoration: none !important;
 	color: #52a4dc;
 }
-
-.Blue {
+.ColorButton {
 	color: #fff; /* Blue */
-	border-color: #539ccf;
-	background: #4780ab; /* Old browsers */
-	background: -moz-linear-gradient(top, #57a1d2 65%, #4780ab 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(65%, #57a1d2),
-		color-stop(100%, #4780ab) ); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #57a1d2 65%, #4780ab 100%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #57a1d2 65%, #4780ab 100%);
-	/* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #57a1d2 65%, #4780ab 100%);
-	/* IE10+ */
-	background: linear-gradient(top, #57a1d2 65%, #4780ab 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#57a1d2',
-		endColorstr='#4780ab', GradientType=0 ); /* IE6-9 */
+	border-color: #bababa;
+	background-color: #33F; 
+	background-image:url('../images/Trans_Buttons.png');
+	background-repeat:repeat-x;
 }
-
-a.Blue:hover {
-	color: #fff; /* Blue */
-	border-color: #539ccf;
-	background: #4780ab; /* Old browsers */
-	background: -moz-linear-gradient(top, #3991d2 65%, #4780ab 100%);
-	/* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(65%, #3991d2),
-		color-stop(100%, #4780ab) ); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #3991d2 65%, #4780ab 100%);
-	/* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #3991d2 65%, #4780ab 100%);
-	/* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #3991d2 65%, #4780ab 100%);
-	/* IE10+ */
-	background: linear-gradient(top, #3991d2 65%, #4780ab 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#3991d2',
-		endColorstr='#4780ab', GradientType=0 ); /* IE6-9 */
+.ColorButton:hover {
+	background-image:url('../images/Trans_Buttons_Hover.png');
 }
-
 .white01 {
 	color: #52a4dc; /* Orange */
 	border-color: #b3b3b3;
