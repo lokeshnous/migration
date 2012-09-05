@@ -76,17 +76,17 @@
                       <div class="ContantMiddleLeftBox">
                 <div class="ContantMiddleLeftLink">
                           <div class="row">
-                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB Blue" href="">Apply now</a> <a class="btn_smC white01" href="">save job</a></span> </div>
+                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${brandingTemplateForm.getColor().substring(4)}" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${brandingTemplateForm.getColor().substring(4)}" href="#">save job</a></span> </div>
                   </div>
                   <div class="row marginTop10">
                   	<div class="ShareArea marginLeft5">
-                    <span><p class="FloatLeft marginTop3">Send to friend:</p><a href="#" >&nbsp;<img src="images/email.png"></a></span>
+                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email"></span>
                     </div>
                     <div class="ShareArea BorderLeft">
-                    <span><p class="FloatLeft marginTop3">Share:</p><span>&nbsp;<a href=""><img src="images/fbook_sm.png"></a></span> <span><a href=""><img src="images/L_In_sm.png"></a></span> <span><a href=""><img src="images/twitter_sm.png"></a></span></span>
+                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
                     </div>
                     <div class="ShareArea BorderLeft paddingRight0">
-                    <span><p class="FloatLeft marginTop3">Print:</p><span>&nbsp;<a href=""><img src="images/Print.png"></a></span></span>
+                    <span><p class="FloatLeft marginTop3">Print:&nbsp;</p><span><img class="print"></span></span>
                     </div>
                   </div>
                           <div class="clearfix"></div>
@@ -140,17 +140,17 @@
                 </div>
                 <div class="ContantMiddleLeftLink marginBottom20">
                           <div class="row">
-                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB Blue" href="">Apply now</a> <a class="btn_smC white01" href="">save job</a></span> </div>
+                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${brandingTemplateForm.getColor().substring(4)}" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${brandingTemplateForm.getColor().substring(4)}" href="#">save job</a></span> </div>
                   </div>
                   <div class="row marginTop10">
                   	<div class="ShareArea marginLeft5">
-                    <span><p class="FloatLeft marginTop3">Send to friend:</p><a href="#" >&nbsp;<img src="images/email.png"></a></span>
+                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email"></span>
                     </div>
                     <div class="ShareArea BorderLeft">
-                    <span><p class="FloatLeft marginTop3">Share:</p><span>&nbsp;<a href=""><img src="images/fbook_sm.png"></a></span> <span><a href=""><img src="images/L_In_sm.png"></a></span> <span><a href=""><img src="images/twitter_sm.png"></a></span></span>
+                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
                     </div>
                     <div class="ShareArea BorderLeft paddingRight0">
-                    <span><p class="FloatLeft marginTop3">Print:</p><span>&nbsp;<a href=""><img src="images/Print.png"></a></span></span>
+                    <span><p class="FloatLeft marginTop3">Print:&nbsp;</p><span><img class="print"></span></span>
                     </div>
                   </div>
                           
