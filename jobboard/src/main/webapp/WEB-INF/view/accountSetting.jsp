@@ -276,7 +276,7 @@ function copyAccToBillingAddr(obj) {
 						<span class="lableText3">
 							E-Mail:
 						</span>
-						<form:input path="email" name="email" class="job_seeker_password" type="text"/>
+						<form:input path="email" name="email" class="job_seeker_password" readonly="true" retype="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
@@ -357,7 +357,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> E-Mail: </span>
-						<form:input path="email" name="email2" id="email2" class="job_seeker_password"
+						<form:input path="email" name="email2" id="email2" class="job_seeker_password" 
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">

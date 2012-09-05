@@ -131,7 +131,7 @@
 						<c:if test="${profAttrib.strLabelName == 'E-Mail Address'}">							
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">E-Mail Address:</span>
-								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" readonly="true"/>
 								<span class="required">(Required)</span>
 							</div>
 						</c:if>
