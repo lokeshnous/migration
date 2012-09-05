@@ -24,8 +24,20 @@
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-
+		
 		<script type="text/javascript">
+		
+		
+			//Limit text area characters
+			function limitText(limitField, limitCount, limitNum) {
+			/* 		alert(limitField.value.length+""+limitCount.value+""+limitNum); */
+				if (limitField.value.length > limitNum) {
+					limitField.value = limitField.value.substring(0, limitNum);
+				} else {
+					limitCount.value = limitNum - limitField.value.length;
+				}
+			}
+		
 		    jQuery(document).ready(function(){
 		    	
 			$( "#scheduleStartDivId" ).hide();		    
@@ -328,7 +340,10 @@
               </div>
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Display Company Name:</span>
-                <form:input path="disCompanyName" class="job_seeker_password textBox350"  />
+                <form:input path="disCompanyName" class="job_seeker_password textBox350"  id="dispCompNameId"  
+                								onKeyDown="limitText(this.form.dispCompNameId,this.form.countdownId2,60);"
+												onKeyUp="limitText(this.form.dispCompNameId,this.form.countdownId2,60);"/>
+				<input type="text" class="input2000_width" name="countdownId2" size="3" value="60" id="countdown"   hidden="true"/>		
                 <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
                 <div class="clearfix"></div>
                 <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginRight5">
@@ -366,7 +381,10 @@
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
 
-                <form:input path="jobTitle" class="job_seeker_password textBox350" />
+                <form:input path="jobTitle" class="job_seeker_password textBox350" id="jobTitleId"  
+                								onKeyDown="limitText(this.form.jobTitleId,this.form.countdownId1,60);"
+												onKeyUp="limitText(this.form.jobTitleId,this.form.countdownId1,60);"/>
+				<input type="text" class="input2000_width" name="countdownId1" size="3" value="60" id="countdown"   hidden="true"/>												
       			<span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
@@ -430,13 +448,6 @@
               </div>
                 <div class="rowEvenNewSpacing"> <span class="lableText3">Job Zip Code:</span>
                 <form:input path="jobZipCode" class="job_seeker_password textBox350"  id="zipCodeITId"/>
-<%--                 <div id="hideZipCodeDdId">
-                <form:select path="" class="jb_input3 jb_input_width3" id="zipCodeSelectId">
-					<form:option value="0" label="Select" />
-					<form:options items="${zipCodeList}" itemValue="fromZipcodeId" itemLabel="fromZipcodeValue" id="zipCodeSelectedId"/>
-				</form:select>
-				</div>
-                <span class="required "><a href="#" id="lookUpZipCode">Look Up Zip Code</a></span> --%>
                 <div class="floatLeft width210"><span class="required marginRight10">
                   <form:checkbox path="bHideZipCode"/>
                   </span>
