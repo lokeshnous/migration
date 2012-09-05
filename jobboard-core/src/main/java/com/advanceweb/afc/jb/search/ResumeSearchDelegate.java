@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.search;
 
 import java.util.Map;
 
-import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 public interface ResumeSearchDelegate {
