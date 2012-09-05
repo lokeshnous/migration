@@ -5,6 +5,8 @@ import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 
+import net.sf.json.JSONObject;
+
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.log4j.Logger;
@@ -30,10 +32,11 @@ public class CustomerDetailsWSTest extends ServiceTest {
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
         
-        customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
+        //customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
         // Call for create Customer
-       // customerDetailsWSTest.createCustomer("Sample Customer");
-        customerDetailsWSTest.createCashSales();
+        	//customerDetailsWSTest.createCustomer("Customer1", "company");
+        //customerDetailsWSTest.createCashSales();
+      // customerDetailsWSTest.updateCustomer("{"customerId":460460,"customerName":"Customer5","recordType":"customer"}");
 
 	}
 
@@ -165,14 +168,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 
 	 
 	 public String createSalesOrder(String itemIntrnlId, int custId, int locId, int discId){
-		 String authorization = getAuthString();
-		/* Object itemInternalId = itemIntrnlId;
-		 Object customerId = custId;
-		 Object loactionId = locId;
-		 Object discountId =  discId;*/
-		 
-		 //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=151&deploy=1&customerid=1596&item=2956&entity=459468&location=1&discountitem=2930");
-		 
+		String authorization = getAuthString();
 		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=151&deploy=1");
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
@@ -196,14 +192,17 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 }
 	 
 	 
-	 public String createCustomer(String entID){
-		 String authorization = getAuthString();
-		 //update
-		 //Object entityId = "{\"entityid\": \"Sample Customer\", \"companyname\" : \"Sample Customer\",\"phone\" : \"121-456-789\"}";
-		 //Create
-		 Object entityId = "{\"entityid\": \"Sample Customer\", \"companyname\" : \"Sample Customer\"}";
+	 public String createCustomer(String compName, String recdType){
+		 String companyName = compName;
+		 String recordType = recdType;
 		 
-		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1");
+		 String authorization = getAuthString();
+		 //Object entityId = "{"customerId":460460,"customerName":"Customer5","recordType":"customer"}";
+		 Object entityId = "{\"companyname\": \"Customer2\", \"recordtype\" : \"Customer\"}";
+		 
+		 	// Object entityId = "{companyname : Customer1, recordtype : Customer}";
+		 
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1&companyname="+companyName+"&recordtype"+recordType);
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
 	    
@@ -223,6 +222,44 @@ public class CustomerDetailsWSTest extends ServiceTest {
         System.out.println("Json Response String for create Customer ="+jsonResponseString);
         return jsonResponseString;
 	 }
+	 
+	 
+	 public String updateCustomer(Object json){
+		 String authorization = getAuthString();
+		 //update
+		 //Object entityId = "{\"entityid\": \"Sample Customer\", \"companyname\" : \"Sample Customer\",\"phone\" : \"121-456-789\"}";
+		 //Create
+		 
+		 //JSONObject json = (JSONObject)new JSONParser().parse("{\"name\":\"MyNode\", \"width\":200, \"height\":100}");
+		
+		 //String test =  JSONObject.escape("{"customerId":460460,"customerName":"Customer5","recordType":"customer"}");
+
+		 //Object ent="{"customerId":"\460460,"customerName":"Customer5","recordType":"customer"}";
+
+		 
+		// Object entityId = "{\"recordtype\": \"customer\", \"internalid\": 460460, \"phone\" : \"121-454-789\"}";
+		 
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=156&deploy=1");
+		client.header("Authorization", authorization);
+	    client.header("Content-Type", "application/json");
+	    
+	    
+		Response response = client.post(json);
+		 
+		 //Response response = client.get();
+	     String jsonResponseString= null;
+		 
+	     try {
+        	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        }
+        System.out.println("Json Response String for create Customer ="+jsonResponseString);
+        return jsonResponseString;
+	 }
+	 
 	 
 
 	 
