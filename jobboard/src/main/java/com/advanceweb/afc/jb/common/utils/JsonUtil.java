@@ -20,11 +20,11 @@ public class JsonUtil {
 	public static void main(String[] str) {
 
 		// Populating the JobDTO
-			//JobDTO jobDTO = JsonUtil.populateObject();
+				//JobDTO jobDTO = JsonUtil.populateObject();
 		// Converting into JSON format
-			//String objJson = JsonUtil.saveToJson(jobDTO);
+			//String objJson = JsonUtil.convertToJson(jobDTO);
 		// Retrieving to DTO object
-			//jobDTO = (JobDTO) JsonUtil.retrieveFromJson(objJson);
+			 //Object obj = JsonUtil.retrieveFromJson(objJson, JobDTO.class);
 		
 		//Test for cutomer
 		//CustomerDTO custDTO = new CustomerDTO();
@@ -76,13 +76,13 @@ public class JsonUtil {
 	 * @return
 	 */
 
-	public static Object retrieveFromJson(String jsonString) {
+	public static <T> Object retrieveFromJson(String jsonString, Class<T> clazz) {
 
 		ObjectMapper mapper = new ObjectMapper();
-		JobDTO jobDTO = null;
+		Object obj = null;
 		try {
 
-			jobDTO = mapper.readValue(jsonString, JobDTO.class);
+			obj = mapper.readValue(jsonString, clazz);
 
 		} catch (JsonParseException e) {
 			e.printStackTrace();
@@ -93,9 +93,9 @@ public class JsonUtil {
 		}
 
 		// Displaying the DTO attributes
-		JsonUtil.displayObject(jobDTO);
+		JsonUtil.displayObject(obj);
 
-		return jobDTO;
+		return obj;
 	}
 	
 
@@ -155,9 +155,11 @@ public class JsonUtil {
 	 * @param jobDTO
 	 */
 
-	private static void displayObject(JobDTO jobDTO) {
+	private static void displayObject(Object obj) {
 
-		LOGGER.info("Ad text is =>" + jobDTO.getAdText());
+		JobDTO jobDTO = (JobDTO)obj;
+		
+		LOGGER.info("Ad text iss =>" + jobDTO.getAdText());
 		LOGGER.info("City is =>" + jobDTO.getCity());
 		LOGGER.info("Email is =>" + jobDTO.getEmail());
 		LOGGER.info("Email Display is =>" + jobDTO.getEmailDisplay());
