@@ -48,6 +48,23 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>1.6.11</version>
 		</dependency>
+		
+		<!-- For JSON -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jackson.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		
+		
 	</dependencies>
 	<name>Job Board Common components</name>
 </project>
