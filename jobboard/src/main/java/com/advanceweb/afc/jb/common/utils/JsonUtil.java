@@ -1,23 +1,45 @@
 package com.advanceweb.afc.jb.common.utils;
 
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import com.advanceweb.afc.jb.common.JobDTO;
+import com.advanceweb.afc.jb.netsuite.CustomerDTO;
+import com.advanceweb.afc.jb.webservice.CustomerDetailsWSTest;
 
 @SuppressWarnings("unchecked")
 public class JsonUtil {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(JsonUtil.class);
 
 	public static void main(String[] str) {
 
 		// Populating the JobDTO
-		JobDTO jobDTO = JsonUtil.populateObject();
+			//JobDTO jobDTO = JsonUtil.populateObject();
 		// Converting into JSON format
-		String objJson = JsonUtil.saveToJson(jobDTO);
+			//String objJson = JsonUtil.saveToJson(jobDTO);
 		// Retrieving to DTO object
-		jobDTO = (JobDTO) JsonUtil.retrieveFromJson(objJson);
+			//jobDTO = (JobDTO) JsonUtil.retrieveFromJson(objJson);
+		
+		//Test for cutomer
+		//CustomerDTO custDTO = new CustomerDTO();
+		//custDTO.setInternalID(460460);
+		//custDTO.setPhone("121-454-789");
+		//custDTO.setRecordType("customer");
+		//custDTO.setCompanyName("MyCompany");
+		
+		//String objJson = JsonUtil.convertToJson(custDTO);
+		//objJson = objJson.toLowerCase();
+		//LOGGER.info("objJson in Lowercase=>"+objJson);
+		
+		//CustomerDetailsWSTest customerDetailsWSTest = new CustomerDetailsWSTest();
+		//customerDetailsWSTest.updateCustomer((Object)objJson);
+		//customerDetailsWSTest.createCustomer(compName, recdType);
 
 	}
 
@@ -27,7 +49,7 @@ public class JsonUtil {
 	 * @param obj
 	 * @return String of JSON data
 	 */
-	public static String saveToJson(Object obj) {
+	public static String convertToJson(Object obj) {
 
 		ObjectMapper mapper = new ObjectMapper();
 		// Object jsonString = new Object();
@@ -43,7 +65,7 @@ public class JsonUtil {
 			e.printStackTrace();
 		}
 
-		System.out.println("JSON data is =>" + jsonString);
+		LOGGER.info("JSON data is =>" + jsonString);
 		return jsonString;
 	}
 
@@ -60,12 +82,6 @@ public class JsonUtil {
 		JobDTO jobDTO = null;
 		try {
 
-			/*
-			 * BufferedReader br = new BufferedReader(new
-			 * FileReader("d:\\jobs.json")); obj = mapper.readValue(br,
-			 * Object.class);
-			 */
-
 			jobDTO = mapper.readValue(jsonString, JobDTO.class);
 
 		} catch (JsonParseException e) {
@@ -81,7 +97,36 @@ public class JsonUtil {
 
 		return jobDTO;
 	}
+	
 
+	/**
+	 * Retriving DTO from JSON data
+	 * 
+	 * @param jsonString
+	 * @return
+	 */
+
+	public static Object retrieveFromJsonForCustomer(String jsonString) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		CustomerDTO custDTO = null;
+		try {
+
+			custDTO = mapper.readValue(jsonString, CustomerDTO.class);
+
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+		return custDTO;
+	}
+	
+	
 	/**
 	 * Populating values into the JobDTO
 	 * 
@@ -112,25 +157,25 @@ public class JsonUtil {
 
 	private static void displayObject(JobDTO jobDTO) {
 
-		System.out.println("Ad text is =>" + jobDTO.getAdText());
-		System.out.println("City is =>" + jobDTO.getCity());
-		System.out.println("Email is =>" + jobDTO.getEmail());
-		System.out.println("Email Display is =>" + jobDTO.getEmailDisplay());
-		System.out.println("Job title is =>" + jobDTO.getJobTitle());
-		System.out.println("Job Id is =>" + jobDTO.getJobId());
-		System.out.println("Apply online is =>" + jobDTO.getApplyOnline());
-		System.out.println("Company is =>" + jobDTO.getCompany());
-		System.out.println("Facility Name is =>" + jobDTO.getFacilityName());
-		System.out.println("Job count is =>" + jobDTO.getJobCount());
-		System.out.println("Job Geo is =>" + jobDTO.getJobGeo());
-		System.out.println("JobGeo0Laton is =>" + jobDTO.getJobGeo0LatLon());
-		System.out.println("JobGeo1Laton is =>" + jobDTO.getJobGeo1LatLon());
-		System.out.println("Job Number is =>" + jobDTO.getJobNumber());
-		System.out.println("Job Position is =>" + jobDTO.getJobPosition());
-		System.out.println("Postcode is =>" + jobDTO.getPostCode());
-		System.out.println("State is =>" + jobDTO.getState());
-		System.out.println("URL is =>" + jobDTO.getUrl());
-		System.out.println("URL display is =>" + jobDTO.getUrlDisplay());
+		LOGGER.info("Ad text is =>" + jobDTO.getAdText());
+		LOGGER.info("City is =>" + jobDTO.getCity());
+		LOGGER.info("Email is =>" + jobDTO.getEmail());
+		LOGGER.info("Email Display is =>" + jobDTO.getEmailDisplay());
+		LOGGER.info("Job title is =>" + jobDTO.getJobTitle());
+		LOGGER.info("Job Id is =>" + jobDTO.getJobId());
+		LOGGER.info("Apply online is =>" + jobDTO.getApplyOnline());
+		LOGGER.info("Company is =>" + jobDTO.getCompany());
+		LOGGER.info("Facility Name is =>" + jobDTO.getFacilityName());
+		LOGGER.info("Job count is =>" + jobDTO.getJobCount());
+		LOGGER.info("Job Geo is =>" + jobDTO.getJobGeo());
+		LOGGER.info("JobGeo0Laton is =>" + jobDTO.getJobGeo0LatLon());
+		LOGGER.info("JobGeo1Laton is =>" + jobDTO.getJobGeo1LatLon());
+		LOGGER.info("Job Number is =>" + jobDTO.getJobNumber());
+		LOGGER.info("Job Position is =>" + jobDTO.getJobPosition());
+		LOGGER.info("Postcode is =>" + jobDTO.getPostCode());
+		LOGGER.info("State is =>" + jobDTO.getState());
+		LOGGER.info("URL is =>" + jobDTO.getUrl());
+		LOGGER.info("URL display is =>" + jobDTO.getUrlDisplay());
 
 	}
 
