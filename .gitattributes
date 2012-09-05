@@ -74,6 +74,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VeteranStatusDTO.java
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VideoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/WorkExpDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/JsonUtil.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConstants.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
