@@ -65,7 +65,7 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 public class ResumeController {
 	
 	private static final Logger LOGGER = Logger
-			.getLogger("ResumeController.class");
+			.getLogger(ResumeController.class);
 	@Autowired
 	private ResumeService resumeService;
 
@@ -454,7 +454,7 @@ public class ResumeController {
 						file.transferTo(dest);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
@@ -498,7 +498,7 @@ public class ResumeController {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 			resumeDTO.setUserId((Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID));
