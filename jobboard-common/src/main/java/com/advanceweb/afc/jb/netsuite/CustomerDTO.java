@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * This is the DTO class for Customer(which means Employer and Agency in JB).
+ * @author Reetesh RN 
+ * @Version 1.0
+ * @Since 3rd Aug 2012
+ */
+
 public class CustomerDTO {
 
 	//refers to internalid in netSuite
