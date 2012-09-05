@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,16 +54,16 @@ public class AdmOrderHeader implements Serializable {
 	private AdmFacility admFacility;
 
 	// bi-directional many-to-one association to AdmOrderPayment
-	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
-	private List<AdmOrderPayment> admOrderPayment;
+	@OneToOne(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
+	private AdmOrderPayment admOrderPayment;
 
 	// bi-directional many-to-one association to AdmOrderPayment
 	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private List<AdmOrderItem> admOrderItem;
 
 	// bi-directional many-to-one association to AdmOrderPayment
-	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
-	private List<AdmOrderAddress> admOrderAddress;
+	@OneToOne(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
+	private AdmOrderAddress admOrderAddress;
 
 	/**
 	 * @return the orderId
@@ -79,20 +80,6 @@ public class AdmOrderHeader implements Serializable {
 		this.orderId = orderId;
 	}
 
-	/**
-	 * @return the admOrderPayment
-	 */
-	public List<AdmOrderPayment> getAdmOrderPayment() {
-		return admOrderPayment;
-	}
-
-	/**
-	 * @param admOrderPayment
-	 *            the admOrderPayment to set
-	 */
-	public void setAdmOrderPayment(List<AdmOrderPayment> admOrderPayment) {
-		this.admOrderPayment = admOrderPayment;
-	}
 
 	/**
 	 * @return the admOrderItem
@@ -110,25 +97,38 @@ public class AdmOrderHeader implements Serializable {
 	}
 
 	/**
-	 * @return the admOrderAddress
-	 */
-	public List<AdmOrderAddress> getAdmOrderAddress() {
-		return admOrderAddress;
-	}
-
-	/**
-	 * @param admOrderAddress
-	 *            the admOrderAddress to set
-	 */
-	public void setAdmOrderAddress(List<AdmOrderAddress> admOrderAddress) {
-		this.admOrderAddress = admOrderAddress;
-	}
-
-	/**
 	 * @return the orderDate
 	 */
 	public Date getOrderDate() {
 		return orderDate;
+	}
+
+	/**
+	 * @return the admOrderPayment
+	 */
+	public AdmOrderPayment getAdmOrderPayment() {
+		return admOrderPayment;
+	}
+
+	/**
+	 * @param admOrderPayment the admOrderPayment to set
+	 */
+	public void setAdmOrderPayment(AdmOrderPayment admOrderPayment) {
+		this.admOrderPayment = admOrderPayment;
+	}
+
+	/**
+	 * @return the admOrderAddress
+	 */
+	public AdmOrderAddress getAdmOrderAddress() {
+		return admOrderAddress;
+	}
+
+	/**
+	 * @param admOrderAddress the admOrderAddress to set
+	 */
+	public void setAdmOrderAddress(AdmOrderAddress admOrderAddress) {
+		this.admOrderAddress = admOrderAddress;
 	}
 
 	/**

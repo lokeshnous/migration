@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -47,7 +48,7 @@ public class AdmOrderPayment implements Serializable{
 	@Column(name = "transaction_dt")
 	private Date transDate;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="order_id")
 	private AdmOrderHeader admOrderHeader;
 
