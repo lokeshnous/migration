@@ -11,7 +11,7 @@ import java.util.List;
  * @Since 3rd Aug 2012
  */
 
-public class CustomerDTO {
+public class NSCustomer {
 
 	//refers to internalid in netSuite
 	private int internalID;
@@ -32,7 +32,7 @@ public class CustomerDTO {
 	
 	private String ccStreet;
 	
-	private List<Item> item = new ArrayList<Item>();
+	private List<NSItem> item = new ArrayList<NSItem>();
 	
 	public int getInternalID() {
 		return internalID;
@@ -42,11 +42,11 @@ public class CustomerDTO {
 		this.internalID = internalID;
 	}
 
-	public List<Item> getItem() {
+	public List<NSItem> getItem() {
 		return item;
 	}
 
-	public void setItem(List<Item> item) {
+	public void setItem(List<NSItem> item) {
 		this.item = item;
 	}
 	

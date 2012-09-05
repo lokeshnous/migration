@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.netsuite;
 
-public class Item {
+public class NSItem {
 
 	private String item;
 	
