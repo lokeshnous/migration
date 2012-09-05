@@ -14,45 +14,45 @@ public interface JobSeekerRegistrationDAO {
 	 * 
 	 * @param jobSeeker
 	 */
-	public UserDTO createNewJobSeeker(
+	UserDTO createNewJobSeeker(
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 
 	/**
 	 * 
 	 * @param jobSeekerId
 	 */
-	public boolean deleteJobSeeker(int jobSeekerId);
+	boolean deleteJobSeeker(int jobSeekerId);
 
 	/**
 	 * 
 	 * @param jobSeekerId
 	 */
-	public JobSeekerRegistrationDTO getJobSeekerDetails(int jobSeekerId);
+	JobSeekerRegistrationDTO getJobSeekerDetails(int jobSeekerId);
 
 	/**
 	 * 
 	 * @param jobSeeker
 	 */
-	public boolean updateJobSeekerDetails(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
+	boolean updateJobSeekerDetails(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
 	/**
 	 * To change password
 	 * @param jobSeekerRegistrationDTO
 	 * @return
 	 */
-	public boolean jsChangePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
+	boolean jsChangePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
-	public boolean validatePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
+	boolean validatePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
-	public boolean validateEmail(String email);
+	boolean validateEmail(String email);
 	
 	/**
 	 * To change password
 	 * @param jobSeekerRegistrationDTO
 	 * @return
 	 */
-	public JobSeekerRegistrationDTO getProfileAttributes();
+	JobSeekerRegistrationDTO getProfileAttributes();
 	
-	public boolean validateProfileAttributes(int jobseekerId);
+	boolean validateProfileAttributes(int jobseekerId);
 
 }
