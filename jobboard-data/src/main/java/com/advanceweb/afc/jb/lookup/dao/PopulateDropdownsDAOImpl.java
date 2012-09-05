@@ -532,8 +532,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.state from  JpLocation jloc WHERE  jloc.city='"+ city+"' ORDER BY  jloc.state ASC");
 
 			if (jpLocationList != null && !jpLocationList.isEmpty()) {			
-				String obj = (String)jpLocationList.get(0);
-				return obj;
+				return (String)jpLocationList.get(0);
 			}
 		} catch (DataAccessException e) {
 
@@ -570,8 +569,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
 
 			if (jpLocationList != null && jpLocationList.size() !=0) {			
-				String obj = (String)jpLocationList.get(0);
-				return obj;
+				return (String)jpLocationList.get(0);
 			}			
 			
 		} catch (DataAccessException e) {
@@ -588,8 +586,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
 
 			if (jpLocationList != null && !jpLocationList.isEmpty()) {			
-				String obj = (String)jpLocationList.get(0);
-				return obj;
+				return (String)jpLocationList.get(0);
 			}			
 			
 		} catch (DataAccessException e) {
