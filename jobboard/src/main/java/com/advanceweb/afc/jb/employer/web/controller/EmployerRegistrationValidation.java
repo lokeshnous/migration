@@ -185,16 +185,7 @@ public class EmployerRegistrationValidation {
 	 * @return 
 	 */
 	public boolean accountValidate(Object target, Errors errors) {
-
 		EmployeeAccountForm registerForm = (EmployeeAccountForm) target;
-
-		if(StringUtils.isEmpty(registerForm.getEmail()))
-			return false;
-		else
-			return true;
-		
-		
+		return StringUtils.isEmpty(registerForm.getEmail());
 	}
-	
-
 }
