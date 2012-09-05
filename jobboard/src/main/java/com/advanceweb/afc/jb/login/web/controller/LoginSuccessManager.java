@@ -21,7 +21,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private ProfileRegistration profileRegistration;
 
@@ -41,37 +41,54 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
 				+ " " + user.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
-		if (authentication.getAuthorities().contains(
-						new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_JOB_SEEKER))
-						&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER)) {
-			if(profileRegistration.validateProfileAttributes(user.getUserId())){
+		if (authentication.getAuthorities()
+				.contains(
+						new SimpleGrantedAuthority(
+								MMJBCommonConstants.ROLE_JOB_SEEKER))
+				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER)) {
+			if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 				response.sendRedirect(request.getContextPath()
-						+ "/jobSeeker/jobSeekerDashBoard.html");//if the user already registered
-			}else{//if the logged in user is new
+						+ "/jobSeeker/jobSeekerDashBoard.html");// if the user
+																// already
+																// registered
+			} else {// if the logged in user is new
 				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-				response.sendRedirect(request.getContextPath()+ "/jobseekerregistration/createJobSeekerCreateYrAcct.html");
+				response.sendRedirect(request.getContextPath()
+						+ "/jobseekerregistration/createJobSeekerCreateYrAcct.html");
 			}
 
 		} else if (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER)) {
-			//Added to put facility id in the session
-			EmployerInfoDTO infoDTO = loginService.facilityDetails(user.getUserId());			
-			session.setAttribute(MMJBCommonConstants.FACILITY_ID, infoDTO.getFacilityId());
-			if(profileRegistration.validateProfileAttributes(user.getUserId())){
-				response.sendRedirect(request.getContextPath()+ "/employer/employerDashBoard.html");
-			}else{
+			// Added to put facility id in the session
+			EmployerInfoDTO infoDTO = loginService.facilityDetails(user
+					.getUserId());
+			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
+					infoDTO.getFacilityId());
+			if (profileRegistration.validateProfileAttributes(user.getUserId())) {
+				response.sendRedirect(request.getContextPath()
+						+ "/employer/employerDashBoard.html");
+			} else {
 				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-				response.sendRedirect(request.getContextPath()+ "/employerRegistration/employerregistration.html");
+				response.sendRedirect(request.getContextPath()
+						+ "/employerRegistration/employerregistration.html");
 			}
 		} else if (authentication.getAuthorities().contains(
-				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP))
+				new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_FACILITY_GROUP))
 				&& pageValue.equals(MMJBCommonConstants.AGENCY)) {
-			if(profileRegistration.validateProfileAttributes(user.getUserId())){
-				response.sendRedirect(request.getContextPath()+ "/agency/agencyDashboard.html");
-			}else{
+			// Added to put facility id in the session
+			EmployerInfoDTO infoDTO = loginService.facilityDetails(user
+					.getUserId());
+			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
+					infoDTO.getFacilityId());
+			if (profileRegistration.validateProfileAttributes(user.getUserId())) {
+				response.sendRedirect(request.getContextPath()
+						+ "/agency/agencyDashboard.html");
+			} else {
 				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-				response.sendRedirect(request.getContextPath()+ "/agencyRegistration/agencyregistration.html");
+				response.sendRedirect(request.getContextPath()
+						+ "/agencyRegistration/agencyregistration.html");
 			}
 		} else {
 			session.invalidate();

@@ -34,11 +34,6 @@ public class JobPostingInventoryController {
 	public ModelAndView jobInventory(Map<String, InventoryForm> model,
 			@RequestParam(value = "page", required = false) String page,
 			Model modelconstants, HttpSession session) {
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-		int facilityId = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		
 		return new ModelAndView("jobPostingInventoryPopup");
 	}
 }
