@@ -106,11 +106,11 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jobApply.setApplyMethod(dto.getApplicationMethod());
 		 jobApply.setJpJob(jpJob);
 		 if(null != dto.getApplyEmail() && dto.getApplyEmail().length() != 0)
-			 jobApply.setApplyLink(dto.getApplyEmail());
+			 {jobApply.setApplyLink(dto.getApplyEmail());}
 		 if(null != dto.getApplyUrl() && dto.getApplyUrl().length() != 0)
-			 jobApply.setApplyLink(dto.getApplyUrl());
+			 {jobApply.setApplyLink(dto.getApplyUrl());}
 		 if(null != dto.getAtsUrl() && dto.getAtsUrl().length() != 0)
-			 jobApply.setApplyLink(dto.getAtsUrl());
+			 {jobApply.setApplyLink(dto.getAtsUrl());}
 		 jobList.add(jobApply);
 		 
 		return jobList;
