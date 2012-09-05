@@ -82,7 +82,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public UserDTO createNewEmployer(EmployerProfileDTO empDTO) {
+	public UserDTO createEmployerProfile(EmployerProfileDTO empDTO) {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO,
 					null);

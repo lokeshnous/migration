@@ -33,7 +33,7 @@ public class JobSeekerRegistrationTest  extends ServiceTest{
 		merUserDTO.setPassword("Sasibhushan");
 
 		jsDTO.setMerUserDTO(merUserDTO);
-		merUserDTO = profileRegistration.createNewProfile(jsDTO);
+		merUserDTO = profileRegistration.createEmployerProfile(jsDTO);
 		Assert.assertNotNull(merUserDTO);
 	}
 	

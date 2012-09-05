@@ -19,7 +19,7 @@ public interface EmployerRegistrationDAO {
 	 * 
 	 * @param employer
 	 */
-	UserDTO createNewEmployer(EmployerProfileDTO empDTO);
+	UserDTO createEmployerProfile(EmployerProfileDTO empDTO);
 
 	/**
 	 * 
