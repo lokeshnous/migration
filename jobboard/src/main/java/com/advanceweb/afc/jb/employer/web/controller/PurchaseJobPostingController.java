@@ -31,7 +31,8 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 @SessionAttributes("purchaseJobPostForm")
 public class PurchaseJobPostingController {
 	private static final Logger LOGGER = Logger.getLogger(PurchaseJobPostingController.class);
-
+	
+	private static final String PURCHASE_JOB_POSTINGS = "empPurchaseJobPostingsPopup";
 
 	@Autowired
 	private JobPostService employerJobPost;
@@ -49,7 +50,7 @@ public class PurchaseJobPostingController {
 		PurchaseJobPostForm purchaseJobPostForm = new PurchaseJobPostForm();
 		purchaseJobPostForm.setJobPostingsForm(jobPostingsForm);
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName("empPurchaseJobPostingsPopup");
+		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return 	model;
 	}
 	
@@ -86,7 +87,7 @@ public class PurchaseJobPostingController {
 		
 		ModelAndView model = new ModelAndView();
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName("empPurchaseJobPostingsPopup");
+		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return 	model;
 	}
 	
@@ -94,7 +95,7 @@ public class PurchaseJobPostingController {
 	public ModelAndView showPurchaseJobPostCart(PurchaseJobPostForm purchaseJobPostForm) {
 		ModelAndView model = new ModelAndView();
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName("empPurchaseJobPostingsPopup");
+		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return 	model;
 	}
 	
@@ -106,7 +107,7 @@ public class PurchaseJobPostingController {
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName("empPurchaseJobPostingsPopup");
+		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return 	model;
 	}
 	
