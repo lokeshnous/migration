@@ -34,21 +34,21 @@ public class ResumeValidator {
 		validationMessage = validateContactInfo(createResume
 				.getContactInfoForm());
 		if (!StringUtils.isEmpty(validationMessage))
-			return validationMessage;
+			{return validationMessage;}
 		validationMessage = validatePhoneNumbers(createResume);
 		if (!StringUtils.isEmpty(validationMessage))
-			return validationMessage;
+			{return validationMessage;}
 		validationMessage = validateCertifications(createResume
 				.getListCertForm());
 		if (!StringUtils.isEmpty(validationMessage))
-			return validationMessage;
+			{return validationMessage;}
 		validationMessage = validateEducation(createResume.getListEduForm());
 		if (!StringUtils.isEmpty(validationMessage))
-			return validationMessage;
+			{return validationMessage;}
 		validationMessage = validateWorkExperience(createResume
 				.getListWorkExpForm());
 		if (!StringUtils.isEmpty(validationMessage))
-			return validationMessage;
+			{return validationMessage;}
 		validationMessage = validateReferences(createResume.getListRefForm());
 
 		return validationMessage;
