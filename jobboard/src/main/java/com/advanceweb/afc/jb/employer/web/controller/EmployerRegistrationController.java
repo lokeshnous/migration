@@ -65,6 +65,7 @@ public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationController.class");
+	private static final String _FORM_VIEW = "employerDashboard";
 
 	@Autowired
 	private ProfileRegistration employerRegistration;
@@ -310,8 +311,9 @@ public class EmployerRegistrationController {
 			EmployeeAccountForm employeeAccountForm, BindingResult result,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int userId = (Integer) session.getAttribute("userId");
+
 		try {
+			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 			if (listProfAttribForms.getCount() > 0) {
@@ -330,14 +332,14 @@ public class EmployerRegistrationController {
 				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
 			} else {
-				model.setViewName("employerDashboard");
+				model.setViewName(_FORM_VIEW);
 				return model;
 			}
 
-			model.setViewName("employerDashboard");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		} catch (Exception e) {
-			model.setViewName("employerDashboard");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		}
 	}
@@ -355,14 +357,15 @@ public class EmployerRegistrationController {
 			EmployeeAccountForm employeeBillingForm, BindingResult result,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int userId = (Integer) session.getAttribute("userId");
-		int facilityId = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		AdmFacilityContactDTO listProfAttribForms = empRegService
-				.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-		// int count=0;
 		try {
-			if ((listProfAttribForms.getCount() > 0)) {
+			int userId = (Integer) session.getAttribute("userId");
+			int facilityId = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			AdmFacilityContactDTO listProfAttribForms = empRegService
+					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
+			// int count=0;
+
+			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
 						.transformBillingProfileFormToDto(employeeBillingForm);
@@ -387,10 +390,10 @@ public class EmployerRegistrationController {
 				// return model;
 			}
 
-			model.setViewName("employerDashboard");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		} catch (Exception e) {
-			model.setViewName("employerDashboard");
+			model.setViewName(_FORM_VIEW);
 			return model;
 		}
 
