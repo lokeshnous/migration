@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -47,7 +48,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @SessionAttributes("registerForm")
 @Scope("session")
 public class JobSeekerRegistrationController {
-	
+	private static final Logger LOGGER = Logger.getLogger(JobSeekerRegistrationController.class);
 	@Autowired
     protected AuthenticationManager customAuthenticationManager;
 	
@@ -176,7 +177,7 @@ public class JobSeekerRegistrationController {
 			
 		} catch (Exception e) {
 			//TODO
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return model;
 		
@@ -248,7 +249,7 @@ public class JobSeekerRegistrationController {
 			    
 		} catch (Exception e) {
 			//TODO
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return model;
 	}
@@ -321,7 +322,7 @@ public class JobSeekerRegistrationController {
 			
 		} catch (Exception e) {
 			//TODO
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return model;
 	}
@@ -392,7 +393,7 @@ public class JobSeekerRegistrationController {
 			
 		} catch (Exception e) {
 			//TODO
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		
 		return "";
@@ -431,7 +432,7 @@ public class JobSeekerRegistrationController {
 			}
 		} catch (Exception e) {
 			//TODO
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return "";
 	}
@@ -489,7 +490,7 @@ public class JobSeekerRegistrationController {
 			form.setEmailId((String) session.getAttribute("userEmail"));
 			model.put("changePasswordForm", form);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return "jobseekerchangepassword";
 	}
