@@ -132,9 +132,27 @@ public class AdmFacility implements Serializable {
 	//bi-directional many-to-one association to JpTemplate
 	@OneToMany(mappedBy=ADM_FACILITY,cascade=CascadeType.ALL)
 	private List<JpTemplate> jpTemplates;
+	
+	//bi-directional many-to-one association to AdmOrderHeader
+	@OneToMany(mappedBy=ADM_FACILITY)
+	private List<AdmOrderHeader> admOrderHeader;
 
 	public Integer getFacilityId() {
 		return this.facilityId;
+	}
+
+	/**
+	 * @return the admOrderHeader
+	 */
+	public List<AdmOrderHeader> getAdmOrderHeader() {
+		return admOrderHeader;
+	}
+
+	/**
+	 * @param admOrderHeader the admOrderHeader to set
+	 */
+	public void setAdmOrderHeader(List<AdmOrderHeader> admOrderHeader) {
+		this.admOrderHeader = admOrderHeader;
 	}
 
 	public void setFacilityId(Integer facilityId) {

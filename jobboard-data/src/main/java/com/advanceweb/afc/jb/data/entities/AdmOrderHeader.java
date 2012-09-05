@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,6 +26,8 @@ import javax.persistence.TemporalType;
 public class AdmOrderHeader implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String ADM_ORDER_HEADER = "admOrderHeader";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,6 +51,18 @@ public class AdmOrderHeader implements Serializable {
 	@JoinColumn(name = "facility_id")
 	private AdmFacility admFacility;
 
+	// bi-directional many-to-one association to AdmOrderPayment
+	@OneToMany(mappedBy = ADM_ORDER_HEADER)
+	private List<AdmOrderPayment> admOrderPayment;
+
+	// bi-directional many-to-one association to AdmOrderPayment
+	@OneToMany(mappedBy = ADM_ORDER_HEADER)
+	private List<AdmOrderItem> admOrderItem;
+
+	// bi-directional many-to-one association to AdmOrderPayment
+	@OneToMany(mappedBy = ADM_ORDER_HEADER)
+	private List<AdmOrderAddress> admOrderAddress;
+
 	/**
 	 * @return the orderId
 	 */
@@ -60,6 +76,51 @@ public class AdmOrderHeader implements Serializable {
 	 */
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
+	}
+
+	/**
+	 * @return the admOrderPayment
+	 */
+	public List<AdmOrderPayment> getAdmOrderPayment() {
+		return admOrderPayment;
+	}
+
+	/**
+	 * @param admOrderPayment
+	 *            the admOrderPayment to set
+	 */
+	public void setAdmOrderPayment(List<AdmOrderPayment> admOrderPayment) {
+		this.admOrderPayment = admOrderPayment;
+	}
+
+	/**
+	 * @return the admOrderItem
+	 */
+	public List<AdmOrderItem> getAdmOrderItem() {
+		return admOrderItem;
+	}
+
+	/**
+	 * @param admOrderItem
+	 *            the admOrderItem to set
+	 */
+	public void setAdmOrderItem(List<AdmOrderItem> admOrderItem) {
+		this.admOrderItem = admOrderItem;
+	}
+
+	/**
+	 * @return the admOrderAddress
+	 */
+	public List<AdmOrderAddress> getAdmOrderAddress() {
+		return admOrderAddress;
+	}
+
+	/**
+	 * @param admOrderAddress
+	 *            the admOrderAddress to set
+	 */
+	public void setAdmOrderAddress(List<AdmOrderAddress> admOrderAddress) {
+		this.admOrderAddress = admOrderAddress;
 	}
 
 	/**
