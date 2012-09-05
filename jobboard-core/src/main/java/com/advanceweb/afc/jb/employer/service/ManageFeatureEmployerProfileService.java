@@ -27,7 +27,7 @@ public class ManageFeatureEmployerProfileService implements
 		ManageFeatureEmployerProfile {
 
 	@Autowired
-	ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
+	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
 
 	/**
 	 * Saving Manage Featured Employer Profile
