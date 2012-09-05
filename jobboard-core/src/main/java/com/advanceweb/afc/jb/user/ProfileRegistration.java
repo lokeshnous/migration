@@ -14,7 +14,8 @@ public interface ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	UserDTO createNewProfile(ProfileDTO profileDTO);
+
+	public UserDTO createEmployerProfile(ProfileDTO profileDTO);
 
 	/**
 	 * 

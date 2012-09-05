@@ -31,7 +31,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	 * 
 	 * @param profileDTO
 	 */
-	public UserDTO createNewProfile(ProfileDTO profileDTO) {
+	public UserDTO createEmployerProfile(ProfileDTO profileDTO) {
 		try {
 			AgencyProfileDTO agencyProfileDTO = (AgencyProfileDTO) profileDTO;
 			return agencyRegistrationDAO.createNewAgency(agencyProfileDTO);

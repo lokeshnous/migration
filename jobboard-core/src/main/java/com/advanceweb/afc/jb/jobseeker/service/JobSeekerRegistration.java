@@ -38,7 +38,7 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	 */
 
 	@Override
-	public UserDTO createNewProfile(ProfileDTO profileDTO) {
+	public UserDTO createEmployerProfile(ProfileDTO profileDTO) {
 		try {
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
 			return jobSeekerRegistrationDAO.createNewJobSeeker(jobSeekerRegistrationDTO);

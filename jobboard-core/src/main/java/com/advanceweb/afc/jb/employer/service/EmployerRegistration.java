@@ -31,6 +31,9 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	@Autowired
 	public EmployerRegistrationDAO employerRegistrationDAO;
 
+	@Autowired
+	private EmployerDelegate employerDelegate;
+	
 	public EmployerRegistration(){
 
 	}
@@ -43,10 +46,10 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	 * 
 	 * @param profileDTO
 	 */
-	public UserDTO createNewProfile(ProfileDTO profileDTO) {
+	public UserDTO createEmployerProfile(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
-			return employerRegistrationDAO.createNewEmployer(empProfileDTO);
+			return employerDelegate.createEmployerProfile(empProfileDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
