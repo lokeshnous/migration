@@ -360,7 +360,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistr
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/TransformAgencyRegistration.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/common/utils/JsonUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddImageForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/AddOnForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTemplateController.java -text
