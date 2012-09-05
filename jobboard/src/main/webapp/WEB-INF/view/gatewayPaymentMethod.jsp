@@ -58,7 +58,7 @@
 
 					<form:form action="paymentMethod.html"
 						enctype="multipart/form-data" method="POST" class="firstForm"
-						commandName="paymentMethodForm">
+						commandName="paymentGatewayForm">
 						<div class="row">
 							<p class="gateway_section_head">Payment Method</p>
 							<p>

@@ -8,42 +8,42 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
-import com.advanceweb.afc.jb.pgi.dao.FetchAccountAndBillingAddressDAO;
-import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
+import com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao;
+import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 
 /**
  * @author muralikc
  * 
  */
-@Service("fetchAdmFacilityConatact")
+@Service("paymentGatewayService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-public class FetchAdmFacilityConatactImpl implements FetchAdmFacilityConatact {
+public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 
 	@Autowired(required = true)
-	private FetchAccountAndBillingAddressDAO fetchAccountAndBillingAddressDAO;
+	private PaymentGatewayDao paymentGatewayDao;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public AccountAddressDTO getConatactByFacilityId(int facilityId) {
-		return fetchAccountAndBillingAddressDAO
+		return paymentGatewayDao
 				.getAccountAddressByFacilityId(facilityId);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public BillingAddressDTO getBillingAddByFacilityId(int facilityId) {
-		return fetchAccountAndBillingAddressDAO
+		return paymentGatewayDao
 				.getBillingAddressByFacilityId(facilityId);
 	}
 
 	@Override
 	public boolean saveBillingAddress(BillingAddressDTO billingAddressDTO) {
-		return fetchAccountAndBillingAddressDAO
+		return paymentGatewayDao
 				.saveBillingAddress(billingAddressDTO);
 	}
 	@Override
 	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
-		return fetchAccountAndBillingAddressDAO
+		return paymentGatewayDao
 				.saveDataBillingAddress(billingAddressDTO);
 	}
 }

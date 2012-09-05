@@ -8,7 +8,7 @@ import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
  * @author muralikc
  *
  */
-public interface FetchAccountAndBillingAddressDAO {
+public interface PaymentGatewayDao {
 	
 	/**
 	 * Get the address details by using the userId

@@ -24,7 +24,7 @@ import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
-import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
+import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 
 /**
  * @author muralikc
@@ -32,23 +32,23 @@ import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
  */
 @Controller
 @RequestMapping("/pgiController")
-@SessionAttributes("paymentMethodForm")
+@SessionAttributes("paymentGatewayForm")
 public class PaymentGatewayController {
 
 	@Autowired
-	FetchAdmFacilityConatact fetchAdmFacilityConatact;
+	private PaymentGatewayService paymentGatewayService;
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
 	@Autowired
-	TransformPaymentMethod transformPaymentMethod;
+	private TransformPaymentMethod transformPaymentMethod;
 
 	@Autowired
-	PaymentGatewayValidation paymentGatewayValidation;
+	private PaymentGatewayValidation paymentGatewayValidation;
 	
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
-	public ModelAndView callPaymentMethod(@Valid PaymentMethodForm form,
+	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm form,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("gatewayPaymentMethod");
@@ -56,17 +56,17 @@ public class PaymentGatewayController {
 	}
 
 	@RequestMapping(value = "/paymentMethod", method = RequestMethod.POST)
-	public ModelAndView gatewayPaymentMethod(@Valid PaymentMethodForm form,
+	public ModelAndView gatewayPaymentMethod(@Valid PaymentGatewayForm form,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		// Getting the facility id from the session
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 
 		// Fetching the Account address from the database
-		AccountAddressDTO accountAddressDTO = fetchAdmFacilityConatact
+		AccountAddressDTO accountAddressDTO = paymentGatewayService
 				.getConatactByFacilityId(facilityId);
 		// Fetching the Billing address from the database
-		BillingAddressDTO billingAddressDTO = fetchAdmFacilityConatact
+		BillingAddressDTO billingAddressDTO = paymentGatewayService
 				.getBillingAddByFacilityId(facilityId);
 		if (billingAddressDTO == null) {
 			billingAddressDTO = new BillingAddressDTO();
@@ -86,7 +86,7 @@ public class PaymentGatewayController {
 		form.setAccountAddressForm(accountAddressForm);
 		form.setBillingAddressForm(billingAddressForm);
 
-		model.addObject("paymentMethodForm", form);
+		model.addObject("paymentGatewayForm", form);
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
 
@@ -100,7 +100,7 @@ public class PaymentGatewayController {
 	}
 
 	@RequestMapping(value = "/paymentCreditBackMethod", method = RequestMethod.GET)
-	public ModelAndView gatewayPaymentBackMethod(@Valid PaymentMethodForm form,
+	public ModelAndView gatewayPaymentBackMethod(@Valid PaymentGatewayForm form,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		List<CountryDTO> countryList = populateDropdownsService
@@ -118,7 +118,7 @@ public class PaymentGatewayController {
 		return model;
 	}
 	@RequestMapping(value = "/paymentInvoiceBackMethod", method = RequestMethod.GET)
-	public ModelAndView gatewayInvoiceBackMethod(@Valid PaymentMethodForm form,
+	public ModelAndView gatewayInvoiceBackMethod(@Valid PaymentGatewayForm form,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		List<CountryDTO> countryList = populateDropdownsService
@@ -133,7 +133,7 @@ public class PaymentGatewayController {
 
 	
 	@RequestMapping(value = "/callInvoiceConfirmOrder", method = RequestMethod.POST)
-	public ModelAndView gatewayConfirmOrder(@Valid PaymentMethodForm form,
+	public ModelAndView gatewayConfirmOrder(@Valid PaymentGatewayForm form,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		paymentGatewayValidation.validateInvoice(form, result);
@@ -171,7 +171,7 @@ public class PaymentGatewayController {
 
 	@RequestMapping(value = "/callCreditConfirmOrder", method = RequestMethod.POST)
 	public ModelAndView gatewayCreditConfirmOrder(
-			@Valid PaymentMethodForm form, HttpSession session,
+			@Valid PaymentGatewayForm form, HttpSession session,
 			BindingResult result) {
 		// validate the credit card information
 		ModelAndView model = new ModelAndView();
@@ -217,7 +217,7 @@ public class PaymentGatewayController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/callThankYouPage", method = RequestMethod.POST)
-	public ModelAndView gatewayThankyouPage(@Valid PaymentMethodForm form,
+	public ModelAndView gatewayThankyouPage(@Valid PaymentGatewayForm form,
 			Map map, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
@@ -226,7 +226,7 @@ public class PaymentGatewayController {
 		BillingAddressDTO billingAddressDTO = transformPaymentMethod
 				.transformBillingAddreFormToDto(billingAddressForm);
 		billingAddressDTO.setFacilityId(facilityId);
-		fetchAdmFacilityConatact.saveBillingAddress(billingAddressDTO);
+		paymentGatewayService.saveBillingAddress(billingAddressDTO);
 		model.setViewName("gatewayThankYou");
 		return model;
 	}

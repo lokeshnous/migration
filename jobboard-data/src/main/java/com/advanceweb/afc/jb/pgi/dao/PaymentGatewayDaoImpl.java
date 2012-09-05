@@ -16,19 +16,19 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
-import com.advanceweb.afc.jb.pgi.helper.AdmFacilityContactHelper;
+import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
 
 /**
  * @author muralikc
  * 
  */
 
-@Repository("fetchAccountAddressDAO")
-public class FetchAccountAndBillingAddressDAOImpl implements
-		FetchAccountAndBillingAddressDAO {
+@Repository("paymentGatewayDao")
+public class PaymentGatewayDaoImpl implements
+		PaymentGatewayDao {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(FetchAccountAndBillingAddressDAOImpl.class);
+			.getLogger(PaymentGatewayDaoImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
 
@@ -40,7 +40,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 	}
 
 	@Autowired
-	private AdmFacilityContactHelper admFacilityContactHelper;
+	private PaymentGatewayHelper paymentGatewayHelper;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -55,7 +55,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 				List<AdmFacilityContact> admFacilityContact = hibernateTemplate
 						.find("from AdmFacilityContact where admFacility = ? and contactType = 'PRIMARY'",
 								admFacility);
-				AccountAddressDTO fetchAccountAddressDTO = admFacilityContactHelper
+				AccountAddressDTO fetchAccountAddressDTO = paymentGatewayHelper
 						.convertAccountAddressDaoToDto(admFacilityContact
 								.get(0));
 				contactDTO = fetchAccountAddressDTO;
@@ -84,7 +84,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 						.find("from AdmFacilityContact where admFacility = ? and contactType = 'BILLING'",
 								admFacility);
 				if (admFacilityContact.size() > 0) {
-					BillingAddressDTO fetchAccountAddressDTO = admFacilityContactHelper
+					BillingAddressDTO fetchAccountAddressDTO = paymentGatewayHelper
 							.convertBillingAddressDaoToDto(admFacilityContact
 									.get(0));
 					billingAddressDTO = fetchAccountAddressDTO;
@@ -104,7 +104,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 	@Transactional(readOnly = false)
 	public boolean saveBillingAddress(BillingAddressDTO billingAddressDTO) {
 		try {
-			AdmFacilityContact admFacilityContact = admFacilityContactHelper
+			AdmFacilityContact admFacilityContact = paymentGatewayHelper
 					.convertBillingAddressDtoToEntity(billingAddressDTO);
 			AdmFacility admFacility = new AdmFacility();
 //			admFacility.setFacilityId(110);
@@ -142,7 +142,7 @@ public class FetchAccountAndBillingAddressDAOImpl implements
 	@Transactional(readOnly = false)
 	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
 		try {
-			AdmFacilityContact admFacilityContact = admFacilityContactHelper
+			AdmFacilityContact admFacilityContact = paymentGatewayHelper
 					.convertBillingDataAddressDtoToEntity(billingAddressDTO);
 			AdmFacility admFacility = new AdmFacility();
 			admFacilityContact.setActive(1);

@@ -109,7 +109,7 @@ public class PaymentGatewayValidation {
 	 * @param errors
 	 */
 	public void validate(Object target, Errors errors) {
-		PaymentMethodForm methodForm = (PaymentMethodForm) target;
+		PaymentGatewayForm methodForm = (PaymentGatewayForm) target;
 		validateCreditCardInfo(methodForm.getCreditCardInfoForm(), errors);
 		validateBillAddrInfo(methodForm.getBillingAddressForm(), errors);
 	}
@@ -119,7 +119,7 @@ public class PaymentGatewayValidation {
 	 * @param errors
 	 */
 	public void validateInvoice(Object target, Errors errors) {
-		PaymentMethodForm methodForm = (PaymentMethodForm) target;
+		PaymentGatewayForm methodForm = (PaymentGatewayForm) target;
 		validateBillAddrInfo(methodForm.getBillingAddressForm(), errors);
 		validatePurchaseOrderNO(methodForm.getInvoiceForm(), errors);
 

@@ -74,7 +74,7 @@
 							>></span>
 					</h3>
 					<form:form action="../pgiController/callInvoiceConfirmOrder.html"
-						method="POST" commandName="paymentMethodForm">
+						method="POST" commandName="paymentGatewayForm">
 
 						<div class="row">
 							<h3 class="gatewayBreadcrumbs main_section">Account

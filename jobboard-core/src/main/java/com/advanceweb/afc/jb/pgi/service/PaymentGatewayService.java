@@ -8,7 +8,7 @@ import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
  * @author muralikc
  * 
  */
-public interface FetchAdmFacilityConatact {
+public interface PaymentGatewayService {
 	
 	
 	/**

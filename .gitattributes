@@ -127,8 +127,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/impl/LookupServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/mail/service/EmailDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/mail/service/MMEmail.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/mail/service/MMEmailService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/FetchAdmFacilityConatact.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/FetchAdmFacilityConatactImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/PaymentGatewayServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/JobSearchDelegate.java -text
@@ -320,9 +320,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/login/dao/LoginFormDAOImpl.jav
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/helper/PopulateDropdownConversionHelper.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/FetchAccountAndBillingAddressDAO.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/FetchAccountAndBillingAddressDAOImpl.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/helper/AdmFacilityContactHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/PaymentGatewayDao.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/PaymentGatewayDaoImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/helper/PaymentGatewayHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDaoImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/helper/ResumeConversionHelper.java -text
@@ -418,8 +418,8 @@ jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/BillingAddressFo
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/CreditCardInfoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/InvoiceForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentGatewayController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentGatewayForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentGatewayValidation.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/PaymentMethodForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/TransformPaymentMethod.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CertificationsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/CreateResume.java -text

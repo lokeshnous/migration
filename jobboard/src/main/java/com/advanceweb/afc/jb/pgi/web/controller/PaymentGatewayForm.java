@@ -5,7 +5,7 @@ package com.advanceweb.afc.jb.pgi.web.controller;
  * 
  */
 
-public class PaymentMethodForm {
+public class PaymentGatewayForm {
 
 	private String paymentMethod;
 	

@@ -52,6 +52,7 @@ public class AgencyRegistrationController {
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistrationController.class);
 	private static final String AGENCY_REG_FORM = "agencyRegForm";
+	private static final String AGENCY_DASHBOARD = "agencyDashboard";
 	private static final String MESSAGE = "message";
 	@Autowired
 	private ProfileRegistration agencyRegistration;
@@ -142,7 +143,6 @@ public class AgencyRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createNewProfile(empDTO);
-		LOGGER.info("REGISTRATION IS SUCCESSFULL");
 
 		model.addObject("agencyRegForm", agencyRegistrationForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
@@ -154,9 +154,9 @@ public class AgencyRegistrationController {
 				.getUserId());
 		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 				infoDTO.getFacilityId());
-		model.setViewName(AGENCY_REG_FORM);
+		model.setViewName(AGENCY_DASHBOARD);
 		authenticateUserAndSetSession(userDTO, request);
-
+		LOGGER.info("Registration is completed.");
 		return model;
 	}
 
@@ -212,13 +212,13 @@ public class AgencyRegistrationController {
 		registerValidation.validate(agencyRegistrationForm, result);
 
 		if (result.hasErrors()) {
-			// model.setViewName(agencyReg);
+			 model.setViewName(AGENCYREG);
 			return false;
 		}
 		if (agencyRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					"Email Id already Exists!");
-			// model.setViewName(agencyReg);
+			 model.setViewName(AGENCYREG);
 			return false;
 		}
 

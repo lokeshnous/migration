@@ -25,7 +25,7 @@ import com.advanceweb.afc.jb.employer.web.controller.EmployeeAccountForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationValidation;
 import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
-import com.advanceweb.afc.jb.pgi.service.FetchAdmFacilityConatact;
+import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 
@@ -53,7 +53,7 @@ public class AgencyDashBoardController {
 	@Autowired
 	private EmployerRegistrationValidation registerValidation;
 	@Autowired
-	private FetchAdmFacilityConatact fetchAdmFacilityConatact;
+	private PaymentGatewayService fetchAdmFacilityConatact;
 	@Autowired
 	private TransformPaymentMethod transformPaymentMethod;
 	@Autowired

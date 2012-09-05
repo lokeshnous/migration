@@ -14,8 +14,8 @@ import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
  * 
  */
 
-@Repository("admFacilityContactHelper")
-public class AdmFacilityContactHelper {
+@Repository("paymentGatewayHelper")
+public class PaymentGatewayHelper {
 
 	/**
 	 * Converting AccountAddressDAO to DTO
