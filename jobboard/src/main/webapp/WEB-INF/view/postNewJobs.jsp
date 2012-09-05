@@ -95,6 +95,7 @@
 			//Auto complete on selecting city
 			$("#cityAutoPopulation").autocomplete({
 				source: '${pageContext.request.contextPath}/employer/getCityList.html',
+				width:500,
 				select: function(event, ui) {
 					$("#cityAutoPopulation").val(ui.item.value);				
 					$.ajax({
@@ -135,7 +136,7 @@
 						},
 					});		
 				}
-			});
+			});			
 			if ($("#readOnly").val()=='true') {
 				$('#postNewJobFormId')
 						.each(
@@ -152,11 +153,12 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
-		<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+
 		<style type="text/css">
 		 .ui-widget input  { background-color: #F0F0F0; border-radius: 4px 4px 4px 4px; height: 25px; border: 1px solid #CCCCCC;}  
     	.ui-widget-header { background:#FE9400; border: 1px solid #AAAAAA; color: #222222;font-weight: bold;}
-    	.ui-state-default, .ui-widget-content .ui-state-default { background: #FE9400; border: 1px solid #D3D3D3; color: #555555; font-weight: normal; outline: medium none;
+    	.ui-state-default, .ui-widget-content .ui-state-default { background: #FE9400; border: 1px solid #D3D3D3; color: #555555; font-weight: normal; outline: medium none;}
+    	.ui-widget-content{ width:350px !important;}
     	
 }
 		</style>
@@ -293,8 +295,8 @@
 
       </div>
       <c:if test="${not empty errorMessage}">
-  			<div style="color: red;font-weight:bold" align="left">
-				<b>${errorMessage}</b>
+  			<div style="color: red; align="left">
+				${errorMessage}
 			</div>      
       </c:if>
               <!--nav-->
@@ -389,7 +391,7 @@
 
                       <div class="rowEvenNewSpacing"><span class="required">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS"/>
-                        </span><span  class="lableText3 width105">Apply-to URL</span>
+                        </span><span  class="lableText3 width105">Apply-to ATS</span>
                <form:input path="atsUrl" class="job_seeker_password textBox350" />
 				<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>
