@@ -9,22 +9,6 @@ public class CustomerDTO {
 	//refers to internalid in netSuite
 	private int internalID;
 	
-	public int getInternalID() {
-		return internalID;
-	}
-
-	public void setInternalID(int internalID) {
-		this.internalID = internalID;
-	}
-
-	public List<Item> getItem() {
-		return item;
-	}
-
-	public void setItem(List<Item> item) {
-		this.item = item;
-	}
-
 	private String phone;
 	
 	private String recordType;
@@ -42,6 +26,22 @@ public class CustomerDTO {
 	private String ccStreet;
 	
 	private List<Item> item = new ArrayList<Item>();
+	
+	public int getInternalID() {
+		return internalID;
+	}
+
+	public void setInternalID(int internalID) {
+		this.internalID = internalID;
+	}
+
+	public List<Item> getItem() {
+		return item;
+	}
+
+	public void setItem(List<Item> item) {
+		this.item = item;
+	}
 	
 	public String getCcNumber() {
 		return ccNumber;
@@ -90,14 +90,6 @@ public class CustomerDTO {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-
-	/*public int getInternalID() {
-		return internalID;
-	}
-
-	public void setInternalID(int internalID) {
-		this.internalID = internalID;
-	}*/
 
 	public String getPhone() {
 		return phone;
