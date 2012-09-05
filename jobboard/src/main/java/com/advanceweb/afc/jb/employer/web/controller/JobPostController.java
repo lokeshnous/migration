@@ -433,7 +433,6 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		jobPostform.setJobPostDTOList(postedJobList);
-		int begin=jobPostform.getBeginVal();
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		if(null != next && !next.isEmpty()){
 			
