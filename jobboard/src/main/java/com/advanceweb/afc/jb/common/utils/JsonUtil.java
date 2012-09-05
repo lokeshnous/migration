@@ -22,9 +22,9 @@ public class JsonUtil {
 		// Populating the JobDTO
 				//JobDTO jobDTO = JsonUtil.populateObject();
 		// Converting into JSON format
-			//String objJson = JsonUtil.convertToJson(jobDTO);
+				//String objJson = JsonUtil.convertToJson(jobDTO);
 		// Retrieving to DTO object
-			 //Object obj = JsonUtil.retrieveFromJson(objJson, JobDTO.class);
+			   //jobDTO = (JobDTO)JsonUtil.retrieveFromJson(objJson, JobDTO.class);
 		
 		//Test for cutomer
 		//CustomerDTO custDTO = new CustomerDTO();
@@ -99,34 +99,6 @@ public class JsonUtil {
 	}
 	
 
-	/**
-	 * Retriving DTO from JSON data
-	 * 
-	 * @param jsonString
-	 * @return
-	 */
-
-	public static Object retrieveFromJsonForCustomer(String jsonString) {
-
-		ObjectMapper mapper = new ObjectMapper();
-		CustomerDTO custDTO = null;
-		try {
-
-			custDTO = mapper.readValue(jsonString, CustomerDTO.class);
-
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-
-		return custDTO;
-	}
-	
-	
 	/**
 	 * Populating values into the JobDTO
 	 * 
