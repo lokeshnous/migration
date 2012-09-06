@@ -56,8 +56,10 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 
 		try {
 			if (jobId != 0) {
-				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,(int) jobId);
-				SearchedJobDTO searchedJobDTO = jobSearchConversionHelper.transformJpJobToSearchedJobDTO(jpJob);
+				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
+						(int) jobId);
+				SearchedJobDTO searchedJobDTO = jobSearchConversionHelper
+						.transformJpJobToSearchedJobDTO(jpJob);
 				jobDetail = searchedJobDTO;
 			}
 		} catch (HibernateException e) {
@@ -96,7 +98,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			LOGGER.info("ex-ERROR");
 		}
 		AppliedJobDTO appliedJobDTO = null;
-		if(jobDetail != null && !jobDetail.isEmpty()){
+		if (jobDetail != null && !jobDetail.isEmpty()) {
 			appliedJobDTO = jobDetail.get(0);
 		}
 		return appliedJobDTO;
@@ -134,7 +136,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			// save the job in DB
 			AdmSaveJob admSaveJob = (AdmSaveJob) hibernateTemplate.load(
 					AdmSaveJob.class, jobDTO.getSaveJobId());
-			
+
 			admSaveJob.setAppliedDt(new java.util.Date());
 			hibernateTemplate.update(admSaveJob);
 			status = true;
@@ -164,15 +166,15 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	@Override
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
 		JobApplyTypeDTO jobApplyTypeDTO = null;
-		try{
-		JpJob jpJob = new JpJob();
-		jpJob.setJobId(jobId);
-		List<JpJobApply> jpJobApply = hibernateTemplate.find(
-				"from JpJobApply where jpJob = ? and active = 1", jpJob);
-		List<JobApplyTypeDTO> jobApplyTypeDTOs = jobSearchConversionHelper
-				.transformJpJobApplytoJobApplyTypeDTO(jpJobApply);
-		jobApplyTypeDTO = jobApplyTypeDTOs.get(0);
-		}catch (Exception e) {
+		try {
+			JpJob jpJob = new JpJob();
+			jpJob.setJobId(jobId);
+			List<JpJobApply> jpJobApply = hibernateTemplate.find(
+					"from JpJobApply where jpJob = ? and active = 1", jpJob);
+			List<JobApplyTypeDTO> jobApplyTypeDTOs = jobSearchConversionHelper
+					.transformJpJobApplytoJobApplyTypeDTO(jpJobApply);
+			jobApplyTypeDTO = jobApplyTypeDTOs.get(0);
+		} catch (Exception e) {
 			LOGGER.info("applyJobDetails : ERROR");
 		}
 		return jobApplyTypeDTO;

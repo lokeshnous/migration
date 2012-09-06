@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.jobseeker.helper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
@@ -28,6 +29,9 @@ import com.advanceweb.afc.jb.data.entities.JpLocation;
  */
 @Repository("jobSearchConversionHelper")
 public class JobSearchConversionHelper {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(JobSearchConversionHelper.class);
 
 	/**
 	 * Entity to view job dto
@@ -38,18 +42,14 @@ public class JobSearchConversionHelper {
 	public SearchedJobDTO transformJpJobToSearchedJobDTO(JpJob entity) {
 		SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
 		if (entity != null) {
-			/**
-			 * get detail from JpJob entity
-			 */
+			// get detail from JpJob entity
 			searchedJobDTO.setJobTitle(entity.getJobtitle());
 			searchedJobDTO.setJobDesc(entity.getAdtext());
 			searchedJobDTO.setJobID(entity.getJobId());
 			searchedJobDTO.setFeatureEmployer(entity.getFeatured() == 1 ? true
 					: false);
 
-			/**
-			 * get detail from admFacility entity
-			 */
+			// get detail from admFacility entity
 			AdmFacility admFacility = entity.getAdmFacility();
 			searchedJobDTO.setCompanyName(admFacility.getName());
 			int blindAd = entity.getBlindAd();
@@ -57,15 +57,21 @@ public class JobSearchConversionHelper {
 				searchedJobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
 			}
 
-			/**
-			 * get detail from JpLocation entity
-			 */
-			List<JpJobLocation> jobLocations = entity.getJpJobLocations();
-			JpJobLocation jobJobLocation = jobLocations.get(0);
-			JpLocation jpLocation = jobJobLocation.getJpLocation();
-			int hideCity = jobJobLocation.getHideCity();
-			int hideState = jobJobLocation.getHideState();
-			int hideCountry = jobJobLocation.getHideCountry();
+			// get detail from JpLocation entity
+			int hideCity = 1;
+			int hideState = 1;
+			int hideCountry = 1;
+			JpLocation jpLocation = null;
+			try{
+				List<JpJobLocation> jobLocations = entity.getJpJobLocations();
+				JpJobLocation jobJobLocation = jobLocations.get(0);
+				jpLocation = jobJobLocation.getJpLocation();
+				hideCity = jobJobLocation.getHideCity();
+				hideState = jobJobLocation.getHideState();
+				hideCountry = jobJobLocation.getHideCountry();
+			}catch (Exception e) {
+				LOGGER.info("Locations not found for Job Id :"+searchedJobDTO.getJobID());
+			}
 
 			if (hideCity != 1) {
 				searchedJobDTO.setCity(jpLocation.getCity());
@@ -77,9 +83,7 @@ public class JobSearchConversionHelper {
 				searchedJobDTO.setCountry(jpLocation.getCountry());
 			}
 
-			/**
-			 * get the template details
-			 */
+			// get the template details
 			searchedJobDTO.setCompanyOverview(entity.getKeywords());
 			searchedJobDTO.setImagePath(entity.getImagePath());
 			searchedJobDTO.setLogo(entity.getLogo());
