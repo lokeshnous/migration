@@ -49,56 +49,16 @@
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
 						class="grid2">
 						<c:forEach items="${alertList}" var="alertList" varStatus="index">
-						
-							<tr>
-								<td><form:checkbox path="selectedAlerts" label="${alertList.optionName}"
-										value="${alertList.optionId}" cssStyle="width:20px" /></td>
-							</tr>
-							
+							<c:if test="${index.count % 2 != 0 }">
+								<tr>
+							</c:if>
+							<td><form:checkbox path="selectedAlerts"
+									label="${alertList.optionName}" value="${alertList.optionId}"
+									cssStyle="width:20px" /></td>
+							<c:if test="${index.count % 2 == 0 }">
+								</tr>
+							</c:if>
 						</c:forEach>
-						<!-- <tr>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Unused job posting
-									expires soon</label></td>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">New job posting
-									credits are available</label></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Active job posting
-									expires soon</label></td>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Order has been
-									assigned</label></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Job posting has
-									expired</label></td>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Order receipt is
-									available</label></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Job posting failed to
-									auto renew</label></td>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Sales contact has been
-									requested </label></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">No job postings are
-									active</label></td>
-							<td><input type="checkbox" name="checkbox" id="checkbox">
-								&nbsp;&nbsp;<label for="checkbox">Administrator changes
-									have been made</label></td>
-						</tr> -->
-
-
-
 					</table>
 					<div
 						class="rowEvenNewSpacing borderBottomDotted paddingBottom10 marginTop0"></div>
