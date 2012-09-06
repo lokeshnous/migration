@@ -68,7 +68,7 @@
 		</property>
 	</bean>
 	<!-- NetSuite services -->
-	<bean id="netSuiteCredential" class="com.advanceweb.afc.jb.webservice.NetSuiteCredential">
+	<bean id="netSuiteCredential" class="com.advanceweb.afc.jb.netsuite.NetSuiteCredential">
 		<property name="account" value="1338577" />
 		<property name="email" value="pravinma@nousinfo.com" />
 		<property name="password" value="pravin123" />

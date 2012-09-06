@@ -25,7 +25,7 @@ public class EmployerRegistrationTest extends ServiceTest{
 		merUserDTO.setPassword("cmkcmkcmk1q");
 		
 		profileDto.setMerUserDTO(merUserDTO);
-		merUserDTO = profileRegistration.createEmployerProfile(profileDto);
+		merUserDTO = profileRegistration.createEmployer(profileDto);
 		Assert.assertNotNull(merUserDTO);
 		
 	}
