@@ -80,8 +80,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -te
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/netsuite/NSCustomer.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/netsuite/NSItem.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/AccountAddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/BillingAddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/search/JobSearchResultDTO.java -text
