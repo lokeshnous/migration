@@ -171,7 +171,7 @@ public class EmployerRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = employerRegistration.createEmployerProfile(empDTO);
+		userDTO = employerRegistration.createEmployer(empDTO);
 		
 		model.addObject("empRegisterForm", empRegForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,

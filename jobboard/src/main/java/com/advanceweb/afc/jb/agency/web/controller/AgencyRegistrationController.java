@@ -142,7 +142,7 @@ public class AgencyRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = agencyRegistration.createEmployerProfile(empDTO);
+		userDTO = agencyRegistration.createEmployer(empDTO);
 
 		model.addObject("agencyRegForm", agencyRegistrationForm);
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
