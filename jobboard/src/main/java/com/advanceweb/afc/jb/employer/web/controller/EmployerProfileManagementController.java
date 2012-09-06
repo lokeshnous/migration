@@ -1,11 +1,16 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -13,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 
 /**
@@ -47,16 +53,26 @@ public class EmployerProfileManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveemployerprofile", method = RequestMethod.POST)
-	public ModelAndView saveEmployeeProf(EmployerProfileManagementForm managementForm) {
+	public ModelAndView saveEmployeeProf(EmployerProfileManagementForm managementForm, BindingResult result) {
+		ModelAndView model = new ModelAndView();
 		CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
 		companyProfileDTO.setCompanyName(managementForm.getCompanyName());
 		companyProfileDTO.setCompanyOverview(managementForm.getCompanyOverview());
+//		Validate email id
+		checkEmail(managementForm.getCompanyEmail(), result);
+		
+		if (result.hasErrors()) {
+			model.addObject("managementForm", managementForm);
+			model.setViewName("manageFeatureEmpPro");
+			return model;
+		}
+		
 		companyProfileDTO.setCompanyEmail(managementForm.getCompanyEmail());
 		companyProfileDTO.setCompanyWebsite(managementForm.getCompanyWebsite());
         companyProfileDTO.setPrimaryColor(managementForm.getPrimaryColor());
         companyProfileDTO.setCompanyNews(managementForm.getCompanyNews());
         String fileName = null, filePath = null;
-        ModelAndView model = new ModelAndView();
+        
 		try {
 			MultipartFile logoUrl = managementForm.getLogoUrl();
 			MultipartFile promoMedia = managementForm.getPositionalMedia();
@@ -87,4 +103,42 @@ public class EmployerProfileManagementController {
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return model;
 	}
+	
+	
+	/**
+	 * Validating the emailId
+	 * 
+	 * @param registerForm
+	 * @return
+	 * @return
+	 */
+	public void checkEmail(String email, Errors errors) {
+
+		if (StringUtils.isEmpty(email)) {
+			errors.rejectValue("companyEmail", "NotEmpty",
+					"Email id should not be blank");
+		}
+
+		if (!StringUtils.isEmpty(email) && !validateEmailPattern(email)) {
+
+			errors.rejectValue("companyEmail", "NotEmpty", "Invalid Email Id");
+
+		}
+	}
+	
+	/**
+	 * Validating Email Pattern
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	public boolean validateEmailPattern(String emailId) {
+		Pattern pattern;
+		Matcher matcher;
+		pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
+		matcher = pattern.matcher(emailId);
+		return matcher.matches();
+	}
+	
+	
 }
