@@ -52,7 +52,7 @@
 					<!-- content_wrapper -->
 					<div class="popupHeader Padding0  OrangeBG marginBottom5">
 						<h2>MANAGE FEATURED EMPLOYER PROFILE</h2>
-						<span class="floatRight marginRight10"><a href="#"
+						<span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
 							class="link_color3_emphasized FontSize12 FontWeight">Back to
 								Dashboard</a></span>
 					</div>
@@ -77,9 +77,6 @@
 
 							</div>
 
-
-
-
 						</div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Company Website:</div>
@@ -90,6 +87,8 @@
 										class="jb_input2Coverletter width300" />
 								</div>
 							</div>
+							
+							
 						</div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Company Email
@@ -98,13 +97,17 @@
 								<div class="floatLeft">
 									<form:input path="companyEmail" name="Exclude"
 										class="jb_input2Coverletter width300" />
-
+									
+								</div>
+								<div class="FormErrorDisplayText">
+										<form:errors path="companyEmail" />
 								</div>
 							</div>
+							
 						</div>
 						<div class="floatLeft marginTop5">
 										<span class="lableText3"> Primary Color:</span>
-							         	 <form:input id="color_id" path="primaryColor" readonly="true" class="jb_input2Coverletter InputActiveText" value="HEX #"/>
+							         	 <form:input id="color_id" path="primaryColor" readonly="true" class="jb_input2Coverletter InputActiveText" />
 							        <div class="floatRight"><input id="colorPkr" name="color1" type="text"   /></div></div>
 							         <div class="toolTip marginTop6 marginleft5"><span class="classic">Select a color that complements your brand.</span></div>
 							         	
