@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.UserAlertDTO;
-import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 import com.advanceweb.afc.jb.data.entities.AdmUserAlert;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
@@ -47,16 +46,17 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @param userId
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserAlertDTO> viewalerts(int userId) {
 		List<MerUser> user = hibernateTemplateTracker.find(
 				" from  MerUser user where user.userId=?", userId);
-		List<AdmUserAlert> userAlerts = hibernateTemplate
-				.find("from AdmUserAlert au where  au.userId=? and au.deleteDt is NULL",
-						userId);
-
+		List<AdmUserAlert> userAlerts = hibernateTemplate.find(
+				" from AdmUserAlert  where userId = ? and deleteDt is null",
+				userId);
 		return conversionHelper.transformAdmUserAlertToAlertDTO(user,
 				userAlerts);
+
 	}
 
 	/**

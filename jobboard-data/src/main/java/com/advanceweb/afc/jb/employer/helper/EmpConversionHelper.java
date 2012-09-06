@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmUserAlert;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -56,14 +57,12 @@ public class EmpConversionHelper {
 				+ user.get(0).getLastName();
 		for (AdmUserAlert admUserAlert : userAlerts) {
 			UserAlertDTO alertDTO = new UserAlertDTO();
-			alertDTO.setAlertId(admUserAlert.getAdmAlert().getAlertId());
-			alertDTO.setAlertType(admUserAlert.getAlertValue());
+			AdmAlert alert = admUserAlert.getAdmAlert();
+			alertDTO.setAlertId(alert.getAlertId());
+			alertDTO.setAlertType(alert.getName());
 			alertDTO.setJobOwner(owner);
-			if (admUserAlert.getCreateDt() != null) {
-				alertDTO.setSetDate(DateUtils
-						.convertSQLDateToStdDate(admUserAlert.getCreateDt()
-								.toString()));
-			}
+			alertDTO.setSetDate(DateUtils.convertSQLDateToStdDate(admUserAlert
+					.getCreateDt().toString()));
 			alertDTOs.add(alertDTO);
 		}
 		return alertDTOs;

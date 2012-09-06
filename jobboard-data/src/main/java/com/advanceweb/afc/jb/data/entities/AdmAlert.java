@@ -24,7 +24,7 @@ public class AdmAlert implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to AdmUserAlert
-	@OneToMany(mappedBy="admAlert")
+	@OneToMany(mappedBy="admAlert", cascade=CascadeType.ALL)
 	private List<AdmUserAlert> admUserAlerts;
 
 	public int getAlertId() {
