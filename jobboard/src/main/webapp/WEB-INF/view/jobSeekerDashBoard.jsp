@@ -28,10 +28,6 @@
 	<script type="text/javascript">
 jQuery(document).ready(
 		function() {
-			val=<%= request.getParameter("totalProgress") %>;
-			if(val!=null){
-			alert("You have completed "+ val+ "% of information.");	
-			}
 			//jQuery(".megamenu").megamenu();
 			$("#viewappliedjob").displaypopup("#viewappliedjob", "775",
 					"355");
