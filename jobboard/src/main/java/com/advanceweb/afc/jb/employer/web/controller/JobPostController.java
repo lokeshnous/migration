@@ -337,7 +337,7 @@ public class JobPostController {
 	@ResponseBody
 	public List<String> getPostalCodeAutoPopulation(
 			@RequestParam("term") String postalCode) {
-		System.out.println("Value" +postalCode);
+
 		List<String> postalCodeList = populateDropdownsService
 				.populatePostalCodeAutoComplete(postalCode);
 
