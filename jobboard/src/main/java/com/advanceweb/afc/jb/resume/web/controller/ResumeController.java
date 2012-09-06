@@ -669,7 +669,6 @@ public class ResumeController {
 		resumeDTO.setListPhoneDtl(listPhoneDTO);
 		resumeService.createResumeBuilder(resumeDTO);
 		getTotalNotNullField(createResume);
-		model.addObject("totalProgress", createResume.getTotalProgress());
 		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		//createResume is a session variable & we have make it null once the resume is saved, 
 		//otherwise if we go to create new resume screen we will get the session data displayed in the 
