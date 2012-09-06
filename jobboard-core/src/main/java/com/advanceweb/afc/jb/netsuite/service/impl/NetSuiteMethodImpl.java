@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.netsuite.NetSuiteCredential;
-import com.advanceweb.afc.jb.netsuite.NetSuiteHelper;
 import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 
 
@@ -19,15 +18,24 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	private static final String AUTHORIZATION_STRING = "Authorization";
 	private static final String CONTENT_TYPE_STRING = "Content-Type";
 	private static final String CONTENT_TYPE_VALUE = "application/json";
-	private static final Logger LOGGER = Logger.getLogger(NetSuiteHelper.class);
+	private static final Logger LOGGER = Logger.getLogger(NetSuiteMethodImpl.class);
 	
 	@Autowired
 	private NetSuiteCredential netSuiteCredential;
 
+	/**
+	 * 
+	 */
+	
 	public Response netSuiteGet(String wsUrl) {
 		return createWebClient(wsUrl).get();
 	}
 
+	
+	/**
+	 * 
+	 */
+	
 	public Response netSuitePost(String wsUrl, Object obj) {
 		return createWebClient(wsUrl).post(obj);
 	}
@@ -46,6 +54,11 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 		client.header(CONTENT_TYPE_STRING, CONTENT_TYPE_VALUE);
 		return client;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	
 	private String createAuthorization(){
 		String authorization = "NLAuth nlauth_account=" + netSuiteCredential.getAccount()
