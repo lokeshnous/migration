@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +17,10 @@ public class NetSuiteHelper {
 	private static final String AUTHORIZATION_STRING = "Authorization";
 	private static final String CONTENT_TYPE_STRING = "Content-Type";
 	private static final String CONTENT_TYPE_VALUE = "application/json";
-	
-	
 	private static final Logger LOGGER = Logger.getLogger(NetSuiteHelper.class);
+	
+	@Autowired
+	private NetSuiteCredential netSuiteCredential;
 
 	
 	/**
@@ -50,11 +52,12 @@ public class NetSuiteHelper {
 	
 	
 	public String createAuthorization(){
-		Properties entries = getWSProperties();
-		String authorization = "NLAuth nlauth_account=" + entries.getProperty("account")
-				+ ", nlauth_email=" + entries.getProperty("email") + ", nlauth_signature=" + entries.getProperty("password")
-				+ ", nlauth_role=" + entries.getProperty("role") + "";
 		
+		String authorization = "NLAuth nlauth_account=" + netSuiteCredential.getAccount()
+				+ ", nlauth_email=" + netSuiteCredential.getEmail() + ", nlauth_signature=" + netSuiteCredential.getPassword()
+				+ ", nlauth_role=" + netSuiteCredential.getRole() + "";
+		
+		LOGGER.info("Authorization=>"+authorization);
 		return authorization;
 	}
 	

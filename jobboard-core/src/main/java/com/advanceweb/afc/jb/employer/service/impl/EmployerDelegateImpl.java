@@ -42,7 +42,10 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 		
 		LOGGER.info("Json for Customer=>"+jsonCustomer);
 		
-		String customerID = nsCustomerService.createCustomer(jsonCustomer.toLowerCase());
+		String customerID = nsCustomerService.createCustomer(jsonCustomer);
+		
+		LOGGER.info("Is error=="+customerID.contains("error"));
+		
 		if(customerID.contains("error")){
 			LOGGER.info("Error occurred while getting the response from NetSuite.");
 			throw new JobBoardServiceException("Error occurred while getting the response from NetSuite.");
