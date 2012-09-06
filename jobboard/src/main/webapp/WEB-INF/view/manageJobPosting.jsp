@@ -244,7 +244,7 @@
 						<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 						</div>
 						<div class="searchResultsNavigationColumn2 floatRight">
-							<span>Page:</span>
+							<!-- <span>Page:</span> -->
 							<%--For displaying Previous link except for the 1st page --%>
 							<c:if test="${currentPage != 1 && noOfPages gt 10}">
 								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}"> <img
@@ -433,7 +433,7 @@
 						<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 						</div>
 						<div class="searchResultsNavigationColumn2 floatRight">
-							<span>Page: </span>
+							<!-- <span>Page: </span> -->
 							
 							<%--For displaying Previous link except for the 1st page --%>
 							<c:if test="${currentPage != 1 && noOfPages gt 10}">

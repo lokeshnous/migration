@@ -499,7 +499,7 @@
                                      
                                      <div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp; </div>
 <div class="searchResultsNavigationColumn2">
-                                     	<span>Page:</span>
+                                     	<!-- <span>Page:</span> -->
                                         <span class="active">1</span>
                                         <span><a href="">2</a></span>
                                         <span><a href="">3</a></span>
@@ -1485,7 +1485,7 @@
                                      	&nbsp;&nbsp;&nbsp;
                                      </div>
                                      <div class="searchResultsNavigationColumn2">
-                                     	<span>Page:</span>
+                                     	<!-- <span>Page:</span> -->
                                         <span class="active">1</span>
                                         <span><a href="">2</a></span>
                                         <span><a href="">3</a></span>

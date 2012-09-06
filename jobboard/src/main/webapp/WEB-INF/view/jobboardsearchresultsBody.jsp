@@ -164,7 +164,7 @@
 		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 					</div>
 					<div class="searchResultsNavigationColumn2 floatRight">
-						<span>Page:</span>
+						<!-- <span>Page:</span> -->
 						<c:if test="${currentPage != 1 && noOfPages gt 10}">
 							<td><a
 								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
@@ -241,7 +241,7 @@
 											class="btn_sm white">Save This Job</a>
 									</div>
 								</div>
-								<div class="featured_empButton">${job.IsFeatured}
+								<div class="featured_empButton">
 									<c:choose>
 										<c:when test="${job.IsFeatured}">
 											<!-- <a href=""> --><img src="../resources/images/FeaturedEmp.png"
@@ -310,7 +310,7 @@
 		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 					</div>
 					<div class="searchResultsNavigationColumn2 floatRight">
-						<span>Page: </span>
+						<!-- <span>Page: </span> -->
 						<c:if test="${currentPage != 1 && noOfPages gt 10}">
 							<td><a
 								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
