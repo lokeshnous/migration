@@ -193,6 +193,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/JobSeeker.java -te
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Resume.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmAlert.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacility.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityAlert.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityContact.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityCredit.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityGroup.java -text
@@ -445,6 +446,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeProfile
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/TransformCreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/TransferUserAlert.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserAlertController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/exception/JobBoardUIException.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text

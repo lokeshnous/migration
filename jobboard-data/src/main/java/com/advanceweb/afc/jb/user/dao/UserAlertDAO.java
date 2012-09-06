@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.user.dao;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 
 /**
@@ -19,7 +20,7 @@ public interface UserAlertDAO {
 	 * @param userId
 	 * @return
 	 */
-	List<UserAlertDTO> viewalerts(int userId);
+	List<UserAlertDTO> viewalerts(int userId, int facilityId);
 
 	/**
 	 * This method is called to delete the alerts
@@ -29,4 +30,21 @@ public interface UserAlertDAO {
 	 * @return
 	 */
 	boolean deleteAlert(int userId, int alertId);
+
+	/**
+	 * To get the check box values
+	 * 
+	 * @param dropDownName
+	 * @return
+	 */
+	List<DropDownDTO> populateValues(String dropDownName);
+
+	/**
+	 * This method is called to save the selected alerts
+	 * 
+	 * @param userId
+	 * @param alertDTOs
+	 * @return
+	 */
+	boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs);
 }

@@ -26,9 +26,6 @@
 			var action = $(this).attr("alt");
 			var rowObj = $(this).parent().parent().parent();
 			var alertId = rowObj.attr("id");
-			
-			alert(action);
-			alert(alertId);
 		
 			switch (action) {
 			case "delete":{

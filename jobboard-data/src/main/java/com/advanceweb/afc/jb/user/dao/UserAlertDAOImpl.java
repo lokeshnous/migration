@@ -3,14 +3,18 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
-import com.advanceweb.afc.jb.data.entities.AdmUserAlert;
+import com.advanceweb.afc.jb.data.entities.AdmAlert;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 
@@ -24,6 +28,9 @@ import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 @Transactional
 @Repository("alertDAO")
 public class UserAlertDAOImpl implements UserAlertDAO {
+
+	private static final Logger LOGGER = Logger
+			.getLogger(UserAlertDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
 	private HibernateTemplate hibernateTemplateTracker;
@@ -48,12 +55,12 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserAlertDTO> viewalerts(int userId) {
+	public List<UserAlertDTO> viewalerts(int userId, int facilityId) {
 		List<MerUser> user = hibernateTemplateTracker.find(
 				" from  MerUser user where user.userId=?", userId);
-		List<AdmUserAlert> userAlerts = hibernateTemplate.find(
-				" from AdmUserAlert  where userId = ? and deleteDt is null",
-				userId);
+		List<AdmFacilityAlert> userAlerts = hibernateTemplate
+				.find(" from AdmFacilityAlert  where userId = ? and deleteDt is null",
+						userId);
 		return conversionHelper.transformAdmUserAlertToAlertDTO(user,
 				userAlerts);
 
@@ -68,10 +75,54 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 */
 	@Override
 	public boolean deleteAlert(int userId, int alertId) {
-		AdmUserAlert userAlert = hibernateTemplate.load(AdmUserAlert.class,
-				alertId);
+		AdmFacilityAlert userAlert = hibernateTemplate.load(
+				AdmFacilityAlert.class, alertId);
 		userAlert.setDeleteDt(new Date());
 		hibernateTemplate.saveOrUpdate(userAlert);
 		return true;
 	}
+
+	/**
+	 * To get the check box values
+	 * 
+	 * @param dropDownName
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DropDownDTO> populateValues(String dropDownName) {
+		List<AdmAlert> admAlerts = hibernateTemplate.find(
+				"from AdmAlert e where e.alertType=?", dropDownName);
+		return conversionHelper.convertAdmAlertToDropDownDTO(admAlerts);
+	}
+
+	/**
+	 * This method is called to save the selected alerts
+	 * 
+	 * @param userId
+	 * @param alertDTOs
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs) {
+		try {
+
+			if (userId != 0) {
+				List<AdmFacilityAlert> listAlerts = hibernateTemplate
+						.find("from AdmFacilityAlert where userId =? and deleteDt is null",
+								userId);
+				List<AdmFacilityAlert> userAlerts = conversionHelper
+						.transformAlertDTOToAdmFacilityAlert(alertDTOs,
+								listAlerts);
+				hibernateTemplate.deleteAll(listAlerts);
+				hibernateTemplate.saveOrUpdateAll(userAlerts);
+			}
+		} catch (DataAccessException e) {
+			LOGGER.info("not able to assign the alerts to the facility");
+		}
+
+		return true;
+	}
+
 }

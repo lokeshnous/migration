@@ -20,6 +20,16 @@
 		}
 	});
 	jQuery(document).ready(function() {
+		$('#save').click(function(){			
+			
+			$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html",
+				data:$('#alertId').serialize(),
+				type:"GET",
+				success: function(data) {					
+					parent.$.nmTop().close();
+				 },
+			});
+		}); 
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -34,12 +44,19 @@
 				height="19" onclick="closePopup();" alt=""></a>
 		</div>
 		<div class="popUpContainerWrapper">
-			<form action="" method="">
+			<form:form method="GET" action="../alerts/employer/saveAlerts.html" id="alertId" commandName="alertForm">
 				<div class="rowEvenNewSpacing">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
 						class="grid2">
-
-						<tr>
+						<c:forEach items="${alertList}" var="alertList" varStatus="index">
+						
+							<tr>
+								<td><form:checkbox path="selectedAlerts" label="${alertList.optionName}"
+										value="${alertList.optionId}" cssStyle="width:20px" /></td>
+							</tr>
+							
+						</c:forEach>
+						<!-- <tr>
 							<td><input type="checkbox" name="checkbox" id="checkbox">
 								&nbsp;&nbsp;<label for="checkbox">Unused job posting
 									expires soon</label></td>
@@ -78,7 +95,7 @@
 							<td><input type="checkbox" name="checkbox" id="checkbox">
 								&nbsp;&nbsp;<label for="checkbox">Administrator changes
 									have been made</label></td>
-						</tr>
+						</tr> -->
 
 
 
@@ -102,13 +119,13 @@
 								Job Owner</a></span>
 					</div>
 				</div>
-				<div class="row marginTop20 paddingBottom10">
-					<span class="floatLeft marginTop10"> <input type="button"
-						id="saveData" class="btn_sm orange value=" Save" /> <input
-						type="button" onclick="closePopup();" class="btn_sm orange value=" Cancel" />
-						<!-- <a href="" class="btn_sm orange">Cancel</a> --></span>
+				<div class="popUpButtonRow">
+					<input type="button" id="save" value="Save" class="orange" />
+					<!-- <a href="" class="btn_sm orange">Save</a> -->
+					<input type="button" value="Cancel" onclick="closePopup()"
+						class="orange" name="Cancel" />
 				</div>
-			</form>
+			</form:form>
 		</div>
 		<div class="clearfix"></div>
 	</div>

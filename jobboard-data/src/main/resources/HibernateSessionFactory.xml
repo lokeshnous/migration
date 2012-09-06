@@ -88,6 +88,7 @@
 			<list>
 					<value>com.advanceweb.afc.jb.data.entities.AdmAlert</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacility</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityAlert</value>				
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityContact</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityCredit</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityGroup</value>

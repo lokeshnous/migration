@@ -16,6 +16,7 @@ public class UserAlertDTO {
 	private String jobOwner;
 	private String setDate;
 	private int userId;
+	private int facilityId;
 
 	/**
 	 * @return the alertTYpe
@@ -85,10 +86,26 @@ public class UserAlertDTO {
 	}
 
 	/**
-	 * @param alertId the alertId to set
+	 * @param alertId
+	 *            the alertId to set
 	 */
 	public void setAlertId(int alertId) {
 		this.alertId = alertId;
+	}
+
+	/**
+	 * @return the facilityId
+	 */
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	/**
+	 * @param facilityId
+	 *            the facilityId to set
+	 */
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 }

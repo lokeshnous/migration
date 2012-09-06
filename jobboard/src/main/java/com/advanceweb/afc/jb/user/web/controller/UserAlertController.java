@@ -24,7 +24,6 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
-import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.UserAlertService;
 
 /**
@@ -43,9 +42,9 @@ public class UserAlertController {
 
 	@Autowired
 	private UserAlertService alertService;
-	
+
 	@Autowired
-	private PopulateDropdowns populateDropdownsService;
+	private TransferUserAlert transferUserAlert;
 
 	@Value("${dataDeleteSuccess}")
 	private String dataDeleteSuccess;
@@ -65,12 +64,47 @@ public class UserAlertController {
 	public ModelAndView setAlerts(
 			@ModelAttribute("alertForm") UserAlertForm alertForm,
 			BindingResult result, HttpSession session) {
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		ModelAndView model = new ModelAndView();
-		List<DropDownDTO> alertList = populateDropdownsService
-				.populateDropdown("EmployerAlert");
+		List<DropDownDTO> alertList = alertService.populateValues("FACILITY");
+		List<UserAlertDTO> userAlertDTOs = alertService.viewalerts(userId,
+				facilityId);
+		transferUserAlert.jsUserAlertDTOToUserAlerts(userAlertDTOs, alertForm,
+				alertList);
 		model.addObject("alertList", alertList);
+		model.setViewName("alertForm");
 		model.setViewName("setAlertPopup");
 		return model;
+	}
+
+	/**
+	 * This method is called to save the selected alerts
+	 * 
+	 * @param JobSeekerSubscriptionForm
+	 * @param result
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/employer/saveAlerts", method = RequestMethod.GET)
+	public String saveAlerts(UserAlertForm alertForm, BindingResult result,
+			HttpSession session) {
+		try {
+
+			alertForm.setUserId(Integer.valueOf(String.valueOf(session
+					.getAttribute("userId"))));
+			alertForm.setFacilityId(Integer.valueOf(String.valueOf(session
+					.getAttribute("facilityId"))));
+			List<UserAlertDTO> alertDTOs = transferUserAlert
+					.jsAlertFormToUserAlertDTO(alertForm);
+			alertService.saveAlerts(alertForm.getUserId(), alertDTOs);
+		} catch (Exception e) {
+			LOGGER.info("error in saving the subscription for job seeker");
+		}
+		return null;
 	}
 
 	/**
@@ -86,7 +120,10 @@ public class UserAlertController {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
-		List<UserAlertDTO> alertList = alertService.viewalerts(userId);
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<UserAlertDTO> alertList = alertService.viewalerts(userId,
+				facilityId);
 		model.addObject("alertList", alertList);
 		model.addObject(alertForm);
 		model.setViewName("viewAlertPopup");
@@ -94,7 +131,7 @@ public class UserAlertController {
 	}
 
 	/**
-	 * This method is called to delete a Saved Job Search
+	 * This method is called to delete the alert
 	 * 
 	 * @param form
 	 * @param result

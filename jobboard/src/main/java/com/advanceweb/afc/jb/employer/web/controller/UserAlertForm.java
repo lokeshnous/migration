@@ -11,9 +11,13 @@ import java.util.Date;
 
 public class UserAlertForm {
 
+	private int alertId;
 	private String alertTYpe;
 	private String jobOwner;
 	private Date setDate;
+	private int userId;
+	private int facilityId;
+	private String[] selectedAlerts;
 
 	/**
 	 * @return the alertTYpe
@@ -58,5 +62,62 @@ public class UserAlertForm {
 	 */
 	public void setSetDate(Date setDate) {
 		this.setDate = setDate;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return the selectedAlerts
+	 */
+	public String[] getSelectedAlerts() {
+		return selectedAlerts;
+	}
+
+	/**
+	 * @param selectedAlerts the selectedAlerts to set
+	 */
+	public void setSelectedAlerts(String[] selectedAlerts) {
+		this.selectedAlerts = selectedAlerts;
+	}
+
+	/**
+	 * @return the alertId
+	 */
+	public int getAlertId() {
+		return alertId;
+	}
+
+	/**
+	 * @param alertId the alertId to set
+	 */
+	public void setAlertId(int alertId) {
+		this.alertId = alertId;
+	}
+
+	/**
+	 * @return the facilityId
+	 */
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	/**
+	 * @param facilityId the facilityId to set
+	 */
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 }
