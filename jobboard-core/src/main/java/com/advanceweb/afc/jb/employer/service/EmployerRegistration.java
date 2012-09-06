@@ -46,10 +46,10 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	 * 
 	 * @param profileDTO
 	 */
-	public UserDTO createEmployerProfile(ProfileDTO profileDTO) {
+	public UserDTO createEmployer(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
-			return employerDelegate.createEmployerProfile(empProfileDTO);
+			return employerDelegate.createEmployer(empProfileDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

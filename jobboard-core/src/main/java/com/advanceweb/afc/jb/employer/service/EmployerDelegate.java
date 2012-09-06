@@ -6,6 +6,6 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 public interface EmployerDelegate {
 	
-	public UserDTO createEmployerProfile(EmployerProfileDTO empProfileDTO) throws JobBoardServiceException;
+	public UserDTO createEmployer(EmployerProfileDTO empProfileDTO) throws JobBoardServiceException;
 
 }

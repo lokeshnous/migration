@@ -129,6 +129,16 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/lookup/service/impl/LookupServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/mail/service/EmailDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/mail/service/MMEmail.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/mail/service/MMEmailService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/NSCustomer.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/NSItem.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/NetSuiteCredential.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/NetSuiteHelper.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NSCustomerService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NSInvoiceService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NSSalesOrderService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NetSuiteMethod.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/impl/NSCustomerServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/impl/NetSuiteMethodImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/PaymentGatewayServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeService.java -text

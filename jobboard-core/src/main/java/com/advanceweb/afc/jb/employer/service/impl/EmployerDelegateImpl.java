@@ -6,12 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.common.util.JsonUtil;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.employer.service.EmployerDelegate;
-import com.advanceweb.afc.jb.netsuite.NSCustomer;
+import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-import com.advanceweb.afc.jb.webservice.service.NSCustomerService;
 
 
 
@@ -33,18 +31,13 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 	 */
 	
 	@Override
-	public UserDTO createEmployerProfile(EmployerProfileDTO empProfileDTO) throws JobBoardServiceException{
+	public UserDTO createEmployer(EmployerProfileDTO empProfileDTO) throws JobBoardServiceException{
 		
+		//Get the details here and put it inside UserDTO
 		UserDTO userDTO = null;
 		//Added for calling WS call to NetSuite
-		NSCustomer nsCustomer = createCustomerObject(empProfileDTO);		
-		String jsonCustomer = JsonUtil.toJson(nsCustomer);
 		
-		LOGGER.info("Json for Customer=>"+jsonCustomer);
-		
-		String customerID = nsCustomerService.createCustomer(jsonCustomer);
-		
-		LOGGER.info("Is error=="+customerID.contains("error"));
+		String customerID = nsCustomerService.createCustomer(userDTO);
 		
 		if(customerID.contains("error")){
 			LOGGER.info("Error occurred while getting the response from NetSuite.");
@@ -52,22 +45,10 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 		}else{
 			userDTO = employerRegistrationDAO.createEmployerProfile(empProfileDTO);
 		}
+		
 		return userDTO;
 	}
 	
-	/**
-	 * 
-	 * @param empProfileDTO
-	 * @return
-	 */
 	
-	private NSCustomer createCustomerObject(EmployerProfileDTO empProfileDTO){
-		
-		NSCustomer nsCustomer = new NSCustomer();
-		//custDTO.setCustomerId(460460);
-		nsCustomer.setCompanyName(empProfileDTO.getMerUserDTO().getFirstName() + " " + empProfileDTO.getMerUserDTO().getLastName());
-		nsCustomer.setRecordType("customer");
-		return nsCustomer;
-	}
 
 }
