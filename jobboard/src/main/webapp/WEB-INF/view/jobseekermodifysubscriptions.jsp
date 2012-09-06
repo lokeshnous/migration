@@ -19,7 +19,8 @@
 				data:$('#subscriptionsId').serialize(),
 				type:"POST",
 				success: function(data) {					
-					parent.$.nmTop().close();
+					//parent.$.nmTop().close();
+					location.reload();
 				 },
 			});
 		}); 
