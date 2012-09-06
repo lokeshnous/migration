@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.webservice.Helper;
+package com.advanceweb.afc.jb.webservice;
 
 import java.io.IOException;
 import java.util.Properties;
