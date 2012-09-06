@@ -164,8 +164,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/webservice/NetSuiteCredential.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/webservice/NetSuiteHelper.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/webservice/service/NSCustomerService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/webservice/service/NSInvoiceService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/webservice/service/NSSalesOrderService.java -text
