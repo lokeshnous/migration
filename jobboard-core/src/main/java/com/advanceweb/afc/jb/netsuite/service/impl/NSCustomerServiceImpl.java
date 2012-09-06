@@ -2,6 +2,8 @@ package com.advanceweb.afc.jb.netsuite.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.ws.rs.core.Response;
@@ -58,9 +60,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		
 		LOGGER.info("Json for Customer=>"+jsonCustomer);
 		
-		String wsURL = createNSUrl();
+		Map<String, String> queryparamMap = createQueryMap();
 		
-		Response response = netSuiteMethod.netSuitePost(wsURL, jsonCustomer);
+		Response response = netSuiteMethod.netSuitePost(queryparamMap, jsonCustomer);
 		
 		return getJSONFromResponse(response);
 	}
@@ -86,15 +88,15 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	 * @return
 	 */
 	
-	private String createNSUrl() {
+	private Map<String, String> createQueryMap() {
 		
 		Properties entries = netSuiteHelper.getNSProperties();
-		String wsUrl = entries.getProperty("baseUrl").concat("?script=")
-				.concat(entries.getProperty("scriptForCreateCustomer")).concat("&deploy=")
-				.concat(entries.getProperty("deployForCreateCustomer"));
-		LOGGER.info("NS Create Customer Url=>" + wsUrl);
+		Map<String, String> queryParamMap = new HashMap<String, String>();
+		queryParamMap.put("baseUrl", entries.getProperty("baseUrl"));
+		queryParamMap.put("script", entries.getProperty("scriptForCreateCustomer"));
+		queryParamMap.put("deploy", entries.getProperty("deployForCreateCustomer"));
 		
-		return wsUrl;
+		return queryParamMap;
 	}
 	
 	/**

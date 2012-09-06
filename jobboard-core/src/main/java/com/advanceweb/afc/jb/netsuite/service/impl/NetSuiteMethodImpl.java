@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.netsuite.service.impl;
 
+import java.util.Map;
+
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.client.WebClient;
@@ -27,8 +29,8 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	 * 
 	 */
 	
-	public Response netSuiteGet(String wsUrl) {
-		return createWebClient(wsUrl).get();
+	public Response netSuiteGet(Map<String, String> queryparamMap) {
+		return createWebClient(queryparamMap).get();
 	}
 
 	
@@ -36,8 +38,8 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	 * 
 	 */
 	
-	public Response netSuitePost(String wsUrl, Object obj) {
-		return createWebClient(wsUrl).post(obj);
+	public Response netSuitePost(Map<String, String> queryparamMap, Object obj) {
+		return createWebClient(queryparamMap).post(obj);
 	}
 	
 	
@@ -47,11 +49,18 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	 * 
 	 * @return WebClient obj
 	 */
-	private WebClient createWebClient(String wsUrl) {
+	private WebClient createWebClient(Map<String, String> queryparamMap) {
 		String authorization = createAuthorization();
-		WebClient client = WebClient.create(wsUrl);
+		WebClient client = WebClient.create(queryparamMap.get("baseUrl"));
+		client.query("script", queryparamMap.get("script"));
+		client.query("deploy", queryparamMap.get("deploy"));
+
 		client.header(AUTHORIZATION_STRING, authorization);
 		client.header(CONTENT_TYPE_STRING, CONTENT_TYPE_VALUE);
+		
+		LOGGER.info("Web Client=>"+client);
+		LOGGER.info("Web Client=>"+client.getCurrentURI());
+		
 		return client;
 	}
 	
@@ -70,5 +79,4 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	}
 	
 	
-
 }

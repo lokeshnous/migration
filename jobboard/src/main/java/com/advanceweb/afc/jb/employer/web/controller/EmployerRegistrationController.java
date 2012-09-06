@@ -38,15 +38,11 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.common.util.JsonUtil;
-
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
-import com.advanceweb.afc.jb.netsuite.NSCustomer;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
@@ -172,21 +168,26 @@ public class EmployerRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createEmployer(empDTO);
-		
-		model.addObject("empRegisterForm", empRegForm);
-		session.setAttribute(MMJBCommonConstants.USER_NAME,
-				userDTO.getFirstName() + " " + userDTO.getLastName());
-		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL,
-				userDTO.getEmailId());
-		EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
-				.getUserId());
-		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
-				infoDTO.getFacilityId());
-		model.setViewName("jobBoardEmployerPostJobs01");
-		authenticateUserAndSetSession(userDTO, request);
+		if(userDTO == null){
+			model.addObject("Error occurred while interaction with NetSuite.. Please try again.");
+			return model;
+		}else{
+			model.addObject("empRegisterForm", empRegForm);
+			session.setAttribute(MMJBCommonConstants.USER_NAME,
+					userDTO.getFirstName() + " " + userDTO.getLastName());
+			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
+			session.setAttribute(MMJBCommonConstants.USER_EMAIL,
+					userDTO.getEmailId());
+			EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
+					.getUserId());
+			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
+					infoDTO.getFacilityId());
+			model.setViewName("jobBoardEmployerPostJobs01");
+			authenticateUserAndSetSession(userDTO, request);
 
-		return model;
+			return model;
+		}
+		
 	}
 
 	/**

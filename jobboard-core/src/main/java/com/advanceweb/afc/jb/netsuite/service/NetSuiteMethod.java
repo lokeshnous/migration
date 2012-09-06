@@ -1,11 +1,13 @@
 package com.advanceweb.afc.jb.netsuite.service;
 
+import java.util.Map;
+
 import javax.ws.rs.core.Response;
 
 public interface NetSuiteMethod {
 	
-	public Response netSuiteGet(String wsUrl);
+	public Response netSuiteGet(Map<String, String> queryparamMap);
 	
-	public Response netSuitePost(String wsUrl, Object obj);
+	public Response netSuitePost(Map<String, String> queryparamMap, Object obj);
 
 }

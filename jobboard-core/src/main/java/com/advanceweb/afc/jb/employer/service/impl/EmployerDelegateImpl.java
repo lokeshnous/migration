@@ -34,7 +34,7 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 	public UserDTO createEmployer(EmployerProfileDTO empProfileDTO) throws JobBoardServiceException{
 		
 		//Get the details here and put it inside UserDTO
-		UserDTO userDTO = null;
+		UserDTO userDTO = new UserDTO();
 		//Added for calling WS call to NetSuite
 		
 		String customerID = nsCustomerService.createCustomer(userDTO);

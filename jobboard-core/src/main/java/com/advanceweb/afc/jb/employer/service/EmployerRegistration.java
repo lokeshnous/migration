@@ -9,15 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
-import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
-import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
+import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
  * @author rajeshkb
@@ -45,15 +46,17 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	/**
 	 * 
 	 * @param profileDTO
+	 * @throws JobBoardServiceException 
 	 */
 	public UserDTO createEmployer(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerDelegate.createEmployer(empProfileDTO);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (JobBoardServiceException e) {
+			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
+			return null;
 		}
-		return null;
+		
 	}
 
 	/**
