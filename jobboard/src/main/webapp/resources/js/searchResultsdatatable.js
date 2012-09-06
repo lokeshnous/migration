@@ -195,6 +195,13 @@ jQuery(document).ready(function() {
 								});
 			};
 
+			var keywords ;
+			var cityState ;
+			var radius ;
+			var rows ;
+			var start ;
+			var searchtype ;
+			
 			$(document)
 					.ready(
 							function() {
@@ -206,117 +213,40 @@ jQuery(document).ready(function() {
 									findJobs();
 								
 								}
-								//$('#submitval').trigger('click');
 								$("#submitval").click(function(event) {
 									$("#errorMsg").html("");
 									$("#autoload").val(false);
 									if(!validateSearch()){
 										return false;
-									}
+									}							
 									//var x = $("#results").val();
 									$("#rows").val(25000);
 									$("#start").val("0");
 									
-									var keywords = $("#keywords").val();
-									var cityState = $("#cityState").val();
-									var radius = $("#radius").val();
-									var rows = $("#rows").val();
-									var start = $("#start").val();
-									var searchtype = $("#searchtype").val();
+									keywords = $("#keywords").val();
+									cityState = $("#cityState").val();
+									radius = $("#radius").val();
+									rows = $("#rows").val();
+									start = $("#start").val();
+									searchtype = $("#searchtype").val();
 									
 									var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
 									$.getJSON(navUrl,function(data) {
-											table.fnClearTable();
-											table.fnAddData(data.jsonRows);
-											var nNodes = table.fnGetNodes();
-											var count = 0;
-											for(var i=0;i<nNodes.length;i++)
-										        {
-												if(i  != 0 && (i % 9) == 0){
-												
-												table.fnOpen( nNodes[i+count], "<img src='../resources/images/ads/banner_ad_fpo.png'>", "advertiseStyle" );
-												count = count+1;
-												}
-										        }
-											$("#TotalNoRecords").text(data.TotalNoRecords);
-											$("#TotalRecord").text(data.TotalNoRecords);
-											/* $("#SearchCriteria").text(keywords); */
-											});
+										//alert(data["totalNoOfRecords"]);
+										processPaginationReq();//totalNoOfRecords
+										$("#TotalNoRecords").text(data["totalNoOfRecords"]);
+										//alert(data["totalNoOfRecords"]);
+										$("#TotalRecord").text(data["totalNoOfRecords"]);
+									});
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");
 									
 									return true;
 									
 								});
-								/* Add event listener for opening and closing details
-								 * Note that the indicator for showing which row is open is not controlled by DataTables,
-								 * rather it is done here
-								 */
-								$('#jsonTable tbody tr')
-										.live(
-												'click',
-												function() {
-													var nTr = this;
-													var aData = table.fnGetData(nTr);
-													var jobId = aData['JobId'];
-													
-													if ($(this).attr('popup')) {
-													} else {
-														$(this).attr('popup',
-																'show');
-													}
-
-													if ($(this).attr('popup')
-															.match('show')) {
-														$(this).attr('popup',
-																'hide');
-														if ($(this).find('td').attr('class')
-																.match('details')) {
-														}else{
-															$(this).addClass('row_selected'); 
-															$('td:eq(0)',$(this)).addClass('leftCornerBorder');
-															$('td:eq(1)',$(this)).addClass('middleBorder');
-															$('td:eq(2)',$(this)).addClass('middleBorder');
-															$('td:eq(3)',$(this)).addClass('rightCornerBorder');
-														}
-														table
-																.fnOpen(
-																		nTr,
-																		fnFormatDetails(
-																				table,
-																				nTr),
-																		'details');
-														$.ajax({
-															url : '../jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
-															data : ({
-																userID : "userID"
-															}),
-															/*success : function(data) {
-															},
-															;error : function(data) {
-																alert('Unable to process');
-															},
-															complete : function(data) {
-															}
-	*/
-														});
-													} else {
-														$(this).attr('popup',
-																'show');
-														$(this).removeClass('row_selected');
-														$('td:eq(0)',$(this)).removeClass('leftCornerBorder');
-														$('td:eq(1)',$(this)).removeClass('middleBorder');
-														$('td:eq(2)',$(this)).removeClass('middleBorder');
-														$('td:eq(3)',$(this)).removeClass('rightCornerBorder');
-													
-														table.fnClose(nTr);
-													}
-												});
-								
-								
 								
 							});
 			
@@ -338,32 +268,20 @@ jQuery(document).ready(function() {
 					$("#rows").val(25000);
 					$("#start").val("0");
 					
-					var keywords = $("#keywords").val();
-					var cityState = $("#cityState").val();
-					var radius = $("#radius").val();
-					var rows = $("#rows").val();
-					var start = $("#start").val();
-					var searchtype = $("#searchtype").val();
+					keywords = $("#keywords").val();
+					cityState = $("#cityState").val();
+					radius = $("#radius").val();
+					rows = $("#rows").val();
+					start = $("#start").val();
+					searchtype = $("#searchtype").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 					$("#TotalNoRecords").text("");
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
-							table.fnClearTable();
-							table.fnAddData(data.jsonRows);
-							var nNodes = table.fnGetNodes();
-							var count = 0;
-							for(var i=0;i<nNodes.length;i++)
-						        {
-								if(i  != 0 && (i % 9) == 0){
-								
-								table.fnOpen( nNodes[i+count], "<img src='../resources/images/ads/banner_ad_fpo.png'>", "advertiseStyle" );
-								count = count+1;
-								}
-						        }
-							$("#TotalNoRecords").text(data.TotalNoRecords);
-							$("#TotalRecord").text(data.TotalNoRecords);
-							/* $("#SearchCriteria").text(keywords); */
+							processPaginationReq();
+							$("#TotalNoRecords").text(data["totalNoOfRecords"]);
+							$("#TotalRecord").text(data["totalNoOfRecords"]);
 							});
 					$(".otherContent").attr("style","display: none");
 					$(".searchContent").attr("style","display: block");
@@ -400,4 +318,157 @@ jQuery(document).ready(function() {
 					});
 				}
 
+				function viewJobDetails(jobId) {
+					window.location.href = "../jobsearch/viewJobDetails.html?id="
+							+ jobId
+							+ "&currentUrl="
+							+ window.location.pathname
+							+ "&clickType=view";
+				}
+				
+				function getNextPage(page) {
+//					var keywords = $("#keywords").val();
+//					var cityState = $("#cityState").val();
+//					var radius = $("#radius").val();
+//					var rows = $("#rows").val();
+//					var start = $("#start").val();
+//					var searchtype = $("#searchtype").val();
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
+					+"&page="+page;
+//					var navUrl =  "../jobsearch/searchJob.html?page="+ page;
+					$.getJSON(navUrl, function(data) {
+						processPaginationReq();
+					});
+					
+				}
+				
+				function getNextPages(page, begin) {
+//					var keywords = $("#keywords").val();
+//					var cityState = $("#cityState").val();
+//					var radius = $("#radius").val();
+//					var rows = $("#rows").val();
+//					var start = $("#start").val();
+//					var searchtype = $("#searchtype").val();
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
+					+"&page="+page+"&next="+begin;
+//					var navUrl =  "../jobsearch/searchJob.html?page="+ page;
+					$.getJSON(navUrl, function(data) {
+						processPaginationReq();
+					});
+					
+				}
+				
+				function getPrevPages(page, begin) {
+//					var keywords = $("#keywords").val();
+//					var cityState = $("#cityState").val();
+//					var radius = $("#radius").val();
+//					var rows = $("#rows").val();
+//					var start = $("#start").val();
+//					var searchtype = $("#searchtype").val();
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
+					+"&page="+page+"&next="+begin;
+//					var navUrl =  "../jobsearch/searchJob.html?page="+ page;
+					$.getJSON(navUrl, function(data) {
+						processPaginationReq();
+					});
+					
+				}
+				
+				function processPaginationReq(){
+					
+					$.ajax({
+						url : '../jobsearch/jobboardsearchresultsBody.html',
+						data : ({}),
+						
+						success : function(data) {
+							$("#tableContent").html(data);
+						},
+						error : function(data) {
+							alert('Unable to process');
+						},
+						complete : function(data) {
+							// do nothing for now.
+						}
+					}
+					);
+				}
+
+				window.onload = function() {
+					processPaginationReq();
+				}
+
+				function applyFilter() {
+					var displayRecordsPerPage = $("#noOfPage").val();
+					//alert(displayRecordsPerPage);
+//					var keywords = $("#keywords").val();
+//					var cityState = $("#cityState").val();
+//					var radius = $("#radius").val();
+//					var rows = $("#rows").val();
+//					var start = $("#start").val();
+//					var searchtype = $("#searchtype").val();
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
+					+"&displayRecordsPerPage="+ displayRecordsPerPage;
+					$.getJSON(navUrl, function(data) {
+						processPaginationReq();
+					});
+//					document.getElementById('noOfPage').value = displayRecordsPerPage;
+//					$('#noOfPage').val(displayRecordsPerPage);
+//					$('#noOfPageLower').val(displayRecordsPerPage);
+				}
+				function applyLowerFilter() {
+					var displayRecordsPerPage = $("#noOfPageLower").val();
+					//alert(displayRecordsPerPage);
+//					var keywords = $("#keywords").val();
+//					var cityState = $("#cityState").val();
+//					var radius = $("#radius").val();
+//					var rows = $("#rows").val();
+//					var start = $("#start").val();
+//					var searchtype = $("#searchtype").val();
+//					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+//					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
+//					+"&displayRecordsPerPage="+ displayRecordsPerPage;
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
+					+"&displayRecordsPerPage="+ displayRecordsPerPage;
+					$.getJSON(navUrl, function(data) {
+						processPaginationReq();
+						
+					});
+//					$('#noOfPage').val(displayRecordsPerPage);
+//					$('#noOfPageLower').val(displayRecordsPerPage);
+				}
+				
+				function saveThisSearch() {
+					var keywords = $.trim($("#keywords").val());
+					$.ajax({url : "${pageContext.request.contextPath}/savedSearches/saveThisSearch.html?keywords="+keywords,
+						success: function(data){ 
+							$.each(data, function(key, val) {
+								if (key == "NavigationPath") {
+									//window.location.href = val+".html?page=jobSeeker";
+									$.nmManual(val + '.html');
+								}
+								
+								if (key == "LoggedInNavigationPath") {
+									$.nmManual(val + '.html');
+								}
+							}); 
+						    if(data.success != null){
+						    }
+						    if(data.failure != null){
+						    	$("#errorMsg").html("<span style='color:red'><b>Please enter the required parameters.</b></span>");
+						    }
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							
+						}
+					
+					});
+				} 
 	

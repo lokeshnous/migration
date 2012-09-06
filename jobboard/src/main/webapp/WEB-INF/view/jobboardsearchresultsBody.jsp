@@ -4,41 +4,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-
-		<head>
-		<script type="text/javascript">
-	
-	function saveThisSearch() {
-		
-		var keywords = $.trim($("#keywords").val());
-		$.ajax({url : "${pageContext.request.contextPath}/savedSearches/saveThisSearch.html?keywords="+keywords,
-			success: function(data){ 
-				$.each(data, function(key, val) {
-					if (key == "NavigationPath") {
-						window.location.href = val+'.html';
-					}
-					
-					if (key == "LoggedInNavigationPath") {
-						$.nmManual(val + '.html');
-					}
-				}); 
-			    if(data.success != null){
-			    }
-			    if(data.failure != null){
-			    	$("#errorMsg").html("<span style='color:red'><b>Please enter the required parameters.</b></span>");
-			    }
-			},
-			error: function(response) {
-				alert("Server Error : "+response.status);
-			},
-			complete: function() {
-				
-			}
-		
-		});
-	} 
-	
-</script>
+		<head>		
+<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 		</head>
 
 		<body>
@@ -50,7 +17,7 @@
 						<div id="errorMsg"></div>
 							<div class="floatLeft">
 								<h1 >
-									<span id="TotalRecord"></span> jobs match your search criteria.
+									<span>${totalNoOfRecords}</span> jobs match your search criteria.
 								</h1>
 							</div>
 						</div>
@@ -143,7 +110,7 @@
 						</div>
 						<!-- column1 -->
 
-						<div class="column2">
+						<!-- <div class="column2">
 
 							<div class="searchResults">
 
@@ -167,15 +134,212 @@
 												</thead>
 											</table>
 										</div>
-										<!-- <div id="pager2"></div> -->
+										<div id="pager2"></div>
 
 									</div>
 
 
 								</table>
 							</div>
+						</div> -->
+		<div class="column2">
+<div class="searchResults">
+				<div class="searchResultsNavigation">
+
+		<div class="searchResultsNavigationColumn1">
+		<input type="hidden" value="${beginVal}"/>
+			<span class="marginTop5">Results viewable:</span> <span
+				class="Padding0"> <select name="results" id="noOfPage"
+				class="jb_input4 margin0" onchange="applyFilter();">
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+			</select>
+			</span><span class="marginTop5">per page</span>
+		</div>
+
+
+
+		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} – ${endRow} of ${totalNoOfRecords}&nbsp;
+					</div>
+					<div class="searchResultsNavigationColumn2 floatRight">
+						<span>Page:</span>
+						<c:if test="${currentPage != 1 && noOfPages gt 10}">
+							<td><a
+								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
+									<img src="../resources/images/ArrowLeft.png"> Previous
+							</a></td>
+						</c:if>
+
+						<c:forEach begin="${begin}" end="${noOfPages}" var="i">
+               				 <c:choose>
+                  				  <c:when test="${currentPage eq i}">
+									<span class="active">${i}</span>
+									</c:when>
+                   				 <c:otherwise>
+                       				 <span><c:if test="${i lt begin+10}">
+                       				 <a onclick="getNextPage(${i});" >${i}</a></c:if></span>
+                   				 </c:otherwise>
+               				 </c:choose> 
+           				 </c:forEach>
+           				 <c:if test="${(begin+10) lt noOfPages}">
+           				 <span><a onclick="getNextPages(${currentPage + 1} ,${begin+10});"
+							>Next<img src="../resources/images/ArrowRight.png">
+							</a></span>
+       					</c:if>       		 
+					</div>
+				</div>
+
+
+				<div class="searchResultsHeader">
+					<ul>
+						<li class="searchResultsColumn1">Job Title</li>
+						<li class="searchResultsColumn2">Employer</li>
+						<li class="searchResultsColumn3">Location</li>
+						<li class="searchResultsColumn4">Date Posted</li>
+					</ul>
+				</div>
+
+				<div class="searchResultsListing">
+
+					<div class="searchResultsItem">
+					<c:forEach items="${searchResultsList}" var="job" varStatus="status">
+					<%-- <form:hidden path="jobDTOs[${status.index}].jobId"/> --%>
+						<ul class="searchResultsJobInfo closed">
+							<li class="searchResultsColumn1">${job.JobTitle}</li>
+							<li class="searchResultsColumn2">${job.Company}</li>
+							<li class="searchResultsColumn3">${job.City}</li>
+							<li class="searchResultsColumn4">${job.PostedDate}</li>
+						</ul>
+						<div class="searchResultsSubContent">
+
+							<%-- <p class="searchResultsSubContentJobDescription" >
+								<span class="bold">Job Description:</span>
+								${job.AdText}
+							</p> --%>
+
+								<div style="height: 42px; overflow: hidden;margin-bottom: 5px;">
+								<p class="searchResultsSubContentJobDescription">								
+									<span class="bold">Job Description:</span>
+									${job.AdText}
+								</p>
+								</div>
+
+								<div class="searchResultsSubContentButtonArea">
+									<div class="searchResultsSubContentButtons">
+										<a onclick="applyThisJob(${job.JobId});" class="btn_sm white"
+											style="cursor: default;" id="applyJobid${job.JobId}">Apply</a>
+									</div>
+									<div class="searchResultsSubContentButtons">
+										<a onclick="viewJobDetails(${job.JobId})" class="btn_sm white">View
+											Details</a>
+									</div>
+									<div class="searchResultsSubContentButtons">
+										<a onclick="saveThisJob(${job.JobId})"
+											id="saveThisJobId${job.JobId}" style="cursor: default;"
+											class="btn_sm white">Save This Job</a>
+									</div>
+								</div>
+								<div class="featured_empButton">
+									<c:choose>
+										<c:when test="${job.IsFeatured}">
+											<a href=""><img src="../resources/images/FeaturedEmp.png"
+												alt="featured emp Button" width="164" height="23"></a>
+										</c:when>
+										<c:otherwise>
+											<img src="../resources/images/tranBg.png"
+												alt="featured emp Button" width="164" height="23">
+										</c:otherwise>
+									</c:choose>
+								</div>
+
+								<div class="searchResultsSubContentShare">
+									<span class="marginTop5 floatLeft"> Send to
+										Friend:&nbsp;</span><span><a onclick="sendToFrd('+jobId+');"><div
+												class="email"></div></a></span>
+								</div>
+
+								<!-- <div class="searchResultsSubContentShare">
+									<span class="marginTop3 floatLeft"> Send to
+										Friend:&nbsp;</span><span><a href=""><img
+											src="../resources/images/email.png"></a></span>
+								</div> -->
+
+								<div class="searchResultsSubContentShare">
+								<span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><!-- <a
+									href=""> --><img src="../resources/images/fbook_sm.png"><!-- </a> --></span> <span><!-- <a
+									href=""> --><img src="../resources/images/L_In_sm.png"><!-- </a> --></span> <span><!-- <a
+									href=""> --><img src="../resources/images/twitter_sm.png"><!-- </a> --></span>
+							</div>
+							<div class="FormErrorDisplayText" id="topjobActionInfo${job.JobId}" ></div>
+
 						</div>
-						<!-- column2-->
+				<c:if test="${(status.index + 1) % 10 == 0}">
+					<div class="ad_wrapper">
+						<img src="../resources/images/ads/banner_ad_fpo.png">
+					</div>
+				</c:if>
+			</c:forEach>
+					</div>
+				</div>
+
+
+				<div class="searchResultsNavigation searchResultsNavigationBottom">
+
+		<div class="searchResultsNavigationColumn1">
+			<span class="marginTop5">Results viewable:</span> <span
+				class="Padding0"> <%-- <form:select path="noOfPageLower"
+							name="results" class="jb_input4 margin0">
+								<form:option value="20">20</form:option>
+								<form:option value="30">30</form:option>
+								<form:option value="40">40</form:option>
+								<form:option value="50">50</form:option>
+						</form:select> --%> <select name="results" id="noOfPageLower"
+				class="jb_input4 margin0" onchange="applyLowerFilter();">
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="50">50</option>
+			</select>
+			</span><span class="marginTop5">per page</span>
+		</div>
+
+
+
+		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} – ${endRow} of ${totalNoOfRecords}&nbsp;
+					</div>
+					<div class="searchResultsNavigationColumn2 floatRight">
+						<span>Page: </span>
+						<c:if test="${currentPage != 1 && noOfPages gt 10}">
+							<td><a
+								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
+									<img src="../resources/images/ArrowLeft.png"> Previous
+							</a></td>
+						</c:if>
+
+						<c:forEach begin="${begin}" end="${noOfPages}" var="i">
+               				 <c:choose>
+                  				  <c:when test="${currentPage eq i}">
+									<span class="active">${i}</span>
+									</c:when>
+                   				 <c:otherwise>
+                       				 <span><c:if test="${i lt begin+10}">
+                       				 <a onclick="getNextPage(${i});" >${i}</a></c:if></span>
+                   				 </c:otherwise>
+               				 </c:choose> 
+           				 </c:forEach>
+           				 <c:if test="${(begin+10) lt noOfPages}">
+           				 <span><a onclick="getNextPages(${currentPage + 1} ,${begin+10});"
+							>Next<img src="../resources/images/ArrowRight.png">
+							</a></span>
+       					</c:if>     
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		<!-- column2-->
 
 					</div> 
 </body>

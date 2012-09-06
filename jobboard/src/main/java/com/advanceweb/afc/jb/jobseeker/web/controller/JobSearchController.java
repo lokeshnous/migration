@@ -151,6 +151,7 @@ public class JobSearchController {
 	@Value("${jobseekerSuggestFrdSub}")
 	private String jobseekerSuggestFrdSub;
 
+	@SuppressWarnings("unused")
 	@Value("${jobseekerSuggestFrdBody}")
 	private String jobseekerSuggestFrdBody;
 
@@ -159,6 +160,7 @@ public class JobSearchController {
 
 	@Autowired
 	ClickController clickController;
+	
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -476,12 +478,23 @@ public class JobSearchController {
 	 * @return JSON Object
 	 * 
 	 */
-
 	@RequestMapping(value = "/searchJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject searchJob(HttpSession session,
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap, HttpServletRequest request) {
+		// JSONObject jsonObject = new JSONObject();
+		// TODO :Need Use sessionMap
+		LOGGER.info("Removing from session....");
+		session.removeAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST);
+		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
+		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
+		session.removeAttribute(MMJBCommonConstants.RECORDS_PER_PAGE);
+		session.removeAttribute(MMJBCommonConstants.TOTAL_NO_RECORDS);
+		session.removeAttribute(MMJBCommonConstants.START_ROW);
+		session.removeAttribute(MMJBCommonConstants.END_ROW);
+		session.removeAttribute(MMJBCommonConstants.BEGIN_VAL);
+		session.removeAttribute(MMJBCommonConstants.BEGIN);
 
 		JobSearchResultDTO jobSearchResultDTO = null;
 		// Map<String, String> paramMap = new HashMap<String, String>();
@@ -508,34 +521,95 @@ public class JobSearchController {
 			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 
 		}
-		long start = Long.parseLong(jobSearchResultForm.getStart());
-		long rows = Long.parseLong(jobSearchResultForm.getRows());
+		// long start = Long.parseLong(jobSearchResultForm.getStart());
+		// long rows = Long.parseLong(jobSearchResultForm.getRows());
 
 		// Putting all the parameters coming from the UI into a Map for further
 		// processing.
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
 				sessionId, searchName, sessionMap);
 
+		int page = 1;
+		// String displayRecordsPerPage = jobSearchResultForm.getNoOfPage();
+		int displayRecordsPerPage = 0;
+		if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
+			page = Integer.parseInt(request.getParameter(MMJBCommonConstants.PAGE));
+		}
+		if (request.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE) != null) {
+			displayRecordsPerPage = Integer.parseInt(request
+					.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE));
+		}
+		String next = request.getParameter("next");
+		int recordsPerPage = 0;
+
+		int noOfRecords = 0;
+		if (0 == displayRecordsPerPage) {
+			displayRecordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
+		}
+
 		try {
 
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
 
+			// jobSearchResultDTO = jobSearchService.jobSearch(searchName,
+			// paramMap, start, rows);
+			recordsPerPage = displayRecordsPerPage;
 			jobSearchResultDTO = jobSearchService.jobSearch(searchName,
-					paramMap, start, rows);
+					paramMap, (page - 1) * recordsPerPage, recordsPerPage);
+
+			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1) * recordsPerPage + 1));
+			session.setAttribute(MMJBCommonConstants.END_ROW,
+					(((page - 1) * recordsPerPage) + jobSearchResultDTO
+							.getResultList().size()));
+
+			noOfRecords = (int) jobSearchResultDTO.getResultCount();
+
+			// List<JobDTO> jobDTOList = jobSearchResultDTO.getResultList();
+
+			// TODO: Advertise part is not done
+			// session.setAttribute("AddsPerPage",
+			// MMJBCommonConstants.ADDS_PER_PAGE);
+
+			// jobSearchResultForm.setJobDTOs(jobDTOList);
 
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
 		}
+
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+		int beginVal = 0;
+		if (null != next && !next.isEmpty()) {
+
+			// jobPostform.setBeginVal(Integer.parseInt(next));
+			beginVal = Integer.parseInt(next);
+			page = Integer.parseInt(next);
+		} else {
+			// jobPostform.setBeginVal((page / 10) * 10);
+			beginVal = (page / 10) * 10;
+//			session.setAttribute("beginVal", beginVal);
+		}
+//		sessionMap.put("noOfPages", noOfPage);
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
 			jobSrchJsonObj = jsonConverterService
 					.convertToJSON(jobSearchResultDTO);
-			return jobSrchJsonObj;
 		}
-		return null;
+		//TODO: Need to use session Map
+		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
+		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
+		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
+//		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT, displayRecordsPerPage);
+		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1 : beginVal));
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		return jobSrchJsonObj;
 	}
 
 	/**
@@ -899,6 +973,14 @@ public class JobSearchController {
 				.getSearchtype().trim());
 		return sessionMap;
 
+	}
+	
+	@RequestMapping(value = "/jobboardsearchresultsBody")
+	public ModelAndView pp(HttpServletResponse response,
+			HttpServletRequest request, Model model){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("jobboardsearchresultsBody");
+		return modelAndView;
 	}
 
 }

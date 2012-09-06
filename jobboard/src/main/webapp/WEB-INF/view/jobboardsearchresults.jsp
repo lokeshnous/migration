@@ -25,7 +25,21 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <!-- <link rel="stylesheet" type="text/css"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /> -->
-
+<!-- 	<script type="text/javascript" src="../resources/js/jquery.simplyscroll.js"></script>
+<link rel="stylesheet" href="../resources/css/jquery.simplyscroll.css" media="all" 
+type="text/css">
+	<script type="text/javascript">
+(function($) {
+	$(function() { 
+		$("#scroller").simplyScroll({
+			customClass: 'custom',
+			autoMode: 'loop',
+        	auto: true,
+			speed: 200
+		});
+	});
+})(jQuery);
+</script> -->
 </head>
 
 <body class="job_board">
@@ -36,25 +50,28 @@
 		<div class="main_wrapper_inside">
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+				 <!-- <a href="../pgiController/callPaymentMethod.html" class="btn_sm white">Payment Order</a>  -->
 				<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
-				<div class="content_columns row">
-					<div class="searchContent" style="display: block">
-						<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
-					</div>
+				<div class="searchContent" style="display: block;" id="tableContent">
+					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
 					<br class="clearfix" />
-
-					<div class="ad_wrapper">
-						<img src="../resources/images/ads/banner_ad_fpo.png" />
 					</div>
+				<br class="clearfix" />
+				
+				<div class="ad_wrapper">
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
-
+			
+				
 			</div>
 			<!-- main -->
-		</div>
+			</div>
 
 		<!-- end main_wrapper_inside -->
-
-		<!-- end main_wrapper_outside -->
-		<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
+	</div>
+	<!-- end main_wrapper_outside -->
+	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
+	
+	
 </body>
 </html>

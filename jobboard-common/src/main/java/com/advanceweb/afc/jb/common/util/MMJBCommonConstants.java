@@ -232,5 +232,20 @@ public interface MMJBCommonConstants {
 	String USER_DTO="USER_DTO";
 	
 	String RECAPTCHA_PRIVATE_KEY="6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
+	
+	
+	// For Job search results
+	int DEFAULT_PAGE_SIZE = 20;
+	int ADDS_PER_PAGE = 10;	
+	String SEARCH_RESULTS_LIST = "searchResultsList";
+	String NO_OF_PAGES = "noOfPages";
+	String CURRENT_PAGE = "currentPage";
+	String RECORDS_PER_PAGE = "displayRecordsPerPage";
+	String RECORDS_COUNT = "totalNoOfRecords";
+	String START_ROW = "startRow";
+	String END_ROW = "endRow";
+	String BEGIN_VAL = "beginVal";
+	String BEGIN = "begin";
+	String PAGE = "page";
 
 }

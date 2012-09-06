@@ -460,7 +460,7 @@ a.white:hover {
 	background-color: #ECECEC;
 	background-image: url("../images/Jobs_Board_edges.png");
 	background-repeat: no-repeat;
-	width: 1020px;
+	width: 1000px;
 	margin: 0 auto;
 }
 
@@ -1214,7 +1214,7 @@ h3.jobSummaryTitle {
 	float: left;
 	margin-left: 0;
 	padding-left: 10px;
-	width: 758px;
+	width: 759px;
 }
 
 .content_columns_search_results .column2 .searchResults {
@@ -3541,7 +3541,7 @@ a.white01:hover {
 	width: 960px;
 	float: left;
 	background: #FFF;
-	margin-left: 20px;
+	/* margin-left: 20px; */
 }
 
 .popUpButtonRow {
