@@ -161,7 +161,7 @@
 
 
 
-		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} – ${endRow} of ${totalNoOfRecords}&nbsp;
+		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 					</div>
 					<div class="searchResultsNavigationColumn2 floatRight">
 						<span>Page:</span>
@@ -241,11 +241,11 @@
 											class="btn_sm white">Save This Job</a>
 									</div>
 								</div>
-								<div class="featured_empButton">
+								<div class="featured_empButton">${job.IsFeatured}
 									<c:choose>
 										<c:when test="${job.IsFeatured}">
-											<a href=""><img src="../resources/images/FeaturedEmp.png"
-												alt="featured emp Button" width="164" height="23"></a>
+											<!-- <a href=""> --><img src="../resources/images/FeaturedEmp.png"
+												alt="featured emp Button" width="164" height="23"><!-- </a> -->
 										</c:when>
 										<c:otherwise>
 											<img src="../resources/images/tranBg.png"
@@ -256,8 +256,8 @@
 
 								<div class="searchResultsSubContentShare">
 									<span class="marginTop5 floatLeft"> Send to
-										Friend:&nbsp;</span><span><a onclick="sendToFrd('+jobId+');"><div
-												class="email"></div></a></span>
+										Friend:&nbsp;</span><span><a onclick="sendToFrd('+jobId+');"><span
+												class="email"></span></a></span>
 								</div>
 
 								<!-- <div class="searchResultsSubContentShare">
@@ -267,10 +267,10 @@
 								</div> -->
 
 								<div class="searchResultsSubContentShare">
-								<span class="marginTop3 floatLeft">Share:&nbsp;</span> <span><!-- <a
-									href=""> --><img src="../resources/images/fbook_sm.png"><!-- </a> --></span> <span><!-- <a
-									href=""> --><img src="../resources/images/L_In_sm.png"><!-- </a> --></span> <span><!-- <a
-									href=""> --><img src="../resources/images/twitter_sm.png"><!-- </a> --></span>
+								<span class="marginTop3 floatLeft">Share:&nbsp;</span> 
+								<span class="fbook"><!-- <a href=""> --><!-- </a> --></span>
+								<span class="linkedIn"><!-- <a href=""> --><!-- </a> --></span> 
+								<span class="twitter"><!-- <a href=""> --><!-- </a> --></span>
 							</div>
 							<div class="FormErrorDisplayText" id="topjobActionInfo${job.JobId}" ></div>
 
@@ -307,7 +307,7 @@
 
 
 
-		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} – ${endRow} of ${totalNoOfRecords}&nbsp;
+		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 					</div>
 					<div class="searchResultsNavigationColumn2 floatRight">
 						<span>Page: </span>

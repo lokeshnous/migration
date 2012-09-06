@@ -39,13 +39,13 @@ jQuery(document).ready(function() {
 			var keywords = $.trim($("#keywords").val());
 			var status = true;
 			if(keywords.length == 0){
-				table.fnClearTable();
+				//table.fnClearTable();
 				$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				status = false;
 				$('#findSearchInfo').html('Please enter the \"Job Title, Keyword, Job Id, Company Name\" to perform a search.');
 			}else if(radius != 0 && cityState.length == 0){
-				table.fnClearTable();
+				//table.fnClearTable();
 				$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				status = false;
