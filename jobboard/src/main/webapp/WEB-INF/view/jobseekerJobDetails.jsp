@@ -217,7 +217,17 @@
             </div>
 			<div class="jobDetailsIntro">
 			    <div class="jobDetailsIntroReview">
-				<p><c:if test="${isHideCity}" ><span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><c:if test="${isHideState}" ><span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.stateFullName}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><c:if test="${isHideCoutry}" ><span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;</c:if><span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobID}</p>
+				<p>
+					<c:if test="${not empty jobDetail.city}" >
+						<span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;
+					</c:if>
+					<c:if test="${not empty jobDetail.stateFullName}" >
+						<span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.stateFullName}&nbsp;&nbsp;|&nbsp;&nbsp;
+					</c:if>
+					<c:if test="${not empty jobDetail.country}" >
+						<span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;
+					</c:if>
+					<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobID}</p>
 			    </div>
 			    <div class="jobDetailsIntroOptions">
 			    <div class="rowEvenTB10Spacing">

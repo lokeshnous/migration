@@ -188,9 +188,6 @@ public class JobSearchController {
 			// View the job with template
 			SearchedJobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 			model.put("jobDetail", jobDTO);
-			model.put("isHideCity", jobDTO.getCity() != null);
-			model.put("isHideState", jobDTO.getStateFullName() != null);
-			model.put("isHideCoutry", jobDTO.getCountry() != null);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
 			model.put("returnResults", currentUrl);
 
