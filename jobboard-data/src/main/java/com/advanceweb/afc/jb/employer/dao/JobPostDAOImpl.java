@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,21 +45,20 @@ import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 public class JobPostDAOImpl implements JobPostDAO {
 
 	private static final String FIND_ADM_USER_FACILITY = "select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
+	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
+
 
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 
-	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
 	private int numberOfJobRecordsByStatus;
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
 
 	@Autowired
-	public void setHibernateTemplate(
-			SessionFactory sessionFactoryMerionTracker,
-			SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(
-				sessionFactoryMerionTracker);
+	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
@@ -500,6 +501,111 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public int getTotalNumberOfJobRecordsByStatus() {
 		return this.numberOfJobRecordsByStatus;
+	}
+
+	@Override
+	public boolean executeActiveJobWorker() {
+		LOGGER.info("Executing -> executeActiveJobWorker()");
+		//Update Jobs as expired
+		try {
+			
+			List<JpJob> expiredJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS, getOneDayBeforeDate());
+			
+			for(JpJob job : expiredJobs){
+				try {
+					job.setActive((byte)0);
+					hibernateTemplate.saveOrUpdate(job);
+				} catch (Exception e) {
+					LOGGER.error("Failed to mark job as expired for job Id  " +job.getJobId());
+					LOGGER.error(e);
+				}
+				LOGGER.info("ActiveJobsJobWorker-> Marked Job as expired successfully....." +job.getJobId());
+			}
+			
+		} catch (DataAccessException e) {
+			LOGGER.error("Failed to retreive expired jobs  ");
+			e.printStackTrace();
+			LOGGER.error(e);
+		}
+		
+		//Schedule Jobs
+		try {
+			
+			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
+			
+			for(JpJob job : scheduledJobs){		
+				//TODO
+				//Check for available credits
+				int credits=1;
+				if(credits == 0){
+					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
+				}else{				
+					try {
+						job.setActive((byte)1);
+						hibernateTemplate.saveOrUpdate(job);
+					} catch (Exception e) {
+						LOGGER.error("Failed to post a job as Active " +job.getJobId());
+						LOGGER.error(e);
+					}
+					LOGGER.info("ActiveJobsJobWorker-> Job is posted successfully....." +job.getJobId());
+				}
+			}
+			
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}	
+		LOGGER.info("Executed -> executeActiveJobWorker()");
+		return false;
+	}
+
+	@Override
+	public boolean executeAutoRenewalJobWorker() {
+		LOGGER.info("Executing -> executeAutoRenewalJobWorker()");
+		//Schedule Jobs
+		try {
+
+			List<JpJob> autoRenewJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
+			
+			for(JpJob job : autoRenewJobs){		
+				//TODO
+				//Check for available credits
+				int credits=1;
+				if(credits == 0){
+					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
+				}else{				
+					try {
+						job.setStartDt(new Date());
+						job.setEndDt(addDaysToCurrentDate());
+						job.setActive((byte)1);
+						hibernateTemplate.saveOrUpdate(job);
+					} catch (Exception e) {
+						LOGGER.error("Failed to renew the job as Active " +job.getJobId());
+						LOGGER.error(e);
+					}
+					LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
+				}
+			}
+			
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		LOGGER.info("Executed -> executeActiveJobWorker()");
+		return false;
+	}
+	
+	private String getOneDayBeforeDate(){
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		cal.add(Calendar.DATE, -1);	
+		return dateFormat.format(cal.getTime());
+	}
+	
+	private Date addDaysToCurrentDate(){
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, MMJBCommonConstants.AUTO_RENEWAL_DAYS);	
+		return cal.getTime();
 	}
 
 }
