@@ -50,7 +50,7 @@
 					if (resumeName != null	&& resumeName != "" && 
 							jobTitle != null	&& jobTitle != ""
 							&& workAuth != "Select"	&& workAuth != null
-							&& workAuth != "" && parseInt(sizeInKB) < 750 ) {
+							&& workAuth != "" && parseInt(sizeInKB) < 750 && chooseFile != null && chooseFile != "") {
 						if(validateResume(chooseFile)){
 							$("#resumeErrorMsg").html("");
 							
