@@ -73,7 +73,7 @@
 						return;
 					}
 					else if(!reg.test(quantity)){
-						alert("Enter the numaric value");
+						alert("Quantity should be numeric & greater than zero");
 						return;
 					}
 					else{
