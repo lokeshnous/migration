@@ -40,14 +40,10 @@
 			<ul>
 				<li><a href="#">ADVANCE Healthcare Jobs</a></li>
 				<li><a href="#">Subscribe</a></li>
-				<li><img src="../resources/images/email.png" class="foot_icon" /><a
-					href="#">Sign Up for Enewsletter</a></li>
-				<li><img src="../resources/images/fbook_sm.png"
-					class="foot_icon" /><a href="#">Connect on Facebook</a></li>
-				<li><img src="../resources/images/L_In_sm.png"
-					class="foot_icon" /><a href="#">Connect on LinkedIn</a></li>
-				<li><img src="../resources/images/twitter_sm.png"
-					class="foot_icon" /><a href="#">Connect on Twitter</a></li>
+				<li><img src="../resources/images/tranBg.png" class="foot_icon email" /><a href="#">Sign Up for Enewsletter</a></li>
+				<li><img src="../resources/images/tranBg.png" class="foot_icon fbook" /><a href="#">Connect on Facebook</a></li>
+				<li><img src="../resources/images/tranBg.png" class="foot_icon linkedIn" /><a href="#">Connect on LinkedIn</a></li>
+				<li><img src="../resources/images/tranBg.png" class="foot_icon twitter" /><a href="#">Connect on Twitter</a></li>
 				<li><a href="#">Download the Mobile App</a></li>
 				<li><a href="#">Order Promotional Items</a></li>
 			</ul>

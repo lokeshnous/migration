@@ -903,7 +903,7 @@ h4 {
 
 .foot_icon {
 	position: relative;
-	top: -5px;
+	top: 2px;
 	padding-right: 5px;
 	float: left;
 }
@@ -3692,6 +3692,7 @@ orange:hover {
 .email {
 	background-position: -239px -164px;
 	margin-top: -5px;
+	width: 15px !important;
 }
 
 .print {

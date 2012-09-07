@@ -65,7 +65,7 @@
 								please fill out these fields.</h2>
 							<c:if test="${not empty message}">
 								<div class="validationMsg">
-									<b>${message}</b>
+									${message}
 								</div>
 							</c:if>
 
@@ -273,12 +273,12 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="rowEvenNewSpacing marginTop25 paddingBottom30">
-							<span class="floatLeft marginTop10 marginRight60"> <!-- <a
+							<span> <!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
-								<input type="submit" style="margin-top: -4px;"
-								value="Save & Continue" class="btn_sm orange"> 
+								<input type="submit"
+								value="Save & Continue" class="orange"> 
 								 <c:if test="${empRegisterForm.bReadOnly == false}">
-									<input type="button" value="Cancel" onclick="cancelProcess()" class="btn_sm orange" name="Cancel" />
+									<input type="button" value="Cancel" onclick="cancelProcess()" class="orange" name="Cancel" />
 								</c:if> 
 								<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
 							<!-- <span class="floatLeft marginTop10">I'll set up my profile

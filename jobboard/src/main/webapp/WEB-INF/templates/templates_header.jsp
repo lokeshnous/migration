@@ -12,9 +12,9 @@
 
 <body class="job_board">
 	<div class="header_wrapper">
-		<a href="">
+		
 			<div class="logo"></div>
-		</a>
+		
 		<div class="headerLoginSection">
 			<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
 				<div class="headerLoginSection">

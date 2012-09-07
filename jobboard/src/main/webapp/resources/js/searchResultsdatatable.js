@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
 			
 			if(radius != 0 && cityState.length == 0){
 				//$("#radius").val("");
-				table.fnClearTable();
+				//table.fnClearTable();
 				$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code');
@@ -208,17 +208,18 @@ jQuery(document).ready(function() {
 								$(".megamenu").megamenu();
 								generateTable();
 								var autoLoad = $("#autoload").val();
-								
+								//alert('113331'+autoLoad);
 								if(autoLoad == true || autoLoad == "true"){	
 									findJobs();
 								
 								}
 								$("#submitval").click(function(event) {
+									//alert('submitval'+autoLoad);
 									$("#errorMsg").html("");
 									$("#autoload").val(false);
-									if(!validateSearch()){
-										return false;
-									}							
+//									if(!validateSearch()){
+//										return false;
+//									}							
 									//var x = $("#results").val();
 									$("#rows").val(25000);
 									$("#start").val("0");
@@ -235,6 +236,12 @@ jQuery(document).ready(function() {
 									$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
 									$.getJSON(navUrl,function(data) {
+										//alert('submitvaldata'+data);
+										$.each(data, function(key, val) {
+											if (key == "AjaxMSG") {
+												$('#findSearchInfo').html(val);
+											}
+										});										
 										//alert(data["totalNoOfRecords"]);
 										processPaginationReq();//totalNoOfRecords
 										$("#TotalNoRecords").text(data["totalNoOfRecords"]);
@@ -261,8 +268,8 @@ jQuery(document).ready(function() {
 			}); 
 			 
 			 function findJobs() {
-				 
 				var autoLoad = $("#autoload").val();
+				//alert('111'+autoLoad);
 				 if(autoLoad == true || autoLoad == "true"){
 				 	$("#autoload").val(false);
 					$("#rows").val(25000);
@@ -384,6 +391,7 @@ jQuery(document).ready(function() {
 						data : ({}),
 						
 						success : function(data) {
+//							alert("processPaginationReq"+data);
 							$("#tableContent").html(data);
 						},
 						error : function(data) {

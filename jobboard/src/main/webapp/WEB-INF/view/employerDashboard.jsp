@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				$("#changePassword").displaypopup("#changePassword", "780",
+				$("#changePassword").displaypopup("#changePassword", "790",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
 						"770", "360");

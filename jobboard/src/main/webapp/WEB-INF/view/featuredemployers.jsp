@@ -40,7 +40,7 @@
 				<div class="searchContent" style="display: none;">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
 					<br class="clearfix" />
-				
+				</div>
 				<div class="otherContent marginTop5">
 				<div class="row ">
 					<div class="sectionHeader marginTop15">
@@ -60,7 +60,7 @@
 				<div class="ad_wrapper">
 					<img src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
-				</div>
+				
 				
 			</div>
 			<!-- main -->

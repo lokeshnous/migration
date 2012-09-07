@@ -170,7 +170,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="">${msg.jsEmployersViewedProfile}</a>
+												<!--<a href="#">-->${msg.jsEmployersViewedProfile}<!-- </a> -->
 											</p>
 										</div>
 
@@ -219,13 +219,14 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="">${msg.jsManageExistingCoverLetters}</a>
+												<!-- <a href="#"> -->${msg.jsManageExistingCoverLetters}<!-- </a> -->
 											</p>
 
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="">${msg.jsCreateNewCoverLetter}</a>
+												<!-- <a href="#"> -->${msg.jsCreateNewCoverLetter}<!-- </a> -->
+												
 											</p>
 										</div>
 										<div class="lableTextDashBoard">

@@ -15,17 +15,17 @@
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				$("#changePassword").displaypopup("#changePassword", "780",
+				$("#changePassword").displaypopup("#changePassword", "790",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
-						"770", "360");
+						"790", "360");
 				jQuery(".megamenu").megamenu();
 				$("#manageBrandingTemplatePopup").displaypopup(
 						"#manageBrandingTemplatePopup", "775", "252");
-				$("#postingInventory").displaypopup("#postingInventory", "780",
+				$("#postingInventory").displaypopup("#postingInventory", "790",
 						"370");
 				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings",
-						"770", "360");
+						"790", "360");
 				$("#accessPermissioPopUp").displaypopup(
 						"#accessPermissioPopUp", "770", "360");
 				$("#setAlertPopUp")
