@@ -256,7 +256,7 @@ public class BrandingTemplateController {
 
 	
 	
-	@RequestMapping(value = "/previewExisting", method = RequestMethod.POST)
+	@RequestMapping(value = "/previewExisting", method = RequestMethod.GET)
 	public ModelAndView previewExisting(
 			BrandingTemplateForm brandingTemplateForm,
 			@RequestParam("templateId") int templateId, HttpSession session) {
