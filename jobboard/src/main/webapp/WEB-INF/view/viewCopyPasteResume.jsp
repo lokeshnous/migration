@@ -46,7 +46,7 @@
 							</div>
 						</div>
 						<div class="rowEvenNewSpacing">
-							<h2 class="noTopBottomBorder ">Resume:
+							<h2 class="noTopBottomBorder ">
 								${createResume.resumeName}</h2>
 							<br> <span>
 								<h3 class="marginTop3">
