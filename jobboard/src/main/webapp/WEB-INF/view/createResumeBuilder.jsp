@@ -40,6 +40,7 @@
 		} else {
 			limitCount.value = limitNum - limitField.value.length;
 		}
+		
 	}
 	
 	//Limit text area characters
@@ -162,9 +163,17 @@
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/jobSeekerResume/getResumeProgress.html",
-				success : function(data) {					
-						$("#saveResBuilderHdBtId").click();
-					
+				success : function(data) {		
+						val=data;
+						if(val!=null){
+							if (confirm("You have completed "+ val+ "% of information.")) 
+							{
+								$("#saveResBuilderHdBtId").click();
+								
+							} 
+							
+						}
+						
 				},
 			});
 		});
