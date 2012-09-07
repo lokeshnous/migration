@@ -139,6 +139,10 @@ public class AdmFacility implements Serializable {
 	//bi-directional many-to-one association to AdmOrderHeader
 	@OneToMany(mappedBy=ADM_FACILITY, cascade = CascadeType.ALL)
 	private List<AdmOrderHeader> admOrderHeader;
+	
+	//bi-directional many-to-one association to AdmPurchaseHistory
+	@OneToMany(mappedBy=ADM_FACILITY, cascade = CascadeType.ALL)
+	private List<AdmFacilityInventory> admFacilityInventories;
 
 	public Integer getFacilityId() {
 		return this.facilityId;
@@ -425,6 +429,16 @@ public class AdmFacility implements Serializable {
 	public void setNsCustomerID(int nsCustomerID) {
 		this.nsCustomerID = nsCustomerID;
 	}
+
+	public List<AdmFacilityInventory> getAdmFacilityInventories() {
+		return admFacilityInventories;
+	}
+
+	public void setAdmFacilityInventories(
+			List<AdmFacilityInventory> admFacilityInventories) {
+		this.admFacilityInventories = admFacilityInventories;
+	}
+
 	
 	
 }

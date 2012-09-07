@@ -13,7 +13,6 @@ import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
  * 
  */
 @Service
-@Scope("prototype")
 @Qualifier("activeJobsJobWorker")
 public class ActiveJobsJobWorker implements JobWorker {
 

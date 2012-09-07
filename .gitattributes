@@ -205,10 +205,12 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityAlert
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityContact.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityCredit.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityGroup.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityInventory.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySubscription.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySubscriptionPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySystem.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityTmp.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmInventoryDetail.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderAddress.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderHeader.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderItem.java -text

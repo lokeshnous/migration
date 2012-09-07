@@ -80,7 +80,7 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
-				.populateJobPostingTypeDropdowns();
+				.populateJobPostingTypeDropdowns(employerInfoDTO.getFacilityId());
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
 				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId(),
@@ -267,7 +267,7 @@ public class JobPostController {
 						employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId());
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
-				.populateJobPostingTypeDropdowns();
+				.populateJobPostingTypeDropdowns(employerInfoDTO.getFacilityId());
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
 				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId(),

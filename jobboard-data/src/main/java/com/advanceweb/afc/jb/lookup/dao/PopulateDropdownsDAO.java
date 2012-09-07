@@ -162,7 +162,7 @@ public interface PopulateDropdownsDAO {
 	
 	List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId);
 	
-	List<DropDownDTO> populateJobPostingTypeDropdowns();
+	List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId);
 	
 	List<String> populateCityAutoComplete(String city);
 	

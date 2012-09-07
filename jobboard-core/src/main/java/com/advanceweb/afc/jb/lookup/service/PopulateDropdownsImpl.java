@@ -219,9 +219,9 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobPostingTypeDropdowns() {
+	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
 		
-		return populateDropdownsDAO.populateJobPostingTypeDropdowns();
+		return populateDropdownsDAO.populateJobPostingTypeDropdowns(facilityId);
 	}
 
 	@Override

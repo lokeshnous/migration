@@ -12,7 +12,6 @@ import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
  * 
  */
 @Service
-@Scope("prototype")
 public class AutoRenewalJobWorker implements JobWorker {
 
 	private final static String JOB_NAME = "AUTORENEAL_JOB";

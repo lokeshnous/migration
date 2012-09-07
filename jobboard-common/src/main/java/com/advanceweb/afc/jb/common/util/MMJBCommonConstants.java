@@ -247,6 +247,9 @@ public interface MMJBCommonConstants {
 	String BEGIN_VAL = "beginVal";
 	String BEGIN = "begin";
 	String PAGE = "page";
-
+	
+	//Job Types
+	String JOB_TYPE="JOB_TYPE";
+	String JOB_TYPE_ADDON="ADDON";
 
 }
