@@ -256,7 +256,7 @@
 
 								<div class="searchResultsSubContentShare">
 									<span class="marginTop5 floatLeft"> Send to
-										Friend:&nbsp;</span><span><a onclick="sendToFrd('+jobId+');"><span
+										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId});"><span
 												class="email"></span></a></span>
 								</div>
 
