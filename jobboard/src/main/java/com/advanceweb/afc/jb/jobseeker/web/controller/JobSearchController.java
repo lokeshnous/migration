@@ -767,19 +767,41 @@ public class JobSearchController {
 	}
 
 	@SuppressWarnings("unused")
+	@ResponseBody
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
-	public ModelAndView sendToFriendPost(
+	public String sendToFriendPost(
 			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
-			BindingResult result, Model model, HttpServletRequest request,
+			BindingResult result, HttpServletRequest request,
 			HttpSession session) {
 		ModelAndView modelData = new ModelAndView();
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
 		StringBuffer mesg=new StringBuffer();
+		StringBuffer dataString=new StringBuffer();
 		String bodyMesg="";
 		try {
-			if (sendtofriendmail.getEmail().length() > 0
-					&& validateEmailPattern(sendtofriendmail.getEmail())) {
+			String data=sendtofriendmail.getEmail().toString();
+			//data=data.trim();
+			data=data.replace( ',',';' );
+			int len = data.length();
+			if(data.charAt(len-1) == ';')
+			{
+				data = data.substring(0, len-1);
+			}
+			String str[] = data.split(";");
+			int countString=str.length;
+/*			final String regex =
+			        "(([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4}))(((;|,|; | ;| ; | , | ,){1}"
+			        +"([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4}))*)";
+			boolean mailBol=false;
+			for (String string : str) {
+				if(Pattern.matches(regex, string)){
+					mailBol=true;
+				}else{
+					mailBol=false;
+					}
+				}	
+			if ((countString > 0)&&(mailBol==true)) {*/
 				try {
 
 					int userId = 0;
@@ -794,35 +816,39 @@ public class JobSearchController {
 						userEmail = (String) session
 								.getAttribute(MMJBCommonConstants.USER_EMAIL);
 					}
-
 					EmailDTO jobSeekerEmailDTO = new EmailDTO();
 					jobSeekerEmailDTO
 							.setFromAddress("merion@nousinfosystems.com");
-					// jobSeekerEmailDTO.setFromAddress(userEmail);
-					InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-					jobSeekerToAddress[0] = new InternetAddress(
-							sendtofriendmail.getEmail().trim());
+					
+					int k= 0 ;
+					InternetAddress[] jobSeekerToAddress =new InternetAddress[str.length];					
+					for (String string : str) {
+						
+						if(!validateEmailPattern(string.trim())){
+							return "Please enter the correct Email address";
+						}
+						
+						jobSeekerToAddress[k] = new InternetAddress(string.trim());
+						k++;
+				
+					}
 					jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 					if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 						jobseekerName = (String) session
 								.getAttribute(MMJBCommonConstants.USER_NAME);
 						jobseekerSuggestFrdSub = jobseekerSuggestFrdSub
 								.replace("?Jobseekername", jobseekerName);
-						modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+						//modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
 					} else {
 						jobseekerName = "XXXX-XXX";
 						jobseekerSuggestFrdSub = jobseekerSuggestFrdSub
 								.replace("?Jobseekername", jobseekerName);
-						modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+						//modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
 					}
 					jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
 					SearchedJobDTO searchedJobDTO = jobSearchService
 							.viewJobDetails(sendtofriendmail.getJobId());
-					/*jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
-					"?Jobtitle", searchedJobDTO.getJobTitle());*/
-					/*jobseekerSuggestFrdBody = jobseekerSuggestFrdBody.replace(
-					"?Companyname", searchedJobDTO.getCompanyName());*/
-					
+							
 					
 					String Subject="A job opportunity sent to you by "+jobseekerName;
 					String bodyHead1="Here’s a job opportunity that "+jobseekerName+" thought might interest you.";
@@ -844,25 +870,29 @@ public class JobSearchController {
 				} catch (Exception e) {
 					LOGGER.info("ERROR" + e);
 				}
-				model.addAttribute("visible", true);
-			} else if (sendtofriendmail.getEmail().length() > 0
+				
+				//model.addAttribute("visible", true);
+			//} 
+			/*else if (sendtofriendmail.getEmail().length() > 0
 					&& !validateEmailPattern(sendtofriendmail.getEmail())) {
 				model.addAttribute("visible", false);
 				model.addAttribute("invalidemail", invalidemail);
 			} else {
 				model.addAttribute("visible", false);
 				model.addAttribute("notempty", notempty);
-			}
-
+			}*/
+			
 		} catch (Exception e) {
 			status = Boolean.FALSE;
 			throw new MailParseException(e);
-		}
-		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			return modelData;
+		}if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+			return "";
 		}else{
-			return modelData;
+			modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+			return "";
 		}
+		
 	}
 	
 	/**
