@@ -13,16 +13,27 @@
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
+		    	
+		    	
 		    	$("#saveNewOwner").click(function() {
+		    		$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
+		    			data:$('#addJobOwnerForm').serialize(),
+						type: "POST",
+						success : function(dataFound) {
+							alert("hai");							  
+							  $("#manageAccPerm").click();
+						}					
 							
-								$("form")
+						
+					});
+							/* 
+								$("#addJobOwnerForm")
 										.attr(
 												"action",
-												"${pageContext.request.contextPath}/employer/addJobOwner.html"
-														+ val);
-								$("form")
+												"${pageContext.request.contextPath}/employer/addNewJobOwner.html");
+								$("#addJobOwnerForm")
 										.attr("method", "POST");
-								$("form").submit();							
+								$("#addJobOwnerForm").submit();			 */				
 
 						});
 		    jQuery(".megamenu").megamenu();
@@ -31,7 +42,7 @@
 </head>
 
 <body class="job_board">
-<form:form action="addJobOwner.html" commandName="manageAccessPermissionForm">
+<form:form  commandName="manageAccessPermissionForm" id="addJobOwnerForm">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
@@ -51,21 +62,22 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4"> </span>
 					<div class="floatLeft marginTop5 marginRight10">
-						<label> <form:radiobutton name="RadioGroup10" 
-							id="RadioGroup1_0"  path="accessTypeFull" label="Full Access"/> 
+						<label> <form:radiobutton name="RadioGroup10" value="5"
+							id="RadioGroup1_0"  path="fullAccess" label="Full Access"/> 
 						</label>
 					</div>
 
 					<div class="floatLeft marginTop5">
 						<label> <form:radiobutton name="RadioGroup10" 
-							id="RadioGroup1_0"  path="accessTypePost" label="Post / Edit Only"/> 
+							id="RadioGroup1_0"  path="postEditAccess" value="6" label="Post / Edit Only"/> 
 						</label>
 					</div>
-					</div>
+					</div> 
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 						<span class="floatLeft marginTop10"><a href="" id="saveNewOwner"
 							class="btn_sm orange">SAVE</a> <a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a></span>
+							<a hidden="hidden" class="nyroModal" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="manageAccPerm"></a>
 					</div>
 					<div class="clearfix"></div>
 			</div>

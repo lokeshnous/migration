@@ -14,31 +14,52 @@
 		    jQuery(document).ready(function(){
 		    $("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
 		    
-		    $('#addNewJobOwnerPopUp').click(function() {
+		    /* $('#addNewJobOwnerPopUp').click(function() {
 		    	 $("form")
 					.attr(
 							"action",
 							"${pageContext.request.contextPath}/employer/addNewJobOwner.html");
 			$("form")
-					.attr("method", "GET");
-			$("form").submit();	 	
-			});
+					.attr("method", "POST");
+			$("#manageAcceccPermissionForm").submit();	 	
+			}); */
 		  
 		    $("#managePermission a").click(function() {
 		    	
 		    	//val= this.$('#userId').val();
 				val=$(this).attr("id");
-				 $("form")
-						.attr(
-								"action",
-								"${pageContext.request.contextPath}/employer/updateJobOwner.html?update=delete&userId="
-										+ val);
-				$("form")
-						.attr("method", "POST");
-				$("form").submit();	 				
+				if (val != ""
+					&& confirm("Do you want to Delete?")){
+					 $("form")
+							.attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/deleteJobOwner.html?userId="
+											+ val);
+					$("form")
+							.attr("method", "POST");
+					$("form").submit();	
+				}
 
 		});
-		    
+			
+			$("#saveClicked").click(function() {
+				 $("form")
+					.attr(
+							"action",
+							"${pageContext.request.contextPath}/employer/updateJobOwner.html");
+							$("form")
+								.attr("method", "POST");
+							$("form").submit();	
+	    		/* $.ajax({url : "${pageContext.request.contextPath}/employer/updateJobOwner.html",
+	    			data:$('#addJobOwnerForm').serialize(),
+					type: "POST",
+					success : function(dataFound) {
+						alert("hai");							  
+						  $("#manageAccPerm").click();
+					}					
+						
+	    		}); */
+			});	
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -46,14 +67,14 @@
 
 		<body class="job_board">
 		
-		 <form:form action="updateJobOwner.html" commandName="manageAccessPermissionForm">
+		 <form:form action="updateJobOwner.html" commandName="manageAccessPermissionForm" id="manageAcceccPermissionForm" >
 		 
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
           <div class="popupHeader">
             <h2>MANAGE ACCESS PERMISSIONS</h2>
            <img src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>
           <div class="popUpContainerWrapper">
-           <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="#"  id="addNewJobOwnerPopUp" class="btn_sm white">Add New Job Owner</a> </span>  </div>
+           <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html"  id="addNewJobOwnerPopUp" class="btn_sm white">Add New Job Owner</a> </span>  </div>
             
               <div class="rowEvenNewSpacing marginTop10 marginTop0">
 					<table id="managePermission" width="100%" border="0" cellspacing="0" cellpadding="0"
@@ -65,24 +86,25 @@
 								Settings</th>
 							<th width="18%" align="left" scope="col">&nbsp;</th>
 						</tr>
-						<c:forEach items="${jobOwners}" var="job"
+						<c:forEach items="${manageAccessPermissionForm.manageAccessPermissiondetails}" var="job"
 							varStatus="status">
+							<form:hidden path="manageAccessPermissiondetails[${status.index}].ownerId"/>
 							<tr>
-								<td>&nbsp;</td>
-								<td>${job.optionName} </td>
-								<td width="16%" align="left"><input name="radio"
-									type="radio" id="radio1" value="radio" checked> <label
-									for="radio">Full Access</label></td>
-								<td width="31%" align="left"><input name="radio"
-									type="radio" id="radio1" value="radio"> <label
-									for="radio">Post / Edit Only</label></td>
-								<td align="left"><a id="${job.optionId}" href="#"> Delete User</a></td>
+							 <td>&nbsp;</td>
+								<td>${job.ownerName} </td>
+								<td width="16%" align="left"><form:radiobutton
+									 id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess"  value="5" label="Full Access" /> </td>
+								<td width="31%" align="left"><form:radiobutton
+									 id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess" value="6" label="Post / Edit Only" /> </td>
+								<td align="left"><a id="${job.ownerId}" href="#"> Delete User</a></td> 
 							</tr>
 						</c:forEach>
 
 					</table>
 				</div>
-              <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="" class="btn_sm orange">Save</a> <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a></span> <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
+              <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="#" class="btn_sm orange" id="saveClicked">Save</a> 
+              <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a></span> 
+              <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
            
           </div>
           <div class="clearfix"></div>

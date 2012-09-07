@@ -9,6 +9,7 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -188,5 +189,45 @@ public class TransformEmployerRegistration {
 		
 		return dto;
 	}
-	
+	/**
+	 * Converting Job Seeker Registration Form to MerUserDTO
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public UserDTO createUserDTOFromManageAccessForm(ManageAccessPermissionForm manageAccessPermissionForm) {
+		// TODO Need to Modify the hard code value
+		UserDTO dto = new UserDTO();
+		if(null!=manageAccessPermissionForm.getOwnerName() && !manageAccessPermissionForm.getOwnerName().isEmpty() ){
+			String[] names = manageAccessPermissionForm.getOwnerName().split(" ");
+			dto.setFirstName(names[1]);
+			dto.setLastName(names[0]);
+			dto.setPassword("password");
+			dto.setEmailId(manageAccessPermissionForm.getOwnerEmail());
+		}
+		
+		
+
+		return dto;
+	}
+	/**
+	 * Converting Job Seeker Registration Form to MerUserDTO
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public ManageAccessPermissionDTO createManageAccessPermissionDTOFromManageAccessForm(ManageAccessPermissionForm manageAccessPermissionForm) {
+		
+		ManageAccessPermissionDTO accessPermissionDTO = new ManageAccessPermissionDTO();
+		if(null!=manageAccessPermissionForm){
+			accessPermissionDTO.setOwnerId(manageAccessPermissionForm.getOwnerId());
+			accessPermissionDTO.setOwnerName(manageAccessPermissionForm.getOwnerName());
+			accessPermissionDTO.setOwnerEmail(manageAccessPermissionForm.getOwnerEmail());
+			//accessPermissionDTO.set(manageAccessPermissionForm.getManageAccessPermissiondetails());
+		}
+		
+		
+
+		return accessPermissionDTO;
+	}
 }

@@ -164,17 +164,21 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
 			int noOfRecords) {
-		List<JpJob> jobs = new ArrayList<JpJob>();
 
-		Query query = hibernateTemplate
-				.getSessionFactory()
-				.getCurrentSession()
-				.createQuery(
-						"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-								+ employerId + "and a.deleteDt is NULL ");
-		query.setFirstResult(offset);
-		query.setMaxResults(noOfRecords);
-		jobs = query.list();
+		List<JpJob> jobs = new ArrayList<JpJob>();
+		try {
+			Query query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ employerId + "and a.deleteDt is NULL ");
+			query.setFirstResult(offset);
+			query.setMaxResults(noOfRecords);
+			jobs = query.list();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
 
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
@@ -191,12 +195,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public JobPostDTO editJob(int jobId) {
 		JobPostDTO dto = new JobPostDTO();
-		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+		try {
+			JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 
-		if (job != null) {
+			if (job != null) {
 
-			dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
+				dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
 
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
 		}
 
 		return dto;
@@ -220,19 +228,25 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		boolean bDelete = false;
-		if (null != job.getEndDt() && null != job.getStartDt()) {
-			int compareEndDate = job.getEndDt().compareTo(new Date());
-			if ((job.getActive() == 1 && compareEndDate < 0)
-					|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
-				// System deletes the job postings which are in "inactive" or
-				// “Expired” status
-				job.setDeleteDt(new Timestamp(new Date().getTime()));
-				hibernateTemplate.save(job);
-				bDelete = true;
-			} else {
-				bDelete = false;
+		try {
+			if (null != job.getEndDt() && null != job.getStartDt()) {
+				int compareEndDate = job.getEndDt().compareTo(new Date());
+				if ((job.getActive() == 1 && compareEndDate < 0)
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+					// System deletes the job postings which are in "inactive"
+					// or
+					// “Expired” status
+					job.setDeleteDt(new Timestamp(new Date().getTime()));
+					hibernateTemplate.save(job);
+					bDelete = true;
+				} else {
+					bDelete = false;
+				}
 			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
 		}
+
 		return bDelete;
 	}
 
@@ -248,17 +262,22 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
 			int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		// System deletes the job postings which are in “Expired” status
-		job.setUpdateDt(new Timestamp(new Date().getTime()));
-		job.setAutoRenew(autoRenew ? 1 : 0);
-		JpTemplate template = null;
-		if (Integer.valueOf(brandTemplate) > 0) {
-			template = hibernateTemplate.load(JpTemplate.class,
-					Integer.valueOf(brandTemplate));
+		try {
+			// System deletes the job postings which are in “Expired” status
+			job.setUpdateDt(new Timestamp(new Date().getTime()));
+			job.setAutoRenew(autoRenew ? 1 : 0);
+			JpTemplate template = null;
+			if (Integer.valueOf(brandTemplate) > 0) {
+				template = hibernateTemplate.load(JpTemplate.class,
+						Integer.valueOf(brandTemplate));
+			}
+
+			job.setJpTemplate(template);
+			hibernateTemplate.saveOrUpdate(job);
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
 		}
 
-		job.setJpTemplate(template);
-		hibernateTemplate.saveOrUpdate(job);
 		return true;
 	}
 
@@ -272,19 +291,22 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean deactivateJob(int jobId, int userId) {
 		boolean bDeactivate = false;
-		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+		try {
+			JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 
-		if (job.getActive() == MMJBCommonConstants.ACTIVE) {
-			// System should deactivate the job posting which are in
-			// “Active”
-			// status
-			job.setActive(MMJBCommonConstants.INACTIVE);
-			hibernateTemplate.save(job);
-			bDeactivate = true;
-		} else {
-			bDeactivate = false;
+			if (job.getActive() == MMJBCommonConstants.ACTIVE) {
+				// System should deactivate the job posting which are in
+				// “Active”
+				// status
+				job.setActive(MMJBCommonConstants.INACTIVE);
+				hibernateTemplate.save(job);
+				bDeactivate = true;
+			} else {
+				bDeactivate = false;
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
 		}
-
 		return bDeactivate;
 	}
 
@@ -299,22 +321,27 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean repostJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		boolean bRepost = false;
-		if (null != job.getEndDt() && null != job.getStartDt()) {
-			int compareEndDate = job.getEndDt().compareTo(new Date());
-			if ((job.getActive() == 1 && compareEndDate < 0)
-					|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
-				// Repost the inactive and expired job and extend the end date
-				// to one month
-				Calendar now = Calendar.getInstance();
-				now.setTime(job.getEndDt());
-				now.add(Calendar.DAY_OF_MONTH, 30);
-				job.setActive(MMJBCommonConstants.ACTIVE);
-				job.setEndDt(now.getTime());
-				hibernateTemplate.save(job);
-				bRepost = true;
-			} else {
-				bRepost = false;
+		try {
+			if (null != job.getEndDt() && null != job.getStartDt()) {
+				int compareEndDate = job.getEndDt().compareTo(new Date());
+				if ((job.getActive() == 1 && compareEndDate < 0)
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+					// Repost the inactive and expired job and extend the end
+					// date
+					// to one month
+					Calendar now = Calendar.getInstance();
+					now.setTime(job.getEndDt());
+					now.add(Calendar.DAY_OF_MONTH, 30);
+					job.setActive(MMJBCommonConstants.ACTIVE);
+					job.setEndDt(now.getTime());
+					hibernateTemplate.save(job);
+					bRepost = true;
+				} else {
+					bRepost = false;
+				}
 			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
 		}
 		return bRepost;
 	}
@@ -333,115 +360,125 @@ public class JobPostDAOImpl implements JobPostDAO {
 		List<JpJob> jobs = new ArrayList<JpJob>();
 		Long jobCount = 0L;
 		Query query = null;
-		if (null != jobStatus
-				&& jobStatus.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
-			query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
-			jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL")
-					.uniqueResult();
+		try {
+			if (null != jobStatus
+					&& jobStatus
+							.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
+				query = hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
+				jobCount = (Long) hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL")
+						.uniqueResult();
 
-		} else if (null != jobStatus
-				&& jobStatus
-						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
-			query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and a.active = 0 and a.deleteDt is NULL");
-			jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and a.active = 0 and a.deleteDt is NULL")
-					.uniqueResult();
-		} else if (null != jobStatus
-				&& jobStatus
-						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
-			query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
-			jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
-					.uniqueResult();
-		} else if (null != jobStatus
-				&& jobStatus
-						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
-			query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
-			jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL")
-					.uniqueResult();
-		} else if (null != jobStatus
-				&& jobStatus
-						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_SCHEDULED)) {
-			query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
-			jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-									+ userId
-									+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
-					.uniqueResult();
+			} else if (null != jobStatus
+					&& jobStatus
+							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
+				query = hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and a.active = 0 and a.deleteDt is NULL");
+				jobCount = (Long) hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and a.active = 0 and a.deleteDt is NULL")
+						.uniqueResult();
+			} else if (null != jobStatus
+					&& jobStatus
+							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
+				query = hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+				jobCount = (Long) hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
+						.uniqueResult();
+			} else if (null != jobStatus
+					&& jobStatus
+							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+				query = hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
+				jobCount = (Long) hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL")
+						.uniqueResult();
+			} else if (null != jobStatus
+					&& jobStatus
+							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_SCHEDULED)) {
+				query = hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+				jobCount = (Long) hibernateTemplate
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+										+ userId
+										+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
+						.uniqueResult();
+			}
+
+			query.setFirstResult(offset);
+			query.setMaxResults(noOfRecords);
+			jobs = query.list();
+			setNumberOfJobRecordsByStatus(jobCount.intValue());
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
 		}
-
-		query.setFirstResult(offset);
-		query.setMaxResults(noOfRecords);
-		jobs = query.list();
-		setNumberOfJobRecordsByStatus(jobCount.intValue());
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 	}
 
 	@Override
 	public int getTotalNumberOfJobRecords(int employerId) {
-		Long jobCount = (Long) hibernateTemplate
-				.getSessionFactory()
-				.getCurrentSession()
-				.createQuery(
-						"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
-								+ employerId + "and a.deleteDt is NULL")
-				.uniqueResult();
-		return jobCount.intValue();
+		try {
+			Long jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+									+ employerId + "and a.deleteDt is NULL")
+					.uniqueResult();
+			return jobCount.intValue();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+			return 0;
+		}
 
 	}
 

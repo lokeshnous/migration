@@ -106,7 +106,7 @@ public class AdmFacility implements Serializable {
 //	private List<AdmFacility> admFacilities;
 
 	//bi-directional many-to-one association to AdmFacilityContact
-	@OneToMany(mappedBy=ADM_FACILITY)
+	@OneToMany(mappedBy=ADM_FACILITY ,cascade=CascadeType.ALL)
 	private List<AdmFacilityContact> admFacilityContacts;
 
 	//bi-directional one-to-one association to AdmFacilityCredit
@@ -122,7 +122,7 @@ public class AdmFacility implements Serializable {
 	private List<AdmPurchaseHistory> admPurchaseHistories;
 
 	//bi-directional many-to-one association to AdmUserFacility
-	@OneToMany(mappedBy=ADM_FACILITY)
+	@OneToMany(mappedBy=ADM_FACILITY,cascade=CascadeType.ALL)
 	private List<AdmUserFacility> admUserFacilities;
 
 	//bi-directional many-to-one association to JpJob

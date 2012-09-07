@@ -15,6 +15,7 @@ import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -535,5 +536,49 @@ public class EmployerRegistrationConversionHelper {
 		}
 
 		return afc;
+	}
+	
+	/**
+	 * Converting MerUserDTO to MerUser for Manage Access Permission
+	 * 
+	 * @param dto
+	 * @return MerUser
+	 */
+	public MerUser transformMerUserDTOToMerUser(EmployerProfileDTO dto) {
+		
+		
+		UserDTO userDTO = dto.getMerUserDTO();
+		MerUser	merUser=null;
+		if (null != userDTO) {
+			merUser = new MerUser();
+			merUser.setFirstName(userDTO.getFirstName());
+			merUser.setLastName(userDTO.getLastName());
+			merUser.setPassword(userDTO.getPassword());
+			merUser.setEmail(userDTO.getEmailId());
+		}
+
+		if (null != dto.getAttribList()) {
+			return createMerUser(merUser, dto, userDTO);
+		}
+
+		return merUser;
+
+	}
+	
+	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(List<MerUser> merUsers,List<Integer> roleId){
+		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
+		int i =0;
+		for (MerUser merUser : merUsers) {
+			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
+			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
+			manageAccessPermissionDTO.setOwnerName(merUser.getFirstName());
+			if (roleId.size()>i && null !=roleId.get(i)) {
+				manageAccessPermissionDTO.setTypeOfAccess(roleId.get(i));
+			}
+			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
+			i=i+1;
+		}
+		return manageAccessPermissionDTOList;		
+		
 	}
 }

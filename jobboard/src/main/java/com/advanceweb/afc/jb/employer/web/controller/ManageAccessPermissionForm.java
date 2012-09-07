@@ -1,5 +1,10 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
+
+
 /**
  * 
  * @author deviprasadm
@@ -7,10 +12,12 @@ package com.advanceweb.afc.jb.employer.web.controller;
  * @Purpose: This class will act as a Form Bean for the Manage Access Permission
  */
 public class ManageAccessPermissionForm {
+	private int ownerId;
 	private String ownerName;
 	private String ownerEmail;
-	private boolean accessTypeFull;
-	private boolean accessTypePost;
+	private String fullAccess;
+	private String postEditAccess;
+	private List<ManageAccessPermissionDTO> manageAccessPermissiondetails; 
 	/**
 	 * @return the ownerName
 	 */
@@ -36,28 +43,55 @@ public class ManageAccessPermissionForm {
 		this.ownerEmail = ownerEmail;
 	}
 	/**
-	 * @return the accessTypeFull
+	 * @return the fullAccess
 	 */
-	public boolean isAccessTypeFull() {
-		return accessTypeFull;
+	public String getFullAccess() {
+		return fullAccess;
 	}
 	/**
-	 * @param accessTypeFull the accessTypeFull to set
+	 * @param fullAccess the fullAccess to set
 	 */
-	public void setAccessTypeFull(boolean accessTypeFull) {
-		this.accessTypeFull = accessTypeFull;
+	public void setFullAccess(String fullAccess) {
+		this.fullAccess = fullAccess;
 	}
 	/**
-	 * @return the accessTypePost
+	 * @return the postEditAccess
 	 */
-	public boolean isAccessTypePost() {
-		return accessTypePost;
+	public String getPostEditAccess() {
+		return postEditAccess;
 	}
 	/**
-	 * @param accessTypePost the accessTypePost to set
+	 * @param postEditAccess the postEditAccess to set
 	 */
-	public void setAccessTypePost(boolean accessTypePost) {
-		this.accessTypePost = accessTypePost;
+	public void setPostEditAccess(String postEditAccess) {
+		this.postEditAccess = postEditAccess;
 	}
+	
+	/**
+	 * @return the ownerId
+	 */
+	public int getOwnerId() {
+		return ownerId;
+	}
+	/**
+	 * @param ownerId the ownerId to set
+	 */
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+	/**
+	 * @return the manageAccessPermissiondetails
+	 */
+	public List<ManageAccessPermissionDTO> getManageAccessPermissiondetails() {
+		return manageAccessPermissiondetails;
+	}
+	/**
+	 * @param manageAccessPermissiondetails the manageAccessPermissiondetails to set
+	 */
+	public void setManageAccessPermissiondetails(
+			List<ManageAccessPermissionDTO> manageAccessPermissiondetails) {
+		this.manageAccessPermissiondetails = manageAccessPermissiondetails;
+	}
+	
 	
 }

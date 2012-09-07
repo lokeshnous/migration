@@ -18,6 +18,7 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 	private AddressDTO addDTO;
 	private String profileType;
 	private List<ProfileAttribDTO> attribList;
+	private int rollId;
 
 	/**
 	 * @return the attribList
@@ -88,6 +89,20 @@ public class EmployerProfileDTO extends BaseProfileDTO {
 
 	public void setProfileType(String profileType) {
 		this.profileType = profileType;
+	}
+
+	/**
+	 * @return the rollId
+	 */
+	public int getRollId() {
+		return rollId;
+	}
+
+	/**
+	 * @param rollId the rollId to set
+	 */
+	public void setRollId(int rollId) {
+		this.rollId = rollId;
 	}
 	
 }
