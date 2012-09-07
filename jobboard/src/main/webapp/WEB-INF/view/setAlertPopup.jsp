@@ -21,12 +21,12 @@
 	});
 	jQuery(document).ready(function() {
 		$('#save').click(function(){			
-			
 			$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html",
 				data:$('#alertId').serialize(),
 				type:"GET",
-				success: function(data) {					
-					parent.$.nmTop().close();
+				success: function(data) {			
+						alert("The alerts saved Successfully.");
+						parent.$.nmTop().close();
 				 },
 			});
 		}); 
@@ -69,7 +69,7 @@
 						<span class=" FloatLeft marginTop3">Job Owner: </span> <select
 							id="select14" class="jb_input3  marginTop0 width150 marginLeft5"
 							name="select9">
-							<option selected="selected">--- Job Owner ---</option>
+							<option selected="selected" id="ownerId">--- Job Owner ---</option>
 							<option>Daniel Stuart</option>
 							<option>Kim Noble</option>
 							<option>Jane Wharton</option>

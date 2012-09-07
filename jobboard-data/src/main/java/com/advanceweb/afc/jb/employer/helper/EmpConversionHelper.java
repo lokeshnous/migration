@@ -53,8 +53,8 @@ public class EmpConversionHelper {
 	public List<UserAlertDTO> transformAdmUserAlertToAlertDTO(
 			List<MerUser> user, List<AdmFacilityAlert> userAlerts) {
 		List<UserAlertDTO> alertDTOs = new ArrayList<UserAlertDTO>();
-		String owner = user.get(0).getFirstName() + " "
-				+ user.get(0).getLastName();
+		String owner = user.get(0).getLastName() + " "
+				+ user.get(0).getFirstName();
 		for (AdmFacilityAlert admUserAlert : userAlerts) {
 			UserAlertDTO alertDTO = new UserAlertDTO();
 			AdmAlert alert = admUserAlert.getAdmAlert();

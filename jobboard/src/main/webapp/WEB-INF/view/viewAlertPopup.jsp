@@ -33,7 +33,7 @@
 				if(r==true){
 					$.ajax({url: "${pageContext.request.contextPath}/alerts/employer/deleteAlert.html?alertId="+alertId,
 							success: function(data){ 
-							    if(data.success != null){
+							    if(data.success != null){							    	
 							    	rowObj.remove();
 							    }
 							    if(data.failure != null){

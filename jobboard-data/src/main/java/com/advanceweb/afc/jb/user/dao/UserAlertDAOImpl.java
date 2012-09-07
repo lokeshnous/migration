@@ -75,10 +75,14 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 */
 	@Override
 	public boolean deleteAlert(int userId, int alertId) {
-		AdmFacilityAlert userAlert = hibernateTemplate.load(
-				AdmFacilityAlert.class, alertId);
-		userAlert.setDeleteDt(new Date());
-		hibernateTemplate.saveOrUpdate(userAlert);
+		AdmFacilityAlert facilityAlert = (AdmFacilityAlert) hibernateTemplate
+				.find("from AdmFacilityAlert where userId = ? and admAlert.alertId = ?",
+						userId, alertId).get(0);
+		if (null != facilityAlert) {
+			facilityAlert.setDeleteDt(new Date());
+		}
+		// userAlert.setDeleteDt(new Date());
+		hibernateTemplate.saveOrUpdate(facilityAlert);
 		return true;
 	}
 
@@ -115,7 +119,7 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 				List<AdmFacilityAlert> userAlerts = conversionHelper
 						.transformAlertDTOToAdmFacilityAlert(alertDTOs,
 								listAlerts);
-				hibernateTemplate.deleteAll(listAlerts);
+				//hibernateTemplate.deleteAll(listAlerts);
 				hibernateTemplate.saveOrUpdateAll(userAlerts);
 			}
 		} catch (DataAccessException e) {
