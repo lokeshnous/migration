@@ -339,6 +339,9 @@ public class JobSeekerRegistrationController {
 	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
 	public String updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session) {
+		String firstName = "";
+		String lastName= "";
+		
 		try {	
 			
 			if(null != registerForm.getListProfAttribForms()){
@@ -389,7 +392,17 @@ public class JobSeekerRegistrationController {
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
-			session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
+			
+			for (JobSeekerProfileAttribForm attribForm : registerForm.getListProfAttribForms()) {
+				if(attribForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.FIRST_NAME)){
+					firstName = attribForm.getStrLabelValue();
+				}else if(attribForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.LAST_NAME)){
+					lastName = attribForm.getStrLabelValue();
+					//break;
+				}
+			}
+			
+			session.setAttribute(MMJBCommonConstants.USER_NAME, firstName+" "+lastName);
 			
 		} catch (Exception e) {
 			//TODO
