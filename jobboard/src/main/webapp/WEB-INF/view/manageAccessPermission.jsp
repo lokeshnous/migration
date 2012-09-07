@@ -13,31 +13,28 @@
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    $("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
-		    
-		    /* $('#addNewJobOwnerPopUp').click(function() {
-		    	 $("form")
-					.attr(
-							"action",
-							"${pageContext.request.contextPath}/employer/addNewJobOwner.html");
-			$("form")
-					.attr("method", "POST");
-			$("#manageAcceccPermissionForm").submit();	 	
-			}); */
-		  
+		    $("#manageAccessPerm").displaypopup("#manageAccessPerm","770","360");
+		   
 		    $("#managePermission a").click(function() {
 		    	
-		    	//val= this.$('#userId').val();
 				val=$(this).attr("id");
 				if (val != ""
 					&& confirm("Do you want to Delete?")){
-					 $("form")
-							.attr(
-									"action",
-									"${pageContext.request.contextPath}/employer/deleteJobOwner.html?userId="
-											+ val);
-					$("form")
-							.attr("method", "POST");
-					$("form").submit();	
+					
+					$.ajax({url : "${pageContext.request.contextPath}/employer/deleteJobOwner.html?userId="+ val,
+		    			data:$('#manageAcceccPermissionForm').serialize(),
+						type: "POST",
+						success : function(dataFound) {		
+							 $("#manageAccessPerm").click();
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						}
+							
+						
+					});
+					
+					
 				}
 
 		});
@@ -50,15 +47,7 @@
 							$("form")
 								.attr("method", "POST");
 							$("form").submit();	
-	    		/* $.ajax({url : "${pageContext.request.contextPath}/employer/updateJobOwner.html",
-	    			data:$('#addJobOwnerForm').serialize(),
-					type: "POST",
-					success : function(dataFound) {
-						alert("hai");							  
-						  $("#manageAccPerm").click();
-					}					
-						
-	    		}); */
+	    		
 			});	
 		    jQuery(".megamenu").megamenu();
 		});
@@ -104,6 +93,7 @@
 				</div>
               <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="#" class="btn_sm orange" id="saveClicked">Save</a> 
               <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a></span> 
+              <a hidden="hidden" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="manageAccessPerm"></a>
               <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
            
           </div>

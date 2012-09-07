@@ -40,14 +40,7 @@
 									
 								
 							});
-						}	/* 
-								$("#addJobOwnerForm")
-										.attr(
-												"action",
-												"${pageContext.request.contextPath}/employer/addNewJobOwner.html");
-								$("#addJobOwnerForm")
-										.attr("method", "POST");
-								$("#addJobOwnerForm").submit();			 */				
+						}				
 
 						});
 		    jQuery(".megamenu").megamenu();

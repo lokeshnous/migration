@@ -97,6 +97,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 				facility.setColorPalette(facilityP.getColorPalette());
 				facility.setCompanyNews(facilityP.getCompanyNews());
 				facility.setCompanyOverview(facilityP.getCompanyOverview());
+				
 			}
 
 			List<AdmFacilityContact> admFacilityContactP = facilityP

@@ -41,7 +41,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
-				 <prop key="hibernate.show_sql">false</prop>
+				 <prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">
@@ -81,7 +81,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
-				 <prop key="hibernate.show_sql">false</prop>
+				 <prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">

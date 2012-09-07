@@ -91,25 +91,22 @@ public class ManageAccessPermissionController {
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			int userIdParent = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
-			
-				
-			
+
 			if (null != manageAccessPermissionForm) {
 				if (null != manageAccessPermissionForm.getFullAccess()
 						&& !manageAccessPermissionForm.getFullAccess()
 								.isEmpty()) {
 					empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
 							.getFullAccess()));
-				} 
+				}
 			}
-			
-				UserDTO userDTO = transformEmpReg
-						.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
-				empDTO.setMerUserDTO(userDTO);
-	
-				manageAccessPermissionService.createJobOwner(empDTO,
-						facilityIdParent, userIdParent);
-		
+
+			UserDTO userDTO = transformEmpReg
+					.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
+			empDTO.setMerUserDTO(userDTO);
+
+			manageAccessPermissionService.createJobOwner(empDTO,
+					facilityIdParent, userIdParent);
 
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -119,27 +116,21 @@ public class ManageAccessPermissionController {
 	}
 
 	@RequestMapping(value = "/deleteJobOwner", method = RequestMethod.POST)
-	public ModelAndView deleteJobOwner(
+	public @ResponseBody JSONObject deleteJobOwner(
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			@RequestParam("userId") int userId) {
-		ModelAndView model = new ModelAndView();
+
+		JSONObject warningMessage = new JSONObject();
 		try {
 
 			manageAccessPermissionService.deleteJobOwner(userId);
 			LOGGER.info("Request For - delete" + "user Id :" + userId);
 
-			manageAccessPermissionService
-					.updateJobOwner(manageAccessPermissionForm
-							.getManageAccessPermissiondetails());
-			LOGGER.info("Request For - update user Id ");
-
-			model.addObject("manageAccessPermissionForm",
-					manageAccessPermissionForm);
-			model.setViewName("forward:/employer/manageAccessPermission.html");
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
-		return model;
+		warningMessage.put("success", "succes");
+		return warningMessage;
 	}
 
 	@RequestMapping(value = "/updateJobOwner", method = RequestMethod.POST)
@@ -159,21 +150,6 @@ public class ManageAccessPermissionController {
 					manageAccessPermissionForm);
 			model.setViewName("forward:/employer/manageAccessPermission.html");
 		} catch (DataAccessException e) {
-			LOGGER.error(e);
-		}
-		return model;
-	}
-
-	@RequestMapping(value = "/addJobOwner", method = RequestMethod.POST)
-	public ModelAndView addJobOwner(
-			ManageAccessPermissionForm manageAccessPermissionForm) {
-		ModelAndView model = new ModelAndView();
-		try {
-			manageAccessPermissionForm.setFullAccess("5");
-			model.addObject("manageAccessPermissionForm",
-					manageAccessPermissionForm);
-			model.setViewName("forward:/employer/manageAccessPermission.html");
-		} catch (Exception e) {
 			LOGGER.error(e);
 		}
 		return model;
