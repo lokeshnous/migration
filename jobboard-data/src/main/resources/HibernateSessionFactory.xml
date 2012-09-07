@@ -41,7 +41,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.hibernate.dialect}</prop>
-				 <prop key="hibernate.show_sql">true</prop>
+				 <prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">
@@ -97,6 +97,8 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilitySystem</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.AdmFacilityTmp</value> -->
 					<value>com.advanceweb.afc.jb.data.entities.AdmPermission</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmInventoryDetail</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityInventory</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmPurchaseHistory</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmRole</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmSaveJob</value>
