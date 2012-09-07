@@ -11,14 +11,17 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
+	function cancelProcess(){
+		parent.$.nmTop().close();
+	}
 	function closePopup() {
 		parent.window.location.reload();
 	}
-	$(document).keyup(function(event) {
+	/* $(document).keyup(function(event) {
 		if (event.keyCode == 27) {
 			parent.window.location.reload();
 		}
-	});
+	}); */
 	jQuery(document).ready(function() {
 		
 		$("#tb_view_alerts img").click(function(event) {
@@ -64,7 +67,7 @@
 		<div class="popupHeader">
 			<h2>VIEW ALERTS</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" onclick="closePopup();" alt=""></a>
+				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -94,7 +97,7 @@
 					</table>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<input type="button" onclick="closePopup();" class="orange"
+					<input type="button" onclick="cancelProcess();" class="orange"
 						value="Cancel" />
 					<!-- <a href="" class="btn_sm orange">Cancel</a> -->
 				</div>

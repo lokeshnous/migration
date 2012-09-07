@@ -6,10 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
-import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerSubscriptionForm;
 
 /**
  * 
@@ -33,7 +32,7 @@ public class TransferUserAlert {
 			for (String selAlert : alertForm.getSelectedAlerts()) {
 				UserAlertDTO dto = new UserAlertDTO();
 				dto.setAlertId(Integer.valueOf(selAlert));
-				dto.setUserId(alertForm.getUserId());
+				dto.setUserId(Integer.parseInt(alertForm.getSelJobOwner()));
 				dto.setFacilityId(alertForm.getFacilityId());
 				list.add(dto);
 			}
@@ -73,6 +72,19 @@ public class TransferUserAlert {
 			}
 		}
 		return selSubList;
+	}
+	
+	public List<DropDownDTO> jbOwnerListTODropDownDTO(List<ManageAccessPermissionDTO> jbOwnerList){
+		List<DropDownDTO> selOwnerList = new ArrayList<DropDownDTO>();
+		for(ManageAccessPermissionDTO permissionDTO : jbOwnerList){
+			DropDownDTO dropDownDTO = new DropDownDTO();
+			dropDownDTO.setOptionId(String.valueOf(permissionDTO.getOwnerId()));
+			dropDownDTO.setOptionName(permissionDTO.getOwnerName());
+			selOwnerList.add(dropDownDTO);
+		}
+		
+		return selOwnerList;
+		
 	}
 
 }

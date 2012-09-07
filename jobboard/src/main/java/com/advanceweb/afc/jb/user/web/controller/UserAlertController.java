@@ -21,14 +21,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
+import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.user.UserAlertService;
 
 /**
  * 
- * @author bharatiu
+ * @author Bharati Umarani
  * @version 1.0
  * @since 4th sept, 2012
  */
@@ -42,6 +44,9 @@ public class UserAlertController {
 
 	@Autowired
 	private UserAlertService alertService;
+
+	@Autowired
+	private ManageAccessPermissionService permissionService;
 
 	@Autowired
 	private TransferUserAlert transferUserAlert;
@@ -64,17 +69,32 @@ public class UserAlertController {
 	public ModelAndView setAlerts(
 			@ModelAttribute("alertForm") UserAlertForm alertForm,
 			BindingResult result, HttpSession session) {
+
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
 		ModelAndView model = new ModelAndView();
+
 		List<DropDownDTO> alertList = alertService.populateValues("FACILITY");
+		List<ManageAccessPermissionDTO> jbOwnerList = permissionService
+				.getJobOwnerList(facilityId, userId);
+
+		List<DropDownDTO> dropDownList = null;
+
+		if (!jbOwnerList.isEmpty()) {
+			dropDownList = transferUserAlert
+					.jbOwnerListTODropDownDTO(jbOwnerList);
+		}
+
 		List<UserAlertDTO> userAlertDTOs = alertService.viewalerts(userId,
 				facilityId);
 		transferUserAlert.jsUserAlertDTOToUserAlerts(userAlertDTOs, alertForm,
 				alertList);
+		
 		model.addObject("alertList", alertList);
+		model.addObject("jbOwnerList", dropDownList);
 		model.setViewName("alertForm");
 		model.setViewName("setAlertPopup");
 		return model;
@@ -88,23 +108,24 @@ public class UserAlertController {
 	 * @param model
 	 * @return
 	 */
-	@ResponseBody
 	@RequestMapping(value = "/employer/saveAlerts", method = RequestMethod.GET)
-	public String saveAlerts(UserAlertForm alertForm, BindingResult result,
-			HttpSession session) {
+	public @ResponseBody
+	JSONObject saveAlerts(UserAlertForm alertForm, BindingResult result,
+			HttpSession session, @RequestParam("selOwnerId") int selOwnerId) {
+		JSONObject jsonObject = new JSONObject();
 		try {
 
 			alertForm.setUserId(Integer.valueOf(String.valueOf(session
-					.getAttribute("userId"))));
+					.getAttribute(MMJBCommonConstants.USER_ID))));
 			alertForm.setFacilityId(Integer.valueOf(String.valueOf(session
-					.getAttribute("facilityId"))));
+					.getAttribute(MMJBCommonConstants.FACILITY_ID))));
 			List<UserAlertDTO> alertDTOs = transferUserAlert
 					.jsAlertFormToUserAlertDTO(alertForm);
 			alertService.saveAlerts(alertForm.getUserId(), alertDTOs);
 		} catch (Exception e) {
 			LOGGER.info("error in saving the subscription for job seeker");
 		}
-		return null;
+		return jsonObject;
 	}
 
 	/**

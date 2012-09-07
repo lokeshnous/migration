@@ -11,17 +11,22 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
+function cancelProcess(){
+	parent.$.nmTop().close();
+}
 	function closePopup() {
 		parent.window.location.reload();
 	}
-	$(document).keyup(function(event) {
+	/* $(document).keyup(function(event) {
 		if (event.keyCode == 27) {
 			parent.window.location.reload();
 		}
-	});
+	}); */
 	jQuery(document).ready(function() {
+		$("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
+		var selOwnerId = $("#selJobOwner").val();
 		$('#save').click(function(){			
-			$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html",
+			$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html?selOwnerId="+selOwnerId,
 				data:$('#alertId').serialize(),
 				type:"GET",
 				success: function(data) {			
@@ -41,7 +46,7 @@
 		<div class="popupHeader marginBottom0">
 			<h2>SET ALERTS</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" onclick="closePopup();" alt=""></a>
+				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="GET" action="../alerts/employer/saveAlerts.html" id="alertId" commandName="alertForm">
@@ -66,23 +71,23 @@
 					<span><h3 class="TextColor01 marginTop15">Select who
 							you would like to receive the alert(s) checked above.</h3></span>
 					<div class="rowEvenNewSpacing">
-						<span class=" FloatLeft marginTop3">Job Owner: </span> <select
-							id="select14" class="jb_input3  marginTop0 width150 marginLeft5"
-							name="select9">
-							<option selected="selected" id="ownerId">--- Job Owner ---</option>
-							<option>Daniel Stuart</option>
-							<option>Kim Noble</option>
-							<option>Jane Wharton</option>
-							<option>Mark Murphy</option>
-							<option>Michael Connor</option>
-						</select> <span class="required paddingTop4"><a href="#">Add New
-								Job Owner</a></span>
+						<span class=" FloatLeft marginTop3">Job Owner: </span> 
+												    
+						<form:select 
+							class="jb_input3  marginTop0 width150 marginLeft5"
+							path="selJobOwner" items="${jbOwnerList}" 
+							itemValue="optionId" itemLabel="optionName">
+						</form:select> 
+								
+					<span class="required paddingTop4">
+						<a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html"  
+						id="addNewJobOwnerPopUp" ">Add NewJob Owner</a></span>
 					</div>
 				</div>
 				<div class="popUpButtonRow">
 					<input type="button" id="save" value="Save" class="orange" />
 					<!-- <a href="" class="btn_sm orange">Save</a> -->
-					<input type="button" value="Cancel" onclick="closePopup()"
+					<input type="button" value="Cancel" onclick="cancelProcess()"
 						class="orange" name="Cancel" />
 				</div>
 			</form:form>
