@@ -35,6 +35,14 @@
 			});
 		});
 		
+		$("#proceedToCheckout").click(function(){
+			if($("#grandTotalId").text() == "$0"){
+				alert("Please select some items to checkout");
+				return false;
+			}
+			return true;
+		});
+		
 		$("#jobPostingsCart a").click(function(){
 			if($(this).html()== "Remove"){
 				$.ajax({url: "${pageContext.request.contextPath}/purchaseJobPosting/removeJobPost.html",
@@ -55,13 +63,17 @@
 		
 		$("#addToCart").click(function() {
 			var count = 0; 
-			debugger;
 			$("#purchaseJobPostingId input[type='radio']").each(function(){
 				if($(this).is(':checked')){
 					count++;
 					var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
+					var reg = new RegExp("^1?[1-9]$|^[1-2]0$");
 					if("" == quantity || null == quantity){
 						alert("Please Add Quantity value");
+						return;
+					}
+					else if(!reg.test(quantity)){
+						alert("Enter the numaric value");
 						return;
 					}
 					else{
@@ -250,7 +262,7 @@
 								<tr cellpadding="0" cellspacing="0" border="0">
 									<td width="32%" align="Left"><h3 class="TextColorA01">Grand
 											Total:</h3></td>
-									<td width="7%" align="Left"><h3 class="TextColorA01"><span>$</span>${purchaseJobPostForm.grandTotal}</h3></td>
+									<td width="7%" align="Left"><h3 class="TextColorA01" id="grandTotalId"><span>$</span>${purchaseJobPostForm.grandTotal}</h3></td>
 									<td width="19%"><h3 class="TextColorA01">&nbsp;</h3></td>
 								</tr>
 								<tr>
