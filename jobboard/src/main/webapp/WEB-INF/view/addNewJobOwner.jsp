@@ -16,17 +16,31 @@
 		    	
 		    	
 		    	$("#saveNewOwner").click(function() {
-		    		$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
-		    			data:$('#addJobOwnerForm').serialize(),
-						type: "POST",
-						success : function(dataFound) {
-							alert("hai");							  
-							  $("#manageAccPerm").click();
-						}					
-							
+			    		var ownerName = $.trim($("#ownerName").val());
+						var ownerEmail = $.trim($("#ownerEmail").val());
+						var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;           
 						
-					});
-							/* 
+						if (ownerName.length <= 0
+							&& ownerEmail .length <= 0){
+							$("#resumeErrorMsg").html("<span>All fields are mandatory.</span>");
+						
+						}else if($('#ownerName').val().split(' ').length < 2) {		
+							$("#resumeErrorMsg").html("<span>Name should be both first name and last name.</span>");
+							
+						}else if(!email_regex.test(ownerEmail)){
+							$("#resumeErrorMsg").html("<span>Please enter a valied Email address.</span>");	
+						
+						}else {						
+							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
+				    			data:$('#addJobOwnerForm').serialize(),
+								type: "POST",
+								success : function(dataFound) {			  
+									  $("#manageAccPerm").click();
+								}					
+									
+								
+							});
+						}	/* 
 								$("#addJobOwnerForm")
 										.attr(
 												"action",
@@ -51,6 +65,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
+		<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
 						name="EmailAddress" class="job_seeker_email width300" />
@@ -63,19 +78,19 @@
 					<span class="lableText4"> </span>
 					<div class="floatLeft marginTop5 marginRight10">
 						<label> <form:radiobutton name="RadioGroup10" value="5"
-							id="RadioGroup1_0"  path="fullAccess" label="Full Access"/> 
+							  path="fullAccess"  label="Full Access"/> 
 						</label>
 					</div>
 
 					<div class="floatLeft marginTop5">
 						<label> <form:radiobutton name="RadioGroup10" 
-							id="RadioGroup1_0"  path="postEditAccess" value="6" label="Post / Edit Only"/> 
+							  path="fullAccess" value="6" label="Post / Edit Only"/> 
 						</label>
 					</div>
 					</div> 
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-						<span class="floatLeft marginTop10"><a href="" id="saveNewOwner"
+						<span class="floatLeft marginTop10"><a href="#" id="saveNewOwner"
 							class="btn_sm orange">SAVE</a> <a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a></span>
 							<a hidden="hidden" class="nyroModal" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="manageAccPerm"></a>
 					</div>

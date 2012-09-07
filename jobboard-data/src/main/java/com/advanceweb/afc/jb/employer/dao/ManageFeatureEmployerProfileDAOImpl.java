@@ -111,7 +111,6 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 				AdmFacility admFacility = (AdmFacility) session.get(
 						AdmFacility.class, Long.valueOf(employerId).intValue());
-				// System.out.println(facility);
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility
 						.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());

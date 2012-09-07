@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -68,6 +69,7 @@ public class ManageAccessPermissionController {
 			ManageAccessPermissionForm manageAccessPermissionForm) {
 		ModelAndView model = new ModelAndView();
 		try {
+			manageAccessPermissionForm.setFullAccess("5");
 			model.addObject("manageAccessPermissionForm",
 					manageAccessPermissionForm);
 			model.setViewName("addNewJobOwner");
@@ -89,26 +91,25 @@ public class ManageAccessPermissionController {
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			int userIdParent = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
+			
+				
+			
 			if (null != manageAccessPermissionForm) {
 				if (null != manageAccessPermissionForm.getFullAccess()
 						&& !manageAccessPermissionForm.getFullAccess()
 								.isEmpty()) {
 					empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
 							.getFullAccess()));
-				} else if (null != manageAccessPermissionForm
-						.getPostEditAccess()
-						&& !manageAccessPermissionForm.getPostEditAccess()
-								.isEmpty()) {
-					empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
-							.getPostEditAccess()));
-				}
+				} 
 			}
-			UserDTO userDTO = transformEmpReg
-					.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
-			empDTO.setMerUserDTO(userDTO);
-
-			manageAccessPermissionService.createJobOwner(empDTO,
-					facilityIdParent, userIdParent);
+			
+				UserDTO userDTO = transformEmpReg
+						.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
+				empDTO.setMerUserDTO(userDTO);
+	
+				manageAccessPermissionService.createJobOwner(empDTO,
+						facilityIdParent, userIdParent);
+		
 
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -168,6 +169,7 @@ public class ManageAccessPermissionController {
 			ManageAccessPermissionForm manageAccessPermissionForm) {
 		ModelAndView model = new ModelAndView();
 		try {
+			manageAccessPermissionForm.setFullAccess("5");
 			model.addObject("manageAccessPermissionForm",
 					manageAccessPermissionForm);
 			model.setViewName("forward:/employer/manageAccessPermission.html");
@@ -176,5 +178,5 @@ public class ManageAccessPermissionController {
 		}
 		return model;
 	}
-
+	
 }

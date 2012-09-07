@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +18,6 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
-import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -64,7 +62,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 				hibernateTemplateTracker.saveOrUpdate(merUser);
 			}
 			
-			
+			// saving the data in Adm_User_Role
 			AdmUserRole userRole = new AdmUserRole();
 			userRole.setCreateUserId(userIdp);
 			userRole.setCreateDt(new Date());
@@ -103,8 +101,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 
 			List<AdmFacilityContact> admFacilityContactP = facilityP
 					.getAdmFacilityContacts();
-			List<AdmUserFacility> admUserFacilities = facilityP
-					.getAdmUserFacilities();
+			
 			// saving the data in adm_facility_contact as per the logged in User
 			List<AdmFacilityContact> admFacilityContactList = new ArrayList<AdmFacilityContact>();
 			if (null != admFacilityContactP) {
@@ -155,7 +152,12 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 		return null;
 	}
 
-	
+	/**
+	 * This method is called to delete the Job Owner
+	 * 
+	 * @param accessPermissionDTOList
+	 * @return delete status
+	 */
 
 	@Override
 	public boolean deleteJobOwner(int jobOwnerId) {
@@ -178,7 +180,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 	 * This method is called to update the Job Owner
 	 * 
 	 * @param accessPermissionDTOList
-	 * @return delete status
+	 * @return update status
 	 */
 	@Override
 	public boolean updateJobOwner(
