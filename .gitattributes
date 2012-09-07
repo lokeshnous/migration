@@ -171,6 +171,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java 
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
 jobboard-core/src/main/resources/JbCoreSpringBeans.xml -text
+jobboard-core/src/main/resources/jobboard-scheduler.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.xml -text
 jobboard-core/src/main/resources/mailServer.properties -text
 jobboard-core/src/main/resources/solr.properties -text
