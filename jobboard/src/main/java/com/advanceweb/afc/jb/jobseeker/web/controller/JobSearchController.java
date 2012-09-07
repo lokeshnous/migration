@@ -749,30 +749,31 @@ public class JobSearchController {
 	 * 
 	 */
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
-	public String sendToFriend(HttpServletRequest request, Model model) {
+	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
+			BindingResult result,HttpServletRequest request, Model model) {
 		try {
-			SendToFriend sendToForm = new SendToFriend();
+			
+			//SendToFriend sendtofriendmail = new SendToFriend();
+			//SendToFriend sendToForm = new SendToFriend();
 			int jobId = Integer.parseInt(request.getParameter("id"));
-			sendToForm.setJobId(jobId);
-			sendToForm.setJoburl(request.getRequestURL().toString());
+			sendtofriendmail.setJobId(jobId);
+			sendtofriendmail.setJoburl(request.getRequestURL().toString());
 			model.addAttribute("joburl", request.getRequestURL().toString());
 			model.addAttribute("jobId", request.getParameter("id"));
 			model.addAttribute("currentUrl", request.getParameter("currentUrl"));
-			model.addAttribute("sendtofriendmail", sendToForm);
+			model.addAttribute("sendtofriendmail", sendtofriendmail);
 		} catch (Exception e) {
 			LOGGER.info("ERROR");
 		}
 
-		return "jobseekersendtofriendpopup";
+		return new ModelAndView("jobseekersendtofriendpopup");
 	}
 
 	@SuppressWarnings("unused")
 	@ResponseBody
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
-	public String sendToFriendPost(
-			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
-			BindingResult result, HttpServletRequest request,
-			HttpSession session) {
+	public String sendToFriendPost(@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
+			BindingResult result, HttpServletRequest request,HttpSession session) {
 		ModelAndView modelData = new ModelAndView();
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
