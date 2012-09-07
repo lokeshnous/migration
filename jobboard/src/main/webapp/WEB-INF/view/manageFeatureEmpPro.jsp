@@ -58,7 +58,7 @@
 					</div>
 					<div class="row ">
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter width150">Company Name:</div>
+							<div class="lableTextCoverletterSize">Company Name:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
 									<form:input path="companyName" name="Exclude"
@@ -68,7 +68,7 @@
 						</div>
 
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter marginTop10 width150">
+							<div class="lableTextCoverletterSize marginTop10">
 								Company Overview:</div>
 							<div class="input_grp5 ">
 								<form:textarea path="companyOverview" id="Body Text:"
@@ -79,7 +79,7 @@
 
 						</div>
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter width150">Company Website:</div>
+							<div class="lableTextCoverletterSize">Company Website:</div>
 							<div class="input_grp5 ">
 
 								<div class="floatLeft">
@@ -91,7 +91,7 @@
 							
 						</div>
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter width150">Company Email
+							<div class="lableTextCoverletterSize">Company Email
 								Address:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
@@ -105,15 +105,19 @@
 							</div>
 							
 						</div>
-						<div class="floatLeft marginTop5">
-										<span class="lableText3"> Primary Color:</span>
+						<div class="row marginTop15">
+										<span class="lableTextCoverletterSize"> Primary Color:</span>
 							         	 <form:input id="color_id" path="primaryColor" readonly="true" class="jb_input2Coverletter InputActiveText" />
-							        <div class="floatRight"><input id="colorPkr" name="color1" type="text"   /></div></div>
-							         <div class="toolTip marginTop6 marginleft5"><span class="classic">Select a color that complements your brand.</span></div>
+							        <span>
+							        <div class="colorPkrArea"><input id="colorPkr" name="color1" type="text"   /></div>
+							         <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select a color that complements your brand.</span>
+							         
+							         </div></span>
+							        </div>
 							         	
 									  </div>
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter marginTop10 width150">
+							<div class="lableTextCoverletterSize marginTop10">
 								Company News:</div>
 							<div class="input_grp5">
 								<div class="FloatLeft">
@@ -121,7 +125,7 @@
 										class="textareaBoxCResume Height256" rows="5" cols="45"
 										name="Body Text:" />
 								</div>
-								<div class="toolTip marginTop10 marginLeft5">
+								<div class="toolTip01 marginTop10 marginLeft5">
 									<span class="classic">Describe what's going on at your
 										company here. Attract job-seekers by mentioning awards you've
 										recently won, expansions currently in the works or upcoming
@@ -131,7 +135,7 @@
 							</div>
 						</div>
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter width150">Promotional
+							<div class="lableTextCoverletterSize">Promotional
 								Media:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
@@ -148,7 +152,7 @@
 							</div>
 						</div>
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter width150">Logo:</div>
+							<div class="lableTextCoverletterSize">Logo:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
 									<form:input path="logoUrl" name="textfield4" type="file"

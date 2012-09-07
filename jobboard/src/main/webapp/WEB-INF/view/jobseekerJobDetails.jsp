@@ -31,143 +31,13 @@
 		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
 			});
 		</script>
   
-<script type="text/javascript">
-	function saveThisJob(jobId) {
-		$.ajax({
-			url : '../jobsearch/saveThisJob.html?id='+jobId,
-			data : ({
-				userID : "userID"
-			}),
-			success : function(data) {
-				$.each(data, function(key, val) {
-					if (key == "AjaxMSG") {
-						$('#topjobActionInfo').html(val);
-						$('#bottomjobActionInfo').html('');
-					}
-				});
-				$.each(data, function(key, val) {
-					if (key == "NavigationPath") {
-						//$('#saveThisJobId').attr('target', '_blank');
-						//$('#saveThisJobId').attr('href', val + '.html');
-						//$("#saveThisJobId").displaypopup("#saveThisJobId",
-							//	"775", "252");
-						$.nmManual(val + '.html');
-
-					}
-				});
-			},
-			error : function(data) {
-				alert('Unable to process');
-			},
-			complete : function(data) {
-			}
-		});
-	}
-
-	function applyThisJob(jobId) {
-		$.ajax({
-			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
-			data : ({
-				userID : "userID"
-			}),
-
-			success : function(data) {
-				$.each(data, function(key, val) {
-					if (key == "applyLink") {
-						window.open(val, '_blank');
-					}
-				});
-				$.each(data, function(key, val) {
-					if (key == "AjaxMSG") {
-						$('#topjobActionInfo').html(val);
-						$('#bottomjobActionInfo').html('');
-					}
-				});
-				$.each(data, function(key, val) {
-					if (key == "NavigationPath") {
-						//$(applyJobidId).attr('href', val + '.html');
-						window.location.href = val;
-					}
-				});
-			},
-			error : function(data) {
-				alert('Unable to process');
-			},
-			complete : function(data) {
-			}
-		});
-	}
-	function btsaveThisJob(jobId) {
-		$.ajax({
-			url : '../jobsearch/saveThisJob.html?id='+jobId,
-			data : ({
-				userID : "userID"
-			}),
-			success : function(data) {
-				$.each(data, function(key, val) {
-					if (key == "AjaxMSG") {
-						$('#bottomjobActionInfo').html(val);
-						$('#topjobActionInfo').html('');
-					}
-				});
-				$.each(data, function(key, val) {
-					if (key == "NavigationPath") {
-						//$('#btsaveThisJobId').attr('target', '_blank');
-						//$('#btsaveThisJobId').attr('href', val + '.html');
-						//$("#btsaveThisJobId").displaypopup("#btsaveThisJobId",
-						//		"775", "252");
-						$.nmManual(val + '.html');
-					}
-				});
-			},
-			error : function(data) {
-				alert('Unable to process');
-			},
-			complete : function(data) {
-			}
-		});
-	}
-
-	function btapplyThisJob(jobId) {
-		$.ajax({
-			url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
-			data : ({
-				userID : "userID"
-			}),
-			
-			success : function(data) {
-				$.each(data, function(key, val) {
-					if (key == "applyLink") {
-						window.open(val, '_blank');
-					}
-				});
-				$.each(data, function(key, val) {
-					if (key == "AjaxMSG") {
-						$('#bottomjobActionInfo').html(val);
-						$('#topjobActionInfo').html('');
-					}
-				});
-				$.each(data, function(key, val) {
-					if (key == "NavigationPath") {
-						//$(applyJobidId).attr('href', val + '.html');
-						window.location.href = val;
-					}
-				});
-			},
-			error : function(data) {
-				alert('Unable to process');
-			},
-			complete : function(data) {
-			}
-		});
-	}
-</script>
 </head>
     
     <body class="job_board_home">    
@@ -231,24 +101,26 @@
 			    </div>
 			    <div class="jobDetailsIntroOptions">
 			    <div class="rowEvenTB10Spacing">
-				<div class="floatLeft">Send to friend:</div><a href=""><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<div class="floatLeft">Send to friend:</div>
+				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
 				<a onclick="applyThisJob(${jobDetail.jobID});" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
 				<a onclick="saveThisJob(${jobDetail.jobID})" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
 			    
 			    <br/><br/><br/>
-			    <h4><div style="color: red" id="topjobActionInfo" ></div></h4>
+			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
 			    <h3 class="jobSummaryTitle"><span>Job Summary:</span></h3>
 			    <p class="article">${jobDetail.jobDesc}</p>     
 			    <div class="jobDetailsIntroOptionsTborder">
 				<div class="jobDetailsIntroOptions">
 				<div class="rowEvenTB10Spacing">
-				<div class="floatLeft">Send to friend:</div><a href=""><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<div class="floatLeft">Send to friend:</div>
+				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
 				<a onclick="btapplyThisJob(${jobDetail.jobID});" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				<a onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
 			    <br/><br/>
-			    <h4><div style="color: red" id="bottomjobActionInfo" ></div></h4>
+			    <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
 			    </div>
 			    </div>
 			    

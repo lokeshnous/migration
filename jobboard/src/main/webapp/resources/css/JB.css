@@ -608,6 +608,7 @@ ul.news {
 	padding-left: 5px;
 	font-size: 14px;
 	padding-bottom: 3px;
+	float:left
 }
 
 .InputActiveText {
@@ -2175,13 +2176,16 @@ h2.White {
 	margin-left: 0px;
 }
 
-.lableTextCoverletter {
+.lableTextCoverletter ,.lableTextCoverletterSize{
 	width: 120px;
 	padding: 6px 10px 0 10px; /* MM: changed */
 	float: left;
 	text-align: right; /* MM: added */
 }
-
+.lableTextCoverletterSize{
+	width: 145px !important;
+	}
+}
 .required2 {
 	color: #FE9400;
 	float: left;
@@ -2210,6 +2214,7 @@ h2.White {
 	border: 1px solid #CCCCCC;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 15px;
+	resize:none;
 }
 /********** grid style **************/
 table.grid,table.grid2,table.grid3,table.grid4 {
@@ -3681,18 +3686,21 @@ orange:hover {
 	margin: 0 auto;
 }
 
-.email,.print,.printOrange,.editFile,.download,.view,.delete,.check,.fbook,.twitter,.linkedIn,.printJBdetail
+.email,.emailFooter,.print,.printOrange,.editFile,.download,.view,.delete,.check,.fbook,.twitter,.linkedIn,.printJBdetail
 	{
 	width: 20px;
 	height: 20px;
 	margin-right: 3px;
 	float: left;
 }
-
+.emailFooter{
+	width: 15px !important;
+	margin-right:8px !important;
+}
 .email {
 	background-position: -239px -164px;
 	margin-top: -5px;
-	width: 15px !important;
+	
 }
 
 .print {
@@ -3962,11 +3970,22 @@ orange:hover {
 	
 	font-weight: bold ;
 }
-
 .BannerTextBoxBlank {
 	width: 430px;;
 	height: 279px;
 	float: left;
 	padding: 20px;
 	line-height: 16px;
+}
+.colorPkrArea,.colorPkrAreaToolTip {
+	float:left;
+	margin-top:5px;
+	margin-left:5px;	
+}
+.colorPkrAreaToolTip {
+	margin-top: 8px !important;
+}
+
+.ui-autocomplete {
+	height: 120px;
 }

@@ -66,6 +66,8 @@ jQuery(document).ready(function() {
 					$.each(data, function(key, val) {
 						if (key == "AjaxMSG") {
 							$('#topjobActionInfo'+jobId).html(val);
+							$('#topjobActionInfo').html(val);
+							$('#bottomjobActionInfo').html('');
 						}
 					});
 					$.each(data, function(key, val) {
@@ -99,6 +101,8 @@ jQuery(document).ready(function() {
 					$.each(data, function(key, val) {
 						if (key == "AjaxMSG") {
 							$('#topjobActionInfo'+jobId).html(val);
+							$('#topjobActionInfo').html(val);
+							$('#bottomjobActionInfo').html('');
 						}
 					});
 					$.each(data, function(key, val) {
@@ -115,85 +119,6 @@ jQuery(document).ready(function() {
 				}
 			});
 		}
-			function fnFormatDetails(table, nTr) {
-				var aData = table.fnGetData(nTr);
-				//alert('--' + aData['Company']+aData['JobId']);
-				var jobId = aData['JobId'];
-				var jobDesc = aData['AdText'];
-				var isFeaturedEmployer = aData['IsFeatured'];
-				var currentUrl = window.location.pathname;
-				//alert(jobDesc.toLowerCase().indexOf("job description"));
-				var saveThisJobIdid= "saveThisJobId"+jobId;
-				var applyJobId= "applyJobid"+jobId;
-				var sOut = '<div class="searchResultsSubContent">';	
-				sOut += '<p class="searchResultsSubContentJobDescription"><div  style="height: 32px;overflow: hidden;"><span class="bold">Job Description:</span>'+jobDesc+'</div></p><br/>';
-				sOut += '<div class="searchResultsSubContentButtonArea"><a onclick="applyThisJob('+jobId+');" class="btn_sm white" style=" cursor: default;" id="'+applyJobId+'">Apply</a>';
-				sOut += '<a href="../jobsearch/viewJobDetails.html?id='+jobId+'&currentUrl='+currentUrl+'&clickType=view';
-				sOut += '" class="btn_sm white">View Details</a>';
-				sOut += '<a onclick="saveThisJob('+jobId+')" id="'+saveThisJobIdid+'" style=" cursor: default;"';
-				sOut += '" class="btn_sm white">Save This Job</a></div>';
-				if(isFeaturedEmployer){
-					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/FeaturedEmp.png" alt="featured emp Button" width="164" height="23"></a> </div>';
-				}else{
-					sOut += '<div class="featured_empButton"><a href=""><img src="../resources/images/tranBg.png" alt="featured emp Button" width="164" height="23"></a> </div>';
-				}
-				sOut += '';
-				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft"> Send to Friend:&nbsp;</span><span><a onclick="sendToFrd('+jobId+');"><div class="email"></div></a></span></div>';
-				sOut += '<div class="searchResultsSubContentShare"><span class="marginTop5 floatLeft">Share:&nbsp;</span> <span><a href=""><div class="fbook"></div></a></span> <span><a href=""><div class="linkedIn"></div></a></span> <span><a href=""><div class="twitter"></div></a></span></div>';
-				sOut += '<h4><div style="color: red" id="topjobActionInfo'+jobId+'" ></div></h4>';
-				sOut += '</div>';
-				return sOut;
-			}
-			var table;
-
-			function generateTable() {
-				table = $("#jsonTable")
-						.dataTable(
-								{
-									"bFilter" : false,
-								    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-								        if (iDataIndex  != 0 && (iDataIndex % 10) == 0)
-								        {
-								        
-								        }
-								      },
-									"bProcessing" : true,
-									"sPaginationType" : "full_numbers",
-									"bJQueryUI" : true,
-									"bSort" : true,
-									"iDisplayLength": 20,
-									"aLengthMenu": [[20, 30, 40, 50], [20, 30, 40, 50]],
-									"oLanguage" : {
-										"sLengthMenu" : "<span>Results viewable: </span>_MENU_ <span>per page</span>",
-										//"sZeroRecords" : "Nothing found - sorry",										
-										"sInfo" : "_START_ - _END_ of _TOTAL_",
-										
-									},
-									"sEmptyTable": "No results found",
-									//"sDom": 'l<"pagination"p>t<"bottom"i>l<"pagination"pr><"clear">',
-									"sDom": '<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"i><"searchResultsNavigationColumn2"p>>t<"searchResultsNavigation"<"searchResultsNavigationColumn1"l><"searchResultsNavigationColumn3"i><"searchResultsNavigationColumn2"pr>><"clear">',
-									 //"sDom": 'T<"clear">lfrtip',
-									//"sScrollY" : 500,
-									'fnRowCallback' : function(nRow, aData, iDisplayIndex,iDisplayIndexFull) {
-									// alert(aData['IsFeatured']);
-									if (aData['IsFeatured'] == true) {
-										
-										$(nRow).addClass('featuredEmployerRowColor');
-									}
-									
-										return nRow;
-									},
-									"aoColumns" : [ {
-										"mDataProp" : "JobTitle","bSortable": "false"
-									}, {
-										"mDataProp" : "Company","bSortable": "false"
-									}, {
-										"mDataProp" : "City","bSortable": "false"
-									}, {
-										"mDataProp" : "PostedDate","bSortable": "true"
-									} ]
-								});
-			};
 
 			var keywords ;
 			var cityState ;
@@ -206,7 +131,7 @@ jQuery(document).ready(function() {
 					.ready(
 							function() {
 								$(".megamenu").megamenu();
-								generateTable();
+								//generateTable();
 								var autoLoad = $("#autoload").val();
 								//alert('113331'+autoLoad);
 								if(autoLoad == true || autoLoad == "true"){	
@@ -479,4 +404,69 @@ jQuery(document).ready(function() {
 					
 					});
 				} 
+				
+				function btsaveThisJob(jobId) {
+					$.ajax({
+						url : '../jobsearch/saveThisJob.html?id='+jobId,
+						data : ({
+							userID : "userID"
+						}),
+						success : function(data) {
+							$.each(data, function(key, val) {
+								if (key == "AjaxMSG") {
+									$('#bottomjobActionInfo').html(val);
+									$('#topjobActionInfo').html('');
+								}
+							});
+							$.each(data, function(key, val) {
+								if (key == "NavigationPath") {
+									//$('#btsaveThisJobId').attr('target', '_blank');
+									//$('#btsaveThisJobId').attr('href', val + '.html');
+									//$("#btsaveThisJobId").displaypopup("#btsaveThisJobId",
+									//		"775", "252");
+									$.nmManual(val + '.html');
+								}
+							});
+						},
+						error : function(data) {
+							alert('Unable to process');
+						},
+						complete : function(data) {
+						}
+					});
+				}
+
+				function btapplyThisJob(jobId) {
+					$.ajax({
+						url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
+						data : ({
+							userID : "userID"
+						}),
+						
+						success : function(data) {
+							$.each(data, function(key, val) {
+								if (key == "applyLink") {
+									window.open(val, '_blank');
+								}
+							});
+							$.each(data, function(key, val) {
+								if (key == "AjaxMSG") {
+									$('#bottomjobActionInfo').html(val);
+									$('#topjobActionInfo').html('');
+								}
+							});
+							$.each(data, function(key, val) {
+								if (key == "NavigationPath") {
+									//$(applyJobidId).attr('href', val + '.html');
+									window.location.href = val;
+								}
+							});
+						},
+						error : function(data) {
+							alert('Unable to process');
+						},
+						complete : function(data) {
+						}
+					});
+				}
 	
