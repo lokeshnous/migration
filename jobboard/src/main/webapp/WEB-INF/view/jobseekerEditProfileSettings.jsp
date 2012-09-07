@@ -1,8 +1,7 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="en">
 <head>
@@ -20,6 +19,7 @@
 					if(data == ''){
 						alert("Data saved successfully !");
 						parent.$.nmTop().close();
+						window.location.reload();
 					}else{
 						$("#errmsg").html(data);
 					}
@@ -50,8 +50,7 @@
 		<div class="popUpContainerWrapper">
 			<div id="errmsg" class="FormErrorDisplay">
 				</div>
-			<form:form action="../jobseekerregistration/updateJobSeekerProfile.html" method="POST"
-				commandName="registerForm"  id="editProfileSettingsId">
+			<form:form action="../jobseekerregistration/updateJobSeekerProfile.html" method="POST" commandName="registerForm"  id="editProfileSettingsId">
 					<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">
 						<c:if test="${profAttrib.strLabelName == 'First Name'}">
 							<div class="rowEvenNewSpacing">
