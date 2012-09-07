@@ -10,11 +10,11 @@ public interface JobWorker {
 	/**
 	 * Execute job.
 	 */
-	public void executeJob();
+	void executeJob();
 	
 	/**
 	 * @return
 	 */
-	public String getJobName();
+	String getJobName();
 
 }

@@ -28,7 +28,7 @@ public class JobBoardSchedulerServiceImpl implements JobBoardSchedulerService {
 	/**
 	 * 
 	 */
-	protected static Logger LOGGER = Logger
+	private static final Logger LOGGER = Logger
 			.getLogger(JobBoardSchedulerServiceImpl.class);
 
 	/**

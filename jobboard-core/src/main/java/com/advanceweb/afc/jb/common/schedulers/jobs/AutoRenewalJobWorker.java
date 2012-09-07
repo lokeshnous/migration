@@ -17,7 +17,7 @@ public class AutoRenewalJobWorker implements JobWorker {
 
 	private final static String JOB_NAME = "AUTORENEAL_JOB";
 
-	protected static Logger LOGGER = Logger.getLogger(AutoRenewalJobWorker.class);
+	private static final Logger LOGGER = Logger.getLogger(AutoRenewalJobWorker.class);
 	
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
@@ -25,7 +25,7 @@ public class AutoRenewalJobWorker implements JobWorker {
 	@Override
 	public void executeJob() {
 		LOGGER.info("AutoRenewalJobWorker-> Execute Job.....");
-		boolean bExecuted = employerJobPostDAO.executeAutoRenewalJobWorker();
+		employerJobPostDAO.executeAutoRenewalJobWorker();
 		LOGGER.info("ActiveJobsJobWorker-> Executed Job Successfully.....");
 	}
 
