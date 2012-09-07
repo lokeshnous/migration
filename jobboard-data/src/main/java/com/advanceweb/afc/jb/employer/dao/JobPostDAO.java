@@ -28,5 +28,8 @@ public interface JobPostDAO {
 	List<JobPostingPlanDTO> getJobPostingPlans();
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
+	
+	boolean executeActiveJobWorker();
+	boolean executeAutoRenewalJobWorker();
 
 }

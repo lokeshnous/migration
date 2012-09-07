@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/task
+      http://www.springframework.org/schema/task/spring-task-3.0.xsd 
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Activates various annotations to be detected in bean classes -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.advanceweb.afc.jb" />
+
+
+	<!-- Daily Job List -->
+	<bean id="dailyJobList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="activeJobsJobWorker" />
+				<ref bean="autoRenewalJobWorker" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<!-- JobScheduler for Daily Jobs -->
+
+	<bean id="dailyJobScheduler"
+		class="com.advanceweb.afc.jb.schedulers.service.impl.JobBoardSchedulerServiceImpl">
+		<property name="jobWorkers" ref="dailyJobList"></property>
+	</bean>
+
+	<bean id="dailyJobBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="dailyJobScheduler" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+	<bean id="dailyJobTrigger" class="com.advanceweb.afc.jb.common.schedulers.jobs.JobBoardCronTrigger">
+		<property name="jobDetail" ref="dailyJobBean" />
+		<property name="cronExp" value="${jobboard.scheduler.cronexp.activejobs}">
+		</property>
+	</bean>
+
+
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="dailyJobTrigger" />
+				<!-- <ref bean="monthlyJobTrigger" /> -->
+			</list>
+		</property>
+	</bean>
+
+</beans>

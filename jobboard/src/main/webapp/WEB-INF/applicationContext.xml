@@ -16,11 +16,14 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	
 	<mvc:annotation-driven />
-	<context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties" />
+	<context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, classpath:jobboard-scheduler.properties" />
 	
 	<import resource="classpath:HibernateSessionFactory.xml"/>
 	<import resource="classpath:JbCoreSpringBeans.xml"/>
-		
+	
+	<!-- Spring Quartz framework for schedulers -->
+	<context:annotation-config />
+	<import resource="classpath:jobboard-scheduler.xml" />	
 	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
 	Logging Aspect
 	<bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" /> -->

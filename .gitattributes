@@ -92,6 +92,10 @@ jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/netSuite.properties -text
 jobboard-core/pom.xml -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/AutoRenewalJobWorker.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobBoardCronTrigger.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/AgencyRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/BrandingTemplateService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmloyerRegistartionService.java -text
@@ -143,6 +147,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/PaymentGatewayServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/schedulers/service/JobBoardSchedulerService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/schedulers/service/impl/JobBoardSchedulerServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/JobSearchDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/ResumeSearchDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/SearchIndex.java -text
@@ -165,6 +171,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java 
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
 jobboard-core/src/main/resources/JbCoreSpringBeans.xml -text
+jobboard-core/src/main/resources/jobboard-scheduler.xml -text
 jobboard-core/src/main/resources/mailServer.properties -text
 jobboard-core/src/main/resources/solr.properties -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
