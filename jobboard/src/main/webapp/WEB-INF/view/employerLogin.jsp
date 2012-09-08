@@ -15,6 +15,8 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		$('#j_username').focus();
+		
 		$("#forgrtpassword").displaypopup("#forgrtpassword", "775", "252");
 		jQuery(".megamenu").megamenu();
 		});
