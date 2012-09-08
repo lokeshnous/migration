@@ -250,10 +250,11 @@ public interface MMJBCommonConstants {
 
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER="merion@nousinfosystems.com";
-	String EMAIL_MESSAGE="Please enter the correct Email address";
+	String EMAIL_MESSAGE="Please enter correct Email address";
 	String EMAIL_NULL_MESSAGE="Email Id already Exists!";
 	String PHONE_NO="Please enter the correct Phone Number (XXX-XXX-XXXX)";
 	String PHONE_NULL_NO="Please give the Phone number";
+	String EMAIL_MESSAGE_BLANK="Please enter required fields.";
 		
 	//Job Types
 	String JOB_TYPE="JOB_TYPE";
