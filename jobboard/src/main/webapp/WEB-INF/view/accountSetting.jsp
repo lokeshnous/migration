@@ -137,7 +137,7 @@ function copyAccToBillingAddr(obj) {
 			</div>
 			<div id="errmsg" class="FormErrorDisplay"></div>
 			<div class="popUpContainerWrapper">
-				<form:form action="../employerRegistration/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="../employerRegistration/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
@@ -199,7 +199,8 @@ function copyAccToBillingAddr(obj) {
 						<span class="lableText3">
 							E-Mail:
 						</span>
-						<form:input path="email" name="email" class="job_seeker_password" readonly="true" retype="text"/>
+						<!-- readonly="true" -->
+						<form:input path="email" name="email" class="job_seeker_password"  retype="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
