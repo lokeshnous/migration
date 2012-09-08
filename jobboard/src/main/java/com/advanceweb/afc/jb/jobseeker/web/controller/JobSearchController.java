@@ -814,6 +814,9 @@ public class JobSearchController {
 		String bodyMesg = "";
 		try {
 			String data = sendtofriendmail.getEmail().toString();
+			if((null==data.trim())||("".equals(data.trim()))){
+				return MMJBCommonConstants.EMAIL_MESSAGE_BLANK;
+			}
 			data = data.replace(',', ';');
 			int len = data.length();
 			if (data.charAt(len - 1) == ';') {
@@ -841,7 +844,7 @@ public class JobSearchController {
 				int k = 0;
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
-
+					
 					if (!validateEmailPattern(string.trim())) {
 						return MMJBCommonConstants.EMAIL_MESSAGE;
 					}
