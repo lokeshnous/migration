@@ -92,6 +92,7 @@ jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/netSuite.properties -text
 jobboard-core/pom.xml -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/AdminService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/AutoRenewalJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobBoardCronTrigger.java -text
@@ -192,6 +193,8 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java 
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
 jobboard-data/pom.xml -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/helper/AgencyRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
@@ -366,6 +369,9 @@ jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard-parent/pom.xml -text
 jobboard/pom.xml -text
 jobboard/src/main/java/Messages_IN.properties -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminLoginForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationController.java -text
@@ -480,6 +486,10 @@ jobboard/src/main/webapp/WEB-INF/view/addPhoneNos.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addReference.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addTestimonies.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/adminEditJobPostInventory.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/adminEditJobPosting.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/adminImpersonation.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/adminLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyLogin.jsp -text
