@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,7 +66,7 @@ public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerRegistrationController.class);
-	private static final String _FORM_VIEW = "employerDashboard";
+	//private static final String _FORM_VIEW = "employerDashboard";
 
 	@Autowired
 	private ProfileRegistration employerRegistration;
@@ -303,18 +305,17 @@ public class EmployerRegistrationController {
 	}
 
 	/**
-	 * This method is called to Account Setting update page
-	 * 
+	 * This method is called to Account Setting update page and
+	 * editAccountSetting method take Bean class binding result from Jsp pages
+	 * Seession for UserId and FacilityId. 
 	 * @author kartikm
 	 * @param model
 	 * @return true
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/employeeAccountSetting", method = RequestMethod.GET)
-	public ModelAndView editAccountSetting(
-			EmployeeAccountForm employeeAccountForm, BindingResult result,
-			HttpSession session) {
-		ModelAndView model = new ModelAndView();
+	@RequestMapping(value = "/employeeAccountSetting", method = RequestMethod.POST)
+	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
+			BindingResult result, HttpSession session) {
 
 		try {
 			int userId = (Integer) session.getAttribute("userId");
@@ -322,55 +323,60 @@ public class EmployerRegistrationController {
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
-
+				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
+					return MMJBCommonConstants.EMAIL_MESSAGE;
+				} else if (!employerRegistration
+						.validateEmail(employeeAccountForm.getEmail())) {
+					return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
+					return MMJBCommonConstants.PHONE_NO;
+				} else if (null == employeeAccountForm.getPhone()) {
+					return MMJBCommonConstants.PHONE_NULL_NO;
+				}
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 
-				if (!registerValidation.accountValidate(employeeAccountForm,
-						result)) {
-					result.rejectValue("email", "NotEmpty",
-							"Email Id already Exists!");
-					model.setViewName("accountSetting");
-					return model;
-				}
-				
-				
-				
 				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-			} else {
-				model.setViewName(_FORM_VIEW);
-				return model;
+				LOGGER.info("This is Account Addresss edite option done successfully");
 			}
 
-			model.setViewName(_FORM_VIEW);
-			return model;
 		} catch (Exception e) {
-			model.setViewName(_FORM_VIEW);
-			return model;
+
+			LOGGER.info("This is Account Addresss edite option error");
 		}
+		return "";
 	}
 
 	/**
-	 * This method is called to Account Setting update page
-	 * 
+	 * This method is called to Billing Setting update page and
+	 * editBillingSetting method take Bean class binding result from Jsp pages
+	 * Seession for UserId and FacilityId. 
 	 * @author kartikm
 	 * @param model
 	 * @return true
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/employeeBillingSetting", method = RequestMethod.GET)
-	public ModelAndView editBillingSetting(
-			EmployeeAccountForm employeeBillingForm, BindingResult result,
-			HttpSession session) {
-		ModelAndView model = new ModelAndView();
+	@RequestMapping(value = "/employeeBillingSetting", method = RequestMethod.POST)
+	public String editBillingSetting(EmployeeAccountForm employeeBillingForm,
+			BindingResult result, HttpSession session) {
+
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-			// int count=0;
+			if (!validateEmailPattern(employeeBillingForm.getEmail())) {
+				return MMJBCommonConstants.EMAIL_MESSAGE;
+			} else if (!employerRegistration.validateEmail(employeeBillingForm
+					.getEmail())) {
+				return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
+				return MMJBCommonConstants.PHONE_NO;
+			} else if (null == employeeBillingForm.getPhone()) {
+				return MMJBCommonConstants.PHONE_NULL_NO;
+			}
 
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
@@ -378,6 +384,7 @@ public class EmployerRegistrationController {
 						.transformBillingProfileFormToDto(employeeBillingForm);
 				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
+				LOGGER.info("This is Billing Addresss edite option done successfully");
 
 			} else {
 
@@ -392,23 +399,18 @@ public class EmployerRegistrationController {
 				billingAddressDTO.setCreateDate(new Date());
 				fetchAdmFacilityConatact
 						.saveDataBillingAddress(billingAddressDTO);
-
-				// model.setViewName("employerDashboard");
-				// return model;
+				LOGGER.info("This is Billing Addresss save done successfully");
 			}
 
-			model.setViewName(_FORM_VIEW);
-			return model;
 		} catch (Exception e) {
-			model.setViewName(_FORM_VIEW);
-			return model;
+			LOGGER.info("This is Billing Addresss edite or save error");
 		}
-
+		return "";
 	}
 
 	/**
-	 * This method is called to Account Setting display page
-	 * 
+	 * This method is called to Account Setting display page call from dash
+	 * board of employer 
 	 * @author kartikm
 	 * @param model
 	 * @return true
@@ -451,10 +453,12 @@ public class EmployerRegistrationController {
 			int count = 0;
 			AdmFacilityContactDTO listBillingForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-			if ((listBillingForms.getCount() <= 0)) {
-				count = listBillingForms.getCount();
-
-			} else {
+			if ((listBillingForms.getCount() > 0)) {
+				/*
+				 * count = listBillingForms.getCount();
+				 * 
+				 * } else {
+				 */
 				employeeBillingForm
 						.getBillingAddressForm()
 						.setFnameForBillingAddr(listBillingForms.getFirstName());
@@ -488,10 +492,36 @@ public class EmployerRegistrationController {
 			model.addObject("employeeBillingForm", employeeBillingForm);
 
 		} catch (Exception e) {
-			LOGGER.info("Error For controller");
+			LOGGER.info("Error For Account Setting Link call in controller class");
 		}
 
 		return model;
+	}
+
+	/**
+	 * 
+	 * @param emailAddress
+	 *            emailAddress.
+	 * @return true.
+	 */
+
+	private boolean validateEmailPattern(String emailAddress) {
+		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(emailAddress);
+		return matcher.matches();
+	}
+
+	/**
+	 * 
+	 * @param phoneNumber
+	 *            phoneNumber.
+	 * @return true.
+	 */
+
+	private boolean validatePhonePattern(String phoneNumber) {
+		Pattern pattern = Pattern.compile(MMJBCommonConstants.MOBILE_PATTERN);
+		Matcher matcher = pattern.matcher(phoneNumber);
+		return matcher.matches();
 	}
 
 }
