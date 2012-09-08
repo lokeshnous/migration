@@ -327,7 +327,7 @@ public class EmployerRegistrationController {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
 				} else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
-					return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
@@ -384,7 +384,9 @@ public class EmployerRegistrationController {
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 
 			} else {
-
+				if (listProfAttribForms.getEmail().toString().equals(employeeBillingForm.getEmail())) {
+					return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				}
 				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 				AccountBillingDTO billingAddressDTO = transformPaymentMethod
 						.transformDataBillingAddreFormToDto(billingAddressForm);
@@ -447,7 +449,7 @@ public class EmployerRegistrationController {
 			/**
 			 * this is for billing pages
 			 */
-			int count = 0;
+			//int count = 0;
 			AdmFacilityContactDTO listBillingForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 			if ((listBillingForms.getCount() > 0)) {
@@ -483,7 +485,7 @@ public class EmployerRegistrationController {
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
 			model.addObject("listProfAttribForms", listProfAttribForms);
-			model.addObject("count", count);
+			model.addObject("count", listBillingForms.getCount());
 			model.setViewName("accountSetting");
 			model.addObject("employeeAccountForm", employeeAccountForm);
 			model.addObject("employeeBillingForm", employeeBillingForm);
