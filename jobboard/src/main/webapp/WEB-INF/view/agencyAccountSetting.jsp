@@ -21,87 +21,7 @@ function validateNumber(event) {
     else return true;
 };
 </script>
-<script type="text/javascript">
-  $('#btn-submit').click(function() { 
- 
-    $(".error").hide();
-    var hasError = false;
-    var emailReg=/^[a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/;
-   // var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var emailblockReg =
-     /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
- 
-    var emailaddressVal = $("#email").val();
-    if(emailaddressVal == '') {
-      $("#email").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
-      hasError = true;
-    }
- 
-    else if(!emailReg.test(emailaddressVal)) {
-      $("#email").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
-      hasError = true;
-    }
- 
-   /*  else if(!emailblockReg.test(emailaddressVal)) {
-      $("#email").after('<span class="error" STYLE="color: red; font-size: 10pt">No yahoo, gmail or hotmail emails.</span>');
-      hasError = true
-    } */
- 
-    var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
-    var phone=$("#phone").val();
-    if(phone==''){
-    	 $("#phone").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
-         hasError = true;
-    }else if(!filter.test(phone)){
-    	 $("#phone").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
-         hasError = true;
-    }
- 
-    if(hasError == true) { return false; }
- 
-    });	
-  </script>
-  <script type="text/javascript">
-  $('#btn-submit2').click(function() { 
- 
-    $(".error").hide();
-    var hasError = false;
-    
-    var emailReg=/^[a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$/;
-   // var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var emailblockReg =
-     /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
- 
-    var emailaddressVal = $("#email2").val();
-    if(emailaddressVal == '') {
-      $("#email2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
-      hasError = true;
-    }
- 
-    else if(!emailReg.test(emailaddressVal)) {
-      $("#email2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail address</span></div>');
-      hasError = true;
-    }
- 
-   /*  else if(!emailblockReg.test(emailaddressVal)) {
-      $("#email2").after('<span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct E-Mail Address</span>');
-      hasError = true
-    } */
- 
-    var filter =/^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}/; 
-    var phone=$("#phone2").val();
-    if(phone==''){
-    	 $("#phone2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
-         hasError = true;
-    }else if(!filter.test(phone)){
-    	 $("#phone2").after('<div class="rowEvenNewSpacing"><span class="lableText3"></span><span class="error" STYLE="color: red; font-size: 10pt">Please enter the correct Phone Number (XXX-XXX-XXXX)</span></div>');
-         hasError = true;
-    }
- 
-    if(hasError == true) { return false; }
- 
-    });	
-  </script>
+
 
 <script type="text/javascript">
 function copyAccToBillingAddr(obj) {            	
@@ -147,13 +67,14 @@ function copyAccToBillingAddr(obj) {
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		
- 		$('#save').click(function(){			
+ 		$('#btn-submit').click(function(){			
  			
-			$.ajax({url:"${sessionScope.contextPath}/agency/employeeAccountSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/agency/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
+						alert("Data save successfully !");	
 						parent.$.nmTop().close();
 					}else{
 						$("#errmsg").html(data);
@@ -163,7 +84,7 @@ function copyAccToBillingAddr(obj) {
 		});
  		
  		$('[id^=zipCode]').keypress(validateNumber);
- 		$('[id^=zipCode2]').keypress(validateNumber); 		
+ 		//$('[id^=zipCode2]').keypress(validateNumber); 		
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -171,13 +92,14 @@ function copyAccToBillingAddr(obj) {
 <script type="text/javascript">
 	 jQuery(document).ready(function() {
 		
- 		$('#save').click(function(){			
+ 		$('#btn-submit2').click(function(){			
  			
-			$.ajax({url:"${sessionScope.contextPath}/agency/employeeBillingSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/agency/employeeBillingSetting.html",
 				data:$('#editBillingSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
+						alert("Data send successfully !");	
 						parent.$.nmTop().close();
 					}else{
 						$("#errmsg").html(data);
@@ -185,15 +107,15 @@ function copyAccToBillingAddr(obj) {
 				 },
 			});
 		}); 
-		
+ 		 		
 		jQuery(".megamenu").megamenu();
 		
-		$('[id^=zipCode]').keypress(validateNumber);
+		//$('[id^=zipCode]').keypress(validateNumber);
 		$('[id^=zipCode2]').keypress(validateNumber);
 
 	}); 
 </script>
-<script type="text/javascript">
+		<script type="text/javascript">
 		$('#Cancel').click(function(){		
 			parent.$.nmTop().close();		
 		});
@@ -213,8 +135,9 @@ function copyAccToBillingAddr(obj) {
 				<img width="19" height="19" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
 				</a>
 			</div>
+			<div id="errmsg" class="FormErrorDisplay"></div>
 			<div class="popUpContainerWrapper">
-				<form:form action="../agency/employeeAccountSetting.html" method="get" commandName="employeeAccountForm" id="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="../agency/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
@@ -261,13 +184,13 @@ function copyAccToBillingAddr(obj) {
 						<span class="lableText3">
 							ZIP Code:
 						</span>
-						<form:input path="zipCode" name="zipCode" class="job_seeker_password" type="text" onblur="testField(this);"/>
+						<form:input path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 ">
 							Country:
 						</span>
-						<form:select path="country" name="country" class="jb_input3 jb_input_width3" id="Country">
+						<form:select path="country" name="country" class="jb_input3 jb_input_width3" id="country">
 						<form:option value="0" label="Select" />
 						<form:options items="${countryList}" itemValue="countryValue" itemLabel="countryValue" />
 						</form:select>
@@ -276,7 +199,8 @@ function copyAccToBillingAddr(obj) {
 						<span class="lableText3">
 							E-Mail:
 						</span>
-						<form:input path="email" name="email" class="job_seeker_password" type="text" readonly="true"/>
+						<!-- readonly="true" -->
+						<form:input path="email" name="email" class="job_seeker_password"  retype="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
@@ -286,9 +210,8 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="submit" value="Save" name="Save" id="btn-submit" class="btn_sm orange" />
-							<!-- <input class="btn_sm orange" type="submit" id="btn-submit" value="Edit"> -->
-							<input type="button" value="Cancel" class="nyroModalClose  btn_sm orange" />
+							<input type="button" value="Save" name="btn-submit" id="btn-submit" class="btn_sm orange" />
+							<input type="button" name="Cancel" id="Cancel" value="Cancel" class="btn_sm orange" />
 								
 						</span>
 					</div>
@@ -357,7 +280,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> E-Mail: </span>
-						<form:input path="email" name="email2" id="email2" class="job_seeker_password"
+						<form:input path="email" name="email2" id="email2" class="job_seeker_password" 
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
@@ -366,12 +289,8 @@ function copyAccToBillingAddr(obj) {
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
-						<span class="floatLeft marginTop10"> <!-- <a class="btn_sm orange" href="">
-								Edit
-							</a> -->
-							 <!-- <input class="btn_sm orange" type="submit"
-							id="btn-submit2" value="Edit">  -->
-							<input type="submit" value="Save" name="Save" id="btn-submit2" class="btn_sm orange" />
+						<span class="floatLeft marginTop10">
+							<input type="button" value="Save" name="btn-submit2" id="btn-submit2" class="btn_sm orange" />
 							<input type="button" name="CancelData"  id="CancelData" value="Cancel" class="btn_sm orange" />
 						</span>
 					</div>
