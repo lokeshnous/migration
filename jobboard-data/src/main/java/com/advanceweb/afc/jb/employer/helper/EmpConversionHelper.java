@@ -7,17 +7,17 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
  * 
- * @author bharatiu
+ * @author Bharati Umarani
  * @version 1.0
  * @since 27th August, 2012
  */
@@ -51,19 +51,26 @@ public class EmpConversionHelper {
 	 * @return
 	 */
 	public List<UserAlertDTO> transformAdmUserAlertToAlertDTO(
-			List<MerUser> user, List<AdmFacilityAlert> userAlerts) {
+			List<ManageAccessPermissionDTO> jbOwnerList,
+			List<AdmFacilityAlert> userAlerts) {
 		List<UserAlertDTO> alertDTOs = new ArrayList<UserAlertDTO>();
-		String owner = user.get(0).getLastName() + " "
-				+ user.get(0).getFirstName();
-		for (AdmFacilityAlert admUserAlert : userAlerts) {
-			UserAlertDTO alertDTO = new UserAlertDTO();
-			AdmAlert alert = admUserAlert.getAdmAlert();
-			alertDTO.setAlertId(alert.getAlertId());
-			alertDTO.setAlertType(alert.getName());
-			alertDTO.setJobOwner(owner);
-			alertDTO.setSetDate(DateUtils.convertSQLDateToStdDate(admUserAlert
-					.getCreateDt().toString()));
-			alertDTOs.add(alertDTO);
+		for (ManageAccessPermissionDTO permissionDTO : jbOwnerList) {
+			for (AdmFacilityAlert admUserAlert : userAlerts) {
+				if (permissionDTO.getOwnerId() == admUserAlert.getUserId()) {
+					UserAlertDTO alertDTO = new UserAlertDTO();
+					AdmAlert alert = admUserAlert.getAdmAlert();
+					alertDTO.setAlertId(alert.getAlertId());
+					alertDTO.setAlertType(alert.getName());
+					alertDTO.setUserId(admUserAlert.getUserId());
+					alertDTO.setFacilityAlertId(admUserAlert
+							.getFacilityAlertId());
+					alertDTO.setJobOwner(permissionDTO.getOwnerName());
+					alertDTO.setSetDate(DateUtils
+							.convertSQLDateToStdDate(admUserAlert.getCreateDt()
+									.toString()));
+					alertDTOs.add(alertDTO);
+				}
+			}
 		}
 		return alertDTOs;
 	}

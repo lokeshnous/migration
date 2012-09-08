@@ -20,6 +20,7 @@ public class UserAlertForm {
 	private String[] selectedAlerts;
 	private String selJobOwner;
 	private int selJbOwnerId;
+	private int facilityAlertId;
 
 	/**
 	 * @return the alertTYpe
@@ -149,5 +150,19 @@ public class UserAlertForm {
 	 */
 	public void setSelJbOwnerId(int selJbOwnerId) {
 		this.selJbOwnerId = selJbOwnerId;
+	}
+
+	/**
+	 * @return the facilityAlertId
+	 */
+	public int getFacilityAlertId() {
+		return facilityAlertId;
+	}
+
+	/**
+	 * @param facilityAlertId the facilityAlertId to set
+	 */
+	public void setFacilityAlertId(int facilityAlertId) {
+		this.facilityAlertId = facilityAlertId;
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.user.dao.UserAlertDAO;
 
@@ -28,8 +29,9 @@ public class UserAlertServiceImpl implements UserAlertService {
 	 * @param userId
 	 * @return
 	 */
-	public List<UserAlertDTO> viewalerts(int userId, int facilityId) {
-		return alertDAO.viewalerts(userId, facilityId);
+	public List<UserAlertDTO> viewalerts(int userId, int facilityId,
+			List<ManageAccessPermissionDTO> jbOwnerList) {
+		return alertDAO.viewalerts(userId, facilityId,jbOwnerList);
 	}
 
 	/**
@@ -39,8 +41,8 @@ public class UserAlertServiceImpl implements UserAlertService {
 	 * @param alertId
 	 * @return
 	 */
-	public boolean deleteAlert(int userId, int alertId) {
-		return alertDAO.deleteAlert(userId, alertId);
+	public boolean deleteAlert(int facilityAlertId) {
+		return alertDAO.deleteAlert(facilityAlertId);
 	}
 
 	/**

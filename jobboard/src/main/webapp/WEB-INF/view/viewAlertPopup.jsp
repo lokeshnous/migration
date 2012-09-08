@@ -28,13 +28,12 @@
 			
 			var action = $(this).attr("alt");
 			var rowObj = $(this).parent().parent().parent();
-			var alertId = rowObj.attr("id");
-		
+			var facilityAlertId = rowObj.attr("id");
 			switch (action) {
 			case "delete":{
 				var r=confirm("Are you sure you want to delete?");
 				if(r==true){
-					$.ajax({url: "${pageContext.request.contextPath}/alerts/employer/deleteAlert.html?alertId="+alertId,
+					$.ajax({url: "${pageContext.request.contextPath}/alerts/employer/deleteAlert.html?facilityAlertId="+facilityAlertId,
 							success: function(data){ 
 							    if(data.success != null){							    	
 							    	rowObj.remove();
@@ -85,7 +84,7 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${alertList}" var="alertList">
-								<tr id="${alertList.alertId}">
+								<tr id="${alertList.facilityAlertId}">
 									<td align="left">${alertList.getAlertType()}</td>
 									<td align="left">${alertList.getJobOwner()}</td>
 									<td align="left">${alertList.getSetDate()}</td>

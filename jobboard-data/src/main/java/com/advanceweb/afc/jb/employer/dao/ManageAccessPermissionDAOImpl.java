@@ -26,22 +26,22 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 
 /**
- *  To save new  job Owner  
- * * @author deviprasadm
- *
+ * To save new job Owner * @author deviprasadm
+ * 
  */
 @SuppressWarnings("unchecked")
 @Repository("manageAccessPermissionDAO")
-public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
+public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO {
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageAccessPermissionDAOImpl.class);
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=?";
-	
+
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
+
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -51,7 +51,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 
 	}
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public UserDTO createJobOwner(EmployerProfileDTO empDTO, int facilityIdP,
 			int userIdp) {
@@ -61,7 +61,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 				// saving employer credentials
 				hibernateTemplateTracker.saveOrUpdate(merUser);
 			}
-			
+
 			// saving the data in Adm_User_Role
 			AdmUserRole userRole = new AdmUserRole();
 			userRole.setCreateUserId(userIdp);
@@ -97,12 +97,12 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 				facility.setColorPalette(facilityP.getColorPalette());
 				facility.setCompanyNews(facilityP.getCompanyNews());
 				facility.setCompanyOverview(facilityP.getCompanyOverview());
-				
+
 			}
 
 			List<AdmFacilityContact> admFacilityContactP = facilityP
 					.getAdmFacilityContacts();
-			
+
 			// saving the data in adm_facility_contact as per the logged in User
 			List<AdmFacilityContact> admFacilityContactList = new ArrayList<AdmFacilityContact>();
 			if (null != admFacilityContactP) {
@@ -189,17 +189,17 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 		LOGGER.info("Update Job Owners");
 		try {
 			for (ManageAccessPermissionDTO accessPermissionDTO : accessPermissionDTOList) {
-				 AdmUserRole admUserRole = new AdmUserRole();
+				AdmUserRole admUserRole = new AdmUserRole();
 				AdmUserFacility admUserFacility = (AdmUserFacility) hibernateTemplateCareers
 						.find("from AdmUserFacility af where af.id.userId ="
 								+ accessPermissionDTO.getOwnerId()).get(0);
 				List<AdmUserRole> admUserRoleList = new ArrayList<AdmUserRole>();
-				 admUserRoleList= (List<AdmUserRole>) hibernateTemplateCareers
+				admUserRoleList = (List<AdmUserRole>) hibernateTemplateCareers
 						.find("from AdmUserRole a where a.id.userId=?",
 								accessPermissionDTO.getOwnerId());
-				 if(null != admUserRoleList && admUserRoleList.size()>0){
-					 admUserRole=admUserRoleList.get(0);
-				 }
+				if (null != admUserRoleList && admUserRoleList.size() > 0) {
+					admUserRole = admUserRoleList.get(0);
+				}
 				if (null != admUserFacility && null != admUserRole) {
 					// update the role in AdmUserFacility
 					/*
@@ -212,28 +212,29 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 					// admUserFacility.getFacilityPK().setRoleId(accessPermissionDTO.getTypeOfAccess());
 					// update the role in AdmUserRole
 					AdmUserRole admUserRoleNew = new AdmUserRole();
-					if(null != admUserRole.getRolePK() && admUserRole.getRolePK().getUserId() > 0){
-					int userIdVal = admUserRole.getRolePK().getUserId();
-					AdmUserRolePK admUserRolePK = new AdmUserRolePK();
-					admUserRolePK.setUserId(userIdVal);
-					admUserRolePK.setRoleId(accessPermissionDTO
-							.getTypeOfAccess());
-					// admUserRole.setRolePK(admUserRolePK);
-					// admUserRole.getRolePK().setRoleId(accessPermissionDTO.getTypeOfAccess());
-					admUserRoleNew.setRolePK(admUserRolePK);
-					admUserRoleNew.setCreateDt(admUserRole.getCreateDt());
-					admUserRoleNew.setCreateUserId(admUserRole
-							.getCreateUserId());
-					admUserRoleNew.setDeleteDt(admUserRole.getDeleteDt());
-					admUserRoleNew.setDeleteUserId(admUserRole
-							.getDeleteUserId());
-					admUserRoleNew.setAdmRole(admUserRole.getAdmRole());
-					// hibernateTemplateCareers.saveOrUpdate(admUserFacility);
-					//hibernateTemplateCareers.delete(admUserRole);
-					hibernateTemplateCareers.saveOrUpdate(admUserRoleNew);
-					
-					LOGGER.info("Updated Job Owners:"
-							+ accessPermissionDTO.getTypeOfAccess());
+					if (null != admUserRole.getRolePK()
+							&& admUserRole.getRolePK().getUserId() > 0) {
+						int userIdVal = admUserRole.getRolePK().getUserId();
+						AdmUserRolePK admUserRolePK = new AdmUserRolePK();
+						admUserRolePK.setUserId(userIdVal);
+						admUserRolePK.setRoleId(accessPermissionDTO
+								.getTypeOfAccess());
+						// admUserRole.setRolePK(admUserRolePK);
+						// admUserRole.getRolePK().setRoleId(accessPermissionDTO.getTypeOfAccess());
+						admUserRoleNew.setRolePK(admUserRolePK);
+						admUserRoleNew.setCreateDt(admUserRole.getCreateDt());
+						admUserRoleNew.setCreateUserId(admUserRole
+								.getCreateUserId());
+						admUserRoleNew.setDeleteDt(admUserRole.getDeleteDt());
+						admUserRoleNew.setDeleteUserId(admUserRole
+								.getDeleteUserId());
+						admUserRoleNew.setAdmRole(admUserRole.getAdmRole());
+						// hibernateTemplateCareers.saveOrUpdate(admUserFacility);
+						// hibernateTemplateCareers.delete(admUserRole);
+						hibernateTemplateCareers.saveOrUpdate(admUserRoleNew);
+
+						LOGGER.info("Updated Job Owners:"
+								+ accessPermissionDTO.getTypeOfAccess());
 					}
 				}
 			}
@@ -245,8 +246,8 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 		return true;
 
 	}
+
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
 			int userId) {
 
@@ -292,7 +293,5 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO{
 		return null;
 
 	}
-
-	
 
 }

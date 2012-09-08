@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.user.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,15 +13,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 
 /**
  * 
- * @author bharatiu
+ * @author Bharati Umarani
  * @version 1.0
  * @since 4th sept,2012
  */
@@ -33,7 +34,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 			.getLogger(UserAlertDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
-	private HibernateTemplate hibernateTemplateTracker;
 
 	@Autowired
 	private EmpConversionHelper conversionHelper;
@@ -42,8 +42,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(
-				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
@@ -55,14 +53,18 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserAlertDTO> viewalerts(int userId, int facilityId) {
-		List<MerUser> user = hibernateTemplateTracker.find(
-				" from  MerUser user where user.userId=?", userId);
-		List<AdmFacilityAlert> userAlerts = hibernateTemplate
-				.find(" from AdmFacilityAlert  where userId = ? and deleteDt is null",
-						userId);
-		return conversionHelper.transformAdmUserAlertToAlertDTO(user,
-				userAlerts);
+	public List<UserAlertDTO> viewalerts(int userId, int facilityId,
+			List<ManageAccessPermissionDTO> jbOwnerList) {
+		List<AdmFacilityAlert> facilityAlerts = new ArrayList<AdmFacilityAlert>();
+		for (ManageAccessPermissionDTO permissionDTO : jbOwnerList) {
+			int OwnerId = permissionDTO.getOwnerId();
+			List<AdmFacilityAlert> userAlerts = hibernateTemplate
+					.find(" from AdmFacilityAlert  where userId = ? and deleteDt is null",
+							OwnerId);
+			facilityAlerts.addAll(userAlerts);
+		}
+		return conversionHelper.transformAdmUserAlertToAlertDTO(jbOwnerList,
+				facilityAlerts);
 
 	}
 
@@ -74,14 +76,13 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @return
 	 */
 	@Override
-	public boolean deleteAlert(int userId, int alertId) {
+	public boolean deleteAlert(int facilityAlertId) {
 		AdmFacilityAlert facilityAlert = (AdmFacilityAlert) hibernateTemplate
-				.find("from AdmFacilityAlert where userId = ? and admAlert.alertId = ?",
-						userId, alertId).get(0);
+				.find("from AdmFacilityAlert where facilityAlertId = ? ",
+						facilityAlertId).get(0);
 		if (null != facilityAlert) {
 			facilityAlert.setDeleteDt(new Date());
 		}
-		// userAlert.setDeleteDt(new Date());
 		hibernateTemplate.saveOrUpdate(facilityAlert);
 		return true;
 	}
@@ -119,7 +120,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 				List<AdmFacilityAlert> userAlerts = conversionHelper
 						.transformAlertDTOToAdmFacilityAlert(alertDTOs,
 								listAlerts);
-				//hibernateTemplate.deleteAll(listAlerts);
 				hibernateTemplate.saveOrUpdateAll(userAlerts);
 			}
 		} catch (DataAccessException e) {

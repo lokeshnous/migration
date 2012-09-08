@@ -16,6 +16,7 @@ public class UserAlertDTO {
 	private String setDate;
 	private int userId;
 	private int facilityId;
+	private int facilityAlertId;
 
 	/**
 	 * @return the alertTYpe
@@ -105,6 +106,20 @@ public class UserAlertDTO {
 	 */
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	/**
+	 * @return the facilityAlertId
+	 */
+	public int getFacilityAlertId() {
+		return facilityAlertId;
+	}
+
+	/**
+	 * @param facilityAlertId the facilityAlertId to set
+	 */
+	public void setFacilityAlertId(int facilityAlertId) {
+		this.facilityAlertId = facilityAlertId;
 	}
 
 }

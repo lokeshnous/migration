@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 
 /**
@@ -20,7 +21,7 @@ public interface UserAlertDAO {
 	 * @param userId
 	 * @return
 	 */
-	List<UserAlertDTO> viewalerts(int userId, int facilityId);
+	List<UserAlertDTO> viewalerts(int userId, int facilityId,List<ManageAccessPermissionDTO> jbOwnerList);
 
 	/**
 	 * This method is called to delete the alerts
@@ -29,7 +30,7 @@ public interface UserAlertDAO {
 	 * @param alertId
 	 * @return
 	 */
-	boolean deleteAlert(int userId, int alertId);
+	boolean deleteAlert(int facilityAlertId);
 
 	/**
 	 * To get the check box values

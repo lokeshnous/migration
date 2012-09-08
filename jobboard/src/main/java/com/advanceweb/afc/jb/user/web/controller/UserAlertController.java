@@ -89,10 +89,10 @@ public class UserAlertController {
 		}
 
 		List<UserAlertDTO> userAlertDTOs = alertService.viewalerts(userId,
-				facilityId);
+				facilityId, jbOwnerList);
 		transferUserAlert.jsUserAlertDTOToUserAlerts(userAlertDTOs, alertForm,
 				alertList);
-		
+
 		model.addObject("alertList", alertList);
 		model.addObject("jbOwnerList", dropDownList);
 		model.setViewName("alertForm");
@@ -143,8 +143,10 @@ public class UserAlertController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<ManageAccessPermissionDTO> jbOwnerList = permissionService
+				.getJobOwnerList(facilityId, userId);
 		List<UserAlertDTO> alertList = alertService.viewalerts(userId,
-				facilityId);
+				facilityId, jbOwnerList);
 		model.addObject("alertList", alertList);
 		model.addObject(alertForm);
 		model.setViewName("viewAlertPopup");
@@ -162,13 +164,11 @@ public class UserAlertController {
 	public @ResponseBody
 	JSONObject deleteResume(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
-			@RequestParam("alertId") int alertId) {
-
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-
-		boolean deleteStatus = alertService.deleteAlert(userId, alertId);
+			@RequestParam("facilityAlertId") int facilityAlertId) {
+		
+		boolean deleteStatus = alertService.deleteAlert(facilityAlertId);
 		JSONObject deleteStatusJson = new JSONObject();
+		
 		if (deleteStatus) {
 			deleteStatusJson.put("success", dataDeleteSuccess);
 			return deleteStatusJson;
