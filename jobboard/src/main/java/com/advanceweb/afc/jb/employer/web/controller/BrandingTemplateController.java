@@ -84,6 +84,7 @@ public class BrandingTemplateController {
 	private static final String STR_TEMPLATE_ = "Template_";
 	private static final String STR_SILVERPREVIEW = "brandTemplateSilverPreview";
 	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
+	private static final String STR_NOCOLOR = "HEX #ffffff";
 	
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -244,6 +245,11 @@ public class BrandingTemplateController {
 			return model;
 		}
 
+		if(null==brandingTemplateForm.getColor() || brandingTemplateForm.getColor().isEmpty())
+		{
+			brandingTemplateForm.setColor(STR_NOCOLOR);
+		}
+		
 		if (brandingTemplateForm.getIsSilverCustomer()) {
 			model.setViewName(STR_SILVERPREVIEW);
 		} else {
@@ -269,6 +275,11 @@ public class BrandingTemplateController {
 		brandingTemplateForm.setBrowsePath("manage");
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
+		
+		if(null==brandingTemplateForm.getColor() || brandingTemplateForm.getColor().isEmpty())
+		{
+			brandingTemplateForm.setColor(STR_NOCOLOR);
+		}
 		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_SILVERPREVIEW);
