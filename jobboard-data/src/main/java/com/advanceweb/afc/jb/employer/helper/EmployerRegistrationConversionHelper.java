@@ -46,10 +46,10 @@ public class EmployerRegistrationConversionHelper {
 	public MerUser transformMerUserDTOToMerUser(EmployerProfileDTO dto,
 			MerUser entity) {
 		/**
-		 *  Introduced a new variable "merUSer" to resolve PMD issue. 
+		 * Introduced a new variable "merUSer" to resolve PMD issue.
 		 */
-		MerUser merUser =entity; 
-		
+		MerUser merUser = entity;
+
 		UserDTO userDTO = dto.getMerUserDTO();
 
 		if (null != userDTO && null == merUser) {
@@ -138,11 +138,12 @@ public class EmployerRegistrationConversionHelper {
 	 * @param apd
 	 * @return admFacilityContact.
 	 */
-	public AdmFacilityContact transformEmpAccDTOToAdmAccEntity(AccountProfileDTO apd){
+	public AdmFacilityContact transformEmpAccDTOToAdmAccEntity(
+			AccountProfileDTO apd) {
 		AdmFacilityContact admFacilityContact = new AdmFacilityContact();
 		AdmFacility admFacility = new AdmFacility();
-		admFacility.setAdminUserId(apd.getFacilityId());		
-		//admFacilityContact.setAdmFacility(apd.getFacilityId());
+		admFacility.setAdminUserId(apd.getFacilityId());
+		// admFacilityContact.setAdmFacility(apd.getFacilityId());
 		admFacilityContact.setContactType(apd.getContactType());
 		admFacilityContact.setFirstName(apd.getFirstName());
 		admFacilityContact.setCompany(apd.getCompanyName());
@@ -153,13 +154,10 @@ public class EmployerRegistrationConversionHelper {
 		admFacilityContact.setCountry(apd.getCountry());
 		admFacilityContact.setEmail(apd.getEmail());
 		admFacilityContact.setPhone(apd.getPhone());
-		
-		
-		return admFacilityContact;
-		
-	}
-	
 
+		return admFacilityContact;
+
+	}
 
 	/**
 	 * Transform MerUserDTO to entity MerUser
@@ -207,8 +205,8 @@ public class EmployerRegistrationConversionHelper {
 
 					if (null != attribDTO.getStrProfileAttribId()
 							&& !attribDTO.getStrProfileAttribId().isEmpty()) {
-						merUserProfilePK.setProfileAttribId(Integer.valueOf(attribDTO
-								.getStrProfileAttribId()));
+						merUserProfilePK.setProfileAttribId(Integer
+								.valueOf(attribDTO.getStrProfileAttribId()));
 					}
 
 					if (user.getUserId() != 0) {
@@ -224,19 +222,17 @@ public class EmployerRegistrationConversionHelper {
 		return listProfiles;
 
 	}
-	
+
 	/**
 	 * Transform MerUserDTO to entity MerUser
 	 * 
 	 * @param dto
 	 * @return
 	 */
-	public AdmFacility transformEmpDTOToAdmFAcility(
-			EmployerProfileDTO dto) {
+	public AdmFacility transformEmpDTOToAdmFAcility(EmployerProfileDTO dto) {
 
-		AdmFacility admFacility= new AdmFacility();
-		
-		
+		AdmFacility admFacility = new AdmFacility();
+
 		if (null != dto.getAttribList()) {
 			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
@@ -268,7 +264,7 @@ public class EmployerRegistrationConversionHelper {
 		return admFacility;
 
 	}
-	
+
 	/**
 	 * Transform MerUserDTO to entity MerUser
 	 * 
@@ -276,7 +272,7 @@ public class EmployerRegistrationConversionHelper {
 	 * @return
 	 */
 	public AdmFacilityContact transformEmpDTOToAdmFacilityContact(
-			EmployerProfileDTO dto,AdmFacility facility) {
+			EmployerProfileDTO dto, AdmFacility facility) {
 
 		AdmFacilityContact facilityContact = new AdmFacilityContact();
 
@@ -332,16 +328,15 @@ public class EmployerRegistrationConversionHelper {
 
 	}
 
-
-	
 	/**
 	 * Converting list of MerProfileAttribList to list of DropDownDTO's
 	 */
-	public List<DropDownDTO> transformToDropDownDTO(List<MerProfileAttribList> dropdownVals){
-		
+	public List<DropDownDTO> transformToDropDownDTO(
+			List<MerProfileAttribList> dropdownVals) {
+
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
-		if(null != dropdownVals){
-			for(MerProfileAttribList attrib : dropdownVals){
+		if (null != dropdownVals) {
+			for (MerProfileAttribList attrib : dropdownVals) {
 				DropDownDTO dto = new DropDownDTO();
 				dto.setOptionId(String.valueOf(attrib.getProfileAttribListId()));
 				dto.setOptionName(attrib.getListValue());
@@ -350,7 +345,7 @@ public class EmployerRegistrationConversionHelper {
 		}
 		return dropdownList;
 	}
-	
+
 	/**
 	 * 
 	 * @param listProfAttrib
@@ -359,7 +354,8 @@ public class EmployerRegistrationConversionHelper {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public EmployerProfileDTO transformProfileAttrib(List<MerProfileAttrib> listProfAttrib,
+	public EmployerProfileDTO transformProfileAttrib(
+			List<MerProfileAttrib> listProfAttrib,
 			List<DropDownDTO> countryList, List<DropDownDTO> stateList) {
 		Properties entries = null;
 		Set set = null;
@@ -378,21 +374,23 @@ public class EmployerRegistrationConversionHelper {
 		Properties profileAttributes = null;
 		List<String> profileAttribs = new ArrayList<String>();
 		try {
-				profileAttributes = PropertiesLoaderUtils.loadAllProperties("employerProfile.properties");
-				set = profileAttributes.keySet(); 
-				Iterator itr = set.iterator(); 
-				while(itr.hasNext()) { 
-					profileAttribs.add(profileAttributes.getProperty((String) itr.next())); 
-				}
+			profileAttributes = PropertiesLoaderUtils
+					.loadAllProperties("employerProfile.properties");
+			set = profileAttributes.keySet();
+			Iterator itr = set.iterator();
+			while (itr.hasNext()) {
+				profileAttribs.add(profileAttributes.getProperty((String) itr
+						.next()));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		EmployerProfileDTO registerDTO = new EmployerProfileDTO();
 		List<ProfileAttribDTO> listDTO = new ArrayList<ProfileAttribDTO>();
 		if (null != listProfAttrib) {
 			for (MerProfileAttrib entity : listProfAttrib) {
-				if(profileAttribs.contains(entity.getName())){
+				if (profileAttribs.contains(entity.getName())) {
 					ProfileAttribDTO dto = new ProfileAttribDTO();
 					dto.setStrAttribType(entity.getFormType());
 					dto.setStrLabelName(entity.getName());
@@ -400,19 +398,19 @@ public class EmployerRegistrationConversionHelper {
 							.getProfileAttribId()));
 					dto.setbRequired((labels.contains(dto.getStrLabelName()) ? 1
 							: 0));
-					if (dto.getStrAttribType()
-							.equals(MMJBCommonConstants.DROP_DOWN)
+					if (dto.getStrAttribType().equals(
+							MMJBCommonConstants.DROP_DOWN)
 							|| dto.getStrAttribType().equals(
 									MMJBCommonConstants.CHECK_BOX)) {
 						// populating countries
 						if (dto.getStrLabelName().equals(
 								MMJBCommonConstants.LABEL_COUNTRY)) {
 							dto.setDropdown(countryList);
-	
+
 						} else if (dto.getStrLabelName().equals(
 								MMJBCommonConstants.LABEL_STATE)) {
 							dto.setDropdown(stateList); // populating states
-	
+
 						} else {
 							List<MerProfileAttribList> dropdownVals = entity
 									.getMerProfileAttribLists();
@@ -420,64 +418,72 @@ public class EmployerRegistrationConversionHelper {
 						}
 					}
 					listDTO.add(dto);
-				}	
+				}
 			}
 		}
 		registerDTO.setAttribList(listDTO);
 		return registerDTO;
 	}
-	
+
 	/**
 	 * Transform MerUser to MerUserDTO
+	 * 
 	 * @param dto
 	 * @return
 	 */
-	public EmployerProfileDTO transformMerUserProfilesToDTO(MerUser user, EmployerProfileDTO jsDTO, 
-			List<MerUserProfile> profiles) {
-		
-		if (null !=jsDTO.getAttribList()) {
-			
-			for(ProfileAttribDTO attribDTO : jsDTO.getAttribList()){
-				if(MMJBCommonConstants.FIRST_NAME.equalsIgnoreCase(attribDTO.getStrLabelName())){
+	public EmployerProfileDTO transformMerUserProfilesToDTO(MerUser user,
+			EmployerProfileDTO jsDTO, List<MerUserProfile> profiles) {
+
+		if (null != jsDTO.getAttribList()) {
+
+			for (ProfileAttribDTO attribDTO : jsDTO.getAttribList()) {
+				if (MMJBCommonConstants.FIRST_NAME.equalsIgnoreCase(attribDTO
+						.getStrLabelName())) {
 					attribDTO.setStrLabelValue(user.getFirstName());
-				}else if(MMJBCommonConstants.LAST_NAME.equalsIgnoreCase(attribDTO.getStrLabelName())){
+				} else if (MMJBCommonConstants.LAST_NAME
+						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
 					attribDTO.setStrLabelValue(user.getLastName());
-				}else if(MMJBCommonConstants.MIDDLE_NAME.equalsIgnoreCase(attribDTO.getStrLabelName())){
+				} else if (MMJBCommonConstants.MIDDLE_NAME
+						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
 					attribDTO.setStrLabelValue(user.getMiddleName());
-				}else if(MMJBCommonConstants.EMAIL_ADDRESS.equalsIgnoreCase(attribDTO.getStrLabelName())){
+				} else if (MMJBCommonConstants.EMAIL_ADDRESS
+						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
 					attribDTO.setStrLabelValue(user.getEmail());
-				}else{
-					attribDTO.setStrLabelValue(retrieveLabelValue(attribDTO, profiles));
+				} else {
+					attribDTO.setStrLabelValue(retrieveLabelValue(attribDTO,
+							profiles));
 				}
 			}
 		}
 
 		return jsDTO;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param attribDTO
 	 * @param profiles
 	 * @return
 	 */
-	private String retrieveLabelValue(ProfileAttribDTO attribDTO, List<MerUserProfile> profiles){
-		
-		if(null != attribDTO){
-			for(MerUserProfile profile : profiles){
-				if(attribDTO.getStrProfileAttribId().equalsIgnoreCase(String.valueOf(profile.getProfilePK().getProfileAttribId()))){
+	private String retrieveLabelValue(ProfileAttribDTO attribDTO,
+			List<MerUserProfile> profiles) {
+
+		if (null != attribDTO) {
+			for (MerUserProfile profile : profiles) {
+				if (attribDTO.getStrProfileAttribId().equalsIgnoreCase(
+						String.valueOf(profile.getProfilePK()
+								.getProfileAttribId()))) {
 					return profile.getAttribValue();
 				}
 			}
 		}
-		
-		return null;		
+
+		return null;
 	}
 
 	public UserDTO transformMerUserToUserDTO(MerUser merUser) {
 		UserDTO userDTO = new UserDTO();
-		if(null != merUser){
+		if (null != merUser) {
 			userDTO.setEmailId(merUser.getEmail());
 			userDTO.setFirstName(merUser.getFirstName());
 			userDTO.setLastName(merUser.getLastName());
@@ -485,18 +491,17 @@ public class EmployerRegistrationConversionHelper {
 			userDTO.setMiddleName(merUser.getMiddleName());
 			userDTO.setPassword(merUser.getPassword());
 		}
-		
-		return userDTO;		
+
+		return userDTO;
 	}
 
-
-	
-	public AdmFacilityContact transformEmpAccDTOToAdmAccEntityData(AdmFacilityContact afc,AccountProfileDTO apd){
-		//AdmFacilityContact admFacilityContact = new AdmFacilityContact();
-		//AdmFacility admFacility = new AdmFacility();
-		//admFacility.setAdminUserId(apd.getFacilityId());		
-		//admFacilityContact.setAdmFacility(admFacility);
-		//admFacilityContact.setContactType(apd.getContactType());
+	public AdmFacilityContact transformEmpAccDTOToAdmAccEntityData(
+			AdmFacilityContact afc, AccountProfileDTO apd) {
+		// AdmFacilityContact admFacilityContact = new AdmFacilityContact();
+		// AdmFacility admFacility = new AdmFacility();
+		// admFacility.setAdminUserId(apd.getFacilityId());
+		// admFacilityContact.setAdmFacility(admFacility);
+		// admFacilityContact.setContactType(apd.getContactType());
 		afc.setFirstName(apd.getFirstName());
 		afc.setCompany(apd.getCompanyName());
 		afc.setStreet(apd.getStreet());
@@ -506,8 +511,7 @@ public class EmployerRegistrationConversionHelper {
 		afc.setCountry(apd.getCountry());
 		afc.setEmail(apd.getEmail());
 		afc.setPhone(apd.getPhone());
-		
-		
+
 		return afc;
 	}
 
@@ -532,12 +536,12 @@ public class EmployerRegistrationConversionHelper {
 				afc.setFacilityContactId(facility.getFacilityContactId());
 				count++;
 			}
-			afc.setCount(count);
+			// afc.setCount(count);
 		}
-
+		afc.setCount(count);
 		return afc;
 	}
-	
+
 	/**
 	 * Converting MerUserDTO to MerUser for Manage Access Permission
 	 * 
@@ -545,10 +549,9 @@ public class EmployerRegistrationConversionHelper {
 	 * @return MerUser
 	 */
 	public MerUser transformMerUserDTOToMerUser(EmployerProfileDTO dto) {
-		
-		
+
 		UserDTO userDTO = dto.getMerUserDTO();
-		MerUser	merUser=null;
+		MerUser merUser = null;
 		if (null != userDTO) {
 			merUser = new MerUser();
 			merUser.setFirstName(userDTO.getFirstName());
@@ -564,21 +567,22 @@ public class EmployerRegistrationConversionHelper {
 		return merUser;
 
 	}
-	
-	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(List<MerUser> merUsers,List<Integer> roleId){
+
+	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(
+			List<MerUser> merUsers, List<Integer> roleId) {
 		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
-		int i =0;
+		int i = 0;
 		for (MerUser merUser : merUsers) {
 			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
 			manageAccessPermissionDTO.setOwnerName(merUser.getFirstName());
-			if (roleId.size()>i && null !=roleId.get(i)) {
+			if (roleId.size() > i && null != roleId.get(i)) {
 				manageAccessPermissionDTO.setTypeOfAccess(roleId.get(i));
 			}
 			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
-			i=i+1;
+			i = i + 1;
 		}
-		return manageAccessPermissionDTOList;		
-		
+		return manageAccessPermissionDTOList;
+
 	}
 }
