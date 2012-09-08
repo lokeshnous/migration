@@ -166,7 +166,7 @@
 				success : function(data) {		
 						val=data;
 						if(val!=null){
-							if (confirm("You have completed "+ val+ "% of information.")) 
+							if (confirm("You have completed "+ val+ "% of information.\n Do you want to continue?")) 
 							{
 								$("#saveResBuilderHdBtId").click();
 								
