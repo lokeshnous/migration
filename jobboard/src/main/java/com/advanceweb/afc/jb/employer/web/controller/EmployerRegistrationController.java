@@ -325,7 +325,7 @@ public class EmployerRegistrationController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
-				} else if (!employerRegistration
+				} else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
 					return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
@@ -369,9 +369,6 @@ public class EmployerRegistrationController {
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 			if (!validateEmailPattern(employeeBillingForm.getEmail())) {
 				return MMJBCommonConstants.EMAIL_MESSAGE;
-			} else if (!employerRegistration.validateEmail(employeeBillingForm
-					.getEmail())) {
-				return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
 				return MMJBCommonConstants.PHONE_NO;
 			} else if (null == employeeBillingForm.getPhone()) {
