@@ -40,7 +40,9 @@ public class BrandingTemplateForm {
 
 	private Boolean isSilverCustomer = null;
 	private String browsePath;
-
+	private String imageSizeLimit;
+	private String videoSizeLimit;
+	
 	public int getFacilityId() {
 		return facilityId;
 	}
@@ -156,6 +158,22 @@ public class BrandingTemplateForm {
 
 	public List<AddImageForm> getListAddImages() {
 		return listAddImages;
+	}
+
+	public String getImageSizeLimit() {
+		return imageSizeLimit;
+	}
+
+	public void setImageSizeLimit(String imageSizeLimit) {
+		this.imageSizeLimit = imageSizeLimit;
+	}
+
+	public String getVideoSizeLimit() {
+		return videoSizeLimit;
+	}
+
+	public void setVideoSizeLimit(String videoSizeLimit) {
+		this.videoSizeLimit = videoSizeLimit;
 	}
 
 	public String getBrowsePath() {
