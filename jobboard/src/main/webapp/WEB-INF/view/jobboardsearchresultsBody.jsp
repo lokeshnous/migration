@@ -9,7 +9,7 @@
 		</head>
 
 		<body>
-
+<form:form method="" action="" commandName="jobSearchResultForm">
 					
 					<div class="row">
 
@@ -156,15 +156,21 @@
 					<option value="40">40</option>
 					<option value="50">50</option>
 			</select>
-			</span><span class="marginTop5">per page</span>
+			<%-- <form:select path="${filterVal}" itemValue="${filterVals.optionId}" 
+								itemLabel="${filterVals.optionName}" items="${filterVals}"></form:select>   --%>
+						</span><span class="marginTop5">per page</span>
 		</div>
 
 
-
-		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
-					</div>
-					<div class="searchResultsNavigationColumn2 floatRight">
+						<div class="searchResultsNavigationColumn3">
+							&nbsp;&nbsp;
+							<c:if test="${totalNoOfRecords != null}">
+							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
+						</c:if>
+						</div>
+						<div class="searchResultsNavigationColumn2 floatRight">
 						<!-- <span>Page:</span> -->
+						<c:if test="${totalNoOfRecords != null}">
 						<c:if test="${currentPage != 1 && noOfPages gt 10}">
 							<td><a
 								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
@@ -187,7 +193,8 @@
            				 <span><a onclick="getNextPages(${currentPage + 1} ,${begin+10});"
 							>Next<img src="../resources/images/ArrowRight.png">
 							</a></span>
-       					</c:if>       		 
+       					</c:if>  
+       					</c:if>     		 
 					</div>
 				</div>
 
@@ -306,11 +313,15 @@
 		</div>
 
 
-
-		<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
-					</div>
-					<div class="searchResultsNavigationColumn2 floatRight">
+						<div class="searchResultsNavigationColumn3">
+							&nbsp;&nbsp;
+							<c:if test="${totalNoOfRecords != null}">
+							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
+						</c:if>
+						</div>
+						<div class="searchResultsNavigationColumn2 floatRight">
 						<!-- <span>Page: </span> -->
+						<c:if test="${totalNoOfRecords != null}">
 						<c:if test="${currentPage != 1 && noOfPages gt 10}">
 							<td><a
 								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
@@ -333,7 +344,8 @@
            				 <span><a onclick="getNextPages(${currentPage + 1} ,${begin+10});"
 							>Next<img src="../resources/images/ArrowRight.png">
 							</a></span>
-       					</c:if>     
+       					</c:if>  
+       					</c:if>   
 					</div>
 				</div>
 			</div>
@@ -342,5 +354,6 @@
 		<!-- column2-->
 
 					</div> 
+					</form:form>
 </body>
 </html>

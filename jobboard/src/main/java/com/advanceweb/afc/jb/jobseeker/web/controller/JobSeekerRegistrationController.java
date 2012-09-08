@@ -64,6 +64,18 @@ public class JobSeekerRegistrationController {
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	
+	@Value("${followuplinkfacebook}")
+	private String followuplinkfacebook;
+
+	@Value("${followuplinktwitter}")
+	private String followuplinktwitter;
+
+	@Value("${followuplinkyoutube}")
+	private String followuplinkyoutube;
+
+	@Value("${followuplinklinkedin}")
+	private String followuplinklinkedin;
+	
 	//Spring ReCaptcha
 /*	private String recaptcha_response;
 	private String recaptcha_challenge;
@@ -121,60 +133,75 @@ public class JobSeekerRegistrationController {
 		 placeKey = (new Random()).nextLong();		
 		 ModelAndView model = new ModelAndView();
 		
-		 try {
-			// Spring Recaptcha Starts here		
-			 
-/*			 if(StringUtils.isEmpty(req.getParameter("recaptcha_response_field"))){
-					model.setViewName("jobSeekerCreateAccount");
-					model.addObject("errorMessage","Captcha should not be blank");
-					return model;
-			 }
-			 
-			 if(req.getParameter("recaptcha_response_field") != null) {
-				recaptcha_response = req.getParameter("recaptcha_response_field");
-				recaptcha_challenge = req.getParameter("recaptcha_challenge_field");
-				remoteAddr = req.getRemoteAddr();	   
-			 }
-			  
-			 ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-			 reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
-			  		 
-			 ReCaptchaResponse reCaptchaResponse = 
-					 reCaptcha.checkAnswer(remoteAddr, recaptcha_challenge, recaptcha_response); // Send HTTP request to validate user's Captcha
+		try {
+			// Spring Recaptcha Starts here
 
-			 if(!reCaptchaResponse.isValid()) {		  // Check if valid
-				model.setViewName("jobSeekerCreateAccount");
-				model.addObject("errorMessage","Captcha is invalid!");
-				return model;
-			 }	*/	  
-			//Spring Recaptcha Ends here	
-			 
-			if(!registerForm.isbReadOnly()){ //it will be executed when the user come's from Sign Up page
+			/*
+			 * if(StringUtils.isEmpty(req.getParameter("recaptcha_response_field"
+			 * ))){ model.setViewName("jobSeekerCreateAccount");
+			 * model.addObject("errorMessage","Captcha should not be blank");
+			 * return model; }
+			 * 
+			 * if(req.getParameter("recaptcha_response_field") != null) {
+			 * recaptcha_response =
+			 * req.getParameter("recaptcha_response_field"); recaptcha_challenge
+			 * = req.getParameter("recaptcha_challenge_field"); remoteAddr =
+			 * req.getRemoteAddr(); }
+			 * 
+			 * ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+			 * reCaptcha.setPrivateKey
+			 * (MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
+			 * 
+			 * ReCaptchaResponse reCaptchaResponse =
+			 * reCaptcha.checkAnswer(remoteAddr, recaptcha_challenge,
+			 * recaptcha_response); // Send HTTP request to validate user's
+			 * Captcha
+			 * 
+			 * if(!reCaptchaResponse.isValid()) { // Check if valid
+			 * model.setViewName("jobSeekerCreateAccount");
+			 * model.addObject("errorMessage","Captcha is invalid!"); return
+			 * model; }
+			 */
+			// Spring Recaptcha Ends here
+
+			if (!registerForm.isbReadOnly()) { // it will be executed when the
+												// user come's from Sign Up page
 				registerValidation.validate(registerForm, result);
-				
-				if(result.hasErrors()){
+
+				if (result.hasErrors()) {
 					model.setViewName("jobSeekerCreateAccount");
 					return model;
 				}
-				
-				if(profileRegistration.validateEmail(registerForm.getEmailId())){
+
+				if (profileRegistration
+						.validateEmail(registerForm.getEmailId())) {
 					model.setViewName("jobSeekerCreateAccount");
-					result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+					result.rejectValue("emailId", "NotEmpty",
+							"Email address already exists");
 					return model;
 				}
 			}
-			
-			JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration.getProfileAttributes();
-			 UserDTO userDTO=null; 
-			 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
-				 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
-			 }
-			List<JobSeekerProfileAttribForm> listProfAttribForms = 
-					transformJobSeekerRegistration.transformDTOToProfileAttribForm(registerDTO, userDTO);
+
+			JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration
+					.getProfileAttributes();
+			UserDTO userDTO = null;
+			if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
+				userDTO = (UserDTO) session
+						.getAttribute(MMJBCommonConstants.USER_DTO);
+			}
+			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
+					.transformDTOToProfileAttribForm(registerDTO, userDTO);
 			registerForm.setListProfAttribForms(listProfAttribForms);
 			model.setViewName("jobSeekerCreateAccountInfo");
 			model.addObject("registerForm", registerForm);
-			
+			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
+					followuplinkfacebook);
+			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_TWITTER,
+					followuplinktwitter);
+			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_YOUTUBE,
+					followuplinkyoutube);
+			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_LINKEDIN,
+					followuplinklinkedin);
 		} catch (Exception e) {
 			//TODO
 			LOGGER.error(e);

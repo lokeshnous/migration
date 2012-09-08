@@ -104,10 +104,14 @@ public class JobSeekerDashBoardController {
 		appliedJobsCount = appliedJobDTOList.size();
 		form.setAppliedJobsCount(appliedJobsCount);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-		model.addObject("followuplinkfacebook", followuplinkfacebook);
-		model.addObject("followuplinktwitter", followuplinktwitter);
-		model.addObject("followuplinkyoutube", followuplinkyoutube);
-		model.addObject("followuplinklinkedin", followuplinklinkedin);
+		model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
+				followuplinkfacebook);
+		model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_TWITTER,
+				followuplinktwitter);
+		model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_YOUTUBE,
+				followuplinkyoutube);
+		model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_LINKEDIN,
+				followuplinklinkedin);
 		model.addObject("jobSearchResultForm", jobSearchResultForm);
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");

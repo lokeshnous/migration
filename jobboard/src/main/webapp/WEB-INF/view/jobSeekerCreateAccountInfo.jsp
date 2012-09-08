@@ -319,17 +319,16 @@
 
 						<div class="follow_us">
 							<h2>Follow Us</h2>
-							<p>Stay connected to the latest jobs.</p>
-							<a href="">
-								<div class="social facebook_link">Facebook</div>
-							</a> <a href="">
-								<div class="social twitter_link">Twitter</div>
-
-							</a> <a href="">
-								<div class="social youTube_link">YouTube</div>
-							</a> <a href="">
-								<div class="last social linkedIn_link">LinkedIn</div>
-							</a>
+						<p>Stay connected to the latest jobs.</p>
+						<a href="${followuplinkfacebook}" target="_blank">
+							<div class="social facebook_link">Facebook</div>
+						</a> <a href="${followuplinktwitter}" target="_blank">
+							<div class="social twitter_link">Twitter</div>
+						</a> <a href="${followuplinkyoutube}" target="_blank">
+							<div class="social youTube_link">YouTube</div>
+						</a> <a href="${followuplinklinkedin}" target="_blank">
+							<div class="last social linkedIn_link">LinkedIn</div>
+						</a>
 						</div>
 						<br class="clearfix" />
 

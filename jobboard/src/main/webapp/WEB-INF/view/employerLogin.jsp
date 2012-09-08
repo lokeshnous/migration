@@ -68,7 +68,7 @@
 			
 				</div>
 				<div class="row">
-				    <p><span class="bold">Not a member?</span> <a href="">Sign up now!</a></p>
+				    <p><span class="bold">Not a member?</span> <a href="<%=request.getContextPath()%>/employerRegistration/employerregistration.html">Sign up now!</a></p>
 				</div>
 				<div class="clearfix"></div>
 			    </div>

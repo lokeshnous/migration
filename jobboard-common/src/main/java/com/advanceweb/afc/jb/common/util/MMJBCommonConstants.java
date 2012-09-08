@@ -260,5 +260,14 @@ public interface MMJBCommonConstants {
 	String JOB_TYPE="JOB_TYPE";
 	String JOB_TYPE_ADDON="ADDON";
 
+	String NEXT = "next";
+	int[] FILTER_VALS = {20,30,40,50};
+	
+	// For jobboard links 
+	String FOLLOWUP_LINK_FACEBOOK = "followuplinkfacebook";
+	String FOLLOWUP_LINK_TWITTER = "followuplinktwitter";
+	String FOLLOWUP_LINK_YOUTUBE = "followuplinkyoutube";
+	String FOLLOWUP_LINK_LINKEDIN = "followuplinklinkedin";
+	
 
 }
