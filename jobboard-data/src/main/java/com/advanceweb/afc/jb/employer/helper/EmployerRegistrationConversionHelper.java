@@ -575,7 +575,8 @@ public class EmployerRegistrationConversionHelper {
 		for (MerUser merUser : merUsers) {
 			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
-			manageAccessPermissionDTO.setOwnerName(merUser.getFirstName());
+			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
+					+ merUser.getFirstName());
 			if (roleId.size() > i && null != roleId.get(i)) {
 				manageAccessPermissionDTO.setTypeOfAccess(roleId.get(i));
 			}
