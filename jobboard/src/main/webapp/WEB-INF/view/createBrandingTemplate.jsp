@@ -167,7 +167,7 @@
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">Select the company logo you want
 										to feature on this job posting template. The file size limit
-										is XX KB at 72 dpi. Accepted file types include .jpg, .gif,
+										is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg, .gif,
 										.png and .tif.</span>
 								</div>
 								<div class="clearfix"></div>
@@ -210,7 +210,7 @@
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">This is the large image that will
 										appear at the top of your job posting template. The file size
-										limit is XX KB at 72 dpi. Accepted file types include .jpg,
+										limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg,
 										.gif, .png and .tif.</span>
 								</div>
 								<div class="clearfix"></div>
@@ -291,7 +291,7 @@
 								<span class="classic">These images will appear as
 										thumbnails in an interactive gallery prominently displayed on
 										your job posting template. They will expand to full size upon
-										being clicked. The file size limit is XX KB at 72 dpi.
+										being clicked. The file size limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi.
 										Accepted file types include .jpg, .gif, .png and .tif.</span>
 							</div>
 						</div>
