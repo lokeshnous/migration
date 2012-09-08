@@ -48,13 +48,6 @@
 	}
 </script>
 
-
-	<!-- <script type="text/javascript">
-		$('#Cancel').click(function(){		
-			parent.$.nmTop().close();		
-		});
-		
-		</script> -->
 </head>
 <body class="job_board">
 	<div class="job_seeker_login popUpContainer" id="jobSeekerRegister1" style="display: block;">
