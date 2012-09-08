@@ -69,19 +69,6 @@
 					(Required)
 					</span>
 				</div>
-				
-				
-				
-				<!-- <div class="rowEvenNewSpacing"><span class="lableText3"></span>
-					<span class="FormErrorDisplayText" id="emailInfo"> </span>
-				</div> -->
-					<%-- 
-				<div class="rowEvenNewSpacing">
-					<span class="lableText3"> <c:if
-							test="${fn:length(notempty) gt 0}">*${notempty}</c:if> <c:if
-							test="${fn:length(invalidemail) gt 0}">*${invalidemail}</c:if>
-					</span>
-				</div> --%>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Message:
