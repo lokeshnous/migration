@@ -16,10 +16,10 @@
 		
 		$('#emailbutton').click(function(){			
 			var email = $("#email").val();			
-			$("#emailbutton").hide();
+			/* $("#emailbutton").hide();
 			$("#cancelbutton").hide();
 			$("#waitmsg").show();
-			$('body').css('cursor','wait');  
+			$('body').css('cursor','wait');  */ 
 
 			
 			$.ajax({url:"jobSeekerForgotPWDPopUp.html?email="+email,
@@ -81,9 +81,6 @@
 					     <input type="button" id="emailbutton" class="orange" value="Send"/>
 					     <input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 				</div>
-				<span  style="font-size: 18px;font:bold; "><div id="waitmsg" >Please Wait..Your password is being sent to your Email address</div></span>
-				
-				<div class="clearfix"></div>
 			</form:form>
 		</div>
 		<div class="clearfix"></div>

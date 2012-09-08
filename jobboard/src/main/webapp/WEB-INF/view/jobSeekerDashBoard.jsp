@@ -29,9 +29,8 @@
 jQuery(document).ready(
 		function() {
 			//jQuery(".megamenu").megamenu();
-			$("#viewappliedjob").displaypopup("#viewappliedjob", "775",
-					"355");
-			$("#viewsavedjob").displaypopup("#viewsavedjob", "780", "370");
+			$("#viewappliedjob").displaypopup("#viewappliedjob", "760", "238");
+			$("#viewsavedjob").displaypopup("#viewsavedjob", "760", "278");
 
 			$("#changePassword").displaypopup("#changePassword", "780",
 					"370");
