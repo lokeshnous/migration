@@ -74,6 +74,9 @@ public class BrandingTemplateController {
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 
+	private @Value("${imageSizeLimit}")
+	String imageSizeLimit;
+	
 //	@Value("${ajaxNavigationPath}")
 //	private String ajaxNavigationPath;
 	
@@ -665,6 +668,7 @@ public class BrandingTemplateController {
 		ArrayList<TestimonyForm> nonEmptyList = new ArrayList<TestimonyForm>();
 		nonEmptyList.add(testimonyForm);
 		brandingTemplateForm.setListTestimony(nonEmptyList);
+		brandingTemplateForm.setImageSizeLimit(imageSizeLimit.substring(0, imageSizeLimit.length()-3));
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 //		Dummy list created to have a non zero List
@@ -837,6 +841,7 @@ public class BrandingTemplateController {
 		ModelAndView model = new ModelAndView();
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
+		brandingTemplateForm.setImageSizeLimit(imageSizeLimit.substring(0, imageSizeLimit.length()-3));
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 //		model.setViewName("editBrandingTemplate");
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
