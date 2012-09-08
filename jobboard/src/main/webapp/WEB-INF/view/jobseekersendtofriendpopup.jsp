@@ -72,7 +72,7 @@
 						Your Friend's Email Address:
 					</span>
 					<form:input path="email" name="EmailAddress" id="EmailAddress" class="job_seeker_email" type="text"/>
-					<span class="required">
+					<span class="required" title="Example; John@yahoo.com;Dave@yahoo.com">
 					(Required)
 					</span>
 				</div>
