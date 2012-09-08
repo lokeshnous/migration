@@ -207,10 +207,13 @@ public class JobSearchController {
 	public ModelAndView trackClicks(HttpServletResponse response,
 			HttpServletRequest request, Model model,@RequestParam("id") int jobId,
 			@RequestParam("clickType") String clickType){
+		
 		ModelAndView modelAndView = new ModelAndView();
+		
 		if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)){
 			clickController.getclickevent(jobId, clickType, request, response, model);
 		}
+		
 		return modelAndView;
 	}
 
@@ -237,7 +240,9 @@ public class JobSearchController {
 			Model model,
 			@RequestParam("clickType") String clickType, HttpSession session,
 			HttpServletRequest request) {
+		
 		JSONObject jsonObject = new JSONObject();
+		
 		if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)){
 			clickController.getclickevent(jobId, clickType, request, response, model);
 		}
@@ -246,6 +251,7 @@ public class JobSearchController {
 		int userId = 0;
 		String userName = null;
 		String userEmail = null;
+		
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			userId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
@@ -254,7 +260,9 @@ public class JobSearchController {
 			userEmail = (String) session
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
 		}
+		
 		form.setUseremail(userEmail);
+		
 		try {
 			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchService
@@ -263,6 +271,7 @@ public class JobSearchController {
 			// apply job by apply type like by ATS, Website or Email
 			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
 					.applyJobDetails(form.getJobID());
+		
 			if (jobApplyTypeDTO != null) {
 				if (jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
 						MMJBCommonConstants.APPLY_TO_ATS)
@@ -746,8 +755,11 @@ public class JobSearchController {
 
 	/**
 	 * This method is called to send job to a friend
-	 * 
-	 * @param sendtofriendmail
+	 * for call the Mail page open and here hold 
+	 * URl userid and job id etc.
+	 * @author kartikm
+	 * @version V.0.1
+	 * @param sendtofriendmail - 
 	 * @param result
 	 * @param request
 	 * @param model
@@ -756,10 +768,9 @@ public class JobSearchController {
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
 			BindingResult result, HttpServletRequest request, Model model) {
+		
 		try {
-
-			// SendToFriend sendtofriendmail = new SendToFriend();
-			// SendToFriend sendToForm = new SendToFriend();
+		
 			int jobId = Integer.parseInt(request.getParameter("id"));
 			sendtofriendmail.setJobId(jobId);
 			sendtofriendmail.setJoburl(request.getRequestURL().toString());
@@ -775,7 +786,13 @@ public class JobSearchController {
 	}
 
 	/**
-	 * 
+	 * Mail Sending method sendTofriendPost
+	 * take Bean file Binding result and 
+	 * Http servlet request and Session for 
+	 * Many place it is hold User id and 
+	 * facilityid
+	 * @author kartikm
+	 * @version V.0.1
 	 * @param sendtofriendmail
 	 * @param result
 	 * @param request
@@ -797,7 +814,6 @@ public class JobSearchController {
 		String bodyMesg = "";
 		try {
 			String data = sendtofriendmail.getEmail().toString();
-			// data=data.trim();
 			data = data.replace(',', ';');
 			int len = data.length();
 			if (data.charAt(len - 1) == ';') {
@@ -805,17 +821,8 @@ public class JobSearchController {
 			}
 			String str[] = data.split(";");
 			int countString = str.length;
-			/*
-			 * final String regex =
-			 * "(([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4}))(((;|,|; | ;| ; | , | ,){1}"
-			 * +
-			 * "([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4}))*)"
-			 * ; boolean mailBol=false; for (String string : str) {
-			 * if(Pattern.matches(regex, string)){ mailBol=true; }else{
-			 * mailBol=false; } } if ((countString > 0)&&(mailBol==true)) {
-			 */
+			
 			try {
-
 				int userId = 0;
 				String userName = null;
 				String userEmail = null;
@@ -829,14 +836,14 @@ public class JobSearchController {
 							.getAttribute(MMJBCommonConstants.USER_EMAIL);
 				}
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress("merion@nousinfosystems.com");
+				jobSeekerEmailDTO.setFromAddress(MMJBCommonConstants.WEB_MAIL_SERVER);
 
 				int k = 0;
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
 
 					if (!validateEmailPattern(string.trim())) {
-						return "Please enter the correct Email address";
+						return MMJBCommonConstants.EMAIL_MESSAGE;
 					}
 
 					jobSeekerToAddress[k] = new InternetAddress(string.trim());
@@ -849,12 +856,11 @@ public class JobSearchController {
 							.getAttribute(MMJBCommonConstants.USER_NAME);
 					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
 							"?Jobseekername", jobseekerName);
-					// modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+					
 				} else {
 					jobseekerName = "XXXX-XXX";
 					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
 							"?Jobseekername", jobseekerName);
-					// modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
 				}
 				jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
 				SearchedJobDTO searchedJobDTO = jobSearchService
@@ -886,19 +892,8 @@ public class JobSearchController {
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info("ERROR" + e);
+				LOGGER.info("ERROR For sending mail option of SendToFriend method" + e);
 			}
-
-			// model.addAttribute("visible", true);
-			// }
-			/*
-			 * else if (sendtofriendmail.getEmail().length() > 0 &&
-			 * !validateEmailPattern(sendtofriendmail.getEmail())) {
-			 * model.addAttribute("visible", false);
-			 * model.addAttribute("invalidemail", invalidemail); } else {
-			 * model.addAttribute("visible", false);
-			 * model.addAttribute("notempty", notempty); }
-			 */
 
 		} catch (Exception e) {
 			status = Boolean.FALSE;
