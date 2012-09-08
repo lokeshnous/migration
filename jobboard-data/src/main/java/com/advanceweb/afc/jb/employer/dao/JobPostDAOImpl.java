@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

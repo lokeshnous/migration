@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -139,11 +138,10 @@ public class ManageAccessPermissionController {
 		ModelAndView model = new ModelAndView();
 		try {
 
-			/*
-			 * manageAccessPermissionService
-			 * .updateJobOwner(manageAccessPermissionForm
-			 * .getManageAccessPermissiondetails());
-			 */
+			manageAccessPermissionService
+					.updateJobOwner(manageAccessPermissionForm
+							.getManageAccessPermissiondetails());
+
 			LOGGER.info("Request For - update user Id ");
 
 			model.addObject("manageAccessPermissionForm",

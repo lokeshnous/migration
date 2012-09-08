@@ -202,38 +202,31 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				}
 				if (null != admUserFacility && null != admUserRole) {
 					// update the role in AdmUserFacility
-					/*
-					 * AdmUserFacilityPK admUserFacilityPK=
-					 * admUserFacility.getFacilityPK();
-					 * admUserFacilityPK.setRoleId(
-					 * accessPermissionDTO.getTypeOfAccess());
-					 * admUserFacility.setFacilityPK(admUserFacilityPK);
-					 */
-					// admUserFacility.getFacilityPK().setRoleId(accessPermissionDTO.getTypeOfAccess());
+					AdmUserFacility admUserFacilityNew = (AdmUserFacility) hibernateTemplateCareers
+							.load(AdmUserFacility.class,
+									admUserFacility.getFacilityPK());
+
 					// update the role in AdmUserRole
-					AdmUserRole admUserRoleNew = new AdmUserRole();
+
 					if (null != admUserRole.getRolePK()
 							&& admUserRole.getRolePK().getUserId() > 0) {
-						int userIdVal = admUserRole.getRolePK().getUserId();
-						AdmUserRolePK admUserRolePK = new AdmUserRolePK();
-						admUserRolePK.setUserId(userIdVal);
-						admUserRolePK.setRoleId(accessPermissionDTO
-								.getTypeOfAccess());
-						// admUserRole.setRolePK(admUserRolePK);
-						// admUserRole.getRolePK().setRoleId(accessPermissionDTO.getTypeOfAccess());
-						admUserRoleNew.setRolePK(admUserRolePK);
-						admUserRoleNew.setCreateDt(admUserRole.getCreateDt());
-						admUserRoleNew.setCreateUserId(admUserRole
-								.getCreateUserId());
-						admUserRoleNew.setDeleteDt(admUserRole.getDeleteDt());
-						admUserRoleNew.setDeleteUserId(admUserRole
-								.getDeleteUserId());
-						admUserRoleNew.setAdmRole(admUserRole.getAdmRole());
-						// hibernateTemplateCareers.saveOrUpdate(admUserFacility);
-						// hibernateTemplateCareers.delete(admUserRole);
-						hibernateTemplateCareers.saveOrUpdate(admUserRoleNew);
+						AdmUserRole admUserRoleNew = (AdmUserRole) hibernateTemplateCareers
+								.load(AdmUserRole.class,
+										admUserRole.getRolePK());
+						if (admUserRole.getRolePK().getRoleId() != accessPermissionDTO
+								.getTypeOfAccess()) {
+							admUserFacilityNew.getFacilityPK().setRoleId(
+									accessPermissionDTO.getTypeOfAccess());
+							admUserRoleNew.getRolePK().setRoleId(
+									accessPermissionDTO.getTypeOfAccess());
 
-						LOGGER.info("Updated Job Owners:"
+							hibernateTemplateCareers.saveOrUpdate(
+									"AdmUserFacility", admUserFacilityNew);
+							hibernateTemplateCareers.saveOrUpdate(
+									"AdmUserRole", admUserRoleNew);
+
+						}
+						LOGGER.info("Updated Job Owners Role To:"
 								+ accessPermissionDTO.getTypeOfAccess());
 					}
 				}
@@ -244,7 +237,6 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		}
 
 		return true;
-
 	}
 
 	@Override
