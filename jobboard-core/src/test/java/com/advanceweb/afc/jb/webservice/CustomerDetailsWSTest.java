@@ -5,8 +5,6 @@ import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 
-import net.sf.json.JSONObject;
-
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.log4j.Logger;
@@ -22,21 +20,24 @@ public class CustomerDetailsWSTest extends ServiceTest {
 
         CustomerDetailsWSTest customerDetailsWSTest = new CustomerDetailsWSTest();
 
+        String str = "";
+        
+        
         // Calling for customer details
        // customerDetailsWSTest.getCustomerDetails();
         // Calling to authorize an user
         //customerDetailsWSTest.authorizeUser("customer", "NS101");
         //calling to authorise user using POST
-        //customerDetailsWSTest.getCustomerDetails("customer",1596);
+        //customerDetailsWSTest.getCustomerDetails("customer",462667);
         //Call for item services
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
         
-        //customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
+        customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
         // Call for create Customer
         	//customerDetailsWSTest.createCustomer("Customer1", "company");
         //customerDetailsWSTest.createCashSales();
-      // customerDetailsWSTest.updateCustomer("{"customerId":460460,"customerName":"Customer5","recordType":"customer"}");
+      customerDetailsWSTest.updateCustomer();
 
 	}
 
@@ -169,11 +170,15 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 
 	 public String createSalesOrder(String itemIntrnlId, int custId, int locId, int discId){
 		String authorization = getAuthString();
-		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=151&deploy=1");
+		//WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=151&deploy=1");
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl");
+		client.query("script", "151");
+		client.query("deploy", "1");
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
-		Object obj = "{ \"item\": [{\"item\": \"2956\",\"quantity\": \"3\", \"taxcode\" : \"2984\"}, { \"item\": \"2955\", \"quantity\": \"4\", \"taxcode\" : \"2984\" }], \"entity\" : \"459468\", \"location\" :\"1\", \"discountitem\" : \"2930\", \"paymentmethod\" : \"6\", \"ccnumber\": \"378282246310005\", \"ccexpiredate\" : \"09/2013\", \"ccname\": \"Mohammed Zubair Ahmed\", \"cczipcode\" : \"560002\", \"ccstreet\" : \"HSR Layout\" }";	
-		//Object obj ="{ item : 2956 , entity : 459468 , location : 1 , discountitem : 2930 }";
+	    //"Your Transaction has Successful: transaction number (Payment for future=14806"
+		Object obj = "{ \"item\": [{\"item\": \"3006\",\"quantity\": \"3\"}, { \"item\": \"3006\", \"quantity\": \"4\" }], \"entity\" : \"459468\", \"paymentmethod\": \"ccp\", \"cardType\" : \"5\", \"ccnumber\": \"4111111111111111\", \"ccexpiredate\" : \"12/2014\", \"ccname\": \"Alain Gendre\", \"cczipcode\" : \"760002\", \"ccstreet\" : \"Suite Avenue\" }";	
+		//Object obj ="{internalid:0, phone:(000) 999-7777, recordtype:customer, companyname:drrd, ccnumber:null, ccexpiredate:null, ccname:null, cczipcode:null, ccstreet:null, item:[], firstname:dhrrdh, middlename:dfhdfh, lastname:dfhdfh, email:null, zip:225215, state:ae, country:us, altphone:, isperson:T, addr1:dhdf@gnamil.com, city:sddd}";
 		Response response = client.post(obj);
 		 
 		 
@@ -198,11 +203,19 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		 
 		 String authorization = getAuthString();
 		 //Object entityId = "{"customerId":460460,"customerName":"Customer5","recordType":"customer"}";
-		 Object entityId = "{\"companyname\": \"Customer2\", \"recordtype\" : \"Customer\"}";
+		 //Object entityId = "{\"companyname\": \"Customer6667\", \"recordtype\" : \"Customer\", \"ccname\": \"11111\"}";
+		// Object entityId = "{\"internalid\":0, \"phone\":\"(000)888-9877\", \"recordtype\":\"customer\",\"companyname\":\"noussss3222s\", \"ccnumber\":null, \"ccexpiredate\":null,	 \"ccname\":null, \"cczipcode\":null, \"ccstreet\":null, \"item\":[],\"firstname\":\"reetesh11112333\", \"middlename\":null, \"lastname\":\"test\", \"email\":null,	 \"zip\":\"123456\",\"state\":\"gu\", \"country\":\"us\", \"altphone\":\"(000) 888-9878\", \"addr1\":\"blr45\", \"city\":\"blr\", \"isperson\":\"T\"}";
+		 // Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"testsccts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		//Working
+		 //Object entityId = "{\"internalid\":0,\"phone\":\"(000) 888-9878\",\"recordtype\":\"customer\",\"companyname\":\"jjff@gmail.com\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"jjj\",\"middlename\":\"jjj\",\"lastname\":\"jjj\",\"email\":null,\"zip\":\"123456\",\"state\":\"ga\",\"country\":\"us\",\"altphone\":\"\",\"isperson\":\"T\",\"addr1\":\"jjff@gmail.com\",\"city\":\"jjff@gmail.com\"}";
+		//error
+		//Object entityId = "{internalid:0,phone:(000) 999-7777,recordtype:customer,companyname:drrd,ccnumber:null,ccexpiredate:null,ccname:null,cczipcode:null,ccstreet:null,item:[],firstname:dhrrdh,middlename:dfhdfh,lastname:dfhdfh,email:null,zip:225215,state:ae,country:us,altphone:,isperson:T,addr1:dhdf@gnamil.com,city:sddd}";
+		 //WORKING
+		// Object entityId = "{\"internalid\":\"0\",\"phone\":\"(000) 999-7777\",\"recordtype\":\"customer\",\"companyname\":\"asdsa\",\"ccnumber\":\"null\",\"ccexpiredate\":\"null\",\"ccname\":\"null\",\"cczipcode\":\"null\",\"ccstreet\":\"null\",\"item\":\"[]\",\"firstname\":\"bdd\",\"middlename\":\"dbdfb\",\"lastname\":\"dbdf\",\"email\":\"null\",\"zip\":\"123456\",\"state\":\"gu\",\"country\":\"us\",\"altphone\":\"\",\"isperson\":\"T\",\"addr1\":\"bdbfd@gmail.com\",\"city\":\"sasa\"}";
+		
+		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
 		 
-		 	// Object entityId = "{companyname : Customer1, recordtype : Customer}";
-		 
-		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1&companyname="+companyName+"&recordtype"+recordType);
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1");
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
 	    
@@ -224,7 +237,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 }
 	 
 	 
-	 public String updateCustomer(Object json){
+	 public String updateCustomer(){
 		 String authorization = getAuthString();
 		 //update
 		 //Object entityId = "{\"entityid\": \"Sample Customer\", \"companyname\" : \"Sample Customer\",\"phone\" : \"121-456-789\"}";
@@ -236,15 +249,17 @@ public class CustomerDetailsWSTest extends ServiceTest {
 
 		 //Object ent="{"customerId":"\460460,"customerName":"Customer5","recordType":"customer"}";
 
+		 //Working
+		 //Object entityId = "{\"recordtype\": \"customer\", \"internalid\": 460460, \"phone\" : \"121-454-789\"}";
 		 
-		// Object entityId = "{\"recordtype\": \"customer\", \"internalid\": 460460, \"phone\" : \"121-454-789\"}";
+		 Object entityId = "{\"internalid\":463366,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
 		 
 		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=156&deploy=1");
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
 	    
-	    
-		Response response = client.post(json);
+	    //"Record updated successfully"
+		Response response = client.post(entityId);
 		 
 		 //Response response = client.get();
 	     String jsonResponseString= null;
