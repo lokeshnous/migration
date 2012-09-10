@@ -1,14 +1,13 @@
-package com.advanceweb.afc.jb.employer.web.controller;
+package com.advanceweb.afc.jb.common;
 
 /**
  * 
  * @author Bharati Umarani
  * @version 1.0
- * @since 30th August, 2012
- * @Purpose: This class will act as a Form Bean for the job posting inventory
+ * @since 10th sept,2012
  */
 
-public class InventoryForm {
+public class JobPostingInventoryDTO {
 
 	private int userId;
 	private int facilityId;
@@ -47,6 +46,21 @@ public class InventoryForm {
 	 */
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	/**
+	 * @return the inventoryId
+	 */
+	public int getInventoryId() {
+		return inventoryId;
+	}
+
+	/**
+	 * @param inventoryId
+	 *            the inventoryId to set
+	 */
+	public void setInventoryId(int inventoryId) {
+		this.inventoryId = inventoryId;
 	}
 
 	/**
@@ -122,21 +136,6 @@ public class InventoryForm {
 	 */
 	public void setAvailableQty(int availableQty) {
 		this.availableQty = availableQty;
-	}
-
-	/**
-	 * @return the inventoryId
-	 */
-	public int getInventoryId() {
-		return inventoryId;
-	}
-
-	/**
-	 * @param inventoryId
-	 *            the inventoryId to set
-	 */
-	public void setInventoryId(int inventoryId) {
-		this.inventoryId = inventoryId;
 	}
 
 }
