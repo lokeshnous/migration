@@ -171,7 +171,7 @@
 						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page:</span> -->
 						<c:if test="${totalNoOfRecords != null}">
-						<c:if test="${currentPage > 10 && noOfPages gt 10}">
+						<c:if test="${currentPage != 1 && noOfPages gt 10}">
 							<td><a
 								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
 									<img src="../resources/images/ArrowLeft.png"> Previous
@@ -294,8 +294,8 @@
 
 				<div class="searchResultsNavigation searchResultsNavigationBottom">
 
-		<div class="searchResultsNavigationColumn1">
-			<span class="marginTop5">Results viewable:</span> <span
+		<div class="searchResultsNavigationColumn1 SearchPerPage">
+			<span class="ShareText">Results viewable:</span> <span
 				class="Padding0"> <%-- <form:select path="noOfPageLower"
 							name="results" class="jb_input4 margin0">
 								<form:option value="20">20</form:option>
@@ -309,17 +309,17 @@
 					<option value="40">40</option>
 					<option value="50">50</option>
 			</select>
-			</span><span class="marginTop5">per page</span>
+			</span><span class="ShareText">per page</span>
 		</div>
 
 
-						<div class="searchResultsNavigationColumn3">
+						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
 							<c:if test="${totalNoOfRecords != null}">
 							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 						</c:if>
 						</div>
-						<div class="searchResultsNavigationColumn2 floatRight">
+						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page: </span> -->
 						<c:if test="${totalNoOfRecords != null}">
 						<c:if test="${currentPage != 1 && noOfPages gt 10}">
