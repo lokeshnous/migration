@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -75,14 +76,14 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	/**
-	 * To save employer registrations
+	 * This method is used to create a User(Employer) in job board.
 	 * 
-	 * @param empDTO
-	 * @return boolean
+	 * @param Object of EmployerProfileDTO
+	 * @return Object of UserDTO
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public UserDTO createEmployerProfile(EmployerProfileDTO empDTO) {
+	public UserDTO createUser(EmployerProfileDTO empDTO) {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO,
 					null);
@@ -121,6 +122,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			// TODO: Remove hard code values
 			facility.setEmail(empDTO.getMerUserDTO().getEmailId());
 			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
+			facility.setNsCustomerID(empDTO.getMerUserDTO().getNsCustomerID());
 			facility.setCreateDt(new Date());
 			facility.setCreateUserId(null);
 			facility.setAccountNumber(null);
@@ -328,8 +330,10 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	@Override
-	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+	public boolean editUser(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing) {
+		boolean isUpdate = false;
+		
 		try{
 		if (billing.equals("PRIMARY")){
 			// update meruser Entity		
@@ -352,6 +356,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		facility.setEmail(apd.getEmail());
 		facility.setPhone(apd.getPhone());
 		hibernateTemplateCareers.update(facility);
+		isUpdate = true;
 		
 		}else{
 			AdmFacilityContact facility = hibernateTemplateCareers.get(
@@ -367,11 +372,14 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			facility.setEmail(apd.getEmail());
 			facility.setPhone(apd.getPhone());
 			hibernateTemplateCareers.update(facility);
+			isUpdate = true;
 		}
 		}catch(Exception e)
 		{
 			LOGGER.info("Error im Meruser duplicate Data insert");
 		}
+		
+		return isUpdate;
 
 	}
 
@@ -418,5 +426,34 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	
+	
+	public AdmFacilityDTO getNSCustomerIDFromAdmFacility(String email) {
+		
+		AdmFacilityDTO admFacilityDTO = new AdmFacilityDTO();
+		try{
+			
+			List<AdmFacility> admFacilityList = hibernateTemplateCareers
+					.find(" from  AdmFacility WHERE  email='" + email +"'");
+			
+			if (admFacilityList != null) {
+				admFacilityDTO.setNsCustomerID(admFacilityList.get(0).getNsCustomerID());
+			}
+			
+		}catch(DataAccessException e){
+			LOGGER.error("Error while getting the NSCustomerID from AdmFacility."+e);
+		}
+		return admFacilityDTO;
+		
+	}
+	
+
+	
 
 }

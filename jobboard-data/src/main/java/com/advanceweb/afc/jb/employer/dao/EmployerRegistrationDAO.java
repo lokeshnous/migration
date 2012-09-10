@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
+import com.advanceweb.afc.jb.common.AdmFacilityDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -16,10 +17,12 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 public interface EmployerRegistrationDAO {
 
 	/**
+	 * This method is used to create a User(Employer) in job board.
 	 * 
-	 * @param employer
+	 * @param Object of EmployerProfileDTO
+	 * @return Object of UserDTO
 	 */
-	UserDTO createEmployerProfile(EmployerProfileDTO empDTO);
+	UserDTO createUser(EmployerProfileDTO empDTO);
 
 	/**
 	 * 
@@ -75,17 +78,28 @@ public interface EmployerRegistrationDAO {
 			String contactType);
 
 	/**
+	 * This method is used to edit and update  a User(Employer) in job board.
 	 * 
-	 * @param apd
-	 *            apd.
-	 * @param admfacilityid
-	 *            admfacilityid.
+	 * @param Object of AccountProfileDTO
+	 * @param int admfacilityid
+	 * @param int userId
+	 * @param  String billing
+	 * @return boolean
 	 */
-
 	
-	void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
+	boolean editUser(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing);
 
 	public boolean validateProfileAttributes(int jobseekerId); 
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	
+	public AdmFacilityDTO getNSCustomerIDFromAdmFacility(String name);
+	
+	
 
 }

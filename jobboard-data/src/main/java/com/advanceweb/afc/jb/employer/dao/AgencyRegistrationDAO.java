@@ -13,7 +13,7 @@ public interface AgencyRegistrationDAO {
 	 * 
 	 * @param agency
 	 */
-	UserDTO createNewAgency(AgencyProfileDTO agency);
+	UserDTO createUser(AgencyProfileDTO agency);
 
 	/**
 	 * 

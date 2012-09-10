@@ -231,8 +231,9 @@ public class EmployerRegistrationConversionHelper {
 	 */
 	public AdmFacility transformEmpDTOToAdmFAcility(EmployerProfileDTO dto) {
 
-		AdmFacility admFacility = new AdmFacility();
 
+		AdmFacility admFacility= new AdmFacility();
+		
 		if (null != dto.getAttribList()) {
 			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
@@ -256,7 +257,7 @@ public class EmployerRegistrationConversionHelper {
 				} else if (MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
 						.getStrLabelName())) {
 					admFacility.setName(attribDTO.getStrLabelValue());
-				}
+				} 
 
 			}
 		}

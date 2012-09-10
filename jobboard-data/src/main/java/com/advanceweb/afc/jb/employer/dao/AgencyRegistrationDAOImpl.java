@@ -71,7 +71,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	 * 
 	 * @param agencyDTO
 	 */
-	public UserDTO createNewAgency(AgencyProfileDTO agencyDTO) {
+	public UserDTO createUser(AgencyProfileDTO agencyDTO) {
 		try {
 			MerUser merUser = agencyHelper.transformMerUserDTOToMerUser(
 					agencyDTO, null);
@@ -109,6 +109,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			// TODO: Remove hard code values
 			facility.setEmail(agencyDTO.getMerUserDTO().getEmailId());
 			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
+			facility.setNsCustomerID(agencyDTO.getMerUserDTO().getNsCustomerID());
 			facility.setCreateDt(new Date());
 			facility.setCreateUserId(null);
 			facility.setAccountNumber(null);
