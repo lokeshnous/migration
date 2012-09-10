@@ -69,7 +69,7 @@
 					<span class="required">
 					(Required)
 					</span>
-					<div class="toolTip"><span class="classic"><p>Example: John@yahoo.com;Dave@yahoo.com.</p></span></div>
+					<div class="toolTip"><span class="classic">Example: John@yahoo.com;Dave@yahoo.com.</span></div>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
