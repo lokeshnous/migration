@@ -41,7 +41,7 @@
 
 
 	<div class="EmployerDashboardHeader">
-		<h1>[Employer Name] Dashboard</h1>
+		<h1><%=(String) session.getAttribute("userName")%> Dashboard</h1>
 	</div>
 	<div class="MidContent_Wrapper FloatLeft">
 		<div class="dashboardColumns">
