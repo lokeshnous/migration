@@ -31,5 +31,7 @@ public interface JobPostDAO {
 	
 	boolean executeActiveJobWorker();
 	boolean executeAutoRenewalJobWorker();
+	
+	boolean decreaseAvailableCredits();
 
 }
