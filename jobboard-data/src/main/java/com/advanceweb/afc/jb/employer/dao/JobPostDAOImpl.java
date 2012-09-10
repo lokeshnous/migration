@@ -22,6 +22,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
@@ -569,6 +570,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			for(JpJob job : autoRenewJobs){		
 				//TODO
 				//Check for available credits
+
 				int credits=1;
 				if(credits == 0){
 					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
