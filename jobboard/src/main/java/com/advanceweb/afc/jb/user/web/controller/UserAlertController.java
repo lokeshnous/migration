@@ -87,12 +87,6 @@ public class UserAlertController {
 			dropDownList = transferUserAlert
 					.jbOwnerListTODropDownDTO(jbOwnerList);
 		}
-
-		List<UserAlertDTO> userAlertDTOs = alertService.viewalerts(userId,
-				facilityId, jbOwnerList);
-		transferUserAlert.jsUserAlertDTOToUserAlerts(userAlertDTOs, alertForm,
-				alertList);
-
 		model.addObject("alertList", alertList);
 		model.addObject("jbOwnerList", dropDownList);
 		model.setViewName("alertForm");
@@ -165,10 +159,10 @@ public class UserAlertController {
 	JSONObject deleteResume(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			@RequestParam("facilityAlertId") int facilityAlertId) {
-		
+
 		boolean deleteStatus = alertService.deleteAlert(facilityAlertId);
 		JSONObject deleteStatusJson = new JSONObject();
-		
+
 		if (deleteStatus) {
 			deleteStatusJson.put("success", dataDeleteSuccess);
 			return deleteStatusJson;
