@@ -34,8 +34,12 @@
 							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
 				    			data:$('#addJobOwnerForm').serialize(),
 								type: "POST",
-								success : function(dataFound) {			  
+								success : function(data) {
+									if(data.failure!=null){
+										$("#resumeErrorMsg").html("<span>"+data.failure+"</span>");	
+									}else{
 									  $("#manageAccPerm").click();
+									}
 								}					
 									
 								
@@ -66,6 +70,8 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Email Address:</span> <form:input
 						 path="ownerEmail" name="EmailAddress" class="job_seeker_email width300" />
+						 <form:errors
+										path="ownerEmail" />
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4"> </span>

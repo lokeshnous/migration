@@ -21,6 +21,7 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
+import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
  * 
@@ -39,7 +40,8 @@ public class ManageAccessPermissionController {
 	private ManageAccessPermissionService manageAccessPermissionService;
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
-
+	@Autowired
+	private ProfileRegistration employerRegistration;
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -99,7 +101,10 @@ public class ManageAccessPermissionController {
 							.getFullAccess()));
 				}
 			}
-
+			if (employerRegistration.validateEmail(manageAccessPermissionForm.getOwnerEmail())) {
+				warningMessage.put("failure", "Email Id already Exists!");
+				return warningMessage;
+			}
 			UserDTO userDTO = transformEmpReg
 					.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
 			empDTO.setMerUserDTO(userDTO);
