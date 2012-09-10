@@ -400,7 +400,7 @@
 							name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATED</a>
 							<a href="#" id="delete_lower" value="DELETE" name="DELETE"
 							class="btn_sm white jb_search_submit">DELETE</a> <a
-							href="/jobboard/employer/postNewJobs.html"
+							href="<%=request.getContextPath()%>/jobboard/employer/postNewJobs.html"
 							class="btn_sm white jb_search_submit">POST NEW JOB</a> <input
 							type="submit" id="repostHidden" value="REPOST" name="REPOST"
 							class="btn_sm white" style="visibility: hidden;" /><input
