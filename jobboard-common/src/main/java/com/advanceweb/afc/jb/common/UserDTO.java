@@ -15,6 +15,106 @@ public class UserDTO {
 	private String memberShips;
 	private String otherDetails;
 	private String currentPassword;
+	private String streetAddress;
+	private String zipCode;
+	private String state;
+	private String country;
+	private String position;
+	private String company;
+	private String primaryPhone;
+	private String secondaryPhone;
+	private String city;
+	private int nsCustomerID;
+	private String nsStatus;
+
+	
+	public String getNsStatus() {
+		return nsStatus;
+	}
+
+	public void setNsStatus(String nsStatus) {
+		this.nsStatus = nsStatus;
+	}
+
+	public int getNsCustomerID() {
+		return nsCustomerID;
+	}
+
+	public void setNsCustomerID(int nsCustomerID) {
+		this.nsCustomerID = nsCustomerID;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getPrimaryPhone() {
+		return primaryPhone;
+	}
+
+	public void setPrimaryPhone(String primaryPhone) {
+		this.primaryPhone = primaryPhone;
+	}
+
+	public String getSecondaryPhone() {
+		return secondaryPhone;
+	}
+
+	public void setSecondaryPhone(String secondaryPhone) {
+		this.secondaryPhone = secondaryPhone;
+	}
+
+	public String getStreetAddress() {
+		return streetAddress;
+	}
+
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
 
 	public String getEmailId() {
 		return emailId;

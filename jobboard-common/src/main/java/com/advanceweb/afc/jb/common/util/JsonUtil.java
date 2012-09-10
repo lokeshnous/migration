@@ -2,13 +2,13 @@ package com.advanceweb.afc.jb.common.util;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.advanceweb.afc.jb.common.JobDTO;
+
 
 @SuppressWarnings("unchecked")
 public class JsonUtil {
@@ -61,6 +61,7 @@ public class JsonUtil {
 			e.printStackTrace();
 		}
 
+		
 		return jsonString;
 	}
 

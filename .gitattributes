@@ -6,6 +6,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddImageDTO.java -tex
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddOnDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityContactDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text

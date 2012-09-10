@@ -143,6 +143,7 @@ public interface MMJBCommonConstants {
 	String CITY_EMP = "City";
 	String STATE_PROVINCE = "State / Province";
 	String COMPANY_EMP = "Company";
+	String NS_CUSTOMER_ID = "ns_customer_id";
 
 	// For Save this
 	String SEARCH_TYPE = "searchtype";
