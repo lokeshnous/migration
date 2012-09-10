@@ -50,7 +50,39 @@ public class NSCustomer {
 	
 	private String altPhone;
 	
+	private String isPerson;
 	
+	private String addr1;
+	
+	private String city;
+	
+	
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddr1() {
+		return addr1;
+	}
+
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+
+
+	public String getIsPerson() {
+		return isPerson;
+	}
+
+	public void setIsPerson(String isPerson) {
+		this.isPerson = isPerson;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
