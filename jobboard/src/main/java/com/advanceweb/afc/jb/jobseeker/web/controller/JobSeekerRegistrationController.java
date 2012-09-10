@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,6 +43,8 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 
 @Controller
 @RequestMapping("/jobseekerregistration")
@@ -172,6 +175,28 @@ public class JobSeekerRegistrationController {
 					model.setViewName("jobSeekerCreateAccount");
 					return model;
 				}
+				
+				
+				
+				/**
+				 * OpenAM code starts here for Validate Email-Id
+		         * 
+			     * @auther Santhosh Gampa
+			     * @since Sep 4 2012
+		         *
+				 */
+				boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(registerForm.getEmailId());
+		    	if(isinvaliduser){
+		    		LOGGER.info("OpenAM : user is already exist !");
+		    		model.setViewName("jobSeekerCreateAccount");
+					result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+					return model;
+		    	}else{
+		    		LOGGER.info("OpenAM : valid user!");
+		    	}
+		    	
+		    	//Ends of OpenAM code
+		    	
 
 				if (profileRegistration
 						.validateEmail(registerForm.getEmailId())) {
@@ -222,6 +247,7 @@ public class JobSeekerRegistrationController {
 	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm")  JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session, HttpServletRequest request) {
 			ModelAndView model = new ModelAndView();
+			HashMap<String, String> hashmap = new HashMap<String, String>();
 		try {
 			
 			if (((Long) session.getAttribute("LAST_PLACE_KEY"))!=null && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals(placeKey)) {
@@ -232,7 +258,7 @@ public class JobSeekerRegistrationController {
 				if(null != registerForm.getListProfAttribForms()){
 					model.setViewName("jobSeekerCreateAccountInfo");
 					for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
-						
+						hashmap.put(form.getStrLabelName(), form.getStrLabelValue());
 						//Checking validation for input text box
 						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue()) 
 								&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
@@ -265,7 +291,24 @@ public class JobSeekerRegistrationController {
 				jsRegistrationDTO.setMerUserDTO(userDTO);
 
 				// Call to service layer
+
+				
+
+				/**
+				 * OpenAM code starts here for creating users in OpenDJ
+				 * 
+				 * @auther Santhosh Gampa
+				 * @since Sep 4 2012
+				 * 
+				 */
+				boolean isCreated=OpenAMEUtility.openAMCreateUser(userDTO, hashmap);
+				LOGGER.info("Open AM : User is created!"+isCreated);
+				// Ends of OpenAM code
+
+				
+
 				userDTO = profileRegistration.createUser(jsRegistrationDTO);
+
 				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
 				session.setAttribute("userId", userDTO.getUserId());
 				session.setAttribute("userEmail", userDTO.getEmailId());
@@ -368,12 +411,19 @@ public class JobSeekerRegistrationController {
 			BindingResult result, HttpSession session) {
 		String firstName = "";
 		String lastName= "";
+		/**
+		 * Added by Santhosh Gampa for OpenAM integration
+		 */
+		HashMap<String, String> hm = new HashMap<String, String>();
+
 		
 		try {	
 			
 			if(null != registerForm.getListProfAttribForms()){
 				for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
-					
+					// Hold the required value for openAM
+					hm.put(form.getStrLabelName(), form.getStrLabelValue());
+
 					//Checking validation for input text box
 					if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
 						return "Please fill the required fields";
@@ -417,6 +467,14 @@ public class JobSeekerRegistrationController {
 			userDTO.setUserId((Integer) session.getAttribute("userId"));
 			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
+			
+			// OpenAM code for Modify the user profile details
+			// Added by Santhosh Gampa on Sep 4 2012
+			boolean isUdated = OpenAMEUtility.openAMUpdateUser(userDTO, hm);
+			LOGGER.info("User Profile updated in OpenAM - "+isUdated);
+			// End of OpenAM code
+
+			
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
 			
@@ -466,6 +524,13 @@ public class JobSeekerRegistrationController {
 
 			// Call to service layer
 			if(profileRegistration.validatePassword(jsRegistrationDTO)){
+				
+				// OpenAM User Update password
+				// Added by Santhosh Gampa on 4th Sep 2012
+				boolean isUdated =OpenAMEUtility.openAMUpdatePassword(form.getEmailId(),form.getPassword());
+				LOGGER.info("User password updated - "+isUdated);
+				// Ends OpenAM User Update password
+
 				profileRegistration.changePassword(jsRegistrationDTO);
 			}else{
 				return "Invalid Current Password";				

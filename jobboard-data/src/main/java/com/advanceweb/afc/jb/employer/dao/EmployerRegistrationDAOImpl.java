@@ -39,6 +39,7 @@ import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelpe
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 /**
  * @author rajeshkb
  * @version 1.0
@@ -118,6 +119,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			// saving the data in adm_facility
 			AdmFacility facility = empHelper
 					.transformEmpDTOToAdmFAcility(empDTO);
+			
 			facility.setFacilityType(MMJBCommonConstants.FACILITY);
 			// TODO: Remove hard code values
 			facility.setEmail(empDTO.getMerUserDTO().getEmailId());
@@ -142,6 +144,13 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			// saving the data in adm_facility_contact
 			AdmFacilityContact contact = empHelper
 					.transformEmpDTOToAdmFacilityContact(empDTO, facility);
+			/**
+			 *  creating employer Users in OpenAM 
+			 */
+			boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+			LOGGER.info("Open AM :Employee User is created!"+isCreated);
+			// Ends OpenAM code
+
 			contact.setContactType(MMJBCommonConstants.PRIMARY);
 			contact.setCreateDt(new Date());
 			contact.setEmail(empDTO.getMerUserDTO().getEmailId());
@@ -220,6 +229,13 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO,
 					null);
+						// OpenAM User Update password
+						// Added by Santhosh Gampa on 4th Sep 2012
+						
+						boolean isUdated =OpenAMEUtility.openAMUpdatePassword(merUser.getEmail(),merUser.getPassword());
+						LOGGER.info("User password updated - "+isUdated);
+						//OpenAM code ends 
+
 			hibernateTemplateTracker.saveOrUpdate(merUser);
 			return true;
 		} catch (DataAccessException e) {
@@ -292,6 +308,26 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	@Override
 	public boolean validateEmail(String email) {
 		try {
+			/**
+			 * OpenAM code starts here for Validate Email-Id
+	         * 
+		     * @auther Santhosh Gampa
+		     * @since Sep 4 2012
+	         *
+			 */
+			boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(email);
+			if(isinvaliduser){
+	    		LOGGER.info("OpenAM : user is already exist !");
+	    		//model.setViewName("jobSeekerCreateAccount");
+				//result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+				return false;
+	    	}else{
+	    		LOGGER.info("OpenAM : valid user!");
+	    		
+	    	}
+	    	//End of OpenAM code
+	    	
+			
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
 			
 				List<MerUser> usersList = hibernateTemplateTracker.find(
@@ -330,7 +366,11 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	@Override
+<<<<<<< .mine
+	public void editUser(AccountProfileDTO apd, int admfacilityid,
+=======
 	public boolean editUser(AccountProfileDTO apd, int admfacilityid,
+>>>>>>> .r1949
 			int userId, String billing) {
 		boolean isUpdate = false;
 		
@@ -345,6 +385,12 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			//update admfacilitycontact
 		AdmFacilityContact facility = hibernateTemplateCareers.get(
 				AdmFacilityContact.class, admfacilityid);
+		// OpenAM code for Modify the user profile details
+		// Added by Santhosh Gampa on Sep 6 2012
+		boolean isUdated = OpenAMEUtility.openAMUpdateEmp(apd);
+		LOGGER.info("User Profile updated in OpenAM - "+isUdated);
+		//OpenAm code ends
+
 		facility.setFirstName(apd.getFirstName());
 		facility.setLastName(apd.getLastName());
 		facility.setCompany(apd.getCompanyName());

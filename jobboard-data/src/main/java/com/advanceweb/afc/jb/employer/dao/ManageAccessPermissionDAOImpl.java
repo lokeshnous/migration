@@ -16,6 +16,7 @@ import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
@@ -24,6 +25,8 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
+
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 
 /**
  * To save new job Owner * @author deviprasadm
@@ -60,6 +63,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			if (null != merUser) {
 				// saving employer credentials
 				hibernateTemplateTracker.saveOrUpdate(merUser);
+				//System.out.println(merUser.);
 			}
 
 			// saving the data in Adm_User_Role
@@ -102,12 +106,21 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 
 			List<AdmFacilityContact> admFacilityContactP = facilityP
 					.getAdmFacilityContacts();
+			
 
 			// saving the data in adm_facility_contact as per the logged in User
 			List<AdmFacilityContact> admFacilityContactList = new ArrayList<AdmFacilityContact>();
 			if (null != admFacilityContactP) {
 
 				for (AdmFacilityContact contact : admFacilityContactP) {
+					
+					/**
+					 *  creating add Job owner Users in OpenAM 
+					 */
+					boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+					LOGGER.info("Open AM :Employee add owner User is created!"+isCreated);
+					// Ends OpenAM code
+
 
 					AdmFacilityContact admFacilityContact = new AdmFacilityContact();
 					admFacilityContact.setCity(contact.getCity());
@@ -132,6 +145,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 
 				}
 			}
+		
 
 			facility.setAdmFacilityContacts(admFacilityContactList);
 			hibernateTemplateCareers.save(facility);
@@ -164,6 +178,15 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	public boolean deleteJobOwner(int jobOwnerId) {
 		MerUser ownerDetails = hibernateTemplateTracker.get(MerUser.class,
 				jobOwnerId);
+		System.out.println("delete Emailid ----"+ownerDetails.getEmail());
+		/**
+		 *  Delete Job owner from OpenAM 
+		 */
+	
+		boolean isDeleted=OpenAMEUtility.openAMDeleteUser(ownerDetails.getEmail());
+		LOGGER.info("Open AM :Employee add owner User is created!"+isDeleted);
+		//Ends OpenAM code
+		
 		boolean bDelete = false;
 		try {
 			ownerDetails.setDeleteDt(new Timestamp(new Date().getTime()));

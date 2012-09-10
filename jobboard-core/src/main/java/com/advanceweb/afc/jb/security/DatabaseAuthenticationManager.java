@@ -17,12 +17,19 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.user.dao.UserDao;
+import org.apache.log4j.Logger;
+
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 
 /**
  * A custom authentication manager that allows access if the user details exist
  * in the database otherwise, throw a {@link BadCredentialsException}
  */
 public class DatabaseAuthenticationManager implements AuthenticationManager {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger("DatabaseAuthenticationManager.class");
+
 
 	@Autowired
 	private UserDao userDAO;
@@ -42,6 +49,12 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 	public Authentication authenticate(Authentication auth)
 			throws AuthenticationException {
 		UserDTO user = null;
+		// This is used to check if user authenticated with Open AM.
+				boolean isAuthenticated = OpenAMEUtility.getOpenAMAuthentication(auth.getName(),auth.getCredentials().toString());
+				LOGGER.info("OpenAM authentication - "+isAuthenticated);
+				//OpenAM Code Ends
+
+		
 		try {
 			user = userDAO.getUser(auth.getName());
 			if (user == null) {

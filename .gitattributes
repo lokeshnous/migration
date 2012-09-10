@@ -204,6 +204,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/helper/AgencyRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/OpenAMEUtility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Job.java -text
