@@ -142,6 +142,9 @@ public class JobSearchController {
 
 	@Value("${applyJobErrMsg}")
 	private String applyJobErrMsg;
+	
+	@Value("${resumeNotFoundMsg}")
+	private String resumeNotFoundMsg;
 
 	@Value("${ajaxMsg}")
 	private String ajaxMsg;
@@ -318,6 +321,12 @@ public class JobSearchController {
 			String employerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
 					+ dothtmlExtention + employerPageExtention;
+			// Fetch the public resume
+			List<String> attachmentpaths = fetchPublicVisibleResume(userId);
+			if(attachmentpaths == null){
+				jsonObject.put(ajaxMsg, resumeNotFoundMsg);
+				return jsonObject;
+			}
 
 			EmailDTO employerEmailDTO = new EmailDTO();
 			employerEmailDTO.setFromAddress(advanceWebAddress);
@@ -337,52 +346,7 @@ public class JobSearchController {
 					userName);
 			employerEmailDTO.setBody(employerMailBody);
 			employerEmailDTO.setHtmlFormat(true);
-			List<String> attachmentpaths = new ArrayList<String>();
-			try {
-				ResumeDTO resumeDTO = resumeService
-						.fetchPublicResumeByUserId(userId);
-				if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
-						.equalsIgnoreCase(resumeDTO.getResumeType())) {
-					// TODO: Need to clarify
-					
-				} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
-						.equalsIgnoreCase(resumeDTO.getResumeType())) {
-					try {
-						// Create temp file.
-						File temp = File.createTempFile(
-								resumeDTO.getResumeName(),
-								defaultResumeExtension);
-						File newFile = new File(temp.getParent() + "\\"
-								+ resumeDTO.getResumeName()
-								+ defaultResumeExtension);
-						// Rename
-						newFile.deleteOnExit();
-						if (temp.renameTo(newFile)) {
-							LOGGER.info("File has been renamed.");
-						}
-						temp.deleteOnExit();
-
-						// Write to temp file
-						BufferedWriter out = new BufferedWriter(new FileWriter(
-								newFile));
-						out.write(resumeDTO.getResumeText());
-						out.close();
-						resumeDTO.setFilePath(newFile.getAbsolutePath());
-					} catch (IOException e) {
-						LOGGER.info("Copy Paste resume error");
-					}
-				}else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
-						.equalsIgnoreCase(resumeDTO.getResumeType())) {
-					// TODO: Need to clarify
-					
-				}
-				if (resumeDTO.getFilePath() != null) {
-					attachmentpaths.add(resumeDTO.getFilePath());
-				}
-				employerEmailDTO.setAttachmentPaths(attachmentpaths);
-			} catch (Exception e) {
-				LOGGER.info("Resume not found");
-			}
+			employerEmailDTO.setAttachmentPaths(attachmentpaths);
 			emailService.sendEmail(employerEmailDTO);
 			LOGGER.info("Mail sent to employer");
 
@@ -433,6 +397,58 @@ public class JobSearchController {
 			LOGGER.info("applyJob ERROR");
 		}
 		return jsonObject;
+	}
+
+	
+	private List<String> fetchPublicVisibleResume(int userId) {
+		List<String> attachmentpaths = null;
+		try {
+			ResumeDTO resumeDTO = resumeService
+					.fetchPublicResumeByUserId(userId);
+			if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
+					.equalsIgnoreCase(resumeDTO.getResumeType())) {
+				// TODO: Need to clarify
+				
+			} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
+					.equalsIgnoreCase(resumeDTO.getResumeType())) {
+				try {
+					// Create temp file.
+					File temp = File.createTempFile(
+							resumeDTO.getResumeName(),
+							defaultResumeExtension);
+					File newFile = new File(temp.getParent() + "\\"
+							+ resumeDTO.getResumeName()
+							+ defaultResumeExtension);
+					// Rename
+					newFile.deleteOnExit();
+					if (temp.renameTo(newFile)) {
+						LOGGER.info("File has been renamed.");
+					}
+					temp.deleteOnExit();
+
+					// Write to temp file
+					BufferedWriter out = new BufferedWriter(new FileWriter(
+							newFile));
+					out.write(resumeDTO.getResumeText());
+					out.close();
+					resumeDTO.setFilePath(newFile.getAbsolutePath());
+				} catch (IOException e) {
+					LOGGER.info("Copy Paste resume error");
+				}
+			}else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
+					.equalsIgnoreCase(resumeDTO.getResumeType())) {
+				// TODO: Need to clarify
+				
+			}
+			if (resumeDTO.getFilePath() != null) {
+				attachmentpaths = new ArrayList<String>();
+				attachmentpaths.add(resumeDTO.getFilePath());
+			}
+			//employerEmailDTO.setAttachmentPaths(attachmentpaths);
+		} catch (Exception e) {
+			LOGGER.info("Resume not found");
+		}
+		return attachmentpaths;
 	}
 
 	/**

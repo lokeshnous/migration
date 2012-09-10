@@ -171,7 +171,7 @@
 						<div class="searchResultsNavigationColumn2 floatRight">
 						<!-- <span>Page:</span> -->
 						<c:if test="${totalNoOfRecords != null}">
-						<c:if test="${currentPage != 1 && noOfPages gt 10}">
+						<c:if test="${currentPage > 10 && noOfPages gt 10}">
 							<td><a
 								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
 									<img src="../resources/images/ArrowLeft.png"> Previous
