@@ -11,11 +11,12 @@ import com.advanceweb.afc.jb.common.ProfileDTO;
 public interface ProfileRegistration {
 
 	/**
-	 * 
-	 * @param profileDTO
+	 * This method is used for creating a User( agency) in Job board. 
+	 * @param Object of profileDTO
+	 * @return Object of UserDTO
 	 */
 
-	public UserDTO createEmployer(ProfileDTO profileDTO);
+	public UserDTO createUser(ProfileDTO profileDTO);
 
 	/**
 	 * 
@@ -67,5 +68,6 @@ public interface ProfileRegistration {
 	 * @return
 	 */
 	boolean validateProfileAttributes(int jobseekerId);
+	
 
 }

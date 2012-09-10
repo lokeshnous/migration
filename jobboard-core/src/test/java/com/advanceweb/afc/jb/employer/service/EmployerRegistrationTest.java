@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 public class EmployerRegistrationTest extends ServiceTest{
 	
 	@Autowired
 	private ProfileRegistration profileRegistration;
+	
+	@Autowired
+	private NSCustomerService nsCustomerService;
 	
 	@Test
 	public void createNewProfile(){
@@ -25,9 +29,31 @@ public class EmployerRegistrationTest extends ServiceTest{
 		merUserDTO.setPassword("cmkcmkcmk1q");
 		
 		profileDto.setMerUserDTO(merUserDTO);
-		merUserDTO = profileRegistration.createEmployer(profileDto);
+		merUserDTO = profileRegistration.createUser(profileDto);
 		Assert.assertNotNull(merUserDTO);
 		
 	}
+	
+	/*@Test
+	public void createEmployer(){
+	
+		UserDTO userDTO = new UserDTO();
+			userDTO.setFirstName("Test123");
+			userDTO.setMiddleName("Test123");
+			userDTO.setLastName("Test123");
+			userDTO.setStreetAddress("Addr1");
+			userDTO.setZipCode("123123");
+			userDTO.setCity("city");
+			userDTO.setState("TestState");
+			userDTO.setCountry("TestCountry");
+			userDTO.setEmailId("Test123@gmail.com");
+			userDTO.setPosition("Test123");
+			userDTO.setCompany("Test123");
+			userDTO.setPrimaryPhone("(000) 888-9999");
+			userDTO.setSecondaryPhone("(000) 888-9979");
+			
+			nsCustomerService.createCustomer(userDTO);
+			
+	}*/
 	
 }

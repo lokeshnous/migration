@@ -33,11 +33,11 @@ public class CustomerDetailsWSTest extends ServiceTest {
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
         
-        customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
+        //customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
         // Call for create Customer
-        	//customerDetailsWSTest.createCustomer("Customer1", "company");
+        	customerDetailsWSTest.createCustomer("Customer1", "company");
         //customerDetailsWSTest.createCashSales();
-      customerDetailsWSTest.updateCustomer();
+      //customerDetailsWSTest.updateCustomer();
 
 	}
 
@@ -202,18 +202,16 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		 String recordType = recdType;
 		 
 		 String authorization = getAuthString();
-		 //Object entityId = "{"customerId":460460,"customerName":"Customer5","recordType":"customer"}";
-		 //Object entityId = "{\"companyname\": \"Customer6667\", \"recordtype\" : \"Customer\", \"ccname\": \"11111\"}";
-		// Object entityId = "{\"internalid\":0, \"phone\":\"(000)888-9877\", \"recordtype\":\"customer\",\"companyname\":\"noussss3222s\", \"ccnumber\":null, \"ccexpiredate\":null,	 \"ccname\":null, \"cczipcode\":null, \"ccstreet\":null, \"item\":[],\"firstname\":\"reetesh11112333\", \"middlename\":null, \"lastname\":\"test\", \"email\":null,	 \"zip\":\"123456\",\"state\":\"gu\", \"country\":\"us\", \"altphone\":\"(000) 888-9878\", \"addr1\":\"blr45\", \"city\":\"blr\", \"isperson\":\"T\"}";
-		 // Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"testsccts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		 
 		//Working
 		 //Object entityId = "{\"internalid\":0,\"phone\":\"(000) 888-9878\",\"recordtype\":\"customer\",\"companyname\":\"jjff@gmail.com\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"jjj\",\"middlename\":\"jjj\",\"lastname\":\"jjj\",\"email\":null,\"zip\":\"123456\",\"state\":\"ga\",\"country\":\"us\",\"altphone\":\"\",\"isperson\":\"T\",\"addr1\":\"jjff@gmail.com\",\"city\":\"jjff@gmail.com\"}";
 		//error
 		//Object entityId = "{internalid:0,phone:(000) 999-7777,recordtype:customer,companyname:drrd,ccnumber:null,ccexpiredate:null,ccname:null,cczipcode:null,ccstreet:null,item:[],firstname:dhrrdh,middlename:dfhdfh,lastname:dfhdfh,email:null,zip:225215,state:ae,country:us,altphone:,isperson:T,addr1:dhdf@gnamil.com,city:sddd}";
 		 //WORKING
 		// Object entityId = "{\"internalid\":\"0\",\"phone\":\"(000) 999-7777\",\"recordtype\":\"customer\",\"companyname\":\"asdsa\",\"ccnumber\":\"null\",\"ccexpiredate\":\"null\",\"ccname\":\"null\",\"cczipcode\":\"null\",\"ccstreet\":\"null\",\"item\":\"[]\",\"firstname\":\"bdd\",\"middlename\":\"dbdfb\",\"lastname\":\"dbdf\",\"email\":\"null\",\"zip\":\"123456\",\"state\":\"gu\",\"country\":\"us\",\"altphone\":\"\",\"isperson\":\"T\",\"addr1\":\"bdbfd@gmail.com\",\"city\":\"sasa\"}";
-		
-		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		//Json Response String for create Customer ="463566"
+		 //Json Response String for create Customer ="Record already exist.Try again with other company name"
+		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"xsss\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tvdsdsdts\",\"middlename\":\"teststs\",\"lastname\":\"testasfsts\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
 		 
 		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1");
 		client.header("Authorization", authorization);
