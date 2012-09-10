@@ -60,14 +60,16 @@
 			<form:form method="post" action="../jobsearch/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
 				<form:input type="hidden" name="jobId" id="jobId" path="jobId"/>
 			    <form:input type="hidden" name="joburl" id="joburl" path="joburl"/>
+   
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Your Friend's Email Address:
 					</span>
 					<form:input path="email" name="EmailAddress" id="EmailAddress" class="job_seeker_email" type="text"/>
-					<span class="required" title="Example: John@yahoo.com;Dave@yahoo.com">
+					<span class="required">
 					(Required)
 					</span>
+					<div class="toolTip"><span class="classic"><p>Example: John@yahoo.com;Dave@yahoo.com.</p></span></div>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
