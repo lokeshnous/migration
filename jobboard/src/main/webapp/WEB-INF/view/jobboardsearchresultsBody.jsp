@@ -213,7 +213,7 @@
 					<div class="searchResultsItem">
 					<c:forEach items="${searchResultsList}" var="job" varStatus="status">
 					<%-- <form:hidden path="jobDTOs[${status.index}].jobId"/> --%>
-						<ul class="searchResultsJobInfo closed">
+						<ul class="searchResultsJobInfo closed" id="searchResultsJobInfo${job.JobId}" onclick="trackClick(${job.JobId});">
 							<li class="searchResultsColumn1">${job.JobTitle}</li>
 							<li class="searchResultsColumn2">${job.Company}</li>
 							<li class="searchResultsColumn3">${job.City}</li>
