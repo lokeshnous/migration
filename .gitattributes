@@ -167,6 +167,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/JSONConver
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/JobSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/ResumeSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/security/DatabaseAuthenticationManager.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardNetSuiteServiceException.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServiceException.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
