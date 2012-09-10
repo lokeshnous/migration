@@ -110,7 +110,9 @@
 							         	 <form:input id="color_id" path="primaryColor" readonly="true" class="jb_input2Coverletter InputActiveText" />
 							        <span>
 							        <div class="colorPkrArea"><input id="colorPkr" name="color1" type="text"   /></div>
-							         <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select a color that complements your brand.</span>
+							         <div class="toolTip colorPkrAreaToolTip">
+							         <span class="classic">Select a color that complements your brand.
+							        </span>
 							         
 							         </div></span>
 							        </div>
@@ -125,7 +127,7 @@
 										class="textareaBoxCResume Height256" rows="5" cols="45"
 										name="Body Text:" />
 								</div>
-								<div class="toolTip01 marginTop10 marginLeft5">
+								<div class="toolTip01 colorPkrAreaToolTip">
 									<span class="classic">Describe what's going on at your
 										company here. Attract job-seekers by mentioning awards you've
 										recently won, expansions currently in the works or upcoming
@@ -145,7 +147,7 @@
 										class="job_seeker_login_email fileType" />
 										
 								</div>
-								<div class="toolTip marginTop6 marginLeft5">
+								<div class="toolTip colorPkrAreaToolTip">
 									<span class="classic">Upload a video, slideshow or
 										animated .gif that shines the spotlight on your facility or
 										health system.</span>

@@ -97,8 +97,8 @@
 			    </div>
 			    <div class="jobDetailsIntroOptions">
 			    <div class="rowEvenTB10Spacing">
-				<div class="floatLeft">Send to friend:</div>
-				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<div class="ShareText">Send to friend: &nbsp;</div>
+				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
 				<a onclick="applyThisJob(${jobDetail.jobID});" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
 				<a onclick="saveThisJob(${jobDetail.jobID})" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
@@ -110,8 +110,8 @@
 			    <div class="jobDetailsIntroOptionsTborder">
 				<div class="jobDetailsIntroOptions">
 				<div class="rowEvenTB10Spacing">
-				<div class="floatLeft">Send to friend:</div>
-				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Share:</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="floatLeft"> |&nbsp;&nbsp;Print:</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<div class="ShareText">Send to friend:&nbsp;</div>
+				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
 				<a onclick="btapplyThisJob(${jobDetail.jobID});" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				<a onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>

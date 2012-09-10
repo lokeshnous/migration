@@ -255,8 +255,7 @@
 							<div class="lableTextCoverletter width150">Primary Color:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input id="color_id" path="color" type="text" readonly="true"
-										class="jb_input2Coverletter InputActiveText" />
+									<form:input id="color_id" path="color" type="text" readonly="true" class="jb_input2Coverletter InputActiveText" />
 								</div>
 								
 								<div class="required2">

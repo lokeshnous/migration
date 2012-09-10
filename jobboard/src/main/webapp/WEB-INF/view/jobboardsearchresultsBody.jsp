@@ -146,9 +146,9 @@
 <div class="searchResults">
 				<div class="searchResultsNavigation">
 
-		<div class="searchResultsNavigationColumn1">
+		<div class="searchResultsNavigationColumn1 SearchPerPage">
 		<input type="hidden" value="${beginVal}"/>
-			<span class="marginTop5">Results viewable:</span> <span
+			<span class="ShareText">Results viewable:</span> <span
 				class="Padding0"> <select name="noOfPage" id="noOfPage"
 				class="jb_input4 margin0" onchange="applyFilter();">
 					<option value="20">20</option>
@@ -158,17 +158,17 @@
 			</select>
 			<%-- <form:select path="${filterVal}" itemValue="optionId" 
 								itemLabel="optionName" items="${filterVals}"></form:select>  --%> 
-						</span><span class="marginTop5">per page</span>
+						</span><span class="ShareText">per page</span>
 		</div>
 
 
-						<div class="searchResultsNavigationColumn3">
+						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
 							<c:if test="${totalNoOfRecords != null}">
 							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 						</c:if>
 						</div>
-						<div class="searchResultsNavigationColumn2 floatRight">
+						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page:</span> -->
 						<c:if test="${totalNoOfRecords != null}">
 						<c:if test="${currentPage > 10 && noOfPages gt 10}">
@@ -261,8 +261,8 @@
 									</c:choose>
 								</div>
 
-								<div class="searchResultsSubContentShare">
-									<span class="marginTop5 floatLeft"> Send to
+								<div class="ShareSearch">
+									<span class="ShareText"> Send to
 										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId});"><span
 												class="email"></span></a></span>
 								</div>
@@ -273,8 +273,8 @@
 											src="../resources/images/email.png"></a></span>
 								</div> -->
 
-								<div class="searchResultsSubContentShare">
-								<span class="marginTop3 floatLeft">Share:&nbsp;</span> 
+								<div class="ShareSearch">
+								<span class="ShareText">Share:&nbsp;</span> 
 								<span class="fbook"><!-- <a href=""> --><!-- </a> --></span>
 								<span class="linkedIn"><!-- <a href=""> --><!-- </a> --></span> 
 								<span class="twitter"><!-- <a href=""> --><!-- </a> --></span>

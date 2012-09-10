@@ -160,7 +160,7 @@
 										class="job_seeker_login_email fileType"  />
 										
 								</div>
-								<div class="toolTip marginTop6 marginLeft5">
+								<div class="toolTip colorPkrAreaToolTip">
 									<span class="classic">Select the company logo you want
 										to feature on this job posting template. The file size limit
 										is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg, .gif,
@@ -184,11 +184,11 @@
 								
 								<!-- value="HEX #" --> 
 								
-								<div class="required2">
+								<div class="colorPkrArea">
 									<!-- <img src="images/Color.png" width="16" height="16" alt="Color"> -->
 									<div class="floatRight"><input id="colorPkr" name="color1" type="text"   /></div>
 								</div>
-								<div class="toolTip marginTop6 marginLeft5">
+								<div class="toolTip colorPkrAreaToolTip">
 									<span class="classic">Select a color that complements
 										your brand.</span>
 								</div>
@@ -203,7 +203,7 @@
 										class="job_seeker_login_email fileType" />
 										
 								</div>
-								<div class="toolTip marginTop6 marginLeft5">
+								<div class="toolTip colorPkrAreaToolTip">
 									<span class="classic">This is the large image that will
 										appear at the top of your job posting template. The file size
 										limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg,

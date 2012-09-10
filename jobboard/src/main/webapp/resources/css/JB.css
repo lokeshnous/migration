@@ -2181,12 +2181,14 @@ h2.White {
 	border: none;
 }
 
-.input_grp5 {
-	width: 605px;
+.input_grp5,.input_grp6 {
+	width: 625px;
 	float: left;
 	margin-left: 0px;
 }
-
+.input_grp6{
+	width: 605px !important;
+}
 .lableTextCoverletter ,.lableTextCoverletterSize{
 	width: 120px;
 	padding: 6px 10px 0 10px; /* MM: changed */
@@ -4015,4 +4017,25 @@ orange:hover {
 }
 .BTemplateIconAlign{
 	margin-left:33px;
+}
+.ShareSearch{
+	float: left;
+    margin-left:10px;
+    margin-top: 11px;
+    width: auto;
+}
+.ShareText{
+	float: left !important;
+    height: auto;
+    margin-top: -3px;
+    width: auto;
+}
+.SearchPerPage,.ViewNumPage{
+	width:220px !important;
+}
+.ViewNumPage{
+	margin-top:5px;
+}
+.GetNumPage{
+	width:299px !important;
 }

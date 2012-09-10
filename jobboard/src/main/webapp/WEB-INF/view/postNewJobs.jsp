@@ -395,10 +395,10 @@
                 <div class="toolTip colorPkrAreaToolTip"><span class="classic">If this position requires specific skills, enter them here. Use brief keywords and phrases like "Triage" and "Emergency Care" to attract job-seekers who are including skills in their search.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Description</span>
-                <div class="input_grp5 width450">
+                <div class="input_grp6">
                 		<form:textarea path="jobDesc" class="textareaBoxCResume width450" rows="3" cols="45"/>
                         </div>
-                <span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter all of the pertinent information regarding this position here. You can include anything from job responsibilities to education requirements to information about your facility or health system.</span></div></div>
+                <span class="required">(Required)</span><div class="toolTip01 colorPkrAreaToolTip"><span class="classic">Enter all of the pertinent information regarding this position here. You can include anything from job responsibilities to education requirements to information about your facility or health system.</span></div></div>
 
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3">Tracking Pixel:</span>
                 <form:input path="trackPixel" class="job_seeker_password textBox350" />
