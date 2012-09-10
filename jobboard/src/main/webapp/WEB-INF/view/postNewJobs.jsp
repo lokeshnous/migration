@@ -208,11 +208,6 @@
 <form:hidden path="readOnly"/>
     <div class="main">
       <jsp:include page="../templates/templates_header.jsp"></jsp:include>
-      <c:if test="${not empty errorMessage}">
-  			<div style="color: red; align="left">
-				${errorMessage}
-			</div>      
-      </c:if>
               <div class="clearfix"></div>
               <!--Start:MidContant-->
               <div class="MidContent_Wrapper floatLeft">
@@ -221,6 +216,11 @@
                   <span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Manage / Edit Job Postings</a></span></div>
 
         <div class="clearfix"></div>
+      <c:if test="${not empty errorMessage}">
+  			<div style="color: red; align="left">
+				${errorMessage}
+			</div>      
+      </c:if>
         <!--*-->
         <div class="row">
                   <div class="job_seeker_login leftFormHolderLMargin width100P" style="display:block">
@@ -318,7 +318,7 @@
                  <div class="row marginTop10">
 
                 <h3>Location</h3>
-                <p class="FloatLeft marginLeft20 FontSize12 TextColor03 marginTop13">(All fields are required)</p>
+                <p class="required">(All fields are required)</p>
               </div>
                       <div class="rowEvenNewSpacing" id="divCityAutoPopulate"> <span class="lableText3">Job City:</span>               
                 <form:input path="jobCity" class="job_seeker_password textBox350"  id="cityAutoPopulation"/>
