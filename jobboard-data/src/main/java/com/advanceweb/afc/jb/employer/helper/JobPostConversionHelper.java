@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.helper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -136,68 +137,92 @@ public class JobPostConversionHelper<JobPostForm> {
 		List<JobPostDTO> jobPostDTOList = new ArrayList<JobPostDTO>();
 		SimpleDateFormat formatter = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN,Locale.US);
 		String location=null;
-		if(null !=jobs){
+		if (null != jobs) {
 			for (JpJob job : jobs) {
 				JobPostDTO jobPostDTO = new JobPostDTO();
 				jobPostDTO.setJobId(job.getJobId());
 				jobPostDTO.setJobTitle(job.getJobtitle());
-				if(null != job.getStartDt()){
+				if (null != job.getStartDt()) {
 					jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
 				}
-				if(null != job.getEndDt()){
+				if (null != job.getEndDt()) {
 					jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-				}				
-				jobPostDTO.setAutoRenew(job.getAutoRenew()==0?false:true);
-				//jobPostDTO.setJobStatus(job.getJobStatus());
-				if(null !=job.getJpTemplate()){
-				jobPostDTO.setBrandTemplate(String.valueOf(job.getJpTemplate().getTemplateId()));
 				}
-				if (null != job.getEndDt() && null != job.getStartDt()) {
-					int compareEndDate = job.getEndDt().compareTo(new Date());
-					int compareStartDate = job.getStartDt().compareTo(
-							new Date());
-					if (job.getActive() == 1 && compareStartDate < 0
-							&& compareEndDate > 0) {
-						jobPostDTO
-								.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
-					}
+				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
+				if (null != job.getJpTemplate()) {
+					jobPostDTO.setBrandTemplate(String.valueOf(job
+							.getJpTemplate().getTemplateId()));
+				}
+				if (null != job.getStartDt()) {
 
-				} else if (null != job.getEndDt()) {
-					int compareEndDate = job.getEndDt().compareTo(new Date());
-					if (job.getActive() == 1 && compareEndDate < 0) {
-						jobPostDTO
-								.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
-					}
-
-				} else if (null != job.getStartDt()) {
-					int compareStartDate = job.getStartDt().compareTo(
-							new Date());
-					if (job.getActive() == 1 && compareStartDate > 0) {
+					long startDateAsTimestamp = job.getStartDt().getTime();
+					long currentTimestamp = System.currentTimeMillis();
+					long getRidOfTime = 1000 * 60 * 60 * 24;
+					long startDate = startDateAsTimestamp / getRidOfTime;
+					long currentTimestampWithoutTime = currentTimestamp
+							/ getRidOfTime;
+					if (job.getActive() == 1
+							&& startDate > currentTimestampWithoutTime) {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
-					}
-					if (job.getActive() == 0 && compareStartDate > 0) {
+					} else if (job.getActive() == 0
+							&& startDate > currentTimestampWithoutTime) {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
+					} else if (null != job.getEndDt()) {
+						long endtDateAsTimestamp = job.getEndDt().getTime();
+						long endDate = endtDateAsTimestamp / getRidOfTime;
+
+						if (job.getActive() == 1
+								&& endDate < currentTimestampWithoutTime) {
+							jobPostDTO
+									.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
+						}
+
+					} // TODO Need to check the end date condition once the
+						// Package and plan functionality finalized. for the
+						// time
+						// being, as we need end date to check the status,I have
+						// added 30 day to the start date.
+					if (startDate <= currentTimestampWithoutTime) {
+						if (null == job.getEndDt()) {
+							Calendar now = Calendar.getInstance();
+							now.setTime(job.getStartDt());
+							now.add(Calendar.DAY_OF_MONTH, 30);
+							job.setEndDt(now.getTime());
+						}
+
+						long endtDateAsTimestamp = job.getEndDt().getTime();
+						long endDate = endtDateAsTimestamp / getRidOfTime;
+
+						if (job.getActive() == 1
+
+						&& endDate > currentTimestampWithoutTime) {
+							jobPostDTO
+									.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
+						}
 					}
+
 				}
+
 				if (job.getActive() == 0) {
 					jobPostDTO
 							.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
 				}
-				 List<JpJobLocation> jobLocationList= job.getJpJobLocations();
-				 if(null !=jobLocationList){
-					 for(JpJobLocation jobLocation:jobLocationList){
-						 location = jobLocation.getJpLocation().getCity() +","+ jobLocation.getJpLocation().getState();
-						 jobPostDTO.setLocation(location);
-					 }
-				 }
+				List<JpJobLocation> jobLocationList = job.getJpJobLocations();
+				if (null != jobLocationList) {
+					for (JpJobLocation jobLocation : jobLocationList) {
+						location = jobLocation.getJpLocation().getCity() + ","
+								+ jobLocation.getJpLocation().getState();
+						jobPostDTO.setLocation(location);
+					}
+				}
 				if (null != job.getJpJobStat()) {
-					
-						jobPostDTO.setViews(job.getJpJobStat().getViews());
-						jobPostDTO.setApplies(job.getJpJobStat().getApplies());
-						jobPostDTO.setClicks(job.getJpJobStat().getClicks());
-					
+
+					jobPostDTO.setViews(job.getJpJobStat().getViews());
+					jobPostDTO.setApplies(job.getJpJobStat().getApplies());
+					jobPostDTO.setClicks(job.getJpJobStat().getClicks());
+
 				}
 				jobPostDTOList.add(jobPostDTO);
 			}

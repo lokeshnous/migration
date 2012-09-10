@@ -364,13 +364,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
+				// TODO Need to check the end date condition once the Package and plan functionality finalized
 				query = hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL");
+										+ " and a.active = 1 and a.startDt <= CURRENT_DATE  and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()

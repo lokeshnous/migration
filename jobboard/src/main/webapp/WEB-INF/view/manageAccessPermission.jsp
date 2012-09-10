@@ -40,13 +40,21 @@
 		});
 			
 			$("#saveClicked").click(function() {
-				 $("form")
-					.attr(
-							"action",
-							"${pageContext.request.contextPath}/employer/updateJobOwner.html");
-							$("form")
-								.attr("method", "POST");
-							$("form").submit();	
+				
+				
+				$.ajax({url : "${pageContext.request.contextPath}/employer/updateJobOwner.html",
+	    			data:$('#manageAcceccPermissionForm').serialize(),
+					type: "POST",
+					success : function(dataFound) {		
+						 $("#manageAccessPerm").click();
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					}
+						
+					
+				});
+				
 	    		
 			});	
 		    jQuery(".megamenu").megamenu();
