@@ -97,7 +97,7 @@ public class AgencyDashBoardController {
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 
-				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
+				empRegService.editEmployer(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
 				LOGGER.info("This is Account Addresss edite option done successfully");
 			}
@@ -140,7 +140,7 @@ public class AgencyDashBoardController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
 						.transformBillingProfileFormToDto(employeeBillingForm);
-				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
+				empRegService.editEmployer(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 

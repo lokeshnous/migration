@@ -265,7 +265,7 @@ public class JobSeekerRegistrationController {
 				jsRegistrationDTO.setMerUserDTO(userDTO);
 
 				// Call to service layer
-				userDTO = profileRegistration.createEmployer(jsRegistrationDTO);
+				userDTO = profileRegistration.createUser(jsRegistrationDTO);
 				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
 				session.setAttribute("userId", userDTO.getUserId());
 				session.setAttribute("userEmail", userDTO.getEmailId());

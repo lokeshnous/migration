@@ -169,7 +169,7 @@ public class EmployerRegistrationController {
 						.getListProfAttribForms());
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
-		userDTO = employerRegistration.createEmployer(empDTO);
+		userDTO = employerRegistration.createUser(empDTO);
 		if(userDTO == null){
 			model.addObject("Error occurred while interaction with NetSuite.. Please try again.");
 			return model;
@@ -336,7 +336,7 @@ public class EmployerRegistrationController {
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 
-				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
+				empRegService.editEmployer(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
 				LOGGER.info("This is Account Addresss edite option done successfully");
 			}
@@ -379,7 +379,7 @@ public class EmployerRegistrationController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
 						.transformBillingProfileFormToDto(employeeBillingForm);
-				empRegService.editEmployeeAccount(dto, admfacilityid, userId,
+				empRegService.editEmployer(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 
