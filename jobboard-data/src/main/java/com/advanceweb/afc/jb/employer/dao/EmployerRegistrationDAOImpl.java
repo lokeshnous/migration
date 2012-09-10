@@ -365,12 +365,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return accountProfileDTO;
 	}
 
-	@Override
-<<<<<<< .mine
-	public void editUser(AccountProfileDTO apd, int admfacilityid,
-=======
+	
 	public boolean editUser(AccountProfileDTO apd, int admfacilityid,
->>>>>>> .r1949
+
 			int userId, String billing) {
 		boolean isUpdate = false;
 		
