@@ -71,7 +71,7 @@ function closePopup() {
 		<div class="popupHeader">
 			<h2>SAVE SEARCHES</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19" height="19"
-				alt=""></a>
+				onclick="closePopup();" alt=""></a>
 		</div>
 
 		<div class="popUpContainerWrapper">
