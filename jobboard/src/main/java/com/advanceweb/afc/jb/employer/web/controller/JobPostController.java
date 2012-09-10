@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -133,7 +135,7 @@ public class JobPostController {
 		ModelAndView model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
 		if (!StringUtils.isEmpty(errMessage)) {
-			model = populateDropdowns(model);
+			model = populateDropdowns(model, session);
 			model.setViewName(POST_NEW_JOBS);
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
@@ -162,7 +164,7 @@ public class JobPostController {
 		ModelAndView model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
 		if (!StringUtils.isEmpty(errMessage)) {
-			model = populateDropdowns(model);
+			model = populateDropdowns(model,session);
 			model.setViewName(POST_NEW_JOBS);
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
@@ -190,7 +192,7 @@ public class JobPostController {
 		ModelAndView model = new ModelAndView();
 		String errMessage = validateJobPostDetails(form);
 		if (!StringUtils.isEmpty(errMessage)) {
-			model = populateDropdowns(model);
+			model = populateDropdowns(model, session);
 			model.setViewName(POST_NEW_JOBS);
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
@@ -237,28 +239,32 @@ public class JobPostController {
 					|| MMJBCommonConstants.ZERO.equals(form.getBrandTemplate())
 					|| StringUtils.isEmpty(form.getJobDesc())
 					|| (StringUtils.isEmpty(form.getApplyUrl())
-							&& StringUtils.isEmpty(form.getAtsUrl()) && StringUtils
-								.isEmpty(form.getApplyEmail()))) {
+							&& StringUtils.isEmpty(form.getAtsUrl()) 
+							&& StringUtils.isEmpty(form.getApplyEmail()))) {
+				
 				return "Please fill the required fields";
 			}
-
+					
 			// Validating URL
-			if ((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator
-					.isValid(form.getApplyUrl()))
-					|| (!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator
-							.isValid(form.getAtsUrl()))
-					|| (!StringUtils.isEmpty(form.getApplyEmail()) && !urlValidator
-							.isValid(form.getApplyEmail()))) {
-
+			if ((MMJBCommonConstants.APPLY_TO_URL.equals(form.getApplMethod()) || MMJBCommonConstants.APPLY_TO_ATS.equals(form.getApplMethod())) 
+					&& ((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl()))
+					|| (!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())))) {
+				
 				return "Please enter valid URL";
+			}
+			//Validating EMail
+			if(MMJBCommonConstants.APPLY_TO_EMAIL.equals(form.getApplMethod()) && 
+					(!StringUtils.isEmpty(form.getApplyEmail()) && !validateEmailPattern(form.getApplyEmail()))){
+				
+				return "Invalid Email Id";
 			}
 		}
 
 		return null;
 	}
 
-	private ModelAndView populateDropdowns(ModelAndView model) {
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(1,
+	private ModelAndView populateDropdowns(ModelAndView model, HttpSession session) {
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),
 				"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
@@ -604,6 +610,17 @@ public class JobPostController {
 	  LocationDTO dto = populateDropdownsService.populateLocation(zipCode);
 	   
 	  return dto;
+	}
+	
+	/**
+	 * Validating Email Pattern
+	 * @param emailId
+	 * @return
+	 */
+	public boolean validateEmailPattern(String emailId){
+		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
+		Matcher matcher = pattern.matcher(emailId);
+		return matcher.matches();
 	}
 	
 }

@@ -36,8 +36,8 @@
 				} else {
 					limitCount.value = limitNum - limitField.value.length;
 				}
-			}
-		
+			}			
+			
 		    jQuery(document).ready(function(){
 		    	
 			$( "#scheduleStartDivId" ).hide();		    
@@ -161,6 +161,36 @@
 								});
 
 			}
+			
+			$("#applyToEMailId").click(function(){
+				if( $("#applyToEMailId").val()=='ApplyToEMail'){
+					$('#applyToEMailTSId').removeAttr('readonly');
+					$('#applyToATSIPId').attr('readonly', true);
+					$('#applyToURLTSId').attr('readonly', true);	
+					$('#applyToURLTSId').val('');
+					$('#applyToATSIPId').val('');
+				}
+			});
+			
+			$("#applyToURLId").click(function(){
+				if($("#applyToURLId").val()=='ApplyToURL'){
+					$('#applyToURLTSId').removeAttr('readonly');
+					$('#applyToEMailTSId').attr('readonly', true);
+					$('#applyToATSIPId').attr('readonly', true);
+					$('#applyToEMailTSId').val('');
+					$('#applyToATSIPId').val('');
+				}
+			});
+			
+			$("#applyToATSId").click(function(){
+				if($("#applyToATSId").val()=='ApplyToATS'){
+					$('#applyToATSIPId').removeAttr('readonly');
+					$('#applyToURLTSId').attr('readonly', true);
+					$('#applyToEMailTSId').attr('readonly', true);
+					$('#applyToURLTSId').val('');
+					$('#applyToEMailTSId').val('');
+				}
+			});
 
 		    jQuery(".megamenu").megamenu();
 		});
@@ -396,21 +426,21 @@
                		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required">(Required)</span>
               </div>
                       <div class="rowEvenNewSpacing"><span class="required">
-                      <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail"/>
+                      <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail" id="applyToEMailId"/>
                         </span><span class="lableText3 width105">Apply-to Email:</span>
-                <form:input path="applyEmail" class="job_seeker_password textBox350" />
+                <form:input path="applyEmail" class="job_seeker_password textBox350"  id="applyToEMailTSId" readonly="readonly"/>
 
                 <span class="required TextColor01">Enter the email address where you would like resumes to be sent.</span> </div>
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToURL"/>
+                        <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToURL" id="applyToURLId"/>
                         </span><span class="lableText3 width105">Apply-to URL</span>
-                <form:input path="applyUrl" class="job_seeker_password textBox350" />
+                <form:input path="applyUrl" class="job_seeker_password textBox350"  id="applyToURLTSId" readonly="readonly"/>
                 <span class="required TextColor01">Enter the URL where you would like to send job-seekers to apply.</span> </div>
 
                       <div class="rowEvenNewSpacing"><span class="required">
-                        <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS"/>
+                        <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS" id="applyToATSId"/>
                         </span><span  class="lableText3 width105">Apply-to ATS</span>
-               <form:input path="atsUrl" class="job_seeker_password textBox350" />
+               <form:input path="atsUrl" class="job_seeker_password textBox350" id="applyToATSIPId" readonly="readonly"/>
 				<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
