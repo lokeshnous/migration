@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.employer.service;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,8 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @created 21-Jun-2012 2:22:44 PM
  */
 @Service("employerRegistration")
-public class EmployerRegistration implements ProfileRegistration,EmloyerRegistartionService {
+public class EmployerRegistration implements ProfileRegistration,
+		EmloyerRegistartionService {
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistration.class");
 	@Autowired
@@ -34,8 +34,8 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 
 	@Autowired
 	private EmployerDelegate employerDelegate;
-	
-	public EmployerRegistration(){
+
+	public EmployerRegistration() {
 
 	}
 
@@ -46,24 +46,24 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	/**
 	 * 
 	 * @param profileDTO
-	 * @throws JobBoardServiceException 
+	 * @throws JobBoardServiceException
 	 */
-	public UserDTO createEmployer(ProfileDTO profileDTO) {
+	public UserDTO createUser(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
-			return employerDelegate.createEmployer(empProfileDTO);
+			return employerDelegate.createUser(empProfileDTO);
 		} catch (JobBoardServiceException e) {
 			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
 			return null;
 		}
-		
+
 	}
 
 	/**
 	 * 
 	 * @param profileId
 	 */
-	public boolean deleteProfile(int profileId){
+	public boolean deleteProfile(int profileId) {
 		return false;
 	}
 
@@ -71,7 +71,7 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean modifyProfile(ProfileDTO profileDTO){
+	public boolean modifyProfile(ProfileDTO profileDTO) {
 		return false;
 	}
 
@@ -79,7 +79,7 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	 * 
 	 * @param profileId
 	 */
-	public ProfileDTO viewProfile(int profileId){
+	public ProfileDTO viewProfile(int profileId) {
 		return null;
 	}
 
@@ -103,14 +103,13 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 	@Override
 	public boolean validateEmail(String email) {
 		return employerRegistrationDAO.validateEmail(email);
-		}
+	}
 
 	@Override
-	@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ProfileDTO getProfileAttributes() {
 		return employerRegistrationDAO.getProfileAttributes();
 	}
-	
 
 	@Override
 	public List<AdmFacilityContact> getEmployeeData(int userId,
@@ -126,11 +125,30 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 		return accountProfileDTO;
 	}
 
-	@Override
-	public void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
-			int userId, String billing) {
-		employerRegistrationDAO.editEmployeeAccount(apd, admfacilityid, userId,
-				billing);
+	/**
+	 * This method is used for edit and update a User(Employer) in Job board. 
+	 * @param Object of AccountProfileDTO  
+	 * @param int admFacilityid
+	 * @param int userId
+	 * @param String billing
+	 * @return boolean
+	 */
+	public boolean editEmployer(AccountProfileDTO apd, int admFacilityid,
+			int userId, String billing) throws JobBoardServiceException {
+
+		boolean isUpdate = false;
+
+		try {
+
+			isUpdate = employerDelegate.editUser(apd, admFacilityid,
+					userId, billing);
+
+		} catch (JobBoardServiceException jbe) {
+			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
+
+		}
+
+		return isUpdate;
 
 	}
 
@@ -150,10 +168,8 @@ public class EmployerRegistration implements ProfileRegistration,EmloyerRegistar
 
 	@Override
 	public boolean validateProfileAttributes(int jobseekerId) {
-		
+
 		return employerRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}
-	
-	
-	
+
 }

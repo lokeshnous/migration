@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -20,21 +21,23 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @Service("agencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
 	private static final Logger LOGGER = Logger.getLogger(AgencyRegistration.class);
+	
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
 	
+	@Autowired
+	private AgencyDelegate agencyDelegate;
+	
+	
 	/**
-	 * 
+	 * This method is used for creating a User( agency) in Job board. 
+	 * @param Object of profileDTO
+	 * @return Object of UserDTO
 	 */
-
-	/**
-	 * 
-	 * @param profileDTO
-	 */
-	public UserDTO createEmployer(ProfileDTO profileDTO) {
+	public UserDTO createUser(ProfileDTO profileDTO) {
 		try {
 			AgencyProfileDTO agencyProfileDTO = (AgencyProfileDTO) profileDTO;
-			return agencyRegistrationDAO.createNewAgency(agencyProfileDTO);
+			return agencyDelegate.createUser(agencyProfileDTO);
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
@@ -94,6 +97,6 @@ public class AgencyRegistration implements ProfileRegistration {
 		
 		return agencyRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}
-	
+
 
 }

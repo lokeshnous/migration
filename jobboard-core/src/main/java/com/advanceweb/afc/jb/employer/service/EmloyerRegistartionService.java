@@ -8,6 +8,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * @author kartikm
@@ -40,7 +41,7 @@ public interface EmloyerRegistartionService {
 	 * @param admfacilityid
 	 *            admfacilityid.
 	 */
-	void editEmployeeAccount(AccountProfileDTO apd, int admfacilityid,
-			int userId, String billing);
+	boolean editEmployer(AccountProfileDTO apd, int admfacilityid,
+			int userId, String billing) throws JobBoardServiceException;
 	
 }

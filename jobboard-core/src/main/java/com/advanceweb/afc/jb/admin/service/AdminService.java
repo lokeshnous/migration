@@ -63,7 +63,7 @@ public class AdminService implements ProfileRegistration{
 
 
 	@Override
-	public UserDTO createEmployer(ProfileDTO profileDTO) {
+	public UserDTO createUser(ProfileDTO profileDTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
