@@ -41,7 +41,7 @@ public interface EmloyerRegistartionService {
 	 * @param admfacilityid
 	 *            admfacilityid.
 	 */
-	boolean editEmployer(AccountProfileDTO apd, int admfacilityid,
+	boolean editUser(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing) throws JobBoardServiceException;
 	
 }

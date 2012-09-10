@@ -133,7 +133,7 @@ public class EmployerRegistration implements ProfileRegistration,
 	 * @param String billing
 	 * @return boolean
 	 */
-	public boolean editEmployer(AccountProfileDTO apd, int admFacilityid,
+	public boolean editUser(AccountProfileDTO apd, int admFacilityid,
 			int userId, String billing) throws JobBoardServiceException {
 
 		boolean isUpdate = false;
