@@ -78,7 +78,7 @@ public class AgencyDashBoardController {
 	@RequestMapping(value = "/employeeAccountSetting", method = RequestMethod.POST)
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
 			BindingResult result, HttpSession session) {
-
+		boolean isUpdated = false;
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
@@ -97,9 +97,15 @@ public class AgencyDashBoardController {
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 
-				empRegService.editEmployer(dto, admfacilityid, userId,
+				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-				LOGGER.info("This is Account Addresss edite option done successfully");
+				if(isUpdated){
+					LOGGER.info("This is Account Addresss edite option done successfully");
+				}else{
+					return MMJBCommonConstants.ERROR_STRING;
+				}
+				
+				
 			}
 
 		} catch (Exception e) {
@@ -140,7 +146,7 @@ public class AgencyDashBoardController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
 						.transformBillingProfileFormToDto(employeeBillingForm);
-				empRegService.editEmployer(dto, admfacilityid, userId,
+				empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 
