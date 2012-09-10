@@ -143,11 +143,15 @@
 									<form:input path="positionalMedia" name="textfield4"
 										type="file" id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
+										
 								</div>
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">Upload a video, slideshow or
 										animated .gif that shines the spotlight on your facility or
 										health system.</span>
+								</div>
+								<div class="FormErrorDisplayText">
+										<form:errors path="positionalMedia" />
 								</div>
 							</div>
 						</div>
@@ -158,6 +162,9 @@
 									<form:input path="logoUrl" name="textfield4" type="file"
 										id="textfield4" size="20"
 										class="job_seeker_login_email fileType" />
+								</div>
+								<div class="FormErrorDisplayText">
+										<form:errors path="logoUrl" />
 								</div>
 							</div>
 						</div>

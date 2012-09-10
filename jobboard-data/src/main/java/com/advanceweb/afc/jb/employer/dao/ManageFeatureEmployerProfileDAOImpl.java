@@ -129,6 +129,8 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
 				// companyProfileDTO.setPositionTitle(facility.get);
 				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
+				companyProfileDTO.setPrimaryColor(admFacility.getColorPalette());
+				companyProfileDTO.setPositionalMedia(admFacility.getPromoMediaPath());
 
 			}
 		} catch (HibernateException e) {

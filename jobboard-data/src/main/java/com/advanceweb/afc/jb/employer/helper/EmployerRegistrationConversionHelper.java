@@ -120,6 +120,7 @@ public class EmployerRegistrationConversionHelper {
 	public AdmFacility transformMerCompanyProfileDTOToAdmFacility(
 			CompanyProfileDTO companyProfileDTO) {
 		AdmFacility admFacility = new AdmFacility();
+		admFacility.setFacilityId(Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
 		admFacility.setName(companyProfileDTO.getCompanyName());
 		admFacility.setCompanyNews(companyProfileDTO.getCompanyNews());
 		admFacility.setCompanyOverview(companyProfileDTO.getCompanyOverview());

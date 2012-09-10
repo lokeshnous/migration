@@ -230,9 +230,15 @@ public interface MMJBCommonConstants {
 	String IMAGE_TYPE_PNG = ".png";
 	String IMAGE_TYPE_TIF = ".tif";
 	
-	String VIDEO_TYPE_MOV= ".mov";
-	String VIDEO_TYPE_MPG= ".mpg";
-	
+	// Media file format-Manage Featured Employer Profile
+	String VIDEO_TYPE_MOV = ".mov";
+	String VIDEO_TYPE_MPG = ".mpg";
+	String MEDIA_TYPE_AVI = ".avi";
+	String MEDIA_TYPE_WMV = ".wmv";
+	String MEDIA_TYPE_MPEG = ".mpeg";
+	String MEDIA_TYPE_MPEG_4 = ".mp4";
+	String MEDIA_TYPE_PPT = ".ppt";
+	String MEDIA_TYPE_PPTX = ".pptx";
 	String USER_DTO="USER_DTO";
 	
 	String RECAPTCHA_PRIVATE_KEY="6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";

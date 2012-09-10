@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +36,37 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 @SessionAttributes("employerProfileManagementForm")
 public class EmployerProfileManagementController {
 	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
+	private static final String STR_NOTEMPTY = "NotEmpty";
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
-	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm managementForm) {
+	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm employerProfileManagementForm,HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		model.addObject("employerProfileManagementForm", managementForm);
+		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+				.getEmployerDetails((Integer) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		if (null != companyProfileDTO) {
+			employerProfileManagementForm.setCompanyName(companyProfileDTO
+					.getCompanyName());
+			employerProfileManagementForm.setCompanyNews(companyProfileDTO
+					.getCompanyNews());
+			employerProfileManagementForm.setCompanyOverview(companyProfileDTO
+					.getCompanyOverview());
+			employerProfileManagementForm.setCompanyWebsite(companyProfileDTO
+					.getCompanyWebsite());
+			employerProfileManagementForm.setCompanyEmail(companyProfileDTO
+					.getCompanyEmail());
+			employerProfileManagementForm.setPositionTitle(companyProfileDTO
+					.getPositionTitle());
+			employerProfileManagementForm.setLogoPath(companyProfileDTO
+					.getLogoPath());
+			employerProfileManagementForm.setPrimaryColor(companyProfileDTO.getPrimaryColor());
+			/*
+			employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
+		}
+		model.addObject("employerProfileManagementForm", employerProfileManagementForm);
 		model.setViewName("manageFeatureEmpPro");
 		return model;
 	}
@@ -53,20 +78,17 @@ public class EmployerProfileManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveemployerprofile", method = RequestMethod.POST)
-	public ModelAndView saveEmployeeProf(EmployerProfileManagementForm managementForm, BindingResult result) {
+	public ModelAndView saveEmployeeProf(EmployerProfileManagementForm managementForm, BindingResult result,HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
+		CompanyProfileDTO companyProfileDTO =  manageFeatureEmployerProfile
+				.getEmployerDetails((Integer) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		companyProfileDTO.setCompanyName(managementForm.getCompanyName());
 		companyProfileDTO.setCompanyOverview(managementForm.getCompanyOverview());
 //		Validate email id
 		checkEmail(managementForm.getCompanyEmail(), result);
-		
-		if (result.hasErrors()) {
-			model.addObject("managementForm", managementForm);
-			model.setViewName("manageFeatureEmpPro");
-			return model;
-		}
-		
+		/*companyProfileDTO.setFacilityid( (String) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID));*/
 		companyProfileDTO.setCompanyEmail(managementForm.getCompanyEmail());
 		companyProfileDTO.setCompanyWebsite(managementForm.getCompanyWebsite());
         companyProfileDTO.setPrimaryColor(managementForm.getPrimaryColor());
@@ -76,27 +98,35 @@ public class EmployerProfileManagementController {
 		try {
 			MultipartFile logoUrl = managementForm.getLogoUrl();
 			MultipartFile promoMedia = managementForm.getPositionalMedia();
-
-			if (null != logoUrl && logoUrl.getSize() > 0) {
+			validateImageFileFormat(logoUrl.getOriginalFilename(),result);
+			validateMediaFileFormat(promoMedia.getOriginalFilename(),result);
+			if (result.hasErrors()) {
+				model.addObject("managementForm", managementForm);
+				model.setViewName("manageFeatureEmpPro");
+				return model;
+			} else {
+				if (null != logoUrl && logoUrl.getSize() > 0) {
 					fileName = logoUrl.getOriginalFilename();
 					filePath = baseDirectoryPathImageAndMedia + fileName;
 
 					companyProfileDTO.setLogoPath(filePath);
 					File dest = new File(filePath);
 					logoUrl.transferTo(dest);
-				
-			}
-			if (null != promoMedia && promoMedia.getSize() > 0) {
+
+				}
+				if (null != promoMedia && promoMedia.getSize() > 0) {
 					fileName = promoMedia.getOriginalFilename();
 					filePath = baseDirectoryPathImageAndMedia + fileName;
-					
+
 					companyProfileDTO.setPositionTitle(filePath);
 					File transfer = new File(filePath);
 					promoMedia.transferTo(transfer);
 
-				
+				}
+
+				manageFeatureEmployerProfile
+						.saveEmployerProfile(companyProfileDTO);
 			}
-			manageFeatureEmployerProfile.saveEmployerProfile(companyProfileDTO);
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
@@ -121,7 +151,7 @@ public class EmployerProfileManagementController {
 
 		if (!StringUtils.isEmpty(email) && !validateEmailPattern(email)) {
 
-			errors.rejectValue("companyEmail", "NotEmpty", "Invalid Email Id");
+			errors.rejectValue("companyEmail", "NotEmpty", " Please enter the correct E-Mail Address");
 
 		}
 	}
@@ -138,6 +168,64 @@ public class EmployerProfileManagementController {
 		pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
 		matcher = pattern.matcher(emailId);
 		return matcher.matches();
+	}
+	/**
+	 * Validating Image File Format
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	public void validateImageFileFormat(String fileName, Errors errors) {
+		int imageLength = fileName.length();
+		if (imageLength > 0) {
+			String fileExtension = fileName.substring(imageLength - 4,
+					imageLength);
+			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG)
+					|| fileExtension
+							.contains(MMJBCommonConstants.IMAGE_TYPE_GIF)
+					|| fileExtension
+							.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension
+						.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) {
+				errors.rejectValue("logoUrl", STR_NOTEMPTY,
+						"Please select the appropriate image");
+			}
+		}
+	}
+	/**
+	 * Validating Vedio File Format
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	public void validateMediaFileFormat(String fileName, Errors errors) {
+		int imageLength = fileName.length();
+		if (imageLength > 0) {
+			String fileExtension = fileName.substring(imageLength - 4,
+					imageLength);
+			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG)
+					|| fileExtension
+							.contains(MMJBCommonConstants.IMAGE_TYPE_GIF)
+					|| fileExtension
+							.contains(MMJBCommonConstants.IMAGE_TYPE_PNG)
+					|| fileExtension
+							.contains(MMJBCommonConstants.IMAGE_TYPE_TIF)
+					|| fileExtension
+							.contains(MMJBCommonConstants.MEDIA_TYPE_AVI)
+					|| fileExtension
+							.contains(MMJBCommonConstants.MEDIA_TYPE_MPEG)
+					|| fileExtension
+							.contains(MMJBCommonConstants.MEDIA_TYPE_MPEG_4)
+					|| fileExtension
+							.contains(MMJBCommonConstants.VIDEO_TYPE_MPG)
+					|| fileExtension
+							.contains(MMJBCommonConstants.MEDIA_TYPE_PPT)
+					|| fileExtension
+							.contains(MMJBCommonConstants.MEDIA_TYPE_PPTX) || fileExtension
+						.contains(MMJBCommonConstants.VIDEO_TYPE_MOV))) {
+				errors.rejectValue("positionalMedia", STR_NOTEMPTY,
+						"Please select the appropriate media file");
+			}
+		}
 	}
 	
 	
