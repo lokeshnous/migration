@@ -29,4 +29,5 @@ public interface JobPostService {
 	List<JobPostingPlanDTO> getJobPostingPlans();
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
+	boolean decreaseAvailableCredits();
 }

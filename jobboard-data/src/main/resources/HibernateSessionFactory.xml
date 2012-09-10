@@ -99,6 +99,8 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmPermission</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmInventoryDetail</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityInventory</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityJpAuditPK</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmPurchaseHistory</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmRole</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmSaveJob</value>

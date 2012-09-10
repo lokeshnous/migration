@@ -126,4 +126,10 @@ public class JobPostServiceImpl implements JobPostService {
 		return employerJobPostDAO.getTotalNumberOfJobRecordsByStatus();
 	}
 
+	@Override
+	public boolean decreaseAvailableCredits() {
+
+		return employerJobPostDAO.decreaseAvailableCredits();
+	}
+
 }

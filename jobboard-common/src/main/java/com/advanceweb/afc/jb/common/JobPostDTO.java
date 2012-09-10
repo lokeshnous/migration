@@ -61,6 +61,8 @@ public class JobPostDTO implements Serializable {
 	private String selectedRow;
     private boolean readOnly= false;
     
+    private int userId;
+    
     private boolean bActive;
     
 	public int getJobId() {
@@ -435,6 +437,14 @@ public class JobPostDTO implements Serializable {
 
 	public void setbActive(boolean bActive) {
 		this.bActive = bActive;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 		
