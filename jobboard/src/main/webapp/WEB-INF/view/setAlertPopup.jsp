@@ -20,7 +20,6 @@ function cancelProcess(){
 	jQuery(document).ready(function() {
 		$("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
 		var selOwnerId = $("#selJobOwner").val();
-		alert(selOwnerId);
 		$('#save').click(function(){
 				$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html?selOwnerId="+selOwnerId,
 					data:$('#alertId').serialize(),
