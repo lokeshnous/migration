@@ -22,7 +22,8 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAuditPK;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
@@ -48,6 +49,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
+	private static final String FIND_AVAILABLE_CREDITS = "from AdmInventoryDetail dtl where dtl.invDetailId=?";
 
 
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
@@ -129,7 +131,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 			// Retrieving the template object selected based on the template id
 			// selected by the user
-			JpTemplate template = hibernateTemplate.load(JpTemplate.class,
+			JpTemplate template = hibernateTemplate.get(JpTemplate.class,
 					Integer.valueOf(dto.getBrandTemplate()));
 
 			JpJobType jobType = hibernateTemplate.load(JpJobType.class,
@@ -137,10 +139,17 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
-
+			
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
 					template, jobType, admFacility);
 			hibernateTemplate.save(jpJob);
+			
+/*			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
+			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
+			pKey.setFacilityId(dto.getFacilityId());
+			pKey.setJobId(jpJob.getJobId());
+			pKey.setUserId(dto.getUserId());*/
+			
 			List<JpJobApply> applyJobList = jobPostConversionHelper
 					.transformJobPostDTOToJpJobApply(dto, jpJob);
 			hibernateTemplate.saveOrUpdateAll(applyJobList);
@@ -592,6 +601,42 @@ public class JobPostDAOImpl implements JobPostDAO {
 			e.printStackTrace();
 		}
 		LOGGER.info("Executed -> executeActiveJobWorker()");
+		return false;
+	}
+	
+	
+	public boolean decreaseAvailableCredits(){
+		LOGGER.info("Executing -> decreaseAvailableCredits()");
+		//Schedule Jobs
+		try {
+
+			List<JpJob> autoRenewJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
+			
+			for(JpJob job : autoRenewJobs){		
+				//TODO
+				//Check for available credits
+
+				int credits=1;
+				if(credits == 0){
+					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
+				}else{				
+					try {
+						job.setStartDt(new Date());
+						job.setEndDt(addDaysToCurrentDate());
+						job.setActive((byte)1);
+						hibernateTemplate.saveOrUpdate(job);
+					} catch (Exception e) {
+						LOGGER.error("Failed to renew the job as Active " +job.getJobId());
+						LOGGER.error(e);
+					}
+					LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
+				}
+			}
+			
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		LOGGER.info("Executed -> decreaseAvailableCredits()");
 		return false;
 	}
 	
