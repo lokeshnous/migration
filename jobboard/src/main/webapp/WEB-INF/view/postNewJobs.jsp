@@ -343,7 +343,7 @@
                 <form:input path="disCompanyName" class="job_seeker_password textBox350"  id="dispCompNameId"  
                 								onKeyDown="limitText(this.form.dispCompNameId,this.form.countdownId2,60);"
 												onKeyUp="limitText(this.form.dispCompNameId,this.form.countdownId2,60);"/>
-				<input type="text" class="input2000_width" name="countdownId2" size="3" value="60" id="countdown"   hidden="true"/>		
+				<form:hidden path="" class="input2000_width" name="countdownId2" size="3" value="60" id="countdown"   hidden="true"/>									
                 <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
                 <div class="clearfix"></div>
                 <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginRight5">
@@ -384,7 +384,7 @@
                 <form:input path="jobTitle" class="job_seeker_password textBox350" id="jobTitleId"  
                 								onKeyDown="limitText(this.form.jobTitleId,this.form.countdownId1,60);"
 												onKeyUp="limitText(this.form.jobTitleId,this.form.countdownId1,60);"/>
-				<input type="text" class="input2000_width" name="countdownId1" size="3" value="60" id="countdown"   hidden="true"/>												
+				<form:hidden path="" class="input2000_width" name="countdownId1" size="3" value="60" id="countdown"   hidden="true"/>																		
       			<span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
@@ -488,7 +488,9 @@
               </div>
               <div class="rowEvenNewSpacing"> <span class="lableText3">Required Skills:</span>
 
-                <form:input path="reqSkills" class="job_seeker_password textBox350" />
+                <form:input path="reqSkills" class="job_seeker_password textBox350" id="reqSkillsId" onKeyDown="limitText(this.form.reqSkillsId,this.form.countdownId1,60);"
+												onKeyUp="limitText(this.form.reqSkillsId,this.form.countdownId1,60);"/>
+				<form:hidden path="" class="input2000_width" name="countdownId1" size="3" value="60" id="countdown"   hidden="true"/>											
                 <div class="toolTip marginTop10 marginLeft5"><span class="classic">If this position requires specific skills, enter them here. Use brief keywords and phrases like "Triage" and "Emergency Care" to attract job-seekers who are including skills in their search.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Description</span>
