@@ -17,23 +17,19 @@ function cancelProcess(){
 	function closePopup() {
 		parent.window.location.reload();
 	}
-	/* $(document).keyup(function(event) {
-		if (event.keyCode == 27) {
-			parent.window.location.reload();
-		}
-	}); */
 	jQuery(document).ready(function() {
 		$("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
 		var selOwnerId = $("#selJobOwner").val();
-		$('#save').click(function(){			
-			$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html?selOwnerId="+selOwnerId,
-				data:$('#alertId').serialize(),
-				type:"GET",
-				success: function(data) {			
-						alert("The alerts saved Successfully.");
-						parent.$.nmTop().close();
-				 },
-			});
+		alert(selOwnerId);
+		$('#save').click(function(){
+				$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html?selOwnerId="+selOwnerId,
+					data:$('#alertId').serialize(),
+					type:"GET",
+					success: function(data) {			
+							parent.$.nmTop().close();
+					 },
+				});
+				
 		}); 
 		jQuery(".megamenu").megamenu();
 	});
