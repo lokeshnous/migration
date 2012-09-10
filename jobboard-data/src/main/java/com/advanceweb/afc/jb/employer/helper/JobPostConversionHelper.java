@@ -241,12 +241,53 @@ public class JobPostConversionHelper<JobPostForm> {
 	public JobPostDTO transformJpJobToJobPostDTO(JpJob jpJob) {
 		JobPostDTO jobPostDTO = new JobPostDTO();
 		jobPostDTO.setCompanyName(jpJob.getName());
-		jobPostDTO.setCustomerNo( jpJob.getJobNumber());
+		jobPostDTO.setCustomerNo(jpJob.getJobNumber());
 		jobPostDTO.setDisCompanyName(jpJob.getFacility());
 		jobPostDTO.setJobOwner(String.valueOf(jpJob.getAdminUserId()));
-		
+		jobPostDTO.setJobPostingType(jpJob.getJpJobType().getName());
 		jobPostDTO.setJobTitle(jpJob.getJobtitle());
-			 		
+		jobPostDTO.setJobId(jpJob.getJobId());
+		if (null != jpJob.getJpJobApplies()
+				&& jpJob.getJpJobApplies().size() > 0) {
+			jobPostDTO.setApplicationMethod(jpJob.getJpJobApplies().get(0)
+					.getApplyMethod());
+
+			if (jpJob.getJpJobApplies().get(0).getApplyMethod()
+					.equalsIgnoreCase(MMJBCommonConstants.APPLY_TO_ATS)) {
+				
+				 //jobPostDTO.setApp(jpJob.getJpJobApplies().get(0).getApplyLink());
+				 
+			} else if (jpJob.getJpJobApplies().get(0).getApplyMethod()
+					.equalsIgnoreCase(MMJBCommonConstants.APPLY_TO_EMAIL)) {
+				jobPostDTO.setApplyEmail(jpJob.getJpJobApplies().get(0)
+						.getApplyLink());
+			} else if (jpJob.getJpJobApplies().get(0).getApplyMethod()
+					.equalsIgnoreCase(MMJBCommonConstants.APPLY_TO_URL)) {
+				jobPostDTO.setApplyUrl(jpJob.getJpJobApplies().get(0)
+						.getApplyLink());
+			}
+
+		}
+		jobPostDTO.setJobNumber(jpJob.getJobNumber());
+		if (null != jpJob.getJpJobLocations() && jpJob.getJpJobLocations().size()>0) {
+			jobPostDTO.setJobCity(jpJob.getJpJobLocations().get(0)
+					.getJpLocation().getCity());
+			jobPostDTO.setJobState(jpJob.getJpJobLocations().get(0)
+					.getJpLocation().getState());
+			jobPostDTO.setJobCountry(jpJob.getJpJobLocations().get(0)
+					.getJpLocation().getCountry());
+			jobPostDTO.setJobZip(jpJob.getJpJobLocations().get(0)
+					.getJpLocation().getPostcode());
+		}
+		// jobPostDTO.setEmploymentType(jpJob.get)
+		jobPostDTO.setReqSkills(jpJob.getSkills());
+		jobPostDTO.setJobDesc(jpJob.getAdtext());
+		jobPostDTO.setTrackPixel(jpJob.getTrackingPixel());
+		if (null != jpJob.getJpTemplate()) {
+			jobPostDTO.setBrandTemplate(String.valueOf(jpJob.getJpTemplate()
+					.getTemplateId()));
+		}
+
 		return jobPostDTO;
 
 	}

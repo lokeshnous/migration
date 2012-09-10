@@ -305,7 +305,7 @@ public class JobPostController {
 	 * @return model
 	 */
 	@RequestMapping(value = "/editJob", method = RequestMethod.GET)
-	public ModelAndView editJob(HttpServletRequest request,
+	public ModelAndView editJob(HttpServletRequest request,HttpSession session,
 			JobPostForm jobPostform, @RequestParam("jobId") int jobId) {
 		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId);
 		String readOnly = request.getParameter("readOnly");
@@ -313,9 +313,38 @@ public class JobPostController {
 			jobPostform.setReadOnly(true);
 		}
 		transformJobPost.transformJobPostDTOToForm(jobPostform, jobPostDTO);
+	
 		ModelAndView model = new ModelAndView();
 		model.addObject(JOB_POST_FORM, jobPostform);
+		// Populating Dropdowns
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
+		List<DropDownDTO> empTypeList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		jobPostform.setCompanyName(employerInfoDTO.getCustomerName());
+		List<DropDownDTO> templateList = populateDropdownsService
+				.populateBrandingTemplateDropdown(
+						employerInfoDTO.getFacilityId(),
+						employerInfoDTO.getUserId());
+		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
+				.populateJobPostingTypeDropdowns(employerInfoDTO.getFacilityId());
+		List<DropDownDTO> jbOwnerList = populateDropdownsService
+				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
+						employerInfoDTO.getUserId(),
+						employerInfoDTO.getRoleId());
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		List<FromZipcodeDTO> zipCodeList = populateDropdownsService
+				.getFromZipcodeList();
 
+	
+		model.addObject("stateList", stateList);
+		model.addObject("empTypeList", empTypeList);
+		model.addObject("countryList", countryList);
+		model.addObject("templateList", templateList);
+		model.addObject("jbOwnerList", jbOwnerList);
+		model.addObject("zipCodeList", zipCodeList);
+		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		model.setViewName(POST_NEW_JOBS);
 		return model;
 	}
