@@ -40,7 +40,7 @@
 <body class="job_board">
 
 
-	<div class="dashboardHeader">
+	<div class="EmployerDashboardHeader">
 		<h1>[Employer Name] Dashboard</h1>
 	</div>
 	<div class="MidContent_Wrapper FloatLeft">

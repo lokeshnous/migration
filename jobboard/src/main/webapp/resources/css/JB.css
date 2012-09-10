@@ -1510,12 +1510,21 @@ div.searchResultsSubContent .btn_sm {
 	margin: 5px 0 0 6px;
 }
 
-.required {
+.required,.required2,.requiredTopmargin,.requiredTopmargin2,.requiredWidth{
 	color: #FE9400;
 	float: left;
 	padding: 7px 0 0 10px; /* MM: changed */
 }
-
+.requiredWidth{
+	color: #6b7b84 !important;
+	width:370px;
+}
+.requiredTopmargin{
+	margin-top: 8px !important;
+}
+.requiredTopmargin2{
+	margin-top: 3px !important;
+}
 .textBox350 {
 	width: 350px !important;
 }
@@ -2021,7 +2030,7 @@ h2.sectionSubHeader2 {
 	border: none;
 }
 
-.dashboardHeader,.popupHeader {
+.dashboardHeader,.popupHeader,.EmployerDashboardHeader {
 	background-color: #fe9400;
 	width: 100%;
 	height: 23px;
@@ -2033,7 +2042,9 @@ h2.sectionSubHeader2 {
 	padding: 5px 0px;
 	text-align: center;
 }
-
+.EmployerDashboardHeader{
+	height:35px !important;
+}
 .popupHeader {
 	height: 14px;
 	padding: 4px 0 6px 0 !important;
@@ -2171,7 +2182,7 @@ h2.White {
 }
 
 .input_grp5 {
-	width: 650px;
+	width: 605px;
 	float: left;
 	margin-left: 0px;
 }
@@ -2186,12 +2197,6 @@ h2.White {
 	width: 145px !important;
 	}
 }
-.required2 {
-	color: #FE9400;
-	float: left;
-	padding: 7px 0 0 10px; /* MM: changed */
-}
-
 .textareaBox {
 	margin: 10px 0 5px 0;
 	height: 256px;
@@ -3598,13 +3603,6 @@ a.white01:hover {
 	margin-top: 20px;
 }
 
-.requiredTopmargin {
-	color: #FE9400;
-	float: left;
-	padding: 7px 0 0 10px; /* MM: changed */
-	margin-top: 8px;
-}
-
 .sectionHeaderResume,.sectionHeaderCreateResume {
 	border-radius: 4px;
 	color: #FFFFFF;
@@ -3996,7 +3994,7 @@ orange:hover {
 	padding: 20px;
 	line-height: 16px;
 }
-.colorPkrArea,.colorPkrAreaToolTip {
+.colorPkrArea,.colorPkrAreaToolTip,.DropDownAreaToolTip {
 	float:left;
 	margin-top:5px;
 	margin-left:5px;	
@@ -4004,7 +4002,17 @@ orange:hover {
 .colorPkrAreaToolTip {
 	margin-top: 8px !important;
 }
-
+.DropDownAreaToolTip{
+	margin-top: 15px !important;
+}
 .ui-autocomplete {
 	height: 120px;
+}
+.greyLabel{
+	float:right; 
+	margin-top:-1px; 
+	margin-left:5px;
+}
+.BTemplateIconAlign{
+	margin-left:33px;
 }

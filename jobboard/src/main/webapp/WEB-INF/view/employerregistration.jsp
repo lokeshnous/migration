@@ -11,20 +11,9 @@
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<!-- ../resources/css -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript" src="../resources/js/slider.js"></script>
-<link href="../resources/css/jquery.dataTables.css" rel="stylesheet"
-	type="text/css">
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
-	type="text/css">
-<link href="../resources/css/jobsearchResults.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript" language="javascript"
 	src="/media/js/jquery.js"></script>

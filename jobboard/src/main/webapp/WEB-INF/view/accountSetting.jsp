@@ -135,7 +135,7 @@ function copyAccToBillingAddr(obj) {
 				<img width="19" height="19" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
 				</a>
 			</div>
-			<div id="errmsg" class="FormErrorDisplay"></div>
+			<div id="errmsg" class="validationMsg"></div>
 			<div class="popUpContainerWrapper">
 				<form:form action="../employerRegistration/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">

@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<div id="errmsg" class="FormErrorDisplay">
+			<div id="errmsg" class="validationMsg">
 				</div>
 			<form:form action="../jobseekerregistration/updateJobSeekerProfile.html" method="POST" commandName="registerForm"  id="editProfileSettingsId">
 					<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">

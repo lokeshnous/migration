@@ -72,10 +72,6 @@
 	rel='stylesheet'>
 
 
-<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-	<![endif]-->
-
 <!-- <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script> -->
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
@@ -265,7 +261,9 @@
 								
 								<div class="required2">
 									<!-- <img src="images/Color.png" width="16" height="16" alt="Color"> -->
-									<div class="floatRight"><input id="colorPkr" name="color1" type="text"   /></div>
+									<div class="floatRight">
+									<input id="colorPkr" name="color1" type="text"   />
+									</div>
 								</div>
 								<div class="toolTip marginTop6 marginLeft5">
 									<span class="classic">Select a color that complements

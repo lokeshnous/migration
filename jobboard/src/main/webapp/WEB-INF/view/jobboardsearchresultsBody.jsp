@@ -9,7 +9,7 @@
 		</head>
 
 		<body>
-<form:form method="" action="" commandName="jobSearchResultForm">
+<form:form method="POST" action="" commandName="jobSearchResultForm">
 					
 					<div class="row">
 
@@ -149,15 +149,15 @@
 		<div class="searchResultsNavigationColumn1">
 		<input type="hidden" value="${beginVal}"/>
 			<span class="marginTop5">Results viewable:</span> <span
-				class="Padding0"> <select name="results" id="noOfPage"
+				class="Padding0"> <select name="noOfPage" id="noOfPage"
 				class="jb_input4 margin0" onchange="applyFilter();">
 					<option value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
 					<option value="50">50</option>
 			</select>
-			<%-- <form:select path="${filterVal}" itemValue="${filterVals.optionId}" 
-								itemLabel="${filterVals.optionName}" items="${filterVals}"></form:select>   --%>
+			<%-- <form:select path="${filterVal}" itemValue="optionId" 
+								itemLabel="optionName" items="${filterVals}"></form:select>  --%> 
 						</span><span class="marginTop5">per page</span>
 		</div>
 

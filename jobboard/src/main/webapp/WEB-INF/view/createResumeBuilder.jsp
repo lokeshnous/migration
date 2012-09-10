@@ -6,18 +6,8 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
-
-<!-- ../resources/css -->
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="../resources/css/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-
-<!--[if IE]>
-	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
 
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>

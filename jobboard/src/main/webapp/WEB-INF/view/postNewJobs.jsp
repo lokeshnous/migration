@@ -6,16 +6,10 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
-		<!-- ../resources/css -->
-		<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
-		<!--[if IE]>
-	<link href="../resources/css/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
 
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
@@ -213,135 +207,12 @@
           <div class="main_wrapper_inside">
 <form:hidden path="readOnly"/>
     <div class="main">
-              <div class="header_wrapper"> <a href="">
-                <div class="logo"></div>
-                </a>
-        <div class="headerLoginSection"> 
-                  
-                  <!-- loginHeader --> 
-                  
-                  <!-- loginHeader -->
-                  <div class="headerLoginSection">
-					<div class="headerLoginSectionColumns width205">
-
-					<span class="boldText">Job Seeker:</span><br>
-		  <div class="PopUpToolTip"><a href="#">Why <strong>advance</strong>?</a>
-          <span class="classic01">
-         	<p class="FontWeight marginBottom10">When you sign up, ADVANCE gives you:</p>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access to thousands of healthcare job opportunities
-            </div>
-
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The best healthcare content you can get anywhere
-            </div>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hours of informative and entertaining multimedia
-            </div>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The latest news, articles, product reviews and much more!
-            </div>
-            <p class=" marginTop10">And it's all FREE!</p>
-
-          </span>
-          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div><!-- loginHeader -->
-                    <div class="headerLoginSectionColumns">
-					<span class="boldText">Employer:</span><br>
-
-                    	<a href="">Login</a> | <a href="">Post Jobs</a>
-					</div><!-- loginHeader -->
-					<div class="headerLoginSectionColumns">
-					<span class="boldText">Ad Agency:</span><br>
-						 <a href="">Login</a> | <a href="">Post Jobs</a>
-
-					</div><!-- loginHeader -->
-                    </div>
-                  <!-- loginHeader --> 
-                </div>
-        <!-- loginHeader --> 
-        <!-- loginHeader --> 
-        
-      </div>
-              <!-- header_wrapper -->
-              
-              <div id="nav">
-        <ul class="megamenu">
-
-                  <li> <a href="javascript:">Magazines</a>
-            <div class="megamenuContainer">
-                      <div class="column"> <a href="http://nursing.advanceweb.com/">
-                        <p>Nurses</p>
-                        </a> <a href="http://physical-therapy.advanceweb.com/">
-                        <p>Physical Therapy and Rehab Medicine</p>
-
-                        </a> <a href="http://occupational-therapy.advanceweb.com/">
-                        <p>Occupational Therapy Practitioners</p>
-                        </a> <a href="http://imaging-radiation-oncology.advanceweb.com/">
-                        <p>Imaging & Radiattion Oncology</p>
-                        </a> <a href="http://audiology.advanceweb.com/">
-                        <p>Hearing Practice Management</p>
-
-                        </a> </div>
-                      <div class="column"> <a href="http://speech-language-pathology-audiology.advanceweb.com/">
-                        <p>Speech-Language Pathologists & Audiologists</p>
-                        </a> <a href="http://respiratory-care-sleep-medicine.advanceweb.com/">
-                        <p>Respiratory Care and Sleep Medicine</p>
-                        </a> <a href="http://laboratory-manager.advanceweb.com/">
-
-                        <p>Administrators of the Laboratory</p>
-                        </a> <a href="http://laboratorian.advanceweb.com/">
-                        <p>Medical Laboratory Professionals</p>
-                        </a> <a href="http://health-information.advanceweb.com/">
-                        <p>Health Information Professionals</p>
-                        </a> </div>
-
-                      <div class="column"> <a href="http://long-term-care.advanceweb.com/">
-                        <p>Long-Term Care Management</p>
-                        </a> <a href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">
-                        <p>NPs & PAs</p>
-                        </a> <a href="http://healthcare-executive-insight.advanceweb.com/">
-                        <p>Executive Insight</p>
-
-                        </a> </div>
-                    </div>
-          </li>
-                  <li> <a href="javascript:">Job Search</a>
-            <div class="megamenuContainer">
-                      <div class="column"> <a href="http://health-care-jobs.advanceweb.com/">
-                        <p>Quick Search</p>
-
-                        </a> <a href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">
-                        <p>Resume Builder</p>
-                        </a> <a href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">
-                        <p>Salary Calculator</p>
-                        </a> <a href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx">
-                        <p><i>ADVANCE</i> Messenger</p>
-
-                        </a> <a href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">
-                        <p>Career Resource Center</p>
-                        </a> <a href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">
-                        <p>Featured Facilities</p>
-                        </a> <a href="http://health-care-jobs.advanceweb.com/Default.aspx">
-                        <p>Home</p>
-
-                        </a> </div>
-                    </div>
-          </li>
-                  <li> <a href="javascript:">Education</a> </li>
-                  <li> <a href="javascript:">Events</a> </li>
-
-                  <li> <a href="javascript:">Community</a> </li>
-                  <li> <a href="javascript:">Healthcare Shop</a> </li>
-                  <li> <a href="javascript:">Custom Promotions</a> </li>
-                </ul>
-
-      </div>
+      <jsp:include page="../templates/templates_header.jsp"></jsp:include>
       <c:if test="${not empty errorMessage}">
   			<div style="color: red; align="left">
 				${errorMessage}
 			</div>      
       </c:if>
-              <!--nav-->
               <div class="clearfix"></div>
               <!--Start:MidContant-->
               <div class="MidContent_Wrapper floatLeft">
@@ -358,12 +229,12 @@
 					<form:option value="0" label="Select" />
 					<form:options items="${jbOwnerList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
-                        <div class="toolTip marginTop10 marginLeft5"><span class="classic">Choose the person who will be responsible for this job posting.</span></div>
+                        <div class="toolTip DropDownAreaToolTip"><span class="classic">Choose the person who will be responsible for this job posting.</span></div>
               </div>
 
               <div class="rowEvenNewSpacing"> <span class="lableText3">Customer Number:</span>
 			    <form:input path="customerNo" class="job_seeker_password textBox350"  readonly="true"/>
-                <div class="toolTip marginTop10 marginLeft5"><span class="classic">This is the customer number shown in your employer profile.</span></div>
+                <div class="toolTip colorPkrAreaToolTip"><span class="classic">This is the customer number shown in your employer profile.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
                 <form:input path="companyName" class="job_seeker_password textBox350"  readonly="true"/>
@@ -374,7 +245,7 @@
                 								onKeyDown="limitText(this.form.dispCompNameId,this.form.countdownId2,60);"
 												onKeyUp="limitText(this.form.dispCompNameId,this.form.countdownId2,60);"/>
 				<form:hidden path="" class="input2000_width" name="countdownId2" size="3" value="60" id="countdown"   hidden="true"/>									
-                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
+                <div class="toolTip colorPkrAreaToolTip"><span class="classic">If you want your company name to be displayed a certain way for this particular job posting, enter it here.</span></div>
                 <div class="clearfix"></div>
                 <div class="rowEvenNewSpacing"><span class="lableText3">&nbsp;</span><span class="required marginRight5">
                   <form:checkbox path="bHideCompName"/>
@@ -394,7 +265,7 @@
 					<form:option value="0" label="Select" />
 					<form:options items="${jbPostingTypeList}" itemValue="optionId" itemLabel="optionName" />
 				</form:select>
-				<span class="required">(Required)</span>
+				<span class="required colorPkrAreaToolTip">(Required)</span>
               </div>
 
               <div class="rowEvenNewSpacing"> <span class="lableText3">Job Posting Inventory:</span> <span class=" FloatLeft marginTop6">
@@ -407,7 +278,7 @@
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job ID:</span>
                 <form:input path="jobNumber" class="job_seeker_password textBox350" />
-                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you're posting multiple positions with the same job title, you can enter a 4 to 10 digit number here to help you reference this specific job posting in the future.</span></div>
+                <div class="toolTip colorPkrAreaToolTip"><span class="classic">If you're posting multiple positions with the same job title, you can enter a 4 to 10 digit number here to help you reference this specific job posting in the future.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Title:</span>
 
@@ -415,7 +286,7 @@
                 								onKeyDown="limitText(this.form.jobTitleId,this.form.countdownId1,60);"
 												onKeyUp="limitText(this.form.jobTitleId,this.form.countdownId1,60);"/>
 				<form:hidden path="" class="input2000_width" name="countdownId1" size="3" value="60" id="countdown"   hidden="true"/>																		
-      			<span class="required">(Required)</span><div class="toolTip marginTop10 marginLeft5"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
+      			<span class="required">(Required)</span><div class="toolTip colorPkrAreaToolTip"><span class="classic">Enter the name of the position you're trying to fill here.</span></div>  </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
                       <div class="row marginTop10">
@@ -423,25 +294,25 @@
               </div>
 
                       <div class="row marginLeft30 marginTop8 width450">
-               		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required">(Required)</span>
+               		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required requiredTopmargin2">(Required)</span>
               </div>
                       <div class="rowEvenNewSpacing"><span class="required">
                       <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail" id="applyToEMailId"/>
                         </span><span class="lableText3 width105">Apply-to Email:</span>
                 <form:input path="applyEmail" class="job_seeker_password textBox350"  id="applyToEMailTSId" readonly="readonly"/>
 
-                <span class="required TextColor01">Enter the email address where you would like resumes to be sent.</span> </div>
+                <span class="required requiredWidth">Enter the email address where you would like resumes to be sent.</span> </div>
                       <div class="rowEvenNewSpacing"><span class="required">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToURL" id="applyToURLId"/>
                         </span><span class="lableText3 width105">Apply-to URL</span>
                 <form:input path="applyUrl" class="job_seeker_password textBox350"  id="applyToURLTSId" readonly="readonly"/>
-                <span class="required TextColor01">Enter the URL where you would like to send job-seekers to apply.</span> </div>
+                <span class="required requiredWidth">Enter the URL where you would like to send job-seekers to apply.</span> </div>
 
                       <div class="rowEvenNewSpacing"><span class="required">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS" id="applyToATSId"/>
                         </span><span  class="lableText3 width105">Apply-to ATS</span>
                <form:input path="atsUrl" class="job_seeker_password textBox350" id="applyToATSIPId" readonly="readonly"/>
-				<span class="required TextColor01 width360">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
+				<span class="required requiredWidth">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
                  <div class="row marginTop10">
@@ -521,7 +392,7 @@
                 <form:input path="reqSkills" class="job_seeker_password textBox350" id="reqSkillsId" onKeyDown="limitText(this.form.reqSkillsId,this.form.countdownId1,60);"
 												onKeyUp="limitText(this.form.reqSkillsId,this.form.countdownId1,60);"/>
 				<form:hidden path="" class="input2000_width" name="countdownId1" size="3" value="60" id="countdown"   hidden="true"/>											
-                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If this position requires specific skills, enter them here. Use brief keywords and phrases like "Triage" and "Emergency Care" to attract job-seekers who are including skills in their search.</span></div>
+                <div class="toolTip colorPkrAreaToolTip"><span class="classic">If this position requires specific skills, enter them here. Use brief keywords and phrases like "Triage" and "Emergency Care" to attract job-seekers who are including skills in their search.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Job Description</span>
                 <div class="input_grp5 width450">
@@ -531,7 +402,7 @@
 
                       <div class="rowEvenNewSpacing MarginBottom10"> <span class="lableText3">Tracking Pixel:</span>
                 <form:input path="trackPixel" class="job_seeker_password textBox350" />
-                <div class="toolTip marginTop10 marginLeft5"><span class="classic">If you want to track the response to this job posting independently, you can enter your tracking pixel HTML code here.</span></div>
+                <div class="toolTip colorPkrAreaToolTip"><span class="classic">If you want to track the response to this job posting independently, you can enter your tracking pixel HTML code here.</span></div>
               </div>
                       <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
@@ -545,7 +416,7 @@
 							<form:options items="${templateList}" itemValue="optionId" itemLabel="optionName" />
 						</form:select>
 						<span class="required">(Required)</span>
-                        <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
+                        <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
               </div>
               <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
@@ -557,7 +428,7 @@
                       <span class="lableText3">Auto Renew:</span><span class="required">
                       
                       <form:radiobutton path="autoRenew" value="Yes"/><label class="greyLabel">Yes</label></span>&nbsp;&nbsp;<span class="required"> 
-                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 marginLeft5"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>                      
+                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 colorPkrAreaToolTip"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>                      
 			   </div>
 			   <form:hidden path="scheduleStartDate" class="job_seeker_password datepicker" id="startDateHdId" readonly="true"/>
 			   <form:hidden path="scheduleEndDate" class="job_seeker_password" id="endDateHdId" readonly="true"/>
@@ -617,101 +488,8 @@
 
 <!-- end main_wrapper_inside -->
 </div>
+<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 <!-- end main_wrapper_outside -->
-<div class="footer_wrapper">
-          <div class="container1">
-    <h4>Professions:</h4>
-    <ul>
-              <li><a href="#">Nursing</a></li>
-              <li><a href="#">Imaging & Radiation</a></li>
-
-              <li><a href="#">Oncology</a></li>
-              <li><a href="#">Physical Therapy and Rehab Medicine</a></li>
-              <li><a href="#">Occupational Therapy</a></li>
-              <li><a href="#">Speech-Language Pathology</a></li>
-              <li><a href="#">Audiology</a></li>
-              <li><a href="#">Hearing Practice Management</a></li>
-
-              <li><a href="#">Long-Term Care Managament</a></li>
-              <li><a href="#">Respiratory Care</a></li>
-              <li><a href="#">Sleep Medicine</a></li>
-              <li><a href="#">Labortory</a></li>
-              <li><a href="#">Health Information</a></li>
-              <li><a href="#">Nurse Practitioners</a></li>
-
-              <li><a href="#">Physician Assistants</a></li>
-              <li><a href="#">Healthcare Executives</a></li>
-            </ul>
-  </div>
-          <!-- end container1 -->
-          
-          <div class="container2">
-    <h4>Content:</h4>
-
-    <ul>
-              <li><a href="#">News</a></li>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Multimedia</a></li>
-              <li><a href="#">Buyers Guide</a></li>
-              <li><a href="#">Community</a></li>
-
-              <li><a href="#">Downloads</a></li>
-            </ul>
-  </div>
-          <!-- end container2 -->
-          
-          <div class="container3">
-    <h4>Services:</h4>
-    <ul>
-              <li><a href="#">ADVANCE Healthcare Jobs</a></li>
-
-              <li><a href="#">Subscribe</a></li>
-	<li><div class="email"></div><a href="#">Sign Up for Enewsletter</a></li>
-	<li><div class="fbook"></div><a href="#">Connect on Facebook</a></li>
-	<li><div class="linkedIn"></div><a href="#">Connect on LinkedIn</a></li>
-	<li><div class="twitter"></div><a href="#">Connect on Twitter</a></li>
-              <li><a href="#">Download the Mobile App</a></li>
-
-              <li><a href="#">Order Promotional Items</a></li>
-            </ul>
-  </div>
-          <!-- end container3 -->
-          
-          <div class="container4">
-    <h4>More from ADVANCE:</h4>
-    <ul>
-              <li><a href="#">ADVANCE Heathcare Shop</a></li>
-
-              <li><a href="#">ADVANCE Custom Promotions</a></li>
-              <li><a href="#">ADVANCE Heathcare Jobs</a></li>
-              <li><a href="#">ADVANCE Job Fairs</a></li>
-              <li><a href="#">ADVANCE Continuing Ediucation</a></li>
-              <li><a href="#">ADVANCE Custom Publishing</a></li>
-            </ul>
-
-  </div>
-          <!-- end container4 -->
-          
-          <div class="container5">
-    <h4>Corporate:</h4>
-    <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact Us</a></li>
-
-              <li><a href="#">Advertise with Us</a></li>
-              <li><a href="#">Work for Us</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Term of Service</a></li>
-              <li><a href="#">Help</a></li>
-            </ul>
-
-  </div>
-          <!-- end container5 --> 
-          
-          <br class="clearfix" />
-          <p class="copyright">&copy; 2012 Merion Matters 2900 Horizon Drive King of Prussia PA 19406 800-355-5627</p>
-        </div>
-<!-- footer_wrapper -->
 </form:form>
 </body>
 </html>

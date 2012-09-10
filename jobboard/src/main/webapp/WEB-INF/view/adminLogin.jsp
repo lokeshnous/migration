@@ -15,14 +15,11 @@
 <title>ADVANCE Heathcare Jobs</title>
 
 <!-- STYLESHEETS -->
-<!-- <link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<!-- 
 <link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
 	type="text/css" />
 <link href="../resources/css/SliderStyles.css" rel="stylesheet"
 	type="text/css">
-[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]
 
 JAVASCRIPT FILES
 <script type="text/javascript"

@@ -9,17 +9,13 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
 		<!-- STYLESHEETS -->
-		<link href="stylesheets/JB.css" rel="stylesheet" type="text/css" />
 		<link href="stylesheets/jquery.megamenu.css" rel="stylesheet" type="text/css" />
 		<link href="stylesheets/SliderStyles.css" rel="stylesheet" type="text/css">
         
-<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-<![endif]-->
-
 
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>

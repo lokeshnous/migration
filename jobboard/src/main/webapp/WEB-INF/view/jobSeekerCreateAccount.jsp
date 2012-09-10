@@ -7,22 +7,12 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
-		<!-- ../resources/css -->
-		<!-- <link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="../resources/css/SliderStyles.css" rel="stylesheet" type="text/css"> -->
-
-		
 
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script> -->
-
+		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
@@ -44,50 +34,6 @@
 	<div class="main_wrapper_outside">
     <div class="main_wrapper_inside">
     <div class="main">
-              <!-- <div class="row">
-
-        <div class="header_wrapper"> <a href="">
-          <div class="logo"></div>
-          </a>
-                  <div class="headerLoginSection">
-            <div class="headerLoginSectionColumns width205">
-					<span class="boldText">Job Seeker:</span><br>
-		  <div class="PopUpToolTip"><a href="#">Why <strong>advance</strong>?</a>
-
-          <span class="classic01">
-         	<p class="FontWeight marginBottom10">When you sign up, ADVANCE gives you:</p>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access to thousands of healthcare job opportunities
-            </div>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The best healthcare content you can get anywhere
-            </div>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hours of informative and entertaining multimedia
-            </div>
-            <div class="FontWeight FontSize12 OrangeDot FontBlack">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The latest news, articles, product reviews and much more!
-            </div>
-            <p class=" marginTop10">And it's all FREE!</p>
-          </span>
-          </div> <div class="floatleft"><span> <a href="">Login</a> | <a href="">Sign Up</a> | </span></div></div>
-
-            loginHeader
-            <div class="headerLoginSectionColumns"> <span class="boldText">Employer:</span><br>
-                      <a href="">Login</a> | <a href="">Post Jobs</a> </div>
-            loginHeader
-            <div class="headerLoginSectionColumns"> <span class="boldText">Ad Agency:</span><br>
-
-                      <a href="">Login</a> | <a href="">Post Jobs</a> </div>
-            loginHeader 
-          </div>
-                  loginHeader 
-                  loginHeader 
-                  
-                </div>
-      </div> -->
-              <!-- header_wrapper -->
 
               <jsp:include page="../templates/templates_header.jsp"></jsp:include>
        <div class="row"> 
@@ -102,28 +48,28 @@
 	                      <form:input path="emailId" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-				<div class="FormErrorDisplay">
+				<div class="validationMsg">
 					<form:errors path="emailId" /> 
 				</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Email Address:</span>
 	                      <form:input path="confirmEmailId" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-	            <div class="FormErrorDisplay">				
+	            <div class="validationMsg">				
 					<form:errors path="confirmEmailId"/>
 				</div>         
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Password:</span>
 	                      <form:password path="password" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}" showPassword="true"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
-				<div class="FormErrorDisplay">
+				<div class="validationMsg">
 					<form:errors path="password" /> 
 				</div>
 	            <div class="row marginTop5"> <span class="lableText3"></span> (8-20 characters, including at least 1 number)</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Password:</span>
 	            		  <form:password path="retypepassword" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}" showPassword="true"/>
 	                      <span class="required">(Required)</span> </div>
-	            <div class="FormErrorDisplay">
+	            <div class="validationMsg">
 					<form:errors path="retypepassword" /> 
 				</div>
 

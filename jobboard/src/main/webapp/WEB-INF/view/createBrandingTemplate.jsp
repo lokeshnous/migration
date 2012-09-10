@@ -95,10 +95,6 @@
 	rel='stylesheet'>
 
 
-<!--[if IE]>
-	<link href="stylesheets/ie.css" rel="stylesheet" type="text/css">
-	<![endif]-->
-
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){

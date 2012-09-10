@@ -75,9 +75,11 @@
 									<td align="center"><label>
 											${template.createdDate}
 									</label></td>
-									<td align="center">&nbsp;&nbsp;&nbsp;&nbsp;<a href='<%=request.getContextPath()%>/brandingTemplates/previewExisting.html?templateId=${template.jpBrandTempId}'>
+									<td align="center"><div class="BTemplateIconAlign">
+									
+									<a href='<%=request.getContextPath()%>/brandingTemplates/previewExisting.html?templateId=${template.jpBrandTempId}'>
 									<img src="../resources/images/tranBg.png" width="20" height="20" alt="view" class="view">
-											</a>&nbsp;<a href='<%=request.getContextPath()%>/brandingTemplates/editTemplate.html?templateId=${template.jpBrandTempId}'><img src="../resources/images/tranBg.png" width="20" height="20" alt="edit" class="editFile"></a>&nbsp;<a href="#"><img src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a></td>
+											</a>&nbsp;<a href='<%=request.getContextPath()%>/brandingTemplates/editTemplate.html?templateId=${template.jpBrandTempId}'><img src="../resources/images/tranBg.png" width="20" height="20" alt="edit" class="editFile"></a>&nbsp;<a href="#"><img src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a></div></td>
 								</tr>
 							</c:forEach>
                   </tbody>
