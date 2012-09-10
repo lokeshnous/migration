@@ -250,7 +250,7 @@ public class JobPostController {
 					&& ((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator.isValid(form.getApplyUrl()))
 					|| (!StringUtils.isEmpty(form.getAtsUrl()) && !urlValidator.isValid(form.getAtsUrl())))) {
 				
-				return "Please enter valid URL";
+				return "Please enter valid URL. (Eg: http://www.google.com)";
 			}
 			//Validating EMail
 			if(MMJBCommonConstants.APPLY_TO_EMAIL.equals(form.getApplMethod()) && 
