@@ -65,7 +65,11 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setStartDt(DateUtils.convertStringToSQLDate(dto.getScheduleStartDt()));
 		 jpJob.setEndDt(DateUtils.convertStringToSQLDate(dto.getScheduleExpiryDt()));
 		 
-		 jpJob.setJpTemplate(template);
+		 if(null != template && template.getTemplateId() !=0 ){
+			 jpJob.setJpTemplate(template);
+		 }else{
+			 jpJob.setJpTemplate(null); 
+		 }
 		 
 		 //Auto Renew
 		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);				
