@@ -201,35 +201,35 @@ public interface MMJBCommonConstants {
 	// For Account Setting
 	String PRIMARY = "PRIMARY";
 	String BILLING = "BILLING";
-	
-	//For Post New Job
-	String POST_NEW_JOB="Active";
-	String POST_JOB_SCHEDULED="Scheduled";
-	String POST_JOB_DRAFT="Draft";
-	String POST_JOB_EXPIRED="Expired";
-	String POST_JOB_INACTIVE="Inactive";
-	byte ACTIVE=1;
-	byte INACTIVE=0;
-	
+
+	// For Post New Job
+	String POST_NEW_JOB = "Active";
+	String POST_JOB_SCHEDULED = "Scheduled";
+	String POST_JOB_DRAFT = "Draft";
+	String POST_JOB_EXPIRED = "Expired";
+	String POST_JOB_INACTIVE = "Inactive";
+	byte ACTIVE = 1;
+	byte INACTIVE = 0;
+
 	// For Apply job type
 	String APPLY_TO_URL = "ApplyToURL";
 	String APPLY_TO_ATS = "ApplyToATS";
 	String APPLY_TO_EMAIL = "ApplyToEMail";
-	
-	//for packages
+
+	// for packages
 	String PACKAGE_ESPOST = "ezpost";
 	String PACKAGE_GOLD = "gold";
 	String PACKAGE_PLATINUM = "platinum";
 	String PACKAGE_JBPOSTSLOT = "jbPostSlot";
 	String PACKAGE_STJOBPOSTING = "stJobPosting";
 	String PACKAGE_SILVER = "silver";
-	
-	//for Branding template
+
+	// for Branding template
 	String IMAGE_TYPE_JPG = ".jpg";
 	String IMAGE_TYPE_GIF = ".gif";
 	String IMAGE_TYPE_PNG = ".png";
 	String IMAGE_TYPE_TIF = ".tif";
-	
+
 	// Media file format-Manage Featured Employer Profile
 	String VIDEO_TYPE_MOV = ".mov";
 	String VIDEO_TYPE_MPG = ".mpg";
@@ -239,14 +239,14 @@ public interface MMJBCommonConstants {
 	String MEDIA_TYPE_MPEG_4 = ".mp4";
 	String MEDIA_TYPE_PPT = ".ppt";
 	String MEDIA_TYPE_PPTX = ".pptx";
-	String USER_DTO="USER_DTO";
-	
-	String RECAPTCHA_PRIVATE_KEY="6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
-	
-	int AUTO_RENEWAL_DAYS=30;
+	String USER_DTO = "USER_DTO";
+
+	String RECAPTCHA_PRIVATE_KEY = "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
+
+	int AUTO_RENEWAL_DAYS = 30;
 	// For Job search results
 	int DEFAULT_PAGE_SIZE = 20;
-	int ADDS_PER_PAGE = 10;	
+	int ADDS_PER_PAGE = 10;
 	String SEARCH_RESULTS_LIST = "searchResultsList";
 	String NO_OF_PAGES = "noOfPages";
 	String CURRENT_PAGE = "currentPage";
@@ -257,28 +257,28 @@ public interface MMJBCommonConstants {
 	String BEGIN_VAL = "beginVal";
 	String BEGIN = "begin";
 	String PAGE = "page";
-
 	// Kartik Add many Variable for account setting and Mail send
-	String WEB_MAIL_SERVER="merion@nousinfosystems.com";
-	String EMAIL_MESSAGE="Please enter correct Email address";
-	String EMAIL_NULL_MESSAGE="Email Id already Exists!";
-	String PHONE_NO="Please enter the correct Phone Number (XXX-XXX-XXXX)";
-	String PHONE_NULL_NO="Please give the Phone number";
-	String EMAIL_MESSAGE_BLANK="Please enter required fields.";
-	String UPDATE_ERROR = " Error occurred while update. Please contact your Administrator.";
-		
-	//Job Types
-	String JOB_TYPE="JOB_TYPE";
-	String JOB_TYPE_ADDON="ADDON";
+	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
+	String EMAIL_MESSAGE = "Please enter correct Email address";
+	String EMAIL_NULL_MESSAGE = "Email Id already Exists!";
+	String PHONE_NO = "Please enter the correct Phone Number (XXX-XXX-XXXX)";
+	String PHONE_NULL_NO = "Please give the Phone number";
+	String EMAIL_MESSAGE_BLANK = "Please enter required fields.";
+
+	// Job Types
+	String JOB_TYPE = "JOB_TYPE";
+	String JOB_TYPE_ADDON = "ADDON";
 
 	String NEXT = "next";
-	int[] FILTER_VALS = {20,30,40,50};
-	
-	// For jobboard links 
+	int[] FILTER_VALS = { 20, 30, 40, 50 };
+
+	// For jobboard links
 	String FOLLOWUP_LINK_FACEBOOK = "followuplinkfacebook";
 	String FOLLOWUP_LINK_TWITTER = "followuplinktwitter";
 	String FOLLOWUP_LINK_YOUTUBE = "followuplinkyoutube";
 	String FOLLOWUP_LINK_LINKEDIN = "followuplinklinkedin";
-	
+
+	int EMPLOYER_ROLE_ID = 3;
+	String phone = "Phone";
 
 }
