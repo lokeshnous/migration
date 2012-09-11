@@ -65,6 +65,13 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String DEPLOY_STRING_GET_USER_DETAILS = "deployForGetUserDetails";
 	
 	private static final String IS_FEATURED = "custentityfeaturedemployee";
+	private static final String AMP_RECORD_TYPE = "&recordtype=";
+	
+	private static final String AMP_ID = "&id=";
+	private static final String ERROR_STRING = "error";
+	
+	private static final String RECORD_ALREADY_EXIST_MSG = "record already exist";
+	private static final String TRUE_STRING = "true";
 	
 
 	/**
@@ -279,16 +286,16 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
-			if (jsonResponse.contains("error")) {
+			if (jsonResponse.contains(ERROR_STRING)) {
 				LOGGER.info("Error occurred while getting the response from NetSuite.");
 				throw new JobBoardNetSuiteServiceException(
 						"Error occurred while getting the response from NetSuite.");
 			} else if (jsonResponse.contains("already exist")) {
-				userDTO.setNsStatus("record already exist");
+				userDTO.setNsStatus(RECORD_ALREADY_EXIST_MSG);
 			} else {
 				userDTO.setNsCustomerID(Integer.parseInt(jsonResponse
 						.replaceAll("\"", " ").trim()));
-				userDTO.setNsStatus("true");
+				userDTO.setNsStatus(TRUE_STRING);
 			}
 
 		} catch (IOException e) {
@@ -318,12 +325,12 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
-			if (jsonResponse.contains("error")) {
+			if (jsonResponse.contains(ERROR_STRING)) {
 				LOGGER.info("Error occurred while record updation in NetSuite.");
 				throw new JobBoardNetSuiteServiceException(
 						"Error occurred while record updation in NetSuite.");
 			} else if (jsonResponse.contains("updated")) {
-				userDTO.setNsStatus("true");
+				userDTO.setNsStatus(TRUE_STRING);
 			}
 
 		} catch (IOException e) {
@@ -356,7 +363,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					.getEntity());
 			
 			
-			if (jsonResponse.contains("error")) {
+			if (jsonResponse.contains(ERROR_STRING)) {
 				LOGGER.info("Error occurred while record updation in NetSuite.");
 				throw new JobBoardNetSuiteServiceException(
 						"Error occurred while record updation in NetSuite.");
@@ -409,7 +416,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	
 	public String formParameterForGetCustomerDetails(UserDTO userDTO, Map<String, String> queryparamMap){
 		
-		return "&recordtype="+userDTO.getRecordType()+"&id="+userDTO.getEntityId();
+		return AMP_RECORD_TYPE+userDTO.getRecordType()+AMP_ID+userDTO.getEntityId();
 		
 	}
 	
