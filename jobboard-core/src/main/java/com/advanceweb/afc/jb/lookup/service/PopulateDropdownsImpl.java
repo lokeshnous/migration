@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -29,12 +30,12 @@ import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 
 @Service("populateDropdownsService")
-@Transactional(propagation=Propagation.SUPPORTS, readOnly=false)
-public class PopulateDropdownsImpl implements PopulateDropdowns{
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+public class PopulateDropdownsImpl implements PopulateDropdowns {
 
 	@Autowired
 	private PopulateDropdownsDAO populateDropdownsDAO;
-	
+
 	@Override
 	public List<CountryDTO> getCountryList() {
 
@@ -43,13 +44,13 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 
 	@Override
 	public List<EmploymentInfoDTO> getEmployementInfoList() {
-		
+
 		return populateDropdownsDAO.getEmployementInfoList();
 	}
 
 	@Override
 	public List<DropDownDTO> getSubscriptionsList() {
-		
+
 		return populateDropdownsDAO.getSubscriptionsList();
 	}
 
@@ -72,11 +73,11 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of RadiusDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of RadiusDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of RadiusDTO for the job seeker's advance search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of RadiusDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getRadiusList()
 	 */
 	@Override
@@ -85,11 +86,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of ExcludeFromDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of ExcludeFromDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of ExcludeFromDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of ExcludeFromDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getExcludeFromList()
 	 */
 	@Override
@@ -98,11 +100,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of FromZipcodeDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of FromZipcodeDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of FromZipcodeDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of FromZipcodeDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getFromZipcodeList()
 	 */
 	@Override
@@ -111,11 +114,11 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of StateDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of StateDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of StateDTO for the job seeker's advance search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of StateDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getStateList()
 	 */
 	@Override
@@ -124,11 +127,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of MetroAreaDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of MetroAreaDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of MetroAreaDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of MetroAreaDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getMetroAreaList()
 	 */
 	@Override
@@ -137,11 +141,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of EmploymentTypeDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of EmploymentTypeDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of EmploymentTypeDTO for the job seeker's
+	 *             advance search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of EmploymentTypeDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getEmploymentTypeList()
 	 */
 	@Override
@@ -150,11 +155,12 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of JobPostedDateDTO for the job seeker's advance search
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of JobPostedDateDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of JobPostedDateDTO for the job seeker's advance
+	 *             search
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of JobPostedDateDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getJobPostedDateList()
 	 */
 	@Override
@@ -173,11 +179,11 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 	}
 
 	/**
-	   @Author :Prince Mathew
-	   @Purpose:To get the list of ResumeVisibilityDTO for the resume
-	   @Created:Jul 10, 2012
-	   @Param  :not required
-	   @Return :List of ResumeVisibilityDTO
+	 * @Author :Prince Mathew
+	 * @Purpose:To get the list of ResumeVisibilityDTO for the resume
+	 * @Created:Jul 10, 2012
+	 * @Param :not required
+	 * @Return :List of ResumeVisibilityDTO
 	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getResumeVisibilityList()
 	 */
 	@Override
@@ -187,7 +193,7 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 
 	@Override
 	public List<DropDownDTO> populateDropdown(String dropDownName) {
-		
+
 		return populateDropdownsDAO.populateDropdown(dropDownName);
 	}
 
@@ -198,41 +204,46 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 
 	@Override
 	public List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName) {
-		return populateDropdownsDAO.populateResumeBuilderDropdowns(dropdownName);
+		return populateDropdownsDAO
+				.populateResumeBuilderDropdowns(dropdownName);
 	}
 
 	@Override
-	public List<DropDownDTO> populateEducationDegreesDropdowns() {	
+	public List<DropDownDTO> populateEducationDegreesDropdowns() {
 		return populateDropdownsDAO.populateEducationDegreesDropdowns();
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId, int roleId) {
-		return populateDropdownsDAO.populateJobOwnersDropdown(facilityId, userId, roleId);
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId,
+			int userId, int roleId) {
+		return populateDropdownsDAO.populateJobOwnersDropdown(facilityId,
+				userId, roleId);
 	}
 
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId) {
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
+			int userId) {
 
-		return populateDropdownsDAO.populateBrandingTemplateDropdown(facilityId, userId);
+		return populateDropdownsDAO.populateBrandingTemplateDropdown(
+				facilityId, userId);
 	}
 
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
-		
+
 		return populateDropdownsDAO.populateJobPostingTypeDropdowns(facilityId);
 	}
 
 	@Override
 	public List<String> populateCityAutoComplete(String city) {
-		
+
 		return populateDropdownsDAO.populateCityAutoComplete(city);
 	}
 
 	@Override
 	public String populateStateAutoComplete(String city) {
-		
+
 		return populateDropdownsDAO.populateStateAutoComplete(city);
 	}
 
@@ -248,16 +259,27 @@ public class PopulateDropdownsImpl implements PopulateDropdowns{
 
 	@Override
 	public String getCountry(String city, String state, String postalCode) {
-		
+
 		return populateDropdownsDAO.getCountry(city, state, postalCode);
 	}
 
 	@Override
 	public LocationDTO populateLocation(String postalCode) {
 		return populateDropdownsDAO.populateLocation(postalCode);
-	}	
+	}
+
 	@Override
-	public Map<String,String> getJobStatusList() {
+	public Map<String, String> getJobStatusList() {
 		return populateDropdownsDAO.getJobStatusList();
-	}	
+	}
+
+	@Override
+	public List<String> getEmployerNamesList(String employerName) {
+		return populateDropdownsDAO.getEmployerNamesList(employerName);
+	}
+
+	@Override
+	public Map getEmployerDetails(String employerName) {
+		return populateDropdownsDAO.getEmployerDetails(employerName);
+	}
 }
