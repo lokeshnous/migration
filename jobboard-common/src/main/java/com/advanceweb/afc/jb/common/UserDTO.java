@@ -30,7 +30,16 @@ public class UserDTO {
 	private int entityId;
 	private boolean isFeatured;
 	private boolean isInvoiceEnabled;
+	private boolean isXmlFeedEnabled;
 	
+
+	public boolean isXmlFeedEnabled() {
+		return isXmlFeedEnabled;
+	}
+
+	public void setXmlFeedEnabled(boolean isXmlFeedEnabled) {
+		this.isXmlFeedEnabled = isXmlFeedEnabled;
+	}
 
 	public boolean isInvoiceEnabled() {
 		return isInvoiceEnabled;
