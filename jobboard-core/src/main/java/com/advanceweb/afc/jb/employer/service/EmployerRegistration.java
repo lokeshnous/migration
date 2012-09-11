@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -43,6 +44,7 @@ public class EmployerRegistration implements ProfileRegistration,
 
 	}
 
+	/**
 	/**
 	 * 
 	 * @param profileDTO
@@ -170,6 +172,30 @@ public class EmployerRegistration implements ProfileRegistration,
 	public boolean validateProfileAttributes(int jobseekerId) {
 
 		return employerRegistrationDAO.validateProfileAttributes(jobseekerId);
+	}
+
+	@Override
+	public boolean addEmployer(AccountProfileDTO accountDto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<AdmFacility> getAssocEmployerNames(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean saveEmployerDetails(AccountProfileDTO dto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteAssocEmployer(String facilityId, int userId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
