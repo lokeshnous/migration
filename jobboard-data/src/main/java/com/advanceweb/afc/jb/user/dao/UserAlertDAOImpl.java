@@ -56,16 +56,17 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	public List<UserAlertDTO> viewalerts(int userId, int facilityId,
 			List<ManageAccessPermissionDTO> jbOwnerList) {
 		List<AdmFacilityAlert> facilityAlerts = new ArrayList<AdmFacilityAlert>();
-		for (ManageAccessPermissionDTO permissionDTO : jbOwnerList) {
-			int OwnerId = permissionDTO.getOwnerId();
-			List<AdmFacilityAlert> userAlerts = hibernateTemplate
-					.find(" from AdmFacilityAlert  where userId = ? and deleteDt is null",
-							OwnerId);
-			facilityAlerts.addAll(userAlerts);
+		if (jbOwnerList != null && !jbOwnerList.isEmpty()) {
+			for (ManageAccessPermissionDTO permissionDTO : jbOwnerList) {
+				int OwnerId = permissionDTO.getOwnerId();
+				List<AdmFacilityAlert> userAlerts = hibernateTemplate
+						.find(" from AdmFacilityAlert  where userId = ? and deleteDt is null",
+								OwnerId);
+				facilityAlerts.addAll(userAlerts);
+			}
 		}
 		return conversionHelper.transformAdmUserAlertToAlertDTO(jbOwnerList,
 				facilityAlerts);
-
 	}
 
 	/**

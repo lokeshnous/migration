@@ -54,21 +54,23 @@ public class EmpConversionHelper {
 			List<ManageAccessPermissionDTO> jbOwnerList,
 			List<AdmFacilityAlert> userAlerts) {
 		List<UserAlertDTO> alertDTOs = new ArrayList<UserAlertDTO>();
-		for (ManageAccessPermissionDTO permissionDTO : jbOwnerList) {
-			for (AdmFacilityAlert admUserAlert : userAlerts) {
-				if (permissionDTO.getOwnerId() == admUserAlert.getUserId()) {
-					UserAlertDTO alertDTO = new UserAlertDTO();
-					AdmAlert alert = admUserAlert.getAdmAlert();
-					alertDTO.setAlertId(alert.getAlertId());
-					alertDTO.setAlertType(alert.getName());
-					alertDTO.setUserId(admUserAlert.getUserId());
-					alertDTO.setFacilityAlertId(admUserAlert
-							.getFacilityAlertId());
-					alertDTO.setJobOwner(permissionDTO.getOwnerName());
-					alertDTO.setSetDate(DateUtils
-							.convertSQLDateToStdDate(admUserAlert.getCreateDt()
-									.toString()));
-					alertDTOs.add(alertDTO);
+		if (jbOwnerList != null && !jbOwnerList.isEmpty()) {
+			for (ManageAccessPermissionDTO permissionDTO : jbOwnerList) {
+				for (AdmFacilityAlert admUserAlert : userAlerts) {
+					if (permissionDTO.getOwnerId() == admUserAlert.getUserId()) {
+						UserAlertDTO alertDTO = new UserAlertDTO();
+						AdmAlert alert = admUserAlert.getAdmAlert();
+						alertDTO.setAlertId(alert.getAlertId());
+						alertDTO.setAlertType(alert.getName());
+						alertDTO.setUserId(admUserAlert.getUserId());
+						alertDTO.setFacilityAlertId(admUserAlert
+								.getFacilityAlertId());
+						alertDTO.setJobOwner(permissionDTO.getOwnerName());
+						alertDTO.setSetDate(DateUtils
+								.convertSQLDateToStdDate(admUserAlert
+										.getCreateDt().toString()));
+						alertDTOs.add(alertDTO);
+					}
 				}
 			}
 		}

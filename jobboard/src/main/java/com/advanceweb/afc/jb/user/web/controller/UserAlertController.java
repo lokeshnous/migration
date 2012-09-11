@@ -83,7 +83,7 @@ public class UserAlertController {
 
 		List<DropDownDTO> dropDownList = null;
 
-		if (!jbOwnerList.isEmpty()) {
+		if (jbOwnerList != null && !jbOwnerList.isEmpty()) {
 			dropDownList = transferUserAlert
 					.jbOwnerListTODropDownDTO(jbOwnerList);
 		}
