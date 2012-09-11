@@ -32,7 +32,7 @@
 
 		
 		$("#Cancel").click(function() {
- 	           parent.window.location.reload();
+ 	          // parent.window.location.reload();
 	           parent.$.nmTop().close();
     });
 
