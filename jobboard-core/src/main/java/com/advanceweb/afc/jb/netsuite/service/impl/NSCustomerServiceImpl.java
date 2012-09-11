@@ -74,6 +74,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String TRUE_STRING = "true";
 	
 	private static final String IS_INVOICE_ENABLED = "custentityinvoiceenabled";
+	private static final String IS_XML_FEED_ENABLED = "custentitycustxmlfeed";
 	
 
 	/**
@@ -375,8 +376,10 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResponse);
 					userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(IS_INVOICE_ENABLED).toString()));
 					userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
+					userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(IS_XML_FEED_ENABLED).toString()));
 					LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
 					LOGGER.info("IS_INVOICE_ENABLED===>"+jsonObject.get(IS_INVOICE_ENABLED));
+					LOGGER.info("IS_XML_FEED_ENABLED===>"+jsonObject.get(IS_XML_FEED_ENABLED));
 				} catch (JSONException e) {
 					LOGGER.error(e);
 				}
