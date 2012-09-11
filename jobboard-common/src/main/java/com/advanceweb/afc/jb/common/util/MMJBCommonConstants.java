@@ -277,6 +277,9 @@ public interface MMJBCommonConstants {
 	String FOLLOWUP_LINK_TWITTER = "followuplinktwitter";
 	String FOLLOWUP_LINK_YOUTUBE = "followuplinkyoutube";
 	String FOLLOWUP_LINK_LINKEDIN = "followuplinklinkedin";
+	// Manage access permission
+	String FULL_ACCESS ="5";
+	
 
 	int EMPLOYER_ROLE_ID = 3;
 	String phone = "Phone";

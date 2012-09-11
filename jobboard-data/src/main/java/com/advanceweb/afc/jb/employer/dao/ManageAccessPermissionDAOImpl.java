@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,8 +26,6 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
-
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 
 /**
  * To save new job Owner * @author deviprasadm
@@ -227,9 +226,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 					// update the role in AdmUserFacility
 					AdmUserFacility admUserFacilityNew = (AdmUserFacility) hibernateTemplateCareers
 							.load(AdmUserFacility.class,
-									admUserFacility.getFacilityPK());
-
-					// update the role in AdmUserRole
+									admUserFacility.getFacilityPK());				
 
 					if (null != admUserRole.getRolePK()
 							&& admUserRole.getRolePK().getUserId() > 0) {
@@ -238,16 +235,20 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 										admUserRole.getRolePK());
 						if (admUserRole.getRolePK().getRoleId() != accessPermissionDTO
 								.getTypeOfAccess()) {
-							admUserFacilityNew.getFacilityPK().setRoleId(
-									accessPermissionDTO.getTypeOfAccess());
-							admUserRoleNew.getRolePK().setRoleId(
-									accessPermissionDTO.getTypeOfAccess());
-
-							hibernateTemplateCareers.saveOrUpdate(
-									"AdmUserFacility", admUserFacilityNew);
-							hibernateTemplateCareers.saveOrUpdate(
-									"AdmUserRole", admUserRoleNew);
-
+							// update the role in AdmUserRole
+							Query updateAdmUserRole = hibernateTemplateCareers.getSessionFactory().getCurrentSession().createSQLQuery(" { call UpdateAdmUserRole(?,?,?) }");
+							updateAdmUserRole.setInteger(0,accessPermissionDTO.getTypeOfAccess());  // first parameter, index starts with 0
+							updateAdmUserRole.setInteger(1,admUserRoleNew.getRolePK().getRoleId()); // secon parameter
+							updateAdmUserRole.setInteger(2,admUserRoleNew.getRolePK().getUserId());
+							// update the role in AdmUserFacility
+							Query updateAdmFacilityUserRole = hibernateTemplateCareers.getSessionFactory().getCurrentSession().createSQLQuery(" { call UpdateAdmUserFacility(?,?,?,?) }");
+							updateAdmFacilityUserRole.setInteger(0,accessPermissionDTO.getTypeOfAccess());  // first parameter, index starts with 0
+							updateAdmFacilityUserRole.setInteger(1,admUserFacilityNew.getFacilityPK().getRoleId()); // secon parameter
+							updateAdmFacilityUserRole.setInteger(2,admUserFacilityNew.getFacilityPK().getUserId());
+							updateAdmFacilityUserRole.setInteger(3,admUserFacilityNew.getFacilityPK().getFacilityId());
+							
+							updateAdmFacilityUserRole.executeUpdate();
+							updateAdmUserRole.executeUpdate();
 						}
 						LOGGER.info("Updated Job Owners Role To:"
 								+ accessPermissionDTO.getTypeOfAccess());
