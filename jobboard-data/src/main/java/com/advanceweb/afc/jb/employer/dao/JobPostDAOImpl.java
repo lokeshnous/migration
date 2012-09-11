@@ -606,7 +606,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 	
 	
-	public boolean decreaseAvailableCredits(){
+	public boolean validateAndDecreaseAvailableCredits(){
 		LOGGER.info("Executing -> decreaseAvailableCredits()");
 		//Schedule Jobs
 		try {

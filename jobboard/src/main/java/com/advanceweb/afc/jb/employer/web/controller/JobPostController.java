@@ -29,7 +29,9 @@ import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
@@ -67,6 +69,9 @@ public class JobPostController {
 	private static final String ERROR_MESSAGE = "errorMessage";
 	private static final String FORWORD_MANAGE_JOBPOST = "forward:/employer/manageJobPost.html";
 	private static final String UPDATE_JOBS = "/updateJobs";
+	
+	@Autowired
+	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
 	public ModelAndView showPostJob(HttpSession session) {
@@ -651,6 +656,15 @@ public class JobPostController {
 		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
 		Matcher matcher = pattern.matcher(emailId);
 		return matcher.matches();
+	}
+	
+	
+	public void getNSCustomerDetails(HttpSession session){
+		
+		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 	}
 	
 }

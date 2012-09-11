@@ -127,9 +127,9 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public boolean decreaseAvailableCredits() {
+	public boolean validateAndDecreaseAvailableCredits() {
 
-		return employerJobPostDAO.decreaseAvailableCredits();
+		return employerJobPostDAO.validateAndDecreaseAvailableCredits();
 	}
 
 }
