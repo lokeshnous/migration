@@ -1896,7 +1896,7 @@ select {
 	float: left;
 }
 
-.lableText3,.lableTextSelect,.lableText4 {
+.lableText3,.lableTextSelect,.lableText4,.lableText5 {
 	width: 160px;
 	float: left;
 	padding: 4px 15px 0 0;
@@ -1908,9 +1908,11 @@ select {
 	padding-top: 6px !important;
 } /* MM: changed */
 .lableText4 {
-	width: 160px !important
+	width: 160px !important;
 }
-
+.lableText5{
+	width: 280px !important;
+}
 .splLableText {
 	width: auto;
 	float: left;
@@ -4038,4 +4040,11 @@ orange:hover {
 }
 .GetNumPage{
 	width:299px !important;
+}
+.AdminLinkAlign{
+	width:310px; 
+	height:35px; 
+	float:left; 
+	text-align:center; 
+	padding-top:25px;
 }

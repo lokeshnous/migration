@@ -1,15 +1,13 @@
-package com.advanceweb.afc.jb.admin.dao;
+package com.advanceweb.afc.jb.admin.service;
 
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 
-public interface AdminDAO {
-	
-	/**
-	 * @param email
-	 * @return
-	 */
-	boolean validateEmail(String email);
+/**
+ * @author muralikc
+ *
+ */
+public interface ImpersonateUserService {
 	
 	/**
 	 * @param adminDTO

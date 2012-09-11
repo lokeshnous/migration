@@ -26,20 +26,29 @@ public class AdminValidation {
 	/**
 	 * Validating the emailId
 	 * 
-	 * @param registerForm
+	 * @param form
 	 * @return
 	 * @return
 	 */
-	public void validateEmail(AdminLoginForm registerForm, Errors errors) {
-		if (StringUtils.isEmpty(registerForm.getJobSeekerOrEmpOrAgeEmail())) {
-			errors.rejectValue("jobSeekerOrEmpOrAgeEmail", "NotEmpty",
-					"Email id should not be blank");
+	public void validateEmail(AdminLoginForm form, Errors errors) {
+		if (StringUtils.isEmpty(form.getEmpOrAgencyEmail())
+				|| StringUtils.isEmpty(form.getPassword())
+				|| StringUtils.isEmpty(form.getUserEmail())) {
+			errors.rejectValue("empOrAgencyEmail", "NotEmpty",
+					"Please fill all the fields");
 		}
-		 if(!StringUtils.isEmpty(registerForm.getJobSeekerOrEmpOrAgeEmail())){
-			 if(!validateEmailPattern(registerForm.getJobSeekerOrEmpOrAgeEmail())){
-				 errors.rejectValue("jobSeekerOrEmpOrAgeEmail", "NotEmpty", "Invalid Email Id"); 
-			 }
-		 }
+		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())) {
+			if (!validateEmailPattern(form.getEmpOrAgencyEmail())) {
+				errors.rejectValue("empOrAgencyEmail", "NotEmpty",
+						"Invalid Employer/Agency Email Id");
+			}
+		}
+		if (!StringUtils.isEmpty(form.getUserEmail())) {
+			if (!validateEmailPattern(form.getUserEmail())) {
+				errors.rejectValue("userEmail", "NotEmpty",
+						"Invalid User Email Id");
+			}
+		}
 
 	}
 

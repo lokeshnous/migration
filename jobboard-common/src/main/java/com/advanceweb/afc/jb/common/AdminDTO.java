@@ -1,16 +1,8 @@
-package com.advanceweb.afc.jb.admin.web.controller;
+package com.advanceweb.afc.jb.common;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-public class AdminLoginForm {
-
-	@NotEmpty
+public class AdminDTO {
 	private String userEmail;
-
-	@NotEmpty
 	private String empOrAgencyEmail;
-
-	@NotEmpty
 	private String password;
 
 	/**
@@ -36,7 +28,8 @@ public class AdminLoginForm {
 	}
 
 	/**
-	 * @param empOrAgencyEmail the empOrAgencyEmail to set
+	 * @param empOrAgencyEmail
+	 *            the empOrAgencyEmail to set
 	 */
 	public void setEmpOrAgencyEmail(String empOrAgencyEmail) {
 		this.empOrAgencyEmail = empOrAgencyEmail;

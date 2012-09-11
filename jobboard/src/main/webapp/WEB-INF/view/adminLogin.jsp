@@ -4,7 +4,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List;"%>
 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -34,11 +34,11 @@ JAVASCRIPT FILES
 		    jQuery(".megamenu").megamenu();
 		    
 		    $("#impersonation").displaypopup("#impersonation",
-					"770", "360");
+					"790", "360");
 		    $("#editJobPosting").displaypopup("#editJobPosting",
-					"770", "360");
+					"790", "360");
 		    $("#inventory").displaypopup("#inventory",
-					"770", "360");
+					"790", "360");
 		});
 		</script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
@@ -154,10 +154,10 @@ JAVASCRIPT FILES
 				<div class="popupHeader Padding0  OrangeBG marginBottom5">
 					<h2>Admin</h2>
 				</div>
-				<form:form method="get">
-					<a id="impersonation" class="boldText" href="<%=request.getContextPath()%>/admin/login.html">Impersonation</a><br>
-					<a id="editJobPosting" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPosting.html">Manage/Edit Job Posting</a><br>
-					<a id="inventory" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPostInventory.html">Manage/Edit Job Posting Inventory</a>
+				<form:form method="POST">
+					<div class="AdminLinkAlign"><a id="impersonation" class="boldText" href="<%=request.getContextPath()%>/admin/login.html">Impersonation</a></div>
+					<div class="AdminLinkAlign"><a id="editJobPosting" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPosting.html">Manage/Edit Job Posting</a></div>
+					<div class="AdminLinkAlign"><a id="inventory" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPostInventory.html">Manage/Edit Job Posting Inventory</a></div>
 				</form:form>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">

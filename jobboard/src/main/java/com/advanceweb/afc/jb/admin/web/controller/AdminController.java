@@ -1,15 +1,21 @@
 package com.advanceweb.afc.jb.admin.web.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.admin.service.ImpersonateUserService;
+import com.advanceweb.afc.jb.common.AdminDTO;
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -21,12 +27,21 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @SessionAttributes("adminLoginForm")
 @Scope("session")
 public class AdminController {
+	private static final Logger LOGGER = Logger
+			.getLogger("AdminController.class");
+
 	
 	@Autowired
 	private AdminValidation adminValidation;
 	
 	@Autowired
 	private ProfileRegistration adminService;
+	
+	@Autowired
+	TransformAdminImpersonation transformAdminImpersonation;
+	
+	@Autowired
+	ImpersonateUserService impersonateUserService;
 	
 	@RequestMapping(value = "/adminMenu", method = RequestMethod.GET)
 	public ModelAndView adminMenuPage(ModelMap map) {
@@ -45,20 +60,33 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/authenticate", method = RequestMethod.GET)
-	public ModelAndView impersonateTheUser(AdminLoginForm adminLoginForm, BindingResult result){
+	@SuppressWarnings("unused")
+	@ResponseBody
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public String impersonateTheUser(@ModelAttribute("adminLoginForm") AdminLoginForm form, BindingResult result){
 		ModelAndView model = new ModelAndView();
-		adminValidation.validate(adminLoginForm, result);
+		adminValidation.validate(form, result);
 		model.setViewName("adminLogin");
 		if(result.hasErrors()){
-			return model;
+			return result.getFieldError().getDefaultMessage();
 		}
-		if (adminService.validateEmail(adminLoginForm.getJobSeekerOrEmpOrAgeEmail())) {
+		if (!adminService.validateEmail(form.getEmpOrAgencyEmail())) {
+			return "Not a register Employer/Agency!";
+		}
+		// This is used to check if user authenticated with Open AM.
+		boolean isAuthenticated = OpenAMEUtility.getOpenAMAuthentication(form.getUserEmail(),form.getPassword());
+		if(isAuthenticated){
+			LOGGER.info("OpenAM : valid user!");
 		}else{
-			result.rejectValue("jobSeekerOrEmpOrAgeEmail", "NotEmpty",
-					"Not a register user!");
+			LOGGER.info("OpenAM : Invalid User E-mail, password");
+			return "Not a valid User E-Mail Or Password from openAM";
 		}
-		return model;
+		if(!impersonateUserService.validateAdminCredentials(form.getUserEmail(), form.getPassword())){
+			return "Not a valid User E-Mail Or Password";
+		}
+		AdminDTO adminDTO =transformAdminImpersonation.transformAdminFormToDTO(form);
+		boolean adminuserDto = impersonateUserService.impersonateUser(adminDTO);
+		return "";
 	}
 	
 	@RequestMapping(value="/editJobPosting")

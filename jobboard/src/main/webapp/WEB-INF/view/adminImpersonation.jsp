@@ -8,22 +8,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
-
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<link href="../resources/css/jquery-ui.css" rel="stylesheet"
-	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
-<script src="../resources/js/jquery.dataTables.nightly.js"></script>
-<script src="../resources/js/searchResultsdatatable.js"></script>
-<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
-
-<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+	$('#impersonate').click(function(){			
+ 			
+			$.ajax({url:"${pageContext.request.contextPath}/admin/authenticate.html",
+				data:$('#adminLoginFormId').serialize(),
+				type:"POST",
+				success: function(data) {
+					if(data == ''){
+						alert("Data saved successfully !");
+						parent.$.nmTop().close();
+						window.location.reload();
+					}else{
+						$("#errmsg").html(data);
+					}
+				 },
+					error : function(data) {
+						alert('Unable to process');
+					},
+					complete : function(data) {
+					}
+			});
+		});
 	});
 </script>
 </head>
@@ -38,47 +47,35 @@
 		</div>
 		<div class="popUpContainerWrapper">
 			<div class="popUpContainerWrapper">
-				<form:form method="get" action="../admin/authenticate.html"
-					commandName="adminLoginForm">
-					<div class="row ">
-						<div class="row marginTop15">
-							<div class="lableTextCoverletter width285">Email Address of
-								Employer / Agency / JobSeeker :</div>
-							<div class="input_grp5 width400 ">
-								<div class="floatLeft width400">
-									<form:input path="jobSeekerOrEmpOrAgeEmail" name="Exclude"
-										class="jb_input2Coverletter FontSize15" />
-								</div>
-							</div>
+			<div class="lableText5"></div>
+			<div id="errmsg" class="FormErrorDisplayText"></div>
+				<form:form method="POST" action="" commandName="adminLoginForm" id="adminLoginFormId">
+					<div class="row">
+						<div class="rowEvenNewSpacing">
+							<div class="lableText5">Email Address of Employer / Agency:</div>
+							<form:input path="empOrAgencyEmail" name="Exclude" class="job_seeker_email" />
 						</div>
 						<div class="row">
-							<FONT class="validationMsgPadding" color="red"><form:errors
-									path="jobSeekerOrEmpOrAgeEmail" /></FONT>
+						<span class="validationMsgPadding">
+						<form:errors path="empOrAgencyEmail" />
+						</span>
 						</div>
-						<div class="row marginTop15">
-							<div class="lableTextCoverletter width285">User Email
-								Address :</div>
-							<div class="input_grp5 width400 ">
-								<div class="floatLeft width400">
-									<input type="text" name="Exclude"
-										class="jb_input2Coverletter FontSize15" />
-								</div>
-							</div>
+						
+						<div class="rowEvenNewSpacing">
+						<div class="lableText5">User Email Address :</div>
+						<form:input name="Exclude" path="userEmail" class="job_seeker_email" />
 						</div>
-						<div class="row marginTop15">
-							<div class="lableTextCoverletter width285">Password :</div>
-							<div class="input_grp5 width400 ">
-								<div class="floatLeft width400">
-									<input type="password" name="Exclude"
-										class="jb_input2Coverletter FontSize15" />
-								</div>
-							</div>
+						
+						<div class="rowEvenNewSpacing">
+						<div class="lableText5">Password :</div>
+						<form:password name="Exclude" path="password" class="job_seeker_email" />
 						</div>
-						<div
-							class="rowEvenNewSpacing marginTop20 paddingBottom10 marginBottom25">
-							<span class="floatLeft marginTop10 marginLeft305"><input
-								type="submit" value="Impersonate" class="btn_sm orange"><a
-								href="" class="btn_sm orange">Cancel</a></span>
+						
+						<div class="rowEvenNewSpacing">
+							<span class="lableText5"></span>
+							<input type="button" value="Impersonate" id="impersonate" class="orange"/>
+							<!-- <a href="" class="btn_sm orange">Cancel</a> -->
+							<input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 						</div>
 					</div>
 				</form:form>

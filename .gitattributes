@@ -7,6 +7,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddOnDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityContactDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdminDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
@@ -94,7 +95,8 @@ jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/netSuite.properties -text
 jobboard-core/pom.xml -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/AdminService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/ImpersonateUserService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/ImpesfonateUserServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/AgencyDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/impl/AgencyDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text
@@ -386,6 +388,7 @@ jobboard/src/main/java/Messages_IN.properties -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminLoginForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminValidation.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/TransformAdminImpersonation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyRegistrationController.java -text
