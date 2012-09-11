@@ -6,17 +6,61 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="refresh" content="10">
 <title>ADVANCE Heathcare Jobs</title>
 
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-	jQuery(document).ready(function() {
+jQuery(document).ready(function() {
+		$("#SearchJob").click(function(event){		
+			var advJobId = $("#advJobId").val();
+			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearch.html?advJobId="+advJobId,
+				success: function(data){ 
+				 	loadTable();
+				},
+				error: function(response) {
+					alert("Server Error : "+response.status);
+				},
+				complete: function() {
+					
+				}
+			}); 
+		});
 		jQuery(".megamenu").megamenu();
-	});
-</script>
+
+window.onload = function() {
+	loadTable();
+}
+
+function loadTable(){
+	$.ajaxSetup({ cache: false });
+	
+	$.ajax({
+		url : '../admin/adminEditJobSave.html',
+		data : ({}),
+		
+		success : function(data) {
+		$("#tableContent").html(data);
+		},
+		error : function(data) {
+			alert('Unable to process');
+		},
+		complete : function(data) {
+			
+		}
+	}
+	);
+}
+
+});
+			
+</script> 
+
+
 </head>
 
 <body class="job_board">
+<form:form method="GET" action="manageEditJobSearch.html" id="formid" name="formid">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
@@ -24,47 +68,35 @@
 			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/>
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="POST">
+		
+		<input type="hidden" name="advJobId"/>
+		<input type="hidden" name="method">		
+		
+				
 			<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Adv Job Id
 					</span>
-					<input  name="advJobId" id="advJobId" class="job_seeker_email" type="text"/>
-					<input type="button" value="Search" name="Search" id="Search" class="btn_sm orange" />
-					<div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div>
+					<input name="advJobId" id="advJobId" class="job_seeker_email" type="text"/>
+					<input type="button" value="Search" name="SearchJob" id="SearchJob" class="btn_sm orange"  />
+					<!-- <div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div> -->
 			</div>
-			  <div class="rowEvenNewSpacing">           
-	            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
-	              <tr class="orange">
-	              	<th width="20%" align="left" scope="col">Job Id</th>
-	              	<th width="20%" align="left" scope="col">Adv Job Id</th>
-	                <th width="33%" align="left" scope="col">Job Title</th>
-	                <th width="33%" align="left" scope="col">Location</th>
-	                <th width="20%" align="center" scope="col">Job Status</th>               
-	              </tr>	            
-	               <tr>               
-	                <td align="left"></td>
-	                <td align="center"></td>
-	                <td align="center"></td>
-	                <td align="center"></td>
-	                <td align="center"></td>                
-	              </tr>              
-	            </table> 
-	            </div>        	
-              		<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
+			 <jsp:include page="adminEditJobSave.jsp" />
+		 	 <div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
 							<input type="button" value="Save" name="Save" id="Save" class="btn_sm orange" />
-							<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel"/>
+							<input type="button" value="Cancel" name="Cancel" id="Cancel" class="orange" />
 								
 						</span>
 					</div>
 				<div class="clearfix">
 				</div>
-			</form:form>
+			
 		</div>
 		<div class="clearfix">
 		</div>
 	</div>
+	</form:form>
 </body>
 
 </html>
