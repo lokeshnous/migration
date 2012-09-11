@@ -145,6 +145,12 @@ public class JobPostController {
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
 		}
+		
+		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+		
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
 		dto.setbActive(true);

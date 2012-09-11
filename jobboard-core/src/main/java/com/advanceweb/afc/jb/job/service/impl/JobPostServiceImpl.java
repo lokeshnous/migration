@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
+import com.advanceweb.afc.jb.job.service.JobPostDelegate;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 
 /**
@@ -25,6 +27,9 @@ public class JobPostServiceImpl implements JobPostService {
 	
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
+	
+	@Autowired
+	private JobPostDelegate jobPostDelegate;
 	
 	/**
 	   @Author :Prince Mathew
@@ -131,9 +136,23 @@ public class JobPostServiceImpl implements JobPostService {
 
 		return employerJobPostDAO.validateAndDecreaseAvailableCredits();
 	}
+
+	
+	/**
+	 * This method is used to get the net suite customer details based on
+	 * customer id.
+	 * @param int admFacilityID
+	 * @return int nsCustomerID
+	 */
+	@Override
+	public UserDTO getNSCustomerDetails(int nsCustomerID){
+		return  jobPostDelegate.getNSCustomerDetails(nsCustomerID);
+	}
+
 	@Override
 	public List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId){
 		return employerJobPostDAO.retrieveAllJobPostByADvSearch(advSearchId);
 	}
+
 
 }

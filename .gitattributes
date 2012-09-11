@@ -118,6 +118,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.jav
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/Job.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobApplicationService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostInventoryService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobPostService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobSearch.java -text
@@ -126,6 +127,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/JobService.java -t
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/ManageAccessPermissionService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/SaveSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobApplicationServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostInventoryServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobSeekerJobDetailServiceImpl.java -text

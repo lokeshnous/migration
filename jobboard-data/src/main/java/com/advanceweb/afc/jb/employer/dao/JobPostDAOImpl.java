@@ -20,10 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAuditPK;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
@@ -58,7 +57,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private int numberOfJobRecordsByStatus;
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
-
+	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -655,6 +654,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		cal.add(Calendar.DATE, MMJBCommonConstants.AUTO_RENEWAL_DAYS);	
 		return cal.getTime();
 	}
+
 	/**
 	 * @Author kartikm
 	 * @Purpose:This method is called to retrieve all posted job 
@@ -682,4 +682,5 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
+
 }

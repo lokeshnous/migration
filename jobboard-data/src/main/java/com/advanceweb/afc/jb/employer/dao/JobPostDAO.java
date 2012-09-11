@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * @Author : Prince Mathew
