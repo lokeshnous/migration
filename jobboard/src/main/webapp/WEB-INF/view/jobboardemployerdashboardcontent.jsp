@@ -33,6 +33,10 @@
 				$("#viewAlertPopUp").displaypopup("#viewAlertPopUp", "770",
 						"360");
 			});
+	
+	
+	
+	
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -50,6 +54,7 @@
 					<img src="../resources/images/tranBg.png" width="30" height="30"
 						alt="User Profile">
 				</div>
+				
 				<div class="dashboardPanalcontent marginTop5">
 					<h2 class="noTopBorder">Profile Management</h2>
 					<div class="lableTextDashBoard">
@@ -80,6 +85,9 @@
 								href="<%=request.getContextPath()%>/empProfile/employerprofile.html">Manage
 								Featured Employer Profile</a>
 						</p>
+					</div>
+					<div class="FormErrorDisplayText">
+					${error}<br /><br />
 					</div>
 				</div>
 			</div>

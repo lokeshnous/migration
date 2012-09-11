@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 
@@ -36,14 +37,32 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 @SessionAttributes("employerProfileManagementForm")
 public class EmployerProfileManagementController {
 	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
+	private static final String FORM_PAGE = "employerDashboard";
 	private static final String STR_NOTEMPTY = "NotEmpty";
+
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
+	
+	private @Value("${isFeaturedEmployerErrorMsg}")
+	String isFeaturedEmployerErrorMsg;
+	
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
-	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm employerProfileManagementForm,HttpSession session) {
+
+	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm employerProfileManagementForm,
+			HttpSession session) {
+
 		ModelAndView model = new ModelAndView();
+
+		int admFacilityId = Integer.parseInt(session.getAttribute(MMJBCommonConstants.FACILITY_ID).toString());
+		// check whether this user is features employer or not.
+		
+		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
+		
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+		
 		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
 				.getEmployerDetails((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
@@ -66,8 +85,19 @@ public class EmployerProfileManagementController {
 			/*
 			employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
 		}
-		model.addObject("employerProfileManagementForm", employerProfileManagementForm);
-		model.setViewName("manageFeatureEmpPro");
+		//userDTO.setFeatured(true);
+		if(userDTO.isFeatured()){
+			model.addObject("employerProfileManagementForm", employerProfileManagementForm);
+			model.setViewName("manageFeatureEmpPro");
+		}else{
+			LOGGER.info("Not a Featured Employer.");
+			model.setViewName("manageFeatureEmpPro");
+			model.addObject("error",isFeaturedEmployerErrorMsg);
+		}
+		
+
+		
+
 		return model;
 	}
 

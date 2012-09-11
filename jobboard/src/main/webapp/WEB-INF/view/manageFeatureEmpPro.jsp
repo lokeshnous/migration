@@ -18,6 +18,9 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('#colorPkr').colorPicker();
+		var error = $('#FormErrorDisplayText').text().trim();
+		alert(error);
+		cancelProcess();
 	});
 </script>
 
@@ -47,7 +50,9 @@
 					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 					<div class="clearfix"></div>
 					<!--nav-->
-
+					<div id="FormErrorDisplayText" class="FormErrorDisplayText" align="center">
+						${error}
+					</div>
 					<!-- ad_col_right -->
 					<!-- content_wrapper -->
 					<div class="popupHeader Padding0  OrangeBG marginBottom5">
