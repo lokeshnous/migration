@@ -148,7 +148,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
 			pKey.setFacilityId(dto.getFacilityId());
 			pKey.setJobId(jpJob.getJobId());
-			pKey.setUserId(dto.getUserId());*/
+			pKey.setUserId(dto.getUserId());
+			pKey.setInventoryDetailId(Integer.valueOf(dto.getJobPostingType()));*/
 			
 			List<JpJobApply> applyJobList = jobPostConversionHelper
 					.transformJobPostDTOToJpJobApply(dto, jpJob);
