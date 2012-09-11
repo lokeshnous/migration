@@ -23,13 +23,13 @@ public class JsonUtil {
 			   //jobDTO = (JobDTO)JsonUtil.retrieveFromJson(objJson, JobDTO.class);
 		
 		//Test for cutomer
-		//NSCustomer custDTO = new NSCustomer();
-		//custDTO.setInternalID(460460);
-		//custDTO.setPhone("121-454-789");
-		//custDTO.setRecordType("customer");
-		//custDTO.setCompanyName("MyCompany");
+		/*JobDTO custDTO = new JobDTO();
+		custDTO.setInternalID(460460);
+		custDTO.setPhone("121-454-789");
+		custDTO.setRecordType("customer");
+		custDTO.setCompanyName("MyCompany");*/
 		
-		//String objJson = JsonUtil.convertToJson(custDTO);
+		//String objJson = JsonUtil.toObject(jobDTO, JobDTO.class);
 		//objJson = objJson.toLowerCase();
 		//LOGGER.info("objJson in Lowercase=>"+objJson);
 		

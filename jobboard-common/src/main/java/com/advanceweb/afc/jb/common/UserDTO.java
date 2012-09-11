@@ -26,8 +26,35 @@ public class UserDTO {
 	private String city;
 	private int nsCustomerID;
 	private String nsStatus;
-
+	private String recordType;
+	private int entityId;
+	private boolean isFeatured;
 	
+
+	public int getEntityId() {
+		return entityId;
+	}
+
+	public void setEntityId(int entityId) {
+		this.entityId = entityId;
+	}
+
+	public boolean isFeatured() {
+		return isFeatured;
+	}
+
+	public void setFeatured(boolean isFeatured) {
+		this.isFeatured = isFeatured;
+	}
+
+	public String getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(String recordType) {
+		this.recordType = recordType;
+	}
+
 	public String getNsStatus() {
 		return nsStatus;
 	}
