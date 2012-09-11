@@ -1,9 +1,17 @@
 package com.advanceweb.afc.jb.admin.web.controller;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
+import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.admin.service.ImpersonateUserService;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
@@ -30,6 +40,8 @@ public class AdminController {
 	private static final Logger LOGGER = Logger
 			.getLogger("AdminController.class");
 
+	@Autowired
+	private JobPostService employerJobPost;
 	
 	@Autowired
 	private AdminValidation adminValidation;
@@ -90,8 +102,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/editJobPosting")
-	public ModelAndView editJobPosting(){
+	public ModelAndView editJobPosting(HttpSession session){
 		ModelAndView model = new ModelAndView();
+		session.removeAttribute("postedJobList");
 		model.setViewName("adminEditJobPosting");
 		return model;
 		
@@ -103,7 +116,40 @@ public class AdminController {
 		return model;
 		
 	}
+	@RequestMapping(value = "/manageEditJobSearch", method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject getJobPostDetails(HttpServletRequest request,
+			HttpSession session, JobPostForm jobPostform,BindingResult result) {
+		JSONObject jsonObject = new JSONObject();
+		try{
+		String id=request.getParameter("advJobId");
+		session.removeAttribute("postedJobList");
+		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
+		int advSearchId=Integer.parseInt(id);		
+		postedJobList = employerJobPost.retrieveAllJobPostByADvSearch(advSearchId);
+		session.setAttribute("postedJobList", postedJobList);
+
+		}catch (Exception e) {
+			LOGGER.info("Manager Edit Job Posting Search Option");
+		}
+		return jsonObject;
+	}
 	
+	/**
+	 * Called a funtion to get the adminEditJobSave page.
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/adminEditJobSave")
+	public ModelAndView getAdminEditJobSave(HttpServletResponse response,
+			HttpServletRequest request, Model model){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("adminEditJobSave");
+		return modelAndView;
+	}
 	
 
 }
