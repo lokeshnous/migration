@@ -69,7 +69,7 @@ public class EmployerProfileManagementController {
 		LOGGER.info("Featured Start Date is "+featuredStartDate);
 		LOGGER.info("Featured End Date is "+featuredEndDate);
 		LOGGER.info("Is in Date Range=>"+isDateRange);
-		//userDTO.setFeatured(true);
+		//kuserDTO.setFeatured(true);
 		if(userDTO.isFeatured() && isDateRange){
 			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
 					.getEmployerDetails((Integer) session

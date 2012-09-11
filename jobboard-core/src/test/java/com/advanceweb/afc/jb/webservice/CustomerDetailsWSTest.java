@@ -28,11 +28,11 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Calling to authorize an user
         //customerDetailsWSTest.authorizeUser("customer", "NS101");
         //calling to authorise user using POST
-        //customerDetailsWSTest.getCustomerDetails("customer",462667);
+        customerDetailsWSTest.getCustomerDetails("customer",462867);
         //Call for item services
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
-        
+       
         //customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
         // Call for create Customer
         	//customerDetailsWSTest.createCustomer("Customer1", "company");
@@ -41,30 +41,6 @@ public class CustomerDetailsWSTest extends ServiceTest {
 
 	}
 
-	/**
-	 * This method is used to get customer details from netsuite.
-	 * 
-	 * @return
-	 */
-
-	
-	/*public String getCustomerDetails(){
-		
-		WebClient client = createWebClient();
-
-		Response response = client.get();
-		String jsonResponseString = null;
-		try {
-			jsonResponseString = IOUtils
-					.readStringFromStream((InputStream) response.getEntity());
-		} catch (IOException e) {
-			LOGGER.info("Failed to get a string represenation of the response",
-					e);
-		}
-		LOGGER.info("Json Response String for getCustomer details="
-				+ jsonResponseString);
-		return jsonResponseString;
-	}*/
 
 	/**
 	 * This method is used to authorize an user from netsuite.
@@ -125,7 +101,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	    
 	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
 	     
-		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=463366");
+		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=464867");
 	     /*client.header("Authorization", authorization);
 	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
