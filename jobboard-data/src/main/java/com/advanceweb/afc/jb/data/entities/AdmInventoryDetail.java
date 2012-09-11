@@ -39,7 +39,7 @@ public class AdmInventoryDetail {
 	@Column(name="Plan_id")
 	private int planId;
 	
-	@Column(name="Availableqty")
+	@Column(name="available_qty")
 	private int availableqty;
 	
 	@Column(name="Status")
