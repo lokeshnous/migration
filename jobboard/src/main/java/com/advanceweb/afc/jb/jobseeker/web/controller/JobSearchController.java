@@ -71,6 +71,8 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
 @RequestMapping("/jobsearch")
 public class JobSearchController {
 
+	private static final String CURRENT_URL = "currentUrl";
+
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchController.class);
 
@@ -183,7 +185,7 @@ public class JobSearchController {
 	@RequestMapping(value = "/viewJobDetails")
 	public ModelAndView viewJobDetails(@RequestParam("id") int jobId,
 			Map<String, Object> model, HttpServletRequest request, Model model1,
-			HttpSession session,HttpServletResponse response, @RequestParam("currentUrl") String currentUrl,
+			HttpSession session,HttpServletResponse response, @RequestParam(CURRENT_URL) String currentUrl,
 			@RequestParam("clickType") String clickType) {
 		
 		try {
@@ -246,7 +248,7 @@ public class JobSearchController {
 	public @ResponseBody
 	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
 			@RequestParam String userID, @RequestParam("id") int jobId,
-			@RequestParam("currentUrl") String currentUrl, HttpServletResponse response,
+			@RequestParam(CURRENT_URL) String currentUrl, HttpServletResponse response,
 			Model model,
 			@RequestParam("clickType") String clickType, HttpSession session,
 			HttpServletRequest request) {
@@ -282,17 +284,15 @@ public class JobSearchController {
 			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
 					.applyJobDetails(form.getJobID());
 		
-			if (jobApplyTypeDTO != null) {
-				if (jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
+				if (jobApplyTypeDTO != null && (jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
 						MMJBCommonConstants.APPLY_TO_ATS)
 						|| jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
-								MMJBCommonConstants.APPLY_TO_URL)) {
+								MMJBCommonConstants.APPLY_TO_URL))) {
 					jsonObject.put("applyMethod",
 							jobApplyTypeDTO.getApplyMethod());
 					jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
 					return jsonObject;
 				}
-			}
 
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
@@ -300,7 +300,7 @@ public class JobSearchController {
 				jsonObject.put(ajaxNavigationPath, navigationPath
 						+ dothtmlExtention + jobseekerPageExtention);
 				session.setAttribute("jobId", jobId);
-				session.setAttribute("currentUrl", currentUrl);
+				session.setAttribute(CURRENT_URL, currentUrl);
 				return jsonObject;
 			}
 			// Validate if job is already applied
@@ -808,7 +808,7 @@ public class JobSearchController {
 			sendtofriendmail.setJoburl(request.getRequestURL().toString());
 			model.addAttribute("joburl", request.getRequestURL().toString());
 			model.addAttribute("jobId", request.getParameter("id"));
-			model.addAttribute("currentUrl", request.getParameter("currentUrl"));
+			model.addAttribute(CURRENT_URL, request.getParameter(CURRENT_URL));
 			model.addAttribute("sendtofriendmail", sendtofriendmail);
 		} catch (Exception e) {
 			LOGGER.info("ERROR");
