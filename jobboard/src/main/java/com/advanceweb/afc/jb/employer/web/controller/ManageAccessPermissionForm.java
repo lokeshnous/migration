@@ -17,6 +17,8 @@ public class ManageAccessPermissionForm {
 	private String ownerEmail;
 	private String fullAccess;
 	private String postEditAccess;
+	private String setAlertPage;
+	
 	private List<ManageAccessPermissionDTO> manageAccessPermissiondetails; 
 	/**
 	 * @return the ownerName
@@ -92,6 +94,19 @@ public class ManageAccessPermissionForm {
 			List<ManageAccessPermissionDTO> manageAccessPermissiondetails) {
 		this.manageAccessPermissiondetails = manageAccessPermissiondetails;
 	}
+	/**
+	 * @return the setAlertPage
+	 */
+	public String getSetAlertPage() {
+		return setAlertPage;
+	}
+	/**
+	 * @param setAlertPage the setAlertPage to set
+	 */
+	public void setSetAlertPage(String setAlertPage) {
+		this.setAlertPage = setAlertPage;
+	}
+	
 	
 	
 }

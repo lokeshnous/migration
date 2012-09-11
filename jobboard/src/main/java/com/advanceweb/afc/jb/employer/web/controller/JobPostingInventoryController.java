@@ -1,17 +1,22 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 
 /**
  * 
@@ -24,16 +29,48 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @RequestMapping("/inventory")
 public class JobPostingInventoryController {
 
+	private static final Logger LOGGER = Logger
+			.getLogger(JobPostingInventoryController.class);
+
+	@Autowired
+	private JobPostInventoryService inventoryService;
+
 	/**
-	 * This method to login in to the forgot your password page
+	 * This method to get job posting inventory details
 	 * 
 	 * @param model
-	 * @return
+	 * @return ModelAndView
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/employer/jobInventory", method = RequestMethod.GET)
-	public ModelAndView jobInventory(Map<String, InventoryForm> model,
-			@RequestParam(value = "page", required = false) String page,
-			Model modelconstants, HttpSession session) {
-		return new ModelAndView("jobPostingInventoryPopup");
+	public ModelAndView jobInventory(
+			@ModelAttribute("alertForm") UserAlertForm alertForm,
+			BindingResult result, HttpSession session) {
+
+		ModelAndView model = new ModelAndView();
+
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
+		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
+				.getInventoryDetails(userId, facilityId);
+
+		/*
+		 * List<JobPostingInventoryDTO> jobTypeList =
+		 * (List<JobPostingInventoryDTO>) inventiryDTO .get(0);
+		 * List<JobPostingInventoryDTO> inventoryList =
+		 * (List<JobPostingInventoryDTO>) inventiryDTO .get(1);
+		 */
+
+		List<JobPostingInventoryDTO> jobTypeList = new ArrayList<JobPostingInventoryDTO>();
+		List<JobPostingInventoryDTO> inventoryList = new ArrayList<JobPostingInventoryDTO>();
+
+		model.addObject("jobTypeList", jobTypeList);
+		model.addObject("inventoryList", inventoryList);
+		model.setViewName("jobPostingInventoryPopup");
+
+		return model;
 	}
 }
