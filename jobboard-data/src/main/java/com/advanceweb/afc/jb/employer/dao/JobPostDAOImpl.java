@@ -655,5 +655,31 @@ public class JobPostDAOImpl implements JobPostDAO {
 		cal.add(Calendar.DATE, MMJBCommonConstants.AUTO_RENEWAL_DAYS);	
 		return cal.getTime();
 	}
+	/**
+	 * @Author kartikm
+	 * @Purpose:This method is called to retrieve all posted job 
+	 * by Advanced search job id
+	 * @Created:10sept, 2012
+	 * @Param :advSearchId
+	 * @Return :List<JobPostDTO>
+	 * 
+	 */
+	@Override
+	public List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId) {
 
+		List<JpJob> jobs = new ArrayList<JpJob>();
+		try {
+			Query query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("SELECT a from JpJob a where a.jobId='"+advSearchId+"' ");
+			
+			jobs = query.list();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+
+		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+
+	}
 }
