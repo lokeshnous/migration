@@ -4048,3 +4048,11 @@ orange:hover {
 	text-align:center; 
 	padding-top:25px;
 }
+.InputTextRight{
+	text-align:center !important;
+	font-size:11px;
+	border:1px solid #6B7B84;
+	padding-top:3px;
+	padding-bottom:3px;
+	
+}
