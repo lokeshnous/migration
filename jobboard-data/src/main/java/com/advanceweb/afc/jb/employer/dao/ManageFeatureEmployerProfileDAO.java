@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.AdmFacilityDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 
@@ -26,5 +27,14 @@ public interface ManageFeatureEmployerProfileDAO {
 	List<EmployerProfileDTO> getEmployerAccountDetails(long employerId);
 
 	List<CompanyProfileDTO> getEmployerList(); 
+	
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return List<AdmFacilityDTO>
+	 */
+	List<AdmFacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID);
+	
 
 }

@@ -35,7 +35,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
         
         //customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
         // Call for create Customer
-        	customerDetailsWSTest.createCustomer("Customer1", "company");
+        	//customerDetailsWSTest.createCustomer("Customer1", "company");
         //customerDetailsWSTest.createCashSales();
       //customerDetailsWSTest.updateCustomer();
 
@@ -71,7 +71,6 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 * 
 	 * @return
 	 */
-
 	
 	public String authorizeUser(String recdType, String entId){
 		
@@ -124,10 +123,18 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		 Object recordType = recdType;
 		 Object cutomerId = custId;
 	    
-	     WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
+	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
+	     
+		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=463366");
 	     /*client.header("Authorization", authorization);
 	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
+		 
+		 /*
+		   {"phone":"000-999-7777","contactroles":[{"contact":{"name":"NS63744","internalid":"462667"},"contactname":"NS63744 ss d sdgsdgsd","email":"sd@gmail.com","giveaccess":false,"role":{"name":"Customer Center","internalid":"14"},"sendemail":false}],"globalsubscriptionstatus":{"name":"Soft Opt-In","internalid":"1"},"giveaccess":false,"isperson":true,"lastname":"sdgsdgsd","datecreated":"9/7/2012 8:48 am","custentity_ccrequired":false,"custentity_ahafacility":false,"lastmodifieddate":"9/7/2012 8:48 am","id":"462667","custentity_invindividually":false,"balance":0,"emailtransactions":false,"custentity_porequired":false,"custentity_holdsecnotice":false,"custentityfeaturedemployee":false,"entitystatus":{"name":"CUSTOMER-- New Pending Approval","internalid":"17"},"isbudgetapproved":false,"faxtransactions":false,"recordtype":"customer","emailpreference":{"name":"Default","internalid":"DEFAULT"},"sendemail":false,"unbilledorders":0,"middlename":"dgsdg","subscriptions":[{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":false,"subscription":{"name":"Advance for NPs & PAs","internalid":"6"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Billing Communication","internalid":"2"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Marketing","internalid":"1"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Newsletters","internalid":"4"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Product Updates","internalid":"5"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Surveys","internalid":"3"}}],"taxable":true,"custentity_autopickup":false,"entityid":"NS63744 ss d sdgsdgsd","isinactive":false,"depositbalance":0,"printtransactions":false,"firstname":"ss","companyname":"asffas","custentityinvoiceenabled":false,"email":"sd@gmail.com","weblead":"No","receivablesaccount":{"name":"Use System Preference","internalid":"-10"},"overduebalance":0,"custentitycustxmlfeed":false,"creditholdoverride":{"name":"Auto","internalid":"AUTO"},"custentitycreditappstatus":{"name":"Pending","internalid":"3"}}
+		  */
+		 
+		 
 		String jsonResult = null;
 		try {
 			jsonResult = IOUtils.readStringFromStream((InputStream)response.getEntity());
