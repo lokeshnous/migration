@@ -470,7 +470,7 @@ public class PopulateDropdownConversionHelper {
 		for(MerUser merUser: merUsers){
 			DropDownDTO dropdownDTO = new DropDownDTO();
 			dropdownDTO.setOptionId(String.valueOf(merUser.getUserId()));
-			dropdownDTO.setOptionName(merUser.getFirstName());
+			dropdownDTO.setOptionName(merUser.getLastName()+" "+merUser.getFirstName());
 			
 			dropdownList.add(dropdownDTO);
 		}
