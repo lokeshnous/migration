@@ -54,4 +54,6 @@ public interface AgencyRegistrationDAO {
 	boolean addEmployer(AccountProfileDTO accountDto, int agencyFacilityId,
 			int userId);
 
+	boolean validateEmail(String email);
+
 }

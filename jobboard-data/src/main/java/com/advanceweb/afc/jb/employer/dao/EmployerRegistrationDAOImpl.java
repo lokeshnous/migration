@@ -320,7 +320,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	    		LOGGER.info("OpenAM : user is already exist !");
 	    		//model.setViewName("jobSeekerCreateAccount");
 				//result.rejectValue("emailId", "NotEmpty", "Email address already exists");
-				return false;
+				return true;
 	    	}else{
 	    		LOGGER.info("OpenAM : valid user!");
 	    		

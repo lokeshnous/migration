@@ -21,6 +21,7 @@ import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
@@ -33,6 +34,7 @@ import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
+import com.mysql.jdbc.StringUtils;
 
 /**
  * @author rajeshkb
@@ -45,6 +47,8 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
+	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is not NULL";
+	
 	@Autowired
 	private AgencyRegistrationConversionHelper agencyHelper;
 
@@ -259,6 +263,42 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			e.printStackTrace();
 		}
 
+		return false;
+	}
+	
+	@Override
+	public boolean validateEmail(String email) {
+		try {
+			/**
+			 * OpenAM code starts here for Validate Email-Id
+	         * 
+		     * @auther Santhosh Gampa
+		     * @since Sep 4 2012
+	         *
+			 */
+			boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(email);
+			if(isinvaliduser){
+	    		LOGGER.info("OpenAM : user is already exist !");
+	    		//model.setViewName("jobSeekerCreateAccount");
+				//result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+				return true;
+	    	}else{
+	    		LOGGER.info("OpenAM : valid user!");
+	    		
+	    	}
+	    	//End of OpenAM code
+			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+			
+				List<MerUser> usersList = hibernateTemplateTracker.find(
+						VERIFY_EMAIL, email);
+				if (null != usersList && !usersList.isEmpty()) {
+					MerUser user = usersList.get(0);
+					return (null != user ? true : false);
+				}
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
 		return false;
 	}
 
