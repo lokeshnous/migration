@@ -43,14 +43,15 @@ public interface AgencyRegistrationDAO {
 	 */
 	AgencyProfileDTO getProfileAttributes();
 
-	boolean validateProfileAttributes(int jobseekerId);
-
-	boolean addEmployer(AccountProfileDTO accountDto);
-
-	List<AdmFacility> getAssocEmployerNames(int userId);
+	boolean validateProfileAttributes(int jobseekerId);		
 
 	boolean saveEmployerDetails(AccountProfileDTO dto);
 
 	boolean deleteAssocEmployer(String facilityId, int userId);
+
+	List<AdmFacility> getAssocEmployerNames(int userId, int agencyFacilityId);
+
+	boolean addEmployer(AccountProfileDTO accountDto, int agencyFacilityId,
+			int userId);
 
 }

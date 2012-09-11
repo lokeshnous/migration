@@ -105,13 +105,17 @@ public class AgencyRegistration implements ProfileRegistration {
 	}
 
 	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto) {
-		return agencyRegistrationDAO.addEmployer(accountDto);
+	public boolean addEmployer(AccountProfileDTO accountDto,
+			int agencyFacilityId, int userId) {
+		return agencyRegistrationDAO.addEmployer(accountDto, agencyFacilityId,
+				userId);
 	}
 
 	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId) {
-		return agencyRegistrationDAO.getAssocEmployerNames(userId);
+	public List<AdmFacility> getAssocEmployerNames(int userId,
+			int agencyFacilityId) {
+		return agencyRegistrationDAO.getAssocEmployerNames(userId,
+				agencyFacilityId);
 	}
 
 	@Override

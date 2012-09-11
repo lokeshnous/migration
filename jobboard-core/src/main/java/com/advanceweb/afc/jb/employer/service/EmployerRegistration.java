@@ -45,7 +45,7 @@ public class EmployerRegistration implements ProfileRegistration,
 	}
 
 	/**
-	/**
+	 * /**
 	 * 
 	 * @param profileDTO
 	 * @throws JobBoardServiceException
@@ -128,11 +128,14 @@ public class EmployerRegistration implements ProfileRegistration,
 	}
 
 	/**
-	 * This method is used for edit and update a User(Employer) in Job board. 
-	 * @param Object of AccountProfileDTO  
+	 * This method is used for edit and update a User(Employer) in Job board.
+	 * 
+	 * @param Object
+	 *            of AccountProfileDTO
 	 * @param int admFacilityid
 	 * @param int userId
-	 * @param String billing
+	 * @param String
+	 *            billing
 	 * @return boolean
 	 */
 	public boolean editUser(AccountProfileDTO apd, int admFacilityid,
@@ -142,8 +145,8 @@ public class EmployerRegistration implements ProfileRegistration,
 
 		try {
 
-			isUpdate = employerDelegate.editUser(apd, admFacilityid,
-					userId, billing);
+			isUpdate = employerDelegate.editUser(apd, admFacilityid, userId,
+					billing);
 
 		} catch (JobBoardServiceException jbe) {
 			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
@@ -175,18 +178,6 @@ public class EmployerRegistration implements ProfileRegistration,
 	}
 
 	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean saveEmployerDetails(AccountProfileDTO dto) {
 		// TODO Auto-generated method stub
 		return false;
@@ -196,6 +187,20 @@ public class EmployerRegistration implements ProfileRegistration,
 	public boolean deleteAssocEmployer(String facilityId, int userId) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean addEmployer(AccountProfileDTO accountDto,
+			int agencyFacilityId, int userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<AdmFacility> getAssocEmployerNames(int userId,
+			int agencyFacilityId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

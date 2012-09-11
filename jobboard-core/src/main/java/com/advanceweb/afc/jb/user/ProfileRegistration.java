@@ -15,8 +15,10 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 public interface ProfileRegistration {
 
 	/**
-	 * This method is used for creating a User( agency) in Job board. 
-	 * @param Object of profileDTO
+	 * This method is used for creating a User( agency) in Job board.
+	 * 
+	 * @param Object
+	 *            of profileDTO
 	 * @return Object of UserDTO
 	 */
 
@@ -73,12 +75,13 @@ public interface ProfileRegistration {
 	 */
 	boolean validateProfileAttributes(int jobseekerId);
 
-	boolean addEmployer(AccountProfileDTO accountDto);
-
-	public List<AdmFacility> getAssocEmployerNames(int userId);
-
 	public boolean saveEmployerDetails(AccountProfileDTO dto);
 
 	boolean deleteAssocEmployer(String facilityId, int userId);
+
+	boolean addEmployer(AccountProfileDTO accountDto, int agencyFacilityId,
+			int userId);
+
+	List<AdmFacility> getAssocEmployerNames(int userId, int agencyFacilityId);
 
 }

@@ -111,18 +111,6 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	}
 
 	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<AdmFacility> getAssocEmployerNames(int UserId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean saveEmployerDetails(AccountProfileDTO dto) {
 		// TODO Auto-generated method stub
 		return false;
@@ -132,6 +120,20 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	public boolean deleteAssocEmployer(String facilityId, int userId) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean addEmployer(AccountProfileDTO accountDto,
+			int agencyFacilityId, int userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<AdmFacility> getAssocEmployerNames(int userId,
+			int agencyFacilityId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

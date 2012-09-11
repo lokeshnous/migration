@@ -263,20 +263,28 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	}
 
 	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto) {
+	public boolean addEmployer(AccountProfileDTO accountDto,
+			int agencyFacilityId, int userId) {
 		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
 				accountDto.getFacilityId());
-		facility.setAdminUserId(2162);// TODO: REMOVE HARD CODE AGENCY USER ID
-		facility.setFacilityParentId(393);
+//		facility.setAdminUserId(2162);// TODO: REMOVE HARD CODE AGENCY USER ID
+//		facility.setFacilityParentId(393);
+		facility.setAdminUserId(userId);
+		facility.setFacilityParentId(agencyFacilityId);
 		hibernateTemplateCareers.update(facility);
 		return true;
 	}
 
 	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId) {
+	public List<AdmFacility> getAssocEmployerNames(int userId,
+			int agencyFacilityId) {
 		@SuppressWarnings("unchecked")
+//		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
+//				.find("from AdmFacility where adminUserId=2162 and facilityParentId=393 and deleteUserId=0");
 		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
-				.find("from AdmFacility where adminUserId=2162 and facilityParentId=393 and deleteUserId=0");
+				.find("from AdmFacility where adminUserId=" + userId
+						+ " and facilityParentId=" + agencyFacilityId
+						+ " and deleteUserId=0");
 
 		return assocEmplyrs;
 	}
@@ -297,7 +305,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	public boolean deleteAssocEmployer(String facilityId, int userId) {
 		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
 				Integer.parseInt(facilityId));
-		facility.setDeleteUserId(1);// TODO : GET USER ID FROM SESSION
+		facility.setDeleteUserId(userId);
 		Date deleteDt = new Timestamp(new Date().getTime());
 		facility.setDeleteDt(deleteDt);
 		hibernateTemplateCareers.update(facility);
