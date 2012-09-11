@@ -9,12 +9,18 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		$("#changePassword").displaypopup("#changePassword", "780", "370");
-		$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
-				"770", "360");
-		jQuery(".megamenu").megamenu();
-	});
+	jQuery(document).ready(
+			function() {
+				$("#changePassword").displaypopup("#changePassword", "780",
+						"370");
+				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
+						"770", "360");
+				$("#createEmployerpopup").displaypopup("#createEmployerpopup",
+						"750", "350");
+				$("#manageEmployers").displaypopup("#manageEmployers", "750",
+						"350");
+				jQuery(".megamenu").megamenu();
+			});
 </script>
 </head>
 
@@ -36,8 +42,8 @@
 							</span><br>
 							<div class="floatRight">
 								<span class="floatLeft"> <a
-									href="<%=request.getContextPath()%>/logout.html">Log Out</a> | <a
-									href="../healthcarejobs/advanceweb.html">Home</a></span>
+									href="<%=request.getContextPath()%>/logout.html">Log Out</a> |
+									<a href="../healthcarejobs/advanceweb.html">Home</a></span>
 							</div>
 						</div>
 						<!-- loginHeader -->
@@ -155,8 +161,8 @@
 									<div class="lableTextDashBoard">
 										<p>
 											<a
-									href="<%=request.getContextPath()%>/agency/viewEmpAccountProfile.html"
-									id="accountSettingpopUp">Account Settings</a>
+												href="<%=request.getContextPath()%>/agency/viewEmpAccountProfile.html"
+												id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
 									<div class="lableTextDashBoard">
@@ -226,43 +232,19 @@
 											<a href="">Vail Valley Medical Center</a>
 										</p>
 									</div>
-
-									<div class="lableTextDashBoard marginTop20">
-										<h3 class="TextColor01">Florida</h3>
-									</div>
-									<div class="lableTextDashBoard">
-										<p>
-											<a href="">BayCare Health System</a>
-										</p>
-									</div>
-									<div class="lableTextDashBoard">
-										<p>
-											<a href="">HCA West Florida Division</a>
-										</p>
-									</div>
-									<div class="lableTextDashBoard marginTop20">
-										<h3 class="TextColor01">Maryland</h3>
-									</div>
-									<div class="lableTextDashBoard">
-										<p>
-											<a href="">Greater Baltimore Medical Center</a>
-										</p>
-									</div>
-									<div class="lableTextDashBoard">
-										<p>
-											<a href="">Howard County General Hospital</a>
-										</p>
-									</div>
-									<div class="rowEvenTB10Spacing">
-									</div>
-									<div class="rowEvenTB10Spacing">
-									</div>
+									<div class="rowEvenTB10Spacing"></div>
+									<div class="rowEvenTB10Spacing"></div>
 									<div class="rowEvenNewSpacing">
-										<a href="#" class="btn_sm orange">ADD EMPLOYER</a><a href="#"
-											class="btn_sm orange">MANAGE EMPLOYERS</a>
+										<a
+											href="<%=request.getContextPath()%>/agency/addEmployer.html"
+											id="createEmployerpopup" class="btn_sm orange">ADD
+											EMPLOYER</a><a
+											href="<%=request.getContextPath()%>/agency/manageEmployers.html"
+											id="manageEmployers" class="btn_sm orange">MANAGE
+											EMPLOYERS</a>
 									</div>
 								</div>
-								
+
 							</div>
 							<!---->
 
@@ -313,7 +295,7 @@
 		</div>
 		<!-- end main_wrapper_inside -->
 	</div>
-	<!-- end main_wrapper_outside -->	
+	<!-- end main_wrapper_outside -->
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 	<!-- footer_wrapper -->
 

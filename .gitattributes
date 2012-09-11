@@ -505,8 +505,11 @@ jobboard/src/main/webapp/WEB-INF/view/adminEditJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminImpersonation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/agencyAddEmployer.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyDashboard.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/agencyEditEmployer.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyLogin.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/agencyManageEmployers.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/anonymousSaveThisSearchPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateGoldPreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplatePlatinumPreview.jsp -text
