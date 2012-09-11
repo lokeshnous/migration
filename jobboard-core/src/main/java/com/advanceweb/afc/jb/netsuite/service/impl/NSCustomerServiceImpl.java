@@ -2,6 +2,9 @@ package com.advanceweb.afc.jb.netsuite.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -19,11 +22,13 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.JsonUtil;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.netsuite.NSCustomer;
 import com.advanceweb.afc.jb.netsuite.NetSuiteHelper;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 
 /**
@@ -76,6 +81,12 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String IS_INVOICE_ENABLED = "custentityinvoiceenabled";
 	private static final String IS_XML_FEED_ENABLED = "custentitycustxmlfeed";
 	
+	
+	private static final String  FEATURED_START_DATE_STRING = "custentityfeaturedemployeestartdate";
+	private static final String  FEATURED_END_DATE_STRING = "custentityfeaturedemployeeenddate";
+	
+	private static final String  XMLFEED_START_DATE_STRING = "custentitystartdate";
+	private static final String  XMLFEED_END_DATE_STRING = "custentityenddate";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -356,6 +367,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	 * @throws JobBoardServiceException
 	 */
 
+	
 	private UserDTO getUserDTOFromResponse(Response response)
 			throws JobBoardNetSuiteServiceException {
 		String jsonResponse = null;
@@ -374,12 +386,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				
 				try {
 					org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResponse);
-					userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(IS_INVOICE_ENABLED).toString()));
-					userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
-					userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(IS_XML_FEED_ENABLED).toString()));
-					LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
-					LOGGER.info("IS_INVOICE_ENABLED===>"+jsonObject.get(IS_INVOICE_ENABLED));
-					LOGGER.info("IS_XML_FEED_ENABLED===>"+jsonObject.get(IS_XML_FEED_ENABLED));
+					userDTO = populateUserDTO(userDTO, jsonObject);
 				} catch (JSONException e) {
 					LOGGER.error(e);
 				}
@@ -392,6 +399,47 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 							+ e);
 		}
 
+		return userDTO;
+	}
+
+	/**
+	 * This method is used to populate USerDTO from JSON object.
+	 * @param userDTO
+	 * @param jsonObject
+	 * @return UserDTO Object
+	 * @throws JSONException
+	 */
+	private UserDTO populateUserDTO(UserDTO userDTO,
+			org.codehaus.jettison.json.JSONObject jsonObject)
+			throws JSONException {
+		
+		userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(IS_INVOICE_ENABLED).toString()));
+		
+		userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
+		if(jsonObject.get(FEATURED_START_DATE_STRING) != null){
+			userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(FEATURED_START_DATE_STRING).toString()));
+		}
+		if(jsonObject.get(FEATURED_END_DATE_STRING) != null){
+			userDTO.setFeaturedEndDate(convertToDate(jsonObject.get(FEATURED_END_DATE_STRING).toString()));
+		}
+		
+		userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(IS_XML_FEED_ENABLED).toString()));
+		if(jsonObject.get(XMLFEED_START_DATE_STRING) != null){
+			userDTO.setXmlFeedStartDate(convertToDate(jsonObject.get(XMLFEED_START_DATE_STRING).toString()));
+		}
+		if(jsonObject.get(XMLFEED_END_DATE_STRING) != null){
+			userDTO.setXmlFeedEndDate(convertToDate(jsonObject.get(XMLFEED_END_DATE_STRING).toString()));
+		}
+		
+		
+		LOGGER.info("XMLFEED_END_DATE_STRING===>"+jsonObject.get(XMLFEED_END_DATE_STRING));
+		LOGGER.info("XMLFEED_START_DATE_STRING===>"+jsonObject.get(XMLFEED_START_DATE_STRING));
+		LOGGER.info("FEATURED_START_DATE_STRING===>"+jsonObject.get(FEATURED_START_DATE_STRING));
+		LOGGER.info("FEATURED_END_DATE_STRING===>"+jsonObject.get(FEATURED_END_DATE_STRING));
+		LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
+		LOGGER.info("IS_INVOICE_ENABLED===>"+jsonObject.get(IS_INVOICE_ENABLED));
+		LOGGER.info("IS_XML_FEED_ENABLED===>"+jsonObject.get(IS_XML_FEED_ENABLED));
+		
 		return userDTO;
 	}
 	
@@ -425,6 +473,17 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		
 		return AMP_RECORD_TYPE+userDTO.getRecordType()+AMP_ID+userDTO.getEntityId();
 		
+	}
+	
+	public Date convertToDate(String date){
+		SimpleDateFormat dateFormat = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
+		Date convertedDate = null;
+		try {
+			convertedDate = dateFormat.parse(date);
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		}
+		return convertedDate;
 	}
 	
 
