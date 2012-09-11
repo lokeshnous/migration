@@ -8,40 +8,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="10">
 <title>ADVANCE Heathcare Jobs</title>
-<script type="text/javascript">
-	/* jQuery(document).ready(function() {
- 		$('#save').click(function(){			
-			
-			$.ajax({url:"${pageContext.request.contextPath}/admin/saveJobSeekerSubscription.html",
-				data:$('#subscriptionsId').serialize(),
-				type:"POST",
-				success: function(data) {					
-					//parent.$.nmTop().close();
-					location.reload();
-				 },
-			});
-		}); 
-		
-		jQuery(".megamenu").megamenu();
-		
-	}); */
-</script>
 </head>
 <body class="job_board">
-	<%-- <form:form method="GET" commandName="jobPostForm" id="saveJobId" name="saveJobId"> --%>
+	
 <div class="row marginTop10 FontSize11" id="tableContent">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
 							class="grid" id="tb_manage_job">
 							<thead>
 							<tr class="LightGrayBG Height35">
-								<th width="2%" align="center" valign="middle" class="FontSize11">Job Id</th>
-								<th width="6%" align="center" valign="middle" class="FontSize11">Adv. Job
+								<th width="4%" align="center" valign="middle" class="FontSize11">Job Id</th>
+								<th width="10%" align="center" valign="middle" class="FontSize11">Adv. Job
 										ID</th>
 								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Title</strong></th>
 								<th width="11%" align="center" valign="middle" class="FontSize11"><strong>Location</strong></th>
-								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Job<br />
+								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Status
+								</strong></th>
+								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Start
+										Date
+								</strong></th>
+								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>End
+										Date
 								</strong></th>																
 							</tr>
 							</thead>
@@ -52,12 +40,16 @@
 									<td align="center" valign="middle">${job.jobId}</td>
 									<td align="center" valign="middle">${job.jobTitle}</td>
 									<td align="center" valign="middle">${job.location}</td>
-									<td align="center" valign="middle">${job.jobStatus}</td>									
+									<td align="center" valign="middle">${job.jobStatus}</td>
+									<td align="center" valign="middle">${job.startDt}</td>
+									<td align="right" valign="middle"><input type="text" class="InputTextRight" name="endDt" value='<c:out value="${job.endDt}"></c:out>'></td>									
 								</tr>
+								<input type="hidden" name="startDate" id="startDate" value='<c:out value="${job.startDt}"></c:out>'/>
+								<input type="hidden" name="endDate" id="endDate" value='<c:out value="${job.endDt}"></c:out>'/>
 						</c:forEach> 
 							</tbody>
 						</table>
 					</div>   	
-				<%-- </form:form> --%>
+				
 	</body>
 </html>
