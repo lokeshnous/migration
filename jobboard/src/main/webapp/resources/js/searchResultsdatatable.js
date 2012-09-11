@@ -385,4 +385,23 @@ jQuery(document).ready(function() {
 						}
 					});
 				}
+				
+				function trackClick(jobId) {					
+				if($("#searchResultsJobInfo"+jobId).attr('class').match('closed')){
+				$.ajax({
+					url : '../jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
+					data : ({
+						userID : "userID"
+					}),
+					/*success : function(data) {
+					},
+					;error : function(data) {
+						alert('Unable to process');
+					},
+					complete : function(data) {
+					}
+*/
+				});
+				}
+				}
 	
