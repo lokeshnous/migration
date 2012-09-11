@@ -108,13 +108,9 @@ public class UserAlertController {
 			HttpSession session, @RequestParam("selOwnerId") int selOwnerId) {
 		JSONObject jsonObject = new JSONObject();
 		try {
-
-			alertForm.setUserId(Integer.valueOf(String.valueOf(session
-					.getAttribute(MMJBCommonConstants.USER_ID))));
-			alertForm.setFacilityId(Integer.valueOf(String.valueOf(session
-					.getAttribute(MMJBCommonConstants.FACILITY_ID))));
 			List<UserAlertDTO> alertDTOs = transferUserAlert
 					.jsAlertFormToUserAlertDTO(alertForm);
+			alertForm.setUserId(Integer.parseInt(alertForm.getSelJobOwner()));
 			alertService.saveAlerts(alertForm.getUserId(), alertDTOs);
 		} catch (Exception e) {
 			LOGGER.info("error in saving the subscription for job seeker");

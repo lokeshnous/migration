@@ -107,7 +107,8 @@ public class EmpConversionHelper {
 	 * @return
 	 */
 	public List<AdmFacilityAlert> transformAlertDTOToAdmFacilityAlert(
-			List<UserAlertDTO> alertDTOs, List<AdmFacilityAlert> listAlerts) {
+			List<UserAlertDTO> alertDTOs, List<AdmFacilityAlert> listAlerts,
+			int facilityId) {
 
 		List<AdmFacilityAlert> admFacilityAlerts = new ArrayList<AdmFacilityAlert>();
 
@@ -118,7 +119,7 @@ public class EmpConversionHelper {
 					AdmAlert admAlert = new AdmAlert();
 					admAlert.setAlertId(dto.getAlertId());
 					entity.setUserId(dto.getUserId());
-					entity.setFacilityId(dto.getFacilityId());
+					entity.setFacilityId(facilityId);
 					entity.setAdmAlert(admAlert);
 					entity.setCreateDt(new Date());
 					admFacilityAlerts.add(entity);

@@ -17,6 +17,8 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 
 /**
@@ -115,12 +117,17 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 		try {
 
 			if (userId != 0) {
+				AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplate
+						.find("from AdmUserFacility e where e.facilityPK.userId =?",
+								userId).get(0);
+				AdmUserFacilityPK facilityPk = userFacility.getFacilityPK();
+				int facilityId = facilityPk.getFacilityId();
 				List<AdmFacilityAlert> listAlerts = hibernateTemplate
 						.find("from AdmFacilityAlert where userId =? and deleteDt is null",
 								userId);
 				List<AdmFacilityAlert> userAlerts = conversionHelper
 						.transformAlertDTOToAdmFacilityAlert(alertDTOs,
-								listAlerts);
+								listAlerts, facilityId);
 				hibernateTemplate.saveOrUpdateAll(userAlerts);
 			}
 		} catch (DataAccessException e) {
@@ -129,5 +136,4 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 
 		return true;
 	}
-
 }

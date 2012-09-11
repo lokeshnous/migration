@@ -44,7 +44,7 @@ public class JobPostingInventoryController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/employer/jobInventory", method = RequestMethod.GET)
 	public ModelAndView jobInventory(
-			@ModelAttribute("alertForm") UserAlertForm alertForm,
+			@ModelAttribute("alertForm") InventoryForm inventoryForm,
 			BindingResult result, HttpSession session) {
 
 		ModelAndView model = new ModelAndView();
@@ -64,11 +64,16 @@ public class JobPostingInventoryController {
 		 * (List<JobPostingInventoryDTO>) inventiryDTO .get(1);
 		 */
 
+		
 		List<JobPostingInventoryDTO> jobTypeList = new ArrayList<JobPostingInventoryDTO>();
-		List<JobPostingInventoryDTO> inventoryList = new ArrayList<JobPostingInventoryDTO>();
-
+		//Standard Job Posting
+		List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
+		//Job Posting Slot
+		List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
+		
 		model.addObject("jobTypeList", jobTypeList);
-		model.addObject("inventoryList", inventoryList);
+		model.addObject("jbPostList", jbPostList);
+		model.addObject("jbSlotList", jbSlotList);
 		model.setViewName("jobPostingInventoryPopup");
 
 		return model;
