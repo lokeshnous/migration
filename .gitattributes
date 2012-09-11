@@ -598,7 +598,9 @@ jobboard/src/main/webapp/resources/images/ArrowLeft.png -text
 jobboard/src/main/webapp/resources/images/ArrowRight.png -text
 jobboard/src/main/webapp/resources/images/Close.png -text
 jobboard/src/main/webapp/resources/images/DeKalb.jpg -text
+jobboard/src/main/webapp/resources/images/Delete.png -text
 jobboard/src/main/webapp/resources/images/DownArrowTinyOrange.png -text
+jobboard/src/main/webapp/resources/images/Edit.png -text
 jobboard/src/main/webapp/resources/images/EmpDimg.png -text
 jobboard/src/main/webapp/resources/images/FeaturedEmp.png -text
 jobboard/src/main/webapp/resources/images/Interview_60x.jpg -text
