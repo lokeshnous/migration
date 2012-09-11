@@ -29,16 +29,10 @@
 	
 	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>
-	<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-	<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-
 	<script type="text/javascript">
 		jQuery(document)
 				.ready(
-						function() {
-							alert("hi");
+						function() {						
 							//Auto complete for employer name
 							 $("#emplyrNameAutoComplte")
 									.autocomplete(
@@ -56,7 +50,7 @@
 															$('#state').val(data.state);	
 															$('#country').val(data.country);
 															$('#phone').val(data.phone);
-															$('#userId').val(data.facilityId);
+															$('#facilityId').val(data.facilityId);
 														},
 													});	
 												},
