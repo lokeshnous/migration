@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
+import java.util.Date;
+
 public class UserDTO {
 	
 	private int userId;
@@ -29,9 +31,46 @@ public class UserDTO {
 	private String recordType;
 	private int entityId;
 	private boolean isFeatured;
+	private Date featuredStartDate;
+	private Date featuredEndDate;
 	private boolean isInvoiceEnabled;
 	private boolean isXmlFeedEnabled;
+	private Date xmlFeedStartDate;
+	private Date xmlFeedEndDate;
 	
+	
+
+	public Date getXmlFeedStartDate() {
+		return xmlFeedStartDate;
+	}
+
+	public void setXmlFeedStartDate(Date xmlFeedStartDate) {
+		this.xmlFeedStartDate = xmlFeedStartDate;
+	}
+
+	public Date getXmlFeedEndDate() {
+		return xmlFeedEndDate;
+	}
+
+	public void setXmlFeedEndDate(Date xmlFeedEndDate) {
+		this.xmlFeedEndDate = xmlFeedEndDate;
+	}
+
+	public Date getFeaturedStartDate() {
+		return featuredStartDate;
+	}
+
+	public void setFeaturedStartDate(Date featuredStartDate) {
+		this.featuredStartDate = featuredStartDate;
+	}
+
+	public Date getFeaturedEndDate() {
+		return featuredEndDate;
+	}
+
+	public void setFeaturedEndDate(Date featuredEndDate) {
+		this.featuredEndDate = featuredEndDate;
+	}
 
 	public boolean isXmlFeedEnabled() {
 		return isXmlFeedEnabled;
