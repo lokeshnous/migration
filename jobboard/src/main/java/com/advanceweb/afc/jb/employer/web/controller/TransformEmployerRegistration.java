@@ -1,4 +1,5 @@
 package com.advanceweb.afc.jb.employer.web.controller;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,10 +79,9 @@ public class TransformEmployerRegistration {
 		return dto;
 	}
 
+	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(
+			EmployerProfileDTO registerDTO, UserDTO userDTO) {
 
-	
-	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(EmployerProfileDTO registerDTO, UserDTO userDTO){
-		
 		List<EmployerProfileAttribForm> listForms = new ArrayList<EmployerProfileAttribForm>();
 
 		if (null != registerDTO.getAttribList()) {
@@ -93,14 +93,17 @@ public class TransformEmployerRegistration {
 				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setbRequired(dto.getbRequired());
-				if(null != userDTO){
-					if(form.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+				if (null != userDTO) {
+					if (form.getStrLabelName().equals(
+							MMJBCommonConstants.FIRST_NAME)) {
 						form.setStrLabelValue(userDTO.getFirstName());
 					}
-					if(form.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+					if (form.getStrLabelName().equals(
+							MMJBCommonConstants.LAST_NAME)) {
 						form.setStrLabelValue(userDTO.getLastName());
 					}
-					if(form.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
+					if (form.getStrLabelName().equals(
+							MMJBCommonConstants.MIDDLE_NAME)) {
 						form.setStrLabelValue(userDTO.getMiddleName());
 					}
 				}
@@ -130,34 +133,38 @@ public class TransformEmployerRegistration {
 		return dto;
 	}
 
-	
 	/**
 	 * 
 	 * @param attributeList
 	 * @return
 	 */
-	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(List<EmployerProfileAttribForm> attributeList){
-		
+	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(
+			List<EmployerProfileAttribForm> attributeList) {
+
 		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
-		
-		if(null != attributeList){
-			for(EmployerProfileAttribForm form : attributeList){
+
+		if (null != attributeList) {
+			for (EmployerProfileAttribForm form : attributeList) {
 				ProfileAttribDTO dto = new ProfileAttribDTO();
-				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
-					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
-				}else{
+				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
+						.getStrLabelName())) {
+					dto.setStrLabelValue(StringUtils
+							.arrayToCommaDelimitedString(form.getSubs()));
+				} else {
 					dto.setStrLabelValue(form.getStrLabelValue());
 				}
 				dto.setStrAttribType(form.getStrAttribType());
 				dto.setStrLabelName(form.getStrLabelName());
-				dto.setStrProfileAttribId(form.getStrProfileAttribId());				
+				dto.setStrProfileAttribId(form.getStrProfileAttribId());
 				dtoList.add(dto);
 			}
 		}
-		
-		return dtoList;		
+
+		return dtoList;
 	}
-	public AccountProfileDTO transformAccountProfileFormToDto(EmployeeAccountForm form){
+
+	public AccountProfileDTO transformAccountProfileFormToDto(
+			EmployeeAccountForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();
 		dto.setFirstName(form.getFirstName());
 		dto.setLastName(form.getLastName());
@@ -169,12 +176,12 @@ public class TransformEmployerRegistration {
 		dto.setZipCode(form.getZipCode());
 		dto.setPhone(form.getPhone());
 		dto.setCity(form.getCityOrTown());
-		
+
 		return dto;
 	}
-	
-	
-	public AccountProfileDTO transformBillingProfileFormToDto(EmployeeAccountForm form){
+
+	public AccountProfileDTO transformBillingProfileFormToDto(
+			EmployeeAccountForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();
 		dto.setFirstName(form.billingAddressForm.getFnameForBillingAddr());
 		dto.setLastName(form.billingAddressForm.getLnameForBillingAddr());
@@ -186,48 +193,71 @@ public class TransformEmployerRegistration {
 		dto.setZipCode(form.billingAddressForm.getZipCodeForBillingAddr());
 		dto.setPhone(form.getPhone());
 		dto.setCity(form.billingAddressForm.getCityOrTownForBillingAddr());
-		
+
 		return dto;
 	}
+
 	/**
 	 * Converting Job Seeker Registration Form to MerUserDTO
 	 * 
 	 * @param form
 	 * @return
 	 */
-	public UserDTO createUserDTOFromManageAccessForm(ManageAccessPermissionForm manageAccessPermissionForm) {
+	public UserDTO createUserDTOFromManageAccessForm(
+			ManageAccessPermissionForm manageAccessPermissionForm) {
 		// TODO Need to Modify the hard code value
 		UserDTO dto = new UserDTO();
-		if(null!=manageAccessPermissionForm.getOwnerName() && !manageAccessPermissionForm.getOwnerName().isEmpty() ){
-			String[] names = manageAccessPermissionForm.getOwnerName().split(" ");
+		if (null != manageAccessPermissionForm.getOwnerName()
+				&& !manageAccessPermissionForm.getOwnerName().isEmpty()) {
+			String[] names = manageAccessPermissionForm.getOwnerName().split(
+					" ");
 			dto.setFirstName(names[1]);
 			dto.setLastName(names[0]);
 			dto.setPassword("password");
 			dto.setEmailId(manageAccessPermissionForm.getOwnerEmail());
 		}
-		
-		
 
 		return dto;
 	}
+
 	/**
 	 * Converting Job Seeker Registration Form to MerUserDTO
 	 * 
 	 * @param form
 	 * @return
 	 */
-	public ManageAccessPermissionDTO createManageAccessPermissionDTOFromManageAccessForm(ManageAccessPermissionForm manageAccessPermissionForm) {
-		
+	public ManageAccessPermissionDTO createManageAccessPermissionDTOFromManageAccessForm(
+			ManageAccessPermissionForm manageAccessPermissionForm) {
+
 		ManageAccessPermissionDTO accessPermissionDTO = new ManageAccessPermissionDTO();
-		if(null!=manageAccessPermissionForm){
-			accessPermissionDTO.setOwnerId(manageAccessPermissionForm.getOwnerId());
-			accessPermissionDTO.setOwnerName(manageAccessPermissionForm.getOwnerName());
-			accessPermissionDTO.setOwnerEmail(manageAccessPermissionForm.getOwnerEmail());
-			//accessPermissionDTO.set(manageAccessPermissionForm.getManageAccessPermissiondetails());
+		if (null != manageAccessPermissionForm) {
+			accessPermissionDTO.setOwnerId(manageAccessPermissionForm
+					.getOwnerId());
+			accessPermissionDTO.setOwnerName(manageAccessPermissionForm
+					.getOwnerName());
+			accessPermissionDTO.setOwnerEmail(manageAccessPermissionForm
+					.getOwnerEmail());
+			// accessPermissionDTO.set(manageAccessPermissionForm.getManageAccessPermissiondetails());
 		}
-		
-		
 
 		return accessPermissionDTO;
+	}
+
+	
+	public AccountProfileDTO transformEmployerFormToDto(
+			EmployerRegistrationForm form) {
+		AccountProfileDTO dto = new AccountProfileDTO();
+		dto.setFirstName(form.getFirstName());
+		dto.setLastName(form.getLastName());
+		dto.setCompanyName(form.getCompany());
+		dto.setState(form.getState());
+		dto.setStreet(form.getStreet());
+		dto.setCountry(form.getCountry());
+		dto.setZipCode(form.getZipCode());
+		dto.setPhone(form.getPrimaryPhone());
+		dto.setCity(form.getCity());
+		dto.setFacilityId(form.getUserId());
+
+		return dto;
 	}
 }
