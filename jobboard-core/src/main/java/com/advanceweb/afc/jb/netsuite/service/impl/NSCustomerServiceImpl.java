@@ -73,6 +73,8 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String RECORD_ALREADY_EXIST_MSG = "record already exist";
 	private static final String TRUE_STRING = "true";
 	
+	private static final String IS_INVOICE_ENABLED = "custentityinvoiceenabled";
+	
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -371,8 +373,10 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				
 				try {
 					org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResponse);
-					LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
+					userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(IS_INVOICE_ENABLED).toString()));
 					userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
+					LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
+					LOGGER.info("IS_INVOICE_ENABLED===>"+jsonObject.get(IS_INVOICE_ENABLED));
 				} catch (JSONException e) {
 					LOGGER.error(e);
 				}
