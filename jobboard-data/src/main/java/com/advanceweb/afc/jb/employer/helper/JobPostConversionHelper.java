@@ -146,19 +146,13 @@ public class JobPostConversionHelper<JobPostForm> {
 				JobPostDTO jobPostDTO = new JobPostDTO();
 				jobPostDTO.setJobId(job.getJobId());
 				jobPostDTO.setJobTitle(job.getJobtitle());
-				if (null != job.getStartDt()) {
-					jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
-				}
-				if (null != job.getEndDt()) {
-					jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-				}
 				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
 				if (null != job.getJpTemplate()) {
 					jobPostDTO.setBrandTemplate(String.valueOf(job
 							.getJpTemplate().getTemplateId()));
 				}
 				if (null != job.getStartDt()) {
-
+					jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
 					long startDateAsTimestamp = job.getStartDt().getTime();
 					long currentTimestamp = System.currentTimeMillis();
 					long getRidOfTime = 1000 * 60 * 60 * 24;
@@ -174,6 +168,7 @@ public class JobPostConversionHelper<JobPostForm> {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 					} else if (null != job.getEndDt()) {
+						jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 						long endtDateAsTimestamp = job.getEndDt().getTime();
 						long endDate = endtDateAsTimestamp / getRidOfTime;
 
@@ -209,7 +204,8 @@ public class JobPostConversionHelper<JobPostForm> {
 
 				}
 
-				if (job.getActive() == 0) {
+				if ((null == jobPostDTO.getJobStatus() || jobPostDTO
+						.getJobStatus().isEmpty()) && (job.getActive() == 0)) {
 					jobPostDTO
 							.setJobStatus(MMJBCommonConstants.POST_JOB_INACTIVE);
 				}
