@@ -292,7 +292,8 @@ public class JobSeekerRegistrationController {
 
 				// Call to service layer
 
-				
+
+				userDTO = profileRegistration.createUser(jsRegistrationDTO);
 
 				/**
 				 * OpenAM code starts here for creating users in OpenDJ
@@ -306,8 +307,6 @@ public class JobSeekerRegistrationController {
 				// Ends of OpenAM code
 
 				
-
-				userDTO = profileRegistration.createUser(jsRegistrationDTO);
 
 				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
 				session.setAttribute("userId", userDTO.getUserId());
