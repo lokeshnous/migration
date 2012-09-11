@@ -51,7 +51,7 @@
 				<a href="#"><img src="../resources/images/Close.png" width="19"
 					height="19" alt="" onclick="parent.$.nmTop().close();"></a>
 			</div>
-			<form:hidden path="userId" id="userId"/>
+			<form:hidden path="facilityId" id="facilityId"/>
 			<div class="popUpContainerWrapper">
 				<div class="rowEvenNewSpacing marginTop10 marginLeft15">
 					<h3>EMPLOYER DETAILS</h3>
