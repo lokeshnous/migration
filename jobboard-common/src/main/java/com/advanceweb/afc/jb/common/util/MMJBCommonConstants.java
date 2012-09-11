@@ -281,4 +281,7 @@ public interface MMJBCommonConstants {
 	int EMPLOYER_ROLE_ID = 3;
 	String phone = "Phone";
 
+	// Added for set alerts task
+	String SET_ALERT = "setAlertPage";
+
 }
