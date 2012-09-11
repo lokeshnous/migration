@@ -58,15 +58,16 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 @Repository("populateDropdownsDAO")
 @SuppressWarnings("unchecked")
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
-	
+
 	private static final Logger LOGGER = Logger
 			.getLogger(PopulateDropdownsDAOImpl.class);
 
-	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
-	private static final String FIND_RESBUILDER_DROPDOWNS="from ResResumeAttrib attrib where attrib.name=?";
-	private static final String FIND_EDU_DEGREES="from ResDegreeEdu edu";
-//	private static final String FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
-	
+	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
+	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
+	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
+	// private static final String
+	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
+
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
 
@@ -97,7 +98,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			return dropdownHelper.convertMerUtilityToCountryDTO(merUtilityList);
 
 		} catch (HibernateException e) {
-			
+
 			LOGGER.error(e);
 		}
 		return null;
@@ -120,14 +121,15 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	@Override
 	public List<DropDownDTO> getSubscriptionsList() {
-			
+
 		try {
-			List<AdmSubscription> subsList = hibernateTemplate.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
+			List<AdmSubscription> subsList = hibernateTemplate.find(
+					FIND_JOBSEEKER_SUBSCRIPTIONS, "jobseeker");
 			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
-		
+
 		return null;
 
 	}
@@ -412,17 +414,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public List<ResumeVisibilityDTO> getResumeVisibilityList() {
 		List<ResPrivacy> resPrivacyList = hibernateTemplate
 				.find("from ResPrivacy");
-		return dropdownHelper.transformResPrivacyToVisibilityDTO(resPrivacyList);
+		return dropdownHelper
+				.transformResPrivacyToVisibilityDTO(resPrivacyList);
 	}
 
 	@Override
 	public List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName) {
-		
+
 		try {
-			List<ResResumeAttrib> resResumeAttrib = hibernateTemplate.find(FIND_RESBUILDER_DROPDOWNS, dropdownName);
+			List<ResResumeAttrib> resResumeAttrib = hibernateTemplate.find(
+					FIND_RESBUILDER_DROPDOWNS, dropdownName);
 			if (!resResumeAttrib.isEmpty()) {
-				List<ResResumeAttribList> resResumeAttribList = resResumeAttrib.get(0).getResResumeAttribLists();
-				return dropdownHelper.transformResumeAttribListToDropDownDTO(resResumeAttribList);
+				List<ResResumeAttribList> resResumeAttribList = resResumeAttrib
+						.get(0).getResResumeAttribLists();
+				return dropdownHelper
+						.transformResumeAttribListToDropDownDTO(resResumeAttribList);
 			}
 		} catch (Exception e) {
 			LOGGER.error(e);
@@ -432,11 +438,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	@Override
 	public List<DropDownDTO> populateEducationDegreesDropdowns() {
-		
+
 		try {
-			List<ResDegreeEdu> resEduDegreeList = hibernateTemplate.find(FIND_EDU_DEGREES);
-			return dropdownHelper.transformResDegreeEduToDropDownDTO(resEduDegreeList);
-			
+			List<ResDegreeEdu> resEduDegreeList = hibernateTemplate
+					.find(FIND_EDU_DEGREES);
+			return dropdownHelper
+					.transformResDegreeEduToDropDownDTO(resEduDegreeList);
+
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
@@ -481,17 +489,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+
 	@Override
-	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId, int userId) {
-		
+	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
+			int userId) {
+
 		try {
-			List<AdmFacility> facilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityId=?", facilityId);
-			if(null != facilityList && !facilityList.isEmpty()){
+			List<AdmFacility> facilityList = hibernateTemplate.find(
+					"from AdmFacility adm where adm.facilityId=?", facilityId);
+			if (null != facilityList && !facilityList.isEmpty()) {
 				AdmFacility facility = facilityList.get(0);
 				List<JpTemplate> templateList = facility.getJpTemplates();
-				return dropdownHelper.transformJpTemplateToDropDownDTO(templateList);
+				return dropdownHelper
+						.transformJpTemplateToDropDownDTO(templateList);
 			}
-			
+
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
@@ -500,29 +512,32 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
-		
+
 		try {
 			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
-			
-			List<AdmFacility> facilityList = hibernateTemplate.find("from AdmFacility adm where adm.facilityId=?",facilityId);			
-			
-			if(!facilityList.isEmpty()){
-				AdmFacility facility =  facilityList.get(0);
-				List<AdmFacilityInventory> admFacList = facility.getAdmFacilityInventories();
 
-				for(AdmFacilityInventory inv : admFacList){
+			List<AdmFacility> facilityList = hibernateTemplate.find(
+					"from AdmFacility adm where adm.facilityId=?", facilityId);
+
+			if (!facilityList.isEmpty()) {
+				AdmFacility facility = facilityList.get(0);
+				List<AdmFacilityInventory> admFacList = facility
+						.getAdmFacilityInventories();
+
+				for (AdmFacilityInventory inv : admFacList) {
 					DropDownDTO dto = new DropDownDTO();
 					dto.setOptionId(String.valueOf(inv.getInventoryId()));
-					List<AdmInventoryDetail> invDtlList = inv.getAdmInventoryDetailList(); 
+					List<AdmInventoryDetail> invDtlList = inv
+							.getAdmInventoryDetailList();
 					StringBuilder strBuilder = new StringBuilder();
-					for(AdmInventoryDetail invDtl : invDtlList){
+					for (AdmInventoryDetail invDtl : invDtlList) {
 						strBuilder = formatBaseAddonPackages(invDtl, strBuilder);
 					}
 					dto.setOptionName(String.valueOf(strBuilder));
 					jbPostings.add(dto);
 				}
 			}
-			return jbPostings;					
+			return jbPostings;
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.error(e);
@@ -532,15 +547,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	@Override
 	public List<String> populateCityAutoComplete(String city) {
-		
+
 		List<String> locationList = new ArrayList<String>();
 
 		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.city from  JpLocation jloc WHERE  jloc.city like '"+ city+ "%' ORDER BY  jloc.city ASC");
+			List<Object> jpLocationList = hibernateTemplate
+					.find("select distinct jloc.city from  JpLocation jloc WHERE  jloc.city like '"
+							+ city + "%' ORDER BY  jloc.city ASC");
 
 			if (jpLocationList != null) {
-				for(Object obj : jpLocationList){
-					locationList.add((String)obj);
+				for (Object obj : jpLocationList) {
+					locationList.add((String) obj);
 				}
 			}
 		} catch (DataAccessException e) {
@@ -552,18 +569,20 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	@Override
 	public String populateStateAutoComplete(String city) {
-		
-		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.state from  JpLocation jloc WHERE  jloc.city='"+ city+"' ORDER BY  jloc.state ASC");
 
-			if (jpLocationList != null && !jpLocationList.isEmpty()) {			
-				return (String)jpLocationList.get(0);
+		try {
+			List<Object> jpLocationList = hibernateTemplate
+					.find("select distinct jloc.state from  JpLocation jloc WHERE  jloc.city='"
+							+ city + "' ORDER BY  jloc.state ASC");
+
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {
+				return (String) jpLocationList.get(0);
 			}
 		} catch (DataAccessException e) {
 
 			LOGGER.error(e);
 		}
-		
+
 		return null;
 	}
 
@@ -571,15 +590,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public List<String> populatePostalCodeAutoComplete(String postalCode) {
 		List<String> postalCodeList = new ArrayList<String>();
 		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.postcode like'"+postalCode+"%' ORDER BY  jloc.postcode ASC");
+			List<Object> jpLocationList = hibernateTemplate
+					.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.postcode like'"
+							+ postalCode + "%' ORDER BY  jloc.postcode ASC");
 
 			if (jpLocationList != null) {
-				for(Object obj : jpLocationList){
-					postalCodeList.add((String)obj);
+				for (Object obj : jpLocationList) {
+					postalCodeList.add((String) obj);
 				}
 			}
 			return postalCodeList;
-			
+
 		} catch (DataAccessException e) {
 
 			LOGGER.error(e);
@@ -591,12 +612,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public String getPostalCode(String city, String state) {
 
 		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
+			List<Object> jpLocationList = hibernateTemplate
+					.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.state='"
+							+ state
+							+ "' and jloc.city='"
+							+ city
+							+ "' ORDER BY  jloc.postcode ASC");
 
-			if (jpLocationList != null && jpLocationList.size() !=0) {			
-				return (String)jpLocationList.get(0);
-			}			
-			
+			if (jpLocationList != null && jpLocationList.size() != 0) {
+				return (String) jpLocationList.get(0);
+			}
+
 		} catch (DataAccessException e) {
 
 			LOGGER.error(e);
@@ -608,12 +634,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public String getCountry(String city, String state, String postalCode) {
 
 		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"+state+"' and jloc.city='"+city+"' ORDER BY  jloc.postcode ASC");
+			List<Object> jpLocationList = hibernateTemplate
+					.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"
+							+ state
+							+ "' and jloc.city='"
+							+ city
+							+ "' ORDER BY  jloc.postcode ASC");
 
-			if (jpLocationList != null && !jpLocationList.isEmpty()) {			
-				return (String)jpLocationList.get(0);
-			}			
-			
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {
+				return (String) jpLocationList.get(0);
+			}
+
 		} catch (DataAccessException e) {
 
 			LOGGER.error(e);
@@ -625,30 +656,33 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public LocationDTO populateLocation(String postalCode) {
 
 		try {
-			List<Object> jpLocationList = hibernateTemplate.find("select jloc.country,jloc.state,jloc.city from  JpLocation jloc WHERE jloc.postcode='"+postalCode+"' ORDER BY  jloc.postcode ASC");
+			List<Object> jpLocationList = hibernateTemplate
+					.find("select jloc.country,jloc.state,jloc.city from  JpLocation jloc WHERE jloc.postcode='"
+							+ postalCode + "' ORDER BY  jloc.postcode ASC");
 
-			if (jpLocationList != null && !jpLocationList.isEmpty()) {		
-				LocationDTO dto = new LocationDTO();				
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {
+				LocationDTO dto = new LocationDTO();
 				Object[] obj = (Object[]) jpLocationList.get(0);
 				dto.setCountry(String.valueOf(obj[0]));
 				dto.setState(String.valueOf(obj[1]));
 				dto.setCity(String.valueOf(obj[2]));
-								
+
 				return dto;
-			}			
-			
+			}
+
 		} catch (DataAccessException e) {
 
 			LOGGER.error(e);
 		}
 		return null;
-	}	
-	
+	}
+
 	@Override
-	public Map<String,String> getJobStatusList() {			
+	public Map<String, String> getJobStatusList() {
 		try {
-			Map<String,String> resultMap = new HashMap<String,String>();
-			List<?> dataList = hibernateTemplate.find("select jpa.attribValue from JpAttribList jpa where jpa.attribType='JobStatus' order by jpa.position");
+			Map<String, String> resultMap = new HashMap<String, String>();
+			List<?> dataList = hibernateTemplate
+					.find("select jpa.attribValue from JpAttribList jpa where jpa.attribType='JobStatus' order by jpa.position");
 			resultMap = new LinkedHashMap<String, String>(dataList.size());
 			if (dataList != null && !dataList.isEmpty()) {
 
@@ -660,7 +694,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			} else {
 				resultMap = new LinkedHashMap<String, String>(1);
 			}
-		return resultMap;
+			return resultMap;
 
 		} catch (DataAccessException e) {
 
@@ -669,29 +703,35 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 
 	}
-	
+
 	/**
 	 * This method is called format base and child packages
+	 * 
 	 * @param dtl
 	 * @param sb
 	 * @return
 	 */
-	private StringBuilder formatBaseAddonPackages(AdmInventoryDetail dtl, StringBuilder strBuilder){
+	private StringBuilder formatBaseAddonPackages(AdmInventoryDetail dtl,
+			StringBuilder strBuilder) {
 		try {
-			//Go to Jp Job Type (Base package)
-			if(dtl.getProductType().equals(MMJBCommonConstants.JOB_TYPE)){
-				List<JpJobType> jpTypeList = hibernateTemplate.find("from JpJobType jbTp where jbTp.jobTypeId=?",dtl.getProductId());
-				if(null != jpTypeList && !jpTypeList.isEmpty()){
+			// Go to Jp Job Type (Base package)
+			if (dtl.getProductType().equals(MMJBCommonConstants.JOB_TYPE)) {
+				List<JpJobType> jpTypeList = hibernateTemplate.find(
+						"from JpJobType jbTp where jbTp.jobTypeId=?",
+						dtl.getProductId());
+				if (null != jpTypeList && !jpTypeList.isEmpty()) {
 					JpJobType type = jpTypeList.get(0);
 					strBuilder.append(type.getName());
 				}
 			}
-			
-			//Go to Jp Addon (Child packages(Addons))
-			if(dtl.getProductType().equals(MMJBCommonConstants.JOB_TYPE_ADDON)){
-				List<JpAddon> addonList = hibernateTemplate.find("from JpAddon addon where addon.addonId=?",dtl.getProductId());
+
+			// Go to Jp Addon (Child packages(Addons))
+			if (dtl.getProductType().equals(MMJBCommonConstants.JOB_TYPE_ADDON)) {
+				List<JpAddon> addonList = hibernateTemplate.find(
+						"from JpAddon addon where addon.addonId=?",
+						dtl.getProductId());
 				Iterator iterate = addonList.iterator();
-				while(iterate.hasNext()){
+				while (iterate.hasNext()) {
 					strBuilder.append(" ").append("+").append(" ");
 					JpAddon addon = (JpAddon) iterate.next();
 					strBuilder.append(addon.getName());
@@ -700,8 +740,113 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
-		
+
 		return strBuilder;
 	}
-	
+
+	@Override
+	public List<String> getEmployerNamesList(String employerName) {
+		List<String> emplyrNamesList = new ArrayList<String>();
+		try {
+			// List<MerUser> usersList = hibernateTemplateTracker
+			// .find("from MerUser merUsr where merUsr.firstName like '%"
+			// + employerName + "%'");
+			// for (MerUser user : usersList) {
+			// List<Object> emplyrNamesList = hibernateTemplate
+			// .find("select admUsrRole.id from AdmUserRole admUsrRole where admUsrRole.id.roleId="
+			// + MMJBCommonConstants.EMPLOYER_ROLE_ID
+			// + " and admUsrRole.id.userId='"
+			// + user.getUserId() + "'");
+			// if (null != emplyrNamesList && emplyrNamesList.size() > 0) {
+			// emplyrs.add(user.getFirstName());
+			// }
+			// }
+
+			/*
+			 * List<Integer> emplyrs = hibernateTemplate .find(
+			 * "select admFacility.facilityId from AdmFacility admFacility where admFacility.name like '%"
+			 * + employerName + "%'"); if (emplyrs != null &&
+			 * !emplyrs.isEmpty()) { for (Integer object : emplyrs) {
+			 * List<Integer> facilities = hibernateTemplate .find(
+			 * "select admUsrFaclty.admFacility.facilityId from AdmUserFacility admUsrFaclty where admUsrFaclty.admRole="
+			 * + MMJBCommonConstants.EMPLOYER_ROLE_ID +
+			 * " and admUsrFaclty.admFacility.facilityId=?", object); if
+			 * (facilities != null && !facilities.isEmpty()) { List<Object>
+			 * emplyrNames = hibernateTemplate .find(
+			 * "select admFacility.name from AdmFacility admFacility where admFacility.facilityId=?"
+			 * , facilities.get(0)); if (emplyrNames != null &&
+			 * !emplyrNames.isEmpty()) {
+			 * emplyrNamesList.add(emplyrNames.get(0).toString()); } } }
+			 * 
+			 * }
+			 */
+
+			/*
+			 * List<Object[]> emplyrs = hibernateTemplate .find(
+			 * "select admFacility.facilityId,admFacility.name from AdmFacility admFacility where admFacility.name like '%"
+			 * + employerName + "%'"); if (emplyrs != null &&
+			 * !emplyrs.isEmpty()) { for (Object[] emplyr : emplyrs) {
+			 * List<Integer> facilities = hibernateTemplate .find(
+			 * "select admUsrFaclty.admFacility.facilityId from AdmUserFacility admUsrFaclty where admUsrFaclty.admRole="
+			 * + MMJBCommonConstants.EMPLOYER_ROLE_ID +
+			 * " and admUsrFaclty.admFacility.facilityId=?",
+			 * Integer.parseInt(String.valueOf(emplyr[0]))); if (facilities !=
+			 * null && !facilities.isEmpty()) { EmployerInfoDTO empDto = new
+			 * EmployerInfoDTO(); empDto.setFacilityId(Integer.parseInt(String
+			 * .valueOf(emplyr[0])));
+			 * empDto.setCustomerNamel(String.valueOf(emplyr[1]));
+			 * emplyrNamesList.add(empDto); }
+			 * 
+			 * }
+			 * 
+			 * }
+			 */
+			emplyrNamesList = hibernateTemplate
+					.find("select name from AdmFacility where name like '%"
+							+ employerName + "%' and facilityType='FACILITY'");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return emplyrNamesList;
+	}
+
+	@Override
+	public Map<String, Object> getEmployerDetails(String employerName) {
+
+		Map<String, Object> employerDetails = new HashMap<String, Object>();
+		// TODO: PHONE NUMBER DISPLAY
+		// List<Object> emplyrDetailsList = hibernateTemplate
+		// .find("select admFacility.city,admFacility.street,admFacility.postcode,admFacility.state,admFacility.country,admFacility.admFacilityContacts.phone from AdmFacility admFacility where admFacility.name=?",
+		// employerName);
+		List<Object> emplyrDetailsList = hibernateTemplate
+				.find("select admFacility.city,admFacility.street,admFacility.postcode,admFacility.state,admFacility.country,admFacility.facilityId,admFacility.name from AdmFacility admFacility where admFacility.name=?",
+						employerName);
+		if (emplyrDetailsList != null && !emplyrDetailsList.isEmpty()) {
+			Object[] emplyrDetails = (Object[]) emplyrDetailsList.get(0);
+			employerDetails.put("city", emplyrDetails[0]);
+			employerDetails.put("street", emplyrDetails[1]);
+			employerDetails.put("postcode", emplyrDetails[2]);
+			employerDetails.put("state", emplyrDetails[3]);
+			employerDetails.put("country", emplyrDetails[4]);
+			employerDetails.put("facilityId", emplyrDetails[5]);
+			employerDetails.put("name", emplyrDetails[6]);
+			List<Object> phoneattrIdList = hibernateTemplateTracker
+					.find("select merProfAttrb.profileAttribId from MerProfileAttrib merProfAttrb where merProfAttrb.name= '"
+							+ MMJBCommonConstants.phone + "'");
+			// List<Object> phoneattrIdList = hibernateTemplateTracker
+			// .find("select merProfAttrb.profileAttribId from MerProfileAttrib merProfAttrb where merProfAttrb.name='Phone'");
+			List<Object> userIdList = hibernateTemplate
+					.find("select admUsrFacilty.facilityPK.userId from AdmUserFacility admUsrFacilty where admUsrFacilty.admFacility.facilityId="
+							+ emplyrDetails[5]);
+			List<Object> phoneNumList = hibernateTemplateTracker
+					.find("select merUsrProfile.attribValue from MerUserProfile merUsrProfile where merUsrProfile.merProfileAttrib.profileAttribId="
+							+ phoneattrIdList.get(0)
+							+ "and merUsrProfile.merUser.userId="
+							+ userIdList.get(0));
+			employerDetails.put("phone", phoneNumList.get(0));
+		}
+
+		return employerDetails;
+	}
 }
