@@ -60,7 +60,7 @@ public class EmployerProfileManagementController {
 		int admFacilityId = Integer.parseInt(session.getAttribute(MMJBCommonConstants.FACILITY_ID).toString());
 		// Getting the customer ID from Adm Facility table.
 		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(464867);
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 		
 		Date featuredStartDate = userDTO.getFeaturedStartDate();
 		Date featuredEndDate = userDTO.getFeaturedEndDate();
