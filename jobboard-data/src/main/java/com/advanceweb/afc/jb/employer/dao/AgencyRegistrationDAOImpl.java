@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.agency.helper.AgencyRegistrationConversionHelper;
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -109,7 +111,8 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			// TODO: Remove hard code values
 			facility.setEmail(agencyDTO.getMerUserDTO().getEmailId());
 			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
-			facility.setNsCustomerID(agencyDTO.getMerUserDTO().getNsCustomerID());
+			facility.setNsCustomerID(agencyDTO.getMerUserDTO()
+					.getNsCustomerID());
 			facility.setCreateDt(new Date());
 			facility.setCreateUserId(null);
 			facility.setAccountNumber(null);
@@ -240,21 +243,65 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	}
 
 	/**
-	 * This method is called to check, whether registration is completed 
+	 * This method is called to check, whether registration is completed
 	 * properly or not (To migrate old users to new application)
 	 */
 	@Override
-	public boolean validateProfileAttributes(int agencyId){
+	public boolean validateProfileAttributes(int agencyId) {
 		try {
-			List<MerUserProfile> profAttribList = hibernateTemplateTracker.find(" from MerUserProfile prof where prof.profilePK.userId=?",agencyId);
-			if(null != profAttribList && !profAttribList.isEmpty()){
+			List<MerUserProfile> profAttribList = hibernateTemplateTracker
+					.find(" from MerUserProfile prof where prof.profilePK.userId=?",
+							agencyId);
+			if (null != profAttribList && !profAttribList.isEmpty()) {
 				return true;
 			}
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
+	@Override
+	public boolean addEmployer(AccountProfileDTO accountDto) {
+		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
+				accountDto.getFacilityId());
+		facility.setAdminUserId(2162);// TODO: REMOVE HARD CODE AGENCY USER ID
+		facility.setFacilityParentId(393);
+		hibernateTemplateCareers.update(facility);
+		return true;
+	}
+
+	@Override
+	public List<AdmFacility> getAssocEmployerNames(int userId) {
+		@SuppressWarnings("unchecked")
+		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
+				.find("from AdmFacility where adminUserId=2162 and facilityParentId=393 and deleteUserId=0");
+
+		return assocEmplyrs;
+	}
+
+	@Override
+	public boolean saveEmployerDetails(AccountProfileDTO dto) {
+		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
+				dto.getFacilityId());
+		facility.setCity(dto.getCity());
+		facility.setStreet(dto.getStreet());
+		facility.setCountry(dto.getCountry());
+		facility.setPostcode(dto.getZipCode());
+		hibernateTemplateCareers.update(facility);
+		return true;
+	}
+
+	@Override
+	public boolean deleteAssocEmployer(String facilityId, int userId) {
+		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
+				Integer.parseInt(facilityId));
+		facility.setDeleteUserId(1);// TODO : GET USER ID FROM SESSION
+		Date deleteDt = new Timestamp(new Date().getTime());
+		facility.setDeleteDt(deleteDt);
+		hibernateTemplateCareers.update(facility);
+		return true;
+
+	}
 }
