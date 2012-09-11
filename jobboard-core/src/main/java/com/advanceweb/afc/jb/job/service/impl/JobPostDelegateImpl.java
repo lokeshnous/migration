@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.job.service.impl;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAOImpl;
@@ -9,6 +10,16 @@ import com.advanceweb.afc.jb.job.service.JobPostDelegate;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 
+/**
+ * 
+ * @author Sasibhushana
+ *
+ * @Version 1.0
+ * @Since 2nd July, 2012
+ */
+
+
+@Service("jobPostDelegate")
 public class JobPostDelegateImpl implements JobPostDelegate{
 	
 	private static final String CUSTOMER_STRING = "customer"; 
