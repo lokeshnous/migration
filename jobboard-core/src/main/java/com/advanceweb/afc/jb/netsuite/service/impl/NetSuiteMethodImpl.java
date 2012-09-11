@@ -12,6 +12,14 @@ import org.springframework.stereotype.Service;
 import com.advanceweb.afc.jb.netsuite.NetSuiteCredential;
 import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 
+/**
+ * This service class helps to call the different WebServices of NetSuite.
+ * 
+ * @author Reetesh R N
+ * @version 1.0
+ * @since 04 Sept 2012
+ * 
+ */
 
 @Service("netSuiteMethod")
 public class NetSuiteMethodImpl implements NetSuiteMethod{
@@ -26,20 +34,26 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	private NetSuiteCredential netSuiteCredential;
 
 	/**
-	 * 
+	 * This method is used to call the WebClent get method.
+	 * @param  Map<String, String> queryparamMap
+	 * @param String paramString
+	 * @return Response object
 	 */
 	
-	public Response netSuiteGet(Map<String, String> queryparamMap) {
-		return createWebClient(queryparamMap).get();
+	public Response netSuiteGet(Map<String, String> queryparamMap, String paramString) {
+		return createGETWebClient(queryparamMap, paramString).get();
 	}
 
 	
 	/**
-	 * 
+	 * This method is used to call the WebClent post method.
+	 * @param  Map<String, String> queryparamMap
+	 * @param String paramString
+	 * @return Object 
 	 */
 	
 	public Response netSuitePost(Map<String, String> queryparamMap, Object obj) {
-		return createWebClient(queryparamMap).post(obj);
+		return createPOSTWebClient(queryparamMap).post(obj);
 	}
 	
 	
@@ -49,7 +63,7 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	 * 
 	 * @return WebClient obj
 	 */
-	private WebClient createWebClient(Map<String, String> queryparamMap) {
+	private WebClient createPOSTWebClient(Map<String, String> queryparamMap) {
 		String authorization = createAuthorization();
 		WebClient client = WebClient.create(queryparamMap.get("baseUrl"));
 		client.query("script", queryparamMap.get("script"));
@@ -63,6 +77,27 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 		
 		return client;
 	}
+	
+	
+	/**
+	 * This method is used to create a WebClient Object by taking the web
+	 * services URL.
+	 * 
+	 * @return WebClient obj
+	 */
+	private WebClient createGETWebClient(Map<String, String> queryparamMap, String paramString) {
+		String authorization = createAuthorization();
+		WebClient client = WebClient.create(queryparamMap.get("baseUrl")+"?script="+queryparamMap.get("script")+"&deploy="+queryparamMap.get("deploy")+paramString);
+		
+		client.header(AUTHORIZATION_STRING, authorization);
+		client.header(CONTENT_TYPE_STRING, CONTENT_TYPE_VALUE);
+		
+		LOGGER.info("Web Client=>"+client);
+		LOGGER.info("Web Client=>"+client.getCurrentURI());
+		
+		return client;
+	}
+	
 	
 	/**
 	 * 

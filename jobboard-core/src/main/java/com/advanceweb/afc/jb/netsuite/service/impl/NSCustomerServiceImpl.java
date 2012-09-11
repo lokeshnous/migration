@@ -13,6 +13,7 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,12 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private static final String SCRIPT_STRING_UPDATE_USER = "scriptForUpdateUser";
 	private static final String DEPLOY_STRING_UPDATE_USER = "deployForUpdateUser";
+	
+	private static final String SCRIPT_STRING_GET_USER_DETAILS = "scriptForGetUserDetails";
+	private static final String DEPLOY_STRING_GET_USER_DETAILS = "deployForGetUserDetails";
+	
+	private static final String IS_FEATURED = "custentityfeaturedemployee";
+	
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -107,6 +114,27 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return getUpdatedUserDTOFromResponse(response);
 	}
+	
+	
+	/**
+	 * This method is used to get the customer details through NetSuite.
+	 * @param userDTO
+	 * @return userDTO
+	 * @throws JobBoardNetSuiteServiceException 
+	 */
+	
+	public UserDTO getNSCustomerDetails(UserDTO userDTO) throws JobBoardNetSuiteServiceException{
+		
+		Map<String, String> queryparamMap = getCustomerDetailsQueryMap();
+		String formParameterString = formParameterForGetCustomerDetails(userDTO, queryparamMap);
+		Response response = netSuiteMethod.netSuiteGet(queryparamMap,
+				formParameterString);
+
+		return getUserDTOFromResponse(response);
+		
+	}
+	
+	
 
 	/**
 	 * This method id used to create Net suite customer object from User object.
@@ -209,6 +237,29 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return queryParamMap;
 	}
+	
+	
+	/**
+	 * This method is used for creating net suite service url map. 
+	 * The values will be read from the netSuite.properties file.
+	 * @returnMap<String, String>
+	 */
+
+	private Map<String, String> getCustomerDetailsQueryMap() {
+
+		Properties entries = netSuiteHelper.getNSProperties();
+		Map<String, String> queryParamMap = new HashMap<String, String>();
+		queryParamMap
+				.put(BASE_URL_STRING, entries.getProperty(BASE_URL_STRING));
+		queryParamMap.put(SCRIPT_STRING,
+				entries.getProperty(SCRIPT_STRING_GET_USER_DETAILS));
+		queryParamMap.put(DEPLOY_STRING,
+				entries.getProperty(DEPLOY_STRING_GET_USER_DETAILS));
+
+		return queryParamMap;
+	}
+	
+	
 
 	/**
 	 * This method is used to get the User object from the Net Suite Response
@@ -283,6 +334,55 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return userDTO;
 	}
+	
+	/**
+	 * This method is used to get the User object from the Net Suite Response
+	 * for updating a Customer. The net suite response will be parsed and
+	 * encapsulated in the User object and return it back.
+	 * 
+	 * @param Object
+	 *            of Response
+	 * @return Object of UserDTO
+	 * @throws JobBoardServiceException
+	 */
+
+	private UserDTO getUserDTOFromResponse(Response response)
+			throws JobBoardNetSuiteServiceException {
+		String jsonResponse = null;
+		UserDTO userDTO = new UserDTO();
+		
+		try {
+			jsonResponse = IOUtils.readStringFromStream((InputStream) response
+					.getEntity());
+			
+			
+			if (jsonResponse.contains("error")) {
+				LOGGER.info("Error occurred while record updation in NetSuite.");
+				throw new JobBoardNetSuiteServiceException(
+						"Error occurred while record updation in NetSuite.");
+			} else{
+				
+				try {
+					org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResponse);
+					LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
+					userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
+				} catch (JSONException e) {
+					LOGGER.error(e);
+				}
+				
+			}
+
+		} catch (IOException e) {
+			throw new JobBoardNetSuiteServiceException(
+					"Failed to get a string represenation of the NetSuite response"
+							+ e);
+		}
+
+		return userDTO;
+	}
+	
+	
+	
 
 	/**
 	 * This method is used to get the isPersion string from the Json object.
@@ -299,5 +399,19 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				.toUpperCase());
 		return json;
 	}
+	
+	/**
+	 * This method created the parameter url for netSuite GET request.
+	 * @param object of UserDTO
+	 * @param Map<String, String> queryparamMap
+	 * @return String
+	 */
+	
+	public String formParameterForGetCustomerDetails(UserDTO userDTO, Map<String, String> queryparamMap){
+		
+		return "&recordtype="+userDTO.getRecordType()+"&id="+userDTO.getEntityId();
+		
+	}
+	
 
 }

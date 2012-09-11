@@ -38,4 +38,13 @@ public interface NSCustomerService {
 
 	UserDTO editCustomer(UserDTO userDTO) throws JobBoardNetSuiteServiceException;
 	
+	/**
+	 * This method is used to get the customer details through NetSuite.
+	 * @param userDTO
+	 * @return userDTO
+	 * @throws JobBoardNetSuiteServiceException 
+	 */
+	
+	UserDTO getNSCustomerDetails(UserDTO userDTO) throws JobBoardNetSuiteServiceException;
+	
 }

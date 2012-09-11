@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.ManageFeatureEmployerProfileDAO;
 
 /**
@@ -28,6 +29,9 @@ public class ManageFeatureEmployerProfileService implements
 
 	@Autowired
 	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
+	
+	@Autowired
+	private ManageFeatureEmployerDelegate manageFeatureEmployerDelegate;
 
 	/**
 	 * Saving Manage Featured Employer Profile
@@ -54,5 +58,28 @@ public class ManageFeatureEmployerProfileService implements
 	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
 		return manageFeatureEmployerProfileDAO.getEmployerAccountDetails(employerId);
 	}
+	
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return int nsCustomerID
+	 */
+	public int getNSCustomerIDFromAdmFacility(int admFacilityID){
+		return manageFeatureEmployerDelegate.getNSCustomerIDFromAdmFacility(admFacilityID);
+		
+	}
+	
+	/**
+	 * This method is used to get the net suite customer details based on
+	 * customer id.
+	 * @param int admFacilityID
+	 * @return int nsCustomerID
+	 */
+	
+	public UserDTO getNSCustomerDetails(int nsCustomerID){
+		return  manageFeatureEmployerDelegate.getNSCustomerDetails(nsCustomerID);
+	}
+	
 
 }

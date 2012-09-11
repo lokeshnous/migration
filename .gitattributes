@@ -106,10 +106,12 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/BrandingTempl
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmloyerRegistartionService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerRegistration.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerDelegateImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeatureEmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/Job.java -text

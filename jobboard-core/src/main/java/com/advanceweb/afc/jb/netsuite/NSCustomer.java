@@ -56,8 +56,18 @@ public class NSCustomer {
 	
 	private String city;
 	
+	private boolean custEntityFeaturedEmployee;
 	
 	
+	
+	public boolean isCustEntityFeaturedEmployee() {
+		return custEntityFeaturedEmployee;
+	}
+
+	public void setCustEntityFeaturedEmployee(boolean custEntityFeaturedEmployee) {
+		this.custEntityFeaturedEmployee = custEntityFeaturedEmployee;
+	}
+
 	public String getCity() {
 		return city;
 	}
