@@ -460,9 +460,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			// }
 
 			for (AdmFacility facility : admFacilityList) {
-				Object[] inputs = { facility.getFacilityId(), roleId };
+				Object[] inputs = { facility.getFacilityId(), 5, 6 };
 				List<AdmUserFacility> admUsersList = hibernateTemplate
-						.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and admFacility.id.roleId=?",
+						.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and admFacility.id.roleId=? or admFacility.id.roleId=?",
 								inputs);
 				if (null != admUsersList && !admUsersList.isEmpty()) {
 					AdmUserFacility admUserFacility = admUsersList.get(0);
