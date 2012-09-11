@@ -30,4 +30,10 @@ public interface JobPostService {
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
 	boolean validateAndDecreaseAvailableCredits();
+	/**
+	 * 
+	 * @param advSearchId
+	 * @return JobPostDTO
+	 */
+	List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId);
 }
