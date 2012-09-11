@@ -63,8 +63,9 @@ public class EmployerProfileManagementController {
 		
 		Date featuredStartDate = userDTO.getFeaturedStartDate();
 		Date featuredEndDate = userDTO.getFeaturedEndDate();
-		
-		isDateRange = isInDateRange(featuredStartDate, featuredEndDate);
+		if(featuredStartDate != null && featuredEndDate != null){
+			isDateRange = isInDateRange(featuredStartDate, featuredEndDate);
+		}
 		LOGGER.info("Featured Start Date is "+featuredStartDate);
 		LOGGER.info("Featured End Date is "+featuredEndDate);
 		LOGGER.info("Is in Date Range=>"+isDateRange);
