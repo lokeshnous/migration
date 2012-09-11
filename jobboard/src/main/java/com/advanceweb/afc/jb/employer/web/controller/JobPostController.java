@@ -145,6 +145,8 @@ public class JobPostController {
 		dto.setbActive(true);
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		dto.setUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName(FORWORD_MANAGE_JOBPOST);
 		return model;
@@ -236,7 +238,6 @@ public class JobPostController {
 					|| MMJBCommonConstants.ZERO.equals(form.getJobTitle())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobCountry())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobState())
-					|| MMJBCommonConstants.ZERO.equals(form.getBrandTemplate())
 					|| StringUtils.isEmpty(form.getJobDesc())
 					|| (StringUtils.isEmpty(form.getApplyUrl())
 							&& StringUtils.isEmpty(form.getAtsUrl()) 
