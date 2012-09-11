@@ -1,7 +1,11 @@
 package com.advanceweb.afc.jb.user;
 
-import com.advanceweb.afc.jb.common.UserDTO;
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 
 /**
  * @author rajeshkb
@@ -59,15 +63,22 @@ public interface ProfileRegistration {
 	 * @param profileDTO
 	 */
 	ProfileDTO getProfileAttributes();
-	
+
 	/**
-	 * This method will be called after the successful login by the user, 
-	 * to get the profile information in case of old user
+	 * This method will be called after the successful login by the user, to get
+	 * the profile information in case of old user
 	 * 
 	 * @param jobseekerId
 	 * @return
 	 */
 	boolean validateProfileAttributes(int jobseekerId);
-	
+
+	boolean addEmployer(AccountProfileDTO accountDto);
+
+	public List<AdmFacility> getAssocEmployerNames(int userId);
+
+	public boolean saveEmployerDetails(AccountProfileDTO dto);
+
+	boolean deleteAssocEmployer(String facilityId, int userId);
 
 }
