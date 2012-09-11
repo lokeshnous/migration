@@ -416,26 +416,27 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(IS_INVOICE_ENABLED).toString()));
 		
 		userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
-		if(jsonObject.get(FEATURED_START_DATE_STRING) != null){
+		
+		if(jsonObject.has(FEATURED_START_DATE_STRING)){
 			userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(FEATURED_START_DATE_STRING).toString()));
+			LOGGER.info("FEATURED START DATE IS=>"+jsonObject.get(FEATURED_START_DATE_STRING));
 		}
-		if(jsonObject.get(FEATURED_END_DATE_STRING) != null){
+		if(jsonObject.has(FEATURED_END_DATE_STRING)){
 			userDTO.setFeaturedEndDate(convertToDate(jsonObject.get(FEATURED_END_DATE_STRING).toString()));
+			LOGGER.info("FEATURED END DATE IS=>"+jsonObject.get(FEATURED_END_DATE_STRING));
 		}
 		
 		userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(IS_XML_FEED_ENABLED).toString()));
-		if(jsonObject.get(XMLFEED_START_DATE_STRING) != null){
+		if(jsonObject.has(XMLFEED_START_DATE_STRING)){
 			userDTO.setXmlFeedStartDate(convertToDate(jsonObject.get(XMLFEED_START_DATE_STRING).toString()));
+			LOGGER.info("XMLFEED START DATE IS=>"+jsonObject.get(XMLFEED_START_DATE_STRING));
 		}
-		if(jsonObject.get(XMLFEED_END_DATE_STRING) != null){
+		if(jsonObject.has(XMLFEED_END_DATE_STRING)){
 			userDTO.setXmlFeedEndDate(convertToDate(jsonObject.get(XMLFEED_END_DATE_STRING).toString()));
+			LOGGER.info("XMLFEED END DATE IS=>"+jsonObject.get(XMLFEED_END_DATE_STRING));
 		}
 		
 		
-		LOGGER.info("XMLFEED_END_DATE_STRING===>"+jsonObject.get(XMLFEED_END_DATE_STRING));
-		LOGGER.info("XMLFEED_START_DATE_STRING===>"+jsonObject.get(XMLFEED_START_DATE_STRING));
-		LOGGER.info("FEATURED_START_DATE_STRING===>"+jsonObject.get(FEATURED_START_DATE_STRING));
-		LOGGER.info("FEATURED_END_DATE_STRING===>"+jsonObject.get(FEATURED_END_DATE_STRING));
 		LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
 		LOGGER.info("IS_INVOICE_ENABLED===>"+jsonObject.get(IS_INVOICE_ENABLED));
 		LOGGER.info("IS_XML_FEED_ENABLED===>"+jsonObject.get(IS_XML_FEED_ENABLED));

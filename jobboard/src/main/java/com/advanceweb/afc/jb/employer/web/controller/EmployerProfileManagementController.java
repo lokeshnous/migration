@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,38 +56,43 @@ public class EmployerProfileManagementController {
 			HttpSession session) {
 
 		ModelAndView model = new ModelAndView();
-
+		boolean isDateRange = false;
 		int admFacilityId = Integer.parseInt(session.getAttribute(MMJBCommonConstants.FACILITY_ID).toString());
-		// check whether this user is features employer or not.
-		
+		// Getting the customer ID from Adm Facility table.
 		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(464867);
 		
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+		Date featuredStartDate = userDTO.getFeaturedStartDate();
+		Date featuredEndDate = userDTO.getFeaturedEndDate();
 		
-		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
-				.getEmployerDetails((Integer) session
-						.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		if (null != companyProfileDTO) {
-			employerProfileManagementForm.setCompanyName(companyProfileDTO
-					.getCompanyName());
-			employerProfileManagementForm.setCompanyNews(companyProfileDTO
-					.getCompanyNews());
-			employerProfileManagementForm.setCompanyOverview(companyProfileDTO
-					.getCompanyOverview());
-			employerProfileManagementForm.setCompanyWebsite(companyProfileDTO
-					.getCompanyWebsite());
-			employerProfileManagementForm.setCompanyEmail(companyProfileDTO
-					.getCompanyEmail());
-			employerProfileManagementForm.setPositionTitle(companyProfileDTO
-					.getPositionTitle());
-			employerProfileManagementForm.setLogoPath(companyProfileDTO
-					.getLogoPath());
-			employerProfileManagementForm.setPrimaryColor(companyProfileDTO.getPrimaryColor());
-			/*
-			employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
-		}
+		isDateRange = isInDateRange(featuredStartDate, featuredEndDate);
+		LOGGER.info("Featured Start Date is "+featuredStartDate);
+		LOGGER.info("Featured End Date is "+featuredEndDate);
+		LOGGER.info("Is in Date Range=>"+isDateRange);
 		//userDTO.setFeatured(true);
-		if(userDTO.isFeatured()){
+		if(userDTO.isFeatured() && isDateRange){
+			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+					.getEmployerDetails((Integer) session
+							.getAttribute(MMJBCommonConstants.FACILITY_ID));
+			if (null != companyProfileDTO) {
+				employerProfileManagementForm.setCompanyName(companyProfileDTO
+						.getCompanyName());
+				employerProfileManagementForm.setCompanyNews(companyProfileDTO
+						.getCompanyNews());
+				employerProfileManagementForm.setCompanyOverview(companyProfileDTO
+						.getCompanyOverview());
+				employerProfileManagementForm.setCompanyWebsite(companyProfileDTO
+						.getCompanyWebsite());
+				employerProfileManagementForm.setCompanyEmail(companyProfileDTO
+						.getCompanyEmail());
+				employerProfileManagementForm.setPositionTitle(companyProfileDTO
+						.getPositionTitle());
+				employerProfileManagementForm.setLogoPath(companyProfileDTO
+						.getLogoPath());
+				employerProfileManagementForm.setPrimaryColor(companyProfileDTO.getPrimaryColor());
+				/*
+				employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
+			}
 			model.addObject("employerProfileManagementForm", employerProfileManagementForm);
 			model.setViewName("manageFeatureEmpPro");
 		}else{
@@ -255,6 +261,22 @@ public class EmployerProfileManagementController {
 				errors.rejectValue("positionalMedia", STR_NOTEMPTY,
 						"Please select the appropriate media file");
 			}
+		}
+	}
+	
+	/**
+	 * This method used to compare whether the current date is in the range
+	 * of start date and end date.
+	 * @param startDate
+	 * @param endDate
+	 * @return boolean
+	 */
+	public boolean isInDateRange(Date startDate, Date endDate){
+		Date currentDate = new Date();
+		if(currentDate.getTime() > startDate.getTime() && currentDate.getTime() < endDate.getTime()){
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
