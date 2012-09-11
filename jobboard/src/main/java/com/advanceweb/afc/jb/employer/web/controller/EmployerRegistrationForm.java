@@ -60,7 +60,7 @@ public class EmployerRegistrationForm {
 	@NotEmpty(message = "Country should not be empty")
 	private String country;
 
-	private String facilityId;
+	private int facilityId;
 
 	private List<EmployerProfileAttribForm> listProfAttribForms;
 
@@ -337,11 +337,11 @@ public class EmployerRegistrationForm {
 		this.bReadOnly = bReadOnly;
 	}
 
-	public String getFacilityId() {
+	public int getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
 }

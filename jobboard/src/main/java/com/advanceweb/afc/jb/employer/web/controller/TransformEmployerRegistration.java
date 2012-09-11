@@ -255,7 +255,7 @@ public class TransformEmployerRegistration {
 		dto.setZipCode(form.getZipCode());
 		dto.setPhone(form.getPrimaryPhone());
 		dto.setCity(form.getCity());
-		dto.setFacilityId(Integer.parseInt(form.getFacilityId().toString()));
+		dto.setFacilityId(form.getFacilityId());
 
 		return dto;
 	}
