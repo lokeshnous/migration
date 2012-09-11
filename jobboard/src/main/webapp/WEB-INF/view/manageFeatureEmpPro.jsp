@@ -19,8 +19,10 @@
 	jQuery(document).ready(function() {
 		$('#colorPkr').colorPicker();
 		var error = $('#FormErrorDisplayText').text().trim();
-		alert(error);
-		cancelProcess();
+		if(error.length > 0){
+			alert(error);
+			cancelProcess();
+		}
 	});
 </script>
 
