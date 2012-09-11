@@ -15,7 +15,7 @@
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
-						alert("Data send successfully !");						
+						alert("Successfully sent!");						
 						parent.$.nmTop().close();
 					}else{
 						$("#errmsg").html(data);
