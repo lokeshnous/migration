@@ -13,8 +13,6 @@
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
-		    	
-		    	
 		    	$("#saveNewOwner").click(function() {
 			    		var ownerName = $.trim($("#ownerName").val());
 						var ownerEmail = $.trim($("#ownerEmail").val());
@@ -89,8 +87,17 @@
 					</div> 
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-						<span class="floatLeft marginTop10"><a href="#" id="saveNewOwner"
-							class="btn_sm orange">SAVE</a> <a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a></span>
+						<span class="floatLeft marginTop10">
+							<a href="#" id="saveNewOwner" class="btn_sm orange">SAVE</a> 
+							<c:choose>
+									<c:when test="${manageAccessPermissionForm.setAlertPage != null}">
+										<a href="<%=request.getContextPath()%>/alerts/employer/setAlerts.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a>
+									</c:when>
+									<c:otherwise>
+										<a href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a>
+									</c:otherwise>
+							</c:choose>
+						</span>
 							<a hidden="hidden" class="nyroModal" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="manageAccPerm"></a>
 					</div>
 					<div class="clearfix"></div>

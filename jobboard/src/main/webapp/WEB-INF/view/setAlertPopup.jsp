@@ -73,9 +73,9 @@ function cancelProcess(){
 							path="selJobOwner" items="${jbOwnerList}" 
 							itemValue="optionId" itemLabel="optionName">
 						</form:select> 
-								
+					<input type="hidden" name="pageValue" value="setAlertPage"/>		
 					<span class="required paddingTop4">
-						<a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html"  
+						<a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=setAlertPage"  
 						id="addNewJobOwnerPopUp" ">Add NewJob Owner</a></span>
 					</div>
 				</div>

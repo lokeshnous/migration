@@ -27,7 +27,8 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * 
  * @author deviprasadm
  * @Created: Aug 03, 2012
- * @Purpose: This class will act as a Controller for the Manage Access Permission
+ * @Purpose: This class will act as a Controller for the Manage Access
+ *           Permission
  */
 
 @Controller
@@ -42,6 +43,7 @@ public class ManageAccessPermissionController {
 	private TransformEmployerRegistration transformEmpReg;
 	@Autowired
 	private ProfileRegistration employerRegistration;
+
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -67,10 +69,14 @@ public class ManageAccessPermissionController {
 
 	@RequestMapping(value = "/addNewJobOwner")
 	public ModelAndView addNewJobOwner(HttpSession session,
-			ManageAccessPermissionForm manageAccessPermissionForm) {
+			ManageAccessPermissionForm manageAccessPermissionForm,
+			@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
 		try {
 			manageAccessPermissionForm.setFullAccess("5");
+			if (page.equals(MMJBCommonConstants.SET_ALERT)) {
+				manageAccessPermissionForm.setSetAlertPage("true");
+			}
 			model.addObject("manageAccessPermissionForm",
 					manageAccessPermissionForm);
 			model.setViewName("addNewJobOwner");
@@ -101,7 +107,8 @@ public class ManageAccessPermissionController {
 							.getFullAccess()));
 				}
 			}
-			if (employerRegistration.validateEmail(manageAccessPermissionForm.getOwnerEmail())) {
+			if (employerRegistration.validateEmail(manageAccessPermissionForm
+					.getOwnerEmail())) {
 				warningMessage.put("failure", "Email Id already Exists!");
 				return warningMessage;
 			}
@@ -120,7 +127,8 @@ public class ManageAccessPermissionController {
 	}
 
 	@RequestMapping(value = "/deleteJobOwner", method = RequestMethod.POST)
-	public @ResponseBody JSONObject deleteJobOwner(
+	public @ResponseBody
+	JSONObject deleteJobOwner(
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			@RequestParam("userId") int userId) {
 
@@ -157,5 +165,5 @@ public class ManageAccessPermissionController {
 		}
 		return model;
 	}
-	
+
 }
