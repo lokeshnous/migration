@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
-import com.advanceweb.afc.jb.common.AdmFacilityDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -152,7 +152,7 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 			throws JobBoardServiceException {
 		boolean isUpdate = false;
 
-		AdmFacilityDTO admFacilityDTO = employerRegistrationDAO
+		FacilityDTO admFacilityDTO = employerRegistrationDAO
 				.getNSCustomerIDFromAdmFacility(accountProfDTO.getEmail());
 
 		UserDTO userDTO = createUserDTOFromAccountProfileDTO(accountProfDTO,

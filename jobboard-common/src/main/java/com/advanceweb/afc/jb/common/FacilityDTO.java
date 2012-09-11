@@ -10,7 +10,7 @@ import java.util.Date;
  */
 
 
-public class AdmFacilityDTO {
+public class FacilityDTO {
 	
 	private Integer facilityId;
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.AdmFacilityDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
@@ -177,9 +177,9 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	 * @return int NSCustomerID
 	 */
 	
-	public List<AdmFacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
+	public List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
 
-		List<AdmFacilityDTO> admFacilityDTOList = new ArrayList<AdmFacilityDTO>();
+		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
 		try {
 			@SuppressWarnings("unchecked")
 			List<AdmFacility> admFacilityList = hibernateTemplate
@@ -187,7 +187,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 			if (admFacilityList != null) {
 				for (AdmFacility admFacilityObj : admFacilityList) {
-					AdmFacilityDTO admFacilityDTO = new AdmFacilityDTO();
+					FacilityDTO admFacilityDTO = new FacilityDTO();
 					admFacilityDTO.setNsCustomerID(admFacilityObj.getNsCustomerID());
 					admFacilityDTOList.add(admFacilityDTO);
 				}

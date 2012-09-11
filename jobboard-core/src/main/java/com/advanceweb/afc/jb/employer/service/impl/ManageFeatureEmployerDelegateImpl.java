@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.common.AdmFacilityDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.ManageFeatureEmployerProfileDAO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerDelegate;
@@ -48,7 +48,7 @@ public class ManageFeatureEmployerDelegateImpl implements
 
 	public int getNSCustomerIDFromAdmFacility(int admFacilityID) {
 		int nsCustomerID = 0;
-		List<AdmFacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
+		List<FacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
 				.getNSCustomerIDFromAdmFacility(admFacilityID);
 		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
 		return nsCustomerID;

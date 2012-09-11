@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
-import com.advanceweb.afc.jb.common.AdmFacilityDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -98,7 +98,7 @@ public interface EmployerRegistrationDAO {
 	 * @return
 	 */
 	
-	public AdmFacilityDTO getNSCustomerIDFromAdmFacility(String name);
+	public FacilityDTO getNSCustomerIDFromAdmFacility(String name);
 	
 	
 

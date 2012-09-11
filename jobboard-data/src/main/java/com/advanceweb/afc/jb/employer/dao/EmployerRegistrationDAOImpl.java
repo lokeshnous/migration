@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
-import com.advanceweb.afc.jb.common.AdmFacilityDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -477,9 +477,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 */
 	
 	
-	public AdmFacilityDTO getNSCustomerIDFromAdmFacility(String email) {
+	public FacilityDTO getNSCustomerIDFromAdmFacility(String email) {
 		
-		AdmFacilityDTO admFacilityDTO = new AdmFacilityDTO();
+		FacilityDTO admFacilityDTO = new FacilityDTO();
 		try{
 			
 			List<AdmFacility> admFacilityList = hibernateTemplateCareers
