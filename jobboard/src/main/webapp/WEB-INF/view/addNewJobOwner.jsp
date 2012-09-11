@@ -28,7 +28,7 @@
 							$("#resumeErrorMsg").html("<span>Name should be both first name and last name.</span>");
 							
 						}else if(!email_regex.test(ownerEmail)){
-							$("#resumeErrorMsg").html("<span>Please enter a valied Email address.</span>");	
+							$("#resumeErrorMsg").html("<span>Please enter correct Email address.</span>");	
 						
 						}else {						
 							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
