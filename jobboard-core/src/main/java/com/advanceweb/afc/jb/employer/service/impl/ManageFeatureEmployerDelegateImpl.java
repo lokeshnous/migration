@@ -30,6 +30,8 @@ public class ManageFeatureEmployerDelegateImpl implements
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageFeatureEmployerDelegateImpl.class);
 
+	private static final String CUSTOMER_STRING = "customer"; 
+	
 	@Autowired
 	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
 
@@ -62,7 +64,7 @@ public class ManageFeatureEmployerDelegateImpl implements
 	public UserDTO getNSCustomerDetails(int nsCustomerID) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setEntityId(nsCustomerID);
-		userDTO.setRecordType("customer");
+		userDTO.setRecordType(CUSTOMER_STRING);
 
 		try {
 			
