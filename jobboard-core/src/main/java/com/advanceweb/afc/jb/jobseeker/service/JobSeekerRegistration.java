@@ -1,16 +1,20 @@
 package com.advanceweb.afc.jb.jobseeker.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -20,19 +24,19 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  * @created 21-Jun-2012 2:22:44 PM
  */
 @Service("profileRegistration")
-@Transactional(propagation=Propagation.SUPPORTS, readOnly=false)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobSeekerRegistration implements ProfileRegistration {
 
 	public JobSeekerProfileDTO jobSeekerProfileDTO;
 	@Autowired
 	public JobSeekerRegistrationDAO jobSeekerRegistrationDAO;
 	public ResumeDTO resumeDTO;
-	private static final Logger LOGGER = Logger.getLogger(JobSeekerRegistration.class);
-
+	private static final Logger LOGGER = Logger
+			.getLogger(JobSeekerRegistration.class);
 
 	/**
-	 * This method is called to save job seeker registration
-	 * infromation into the DB.
+	 * This method is called to save job seeker registration infromation into
+	 * the DB.
 	 * 
 	 * @param profileDTO
 	 */
@@ -41,7 +45,8 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	public UserDTO createUser(ProfileDTO profileDTO) {
 		try {
 			JobSeekerRegistrationDTO jobSeekerRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
-			return jobSeekerRegistrationDAO.createNewJobSeeker(jobSeekerRegistrationDTO);
+			return jobSeekerRegistrationDAO
+					.createNewJobSeeker(jobSeekerRegistrationDTO);
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
@@ -63,9 +68,10 @@ public class JobSeekerRegistration implements ProfileRegistration {
 	 */
 	@Override
 	public boolean modifyProfile(ProfileDTO profileDTO) {
-		
+
 		JobSeekerRegistrationDTO jobSeekerRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
-		return jobSeekerRegistrationDAO.updateJobSeekerDetails(jobSeekerRegistrationDTO);
+		return jobSeekerRegistrationDAO
+				.updateJobSeekerDetails(jobSeekerRegistrationDTO);
 	}
 
 	/**
@@ -96,13 +102,36 @@ public class JobSeekerRegistration implements ProfileRegistration {
 
 	@Override
 	public ProfileDTO getProfileAttributes() {
-		
-		return jobSeekerRegistrationDAO.getProfileAttributes();
-	}	
-	
 
-	public boolean validateProfileAttributes(int jobseekerId){
+		return jobSeekerRegistrationDAO.getProfileAttributes();
+	}
+
+	public boolean validateProfileAttributes(int jobseekerId) {
 		return jobSeekerRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}
-	
+
+	@Override
+	public boolean addEmployer(AccountProfileDTO accountDto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<AdmFacility> getAssocEmployerNames(int UserId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean saveEmployerDetails(AccountProfileDTO dto) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteAssocEmployer(String facilityId, int userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
