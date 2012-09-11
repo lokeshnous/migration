@@ -29,7 +29,16 @@ public class UserDTO {
 	private String recordType;
 	private int entityId;
 	private boolean isFeatured;
+	private boolean isInvoiceEnabled;
 	
+
+	public boolean isInvoiceEnabled() {
+		return isInvoiceEnabled;
+	}
+
+	public void setInvoiceEnabled(boolean isInvoiceEnabled) {
+		this.isInvoiceEnabled = isInvoiceEnabled;
+	}
 
 	public int getEntityId() {
 		return entityId;
