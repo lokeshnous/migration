@@ -1,17 +1,21 @@
 package com.advanceweb.afc.jb.employer.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
 
 /**
  * @author rajeshkb
@@ -20,18 +24,20 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  */
 @Service("agencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
-	private static final Logger LOGGER = Logger.getLogger(AgencyRegistration.class);
-	
+	private static final Logger LOGGER = Logger
+			.getLogger(AgencyRegistration.class);
+
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
-	
+
 	@Autowired
 	private AgencyDelegate agencyDelegate;
-	
-	
+
 	/**
-	 * This method is used for creating a User( agency) in Job board. 
-	 * @param Object of profileDTO
+	 * This method is used for creating a User( agency) in Job board.
+	 * 
+	 * @param Object
+	 *            of profileDTO
 	 * @return Object of UserDTO
 	 */
 	public UserDTO createUser(ProfileDTO profileDTO) {
@@ -91,12 +97,31 @@ public class AgencyRegistration implements ProfileRegistration {
 	public ProfileDTO getProfileAttributes() {
 		return agencyRegistrationDAO.getProfileAttributes();
 	}
-	
+
 	@Override
 	public boolean validateProfileAttributes(int jobseekerId) {
-		
+
 		return agencyRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}
 
+	@Override
+	public boolean addEmployer(AccountProfileDTO accountDto) {
+		return agencyRegistrationDAO.addEmployer(accountDto);
+	}
+
+	@Override
+	public List<AdmFacility> getAssocEmployerNames(int userId) {
+		return agencyRegistrationDAO.getAssocEmployerNames(userId);
+	}
+
+	@Override
+	public boolean saveEmployerDetails(AccountProfileDTO dto) {
+		return agencyRegistrationDAO.saveEmployerDetails(dto);
+	}
+
+	@Override
+	public boolean deleteAssocEmployer(String facilityId, int userId) {
+		return agencyRegistrationDAO.deleteAssocEmployer(facilityId, userId);
+	}
 
 }
