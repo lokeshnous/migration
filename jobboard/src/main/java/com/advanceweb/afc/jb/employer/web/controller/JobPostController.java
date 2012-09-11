@@ -146,10 +146,10 @@ public class JobPostController {
 			return model;
 		}
 		
-		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
+/*		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);*/
 		
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
