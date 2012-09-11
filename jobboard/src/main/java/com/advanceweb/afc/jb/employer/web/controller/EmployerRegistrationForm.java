@@ -19,7 +19,7 @@ public class EmployerRegistrationForm {
 
 	@NotEmpty
 	private String confirmEmailId;
-	
+
 	@NotEmpty(message = "Position Tilte should not be empty")
 	private String positionTitle;
 
@@ -60,8 +60,10 @@ public class EmployerRegistrationForm {
 	@NotEmpty(message = "Country should not be empty")
 	private String country;
 
+	private String facilityId;
+
 	private List<EmployerProfileAttribForm> listProfAttribForms;
-	
+
 	private boolean bReadOnly;
 
 	/**
@@ -334,5 +336,12 @@ public class EmployerRegistrationForm {
 	public void setbReadOnly(boolean bReadOnly) {
 		this.bReadOnly = bReadOnly;
 	}
-	
+
+	public String getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(String facilityId) {
+		this.facilityId = facilityId;
+	}
 }

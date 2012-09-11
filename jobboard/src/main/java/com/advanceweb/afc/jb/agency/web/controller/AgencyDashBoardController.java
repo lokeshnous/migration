@@ -433,8 +433,11 @@ public class AgencyDashBoardController {
 
 			AccountProfileDTO dto = transformEmpReg
 					.transformEmployerFormToDto(employerRegistrationForm);
-
-			agencyRegistration.addEmployer(dto);
+			int agencyUserId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+			int facilityId = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			agencyRegistration.addEmployer(dto, facilityId, agencyUserId);
 
 			model.setViewName("employerDashboard");
 
@@ -450,10 +453,12 @@ public class AgencyDashBoardController {
 		ModelAndView model = new ModelAndView();
 		try {
 
-			int agencyUserId = (Integer) session.getAttribute("userId");
-
+			int agencyUserId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+			int facilityId = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			List<AdmFacility> assocEmplyrsNames = agencyRegistration
-					.getAssocEmployerNames(agencyUserId);
+					.getAssocEmployerNames(agencyUserId, facilityId);
 
 			model.addObject("assocEmplyrsNames", assocEmplyrsNames);
 			model.setViewName("agencyManageEmployers");
@@ -514,8 +519,10 @@ public class AgencyDashBoardController {
 		Map<String, List<AdmFacility>> emplyrsByState = new HashMap<String, List<AdmFacility>>();
 		Set<String> stateList = new HashSet<String>();
 
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<AdmFacility> assocEmplyrsNames = agencyRegistration
-				.getAssocEmployerNames(agencyUserId);
+				.getAssocEmployerNames(agencyUserId, facilityId);
 		for (AdmFacility assocEmplyr : assocEmplyrsNames) {
 			String state = assocEmplyr.getState();
 			if (stateList.add(state)) {

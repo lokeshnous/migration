@@ -243,7 +243,6 @@ public class TransformEmployerRegistration {
 		return accessPermissionDTO;
 	}
 
-	
 	public AccountProfileDTO transformEmployerFormToDto(
 			EmployerRegistrationForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();
@@ -256,7 +255,7 @@ public class TransformEmployerRegistration {
 		dto.setZipCode(form.getZipCode());
 		dto.setPhone(form.getPrimaryPhone());
 		dto.setCity(form.getCity());
-		dto.setFacilityId(form.getUserId());
+		dto.setFacilityId(Integer.parseInt(form.getFacilityId().toString()));
 
 		return dto;
 	}
