@@ -33,5 +33,10 @@ public interface JobPostDAO {
 	boolean executeAutoRenewalJobWorker();
 	
 	boolean validateAndDecreaseAvailableCredits();
-
+	/**
+	 * 
+	 * @param advSearchId
+	 * @return JobPostDTO
+	 */
+	List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId);
 }
