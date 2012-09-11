@@ -131,5 +131,9 @@ public class JobPostServiceImpl implements JobPostService {
 
 		return employerJobPostDAO.validateAndDecreaseAvailableCredits();
 	}
+	@Override
+	public List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId){
+		return employerJobPostDAO.retrieveAllJobPostByADvSearch(advSearchId);
+	}
 
 }
