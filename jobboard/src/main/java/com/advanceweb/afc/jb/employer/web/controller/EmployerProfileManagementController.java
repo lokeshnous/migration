@@ -38,7 +38,6 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 @SessionAttributes("employerProfileManagementForm")
 public class EmployerProfileManagementController {
 	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
-	private static final String FORM_PAGE = "employerDashboard";
 	private static final String STR_NOTEMPTY = "NotEmpty";
 
 	@Autowired
