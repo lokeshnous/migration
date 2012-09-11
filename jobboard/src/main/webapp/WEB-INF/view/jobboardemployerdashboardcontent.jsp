@@ -72,6 +72,7 @@
 								id="accountSettingpopUp">Account Settings</a>
 						</p>
 					</div>
+					<c:if test="${enableAccess == 'true' && enablePostEditAccess == 'true'}">
 					<div class="lableTextDashBoard">
 						<p>
 							<a id="accessPermissioPopUp"
@@ -79,6 +80,7 @@
 								Access Permissions</a>
 						</p>
 					</div>
+					</c:if>
 					<div class="lableTextDashBoard">
 						<p>
 							<a
@@ -99,6 +101,7 @@
 				</div>
 				<div class="dashboardPanalcontent marginTop5">
 					<h2 class="noTopBorder">Job Posting</h2>
+					<c:if test="${ enablePostEditAccess eq 'true'}">
 					<div class="lableTextDashBoard">
 						<p>
 							<a id="purchaseJobPostings"
@@ -106,6 +109,7 @@
 								Job Postings</a>
 						</p>
 					</div>
+					</c:if>
 					<div class="lableTextDashBoard">
 						<p>
 							<a href="<%=request.getContextPath()%>/employer/postNewJobs.html">Post
@@ -150,11 +154,13 @@
 				</div>
 				<div class="dashboardPanalcontent marginTop5">
 					<h2 class="noTopBorder">Manage Applicants</h2>
+						<c:if test="${enablePostEditAccess eq 'true'}">
 					<div class="lableTextDashBoard">
 						<p>
 							<a href="">Purchase Resume Search Packages</a>
 						</p>
 					</div>
+					</c:if>
 					<div class="lableTextDashBoard">
 						<p>
 							<a href="">Manage Job-Seekers</a>

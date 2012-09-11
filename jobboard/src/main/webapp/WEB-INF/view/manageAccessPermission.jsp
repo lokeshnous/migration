@@ -45,7 +45,8 @@
 				$.ajax({url : "${pageContext.request.contextPath}/employer/updateJobOwner.html",
 	    			data:$('#manageAcceccPermissionForm').serialize(),
 					type: "POST",
-					success : function(dataFound) {		
+					success : function(dataFound) {	
+						alert("Permissions Changed Successfully.");
 						 $("#manageAccessPerm").click();
 					},
 					error: function(response) {

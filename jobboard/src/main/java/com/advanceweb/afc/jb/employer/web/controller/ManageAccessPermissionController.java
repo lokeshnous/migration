@@ -53,8 +53,8 @@ public class ManageAccessPermissionController {
 	private ProfileRegistration employerRegistration;
 	@Value("${jobOwnerPwdBody}")
 	private String jobOwnerPwdBody;
-	@Value("${jobseekerForgotPwdSub}")
-	private String jobseekerForgotPwdSub;
+	@Value("${jobOwnerMailSubject}")
+	private String jobOwnerMailSubject;
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	@Value("${dothtmlExtention}")
@@ -62,12 +62,18 @@ public class ManageAccessPermissionController {
 
 	@Value("${navigationPath}")
 	private String navigationPath;
+	@Value("${jobOwnerExist}")
+	private String jobOwnerExist;
+	@Value("${jobOwnerAddSuccess}")
+	private String jobOwnerAddSuccess;
+	
 	@Autowired
 	private MMEmailService emailService;
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			HttpSession session) {
+		LOGGER.info("showJobOwner Method");
 		ModelAndView model = new ModelAndView();
 		try {
 			List<ManageAccessPermissionDTO> jbOwnerList = manageAccessPermissionService
@@ -110,59 +116,64 @@ public class ManageAccessPermissionController {
 	@RequestMapping(value = "/saveNewJobOwner", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject saveNewJobOwner(HttpSession session,
-			ManageAccessPermissionForm manageAccessPermissionForm,HttpServletRequest request) throws JobBoardDataException {
+			ManageAccessPermissionForm manageAccessPermissionForm,
+			HttpServletRequest request) {
 		LOGGER.info("Save Job Owner : Process to save new job Owner detail Starts !");
 		JSONObject warningMessage = new JSONObject();
-		EmployerProfileDTO empDTO = new EmployerProfileDTO();
-		int facilityIdParent = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		int userIdParent = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
+		try {
+			EmployerProfileDTO empDTO = new EmployerProfileDTO();
+			int facilityIdParent = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			int userIdParent = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
 
-		if (null != manageAccessPermissionForm) {
-			if (null != manageAccessPermissionForm.getFullAccess()
-					&& !manageAccessPermissionForm.getFullAccess()
-							.isEmpty()) {
-				empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
-						.getFullAccess()));
+			if (null != manageAccessPermissionForm) {
+				if (null != manageAccessPermissionForm.getFullAccess()
+						&& !manageAccessPermissionForm.getFullAccess()
+								.isEmpty()) {
+					empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
+							.getFullAccess()));
+				}
 			}
-		}
-		
-		/**
-		 * OpenAM code starts here for Validate Email-Id
-		 * 
-		 * @auther Santhosh Gampa
-		 * @since Sep 4 2012
-		 * 
-		 */
-		boolean isinvaliduser = OpenAMEUtility
-				.openAMValidateEmail(manageAccessPermissionForm
-						.getOwnerEmail());
-		if (isinvaliduser) {
-			LOGGER.info("OpenAM : user is already exist !");
-			warningMessage.put("failure", "Email Id already Exists!");
-			return warningMessage;
-		} else {
-			LOGGER.info("OpenAM : valid user!");
+
+			/**
+			 * OpenAM code starts here for Validate Email-Id
+			 * 
+			 * @auther Santhosh Gampa
+			 * @since Sep 4 2012
+			 * 
+			 */
+			boolean isinvaliduser = OpenAMEUtility
+					.openAMValidateEmail(manageAccessPermissionForm
+							.getOwnerEmail());
+			if (isinvaliduser) {
+				LOGGER.info("OpenAM : user is already exist !");
+				warningMessage.put("failure", jobOwnerExist);
+				return warningMessage;
+			} else {
+				LOGGER.info("OpenAM : valid user!");
+			}
+
+			// End of openAM code
+
+			if (employerRegistration.validateEmail(manageAccessPermissionForm
+					.getOwnerEmail())) {
+				warningMessage.put("failure", jobOwnerExist);
+				return warningMessage;
+			}
+			UserDTO userDTO = transformEmpReg
+					.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
+			empDTO.setMerUserDTO(userDTO);
+
+			manageAccessPermissionService.createJobOwner(empDTO,
+					facilityIdParent, userIdParent);
+			LOGGER.info("Email : sent Email!");
+			sendEmail(manageAccessPermissionForm, userDTO, request);
+		} catch (DataAccessException ex) {
+			LOGGER.error("Error:" + ex.getStackTrace());
 		}
 
-		// End of openAM code
-
-		if (employerRegistration.validateEmail(manageAccessPermissionForm
-				.getOwnerEmail())) {
-			warningMessage.put("failure", "Email Id already Exists!");
-			return warningMessage;
-		}
-		UserDTO userDTO = transformEmpReg
-				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
-		empDTO.setMerUserDTO(userDTO);
-		
-		manageAccessPermissionService.createJobOwner(empDTO,
-				facilityIdParent, userIdParent);
-		sendEmail(manageAccessPermissionForm
-				.getOwnerEmail(),userDTO,request);
-
-		warningMessage.put("success", "succes");
+		warningMessage.put("success", jobOwnerAddSuccess);
 		return warningMessage;
 	}
 
@@ -180,7 +191,7 @@ public class ManageAccessPermissionController {
 			LOGGER.info("Request For - delete" + "user Id :" + userId);
 
 		} catch (DataAccessException e) {
-			LOGGER.error(e);
+			LOGGER.error("Error:" +e);
 		}
 		warningMessage.put("success", "succes");
 		return warningMessage;
@@ -202,7 +213,7 @@ public class ManageAccessPermissionController {
 					manageAccessPermissionForm);
 			model.setViewName("forward:/employer/manageAccessPermission.html");
 		} catch (DataAccessException e) {
-			LOGGER.error(e);
+			LOGGER.error("Error:" +e);
 		}
 		return model;
 	}
@@ -215,7 +226,7 @@ public class ManageAccessPermissionController {
 	 * @param request
 	 * @return
 	 */
-	public void sendEmail(String emailId, UserDTO userDTO,
+	public void sendEmail(ManageAccessPermissionForm manageAccessPermissionForm, UserDTO userDTO,
 			HttpServletRequest request) {
 		EmailDTO emailDTO = new EmailDTO();
 		InternetAddress[] employerToAddress = new InternetAddress[1];
@@ -224,21 +235,27 @@ public class ManageAccessPermissionController {
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + "?page=employer";
 		try {
-			employerToAddress[0] = new InternetAddress(emailId);
+			employerToAddress[0] = new InternetAddress(manageAccessPermissionForm.getOwnerEmail());
 			emailDTO.setToAddress(employerToAddress);
 			emailDTO.setFromAddress(advanceWebAddress);
 			emailDTO.setCcAddress(null);
 			emailDTO.setBccAddress(null);
-			emailDTO.setSubject(jobseekerForgotPwdSub);
+			String emailSubject=jobOwnerMailSubject.replace("?EmployersName", userDTO.getLastName());
+			emailDTO.setSubject(emailSubject);
 			String forgotPwdMailBody = jobOwnerPwdBody.replace(
 					"?temporarypassword", userDTO.getPassword());
 			forgotPwdMailBody = forgotPwdMailBody.replace("?employerLoginLink",
 					employerloginUrl);
+			String permissionType="Post/Edit Access";
+			if(manageAccessPermissionForm.getFullAccess().equals(MMJBCommonConstants.FULL_ACCESS)){
+				permissionType = "Full Access";
+			}			
+			forgotPwdMailBody=forgotPwdMailBody.replace("?permission", permissionType);
 			emailDTO.setBody(forgotPwdMailBody);
 			emailDTO.setHtmlFormat(true);
 			emailService.sendEmail(emailDTO);
-		} catch (AddressException e) {
-			e.printStackTrace();
+		} catch (AddressException ex) {
+			LOGGER.error("Error:" + ex);
 		}
 
 	}

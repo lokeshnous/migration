@@ -20,13 +20,13 @@
 						
 						if (ownerName.length <= 0
 							&& ownerEmail .length <= 0){
-							$("#resumeErrorMsg").html("<span>All fields are mandatory.</span>");
+							$("#jobOwnerErrorMsg").html("<span>All fields are mandatory.</span>");
 						
 						}else if($('#ownerName').val().split(' ').length < 2) {		
-							$("#resumeErrorMsg").html("<span>Name should be both first name and last name.</span>");
+							$("#jobOwnerErrorMsg").html("<span>Name should be both first name and last name.</span>");
 							
 						}else if(!email_regex.test(ownerEmail)){
-							$("#resumeErrorMsg").html("<span>Please enter correct Email address.</span>");	
+							$("#jobOwnerErrorMsg").html("<span>Please enter correct Email address.</span>");	
 						
 						}else {						
 							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
@@ -34,8 +34,9 @@
 								type: "POST",
 								success : function(data) {
 									if(data.failure!=null){
-										$("#resumeErrorMsg").html("<span>"+data.failure+"</span>");	
+										$("#jobOwnerErrorMsg").html("<span>"+data.failure+"</span>");	
 									}else{
+										$("#jobOwnerErrorMsg").html("<span>"+data.success+"</span>");	
 									  $("#manageAccPerm").click();
 									}
 								}					
@@ -60,7 +61,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-		<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
+		<div id="jobOwnerErrorMsg" class="FormErrorDisplayText"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
 						name="EmailAddress" class="job_seeker_email width300" />

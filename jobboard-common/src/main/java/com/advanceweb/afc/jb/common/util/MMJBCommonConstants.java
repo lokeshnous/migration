@@ -279,6 +279,7 @@ public interface MMJBCommonConstants {
 	String FOLLOWUP_LINK_LINKEDIN = "followuplinklinkedin";
 	// Manage access permission
 	String FULL_ACCESS ="5";
+	String MANAGEEDITACCESS ="6";
 	
 
 	int EMPLOYER_ROLE_ID = 3;
