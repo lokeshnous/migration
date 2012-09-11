@@ -389,8 +389,8 @@ public class AgencyDashBoardController {
 				empRegisterForm
 						.setCity(profAttribFormsMap.get("city") != null ? profAttribFormsMap
 								.get("city").toString() : "");
-				empRegisterForm.setUserId(Integer.parseInt(profAttribFormsMap
-						.get("facilityId").toString()));
+				empRegisterForm.setFacilityId((Integer) profAttribFormsMap
+						.get("facilityId"));
 			}
 			empRegisterForm.setListProfAttribForms(listProfAttribForms);
 
