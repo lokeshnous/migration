@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -693,7 +692,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 
 	}
-
 
 	@Override
 	public List<String> getEmployerNamesList(String employerName) {

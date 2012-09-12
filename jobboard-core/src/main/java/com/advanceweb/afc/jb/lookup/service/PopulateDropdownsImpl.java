@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -279,7 +278,7 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
-	public Map getEmployerDetails(String employerName) {
+	public Map<String, Object> getEmployerDetails(String employerName) {
 		return populateDropdownsDAO.getEmployerDetails(employerName);
 	}
 }

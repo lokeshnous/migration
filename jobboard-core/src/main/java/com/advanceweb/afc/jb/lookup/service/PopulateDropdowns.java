@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
@@ -197,6 +196,6 @@ public interface PopulateDropdowns {
 
 	List<String> getEmployerNamesList(String employerName);
 
-	Map getEmployerDetails(String employerName);
+	Map<String, Object> getEmployerDetails(String employerName);
 
 }
