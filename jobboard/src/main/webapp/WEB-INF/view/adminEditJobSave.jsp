@@ -42,10 +42,22 @@
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
-									<td align="right" valign="middle"><input type="text" class="InputTextRight" name="endDt" value='<c:out value="${job.endDt}"></c:out>'></td>									
+									<td align="right" valign="middle"><input type="text" class="InputTextRight" name="endDt" id="endDt" value='<c:out value="${job.endDt}"></c:out>'>
+														
+									
+									
+									<!--
+									<small><a href="javascript:showCal('Calendar1')">Select Date</a></small>									
+									 <div class="calender">
+												<a href="#"><img src="../resources/images/tranBg.png"
+													width="14" height="14" alt="Datepick"></a>
+											</div> --></td>
+																			
 								</tr>
 								<input type="hidden" name="startDate" id="startDate" value='<c:out value="${job.startDt}"></c:out>'/>
-								<input type="hidden" name="endDate" id="endDate" value='<c:out value="${job.endDt}"></c:out>'/>
+								 <input type="hidden" name="endDate" id="endDate" value='<c:out value="${job.endDt}"></c:out>'/>
+								  <input type="hidden"name="startDate" id="startDate"/> 
+								  <input type="hidden" name="endDt" id="endDt"/> 
 						</c:forEach> 
 							</tbody>
 						</table>
