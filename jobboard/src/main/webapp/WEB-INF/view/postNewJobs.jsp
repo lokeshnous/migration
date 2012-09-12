@@ -72,7 +72,7 @@
 	    	}); 	
 		    
 			//Popup on click of schedule button
-  		    $("#scheduleNewJobButId").click(function() {
+  		   $("#scheduleNewJobButId").click(function() {
 				$( "#scheduleStartDivId" ).dialog({
 					resizable: false,
 					height:400,
@@ -194,9 +194,12 @@
 		 .ui-widget input  { background-color: #F0F0F0; border-radius: 4px 4px 4px 4px; height: 25px; border: 1px solid #CCCCCC;}  
     	.ui-widget-header { background:#FE9400; border: 1px solid #AAAAAA; color: #222222;font-weight: bold;}
     	.ui-state-default, .ui-widget-content .ui-state-default { background: #FE9400; border: 1px solid #D3D3D3; color: #555555; font-weight: normal; outline: medium none;}
-    	.ui-widget-content{ width:350px !important;}
+    	.ui-button, .ui-button-text-only{
     	
-}
+    	}
+    	
+    	
+
 		</style>
 		</head>
 
@@ -425,10 +428,16 @@
               </div>
 
                       <div class="rowEvenNewSpacing MarginBottom10">
-                      <span class="lableText3">Auto Renew:</span><span class="required">
-                      
-                      <form:radiobutton path="autoRenew" value="Yes"/><label class="greyLabel">Yes</label></span>&nbsp;&nbsp;<span class="required"> 
-                      <form:radiobutton path="autoRenew" value="No"/> <label class="greyLabel">No</label></span> <div class="toolTip marginTop10 colorPkrAreaToolTip"><span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>                      
+                      <span class="lableText3">Auto Renew:</span>
+                      <span>
+                      <div class="required"><form:radiobutton path="autoRenew" value="Yes"/><label class="greyLabel">Yes</label></div>
+                      <div class="required"><form:radiobutton path="autoRenew" value="No"/><label class="greyLabel">No</label></div>
+                      </span>
+                      <span class="required"> 
+                      <%-- <form:radiobutton path="autoRenew" value="No"/><label class="greyLabel">No</label> --%>
+                      </span> 
+                      <div class="toolTip colorPkrAreaToolTip">
+                      <span class="classic">Select 'Yes' if you would like this job posting to be automatically renewed when it reaches its expiration date.</span></div>                      
 			   </div>
 			   <form:hidden path="scheduleStartDate" class="job_seeker_password datepicker" id="startDateHdId" readonly="true"/>
 			   <form:hidden path="scheduleEndDate" class="job_seeker_password" id="endDateHdId" readonly="true"/>

@@ -4,7 +4,6 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
 <!-- JAVASCRIPT FILES -->
@@ -14,11 +13,23 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
+<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
 </script>
+        <!-- <script type="text/javascript">
+            $(document).ready( function()
+            {
+                var api = $( '#flash' ).vid({
+                    type    : 'wmv',
+                    videoId : 'R7yfISlGLNU'
+                });
+            });
+        </script> -->
 </head>
 
 <body class="job_board">
@@ -41,6 +52,19 @@
 					<div class="featuredEmployerLeft" style="background: ${employerProfileManagementForm.primaryColor}">
 						<div class="featuredEmployerVideo">
 							&nbsp;
+							<!-- <iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0"
+								marginwidth="0" src="" frameborder="0" height="180"
+								scrolling="no" width="255"></iframe> -->
+								
+							
+		<!-- <video width="320" height="240" controls="controls">
+		  <source src="movie.mp4" type="video/mp4" />
+		   <source src="C://Wildlife.wmv" type="video/wmv" />
+		  <source src="movie.ogg" type="video/ogg" />
+		  Your browser does not support the video tag.
+		</video> -->
+		
+		        <div id="flash" style="width: 320px; height: 240px;"></div>
 							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="" frameborder="0"  height="180" scrolling="no" width="255"></iframe><br>
 
 						</div>

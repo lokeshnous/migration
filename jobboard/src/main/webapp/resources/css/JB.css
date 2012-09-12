@@ -180,7 +180,7 @@ a.btn_lg,a.btn_sm {
 
 .white {
 	color: #FE9400; /* Orange */
-	border-color: #b3b3b3;
+	border-color: #b3b3b3 !important;
 	background: #ffffff; /* Old browsers */
 	background: -moz-linear-gradient(top, #ffffff 65%, #DDDDDD 100%);
 	/* FF3.6+ */
@@ -2873,7 +2873,7 @@ input.job_seeker_Resume {
 }
 
 .IconsArea {
-	width: auto;
+	width: 55px;
 	height: 20px;
 	float: right;
 }

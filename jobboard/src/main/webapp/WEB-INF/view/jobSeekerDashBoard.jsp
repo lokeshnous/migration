@@ -25,8 +25,8 @@
 jQuery(document).ready(
 		function() {
 			//jQuery(".megamenu").megamenu();
-			$("#viewappliedjob").displaypopup("#viewappliedjob", "760", "238");
-			$("#viewsavedjob").displaypopup("#viewsavedjob", "760", "278");
+			$("#viewappliedjob").displaypopup("#viewappliedjob", "790", "350");
+			$("#viewsavedjob").displaypopup("#viewsavedjob", "790", "350");
 
 			$("#changePassword").displaypopup("#changePassword", "780",
 					"370");
@@ -149,7 +149,7 @@ jQuery(document).ready(
 										<div class="lableTextDashBoard">
 											<p>
 												<a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewSavedJob.html"
-													target="_blank" id="viewsavedjob">${msg.jsViewSavedjobs}&nbsp;${msg.commonOpenBrace}<c:out
+													id="viewsavedjob">${msg.jsViewSavedjobs}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.savedJobsCount}" />${msg.commonCloseBrace}
 												</a>
 											</p>
@@ -158,7 +158,7 @@ jQuery(document).ready(
 										<div class="lableTextDashBoard">
 											<p>
 												<a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewAppliedJob.html"
-													target="_blank" id="viewappliedjob">${msg.jsViewJobsApplied}&nbsp;${msg.commonOpenBrace}<c:out
+													id="viewappliedjob">${msg.jsViewJobsApplied}&nbsp;${msg.commonOpenBrace}<c:out
 														value="${jobSeekerDashBoardForm.appliedJobsCount}" />${msg.commonCloseBrace}
 												</a>
 											</p>
