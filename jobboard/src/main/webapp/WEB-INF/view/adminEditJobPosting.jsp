@@ -26,6 +26,34 @@ jQuery(document).ready(function() {
 				}
 			}); 
 		});
+		
+		
+		$("#Save").click(function(event){		
+			var advJobId = $("#advJobId").val();
+			var startDate=$("#startDate").val();
+			var endDate=$("#endDt").val();
+			//alert("${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&startDate="+startDate+"&endDate="+endDate);
+			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
+				 success: function(data){ 
+					 if(data == ''){
+							alert("Data save successfully !");	
+							//loadTable();
+							parent.$.nmTop().close();
+						}else{
+							$("#errmsg").html(data);
+						} 
+				},
+				error: function(response) {
+					alert("Server Error for Save data: "+response.status);
+				},
+				complete: function() {
+					
+				}
+			});  
+		});
+		
+		
+		
 		jQuery(".megamenu").megamenu();
 
 window.onload = function() {
@@ -50,17 +78,20 @@ function loadTable(){
 		}
 	}
 	);
-}
+  }
 
 });
 			
-</script> 
-
-
+</script>
+<script type="text/javascript">
+		$('#Cancel').click(function(){		
+			parent.$.nmTop().close();		
+		});
+		
+		</script>
 </head>
-
 <body class="job_board">
-<form:form method="GET" action="manageEditJobSearch.html" id="formid" name="formid">
+<form:form method="GET" id="formid" name="formid">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
