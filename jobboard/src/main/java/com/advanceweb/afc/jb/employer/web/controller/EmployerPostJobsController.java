@@ -32,6 +32,9 @@ public class EmployerPostJobsController {
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	@Value("${salesWebAddress}")
+	private String salesWebAddress;
 
 	@Value("${goldOrPlatinumPricingReqBody}")
 	private String goldOrPlatinumPricingReqBody;
@@ -83,7 +86,7 @@ public class EmployerPostJobsController {
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
-				employerToAddress[0] = new InternetAddress("muralikc@nousinfo.com");
+				employerToAddress[0] = new InternetAddress(salesWebAddress);
 				employerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
 						"?Companyname", companyName);
@@ -107,7 +110,7 @@ public class EmployerPostJobsController {
 
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
-				employerToAddress[0] = new InternetAddress("muralikc@nousinfo.com");
+				employerToAddress[0] = new InternetAddress(salesWebAddress);
 				employerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
 						"?Companyname", companyName);
@@ -132,7 +135,7 @@ public class EmployerPostJobsController {
 				InternetAddress[] employerToAddress = new InternetAddress[1];
 
 				employerToAddress[0] = new InternetAddress(
-						"muralikc@nousinfo.com");
+						salesWebAddress);
 				employerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
 						"?Companyname", companyName);
