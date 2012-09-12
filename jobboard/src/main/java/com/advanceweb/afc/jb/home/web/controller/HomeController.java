@@ -180,6 +180,31 @@ public class HomeController {
 		}
 	}
 
+	@RequestMapping("/viewImage")
+	public void getImage(@RequestParam("id") String imageId,
+			HttpServletResponse response, HttpServletRequest request
+			) {
+
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(imageId));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(originalImage,
+					imageId.substring(imageId.length() - 3, imageId.length()),
+					baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+
+			ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
+			// Display the image
+			write(response, result.getBody());
+		} catch (Exception e) {
+
+//			LOGGER.error(e);
+
+		}
+	}
+	
 	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
 		// Get bytes from somewhere...
 		byte[] byteData = imageInByte;

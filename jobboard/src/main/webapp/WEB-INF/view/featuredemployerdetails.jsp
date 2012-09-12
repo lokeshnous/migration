@@ -85,7 +85,7 @@
 
 					<div class="featuredEmployerRight">
 						<div class="row marginBottom10 marginTop10">
-							<img src="${employerProfileManagementForm.logoPath}"
+							<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${employerProfileManagementForm.logoPath}"
 								alt="${employerProfileManagementForm.companyName}">
 						</div>
 						<div class="row borderTopRed">
