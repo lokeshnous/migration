@@ -28,7 +28,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Calling to authorize an user
         //customerDetailsWSTest.authorizeUser("customer", "NS101");
         //calling to authorise user using POST
-        customerDetailsWSTest.getCustomerDetails("customer",462867);
+        //customerDetailsWSTest.getCustomerDetails("customer",462867);
         //Call for item services
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
@@ -101,7 +101,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	    
 	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
 	     
-		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=464867");
+		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=459468");
 	     /*client.header("Authorization", authorization);
 	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
