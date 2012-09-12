@@ -149,8 +149,17 @@ public class JobPostController {
 /*		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);*/
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 		
+		boolean bValidCredits = employerJobPost.validateAndDecreaseAvailableCredits(Integer.valueOf(form.getJobPostingType()),
+				(Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		
+		if (!bValidCredits) {
+			model = populateDropdowns(model, session);
+			model.setViewName(POST_NEW_JOBS);
+			model.addObject(ERROR_MESSAGE, MMJBCommonConstants.DO_NOT_HAVE_CREDITS);
+			return model;
+		}*/
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
 		dto.setbActive(true);
@@ -249,6 +258,7 @@ public class JobPostController {
 					|| MMJBCommonConstants.ZERO.equals(form.getJobTitle())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobCountry())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobState())
+					|| MMJBCommonConstants.ZERO.equals(form.getJobPostingType())
 					|| StringUtils.isEmpty(form.getJobDesc())
 					|| (StringUtils.isEmpty(form.getApplyUrl())
 							&& StringUtils.isEmpty(form.getAtsUrl()) 
