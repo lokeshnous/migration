@@ -23,11 +23,13 @@ import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
+import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
@@ -48,7 +50,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
-	private static final String FIND_AVAILABLE_CREDITS = "from AdmInventoryDetail dtl where dtl.invDetailId=?";
+	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
+			"and dtl.jpJobTypeCombo in (from JpJobTypeCombo com where com.comboId=?) and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 
 
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
@@ -605,32 +608,35 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 	
 	
-	public boolean validateAndDecreaseAvailableCredits(){
+	public boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId){
+		
 		LOGGER.info("Executing -> decreaseAvailableCredits()");
 		//Schedule Jobs
 		try {
-
-			List<JpJob> autoRenewJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
 			
-			for(JpJob job : autoRenewJobs){		
-				//TODO
-				//Check for available credits
-
-				int credits=1;
-				if(credits == 0){
-					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
-				}else{				
+			//based on inventory detail id, we are retreiving combo id 
+			List<JpJobTypeCombo> comboList = hibernateTemplate.find("select com from AdmInventoryDetail dtl inner join dtl.jpJobTypeCombo com where dtl.invDetailId=?", invDtlId);
+			if(!comboList.isEmpty()){
+				
+				JpJobTypeCombo combo = comboList.get(0);
+				Object[] inputs = {combo.getComboId(), facilityId};
+				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);
+				
+				if(!invDtls.isEmpty()){
+					
 					try {
-						job.setStartDt(new Date());
-						job.setEndDt(addDaysToCurrentDate());
-						job.setActive((byte)1);
-						hibernateTemplate.saveOrUpdate(job);
+						AdmInventoryDetail dtl = invDtls.get(0);
+						dtl.setAvailableqty(dtl.getAvailableqty()-1);
+						hibernateTemplate.saveOrUpdate(dtl);
 					} catch (Exception e) {
-						LOGGER.error("Failed to renew the job as Active " +job.getJobId());
-						LOGGER.error(e);
-					}
-					LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
-				}
+						LOGGER.error(" Exception has been occured while the posting the job for Inventory Detail Id: " +invDtlId);
+						e.printStackTrace();
+					}	
+					return true;
+				}else{
+					LOGGER.info("Do not sufficient credits to post the job for Inventory Detail Id: " +invDtlId);
+					return false;
+				}	
 			}
 			
 		} catch (DataAccessException e) {

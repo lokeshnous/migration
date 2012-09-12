@@ -30,7 +30,7 @@ public interface JobPostService {
 	List<JobPostingPlanDTO> getJobPostingPlans();
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
-	boolean validateAndDecreaseAvailableCredits();
+	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
 
 	UserDTO getNSCustomerDetails(int nsCustomerID);
 
