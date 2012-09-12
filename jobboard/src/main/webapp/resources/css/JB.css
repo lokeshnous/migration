@@ -4057,3 +4057,20 @@ orange:hover {
 	padding-bottom:3px;
 	
 }
+.featuredEmployerLogoArea img{
+	background:#000;
+	float:left;
+	height: 54px;
+	width: 218px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.featuredEmployerLogoArea span{
+	float:left;
+	font-size:20px;
+	margin-left: 10px;
+    margin-top: 25px;
+    color:#000;
+    font-weight:bold;  
+    font-family:
+}
