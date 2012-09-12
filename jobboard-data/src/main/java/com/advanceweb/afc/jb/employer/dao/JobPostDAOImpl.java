@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
+//import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
@@ -53,7 +54,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
 			"and dtl.jpJobTypeCombo in (from JpJobTypeCombo com where com.comboId=?) and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 
-
+	private static final long millisInDay = 24 * 60 * 60 * 1000;
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
@@ -687,6 +688,82 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
+	}
+	/**
+	 *  @Author kartikm
+	 *  @Purpose:This method is called to save posted job by admin
+	 *  when admin search some Advance job id and change some status
+	 *  by date wise then this function is active.
+	 * 	@Created:12sept, 2012
+	 * 	@param apd as list of End date
+	 * 	@param jobId jobId
+	 * 	@return true
+	 */
+	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId){
+		boolean isUpdate = false;
+		try{
+			JpJob mer = hibernateTemplate.get(JpJob.class, jobId);				 
+				Date endDateValue = null;
+				Date todayDate = null;
+				String enddateValue=apd.getEndDt() +" 00:00:00";
+				final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
+				final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
+				String newDateString;
+				SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+				try {
+					Date d = sdf.parse(enddateValue);
+					sdf.applyPattern(NEW_FORMAT);
+					newDateString = sdf.format(d);					
+				      SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);				
+
+      
+				      endDateValue = sdfSource.parse(newDateString);					
+				} catch (ParseException e) {					
+					LOGGER.info("Date parsing in Job save by admin wrong");
+				} 
+				Calendar cal = Calendar.getInstance();				
+				    long startDay = 0;
+				    long endDay = 0;
+				    int numberOfDays=0;
+				    
+				    Calendar currentDate = Calendar.getInstance();
+				    SimpleDateFormat formatter= 
+				    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				    try{
+				    String dateNow = formatter.format(currentDate.getTime());
+				    SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);				
+
+      
+				      todayDate = sdfSource.parse(dateNow);
+				    }catch(Exception e) {
+					      LOGGER.info("Info data error date conversion");
+				    }
+				    try {
+				      cal.setTime(todayDate);
+				      startDay = cal.getTimeInMillis() / millisInDay;
+				      
+				      cal.setTime(endDateValue);
+				      endDay = cal.getTimeInMillis() / millisInDay;
+				    } catch (Exception e) {
+				      LOGGER.info("Info data error for date conversion");
+				    }
+
+				    numberOfDays = (int) (endDay - startDay + 1);
+				 if(numberOfDays>=0){
+					 mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
+				 }else if(numberOfDays<0){
+					 mer.setJobStatus(MMJBCommonConstants.STATUS_INACTIVE);
+				 }			
+			mer.setEndDt(endDateValue);
+			hibernateTemplate.update(mer);
+			isUpdate = true;
+			LOGGER.info("Job Status Save is done by Admin");
+		}catch(DataAccessException e){
+			LOGGER.error("Job Status Save is not done by Admin");
+			
+		}
+		return isUpdate;
+		
 	}
 
 }
