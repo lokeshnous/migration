@@ -40,4 +40,12 @@ public interface JobPostDAO {
 	 * @return JobPostDTO
 	 */
 	List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId);
+	/**
+	 * 
+	 * @param apd
+	 * @param jobId
+	 * @return boolean value
+	 * @throws JobBoardServiceException
+	 */
+	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
 }
