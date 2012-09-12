@@ -103,6 +103,7 @@ public class AgencyDashBoardController {
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
 			BindingResult result, HttpSession session) {
 		boolean isUpdated = false;
+		
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
@@ -111,9 +112,9 @@ public class AgencyDashBoardController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
-				} else if (listProfAttribForms.getEmail().toString()
-						.equals(employeeAccountForm.getEmail())) {
-					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				} else if (employerRegistration
+						.validateEmail(employeeAccountForm.getEmail())) {
+					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
@@ -124,12 +125,12 @@ public class AgencyDashBoardController {
 
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-				if (isUpdated) {
+				if(isUpdated){
 					LOGGER.info("This is Account Addresss edite option done successfully");
-				} else {
-					return MMJBCommonConstants.ERROR_STRING;
+				}else{
+					return MMJBCommonConstants.UPDATE_ERROR;
 				}
-
+				
 			}
 
 		} catch (Exception e) {
@@ -138,6 +139,7 @@ public class AgencyDashBoardController {
 		}
 		return "";
 	}
+
 
 	/**
 	 * This method is called to Billing Setting update page and
@@ -176,10 +178,10 @@ public class AgencyDashBoardController {
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 
 			} else {
-				if (listProfAttribForms.getEmail().toString()
-						.equals(employeeBillingForm.getEmail())) {
-					return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				}
+				//if (listProfAttribForms.getEmail().toString()
+				//		.equals(employeeBillingForm.getEmail())) {
+					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+			//	}
 				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 				AccountBillingDTO billingAddressDTO = transformPaymentMethod
 						.transformDataBillingAddreFormToDto(billingAddressForm);
