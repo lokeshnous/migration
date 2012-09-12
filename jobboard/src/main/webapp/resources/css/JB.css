@@ -155,6 +155,7 @@ a.btn_lg,a.btn_sm {
 	-webkit-box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5);
 	-moz-box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5);
 	box-shadow: 1px 1px 3px rgba(50, 50, 50, 0.5);
+	cursor: pointer;
 }
 
 .orange {

@@ -236,7 +236,7 @@
 								<div class="searchResultsSubContentButtonArea">
 									<div class="searchResultsSubContentButtons">
 										<a onclick="applyThisJob(${job.JobId});" class="btn_sm white"
-											style="cursor: default;" id="applyJobid${job.JobId}">Apply</a>
+											id="applyJobid${job.JobId}">Apply</a>
 									</div>
 									<div class="searchResultsSubContentButtons">
 										<a onclick="viewJobDetails(${job.JobId})" class="btn_sm white">View
@@ -244,7 +244,7 @@
 									</div>
 									<div class="searchResultsSubContentButtons">
 										<a onclick="saveThisJob(${job.JobId})"
-											id="saveThisJobId${job.JobId}" style="cursor: default;"
+											id="saveThisJobId${job.JobId}"
 											class="btn_sm white">Save This Job</a>
 									</div>
 								</div>
@@ -279,8 +279,9 @@
 								<span class="linkedIn"><!-- <a href=""> --><!-- </a> --></span> 
 								<span class="twitter"><!-- <a href=""> --><!-- </a> --></span>
 							</div>
-							<div class="FormErrorDisplayText" id="topjobActionInfo${job.JobId}" ></div>
-
+							
+							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
+							
 						</div>
 				<c:if test="${(status.index + 1) % 10 == 0}">
 					<div class="ad_wrapper">

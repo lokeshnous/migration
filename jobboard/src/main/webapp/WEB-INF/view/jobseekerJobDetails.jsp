@@ -100,8 +100,8 @@
 				<div class="ShareText">Send to friend: &nbsp;</div>
 				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
-				<a onclick="applyThisJob(${jobDetail.jobID});" class="btn_sm orange" style=" cursor: default;">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
-				<a onclick="saveThisJob(${jobDetail.jobID})" id="saveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
+				<a onclick="applyThisJob(${jobDetail.jobID});" class="btn_sm orange" >Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
+				<a onclick="saveThisJob(${jobDetail.jobID})" id="saveThisJobId" class="btn_sm orange">SAVE THIS JOB</a></div>
 			    
 			    <br/><br/><br/>
 			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
@@ -113,8 +113,8 @@
 				<div class="ShareText">Send to friend:&nbsp;</div>
 				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
-				<a onclick="btapplyThisJob(${jobDetail.jobID});" style=" cursor: default;" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" class="btn_sm orange" style=" cursor: default;">SAVE THIS JOB</a></div>
+				<a onclick="btapplyThisJob(${jobDetail.jobID});" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" class="btn_sm orange" >SAVE THIS JOB</a></div>
 			    <br/><br/>
 			    <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
 			    </div>
