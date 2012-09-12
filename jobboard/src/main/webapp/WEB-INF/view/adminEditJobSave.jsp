@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="10">
 <title>ADVANCE Heathcare Jobs</title>
+
 </head>
 <body class="job_board">
 	
@@ -43,7 +44,7 @@
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
 									<td align="right" valign="middle"><input type="text" class="InputTextRight" name="endDt" id="endDt" value='<c:out value="${job.endDt}"></c:out>'>
-														
+									<div class="toolTip colorPkrAreaToolTip"><span class="classic">Example: 12/30/2010(mm/dd/yyyy)</span></div>					
 									
 									
 									<!--
@@ -51,9 +52,10 @@
 									 <div class="calender">
 												<a href="#"><img src="../resources/images/tranBg.png"
 													width="14" height="14" alt="Datepick"></a>
-											</div> --></td>
-																			
-								</tr>
+											</div> -->
+											
+									</td>
+								 </tr>
 								<input type="hidden" name="startDate" id="startDate" value='<c:out value="${job.startDt}"></c:out>'/>
 								 <input type="hidden" name="endDate" id="endDate" value='<c:out value="${job.endDt}"></c:out>'/>
 								  <input type="hidden"name="startDate" id="startDate"/> 
