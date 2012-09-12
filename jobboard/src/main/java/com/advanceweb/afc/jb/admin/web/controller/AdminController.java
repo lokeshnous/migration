@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.admin.web.controller;
+
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 import com.advanceweb.afc.jb.job.service.JobPostService;
@@ -39,6 +42,8 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class AdminController {
 	private static final Logger LOGGER = Logger
 			.getLogger("AdminController.class");
+
+	//private static final String  = null;
 
 	@Autowired
 	private JobPostService employerJobPost;
@@ -100,6 +105,11 @@ public class AdminController {
 		boolean adminuserDto = impersonateUserService.impersonateUser(adminDTO);
 		return "";
 	}
+	/**
+	 * 
+	 * @param session
+	 * @return
+	 */
 	
 	@RequestMapping(value="/editJobPosting")
 	public ModelAndView editJobPosting(HttpSession session){
@@ -116,6 +126,14 @@ public class AdminController {
 		return model;
 		
 	}
+	/**
+	 * 
+	 * @param request
+	 * @param session
+	 * @param jobPostform
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/manageEditJobSearch", method = RequestMethod.GET)
 	@ResponseBody
 	public JSONObject getJobPostDetails(HttpServletRequest request,
@@ -150,6 +168,31 @@ public class AdminController {
 		modelAndView.setViewName("adminEditJobSave");
 		return modelAndView;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/manageEditJobSearchSave", method = RequestMethod.GET)
+	public String getJobPostDetailsSave(HttpServletRequest request,
+			HttpSession session, JobPostForm jobPostform,BindingResult result) {
+		//JSONObject jsonObject = new JSONObject();
+		try{
+			JobPostDTO dto=new JobPostDTO();
+		String id=request.getParameter("advJobId");
+		int jobId=Integer.parseInt(id);
+		String endDate=request.getParameter("endDate");
+		//String startDate=request.getParameter("startDate");
+		dto.setJobId(jobId);
+		//dto.setStartDt(startDate);
+		dto.setEndDt(endDate);
+		String status="Active";
+		dto.setJobStatus(status);
+		employerJobPost.jobSaveByAdmin(dto,jobId);
+		}catch (Exception e) {
+			LOGGER.info("Manager Edit Job Posting Search Option");
+		}
+		return "";
+	}
+	
+	
 	
 
 }
