@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
@@ -51,6 +52,11 @@ public class AdmInventoryDetail {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="inventory_id")
 	private AdmFacilityInventory admFacilityInventory;
+
+	//bi-directional many-to-one association to MerProfileAttrib
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="combo_id")
+	private JpJobTypeCombo jpJobTypeCombo;
 
 	
 	
@@ -125,7 +131,13 @@ public class AdmInventoryDetail {
 	public void setAdmFacilityInventory(AdmFacilityInventory admFacilityInventory) {
 		this.admFacilityInventory = admFacilityInventory;
 	}
-	
-	
+
+	public JpJobTypeCombo getJpJobTypeCombo() {
+		return jpJobTypeCombo;
+	}
+
+	public void setJpJobTypeCombo(JpJobTypeCombo jpJobTypeCombo) {
+		this.jpJobTypeCombo = jpJobTypeCombo;
+	}	
 	
 }

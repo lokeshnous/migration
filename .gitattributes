@@ -264,6 +264,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobLocationPK.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobStat.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobTemp.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobType.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobTypeCombo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpLocation.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpLocationBckup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpSource.java -text
