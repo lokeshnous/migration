@@ -18,6 +18,8 @@ public class InventoryForm {
 	private String duration;
 	private int quantity;
 	private int availableQty;
+	private String productType;
+	private String addon;
 
 	/**
 	 * @return the userId
@@ -137,6 +139,34 @@ public class InventoryForm {
 	 */
 	public void setInventoryId(int inventoryId) {
 		this.inventoryId = inventoryId;
+	}
+
+	/**
+	 * @return the productType
+	 */
+	public String getProductType() {
+		return productType;
+	}
+
+	/**
+	 * @param productType the productType to set
+	 */
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	/**
+	 * @return the addon
+	 */
+	public String getAddon() {
+		return addon;
+	}
+
+	/**
+	 * @param addon the addon to set
+	 */
+	public void setAddon(String addon) {
+		this.addon = addon;
 	}
 
 }

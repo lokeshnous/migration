@@ -3,6 +3,11 @@ package com.advanceweb.afc.jb.job.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +24,16 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 @Repository("inventoryDAO")
 public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 
+	private static final Logger LOGGER = Logger
+			.getLogger(JobPostInventoryDAOImpl.class);
+
+	private HibernateTemplate hibernateTemplate;
+
+	@Autowired
+	public void setHibernateTemplate(SessionFactory sessionFactory) {
+		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	}
+
 	/**
 	 * This method to get job posting inventory details
 	 * 
@@ -28,8 +43,15 @@ public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 	 */
 	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
 			int facilityId) {
-
-		List<JobPostingInventoryDTO> inventoryDTOs = new ArrayList<JobPostingInventoryDTO>();
+		Query getInventoryData = hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(" { call GetInventoryDetails(?) }");
+		getInventoryData.setInteger(0, facilityId);
+		List<?> invetoryDeatil = getInventoryData.list();
+		List<JobPostingInventoryDTO> inventoryDTOs = new ArrayList<JobPostingInventoryDTO>(invetoryDeatil.size());
+		for (int i = 0; i < invetoryDeatil.size(); i++) {
+			//inventoryDTOs.get(i).setJbType((String) invetoryDeatil.get(i));
+		}
 		return inventoryDTOs;
 	}
 }

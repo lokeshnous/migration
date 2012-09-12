@@ -20,7 +20,7 @@ import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 
 /**
  * 
- * @author bharatiu
+ * @author Bharati Umarani
  * @version 1.0
  * @since 23rd August, 2012
  */
