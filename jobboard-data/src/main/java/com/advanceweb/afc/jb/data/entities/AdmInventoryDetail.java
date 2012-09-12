@@ -34,22 +34,15 @@ public class AdmInventoryDetail {
 	@Column(name="product_id")
 	private int productId;
 	
-	@Column(name="package_id")
-	private int packageId;
-	
-	@Column(name="Plan_id")
-	private int planId;
 	
 	@Column(name="available_qty")
 	private int availableqty;
 	
-	@Column(name="Status")
-	private String status;
-	
-	private float qty;
+	@Column(name="order_qty")
+	private int orderQty;
 	
 	//bi-directional many-to-one association to MerProfileAttrib
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="inventory_id")
 	private AdmFacilityInventory admFacilityInventory;
 
@@ -84,44 +77,12 @@ public class AdmInventoryDetail {
 		this.productId = productId;
 	}
 
-	public int getPackageId() {
-		return packageId;
-	}
-
-	public void setPackageId(int packageId) {
-		this.packageId = packageId;
-	}
-
-	public int getPlanId() {
-		return planId;
-	}
-
-	public void setPlanId(int planId) {
-		this.planId = planId;
-	}
-
 	public int getAvailableqty() {
 		return availableqty;
 	}
 
 	public void setAvailableqty(int availableqty) {
 		this.availableqty = availableqty;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public float getQty() {
-		return qty;
-	}
-
-	public void setQty(float qty) {
-		this.qty = qty;
 	}
 
 	public AdmFacilityInventory getAdmFacilityInventory() {
@@ -138,6 +99,14 @@ public class AdmInventoryDetail {
 
 	public void setJpJobTypeCombo(JpJobTypeCombo jpJobTypeCombo) {
 		this.jpJobTypeCombo = jpJobTypeCombo;
+	}
+
+	public int getOrderQty() {
+		return orderQty;
+	}
+
+	public void setOrderQty(int orderQty) {
+		this.orderQty = orderQty;
 	}	
 	
 }

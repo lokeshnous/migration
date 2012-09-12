@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -51,8 +52,8 @@ public class AdmFacilityInventory {
 	private AdmFacility admFacility;
 	
 	//bi-directional many-to-one association to MerProfileAttribList
-	@OneToMany(mappedBy="admFacilityInventory")
-	private List<AdmInventoryDetail> admInventoryDetailList;
+	@OneToOne(mappedBy="admFacilityInventory")
+	private AdmInventoryDetail admInventoryDetail;
 
 	
 
@@ -96,14 +97,15 @@ public class AdmFacilityInventory {
 		this.admFacility = admFacility;
 	}
 
-	public List<AdmInventoryDetail> getAdmInventoryDetailList() {
-		return admInventoryDetailList;
+	public AdmInventoryDetail getAdmInventoryDetail() {
+		return admInventoryDetail;
 	}
 
-	public void setAdmInventoryDetailList(
-			List<AdmInventoryDetail> admInventoryDetailList) {
-		this.admInventoryDetailList = admInventoryDetailList;
+	public void setAdmInventoryDetail(AdmInventoryDetail admInventoryDetail) {
+		this.admInventoryDetail = admInventoryDetail;
 	}
+
+
 	
 	
 	

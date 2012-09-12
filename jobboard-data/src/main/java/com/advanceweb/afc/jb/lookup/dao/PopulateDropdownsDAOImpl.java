@@ -46,6 +46,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAddon;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
+import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -65,6 +66,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
+	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
@@ -515,25 +517,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 		try {
 			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
-
-			List<AdmFacility> facilityList = hibernateTemplate.find(
-					"from AdmFacility adm where adm.facilityId=?", facilityId);
-
-			if (!facilityList.isEmpty()) {
-				AdmFacility facility = facilityList.get(0);
-				List<AdmFacilityInventory> admFacList = facility
-						.getAdmFacilityInventories();
-
-				for (AdmFacilityInventory inv : admFacList) {
+			List<AdmInventoryDetail> invList = hibernateTemplate.find(FIND_INVENTORY_DETAILS, facilityId);
+			if (!invList.isEmpty()) {
+				for (AdmInventoryDetail inv : invList) {					
 					DropDownDTO dto = new DropDownDTO();
-					dto.setOptionId(String.valueOf(inv.getInventoryId()));
-					List<AdmInventoryDetail> invDtlList = inv
-							.getAdmInventoryDetailList();
-					StringBuilder strBuilder = new StringBuilder();
-					for (AdmInventoryDetail invDtl : invDtlList) {
-						strBuilder = formatBaseAddonPackages(invDtl, strBuilder);
-					}
-					dto.setOptionName(String.valueOf(strBuilder));
+					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
+					JpJobTypeCombo combo = inv.getJpJobTypeCombo();
+					dto.setOptionName(combo.getAddons());
 					jbPostings.add(dto);
 				}
 			}
@@ -704,45 +694,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	}
 
-	/**
-	 * This method is called format base and child packages
-	 * 
-	 * @param dtl
-	 * @param sb
-	 * @return
-	 */
-	private StringBuilder formatBaseAddonPackages(AdmInventoryDetail dtl,
-			StringBuilder strBuilder) {
-		try {
-			// Go to Jp Job Type (Base package)
-			if (dtl.getProductType().equals(MMJBCommonConstants.JOB_TYPE)) {
-				List<JpJobType> jpTypeList = hibernateTemplate.find(
-						"from JpJobType jbTp where jbTp.jobTypeId=?",
-						dtl.getProductId());
-				if (null != jpTypeList && !jpTypeList.isEmpty()) {
-					JpJobType type = jpTypeList.get(0);
-					strBuilder.append(type.getName());
-				}
-			}
-
-			// Go to Jp Addon (Child packages(Addons))
-			if (dtl.getProductType().equals(MMJBCommonConstants.JOB_TYPE_ADDON)) {
-				List<JpAddon> addonList = hibernateTemplate.find(
-						"from JpAddon addon where addon.addonId=?",
-						dtl.getProductId());
-				Iterator iterate = addonList.iterator();
-				while (iterate.hasNext()) {
-					strBuilder.append(" ").append("+").append(" ");
-					JpAddon addon = (JpAddon) iterate.next();
-					strBuilder.append(addon.getName());
-				}
-			}
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-		}
-
-		return strBuilder;
-	}
 
 	@Override
 	public List<String> getEmployerNamesList(String employerName) {
