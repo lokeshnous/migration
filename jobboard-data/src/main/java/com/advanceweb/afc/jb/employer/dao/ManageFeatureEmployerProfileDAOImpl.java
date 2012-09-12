@@ -134,8 +134,8 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				// }
 				// }
 				// companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
-				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
-				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
+				companyProfileDTO.setCompanyWebsite(admFacility.getUrlDisplay());
+				companyProfileDTO.setCompanyEmail(admFacility.getEmailDisplay());
 				// companyProfileDTO.setPositionTitle(facility.get);
 				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
 				companyProfileDTO.setPrimaryColor(admFacility.getColorPalette());

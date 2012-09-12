@@ -38,10 +38,10 @@
 							class="link_color2_emphasized FontSize12 ">View All Featured
 								Employers</a></span>
 					</div>
-					<div class="featuredEmployerLeft">
+					<div class="featuredEmployerLeft" style="background: ${employerProfileManagementForm.primaryColor}">
 						<div class="featuredEmployerVideo">
 							&nbsp;
-							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="" frameborder="0" height="180" scrolling="no" width="255"></iframe><br>
+							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="" frameborder="0"  height="180" scrolling="no" width="255"></iframe><br>
 
 						</div>
 						<div class="featuredEmployerLinks">
