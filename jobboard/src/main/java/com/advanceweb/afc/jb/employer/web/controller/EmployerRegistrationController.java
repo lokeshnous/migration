@@ -390,9 +390,9 @@ public class EmployerRegistrationController {
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 
 			} else {
-				if (listProfAttribForms.getEmail().toString().equals(employeeBillingForm.getEmail())) {
-					return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				}
+				//if (listProfAttribForms.getEmail().toString().equals(employeeBillingForm.getEmail())) {
+					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				//}
 				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 				AccountBillingDTO billingAddressDTO = transformPaymentMethod
 						.transformDataBillingAddreFormToDto(billingAddressForm);
