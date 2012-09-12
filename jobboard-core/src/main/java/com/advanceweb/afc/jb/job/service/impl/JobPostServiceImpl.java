@@ -153,6 +153,9 @@ public class JobPostServiceImpl implements JobPostService {
 	public List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId){
 		return employerJobPostDAO.retrieveAllJobPostByADvSearch(advSearchId);
 	}
-
+	@Override
+	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId){
+		return employerJobPostDAO.jobSaveByAdmin(apd,jobId);
+	}
 
 }
