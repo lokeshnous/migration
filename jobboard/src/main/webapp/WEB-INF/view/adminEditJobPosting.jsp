@@ -8,7 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="10">
 <title>ADVANCE Heathcare Jobs</title>
-
+<script src="<%= request.getContextPath() %>/resources/js/cal_conf2.js"></script>
+<script src="<%= request.getContextPath() %>/resources/js/cal2.js"></script>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -27,8 +28,40 @@ jQuery(document).ready(function() {
 			}); 
 		});
 		
+		$(function() {
+		    $('#Save').bind('click', function(event){
+		    	var advJobId = $("#advJobId").val();
+				var startDate=$("#startDate").val();
+				var endDate=$("#endDt").val();
+		        var txtVal =  $('#endDt').val();
+		        if(isDate(txtVal)){
+		            alert('Valid Date');
+		        //	return true;
+		        	$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
+						 success: function(data){ 
+							 if(data == ''){
+									alert("Data save successfully !");	
+									//loadTable();
+									parent.$.nmTop().close();
+								}else{
+									$("#errmsg").html(data);
+								} 
+						},
+						error: function(response) {
+							alert("Server Error for Save data: "+response.status);
+						},
+						complete: function() {
+							
+						}
+					});  
+		            }
+		        else{
+		            alert('Invalid Date');
+		        	return false;
+		       		}
+		    });
 		
-		$("#Save").click(function(event){		
+		/* $("#Save").click(function(event){		
 			var advJobId = $("#advJobId").val();
 			var startDate=$("#startDate").val();
 			var endDate=$("#endDt").val();
@@ -50,8 +83,43 @@ jQuery(document).ready(function() {
 					
 				}
 			});  
-		});
+		}); */
 		
+			
+		    
+		function isDate(txtDate)
+		{
+		    var currVal = txtDate;
+		    if(currVal == '')
+		        return false;
+		    
+		    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/; //Declare Regex
+		    var dtArray = currVal.match(rxDatePattern); // is format OK?
+		    
+		    if (dtArray == null)
+		        return false;
+		    
+		    //Checks for mm/dd/yyyy format.
+		    dtMonth = dtArray[1];
+		    dtDay= dtArray[3];
+		    dtYear = dtArray[5];        
+		    
+		    if (dtMonth < 1 || dtMonth > 12)
+		        return false;
+		    else if (dtDay < 1 || dtDay> 31)
+		        return false;
+		    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31)
+		        return false;
+		    else if (dtMonth == 2)
+		    {
+		        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+		        if (dtDay> 29 || (dtDay ==29 && !isleap))
+		                return false;
+		    }
+		    return true;
+		}
+
+		});
 		
 		
 		jQuery(".megamenu").megamenu();
