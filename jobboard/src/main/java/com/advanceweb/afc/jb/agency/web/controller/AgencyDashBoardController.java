@@ -103,7 +103,6 @@ public class AgencyDashBoardController {
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
 			BindingResult result, HttpSession session) {
 		boolean isUpdated = false;
-		
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
@@ -114,7 +113,7 @@ public class AgencyDashBoardController {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
 				} else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
-					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
@@ -125,12 +124,12 @@ public class AgencyDashBoardController {
 
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-				if(isUpdated){
+				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
-				}else{
+				} else {
 					return MMJBCommonConstants.UPDATE_ERROR;
 				}
-				
+
 			}
 
 		} catch (Exception e) {
@@ -139,7 +138,6 @@ public class AgencyDashBoardController {
 		}
 		return "";
 	}
-
 
 	/**
 	 * This method is called to Billing Setting update page and
@@ -178,10 +176,10 @@ public class AgencyDashBoardController {
 				LOGGER.info("This is Billing Addresss edite option done successfully");
 
 			} else {
-				//if (listProfAttribForms.getEmail().toString()
-				//		.equals(employeeBillingForm.getEmail())) {
-					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-			//	}
+				// if (listProfAttribForms.getEmail().toString()
+				// .equals(employeeBillingForm.getEmail())) {
+				// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				// }
 				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 				AccountBillingDTO billingAddressDTO = transformPaymentMethod
 						.transformDataBillingAddreFormToDto(billingAddressForm);
@@ -365,7 +363,7 @@ public class AgencyDashBoardController {
 					.transformDTOToProfileAttribForm(registerDTO, null);
 			empRegisterForm.setListProfAttribForms(listProfAttribForms);
 
-			Map profAttribFormsMap = populateDropdownsService
+			Map<String, Object> profAttribFormsMap = populateDropdownsService
 					.getEmployerDetails(employerName);
 			model.setViewName("agencyEditEmployer");
 
@@ -418,11 +416,10 @@ public class AgencyDashBoardController {
 
 	@RequestMapping(value = "/getEmployerDetails")
 	@ResponseBody
-	public Map getEmployerDetails(@RequestParam("name") String employerName) {
-		System.out.println("hi");
-		Map empForm = populateDropdownsService.getEmployerDetails(employerName);
+	public Map<String, Object> getEmployerDetails(
+			@RequestParam("name") String employerName) {
+		return populateDropdownsService.getEmployerDetails(employerName);
 
-		return empForm;
 	}
 
 	@ResponseBody
