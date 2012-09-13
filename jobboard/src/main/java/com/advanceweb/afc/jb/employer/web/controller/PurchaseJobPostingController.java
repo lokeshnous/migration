@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 
 /**
@@ -36,7 +37,7 @@ public class PurchaseJobPostingController {
 			.getLogger(PurchaseJobPostingController.class);
 	private static final String PURCHASE_JOB_POSTINGS = "empPurchaseJobPostingsPopup";
 	private final String _JOBPOST_JSON = "jobPostJson";
-	
+
 	@Autowired
 	private JobPostService employerJobPost;
 
@@ -44,15 +45,21 @@ public class PurchaseJobPostingController {
 	private TransformJobPost transformJobPost;
 
 	@RequestMapping(value = "/purchaseJobPostings", method = RequestMethod.GET)
-	public ModelAndView purchaseJobPostings() {
+	public ModelAndView purchaseJobPostings(
+			@RequestParam(value = "page", required = false) String page) {
 
 		ModelAndView model = new ModelAndView();
+		PurchaseJobPostForm purchaseJobPostForm = new PurchaseJobPostForm();
+
+		if (page != null && page.equals(MMJBCommonConstants.INVENTORY)) {
+			purchaseJobPostForm.setInventoryPage("true");
+		}
 		List<JobPostingPlanDTO> jobPostingPlanDTOList = employerJobPost
 				.getJobPostingPlans();
 
 		List<JobPostingsForm> jobPostingsForm = transformJobPost
 				.transformToJobPostingsFormList(jobPostingPlanDTOList);
-		PurchaseJobPostForm purchaseJobPostForm = new PurchaseJobPostForm();
+
 		purchaseJobPostForm.setJobPostingsForm(jobPostingsForm);
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
@@ -60,15 +67,15 @@ public class PurchaseJobPostingController {
 	}
 
 	@RequestMapping(value = "/addToCart", method = RequestMethod.POST)
-	public ModelAndView addToCart(
-			PurchaseJobPostForm purchaseJobPostForm, HttpServletRequest request) {
+	public ModelAndView addToCart(PurchaseJobPostForm purchaseJobPostForm,
+			HttpServletRequest request) {
 
 		int packageSubTotal = 0, planCreditAmt = 0, addOnCreditAmtTotal = 0;
 		String jobPostJson = request.getParameter(_JOBPOST_JSON);
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
-			
+
 			JobPostingsForm jobPostingsCart = mapper.readValue(jobPostJson,
 					JobPostingsForm.class);
 
@@ -115,7 +122,7 @@ public class PurchaseJobPostingController {
 	@RequestMapping(value = "/removeJobPost", method = RequestMethod.POST)
 	public ModelAndView removeJobPost(PurchaseJobPostForm purchaseJobPostForm,
 			@RequestParam("cartItemIndex") int cartItemIndex) {
-		
+
 		ModelAndView model = new ModelAndView();
 		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart()
 				.get(cartItemIndex);
@@ -132,7 +139,7 @@ public class PurchaseJobPostingController {
 			PurchaseJobPostForm purchaseJobPostForm, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		session.setAttribute("purchaseJobPostForm", purchaseJobPostForm);
-		
+
 		model.setViewName("redirect:/pgiController/callPaymentMethod.html");
 		return model;
 	}

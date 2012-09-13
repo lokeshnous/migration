@@ -65,12 +65,6 @@ public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 			dto.setAvailableQty(availqty.intValue());
 			inventoryDTOs.add(dto);
 		}
-		addCreditsOfAddons(inventoryDTOs);
-		return inventoryDTOs;
-	}
-
-	private List<JobPostingInventoryDTO> addCreditsOfAddons(
-			List<JobPostingInventoryDTO> inventoryDTOs) {
 		return inventoryDTOs;
 	}
 }

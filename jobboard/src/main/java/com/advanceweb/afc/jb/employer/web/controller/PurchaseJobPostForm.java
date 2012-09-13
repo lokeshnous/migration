@@ -14,6 +14,7 @@ public class PurchaseJobPostForm {
 	private List<JobPostingsForm> jobPostingsCart = new ArrayList<JobPostingsForm>();
 	private int grandTotal;
 	private String promotionCode;
+	private String inventoryPage;
 	
 	public List<JobPostingsForm> getJobPostingsForm() {
 		return jobPostingsForm;
@@ -38,6 +39,12 @@ public class PurchaseJobPostForm {
 	}
 	public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;
+	}
+	public String getInventoryPage() {
+		return inventoryPage;
+	}
+	public void setInventoryPage(String inventoryPage) {
+		this.inventoryPage = inventoryPage;
 	}
 	
 
