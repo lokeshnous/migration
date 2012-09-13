@@ -874,7 +874,7 @@ public class JobSearchController {
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				jobSeekerEmailDTO.setFromAddress(MMJBCommonConstants.WEB_MAIL_SERVER);
 
-				int k = 0;
+				int iterationCount = 0;
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
 					
@@ -882,8 +882,8 @@ public class JobSearchController {
 						return MMJBCommonConstants.EMAIL_MESSAGE;
 					}
 
-					jobSeekerToAddress[k] = new InternetAddress(string.trim());
-					k++;
+					jobSeekerToAddress[iterationCount] = new InternetAddress(string.trim());
+					iterationCount++;
 
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
@@ -898,21 +898,23 @@ public class JobSearchController {
 					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
 							"?Jobseekername", jobseekerName);
 				}
+						
+				
 				jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
 				SearchedJobDTO searchedJobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
-				String Subject = MMJBCommonConstants.subjectOfMail+" "
+				String Subject = MMJBCommonConstants.SUBJECT_OF_MAIL+" "
 						+ jobseekerName;
-				String bodyHead1 = MMJBCommonConstants.bodyOfMail1+" "
-						+ jobseekerName +" "+MMJBCommonConstants.bodyOfMail2;
+				String bodyHead1 = MMJBCommonConstants.BODY_OFMAIL_FIRST+" "
+						+ jobseekerName +" "+MMJBCommonConstants.BODY_OFMAIL_SECOND;
 				String bodyHead2 = sendtofriendmail.getMessage();
-				String jobTitle = MMJBCommonConstants.jobTitleHeding;
-				String companyName = MMJBCommonConstants.companyNameHeading;
+				String jobTitle = MMJBCommonConstants.JOB_TITLE_HEADING;
+				String companyName = MMJBCommonConstants.COMAPNY_NAME_HEADING;
 				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl = MMJBCommonConstants.urlLink1
+				String joburl = MMJBCommonConstants.URL_LINK_FIRST
 						+""+jobUrl
-						+""+MMJBCommonConstants.urlLink2;
+						+""+MMJBCommonConstants.URL_LINK_SECOND;
 				mesg = mesg
 						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -928,7 +930,7 @@ public class JobSearchController {
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info(MMJBCommonConstants.errorSendMail);
+				LOGGER.info(MMJBCommonConstants.ERROR_SENDING_MAIL);
 			}
 
 		} catch (Exception e) {
@@ -936,10 +938,10 @@ public class JobSearchController {
 			throw new MailParseException(e);
 		}
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			modelData.setViewName(MMJBCommonConstants.urlRedirectAfterMail);
+			modelData.setViewName(MMJBCommonConstants.URL_REDIRECT_MAIL);
 			return "";
 		} else {
-			modelData.setViewName(MMJBCommonConstants.urlRedirectAfterMail);
+			modelData.setViewName(MMJBCommonConstants.URL_REDIRECT_MAIL);
 			return "";
 		}
 
