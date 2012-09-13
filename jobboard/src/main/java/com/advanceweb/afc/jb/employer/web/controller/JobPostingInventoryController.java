@@ -57,21 +57,50 @@ public class JobPostingInventoryController {
 		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
 				.getInventoryDetails(userId, facilityId);
 
-		/*
-		 * List<JobPostingInventoryDTO> jobTypeList =
-		 * (List<JobPostingInventoryDTO>) inventiryDTO .get(0);
-		 * List<JobPostingInventoryDTO> inventoryList =
-		 * (List<JobPostingInventoryDTO>) inventiryDTO .get(1);
-		 */
-
-		
-		List<JobPostingInventoryDTO> jobTypeList = new ArrayList<JobPostingInventoryDTO>();
-		//Standard Job Posting
 		List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
-		//Job Posting Slot
 		List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
-		
-		model.addObject("jobTypeList", jobTypeList);
+		JobPostingInventoryDTO postingInventoryDTO = new JobPostingInventoryDTO();
+		String Duration = Integer
+				.toString(MMJBCommonConstants.AUTO_RENEWAL_DAYS)
+				+ " "
+				+ MMJBCommonConstants.DAYS;
+		for (int i = 0; i < inventiryDTO.size(); i++) {
+			postingInventoryDTO = inventiryDTO.get(i);
+			JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
+			if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+					MMJBCommonConstants.STANDARD_JOB_POSTING)
+					&& postingInventoryDTO.getProductType().equals(
+							MMJBCommonConstants.JOB_TYPE_COMBO)) {
+				dto.setAddon(postingInventoryDTO.getAddon());
+				dto.setDuration(Duration);
+				dto.setQuantity(postingInventoryDTO.getQuantity());
+				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				jbPostList.add(dto);
+			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+					MMJBCommonConstants.STANDARD_JOB_POSTING)
+					&& postingInventoryDTO.getProductType().equals(
+							MMJBCommonConstants.JOB_TYPE)) {
+				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
+				dto.setQuantity(postingInventoryDTO.getQuantity());
+				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+					MMJBCommonConstants.JOB_POSTING_SLOT)
+					&& postingInventoryDTO.getProductType().equals(
+							MMJBCommonConstants.JOB_TYPE_COMBO)) {
+				dto.setAddon(postingInventoryDTO.getAddon());
+				dto.setDuration(Duration);
+				dto.setQuantity(postingInventoryDTO.getQuantity());
+				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				jbSlotList.add(dto);
+			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+					MMJBCommonConstants.JOB_POSTING_SLOT)
+					&& postingInventoryDTO.getProductType().equals(
+							MMJBCommonConstants.JOB_TYPE)) {
+				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
+				dto.setQuantity(postingInventoryDTO.getQuantity());
+				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+			}
+		}
 		model.addObject("jbPostList", jbPostList);
 		model.addObject("jbSlotList", jbSlotList);
 		model.setViewName("jobPostingInventoryPopup");

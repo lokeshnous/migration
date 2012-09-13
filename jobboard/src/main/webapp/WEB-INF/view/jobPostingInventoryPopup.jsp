@@ -48,10 +48,10 @@
 						<tbody>
 							<c:forEach items="${jbPostList}" var="jbPostList">
 								<tr class="Height30">
-									<td align="left">Job Template</td>
-									<td align="center">30 days</td>
-									<td align="center">3</td>
-									<td align="center">1</td>
+									<td align="left">${jbPostList.getAddon()}</td>
+									<td align="center">${jbPostList.getDuration()}</td>
+									<td align="center">${jbPostList.getQuantity()}</td>
+									<td align="center">${jbPostList.getAvailableQty()}</td>
 									<td align="center"><a href="#"><img
 											src="../resources/images/Addbutton.png" width="20"
 											height="20" alt="Add Button"></a></td>
@@ -76,11 +76,10 @@
 						<tbody>
 							<c:forEach items="${jbSlotList}" var="jbSlotList">
 								<tr class="Height30">
-									<td align="left">Job Template, Universal Geography &
-										Premium Sponsored</td>
-									<td align="center"></td>
-									<td align="center">3</td>
-									<td align="center">1</td>
+									<td align="left">${jbSlotList.getAddon()}</td>
+									<td align="center">${jbSlotList.getDuration()}</td>
+									<td align="center">${jbSlotList.getQuantity()}</td>
+									<td align="center">${jbSlotList.getAvailableQty()}</td>
 									<td align="center"><a href="#"><img
 											src="../resources/images/Addbutton.png" width="20"
 											height="20" alt="Add Button"></a></td>

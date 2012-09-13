@@ -20,6 +20,7 @@ public class InventoryForm {
 	private int availableQty;
 	private String productType;
 	private String addon;
+	private String days;
 
 	/**
 	 * @return the userId
@@ -167,6 +168,20 @@ public class InventoryForm {
 	 */
 	public void setAddon(String addon) {
 		this.addon = addon;
+	}
+
+	/**
+	 * @return the days
+	 */
+	public String getDays() {
+		return days;
+	}
+
+	/**
+	 * @param days the days to set
+	 */
+	public void setDays(String days) {
+		this.days = days;
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.job.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -48,9 +50,19 @@ public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 				.createSQLQuery(" { call GetInventoryDetails(?) }");
 		getInventoryData.setInteger(0, facilityId);
 		List<?> invetoryDeatil = getInventoryData.list();
-		List<JobPostingInventoryDTO> inventoryDTOs = new ArrayList<JobPostingInventoryDTO>(invetoryDeatil.size());
-		for (int i = 0; i < invetoryDeatil.size(); i++) {
-			//inventoryDTOs.get(i).setJbType((String) invetoryDeatil.get(i));
+		Iterator<?> iterator = invetoryDeatil.iterator();
+		List<JobPostingInventoryDTO> inventoryDTOs = new ArrayList<JobPostingInventoryDTO>();
+		while (iterator.hasNext()) {
+			JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
+			Object[] row = (Object[]) iterator.next();
+			BigDecimal qty = (BigDecimal) row[3];
+			BigDecimal availqty = (BigDecimal) row[4];
+			dto.setProductType((String) row[0]);
+			dto.setJbType((String) row[1]);
+			dto.setAddon((String) row[2]);
+			dto.setQuantity(qty.intValue());
+			dto.setAvailableQty(availqty.intValue());
+			inventoryDTOs.add(dto);
 		}
 		return inventoryDTOs;
 	}
