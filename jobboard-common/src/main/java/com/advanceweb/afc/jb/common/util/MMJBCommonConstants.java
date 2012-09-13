@@ -255,7 +255,7 @@ public interface MMJBCommonConstants {
 
 	String RECAPTCHA_PRIVATE_KEY = "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
 
-	int AUTO_RENEWAL_DAYS = 30;
+	int AUTO_RENEWAL_DAYS = 29;
 	// For Job search results
 	int DEFAULT_PAGE_SIZE = 20;
 	int ADDS_PER_PAGE = 10;
