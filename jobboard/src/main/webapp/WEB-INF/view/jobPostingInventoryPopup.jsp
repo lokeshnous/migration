@@ -52,7 +52,8 @@
 									<td align="center">${jbPostList.getDuration()}</td>
 									<td align="center">${jbPostList.getQuantity()}</td>
 									<td align="center">${jbPostList.getAvailableQty()}</td>
-									<td align="center"><a href="#"><img
+									<td align="center"><a
+										href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
 											src="../resources/images/Addbutton.png" width="20"
 											height="20" alt="Add Button"></a></td>
 								</tr>
@@ -80,7 +81,7 @@
 									<td align="center">${jbSlotList.getDuration()}</td>
 									<td align="center">${jbSlotList.getQuantity()}</td>
 									<td align="center">${jbSlotList.getAvailableQty()}</td>
-									<td align="center"><a href="#"><img
+									<td align="center"><a href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
 											src="../resources/images/Addbutton.png" width="20"
 											height="20" alt="Add Button"></a></td>
 								</tr>

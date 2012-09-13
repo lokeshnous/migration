@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.user.UserAlertService;
 
 /**
@@ -51,6 +53,9 @@ public class UserAlertController {
 	@Autowired
 	private TransferUserAlert transferUserAlert;
 
+	@Autowired
+	private LoginService loginService;
+
 	@Value("${dataDeleteSuccess}")
 	private String dataDeleteSuccess;
 
@@ -70,12 +75,30 @@ public class UserAlertController {
 			@ModelAttribute("alertForm") UserAlertForm alertForm,
 			BindingResult result, HttpSession session) {
 
+		String enableAccess = "true";
+		String enablePostEditAccess = "true";
+
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 
 		ModelAndView model = new ModelAndView();
+
+		// Added to check whether logged in job owner has rights to set the
+		// alerts
+		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+		if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
+			enableAccess = "false";
+			model.addObject("enableAccess", enableAccess);
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
+			enablePostEditAccess = "false";
+			model.addObject("enablePostEditAccess", enablePostEditAccess);
+		}
+		model.addObject("enableAccess", enableAccess);
+		model.addObject("enablePostEditAccess", enablePostEditAccess);
 
 		List<DropDownDTO> alertList = alertService.populateValues("FACILITY");
 		List<ManageAccessPermissionDTO> jbOwnerList = permissionService

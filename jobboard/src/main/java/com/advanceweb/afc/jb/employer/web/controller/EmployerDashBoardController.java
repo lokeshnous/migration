@@ -40,30 +40,32 @@ public class EmployerDashBoardController {
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session) {
-		String enableAccess="true";
-		String enablePostEditAccess="true";
+		String enableAccess = "true";
+		String enablePostEditAccess = "true";
 		ModelAndView model = new ModelAndView();
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
-		EmployerInfoDTO roleList =loginService.facilityDetails(userId);
-		if(roleList.getRoleId() == Integer.valueOf(MMJBCommonConstants.FULL_ACCESS)){
-			enableAccess="false";
-			model.addObject("enableAccess",enableAccess);
-		}else if(roleList.getRoleId()==Integer.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)){
-			enablePostEditAccess="false";
-			model.addObject("enablePostEditAccess",enablePostEditAccess);
+		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+		if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
+			enableAccess = "false";
+			model.addObject("enableAccess", enableAccess);
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
+			enablePostEditAccess = "false";
+			model.addObject("enablePostEditAccess", enablePostEditAccess);
 		}
-		model.addObject("enableAccess",enableAccess);
-		model.addObject("enablePostEditAccess",enablePostEditAccess);
+		model.addObject("enableAccess", enableAccess);
+		model.addObject("enablePostEditAccess", enablePostEditAccess);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		MetricsDTO metricsDTO = new MetricsDTO();
 
 		// Get the job post details of logged in employer
 		List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
 
-		// Geting mtrics values from look up table
+		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
 				.populateDropdown("Metrics");
 

@@ -20,6 +20,7 @@ public class JobPostingInventoryDTO {
 	private String productType;
 	private String addon;
 	private String days;
+	private int productId;
 
 	/**
 	 * @return the userId
@@ -179,10 +180,26 @@ public class JobPostingInventoryDTO {
 	}
 
 	/**
-	 * @param days the days to set
+	 * @param days
+	 *            the days to set
 	 */
 	public void setDays(String days) {
 		this.days = days;
+	}
+
+	/**
+	 * @return the productId
+	 */
+	public int getProductId() {
+		return productId;
+	}
+
+	/**
+	 * @param productId
+	 *            the productId to set
+	 */
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
 }

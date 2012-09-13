@@ -55,15 +55,22 @@ public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 		while (iterator.hasNext()) {
 			JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
 			Object[] row = (Object[]) iterator.next();
-			BigDecimal qty = (BigDecimal) row[3];
-			BigDecimal availqty = (BigDecimal) row[4];
-			dto.setProductType((String) row[0]);
-			dto.setJbType((String) row[1]);
-			dto.setAddon((String) row[2]);
+			BigDecimal qty = (BigDecimal) row[4];
+			BigDecimal availqty = (BigDecimal) row[5];
+			dto.setProductId((Integer) row[0]);
+			dto.setProductType((String) row[1]);
+			dto.setJbType((String) row[2]);
+			dto.setAddon((String) row[3]);
 			dto.setQuantity(qty.intValue());
 			dto.setAvailableQty(availqty.intValue());
 			inventoryDTOs.add(dto);
 		}
+		addCreditsOfAddons(inventoryDTOs);
+		return inventoryDTOs;
+	}
+
+	private List<JobPostingInventoryDTO> addCreditsOfAddons(
+			List<JobPostingInventoryDTO> inventoryDTOs) {
 		return inventoryDTOs;
 	}
 }

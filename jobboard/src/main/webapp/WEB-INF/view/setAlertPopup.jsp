@@ -44,7 +44,8 @@ function cancelProcess(){
 				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="GET" action="../alerts/employer/saveAlerts.html" id="alertId" commandName="alertForm">
+			<form:form method="GET" action="../alerts/employer/saveAlerts.html"
+				id="alertId" commandName="alertForm">
 				<div class="rowEvenNewSpacing">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
 						class="grid2">
@@ -66,18 +67,21 @@ function cancelProcess(){
 					<span><h3 class="TextColor01 marginTop15">Select who
 							you would like to receive the alert(s) checked above.</h3></span>
 					<div class="rowEvenNewSpacing">
-						<span class=" FloatLeft marginTop3">Job Owner: </span> 
-												    
-						<form:select 
-							class="jb_input3  marginTop0 width150 marginLeft5"
-							path="selJobOwner" items="${jbOwnerList}" 
-							itemValue="optionId" itemLabel="optionName">
-						</form:select> 
-					<input type="hidden" name="pageValue" value="setAlertPage"/>		
-					<span class="required paddingTop4">
-						<a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=setAlertPage"  
-						id="addNewJobOwnerPopUp" ">Add NewJob Owner</a></span>
+						<span class=" FloatLeft marginTop3">Job Owner: </span>
+
+						<form:select class="jb_input3  marginTop0 width150 marginLeft5"
+							path="selJobOwner" items="${jbOwnerList}" itemValue="optionId"
+							itemLabel="optionName">
+						</form:select>
+						<c:if
+							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}">
+							<input type="hidden" name="pageValue" value="setAlertPage" />
+							<span class="required paddingTop4"> <a
+								href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=setAlertPage"
+								id="addNewJobOwnerPopUp"">Add NewJob Owner</a></span>
+						</c:if>
 					</div>
+
 				</div>
 				<div class="popUpButtonRow">
 					<input type="button" id="save" value="Save" class="orange" />

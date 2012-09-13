@@ -41,7 +41,6 @@ public class JobPostingInventoryController {
 	 * @param model
 	 * @return ModelAndView
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/employer/jobInventory", method = RequestMethod.GET)
 	public ModelAndView jobInventory(
 			@ModelAttribute("alertForm") InventoryForm inventoryForm,
@@ -81,8 +80,10 @@ public class JobPostingInventoryController {
 					&& postingInventoryDTO.getProductType().equals(
 							MMJBCommonConstants.JOB_TYPE)) {
 				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
+				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				jbPostList.add(dto);
 			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
 					MMJBCommonConstants.JOB_POSTING_SLOT)
 					&& postingInventoryDTO.getProductType().equals(
@@ -97,8 +98,10 @@ public class JobPostingInventoryController {
 					&& postingInventoryDTO.getProductType().equals(
 							MMJBCommonConstants.JOB_TYPE)) {
 				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
+				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				jbSlotList.add(dto);
 			}
 		}
 		model.addObject("jbPostList", jbPostList);
