@@ -157,6 +157,7 @@ public class JobPostController {
 		
 		form.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
 		
+		//If free jobs is enabled then we should not decrease credits
 		if(!form.isXmlStartEndDateEnabled()){		
 			
 			boolean bValidCredits = employerJobPost.validateAvailableCredits(Integer.valueOf(form.getJobPostingType()),
