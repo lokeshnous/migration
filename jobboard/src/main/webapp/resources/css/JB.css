@@ -3469,10 +3469,10 @@ a.white01:hover {
 	border-radius: 4px 4px 0px 0px;
 	-moz-border-radius: 4px 4px 0px 0px;
 	-webkit-border-radius: 4px 4px 0px 0px;
-	z-index: 999;
+	/* z-index: 999; */
 }
 
-#VideoSlideButton a {
+#VideoSlideButton a,#TestSlideButton a {
 	width: 135px;
 	height: 24px;
 	float: left;
@@ -3483,9 +3483,9 @@ a.white01:hover {
 	font-size: 14px;
 	text-decoration: none;
 	color: #fff;
-	border-top: 1px solid #54A3DB;
-	border-left: 1px solid #54A3DB;
-	border-right: 1px solid #54A3DB;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	border-bottom: 1px solid #fff;
 	border-radius: 4px 4px 0px 0px;
 	-moz-border-radius: 4px 4px 0px 0px;
@@ -3493,28 +3493,7 @@ a.white01:hover {
 	z-index: 999;
 }
 
-#TestSlideButton a {
-	width: 135px;
-	height: 24px;
-	float: left;
-	display: block;
-	background-color: #54a3db;
-	text-align: center;
-	padding-top: 8px;
-	font-size: 14px;
-	text-decoration: none;
-	color: #fff;
-	border-top: 1px solid #54A3DB;
-	border-left: 1px solid #54A3DB;
-	border-right: 1px solid #54A3DB;
-	border-bottom: 1px solid #fff;
-	border-radius: 4px 4px 0px 0px;
-	-moz-border-radius: 4px 4px 0px 0px;
-	-webkit-border-radius: 4px 4px 0px 0px;
-	z-index: 999;
-}
-
-#PhotoSlideContant {
+#PhotoSlideContant,#VideoSlideContant,#TestSlideContant {
 	width: 958px;
 	height: 197px;
 	float: left;
@@ -4012,6 +3991,21 @@ orange:hover {
 }
 .ui-autocomplete {
 	height: 120px;
+}
+
+/* For Branding template*/
+.templateslider{
+	width:auto !important;
+	background:#ffffff;	
+	overflow: auto;
+	height:200px;
+}
+.imageholder{
+	height: 200px;
+    overflow: hidden;
+    position: relative;
+    width: 900px;
+
 }
 .greyLabel{
 	float:right; 
