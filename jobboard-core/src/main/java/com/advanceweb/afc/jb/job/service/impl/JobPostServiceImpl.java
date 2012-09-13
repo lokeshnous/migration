@@ -158,4 +158,10 @@ public class JobPostServiceImpl implements JobPostService {
 		return employerJobPostDAO.jobSaveByAdmin(apd,jobId);
 	}
 
+	@Override
+	public boolean validateAvailableCredits(int invDtlId, int facilityId) {
+		return employerJobPostDAO.validateAvailableCredits(invDtlId, facilityId);
+	}
+
+
 }

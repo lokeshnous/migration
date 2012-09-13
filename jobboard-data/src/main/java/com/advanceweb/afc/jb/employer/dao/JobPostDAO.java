@@ -34,6 +34,7 @@ public interface JobPostDAO {
 	boolean executeAutoRenewalJobWorker();
 	
 	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
+	boolean validateAvailableCredits(int invDtlId, int facilityId);
 	/**
 	 * 
 	 * @param advSearchId

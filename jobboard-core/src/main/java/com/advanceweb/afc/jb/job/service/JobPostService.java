@@ -31,6 +31,7 @@ public interface JobPostService {
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
 	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
+	boolean validateAvailableCredits(int invDtlId, int facilityId);
 
 	UserDTO getNSCustomerDetails(int nsCustomerID);
 

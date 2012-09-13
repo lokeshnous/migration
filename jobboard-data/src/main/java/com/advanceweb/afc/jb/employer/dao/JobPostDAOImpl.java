@@ -21,16 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-//import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAuditPK;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
-import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
@@ -52,7 +53,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
 	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
-			"and dtl.jpJobTypeCombo in (from JpJobTypeCombo com where com.comboId=?) and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
+			"and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 
 	private static final long millisInDay = 24 * 60 * 60 * 1000;
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
@@ -123,6 +124,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpLocation location = null;
 			// Retrieving location Id based on the data selection while posting
 			// the new job
+			
+			if(!validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId())){
+				return false;
+			}				
+			
 			Object[] inputs = { dto.getJobCountry(), dto.getJobState(),
 					dto.getJobCity(), dto.getJobZip() };
 			List<JpLocation> locationList = hibernateTemplate
@@ -137,22 +143,25 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpTemplate template = hibernateTemplate.get(JpTemplate.class,
 					Integer.valueOf(dto.getBrandTemplate()));
 
-			JpJobType jobType = hibernateTemplate.load(JpJobType.class,
-					Integer.valueOf(dto.getJobPostingType()));
+/*			JpJobType jobType = hibernateTemplate.load(JpJobType.class,
+					Integer.valueOf(dto.getJobPostingType()));*/
 
 			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
 			
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
-					template, jobType, admFacility);
+					template, admFacility);
 			hibernateTemplate.save(jpJob);
 			
-/*			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
+			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
 			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
 			pKey.setFacilityId(dto.getFacilityId());
 			pKey.setJobId(jpJob.getJobId());
 			pKey.setUserId(dto.getUserId());
-			pKey.setInventoryDetailId(Integer.valueOf(dto.getJobPostingType()));*/
+			pKey.setInventoryDetailId(Integer.valueOf(dto.getJobPostingType()));
+			audit.setCreateDt(new Date());
+			audit.setId(pKey);
+			hibernateTemplate.saveOrUpdate(audit);
 			
 			List<JpJobApply> applyJobList = jobPostConversionHelper
 					.transformJobPostDTOToJpJobApply(dto, jpJob);
@@ -613,18 +622,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 		
 		LOGGER.info("Executing -> decreaseAvailableCredits()");
 		//Schedule Jobs
-		try {
-			
-			//based on inventory detail id, we are retreiving combo id 
-			List<JpJobTypeCombo> comboList = hibernateTemplate.find("select com from AdmInventoryDetail dtl inner join dtl.jpJobTypeCombo com where dtl.invDetailId=?", invDtlId);
-			if(!comboList.isEmpty()){
-				
-				JpJobTypeCombo combo = comboList.get(0);
-				Object[] inputs = {combo.getComboId(), facilityId};
-				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);
-				
-				if(!invDtls.isEmpty()){
-					
+		try {			
+			//Based on inventory detail id, we are retreiving combo id 
+			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find("from AdmInventoryDetail dtl where dtl.invDetailId=?", invDtlId);			
+			if(!invDtlList.isEmpty()){				
+				AdmInventoryDetail invDtl = invDtlList.get(0);
+				Object[] inputs = {invDtl.getProductId(), facilityId};
+				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);				
+				if(!invDtls.isEmpty()){					
 					try {
 						AdmInventoryDetail dtl = invDtls.get(0);
 						dtl.setAvailableqty(dtl.getAvailableqty()-1);
@@ -635,7 +640,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 					}	
 					return true;
 				}else{
-					LOGGER.info("Do not sufficient credits to post the job for Inventory Detail Id: " +invDtlId);
+					LOGGER.info("There is no job type with the given inventory Detail Id: " +invDtlId);
 					return false;
 				}	
 			}
@@ -691,6 +696,34 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
+	
+	
+	public boolean validateAvailableCredits(int invDtlId, int facilityId){
+		
+		LOGGER.info("Executing -> decreaseAvailableCredits()");		
+		try {			
+			//Based on inventory detail id, we are retreiving combo id 
+			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find("from AdmInventoryDetail dtl where dtl.invDetailId=?", invDtlId);			
+			if(!invDtlList.isEmpty()){				
+				AdmInventoryDetail invDtl = invDtlList.get(0);
+				Object[] inputs = {invDtl.getProductId(), facilityId};
+				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);				
+				if(!invDtls.isEmpty()){					
+					LOGGER.info("Having sufficient credits to post the job");
+					return true;
+				}else{
+					LOGGER.info("Do not have sufficient credits to post the job for the given inventory Detail Id: " +invDtlId);
+					return false;
+				}
+			}
+			
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		LOGGER.info("Executed -> decreaseAvailableCredits()");
+		return false;
+	}
+	
 
 	/**
 	 * @Author kartikm

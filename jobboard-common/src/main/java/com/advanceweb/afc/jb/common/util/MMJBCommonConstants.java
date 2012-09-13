@@ -292,7 +292,7 @@ public interface MMJBCommonConstants {
 	String DO_NOT_HAVE_CREDITS = "You do not have sufficient credits to post the job";
 	String STATUS_ACTIVE = "Active";
 	String STATUS_INACTIVE = "Inactive";
-
+	
 	// Added for inventory
 	String DAYS = "days";
 	String STANDARD_JOB_POSTING = "Standard Job Posting";
