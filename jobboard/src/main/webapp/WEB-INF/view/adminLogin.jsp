@@ -36,7 +36,7 @@ JAVASCRIPT FILES
 		    $("#impersonation").displaypopup("#impersonation",
 					"790", "360");
 		    $("#editJobPosting").displaypopup("#editJobPosting",
-					"900", "450");
+					"790", "450");
 		    $("#inventory").displaypopup("#inventory",
 					"790", "360");
 		});
