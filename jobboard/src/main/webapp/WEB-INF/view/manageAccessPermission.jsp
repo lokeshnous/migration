@@ -46,8 +46,10 @@
 	    			data:$('#manageAcceccPermissionForm').serialize(),
 					type: "POST",
 					success : function(dataFound) {	
+						if(${manageAccessPermissionForm.manageAccessPermissiondetails.size()>0}){
 						alert("Permissions Changed Successfully.");
 						 $("#manageAccessPerm").click();
+						}
 					},
 					error: function(response) {
 						alert("Server Error : "+response.status);
@@ -83,7 +85,7 @@
 							<th width="33%" align="left" scope="col">Job Owner</th>
 							<th colspan="2" align="Left" scope="col">Permission
 								Settings</th>
-							<th width="18%" align="left" scope="col">&nbsp;</th>
+							<th width="18%" align="left" scope="col">Action</th>
 						</tr>
 						<c:forEach items="${manageAccessPermissionForm.manageAccessPermissiondetails}" var="job"
 							varStatus="status">
