@@ -224,6 +224,7 @@ public class JobPostConversionHelper<JobPostForm> {
 					jobPostDTO.setClicks(job.getJpJobStat().getClicks());
 
 				}
+				jobPostDTO.setFacilityId(job.getAdmFacility().getFacilityId());
 				jobPostDTOList.add(jobPostDTO);
 			}
 		}

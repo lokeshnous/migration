@@ -30,8 +30,10 @@ public interface JobPostDAO {
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
 	
-	boolean executeActiveJobWorker();
-	boolean executeAutoRenewalJobWorker();
+	boolean executeActiveJobWorker(List<JobPostDTO> jobsList);
+	boolean executeAutoRenewalJobWorker(List<JobPostDTO> jobsList);
+	List<JobPostDTO> retreiveAllScheduledJobs();
+	public List<JobPostDTO> retreiveAllExpiredJobs();
 	
 	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
 	boolean validateAvailableCredits(int invDtlId, int facilityId);

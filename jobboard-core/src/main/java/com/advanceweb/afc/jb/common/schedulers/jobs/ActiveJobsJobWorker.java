@@ -1,11 +1,18 @@
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
+import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 
 /**
  * @author muraliananthr
@@ -21,12 +28,24 @@ public class ActiveJobsJobWorker implements JobWorker {
 
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
+	
+	@Autowired
+	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
 
 	@Override
 	public void executeJob() {
 		LOGGER.info("ActiveJobsJobWorker.-> Execute Job.....");		
-		employerJobPostDAO.executeActiveJobWorker();				
+		List<JobPostDTO> jobsList =employerJobPostDAO.retreiveAllScheduledJobs();	
+		for(JobPostDTO dto : jobsList){
+			int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(dto.getFacilityId());			
+			UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+			dto.setbFeatured(userDTO.isFeatured());
+			if(userDTO.isXmlFeedEnabled() && null != userDTO.getXmlFeedStartDate() && null != userDTO.getXmlFeedEndDate()){
+				dto.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getXmlFeedStartDate(), userDTO.getXmlFeedEndDate()));
+			}
+		}
+		employerJobPostDAO.executeActiveJobWorker(jobsList);				
 		LOGGER.info("ActiveJobsJobWorker.-> Executed Job Successfully.....");
 	}
 

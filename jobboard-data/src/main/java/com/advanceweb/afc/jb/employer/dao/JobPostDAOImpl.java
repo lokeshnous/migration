@@ -49,7 +49,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	private static final String FIND_ADM_USER_FACILITY = "select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
 	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
-	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='0'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
 	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
 			"and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
@@ -526,8 +526,39 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return this.numberOfJobRecordsByStatus;
 	}
 
+	/**
+	 * 
+	 */
+	public List<JobPostDTO> retreiveAllScheduledJobs(){
+		//Schedule Jobs			
+		try {
+			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
+			List<JobPostDTO> scheduledJobDTOs = jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
+			return scheduledJobDTOs;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}			
+		return null;		
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public List<JobPostDTO> retreiveAllExpiredJobs(){
+		//Schedule Jobs			
+		try {
+			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
+			List<JobPostDTO> scheduledJobDTOs = jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
+			return scheduledJobDTOs;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}			
+		return null;		
+	}
+	
 	@Override
-	public boolean executeActiveJobWorker() {
+	public boolean executeActiveJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeActiveJobWorker()");
 		//Update Jobs as expired
 		try {
@@ -558,14 +589,20 @@ public class JobPostDAOImpl implements JobPostDAO {
 			
 			for(JpJob job : scheduledJobs){						
 				
-				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());				
+				JobPostDTO dto = validateJobPost(job, jobsList);					
+				
+				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());		
+				
 				if(!jpAuditList.isEmpty()){
 					AdmFacilityJpAudit audit = jpAuditList.get(0);
+					
 					//Checking for available credits
-					if(!validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
+					if(!dto.isXmlStartEndDateEnabled() 
+							&& !validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
 						LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
 					}else{
 						try {
+							job.setFeatured((byte)(dto.isbFeatured()?1:0));
 							job.setStartDt(new Date());
 							job.setEndDt(addDaysToCurrentDate());
 							job.setActive((byte)1);
@@ -590,7 +627,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	@Override
-	public boolean executeAutoRenewalJobWorker() {
+	public boolean executeAutoRenewalJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeAutoRenewalJobWorker()");
 		//Schedule Jobs
 		try {
@@ -601,13 +638,17 @@ public class JobPostDAOImpl implements JobPostDAO {
 				
 				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());
 				
+				JobPostDTO dto = validateJobPost(job, jobsList);	
+				
 				if(!jpAuditList.isEmpty()){
 					AdmFacilityJpAudit audit = jpAuditList.get(0);
 					//Checking for available credits
-					if(!validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
+					if(!dto.isXmlStartEndDateEnabled() 
+							&& !validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
 						LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
 					}else{
 						try {
+							job.setFeatured((byte)(dto.isbFeatured()?1:0));
 							job.setStartDt(new Date());
 							job.setEndDt(addDaysToCurrentDate());
 							job.setActive((byte)1);
@@ -853,26 +894,20 @@ public class JobPostDAOImpl implements JobPostDAO {
 			LOGGER.info("Info data error for date conversion");
 		}
 		return numberOfDays;
-	}
+	}	
 	
 	/**
-	 * This method is called to compare the current date with the given date range
-	 * So that for that particular user we don't need to decrease the credits
-	 * and can post unlimited jobs with in the range.
-	 * @param xmlFeedStartDate
-	 * @param xmlFeedEndDate
+	 * 
+	 * @param job
+	 * @param jobsList
 	 * @return
 	 */
-	public boolean compareDateRangeWithCurrentDate(Date xmlFeedStartDate, Date xmlFeedEndDate){
-		
-		if(null != xmlFeedStartDate && null != xmlFeedEndDate){
-			Date date = new Date();
-			if(date.compareTo(xmlFeedStartDate) >= 0 && date.compareTo(xmlFeedEndDate) <=0){
-				return true;
+	private JobPostDTO validateJobPost(JpJob job, List<JobPostDTO> jobsList){
+		for(JobPostDTO dto : jobsList){
+			if(dto.getJobId() == job.getJobId()){
+				return dto;
 			}
 		}
-		
-		return false;
+		return new JobPostDTO();		
 	}
-	
 }
