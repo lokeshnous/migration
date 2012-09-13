@@ -136,7 +136,7 @@ jQuery(document).ready(function() {
 												$('#findSearchInfo').html(val);
 											}
 										});										
-										processPaginationReq();
+										processPaginationReq("20");
 										$("#TotalNoRecords").text(data["TotalNoRecords"]);
 										$("#TotalRecord").text(data["TotalNoRecords"]);
 									});
@@ -179,7 +179,7 @@ jQuery(document).ready(function() {
 					$("#TotalNoRecords").text("");
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
-							processPaginationReq();
+							processPaginationReq("20");
 							$("#TotalNoRecords").text(data["TotalNoRecords"]);
 							$("#TotalRecord").text(data["TotalNoRecords"]);
 							});
@@ -227,36 +227,39 @@ jQuery(document).ready(function() {
 				}
 				
 				function getNextPage(page) {
+					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&page="+page;
+					+"&page="+page+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize;
 					$.getJSON(navUrl, function(data) {
-						processPaginationReq();
+						processPaginationReq(pageSize);
 					});
 					
 				}
 				
 				function getNextPages(page, begin) {
+					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&page="+page+"&next="+begin;
+					+"&page="+page+"&next="+begin+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize;
 					$.getJSON(navUrl, function(data) {
-						processPaginationReq();
+						processPaginationReq(pageSize);
 					});
 					
 				}
 				
 				function getPrevPages(page, begin) {
+					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&page="+page+"&next="+begin;
+					+"&page="+page+"&next="+begin+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize;
 					$.getJSON(navUrl, function(data) {
-						processPaginationReq();
+						processPaginationReq(pageSize);
 					});
 					
 				}
 				
-				function processPaginationReq(){
+				function processPaginationReq(pageSize){
 					$.ajaxSetup({ cache: false });
 					$.ajax({
 						url : '../jobsearch/jobboardsearchresultsBody.html',
@@ -264,6 +267,9 @@ jQuery(document).ready(function() {
 						
 						success : function(data) {
 						$("#tableContent").html(data);
+						//alert(pageSize);
+						$("#noOfPage").val(pageSize);
+						$("#noOfPageLower").val(pageSize);
 						},
 						error : function(data) {
 							alert('Unable to process');
@@ -276,25 +282,25 @@ jQuery(document).ready(function() {
 				}
 
 				window.onload = function() {
-					processPaginationReq();
+					processPaginationReq("20");
 				}
 
 				function applyFilter() {
-					var displayRecordsPerPage = $("#noOfPage").val();
+					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&displayRecordsPerPage="+ displayRecordsPerPage;
+					+"&displayRecordsPerPage="+ pageSize;
 					$.getJSON(navUrl, function(data) {
-						processPaginationReq();
+						processPaginationReq(pageSize);
 					});
 				}
 				function applyLowerFilter() {
-					var displayRecordsPerPage = $("#noOfPageLower").val();
+					var pageSize = $("#noOfPageLower").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&displayRecordsPerPage="+ displayRecordsPerPage;
+					+"&displayRecordsPerPage="+ pageSize;
 					$.getJSON(navUrl, function(data) {
-						processPaginationReq();
+						processPaginationReq(pageSize);
 						
 					});
 				}

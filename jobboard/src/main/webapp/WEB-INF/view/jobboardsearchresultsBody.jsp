@@ -171,9 +171,9 @@
 						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page:</span> -->
 						<c:if test="${totalNoOfRecords != null}">
-						<c:if test="${currentPage != 1 && noOfPages gt 10}">
+						<c:if test="${currentPage > 9 && noOfPages gt 10}">
 							<td><a
-								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
+								onclick="getPrevPages(${begin - 10}, ${begin-10});">
 									<img src="../resources/images/ArrowLeft.png"> Previous
 							</a></td>
 						</c:if>
@@ -190,7 +190,7 @@
                				 </c:choose> 
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
-           				 <span><a onclick="getNextPages(${currentPage + 1} ,${begin+10});"
+           				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});"
 							>Next<img src="../resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
@@ -323,9 +323,9 @@
 						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page: </span> -->
 						<c:if test="${totalNoOfRecords != null}">
-						<c:if test="${currentPage != 1 && noOfPages gt 10}">
+						<c:if test="${currentPage > 9 && noOfPages gt 10}">
 							<td><a
-								onclick="getPrevPages(${currentPage - 1}, ${begin-10});">
+								onclick="getPrevPages(${begin - 10}, ${begin-10});">
 									<img src="../resources/images/ArrowLeft.png"> Previous
 							</a></td>
 						</c:if>
@@ -342,7 +342,7 @@
                				 </c:choose> 
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
-           				 <span><a onclick="getNextPages(${currentPage + 1} ,${begin+10});"
+           				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});"
 							>Next<img src="../resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
