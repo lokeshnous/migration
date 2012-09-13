@@ -278,22 +278,26 @@ public interface MMJBCommonConstants {
 	String FOLLOWUP_LINK_YOUTUBE = "followuplinkyoutube";
 	String FOLLOWUP_LINK_LINKEDIN = "followuplinklinkedin";
 	// Manage access permission
-	String FULL_ACCESS ="5";
-	String MANAGEEDITACCESS ="6";
-	
-	
-    String DATABASE_ERROR_CODE = 
-            "Database failure occured.Please contact your technical support team to resolve the issue.";
-    String UNIQUEKEY_PRIMARYKEY_VIOLATED = 
-            "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";
-    String SYSTEM_ERROR_CODE = 
-            "System encountered unexpected error.Please contact your techinal support team to resolve the issue.";
+	String FULL_ACCESS = "5";
+	String MANAGEEDITACCESS = "6";
+
+	String DATABASE_ERROR_CODE = "Database failure occured.Please contact your technical support team to resolve the issue.";
+	String UNIQUEKEY_PRIMARYKEY_VIOLATED = "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";
+	String SYSTEM_ERROR_CODE = "System encountered unexpected error.Please contact your techinal support team to resolve the issue.";
 	int EMPLOYER_ROLE_ID = 3;
 	String phone = "Phone";
 
 	// Added for set alerts task
 	String SET_ALERT = "setAlertPage";
-	String DO_NOT_HAVE_CREDITS="You do not have sufficient credits to post the job";
-	String STATUS_ACTIVE="Active";
-	String STATUS_INACTIVE="Inactive";
+	String DO_NOT_HAVE_CREDITS = "You do not have sufficient credits to post the job";
+	String STATUS_ACTIVE = "Active";
+	String STATUS_INACTIVE = "Inactive";
+
+	// Added for inventory
+	String DAYS = "days";
+	String STANDARD_JOB_POSTING = "Standard Job Posting";
+	String JOB_POSTING_SLOT = "Job Posting Slot";
+	String JOB_TYPE_COMBO = "JOB_TYPE_COMBO";
+	String BASIC_JOB_TYPE = "Basic Job Posting Upgrade";
+
 }
