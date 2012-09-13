@@ -26,6 +26,7 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -105,9 +106,8 @@ public class UserAlertController {
 		List<ManageAccessPermissionDTO> jbOwnerList = null;
 		try {
 			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
-		} catch (JobBoardServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occurred while set alert"+e);
 		}
 
 		List<DropDownDTO> dropDownList = null;
