@@ -17,7 +17,7 @@
 							class="grid" id="tb_manage_job">
 							<thead>
 							<tr class="LightGrayBG Height35">
-								<th width="4%" align="center" valign="middle" class="FontSize11">Job Id</th>
+								<th width="6%" align="center" valign="middle" class="FontSize11">Job Id</th>
 								<th width="10%" align="center" valign="middle" class="FontSize11">Adv. Job
 										ID</th>
 								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
@@ -31,6 +31,8 @@
 								</strong></th>
 								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>End
 										Date
+								</strong></th>	
+								<th width="4%" align="center" valign="middle" class="FontSize11"><strong>&#160;
 								</strong></th>																
 							</tr>
 							</thead>
@@ -44,7 +46,7 @@
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
 									<td align="right" valign="middle"><input type="text" class="InputTextRight" name="endDt" id="endDt" value='<c:out value="${job.endDt}"></c:out>'>
-									<div class="toolTip colorPkrAreaToolTip"><span class="classic">Example: 12/30/2010(mm/dd/yyyy)</span></div>					
+													
 									
 									
 									<!--
@@ -55,6 +57,7 @@
 											</div> -->
 											
 									</td>
+									<td align="center" valign="middle"><div class="toolTip01 colorPkrArea"><span class="classic">Example: 12/30/2010(mm/dd/yyyy)</span></div>	</td>
 								 </tr>
 								<input type="hidden" name="startDate" id="startDate" value='<c:out value="${job.startDt}"></c:out>'/>
 								 <input type="hidden" name="endDate" id="endDate" value='<c:out value="${job.endDt}"></c:out>'/>
