@@ -62,92 +62,14 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			if (null != merUser) {
 				// saving employer credentials
 				hibernateTemplateTracker.saveOrUpdate(merUser);
-				//System.out.println(merUser.);
 			}
 
 			// saving the data in Adm_User_Role
-			AdmUserRole userRole = new AdmUserRole();
-			userRole.setCreateUserId(userIdp);
-			userRole.setCreateDt(new Date());
-
-			AdmUserRolePK admUserRolePK = new AdmUserRolePK();
-			admUserRolePK.setUserId(merUser.getUserId());
-			admUserRolePK.setRoleId(empDTO.getRollId());
-			userRole.setRolePK(admUserRolePK);
-			hibernateTemplateCareers.saveOrUpdate(userRole);
+			saveAdmUserRole(empDTO, userIdp, merUser);
 
 			// saving the data in adm_facility
-			AdmFacility facilityP = (AdmFacility) hibernateTemplateCareers
-					.find(FIND_ADM_FACILITY, facilityIdP).get(0);
-			AdmFacility facility = new AdmFacility();
-
-			facility.setFacilityType(MMJBCommonConstants.FACILITY);
-			facility.setFacilityParentId(facilityIdP);
-			facility.setCreateDt(new Date());
-			facility.setCreateUserId(userIdp);
-			if (facilityP != null) {
-				facility.setEmail(facilityP.getEmail());
-				facility.setName(facilityP.getName());
-				facility.setAccountNumber(facilityP.getAccountNumber());
-				facility.setNameDisplay(facilityP.getNameDisplay());
-				facility.setUrl(facilityP.getUrl());
-				facility.setUrlDisplay(facilityP.getUrlDisplay());
-				facility.setEmailDisplay(facilityP.getEmailDisplay());
-				facility.setLogoPath(facilityP.getLogoPath());
-				facility.setAdminUserId(facilityP.getAdminUserId());
-				facility.setCreateUserId(facilityP.getCreateUserId());
-				facility.setPromoMediaPath(facilityP.getPromoMediaPath());
-				facility.setColorPalette(facilityP.getColorPalette());
-				facility.setCompanyNews(facilityP.getCompanyNews());
-				facility.setCompanyOverview(facilityP.getCompanyOverview());
-
-			}
-
-			List<AdmFacilityContact> admFacilityContactP = facilityP
-					.getAdmFacilityContacts();
-			
-
-			// saving the data in adm_facility_contact as per the logged in User
-			List<AdmFacilityContact> admFacilityContactList = new ArrayList<AdmFacilityContact>();
-			if (null != admFacilityContactP) {
-
-				for (AdmFacilityContact contact : admFacilityContactP) {
-					
-					/**
-					 *  creating add Job owner Users in OpenAM 
-					 */
-					boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
-					LOGGER.info("Open AM :Employee add owner User is created!"+isCreated);
-					// Ends OpenAM code
-
-
-					AdmFacilityContact admFacilityContact = new AdmFacilityContact();
-					admFacilityContact.setCity(contact.getCity());
-					admFacilityContact.setCompany(contact.getCompany());
-					admFacilityContact.setCountry(contact.getCountry());
-					admFacilityContact.setFirstName(contact.getFirstName());
-					admFacilityContact.setStreet(contact.getStreet());
-					admFacilityContact.setState(contact.getState());
-					admFacilityContact.setPostcode(contact.getPostcode());
-					admFacilityContact.setLastName(contact.getLastName());
-					admFacilityContact.setMiddleName(contact.getMiddleName());
-					admFacilityContact.setJobTitle(contact.getJobTitle());
-					admFacilityContact.setPhone(contact.getPhone());
-					admFacilityContact.setPhone2(contact.getPhone2());
-					admFacilityContact.setContactType(contact.getContactType());
-					admFacilityContact.setCreateDt(new Date());
-					admFacilityContact.setEmail(contact.getEmail());
-					admFacilityContact.setActive(contact.getActive());
-					admFacilityContact.setCreateDt(new Date());
-					admFacilityContact.setAdmFacility(facility);
-					admFacilityContactList.add(admFacilityContact);
-
-				}
-			}
-		
-
-			facility.setAdmFacilityContacts(admFacilityContactList);
-			hibernateTemplateCareers.save(facility);
+			AdmFacility facility = saveFacilityDetails(facilityIdP, userIdp,
+					merUser);
 
 			// saving the data in the adm_user_facility
 			AdmUserFacility userfacility = new AdmUserFacility();
@@ -164,6 +86,109 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			LOGGER.error(e);
 		}
 		return null;
+	}
+
+	/**
+	 * Method to save the facility and facility detail
+	 * 
+	 * @param facilityIdP
+	 * @param userIdp
+	 * @param merUser
+	 * @return
+	 */
+	private AdmFacility saveFacilityDetails(int facilityIdP, int userIdp,
+			MerUser merUser) {
+		AdmFacility facilityP = (AdmFacility) hibernateTemplateCareers.find(
+				FIND_ADM_FACILITY, facilityIdP).get(0);
+		AdmFacility facility = new AdmFacility();
+
+		facility.setFacilityType(MMJBCommonConstants.FACILITY);
+		facility.setFacilityParentId(facilityIdP);
+		facility.setCreateDt(new Date());
+		facility.setCreateUserId(userIdp);
+		if (facilityP != null) {
+			facility.setEmail(facilityP.getEmail());
+			facility.setName(facilityP.getName());
+			facility.setAccountNumber(facilityP.getAccountNumber());
+			facility.setNameDisplay(facilityP.getNameDisplay());
+			facility.setUrl(facilityP.getUrl());
+			facility.setUrlDisplay(facilityP.getUrlDisplay());
+			facility.setEmailDisplay(facilityP.getEmailDisplay());
+			facility.setLogoPath(facilityP.getLogoPath());
+			facility.setAdminUserId(facilityP.getAdminUserId());
+			facility.setCreateUserId(facilityP.getCreateUserId());
+			facility.setPromoMediaPath(facilityP.getPromoMediaPath());
+			facility.setColorPalette(facilityP.getColorPalette());
+			facility.setCompanyNews(facilityP.getCompanyNews());
+			facility.setCompanyOverview(facilityP.getCompanyOverview());
+
+		}
+
+		List<AdmFacilityContact> admFacilityContactP = facilityP
+				.getAdmFacilityContacts();
+
+		// saving the data in adm_facility_contact as per the logged in User
+		List<AdmFacilityContact> admFacilityContactList = new ArrayList<AdmFacilityContact>();
+		if (null != admFacilityContactP) {
+			Date currentDate = new Date();
+			for (AdmFacilityContact contact : admFacilityContactP) {
+
+				/**
+				 * creating add Job owner Users in OpenAM
+				 */
+				boolean isCreated = OpenAMEUtility.openAMCreateEmp(merUser,
+						contact);
+				LOGGER.info("Open AM :Employee add owner User is created!"
+						+ isCreated);
+				// Ends OpenAM code
+
+				AdmFacilityContact admFacilityContact = new AdmFacilityContact();
+				admFacilityContact.setCity(contact.getCity());
+				admFacilityContact.setCompany(contact.getCompany());
+				admFacilityContact.setCountry(contact.getCountry());
+				admFacilityContact.setFirstName(contact.getFirstName());
+				admFacilityContact.setStreet(contact.getStreet());
+				admFacilityContact.setState(contact.getState());
+				admFacilityContact.setPostcode(contact.getPostcode());
+				admFacilityContact.setLastName(contact.getLastName());
+				admFacilityContact.setMiddleName(contact.getMiddleName());
+				admFacilityContact.setJobTitle(contact.getJobTitle());
+				admFacilityContact.setPhone(contact.getPhone());
+				admFacilityContact.setPhone2(contact.getPhone2());
+				admFacilityContact.setContactType(contact.getContactType());
+				admFacilityContact.setCreateDt(currentDate);
+				admFacilityContact.setEmail(contact.getEmail());
+				admFacilityContact.setActive(contact.getActive());
+				admFacilityContact.setCreateDt(currentDate);
+				admFacilityContact.setAdmFacility(facility);
+				admFacilityContactList.add(admFacilityContact);
+
+			}
+		}
+
+		facility.setAdmFacilityContacts(admFacilityContactList);
+		hibernateTemplateCareers.save(facility);
+		return facility;
+	}
+
+	/**
+	 * saving the data in Adm_User_Role
+	 * 
+	 * @param empDTO
+	 * @param userIdp
+	 * @param merUser
+	 */
+	private void saveAdmUserRole(EmployerProfileDTO empDTO, int userIdp,
+			MerUser merUser) {
+		AdmUserRole userRole = new AdmUserRole();
+		userRole.setCreateUserId(userIdp);
+		userRole.setCreateDt(new Date());
+
+		AdmUserRolePK admUserRolePK = new AdmUserRolePK();
+		admUserRolePK.setUserId(merUser.getUserId());
+		admUserRolePK.setRoleId(empDTO.getRollId());
+		userRole.setRolePK(admUserRolePK);
+		hibernateTemplateCareers.saveOrUpdate(userRole);
 	}
 
 	/**
@@ -219,7 +244,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				admUserRoleList = (List<AdmUserRole>) hibernateTemplateCareers
 						.find("from AdmUserRole a where a.id.userId=?",
 								accessPermissionDTO.getOwnerId());
-				if (null != admUserRoleList && admUserRoleList.size() > 0) {
+				if (null != admUserRoleList && !admUserRoleList.isEmpty()) {
 					admUserRole = admUserRoleList.get(0);
 				}
 				if (null != admUserFacility && null != admUserRole) {

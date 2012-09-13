@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.internet.AddressException;
@@ -12,7 +13,6 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +25,7 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -74,21 +75,24 @@ public class ManageAccessPermissionController {
 			HttpSession session) {
 		LOGGER.info("showJobOwner Method");
 		ModelAndView model = new ModelAndView();
+
+		List<ManageAccessPermissionDTO> jbOwnerList = new ArrayList<ManageAccessPermissionDTO>();
 		try {
-			List<ManageAccessPermissionDTO> jbOwnerList = manageAccessPermissionService
+			jbOwnerList = manageAccessPermissionService
 					.getJobOwnerList((Integer) session
 							.getAttribute(MMJBCommonConstants.FACILITY_ID),
 							(Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID));
-			model.addObject("jobOwners", jbOwnerList);
-			manageAccessPermissionForm
-					.setManageAccessPermissiondetails(jbOwnerList);
-			model.addObject("manageAccessPermissionForm",
-					manageAccessPermissionForm);
-			model.setViewName("manageAccessPermission");
-		} catch (DataAccessException e) {
-			LOGGER.error(e);
+		} catch (JobBoardException jbex) {
+			LOGGER.error("Error occured while updating the job owner", jbex);
 		}
+		model.addObject("jobOwners", jbOwnerList);
+		manageAccessPermissionForm
+				.setManageAccessPermissiondetails(jbOwnerList);
+		model.addObject("manageAccessPermissionForm",
+				manageAccessPermissionForm);
+		model.setViewName("manageAccessPermission");
+
 		return model;
 	}
 
@@ -97,17 +101,14 @@ public class ManageAccessPermissionController {
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
-		try {
-			manageAccessPermissionForm.setFullAccess(MMJBCommonConstants.FULL_ACCESS);
+		manageAccessPermissionForm.setFullAccess(MMJBCommonConstants.FULL_ACCESS);
 			if (page.equals(MMJBCommonConstants.SET_ALERT)) {
 				manageAccessPermissionForm.setSetAlertPage("true");
 			}
 			model.addObject("manageAccessPermissionForm",
 					manageAccessPermissionForm);
 			model.setViewName("addNewJobOwner");
-		} catch (DataAccessException e) {
-			LOGGER.error(e);
-		}
+		
 
 		return model;
 	}
@@ -119,58 +120,56 @@ public class ManageAccessPermissionController {
 			HttpServletRequest request) {
 		LOGGER.info("Save Job Owner : Process to save new job Owner detail Starts !");
 		JSONObject warningMessage = new JSONObject();
+
+		EmployerProfileDTO empDTO = new EmployerProfileDTO();
+		int facilityIdParent = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int userIdParent = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		if (null != manageAccessPermissionForm
+				&& null != manageAccessPermissionForm.getFullAccess()
+				&& !manageAccessPermissionForm.getFullAccess().isEmpty()) {
+			empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
+					.getFullAccess()));
+		}
+
+		/**
+		 * OpenAM code starts here for Validate Email-Id
+		 * 
+		 * @auther Santhosh Gampa
+		 * @since Sep 4 2012
+		 * 
+		 */
+		boolean isinvaliduser = OpenAMEUtility
+				.openAMValidateEmail(manageAccessPermissionForm.getOwnerEmail());
+		if (isinvaliduser) {
+			LOGGER.info("OpenAM : user is already exist !");
+			warningMessage.put("failure", jobOwnerExist);
+			return warningMessage;
+		} else {
+			LOGGER.info("OpenAM : valid user!");
+		}
+
+		// End of openAM code
+
+		if (employerRegistration.validateEmail(manageAccessPermissionForm
+				.getOwnerEmail())) {
+			warningMessage.put("failure", jobOwnerExist);
+			return warningMessage;
+		}
+		UserDTO userDTO = transformEmpReg
+				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
+		empDTO.setMerUserDTO(userDTO);
+
 		try {
-			EmployerProfileDTO empDTO = new EmployerProfileDTO();
-			int facilityIdParent = (Integer) session
-					.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			int userIdParent = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
-
-			if (null != manageAccessPermissionForm) {
-				if (null != manageAccessPermissionForm.getFullAccess()
-						&& !manageAccessPermissionForm.getFullAccess()
-								.isEmpty()) {
-					empDTO.setRollId(Integer.valueOf(manageAccessPermissionForm
-							.getFullAccess()));
-				}
-			}
-
-			/**
-			 * OpenAM code starts here for Validate Email-Id
-			 * 
-			 * @auther Santhosh Gampa
-			 * @since Sep 4 2012
-			 * 
-			 */
-			boolean isinvaliduser = OpenAMEUtility
-					.openAMValidateEmail(manageAccessPermissionForm
-							.getOwnerEmail());
-			if (isinvaliduser) {
-				LOGGER.info("OpenAM : user is already exist !");
-				warningMessage.put("failure", jobOwnerExist);
-				return warningMessage;
-			} else {
-				LOGGER.info("OpenAM : valid user!");
-			}
-
-			// End of openAM code
-
-			if (employerRegistration.validateEmail(manageAccessPermissionForm
-					.getOwnerEmail())) {
-				warningMessage.put("failure", jobOwnerExist);
-				return warningMessage;
-			}
-			UserDTO userDTO = transformEmpReg
-					.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
-			empDTO.setMerUserDTO(userDTO);
-
 			manageAccessPermissionService.createJobOwner(empDTO,
 					facilityIdParent, userIdParent);
-			LOGGER.info("Email : sent Email!");
-			sendEmail(manageAccessPermissionForm, userDTO, request);
-		} catch (DataAccessException ex) {
-			LOGGER.error("Error:" + ex.getStackTrace());
+		} catch (JobBoardException jbex) {
+			LOGGER.error("Error occured while creating the new job owner", jbex);
 		}
+		LOGGER.info("Email : sent Email!");
+		sendEmail(manageAccessPermissionForm, userDTO, request);
 
 		warningMessage.put("success", jobOwnerAddSuccess);
 		return warningMessage;
@@ -184,14 +183,14 @@ public class ManageAccessPermissionController {
 			@RequestParam("userId") int userId) {
 
 		JSONObject warningMessage = new JSONObject();
+
 		try {
-
 			manageAccessPermissionService.deleteJobOwner(userId);
-			LOGGER.info("Request For - delete" + "user Id :" + userId);
-
-		} catch (DataAccessException e) {
-			LOGGER.error("Error:" +e);
+		} catch (JobBoardException jbex) {
+			LOGGER.error("Error occured while deleting the job owner", jbex);
 		}
+		LOGGER.info("Request For - delete" + "user Id :" + userId);
+
 		warningMessage.put("success", "succes");
 		return warningMessage;
 	}
@@ -199,21 +198,26 @@ public class ManageAccessPermissionController {
 	@RequestMapping(value = "/updateJobOwner", method = RequestMethod.POST)
 	public ModelAndView updateJobOwner(
 			ManageAccessPermissionForm manageAccessPermissionForm) {
-		ModelAndView model = new ModelAndView();
+		ModelAndView model = new ModelAndView();		
+
 		try {
-
-			manageAccessPermissionService
-					.updateJobOwner(manageAccessPermissionForm
-							.getManageAccessPermissiondetails());
-
 			LOGGER.info("Request For - update user Id ");
+			if (null != manageAccessPermissionForm
+					.getManageAccessPermissiondetails()
+					&& manageAccessPermissionForm
+							.getManageAccessPermissiondetails().size() > 0) {
+				manageAccessPermissionService
+						.updateJobOwner(manageAccessPermissionForm
+								.getManageAccessPermissiondetails());
+			}
+		} catch (JobBoardException jbex) {
+			LOGGER.error("Error occured while updating the job owner", jbex);
+		}
 
 			model.addObject("manageAccessPermissionForm",
 					manageAccessPermissionForm);
 			model.setViewName("forward:/employer/manageAccessPermission.html");
-		} catch (DataAccessException e) {
-			LOGGER.error("Error:" +e);
-		}
+		
 		return model;
 	}
 

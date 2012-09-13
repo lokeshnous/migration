@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 	/**
 	 * 
@@ -20,14 +21,14 @@ import com.advanceweb.afc.jb.common.UserDTO;
 	 * @return
 	 */
 	public UserDTO createJobOwner(EmployerProfileDTO profileDTO,
-			int facilityIdP, int userIdp);
+			int facilityIdP, int userIdp) throws JobBoardDataException;
 
 	/**
 	 * 
 	 * @param jobOwnerId
 	 * @return
 	 */
-	public boolean deleteJobOwner(int jobOwnerId);
+	public boolean deleteJobOwner(int jobOwnerId)throws JobBoardDataException;
 
 	/**
 	 * 
@@ -35,7 +36,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
 	 * @return
 	 */
 	public boolean updateJobOwner(
-			List<ManageAccessPermissionDTO> accessPermissionDTO);
+			List<ManageAccessPermissionDTO> accessPermissionDTO)throws JobBoardDataException;
 
 	/**
 	 * 
@@ -45,6 +46,6 @@ import com.advanceweb.afc.jb.common.UserDTO;
 	 * @return
 	 */
 	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
-			int userId);
+			int userId)throws JobBoardDataException;
 
 }
