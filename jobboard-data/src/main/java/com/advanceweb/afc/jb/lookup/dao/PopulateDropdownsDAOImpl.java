@@ -521,9 +521,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				for (AdmInventoryDetail inv : invList) {					
 					DropDownDTO dto = new DropDownDTO();
 					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
-					JpJobTypeCombo combo = inv.getJpJobTypeCombo();
-					dto.setOptionName(combo.getAddons());
-					jbPostings.add(dto);
+					if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
+						List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
+						if(!comboList.isEmpty()){
+							JpJobTypeCombo combo = comboList.get(0);
+							dto.setOptionName(combo.getAddons());
+							jbPostings.add(dto);
+						}
+					}else{
+						List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
+						if(!jpTypleList.isEmpty()){
+							JpJobType type = jpTypleList.get(0);
+							dto.setOptionName(type.getName());
+							jbPostings.add(dto);
+						}
+					}
 				}
 			}
 			return jbPostings;
