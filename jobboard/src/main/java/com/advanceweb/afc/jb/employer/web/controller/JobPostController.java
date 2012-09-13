@@ -148,6 +148,7 @@ public class JobPostController {
 			return model;
 		}
 		
+		// Should be used while posting the job
 		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		
@@ -167,7 +168,8 @@ public class JobPostController {
 				return model;
 			}
 		}
-
+		// Should be used while posting the job
+		
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
 		dto.setbFeatured(userDTO.isFeatured());

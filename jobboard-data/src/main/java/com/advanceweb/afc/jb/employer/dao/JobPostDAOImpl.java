@@ -631,7 +631,15 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return false;
 	}
 	
-	
+	/**
+	 * This method is called to validate available credits against the job id
+	 * if the credits are not available it will return false otherwise it will 
+	 * post the job/renewal the job and will decrease the credits.
+	 * 
+	 * @param invDtlId
+	 * @param facilityId
+	 * @return boolean	
+	 */
 	public boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId){
 		
 		LOGGER.info("Executing -> decreaseAvailableCredits()");
