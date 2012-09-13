@@ -46,14 +46,15 @@
 	    			data:$('#manageAcceccPermissionForm').serialize(),
 					type: "POST",
 					success : function(dataFound) {	
-						if(${manageAccessPermissionForm.manageAccessPermissiondetails.size()>0}){
+						var listSize=${manageAccessPermissionForm.manageAccessPermissiondetails.size()};
+						if(listSize>0){
 						alert("Permissions Changed Successfully.");
 						 $("#manageAccessPerm").click();
-						}
-					},
+						};
+					  },
 					error: function(response) {
 						alert("Server Error : "+response.status);
-					}
+					},
 						
 					
 				});
