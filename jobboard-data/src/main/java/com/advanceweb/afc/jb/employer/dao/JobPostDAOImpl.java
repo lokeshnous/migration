@@ -555,21 +555,29 @@ public class JobPostDAOImpl implements JobPostDAO {
 			
 			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
 			
-			for(JpJob job : scheduledJobs){		
-				//TODO
-				//Check for available credits
-				int credits=1;
-				if(credits == 0){
-					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
-				}else{				
-					try {
-						job.setActive((byte)1);
-						hibernateTemplate.saveOrUpdate(job);
-					} catch (Exception e) {
-						LOGGER.error("Failed to post a job as Active " +job.getJobId());
-						LOGGER.error(e);
+			for(JpJob job : scheduledJobs){						
+				
+				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());				
+				if(!jpAuditList.isEmpty()){
+					AdmFacilityJpAudit audit = jpAuditList.get(0);
+					//Checking for available credits
+					if(!validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
+						LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
+					}else{
+						try {
+							job.setStartDt(new Date());
+							job.setEndDt(addDaysToCurrentDate());
+							job.setActive((byte)1);
+							hibernateTemplate.saveOrUpdate(job);
+						} catch (Exception e) {
+							LOGGER.error("Failed to renew the job as Active " +job.getJobId());
+							LOGGER.error(e);
+						}
+						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
 					}
-					LOGGER.info("ActiveJobsJobWorker-> Job is posted successfully....." +job.getJobId());
+
+				}else{
+					LOGGER.info("There is no job type with the given Job Id: " +job.getJobId());
 				}
 			}
 			
@@ -589,23 +597,29 @@ public class JobPostDAOImpl implements JobPostDAO {
 			List<JpJob> autoRenewJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
 			
 			for(JpJob job : autoRenewJobs){		
-				//TODO
-				//Check for available credits
-
-				int credits=1;
-				if(credits == 0){
-					LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
-				}else{				
-					try {
-						job.setStartDt(new Date());
-						job.setEndDt(addDaysToCurrentDate());
-						job.setActive((byte)1);
-						hibernateTemplate.saveOrUpdate(job);
-					} catch (Exception e) {
-						LOGGER.error("Failed to renew the job as Active " +job.getJobId());
-						LOGGER.error(e);
+				
+				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());
+				
+				if(!jpAuditList.isEmpty()){
+					AdmFacilityJpAudit audit = jpAuditList.get(0);
+					//Checking for available credits
+					if(!validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
+						LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
+					}else{
+						try {
+							job.setStartDt(new Date());
+							job.setEndDt(addDaysToCurrentDate());
+							job.setActive((byte)1);
+							hibernateTemplate.saveOrUpdate(job);
+						} catch (Exception e) {
+							LOGGER.error("Failed to renew the job as Active " +job.getJobId());
+							LOGGER.error(e);
+						}
+						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
 					}
-					LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
+
+				}else{
+					LOGGER.info("There is no job type with the given Job Id: " +job.getJobId());
 				}
 			}
 			
