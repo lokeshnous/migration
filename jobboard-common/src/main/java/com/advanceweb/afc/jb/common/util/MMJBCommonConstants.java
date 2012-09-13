@@ -311,5 +311,17 @@ public interface MMJBCommonConstants {
 	String STANDARD_JOB_POSTING = "Standard Job Posting";
 	String JOB_POSTING_SLOT = "Job Posting Slot";
 	String BASIC_JOB_TYPE = "Basic";
+	
+		//FOR MAIL RELATED
+		String subjectOfMail="A job opportunity sent to you by"; 
+		String bodyOfMail1="Here’s a job opportunity that ";
+		String bodyOfMail2=" thought might interest you.";
+		String jobTitleHeding="Job title:";
+		String companyNameHeading="Company name:";
+		String urlLink1="<a href=?";
+		String urlLink2="><b>View this job now</b></a> to learn more and submit your application.";
+		String urlRedirectAfterMail="redirect:/healthcarejobs/advanceweb.html";
+		String errorSendMail="ERROR For sending mail option of SendToFriend method";
+
 
 }
