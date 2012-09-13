@@ -215,7 +215,8 @@
 								</div>
 							</div>
 						
-				<c:if test="false">
+						
+				<c:if test="${!brandingTemplateForm.getIsSilverCustomer()}">
 				<div id="multimediaSectionDivId">
 
 						<div class="row marginTop15 borderBottomDotted">
