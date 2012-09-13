@@ -298,7 +298,7 @@ public interface MMJBCommonConstants {
 	String UNIQUEKEY_PRIMARYKEY_VIOLATED = "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";
 	String SYSTEM_ERROR_CODE = "System encountered unexpected error.Please contact your techinal support team to resolve the issue.";
 	int EMPLOYER_ROLE_ID = 3;
-	String phone = "Phone";
+	String PHONE = "Phone";
 
 	// Added for set alerts task
 	String SET_ALERT = "setAlertPage";
@@ -314,16 +314,18 @@ public interface MMJBCommonConstants {
 	String BASIC_JOB_TYPE = "Basic";
 	String INVENTORY = "inventoryPage";
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
-		//FOR MAIL RELATED
-		String subjectOfMail="A job opportunity sent to you by"; 
-		String bodyOfMail1="Here’s a job opportunity that ";
-		String bodyOfMail2=" thought might interest you.";
-		String jobTitleHeding="Job title:";
-		String companyNameHeading="Company name:";
-		String urlLink1="<a href=?";
-		String urlLink2="><b>View this job now</b></a> to learn more and submit your application.";
-		String urlRedirectAfterMail="redirect:/healthcarejobs/advanceweb.html";
-		String errorSendMail="ERROR For sending mail option of SendToFriend method";
+	//FOR MAIL RELATED
+			String SUBJECT_OF_MAIL="A job opportunity sent to you by"; 
+			String BODY_OFMAIL_FIRST="Here’s a job opportunity that ";
+			String BODY_OFMAIL_SECOND=" thought might interest you.";
+			String JOB_TITLE_HEADING="Job title:";
+			String COMAPNY_NAME_HEADING="Company name:";
+			String URL_LINK_FIRST="<a href=?";
+			String URL_LINK_SECOND="><b>View this job now</b></a> to learn more and submit your application.";
+			String URL_REDIRECT_MAIL="redirect:/healthcarejobs/advanceweb.html";
+			String ERROR_SENDING_MAIL="ERROR For sending mail option of SendToFriend method";
+
+
 
 
 }
