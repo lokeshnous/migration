@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -151,15 +153,21 @@ public class JobPostController {
 		
 		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 		
-		boolean bValidCredits = employerJobPost.validateAvailableCredits(Integer.valueOf(form.getJobPostingType()),
-				(Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		form.setXmlStartEndDateEnabled(compareDateRangeWithCurrentDate(userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
 		
-		if (!bValidCredits) {
-			model = populateDropdowns(model, session);
-			model.setViewName(POST_NEW_JOBS);
-			model.addObject(ERROR_MESSAGE, MMJBCommonConstants.DO_NOT_HAVE_CREDITS);
-			return model;
+		if(!form.isXmlStartEndDateEnabled()){		
+			
+			boolean bValidCredits = employerJobPost.validateAvailableCredits(Integer.valueOf(form.getJobPostingType()),
+					(Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
+			
+			if (!bValidCredits) {
+				model = populateDropdowns(model, session);
+				model.setViewName(POST_NEW_JOBS);
+				model.addObject(ERROR_MESSAGE, MMJBCommonConstants.DO_NOT_HAVE_CREDITS);
+				return model;
+			}
 		}
+
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
 		dto.setbFeatured(userDTO.isFeatured());
@@ -683,5 +691,26 @@ public class JobPostController {
 		
 		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 	}
+	
+	/**
+	 * This method is called to compare the current date with the given date range
+	 * So that for that particular user we don't need to decrease the credits
+	 * and can post unlimited jobs with in the range.
+	 * @param xmlFeedStartDate
+	 * @param xmlFeedEndDate
+	 * @return
+	 */
+	public boolean compareDateRangeWithCurrentDate(Date xmlFeedStartDate, Date xmlFeedEndDate){
+		
+		if(null != xmlFeedStartDate && null != xmlFeedEndDate){
+			Date date = new Date();
+			if(date.compareTo(xmlFeedStartDate) >= 0 && date.compareTo(xmlFeedEndDate) <=0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	
 }

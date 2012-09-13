@@ -76,6 +76,7 @@ public class TransformJobPost {
 		jobPostDTO.setScheduleExpiryDt(form.getScheduleEndDate());
 		
 		jobPostDTO.setJobStatus(form.getJobStatus());
+		jobPostDTO.setXmlStartEndDateEnabled(form.isXmlStartEndDateEnabled());
 		
 		return jobPostDTO;
 		

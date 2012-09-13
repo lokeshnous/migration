@@ -60,6 +60,10 @@ public class JobPostForm {
     private String noOfPage;
     private String noOfPageLower;
     private int beginVal=1;
+    
+    private boolean xmlStartEndDateEnabled;
+    
+    
 	public int getJobId() {
 		return jobId;
 	}
@@ -390,6 +394,14 @@ public class JobPostForm {
 
 	public void setBeginVal(int beginVal) {
 		this.beginVal = beginVal;
+	}
+
+	public boolean isXmlStartEndDateEnabled() {
+		return xmlStartEndDateEnabled;
+	}
+
+	public void setXmlStartEndDateEnabled(boolean xmlStartEndDateEnabled) {
+		this.xmlStartEndDateEnabled = xmlStartEndDateEnabled;
 	}
 	
 	

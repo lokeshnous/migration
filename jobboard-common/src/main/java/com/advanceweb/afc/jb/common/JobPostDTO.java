@@ -61,6 +61,7 @@ public class JobPostDTO implements Serializable {
 
 	private String selectedRow;
     private boolean readOnly= false;
+    private boolean xmlStartEndDateEnabled;
     
     private int userId;
     
@@ -454,6 +455,14 @@ public class JobPostDTO implements Serializable {
 
 	public void setbFeatured(boolean bFeatured) {
 		this.bFeatured = bFeatured;
+	}
+
+	public boolean isXmlStartEndDateEnabled() {
+		return xmlStartEndDateEnabled;
+	}
+
+	public void setXmlStartEndDateEnabled(boolean xmlStartEndDateEnabled) {
+		this.xmlStartEndDateEnabled = xmlStartEndDateEnabled;
 	}
 
 		

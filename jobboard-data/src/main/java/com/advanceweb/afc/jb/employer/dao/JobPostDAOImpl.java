@@ -124,7 +124,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// Retrieving location Id based on the data selection while posting
 			// the new job
 			
-			if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) 
+			if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
 					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId())){
 				return false;
 			}				
@@ -847,6 +847,24 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return numberOfDays;
 	}
 	
-	
+	/**
+	 * This method is called to compare the current date with the given date range
+	 * So that for that particular user we don't need to decrease the credits
+	 * and can post unlimited jobs with in the range.
+	 * @param xmlFeedStartDate
+	 * @param xmlFeedEndDate
+	 * @return
+	 */
+	public boolean compareDateRangeWithCurrentDate(Date xmlFeedStartDate, Date xmlFeedEndDate){
+		
+		if(null != xmlFeedStartDate && null != xmlFeedEndDate){
+			Date date = new Date();
+			if(date.compareTo(xmlFeedStartDate) >= 0 && date.compareTo(xmlFeedEndDate) <=0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 }
