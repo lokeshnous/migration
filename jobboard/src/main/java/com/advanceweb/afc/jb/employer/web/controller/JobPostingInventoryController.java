@@ -59,9 +59,7 @@ public class JobPostingInventoryController {
 		List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
 		List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
 		JobPostingInventoryDTO postingInventoryDTO = new JobPostingInventoryDTO();
-		String Duration = Integer
-				.toString(MMJBCommonConstants.AUTO_RENEWAL_DAYS)
-				+ " "
+		String Duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS) + " "
 				+ MMJBCommonConstants.DAYS;
 		for (int i = 0; i < inventiryDTO.size(); i++) {
 			postingInventoryDTO = inventiryDTO.get(i);
