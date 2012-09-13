@@ -190,6 +190,16 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 		jobDTO.setState(jobSearchDTO.getState());
 		jobDTO.setUrl(jobSearchDTO.getUrl());
 		jobDTO.setUrlDisplay(jobSearchDTO.getUrlDisplay());
+		//Newly added Fields
+		jobDTO.setTemplateId(jobSearchDTO.getTemplateId());
+		jobDTO.setPackageName(jobSearchDTO.getPackageName());
+		jobDTO.setIsPremium(jobSearchDTO.getIsPremium());
+		jobDTO.setUniversalGeo(jobSearchDTO.isUniversalGeo());
+		jobDTO.setHideCity(jobSearchDTO.getHideCity());
+		jobDTO.setHideState(jobSearchDTO.getHideState());
+		jobDTO.setHidePostcode(jobSearchDTO.getHidePostcode());
+		jobDTO.setHideCountry(jobSearchDTO.getHideCountry());
+		jobDTO.setCountry(jobSearchDTO.getCountry());
 
 		return jobDTO;
 

@@ -89,6 +89,18 @@ public interface MMJBCommonConstants {
 	String URL_DISPLAY = "URLDisplay";
 	String URL = "url";
 
+	//newly added field
+	String TEMPLATE_ID_STRING = "TemplateId";
+	String PACKAGE_NAME_STRING = "PackageName";
+	String IS_PREMIUM_STRING = "IsPremium";
+	String IS_UNIVERSAL_GEO_STRING = "IsUniversalGeo";
+	String HIDE_CITY_STRING = "HideCity";
+	String HIDE_STATE_STRING = "HideState";
+	String HIDE_POSCODE_STRING = "HidePostcode";
+	String HIDE_COUNTRY_STRING = "HideCountry";
+	String COUNTRY_STRING = "Country";
+	
+	
 	String TOTAL_NO_RECORDS = "TotalNoRecords";
 	String JSON_ROWS = "jsonRows";
 

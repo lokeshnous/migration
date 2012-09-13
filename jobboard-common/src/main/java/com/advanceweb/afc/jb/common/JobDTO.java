@@ -61,6 +61,99 @@ public class JobDTO implements Serializable{
 	private String jobGeo0LatLon;
 	
 	private String jobGeo1LatLon;
+	
+	//New fields
+	
+	private int templateId;
+
+	private String packageName;
+	
+	private int isPremium;
+	
+	private boolean isUniversalGeo;
+	
+	private int hideCity;
+	
+	private int hideState;
+	
+	private int hidePostcode;
+	
+	private int hideCountry;
+	
+	private String country;
+	
+
+	public int getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(int templateId) {
+		this.templateId = templateId;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
+	public int getIsPremium() {
+		return isPremium;
+	}
+
+	public void setIsPremium(int isPremium) {
+		this.isPremium = isPremium;
+	}
+
+	public boolean isUniversalGeo() {
+		return isUniversalGeo;
+	}
+
+	public void setUniversalGeo(boolean isUniversalGeo) {
+		this.isUniversalGeo = isUniversalGeo;
+	}
+
+	public int getHideCity() {
+		return hideCity;
+	}
+
+	public void setHideCity(int hideCity) {
+		this.hideCity = hideCity;
+	}
+
+	public int getHideState() {
+		return hideState;
+	}
+
+	public void setHideState(int hideState) {
+		this.hideState = hideState;
+	}
+
+	public int getHidePostcode() {
+		return hidePostcode;
+	}
+
+	public void setHidePostcode(int hidePostcode) {
+		this.hidePostcode = hidePostcode;
+	}
+
+	public int getHideCountry() {
+		return hideCountry;
+	}
+
+	public void setHideCountry(int hideCountry) {
+		this.hideCountry = hideCountry;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
 	public String getAdText() {
 		return adText;

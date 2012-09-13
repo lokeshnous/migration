@@ -29,10 +29,7 @@ import com.advanceweb.afc.jb.search.service.JSONConverterService;
 @Service("jsonConverterService")
 public class JSONConverterServiceImpl implements JSONConverterService {
 
-	@SuppressWarnings("unused")
-	private static final Logger LOGGER = Logger
-			.getLogger(JSONConverterServiceImpl.class);
-
+	
 	/**
 	 * This method will convert the JobSearchResultDTO to JSON object
 	 * 
@@ -99,6 +96,16 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 					MMUtils.isNull(jobDTO.getState()));
 			jobSrchJson.put(MMJBCommonConstants.URL,
 					MMUtils.isNull(jobDTO.getUrl()));
+			//Newly added fields
+			jobSrchJson.put(MMJBCommonConstants.TEMPLATE_ID_STRING, jobDTO.getTemplateId());
+			jobSrchJson.put(MMJBCommonConstants.PACKAGE_NAME_STRING, MMUtils.isNull(jobDTO.getPackageName()));
+			jobSrchJson.put(MMJBCommonConstants.IS_PREMIUM_STRING, jobDTO.getIsPremium());
+			jobSrchJson.put(MMJBCommonConstants.IS_UNIVERSAL_GEO_STRING, MMUtils.isNull(String.valueOf(jobDTO.isUniversalGeo())));
+			jobSrchJson.put(MMJBCommonConstants.HIDE_CITY_STRING, MMUtils.isNull(String.valueOf(jobDTO.getHideCity())));
+			jobSrchJson.put(MMJBCommonConstants.HIDE_STATE_STRING, MMUtils.isNull(String.valueOf(jobDTO.getHideState())));
+			jobSrchJson.put(MMJBCommonConstants.HIDE_POSCODE_STRING, MMUtils.isNull(String.valueOf(jobDTO.getHidePostcode())));
+			jobSrchJson.put(MMJBCommonConstants.HIDE_COUNTRY_STRING, MMUtils.isNull(String.valueOf(jobDTO.getHideCountry())));
+			jobSrchJson.put(MMJBCommonConstants.COUNTRY, MMUtils.isNull(jobDTO.getCountry()));
 
 			jsonRows.add(jobSrchJson);
 
