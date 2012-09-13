@@ -63,5 +63,17 @@ public interface BrandingTemplateService {
 	 * @return
 	 */
 	boolean deleteBrandingTemplate(int templateId, int deleteUserId);
+	
+	/**
+	 * Fetch the employer Branding information
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	int getBrandingInformation(int facilityId);
+
+	
+	
+	
 
 }

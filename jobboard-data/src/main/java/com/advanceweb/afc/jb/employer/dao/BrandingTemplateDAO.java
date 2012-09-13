@@ -62,5 +62,16 @@ public interface BrandingTemplateDAO {
 	 * @return <true> If template deleted <false> If template not deleted
 	 */
 	boolean deleteBrandingTemplate(int templateId, int deleteUserId);
+	
+	/**
+	 * Delete the job posting Branding Template.
+	 * 
+	 * @param facilityId
+	 * @return packageId 
+	 */
+	int getBrandingInformation(int facilityId);
+	
+	
+	
 
 }

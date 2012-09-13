@@ -12,6 +12,8 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityPackage;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
@@ -36,7 +38,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			.getLogger(BrandingTemplateDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplateCareer;
-
+	
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -84,27 +86,6 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 */
 	@Override
 	public Boolean createEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-		// Boolean status = null;
-		// try {
-		// MerJpBrandingTemp merJpBrandingTemp = empBrandTempConversionHelper
-		// .transformEmpTempDTOToEmpTemp(brandingTemplatesDTO);
-		// hibernateTemplateTracker.save(merJpBrandingTemp);
-		// status = Boolean.TRUE;
-		// } catch (HibernateException e) {
-		// status = Boolean.FALSE;
-		// // logger call
-		// LOGGER.info("ERROR2");
-		// }
-		// return status;
-		//
-
-		
-//		ResBuilderResume builderResume = resumeConversionHelper.transformBuilderResume(resumeDTO);
-//		List<ResBuilderPhone> builderPhoneList = resumeConversionHelper.transformBuilderPhoneDetails(resumeDTO.getListPhoneDtl(), builderResume);
-//		
-//		builderResume.setResBuilderPhones(builderPhoneList);
-//		
-//		hibernateTemplate.saveOrUpdate(builderResume);
 		
 		Boolean status = null;
 		try {
@@ -119,22 +100,19 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 				List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper.transformTemplateTestimony(brandingTemplatesDTO.getListTestimony(), jpTemplate);
 				List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper.transformVideo(brandingTemplatesDTO.getListVideos(), jpTemplate);
 				
+				listMediaEntity.addAll(brandTemplateConversionHelper.transformAddImage(brandingTemplatesDTO.getListAddImages(), jpTemplate));
 				jpTemplate.setJpTemplateTestimonials(listTestimonyEntity);
 				jpTemplate.setJpTemplateMedias(listMediaEntity);
 				
 				
-			hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
-			hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
+//			hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
+			for(JpTemplateTestimonial testimonialEntity :listTestimonyEntity)
+			{
+				hibernateTemplateCareer.saveOrUpdate(testimonialEntity);
 			}
 			
-//			if (!brandingTemplatesDTO.getIsSilverCustomer()) {
-//				hibernateTemplateCareer.save(jpTemplate
-//						.getJpTemplateMedias().get(0));
-//				hibernateTemplateCareer.save(jpTemplate
-//						.getJpTemplateMedias().get(1));
-//				hibernateTemplateCareer.save(jpTemplate
-//						.getJpTemplateTestimonials().get(0));
-//			}
+			hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
+			}
 			
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
@@ -223,12 +201,31 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 				brandingTemplatesDTO.getJpBrandTempId());
 		template.setColorPalette(brandingTemplatesDTO.getColor());
 		template.setCompanyOverview(brandingTemplatesDTO.getCompanyOverview());
-		template.setCreateDt(brandingTemplatesDTO.getCreatedDate());
+		template.setCreateDt(new Date());
 		template.setTemplateName(brandingTemplatesDTO.getTemplateName());
 		template.setMainImagePath(brandingTemplatesDTO.getMainImagePath());
 		template.setLogoPath(brandingTemplatesDTO.getLogoPath());
 		hibernateTemplateCareer.update(template);
 		return true;
+	}
+
+	@Override
+	public int getBrandingInformation(int facilityId) {
+		int packageId = 0;
+
+		try {
+			if (facilityId != 0) {
+				AdmFacilityPackage admFacilityPackage = (AdmFacilityPackage) hibernateTemplateCareer
+						.find("from AdmFacilityPackage where facilityId=?",
+								facilityId).get(0);
+				packageId = admFacilityPackage.getPackageId();
+			}
+		} catch (HibernateException e) {
+
+			LOGGER.error(e);
+		}
+		return packageId;
+
 	}
 
 }

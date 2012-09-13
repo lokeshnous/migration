@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -20,20 +19,14 @@ public class BrandingTemplateForm {
 	private int facilityId;
 	private String logoPath;
 	private String color;
-	private Date createdDate;
+	private String createdDate;
 	private String templateName;
 	private String companyOverview;
 	private String mainImagePath;
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
-	// Muli media section
-//	private String addImagePath;
-//	private String videoPath;
-//	private String testimony;
-//	private CommonsMultipartFile addImageFileData;
-//	private CommonsMultipartFile videoFileData;
-	private List<String> listAddImagePath;
-	private List<String> listVideoPath;
+
+	// Multimedia section
 	private List<TestimonyForm> listTestimony;
 	private List<AddImageForm> listAddImages;
 	private List<VideoForm> listVideos;
@@ -42,6 +35,8 @@ public class BrandingTemplateForm {
 	private String browsePath;
 	private String imageSizeLimit;
 	private String videoSizeLimit;
+	private String testimonyContainer;
+	private int packageId;
 	
 	public int getFacilityId() {
 		return facilityId;
@@ -83,11 +78,11 @@ public class BrandingTemplateForm {
 		this.color = color;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -132,22 +127,6 @@ public class BrandingTemplateForm {
 	}
 
 	
-	public List<String> getListAddImagePath() {
-		return listAddImagePath;
-	}
-
-	public void setListAddImagePath(List<String> listAddImagePath) {
-		this.listAddImagePath = listAddImagePath;
-	}
-
-	public List<String> getListVideoPath() {
-		return listVideoPath;
-	}
-
-	public void setListVideoPath(List<String> listVideoPath) {
-		this.listVideoPath = listVideoPath;
-	}
-
 	public List<TestimonyForm> getListTestimony() {
 		return listTestimony;
 	}
@@ -158,22 +137,6 @@ public class BrandingTemplateForm {
 
 	public List<AddImageForm> getListAddImages() {
 		return listAddImages;
-	}
-
-	public String getImageSizeLimit() {
-		return imageSizeLimit;
-	}
-
-	public void setImageSizeLimit(String imageSizeLimit) {
-		this.imageSizeLimit = imageSizeLimit;
-	}
-
-	public String getVideoSizeLimit() {
-		return videoSizeLimit;
-	}
-
-	public void setVideoSizeLimit(String videoSizeLimit) {
-		this.videoSizeLimit = videoSizeLimit;
 	}
 
 	public String getBrowsePath() {
@@ -190,6 +153,38 @@ public class BrandingTemplateForm {
 
 	public List<VideoForm> getListVideos() {
 		return listVideos;
+	}
+
+	public int getPackageId() {
+		return packageId;
+	}
+
+	public void setPackageId(int packageId) {
+		this.packageId = packageId;
+	}
+
+	public String getTestimonyContainer() {
+		return testimonyContainer;
+	}
+
+	public void setTestimonyContainer(String testimonyContainer) {
+		this.testimonyContainer = testimonyContainer;
+	}
+
+	public String getImageSizeLimit() {
+		return imageSizeLimit;
+	}
+
+	public void setImageSizeLimit(String imageSizeLimit) {
+		this.imageSizeLimit = imageSizeLimit;
+	}
+
+	public String getVideoSizeLimit() {
+		return videoSizeLimit;
+	}
+
+	public void setVideoSizeLimit(String videoSizeLimit) {
+		this.videoSizeLimit = videoSizeLimit;
 	}
 
 	public void setListVideos(List<VideoForm> listVideos) {

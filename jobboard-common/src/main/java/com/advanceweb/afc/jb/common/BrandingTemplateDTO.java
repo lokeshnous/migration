@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.common;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,19 +26,12 @@ public class BrandingTemplateDTO {
 	private String mainImagePath;
 	private String logoPath;
 	private String color;
-	private Date createdDate;
+	private String createdDate;
 	private String companyOverview;
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
 	
 //	Muli media section
-//	private String addImagePath;
-//	private String videoPath;
-//	private String testimony;
-//	private CommonsMultipartFile addImageFileData;
-//	private CommonsMultipartFile videoFileData;
-	private List<String> listAddImagePath;
-	private List<String> listVideoPath;
 	private List<TestimonyDTO> listTestimony;
 	private List<AddImageDTO> listAddImages;
 	private List<VideoDTO> listVideos;
@@ -50,11 +46,11 @@ public class BrandingTemplateDTO {
 		this.logoPath = logoPath;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -130,22 +126,6 @@ public class BrandingTemplateDTO {
 		this.mainImageFileData = mainImageFileData;
 	}
 
-
-	public List<String> getListAddImagePath() {
-		return listAddImagePath;
-	}
-
-	public void setListAddImagePath(List<String> listAddImagePath) {
-		this.listAddImagePath = listAddImagePath;
-	}
-
-	public List<String> getListVideoPath() {
-		return listVideoPath;
-	}
-
-	public void setListVideoPath(List<String> listVideoPath) {
-		this.listVideoPath = listVideoPath;
-	}
 
 	public Boolean getIsSilverCustomer() {
 		return isSilverCustomer;

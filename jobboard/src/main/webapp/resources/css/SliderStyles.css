@@ -145,5 +145,31 @@ background: -o-linear-gradient(top, #fe9400 27%,#f66900 69%,#f66900 100%); /* Op
 background: -ms-linear-gradient(top, #fe9400 27%,#f66900 69%,#f66900 100%); /* IE10+ */
 background: linear-gradient(top, #fe9400 27%,#f66900 69%,#f66900 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe9400', endColorstr='#f66900',GradientType=0 ); /* IE6-9 */}
-
-
+#test{
+	width:960px;
+	height: 200px;
+	background:#fff !important;
+	overflow:hidden !important;
+	}
+#test #slider1,#test #slider2,#test #slider3{
+width:918px !important;
+}
+#test .slider1Frames {
+	width: 919px !important;
+	height: 200px !important;
+	background-color: white;
+	z-index: -3;
+}
+#test .slider1FrameA1{
+	/* margin:0 23px 0 23px !important; */
+	margin:0 24px 0 24px !important;
+	padding-top:33px !important;
+}
+#test #slider1PrevBtn,#test #slider1NextBtn{
+	margin-top:55px !important;
+}
+#test .slider1FrameA1 img{
+	width:180px !important;
+	height:144px !important;
+	overflow:hidden !important;
+}

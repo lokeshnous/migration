@@ -76,5 +76,16 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	public boolean deleteBrandingTemplate(int templateId, int deleteUserId) {
 		return brandingTemplateDAO.deleteBrandingTemplate(templateId, deleteUserId);
 	}
+	
+	/**
+	 * Fetch the employer Branding information.
+	 */
+	@Override
+	public int getBrandingInformation(int facilityId) {
+		// TODO Auto-generated method stub
+		return brandingTemplateDAO.getBrandingInformation(facilityId);
+//		return 0;
+	}
 
+	
 }

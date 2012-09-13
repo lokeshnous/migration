@@ -225,6 +225,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityGroup
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityInventory.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityJpAudit.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityJpAuditPK.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityPackage.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySubscription.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySubscriptionPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySystem.java -text
@@ -500,11 +501,13 @@ jobboard/src/main/webapp/WEB-INF/view/accountSetting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addAjecncyRegistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addCerts.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addEducation.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addImages.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addLanguage.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addNewJobOwner.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addPhoneNos.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addReference.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addTestimonies.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addVideos.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobPostInventory.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobPosting.jsp -text
@@ -519,7 +522,7 @@ jobboard/src/main/webapp/WEB-INF/view/agencyLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyManageEmployers.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/anonymousSaveThisSearchPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateGoldPreview.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/brandTemplatePlatinumPreview.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/brandTemplatePreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateSilverPreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
@@ -587,6 +590,7 @@ jobboard/src/main/webapp/WEB-INF/view/uploadfile.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/uploadfileindex.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewAlertPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewCopyPasteResume.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/viewTestimony.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/web.xml -text
 jobboard/src/main/webapp/index.jsp -text
