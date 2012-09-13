@@ -47,6 +47,7 @@
 						<h3 class="marginLeft10"> Contact Information </h3>
 						<c:if test="${not empty message}">
 							<div class="rowEvenNewSpacing">
+							<span class="lableText3"></span>
 							<span class="FormErrorDisplayText">${message}<br /></span>
 								
 							</div>

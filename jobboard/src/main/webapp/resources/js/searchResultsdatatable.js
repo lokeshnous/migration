@@ -321,7 +321,7 @@ jQuery(document).ready(function() {
 						    if(data.success != null){
 						    }
 						    if(data.failure != null){
-						    	$("#errorMsg").html("<span style='color:red'><b>Please enter the required parameters.</b></span>");
+						    	$("#errorMsg").html("Please enter the required parameters.");
 						    }
 						},
 						error: function(response) {

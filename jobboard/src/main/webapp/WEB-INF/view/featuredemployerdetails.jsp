@@ -13,23 +13,14 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<jsp:include page="common/include.jsp" />
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
-<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
 </script>
-        <!-- <script type="text/javascript">
-            $(document).ready( function()
-            {
-                var api = $( '#flash' ).vid({
-                    type    : 'wmv',
-                    videoId : 'R7yfISlGLNU'
-                });
-            });
-        </script> -->
 </head>
 
 <body class="job_board">
@@ -64,9 +55,27 @@
 		  Your browser does not support the video tag.
 		</video> -->
 		
-		        <div id="flash" style="width: 320px; height: 240px;"></div>
-							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0" marginwidth="0" src="" frameborder="0"  height="180" scrolling="no" width="255"></iframe><br>
-
+		 <!-- <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
+        --><!--  <div id="flash" style="width: 255px; height: 180px;"></div> -->
+       <embed src="http://www.youtube.com/v/opVb89Cmrtk&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
+  </embed>
+ <!--        <script type="text/javascript">
+       
+            $(document).ready( function()
+            {
+                var api = $( '#flash' ).vid({
+                    
+                });
+            });
+        
+        </script> -->
+ <video width="320" height="240" controls="controls">
+  <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />   
+   <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />      
+Your browser does not support the video tag.
+</video>  
+<iframe width="320" height="240" src="http://www.youtube.com/embed/EWhalXA7z2I" frameborder="0" allowfullscreen></iframe>
 						</div>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">

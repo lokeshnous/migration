@@ -4015,11 +4015,14 @@ orange:hover {
 .BTemplateIconAlign{
 	margin-left:33px;
 }
-.ShareSearch{
+.ShareSearch,.SearchIcons{
 	float: left;
     margin-left:10px;
     margin-top: 11px;
     width: auto;
+}
+.SearchIcons{
+	margin-top: 0px !important;
 }
 .ShareText{
 	float: left !important;

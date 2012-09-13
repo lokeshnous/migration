@@ -61,6 +61,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
+		<span class="lableText3"></span>
 		<div id="jobOwnerErrorMsg" class="FormErrorDisplayText"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"

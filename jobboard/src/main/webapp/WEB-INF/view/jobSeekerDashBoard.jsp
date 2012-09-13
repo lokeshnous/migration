@@ -28,17 +28,17 @@ jQuery(document).ready(
 			$("#viewappliedjob").displaypopup("#viewappliedjob", "790", "350");
 			$("#viewsavedjob").displaypopup("#viewsavedjob", "790", "350");
 
-			$("#changePassword").displaypopup("#changePassword", "780",
+			$("#changePassword").displaypopup("#changePassword", "790",
 					"370");
 			$("#manageResumePopup").displaypopup("#manageResumePopup",
-					"775", "252");
+					"790", "350");
 			$("#createResumePopup").displaypopup("#createResumePopup",
-					"775", "252");
+					"790", "350");
 			$("#editProfileId")
 					.displaypopup("#editProfileId", "790", "252");
-			$("#modifySubs").displaypopup("#modifySubs", "775", "252");
+			$("#modifySubs").displaypopup("#modifySubs", "790", "252");
 			$("#viewMySavedSearchesId").displaypopup(
-					"#viewMySavedSearchesId", "775", "252");
+					"#viewMySavedSearchesId", "790", "252");
 		});
 </script>
 </head>

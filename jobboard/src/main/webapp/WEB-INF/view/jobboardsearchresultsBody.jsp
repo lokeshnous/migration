@@ -14,7 +14,9 @@
 					<div class="row">
 
 						<div class="row marginTop5 paddingBottom05">
-						<div id="errorMsg"></div>
+						<div class="row">
+						<div id="errorMsg" class="FormErrorDisplayText"></div>
+						</div>
 							<div class="floatLeft">
 								<h1 >
 									<span>${totalNoOfRecords}</span> jobs match your search criteria.

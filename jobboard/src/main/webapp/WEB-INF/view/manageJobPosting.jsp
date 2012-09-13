@@ -380,7 +380,7 @@
 												itemValue="optionId" />
 										</form:select></td>
 									<td align="center" valign="middle"><div
-											class="row width80">
+											class="row width80 SearchIcons">
 											<a
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><div
 													class="editFile"></div></a><a
