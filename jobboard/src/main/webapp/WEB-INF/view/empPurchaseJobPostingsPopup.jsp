@@ -12,6 +12,9 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		
+		$(".postingInventory").displaypopup(".postingInventory", "790",
+		"370");
+		
 		jQuery(".megamenu").megamenu();
 		
 		$("#purchaseJobPostingId :checkbox").click(function(){
@@ -290,9 +293,16 @@
 				</div>
 				<div class="row marginTop20 paddingBottom10">
 					<span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/purchaseJobPosting/proceedToCheckOut.html" id="proceedToCheckout"
-						class="btn_sm orange">Proceed to Checkout</a> <a href="#"
-						class="nyroModalClose btn_sm orange">Cancel</a></span> <span
-						class="floatLeft marginTop10 marginLeft5"></span>
+						class="btn_sm orange">Proceed to Checkout</a> 		
+					<c:choose>
+						<c:when test="${purchaseJobPostForm.inventoryPage != null}">
+								<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html" id="postingInventory" class="postingInventory btn_sm orange">Cancel</a>
+						</c:when>
+						<c:otherwise>
+								<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+						</c:otherwise>
+					</c:choose>
+						</span> <span class="floatLeft marginTop10 marginLeft5"></span>
 				</div>
 				
 				</div>
