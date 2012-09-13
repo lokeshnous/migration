@@ -17,6 +17,7 @@ public class BillingAddressForm {
 	private String stateBillingAddress;
 	private String countryForBillingAddr;
 	private String zipCodeForBillingAddr;
+	private String phone;
 	private int facilityContactId;
 	private Date createDate;
 
@@ -170,4 +171,11 @@ public class BillingAddressForm {
 		this.facilityContactId = facilityContactId;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

@@ -6,9 +6,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
+import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
-import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
 import com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao;
+import com.advanceweb.afc.jb.pgi.service.PaymentGatewayDelegate;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 
 /**
@@ -22,6 +23,9 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 	@Autowired(required = true)
 	private PaymentGatewayDao paymentGatewayDao;
 
+	@Autowired(required = true)
+	private PaymentGatewayDelegate paymentGatewayDelegate;
+	
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public AccountAddressDTO getConatactByFacilityId(int facilityId) {
@@ -31,13 +35,13 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public BillingAddressDTO getBillingAddByFacilityId(int facilityId) {
+	public AccountAddressDTO getBillingAddByFacilityId(int facilityId) {
 		return paymentGatewayDao
 				.getBillingAddressByFacilityId(facilityId);
 	}
 
 	@Override
-	public boolean saveBillingAddress(BillingAddressDTO billingAddressDTO) {
+	public boolean saveBillingAddress(AccountAddressDTO billingAddressDTO) {
 		return paymentGatewayDao
 				.saveBillingAddress(billingAddressDTO);
 	}
@@ -45,5 +49,19 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
 		return paymentGatewayDao
 				.saveDataBillingAddress(billingAddressDTO);
+	}
+
+	/**
+	 * This method is used to save the order details by taking the following
+	 * parameters.
+	 * 
+	 * @param orderDetailsDTO
+	 * @return boolean 
+	 */
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+	public boolean createOrder(OrderDetailsDTO orderDetailsDTO) {
+		return paymentGatewayDelegate.createOrder(orderDetailsDTO);
+		
 	}
 }

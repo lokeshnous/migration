@@ -53,14 +53,16 @@
 						<div class="row">
 							<p class="gateway_section_head">Payment Method</p>
 							<p>
-								<form:radiobutton path="paymentMethod" value="creditCard"
+								<form:radiobutton path="paymentMethod" value="ccp"
 									checked="true" />
 								Credit Card
 							</p>
 							<br />
 							<p>
-								<form:radiobutton path="paymentMethod" value="invoice" />
+							<c:if test="${paymentGatewayForm.invoiceForm.invoiceEnabled == true}">
+								<form:radiobutton path="paymentMethod" value="inv" />
 								Invoice
+							</c:if>	
 							</p>
 						</div>
 						<form:errors path="paymentMethod" />

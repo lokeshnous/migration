@@ -7,18 +7,9 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<link href="../resources/css/Gateway.css" rel="stylesheet"
-	type="text/css">
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
@@ -30,7 +21,7 @@
 			        data: {"cartItemIndex" : parseInt($(this).attr("id"))},
 					success: function(data){ 
 						if(null != data && data == "success"){
-						    location.reload();
+						    location.reload(true);
 						}	
 					},
 					error: function(response) {
@@ -71,8 +62,8 @@
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/callThankYouPage.html"
-						method="POST" class="firstForm">
+					<form:form action="../pgiController/placeOrder.html"
+						method="POST" class="firstForm" modelAttribute="form">
 						<div class="row">
 							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
 							<p class="form_notes review_order">Please review your order

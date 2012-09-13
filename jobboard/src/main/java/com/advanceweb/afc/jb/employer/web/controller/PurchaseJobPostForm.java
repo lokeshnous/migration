@@ -14,6 +14,7 @@ public class PurchaseJobPostForm {
 	private List<JobPostingsForm> jobPostingsCart = new ArrayList<JobPostingsForm>();
 	private int grandTotal;
 	private String promotionCode;
+	
 	public List<JobPostingsForm> getJobPostingsForm() {
 		return jobPostingsForm;
 	}

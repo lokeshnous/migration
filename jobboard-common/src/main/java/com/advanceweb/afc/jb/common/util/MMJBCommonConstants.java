@@ -183,8 +183,8 @@ public interface MMJBCommonConstants {
 	String AGENCY_LOGOUT_URL = "/commonLogin/login.html?page=agency";
 
 	// Payment Gateway
-	String CREDIT_CARD = "creditCard";
-	String INVOICE = "invoice";
+	String CREDIT_CARD = "ccp";
+	String INVOICE = "inv";
 
 	// For Successful Login
 	String USER_ID = "userId";
@@ -268,6 +268,7 @@ public interface MMJBCommonConstants {
 	// Job Types
 	String JOB_TYPE = "JOB_TYPE";
 	String JOB_TYPE_ADDON = "ADDON";
+	String JOB_TYPE_COMBO = "JOB_TYPE_COMBO";
 
 	String NEXT = "next";
 	int[] FILTER_VALS = { 20, 30, 40, 50 };
@@ -297,7 +298,6 @@ public interface MMJBCommonConstants {
 	String DAYS = "days";
 	String STANDARD_JOB_POSTING = "Standard Job Posting";
 	String JOB_POSTING_SLOT = "Job Posting Slot";
-	String JOB_TYPE_COMBO = "JOB_TYPE_COMBO";
 	String BASIC_JOB_TYPE = "Basic Job Posting Upgrade";
 
 }

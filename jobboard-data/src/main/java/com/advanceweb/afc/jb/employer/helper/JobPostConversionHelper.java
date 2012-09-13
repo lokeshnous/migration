@@ -307,6 +307,7 @@ public class JobPostConversionHelper<JobPostForm> {
 			jobPostingPlanDTO.setJobPostPlanName(jobType.getName());
 			jobPostingPlanDTO.setJobPostPlanDescr(jobType.getDescription());
 			jobPostingPlanDTO.setJobPostPlanCretitAmt(String.valueOf(jobType.getCreditAmt()));
+			jobPostingPlanDTO.setJobPostNetSuiteId(String.valueOf(jobType.getNetSuiteId()));
 			List<AddOnDTO> addOnDTOList = new ArrayList<AddOnDTO>();
 			for(JpAddon jpAddon : jobType.getJpAddons()){
 				addOnDTOList.add(transformJpAddOnToAddOnDTO(jpAddon));
@@ -330,6 +331,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		addOnDTO.setAddOnName(jpAddon.getName());
 		addOnDTO.setAddOnDescription(jpAddon.getDescription());
 		addOnDTO.setAddOnCreditAmt(String.valueOf(jpAddon.getCreditAmt()));
+		addOnDTO.setAddOnNetSuiteId(String.valueOf(jpAddon.getNetSuiteId()));
 		return addOnDTO;
 	}
 }

@@ -44,6 +44,9 @@ public class AdmOrderItem implements Serializable {
 	
 	@Column(name = "order_status")
 	private String orderStatus;
+	
+	@Column(name = "item_number")
+	private int itemNumber;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
@@ -145,6 +148,18 @@ public class AdmOrderItem implements Serializable {
 	 */
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+	
+	public int getItemNumber() {
+		return itemNumber;
+	}
+
+	public void setItemNumber(int itemNumber) {
+		this.itemNumber = itemNumber;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	/**

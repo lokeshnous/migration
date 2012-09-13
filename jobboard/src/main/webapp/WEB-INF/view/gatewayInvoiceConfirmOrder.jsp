@@ -7,22 +7,30 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<link href="../resources/css/Gateway.css" rel="stylesheet"
-	type="text/css">
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+		$("#jobPostingsCart a").click(function(){
+			if($(this).html()== "Remove"){
+				$.ajax({url: "${pageContext.request.contextPath}/pgiController/removeJobPost.html",
+					type: "POST",
+			        data: {"cartItemIndex" : parseInt($(this).attr("id"))},
+					success: function(data){ 
+						if(null != data && data == "success"){
+						    location.reload(true);
+						}	
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					}
+				});
+			}
+			
+		});
 	});
 </script>
 <script type="text/javascript">
@@ -51,8 +59,8 @@
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/callThankYouPage.html"
-						method="POST" class="firstForm">
+					<form:form action="../pgiController/placeOrder.html"
+						method="POST" class="firstForm" modelAttribute="paymentGatewayForm">
 						<div class="row">
 							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
 							<p class="form_notes review_order">Please review your order
@@ -61,53 +69,86 @@
 								This transaction will be final once you hit the 'Place Order'
 								button, so please review carefully before proceeding.</p>
 							<h3 class="gatewayBreadcrumbs main_section">Order Detials</h3>
-							<table class="indent10 gatewayTable" width="540" border="0"
-								cellspacing="0" cellpadding="0">
-								<thead>
-									<tr>
-										<th width="291" align="left" scope="col">Product Name</th>
-										<th width="83" align="center" scope="col">Price</th>
-										<th width="97" align="center" scope="col">Quantity</th>
-										<th width="69" align="right" scope="col">Total</th>
-									</tr>
-								</thead>
-								<tr>
-									<td align="left">Standard Job Posting</td>
-									<td align="center">&nbsp;</td>
-									<td align="center">&nbsp;</td>
-									<td align="right">&nbsp;</td>
-								</tr>
-								<tr>
-									<td align="left">30-day Standard Job Posting</td>
-									<td align="center">$399</td>
-									<td align="center">2</td>
-									<td align="right">$399</td>
-								</tr>
-								<tr>
-									<td align="left">Job Posting Branding Template Upgrade</td>
-									<td align="center">$199</td>
-									<td align="center">2</td>
-									<td align="right">$199</td>
-								</tr>
-								<tr>
-									<td align="left">Universal Geography Upgrade</td>
-									<td align="center">$99</td>
-									<td align="center">2</td>
-									<td align="right">$199</td>
-								</tr>
-								<tr>
-									<td align="left">Premium Sponsored Job Posting Upgrade</td>
-									<td align="center">&nbsp;</td>
-									<td align="center">2</td>
-									<td align="right">$199</td>
-								</tr>
-								<tr>
-									<td align="left">&nbsp;</td>
-									<td align="center">&nbsp;</td>
-									<td align="center">Grand Total:</td>
-									<td align="right">$796.00</td>
-								</tr>
-							</table>
+							<div id="jobPostingsCart">
+
+								<div class="rowEvenNewSpacing marginTop20">
+									<div class=" row">
+										<table width="100%" border="0" cellpadding="0" cellspacing="0"
+											class="marginBottom3">
+											<tr cellpadding="0" cellspacing="0" border="0">
+												<td width="32%" align="Left"><h3 class="TextColorA01">&nbsp;My
+														Shopping Cart</h3></td>
+												<td width="7%" align="Left"><h3 class="TextColorA01">Price</h3></td>
+												<td width="19%"><h3 class="TextColorA01">Quantity</h3></td>
+											</tr>
+											<tr>
+											</tr>
+										</table>
+									</div>
+
+									<%
+										int i = 0;
+									%>
+									<!-- cart  start-->
+									<c:forEach items="${purchaseJobPostForm.jobPostingsCart}"
+										var="cartItem" varStatus="status">
+										<div class=" row DotBorderBottom marginTop5"></div>
+										<div class="row">
+											<table width="100%" border="0" cellpadding="0"
+												cellspacing="0" class="marginTop5">
+												<tr>
+													<td width="32%" height="30px;" align="Left"><label
+														for="radio" class="link_color2_selected">${cartItem.jobPostPlanName}</label></td>
+													<td width="7%" align="Left"><span>$</span>${cartItem.jobPostPlanCretitAmt}</td>
+													<td width="19%"></td>
+												</tr>
+												<c:forEach items="${cartItem.addOnForm}" var="addOn"
+													varStatus="status">
+													<tr>
+														<td width="32%" height="30px;" align="Left"><div
+																class="floatLeft">
+																&nbsp;&nbsp;&nbsp; <label for="checkbox">${addOn.addOnName}</label>
+																&nbsp;&nbsp;
+															</div></td>
+														<td width="7%" align="Left"><span>$</span>${addOn.addOnCreditAmt}</td>
+														<td width="19%"></td>
+													</tr>
+												</c:forEach>
+												<tr>
+													<td width="32%" height="30px;" align="Left"><label
+														for="radio" class="link_color2_selected">Package
+															Subtotal</label></td>
+													<td width="7%" align="Left"><span
+														class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
+													<td width="19%"><input name="healthCareSubSplty2"
+														type="text" class="jb_input75 marginTop0 mar"
+														value="${cartItem.quantity}" /><a href="#"
+														class="marginLeft20" id="<%=i++%>">Remove</a></td>
+												</tr>
+											</table>
+										</div>
+									</c:forEach>
+									<!-- cart  end-->
+									<div class="row">
+										<div class="SolidBorderBottom"></div>
+										<div class="row">
+											<table width="100%" border="0" cellpadding="0"
+												cellspacing="0">
+												<tr cellpadding="0" cellspacing="0" border="0">
+													<td width="32%" align="Left"><h3 class="TextColorA01">Grand
+															Total:</h3></td>
+													<td width="7%" align="Left"><h3 class="TextColorA01">
+															<span>$</span>${purchaseJobPostForm.grandTotal}
+														</h3></td>
+													<td width="19%"><h3 class="TextColorA01">&nbsp;</h3></td>
+												</tr>
+												<tr>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							
 							<p class="borderBottomDotted marginBottom15">&nbsp;</p>
 							<h3 class="gatewayBreadcrumbs main_section">Payment
 								Information</h3>
@@ -138,7 +179,7 @@
 										</span>
 									</td>
 									<td align="right" valign="top"><span
-										class="paymentLineHeight">$796.00</span></td>
+										class="paymentLineHeight">$</span>${purchaseJobPostForm.grandTotal}</td>
 								</tr>
 							</table>
 						</div>

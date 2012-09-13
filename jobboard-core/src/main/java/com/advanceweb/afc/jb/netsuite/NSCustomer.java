@@ -50,6 +50,12 @@ public class NSCustomer {
 	
 	private String altPhone;
 	
+	private String entity;
+	
+	private String paymentMethod;
+	
+	private String cardType;
+	
 	private String isPerson;
 	
 	private String addr1;
@@ -57,8 +63,6 @@ public class NSCustomer {
 	private String city;
 	
 	private boolean custEntityFeaturedEmployee;
-	
-	
 	
 	public boolean isCustEntityFeaturedEmployee() {
 		return custEntityFeaturedEmployee;
@@ -91,6 +95,30 @@ public class NSCustomer {
 
 	public void setIsPerson(String isPerson) {
 		this.isPerson = isPerson;
+	}
+	
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public String getEntity() {
+		return entity;
+	}
+
+	public void setEntity(String entity) {
+		this.entity = entity;
 	}
 
 	public String getFirstName() {

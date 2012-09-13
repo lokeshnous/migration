@@ -264,6 +264,11 @@
 							<font color="red" style="padding-left: 185px"><form:errors
 									path="billingAddressForm.zipCodeForBillingAddr" /> </font>
 						</div>
+						<div class="rowEvenNewSpacing">
+							<span class="lableText3">Phone:</span>
+							<form:input path="billingAddressForm.phone" type="text"
+								class="job_seeker_password textBox350 " />
+						</div>
 						<form:hidden path="billingAddressForm.facilityContactId" />
 
 						<p class="borderBottomDotted marginBottom15">&nbsp;</p>
@@ -289,12 +294,10 @@
 							<form:select path="creditCardInfoForm.cardType" name="card_type"
 								id="card_type" class="jb_input3 jb_input_width3">
 								<form:option value="" selected="selected">-- Select Card Type --</form:option>
-								<form:option value="visa">Visa</form:option>
-								<form:option value="AmericanExpress">American Express</form:option>
-								<form:option value="discover">Discover</form:option>
-								<form:option value="JCB">JCB</form:option>
-								<form:option value="dinnersClub">Diners Club/ Carte Blanche</form:option>
-								<form:option value="secongVisa">Second Visa</form:option>
+								<form:option value="3">Discover</form:option>
+								<form:option value="4">Master Card</form:option>
+								<form:option value="5">Visa</form:option>
+								<form:option value="6">American Express</form:option>
 							</form:select>
 							<span class="required">(Required)</span>
 						</div>

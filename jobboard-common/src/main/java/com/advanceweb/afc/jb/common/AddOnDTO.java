@@ -11,6 +11,7 @@ public class AddOnDTO {
 	private String addOnName;
 	private String addOnDescription;
 	private String addOnCreditAmt;
+	private String addOnNetSuiteId;
 	
 	public String getAddOnId() {
 		return addOnId;
@@ -35,5 +36,11 @@ public class AddOnDTO {
 	}
 	public void setAddOnCreditAmt(String addOnCreditAmt) {
 		this.addOnCreditAmt = addOnCreditAmt;
+	}
+	public String getAddOnNetSuiteId() {
+		return addOnNetSuiteId;
+	}
+	public void setAddOnNetSuiteId(String addOnNetSuiteId) {
+		this.addOnNetSuiteId = addOnNetSuiteId;
 	}
 }

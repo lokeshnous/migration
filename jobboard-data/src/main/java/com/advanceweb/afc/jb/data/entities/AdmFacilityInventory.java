@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +51,7 @@ public class AdmFacilityInventory {
 	private AdmFacility admFacility;
 	
 	//bi-directional many-to-one association to MerProfileAttribList
-	@OneToOne(mappedBy="admFacilityInventory")
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="admFacilityInventory",cascade=CascadeType.ALL)
 	private AdmInventoryDetail admInventoryDetail;
 
 	

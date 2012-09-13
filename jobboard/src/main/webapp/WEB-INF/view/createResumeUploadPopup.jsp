@@ -35,7 +35,7 @@
 				debugger;
 			  sizeInKB = Math.round(parseInt(this.files[0].size)/1024);
 			  if(parseInt(sizeInKB) > 750){
-				  alert("File size should not exceed more than 750KB. Please try again.");
+				  alert("File size should not exceed more than 750KB.\nPlease try again.");
 			  }
 		});
 		

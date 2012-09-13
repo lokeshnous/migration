@@ -7,10 +7,11 @@ package com.advanceweb.afc.jb.employer.web.controller;
  */
 public class AddOnForm {
 	
-	public String addOnId;
-	public String addOnName;
-	public String addOnDescription;
-	public String addOnCreditAmt;
+	private String addOnId;
+	private String addOnName;
+	private String addOnDescription;
+	private String addOnCreditAmt;
+	private String addOnNetSuiteId;
 	
 	public String getAddOnId() {
 		return addOnId;
@@ -35,5 +36,11 @@ public class AddOnForm {
 	}
 	public void setAddOnCreditAmt(String addOnCreditAmt) {
 		this.addOnCreditAmt = addOnCreditAmt;
+	}
+	public String getAddOnNetSuiteId() {
+		return addOnNetSuiteId;
+	}
+	public void setAddOnNetSuiteId(String addOnNetSuiteId) {
+		this.addOnNetSuiteId = addOnNetSuiteId;
 	}
 }

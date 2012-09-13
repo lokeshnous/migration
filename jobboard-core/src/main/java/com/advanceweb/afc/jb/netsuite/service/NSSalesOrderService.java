@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.netsuite.service;
 
-public interface NSSalesOrderService {
+import com.advanceweb.afc.jb.common.UserDTO;
 
+public interface NSSalesOrderService {
+	public UserDTO createSalesOrder(UserDTO userDTO);
 }
+ 

@@ -88,7 +88,8 @@
 										"addOnId":$(this).parent().parent().parent().attr("id"),
 										"addOnName":$(this).parent().children(1).text(),
 										"addOnDescription":"",
-										"addOnCreditAmt":$(this).parent().parent().parent().find("td").eq(1).attr("id")
+										"addOnCreditAmt":$(this).parent().parent().parent().find("td").eq(1).attr("id"),
+										"addOnNetSuiteId":$(this).parent().parent().parent().attr("title")
 									});
 								}
 						});
@@ -100,6 +101,7 @@
 							 	"jobPostPlanName":planObj.find("td").eq(0).children(1).text(),
 							 	"jobPostPlanDescr":"",
 							 	"jobPostPlanCretitAmt":planObj.find("td").eq(1).attr("id"),
+							 	"jobPostNetSuiteId":planObj.attr("title"),
 							 	"addOnForm":addOnStr,
 							 	"quantity": parseInt(quantity),
 						 }); 
@@ -159,7 +161,7 @@
 					 <c:forEach items="${purchaseJobPostForm.jobPostingsForm}" var="jobPosting" varStatus="status">	
 						<table id="tb_jobPost_${jobPosting.jobPostPlanId}" width="100%" border="0" cellpadding="0" cellspacing="0"
 							class="marginTop5">
-							<thead> <tr id="${jobPosting.jobPostPlanId}">
+							<thead> <tr id="${jobPosting.jobPostPlanId}" title="${jobPosting.jobPostNetSuiteId}">
 								<td width="32%" height="30px;" align="Left"><input
 									name="radio" type="radio" id="radio1" value="radio"
 									class="marginRight5"> <label for="radio"
@@ -172,7 +174,7 @@
 							</thead>
 							<tbody>
 							<c:forEach items="${jobPosting.addOnForm}" var="addOn" varStatus="status">
-							<tr id="${addOn.addOnId}">
+							<tr id="${addOn.addOnId}" title="${addOn.addOnNetSuiteId}">
 								<td width="32%" height="30px;" align="Left"><div
 										class="floatLeft">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="" type="checkbox"
@@ -248,7 +250,7 @@
 								<td width="7%" align="Left"><span
 									class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
 								<td width="19%"><input name="healthCareSubSplty2"
-									type="text" class="jb_input75 marginTop0 mar" value="${cartItem.quantity}" /><a
+									type="text" readonly="readonly" class="jb_input75 marginTop0 mar" value="${cartItem.quantity}" /><a
 									href="#" class="marginLeft20" id="<%=i++%>" >Remove</a></td>
 							</tr>
 						</table>

@@ -30,7 +30,7 @@ public class AdmOrderPayment implements Serializable{
 	private int orderPaymentId;
 	
 	@Column(name = "method")
-	private int method;
+	private String method;
 	
 	@Column(name = "payment_number")
 	private int paymentNumber;
@@ -69,14 +69,14 @@ public class AdmOrderPayment implements Serializable{
 	/**
 	 * @return the method
 	 */
-	public int getMethod() {
+	public String getMethod() {
 		return method;
 	}
 
 	/**
 	 * @param method the method to set
 	 */
-	public void setMethod(int method) {
+	public void setMethod(String method) {
 		this.method = method;
 	}
 

@@ -1,12 +1,25 @@
 package com.advanceweb.afc.jb.pgi.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
+import com.advanceweb.afc.jb.common.AddOnDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.OrderPaymentDTO;
+import com.advanceweb.afc.jb.common.SalesOrderDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityInventory;
+import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
+import com.advanceweb.afc.jb.data.entities.AdmOrderAddress;
+import com.advanceweb.afc.jb.data.entities.AdmOrderHeader;
+import com.advanceweb.afc.jb.data.entities.AdmOrderItem;
+import com.advanceweb.afc.jb.data.entities.AdmOrderPayment;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
-import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
 
 
 /**
@@ -50,17 +63,17 @@ public class PaymentGatewayHelper {
 	 * @param entity
 	 * @return
 	 */
-	public BillingAddressDTO convertBillingAddressDaoToDto(
+	public AccountAddressDTO convertBillingAddressDaoToDto(
 			AdmFacilityContact entity) {
-		BillingAddressDTO billingAddressDTO = new BillingAddressDTO();
+		AccountAddressDTO billingAddressDTO = new AccountAddressDTO();
 		if (entity != null) {
-			billingAddressDTO.setBillFirstName(entity.getFirstName());
-			billingAddressDTO.setBillLastName(entity.getLastName());
-			billingAddressDTO.setBillCityOrTown(entity.getCity());
-			billingAddressDTO.setBillCountry(entity.getCountry());
-			billingAddressDTO.setBillState(entity.getState());
-			billingAddressDTO.setBillStreetAddress(entity.getStreet());
-			billingAddressDTO.setBillZipCode(entity.getPostcode());
+			billingAddressDTO.setFirstName(entity.getFirstName());
+			billingAddressDTO.setLastName(entity.getLastName());
+			billingAddressDTO.setCityOrTown(entity.getCity());
+			billingAddressDTO.setCountry(entity.getCountry());
+			billingAddressDTO.setState(entity.getState());
+			billingAddressDTO.setStreetAddress(entity.getStreet());
+			billingAddressDTO.setZipCode(entity.getPostcode());
 			billingAddressDTO.setFacilityContactId(entity.getFacilityContactId());
 			billingAddressDTO.setCreateDate(entity.getCreateDt());
 		}
@@ -76,18 +89,18 @@ public class PaymentGatewayHelper {
 	 * @return
 	 */
 	public AdmFacilityContact convertBillingAddressDtoToEntity(
-			BillingAddressDTO billingAddressDTO) {
+			AccountAddressDTO billingAddressDTO) {
 		AdmFacilityContact admFacilityContact = new AdmFacilityContact();
 		if (billingAddressDTO != null) {
 			admFacilityContact.setFirstName(billingAddressDTO
-					.getBillFirstName());
-			admFacilityContact.setLastName(billingAddressDTO.getBillLastName());
-			admFacilityContact.setCity(billingAddressDTO.getBillCityOrTown());
-			admFacilityContact.setCountry(billingAddressDTO.getBillCountry());
-			admFacilityContact.setState(billingAddressDTO.getBillState());
+					.getFirstName());
+			admFacilityContact.setLastName(billingAddressDTO.getLastName());
+			admFacilityContact.setCity(billingAddressDTO.getCityOrTown());
+			admFacilityContact.setCountry(billingAddressDTO.getCountry());
+			admFacilityContact.setState(billingAddressDTO.getState());
 			admFacilityContact.setStreet(billingAddressDTO
-					.getBillStreetAddress());
-			admFacilityContact.setPostcode(billingAddressDTO.getBillZipCode());
+					.getStreetAddress());
+			admFacilityContact.setPostcode(billingAddressDTO.getZipCode());
 		}
 
 		return admFacilityContact;
@@ -127,5 +140,107 @@ public class PaymentGatewayHelper {
 		return admFacilityContact;
 
 	}
-
+	
+	/**
+	 * @param admOrderHeader
+	 * @param jobPostingPlanDTOList
+	 * @return
+	 */
+	public List<AdmOrderItem> transformToAdmOrderItemList(AdmOrderHeader admOrderHeader, List<JobPostingPlanDTO> jobPostingPlanDTOList){
+		
+		List<AdmOrderItem> admOrderItemList = new ArrayList<AdmOrderItem>();
+		AdmOrderItem admOrderItem = null;
+		int itemNumber = 0;
+		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
+			admOrderItem = new AdmOrderItem();
+			
+			admOrderItem.setAdmOrderHeader(admOrderHeader);
+			admOrderItem.setPrice(Float.parseFloat(jobPostingPlanDTO.getJobPostPlanCretitAmt()));
+			admOrderItem.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
+			admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE);
+			admOrderItem.setProductName(jobPostingPlanDTO.getJobPostPlanName());
+			admOrderItem.setQtyOrdered(jobPostingPlanDTO.getQuanity());
+			admOrderItem.setOrderStatus("APPROVED");
+			admOrderItem.setItemNumber(++itemNumber);
+			admOrderItemList.add(admOrderItem);
+			
+			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
+				admOrderItem = new AdmOrderItem();
+				admOrderItem.setAdmOrderHeader(admOrderHeader);
+				admOrderItem.setPrice(Float.parseFloat(addOnDTO.getAddOnCreditAmt()));
+				admOrderItem.setProductId(Integer.parseInt(addOnDTO.getAddOnId()));
+				admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE_ADDON);
+				admOrderItem.setProductName(addOnDTO.getAddOnName());
+				admOrderItem.setQtyOrdered(jobPostingPlanDTO.getQuanity());
+				admOrderItem.setOrderStatus("APPROVED");
+				admOrderItem.setItemNumber(itemNumber);
+				admOrderItemList.add(admOrderItem);
+			}
+		}
+		return admOrderItemList;
+	}
+	
+	/**
+	 * @param admOrderHeader
+	 * @param orderAddressDTO
+	 * @return
+	 */
+	public AdmOrderAddress transformToAdmOrderAddress(AdmOrderHeader admOrderHeader, AccountAddressDTO orderAddressDTO){
+		AdmOrderAddress admOrderAddress = new AdmOrderAddress();
+		admOrderAddress.setAdmOrderHeader(admOrderHeader);
+		admOrderAddress.setFirstName(orderAddressDTO.getFirstName());
+		admOrderAddress.setLastName(orderAddressDTO.getLastName());
+		admOrderAddress.setStreet(orderAddressDTO.getStreetAddress());
+		admOrderAddress.setCity(orderAddressDTO.getCityOrTown());
+		admOrderAddress.setAddressType("BILLING");
+		admOrderAddress.setPostcode(orderAddressDTO.getZipCode());
+		admOrderAddress.setPhone(orderAddressDTO.getPhone());
+		//admOrderAddress.setEmail(orderAddressDTO.getEmail());
+		admOrderAddress.setState(orderAddressDTO.getState());
+		admOrderAddress.setCountry(orderAddressDTO.getCountry());
+		//admOrderAddress.setCompany(orderAddressDTO.getCompany());
+		return admOrderAddress;
+	}
+	
+	
+	/**
+	 * @param admOrderHeader
+	 * @param orderPaymentDTO
+	 * @return
+	 */
+	public AdmOrderPayment transformToAdmOrderPayment(AdmOrderHeader admOrderHeader, OrderPaymentDTO orderPaymentDTO){
+		AdmOrderPayment admOrderPayment = new AdmOrderPayment(); 
+		admOrderPayment.setAdmOrderHeader(admOrderHeader);
+		admOrderPayment.setMethod(orderPaymentDTO.getMethod());
+		admOrderPayment.setPaidAmt(Float.parseFloat(orderPaymentDTO.getPaidAmount()));
+		admOrderPayment.setPaymentNumber(Integer.parseInt(orderPaymentDTO.getPaymentNumber()));
+		admOrderPayment.setTranResponse(orderPaymentDTO.getTransactionResponse());
+		admOrderPayment.setTransDate(orderPaymentDTO.getTransactionDate());
+		return admOrderPayment;
+	}
+	/*
+	public List<AdmInventoryDetail> transformToAdmInventoryDetail(AdmFacilityInventory admFacilityInventory, List<JobPostingPlanDTO> jobPostingPlanDTOList){
+		List<AdmInventoryDetail> AdmInventoryDetailList = new ArrayList<AdmInventoryDetail>();
+		AdmInventoryDetail AdmInventoryDetail = null;
+		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
+			AdmInventoryDetail = new AdmInventoryDetail();
+			
+			AdmInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
+			AdmInventoryDetail.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
+			AdmInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE);
+			//AdmInventoryDetail.setQty(jobPostingPlanDTO.getQuanity());
+			AdmInventoryDetailList.add(AdmInventoryDetail);
+			
+			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
+				AdmInventoryDetail = new AdmInventoryDetail();
+				AdmInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
+				AdmInventoryDetail.setProductId(Integer.parseInt(addOnDTO.getAddOnId()));
+				AdmInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE_ADDON);
+				//AdmInventoryDetail.setQty(jobPostingPlanDTO.getQuanity());
+				
+				AdmInventoryDetailList.add(AdmInventoryDetail);
+			}
+		}
+		return AdmInventoryDetailList;
+	}*/
 }

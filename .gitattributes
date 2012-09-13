@@ -51,6 +51,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ManageAccessPermissio
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchTypeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetricsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetroAreaDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/OrderDetailsDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/OrderPaymentDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PackageInformationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PhoneDetailDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ProfileAttribDTO.java -text
@@ -62,6 +64,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeAttribListDTO.j
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeVisibilityDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SalesItemDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SalesOrderDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveOrApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveSearchedJobsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
@@ -84,7 +88,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -te
 jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/AccountAddressDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/pgi/BillingAddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/search/JobSearchResultDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/search/ResumeSearchResultDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/search/SearchFacetDTO.java -text
@@ -155,8 +158,11 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NSInvoiceServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NSSalesOrderService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/NetSuiteMethod.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/impl/NSCustomerServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/impl/NSSalesOrderServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/netsuite/service/impl/NetSuiteMethodImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/PaymentGatewayDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/pgi/service/impl/PaymentGatewayServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/resume/ResumeServiceImpl.java -text
@@ -202,6 +208,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerReg
 jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/login/service/LoginServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text

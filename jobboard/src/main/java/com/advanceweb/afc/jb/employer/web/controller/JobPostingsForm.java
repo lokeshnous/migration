@@ -9,13 +9,14 @@ import java.util.List;
  */
 public class JobPostingsForm {
 	
-	public String jobPostPlanId;
-	public String jobPostPlanName;
-	public String jobPostPlanDescr;
-	public String jobPostPlanCretitAmt;
-	public List<AddOnForm> addOnForm;
-	public int quantity;
-	public int packageSubTotal;
+	private String jobPostPlanId;
+	private String jobPostPlanName;
+	private String jobPostPlanDescr;
+	private String jobPostPlanCretitAmt;
+	private String jobPostNetSuiteId;
+	private List<AddOnForm> addOnForm;
+	private int quantity;
+	private int packageSubTotal;
 	
 	public String getJobPostPlanId() {
 		return jobPostPlanId;
@@ -41,6 +42,12 @@ public class JobPostingsForm {
 	public void setJobPostPlanCretitAmt(String jobPostPlanCretitAmt) {
 		this.jobPostPlanCretitAmt = jobPostPlanCretitAmt;
 	}
+	public String getJobPostNetSuiteId() {
+		return jobPostNetSuiteId;
+	}
+	public void setJobPostNetSuiteId(String jobPostNetSuiteId) {
+		this.jobPostNetSuiteId = jobPostNetSuiteId;
+	}
 	public List<AddOnForm> getAddOnForm() {
 		return addOnForm;
 	}
@@ -59,6 +66,7 @@ public class JobPostingsForm {
 	public void setPackageSubTotal(int packageSubTotal) {
 		this.packageSubTotal = packageSubTotal;
 	}
+	
 	@Override
 	public String toString() {
 		return "JobPostingsForm [jobPostPlanId=" + jobPostPlanId

@@ -1,10 +1,13 @@
 package com.advanceweb.afc.jb.pgi;
 
+import java.util.Date;
+
 /**
  * @author muralikc
  *
  */
 public class AccountAddressDTO {
+	
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -16,6 +19,35 @@ public class AccountAddressDTO {
 	private String country;
 	private String zipCode;
 	private String phone;
+	
+	private int facilityContactId;
+	private Date createDate;
+	private int facilityId;
+	
+
+	public int getFacilityContactId() {
+		return facilityContactId;
+	}
+
+	public void setFacilityContactId(int facilityContactId) {
+		this.facilityContactId = facilityContactId;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
 
 	/**
 	 * @return the firstName

@@ -23,6 +23,7 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 
 /**
  * anilm
+ * 
  * @version 1.0
  * @created Aug 22, 2012
  */
@@ -30,53 +31,64 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 @RequestMapping(value = "/purchaseJobPosting")
 @SessionAttributes("purchaseJobPostForm")
 public class PurchaseJobPostingController {
-	private static final Logger LOGGER = Logger.getLogger(PurchaseJobPostingController.class);
-	
-	private static final String PURCHASE_JOB_POSTINGS = "empPurchaseJobPostingsPopup";
 
+	private static final Logger LOGGER = Logger
+			.getLogger(PurchaseJobPostingController.class);
+	private static final String PURCHASE_JOB_POSTINGS = "empPurchaseJobPostingsPopup";
+	private final String _JOBPOST_JSON = "jobPostJson";
+	
 	@Autowired
 	private JobPostService employerJobPost;
-	
+
 	@Autowired
 	private TransformJobPost transformJobPost;
-	
-	@RequestMapping(value="/purchaseJobPostings",method = RequestMethod.GET)
-	public ModelAndView showPurchaseJobPostings() {
-		
+
+	@RequestMapping(value = "/purchaseJobPostings", method = RequestMethod.GET)
+	public ModelAndView purchaseJobPostings() {
+
 		ModelAndView model = new ModelAndView();
-		List<JobPostingPlanDTO> jobPostingPlanDTOList = employerJobPost.getJobPostingPlans();
-		
-		List<JobPostingsForm> jobPostingsForm = transformJobPost.transformToJobPostingsFormList(jobPostingPlanDTOList);
+		List<JobPostingPlanDTO> jobPostingPlanDTOList = employerJobPost
+				.getJobPostingPlans();
+
+		List<JobPostingsForm> jobPostingsForm = transformJobPost
+				.transformToJobPostingsFormList(jobPostingPlanDTOList);
 		PurchaseJobPostForm purchaseJobPostForm = new PurchaseJobPostForm();
 		purchaseJobPostForm.setJobPostingsForm(jobPostingsForm);
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
-		return 	model;
+		return model;
 	}
-	
-	@RequestMapping(value="/addToCart",method = RequestMethod.POST)
-	public ModelAndView addJobPostingToCart(PurchaseJobPostForm purchaseJobPostForm,HttpServletRequest request) {
-		
-		String jobPostJson = request.getParameter("jobPostJson");
+
+	@RequestMapping(value = "/addToCart", method = RequestMethod.POST)
+	public ModelAndView addToCart(
+			PurchaseJobPostForm purchaseJobPostForm, HttpServletRequest request) {
+
+		int packageSubTotal = 0, planCreditAmt = 0, addOnCreditAmtTotal = 0;
+		String jobPostJson = request.getParameter(_JOBPOST_JSON);
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		try {
-			int packageSubTotal = 0 , planCreditAmt = 0 , addOnCreditAmtTotal = 0;
-			JobPostingsForm jobPostingsCart = mapper.readValue(jobPostJson, JobPostingsForm.class);
 			
-			planCreditAmt = Integer.parseInt(jobPostingsCart.getJobPostPlanCretitAmt());
-			
-			for(AddOnForm addOnForm : jobPostingsCart.getAddOnForm()){
-				addOnCreditAmtTotal = addOnCreditAmtTotal + Integer.parseInt(addOnForm.getAddOnCreditAmt()); 
+			JobPostingsForm jobPostingsCart = mapper.readValue(jobPostJson,
+					JobPostingsForm.class);
+
+			planCreditAmt = Integer.parseInt(jobPostingsCart
+					.getJobPostPlanCretitAmt());
+
+			for (AddOnForm addOnForm : jobPostingsCart.getAddOnForm()) {
+				addOnCreditAmtTotal = addOnCreditAmtTotal
+						+ Integer.parseInt(addOnForm.getAddOnCreditAmt());
 			}
-			
-			packageSubTotal = (planCreditAmt + addOnCreditAmtTotal)*jobPostingsCart.getQuantity();
+
+			packageSubTotal = (planCreditAmt + addOnCreditAmtTotal)
+					* jobPostingsCart.getQuantity();
 			jobPostingsCart.setPackageSubTotal(packageSubTotal);
-			
-			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() + packageSubTotal);
-			
+
+			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm
+					.getGrandTotal() + packageSubTotal);
+
 			purchaseJobPostForm.getJobPostingsCart().add(jobPostingsCart);
-			
+
 		} catch (JsonParseException e) {
 			LOGGER.error(e);
 		} catch (JsonMappingException e) {
@@ -84,40 +96,44 @@ public class PurchaseJobPostingController {
 		} catch (IOException e) {
 			LOGGER.error(e);
 		}
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		model.setViewName(PURCHASE_JOB_POSTINGS);
+		return model;
+	}
+
+	@RequestMapping(value = "/showPurchaseJobPostCart", method = RequestMethod.GET)
+	public ModelAndView showPurchaseJobPostCart(
+			PurchaseJobPostForm purchaseJobPostForm) {
+		ModelAndView model = new ModelAndView();
+		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		model.setViewName(PURCHASE_JOB_POSTINGS);
+		return model;
+	}
+
+	@RequestMapping(value = "/removeJobPost", method = RequestMethod.POST)
+	public ModelAndView removeJobPost(PurchaseJobPostForm purchaseJobPostForm,
+			@RequestParam("cartItemIndex") int cartItemIndex) {
 		
 		ModelAndView model = new ModelAndView();
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName(PURCHASE_JOB_POSTINGS);
-		return 	model;
-	}
-	
-	@RequestMapping(value="/showPurchaseJobPostCart",method = RequestMethod.GET)
-	public ModelAndView showPurchaseJobPostCart(PurchaseJobPostForm purchaseJobPostForm) {
-		ModelAndView model = new ModelAndView();
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		model.setViewName(PURCHASE_JOB_POSTINGS);
-		return 	model;
-	}
-	
-	@RequestMapping(value="/removeJobPost",method = RequestMethod.POST)
-	public ModelAndView removeJobPostFromCart(PurchaseJobPostForm purchaseJobPostForm,
-			@RequestParam("cartItemIndex") int cartItemIndex) {
-		ModelAndView model = new ModelAndView();
-		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
-		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
+		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart()
+				.get(cartItemIndex);
+		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal()
+				- cartItem.getPackageSubTotal());
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
-		return 	model;
+		return model;
 	}
-	
-	@RequestMapping(value="/proceedToCheckOut",method = RequestMethod.GET)
-	public ModelAndView checkOut(PurchaseJobPostForm purchaseJobPostForm,HttpSession session) {
+
+	@RequestMapping(value = "/proceedToCheckOut", method = RequestMethod.GET)
+	public ModelAndView proceedToCheckOut(
+			PurchaseJobPostForm purchaseJobPostForm, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		//model.addObject("purchaseJobPostForm", purchaseJobPostForm);
-		session.setAttribute("purchaseJobPostCart", purchaseJobPostForm);
+		session.setAttribute("purchaseJobPostForm", purchaseJobPostForm);
 		
 		model.setViewName("redirect:/pgiController/callPaymentMethod.html");
-		return 	model;
+		return model;
 	}
 }

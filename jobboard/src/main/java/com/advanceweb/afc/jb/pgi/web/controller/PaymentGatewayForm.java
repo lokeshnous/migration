@@ -1,5 +1,11 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
+import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
+
 /**
  * @author muralikc
  * 
@@ -7,6 +13,7 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 
 public class PaymentGatewayForm {
 
+	private int nsCustomerId;
 	private String paymentMethod;
 	
 	//For Account address
@@ -17,7 +24,16 @@ public class PaymentGatewayForm {
 	public InvoiceForm invoiceForm;
 	//For Credit Card
 	public CreditCardInfoForm creditCardInfoForm;
+	
+	private PurchaseJobPostForm purchaseJobPostForm;
 
+	public int getNsCustomerId() {
+		return nsCustomerId;
+	}
+
+	public void setNsCustomerId(int nsCustomerId) {
+		this.nsCustomerId = nsCustomerId;
+	}
 	/**
 	 * @return the paymentMethod
 	 */
@@ -92,4 +108,19 @@ public class PaymentGatewayForm {
 	public void setCreditCardInfoForm(CreditCardInfoForm creditCardInfoForm) {
 		this.creditCardInfoForm = creditCardInfoForm;
 	}
+
+	/**
+	 * @return
+	 */
+	public PurchaseJobPostForm getPurchaseJobPostForm() {
+		return purchaseJobPostForm;
+	}
+
+	/**
+	 * @param purchaseJobPostForm
+	 */
+	public void setPurchaseJobPostForm(PurchaseJobPostForm purchaseJobPostForm) {
+		this.purchaseJobPostForm = purchaseJobPostForm;
+	}
+
 }

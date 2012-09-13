@@ -18,6 +18,8 @@ public class AccountAddressForm {
 	private String country;
 	private String zipCode;
 	private String phone;
+	
+	
 
 	/**
 	 * @return the firstName

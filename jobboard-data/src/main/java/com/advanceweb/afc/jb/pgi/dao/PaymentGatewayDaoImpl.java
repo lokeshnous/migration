@@ -1,21 +1,33 @@
 package com.advanceweb.afc.jb.pgi.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
+import com.advanceweb.afc.jb.common.AddOnDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.OrderDetailsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityInventory;
+import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
+import com.advanceweb.afc.jb.data.entities.AdmOrderAddress;
+import com.advanceweb.afc.jb.data.entities.AdmOrderHeader;
+import com.advanceweb.afc.jb.data.entities.AdmOrderItem;
+import com.advanceweb.afc.jb.data.entities.AdmOrderPayment;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
-import com.advanceweb.afc.jb.pgi.BillingAddressDTO;
 import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
 
 /**
@@ -24,16 +36,15 @@ import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
  */
 
 @Repository("paymentGatewayDao")
-public class PaymentGatewayDaoImpl implements
-		PaymentGatewayDao {
+public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayDaoImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
 
-	private static final String BLANK= "BLANK";
-	
+	private static final String BLANK = "BLANK";
+
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -67,14 +78,13 @@ public class PaymentGatewayDaoImpl implements
 			// logger call
 			LOGGER.info(ex);
 		}
-		// TODO Auto-generated method stub
 		return contactDTO;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public BillingAddressDTO getBillingAddressByFacilityId(int facilityId) {
-		BillingAddressDTO billingAddressDTO = null;
+	public AccountAddressDTO getBillingAddressByFacilityId(int facilityId) {
+		AccountAddressDTO billingAddressDTO = null;
 		try {
 			if (facilityId != 0) {
 				AdmFacility admFacility = new AdmFacility();
@@ -84,7 +94,7 @@ public class PaymentGatewayDaoImpl implements
 						.find("from AdmFacilityContact where admFacility = ? and contactType = 'BILLING'",
 								admFacility);
 				if (admFacilityContact.size() > 0) {
-					BillingAddressDTO fetchAccountAddressDTO = paymentGatewayHelper
+					AccountAddressDTO fetchAccountAddressDTO = paymentGatewayHelper
 							.convertBillingAddressDaoToDto(admFacilityContact
 									.get(0));
 					billingAddressDTO = fetchAccountAddressDTO;
@@ -99,15 +109,15 @@ public class PaymentGatewayDaoImpl implements
 		}
 		return billingAddressDTO;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
-	public boolean saveBillingAddress(BillingAddressDTO billingAddressDTO) {
+	public boolean saveBillingAddress(AccountAddressDTO billingAddressDTO) {
 		try {
 			AdmFacilityContact admFacilityContact = paymentGatewayHelper
 					.convertBillingAddressDtoToEntity(billingAddressDTO);
 			AdmFacility admFacility = new AdmFacility();
-//			admFacility.setFacilityId(110);
+			// admFacility.setFacilityId(110);
 			admFacilityContact.setActive(1);
 			admFacilityContact.setAdmFacility(admFacility);
 			admFacilityContact.setContactType("BILLING");
@@ -136,8 +146,7 @@ public class PaymentGatewayDaoImpl implements
 
 		return false;
 	}
-	
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
@@ -150,7 +159,7 @@ public class PaymentGatewayDaoImpl implements
 			admFacilityContact.setAdmFacility(admFacility);
 			admFacilityContact.setContactType("BILLING");
 			admFacilityContact.setJobTitle("BLANK");
-			if (billingAddressDTO != null) {				
+			if (billingAddressDTO != null) {
 				hibernateTemplate.save(admFacilityContact);
 			}
 		} catch (HibernateException e) {
@@ -159,6 +168,135 @@ public class PaymentGatewayDaoImpl implements
 
 		return false;
 	}
-	
 
+	/**
+	 * This method is used to save the order details by taking the following
+	 * parameters.
+	 * 
+	 * @param orderDetailsDTO
+	 * @return boolean
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public boolean saveOrderDetails(OrderDetailsDTO orderDetailsDTO) {
+		try {
+			AdmOrderHeader admOrderHeader = new AdmOrderHeader();
+
+			admOrderHeader.setUserId(orderDetailsDTO.getUserId());
+
+			AdmFacility admFacility = new AdmFacility();
+			admFacility.setFacilityId(orderDetailsDTO.getFacilityId());
+			admOrderHeader.setAdmFacility(admFacility);
+
+			List<AdmOrderItem> admOrderItemList = paymentGatewayHelper
+					.transformToAdmOrderItemList(admOrderHeader,
+							orderDetailsDTO.getJobPostingPlanDTOList());
+			admOrderHeader.setAdmOrderItem(admOrderItemList);
+
+			AdmOrderAddress admOrderAddress = paymentGatewayHelper
+					.transformToAdmOrderAddress(admOrderHeader,
+							orderDetailsDTO.getOrderAddressDTO());
+			admOrderHeader.setAdmOrderAddress(admOrderAddress);
+
+			if(null != orderDetailsDTO.getOrderPaymentDTO()){
+				AdmOrderPayment admOrderPayment = paymentGatewayHelper
+						.transformToAdmOrderPayment(admOrderHeader,
+								orderDetailsDTO.getOrderPaymentDTO());
+				admOrderHeader.setAdmOrderPayment(admOrderPayment);
+			}
+
+			admOrderHeader.setOrderDate(new Date());
+			admOrderHeader.setOrderTotal(orderDetailsDTO.getOrderTotal());
+			admOrderHeader.setStatus("APPROVED");
+
+			hibernateTemplate.saveOrUpdate(admOrderHeader);
+		} catch (Exception e) {
+			LOGGER.error("ERROR : " + e);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * This method is used to save the inventory details by taking the following
+	 * parameters.
+	 * 
+	 * @param orderDetailsDTO
+	 * @return boolean
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public boolean saveInventoryDetails(OrderDetailsDTO orderDetailsDTO) {
+		try {
+				List<AdmFacilityInventory> admFacilityInventoryList = new ArrayList<AdmFacilityInventory>();
+				
+				AdmFacilityInventory admFacilityInventory = null;
+				AdmFacility admFacility = new AdmFacility();
+				admFacility.setFacilityId(orderDetailsDTO.getFacilityId());
+				
+				for(JobPostingPlanDTO jobPostingPlanDTO : orderDetailsDTO.getJobPostingPlanDTOList()){
+					
+					admFacilityInventory = new AdmFacilityInventory();
+					
+					admFacilityInventory.setAdmFacility(admFacility);
+					admFacilityInventory.setCreateDt(new Date());
+		
+					/*List<AdmInventoryDetail> admInventoryDetailList = paymentGatewayHelper
+							.transformToAdmInventoryDetail(admFacilityInventory,
+									orderDetailsDTO.getJobPostingPlanDTOList());*/
+					
+					AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,jobPostingPlanDTO);
+					admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
+					admFacilityInventoryList.add(admFacilityInventory);
+				}
+				hibernateTemplate.saveOrUpdateAll(admFacilityInventoryList);
+		} catch (Exception e) {
+			LOGGER.error("ERROR : " + e);
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * @param admFacilityInventory
+	 * @param jobPostingPlanDTO
+	 * @return
+	 */
+	private AdmInventoryDetail transformToAdmInventoryDetail(AdmFacilityInventory admFacilityInventory, JobPostingPlanDTO jobPostingPlanDTO){
+		 AdmInventoryDetail admInventoryDetail = new AdmInventoryDetail();
+			
+			admInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
+			
+			//if its just basic then this is fine to go with 
+			if(jobPostingPlanDTO.getAddOnDTOList().size() == 0){
+				admInventoryDetail.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
+				admInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE);
+			}	
+			else{
+				//call the SP to get the combo id & add it as product id 
+				int jobTypeId = Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId());
+				int [] inputs={0,0,0,0,0,0,0};
+				int index = 0;
+				inputs[index] = jobTypeId;
+				
+				for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
+					// product is combo id
+					index = Integer.parseInt(addOnDTO.getAddOnId());
+					inputs[index] = index;
+				}
+				
+				Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createSQLQuery(" { call Get_comboId(?,?,?,?,?,?,?) }");
+				for(int i = 0;i<inputs.length; i++){
+					query.setInteger(i, inputs[i]);
+				}	
+				// call SP here to get the combo id & set it as product id 
+				int comboId = DataAccessUtils.intResult(query.list());
+				
+				admInventoryDetail.setProductId(comboId);
+				admInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE_COMBO);
+			}
+			admInventoryDetail.setOrderQty(jobPostingPlanDTO.getQuanity());
+			admInventoryDetail.setAvailableqty(jobPostingPlanDTO.getQuanity());
+		return admInventoryDetail;
+	}
 }

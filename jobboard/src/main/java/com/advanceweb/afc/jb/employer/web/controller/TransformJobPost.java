@@ -123,6 +123,10 @@ public class TransformJobPost {
 		
 	}
 	
+	/**
+	 * @param jobPostingPlanDTOList
+	 * @return
+	 */
 	public List<JobPostingsForm> transformToJobPostingsFormList(List<JobPostingPlanDTO> jobPostingPlanDTOList)
 	{
 		List<JobPostingsForm> jobPostingsFormList = new ArrayList<JobPostingsForm>();
@@ -133,23 +137,75 @@ public class TransformJobPost {
 			jobPostingsForm.setJobPostPlanName(jobPostingPlanDTO.getJobPostPlanName());
 			jobPostingsForm.setJobPostPlanDescr(jobPostingPlanDTO.getJobPostPlanDescr());
 			jobPostingsForm.setJobPostPlanCretitAmt(jobPostingPlanDTO.getJobPostPlanCretitAmt());
-			List<AddOnForm> AddOnFormList = new ArrayList<AddOnForm>();
+			jobPostingsForm.setJobPostNetSuiteId(jobPostingPlanDTO.getJobPostNetSuiteId());
+			List<AddOnForm> addOnFormList = new ArrayList<AddOnForm>();
 			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
-				AddOnFormList.add(transformAddOnDTOToAddOnForm(addOnDTO));
+				addOnFormList.add(transformAddOnDTOToAddOnForm(addOnDTO));
 			}
-			jobPostingsForm.setAddOnForm(AddOnFormList);
+			jobPostingsForm.setAddOnForm(addOnFormList);
 			jobPostingsFormList.add(jobPostingsForm);
 		}
 		return jobPostingsFormList;
 		
 	}
 	
+	/**
+	 * @param addOnDTO
+	 * @return
+	 */
 	private AddOnForm transformAddOnDTOToAddOnForm(AddOnDTO addOnDTO) {
 		AddOnForm addOnForm = new AddOnForm();
 		addOnForm.setAddOnId(addOnDTO.getAddOnId());
 		addOnForm.setAddOnName(addOnDTO.getAddOnName());
 		addOnForm.setAddOnDescription(addOnDTO.getAddOnDescription());
 		addOnForm.setAddOnCreditAmt(addOnDTO.getAddOnCreditAmt());
+		addOnForm.setAddOnNetSuiteId(addOnDTO.getAddOnNetSuiteId());
 		return addOnForm;
+	}
+	
+	/**
+	 * @param jobPostingsFormList
+	 * @return
+	 */
+	public List<JobPostingPlanDTO> transformToJobPostingsDTOList(List<JobPostingsForm> jobPostingsFormList)
+	{
+		List<JobPostingPlanDTO> jobPostingPlanDTOList = new ArrayList<JobPostingPlanDTO>();
+		
+		JobPostingPlanDTO jobPostingPlanDTO = null;
+		List<AddOnDTO> addOnDTOList = null; 
+		for(JobPostingsForm jobPostingsForm : jobPostingsFormList){
+			jobPostingPlanDTO = new JobPostingPlanDTO();
+			jobPostingPlanDTO.setJobPostPlanId(jobPostingsForm.getJobPostPlanId());
+			jobPostingPlanDTO.setJobPostPlanId(jobPostingsForm.getJobPostPlanId());
+			jobPostingPlanDTO.setJobPostPlanName(jobPostingsForm.getJobPostPlanName());
+			jobPostingPlanDTO.setJobPostPlanDescr(jobPostingsForm.getJobPostPlanDescr());
+			jobPostingPlanDTO.setJobPostPlanCretitAmt(jobPostingsForm.getJobPostPlanCretitAmt());
+			jobPostingPlanDTO.setJobPostNetSuiteId(jobPostingsForm.getJobPostNetSuiteId());
+			jobPostingPlanDTO.setQuanity(jobPostingsForm.getQuantity());
+			jobPostingPlanDTO.setPackageSubTotal(jobPostingsForm.getPackageSubTotal());
+			addOnDTOList = new ArrayList<AddOnDTO>();
+			AddOnDTO addOnDTO = null;
+			for(AddOnForm addOnForm : jobPostingsForm.getAddOnForm()){
+				addOnDTO = transformAddOnFormToAddOnDTO(addOnForm);
+				addOnDTOList.add(addOnDTO);
+			}
+			jobPostingPlanDTO.setAddOnDTOList(addOnDTOList);
+			jobPostingPlanDTOList.add(jobPostingPlanDTO);
+		}
+		return jobPostingPlanDTOList;
+	}
+
+	/**
+	 * @param addOnForm
+	 * @return
+	 */
+	private AddOnDTO transformAddOnFormToAddOnDTO(AddOnForm addOnForm) {
+    	AddOnDTO addOnDTO = new AddOnDTO();
+		addOnDTO.setAddOnId(addOnForm.getAddOnId());
+		addOnDTO.setAddOnName(addOnForm.getAddOnName());
+		addOnDTO.setAddOnDescription(addOnForm.getAddOnDescription());
+		addOnDTO.setAddOnCreditAmt(addOnForm.getAddOnCreditAmt());
+		addOnDTO.setAddOnNetSuiteId(addOnForm.getAddOnNetSuiteId());
+		return addOnDTO;
 	}
 }

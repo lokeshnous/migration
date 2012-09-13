@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.data.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +42,7 @@ public class AdmInventoryDetail {
 	private int orderQty;
 	
 	//bi-directional many-to-one association to MerProfileAttrib
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="inventory_id")
 	private AdmFacilityInventory admFacilityInventory;
 	
