@@ -31,6 +31,10 @@
 						$(this).attr("checked",false);
 					});
 					$(this).parent().parent().find("td").eq(2).children(0).val("");
+					$(this).parent().parent().find("td").eq(2).children(0).attr("readonly",true);
+				}
+				else{
+					$(this).parent().parent().find("td").eq(2).children(0).attr("readonly",false);
 				}
 			});
 		});
@@ -127,7 +131,7 @@
 				}
 			});
 			if(count == 0){
-				alert("Hey! You Have not Selected Any Plan to Add To Cart");
+				alert("You Have not Selected Any Plan to Add To Cart");
 			}
 		});
 	});
@@ -169,7 +173,7 @@
 								<td width="7%" align="Left" id="${jobPosting.jobPostPlanCretitAmt}"><span
 									class="link_color2_selected"><span>$</span><span>${jobPosting.jobPostPlanCretitAmt}</span></span></td>
 								<td width="19%"><input type="text"
-									name="healthCareSubSplty2" class="jb_input75 marginTop0" /></td>
+									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" /></td>
 							</tr>
 							</thead>
 							<tbody>
