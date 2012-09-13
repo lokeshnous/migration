@@ -52,8 +52,8 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
 
 /**
- * anilm
- * 
+ * This class has been created to perform resume activity such as create, delete, edit, download  
+ * @author anilm
  * @version 1.0
  * @created Jul 9, 2012
  */
@@ -61,7 +61,6 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 @Controller
 @RequestMapping(value = "/jobSeekerResume")
 @SessionAttributes("createResume")
-@SuppressWarnings("unchecked")
 public class ResumeController {
 	
 	private static final Logger LOGGER = Logger
@@ -106,27 +105,33 @@ public class ResumeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/manageResume", method = RequestMethod.GET)
-	public String getResumes(HttpServletRequest request, HttpSession session,
+	public String manageResume(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
+
 		List<ResumeDTO> resumeDTOList = resumeService
 				.retrieveAllResumes((Integer) session
 						.getAttribute(MMJBCommonConstants.USER_ID));
 
 		List<ResumeVisibilityDTO> visiblityList = populateDropdownsService
 				.getResumeVisibilityList();
+		
 		Map<String, String> visibilityMap = new HashMap<String, String>();
+		
 		for (int i = 0; i < visiblityList.size(); i++) {
 			visibilityMap.put(visiblityList.get(i).getVisibilityId(),
 					visiblityList.get(i).getVisibilityName());
 		}
 
 		List<ResumeDTO> resumeDTOListNew = new ArrayList<ResumeDTO>();
+		
 		for (ResumeDTO resumeDTO : resumeDTOList) {
 			resumeDTO.setResumeVisibility(visibilityMap.get(resumeDTO
 					.getResumeVisibility()));
 			resumeDTOListNew.add(resumeDTO);
 		}
+		
 		map.put("resumeList", resumeDTOList);
+		
 		return "manageResumePopup";
 	}
 
@@ -167,9 +172,11 @@ public class ResumeController {
 	JSONObject validateCreateResumePopUp(
 			@RequestParam("resumeName") String resumeName,
 			@RequestParam("resumeId") String resumeId, HttpSession session) {
+		
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		JSONObject warningMessage = new JSONObject();
+		
 		if ("".equals(resumeId) || resumeId == null) {
 			int resumeCount = resumeService.findResumeCount(userId);
 			if (resumeCount >= 5) {
@@ -199,23 +206,27 @@ public class ResumeController {
 
 		transCreateResume.transformResumeDTOToCreateResume(createResume,
 				resumeDTO);
-		ModelAndView model = populateResumeDropDowns();
+		ModelAndView model = populateResumeDropDowns();		
 		model.addObject("createResume", createResume);
+		
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO
 				.getResumeType())) {
 			model.setViewName("editresumepopup");
 			return model;
 		}
+		
 		if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
 				.getResumeType())) {
 			model.setViewName("editUploadResumePopup");
 			return model;
 		}
+		
 		if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO
 				.getResumeType())) {
 			model.setViewName("editCopyPasteResumePopup");
 			return model;
 		}
+		
 		getTotalNotNullField(createResume);
 		model.setViewName("editresumepopup");
 		return model;
@@ -235,7 +246,8 @@ public class ResumeController {
 
 		boolean deleteStatus = resumeService.deleteResume(resumeId,
 				(Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
-		JSONObject deleteStatusJson = new JSONObject();
+		
+		JSONObject deleteStatusJson = new JSONObject();		
 		if (deleteStatus) {
 			deleteStatusJson.put("success", resumeDeleteSuccess);
 			return deleteStatusJson;
