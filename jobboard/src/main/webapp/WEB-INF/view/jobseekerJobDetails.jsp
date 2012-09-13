@@ -8,32 +8,12 @@
         <jsp:include page="common/include.jsp" />
         <title>ADVANCE Heathcare Jobs</title>
 
-<!-- js files for modalpopup------------------------------------------------- -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
-<script src="../resources/js/jquery-1.7.1.min.js"></script>
-		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
-		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
-
-        <style type="text/css" media="screen">
-           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
-        </style>
-<!-- -------------------------------------------------------------------------- -->
-		
-	
-	
-        <!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
 			});
-		</script>
-  
+		</script>  
 </head>
     
     <body class="job_board_home">    
