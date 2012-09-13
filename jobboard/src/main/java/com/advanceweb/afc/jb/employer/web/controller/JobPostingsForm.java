@@ -3,7 +3,9 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.List;
 
 /**
- * anilm
+ * This class has been created for holding the values of Job Type, Respective AddOn, 
+ * Quantity & Package Sub total
+ * @author anilm
  * @version 1.0
  * @created Aug 27, 2012
  */
@@ -65,14 +67,5 @@ public class JobPostingsForm {
 	}
 	public void setPackageSubTotal(int packageSubTotal) {
 		this.packageSubTotal = packageSubTotal;
-	}
-	
-	@Override
-	public String toString() {
-		return "JobPostingsForm [jobPostPlanId=" + jobPostPlanId
-				+ ", jobPostPlanName=" + jobPostPlanName
-				+ ", jobPostPlanDescr=" + jobPostPlanDescr
-				+ ", jobPostPlanCretitAmt=" + jobPostPlanCretitAmt
-				+ ", addOnForm=" + addOnForm + ", quantity=" + quantity + "]";
 	}
 }
