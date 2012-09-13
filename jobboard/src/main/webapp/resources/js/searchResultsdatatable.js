@@ -153,9 +153,11 @@ jQuery(document).ready(function() {
 			 $(document).ready(function() {
 				var cityState = $("#cityState").val();
 				var url = "../jobsearch/findLocation.html?cityState="+cityState;
+				if(typeof(cityState) != "undefined"){
 				$( "#cityState" ).autocomplete({
 					source: url
 				});
+				}
 				
 			}); 
 			 
