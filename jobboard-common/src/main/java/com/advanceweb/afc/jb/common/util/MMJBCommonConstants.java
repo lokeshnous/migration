@@ -311,6 +311,7 @@ public interface MMJBCommonConstants {
 	String STANDARD_JOB_POSTING = "Standard Job Posting";
 	String JOB_POSTING_SLOT = "Job Posting Slot";
 	String BASIC_JOB_TYPE = "Basic";
+	String INVENTORY = "inventoryPage";
 	
 		//FOR MAIL RELATED
 		String subjectOfMail="A job opportunity sent to you by"; 
