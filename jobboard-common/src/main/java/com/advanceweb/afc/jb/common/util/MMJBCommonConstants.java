@@ -298,6 +298,6 @@ public interface MMJBCommonConstants {
 	String DAYS = "days";
 	String STANDARD_JOB_POSTING = "Standard Job Posting";
 	String JOB_POSTING_SLOT = "Job Posting Slot";
-	String BASIC_JOB_TYPE = "Basic Job Posting Upgrade";
+	String BASIC_JOB_TYPE = "Basic";
 
 }
