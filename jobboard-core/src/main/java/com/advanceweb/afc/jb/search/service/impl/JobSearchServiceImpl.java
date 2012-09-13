@@ -117,5 +117,14 @@ public class JobSearchServiceImpl implements JobSearchService {
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
 		return jobSearchDAO.applyJobDetails(jobId);
 	}
+	
+	/**
+	 * This method is used to get the total number of Active jobs.
+	 * @return long
+	 */
 
+	public long getTotalActiveJobs(){
+		return jobSearchDAO.getTotalActiveJobs();
+	}
+	
 }

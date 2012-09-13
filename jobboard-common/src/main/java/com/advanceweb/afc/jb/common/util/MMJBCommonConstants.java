@@ -313,7 +313,7 @@ public interface MMJBCommonConstants {
 	String JOB_POSTING_SLOT = "Job Posting Slot";
 	String BASIC_JOB_TYPE = "Basic";
 	String INVENTORY = "inventoryPage";
-	
+	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
 		//FOR MAIL RELATED
 		String subjectOfMail="A job opportunity sent to you by"; 
 		String bodyOfMail1="Here’s a job opportunity that ";

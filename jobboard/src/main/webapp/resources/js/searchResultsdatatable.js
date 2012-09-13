@@ -283,7 +283,24 @@ jQuery(document).ready(function() {
 
 				window.onload = function() {
 					processPaginationReq("20");
-				}
+					$.ajaxSetup({ cache: false });
+					$.ajax({
+						url : '../healthcarejobs/activeJobs.html',
+						data : ({}),						
+						success : function(data) {
+						$("#TotalNoRecords").html(data);
+						},
+						error : function(data) {
+							alert('Unable to process'+
+									data);
+						},
+						complete : function(data) {
+							// do nothing for now.
+						}
+					}
+					);
+					
+				};
 
 				function applyFilter() {
 					var pageSize = $("#noOfPage").val();

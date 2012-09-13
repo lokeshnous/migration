@@ -61,4 +61,10 @@ public interface JobSearchDAO {
 	 */
 	JobApplyTypeDTO applyJobDetails(int jobId);
 	
+	/**
+	 * This method is used to get the total number of Active jobs.
+	 * @return long
+	 */
+	long getTotalActiveJobs();
+	
 }

@@ -15,6 +15,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -26,11 +27,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
 
@@ -38,6 +41,9 @@ import com.advanceweb.afc.jb.web.utils.ReadFile;
 @RequestMapping(value = "/healthcarejobs")
 public class HomeController {
 
+	private static final Logger LOGGER = Logger
+			.getLogger(HomeController.class);
+	
 	@Value("${IMG_WIDTH}")
 	private String imgwidth;
 
@@ -76,6 +82,9 @@ public class HomeController {
 
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	
+	@Autowired
+	private JobSearchService jobSearchService;
 
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model) {
@@ -331,5 +340,25 @@ public class HomeController {
 
 		return "jspviewcontent";
 	}
+	
+	/**
+	 * This method is used to get the total number of Active jobs.
+	 * @param HttpServletRequest
+	 * @return String
+	 */
+	//To do: Take it from SOLR. Not from DB.
+	@ResponseBody
+	@RequestMapping(value = "/activeJobs", method = RequestMethod.GET)
+	public String activeJobs(HttpServletRequest request) {
+		long totalNoOfActiveJobs = 0;
+		try {
+			totalNoOfActiveJobs = jobSearchService.getTotalActiveJobs();
+			
+		} catch (Exception e) {// Catch exception if any
+			LOGGER.error(e);
+		}
+		return String.valueOf(totalNoOfActiveJobs);
+	}
+	
 
 }

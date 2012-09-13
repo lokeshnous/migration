@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -178,6 +179,23 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			LOGGER.info("applyJobDetails : ERROR");
 		}
 		return jobApplyTypeDTO;
+	}
+	
+	
+	/**
+	 * This method is used to get the total number of Active jobs.
+	 * @return long
+	 */
+	
+	public long getTotalActiveJobs(){
+		long totalNoOfActiveJobs = 0L;
+		try {
+			totalNoOfActiveJobs = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from JpJob where active=1"));
+			LOGGER.info("Total number of Active Job is "+totalNoOfActiveJobs);
+		} catch (HibernateException he) {
+			LOGGER.info("Error occured while getting the Total Active Jobs from Database" + he);
+		}
+		return totalNoOfActiveJobs;
 	}
 
 }
