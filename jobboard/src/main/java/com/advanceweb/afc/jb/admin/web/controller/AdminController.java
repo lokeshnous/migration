@@ -127,12 +127,14 @@ public class AdminController {
 		
 	}
 	/**
-	 * 
+	 * @author kartikm
+	 * Called a function to get the adminEditJobSave page.
+	 * for search display
 	 * @param request
 	 * @param session
 	 * @param jobPostform
 	 * @param result
-	 * @return
+	 * @return jsonObject
 	 */
 	@RequestMapping(value = "/manageEditJobSearch", method = RequestMethod.GET)
 	@ResponseBody
@@ -154,12 +156,13 @@ public class AdminController {
 	}
 	
 	/**
-	 * Called a funtion to get the adminEditJobSave page.
-	 * 
+	 * @author kartikm
+	 * Called a function to get the adminEditJobSave page.
+	 * for search display
 	 * @param response
 	 * @param request
 	 * @param model
-	 * @return
+	 * @return modelAndView
 	 */
 	@RequestMapping(value = "/adminEditJobSave")
 	public ModelAndView getAdminEditJobSave(HttpServletResponse response,
@@ -168,23 +171,31 @@ public class AdminController {
 		modelAndView.setViewName("adminEditJobSave");
 		return modelAndView;
 	}
-	
+	/**
+	 * @author kartikm
+	 * This is the save method call when date change and save button 
+	 * click then it is Change from active, inactive, Draft, Expired 
+	 * @param request
+	 * @param session
+	 * @param jobPostform
+	 * @param result
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/manageEditJobSearchSave", method = RequestMethod.GET)
 	public String getJobPostDetailsSave(HttpServletRequest request,
 			HttpSession session, JobPostForm jobPostform,BindingResult result) {
-		//JSONObject jsonObject = new JSONObject();
+
 		try{
 			JobPostDTO dto=new JobPostDTO();
 		String id=request.getParameter("advJobId");
 		int jobId=Integer.parseInt(id);
 		String endDate=request.getParameter("endDate");
-		//String startDate=request.getParameter("startDate");
+		String startDate=request.getParameter("startDate");
 		dto.setJobId(jobId);
-		//dto.setStartDt(startDate);
+		dto.setStartDt(startDate);
 		dto.setEndDt(endDate);
-		String status="Active";
-		dto.setJobStatus(status);
+
 		employerJobPost.jobSaveByAdmin(dto,jobId);
 		}catch (Exception e) {
 			LOGGER.info("Manager Edit Job Posting Search Option");
