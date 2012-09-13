@@ -679,8 +679,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 			Query query = hibernateTemplate
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("SELECT a from JpJob a where a.jobId='"+advSearchId+"' ");
-			
+					.createQuery(
+							"SELECT a from JpJob a where a.jobId='"
+									+ advSearchId + "'");
+
 			jobs = query.list();
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -689,81 +691,111 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
+
 	/**
-	 *  @Author kartikm
-	 *  @Purpose:This method is called to save posted job by admin
-	 *  when admin search some Advance job id and change some status
-	 *  by date wise then this function is active.
-	 * 	@Created:12sept, 2012
-	 * 	@param apd as list of End date
-	 * 	@param jobId jobId
-	 * 	@return true
+	 * @Author kartikm
+	 * @Purpose:This method is called to save posted job by admin when admin
+	 *               search some Advance job id and change some status by date
+	 *               wise then this function is active.
+	 * @Created:12sept, 2012
+	 * @param apd
+	 *            as list of End date
+	 * @param jobId
+	 *            jobId
+	 * @return true
 	 */
-	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId){
+	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId) {
 		boolean isUpdate = false;
-		try{
-			JpJob mer = hibernateTemplate.get(JpJob.class, jobId);				 
-				Date endDateValue = null;
-				Date todayDate = null;
-				String enddateValue=apd.getEndDt() +" 00:00:00";
-				final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
-				final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
-				String newDateString;
-				SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-				try {
-					Date d = sdf.parse(enddateValue);
-					sdf.applyPattern(NEW_FORMAT);
-					newDateString = sdf.format(d);					
-				      SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);				
+		try {
+			JpJob mer = hibernateTemplate.get(JpJob.class, jobId);
+			Date endDateValue = null;
+			// Date startDateValue=null;
+			Date todayDate = null;
+			String enddateValue = apd.getEndDt() + " 00:00:00";
+			// String startdateValue=apd.getStartDt()+" 00:00:00";
 
-      
-				      endDateValue = sdfSource.parse(newDateString);					
-				} catch (ParseException e) {					
-					LOGGER.info("Date parsing in Job save by admin wrong");
-				} 
-				Calendar cal = Calendar.getInstance();				
-				    long startDay = 0;
-				    long endDay = 0;
-				    int numberOfDays=0;
-				    
-				    Calendar currentDate = Calendar.getInstance();
-				    SimpleDateFormat formatter= 
-				    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				    try{
-				    String dateNow = formatter.format(currentDate.getTime());
-				    SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);				
+			endDateValue = dateConveter(enddateValue);
+			// startDateValue=dateConveter(startdateValue);
+			Calendar currentDate = Calendar.getInstance();
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"MM/dd/yyyy HH:mm:ss");
+			try {
+				String dateNow = formatter.format(currentDate.getTime());
+				todayDate = dateConveter(dateNow);
+			} catch (Exception e) {
+				LOGGER.info("Info data error date conversion");
+			}
 
-      
-				      todayDate = sdfSource.parse(dateNow);
-				    }catch(Exception e) {
-					      LOGGER.info("Info data error date conversion");
-				    }
-				    try {
-				      cal.setTime(todayDate);
-				      startDay = cal.getTimeInMillis() / millisInDay;
-				      
-				      cal.setTime(endDateValue);
-				      endDay = cal.getTimeInMillis() / millisInDay;
-				    } catch (Exception e) {
-				      LOGGER.info("Info data error for date conversion");
-				    }
-
-				    numberOfDays = (int) (endDay - startDay + 1);
-				 if(numberOfDays>=0){
-					 mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
-				 }else if(numberOfDays<0){
-					 mer.setJobStatus(MMJBCommonConstants.STATUS_INACTIVE);
-				 }			
+			int numberOfDays = twoDateDifferentValue(todayDate, endDateValue);
+			// int
+			// numberOfStartDate=twoDateDifferentValue(todayDate,startDateValue);
+			if (numberOfDays >= 0) {
+				mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
+			} else if (numberOfDays < 0) {
+				mer.setJobStatus(MMJBCommonConstants.STATUS_INACTIVE);
+			}
 			mer.setEndDt(endDateValue);
 			hibernateTemplate.update(mer);
 			isUpdate = true;
 			LOGGER.info("Job Status Save is done by Admin");
-		}catch(DataAccessException e){
+		} catch (DataAccessException e) {
 			LOGGER.error("Job Status Save is not done by Admin");
-			
+
 		}
 		return isUpdate;
-		
+
 	}
 
+	/**
+	 * @author kartikm Date Conversion method name dateConveter that is for
+	 *         Converting from MM/dd/yyyy HH:mm:ss to yyyy-MM-dd HH:mm:ss
+	 * @param date
+	 * @return dateValue
+	 */
+	public Date dateConveter(String date) {
+		Date dateValue = null;
+		final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
+		final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
+		String newDateString;
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		try {
+			Date d = sdf.parse(date);
+			sdf.applyPattern(NEW_FORMAT);
+			newDateString = sdf.format(d);
+			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);
+			dateValue = sdfSource.parse(newDateString);
+		} catch (ParseException e) {
+			LOGGER.info("Date parsing in Job save by admin wrong");
+		}
+
+		return dateValue;
+	}
+
+	/**
+	 * @author kartikm Two date Different method name is twoDateDifferentValue
+	 *         that compare number of day start date and end date
+	 * @param todayDate
+	 * @param endDateValue
+	 * @return numberOfDays
+	 */
+	public int twoDateDifferentValue(Date todayDate, Date endDateValue) {
+		Calendar cal = Calendar.getInstance();
+		long startDay = 0;
+		long endDay = 0;
+		int numberOfDays = 0;
+		try {
+			cal.setTime(todayDate);
+			startDay = cal.getTimeInMillis() / millisInDay;
+			cal.setTime(endDateValue);
+			endDay = cal.getTimeInMillis() / millisInDay;
+			// Two date different value calculate
+			numberOfDays = (int) (endDay - startDay + 1);
+		} catch (Exception e) {
+			LOGGER.info("Info data error for date conversion");
+		}
+		return numberOfDays;
+	}
+	
+	
+	
 }
