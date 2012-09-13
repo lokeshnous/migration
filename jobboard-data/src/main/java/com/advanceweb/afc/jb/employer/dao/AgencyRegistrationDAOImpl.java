@@ -167,7 +167,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 					.forClass(MerLocation.class);
 			criteria.setProjection(Projections.distinct(Projections
 					.property("country")));
-			@SuppressWarnings("unchecked")
+		//	@SuppressWarnings("unchecked")
 			List<Object> merUtilityList = hibernateTemplateTracker
 					.findByCriteria(criteria);
 			return registrationConversionHelper
@@ -186,7 +186,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			criteria.setProjection(Projections.distinct(Projections
 					.property("state")));
 			criteria.addOrder(Order.asc("state"));
-			@SuppressWarnings("unchecked")
+		//	@SuppressWarnings("unchecked")
 			List<Object> merUtilityList = hibernateTemplateTracker
 					.findByCriteria(criteria);
 			return registrationConversionHelper
@@ -207,7 +207,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	public AgencyProfileDTO getProfileAttributes() {
 		AgencyProfileDTO dto = null;
 		try {
-			@SuppressWarnings("unchecked")
+		//	@SuppressWarnings("unchecked")
 			List<MerProfileAttrib> listProfAttrib = hibernateTemplateTracker
 					.find(REGISTRATION_ATTRIBS);
 			List<DropDownDTO> countryList = getCountryList();
@@ -318,7 +318,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	@Override
 	public List<AdmFacility> getAssocEmployerNames(int userId,
 			int agencyFacilityId) {
-		@SuppressWarnings("unchecked")
+	//	@SuppressWarnings("unchecked")
 //		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
 //				.find("from AdmFacility where adminUserId=2162 and facilityParentId=393 and deleteUserId=0");
 		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
