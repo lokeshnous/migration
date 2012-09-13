@@ -8,8 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="refresh" content="10">
 <title>ADVANCE Heathcare Jobs</title>
-<script src="<%= request.getContextPath() %>/resources/js/cal_conf2.js"></script>
-<script src="<%= request.getContextPath() %>/resources/js/cal2.js"></script>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 jQuery(document).ready(function() {
@@ -60,33 +58,7 @@ jQuery(document).ready(function() {
 		        	return false;
 		       		}
 		    });
-		
-		/* $("#Save").click(function(event){		
-			var advJobId = $("#advJobId").val();
-			var startDate=$("#startDate").val();
-			var endDate=$("#endDt").val();
-			//alert("${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&startDate="+startDate+"&endDate="+endDate);
-			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
-				 success: function(data){ 
-					 if(data == ''){
-							alert("Data save successfully !");	
-							//loadTable();
-							parent.$.nmTop().close();
-						}else{
-							$("#errmsg").html(data);
-						} 
-				},
-				error: function(response) {
-					alert("Server Error for Save data: "+response.status);
-				},
-				complete: function() {
-					
-				}
-			});  
-		}); */
-		
-			
-		    
+				    
 		function isDate(txtDate)
 		{
 		    var currVal = txtDate;
