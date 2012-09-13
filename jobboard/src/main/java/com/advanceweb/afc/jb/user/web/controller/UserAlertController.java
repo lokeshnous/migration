@@ -28,6 +28,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.UserAlertService;
 
 /**
@@ -101,8 +102,13 @@ public class UserAlertController {
 		model.addObject("enablePostEditAccess", enablePostEditAccess);
 
 		List<DropDownDTO> alertList = alertService.populateValues("FACILITY");
-		List<ManageAccessPermissionDTO> jbOwnerList = permissionService
-				.getJobOwnerList(facilityId, userId);
+		List<ManageAccessPermissionDTO> jbOwnerList = null;
+		try {
+			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
+		} catch (JobBoardServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		List<DropDownDTO> dropDownList = null;
 
@@ -156,8 +162,13 @@ public class UserAlertController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		List<ManageAccessPermissionDTO> jbOwnerList = permissionService
-				.getJobOwnerList(facilityId, userId);
+		List<ManageAccessPermissionDTO> jbOwnerList = null;
+		try {
+			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
+		} catch (JobBoardServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		List<UserAlertDTO> alertList = alertService.viewalerts(userId,
 				facilityId, jbOwnerList);
 		model.addObject("alertList", alertList);

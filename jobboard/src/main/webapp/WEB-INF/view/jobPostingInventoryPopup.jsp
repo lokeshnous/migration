@@ -12,7 +12,8 @@
 	jQuery(document).ready(function() {
 		function cancelProcess() {
 			parent.$.nmTop().close();
-		}
+		}	
+		$("#purchaseJobPostings").displaypopup("#purchaseJobPostings","790", "360");
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -90,8 +91,8 @@
 					</table>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<a href="" class="btn_sm orange">BUY MORE</a> <a href=""
-						onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
+					<a id="purchaseJobPostings" href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html" class="btn_sm orange">BUY MORE</a> 
+					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
 				</div>
 			</form:form>
 		</div>

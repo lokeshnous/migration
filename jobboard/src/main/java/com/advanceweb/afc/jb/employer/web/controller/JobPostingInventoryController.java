@@ -70,7 +70,8 @@ public class JobPostingInventoryController {
 					MMJBCommonConstants.STANDARD_JOB_POSTING)
 					&& postingInventoryDTO.getProductType().equals(
 							MMJBCommonConstants.JOB_TYPE_COMBO)) {
-				dto.setAddon(postingInventoryDTO.getAddon());
+				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
+						+ postingInventoryDTO.getAddon());
 				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
@@ -88,7 +89,8 @@ public class JobPostingInventoryController {
 					MMJBCommonConstants.JOB_POSTING_SLOT)
 					&& postingInventoryDTO.getProductType().equals(
 							MMJBCommonConstants.JOB_TYPE_COMBO)) {
-				dto.setAddon(postingInventoryDTO.getAddon());
+				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
+						+ postingInventoryDTO.getAddon());
 				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
