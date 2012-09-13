@@ -29,14 +29,11 @@
 						},
 						error: function(response) {
 							alert("Server Error : "+response.status);
-						}
-							
+						}					
 						
-					});
-					
+					});	
 					
 				}
-
 		});
 			
 			$("#saveClicked").click(function() {
@@ -46,7 +43,7 @@
 	    			data:$('#manageAcceccPermissionForm').serialize(),
 					type: "POST",
 					success : function(dataFound) {	
-						var listSize=${manageAccessPermissionForm.manageAccessPermissiondetails.size()};
+						var listSize=$('#totalSize').val();
 						if(listSize>0){
 						alert("Permissions Changed Successfully.");
 						 $("#manageAccessPerm").click();
@@ -71,6 +68,7 @@
 		 <form:form action="updateJobOwner.html" commandName="manageAccessPermissionForm" id="manageAcceccPermissionForm" >
 		 
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
+        <form:hidden path="totalSize" id="totalSize"/>
           <div class="popupHeader">
             <h2>MANAGE ACCESS PERMISSIONS</h2>
            <img src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>

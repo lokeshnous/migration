@@ -18,6 +18,7 @@ public class ManageAccessPermissionForm {
 	private String fullAccess;
 	private String postEditAccess;
 	private String setAlertPage;
+	private int totalSize;
 	
 	private List<ManageAccessPermissionDTO> manageAccessPermissiondetails; 
 	/**
@@ -106,7 +107,19 @@ public class ManageAccessPermissionForm {
 	public void setSetAlertPage(String setAlertPage) {
 		this.setAlertPage = setAlertPage;
 	}
-	
-	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTotalSize() {
+		return totalSize;
+	}
+	/**
+	 * 
+	 * @param totalSize
+	 */
+	public void setTotalSize(int totalSize) {
+		this.totalSize = totalSize;
+	}
 	
 }

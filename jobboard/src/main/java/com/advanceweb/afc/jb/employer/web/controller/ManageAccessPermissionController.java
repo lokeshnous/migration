@@ -86,6 +86,8 @@ public class ManageAccessPermissionController {
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while updating the job owner", jbex);
 		}
+		
+		manageAccessPermissionForm.setTotalSize(jbOwnerList.size());
 		model.addObject("jobOwners", jbOwnerList);
 		manageAccessPermissionForm
 				.setManageAccessPermissiondetails(jbOwnerList);
