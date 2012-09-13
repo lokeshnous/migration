@@ -55,7 +55,7 @@
 			<h2>SEND TO A FRIEND</h2>
 			<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
 		</div>
-      <div id="errmsg" class="validationMsg"></div>
+      
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="../jobsearch/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
 				<form:input type="hidden" name="jobId" id="jobId" path="jobId"/>
@@ -71,6 +71,7 @@
 					</span>
 					<div class="toolTip colorPkrAreaToolTip"><span class="classic">Example: John@yahoo.com;Dave@yahoo.com.</span></div>
 				</div>
+				<div id="errmsg" class="validationMsg"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Message:
