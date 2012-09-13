@@ -54,7 +54,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
 			"and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 
-	private static final long millisInDay = 24 * 60 * 60 * 1000;
+	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
@@ -911,9 +911,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 		int numberOfDays = 0;
 		try {
 			cal.setTime(todayDate);
-			startDay = cal.getTimeInMillis() / millisInDay;
+			startDay = cal.getTimeInMillis() / MILLIS_IN_DAY;
 			cal.setTime(endDateValue);
-			endDay = cal.getTimeInMillis() / millisInDay;
+			endDay = cal.getTimeInMillis() / MILLIS_IN_DAY;
 			// Two date different value calculate
 			numberOfDays = (int) (endDay - startDay + 1);
 		} catch (Exception e) {
