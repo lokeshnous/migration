@@ -418,7 +418,6 @@
 							<form:option value="0" label="Select" />
 							<form:options items="${templateList}" itemValue="optionId" itemLabel="optionName" />
 						</form:select>
-						<span class="required">(Required)</span>
                         <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
               </div>
               <div class="clearfix"></div>
