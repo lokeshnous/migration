@@ -12,13 +12,13 @@ public interface ImpersonateUserService {
 	 * @param adminDTO
 	 * @return
 	 */
-	public boolean impersonateUser(AdminDTO adminDTO);
+	boolean impersonateUser(AdminDTO adminDTO);
 	
 	/**
 	 * @param email
 	 * @param password
 	 * @return
 	 */
-	public boolean validateAdminCredentials(String email, String password);
+	boolean validateAdminCredentials(String email, String password);
 
 }

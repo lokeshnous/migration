@@ -21,7 +21,22 @@
 <script src="../resources/js/searchResultsdatatable.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
+function validateNumber(event) {
+    var keyval = window.event ? event.keyCode : event.which;
+
+    if (event.keyCode == 8 || event.keyCode == 46
+     || event.keyCode == 37 || event.keyCode == 39) {
+        return true;
+    }
+    else if ( keyval < 48 || keyval > 57 ) {
+        return false;
+    }
+    else return true;
+};
+</script>
+<script type="text/javascript">
 	jQuery(document).ready(function() {
+		$('[id^=zipCode]').keypress(validateNumber);
 		jQuery(".megamenu").megamenu();
 
 	});
@@ -203,7 +218,7 @@
 										<span class="lableText3">Zip:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
-											type="text" name="healthCareSubSplty"
+											type="text" name="zipCode" id="zipCode"
 											class="job_seeker_password textBox350 
 " maxlength="10" />
 										<span class="required">(Required)</span>

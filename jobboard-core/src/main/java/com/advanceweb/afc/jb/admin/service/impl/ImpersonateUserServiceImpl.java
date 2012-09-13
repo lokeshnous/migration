@@ -19,7 +19,7 @@ public class ImpersonateUserServiceImpl implements ProfileRegistration,
 		ImpersonateUserService {
 
 	@Autowired
-	AdminDAO adminDAO;
+	private AdminDAO adminDAO;
 
 	@Override
 	public boolean validateEmail(String email) {

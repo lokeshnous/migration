@@ -96,6 +96,7 @@ public class UserDaoImpl implements UserDao {
 	 * @param userId
 	 * @return EmployerInfoDTO
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public EmployerInfoDTO facilityDetails(int userId) {
 		EmployerInfoDTO employerInfoDTO = null;

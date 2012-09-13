@@ -69,18 +69,17 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateAdminCredentials(String email, String password) {
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)
 					&& !StringUtils.isEmptyOrWhitespaceOnly(password)) {
-				@SuppressWarnings("unchecked")
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						VALIDATE_ADMIN, email, password);
 
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
-					@SuppressWarnings("unchecked")
 					List<AdmUserRole> useList = hibernateTemplateCareers.find(
 							USER_ROLE, user.getUserId());
 					if (null != useList && !useList.isEmpty()) {
