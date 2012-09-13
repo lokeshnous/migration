@@ -124,7 +124,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// Retrieving location Id based on the data selection while posting
 			// the new job
 			
-			if(!validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId())){
+			if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) 
+					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId())){
 				return false;
 			}				
 			
