@@ -31,7 +31,7 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 	private NSSalesOrderService nsSalesOrderService;
 	
 	@Override
-	public boolean createOrder(OrderDetailsDTO orderDetailsDTO) {
+	public UserDTO createOrder(OrderDetailsDTO orderDetailsDTO) {
 		
 		//get the entity id from DB using facility id 
 		UserDTO userDTO = new UserDTO();
@@ -47,18 +47,17 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 				//payment is success - save both order & inventory details 
 				paymentGatewayDao.saveOrderDetails(orderDetailsDTO);
 				paymentGatewayDao.saveInventoryDetails(orderDetailsDTO);
-				LOGGER.error("Transaction success ............");
+				LOGGER.error("Transaction success : "+userDTO.getNsStatusCode());
 				status = true;
 			}
 			else{
 				//payment is failed - save only order
 				orderDetailsDTO.setOrderPaymentDTO(null);
 				paymentGatewayDao.saveOrderDetails(orderDetailsDTO);
-				paymentGatewayDao.saveInventoryDetails(orderDetailsDTO);
-				LOGGER.error("Transaction failed ............");
+				LOGGER.error("Transaction failed :"+userDTO.getNsStatusCode());
 				status = false;
 			}	
 		}	
-		return status;
+		return userDTO;
 	}
 }

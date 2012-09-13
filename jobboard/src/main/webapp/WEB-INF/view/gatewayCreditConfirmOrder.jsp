@@ -178,8 +178,7 @@
 													href="../pgiController/paymentCreditBackMethod.html">Edit</a></span>
 										</span></td>
 										<td align="center" valign="top"><span
-											class="paymentLineHeight"> ${cardType}, ending in
-												${creditCardNo} <br> <span><a
+											class="paymentLineHeight"> Credit Card <br> <span><a
 													href="../pgiController/callPaymentMethod.html">Edit</a></span>
 										</span></td>
 										<td align="right" valign="top"><span

@@ -43,13 +43,19 @@
 					</h3>
 					<form:form action="../pgiController/callThankYouPage" method="POST"
 						class="firstForm">
-						<div class="row">
-							<p class="gateway_section_head">Thank you for your payment!</p>
-							<p>Your order is currently being processed. Click the button
-								below to proceed to the next page.</p>
+						<div class="FormErrorDisplayText">
+							${errMap.errorMessage}
 						</div>
+						<c:if test="${empty errMap.errorMessage}">
+							<div class="row">
+								<p class="gateway_section_head">Thank you for your payment!</p>
+								<p>Your order is currently being processed. Click the button
+									below to proceed to the next page.</p>
+							</div>
+						</c:if>
+						
 						<div class="buttonContainer">
-							<span class="floatLeft"><a href="" class="btn_sm orange">Return</a></span>
+							<span class="floatLeft"><a href="../employer/employerDashBoard.html" class="btn_sm orange">Return</a></span>
 						</div>
 					</form:form>
 				</div>

@@ -130,14 +130,19 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 	private UserDTO getJSONFromResponse(Response response){
 		UserDTO userDTO = new UserDTO();
 		String jsonResponse = null;
+		Map<Integer,String> nsStatusCode = new HashMap<Integer,String>();
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
 			if(!StringUtils.isEmpty(jsonResponse) && jsonResponse.contains("error")){
-				LOGGER.error("Transaction is failed ......"+jsonResponse);
+				LOGGER.error("Transaction is failed :"+jsonResponse);
+				nsStatusCode.put(response.getStatus(), jsonResponse);
+				userDTO.setNsStatusCode(nsStatusCode);
 				userDTO.setNsStatus("false");
 			}else{
-				LOGGER.info("Valid Transaction  == = ============================="+jsonResponse);
+				LOGGER.info("Transaction is success :"+jsonResponse);
+				nsStatusCode.put(response.getStatus(), jsonResponse);
+				userDTO.setNsStatusCode(nsStatusCode);
 				userDTO.setNsStatus("true");
 			}
 

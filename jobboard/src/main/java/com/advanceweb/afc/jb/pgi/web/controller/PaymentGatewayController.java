@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -267,21 +269,38 @@ public class PaymentGatewayController {
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
 		
 		orderDetailsDTO = transformPaymentMethod.transformToOrderDetailsDTO(paymentGatewayForm);
+		
 		orderDetailsDTO.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		orderDetailsDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		orderDetailsDTO.setNsCustomeId(paymentGatewayForm.getNsCustomerId());
 		
-		boolean status = paymentGatewayService.createOrder(orderDetailsDTO);		
-
+		UserDTO userDTO = paymentGatewayService.createOrder(orderDetailsDTO);		
+		
+		Map<Integer,String> statusCode = userDTO.getNsStatusCode();
 		//once the payment is success clear out the form data & related session data
 		session.removeAttribute("purchaseJobPostForm");
 		paymentGatewayForm = null;		
 		ModelAndView model = new ModelAndView();
-		if(status){
+		Map<String,String> errMap = new HashMap<String,String>();
+		if(userDTO.getNsStatus().equals("true")){
 			model.setViewName("redirect:/pgiController/callThankYouPage.html");
 		}
 		else
-		{
+		{   
+			if(statusCode.containsKey(400)){
+				errMap.put("errorMessage", "Bad Request, please contact System Admin");				
+			}
+			else if(statusCode.containsKey(401)){
+				errMap.put("errorMessage", "Authentication failure, please contact System Admin");
+			}
+			else if(statusCode.containsKey(404)){
+				errMap.put("errorMessage", "Authentication failure, please contact System Admin");
+			}
+			else{
+				errMap.put("errorMessage", "");
+			}
+			errMap.put("errorMessage", "Authentication failure, please contact System Admin");
+			model.addObject("errMap", errMap);
 			model.setViewName("redirect:/pgiController/callThankYouPage.html");
 		}
 		return model;

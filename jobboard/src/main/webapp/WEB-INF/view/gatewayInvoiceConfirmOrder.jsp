@@ -174,7 +174,7 @@
 									</td>
 									<td align="center" valign="top">
 										<span class="paymentLineHeight">
-											Invoice #${orderNo} <br> 
+											Invoice <br> 
 											<a href="../pgiController/callPaymentMethod.html">Edit</a>
 										</span>
 									</td>

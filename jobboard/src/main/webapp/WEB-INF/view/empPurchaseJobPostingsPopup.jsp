@@ -223,7 +223,7 @@
 					</div>
 					<c:if test="${empty purchaseJobPostForm.jobPostingsCart}">
 						<div class=" row DotBorderBottom marginTop5"></div>
-						<br><br><br><h5 align="left">No Items selected</h5><br><br>
+						<br><br><br><h5 align="left" class="FormErrorDisplayText">Please select packages</h5><br><br>
 					</c:if>
 					
 					<% int i= 0; %>

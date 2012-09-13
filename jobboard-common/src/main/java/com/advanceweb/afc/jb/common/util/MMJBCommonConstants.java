@@ -272,8 +272,8 @@ public interface MMJBCommonConstants {
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
 	String EMAIL_MESSAGE = "Please enter correct Email address";
 	String EMAIL_NULL_MESSAGE = "Email Id already Exists!";
-	String PHONE_NO = "Please enter the valid phone format(xxx) xxx-xxxx.";
-	String PHONE_NULL_NO = "Please give the Phone number";
+	String PHONE_NO = "Please enter the correct Phone Number (XXX-XXX-XXXX)";
+	String PHONE_NULL_NO = "Please enter the Phone number";
 	String EMAIL_MESSAGE_BLANK = "Please enter required fields.";
 	String UPDATE_ERROR = " Error occurred. Please contact your Administrator.";
 	// Job Types

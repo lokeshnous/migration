@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
+import java.util.Map;
 
 public class UserDTO {
 	
@@ -28,6 +29,7 @@ public class UserDTO {
 	private String city;
 	private int nsCustomerID;
 	private String nsStatus;
+	private Map<Integer,String> nsStatusCode;
 	private String recordType;
 	private int entityId;
 	private boolean isFeatured;
@@ -243,5 +245,10 @@ public class UserDTO {
 	public void setSalesOrderDTO(SalesOrderDTO salesOrderDTO) {
 		this.salesOrderDTO = salesOrderDTO;
 	}
-	
+	public Map<Integer, String> getNsStatusCode() {
+		return nsStatusCode;
+	}
+	public void setNsStatusCode(Map<Integer, String> nsStatusCode) {
+		this.nsStatusCode = nsStatusCode;
+	}
 }

@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.pgi.service;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 
 /**
@@ -41,6 +42,6 @@ public interface PaymentGatewayService {
 	 * @param orderDetailsDTO
 	 * @return boolean 
 	 */
-	boolean createOrder(OrderDetailsDTO orderDetailsDTO);
+	UserDTO createOrder(OrderDetailsDTO orderDetailsDTO);
 
 }
