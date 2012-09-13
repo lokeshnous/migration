@@ -43,9 +43,9 @@
 					<div class="featuredEmployerLeft" style="background: ${employerProfileManagementForm.primaryColor}">
 						<div class="featuredEmployerVideo">
 							&nbsp;
-							<!-- <iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0"
+							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0"
 								marginwidth="0" src="" frameborder="0" height="180"
-								scrolling="no" width="255"></iframe> -->
+								scrolling="no" width="255"></iframe> 
 								
 							
 		<!-- <video width="320" height="240" controls="controls">
@@ -58,8 +58,8 @@
 		 <!-- <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
         --><!--  <div id="flash" style="width: 255px; height: 180px;"></div> -->
-       <embed src="http://www.youtube.com/v/opVb89Cmrtk&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
-  </embed>
+       <!-- <embed src="http://www.youtube.com/v/opVb89Cmrtk&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
+  </embed> -->
  <!--        <script type="text/javascript">
        
             $(document).ready( function()
@@ -70,11 +70,11 @@
             });
         
         </script> -->
- <video width="320" height="240" controls="controls">
+<!--  <video width="320" height="240" controls="controls">
   <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />   
    <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />      
 Your browser does not support the video tag.
-</video>  
+</video>  --> 
 <iframe width="320" height="240" src="http://www.youtube.com/embed/EWhalXA7z2I" frameborder="0" allowfullscreen></iframe>
 						</div>
 						<div class="featuredEmployerLinks">

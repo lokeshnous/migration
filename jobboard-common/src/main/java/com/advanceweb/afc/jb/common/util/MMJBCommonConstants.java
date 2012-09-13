@@ -275,7 +275,7 @@ public interface MMJBCommonConstants {
 	String PHONE_NO = "Please enter the correct Phone Number (XXX-XXX-XXXX)";
 	String PHONE_NULL_NO = "Please give the Phone number";
 	String EMAIL_MESSAGE_BLANK = "Please enter required fields.";
-	String UPDATE_ERROR = " Error occurred while update. Please contact your Administrator.";
+	String UPDATE_ERROR = " Error occurred. Please contact your Administrator.";
 	// Job Types
 	String JOB_TYPE = "JOB_TYPE";
 	String JOB_TYPE_ADDON = "ADDON";

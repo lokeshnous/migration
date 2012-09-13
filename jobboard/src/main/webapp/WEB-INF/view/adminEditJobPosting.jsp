@@ -38,7 +38,7 @@ jQuery(document).ready(function() {
 		        	$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
 						 success: function(data){ 
 							 if(data == ''){
-									alert("Data save successfully !");	
+									//alert("Data save successfully !");	
 									//loadTable();
 									parent.$.nmTop().close();
 								}else{

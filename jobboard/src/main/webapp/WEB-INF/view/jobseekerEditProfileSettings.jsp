@@ -17,7 +17,7 @@
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
-						alert("Data saved successfully !");
+						//alert("Data saved successfully !");
 						parent.$.nmTop().close();
 						window.location.reload();
 					}else{

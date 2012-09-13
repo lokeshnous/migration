@@ -283,7 +283,7 @@
 						<span> <a href="#" id="repost" value="REPOST" name="REPOST"
 							class="btn_sm white jb_search_submit">REPOST</a> <a href="#"
 							id="deactivated" value="DEACTIVATED" name="DEACTIVATED"
-							class="btn_sm white jb_search_submit">DEACTIVATED</a> <a href="#"
+							class="btn_sm white jb_search_submit">DEACTIVATE</a> <a href="#"
 							id="delete" value="DELETE" name="DELETE"
 							class="btn_sm white jb_search_submit">DELETE</a> <a
 							href="<%=request.getContextPath()%>/employer/postNewJobs.html"
@@ -397,7 +397,7 @@
 						<span><a href="#" id="repost_lower" value="REPOST"
 							name="REPOST" class="btn_sm white jb_search_submit">REPOST</a> <a
 							href="#" id="deactivated_lower" value="DEACTIVATED"
-							name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATED</a>
+							name="DEACTIVATED" class="btn_sm white jb_search_submit">DEACTIVATE</a>
 							<a href="#" id="delete_lower" value="DELETE" name="DELETE"
 							class="btn_sm white jb_search_submit">DELETE</a> <a
 							href="<%=request.getContextPath()%>/employer/postNewJobs.html"
