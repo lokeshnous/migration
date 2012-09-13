@@ -303,6 +303,7 @@ public interface MMJBCommonConstants {
 	// Added for set alerts task
 	String SET_ALERT = "setAlertPage";
 	String DO_NOT_HAVE_CREDITS = "You do not have sufficient credits to post the job";
+	String DO_NOT_HAVE_CREDITS_REPOST = "You do not have sufficient credits to repost the job";
 	String STATUS_ACTIVE = "Active";
 	String STATUS_INACTIVE = "Inactive";
 	

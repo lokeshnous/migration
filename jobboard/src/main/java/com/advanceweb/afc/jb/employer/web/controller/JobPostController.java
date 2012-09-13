@@ -651,11 +651,40 @@ public class JobPostController {
 		int jobId = 0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ",");
 		ModelAndView model = new ModelAndView();
+		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+		jobPostform.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
+			int jobPostType = employerJobPost
+					.getinvDetIdByJobId(jobId, (Integer) session
+							.getAttribute(MMJBCommonConstants.FACILITY_ID),
+							(Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID));
+			// validate and check the credit Starts
+			if (!jobPostform.isXmlStartEndDateEnabled()) {
+
+				boolean bValidCredits = employerJobPost
+						.validateAvailableCredits(
+								jobPostType,
+								(Integer) session
+										.getAttribute(MMJBCommonConstants.FACILITY_ID));
+
+				if (!bValidCredits) {
+					model = populateDropdowns(model, session);
+					model.setViewName(FORWORD_MANAGE_JOBPOST);
+					model.addObject(ERROR_MESSAGE,
+							MMJBCommonConstants.DO_NOT_HAVE_CREDITS_REPOST);
+					return model;
+				}
+			}
+			// validate and check the credit Ends
 			boolean result = employerJobPost
 					.repostJob(jobId, (Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));
+
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, repostFail);
 			}

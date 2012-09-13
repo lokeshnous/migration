@@ -345,7 +345,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		boolean bRepost = false;
 		try {
+			// Check credit detail for the specified job- starts
 			if (null != job.getEndDt() && null != job.getStartDt()) {
+				// Check credit detail for the specified job- starts
+				if (MMJBCommonConstants.POST_NEW_JOB.equals(job.getJobStatus())
+						&& !validateAndDecreaseAvailableCredits(
+								Integer.valueOf(job.getJpJobType().getName()),
+								job.getAdmFacility().getFacilityId())) {
+					return false;
+				}
+				// Check credit detail for the specified job- Ends
 				int compareEndDate = job.getEndDt().compareTo(new Date());
 				if ((job.getActive() == 1 && compareEndDate < 0)
 						|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
@@ -362,6 +371,23 @@ public class JobPostDAOImpl implements JobPostDAO {
 				} else {
 					bRepost = false;
 				}
+			} else if (job.getActive() == MMJBCommonConstants.INACTIVE) {
+				// Check credit detail for the specified job- starts
+				if (MMJBCommonConstants.POST_NEW_JOB.equals(job.getJobStatus())
+						&& !validateAndDecreaseAvailableCredits(
+								Integer.valueOf(job.getJpJobType().getName()),
+								job.getAdmFacility().getFacilityId())) {
+					return false;
+				} else {
+					Calendar now = Calendar.getInstance();
+					job.setStartDt(now.getTime());
+					now.add(Calendar.DAY_OF_MONTH, 30);
+					job.setActive(MMJBCommonConstants.ACTIVE);
+					job.setEndDt(now.getTime());
+					hibernateTemplate.save(job);
+					bRepost = true;
+				}
+				// Check credit detail for the specified job- Ends
 			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -909,5 +935,30 @@ public class JobPostDAOImpl implements JobPostDAO {
 			}
 		}
 		return new JobPostDTO();		
+	}
+
+	@Override
+	public int getinvDetIdByJobId(int jobId, int facilityId, int userId) {
+		int invDetailId = 0;
+		try {
+			Query query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT a from AdmFacilityJpAudit a where a.id.facilityId="
+									+ facilityId + " and a.id.userId = "
+									+ userId + "and a.id.jobId=" + jobId);
+
+			List<AdmFacilityJpAudit> admFacilityJpAuditList = (List<AdmFacilityJpAudit>) query
+					.list();
+			if (null != admFacilityJpAuditList
+					&& admFacilityJpAuditList.size() > 0) {
+				invDetailId = admFacilityJpAuditList.get(0).getId()
+						.getInventoryDetailId();
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return invDetailId;
 	}
 }

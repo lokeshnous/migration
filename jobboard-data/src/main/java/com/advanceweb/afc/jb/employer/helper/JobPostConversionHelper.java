@@ -147,6 +147,7 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setJobId(job.getJobId());
 				jobPostDTO.setJobTitle(job.getJobtitle());
 				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
+				//jobPostDTO.setJobPostingType(job.getJpJobType().getName());
 				if (null != job.getJpTemplate()) {
 					jobPostDTO.setBrandTemplate(String.valueOf(job
 							.getJpTemplate().getTemplateId()));

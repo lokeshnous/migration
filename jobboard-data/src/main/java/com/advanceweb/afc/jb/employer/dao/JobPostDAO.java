@@ -51,4 +51,10 @@ public interface JobPostDAO {
 	 * @throws JobBoardServiceException
 	 */
 	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
+	/**
+	 * 
+	 * @param jobId
+	 * @return
+	 */
+	public int getinvDetIdByJobId(int jobId,int facilityId,int userId);
 }

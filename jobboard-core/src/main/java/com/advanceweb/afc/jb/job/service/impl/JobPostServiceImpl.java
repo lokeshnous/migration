@@ -163,5 +163,11 @@ public class JobPostServiceImpl implements JobPostService {
 		return employerJobPostDAO.validateAvailableCredits(invDtlId, facilityId);
 	}
 
+	@Override
+	public int getinvDetIdByJobId(int jobId, int facilityId, int userId) {
+
+		return employerJobPostDAO.getinvDetIdByJobId(jobId, facilityId, userId);
+	}
+
 
 }

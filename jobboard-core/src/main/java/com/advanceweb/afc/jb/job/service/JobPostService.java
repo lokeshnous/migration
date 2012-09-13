@@ -49,4 +49,12 @@ public interface JobPostService {
 	 * @throws JobBoardServiceException
 	 */
 	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
+	/**
+	 * 
+	 * @param jobId
+	 * @param facilityId
+	 * @param userId
+	 * @return
+	 */
+	public int getinvDetIdByJobId(int jobId,int facilityId,int userId);
 }
