@@ -167,7 +167,7 @@
 						<p class="gateway_section_head form_notes">Accounts Payable
 							Contact</p>
 
-						<div class="rowEvenSpacingMargin0">
+						<div class="rowEvenNewSpacing">
 							<span class="lableText3">First Name:</span>
 							<form:input path="billingAddressForm.fnameForBillingAddr"
 								type="text" name="firstname2" id="firstname2"
