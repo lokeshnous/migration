@@ -10,7 +10,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AdminDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
+//import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
