@@ -266,10 +266,10 @@ public class PaymentGatewayController {
 		//call web service here. If order success save order details in db & move to Thank you page else move to error page
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
 		
+		orderDetailsDTO = transformPaymentMethod.transformToOrderDetailsDTO(paymentGatewayForm);
 		orderDetailsDTO.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		orderDetailsDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		orderDetailsDTO.setNsCustomeId(paymentGatewayForm.getNsCustomerId());
-		orderDetailsDTO = transformPaymentMethod.transformToOrderDetailsDTO(paymentGatewayForm);
 		
 		boolean status = paymentGatewayService.createOrder(orderDetailsDTO);		
 
