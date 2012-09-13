@@ -146,10 +146,10 @@ public class JobPostController {
 			return model;
 		}
 		
-/*		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
+		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);*/
+		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 		
 		boolean bValidCredits = employerJobPost.validateAvailableCredits(Integer.valueOf(form.getJobPostingType()),
 				(Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
@@ -162,6 +162,7 @@ public class JobPostController {
 		}
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
+		dto.setbFeatured(userDTO.isFeatured());
 		dto.setbActive(true);
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
