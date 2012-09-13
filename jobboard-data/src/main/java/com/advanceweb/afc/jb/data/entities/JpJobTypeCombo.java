@@ -37,11 +37,6 @@ public class JpJobTypeCombo {
 	@Column(name="addons")
 	private String addons;
 	
-	//bi-directional many-to-one association to MerProfileAttribList
-	@OneToOne(mappedBy="jpJobTypeCombo")
-	private AdmInventoryDetail admInventoryDetail;
-
-	
 	public int getComboId() {
 		return comboId;
 	}
@@ -64,14 +59,5 @@ public class JpJobTypeCombo {
 
 	public void setAddons(String addons) {
 		this.addons = addons;
-	}
-
-	public AdmInventoryDetail getAdmInventoryDetail() {
-		return admInventoryDetail;
-	}
-
-	public void setAdmInventoryDetail(AdmInventoryDetail admInventoryDetail) {
-		this.admInventoryDetail = admInventoryDetail;
 	}	
-	
 }

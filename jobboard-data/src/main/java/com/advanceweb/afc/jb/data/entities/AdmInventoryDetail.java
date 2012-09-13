@@ -32,7 +32,7 @@ public class AdmInventoryDetail {
 	private String productType;
 	
 	@Column(name="product_id")
-	private int productId;
+	private int productId;	
 	
 	
 	@Column(name="available_qty")
@@ -45,13 +45,6 @@ public class AdmInventoryDetail {
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="inventory_id")
 	private AdmFacilityInventory admFacilityInventory;
-
-	//bi-directional many-to-one association to MerProfileAttrib
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="combo_id")
-	private JpJobTypeCombo jpJobTypeCombo;
-
-	
 	
 	public int getInvDetailId() {
 		return invDetailId;
@@ -91,14 +84,6 @@ public class AdmInventoryDetail {
 
 	public void setAdmFacilityInventory(AdmFacilityInventory admFacilityInventory) {
 		this.admFacilityInventory = admFacilityInventory;
-	}
-
-	public JpJobTypeCombo getJpJobTypeCombo() {
-		return jpJobTypeCombo;
-	}
-
-	public void setJpJobTypeCombo(JpJobTypeCombo jpJobTypeCombo) {
-		this.jpJobTypeCombo = jpJobTypeCombo;
 	}
 
 	public int getOrderQty() {
