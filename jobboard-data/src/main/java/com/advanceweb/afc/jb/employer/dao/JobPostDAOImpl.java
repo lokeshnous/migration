@@ -747,8 +747,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * @author kartikm Date Conversion method name dateConveter that is for
+	 * @author kartikm 
+	 * @Purpose:Date Conversion method name dateConveter that is for
 	 *         Converting from MM/dd/yyyy HH:mm:ss to yyyy-MM-dd HH:mm:ss
+	 * @Created:Sept 12, 2012
 	 * @param date
 	 * @return dateValue
 	 */
@@ -772,8 +774,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * @author kartikm Two date Different method name is twoDateDifferentValue
+	 * @author kartikm 
+	 * @Purpose: Two date Different method name is twoDateDifferentValue
 	 *         that compare number of day start date and end date
+	 * @Created:Sept 12, 2012        
 	 * @param todayDate
 	 * @param endDateValue
 	 * @return numberOfDays
