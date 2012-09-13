@@ -89,7 +89,7 @@ public interface MMJBCommonConstants {
 	String URL_DISPLAY = "URLDisplay";
 	String URL = "url";
 
-	//newly added field
+	// newly added field
 	String TEMPLATE_ID_STRING = "TemplateId";
 	String PACKAGE_NAME_STRING = "PackageName";
 	String IS_PREMIUM_STRING = "IsPremium";
@@ -99,8 +99,7 @@ public interface MMJBCommonConstants {
 	String HIDE_POSCODE_STRING = "HidePostcode";
 	String HIDE_COUNTRY_STRING = "HideCountry";
 	String COUNTRY_STRING = "Country";
-	
-	
+
 	String TOTAL_NO_RECORDS = "TotalNoRecords";
 	String JSON_ROWS = "jsonRows";
 
@@ -306,26 +305,25 @@ public interface MMJBCommonConstants {
 	String DO_NOT_HAVE_CREDITS_REPOST = "You do not have sufficient credits to repost the job";
 	String STATUS_ACTIVE = "Active";
 	String STATUS_INACTIVE = "Inactive";
-	
+
 	// Added for inventory
 	String DAYS = "days";
 	String STANDARD_JOB_POSTING = "Standard Job Posting";
 	String JOB_POSTING_SLOT = "Job Posting Slot";
 	String BASIC_JOB_TYPE = "Basic";
 	String INVENTORY = "inventoryPage";
+	int PLAN_DAYS = 30;
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
-	//FOR MAIL RELATED
-			String SUBJECT_OF_MAIL="A job opportunity sent to you by"; 
-			String BODY_OFMAIL_FIRST="Here’s a job opportunity that ";
-			String BODY_OFMAIL_SECOND=" thought might interest you.";
-			String JOB_TITLE_HEADING="Job title:";
-			String COMAPNY_NAME_HEADING="Company name:";
-			String URL_LINK_FIRST="<a href=?";
-			String URL_LINK_SECOND="><b>View this job now</b></a> to learn more and submit your application.";
-			String URL_REDIRECT_MAIL="redirect:/healthcarejobs/advanceweb.html";
-			String ERROR_SENDING_MAIL="ERROR For sending mail option of SendToFriend method";
 
-
-
+	// FOR MAIL RELATED
+	String SUBJECT_OF_MAIL = "A job opportunity sent to you by";
+	String BODY_OFMAIL_FIRST = "Here’s a job opportunity that ";
+	String BODY_OFMAIL_SECOND = " thought might interest you.";
+	String JOB_TITLE_HEADING = "Job title:";
+	String COMAPNY_NAME_HEADING = "Company name:";
+	String URL_LINK_FIRST = "<a href=?";
+	String URL_LINK_SECOND = "><b>View this job now</b></a> to learn more and submit your application.";
+	String URL_REDIRECT_MAIL = "redirect:/healthcarejobs/advanceweb.html";
+	String ERROR_SENDING_MAIL = "ERROR For sending mail option of SendToFriend method";
 
 }
