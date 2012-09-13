@@ -39,6 +39,7 @@ public class JobPostDTO implements Serializable {
 	private boolean bHideZipCode;
 	
 	private String employmentType;
+	private boolean bFeatured;
 	
 	private String reqSkills;
 	private String jobDesc;
@@ -445,6 +446,14 @@ public class JobPostDTO implements Serializable {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public boolean isbFeatured() {
+		return bFeatured;
+	}
+
+	public void setbFeatured(boolean bFeatured) {
+		this.bFeatured = bFeatured;
 	}
 
 		
