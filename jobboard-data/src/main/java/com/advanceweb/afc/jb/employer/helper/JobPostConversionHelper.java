@@ -38,7 +38,7 @@ import com.advanceweb.afc.jb.data.entities.JpTemplate;
 public class JobPostConversionHelper<JobPostForm> {
 	
 	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, 
-			 JpTemplate template, JpJobType jobType, AdmFacility admFacility){
+			 JpTemplate template, AdmFacility admFacility){
 		
 		 JpJob jpJob=new JpJob();
 		 //Post New Job
@@ -50,7 +50,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setBlindAd(dto.isbHideCompName()?1:0);
 		 
 		 //Job Posting Details
-		 jpJob.setJpJobType(jobType);
+		 jpJob.setJpJobType(null);
 		 
 		 //Job Title and Number
 		 jpJob.setJobtitle(dto.getJobTitle());
