@@ -1,7 +1,8 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 /**
- * anilm
+ * This class has been added to hold the values of AddOns 
+ * @author anilm
  * @version 1.0
  * @created Aug 27, 2012
  */
