@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * @Author : Prince Mathew
@@ -19,13 +18,11 @@ import com.advanceweb.afc.jb.common.UserDTO;
 
 @Repository("transformJobPost")
 public class TransformJobPost {
-	
-	
+
 	/**
-	 * Transforming JobPostForm to JobPostDTO 
-	 * 
+	 * This method will transform JobPostForm to JobPostDTO
 	 * @param form
-	 * @return
+	 * @return jobPostDTO
 	 */
 	public JobPostDTO jobPostFormToJobPostDTO(JobPostForm form){
 		
@@ -79,26 +76,14 @@ public class TransformJobPost {
 		jobPostDTO.setXmlStartEndDateEnabled(form.isXmlStartEndDateEnabled());
 		
 		return jobPostDTO;
-		
 	}
 	
 	/**
-	 * Converting Job Seeker Registration Form to MerUserDTO
-	 * 
-	 * @param form
-	 * @return
+	 * This method is added to convert Job Post DTO to Form  
+	 * @param jobPostform
+	 * @param jobPostDTO
+	 * @return jobPostform
 	 */
-	public UserDTO createUserDTO(JobPostForm form){
-		
-		UserDTO dto = new UserDTO();		
-/*		dto.setFirstName(form.getFirstName());
-		dto.setLastName(form.getLastName());
-		dto.setMiddleName(form.getMiddleName());
-		dto.setPassword(form.getPassword());
-		dto.setEmailId(form.getEmailId());*/
-		
-		return dto;
-	}
 	public JobPostForm  transformJobPostDTOToForm(JobPostForm jobPostform,JobPostDTO jobPostDTO){
 		jobPostform.setJobOwner(jobPostDTO.getJobOwner());
 		jobPostform.setCustomerNo(jobPostDTO.getCustomerNo());
@@ -124,8 +109,9 @@ public class TransformJobPost {
 	}
 	
 	/**
+	 * This method will convert the list of Job Postings DTO to Job posting form list 
 	 * @param jobPostingPlanDTOList
-	 * @return
+	 * @return jobPostingsFormList
 	 */
 	public List<JobPostingsForm> transformToJobPostingsFormList(List<JobPostingPlanDTO> jobPostingPlanDTOList)
 	{
@@ -150,8 +136,9 @@ public class TransformJobPost {
 	}
 	
 	/**
+	 * This method will convert the AddOnDTO to AddOnForm
 	 * @param addOnDTO
-	 * @return
+	 * @return addOnForm
 	 */
 	private AddOnForm transformAddOnDTOToAddOnForm(AddOnDTO addOnDTO) {
 		AddOnForm addOnForm = new AddOnForm();
@@ -164,8 +151,9 @@ public class TransformJobPost {
 	}
 	
 	/**
+	 * This method will transform the JobPostingForm list to JobPostingsDTO list
 	 * @param jobPostingsFormList
-	 * @return
+	 * @return jobPostingPlanDTOList
 	 */
 	public List<JobPostingPlanDTO> transformToJobPostingsDTOList(List<JobPostingsForm> jobPostingsFormList)
 	{
@@ -196,8 +184,9 @@ public class TransformJobPost {
 	}
 
 	/**
+	 * This method will transform AddOnForm to AddOnDTO
 	 * @param addOnForm
-	 * @return
+	 * @return addOnDTO
 	 */
 	private AddOnDTO transformAddOnFormToAddOnDTO(AddOnForm addOnForm) {
     	AddOnDTO addOnDTO = new AddOnDTO();

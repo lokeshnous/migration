@@ -1,12 +1,18 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 /**
+ * This class is added to hold the values of whether the customer is invoice enabled and 
+ * purchase order number
  * @author muralikc
- * 
+ * @version 1.0
+ * @created Aug 22, 2012
  */
 public class InvoiceForm {
 
 	private boolean invoiceEnabled;
+	
+	// For invoice information
+	private String purchaseOrderNo;
 	
 	public boolean isInvoiceEnabled() {
 		return invoiceEnabled;
@@ -15,10 +21,7 @@ public class InvoiceForm {
 	public void setInvoiceEnabled(boolean invoiceEnabled) {
 		this.invoiceEnabled = invoiceEnabled;
 	}
-
-	// For invoice information
-	private String purchaseOrderNo;
-
+	
 	/**
 	 * @return the purchaseOrderNo
 	 */

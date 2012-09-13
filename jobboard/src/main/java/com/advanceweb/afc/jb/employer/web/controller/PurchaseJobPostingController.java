@@ -23,8 +23,9 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 
 /**
- * anilm
- * 
+ * This class is added for purchase job postings. Employer can add job postings to cart, 
+ * remove job postings from cart 
+ * @author anilm
  * @version 1.0
  * @created Aug 22, 2012
  */
@@ -36,14 +37,19 @@ public class PurchaseJobPostingController {
 	private static final Logger LOGGER = Logger
 			.getLogger(PurchaseJobPostingController.class);
 	private static final String PURCHASE_JOB_POSTINGS = "empPurchaseJobPostingsPopup";
-	private final String _JOBPOST_JSON = "jobPostJson";
+	private static final String _JOBPOST_JSON = "jobPostJson";
 
 	@Autowired
 	private JobPostService employerJobPost;
 
 	@Autowired
 	private TransformJobPost transformJobPost;
-
+	
+	/**
+	 * This method is to display the Job Type & Respective AddOns
+	 * @param
+	 * @return model
+	 */
 	@RequestMapping(value = "/purchaseJobPostings", method = RequestMethod.GET)
 	public ModelAndView purchaseJobPostings(
 			@RequestParam(value = "page", required = false) String page) {
@@ -61,11 +67,17 @@ public class PurchaseJobPostingController {
 				.transformToJobPostingsFormList(jobPostingPlanDTOList);
 
 		purchaseJobPostForm.setJobPostingsForm(jobPostingsForm);
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
 	}
 
+	/**
+	 * This method is to add the selected Job Type & AddOns to the Job Posting Cart 
+	 * @param purchaseJobPostForm
+	 * @param request
+	 * @return model
+	 */
 	@RequestMapping(value = "/addToCart", method = RequestMethod.POST)
 	public ModelAndView addToCart(PurchaseJobPostForm purchaseJobPostForm,
 			HttpServletRequest request) {
@@ -105,20 +117,31 @@ public class PurchaseJobPostingController {
 		}
 
 		ModelAndView model = new ModelAndView();
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
 	}
 
+	/**
+	 * This method is added to show the purchase job postings & items in the cart 
+	 * @param purchaseJobPostForm
+	 * @return model
+	 */
 	@RequestMapping(value = "/showPurchaseJobPostCart", method = RequestMethod.GET)
 	public ModelAndView showPurchaseJobPostCart(
 			PurchaseJobPostForm purchaseJobPostForm) {
 		ModelAndView model = new ModelAndView();
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
 	}
 
+	/**
+	 * This method is added to remove the selected items from the job posting cart 
+	 * @param purchaseJobPostForm
+	 * @param cartItemIndex
+	 * @return model
+	 */
 	@RequestMapping(value = "/removeJobPost", method = RequestMethod.POST)
 	public ModelAndView removeJobPost(PurchaseJobPostForm purchaseJobPostForm,
 			@RequestParam("cartItemIndex") int cartItemIndex) {
@@ -129,16 +152,22 @@ public class PurchaseJobPostingController {
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal()
 				- cartItem.getPackageSubTotal());
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
-		model.addObject("purchaseJobPostForm", purchaseJobPostForm);
+		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
 	}
 
+	/**
+	 * This method is added to proceed to payment gateway screens  
+	 * @param purchaseJobPostForm
+	 * @param session
+	 * @return model
+	 */
 	@RequestMapping(value = "/proceedToCheckOut", method = RequestMethod.GET)
 	public ModelAndView proceedToCheckOut(
 			PurchaseJobPostForm purchaseJobPostForm, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		session.setAttribute("purchaseJobPostForm", purchaseJobPostForm);
+		session.setAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 
 		model.setViewName("redirect:/pgiController/callPaymentMethod.html");
 		return model;

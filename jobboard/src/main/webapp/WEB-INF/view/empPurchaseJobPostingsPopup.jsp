@@ -10,10 +10,8 @@
 
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-	jQuery(document).ready(function() {
+		jQuery(document).ready(function() {
 		
-		$(".postingInventory").displaypopup(".postingInventory", "790",
-		"370");
 		
 		jQuery(".megamenu").megamenu();
 		
@@ -44,7 +42,7 @@
 		
 		$("#proceedToCheckout").click(function(){
 			if($("#grandTotalId").text() == "$0"){
-				alert("Please select some items to checkout");
+				alert("Please select any one of the package to proceed to checkout");
 				return false;
 			}
 			return true;
@@ -76,11 +74,11 @@
 					var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
 					var reg = new RegExp("^1?[1-9]$|^[1-2]0$");
 					if("" == quantity || null == quantity){
-						alert("Please Add Quantity value");
+						alert("Please enter quantity in numerics");
 						return;
 					}
 					else if(!reg.test(quantity)){
-						alert("Quantity should be numeric & greater than zero");
+						alert("Please enter quantity in numerics");
 						return;
 					}
 					else{
@@ -133,7 +131,7 @@
 				}
 			});
 			if(count == 0){
-				alert("You Have not Selected Any Plan to Add To Cart");
+				alert("Please select any one of the package to Add To Cart");
 			}
 		});
 	});
@@ -296,7 +294,7 @@
 						class="btn_sm orange">Proceed to Checkout</a> 		
 					<c:choose>
 						<c:when test="${purchaseJobPostForm.inventoryPage != null}">
-								<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html" id="postingInventory" class="postingInventory btn_sm orange">Cancel</a>
+								<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html" class="nyroModal btn_sm orange">Cancel</a>
 						</c:when>
 						<c:otherwise>
 								<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>

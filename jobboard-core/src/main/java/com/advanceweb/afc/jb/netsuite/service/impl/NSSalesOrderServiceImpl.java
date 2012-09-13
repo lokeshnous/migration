@@ -134,7 +134,7 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
 			if(!StringUtils.isEmpty(jsonResponse) && jsonResponse.contains("error")){
-				LOGGER.error("Transaction is failed ......");
+				LOGGER.error("Transaction is failed ......"+jsonResponse);
 				userDTO.setNsStatus("false");
 			}else{
 				LOGGER.info("Valid Transaction  == = ============================="+jsonResponse);

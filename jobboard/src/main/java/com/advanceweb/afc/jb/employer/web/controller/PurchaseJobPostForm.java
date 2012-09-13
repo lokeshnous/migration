@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * anilm
+ * This class have been created to hold the values of Job Post Type list, 
+ * Selected Job postings in the Cart list,calculated Grand total & Promotion code
+ * @author anilm
  * @version 1.0
  * @created Aug 27, 2012
  */
@@ -46,6 +48,4 @@ public class PurchaseJobPostForm {
 	public void setInventoryPage(String inventoryPage) {
 		this.inventoryPage = inventoryPage;
 	}
-	
-
 }
