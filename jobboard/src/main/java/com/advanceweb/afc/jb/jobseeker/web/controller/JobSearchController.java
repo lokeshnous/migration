@@ -204,9 +204,10 @@ public class JobSearchController {
 			model.put("jobDetail", jobDTO);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
 			model.put("returnResults", currentUrl);
-
-			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
-			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
+			if(sessionMap != null){
+				sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+				session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
+			}
 
 		} catch (Exception e) {
 			// loggers call
