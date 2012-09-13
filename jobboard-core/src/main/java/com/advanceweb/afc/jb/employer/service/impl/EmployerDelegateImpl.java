@@ -62,7 +62,7 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 
 			LOGGER.info("CustomerID from JSON for Employer===>"
 					+ userDTO.getNsCustomerID());
-			if (userDTO.getNsStatus().equalsIgnoreCase("record already exist")) {
+			if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("record already exist")) {
 				LOGGER.info("User Already Exist. Please login to continue.");
 			} else {
 				empProfileDTO.getMerUserDTO().setNsCustomerID(
