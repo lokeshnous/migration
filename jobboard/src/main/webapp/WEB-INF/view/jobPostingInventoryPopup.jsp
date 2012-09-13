@@ -24,7 +24,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>JOB POSTING INVENTORY</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19"
+			<a href="#"><img title="close" src="../resources/images/Close.png" width="19"
 				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 
@@ -55,7 +55,7 @@
 									<td align="center">${jbPostList.getAvailableQty()}</td>
 									<td align="center"><a
 										href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
-											src="../resources/images/Addbutton.png" width="20"
+											title="add" src="../resources/images/Addbutton.png" width="20"
 											height="20" alt="Add Button"></a></td>
 								</tr>
 							</c:forEach>

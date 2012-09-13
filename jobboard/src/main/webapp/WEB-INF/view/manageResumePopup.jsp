@@ -115,11 +115,11 @@
 									</label></td>
 									<td align="center">${resume.updateDt}</td>
 									<td align="center">
-									&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="view"><img src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
-									<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal editFile"><img src="../resources/images/tranBg.png" width="20" height="20" alt="edit"></a>
-									<a href="#" title="download"><img src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
-									<a href="#" title="print"><img src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>
-									<a href="#" title="delete"><img src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a>
+									&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="view"><img title="view" src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
+									<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal editFile"><img title="edit" src="../resources/images/tranBg.png" width="20" height="20" alt="edit"></a>
+									<a href="#" title="download"><img title="download" src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
+									<a href="#" title="print"><img title="print" src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>
+									<a href="#" title="delete"><img title="delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a>
 									</td>
 								</tr>
 							</c:forEach>

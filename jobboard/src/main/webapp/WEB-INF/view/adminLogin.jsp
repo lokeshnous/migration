@@ -157,7 +157,7 @@ JAVASCRIPT FILES
 				<form:form method="POST">
 					<div class="AdminLinkAlign"><a id="impersonation" class="boldText" href="<%=request.getContextPath()%>/admin/login.html">Impersonation</a></div>
 					<div class="AdminLinkAlign"><a id="editJobPosting" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPosting.html">Manage/Edit Job Posting</a></div>
-					<div class="AdminLinkAlign"><a id="inventory" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPostInventory.html">Manage/Edit Job Posting Inventory</a></div>
+					<div class="AdminLinkAlign"><a id="inventory" class="boldText" href="<%=request.getContextPath()%>/admininventory/employer/jobInventory.html">Manage/Edit Job Posting Inventory</a></div>
 				</form:form>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">

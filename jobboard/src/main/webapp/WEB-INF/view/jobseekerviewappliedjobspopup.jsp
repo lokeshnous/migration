@@ -73,7 +73,7 @@
                 <td><a href='<c:url value="/jobsearch/viewJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/><c:param name="currentUrl" value="null"/></c:url>'  rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
-                <td align="center"><div class="centerAlignMButton"><a href='<c:url value="/jobSeekerJobDetail/deleteAppliedJob.html" ><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
+                <td align="center"><div class="centerAlignMButton"><a title="delete" href='<c:url value="/jobSeekerJobDetail/deleteAppliedJob.html" ><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
               </tr>
               </c:forEach>
             </table>

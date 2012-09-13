@@ -220,7 +220,7 @@ function validateNumber(event) {
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="zipCode" id="zipCode"
 											class="job_seeker_password textBox350 
-" maxlength="10" />
+" maxlength="6" />
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>

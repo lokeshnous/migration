@@ -97,6 +97,12 @@ public class EmployerRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	@Value("${emp.all.req.fields}")
+	private String reqFields;
+	
+	@Value("${emp.email.exists}")
+	private String emailExists;
 
 	@Autowired
 	private LoginService loginService;
@@ -211,7 +217,7 @@ public class EmployerRegistrationController {
 					&& StringUtils.isEmpty(form.getStrLabelValue())
 					&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 							.getStrLabelName())) {
-				model.addObject("message", "Please fill the required fields");
+				model.addObject("message", reqFields);
 				return false;
 			}
 
@@ -221,7 +227,7 @@ public class EmployerRegistrationController {
 					&& (MMJBCommonConstants.DROP_DOWN.equals(form
 							.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
 							.equals(form.getStrAttribType()))) {
-				model.addObject("message", "Please fill the required fields");
+				model.addObject("message", reqFields);
 				return false;
 			}
 			// validation mobile number
@@ -244,7 +250,7 @@ public class EmployerRegistrationController {
 		registerValidation.validate(empRegForm, result);
 		if (!empRegForm.isbReadOnly() && employerRegistration.validateEmail(empRegForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
-					"Email Id already Exists!");
+					emailExists);
 			// model.setViewName(employerReg);
 			return false;
 		}

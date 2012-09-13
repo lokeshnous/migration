@@ -71,7 +71,7 @@
         <form:hidden path="totalSize" id="totalSize"/>
           <div class="popupHeader">
             <h2>MANAGE ACCESS PERMISSIONS</h2>
-           <img src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>
+           <img title="close" src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>
            <input type="hidden" name="pageValue" value="managePermPage"/>
           <div class="popUpContainerWrapper">
            <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=managePermPage"  id="addNewJobOwnerPopUp" class="btn_sm white">Add New Job Owner</a> </span>  </div>

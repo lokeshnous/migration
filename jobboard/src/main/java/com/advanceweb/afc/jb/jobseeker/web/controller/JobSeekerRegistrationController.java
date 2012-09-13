@@ -79,6 +79,26 @@ public class JobSeekerRegistrationController {
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
 	
+	@Value("${js.all.req.fields}")
+	private String reqFields;
+	
+	@Value("${js.email.exists}")
+	private String emailExists;
+	
+	
+	@Value("${js.password.empty}")
+	private String pwdEmpty;
+	
+	@Value("${js.conform.pass.empty}")
+	private String conformPassEmpty;
+	
+	@Value("${js.pwd.hint}")
+	private String pwdHint;
+	
+	@Value("${js.pwd.not.equal}")
+	private String pwdNotEqual;
+	
+	
 	//Spring ReCaptcha
 /*	private String recaptcha_response;
 	private String recaptcha_challenge;
@@ -189,7 +209,7 @@ public class JobSeekerRegistrationController {
 		    	if(isinvaliduser){
 		    		LOGGER.info("OpenAM : user is already exist !");
 		    		model.setViewName("jobSeekerCreateAccount");
-					result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+					result.rejectValue("emailId", "NotEmpty", emailExists);
 					return model;
 		    	}else{
 		    		LOGGER.info("OpenAM : valid user!");
@@ -202,7 +222,7 @@ public class JobSeekerRegistrationController {
 						.validateEmail(registerForm.getEmailId())) {
 					model.setViewName("jobSeekerCreateAccount");
 					result.rejectValue("emailId", "NotEmpty",
-							"Email address already exists");
+							emailExists);
 					return model;
 				}
 			}
@@ -262,7 +282,7 @@ public class JobSeekerRegistrationController {
 						//Checking validation for input text box
 						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue()) 
 								&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
-							model.addObject("message","Please fill the required fields");
+							model.addObject("message",reqFields);
 							return model;
 						}
 						
@@ -270,7 +290,7 @@ public class JobSeekerRegistrationController {
 						if(form.getbRequired() !=0 && MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
 								&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
 								|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
-							model.addObject("message","Please fill the required fields");
+							model.addObject("message",reqFields);
 							return model;
 						}
 						//validation mobile number
@@ -551,26 +571,26 @@ public class JobSeekerRegistrationController {
 	 */
 	private String validatePasswords(String password, String retypePassword){
 		 if(StringUtils.isEmpty(password)){
-			 return "Password should not be blank";
+			 return pwdEmpty;
 		 }
 		 
 		 if(StringUtils.isEmpty(retypePassword)){
-			 return "Password should not be blank";
+			 return conformPassEmpty;
 		 }
 		 
 		 if(!StringUtils.isEmpty(password) 
 				 && !StringUtils.isEmpty(retypePassword)){
 			 
 			 if(!registerValidation.validatePasswordPattern(password)){
-				 return "Password should contain 8-20 characters, including at least 1 number"; 
+				 return pwdHint; 
 			 }
 			 
 			 if(!registerValidation.validatePasswordPattern(retypePassword)){
-				 return "Password should contain  8-20 characters, including at least 1 number"; 
+				 return pwdHint; 
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				return "Password's doesn't match";
+				return pwdNotEqual;
 			 }
 		 }
 		 

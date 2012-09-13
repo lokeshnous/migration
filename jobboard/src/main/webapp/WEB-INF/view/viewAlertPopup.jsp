@@ -65,7 +65,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>VIEW ALERTS</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19"
+			<a href="#"><img title="close" src="../resources/images/Close.png" width="19"
 				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 

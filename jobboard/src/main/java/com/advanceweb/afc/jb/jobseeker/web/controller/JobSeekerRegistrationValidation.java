@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -18,6 +19,30 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
  */
 @Component("registerValidation")
 public class JobSeekerRegistrationValidation {
+	
+	@Value("${js.email.blank}")
+	private String emailBlank;
+	
+	@Value("${js.conformEmail.blank}")
+	private String conformEmailBlank;
+	
+	@Value("${js.invalid.email}")
+	private String invalidEmail;
+	
+	@Value("${js.email.match}")
+	private String emailMatch;
+	
+	@Value("${js.password.empty}")
+	private String pwdEmpty;
+	
+	@Value("${js.conform.pass.empty}")
+	private String conformPassEmpty;
+	
+	@Value("${js.pwd.hint}")
+	private String pwdHint;
+	
+	@Value("${js.pwd.not.equal}")
+	private String pwdNotEqual;
 	
 	private Pattern pattern;
 	private Matcher matcher;
@@ -37,26 +62,26 @@ public class JobSeekerRegistrationValidation {
 	public void validateEmail(JobSeekerRegistrationForm registerForm, Errors errors){
 		
 		 if(StringUtils.isEmpty(registerForm.getEmailId())){
-			 errors.rejectValue("emailId", "NotEmpty", "Email id should not be blank");
+			 errors.rejectValue("emailId", "NotEmpty", emailBlank);
 		 }
 		 
 		 if(StringUtils.isEmpty(registerForm.getConfirmEmailId())){
-			 errors.rejectValue("confirmEmailId", "NotEmpty", "Email id should not be blank");
+			 errors.rejectValue("confirmEmailId", "NotEmpty", conformEmailBlank);
 		 }
 		 
 		 if(!StringUtils.isEmpty(registerForm.getEmailId()) 
 				 && !StringUtils.isEmpty(registerForm.getConfirmEmailId())){
 			 
 			 if(!validateEmailPattern(registerForm.getEmailId())){
-				 errors.rejectValue("emailId", "NotEmpty", "Invalid Email Id"); 
+				 errors.rejectValue("emailId", "NotEmpty", invalidEmail); 
 			 }
 			 
 			 if(!validateEmailPattern(registerForm.getConfirmEmailId())){
-				 errors.rejectValue("confirmEmailId", "NotEmpty", "Invalid Email Id"); 
+				 errors.rejectValue("confirmEmailId", "NotEmpty", invalidEmail); 
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", "NotEmpty", "Email address's do not match");
+				errors.rejectValue("confirmEmailId", "NotEmpty", emailMatch);
 			 }
 		 }
 	}
@@ -106,26 +131,26 @@ public class JobSeekerRegistrationValidation {
 	public void validatePassoword(String password, String retypePassword, Errors errors){
 		
 		 if(StringUtils.isEmpty(password)){
-			 errors.rejectValue("password", "NotEmpty", "Password should not be blank");
+			 errors.rejectValue("password", "NotEmpty", pwdEmpty);
 		 }
 		 
 		 if(StringUtils.isEmpty(retypePassword)){
-			 errors.rejectValue("retypepassword", "NotEmpty", "Password should not be blank");
+			 errors.rejectValue("retypepassword", "NotEmpty", conformPassEmpty);
 		 }
 		 
 		 if(!StringUtils.isEmpty(password) 
 				 && !StringUtils.isEmpty(retypePassword)){
 			 
 			 if(!validatePasswordPattern(password)){
-				 errors.rejectValue("password", "NotEmpty", "Password should contain 8-20 characters, including at least 1 number"); 
+				 errors.rejectValue("password", "NotEmpty", pwdHint); 
 			 }
 			 
 			 if(!validatePasswordPattern(retypePassword)){
-				 errors.rejectValue("retypepassword", "NotEmpty", "Password should contain  8-20 characters, including at least 1 number"); 
+				 errors.rejectValue("retypepassword", "NotEmpty", pwdHint); 
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				errors.rejectValue("retypepassword", "NotEmpty","Password's doesn't match");
+				errors.rejectValue("retypepassword", "NotEmpty",pwdNotEqual);
 			 }
 		 }
 	}

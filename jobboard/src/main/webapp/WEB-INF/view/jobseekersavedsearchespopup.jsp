@@ -216,9 +216,9 @@ var id = searchJobId.replace("viewSavedSearch", "");
 								
 								<td align="center">
 								<div class="SearchIcons">
-								<a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" onclick="viewSavedSearch(this.id);" class="newWindow"> <img src="../resources/images/tranBg.png" class="view"></a>
-								<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img src="../resources/images/tranBg.png" class="editFile"></a>
-								<a href="#"><img src="../resources/images/tranBg.png" class="delete"></a>
+								<a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" onclick="viewSavedSearch(this.id);" class="newWindow"> <img title="view" src="../resources/images/tranBg.png" class="view"></a>
+								<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img title="edit" src="../resources/images/tranBg.png" class="editFile"></a>
+								<a href="#"><img title="delete" src="../resources/images/tranBg.png" class="delete"></a>
 								</div>
 										</td>
 							</tr>

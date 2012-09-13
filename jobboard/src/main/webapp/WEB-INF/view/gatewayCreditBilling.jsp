@@ -39,6 +39,7 @@
 			$("#State2").val($("#state").val());
 			$("#Country2").val($("#country").val());
 			$("#zip2").val($("#zip").val());
+			$("#phone2").val($("#phone").val());
 		}
 	}
 
@@ -154,7 +155,7 @@
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Phone:</span>
 							<form:input path="accountAddressForm.phone" type="text"
-								name="phone" readonly="true"
+								name="phone" readonly="true" id="phone"
 								class="job_seeker_password textBox350 " />
 						</div>
 
@@ -266,7 +267,7 @@
 						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Phone:</span>
-							<form:input path="billingAddressForm.phone" type="text"
+							<form:input path="billingAddressForm.phone" type="text" id="phone2"
 								class="job_seeker_password textBox350 " />
 						</div>
 						<form:hidden path="billingAddressForm.facilityContactId" />

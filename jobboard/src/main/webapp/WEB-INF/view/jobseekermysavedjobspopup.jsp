@@ -88,7 +88,7 @@
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="center">${dtoList.getCreateDt()}</td>
                 <td align="center">${dtoList.getJobAge()} days</td>
-                <td align="center"><div class="centerAlignMButton"><a href='<c:url value="/jobSeekerJobDetail/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
+                <td align="center"><div class="centerAlignMButton"><a title="delete" href='<c:url value="/jobSeekerJobDetail/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
               </tr>
               </c:forEach>
             </table>

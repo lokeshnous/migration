@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -12,7 +13,29 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("agencyRegistrationValidation")
 public class AgencyRegistrationValidation {
 	
-
+	@Value("${age.email.blank}")
+	private String emailBlank;
+	
+	@Value("${age.conformEmail.blank}")
+	private String conformEmailBlank;
+	
+	@Value("${age.invalid.email}")
+	private String invalidEmail;
+	
+	@Value("${age.email.match}")
+	private String emailMatch;
+	
+	@Value("${age.password.empty}")
+	private String pwdEmpty;
+	
+	@Value("${age.conform.pass.empty}")
+	private String conformPassEmpty;
+	
+	@Value("${age.pwd.hint}")
+	private String pwdHint;
+	
+	@Value("${age.pwd.not.equal}")
+	private String pwdNotEqual;
 
 	private Pattern pattern;
 	private Matcher matcher;
@@ -32,26 +55,26 @@ public class AgencyRegistrationValidation {
 			Errors errors) {
 		
 		 if(StringUtils.isEmpty(registerForm.getEmailId())){
-			 errors.rejectValue("emailId", NOT_EMPTY, "Email id should not be blank");
+			 errors.rejectValue("emailId", NOT_EMPTY, emailBlank);
 		 }
 		 
 		 if(StringUtils.isEmpty(registerForm.getConfirmEmailId())){
-			 errors.rejectValue("confirmEmailId", NOT_EMPTY, "Confirm Email id should not be blank");
+			 errors.rejectValue("confirmEmailId", NOT_EMPTY, conformEmailBlank);
 		 }
 		 
 		 if(!StringUtils.isEmpty(registerForm.getEmailId()) 
 				 && !StringUtils.isEmpty(registerForm.getConfirmEmailId())){
 			 
 			 if(!validateEmailPattern(registerForm.getEmailId())){
-				 errors.rejectValue("emailId", NOT_EMPTY, "Invalid Email Id"); 
+				 errors.rejectValue("emailId", NOT_EMPTY, invalidEmail); 
 			 }
 			 
 			 if(!validateEmailPattern(registerForm.getConfirmEmailId())){
-				 errors.rejectValue("confirmEmailId", NOT_EMPTY, "Invalid Email Id"); 
+				 errors.rejectValue("confirmEmailId", NOT_EMPTY, invalidEmail); 
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", NOT_EMPTY, "E-Mail addresses do not match");
+				errors.rejectValue("confirmEmailId", NOT_EMPTY, emailMatch);
 			 }
 		 }
 	}
@@ -105,12 +128,12 @@ public class AgencyRegistrationValidation {
 
 		if (StringUtils.isEmpty(password)) {
 			errors.rejectValue("password", NOT_EMPTY,
-					"Password Should not be empty");
+					pwdEmpty);
 		}
 
 		if (StringUtils.isEmpty(confirmPassword)) {
 			errors.rejectValue("confirmPassword", NOT_EMPTY,
-					"Confirm Password Should not be empty");
+					conformPassEmpty);
 		}
 
 		if (!StringUtils.isEmpty(password)
@@ -118,17 +141,17 @@ public class AgencyRegistrationValidation {
 
 			if (!validatePasswordPattern(password)) {
 				errors.rejectValue("password", NOT_EMPTY,
-						"Password should contain 8-20 characters, including at least 1 number");
+						pwdHint);
 			}
 
 			if (!validatePasswordPattern(confirmPassword)) {
 				errors.rejectValue("confirmPassword", NOT_EMPTY,
-						"Password should contain  8-20 characters, including at least 1 number");
+						pwdHint);
 			}
 
 			if (!password.equals(confirmPassword)) {
 				errors.rejectValue("confirmPassword", NOT_EMPTY,
-						"Passwords are not equal");
+						pwdNotEqual);
 			}
 		}
 	}

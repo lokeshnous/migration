@@ -71,6 +71,12 @@ public class AgencyRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	@Value("${age.all.req.fields}")
+	private String reqFields;
+	
+	@Value("${age.email.exists}")
+	private String emailExists;
 
 	@Autowired
 	private LoginService loginService;
@@ -175,7 +181,7 @@ public class AgencyRegistrationController {
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 								.getStrLabelName())) {
 					model.addObject(MESSAGE,
-							"Please fill the Required fields");
+							reqFields);
 					return false;
 				}
 
@@ -187,7 +193,7 @@ public class AgencyRegistrationController {
 								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
 								.equals(form.getStrAttribType()))) {
 					model.addObject(MESSAGE,
-							"Please fill the Required fields");
+							reqFields);
 					return false;
 				}
 				// validation mobile number
@@ -217,7 +223,7 @@ public class AgencyRegistrationController {
 		}
 		if (agencyRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
-					"Email Id already Exists!");
+					emailExists);
 			 model.setViewName(AGENCYREG);
 			return false;
 		}
