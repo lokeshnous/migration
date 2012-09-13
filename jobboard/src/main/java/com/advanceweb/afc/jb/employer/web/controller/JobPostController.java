@@ -33,6 +33,7 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -154,7 +155,7 @@ public class JobPostController {
 		
 		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 		
-		form.setXmlStartEndDateEnabled(compareDateRangeWithCurrentDate(userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
+		form.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
 		
 		if(!form.isXmlStartEndDateEnabled()){		
 			
@@ -692,27 +693,6 @@ public class JobPostController {
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		
 		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
-	}
-	
-	/**
-	 * This method is called to compare the current date with the given date range
-	 * So that for that particular user we don't need to decrease the credits
-	 * and can post unlimited jobs with in the range.
-	 * @param xmlFeedStartDate
-	 * @param xmlFeedEndDate
-	 * @return
-	 */
-	public boolean compareDateRangeWithCurrentDate(Date xmlFeedStartDate, Date xmlFeedEndDate){
-		
-		if(null != xmlFeedStartDate && null != xmlFeedEndDate){
-			Date date = new Date();
-			if(date.compareTo(xmlFeedStartDate) >= 0 && date.compareTo(xmlFeedEndDate) <=0){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
+	}	
 	
 }
