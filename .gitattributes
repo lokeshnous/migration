@@ -96,7 +96,7 @@ jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/netSuite.properties -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/ImpersonateUserService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/ImpesfonateUserServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/ImpersonateUserServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/AgencyDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/impl/AgencyDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text

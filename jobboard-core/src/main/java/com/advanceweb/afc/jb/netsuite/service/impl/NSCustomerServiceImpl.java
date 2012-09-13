@@ -337,6 +337,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		String jsonResponse = null;
 		UserDTO userDTO = new UserDTO();
 		try {
+			LOGGER.info("jSON response=>"+response.toString());
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
 			if (jsonResponse.contains(ERROR_STRING)) {

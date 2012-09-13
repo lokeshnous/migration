@@ -37,7 +37,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Call for create Customer
         	//customerDetailsWSTest.createCustomer("Customer1", "company");
         //customerDetailsWSTest.createCashSales();
-      //customerDetailsWSTest.updateCustomer();
+      customerDetailsWSTest.updateCustomer();
 
 	}
 
@@ -67,7 +67,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 			LOGGER.info("Failed to get a string represenation of the response",
 					e);
 		}
-		System.out.println("Json Response String for Authorize User="+ jsonResponseString);
+		LOGGER.info("Json Response String for Authorize User="+ jsonResponseString);
 		return jsonResponseString;
 	}
 	/**

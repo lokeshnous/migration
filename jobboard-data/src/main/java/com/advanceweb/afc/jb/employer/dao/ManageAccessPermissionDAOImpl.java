@@ -177,7 +177,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	public boolean deleteJobOwner(int jobOwnerId) {
 		MerUser ownerDetails = hibernateTemplateTracker.get(MerUser.class,
 				jobOwnerId);
-		System.out.println("delete Emailid ----"+ownerDetails.getEmail());
+		LOGGER.info("delete Emailid ----"+ownerDetails.getEmail());
 		/**
 		 *  Delete Job owner from OpenAM 
 		 */

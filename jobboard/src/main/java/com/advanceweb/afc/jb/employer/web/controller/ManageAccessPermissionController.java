@@ -25,7 +25,6 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
-import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;

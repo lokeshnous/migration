@@ -336,8 +336,8 @@ public class OpenAMEUtility {
 
 	
 	public static boolean openAMCreateEmp(MerUser meruserDTO,AdmFacilityContact contact) {
-		System.out.println("-----------------------------------");
-		System.out.println(meruserDTO.getEmail()+ meruserDTO.getPassword()+ meruserDTO.getFirstName()+" " + meruserDTO.getLastName()+ meruserDTO.getEmail());
+		LOGGER.info("-----------------------------------");
+		LOGGER.info(meruserDTO.getEmail()+ meruserDTO.getPassword()+ meruserDTO.getFirstName()+" " + meruserDTO.getLastName()+ meruserDTO.getEmail());
 
 		StringBuffer attributes = new StringBuffer();
 

@@ -15,7 +15,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Service("adminService")
-public class ImpesfonateUserServiceImpl implements ProfileRegistration,
+public class ImpersonateUserServiceImpl implements ProfileRegistration,
 		ImpersonateUserService {
 
 	@Autowired

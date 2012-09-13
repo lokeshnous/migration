@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.admin.service;
 
 import com.advanceweb.afc.jb.common.AdminDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * @author muralikc

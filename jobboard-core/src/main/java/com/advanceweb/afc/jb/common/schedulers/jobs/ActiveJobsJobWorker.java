@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.common.schedulers.jobs;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;

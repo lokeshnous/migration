@@ -400,7 +400,8 @@ public class AgencyDashBoardController {
 			model.addObject("empRegisterForm", empRegisterForm);
 
 		} catch (Exception e) {
-			System.out.println("Error For controller");
+			LOGGER.info("Error is occured in controllr");
+			LOGGER.error("ERROR"+e);
 		}
 
 		return model;
@@ -464,7 +465,8 @@ public class AgencyDashBoardController {
 			// model.addObject("employerRegForm", employerRegForm);
 
 		} catch (Exception e) {
-			System.out.println("Error For controller");
+			LOGGER.info("Error is occured in controllr");
+			LOGGER.error("ERROR"+e);
 		}
 
 		return model;

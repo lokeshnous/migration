@@ -42,18 +42,17 @@ public class AdminDAOImpl implements AdminDAO {
 				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateEmail(String email) {
 		boolean status = false;
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
-				@SuppressWarnings("unchecked")
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						GET_EMAIL, email);
 
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
-					@SuppressWarnings("unchecked")
 					List<AdmUserRole> useList = hibernateTemplateCareers.find(
 							USER_ROLE, user.getUserId());
 					if (null != useList && !useList.isEmpty()) {

@@ -96,7 +96,7 @@ public class AdminController {
 			LOGGER.info("OpenAM : valid user!");
 		}else{
 			LOGGER.info("OpenAM : Invalid User E-mail, password");
-			return "Not a valid User E-Mail Or Password from openAM";
+			return "Not a valid User E-Mail Or Password";
 		}
 		if(!impersonateUserService.validateAdminCredentials(form.getUserEmail(), form.getPassword())){
 			return "Not a valid User E-Mail Or Password";

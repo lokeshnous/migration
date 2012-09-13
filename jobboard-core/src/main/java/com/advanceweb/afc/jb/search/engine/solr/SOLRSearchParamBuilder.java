@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
 
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.search.SearchParamBuilder;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
