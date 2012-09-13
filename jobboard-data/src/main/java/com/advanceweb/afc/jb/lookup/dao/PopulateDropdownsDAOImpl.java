@@ -792,7 +792,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			employerDetails.put("name", emplyrDetails[6]);
 			List<Object> phoneattrIdList = hibernateTemplateTracker
 					.find("select merProfAttrb.profileAttribId from MerProfileAttrib merProfAttrb where merProfAttrb.name= '"
-							+ MMJBCommonConstants.phone + "'");
+							+ MMJBCommonConstants.PHONE + "'");
 			// List<Object> phoneattrIdList = hibernateTemplateTracker
 			// .find("select merProfAttrb.profileAttribId from MerProfileAttrib merProfAttrb where merProfAttrb.name='Phone'");
 			List<Object> userIdList = hibernateTemplate
