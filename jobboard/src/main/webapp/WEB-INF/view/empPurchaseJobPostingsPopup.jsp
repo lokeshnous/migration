@@ -93,19 +93,18 @@
 										"addOnName":$(this).parent().children(1).text(),
 										"addOnDescription":"",
 										"addOnCreditAmt":$(this).parent().parent().parent().find("td").eq(1).attr("id"),
-										"addOnNetSuiteId":$(this).parent().parent().parent().attr("title")
+										"addOnNetSuiteId":$(this).parent().parent().parent().find("input").last().attr("id")
 									});
 								}
 						});
 						
 						var jobPostObj = [];	
-						
 						jobPostObj.push({
 							 	"jobPostPlanId":planId,
 							 	"jobPostPlanName":planObj.find("td").eq(0).children(1).text(),
 							 	"jobPostPlanDescr":"",
 							 	"jobPostPlanCretitAmt":planObj.find("td").eq(1).attr("id"),
-							 	"jobPostNetSuiteId":planObj.attr("title"),
+							 	"jobPostNetSuiteId":planObj.find("input").last().attr("id"),
 							 	"addOnForm":addOnStr,
 							 	"quantity": parseInt(quantity),
 						 }); 
@@ -165,7 +164,7 @@
 					 <c:forEach items="${purchaseJobPostForm.jobPostingsForm}" var="jobPosting" varStatus="status">	
 						<table id="tb_jobPost_${jobPosting.jobPostPlanId}" width="100%" border="0" cellpadding="0" cellspacing="0"
 							class="marginTop5">
-							<thead> <tr id="${jobPosting.jobPostPlanId}" title="${jobPosting.jobPostNetSuiteId}">
+							<thead> <tr id="${jobPosting.jobPostPlanId}">
 								<td width="32%" height="30px;" align="Left"><input
 									name="radio" type="radio" id="radio1" value="radio"
 									class="marginRight5"> <label for="radio"
@@ -174,11 +173,12 @@
 									class="link_color2_selected"><span>$</span><span>${jobPosting.jobPostPlanCretitAmt}</span></span></td>
 								<td width="19%"><input type="text"
 									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" /></td>
+								<input type="hidden" id="${jobPosting.jobPostNetSuiteId}"></input>	
 							</tr>
 							</thead>
 							<tbody>
 							<c:forEach items="${jobPosting.addOnForm}" var="addOn" varStatus="status">
-							<tr id="${addOn.addOnId}" title="${addOn.addOnNetSuiteId}">
+							<tr id="${addOn.addOnId}">
 								<td width="32%" height="30px;" align="Left"><div
 										class="floatLeft">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="" type="checkbox"
@@ -189,6 +189,7 @@
 									</div></td>
 								<td width="7%" align="Left" id="${addOn.addOnCreditAmt}"><span>$</span><span>${addOn.addOnCreditAmt}</span></td>
 								<td width="19%"></td>
+								<input type="hidden" id="${addOn.addOnNetSuiteId}"></input>	
 							</tr>
 							</c:forEach>
 							</tbody>
