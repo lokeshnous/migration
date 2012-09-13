@@ -902,17 +902,17 @@ public class JobSearchController {
 				SearchedJobDTO searchedJobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
-				String Subject = "A job opportunity sent to you by "
+				String Subject = MMJBCommonConstants.subjectOfMail+" "
 						+ jobseekerName;
-				String bodyHead1 = "Here’s a job opportunity that "
-						+ jobseekerName + " thought might interest you.";
+				String bodyHead1 = MMJBCommonConstants.bodyOfMail1+" "
+						+ jobseekerName +" "+MMJBCommonConstants.bodyOfMail2;
 				String bodyHead2 = sendtofriendmail.getMessage();
-				String jobTitle = "Job title:";
-				String companyName = "Company name:";
+				String jobTitle = MMJBCommonConstants.jobTitleHeding;
+				String companyName = MMJBCommonConstants.companyNameHeading;
 				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl = "<a href=?"
-						+ jobUrl
-						+ "><b>View this job now</b></a> to learn more and submit your application.";
+				String joburl = MMJBCommonConstants.urlLink1
+						+""+jobUrl
+						+""+MMJBCommonConstants.urlLink2;
 				mesg = mesg
 						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -928,7 +928,7 @@ public class JobSearchController {
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info("ERROR For sending mail option of SendToFriend method" + e);
+				LOGGER.info(MMJBCommonConstants.errorSendMail);
 			}
 
 		} catch (Exception e) {
@@ -936,10 +936,10 @@ public class JobSearchController {
 			throw new MailParseException(e);
 		}
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+			modelData.setViewName(MMJBCommonConstants.urlRedirectAfterMail);
 			return "";
 		} else {
-			modelData.setViewName("redirect:/healthcarejobs/advanceweb.html");
+			modelData.setViewName(MMJBCommonConstants.urlRedirectAfterMail);
 			return "";
 		}
 
