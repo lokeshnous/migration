@@ -423,9 +423,9 @@
 		                <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
 		                <br />
 		                <div class="JobDetailHeaderRightView">
-				            <%-- <c:if test="${isFeatureEmployer}"> --%>
+				            <c:if test="${isFeatureEmployer}">
 				            <img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
-			            <%-- </c:if>  --%>
+			            </c:if> 
 			            </div>
 		                <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">JOB  SUMMARY:</h3>
 		                <br />
