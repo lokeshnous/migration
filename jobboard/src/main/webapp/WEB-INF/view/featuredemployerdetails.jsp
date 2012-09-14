@@ -75,7 +75,6 @@
    <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />      
 Your browser does not support the video tag.
 </video>  --> 
-<iframe width="320" height="240" src="http://www.youtube.com/embed/EWhalXA7z2I" frameborder="0" allowfullscreen></iframe>
 						</div>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">
