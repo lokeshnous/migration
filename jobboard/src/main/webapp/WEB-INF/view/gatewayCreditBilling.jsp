@@ -26,11 +26,19 @@
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
 		jQuery(".megamenu").megamenu();
+		
+		$("#continueToNext").click(function(){
+			$("#creditBillingForm").attr("action","${pageContext.request.contextPath}/pgiController/callCreditConfirmOrder.html");
+			$("#creditBillingForm").submit();
+		});
+		
+		$('#firstname2').focus();
 	});
 	function copyAccToBillingAddr(obj) {
 		var isSelected = obj.value;
-		//alert(isSelected);
+		
 		if (isSelected) {
 			$("#firstname2").val($("#firstName").val());
 			$("#lastname2").val($("#lastname").val());
@@ -42,19 +50,8 @@
 			$("#phone2").val($("#phone").val());
 		}
 	}
-
-	$(document).ready(function() {
-		$('#firstname2').focus();
-	});
+	
 </script>
-	<script type="text/javascript">
-		    function cancelProcess(){
-		    	window.location.href = '../pgiController/';
-		    }		
-		    function backProcess(){
-		    	window.location.href = '../pgiController/callPaymentMethod.html';
-		    }		
-		</script>
 </head>
 
 <body class="job_board">
@@ -71,7 +68,7 @@
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/callCreditConfirmOrder.html"
+					<form:form action="../pgiController/callCreditConfirmOrder.html" id="creditBillingForm"
 						method="POST" commandName="paymentGatewayForm">
 
 						<div class="row">
@@ -394,16 +391,10 @@
 						</div>
 						<div class="clearfix"></div>
 						<div class="buttonContainer">
-							<span class="floatLeft"><input type="submit"
-								class="orange" value="Continue to Next Step" />
-								<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="white" name="Cancel" />
-								<input type="button" value="Back" onclick="backProcess()"
-									class="white" name="Back" />
-								
-								<!-- <a href="../pgiController/" class="btn_sm white">Cancel</a> 
-								<a href="../pgiController/callPaymentMethod.html"
-								class="btn_sm white">Back</a> --> </span>
+							<span class="floatLeft">
+								<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a>
+								<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a>
+								<a href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html" class="btn_sm orange">Back</a>	
 						</div>
 
 					</form:form>

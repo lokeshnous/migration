@@ -12,6 +12,7 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
 		jQuery(".megamenu").megamenu();
 		
 		$("#jobPostingsCart a").click(function(){
@@ -31,20 +32,13 @@
 			}
 			
 		});
+		
+		$("#continueToNext").click(function(){
+			$("#creditConfirmForm").attr("action","${pageContext.request.contextPath}/pgiController/placeOrder.html");
+			$("#creditConfirmForm").submit();
+		});
 	});
 
-	/* $('#edit').click(function(){
-		url = "../pgiController/paymentCreditBackMethod.html";
-	    $('#firstname2').focus();
-	}); */
-</script>
-<script type="text/javascript">
-	function cancelProcess() {
-		//window.location.href = '';
-	}
-	function backProcess() {
-		window.location.href = '../pgiController/paymentCreditBackMethod.html';
-	}
 </script>
 </head>
 
@@ -62,7 +56,7 @@
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/placeOrder.html"
+					<form:form action="../pgiController/placeOrder.html" id="creditConfirmForm"
 						method="POST" class="firstForm" modelAttribute="form">
 						<div class="row">
 							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
@@ -188,13 +182,10 @@
 								</table>
 							</div>
 							<div class="buttonContainer indent10">
-								<span class="floatLeft"> <input type="submit"
-									class="orange" value="Place Order" /> <input type="button"
-									value="Cancel" onclick="cancelProcess()" class="white"
-									name="Cancel" /> <input type="button" value="Back"
-									onclick="backProcess()" class="white" name="Back" /> <!-- <a href="" class="btn_sm white">Cancel</a> 
-								<a href="../pgiController/paymentCreditBackMethod.html"
-								class="btn_sm white">Back</a> -->
+								<span class="floatLeft"> 
+									<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a> 
+									<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a>
+									<a href="<%=request.getContextPath()%>/pgiController/paymentCreditBackMethod.html" class="btn_sm orange">Back</a>
 								</span>
 							</div>
 					</form:form>

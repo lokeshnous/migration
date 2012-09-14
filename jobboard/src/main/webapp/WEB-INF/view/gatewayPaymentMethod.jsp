@@ -22,14 +22,13 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+		$("#continueToNext").click(function(){
+			$("#paymentMethodForm").attr("action","${pageContext.request.contextPath}/pgiController/paymentMethod.html");
+			$("#paymentMethodForm").submit();
+		});
 	});
 </script>
-<script type="text/javascript">
-		    function cancelProcess(){
-		    	//window.location.href = '';
-		    }		
-		</script>
-
 </head>
 
 <body class="job_board">
@@ -47,7 +46,7 @@
 							>></span>
 					</h3>
 
-					<form:form action="paymentMethod.html"
+					<form:form action="paymentMethod.html" id="paymentMethodForm"
 						enctype="multipart/form-data" method="POST" class="firstForm"
 						commandName="paymentGatewayForm">
 						<div class="row">
@@ -67,13 +66,11 @@
 						</div>
 						<form:errors path="paymentMethod" />
 						<div class="buttonContainer">
-							<span class="floatLeft"><input type="submit"
-								class="orange" value="Continue to Next Step" />
-								<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="orange" name="Cancel" />
-								
-								<!--  <a
-								href="" class="btn_sm orange">Cancel</a> --></span>
+						  <span class="floatLeft">	
+							<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a>
+							<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" 
+								class="btn_sm orange">Cancel</a>
+						  </span>		
 						</div>
 
 					</form:form>

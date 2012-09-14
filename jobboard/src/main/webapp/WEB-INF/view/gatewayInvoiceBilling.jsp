@@ -23,6 +23,11 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		
+		$("#continueToNext").click(function(){
+			$("#invoiceBillingForm").attr("action","${pageContext.request.contextPath}/pgiController/callInvoiceConfirmOrder.html");
+			$("#invoiceBillingForm").submit();
+		});
 	});
 
 	function copyAccToBillingAddr(obj) {
@@ -39,14 +44,6 @@
 		}
 	}
 </script>
-<script type="text/javascript">
-		    function cancelProcess(){
-		    	//window.location.href = '';
-		    }		
-		    function backProcess(){
-		    	window.location.href = '../pgiController/callPaymentMethod.html';
-		    }		
-		</script>
 </head>
 
 <body class="job_board">
@@ -65,7 +62,7 @@
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/callInvoiceConfirmOrder.html"
+					<form:form action="../pgiController/callInvoiceConfirmOrder.html" id="invoiceBillingForm"
 						method="POST" commandName="paymentGatewayForm">
 
 						<div class="row">
@@ -282,16 +279,11 @@
 						<div class="clearfix"></div>
 
 						<div class="buttonContainer">
-							<span class="floatLeft"><input type="submit"
-								class="orange" value="Continue to Next Step" /> 
-								<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="white" name="Cancel" />
-								<input type="button" value="Back" onclick="backProcess()"
-									class="white" name="Back" />
-								<!-- <a
-								href="" class="btn_sm white">Cancel</a> <a
-								href="../pgiController/callPaymentMethod.html"
-								class="btn_sm white">Back</a> --> </span>
+							<span class="floatLeft">
+								<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a> 
+								<a href="../employer/employerDashBoard.html" class="btn_sm orange">Cancel</a>	
+								<a href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html" class="btn_sm orange">Back</a>
+							</span>
 						</div>
 
 					</form:form>

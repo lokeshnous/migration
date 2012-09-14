@@ -280,6 +280,7 @@ public class PaymentGatewayController {
 		//once the payment is success clear out the form data & related session data
 		session.removeAttribute("purchaseJobPostForm");
 		paymentGatewayForm = null;		
+		
 		ModelAndView model = new ModelAndView();
 		Map<String,String> errMap = new HashMap<String,String>();
 		if(userDTO.getNsStatus().equals("true")){
