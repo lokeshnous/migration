@@ -917,20 +917,21 @@ public class JobSearchController {
 
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
+				String msgSubject="";
 				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
-					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
-							"?Jobseekername", jobseekerName);
+					msgSubject = MMJBCommonConstants.SUBJECT_OF_MAIL+" "
+							+ jobseekerName;
 					
 				} else {
 					jobseekerName = "XXXX-XXX";
-					jobseekerSuggestFrdSub = jobseekerSuggestFrdSub.replace(
-							"?Jobseekername", jobseekerName);
+					msgSubject = MMJBCommonConstants.SUBJECT_OF_MAIL+" "
+							+ jobseekerName;
 				}
 						
 				
-				jobSeekerEmailDTO.setSubject(jobseekerSuggestFrdSub);
+				jobSeekerEmailDTO.setSubject(msgSubject);
 				SearchedJobDTO searchedJobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
