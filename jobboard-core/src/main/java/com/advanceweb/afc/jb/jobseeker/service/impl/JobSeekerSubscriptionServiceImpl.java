@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerSubscriptionsDAO;
+import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 
 /**
@@ -18,7 +20,7 @@ import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
  */
 @Service("jobSeekerSubscriptionService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionService {
+public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionService,CoverLetterService {
 
 	@Autowired
 	private JobSeekerSubscriptionsDAO jobSeekerSubscriptionsDAO;
@@ -43,5 +45,13 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 
 		return jobSeekerSubscriptionsDAO.getCurrentSubscriptions(userId);
 	}
-
+	/**
+	 * To Save the Cover letter of particular user
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO) {
+		return jobSeekerSubscriptionsDAO.coverLetterSaveByjobSeeker(rclDTO);
+	}
 }
