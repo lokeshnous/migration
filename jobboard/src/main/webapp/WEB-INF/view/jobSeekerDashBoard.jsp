@@ -40,7 +40,7 @@ jQuery(document).ready(
 			$("#viewMySavedSearchesId").displaypopup(
 					"#viewMySavedSearchesId", "790", "252");
 			$("#createCoverLett").displaypopup(
-					"#createCoverLett", "400", "252");
+					"#createCoverLett", "400", "350");
 			
 		});
 </script>
