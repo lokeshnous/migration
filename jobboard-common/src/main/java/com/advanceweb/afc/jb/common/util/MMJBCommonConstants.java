@@ -293,7 +293,7 @@ public interface MMJBCommonConstants {
 	String FULL_ACCESS = "5";
 	String MANAGEEDITACCESS = "6";
 
-	String DATABASE_ERROR_CODE = "Database failure occured.Please contact your technical support team to resolve the issue.";
+	String DATABASE_ERROR_CODE = "Database failed to support. Please contact your technical support team to resolve this issue.";
 	String UNIQUEKEY_PRIMARYKEY_VIOLATED = "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";
 	String SYSTEM_ERROR_CODE = "System encountered unexpected error.Please contact your techinal support team to resolve the issue.";
 	int EMPLOYER_ROLE_ID = 3;
