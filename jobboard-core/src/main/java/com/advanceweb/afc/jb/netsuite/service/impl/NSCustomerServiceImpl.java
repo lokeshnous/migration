@@ -30,7 +30,6 @@ import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
-
 /**
  * This service class helps to call the different WebServices from NetSuite.
  * 
@@ -65,28 +64,30 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private static final String SCRIPT_STRING_UPDATE_USER = "scriptForUpdateUser";
 	private static final String DEPLOY_STRING_UPDATE_USER = "deployForUpdateUser";
-	
+
 	private static final String SCRIPT_STRING_GET_USER_DETAILS = "scriptForGetUserDetails";
 	private static final String DEPLOY_STRING_GET_USER_DETAILS = "deployForGetUserDetails";
-	
+
 	private static final String IS_FEATURED = "custentityfeaturedemployee";
 	private static final String AMP_RECORD_TYPE = "&recordtype=";
-	
+
 	private static final String AMP_ID = "&id=";
 	private static final String ERROR_STRING = "error";
-	
+
 	private static final String RECORD_ALREADY_EXIST_MSG = "record already exist";
 	private static final String TRUE_STRING = "true";
-	
+
 	private static final String IS_INVOICE_ENABLED = "custentityinvoiceenabled";
 	private static final String IS_XML_FEED_ENABLED = "custentitycustxmlfeed";
-	
-	
-	private static final String  FEATURED_START_DATE_STRING = "custentityfeaturedemployeestartdate";
-	private static final String  FEATURED_END_DATE_STRING = "custentityfeaturedemployeeenddate";
-	
-	private static final String  XMLFEED_START_DATE_STRING = "custentitystartdate";
-	private static final String  XMLFEED_END_DATE_STRING = "custentityenddate";
+
+	private static final String FEATURED_START_DATE_STRING = "custentityfeaturedemployeestartdate";
+	private static final String FEATURED_END_DATE_STRING = "custentityfeaturedemployeeenddate";
+
+	private static final String XMLFEED_START_DATE_STRING = "custentitystartdate";
+	private static final String XMLFEED_END_DATE_STRING = "custentityenddate";
+
+	private static final String PACKAGE_TYPE_STRING = "custentitypackagetype";
+	private static final String NAME_STRING = "name";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -135,27 +136,27 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return getUpdatedUserDTOFromResponse(response);
 	}
-	
-	
+
 	/**
 	 * This method is used to get the customer details through NetSuite.
+	 * 
 	 * @param userDTO
 	 * @return userDTO
-	 * @throws JobBoardNetSuiteServiceException 
+	 * @throws JobBoardNetSuiteServiceException
 	 */
-	
-	public UserDTO getNSCustomerDetails(UserDTO userDTO) throws JobBoardNetSuiteServiceException{
-		
+
+	public UserDTO getNSCustomerDetails(UserDTO userDTO)
+			throws JobBoardNetSuiteServiceException {
+
 		Map<String, String> queryparamMap = getCustomerDetailsQueryMap();
-		String formParameterString = formParameterForGetCustomerDetails(userDTO, queryparamMap);
+		String formParameterString = formParameterForGetCustomerDetails(
+				userDTO, queryparamMap);
 		Response response = netSuiteMethod.netSuiteGet(queryparamMap,
 				formParameterString);
 
 		return getUserDTOFromResponse(response);
-		
+
 	}
-	
-	
 
 	/**
 	 * This method id used to create Net suite customer object from User object.
@@ -258,11 +259,11 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return queryParamMap;
 	}
-	
-	
+
 	/**
-	 * This method is used for creating net suite service url map. 
-	 * The values will be read from the netSuite.properties file.
+	 * This method is used for creating net suite service url map. The values
+	 * will be read from the netSuite.properties file.
+	 * 
 	 * @returnMap<String, String>
 	 */
 
@@ -279,8 +280,6 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return queryParamMap;
 	}
-	
-	
 
 	/**
 	 * This method is used to get the User object from the Net Suite Response
@@ -337,7 +336,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		String jsonResponse = null;
 		UserDTO userDTO = new UserDTO();
 		try {
-			LOGGER.info("jSON response=>"+response.toString());
+			LOGGER.info("jSON response=>" + response.toString());
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
 			if (jsonResponse.contains(ERROR_STRING)) {
@@ -356,7 +355,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		return userDTO;
 	}
-	
+
 	/**
 	 * This method is used to get the User object from the Net Suite Response
 	 * for updating a Customer. The net suite response will be parsed and
@@ -368,30 +367,29 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	 * @throws JobBoardServiceException
 	 */
 
-	
 	private UserDTO getUserDTOFromResponse(Response response)
 			throws JobBoardNetSuiteServiceException {
 		String jsonResponse = null;
 		UserDTO userDTO = new UserDTO();
-		
+
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
-			
-			
+
 			if (jsonResponse.contains(ERROR_STRING)) {
 				LOGGER.info("Error occurred while record updation in NetSuite.");
 				throw new JobBoardNetSuiteServiceException(
 						"Error occurred while record updation in NetSuite.");
-			} else{
-				
+			} else {
+
 				try {
-					org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResponse);
+					org.codehaus.jettison.json.JSONObject jsonObject = new org.codehaus.jettison.json.JSONObject(
+							jsonResponse);
 					userDTO = populateUserDTO(userDTO, jsonObject);
 				} catch (JSONException e) {
 					LOGGER.error(e);
 				}
-				
+
 			}
 
 		} catch (IOException e) {
@@ -405,6 +403,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	/**
 	 * This method is used to populate USerDTO from JSON object.
+	 * 
 	 * @param userDTO
 	 * @param jsonObject
 	 * @return UserDTO Object
@@ -413,40 +412,71 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private UserDTO populateUserDTO(UserDTO userDTO,
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
-		
-		userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(IS_INVOICE_ENABLED).toString()));
-		
-		userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED).toString()));
-		
-		if(jsonObject.has(FEATURED_START_DATE_STRING)){
-			userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(FEATURED_START_DATE_STRING).toString()));
-			LOGGER.info("FEATURED START DATE IS=>"+jsonObject.get(FEATURED_START_DATE_STRING));
+
+		userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(
+				IS_INVOICE_ENABLED).toString()));
+
+		userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED)
+				.toString()));
+
+		if (jsonObject.has(FEATURED_START_DATE_STRING)) {
+			userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(
+					FEATURED_START_DATE_STRING).toString()));
+			LOGGER.info("FEATURED START DATE IS=>"
+					+ jsonObject.get(FEATURED_START_DATE_STRING));
 		}
-		if(jsonObject.has(FEATURED_END_DATE_STRING)){
-			userDTO.setFeaturedEndDate(convertToDate(jsonObject.get(FEATURED_END_DATE_STRING).toString()));
-			LOGGER.info("FEATURED END DATE IS=>"+jsonObject.get(FEATURED_END_DATE_STRING));
+		if (jsonObject.has(FEATURED_END_DATE_STRING)) {
+			userDTO.setFeaturedEndDate(convertToDate(jsonObject.get(
+					FEATURED_END_DATE_STRING).toString()));
+			LOGGER.info("FEATURED END DATE IS=>"
+					+ jsonObject.get(FEATURED_END_DATE_STRING));
 		}
-		
-		userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(IS_XML_FEED_ENABLED).toString()));
-		if(jsonObject.has(XMLFEED_START_DATE_STRING)){
-			userDTO.setXmlFeedStartDate(convertToDate(jsonObject.get(XMLFEED_START_DATE_STRING).toString()));
-			LOGGER.info("XMLFEED START DATE IS=>"+jsonObject.get(XMLFEED_START_DATE_STRING));
+
+		userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(
+				IS_XML_FEED_ENABLED).toString()));
+		if (jsonObject.has(XMLFEED_START_DATE_STRING)) {
+			userDTO.setXmlFeedStartDate(convertToDate(jsonObject.get(
+					XMLFEED_START_DATE_STRING).toString()));
+			LOGGER.info("XMLFEED START DATE IS=>"
+					+ jsonObject.get(XMLFEED_START_DATE_STRING));
 		}
-		if(jsonObject.has(XMLFEED_END_DATE_STRING)){
-			userDTO.setXmlFeedEndDate(convertToDate(jsonObject.get(XMLFEED_END_DATE_STRING).toString()));
-			LOGGER.info("XMLFEED END DATE IS=>"+jsonObject.get(XMLFEED_END_DATE_STRING));
+		if (jsonObject.has(XMLFEED_END_DATE_STRING)) {
+			userDTO.setXmlFeedEndDate(convertToDate(jsonObject.get(
+					XMLFEED_END_DATE_STRING).toString()));
+			LOGGER.info("XMLFEED END DATE IS=>"
+					+ jsonObject.get(XMLFEED_END_DATE_STRING));
 		}
-		
-		
-		LOGGER.info("IS_FEATURED===>"+jsonObject.get(IS_FEATURED));
-		LOGGER.info("IS_INVOICE_ENABLED===>"+jsonObject.get(IS_INVOICE_ENABLED));
-		LOGGER.info("IS_XML_FEED_ENABLED===>"+jsonObject.get(IS_XML_FEED_ENABLED));
-		
+
+		setPackageTypeInUserDTO(userDTO, jsonObject);
+
+		LOGGER.info("IS_FEATURED===>" + jsonObject.get(IS_FEATURED));
+		LOGGER.info("IS_INVOICE_ENABLED===>"
+				+ jsonObject.get(IS_INVOICE_ENABLED));
+		LOGGER.info("IS_XML_FEED_ENABLED===>"
+				+ jsonObject.get(IS_XML_FEED_ENABLED));
+
 		return userDTO;
 	}
+
+	/**
+	 * This method is used for setting the package type into the UserDTO.
+	 * @param userDTO
+	 * @param jsonObject
+	 * @throws JSONException
+	 */
 	
-	
-	
+	private void setPackageTypeInUserDTO(UserDTO userDTO,
+			org.codehaus.jettison.json.JSONObject jsonObject)
+			throws JSONException {
+		if (jsonObject.has(PACKAGE_TYPE_STRING)) {
+			org.codehaus.jettison.json.JSONObject jsonObj = (org.codehaus.jettison.json.JSONObject) jsonObject
+					.get(PACKAGE_TYPE_STRING);
+			if (jsonObj.has(NAME_STRING)) {
+				LOGGER.info("PACKAGE TYP IS " + jsonObj.get(NAME_STRING));
+				userDTO.setPackageName(jsonObj.get(NAME_STRING).toString());
+			}
+		}
+	}
 
 	/**
 	 * This method is used to get the isPersion string from the Json object.
@@ -463,22 +493,28 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				.toUpperCase());
 		return json;
 	}
-	
+
 	/**
 	 * This method created the parameter url for netSuite GET request.
-	 * @param object of UserDTO
-	 * @param Map<String, String> queryparamMap
+	 * 
+	 * @param object
+	 *            of UserDTO
+	 * @param Map
+	 *            <String, String> queryparamMap
 	 * @return String
 	 */
-	
-	public String formParameterForGetCustomerDetails(UserDTO userDTO, Map<String, String> queryparamMap){
-		
-		return AMP_RECORD_TYPE+userDTO.getRecordType()+AMP_ID+userDTO.getEntityId();
-		
+
+	public String formParameterForGetCustomerDetails(UserDTO userDTO,
+			Map<String, String> queryparamMap) {
+
+		return AMP_RECORD_TYPE + userDTO.getRecordType() + AMP_ID
+				+ userDTO.getEntityId();
+
 	}
-	
-	public Date convertToDate(String date){
-		SimpleDateFormat dateFormat = new SimpleDateFormat(MMJBCommonConstants.DISP_DATE_PATTERN);
+
+	public Date convertToDate(String date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				MMJBCommonConstants.DISP_DATE_PATTERN);
 		Date convertedDate = null;
 		try {
 			convertedDate = dateFormat.parse(date);
@@ -487,6 +523,5 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		}
 		return convertedDate;
 	}
-	
 
 }
