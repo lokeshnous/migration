@@ -73,8 +73,15 @@ public class BrandingTemplateController {
 	private @Value("${imageSizeLimit}")
 	String imageSizeLimit;
 
-	// @Value("${ajaxNavigationPath}")
-	// private String ajaxNavigationPath;
+	private @Value("${empBrandFileError}")
+	String empBrandFileError;
+	 
+	private @Value("${empBrandTemplateError}")
+	String empBrandTemplateError;
+	 
+	private @Value("${defaultColor}")
+	String defaultColor;
+	 
 
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
@@ -83,9 +90,7 @@ public class BrandingTemplateController {
 	private static final String STR_TEMPLATE_ = "Template_";
 	private static final String STR_BRANDTEMPLATEPREVIEW = "brandTemplatePreview";
 	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
-	private static final String STR_NOCOLOR = "HEX #ffffff";
-	private static final int INT_GOLD=2;
-	private static final int INT_PLATINUM=3;
+	
 	
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -161,7 +166,7 @@ public class BrandingTemplateController {
 		status = uploadMedia(brandingTemplate);
 		if (!status) {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
-					"An error occured while saving the file. Please try again");
+					empBrandFileError);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			status = null;
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
@@ -184,7 +189,7 @@ public class BrandingTemplateController {
 		} else {
 
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
-					"An error occured while creating the Template. Please try again");
+					empBrandTemplateError);
 			status = null;
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
@@ -266,7 +271,7 @@ public class BrandingTemplateController {
 
 		if(null==brandingTemplateForm.getColor() || brandingTemplateForm.getColor().isEmpty())
 		{
-			brandingTemplateForm.setColor(STR_NOCOLOR);
+			brandingTemplateForm.setColor(defaultColor);
 		}
 			model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 
@@ -286,7 +291,7 @@ public class BrandingTemplateController {
 		BrandingTemplateForm brandingTemplateForm = form;
 		int packageId = brandingTemplateService.getBrandingInformation(facility_id);
 		
-		if(packageId == INT_GOLD || packageId == INT_PLATINUM)
+		if(packageId == MMJBCommonConstants.INT_GOLD || packageId == MMJBCommonConstants.INT_PLATINUM)
 		{
 			brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
 		}
@@ -323,7 +328,7 @@ public class BrandingTemplateController {
 
 		if(null==brandingTemplateForm.getColor() || brandingTemplateForm.getColor().isEmpty())
 		{
-			brandingTemplateForm.setColor(STR_NOCOLOR);
+			brandingTemplateForm.setColor(defaultColor);
 		}
 		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);

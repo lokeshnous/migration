@@ -240,7 +240,9 @@ public interface MMJBCommonConstants {
 	String IMAGE_TYPE_GIF = ".gif";
 	String IMAGE_TYPE_PNG = ".png";
 	String IMAGE_TYPE_TIF = ".tif";
-
+	int INT_GOLD = 2;
+	int INT_PLATINUM = 3;
+	
 	// Media file format-Manage Featured Employer Profile
 	String VIDEO_TYPE_MOV = ".mov";
 	String VIDEO_TYPE_MPG = ".mpg";

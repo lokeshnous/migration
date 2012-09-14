@@ -80,41 +80,30 @@
   
 </head>
     
-    <body class="job_board_home">    
+    <body class="job_board">    
         <div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
         </div>
-        <div class="main_wrapper_outside">
-        <div class="main_wrapper_inside">
-
-
-            <div class="main">
+        
+<div class="main_wrapper_outside marginTop30">
+ <div class="main_wrapper_insideRC">
+ <div class="main">
             <jsp:include page="../templates/templates_header.jsp"></jsp:include>
-				<div class="ad_col_right">
-                    <img src="../resources/images/ads/300x250ad1.png" />
-                    <img src="../resources/images/ads/300x250ad2.png" />
+				
 
-		    <br class="clearfix" />
+                <!-- <div class="content_wrapper"> -->
 
-                </div><!-- ad_col_right -->
-
-                <div class="content_wrapper">
-
-		    <div class="jobDetails">
+		    <!-- <div class="jobDetails"> -->
 			
 			<div class="jobDetailsEyebrow">
-            
-			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> <div class="floatRight">
-			<%-- <a href="${returnResults}" class="link_color2_emphasized">Return to Search Results &nbsp; </a> --%>
-			 <c:choose><c:when test="${returnResults != 'null'}">
-                        <%-- <a href="${returnResults}" class="link_color2_emphasized">Return to Search Results &nbsp; </a> --%>
-                        <a href='${pageContext.request.contextPath}/jobsearch/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
-                        </c:when>
-                        <c:otherwise></c:otherwise>
-                        </c:choose>
+			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> 
+			<div class="floatRight">
+				<c:choose><c:when test="${returnResults != 'null'}">
+                   <a href='${pageContext.request.contextPath}/jobsearch/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
+                </c:when>
+                <c:otherwise></c:otherwise>
+                </c:choose>
 			</div>
-			
-			
 			</div>
 			
 			<!-- Start Branding -->
@@ -147,7 +136,7 @@
        	  </div>
                   
                   
-            <%-- <c:if test="${!jobDetail.getIsSilverCustomer()}">  
+            <c:if test="${!jobDetail.getIsSilverCustomer()}">  
                 
 			<!--IMAGE SLIDER-->
            <div class="row">
@@ -181,7 +170,7 @@
 							<div id="slider1">
 							<c:forEach var="companyProfileDTO"
 									items="${jobDetail.listAddImages}" varStatus="status" step="4">
-									<% i++; %>
+									
 									<div class="slider1Frames">
 										<a id="${jobDetail.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
 											<div class="slider1FrameA1">
@@ -235,7 +224,7 @@
 							<div id="slider1">
 							<c:forEach var="companyProfileDTO"
 									items="${jobDetail.listAddImages}" varStatus="status" step="4">
-									<% i++; %>
+									
 									<div class="slider1Frames">
 										<a id="${jobDetail.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
 											<div class="slider1FrameA1">
@@ -283,8 +272,7 @@
 								<!-- Testimonials -->
 								<div id="slider1">
 								<c:forEach var="companyProfileDTO"
-									items="${jobDetail.listAddImages}" varStatus="status" step="4">
-									<% i++; %>
+									items="${jobDetail.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
 										<a
 											id="${jobDetail.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
@@ -328,7 +316,7 @@
 	           </div>
 	           </div>
           </div>
-          </c:if>	 --%>
+          </c:if>	
                   <!--CONT SLIDER-->
           
             <div class="row">
@@ -337,11 +325,11 @@
             
                 <div class="ContantMiddleLeftLink">
                           <div class="row">
-                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${jobDetail.getColor().substring(4)}" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${jobDetail.getColor().substring(4)}" href="#">save job</a></span> </div>
+                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobID});" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" href="#">save job</a></span> </div>
                   </div>
                   <div class="row marginTop10">
                   	<div class="ShareArea marginLeft5">
-                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email"></span>
+                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email" onclick="sendToFrd(${jobDetail.jobID});"></span>
                     </div>
                     <div class="ShareArea BorderLeft">
                     <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
@@ -356,25 +344,34 @@
                         
                 <div class="row marginTop20">
                           <h3 class="TextColorA01 FontSize18">Name of Facility</h3>
-                          <div class="row marginTop5">
+                  <c:if test="${not empty jobDetail.city}" >        
+                  <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>CITY :</strong></h1>
-                    <p>Baltimore</p>
+                    <p>${jobDetail.city}</p>
                   </div>
-                          <div class="row marginTop5">
+                  </c:if>     
+                         
+                  <c:if test="${not empty jobDetail.stateFullName}" >        
+                  <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>STATE :</strong></h1>
-                    <p>Maryland</p>
+                    <p>${jobDetail.stateFullName}</p>
                   </div>
-                          <div class="row marginTop5">
+                  </c:if>
+                  
+                  <c:if test="${not empty jobDetail.country}" >
+                  <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>COUNTRY :</strong></h1>
-                    <p>US</p>
+                    <p>${jobDetail.country}</p>
                   </div>
+                  </c:if>
+                  
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>JOB ID NUMBER :</strong></h1>
-                    <p>00000000</p>
+                    <p>${jobDetail.jobID}</p>
                   </div>
                  </div>
                  
-                 <%-- <c:if test="${jobDetail.getPackageId()==3}">
+                 <c:if test="${jobDetail.getPackageId()==3}">
                  <div class="row">
                  <div class="ContantLeftBlueBox " style="background: ${jobDetail.getColor().substring(4)} ">
                     <div class="BlueBoxCont TextColor02">
@@ -419,30 +416,37 @@
                       </a> </div>
 	             </div>
 	             </div>
-                 </c:if> --%>
+                 </c:if>
               </div>
               
               
               <div class="ContantMiddleRightBox">
                 	<DIV class="row">
-		                <h1 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">Manager, Home Care Coordination/Discharge Planning </h1>
+		                <h1 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">${jobDetail.jobTitle} </h1>
 		                <br />
+		                <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
 		                <br />
+		                <div class="JobDetailHeaderRight">
+				            <%-- <c:if test="${isFeatureEmployer}"> --%>
+				            <img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
+			            <%-- </c:if>  --%>
+			            </div>
 		                <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">JOB  SUMMARY:</h3>
 		                <br />
 		                <div class="lineHeight16">
-		                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
+		                <p class="article">${jobDetail.jobDesc}</p>
 		                <br />
 	               		</div>
                 	</div>
                 
 	                <div class="ContantMiddleLeftLink marginBottom20">
 	                          <div class="row">
-	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${jobDetail.getColor().substring(4)}" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${jobDetail.getColor().substring(4)}" href="#">save job</a></span> </div>
+	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobID});" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" href="#">save job</a></span> </div>
 	                  </div>
 	                  <div class="row marginTop10">
 	                  	<div class="ShareArea marginLeft5">
-	                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email"></span>
+	                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email" onclick="sendToFrd(${jobDetail.jobID});"> </span>
 	                    </div>
 	                    <div class="ShareArea BorderLeft">
 	                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
@@ -457,80 +461,26 @@
               
               </div>
               </div>
-              
-                   
         
-        
-</div>             
+			 </div>       
+			<!-- </div> -->             
  			
 			<!-- End -->
 			
 			
-			<%-- <div class="JobDetailHeaderLeft">
-			<h1 ><span>${jobDetail.jobTitle}</span></h1>
-            <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
-            </div>
-            <div class="JobDetailHeaderRight">
-            <c:if test="${isFeatureEmployer}">
-            <img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
-            </c:if> 
-            </div>
-			<div class="jobDetailsIntro">
-			    <div class="jobDetailsIntroReview">
-				<p>
-					<c:if test="${not empty jobDetail.city}" >
-						<span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;
-					</c:if>
-					<c:if test="${not empty jobDetail.stateFullName}" >
-						<span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.stateFullName}&nbsp;&nbsp;|&nbsp;&nbsp;
-					</c:if>
-					<c:if test="${not empty jobDetail.country}" >
-						<span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;
-					</c:if>
-					<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobID}</p>
-			    </div>
-			    <div class="jobDetailsIntroOptions">
-			    <div class="rowEvenTB10Spacing">
-				<div class="ShareText">Send to friend: &nbsp;</div>
-				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
-				<div class="rowEvenTB10Spacing">
-				<a onclick="applyThisJob(${jobDetail.jobID});" class="btn_sm orange" >Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
-				<a onclick="saveThisJob(${jobDetail.jobID})" id="saveThisJobId" class="btn_sm orange">SAVE THIS JOB</a></div>
-			    
-			    <br/><br/><br/>
-			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
-			    <h3 class="jobSummaryTitle"><span>Job Summary:</span></h3>
-			    <p class="article">${jobDetail.jobDesc}</p>     
-			    <div class="jobDetailsIntroOptionsTborder">
-				<div class="jobDetailsIntroOptions">
-				<div class="rowEvenTB10Spacing">
-				<div class="ShareText">Send to friend:&nbsp;</div>
-				<a onclick="sendToFrd(${jobDetail.jobID});"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
-				<div class="rowEvenTB10Spacing">
-				<a onclick="btapplyThisJob(${jobDetail.jobID});" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" class="btn_sm orange" >SAVE THIS JOB</a></div>
-			    <br/><br/>
-			    <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
-			    </div>
-			    </div>
-			    
-			    
-			</div>
-		    </div>
-		    
-		     --%>
 		    <br class="clearfix" />
 
-                </div><!-- content_wrapper -->
+                <!-- </div> -->
+                <!-- content_wrapper -->
 
                 <div class="ad_wrapper">
 					<img src="../resources/images/ads/banner_ad_fpo.png" />
                 </div><!-- ad_wrapper -->
 
-            </div><!-- main -->
+ </div><!-- main -->
+ </div> <!-- end main_wrapper_inside -->   
+</div> <!-- end main_wrapper_outside -->
 
-        </div> <!-- end main_wrapper_inside -->   
-        </div> <!-- end main_wrapper_outside -->
 <jsp:include page="../templates/templates_footer.jsp"></jsp:include>
     </body>
 </html>

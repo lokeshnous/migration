@@ -35,12 +35,6 @@ public class JpTemplate implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
-
-//    MUST be changed to JoinColumn
-    	
-//    @ManyToOne(fetch=FetchType.LAZY)
-//	@JoinColumn(name="create_user_id")
-//    private MerUser merUser;
     
 	@Column(name="create_user_id")
 	private int createUserId;
@@ -55,8 +49,8 @@ public class JpTemplate implements Serializable {
 	private String templateName;
 
 	//bi-directional many-to-one association to JpJob
-//	@OneToMany(mappedBy="jpTemplate")
-//	private List<JpJob> jpJobs;
+	@OneToMany(mappedBy="jpTemplate")
+	private List<JpJob> jpJobs;
 
 	@Column(name="delete_user_id")
 	private int deleteUserId;
@@ -133,6 +127,14 @@ public class JpTemplate implements Serializable {
 //	public void setMerUser(MerUser merUser) {
 //		this.merUser = merUser;
 //	}
+
+	public List<JpJob> getJpJobs() {
+		return jpJobs;
+	}
+
+	public void setJpJobs(List<JpJob> jpJobs) {
+		this.jpJobs = jpJobs;
+	}
 
 	public int getDeleteUserId() {
 		return deleteUserId;

@@ -124,8 +124,6 @@ public class BrandTemplateConversionHelper {
 				TestimonyDTO dto = new TestimonyDTO();
 				
 				dto.setTestimony(entity.getTestimonial());
-				
-//				dto.setBuilderPhoneId(entity.getBuilderPhoneId());
 						
 				listTestimonyDTO.add(dto);
 			}

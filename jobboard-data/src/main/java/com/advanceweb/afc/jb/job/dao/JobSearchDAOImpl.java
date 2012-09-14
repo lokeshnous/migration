@@ -68,7 +68,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			LOGGER.info("viewJobDetails ERROR");
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info("ex-ERROR");
+			LOGGER.info("ex-ERROR "+ex);
 		}
 		return jobDetail;
 	}

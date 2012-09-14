@@ -82,9 +82,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 */
 	@Override
 	public int getBrandingInformation(int facilityId) {
-		// TODO Auto-generated method stub
+
 		return brandingTemplateDAO.getBrandingInformation(facilityId);
-//		return 0;
+
 	}
 
 	

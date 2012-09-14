@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,7 +14,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +28,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,6 +52,8 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
+import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.home.web.controller.ClickController;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
@@ -93,6 +103,9 @@ public class JobSearchController {
 
 	@Autowired
 	private CheckSessionMap checkSessionMap;
+	
+	@Autowired
+	private BrandingTemplateService brandingTemplateService;
 
 	@Value("${jobSearchValidateKeyword}")
 	private String jobSearchValidateKeyword;
@@ -187,6 +200,7 @@ public class JobSearchController {
 			Map<String, Object> model, HttpServletRequest request, Model model1,
 			HttpSession session,HttpServletResponse response, @RequestParam(CURRENT_URL) String currentUrl,
 			@RequestParam(value="clickType",required=false) String clickType) {
+		ModelAndView modelView = new ModelAndView();
 		
 		try {
 			
@@ -201,6 +215,10 @@ public class JobSearchController {
 			}
 			// View the job with template
 			SearchedJobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
+			if(MMJBCommonConstants.ZERO_INT != jobDTO.getTemplateId())
+			{
+				jobDTO = checkBrand(jobDTO);
+			}
 			model.put("jobDetail", jobDTO);
 			model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
 			model.put("returnResults", currentUrl);
@@ -209,11 +227,22 @@ public class JobSearchController {
 				session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 			}
 
+
+			if(MMJBCommonConstants.ZERO_INT != jobDTO.getTemplateId())
+			{
+				modelView.setViewName("jobseekerJobDetailsTemplate");
+			}
+			else
+			{
+				modelView.setViewName("jobseekerJobDetails");
+			}
+			
 		} catch (Exception e) {
 			// loggers call
-			LOGGER.info("ERROR");
+			LOGGER.info("ERROR"+e);
 		}
-		return new ModelAndView("jobseekerJobDetails");
+		
+		return modelView;
 	}
 	
 	@RequestMapping(value = "/clicksTrack")
@@ -1066,4 +1095,104 @@ public class JobSearchController {
 		return modelAndView;
 	}
 
+	
+	@RequestMapping("/viewImage")
+	public void getPhoto(@RequestParam("id") String imageId,
+			HttpServletResponse response, HttpServletRequest request,
+			BrandingTemplateForm brandingTemplateForm) {
+
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(imageId));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(originalImage,
+					imageId.substring(imageId.length() - 3, imageId.length()),
+					baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+
+			ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
+			// Display the image
+			write(response, result.getBody());
+		} catch (Exception e) {
+
+			LOGGER.error(e);
+
+		}
+	}
+
+	/**
+	 * Writes the report to the output stream
+	 */
+	public void write(HttpServletResponse response, byte[] byteArray) {
+		ServletOutputStream outputStream =null;
+		try {
+			// Retrieve the output stream
+			outputStream = response.getOutputStream();
+			// Write to the output stream
+			outputStream.write(byteArray);
+			// Flush the stream
+			outputStream.flush();
+			// Close the stream
+			outputStream.close();
+
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		finally{
+			try{
+			outputStream.close();
+			}catch (Exception e) {
+				LOGGER.error(e);
+			}
+		}
+	}
+	
+	
+	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
+		// Get bytes from somewhere...
+		byte[] byteData = imageInByte;
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.setContentType(MediaType.IMAGE_PNG);
+		responseHeaders.setContentLength(byteData.length);
+
+		return new ResponseEntity<byte[]>(byteData, responseHeaders,
+				HttpStatus.OK);
+	}
+
+	@RequestMapping("/viewTestimonial")
+	public ModelAndView enlargeTestimonial(@RequestParam("id") String testimonyId,
+			HttpServletResponse response, HttpServletRequest request,
+			BrandingTemplateForm brandingTemplateForm) {
+		ModelAndView model = new ModelAndView();
+		brandingTemplateForm.setTestimonyContainer(testimonyId);
+		model.addObject("brandingTemplateForm", brandingTemplateForm);
+		model.setViewName("viewTestimony");
+		return model;
+	}
+	
+	/**
+	 * The method is called to read the branding information from database.
+	 * 
+	 * @param dto
+	 * @return SearchedJobDTO
+	 */
+	public SearchedJobDTO checkBrand(SearchedJobDTO dto)
+	{
+		SearchedJobDTO searchedJobDTO = dto;
+		int packageId = brandingTemplateService.getBrandingInformation(searchedJobDTO.getFacilityId());
+		
+		if(packageId == MMJBCommonConstants.INT_GOLD || packageId == MMJBCommonConstants.INT_PLATINUM)
+		{
+			searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
+		}
+		else
+		{
+			searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
+		}
+		
+		searchedJobDTO.setPackageId(packageId);
+		return searchedJobDTO;
+	}
 }

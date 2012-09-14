@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
@@ -17,6 +19,8 @@ import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
+import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 
 /**
  * <code> JobSearchConversionHelper </code> is a Conversion Helper class for
@@ -33,6 +37,11 @@ public class JobSearchConversionHelper {
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchConversionHelper.class);
 
+	private @Value("${defaultColor}")
+	String defaultColor;
+	
+	@Autowired
+	BrandTemplateConversionHelper brandTemplateConversionHelper;
 	/**
 	 * Entity to view job dto
 	 * 
@@ -52,6 +61,7 @@ public class JobSearchConversionHelper {
 			// get detail from admFacility entity
 			AdmFacility admFacility = entity.getAdmFacility();
 			searchedJobDTO.setCompanyName(admFacility.getName());
+			searchedJobDTO.setFacilityId(admFacility.getFacilityId());
 			int blindAd = entity.getBlindAd();
 			if (blindAd == 1) {
 				searchedJobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
@@ -84,10 +94,36 @@ public class JobSearchConversionHelper {
 			}
 
 			// get the template details
-			searchedJobDTO.setCompanyOverview(entity.getKeywords());
-			searchedJobDTO.setImagePath(entity.getImagePath());
-			searchedJobDTO.setLogo(entity.getLogo());
+//			searchedJobDTO.setCompanyOverview(entity.getKeywords());
+//			searchedJobDTO.setImagePath(entity.getImagePath());
+//			searchedJobDTO.setLogo(entity.getLogo());
+			
+			JpTemplate jpTemplate = entity.getJpTemplate();
+			if(null != jpTemplate)
+			{
+				searchedJobDTO.setTemplateId(jpTemplate.getTemplateId());
+				searchedJobDTO.setCompanyOverview(jpTemplate.getCompanyOverview());
+				searchedJobDTO.setImagePath(jpTemplate.getMainImagePath());
+				searchedJobDTO.setLogo(jpTemplate.getLogoPath());
+				
+				if(null==jpTemplate.getColorPalette() || jpTemplate.getColorPalette().isEmpty())
+				{
+					searchedJobDTO.setColor(defaultColor);
+				}
+				else
+				{
+					searchedJobDTO.setColor(jpTemplate.getColorPalette());
+				}
+				
+//				Multimedia section
+				searchedJobDTO.setListTestimony(brandTemplateConversionHelper.transformTemplateTestimonyToDTO(jpTemplate));
+				searchedJobDTO.setListAddImages(brandTemplateConversionHelper.transformAddImageToDTO(jpTemplate));
+				searchedJobDTO.setListVideos(brandTemplateConversionHelper.transformVideoToDTO(jpTemplate));
+				
+			}
+			
 			searchedJobDTO.setEmployerEmailAddress(entity.getEmail());
+			
 
 		}
 		return searchedJobDTO;

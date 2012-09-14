@@ -130,7 +130,6 @@
 							<div id="slider1">
 							<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listAddImages}" varStatus="status" step="4">
-									<%-- <% i++; %> --%>
 									<div class="slider1Frames">
 										<a id="${brandingTemplateForm.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
 											<div class="slider1FrameA1">
@@ -184,7 +183,6 @@
 							<div id="slider1">
 							<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listAddImages}" varStatus="status" step="4">
-									<%-- <% i++; %> --%>
 									<div class="slider1Frames">
 										<a id="${brandingTemplateForm.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
 											<div class="slider1FrameA1">
@@ -232,8 +230,7 @@
 								<!-- Testimonials -->
 								<div id="slider1">
 								<c:forEach var="companyProfileDTO"
-									items="${brandingTemplateForm.listAddImages}" varStatus="status" step="4">
-									<%-- <% i++; %> --%>
+									items="${brandingTemplateForm.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">

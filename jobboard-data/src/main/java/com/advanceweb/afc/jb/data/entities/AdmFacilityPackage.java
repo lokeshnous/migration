@@ -28,20 +28,17 @@ public class AdmFacilityPackage implements Serializable {
 	@Column(name = "facility_id")
 	private int facilityId;
 
-	@Column(name = "plan_id")
-	private int planId;
-
 	@Column(name = "package_id")
 	private int packageId;
 
-	@Column(name = "expire_dt")
-	private Date expireDt;
+	@Column(name = "template_id")
+	private int templateId;
 
-	@Column(name = "active")
-	private int active;
+	@Column(name = "start_dt")
+	private Date startDate;
 
-	@Column(name = "quantity")
-	private int quantity;
+	@Column(name = "end_dt")
+	private Date endDate;
 
 	public int getFacilityPackageId() {
 		return facilityPackageId;
@@ -59,14 +56,6 @@ public class AdmFacilityPackage implements Serializable {
 		this.facilityId = facilityId;
 	}
 
-	public int getPlanId() {
-		return planId;
-	}
-
-	public void setPlanId(int planId) {
-		this.planId = planId;
-	}
-
 	public int getPackageId() {
 		return packageId;
 	}
@@ -75,28 +64,32 @@ public class AdmFacilityPackage implements Serializable {
 		this.packageId = packageId;
 	}
 
-	public Date getExpireDt() {
-		return expireDt;
+	public int getTemplateId() {
+		return templateId;
 	}
 
-	public void setExpireDt(Date expireDt) {
-		this.expireDt = expireDt;
+	public void setTemplateId(int templateId) {
+		this.templateId = templateId;
 	}
 
-	public int getActive() {
-		return active;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setActive(int active) {
-		this.active = active;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

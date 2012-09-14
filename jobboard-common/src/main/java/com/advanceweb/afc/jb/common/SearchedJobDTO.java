@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <code> SearchedJobDTO </code> is a DTO class. The purpose of this class to
@@ -25,16 +26,22 @@ public class SearchedJobDTO {
 	private int userID;	
 	// Admin facility 
 	private String companyName;
-	private String companyNameDisp;	
+	private String companyNameDisp;
+	private int facilityId;
 	// Location
 	private String city;
 	private String stateFullName;
 	private String country;
 	private String areaOfInterest;
 	private boolean featureEmployer;
+	private int templateId;
+	private String color;
+	private Boolean isSilverCustomer;
+	private int packageId;
+	private List<TestimonyDTO> listTestimony;
+	private List<AddImageDTO> listAddImages;
+	private List<VideoDTO> listVideos;
 	
-
-
 	public String getAreaOfInterest() {
 		return areaOfInterest;
 	}
@@ -125,6 +132,14 @@ public class SearchedJobDTO {
 		this.companyName = companyName;
 	}
 
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
+
 	public String getCompanyOverview() {
 		return companyOverview;
 	}
@@ -181,6 +196,46 @@ public class SearchedJobDTO {
 		return stateFullName;
 	}
 
+	public List<TestimonyDTO> getListTestimony() {
+		return listTestimony;
+	}
+
+	public void setListTestimony(List<TestimonyDTO> listTestimony) {
+		this.listTestimony = listTestimony;
+	}
+
+	public List<AddImageDTO> getListAddImages() {
+		return listAddImages;
+	}
+
+	public void setListAddImages(List<AddImageDTO> listAddImages) {
+		this.listAddImages = listAddImages;
+	}
+
+	public List<VideoDTO> getListVideos() {
+		return listVideos;
+	}
+
+	public void setListVideos(List<VideoDTO> listVideos) {
+		this.listVideos = listVideos;
+	}
+
+	public int getPackageId() {
+		return packageId;
+	}
+
+	public void setPackageId(int packageId) {
+		this.packageId = packageId;
+	}
+
+	public Boolean getIsSilverCustomer() {
+		return isSilverCustomer;
+	}
+
+	public void setIsSilverCustomer(Boolean isSilverCustomer) {
+		this.isSilverCustomer = isSilverCustomer;
+	}
+
 	public void setStateFullName(String stateFullName) {
 		this.stateFullName = stateFullName;
 	}
@@ -207,6 +262,22 @@ public class SearchedJobDTO {
 
 	public void setFeatureEmployer(boolean featureEmployer) {
 		this.featureEmployer = featureEmployer;
+	}
+
+	public int getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(int templateId) {
+		this.templateId = templateId;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	
