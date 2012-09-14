@@ -39,6 +39,9 @@ jQuery(document).ready(
 			$("#modifySubs").displaypopup("#modifySubs", "790", "252");
 			$("#viewMySavedSearchesId").displaypopup(
 					"#viewMySavedSearchesId", "790", "252");
+			$("#createCoverLett").displaypopup(
+					"#createCoverLett", "400", "252");
+			
 		});
 </script>
 </head>
@@ -220,7 +223,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-											<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover">${msg.jsCreateNewCoverLetter} </a> 											
+											<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
 											</p>
 										</div>
 										<div class="lableTextDashBoard">
