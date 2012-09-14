@@ -9,10 +9,9 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-	jQuery(document).ready(
-			function() {
-								
-			});
+	jQuery(document).ready(function() {
+
+	});
 </script>
 </head>
 
@@ -22,8 +21,8 @@
 		<div class="popupHeader">
 			<h2>JOB POSTING INVENTORY</h2>
 			<img title="Close" class="nyroModalClose"
-				src="../resources/images/Close.png" width="19" height="19" title="Close"
-				alt="cancel">
+				src="../resources/images/Close.png" width="19" height="19"
+				title="Close" alt="cancel">
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -42,7 +41,13 @@
 									<th width="13%" align="center" valign="top" scope="col">Duration</th>
 									<th width="13%" align="center" valign="top" scope="col">Purchased</th>
 									<th width="11%" align="center" valign="top" scope="col">Available</th>
-									<th width="12%" align="center" valign="top" scope="col">Action</th>
+									<c:choose>
+										<c:when test="${isAction != null}">
+											<th width="12%" align="center" valign="top" scope="col">Action</th>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</thead>
 							<tbody>
@@ -52,10 +57,16 @@
 										<td align="center">${jbPostList.getDuration()}</td>
 										<td align="center">${jbPostList.getQuantity()}</td>
 										<td align="center">${jbPostList.getAvailableQty()}</td>
-										<td align="center"><a
-											href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
-												src="../resources/images/Addbutton.png" width="20"
-												height="20" alt="Post New Job" title="Post New Job"></a></td>
+										<c:choose>
+											<c:when test="${isAction != null}">
+												<td align="center"><a
+													href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
+														src="../resources/images/Addbutton.png" width="20"
+														height="20" alt="Post New Job" title="Post New Job"></a></td>
+											</c:when>
+											<c:otherwise>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -74,7 +85,13 @@
 									<th width="13%" align="center" valign="top" scope="col">Duration</th>
 									<th width="13%" align="center" valign="top" scope="col">Purchased</th>
 									<th width="11%" align="center" valign="top" scope="col">Available</th>
-									<th width="12%" align="center" valign="top" scope="col">Action</th>
+									<c:choose>
+										<c:when test="${isAction != null}">
+											<th width="12%" align="center" valign="top" scope="col">Action</th>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</thead>
 							<tbody>
@@ -84,10 +101,16 @@
 										<td align="center">${jbSlotList.getDuration()}</td>
 										<td align="center">${jbSlotList.getQuantity()}</td>
 										<td align="center">${jbSlotList.getAvailableQty()}</td>
-										<td align="center"><a
-											href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
-												src="../resources/images/Addbutton.png" width="20"
-												height="20" alt="Post New Job" title="Post New Job"></a></td>
+										<c:choose>
+											<c:when test="${isAction != null}">
+												<td align="center"><a
+													href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
+														src="../resources/images/Addbutton.png" width="20"
+														height="20" alt="Post New Job" title="Post New Job"></a></td>
+											</c:when>
+											<c:otherwise>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -98,8 +121,8 @@
 				<div class="row marginTop20 paddingBottom10">
 					<a id="purchaseJobPostings"
 						href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html?page=inventoryPage"
-						class="nyroModal btn_sm orange">BUY MORE</a> 
-						<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+						class="nyroModal btn_sm orange">BUY MORE</a> <a href="#"
+						class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 			</form:form>
 		</div>

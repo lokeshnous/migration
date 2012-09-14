@@ -6,7 +6,6 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
@@ -18,7 +17,7 @@
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-		
+		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		
 		
@@ -33,6 +32,9 @@
 			}			
 			
 		    jQuery(document).ready(function(){
+		    	
+		    $(".postingInventory").displaypopup(".postingInventory",
+						"790", "360");
 		    	
 			$( "#scheduleStartDivId" ).hide();		    
 		    $("#postNewJobButId").click(function(){
@@ -271,8 +273,11 @@
 				<span class="required colorPkrAreaToolTip">(Required)</span>
               </div>
 
-              <div class="rowEvenNewSpacing"> <span class="lableText3">Job Posting Inventory:</span> <span class=" FloatLeft marginTop6">
-              <a href="#">View Job Posting Inventory</a></span> </div>
+              <div class="rowEvenNewSpacing"> <span class="lableText3">Job Posting Inventory:</span>              
+              		<span class="FloatLeft marginTop6">
+              			<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html?page=postJobPage" class="postingInventory" id="postingInventory" >View Job Posting Inventory</a>
+              		</span>            
+             </div>
               <div class="clearfix"></div>
               <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
               <div class="row marginTop10">
