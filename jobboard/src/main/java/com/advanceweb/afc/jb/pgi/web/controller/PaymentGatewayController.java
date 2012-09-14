@@ -144,6 +144,19 @@ public class PaymentGatewayController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value = "/paymentMethodForBack", method = RequestMethod.GET)
+	public ModelAndView gatewayPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
+			HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		model.addObject("countryList", countryList);
+		model.addObject("stateList", stateList);
+		model.setViewName("gatewayPaymentMethod");
+		return model;
+	}
 	@RequestMapping(value = "/paymentInvoiceBackMethod", method = RequestMethod.GET)
 	public ModelAndView gatewayInvoiceBackMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session) {

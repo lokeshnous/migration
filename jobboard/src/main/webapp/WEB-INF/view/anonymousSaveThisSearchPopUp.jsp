@@ -29,7 +29,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE THIS SEARCH</h2>
-			<img src="../resources/images/Close.png" width="19" class="nyroModalClose"
+			<img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
 				height="19" alt="Close">
 		</div>
 

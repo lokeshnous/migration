@@ -173,7 +173,7 @@
 										</span></td>
 										<td align="center" valign="top"><span
 											class="paymentLineHeight"> Credit Card <br> <span><a
-													href="../pgiController/callPaymentMethod.html">Edit</a></span>
+													href="../pgiController/paymentMethodForBack.html">Edit</a></span>
 										</span></td>
 										<td align="right" valign="top"><span
 											class="paymentLineHeight">$</span><span

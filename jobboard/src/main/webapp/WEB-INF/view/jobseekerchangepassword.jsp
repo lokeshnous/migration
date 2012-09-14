@@ -44,7 +44,7 @@
 <body class="job_board">
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
        <div class="popupHeader"><h2>Change Password</h2>
-       <a href="#"><img title="close" src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();" alt=""></a></div>
+       <a href="#"><img title="Close" src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();" alt=""></a></div>
                  
        <div class="popUpContainerWrapper">
        <form:form method="Get" action="/<%=request.getContextPath()%>/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 

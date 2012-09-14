@@ -53,7 +53,7 @@
             <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html"><img src="../resources/images/Close.png" width="19" height="19" alt="Close"></a></div> --%>
 <!--             <a href="#"><img src="../resources/images/Close.png" class="nyroModalClose" width="19" height="19" alt="Close"></a></div> -->
 
-            <img src="../resources/images/Close.png" title="close" width="19" class="nyroModalClose"
+            <img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
 				height="19" alt="Close"></div>
 
           <div class="popUpContainerWrapper">
@@ -77,9 +77,9 @@
 									</label></td>
 									<td align="center"><div class="BTemplateIconAlign">
 									
-									<a title="view" href='<%=request.getContextPath()%>/brandingTemplates/previewExisting.html?templateId=${template.jpBrandTempId}'>
+									<a title="View" href='<%=request.getContextPath()%>/brandingTemplates/previewExisting.html?templateId=${template.jpBrandTempId}'>
 									<img  src="../resources/images/tranBg.png" width="20" height="20" alt="view" class="view">
-											</a>&nbsp;<a title="edit" href='<%=request.getContextPath()%>/brandingTemplates/editTemplate.html?templateId=${template.jpBrandTempId}'><img src="../resources/images/tranBg.png" width="20" height="20" alt="edit" class="editFile"></a>&nbsp;<a href="#"><img title="delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a></div></td>
+											</a>&nbsp;<a title="Edit" href='<%=request.getContextPath()%>/brandingTemplates/editTemplate.html?templateId=${template.jpBrandTempId}'><img src="../resources/images/tranBg.png" width="20" height="20" alt="edit" class="editFile"></a>&nbsp;<a href="#"><img title="delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a></div></td>
 								</tr>
 							</c:forEach>
                   </tbody>

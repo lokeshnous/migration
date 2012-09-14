@@ -40,7 +40,7 @@
 							Post your listings instantly on the <em>ADVANCE</em> Healthcare
 							Jobs website.
 						</p>
-						<span class="floatRight"><a href="#"
+						<span class="floatRight"><a href="${viewMediaUrl}" target="_blank"
 							class="btn_sm white marginRight5">VIEW MEDIA KIT</a></span>
 					</div>
 					<!--***-->
@@ -133,7 +133,7 @@
 							Upgrades</h1>
 						<p class="FontSize17 FloatLeft">Showcase your postings and
 							reinforce your brand with these special enhancement packages.</p>
-						<span class="floatRight"><a href="#"
+						<span class="floatRight"><a href="${viewMediaUrl}" target="_blank"
 							class="btn_sm white marginRight5">VIEW MEDIA KIT</a></span>
 					</div>
 					<!--***-->

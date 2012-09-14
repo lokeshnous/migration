@@ -70,7 +70,7 @@ function closePopup() {
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE SEARCHES</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19" height="19"
+			<a href="#"><img src="../resources/images/Close.png" width="19" height="19" title="Close"
 				onclick="closePopup();" alt=""></a>
 		</div>
 

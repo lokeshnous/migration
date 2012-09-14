@@ -42,7 +42,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Impersonation</h2>
-			<img id="closeCheckOut" src="../resources/images/Close.png"
+			<img id="closeCheckOut" src="../resources/images/Close.png" title="Close"
 				width="19" height="19" alt="" class="nyroModalClose">
 		</div>
 		<div class="popUpContainerWrapper">

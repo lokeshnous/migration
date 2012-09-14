@@ -28,10 +28,10 @@
 	});
 </script>
 <script type="text/javascript">
-		    function cancelProcess(){
-		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
-		    }		
-		</script>
+	function cancelProcess() {
+		window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
+	}
+</script>
 
 </head>
 
@@ -54,9 +54,7 @@
 							<h2 class="sectionSubHeader">To register as an agency,
 								please fill out these fields.</h2>
 							<c:if test="${not empty message}">
-								<div class="validationMsg">
-									${message}
-								</div>
+								<div class="validationMsg">${message}</div>
 							</c:if>
 
 
@@ -97,7 +95,8 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Email Address:</span>
 								<form:input path="emailId" type="text" name="mobileNo"
-									class="job_seeker_password textBox350" readonly="${agencyRegForm.bReadOnly}" />
+									class="job_seeker_password textBox350"
+									readonly="${agencyRegForm.bReadOnly}" />
 								<span class="required">(Required)</span>
 							</div>
 							<div class="row">
@@ -107,7 +106,8 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Email Address:</span>
 								<form:input path="confirmEmailId" type="text" name="JobTitle"
-									class="job_seeker_password textBox350 "  readonly="${agencyRegForm.bReadOnly}"/>
+									class="job_seeker_password textBox350 "
+									readonly="${agencyRegForm.bReadOnly}" />
 								<span class="required">(Required)</span>
 							</div>
 							<div class="row">
@@ -117,7 +117,8 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Password:</span>
 								<form:password path="password" name="healthCareSubSplty"
-									class="job_seeker_password textBox350 "  readonly="${agencyRegForm.bReadOnly}" showPassword="true"/>
+									class="job_seeker_password textBox350 "
+									readonly="${agencyRegForm.bReadOnly}" showPassword="true" />
 								<span class="required">(Required)</span>
 								<div class="row marginTop5">
 									<span class="lableText3"></span>(8-20 characters, including at
@@ -131,7 +132,8 @@
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Password:</span>
 								<form:password path="confirmPassword" name="healthCareSubSplty"
-									class="job_seeker_password textBox350" readonly="${agencyRegForm.bReadOnly}" showPassword="true"/>
+									class="job_seeker_password textBox350"
+									readonly="${agencyRegForm.bReadOnly}" showPassword="true" />
 								<span class="required">(Required)</span>
 							</div>
 							<div class="row">
@@ -206,7 +208,7 @@
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
 											class="job_seeker_password textBox350 
-" maxlength="10" />
+" maxlength="5" />
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>
@@ -266,11 +268,11 @@
 							<span class="floatLeft marginTop10 marginRight60"> <!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
 								<input type="submit" style="margin-top: -4px;"
-								value="Save & Continue" class="btn_sm orange">
-							<c:if test="${agencyRegForm.bReadOnly == false}"> 
-								<input type="button" value="Cancel" onclick="cancelProcess()" class="btn_sm orange" name="Cancel" />
-							</c:if> 
-								<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
+								value="Save & Continue" class="btn_sm orange"> <c:if
+									test="${agencyRegForm.bReadOnly == false}">
+									<input type="button" value="Cancel" onclick="cancelProcess()"
+										class="btn_sm orange" name="Cancel" />
+								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
 							<span class="floatLeft marginTop10">I'll set up my profile
 								later. <a href="#">Continue</a> to the site now.
 							</span>

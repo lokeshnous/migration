@@ -87,7 +87,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE MY RESUMES</h2>
-			<img src="../resources/images/Close.png" width="19" class="nyroModalClose"
+			<img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
 				height="19" alt="Close">
 		</div>
 		<div class="popUpContainerWrapper">
@@ -115,11 +115,11 @@
 									</label></td>
 									<td align="center">${resume.updateDt}</td>
 									<td align="center">
-									&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="view"><img title="view" src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
-									<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal editFile"><img title="edit" src="../resources/images/tranBg.png" width="20" height="20" alt="edit"></a>
-									<a href="#" title="download"><img title="download" src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
-									<a href="#" title="print"><img title="print" src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>
-									<a href="#" title="delete"><img title="delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a>
+									&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="view"><img title="View" src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
+									<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal editFile"><img title="Edit" src="../resources/images/tranBg.png" width="20" height="20" alt="edit"></a>
+									<a href="#" title="download"><img title="Download" src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
+									<a href="#" title="print"><img title="Print" src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>
+									<a href="#" title="delete"><img title="Delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a>
 									</td>
 								</tr>
 							</c:forEach>

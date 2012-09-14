@@ -103,6 +103,9 @@ public class EmployerRegistrationController {
 	
 	@Value("${emp.email.exists}")
 	private String emailExists;
+	
+	@Value("${view.media.kit.url}")
+	private String viewMediaUrl;
 
 	@Autowired
 	private LoginService loginService;
@@ -149,6 +152,7 @@ public class EmployerRegistrationController {
 	}
 
 	/**
+	 * 
 	 * This method is called to display job seeker registration page
 	 * 
 	 * @param model
@@ -190,6 +194,7 @@ public class EmployerRegistrationController {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
+			model.addObject("viewMediaUrl", viewMediaUrl);
 			model.setViewName("jobBoardEmployerPostJobs01");
 			authenticateUserAndSetSession(userDTO, request);
 

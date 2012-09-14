@@ -43,7 +43,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Edit Profile Settings</h2>
-			<img src="../resources/images/Close.png" width="19" height="19"
+			<img src="../resources/images/Close.png" width="19" height="19" title="Close"
 				alt="" onclick="parent.$.nmTop().close();">
 		</div>
 

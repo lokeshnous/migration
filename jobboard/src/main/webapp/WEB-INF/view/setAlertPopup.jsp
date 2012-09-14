@@ -40,7 +40,7 @@ function cancelProcess(){
 		style="display: block">
 		<div class="popupHeader marginBottom0">
 			<h2>SET ALERTS</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19"
+			<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
 				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 		<div class="popUpContainerWrapper">

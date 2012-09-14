@@ -65,7 +65,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>VIEW ALERTS</h2>
-			<a href="#"><img title="close" src="../resources/images/Close.png" width="19"
+			<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
 				height="19" onclick="cancelProcess();" alt=""></a>
 		</div>
 
@@ -89,7 +89,7 @@
 									<td align="left">${alertList.getJobOwner()}</td>
 									<td align="left">${alertList.getSetDate()}</td>
 									<td align="center"><!-- <a href="#" alt="delete" class="delete marginLeft25"></a> -->
-									<a href="#" title="delete"><img src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete marginLeft25"></a></td>
+									<a href="#" title="Delete"><img src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete marginLeft25"></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

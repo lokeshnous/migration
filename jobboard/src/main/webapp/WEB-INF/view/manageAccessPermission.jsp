@@ -71,7 +71,7 @@
         <form:hidden path="totalSize" id="totalSize"/>
           <div class="popupHeader">
             <h2>MANAGE ACCESS PERMISSIONS</h2>
-           <img title="close" src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>
+           <img title="Close" src="../resources/images/Close.png" width="19" height="19" class="nyroModalClose" alt="close"></div>
            <input type="hidden" name="pageValue" value="managePermPage"/>
           <div class="popUpContainerWrapper">
            <div class="row marginTop5 paddingBottom10"> <span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=managePermPage"  id="addNewJobOwnerPopUp" class="btn_sm white">Add New Job Owner</a> </span>  </div>
@@ -105,7 +105,7 @@
 					</table>
 				</div>
               <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="#" class="btn_sm orange" id="saveClicked">Save</a> 
-              <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a></span> 
+              <a class="nyroModalClose btn_sm orange">Cancel</a></span> 
               <a hidden="hidden" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="manageAccessPerm"></a>
               <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
            

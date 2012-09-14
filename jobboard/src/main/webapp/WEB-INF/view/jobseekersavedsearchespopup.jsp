@@ -181,7 +181,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 		style="display: block">
 		<div class="popupHeader">
 			<h2>My Saved Searches</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19"
+			<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
 				height="19" onclick="closePopup();" alt=""></a>
 		</div>
 
@@ -217,9 +217,9 @@ var id = searchJobId.replace("viewSavedSearch", "");
 								
 								<td align="center">
 								<div class="SearchIcons">
-								<a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" onclick="viewSavedSearch(this.id);" class="newWindow"> <img title="view" src="../resources/images/tranBg.png" class="view"></a>
-								<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img title="edit" src="../resources/images/tranBg.png" class="editFile"></a>
-								<a href="#"><img title="delete" src="../resources/images/tranBg.png" class="delete"></a>
+								<a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" onclick="viewSavedSearch(this.id);" class="newWindow"> <img title="View" src="../resources/images/tranBg.png" class="view"></a>
+								<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img title="Edit" src="../resources/images/tranBg.png" class="editFile"></a>
+								<a href="#"><img title="Delete" src="../resources/images/tranBg.png" class="delete"></a>
 								</div>
 										</td>
 							</tr>

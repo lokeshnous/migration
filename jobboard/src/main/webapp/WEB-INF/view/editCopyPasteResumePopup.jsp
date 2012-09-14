@@ -60,7 +60,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Edit Resume</h2>
-			<img src="../resources/images/Close.png"
+			<img src="../resources/images/Close.png" title="Close"
 				width="19" height="19" alt="Close" onclick="parent.$.nmTop().close();">
 		</div>
 

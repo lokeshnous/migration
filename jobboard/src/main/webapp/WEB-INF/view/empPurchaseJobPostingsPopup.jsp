@@ -143,7 +143,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>PURCHASE JOB POSTINGS</h2>
-			<img id="closeCheckOut" src="../resources/images/Close.png" width="19" height="19"
+			<img id="closeCheckOut" src="../resources/images/Close.png" width="19" height="19" title="Close"
 				alt="" class="nyroModalClose">
 		</div>
 		<div class="popUpContainerWrapper">

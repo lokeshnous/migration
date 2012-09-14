@@ -17,6 +17,7 @@
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
             $(document).ready(function(){
+            	$(".deleteSavedJob").displaypopup(".deleteSavedJob","770","360");
         		$("#id").click(function() {
      	           parent.window.location.href = "navigateToLogin.html";
      	           parent.$.nmTop().close();
@@ -67,7 +68,7 @@
 
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block"> 
                   <div class="popupHeader marginBottom5"><h2>MY SAVED JOBS</h2>
-                 <img src="../resources/images/Close.png" width="19" height="19" onclick="closePopup();"></div>
+                 <img src="../resources/images/Close.png"  title="Close" width="19" height="19" onclick="closePopup();"></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing">
@@ -88,7 +89,10 @@
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="center">${dtoList.getCreateDt()}</td>
                 <td align="center">${dtoList.getJobAge()} days</td>
-                <td align="center"><div class="centerAlignMButton"><a title="delete" href='<c:url value="/jobSeekerJobDetail/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
+                <td align="center"><div class="centerAlignMButton">
+                <a title="Delete" id="ppppp" class="deleteSavedJob" href='<c:url value="/jobSeekerJobDetail/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();" >
+                <div class="delete"></div>
+                </a></div></td>
               </tr>
               </c:forEach>
             </table>

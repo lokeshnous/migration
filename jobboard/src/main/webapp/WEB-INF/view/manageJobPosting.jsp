@@ -381,11 +381,11 @@
 										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80 SearchIcons">
-											<a title="edit"
+											<a title="Edit"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><div
-													class="editFile"></div></a><a title="view"
+													class="editFile"></div></a><a title="View"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><div
-													class="view"></div></a><a title="check" href="#"><div class="check"
+													class="view"></div></a><a title="Save" href="#"><div class="check"
 													id="${job.jobId}"></div></a>
 										</div></td>
 								</tr>

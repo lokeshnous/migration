@@ -68,7 +68,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>GUEST USER FORM</h2>
-			<a href=""><img src="../resources/images/Close.png"
+			<a href=""><img src="../resources/images/Close.png" title="Close"
 				onclick="closePopup();" width="19" height="19" alt=""></a>
 		</div>
 		<div id="errmsg" style="font: bold; color: red" align="left"></div>

@@ -132,7 +132,7 @@ function copyAccToBillingAddr(obj) {
 					ACCOUNT SETTINGS
 				</h2>
 				<a href="#">
-				<img width="19" height="19" title="close" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
+				<img width="19" height="19" title="Close" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">

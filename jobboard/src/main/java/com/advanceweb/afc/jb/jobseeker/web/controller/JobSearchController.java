@@ -186,7 +186,7 @@ public class JobSearchController {
 	public ModelAndView viewJobDetails(@RequestParam("id") int jobId,
 			Map<String, Object> model, HttpServletRequest request, Model model1,
 			HttpSession session,HttpServletResponse response, @RequestParam(CURRENT_URL) String currentUrl,
-			@RequestParam("clickType") String clickType) {
+			@RequestParam(value="clickType",required=false) String clickType) {
 		
 		try {
 			

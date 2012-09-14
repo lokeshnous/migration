@@ -75,7 +75,7 @@
 			style="display: block">
 			<div class="popupHeader">
 				<h2>ADD EMPLOYER</h2>
-				<a href="#"><img src="../resources/images/Close.png" width="19"
+				<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
 					height="19" alt="" onclick="parent.$.nmTop().close();"></a>
 			</div>
 			<form:hidden path="facilityId" id="facilityId"/>
