@@ -8,25 +8,11 @@
         <jsp:include page="common/include.jsp" />
         <title>ADVANCE Heathcare Jobs</title>
 
-<!-- js files for modalpopup------------------------------------------------- -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
-<script src="../resources/js/jquery-1.7.1.min.js"></script>
-		<script src="../resources/jquery.nyroModal/js/popup.js"></script>
-		<script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-        <script src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
- 	    <link href="../resources/jquery.nyroModal/styles/nyroModal.css" rel="stylesheet" type="text/css">
-
-        <style type="text/css" media="screen">
-           @import url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css");
-        </style>
-<!-- -------------------------------------------------------------------------- -->
-		
-	
 	
         <!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script> -->
 		<script type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
 		
   
@@ -85,8 +71,8 @@
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
         </div>
         
-<div class="main_wrapper_outside marginTop30">
- <div class="main_wrapper_insideRC">
+<div class="main_wrapper_outside">
+ <div class="main_wrapper_inside">
  <div class="main">
             <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				
@@ -94,7 +80,6 @@
                 <!-- <div class="content_wrapper"> -->
 
 		    <!-- <div class="jobDetails"> -->
-			
 			<div class="jobDetailsEyebrow">
 			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> 
 			<div class="floatRight">
@@ -320,22 +305,33 @@
                   <!--CONT SLIDER-->
           
             <div class="row">
-            <div class="ContantMiddleBox marginTop0 " style="border-top: 5px solid ${jobDetail.getColor().substring(4)}">
+            <div class="ContantMiddleBox01" style="border-top: 5px solid ${jobDetail.getColor().substring(4)}">
             <div class="ContantMiddleLeftBox">
             
                 <div class="ContantMiddleLeftLink">
                           <div class="row">
                     <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobID});" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" href="#">save job</a></span> </div>
                   </div>
-                  <div class="row marginTop10">
-                  	<div class="ShareArea marginLeft5">
-                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email" onclick="sendToFrd(${jobDetail.jobID});"></span>
+                  <div class="ShareSearchView">
+                  	<div class="ShareArea">
+                    <span>
+                    <div class="ShareText">Send to friend:&nbsp;</div>
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID});">
+                    </span>
                     </div>
-                    <div class="ShareArea BorderLeft">
-                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
+                    <img class="fbook" src="../resources/images/tranBg.png" >
+                     <img class="linkedIn" src="../resources/images/tranBg.png" >
+                     <img class="twitter" src="../resources/images/tranBg.png">
+                      </span>
                     </div>
-                    <div class="ShareArea BorderLeft paddingRight0">
-                    <span><p class="FloatLeft marginTop3">Print:&nbsp;</p><span><img class="print"></span></span>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
+                     <img class="printJBdetail" src="../resources/images/tranBg.png">
+                    </span>
                     </div>
                   </div>
                           <div class="clearfix"></div>
@@ -426,7 +422,7 @@
 		                <br />
 		                <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
 		                <br />
-		                <div class="JobDetailHeaderRight">
+		                <div class="JobDetailHeaderRightView">
 				            <%-- <c:if test="${isFeatureEmployer}"> --%>
 				            <img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
 			            <%-- </c:if>  --%>
@@ -444,16 +440,27 @@
 	                          <div class="row">
 	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobID});" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" href="#">save job</a></span> </div>
 	                  </div>
-	                  <div class="row marginTop10">
-	                  	<div class="ShareArea marginLeft5">
-	                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email" onclick="sendToFrd(${jobDetail.jobID});"> </span>
-	                    </div>
-	                    <div class="ShareArea BorderLeft">
-	                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
-	                    </div>
-	                    <div class="ShareArea BorderLeft paddingRight0">
-	                    <span><p class="FloatLeft marginTop3">Print:&nbsp;</p><span><img class="print"></span></span>
-	                    </div>
+	                  <div class="ShareSearchView">
+	                  	<div class="ShareArea">
+                    <span>
+                    <div class="ShareText">Send to friend:&nbsp;</div>
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID});">
+                    </span>
+                    </div>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
+                    <img class="fbook" src="../resources/images/tranBg.png" >
+                     <img class="linkedIn" src="../resources/images/tranBg.png" >
+                     <img class="twitter" src="../resources/images/tranBg.png">
+                      </span>
+                    </div>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
+                     <img class="printJBdetail" src="../resources/images/tranBg.png">
+                    </span>
+                    </div>
 	                  </div>
 	                </div>
               </div>
