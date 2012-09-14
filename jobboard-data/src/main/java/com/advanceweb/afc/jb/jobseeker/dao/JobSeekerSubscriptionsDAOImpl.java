@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,7 +16,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
+import com.advanceweb.afc.jb.data.entities.ResCoverletter;
+import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
 
 /**
@@ -82,5 +89,88 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		
 		return listSubscriptiosns;
 	}
+	
+	/**
+	 * @author kartikm 
+	 * @Purpose:Save of Cover letter
+	 * when submit the cover letter text
+	 * @Created:Sept 14, 2012
+	 * @param rclDTO
+	 * @return isUpdate
+	 */
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO) {
+		boolean isUpdate = false;
+		Date todayDate = null;
+		try{
+		ResCoverletter res=new ResCoverletter();
+		//ResCoverletterPriv resPriv=new ResCoverletterPriv();
+		res.setUserId(rclDTO.getUserId());
+		res.setName(rclDTO.getName());
+		res.setCoverletterText(rclDTO.getCoverletterText());
+		res.setActive(rclDTO.getActive());
+				
+		Calendar currentDate = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"MM/dd/yyyy HH:mm:ss");
+		try {
+			String dateNow = formatter.format(currentDate.getTime());
+			todayDate = dateConveter(dateNow);
+		} catch (Exception e) {
+			LOGGER.info("Info data error date conversion");
+		}
+		
+		//Date createDate=dateConveter(rclDTO.getCreateDt());
+		//Date updateDate=dateConveter(rclDTO.getUpdateDt());
+		//Date deleteDate=dateConveter(rclDTO.getDeleteDt());
+			
+		
+		res.setCreateDt(todayDate);
+		res.setUpdateDt(todayDate);
+		//res.setDeleteDt(null);
+		hibernateTemplateCareers.save(res);
+		//This is ResCoverletterPriv table data save
+		/*resPriv.setDeleteUserId(rclDTO.getUserId());
+		resPriv.setActive(rclDTO.getActive());
+		resPriv.setCreateDt(todayDate);
+		resPriv.setDeleteDt(todayDate);
+		resPriv.setResCoverletter(res);
+		resPriv.setResPrivacy(null);
+		hibernateTemplateCareers.save(resPriv);*/
+		}catch(DataAccessException e){
+			LOGGER.error("Not save Cover letter");
+		}
+		return isUpdate;		
+	}
+	
+	/**
+	 * @author kartikm 
+	 * @Purpose:Date Conversion method name dateConveter that is for
+	 *         Converting from MM/dd/yyyy HH:mm:ss to yyyy-MM-dd HH:mm:ss
+	 * @Created:Sept 12, 2012
+	 * @param date
+	 * @return dateValue
+	 */
+	public Date dateConveter(String date) {
+		Date dateValue = null;
+		final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
+		final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
+		String newDateString;
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		try {
+			Date d = sdf.parse(date);
+			sdf.applyPattern(NEW_FORMAT);
+			newDateString = sdf.format(d);
+			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);
+			dateValue = sdfSource.parse(newDateString);
+		} catch (ParseException e) {
+			LOGGER.info("Date parsing in Job save by admin wrong");
+		}
 
+		return dateValue;
+	}
+	
+	
+	
 }
