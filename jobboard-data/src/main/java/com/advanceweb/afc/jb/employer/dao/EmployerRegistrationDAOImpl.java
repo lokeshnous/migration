@@ -54,7 +54,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
 	private static final String FIND_EMPLOYER_ROLE_ID = "from AdmRole role where role.name=?";
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
-	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is not NULL";
+	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
 	private static final String FIND_EMPLOYER_PROFILE = "from MerUserProfile prof where prof.id.userId=?";
 
 	private HibernateTemplate hibernateTemplateTracker;
