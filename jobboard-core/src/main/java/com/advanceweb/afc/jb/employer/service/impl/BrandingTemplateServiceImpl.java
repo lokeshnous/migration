@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
@@ -26,6 +27,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	@Autowired
 	private BrandingTemplateDAO brandingTemplateDAO;
 
+	@Autowired
+	private BrandingTemplateDelegate brandingTemplateDelegate;
+	
 	/**
 	 * Fetch the job posting Branding Templates
 	 */
@@ -77,13 +81,25 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 		return brandingTemplateDAO.deleteBrandingTemplate(templateId, deleteUserId);
 	}
 	
+	
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return int nsCustomerID
+	 */
+	public int getNSCustomerIDFromAdmFacility(int admFacilityID){
+		return brandingTemplateDelegate.getNSCustomerIDFromAdmFacility(admFacilityID);
+		
+	}
+	
 	/**
 	 * Fetch the employer Branding information.
 	 */
 	@Override
-	public int getBrandingInformation(int facilityId) {
+	public UserDTO getBrandingInformation(int nsCustomerID) {
 
-		return brandingTemplateDAO.getBrandingInformation(facilityId);
+		return brandingTemplateDelegate.getCustomerDetails(nsCustomerID);
 
 	}
 

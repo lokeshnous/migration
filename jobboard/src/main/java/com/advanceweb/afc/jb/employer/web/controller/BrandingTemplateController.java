@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
@@ -288,12 +289,28 @@ public class BrandingTemplateController {
 	 */
 	public BrandingTemplateForm checkBrand(BrandingTemplateForm form, int facility_id)
 	{
+		int packageId = 1;
 		BrandingTemplateForm brandingTemplateForm = form;
-		int packageId = brandingTemplateService.getBrandingInformation(facility_id);
 		
-		if(packageId == MMJBCommonConstants.INT_GOLD || packageId == MMJBCommonConstants.INT_PLATINUM)
-		{
-			brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
+		// Getting the customer ID from Adm Facility table.
+		int nsCustomerID = brandingTemplateService.getNSCustomerIDFromAdmFacility(facility_id);
+		
+		UserDTO userDTO = brandingTemplateService.getBrandingInformation(nsCustomerID);
+
+		if (null != userDTO.getPackageName()) {
+			if (userDTO.getPackageName().equalsIgnoreCase("Gold") ) 
+			{
+				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
+				packageId = MMJBCommonConstants.INT_GOLD;
+			} 
+			else if(userDTO.getPackageName().equalsIgnoreCase("Platinum"))
+			{
+				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
+				packageId = MMJBCommonConstants.INT_PLATINUM;
+			}else 
+			{
+				brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
+			}
 		}
 		else
 		{

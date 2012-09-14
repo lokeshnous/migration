@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 
 /**
  * <code>EmpBrandTemp</code>This interface help to manage job posting Branding
@@ -70,8 +71,15 @@ public interface BrandingTemplateService {
 	 * @param facilityId
 	 * @return
 	 */
-	int getBrandingInformation(int facilityId);
+	UserDTO getBrandingInformation(int facilityId);
 
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return int nsCustomerID
+	 */
+	int getNSCustomerIDFromAdmFacility(int admFacilityID);
 	
 	
 	

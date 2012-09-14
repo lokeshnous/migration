@@ -50,6 +50,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
@@ -1175,17 +1176,34 @@ public class JobSearchController {
 	/**
 	 * The method is called to read the branding information from database.
 	 * 
-	 * @param dto
-	 * @return SearchedJobDTO
+	 * @param form
+	 * @param facility_id
+	 * @return brandingTemplate
 	 */
 	public SearchedJobDTO checkBrand(SearchedJobDTO dto)
 	{
+		int packageId = 1;
 		SearchedJobDTO searchedJobDTO = dto;
-		int packageId = brandingTemplateService.getBrandingInformation(searchedJobDTO.getFacilityId());
 		
-		if(packageId == MMJBCommonConstants.INT_GOLD || packageId == MMJBCommonConstants.INT_PLATINUM)
-		{
-			searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
+		// Getting the customer ID from Adm Facility table.
+		int nsCustomerID = brandingTemplateService.getNSCustomerIDFromAdmFacility(searchedJobDTO.getFacilityId());
+		
+		UserDTO userDTO = brandingTemplateService.getBrandingInformation(nsCustomerID);
+
+		if (null != userDTO.getPackageName()) {
+			if (userDTO.getPackageName().equalsIgnoreCase("Gold") ) 
+			{
+				searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
+				packageId = MMJBCommonConstants.INT_GOLD;
+			} 
+			else if(userDTO.getPackageName().equalsIgnoreCase("Platinum"))
+			{
+				searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
+				packageId = MMJBCommonConstants.INT_PLATINUM;
+			}else 
+			{
+				searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
+			}
 		}
 		else
 		{

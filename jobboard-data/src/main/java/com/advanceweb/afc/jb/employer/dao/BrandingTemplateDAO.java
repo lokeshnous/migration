@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 
 /**
  * <code>EmpBrandTempDAO</code> is a DAO.
@@ -71,7 +72,14 @@ public interface BrandingTemplateDAO {
 	 */
 	int getBrandingInformation(int facilityId);
 	
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return int NSCustomerID
+	 */
 	
+	List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID);
 	
 
 }

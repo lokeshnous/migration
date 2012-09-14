@@ -115,6 +115,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerRegis
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeatureEmployerDelegateImpl.java -text

@@ -12,7 +12,8 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.common.FacilityDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityPackage;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -227,5 +228,37 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return packageId;
 
 	}
+	
+	
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return int NSCustomerID
+	 */
+	
+	public List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
+
+		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
+		try {
+			@SuppressWarnings("unchecked")
+			List<AdmFacility> admFacilityList = hibernateTemplateCareer
+					.find(" from  AdmFacility WHERE  facilityId  = '" + admFacilityID + "'");
+
+			if (admFacilityList != null) {
+				for (AdmFacility admFacilityObj : admFacilityList) {
+					FacilityDTO admFacilityDTO = new FacilityDTO();
+					admFacilityDTO.setNsCustomerID(admFacilityObj.getNsCustomerID());
+					admFacilityDTOList.add(admFacilityDTO);
+				}
+			}
+
+		} catch (HibernateException e) {
+			LOGGER.debug(e);
+		}
+		return admFacilityDTOList;
+	}
+
+	
 
 }
