@@ -521,7 +521,7 @@ ul.news {
 
 .ad_wrapper {
 	height: 90px;
-	margin: 8px auto;
+
 	width: 960px;
 	text-align: center;
 	background-position: center;
@@ -2770,11 +2770,14 @@ input.job_seeker_Resume {
 	padding-top: 4px;
 }
 
-.JobDetailHeaderRight {
+.JobDetailHeaderRight{
 	width: 26%;
 	min-height: 50px;
 	float: left;
 	padding-top: 6px;
+}
+.JobDetailHeaderRightView{
+	float:right;
 }
 /*.toolTip */
 .toolTipBefore {
@@ -3268,14 +3271,17 @@ input.job_seeker_Resume {
 	margin-top: 18px;
 }
 
-.ContantMiddleBox {
+.ContantMiddleBox,.ContantMiddleBox01 {
 	width: 100%;
 	height: auto;
 	float: left;
 	margin-top: 23px;
 	border-top: 5px solid #54a3db;
 }
-
+.ContantMiddleBox01{
+	margin-top:0px !important;
+	border-top: 0px !important;
+}
 .ContantMiddleLeftBox {
 	width: 320px;
 	float: left;
@@ -3306,9 +3312,7 @@ input.job_seeker_Resume {
 	width: auto;
 	height: auto;
 	float: left;
-	display: block;
 	height: 23px;
-	padding: 0px 5px 0px 5px;
 }
 
 .ContantLeftBlueBox {
@@ -4018,7 +4022,7 @@ orange:hover {
 .BTemplateIconAlign{
 	margin-left:33px;
 }
-.ShareSearch,.SearchIcons{
+.ShareSearch,.SearchIcons,.ShareSearchView{
 	float: left;
     margin-left:10px;
     margin-top: 11px;
@@ -4026,6 +4030,9 @@ orange:hover {
 }
 .SearchIcons{
 	margin-top: 0px !important;
+}
+.ShareSearchView{
+	margin-top:20px !important;
 }
 .ShareText{
 	float: left !important;
