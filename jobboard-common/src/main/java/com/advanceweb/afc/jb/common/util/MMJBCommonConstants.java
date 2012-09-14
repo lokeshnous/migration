@@ -317,6 +317,7 @@ public interface MMJBCommonConstants {
 	String PURCHASE_JOB_POST_FORM = "purchaseJobPostForm";
 	int PLAN_DAYS = 30;
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
+	String POST_JOB_PAGE = "postJobPage";
 
 	// FOR MAIL RELATED
 	String SUBJECT_OF_MAIL = "A job opportunity sent to you by";
