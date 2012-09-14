@@ -111,13 +111,13 @@ public class AgencyDashBoardController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
-				} else if (employerRegistration
-						.validateEmail(employeeAccountForm.getEmail())) {
-					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
+				}  else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
+				}else if (employerRegistration
+						.validateEmail(employeeAccountForm.getEmail())) {
+					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				}
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
