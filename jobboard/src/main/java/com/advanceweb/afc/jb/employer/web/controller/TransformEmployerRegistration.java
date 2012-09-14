@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -205,15 +207,15 @@ public class TransformEmployerRegistration {
 	 */
 	public UserDTO createUserDTOFromManageAccessForm(
 			ManageAccessPermissionForm manageAccessPermissionForm) {
-		// TODO Need to Modify the hard code value
 		UserDTO dto = new UserDTO();
 		if (null != manageAccessPermissionForm.getOwnerName()
 				&& !manageAccessPermissionForm.getOwnerName().isEmpty()) {
 			String[] names = manageAccessPermissionForm.getOwnerName().split(
 					" ");
+			SecureRandom random = new SecureRandom();
 			dto.setFirstName(names[1]);
 			dto.setLastName(names[0]);
-			dto.setPassword("password");
+			dto.setPassword(new BigInteger(130, random).toString(32).substring(0, 12));
 			dto.setEmailId(manageAccessPermissionForm.getOwnerEmail());
 		}
 
