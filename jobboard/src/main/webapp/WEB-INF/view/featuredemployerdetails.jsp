@@ -13,9 +13,9 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
-<jsp:include page="common/include.jsp" />
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
+<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
