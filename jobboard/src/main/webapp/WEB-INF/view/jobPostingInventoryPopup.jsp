@@ -11,12 +11,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				function cancelProcess() {
-					parent.$.nmTop().close();
-				}
-				$(".purchaseJobPostings").displaypopup(".purchaseJobPostings",
-						"790", "360");
-				jQuery(".megamenu").megamenu();
+								
 			});
 </script>
 </head>
@@ -26,9 +21,9 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>JOB POSTING INVENTORY</h2>
-			<a href="#"><img title="close"
+			<img title="close" class="nyroModalClose"
 				src="../resources/images/Close.png" width="19" height="19"
-				onclick="cancelProcess();" alt=""></a>
+				alt="cancel">
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -103,8 +98,8 @@
 				<div class="row marginTop20 paddingBottom10">
 					<a id="purchaseJobPostings"
 						href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html?page=inventoryPage"
-						class="purchaseJobPostings btn_sm orange">BUY MORE</a> <a href=""
-						onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
+						class="nyroModal btn_sm orange">BUY MORE</a> 
+						<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 			</form:form>
 		</div>
