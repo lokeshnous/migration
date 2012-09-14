@@ -480,7 +480,7 @@ public class EmployerRegistrationController {
 						.setFnameForBillingAddr(listBillingForms.getFirstName());
 				employeeBillingForm.getBillingAddressForm()
 						.setLnameForBillingAddr(
-								listProfAttribForms.getLastName());
+								listBillingForms.getLastName());
 				employeeBillingForm.setCompany(listBillingForms
 						.getCompanyName());
 				employeeBillingForm.getBillingAddressForm()
