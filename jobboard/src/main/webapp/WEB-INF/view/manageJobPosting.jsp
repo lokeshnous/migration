@@ -139,28 +139,28 @@
 							}
 						});
 						$("#tb_manage_job img")
-								.click(
-										function(event) {
-											var action = $(this).attr("alt");
-											var val = 0;
-											switch (action) {
-											case "check": {
-												val = $(this).attr("id");
+						.click(
+								function(event) {
+									var rowObj = $(this).parent();
+									var action =rowObj.attr("name");
+									var val = 0;
+									switch (action) {
+									case "check": {
+										val = rowObj.attr("id");
+										$("form")
+												.attr(
+														"action",
+														"${pageContext.request.contextPath}/employer/updateJobs.html?jobId=${job.jobId}"
+																+ val);
+										$("form")
+												.attr("method", "POST");
+										$("form").submit();
 
-												$("form")
-														.attr(
-																"action",
-																"${pageContext.request.contextPath}/employer/updateJobs.html?jobId=${job.jobId}"
-																		+ val);
-												$("form")
-														.attr("method", "POST");
-												$("form").submit();
+									}
+										break;
+									}
 
-											}
-												break;
-											}
-
-										});
+								});
 						$('#statusValue').change(
 								function() {
 									val = $(this).val();
@@ -379,14 +379,15 @@
 											<form:options items="${templateList}" itemLabel="optionName"
 												itemValue="optionId" />
 										</form:select></td>
+										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80 SearchIcons">
-											<a title="Edit"
+											<a title="edit"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><div
-													class="editFile"></div></a><a title="View"
+													class="editFile"></div></a><a title="view"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><div
-													class="view"></div></a><a title="Save" href="#"><div class="check"
-													id="${job.jobId}"></div></a>
+													class="view"></div></a><a title="check" href="#"><div class="check" name="check"
+													id="${job.jobId}"><img title="delete" src="../resources/images/tranBg.png" class="check"></div></a>
 										</div></td>
 								</tr>
 								</c:forEach>
