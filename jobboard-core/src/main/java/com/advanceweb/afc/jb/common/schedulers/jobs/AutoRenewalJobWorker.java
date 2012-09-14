@@ -32,11 +32,15 @@ public class AutoRenewalJobWorker implements JobWorker {
 	@Override
 	public void executeJob() {
 		LOGGER.info("AutoRenewalJobWorker-> Execute Job.....");
+		//Retreive all the expireds jobs to validate with net suite data 
 		List<JobPostDTO> jobsList =employerJobPostDAO.retreiveAllExpiredJobs();
+		//Calling net suite to check whether the employer is featured or not 
+		//And to know, whether the employer is applicable for free job posting
 		for(JobPostDTO dto : jobsList){
 			int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(dto.getFacilityId());			
 			UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
 			dto.setbFeatured(userDTO.isFeatured());
+			//Verify the employer is applicable for free posting or not
 			if(userDTO.isXmlFeedEnabled() && null != userDTO.getXmlFeedStartDate() && null != userDTO.getXmlFeedEndDate()){
 				dto.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getXmlFeedStartDate(), userDTO.getXmlFeedEndDate()));
 			}
