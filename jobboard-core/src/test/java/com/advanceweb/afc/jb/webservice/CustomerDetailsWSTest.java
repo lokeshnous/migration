@@ -2,12 +2,16 @@ package com.advanceweb.afc.jb.webservice;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import com.advanceweb.afc.jb.ServiceTest;
 
@@ -28,12 +32,12 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Calling to authorize an user
         //customerDetailsWSTest.authorizeUser("customer", "NS101");
         //calling to authorise user using POST
-        //customerDetailsWSTest.getCustomerDetails("customer",462867);
+        customerDetailsWSTest.getCustomerDetails("customer",465670);
         //Call for item services
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
        
-        //customerDetailsWSTest.createSalesOrder("459468", 1596, 1, 2930);
+        //customerDetailsWSTest.createSalesOrder();
         // Call for create Customer
         	//customerDetailsWSTest.createCustomer("Customer1", "company");
         //customerDetailsWSTest.createCashSales();
@@ -101,7 +105,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	    
 	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
 	     
-		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=459468");
+		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=467173");//465670
 	     /*client.header("Authorization", authorization);
 	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
@@ -114,6 +118,40 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		String jsonResult = null;
 		try {
 			jsonResult = IOUtils.readStringFromStream((InputStream)response.getEntity());
+			
+			
+			try {
+				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				//jsonObject.has("contactroles");
+				System.out.println(jsonObject.has("contactroles"));
+				JSONArray jsonArray = new JSONArray();
+				if(jsonObject.has("contactroles")){
+					jsonArray = (JSONArray) jsonObject.get("contactroles");
+				}
+				System.out.println("jsonArray="+jsonArray);
+				for(int index = 0; index < jsonArray.length(); index++ ){
+					JSONObject innerJsonObj = jsonArray.getJSONObject(index);
+				System.out.println("contacts=>"+innerJsonObj.getString("email"));
+				}
+				//Iterator<String> myIter = jsonObject.keys();
+				/*if(jsonObject.has("contactroles")){
+					
+				}*/
+				
+				
+				System.out.println(jsonObject.get("contactroles"));
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			/*if(jsonObject.has(FEATURED_START_DATE_STRING)){
+				userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(FEATURED_START_DATE_STRING).toString()));
+				LOGGER.info("FEATURED START DATE IS=>"+jsonObject.get(FEATURED_START_DATE_STRING));
+			}*/
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -160,7 +198,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
 	    //"Your Transaction has Successful: transaction number (Payment for future=14806"
-		Object obj = "{ \"item\": [{\"item\": \"3006\",\"quantity\": \"3\"}, { \"item\": \"3006\", \"quantity\": \"4\" }], \"entity\" : \"459468\", \"paymentmethod\": \"ccp\", \"cardType\" : \"5\", \"ccnumber\": \"4111111111111111\", \"ccexpiredate\" : \"12/2014\", \"ccname\": \"Alain Gendre\", \"cczipcode\" : \"760002\", \"ccstreet\" : \"Suite Avenue\" }";	
+		Object obj = "{ \"item\": [{\"item\": \"3006\",\"quantity\": \"3\"}, { \"item\": \"3006\", \"quantity\": \"4\" }], \"entity\" : \"467173\", \"paymentmethod\": \"ccp\", \"cardType\" : \"5\", \"ccnumber\": \"4111111111111111\", \"ccexpiredate\" : \"12/2014\", \"ccname\": \"Alain Gendre\", \"cczipcode\" : \"760002\", \"ccstreet\" : \"Suite Avenue\" }";	
 		//Object obj ="{internalid:0, phone:(000) 999-7777, recordtype:customer, companyname:drrd, ccnumber:null, ccexpiredate:null, ccname:null, cczipcode:null, ccstreet:null, item:[], firstname:dhrrdh, middlename:dfhdfh, lastname:dfhdfh, email:null, zip:225215, state:ae, country:us, altphone:, isperson:T, addr1:dhdf@gnamil.com, city:sddd}";
 		Response response = client.post(obj);
 		 
@@ -194,7 +232,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		// Object entityId = "{\"internalid\":\"0\",\"phone\":\"(000) 999-7777\",\"recordtype\":\"customer\",\"companyname\":\"asdsa\",\"ccnumber\":\"null\",\"ccexpiredate\":\"null\",\"ccname\":\"null\",\"cczipcode\":\"null\",\"ccstreet\":\"null\",\"item\":\"[]\",\"firstname\":\"bdd\",\"middlename\":\"dbdfb\",\"lastname\":\"dbdf\",\"email\":\"null\",\"zip\":\"123456\",\"state\":\"gu\",\"country\":\"us\",\"altphone\":\"\",\"isperson\":\"T\",\"addr1\":\"bdbfd@gmail.com\",\"city\":\"sasa\"}";
 		//Json Response String for create Customer ="463566"
 		 //Json Response String for create Customer ="Record already exist.Try again with other company name"
-		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"xsss\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tvdsdsdts\",\"middlename\":\"teststs\",\"lastname\":\"testasfsts\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"xsss\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tvd222SDF\",\"middlename\":\"teststs\",\"lastname\":\"test222aSSS\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
 		 
 		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1");
 		client.header("Authorization", authorization);
@@ -233,7 +271,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		 //Working
 		 //Object entityId = "{\"recordtype\": \"customer\", \"internalid\": 460460, \"phone\" : \"121-454-789\"}";
 		 
-		 Object entityId = "{\"internalid\":463366,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		 Object entityId = "{\"internalid\":467173,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
 		 
 		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=156&deploy=1");
 		client.header("Authorization", authorization);
