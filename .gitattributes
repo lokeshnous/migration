@@ -396,6 +396,7 @@ jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard-parent/pom.xml -text
 jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminJobPostingInventoryController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminLoginForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/TransformAdminImpersonation.java -text
