@@ -220,8 +220,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<!-- <a href="#"> -->${msg.jsCreateNewCoverLetter}<!-- </a> -->
-												
+											<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover">${msg.jsCreateNewCoverLetter} </a> 											
 											</p>
 										</div>
 										<div class="lableTextDashBoard">
