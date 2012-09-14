@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 
 /**
  * Created JobSeekerSubscriptions DAO
@@ -24,4 +25,10 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @return
 	 */
 	List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId);
+	/**
+	 * 
+	 * @param rclDTO.
+	 * @return boolean.
+	 */
+	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO);
 }
