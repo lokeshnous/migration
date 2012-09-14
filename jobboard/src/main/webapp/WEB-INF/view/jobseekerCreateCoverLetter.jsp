@@ -7,17 +7,18 @@
 		<script src="javascripts/expandCollapse.js" type="text/javascript"></script>
 	</head>
 	<body class="job_board">
-		<div class="ad_page_top">
+		<%-- <div class="ad_page_top">
 			<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png"/>
-		</div>
+		</div> --%>
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
 				<div class="main">
-				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
+				<%-- <jsp:include page="../templates/templates_header.jsp"></jsp:include> --%>
 					<div class="popupHeader">
 						<h2>
 							CREATE NEW COVER LETTER 
 						</h2>
+						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
 					</div>
 					<div class="row ">
 						<div class="row marginTop15">
@@ -78,17 +79,17 @@
 						</span>
 					</div>
 					</div>
-					<div class="clearfix">
+					<%-- <div class="clearfix">
 					</div>
 					<div class="ad_wrapper">
 						<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png"/>
 						
-					</div>
+					</div> --%>
 				</div>
 			</div>
 		</div>
 		<!-- <div class="footer_wrapper">
 		</div> -->
-		<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
+		<%-- <jsp:include page="../templates/templates_footer.jsp"></jsp:include> --%>
 	</body>
 </html>
