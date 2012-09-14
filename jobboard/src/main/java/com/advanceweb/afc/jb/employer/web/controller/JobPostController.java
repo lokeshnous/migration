@@ -150,6 +150,8 @@ public class JobPostController {
 		}
 		
 		// Should be used while posting the job
+		//Calling net suite to check whether the employer is featured or not 
+		//And to know, whether the employer is applicable for free job posting
 		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		
@@ -159,7 +161,7 @@ public class JobPostController {
 		
 		//If free jobs is enabled then we should not decrease credits
 		if(!form.isXmlStartEndDateEnabled()){		
-			
+			//Checking for whether the employer is having credits or not
 			boolean bValidCredits = employerJobPost.validateAvailableCredits(Integer.valueOf(form.getJobPostingType()),
 					(Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 			
