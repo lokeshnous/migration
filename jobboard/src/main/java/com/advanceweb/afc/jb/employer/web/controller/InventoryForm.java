@@ -21,6 +21,7 @@ public class InventoryForm {
 	private String productType;
 	private String addon;
 	private String days;
+	private String postJobPage;
 
 	/**
 	 * @return the userId
@@ -182,6 +183,20 @@ public class InventoryForm {
 	 */
 	public void setDays(String days) {
 		this.days = days;
+	}
+
+	/**
+	 * @return the postJobPage
+	 */
+	public String getPostJobPage() {
+		return postJobPage;
+	}
+
+	/**
+	 * @param postJobPage the postJobPage to set
+	 */
+	public void setPostJobPage(String postJobPage) {
+		this.postJobPage = postJobPage;
 	}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
@@ -44,9 +45,18 @@ public class JobPostingInventoryController {
 	@RequestMapping(value = "/employer/jobInventory", method = RequestMethod.GET)
 	public ModelAndView jobInventory(
 			@ModelAttribute("alertForm") InventoryForm inventoryForm,
-			BindingResult result, HttpSession session) {
-
+			BindingResult result,
+			@RequestParam(value = "page", required = false) String page,
+			HttpSession session) {
+		String status = null;
 		ModelAndView model = new ModelAndView();
+
+		if (page != null && page.equals(MMJBCommonConstants.POST_JOB_PAGE)) {
+			inventoryForm.setPostJobPage("true");
+		}else{
+			status = "true";
+			
+		}
 
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
@@ -106,6 +116,7 @@ public class JobPostingInventoryController {
 		}
 		model.addObject("jbPostList", jbPostList);
 		model.addObject("jbSlotList", jbSlotList);
+		model.addObject("isAction", status);
 		model.setViewName("jobPostingInventoryPopup");
 
 		return model;
