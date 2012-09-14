@@ -160,11 +160,7 @@ public class JobPostConversionHelper<JobPostForm> {
 					long startDate = startDateAsTimestamp / getRidOfTime;
 					long currentTimestampWithoutTime = currentTimestamp
 							/ getRidOfTime;
-					if (job.getActive() == 1
-							&& startDate > currentTimestampWithoutTime) {
-						jobPostDTO
-								.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
-					} else if (job.getActive() == 0
+					 if (job.getActive() == 0
 							&& startDate > currentTimestampWithoutTime) {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
@@ -204,7 +200,10 @@ public class JobPostConversionHelper<JobPostForm> {
 					}
 
 				}
-
+				if ((job.getActive() == 0 && null == job.getStartDt()
+						&& null == job.getEndDt())) {
+					jobPostDTO.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
+				}
 				if ((null == jobPostDTO.getJobStatus() || jobPostDTO
 						.getJobStatus().isEmpty()) && (job.getActive() == 0)) {
 					jobPostDTO
