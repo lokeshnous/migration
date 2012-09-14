@@ -293,7 +293,7 @@ public class JobPostController {
 			if(MMJBCommonConstants.APPLY_TO_EMAIL.equals(form.getApplMethod()) && 
 					(!StringUtils.isEmpty(form.getApplyEmail()) && !validateEmailPattern(form.getApplyEmail()))){
 				
-				return "Invalid Email Id";
+				return "Please enter valid Email address";
 			}
 		}
 

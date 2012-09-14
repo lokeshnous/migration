@@ -272,12 +272,12 @@ public interface MMJBCommonConstants {
 	String PAGE = "page";
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
-	String EMAIL_MESSAGE = "Please enter correct Email address";
-	String EMAIL_NULL_MESSAGE = "Email Id already Exists!";
-	String PHONE_NO = "Please enter the correct Phone Number (XXX-XXX-XXXX)";
-	String PHONE_NULL_NO = "Please enter the Phone number";
-	String EMAIL_MESSAGE_BLANK = "Please enter required fields.";
-	String UPDATE_ERROR = " Error occurred. Please contact your Administrator.";
+	String EMAIL_MESSAGE = "Please enter correct Email address.";
+	String EMAIL_NULL_MESSAGE = "Email address already Exists!";
+	String PHONE_NO = "Please enter the valid phone number in the following format(xxx) xxx-xxxx.";
+	String PHONE_NULL_NO = "Please enter the phone number.";
+	String EMAIL_MESSAGE_BLANK = "Please enter a required field.";
+	String UPDATE_ERROR = " Error occurred. Please contact administrator.";
 	// Job Types
 	String JOB_TYPE = "JOB_TYPE";
 	String JOB_TYPE_ADDON = "ADDON";
@@ -303,8 +303,8 @@ public interface MMJBCommonConstants {
 
 	// Added for set alerts task
 	String SET_ALERT = "setAlertPage";
-	String DO_NOT_HAVE_CREDITS = "You do not have sufficient credits to post the job";
-	String DO_NOT_HAVE_CREDITS_REPOST = "You do not have sufficient credits to repost the job";
+	String DO_NOT_HAVE_CREDITS = "You do not have sufficient credits to post the job.";
+	String DO_NOT_HAVE_CREDITS_REPOST = "You do not have sufficient credits to repost the job.";
 	String STATUS_ACTIVE = "Active";
 	String STATUS_INACTIVE = "Inactive";
 

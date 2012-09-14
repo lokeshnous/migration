@@ -40,13 +40,13 @@ public class LoginFormValidator {
 
 		if (StringUtils.isEmpty(loginForm.getEmailAddress())) {
 			errors.rejectValue("emailAddress", NOTEMPTY,
-					"Email Id Should not be empty");
+					"Email address Should not be blank.");
 		}
 
 		if (!StringUtils.isEmpty(loginForm.getEmailAddress())
 				&& !validateEmailPattern(loginForm.getEmailAddress())) {
 
-			errors.rejectValue("emailAddress", NOTEMPTY, "Invalid Email Id");
+			errors.rejectValue("emailAddress", NOTEMPTY, "Please enter valid Email address");
 
 		}
 	}
@@ -87,7 +87,7 @@ public class LoginFormValidator {
 
 		if (StringUtils.isEmpty(loginForm.getPassword())) {
 			errors.rejectValue("password", NOTEMPTY,
-					"Password Should not be empty");
+					"Password Should not be blank.");
 		}
 
 		if (!StringUtils.isEmpty(loginForm.getPassword())

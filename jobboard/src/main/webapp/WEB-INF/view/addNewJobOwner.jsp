@@ -20,13 +20,13 @@
 						
 						if (ownerName.length <= 0
 							&& ownerEmail .length <= 0){
-							$("#jobOwnerErrorMsg").html("<span>All fields are mandatory.</span>");
+							$("#jobOwnerErrorMsg").html("<span>Please enter required fields.</span>");
 						
 						}else if($('#ownerName').val().split(' ').length < 2) {		
-							$("#jobOwnerErrorMsg").html("<span>Name should be both first name and last name.</span>");
+							$("#jobOwnerErrorMsg").html("<span>Name field should contain both first and last name.</span>");
 							
 						}else if(!email_regex.test(ownerEmail)){
-							$("#jobOwnerErrorMsg").html("<span>Please enter correct Email address.</span>");	
+							$("#jobOwnerErrorMsg").html("<span>Please enter correct email address.</span>");	
 						
 						}else {						
 							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",

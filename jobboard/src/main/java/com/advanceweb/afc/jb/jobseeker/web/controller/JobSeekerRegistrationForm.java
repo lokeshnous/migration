@@ -11,13 +11,13 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String emailId;
 	private String confirmEmailId;
 	private String newsLetterEmailId;
-	@NotEmpty(message="Industry should not be empty")
+	@NotEmpty(message="Industry should not be blank.")
 	private String myIndustry;
-	@NotEmpty(message="Profession should not be empty")
+	@NotEmpty(message="Profession should not be blank.")
 	private String myProfession;
-	@NotEmpty(message="Speciality should not be empty")
+	@NotEmpty(message="Speciality should not be blank.")
 	private String mySpeciality;
-	@NotEmpty(message="Job Title should not be empty")
+	@NotEmpty(message="Job Title should not be blank.")
 	private String myJobTitle;
 	private String ethenticity;
 	private String gender;

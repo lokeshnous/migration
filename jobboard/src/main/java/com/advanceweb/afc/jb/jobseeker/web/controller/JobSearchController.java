@@ -204,7 +204,7 @@ public class JobSearchController {
 		
 		try {
 			
-			if(clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)){
+			if(clickType != null && clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)){
 				clickController.getclickevent(jobId, clickType, request, response, model1);
 			}
 

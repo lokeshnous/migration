@@ -40,13 +40,13 @@ public class AdminValidation {
 		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())) {
 			if (!validateEmailPattern(form.getEmpOrAgencyEmail())) {
 				errors.rejectValue("empOrAgencyEmail", "NotEmpty",
-						"Invalid Employer/Agency Email Id");
+						"Invalid Employer/Agency Email address");
 			}
 		}
 		if (!StringUtils.isEmpty(form.getUserEmail())) {
 			if (!validateEmailPattern(form.getUserEmail())) {
 				errors.rejectValue("userEmail", "NotEmpty",
-						"Invalid User Email Id");
+						"Invalid User Email address");
 			}
 		}
 

@@ -20,7 +20,7 @@ public class EmployerRegistrationForm {
 	@NotEmpty
 	private String confirmEmailId;
 
-	@NotEmpty(message = "Position Tilte should not be empty")
+	@NotEmpty(message = "Position Tilte should not be blank.")
 	private String positionTitle;
 
 	@NotEmpty
@@ -29,35 +29,35 @@ public class EmployerRegistrationForm {
 	@NotEmpty
 	private String confirmPassword;
 
-	@NotEmpty(message = "Company should not be empty")
+	@NotEmpty(message = "Company should not be blank.")
 	private String company;
 
-	@NotEmpty(message = "Street should not be empty")
+	@NotEmpty(message = "Street should not be blank.")
 	private String street;
 
-	@NotEmpty(message = "First Name should not be empty")
+	@NotEmpty(message = "First Name should not be blank.")
 	private String firstName;
 
 	private String middleName;
 
-	@NotEmpty(message = "Last Name should not be empty")
+	@NotEmpty(message = "Last Name should not be blank.")
 	private String lastName;
 
-	@NotEmpty(message = "City should not be empty")
+	@NotEmpty(message = "City should not be blank.")
 	private String city;
 
-	@NotEmpty(message = "State should not be empty")
+	@NotEmpty(message = "State should not be blank.")
 	private String state;
 
-	@NotEmpty(message = "Zip Code should not be empty")
+	@NotEmpty(message = "Zip Code should not be blank.")
 	private String zipCode;
 
-	@NotEmpty(message = "Primary Phone should not be empty")
+	@NotEmpty(message = "Primary Phone should not be blank.")
 	private String primaryPhone;
 
 	private String secondryPhone;
 
-	@NotEmpty(message = "Country should not be empty")
+	@NotEmpty(message = "Country should not be blank.")
 	private String country;
 
 	private int facilityId;

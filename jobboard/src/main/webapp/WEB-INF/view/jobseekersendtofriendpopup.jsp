@@ -53,7 +53,7 @@
 	<div class="job_seeker_login popUpContainer" id="jobSeekerRegister1" style="display: block;">
 		<div class="popupHeader">
 			<h2>SEND TO A FRIEND</h2>
-			<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
+			<a href="#"><img width="19" title="Close" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
 		</div>
       
 		<div class="popUpContainerWrapper">

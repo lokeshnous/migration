@@ -182,7 +182,7 @@ public class EmployerProfileManagementController {
 
 		if (StringUtils.isEmpty(email)) {
 			errors.rejectValue("companyEmail", "NotEmpty",
-					"Email id should not be blank");
+					"Email address should not be blank");
 		}
 
 		if (!StringUtils.isEmpty(email) && !validateEmailPattern(email)) {
