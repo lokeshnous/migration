@@ -328,7 +328,7 @@ jQuery(document).ready(function() {
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
-									$.nmManual(val + '.html');
+									window.location.href = val+ '.html';
 								}
 								
 								if (key == "LoggedInNavigationPath") {

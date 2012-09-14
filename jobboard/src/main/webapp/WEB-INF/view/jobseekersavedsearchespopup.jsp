@@ -23,8 +23,9 @@ $(document).keyup(function(event) {
 						$("#tb_save_search img").click(function(event) {
 							
 							var action = $(this).attr("class");
-							var rowObj = $(this).parent().parent().parent();
+							var rowObj = $(this).parent().parent().parent().parent();
 							var saveSearchId = rowObj.attr("id");
+							
 							var saveSearchedUrl = rowObj.attr("href");
 							//var searchName = $("#searchName").text();
 							
