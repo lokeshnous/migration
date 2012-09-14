@@ -301,19 +301,19 @@
               </div>
                       <div class="rowEvenNewSpacing"><span class="required">
                       <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail" id="applyToEMailId"/>
-                        </span><span class="lableText3 width105">Apply-to Email:</span>
+                        </span><span class="lableText6">Apply-to Email:</span>
                 <form:input path="applyEmail" class="job_seeker_password textBox350"  id="applyToEMailTSId" readonly="readonly"/>
 
                 <span class="required requiredWidth">Enter the email address where you would like resumes to be sent.</span> </div>
                       <div class="rowEvenNewSpacing"><span class="required">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToURL" id="applyToURLId"/>
-                        </span><span class="lableText3 width105">Apply-to URL</span>
+                        </span><span class="lableText6">Apply-to URL</span>
                 <form:input path="applyUrl" class="job_seeker_password textBox350"  id="applyToURLTSId" readonly="readonly"/>
                 <span class="required requiredWidth">Enter the URL where you would like to send job-seekers to apply.</span> </div>
 
                       <div class="rowEvenNewSpacing"><span class="required">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS" id="applyToATSId"/>
-                        </span><span  class="lableText3 width105">Apply-to ATS</span>
+                        </span><span  class="lableText6">Apply-to ATS</span>
                <form:input path="atsUrl" class="job_seeker_password textBox350" id="applyToATSIPId" readonly="readonly"/>
 				<span class="required requiredWidth">Enter the URL to the corresponding job posting or application on your company's website.</span></div>
                       <div class="clearfix"></div>

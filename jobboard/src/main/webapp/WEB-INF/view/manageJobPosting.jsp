@@ -468,7 +468,7 @@
 				<div class="clearfix"></div>
 				<!-- content_wrapper -->
 				<div class="ad_wrapper">
-					<img src="images/ads/banner_ad_fpo.png" />
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
 				<!-- ad_wrapper -->
 

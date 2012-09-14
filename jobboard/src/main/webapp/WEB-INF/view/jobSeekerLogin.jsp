@@ -16,9 +16,9 @@
 	jQuery(document).ready(function() {
 		$('#j_username').focus();
 		
-		$("#forgrtpassword").displaypopup("#forgrtpassword", "775", "252");
+		$("#forgrtpassword").displaypopup("#forgrtpassword", "790", "252");
 		jQuery(".megamenu").megamenu();
-		$("#guestUser").displaypopup("#guestUser", "775",
+		$("#guestUser").displaypopup("#guestUser", "790",
 		"355");
 	});
 </script>

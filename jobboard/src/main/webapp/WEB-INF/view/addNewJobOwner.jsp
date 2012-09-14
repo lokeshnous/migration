@@ -68,24 +68,19 @@
 						name="EmailAddress" class="job_seeker_email width300" />
 				</div>
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Job Owner Email Address:</span> <form:input
-						 path="ownerEmail" name="EmailAddress" class="job_seeker_email width300" />
-						 <form:errors
-										path="ownerEmail" />
+					<span class="lableText3">Job Owner Email Address:</span> 
+					<form:input path="ownerEmail" name="EmailAddress" class="job_seeker_email width300" />
+				    <form:errors path="ownerEmail" />
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4"> </span>
-					<div class="floatLeft marginTop5 marginRight10">
-						<label> <form:radiobutton name="RadioGroup10" value="5"
-							  path="fullAccess"  label="Full Access"/> 
-						</label>
-					</div>
-
-					<div class="floatLeft marginTop5">
-						<label> <form:radiobutton name="RadioGroup10" 
-							  path="fullAccess" value="6" label="Post / Edit Only"/> 
-						</label>
-					</div>
+					<span>
+						<div class="required"><label ><input type="radio" checked="checked" value="5" name="fullAccess" id="fullAccess1"><label class="greyLabel" for="fullAccess1">Full Access</label> </label></div>
+						<div class="required"><label><input type="radio" value="6" name="fullAccess" id="fullAccess1"><label class="greyLabel" for="fullAccess1">Post / Edit Only</label> </label></div>
+					</span>
+					<%-- <div class="floatLeft marginTop5">
+						<label> <form:radiobutton name="RadioGroup10" path="fullAccess" value="6" label="Post / Edit Only"/> </label>
+					</div> --%>
 					</div> 
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">

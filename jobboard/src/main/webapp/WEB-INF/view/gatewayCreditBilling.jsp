@@ -155,9 +155,9 @@
 								name="phone" readonly="true" id="phone"
 								class="job_seeker_password textBox350 " />
 						</div>
-
+						<div class="clearfix"></div>
 						<p class="borderBottomDotted marginBottom15">&nbsp;</p>
-
+						<div class="clearfix"></div>
 						<!-- Billing Address -->
 
 						<h3 class="gatewayBreadcrumbs main_section">Billing Address</h3>
@@ -171,9 +171,10 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.fnameForBillingAddr" /> </font>
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.fnameForBillingAddr" /> 
+							<%-- <font color="red" style="padding-left: 185px"><form:errors
+									path="billingAddressForm.fnameForBillingAddr" /> </font> --%>
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -183,9 +184,9 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.lnameForBillingAddr" /> </font>
+						<div class="validationMsg ">
+							
+							<form:errors path="billingAddressForm.lnameForBillingAddr" /> 
 						</div>
 
 						<div class="rowEvenNewSpacing reuse_address">
@@ -203,9 +204,9 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.streetForBillingAddr" /> </font>
+						<div class="validationMsg ">
+							
+							<form:errors path="billingAddressForm.streetForBillingAddr" /> 
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -215,9 +216,8 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.cityOrTownForBillingAddr" /> </font>
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.cityOrTownForBillingAddr" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -230,9 +230,8 @@
 							</form:select>
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.stateBillingAddress" /></font>
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.stateBillingAddress" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -246,9 +245,8 @@
 							</form:select>
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.countryForBillingAddr" /> </font>
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.countryForBillingAddr" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -258,17 +256,18 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="billingAddressForm.zipCodeForBillingAddr" /> </font>
+						
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.zipCodeForBillingAddr" />
 						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Phone:</span>
 							<form:input path="billingAddressForm.phone" type="text" id="phone2"
 								class="job_seeker_password textBox350 " />
 						</div>
+						<div class="clearfix"></div>
 						<form:hidden path="billingAddressForm.facilityContactId" />
-
+						<div class"clearfix"></div>
 						<p class="borderBottomDotted marginBottom15">&nbsp;</p>
 						<!-- payment info -->
 						<h3 class="gatewayBreadcrumbs main_section">Payment
@@ -282,9 +281,8 @@
 
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="creditCardInfoForm.name" /> </font>
+						<div class="validationMsg ">
+							<form:errors path="creditCardInfoForm.name" /> 
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -299,9 +297,8 @@
 							</form:select>
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="creditCardInfoForm.cardType" /></font>
+						<div class="validationMsg ">
+							<form:errors path="creditCardInfoForm.cardType" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -311,9 +308,8 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="creditCardInfoForm.creditCardNo" /> </font>
+						<div class="validationMsg">
+							<form:errors path="creditCardInfoForm.creditCardNo" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -370,10 +366,9 @@
 							</form:select>
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"><form:errors
-									path="creditCardInfoForm.expMonth" /> </font> <font color="red"><form:errors
-									path="creditCardInfoForm.expYear" /> </font>
+						<div class="validationMsg">
+							<form:errors path="creditCardInfoForm.expMonth" /> 
+							<form:errors path="creditCardInfoForm.expYear" /> 
 						</div>
 
 						<div class="rowEvenNewSpacing">
@@ -381,13 +376,15 @@
 							<form:password path="creditCardInfoForm.securiyCode"
 								name="security_code" id="security_code"
 								class="job_seeker_password tinyTextBox " />
-							<span class="floatLeft marginTop6"><img
-								src="../resources/images/Tips_blue_Icon.png" /></span> <span
+							<div class="toolTip colorPkrAreaToolTip"><span class="classic">For Visa, MasterCard, and Discover this number is the last 3 digits on back of your card on the signature strip. For American Express this number is the 4 digits above card number at the right on the front of your card.</span></div>	
+							<!-- <span class="floatLeft marginTop6"><img
+								src="../resources/images/Tips_blue_Icon.png" /></span>  -->
+								
+								<span
 								class="required">(Required)</span>
 						</div>
-						<div>
-							<font font color="red" style="padding-left: 185px"><form:errors
-									path="creditCardInfoForm.securiyCode" /></font>
+						<div class="validationMsg">
+							<form:errors path="creditCardInfoForm.securiyCode" />
 						</div>
 						<div class="clearfix"></div>
 						<div class="buttonContainer">

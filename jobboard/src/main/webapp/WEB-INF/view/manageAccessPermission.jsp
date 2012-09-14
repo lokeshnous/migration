@@ -92,10 +92,12 @@
 							<tr>
 							 <td>&nbsp;</td>
 								<td>${job.ownerName} </td>
-								<td width="16%" align="left"><form:radiobutton
-									 id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess"  value="5" label="Full Access" /> </td>
-								<td width="31%" align="left"><form:radiobutton
-									 id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess" value="6" label="Post / Edit Only" /> </td>
+								<td width="16%" align="left">
+								<div class="required"><form:radiobutton id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess"  value="5" /><label class="greyLabel">Full Access</label></div> 
+							</td>
+								<td width="31%" align="left">
+								<div class="required"><form:radiobutton id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess" value="6" /><label class="greyLabel">Post / Edit Only</label></div> 
+								</td>
 								<td align="left"><a id="${job.ownerId}" href="#"> Delete User</a></td> 
 							</tr>
 						</c:forEach>

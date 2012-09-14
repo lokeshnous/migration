@@ -53,6 +53,7 @@ input.job_seeker_password {
 	-webkit-border-radius: 4px;
 	background-color: #f0f0f0;
 	font-size: 1.2em;
+	border: 1px solid #CCC;
 }
 
 .row {
@@ -60,7 +61,12 @@ input.job_seeker_password {
 	height: auto;
 	float: left;
 }
-
+.rowEvenNewSpacing {
+    float: left;
+    height: auto;
+    margin-top: 10px;
+    width: 80.5%;
+}
 .gateway .row,.gateway .rowEvenNewSpacing {
 	margin-left: 10px;
 }
@@ -83,7 +89,7 @@ input.job_seeker_password {
 }
 
 .form_notes {
-	margin: 3px 0 0 10px;
+	margin: 3px 0 5px 10px;
 }
 
 .form_notes span {
@@ -139,4 +145,12 @@ table.gatewayTable tr td span.paymentLineHeight {
 
 .indent10 {
 	margin-left: 10px;
+}
+.validationMsg {
+    color: red;
+    float: left;
+    height: auto;
+    margin-left: 185px;
+    width: auto;
+    margin-top: 5px;
 }

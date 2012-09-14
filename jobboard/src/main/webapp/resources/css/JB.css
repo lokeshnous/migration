@@ -1897,13 +1897,12 @@ select {
 	float: left;
 }
 
-.lableText3,.lableTextSelect,.lableText4,.lableText5 {
+.lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6 {
 	width: 160px;
 	float: left;
 	padding: 4px 15px 0 0;
 	text-align: right;
 }
-
 .lableText3 {
 	line-height: 16px;
 	padding-top: 6px !important;
@@ -1913,6 +1912,9 @@ select {
 }
 .lableText5{
 	width: 280px !important;
+}
+.lableText6{
+	width: 138px !important;
 }
 .splLableText {
 	width: auto;
@@ -4011,6 +4013,7 @@ orange:hover {
 	float:right; 
 	margin-top:-1px; 
 	margin-left:5px;
+	color:#6B7B84;
 }
 .BTemplateIconAlign{
 	margin-left:33px;
@@ -4038,6 +4041,7 @@ orange:hover {
 }
 .GetNumPage{
 	width:299px !important;
+	text-align:right;
 }
 .AdminLinkAlign{
 	width:310px; 
