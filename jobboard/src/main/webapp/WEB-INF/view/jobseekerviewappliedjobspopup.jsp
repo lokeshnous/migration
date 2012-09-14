@@ -43,12 +43,13 @@
 	});
    </script>
       <script type="text/javascript">
-	    function confirmDelete() {
-		if (confirm("Are you sure you want to delete?")) {
-			return true;
-		} else {
-			return false;
-		}
+      function confirmDelete(id) {
+	    	var r=confirm("Are you sure you want to delete?");
+			if(r==true){
+				$.nmManual("${pageContext.request.contextPath}/jobSeekerJobDetail/deleteAppliedJob.html?appliedJobId="+id);
+				}else{
+					return false;
+				}
 	    }
      </script>
 </head>
@@ -74,7 +75,9 @@
                 <td><a href='<c:url value="/jobsearch/viewJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/><c:param name="currentUrl" value="null"/></c:url>'  rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
-                <td align="center"><div class="centerAlignMButton"><a title="Delete" id="ppppp" class="deleteSavedJob" href='<c:url value="/jobSeekerJobDetail/deleteAppliedJob.html" ><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();"><div class="delete"></div></a></div></td>
+                <td align="center"><div class="centerAlignMButton">
+                <a title="Delete" onclick="confirmDelete(this.id); " id="${dtoList.getSaveJobId()}" class="deleteSavedJob" >
+                <div class="delete"></div></a></div></td>
               </tr>
               </c:forEach>
             </table>

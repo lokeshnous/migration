@@ -52,12 +52,13 @@
 	});
    </script>
       <script type="text/javascript">
-	    function confirmDelete() {
-		if (confirm("Are you sure you want to delete?")) {
-			return true;
-		} else {
-			return false;
-		}
+	    function confirmDelete(id) {
+	    	var r=confirm("Are you sure you want to delete?");
+			if(r==true){
+				$.nmManual("${pageContext.request.contextPath}/jobSeekerJobDetail/deleteSavedJob.html?appliedJobId="+id);
+				}else{
+					return false;
+				}
 	    }
      </script>
 </head>
@@ -90,7 +91,7 @@
                 <td align="center">${dtoList.getCreateDt()}</td>
                 <td align="center">${dtoList.getJobAge()} days</td>
                 <td align="center"><div class="centerAlignMButton">
-                <a title="Delete" id="ppppp" class="deleteSavedJob" href='<c:url value="/jobSeekerJobDetail/deleteSavedJob.html"><c:param name="appliedJobId" value="${dtoList.getSaveJobId()}"/> </c:url>' onclick="return confirmDelete();" >
+                <a title="Delete" onclick="confirmDelete(this.id); " id="${dtoList.getSaveJobId()}" class="deleteSavedJob"  >
                 <div class="delete"></div>
                 </a></div></td>
               </tr>
