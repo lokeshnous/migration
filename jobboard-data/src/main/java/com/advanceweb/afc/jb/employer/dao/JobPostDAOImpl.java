@@ -122,8 +122,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		try {
 			JpLocation location = null;
 			// Retrieving location Id based on the data selection while posting
-			// the new job
-			
+			// the new job			
 			if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
 					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId())){
 				return false;
@@ -553,7 +552,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * 
+	 * This method is called to retreive all the scheduled jobs
 	 */
 	public List<JobPostDTO> retreiveAllScheduledJobs(){
 		//Schedule Jobs			
@@ -569,7 +568,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	
 	
 	/**
-	 * 
+	 * This method is called to retreive all the expired jobs
 	 */
 	public List<JobPostDTO> retreiveAllExpiredJobs(){
 		//Schedule Jobs			
@@ -589,6 +588,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		//Update Jobs as expired
 		try {
 			
+			//Identify the expired jobs
 			List<JpJob> expiredJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS, getOneDayBeforeDate());
 			
 			for(JpJob job : expiredJobs){
@@ -611,12 +611,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 		//Schedule Jobs
 		try {
 			
+			//Identify the scheduled jobs
 			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
 			
 			for(JpJob job : scheduledJobs){						
 				
+				//Validating with net suite data to check whether the employer is featured or not 
+				//And to know, whether the employer is applicable for free job posting
 				JobPostDTO dto = validateJobPost(job, jobsList);					
 				
+				//Retreiving job posting type based on the job id
 				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());		
 				
 				if(!jpAuditList.isEmpty()){
@@ -712,7 +716,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 		LOGGER.info("Executing -> decreaseAvailableCredits()");
 		//Schedule Jobs
 		try {			
-			//Based on inventory detail id, we are retreiving combo id 
+			//Based on inventory detail id, we are retreiving product id
+			//For example if the product id is having multiple purchases, we are going to dedut form old purchases
 			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find("from AdmInventoryDetail dtl where dtl.invDetailId=?", invDtlId);			
 			if(!invDtlList.isEmpty()){				
 				AdmInventoryDetail invDtl = invDtlList.get(0);
@@ -720,6 +725,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);				
 				if(!invDtls.isEmpty()){					
 					try {
+						//Deducting available quantity
 						AdmInventoryDetail dtl = invDtls.get(0);
 						dtl.setAvailableqty(dtl.getAvailableqty()-1);
 						hibernateTemplate.saveOrUpdate(dtl);
