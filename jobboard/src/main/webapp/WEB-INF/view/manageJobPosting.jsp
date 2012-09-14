@@ -139,28 +139,28 @@
 							}
 						});
 						$("#tb_manage_job img")
-						.click(
-								function(event) {
-									var rowObj = $(this).parent();
-									var action =rowObj.attr("name");
-									var val = 0;
-									switch (action) {
-									case "check": {
-										val = rowObj.attr("id");
-										$("form")
-												.attr(
-														"action",
-														"${pageContext.request.contextPath}/employer/updateJobs.html?jobId=${job.jobId}"
-																+ val);
-										$("form")
-												.attr("method", "POST");
-										$("form").submit();
+								.click(
+										function(event) {
+											var rowObj = $(this).parent();
+											var action =rowObj.attr("name");
+											var val = 0;
+											switch (action) {
+											case "check": {
+												val = rowObj.attr("id");
+												$("form")
+														.attr(
+																"action",
+																"${pageContext.request.contextPath}/employer/updateJobs.html?jobId=${job.jobId}"
+																		+ val);
+												$("form")
+														.attr("method", "POST");
+												$("form").submit();
 
-									}
-										break;
-									}
+											}
+												break;
+											}
 
-								});
+										});
 						$('#statusValue').change(
 								function() {
 									val = $(this).val();
@@ -378,7 +378,6 @@
 											<form:option value="0" label="Select One" />
 											<form:options items="${templateList}" itemLabel="optionName"
 												itemValue="optionId" />
-										</form:select></td>
 										</form:select></td>
 									<td align="center" valign="middle"><div
 											class="row width80 SearchIcons">
