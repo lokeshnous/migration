@@ -571,6 +571,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsHeader.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresumeheader.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresumeresultbody.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobseekerCreateCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerEditProfileSettings.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerJobDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerJobDetailsTemplate.jsp -text
