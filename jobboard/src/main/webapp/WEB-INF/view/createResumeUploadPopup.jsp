@@ -93,7 +93,7 @@
 			 if(fileName!=''){
 				  var filename = fileName.toLowerCase();
 				  if (!filename.match(/(\.doc|\.pdf|\.docx)$/)){
-					  alert("Please upload correct document like Docx, Doc, Pdf");
+					  alert("Please upload resume with Doc,Docx or Pdf format only");
 					  return false;
 				    }
 				 }
