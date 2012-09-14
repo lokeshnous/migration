@@ -38,7 +38,7 @@
 			$("#creditConfirmForm").submit();
 		});
 	});
-
+	
 </script>
 </head>
 
@@ -173,7 +173,7 @@
 										</span></td>
 										<td align="center" valign="top"><span
 											class="paymentLineHeight"> Credit Card <br> <span><a
-													href="../pgiController/paymentMethodForBack.html">Edit</a></span>
+													href="../pgiController/editPaymentMethod.html">Edit</a></span>
 										</span></td>
 										<td align="right" valign="top"><span
 											class="paymentLineHeight">$</span><span
@@ -181,6 +181,7 @@
 									</tr>
 								</table>
 							</div>
+							<br>
 							<div class="buttonContainer indent10">
 								<span class="floatLeft"> 
 									<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a> 

@@ -29,6 +29,9 @@
 		
 		jQuery(".megamenu").megamenu();
 		
+		$('[id^=card_number]').keypress(validateNumber);
+		$('[id^=security_code]').keypress(validateNumber);
+		
 		$("#continueToNext").click(function(){
 			$("#creditBillingForm").attr("action","${pageContext.request.contextPath}/pgiController/callCreditConfirmOrder.html");
 			$("#creditBillingForm").submit();
@@ -50,7 +53,18 @@
 			$("#phone2").val($("#phone").val());
 		}
 	}
-	
+	function validateNumber(event) {
+	    var keyval = window.event ? event.keyCode : event.which;
+
+	    if (event.keyCode == 8 || event.keyCode == 46
+	     || event.keyCode == 37 || event.keyCode == 39) {
+	        return true;
+	    }
+	    else if ( keyval < 48 || keyval > 57 ) {
+	        return false;
+	    }
+	    else return true;
+	};
 </script>
 </head>
 

@@ -95,16 +95,22 @@ public class PaymentGatewayController {
 				.getCountryList();
 		// Getting the States from the database
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		// Converting AccountAddressDTO to Form
-		AccountAddressForm accountAddressForm = transformPaymentMethod
-				.transformAccountAddrDtoToForm(accountAddressDTO);
-		// Converting BillingAddressDTO to Form
-		BillingAddressForm billingAddressForm = transformPaymentMethod
-				.transformBillingAddressDtoToForm(billingAddressDTO);
-
-		paymentGatewayForm.setAccountAddressForm(accountAddressForm);
-		paymentGatewayForm.setBillingAddressForm(billingAddressForm);
 		
+		AccountAddressForm accountAddressForm = null;
+		BillingAddressForm billingAddressForm = null;
+		
+		if(null == paymentGatewayForm.getAccountAddressForm()){
+			// Converting AccountAddressDTO to Form
+			accountAddressForm = transformPaymentMethod
+					.transformAccountAddrDtoToForm(accountAddressDTO);
+			paymentGatewayForm.setAccountAddressForm(accountAddressForm);
+		}
+		if(null == paymentGatewayForm.getBillingAddressForm()){
+			// Converting BillingAddressDTO to Form
+			billingAddressForm = transformPaymentMethod
+					.transformBillingAddressDtoToForm(billingAddressDTO);
+			paymentGatewayForm.setBillingAddressForm(billingAddressForm);
+		}
 		
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
@@ -112,8 +118,8 @@ public class PaymentGatewayController {
 		if (paymentGatewayForm.getPaymentMethod().equalsIgnoreCase(
 				MMJBCommonConstants.CREDIT_CARD)) {
 			if(null != paymentGatewayForm.getCreditCardInfoForm()){
-				paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo("");
-				paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode("");
+				paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo(null);
+				paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode(null);
 			}
 			paymentGatewayForm.setInvoiceForm(null);
 			model.addObject("paymentGatewayForm", paymentGatewayForm);
@@ -135,13 +141,10 @@ public class PaymentGatewayController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
+		paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo(null);
+		paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode(null);
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
 		model.setViewName("gatewayCreditBilling");
-//		form.getCreditCardInfoForm().setCardType("");
-//		form.getCreditCardInfoForm().setCreditCardNo("");
-//		form.getCreditCardInfoForm().setExpMonth("");
-//		form.getCreditCardInfoForm().setExpYear("");
-//		form.getCreditCardInfoForm().setName("");
-		
 		return model;
 	}
 	
@@ -170,7 +173,15 @@ public class PaymentGatewayController {
 //		form.getInvoiceForm().setPurchaseOrderNo("");
 		return model;
 	}
-
+	
+	@RequestMapping(value = "/editPaymentMethod", method = RequestMethod.GET)
+	public ModelAndView gatewayPaymentBack(PaymentGatewayForm paymentGatewayForm) {
+		ModelAndView model = new ModelAndView();
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		System.out.println(paymentGatewayForm);
+		model.setViewName("redirect:/pgiController/callPaymentMethod.html");	
+		return model;
+	}
 	
 	@RequestMapping(value = "/callInvoiceConfirmOrder", method = RequestMethod.POST)
 	public ModelAndView gatewayConfirmOrder(@Valid PaymentGatewayForm paymentGatewayForm,
