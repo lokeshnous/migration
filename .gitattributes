@@ -136,6 +136,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostInvent
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobPostServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/JobSeekerJobDetailServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/ManageAccessPermissionServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/CoverLetterService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerJobDetailService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionService.java -text
