@@ -217,8 +217,14 @@
 					<%-- <form:hidden path="jobDTOs[${status.index}].jobId"/> --%>
 						<ul class="searchResultsJobInfo closed" id="searchResultsJobInfo${job.JobId}" onclick="trackClick(${job.JobId});">
 							<li class="searchResultsColumn1">${job.JobTitle}</li>
+							
 							<li class="searchResultsColumn2">${job.Company}</li>
-							<li class="searchResultsColumn3">${job.City}</li>
+							
+							<li class="searchResultsColumn3">
+							<c:if test="${!(job.HideCity == 1 || job.HideState == 1 || job.HideCountry == 1)}">
+							${job.City}
+							</c:if></li>
+							
 							<li class="searchResultsColumn4">${job.PostedDate}</li>
 						</ul>
 						<div class="searchResultsSubContent">

@@ -22,7 +22,7 @@ jQuery(document).ready(function() {
 			var radius = $.trim($("#radius").val());
 			
 			if(radius != 0 && cityState.length == 0){
-				$("#TotalNoRecords").text("");
+				//$("#TotalNoRecords").text("");
 				$("#TotalRecord").text("");
 				$('#findSearchInfo').html('Please enter the City and State or Zip Code');
 			}else{
@@ -127,7 +127,7 @@ jQuery(document).ready(function() {
 									
 									var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
-									$("#TotalNoRecords").text("");
+									//$("#TotalNoRecords").text("");
 									$("#TotalRecord").text("");
 									$.getJSON(navUrl,function(data) {
 										 $.ajaxSetup({ cache: true });
@@ -137,7 +137,7 @@ jQuery(document).ready(function() {
 											}
 										});										
 										processPaginationReq("20");
-										$("#TotalNoRecords").text(data["TotalNoRecords"]);
+										//$("#TotalNoRecords").text(data["TotalNoRecords"]);
 										$("#TotalRecord").text(data["TotalNoRecords"]);
 									});
 									$(".otherContent").attr("style","display: none");
@@ -176,11 +176,11 @@ jQuery(document).ready(function() {
 					searchtype = $("#searchtype").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
-					$("#TotalNoRecords").text("");
+					//$("#TotalNoRecords").text("");
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
 							processPaginationReq("20");
-							$("#TotalNoRecords").text(data["TotalNoRecords"]);
+							//$("#TotalNoRecords").text(data["TotalNoRecords"]);
 							$("#TotalRecord").text(data["TotalNoRecords"]);
 							});
 					$(".otherContent").attr("style","display: none");
