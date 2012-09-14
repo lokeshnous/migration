@@ -59,8 +59,8 @@
 										<td align="center">${jbPostList.getAvailableQty()}</td>
 										<td align="center"><a
 											href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
-												title="add" src="../resources/images/Addbutton.png"
-												width="20" height="20" alt="Add Button" title="PostNewJob"></a></td>
+												src="../resources/images/Addbutton.png" width="20"
+												height="20" alt="Post New Job" title="Post New Job"></a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -92,7 +92,7 @@
 										<td align="center"><a
 											href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
 												src="../resources/images/Addbutton.png" width="20"
-												height="20" alt="Add Button" title="PostNewJob"></a></td>
+												height="20" alt="Post New Job" title="Post New Job"></a></td>
 									</tr>
 								</c:forEach>
 							</tbody>
