@@ -198,7 +198,20 @@
 						</a>
 					</div>
 				</div></li>
-			<li><a href="../healthcarejobs/advanceweb.html">Job Search</a>
+			<li>
+			
+			<security:authorize
+				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP')">
+				<a href="../healthcarejobs/advanceweb.html">Job Search</a>
+				</security:authorize>
+			<security:authorize
+				access="hasRole('ROLE_JOB_SEEKER')">
+				<a href="../healthcarejobs/advanceweb.html">Job Search</a>
+				</security:authorize>
+			<security:authorize
+				access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP')">
+				<a href="#">Job Search</a>
+				</security:authorize>
 				<div class="megamenuContainer">
 					<div class="column">
 						<a href="http://health-care-jobs.advanceweb.com/">
