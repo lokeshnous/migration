@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.impl.EmployerDelegateImpl;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -37,7 +39,9 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 @RequestMapping("/pgiController")
 @SessionAttributes("paymentGatewayForm")
 public class PaymentGatewayController {
-
+	private static final Logger LOGGER = Logger
+			.getLogger(PaymentGatewayController.class);
+	
 	@Autowired
 	private PaymentGatewayService paymentGatewayService;
 
@@ -300,34 +304,70 @@ public class PaymentGatewayController {
 		
 		UserDTO userDTO = paymentGatewayService.createOrder(orderDetailsDTO);		
 		
+		int netSuiteStatus = Integer.parseInt(userDTO.getNsStatus());
+		
 		Map<Integer,String> statusCode = userDTO.getNsStatusCode();
 		//once the payment is success clear out the form data & related session data
 		session.removeAttribute("purchaseJobPostForm");
-		paymentGatewayForm = null;		
 		
 		ModelAndView model = new ModelAndView();
-		Map<String,String> errMap = new HashMap<String,String>();
-		if(userDTO.getNsStatus().equals("true")){
-			model.setViewName("redirect:/pgiController/callThankYouPage.html");
+		
+		String errorMessage ="";
+		
+		if(netSuiteStatus == MMJBCommonConstants.STATUS_CODE_200){
+			LOGGER.info(statusCode.get(netSuiteStatus));
+			//clear out all the form data
+			paymentGatewayForm = new PaymentGatewayForm();
+						
 		}
 		else
 		{   
-			if(statusCode.containsKey(400)){
-				errMap.put("errorMessage", "Bad Request, please contact System Admin");				
+			switch(netSuiteStatus){
+				case MMJBCommonConstants.STATUS_CODE_400 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.BAD_REQUEST_400);
+						errorMessage = MMJBCommonConstants.BAD_REQUEST_400;
+						break;
+				case MMJBCommonConstants.STATUS_CODE_401 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.UNAUTHORIZED_401);
+						errorMessage = MMJBCommonConstants.UNAUTHORIZED_401;
+						break;
+				case MMJBCommonConstants.STATUS_CODE_403 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.FORBIDDEN_403);
+						errorMessage = MMJBCommonConstants.FORBIDDEN_403;
+						break;
+				case MMJBCommonConstants.STATUS_CODE_404 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.NOT_FOUND_404);
+						errorMessage = MMJBCommonConstants.NOT_FOUND_404;
+						break;	
+				case MMJBCommonConstants.STATUS_CODE_405 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.METHOD_NOT_ALLOWED_405);
+						errorMessage = MMJBCommonConstants.METHOD_NOT_ALLOWED_405;
+						break;	
+				case MMJBCommonConstants.STATUS_CODE_415 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.UNSUPPORTED_MEDIA_TYPE_415);
+						errorMessage = MMJBCommonConstants.UNSUPPORTED_MEDIA_TYPE_415;
+						break;
+				case MMJBCommonConstants.STATUS_CODE_500 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.INTERNAL_SERVER_ERROR_500);
+						errorMessage = MMJBCommonConstants.INTERNAL_SERVER_ERROR_500;
+						break;
+				case MMJBCommonConstants.STATUS_CODE_503 :
+						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
+										MMJBCommonConstants.SERVICE_UNAVAILABLE_503);
+						errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
+						break;	
 			}
-			else if(statusCode.containsKey(401)){
-				errMap.put("errorMessage", "Authentication failure, please contact System Admin");
-			}
-			else if(statusCode.containsKey(404)){
-				errMap.put("errorMessage", "Authentication failure, please contact System Admin");
-			}
-			else{
-				errMap.put("errorMessage", "");
-			}
-			errMap.put("errorMessage", "Authentication failure, please contact System Admin");
-			model.addObject("errMap", errMap);
-			model.setViewName("redirect:/pgiController/callThankYouPage.html");
 		}
+		model.addObject("errorMessage", errorMessage);		
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		model.setViewName("gatewayThankYou");
 		return model;
 	}
 

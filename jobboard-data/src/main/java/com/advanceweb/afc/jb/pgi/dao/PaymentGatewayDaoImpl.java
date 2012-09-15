@@ -210,6 +210,13 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			admOrderHeader.setStatus("APPROVED");
 
 			hibernateTemplate.saveOrUpdate(admOrderHeader);
+			
+			//if order is success then save the inventory details 
+			if(MMJBCommonConstants.STATUS_CODE_200 == orderDetailsDTO.getOrderStatus()){
+				orderDetailsDTO.setOrderId(admOrderHeader.getOrderId());
+				saveInventoryDetails(orderDetailsDTO);
+			}	
+			
 		} catch (Exception e) {
 			LOGGER.error("ERROR : " + e);
 			return false;
@@ -233,17 +240,14 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 				AdmFacilityInventory admFacilityInventory = null;
 				AdmFacility admFacility = new AdmFacility();
 				admFacility.setFacilityId(orderDetailsDTO.getFacilityId());
+				int orderId = orderDetailsDTO.getOrderId();
 				
 				for(JobPostingPlanDTO jobPostingPlanDTO : orderDetailsDTO.getJobPostingPlanDTOList()){
 					
 					admFacilityInventory = new AdmFacilityInventory();
-					
+					admFacilityInventory.setOrderId(orderId);
 					admFacilityInventory.setAdmFacility(admFacility);
 					admFacilityInventory.setCreateDt(new Date());
-		
-					/*List<AdmInventoryDetail> admInventoryDetailList = paymentGatewayHelper
-							.transformToAdmInventoryDetail(admFacilityInventory,
-									orderDetailsDTO.getJobPostingPlanDTOList());*/
 					
 					AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,jobPostingPlanDTO);
 					admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
@@ -280,7 +284,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 				inputs[index] = jobTypeId;
 				
 				for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
-					// product is combo id
+					// product id is combo id
 					index = Integer.parseInt(addOnDTO.getAddOnId());
 					inputs[index] = index;
 				}

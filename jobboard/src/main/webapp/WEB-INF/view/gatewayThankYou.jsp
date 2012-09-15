@@ -44,9 +44,9 @@
 					<form:form action="../pgiController/callThankYouPage" method="POST"
 						class="firstForm">
 						<div class="FormErrorDisplayText">
-							${errMap.errorMessage}
+							${errorMessage}
 						</div>
-						<c:if test="${empty errMap.errorMessage}">
+						<c:if test="${empty errorMessage}">
 							<div class="row">
 								<p class="gateway_section_head">Thank you for your payment!</p>
 								<p>Your order is currently being processed. Click the button

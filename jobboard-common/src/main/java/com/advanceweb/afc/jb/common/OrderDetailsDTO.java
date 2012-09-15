@@ -20,8 +20,9 @@ public class OrderDetailsDTO {
 	private AccountAddressDTO orderAddressDTO;
 	private OrderPaymentDTO orderPaymentDTO;
 	private SalesOrderDTO salesOrderDTO;
+	private int orderId;
 	private int orderTotal;
-	private boolean orderStatus;
+	private int orderStatus;
 	
 	public int getUserId() {
 		return userId;
@@ -72,10 +73,16 @@ public class OrderDetailsDTO {
 	public void setOrderTotal(int orderTotal) {
 		this.orderTotal = orderTotal;
 	}
-	public boolean isOrderStatus() {
+	public int getOrderStatus() {
 		return orderStatus;
 	}
-	public void setOrderStatus(boolean orderStatus) {
+	public void setOrderStatus(int orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 }

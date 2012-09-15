@@ -189,6 +189,7 @@
 									<a href="<%=request.getContextPath()%>/pgiController/paymentCreditBackMethod.html" class="btn_sm orange">Back</a>
 								</span>
 							</div>
+							<br><br>
 					</form:form>
 				</div>
 				<!-- gateway -->

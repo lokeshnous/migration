@@ -134,16 +134,17 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
-			if(!StringUtils.isEmpty(jsonResponse) && jsonResponse.contains("error")){
+			if(response.getStatus() != MMJBCommonConstants.STATUS_CODE_200 && 
+					!StringUtils.isEmpty(jsonResponse) && jsonResponse.contains("error")){
 				LOGGER.error("Transaction is failed :"+jsonResponse);
 				nsStatusCode.put(response.getStatus(), jsonResponse);
 				userDTO.setNsStatusCode(nsStatusCode);
-				userDTO.setNsStatus("false");
+				userDTO.setNsStatus(String.valueOf(response.getStatus()));
 			}else{
 				LOGGER.info("Transaction is success :"+jsonResponse);
 				nsStatusCode.put(response.getStatus(), jsonResponse);
 				userDTO.setNsStatusCode(nsStatusCode);
-				userDTO.setNsStatus("true");
+				userDTO.setNsStatus(String.valueOf(response.getStatus()));
 			}
 
 		} catch (IOException e) {

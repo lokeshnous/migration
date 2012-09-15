@@ -282,6 +282,28 @@ public interface MMJBCommonConstants {
 	String JOB_TYPE = "JOB_TYPE";
 	String JOB_TYPE_ADDON = "ADDON";
 	String JOB_TYPE_COMBO = "JOB_TYPE_COMBO";
+	
+	//netsuite status code 
+	int STATUS_CODE_200 = 200;
+	int STATUS_CODE_400 = 400;
+	int STATUS_CODE_401 = 401;
+	int STATUS_CODE_403 = 403;
+	int STATUS_CODE_404 = 404;
+	int STATUS_CODE_405 = 405;
+	int STATUS_CODE_415 = 415;
+	int STATUS_CODE_500 = 500;
+	int STATUS_CODE_503 = 503;
+	
+	String SUCCESS_200 = "The RESTlet request was executed successfully.";
+	String BAD_REQUEST_400 = "The RESTlet request failed with a user error.";
+	String UNAUTHORIZED_401 = "This is not a valid NetSuite login session for the RESTlet calls.";
+	String FORBIDDEN_403 = "RESTlet request sent to invalid domain, meaning a domain other than https://rest.netsuite.com.";
+	String NOT_FOUND_404 = "A RESTlet script is not defined in the RESTlet request.";		 
+	String METHOD_NOT_ALLOWED_405 = "The RESTlet request method is not valid.";
+	String UNSUPPORTED_MEDIA_TYPE_415 ="An unsupported content type was specified. (Only JSON and text are allowed.)";
+	String INTERNAL_SERVER_ERROR_500 = "(unexpected errors): Occurs for non-user errors that cannot be recovered by resubmitting the same request. Contact Customer Support to file a case."; 
+	String SERVICE_UNAVAILABLE_503 = "The NetSuite database is offline or a database connection is not available.";
+	
 
 	String NEXT = "next";
 	int[] FILTER_VALS = { 20, 30, 40, 50 };

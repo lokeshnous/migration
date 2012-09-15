@@ -35,7 +35,7 @@ public class PaymentGatewayServiceTest extends ServiceTest{
 	@Test
 	public void createOrderToNetSuite(){
 		OrderDetailsDTO orderDetailsDTO = getOrderDetails();
-//		Assert.assertTrue(paymentGatewayService.createOrder(orderDetailsDTO));
+		Assert.assertNull(paymentGatewayService.createOrder(orderDetailsDTO));
 	}
 
 	private OrderDetailsDTO getOrderDetails() {
@@ -48,9 +48,9 @@ public class PaymentGatewayServiceTest extends ServiceTest{
 		jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
 		jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
 		
-		//jobPostingPlanDTOList.remove(1);
-		jobPostingPlanDTOList.get(1).setQuanity(3);
-		jobPostingPlanDTOList.get(1).getAddOnDTOList().remove(0);
+		jobPostingPlanDTOList.remove(1);
+		//jobPostingPlanDTOList.get(1).setQuanity(3);
+		//.get(1).getAddOnDTOList().remove(0);
 		//jobPostingPlanDTOList.get(1).getAddOnDTOList().remove(1);
 		//jobPostingPlanDTOList.get(1).getAddOnDTOList().remove(2);
 		
@@ -74,10 +74,10 @@ public class PaymentGatewayServiceTest extends ServiceTest{
 		orderPaymentDTO.setMethod("ccp");
 		//orderPaymentDTO.setMethod("inv");
 		orderPaymentDTO.setPaidAmount(String.valueOf(orderTotal));
-		orderPaymentDTO.setPaymentNumber("1234");
+		//orderPaymentDTO.setPaymentNumber("1234");
 		orderPaymentDTO.setTransactionDate(new Date());
-		orderPaymentDTO.setTransactionId("1111");
-		orderPaymentDTO.setTransactionResponse("transactionResponse");
+		//orderPaymentDTO.setTransactionId("1111");
+		//orderPaymentDTO.setTransactionResponse("transactionResponse");
 		orderDetailsDTO.setOrderPaymentDTO(orderPaymentDTO);
 		
 		SalesOrderDTO salesOrderDTO  = new SalesOrderDTO();
