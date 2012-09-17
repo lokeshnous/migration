@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,6 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
-import com.advanceweb.afc.jb.employer.service.impl.EmployerDelegateImpl;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -364,6 +362,7 @@ public class PaymentGatewayController {
 						errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
 						break;	
 			}
+			paymentGatewayForm = new PaymentGatewayForm();
 		}
 		model.addObject("errorMessage", errorMessage);		
 		model.addObject("paymentGatewayForm", paymentGatewayForm);
