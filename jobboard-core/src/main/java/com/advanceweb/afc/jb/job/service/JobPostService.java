@@ -19,7 +19,7 @@ public interface JobPostService {
 	//List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto);
 	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords);
-	JobPostDTO editJob(int jobId);
+	JobPostDTO editJob(int jobId,int jobPostType);
 	boolean deleteJob(int jobId , int userId);
 	boolean updateManageJob(boolean autoRenew,String brandTemplate,int jobId , int userId);
 	boolean deactivateJob(int jobId , int userId);

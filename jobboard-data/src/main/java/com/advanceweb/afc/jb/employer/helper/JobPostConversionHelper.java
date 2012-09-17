@@ -245,9 +245,6 @@ public class JobPostConversionHelper<JobPostForm> {
 		jobPostDTO.setCustomerNo(jpJob.getJobNumber());
 		jobPostDTO.setDisCompanyName(jpJob.getFacility());
 		jobPostDTO.setJobOwner(String.valueOf(jpJob.getAdminUserId()));
-		if(null!=jpJob.getJpJobType()){
-		jobPostDTO.setJobPostingType(jpJob.getJpJobType().getName());
-		}
 		jobPostDTO.setJobTitle(jpJob.getJobtitle());
 		jobPostDTO.setJobId(jpJob.getJobId());
 		if (null != jpJob.getJpJobApplies()

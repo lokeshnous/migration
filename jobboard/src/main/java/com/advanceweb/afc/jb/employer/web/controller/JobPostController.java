@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -344,20 +343,25 @@ public class JobPostController {
 	@RequestMapping(value = "/editJob", method = RequestMethod.GET)
 	public ModelAndView editJob(HttpServletRequest request,HttpSession session,
 			JobPostForm jobPostform, @RequestParam("jobId") int jobId) {
-		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId);
+		int jobPostType = employerJobPost
+				.getinvDetIdByJobId(jobId, (Integer) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID),
+						(Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId,jobPostType);
 		String readOnly = request.getParameter("readOnly");
 		if (null != readOnly && readOnly.equalsIgnoreCase("true")) {
 			jobPostform.setReadOnly(true);
 		}
-		transformJobPost.transformJobPostDTOToForm(jobPostform, jobPostDTO);
+		jobPostDTO.setJobPostingType(String.valueOf(jobPostType));
+		jobPostform=transformJobPost.transformJobPostDTOToForm(jobPostform, jobPostDTO);
 	
 		ModelAndView model = new ModelAndView();
-		model.addObject(JOB_POST_FORM, jobPostform);
+		
 		// Populating Dropdowns
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		jobPostform.setCompanyName(employerInfoDTO.getCustomerName());
 		List<DropDownDTO> templateList = populateDropdownsService
 				.populateBrandingTemplateDropdown(
 						employerInfoDTO.getFacilityId(),
@@ -373,8 +377,7 @@ public class JobPostController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		List<FromZipcodeDTO> zipCodeList = populateDropdownsService
 				.getFromZipcodeList();
-
-	
+		model.addObject(JOB_POST_FORM, jobPostform);
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);
 		model.addObject("countryList", countryList);

@@ -340,7 +340,10 @@ public interface MMJBCommonConstants {
 	int PLAN_DAYS = 30;
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
 	String POST_JOB_PAGE = "postJobPage";
-
+    String JOB_POST_TYPE_POSTING="30-Day Standard Job Posting";
+    String JOB_POST_TYPE_SLOT="30-Day Job Posting Slot";
+    int JOB_POST_TYPE_POSTING_ID=1;
+    int JOB_POST_TYPE_SLOT_ID=2;
 	// FOR MAIL RELATED
 	String SUBJECT_OF_MAIL = "A job opportunity sent to you by";
 	String BODY_OFMAIL_FIRST = "Here’s a job opportunity that ";

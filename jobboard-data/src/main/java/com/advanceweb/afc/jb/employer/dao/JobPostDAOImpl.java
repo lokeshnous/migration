@@ -31,6 +31,7 @@ import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
+import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
@@ -53,10 +54,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
 	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
 			"and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
-
+	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID="from AdmInventoryDetail inv  where inv.invDetailId=?)";
 	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
+	
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
-
 	private HibernateTemplate hibernateTemplate;
 	private int numberOfJobRecordsByStatus;
 	@Autowired
@@ -141,15 +142,50 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// selected by the user
 			JpTemplate template = hibernateTemplate.get(JpTemplate.class,
 					Integer.valueOf(dto.getBrandTemplate()));
+			
+			List<AdmInventoryDetail> invList = hibernateTemplate.find(
+					FIND_INVENTORY_DETAILS_BY_INV_ID, dto);
+			JpJobType jobType=new JpJobType();
+			if (!invList.isEmpty()) {
+				AdmInventoryDetail admInventoryDetail = invList.get(0);
+				if (MMJBCommonConstants.JOB_TYPE_COMBO
+						.equals(admInventoryDetail.getProductType())) {
+					List<JpJobTypeCombo> comboList = hibernateTemplate.find(
+							"from JpJobTypeCombo combo where combo.comboId=?",
+							admInventoryDetail.getProductId());
+					if (!comboList.isEmpty()) {
+						JpJobTypeCombo combo = comboList.get(0);
+						if (null != combo.getJobType()
+								&& combo.getJobType()
+										.equalsIgnoreCase(
+												MMJBCommonConstants.JOB_POST_TYPE_POSTING)) {
+							jobType = hibernateTemplate
+									.load(JpJobType.class,
+											MMJBCommonConstants.JOB_POST_TYPE_POSTING_ID);
+						} else if (null != combo.getJobType()
+								&& combo.getJobType()
+										.equalsIgnoreCase(
+												MMJBCommonConstants.JOB_POST_TYPE_SLOT)) {
+							jobType = hibernateTemplate.load(JpJobType.class,
+									MMJBCommonConstants.JOB_POST_TYPE_SLOT_ID);
+						}
+					}
+				} else {
+					List<JpJobType> jpTypleList = hibernateTemplate.find(
+							"from JpJobType type where type.jobTypeId=?",
+							admInventoryDetail.getProductId());
+					if (!jpTypleList.isEmpty()) {
+						jobType = jpTypleList.get(0);
+					}
+				}
 
-/*			JpJobType jobType = hibernateTemplate.load(JpJobType.class,
-					Integer.valueOf(dto.getJobPostingType()));*/
-
+			}
 			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
 			
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
 					template, admFacility);
+			jpJob.setJpJobType(jobType);
 			hibernateTemplate.save(jpJob);
 			
 			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
@@ -215,7 +251,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * 
 	 */
 	@Override
-	public JobPostDTO editJob(int jobId) {
+	public JobPostDTO editJob(int jobId, int jobPostType) {
 		JobPostDTO dto = new JobPostDTO();
 		try {
 			JpJob job = hibernateTemplate.get(JpJob.class, jobId);
@@ -223,6 +259,31 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (job != null) {
 
 				dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
+
+				List<AdmInventoryDetail> invList = hibernateTemplate.find(
+						FIND_INVENTORY_DETAILS_BY_INV_ID, jobPostType);
+				if (!invList.isEmpty()) {
+					AdmInventoryDetail admInventoryDetail = invList.get(0);
+					if (MMJBCommonConstants.JOB_TYPE_COMBO
+							.equals(admInventoryDetail.getProductType())) {
+						List<JpJobTypeCombo> comboList = hibernateTemplate
+								.find("from JpJobTypeCombo combo where combo.comboId=?",
+										admInventoryDetail.getProductId());
+						if (!comboList.isEmpty()) {
+							JpJobTypeCombo combo = comboList.get(0);
+							dto.setJobPostingType(combo.getAddons());
+						}
+					} else {
+						List<JpJobType> jpTypleList = hibernateTemplate.find(
+								"from JpJobType type where type.jobTypeId=?",
+								admInventoryDetail.getProductId());
+						if (!jpTypleList.isEmpty()) {
+							JpJobType type = jpTypleList.get(0);
+							dto.setJobPostingType(type.getName());
+						}
+					}
+
+				}
 
 			}
 		} catch (DataAccessException e) {
