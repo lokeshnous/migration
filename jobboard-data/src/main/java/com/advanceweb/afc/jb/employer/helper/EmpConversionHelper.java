@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
  * 
@@ -149,5 +150,51 @@ public class EmpConversionHelper {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * This method is used to convert from admFacility to
+	 * ManageAccessPermissionDTO
+	 * 
+	 * @param merUsers
+	 * @param roleId
+	 * @return
+	 */
+	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(
+			List<MerUser> merUsers, List<Integer> roleId) {
+		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
+		int i = 0;
+		for (MerUser merUser : merUsers) {
+			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
+			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
+			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
+					+ merUser.getFirstName());
+			if (roleId.size() > i && null != roleId.get(i)) {
+				manageAccessPermissionDTO.setTypeOfAccess(roleId.get(i));
+			}
+			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
+			i = i + 1;
+		}
+		return manageAccessPermissionDTOList;
+
+	}
+
+	/**
+	 * This method is used to convert form UserDTO to ManageAccessPermissionDTO
+	 * 
+	 * @param merUsers
+	 * @return
+	 */
+	public List<ManageAccessPermissionDTO> transformMerUserToManageAccessPermissionDTO(
+			List<MerUser> merUsers) {
+		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
+		for (MerUser merUser : merUsers) {
+			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
+			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
+			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
+					+ merUser.getFirstName());
+			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
+		}
+		return manageAccessPermissionDTOList;
 	}
 }

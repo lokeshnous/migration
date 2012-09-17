@@ -16,9 +16,12 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK;
+import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 
 /**
@@ -37,6 +40,8 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 
 	private HibernateTemplate hibernateTemplate;
 
+	private HibernateTemplate hibernateTemplateTracker;
+
 	@Autowired
 	private EmpConversionHelper conversionHelper;
 
@@ -44,6 +49,8 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
@@ -135,5 +142,87 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 		}
 
 		return true;
+	}
+
+	/**
+	 * To get the job owner list for logged in user
+	 * 
+	 * @param facilityId
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
+			int userId) {
+
+		try {
+			List<MerUser> merUsers = new ArrayList<MerUser>();
+			List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
+			List<Integer> roleId = new ArrayList<Integer>();
+
+			AdmFacility facilityDetails = (AdmFacility) hibernateTemplate.find(
+					"from AdmFacility adm where adm.facilityId=?", facilityId)
+					.get(0);
+			List<AdmFacility> admFacilityList = hibernateTemplate.find(
+					"from AdmFacility adm where adm.facilityParentId=?",
+					facilityDetails.getFacilityParentId());
+
+			facilityList.addAll(admFacilityList);
+			for (AdmFacility facility : facilityList) {
+				Object[] inputs = { facility.getFacilityId() };
+				List<AdmUserFacility> admUsersList = hibernateTemplate
+						.find("from AdmUserFacility admFacility where admFacility.id.facilityId=?",
+								inputs);
+				if (null != admUsersList && !admUsersList.isEmpty()) {
+					AdmUserFacility admUserFacility = admUsersList.get(0);
+					List<MerUser> merUserList = hibernateTemplateTracker
+							.find("from MerUser user where user.userId=? and user.deleteDt is null",
+									admUserFacility.getFacilityPK().getUserId());
+					merUsers.addAll(merUserList);
+
+				}
+
+			}
+			for (MerUser merUser : merUsers) {
+				List<AdmUserRole> admUserRolesList = new ArrayList<AdmUserRole>();
+				admUserRolesList = (List<AdmUserRole>) hibernateTemplate.find(
+						"from AdmUserRole a where a.id.userId=?",
+						merUser.getUserId());
+				AdmUserRole admUserRole = admUserRolesList.get(0);
+				roleId.add(admUserRole.getRolePK().getRoleId());
+
+			}
+			return conversionHelper
+					.transformAdmFacilityToManageAccessPermissionDTO(merUsers,
+							roleId);
+
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		return null;
+
+	}
+
+	/**
+	 * To get the details of logged in user
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ManageAccessPermissionDTO> getOwnerDetails(int userId) {
+		try {
+			List<MerUser> userList = hibernateTemplateTracker.find(
+					" from  MerUser user where user.userId=?", userId);
+			return conversionHelper
+					.transformMerUserToManageAccessPermissionDTO(userList);
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		return null;
 	}
 }

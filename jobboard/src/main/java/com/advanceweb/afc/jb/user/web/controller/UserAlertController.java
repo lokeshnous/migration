@@ -102,19 +102,53 @@ public class UserAlertController {
 		model.addObject("enableAccess", enableAccess);
 		model.addObject("enablePostEditAccess", enablePostEditAccess);
 
+		// Get All check box values from DB
 		List<DropDownDTO> alertList = alertService.populateValues("FACILITY");
+
+		// Getting the job owner list for employer
 		List<ManageAccessPermissionDTO> jbOwnerList = null;
 		try {
 			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
 		} catch (JobBoardException e) {
-			LOGGER.info("Error occurred while set alert"+e);
+			LOGGER.info("Error occurred while set alert" + e);
 		}
 
 		List<DropDownDTO> dropDownList = null;
 
-		if (jbOwnerList != null && !jbOwnerList.isEmpty()) {
+		// Based on the role of logged in user we are fetching the owner list
+		// If logged in user role is 3 then we get all job owners of employer
+		// and we are going to enable the add new job owner link in pop up
+		if (jbOwnerList != null
+				&& !jbOwnerList.isEmpty()
+				&& (roleList.getRoleId() == Integer
+						.valueOf(MMJBCommonConstants.EMPLOYER_ROLE_ID))) {
 			dropDownList = transferUserAlert
 					.jbOwnerListTODropDownDTO(jbOwnerList);
+			// If logged in user role is 5 then we get all job owners of
+			// employer But we are going to disable the add new job owner link
+			// in pop up
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
+			List<ManageAccessPermissionDTO> jbOwners = null;
+			try {
+				jbOwners = alertService.getJobOwner(facilityId, userId);
+			} catch (JobBoardException e) {
+				LOGGER.info("Error occurred while getting the data for set alert"
+						+ e);
+			}
+			dropDownList = transferUserAlert.jbOwnerListTODropDownDTO(jbOwners);
+			// If logged in user role is 6 then we get only logged in user name
+			// in the drop down list
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
+			List<ManageAccessPermissionDTO> jbOwners = null;
+			try {
+				jbOwners = alertService.getOwnerDetails(userId);
+			} catch (JobBoardException e) {
+				LOGGER.info("Error occurred while getting the data for set alert"
+						+ e);
+			}
+			dropDownList = transferUserAlert.jbOwnerListTODropDownDTO(jbOwners);
 		}
 		model.addObject("alertList", alertList);
 		model.addObject("jbOwnerList", dropDownList);

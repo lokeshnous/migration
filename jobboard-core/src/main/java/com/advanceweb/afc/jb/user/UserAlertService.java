@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * 
@@ -29,7 +30,8 @@ public interface UserAlertService {
 	 * @param userId
 	 * @return
 	 */
-	List<UserAlertDTO> viewalerts(int userId, int facilityId, List<ManageAccessPermissionDTO> jbOwnerList);
+	List<UserAlertDTO> viewalerts(int userId, int facilityId,
+			List<ManageAccessPermissionDTO> jbOwnerList);
 
 	/**
 	 * To get the check box values
@@ -38,6 +40,27 @@ public interface UserAlertService {
 	 * @return
 	 */
 	List<DropDownDTO> populateValues(String dropDownName);
+
+	/**
+	 * To get the job owner list for logged in user
+	 * 
+	 * @param facilityId
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
+			int userId) throws JobBoardServiceException;
+
+	/**
+	 * To get the details of logged in user
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public List<ManageAccessPermissionDTO> getOwnerDetails(int userId)
+			throws JobBoardServiceException;
 
 	/**
 	 * This method is called to delete the alerts

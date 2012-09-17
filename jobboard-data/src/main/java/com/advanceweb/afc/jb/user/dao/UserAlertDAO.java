@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 /**
  * 
@@ -21,7 +22,8 @@ public interface UserAlertDAO {
 	 * @param userId
 	 * @return
 	 */
-	List<UserAlertDTO> viewalerts(int userId, int facilityId,List<ManageAccessPermissionDTO> jbOwnerList);
+	List<UserAlertDTO> viewalerts(int userId, int facilityId,
+			List<ManageAccessPermissionDTO> jbOwnerList);
 
 	/**
 	 * This method is called to delete the alerts
@@ -48,4 +50,25 @@ public interface UserAlertDAO {
 	 * @return
 	 */
 	boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs);
+
+	/**
+	 * To get the job owner list for logged in user
+	 * 
+	 * @param facilityId
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
+			int userId) throws JobBoardDataException;
+
+	/**
+	 * To get the details of logged in user
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public List<ManageAccessPermissionDTO> getOwnerDetails(int userId)
+			throws JobBoardDataException;
 }

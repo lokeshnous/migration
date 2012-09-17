@@ -1,13 +1,17 @@
 package com.advanceweb.afc.jb.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.dao.UserAlertDAO;
 
 /**
@@ -20,6 +24,9 @@ import com.advanceweb.afc.jb.user.dao.UserAlertDAO;
 @Service("alertService")
 public class UserAlertServiceImpl implements UserAlertService {
 
+	private static final Logger LOGGER = Logger
+			.getLogger(UserAlertServiceImpl.class);
+
 	@Autowired
 	private UserAlertDAO alertDAO;
 
@@ -31,7 +38,7 @@ public class UserAlertServiceImpl implements UserAlertService {
 	 */
 	public List<UserAlertDTO> viewalerts(int userId, int facilityId,
 			List<ManageAccessPermissionDTO> jbOwnerList) {
-		return alertDAO.viewalerts(userId, facilityId,jbOwnerList);
+		return alertDAO.viewalerts(userId, facilityId, jbOwnerList);
 	}
 
 	/**
@@ -53,6 +60,50 @@ public class UserAlertServiceImpl implements UserAlertService {
 	 */
 	public List<DropDownDTO> populateValues(String dropDownName) {
 		return alertDAO.populateValues(dropDownName);
+	}
+
+	/**
+	 * To get the job owner list for logged in user
+	 * 
+	 * @param facilityId
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	@Override
+	public List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
+			int userId) throws JobBoardServiceException {
+		List<ManageAccessPermissionDTO> manageAccessPermissionDTOs = new ArrayList<ManageAccessPermissionDTO>();
+		try {
+			manageAccessPermissionDTOs = alertDAO.getJobOwner(facilityId,
+					userId);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while fetching the job owner..." + jdex);
+		}
+		return manageAccessPermissionDTOs;
+	}
+
+	/**
+	 * To get the details of logged in user
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	@Override
+	public List<ManageAccessPermissionDTO> getOwnerDetails(int userId)
+			throws JobBoardServiceException {
+		List<ManageAccessPermissionDTO> userDTOs = new ArrayList<ManageAccessPermissionDTO>();
+		try {
+			userDTOs = alertDAO.getOwnerDetails(userId);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while fetching the job owner..." + jdex);
+		}
+		return userDTOs;
 	}
 
 	/**
