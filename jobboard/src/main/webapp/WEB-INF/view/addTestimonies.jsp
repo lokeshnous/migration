@@ -5,7 +5,7 @@
 
 
 <div class="rowEvenNewSpacing MarginBottom10">
-	<span class="lableText3"></span>
+	<span class="lableText7"></span>
 	<div class="floatLeft marginRight10"></div>
 	<span class="floatLeft marginRight10"></span>
 	
@@ -16,6 +16,6 @@
 	 <div class="floatLeft marginRight10"></div> -->
 
 		<form:textarea
-			path="brandingTemplateForm.listTestimony[${testimonyPosId}].testimony" class="textareaBoxCResume" Height="256" rows="5" cols="45" />
+			path="brandingTemplateForm.listTestimony[${testimonyPosId}].testimony" class="textareaBoxCResumeTemplate" rows="5" cols="45" />
 	</span>
 </div>

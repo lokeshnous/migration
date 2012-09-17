@@ -6,7 +6,7 @@
 
 
 <div class="rowEvenNewSpacing MarginBottom10">
-	<span class="lableText3"></span>
+	<span class="lableText7"></span>
 	<div class="floatLeft marginRight10"></div>
 	<span class="floatLeft marginRight10"></span>
 

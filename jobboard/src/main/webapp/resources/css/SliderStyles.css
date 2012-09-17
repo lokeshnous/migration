@@ -169,7 +169,11 @@ width:918px !important;
 	margin-top:55px !important;
 }
 #test .slider1FrameA1 img{
-	width:180px !important;
-	height:144px !important;
+	width:178px !important;
+	height:130px !important;
 	overflow:hidden !important;
+	border:1px solid #CCCCCC;
+	border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
 }

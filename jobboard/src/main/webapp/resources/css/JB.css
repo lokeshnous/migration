@@ -1897,7 +1897,7 @@ select {
 	float: left;
 }
 
-.lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6 {
+.lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6,.lableText7 {
 	width: 160px;
 	float: left;
 	padding: 4px 15px 0 0;
@@ -1915,6 +1915,9 @@ select {
 }
 .lableText6{
 	width: 138px !important;
+}
+.lableText7{
+	width: 126px !important;
 }
 .splLableText {
 	width: auto;
@@ -2215,7 +2218,7 @@ h2.White {
 	border: 1px solid #CCCCCC;
 }
 
-.textareaBoxCResume {
+.textareaBoxCResume,.textareaBoxCResumeTemplate {
 	margin: 10px 0 5px 0;
 	height: 100px;
 	width: 600px;
@@ -2227,6 +2230,9 @@ h2.White {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 15px;
 	resize:none;
+}
+.textareaBoxCResumeTemplate{
+	width: 400px !important;
 }
 /********** grid style **************/
 table.grid,table.grid2,table.grid3,table.grid4 {
@@ -3040,8 +3046,6 @@ input.job_seeker_Resume {
 	float: left;
 	margin-top: 3px;
 	padding: 10px 0px 10px;
-	0
-	px;
 }
 
 .LightGrayBG td {
@@ -3456,7 +3460,7 @@ a.white01:hover {
 	z-index: 999;
 }
 
-#PhotoSlideButton a {
+#PhotoSlideButton a,#VideoSlideButton a,#TestSlideButton a {
 	width: 135px;
 	height: 24px;
 	float: left;
@@ -3478,7 +3482,7 @@ a.white01:hover {
 	/* z-index: 999; */
 }
 
-#VideoSlideButton a,#TestSlideButton a {
+/* #VideoSlideButton a,#TestSlideButton a {
 	width: 135px;
 	height: 24px;
 	float: left;
@@ -3497,7 +3501,7 @@ a.white01:hover {
 	-moz-border-radius: 4px 4px 0px 0px;
 	-webkit-border-radius: 4px 4px 0px 0px;
 	z-index: 999;
-}
+} */
 
 #PhotoSlideContant,#VideoSlideContant,#TestSlideContant {
 	width: 958px;
@@ -3977,17 +3981,30 @@ orange:hover {
 	
 	font-weight: bold ;
 }
-.BannerTextBoxBlank {
+.BannerTextBoxBlank,.BannerTextBoxBlankSlide{
 	width: 430px;;
 	height: 279px;
 	float: left;
 	padding: 20px;
 	line-height: 16px;
 }
-.colorPkrArea,.colorPkrAreaToolTip,.DropDownAreaToolTip {
+.BannerTextBoxBlankSlide{
+	padding: 5px !important;
+	color:#000 !important;
+	border:1px solid #CCCCCC;
+	height:120px;
+	width:168px;
+	border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+}
+.colorPkrArea,.colorPkrAreaToolTip,.DropDownAreaToolTip,.MultimediaLabel {
 	float:left;
 	margin-top:5px;
 	margin-left:5px;	
+}
+.MultimediaLabel{
+	margin-top:3px !important;
 }
 .colorPkrAreaToolTip {
 	margin-top: 8px !important;

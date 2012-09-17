@@ -22,7 +22,11 @@
 			    
 			 	// Then hide the second div
 			    $("#VideoSlideContant").hide();
+			    $("#VideoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			    $("#VideoSlideButton a").css("color", "#FFFFFF");
 				$("#TestSlideContant").hide();
+				$("#TestSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			    $("#TestSlideButton a").css("color", "#FFFFFF");
 
 			    // Then add a click handlers to the buttons
 			    $("#PhotoSlideButton").click(function() {
@@ -258,25 +262,25 @@
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${brandingTemplateForm.listTestimony[status.index].testimony}</p>
+												<p class="BannerTextBoxBlankSlide"  >${brandingTemplateForm.listTestimony[status.index].testimony}</p>
 											</div>
 										</a> 
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index+1].testimony}" onclick="popTestimony(this.id);" >
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${brandingTemplateForm.listTestimony[status.index+1].testimony}</p>
+												<p class="BannerTextBoxBlankSlide" >${brandingTemplateForm.listTestimony[status.index+1].testimony}</p>
 											</div>
 										</a>
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index+2].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${brandingTemplateForm.listTestimony[status.index+2].testimony}</p>
+												<p class="BannerTextBoxBlankSlide"  >${brandingTemplateForm.listTestimony[status.index+2].testimony}</p>
 											</div>
 										</a>
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index+3].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${brandingTemplateForm.listTestimony[status.index+3].testimony}</p>
+												<p class="BannerTextBoxBlankSlide" >${brandingTemplateForm.listTestimony[status.index+3].testimony}</p>
 											</div>
 										</a>
 									</div>
@@ -308,15 +312,26 @@
                           <div class="row">
                     <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${brandingTemplateForm.getColor().substring(4)}" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${brandingTemplateForm.getColor().substring(4)}" href="#">save job</a></span> </div>
                   </div>
-                  <div class="row marginTop10">
-                  	<div class="ShareArea marginLeft5">
-                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email"></span>
+                  <div class="ShareSearchView">
+                  	<div class="ShareArea">
+                    <span>
+                    <div class="ShareText">Send to friend:&nbsp;</div>
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID});">
+                    </span>
                     </div>
-                    <div class="ShareArea BorderLeft">
-                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
+                    <img class="fbook" src="../resources/images/tranBg.png" >
+                     <img class="linkedIn" src="../resources/images/tranBg.png" >
+                     <img class="twitter" src="../resources/images/tranBg.png">
+                      </span>
                     </div>
-                    <div class="ShareArea BorderLeft paddingRight0">
-                    <span><p class="FloatLeft marginTop3">Print:&nbsp;</p><span><img class="print"></span></span>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
+                     <img class="printJBdetail" src="../resources/images/tranBg.png">
+                    </span>
                     </div>
                   </div>
                           <div class="clearfix"></div>
@@ -409,17 +424,28 @@
 	                          <div class="row">
 	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10"><a class="btn_smB ColorButton" style="background-color: ${brandingTemplateForm.getColor().substring(4)}" href="#">Apply now</a> <a class="btn_smC white01" style="color: ${brandingTemplateForm.getColor().substring(4)}" href="#">save job</a></span> </div>
 	                  </div>
-	                  <div class="row marginTop10">
-	                  	<div class="ShareArea marginLeft5">
-	                    <span><p class="FloatLeft marginTop3">Send to friend:&nbsp;</p><img class = "email"></span>
-	                    </div>
-	                    <div class="ShareArea BorderLeft">
-	                    <span><p class="FloatLeft marginTop3">Share:&nbsp;</p><span><img class="fbook" ></span> <span><img class="linkedIn" ></span> <span><img class="twitter"></span></span>
-	                    </div>
-	                    <div class="ShareArea BorderLeft paddingRight0">
-	                    <span><p class="FloatLeft marginTop3">Print:&nbsp;</p><span><img class="print"></span></span>
-	                    </div>
-	                  </div>
+	                 <div class="ShareSearchView">
+                  	<div class="ShareArea">
+                    <span>
+                    <div class="ShareText">Send to friend:&nbsp;</div>
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID});">
+                    </span>
+                    </div>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
+                    <img class="fbook" src="../resources/images/tranBg.png" >
+                     <img class="linkedIn" src="../resources/images/tranBg.png" >
+                     <img class="twitter" src="../resources/images/tranBg.png">
+                      </span>
+                    </div>
+                    <div class="ShareArea">
+                    <span>
+                    <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
+                     <img class="printJBdetail" src="../resources/images/tranBg.png">
+                    </span>
+                    </div>
+                  </div>
 	                </div>
               </div>
               

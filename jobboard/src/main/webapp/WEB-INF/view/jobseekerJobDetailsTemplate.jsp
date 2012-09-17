@@ -26,9 +26,13 @@
 		    function popUpIds()
 		    {
 			    
-			 	// Then hide the second div
+		    	// Then hide the second div
 			    $("#VideoSlideContant").hide();
+			    $("#VideoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			    $("#VideoSlideButton a").css("color", "#FFFFFF");
 				$("#TestSlideContant").hide();
+				$("#TestSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			    $("#TestSlideButton a").css("color", "#FFFFFF");
 
 				// Then add a click handlers to the buttons
 			    $("#PhotoSlideButton").click(function() {
@@ -73,12 +77,12 @@
 		<script type="text/javascript">
 		function popImage(path) {
 			
-			$.nmManual('../jobsearch/viewImage.html?id='+path);
+			$.nmManual('../jobsearch/viewImage.html?id='+path ,  {sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
 		}
 		
 		function popTestimony(path) {
 			
-			$.nmManual('../jobsearch/viewTestimonial.html?id='+path);
+			$.nmManual('../jobsearch/viewTestimonial.html?id='+path,  {sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
 		}
 		</script>
   
@@ -280,25 +284,25 @@
 										<a
 											id="${jobDetail.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${jobDetail.listTestimony[status.index].testimony}</p>
+												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index].testimony}</p>
 											</div>
 										</a> 
 										<a
 											id="${jobDetail.listTestimony[status.index+1].testimony}" onclick="popTestimony(this.id);" >
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${jobDetail.listTestimony[status.index+1].testimony}</p>
+												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+1].testimony}</p>
 											</div>
 										</a>
 										<a
 											id="${jobDetail.listTestimony[status.index+2].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${jobDetail.listTestimony[status.index+2].testimony}</p>
+												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+2].testimony}</p>
 											</div>
 										</a>
 										<a
 											id="${jobDetail.listTestimony[status.index+3].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
-												<p class="BannerTextBoxBlank" style="height:144px; width: 180px;" >${jobDetail.listTestimony[status.index+3].testimony}</p>
+												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+3].testimony}</p>
 											</div>
 										</a>
 									</div>
