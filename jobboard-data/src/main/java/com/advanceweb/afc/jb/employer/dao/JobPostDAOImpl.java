@@ -144,7 +144,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 					Integer.valueOf(dto.getBrandTemplate()));
 			
 			List<AdmInventoryDetail> invList = hibernateTemplate.find(
-					FIND_INVENTORY_DETAILS_BY_INV_ID, dto);
+					FIND_INVENTORY_DETAILS_BY_INV_ID, Integer.valueOf(dto.getJobPostingType()));
 			JpJobType jobType=new JpJobType();
 			if (!invList.isEmpty()) {
 				AdmInventoryDetail admInventoryDetail = invList.get(0);
