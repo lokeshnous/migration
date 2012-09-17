@@ -521,24 +521,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
 					if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
 						List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
-						if (!comboList.isEmpty()) {
+						if(!comboList.isEmpty()){
 							JpJobTypeCombo combo = comboList.get(0);
-							if (!dto.getOptionName()
-									.contains(combo.getAddons())) {
-								dto.setOptionName(combo.getAddons());
-								jbPostings.add(dto);
-							}
+							dto.setOptionName(combo.getAddons());
+							jbPostings.add(dto);
 						}
-					} else {
-						List<JpJobType> jpTypleList = hibernateTemplate.find(
-								"from JpJobType type where type.jobTypeId=?",
-								inv.getProductId());
-						if (!jpTypleList.isEmpty()) {
+					}else{
+						List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
+						if(!jpTypleList.isEmpty()){
 							JpJobType type = jpTypleList.get(0);
-							if (!dto.getOptionName().contains(type.getName())) {
-								dto.setOptionName(type.getName());
-								jbPostings.add(dto);
-							}
+							dto.setOptionName(type.getName());
+							jbPostings.add(dto);
 						}
 					}
 				}
