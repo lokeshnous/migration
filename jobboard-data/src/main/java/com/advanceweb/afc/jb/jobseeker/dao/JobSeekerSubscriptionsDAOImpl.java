@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -101,9 +102,42 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO) {
+		ResCoverletter resUpdate=new ResCoverletter();		
 		boolean isUpdate = false;
-		Date todayDate = null;
 		try{
+			
+			if(rclDTO.getActive()==1){
+				Date todayDate = null;
+				Calendar currentDate = Calendar.getInstance();
+				SimpleDateFormat formatter = new SimpleDateFormat(
+						"MM/dd/yyyy HH:mm:ss");
+				try {
+					String dateNow = formatter.format(currentDate.getTime());
+					todayDate = dateConveter(dateNow);
+				} catch (Exception e) {
+					LOGGER.info("Info data error date conversion");
+				}
+			List<ResCoverletter> resData=hibernateTemplateCareers.find("from ResCoverletter rs where rs.userId=? and rs.active=?",rclDTO.getUserId(),rclDTO.getActive());
+			if(null != resData && !resData.isEmpty()){	
+			int primaryIdData=resData.get(0).getCoverletterId();
+			resUpdate=hibernateTemplateCareers.get(ResCoverletter.class, primaryIdData);
+			resUpdate.setActive(5);
+			resUpdate.setUpdateDt(todayDate);
+			hibernateTemplateCareers.update(resUpdate);			
+			ResCoverletter res=new ResCoverletter();
+			res.setUserId(rclDTO.getUserId());
+			res.setName(rclDTO.getName());
+			res.setCoverletterText(rclDTO.getCoverletterText());
+			res.setActive(rclDTO.getActive());				
+			res.setCreateDt(todayDate);
+			res.setUpdateDt(todayDate);
+		
+			hibernateTemplateCareers.save(res);
+			
+			}
+			}else{			
+		Date todayDate = null;
+		//try{
 		ResCoverletter res=new ResCoverletter();
 		//ResCoverletterPriv resPriv=new ResCoverletterPriv();
 		res.setUserId(rclDTO.getUserId());
@@ -138,6 +172,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		resPriv.setResCoverletter(res);
 		resPriv.setResPrivacy(null);
 		hibernateTemplateCareers.save(resPriv);*/
+			}
 		}catch(DataAccessException e){
 			LOGGER.error("Not save Cover letter");
 		}
@@ -171,6 +206,33 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		return dateValue;
 	}
 	
-	
+	/**
+	 * @author kartikm 
+	 * @Purpose:Find the status of the cover letter that is 
+	 *  public or private
+	 * @Created:Sept 14, 2012
+	 * @param userId
+	 * @param status
+	 * @return dateValue
+	 */
+	@Override
+	public boolean findActiveStatus(int userId,int status){
+		boolean isUpdate = false;
+		/*try{
+			ResCoverLetterDTO rcl=new ResCoverLetterDTO();
+			
+			List<ResCoverletter> res=hibernateTemplateCareers.find("from ResCoverletter rs where rs.userId=? and rs.active=?",userId,status);
+			if(null != res && !res.isEmpty()){
+				rcl=jsSubscriptionHelper.transFromListToDTO(res);
+				isUpdate=true;
+			}
+			else{
+				isUpdate=false;
+			}
+		}catch(DataAccessException e){
+			LOGGER.error("Not find  Cover letter status");	
+		}*/
+		return isUpdate;
+	}
 	
 }
