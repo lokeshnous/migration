@@ -332,16 +332,14 @@ public interface MMJBCommonConstants {
 
 	// Added for inventory
 	String DAYS = "days";
-	String STANDARD_JOB_POSTING = "Standard Job Posting";
-	String JOB_POSTING_SLOT = "Job Posting Slot";
+	String STANDARD_JOB_POSTING = "30-Day Standard Job Posting";
+	String JOB_POSTING_SLOT = "30-Day Job Posting Slot";
 	String BASIC_JOB_TYPE = "Basic";
 	String INVENTORY = "inventoryPage";
 	String PURCHASE_JOB_POST_FORM = "purchaseJobPostForm";
 	int PLAN_DAYS = 30;
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
 	String POST_JOB_PAGE = "postJobPage";
-    String JOB_POST_TYPE_POSTING="30-Day Standard Job Posting";
-    String JOB_POST_TYPE_SLOT="30-Day Job Posting Slot";
     int JOB_POST_TYPE_POSTING_ID=1;
     int JOB_POST_TYPE_SLOT_ID=2;
 	// FOR MAIL RELATED

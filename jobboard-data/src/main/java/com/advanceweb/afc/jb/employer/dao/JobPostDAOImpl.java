@@ -158,14 +158,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						if (null != combo.getJobType()
 								&& combo.getJobType()
 										.equalsIgnoreCase(
-												MMJBCommonConstants.JOB_POST_TYPE_POSTING)) {
+												MMJBCommonConstants.STANDARD_JOB_POSTING)) {
 							jobType = hibernateTemplate
 									.load(JpJobType.class,
 											MMJBCommonConstants.JOB_POST_TYPE_POSTING_ID);
 						} else if (null != combo.getJobType()
 								&& combo.getJobType()
 										.equalsIgnoreCase(
-												MMJBCommonConstants.JOB_POST_TYPE_SLOT)) {
+												MMJBCommonConstants.JOB_POSTING_SLOT)) {
 							jobType = hibernateTemplate.load(JpJobType.class,
 									MMJBCommonConstants.JOB_POST_TYPE_SLOT_ID);
 						}
