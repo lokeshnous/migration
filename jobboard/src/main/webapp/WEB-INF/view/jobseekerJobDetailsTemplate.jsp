@@ -30,23 +30,41 @@
 			    $("#VideoSlideContant").hide();
 				$("#TestSlideContant").hide();
 
-			    // Then add a click handlers to the buttons
+				// Then add a click handlers to the buttons
 			    $("#PhotoSlideButton").click(function() {
 			      $("#PhotoSlideContant").show();
+			      $("#PhotoSlideButton a").css("background-color", "#FFFFFF");
+			      $("#PhotoSlideButton a").css("color", "${jobDetail.getColor().substring(4)}");
 			      $("#VideoSlideContant").hide();
+			      $("#VideoSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
+			      $("#VideoSlideButton a").css("color", "#FFFFFF");
 				  $("#TestSlideContant").hide();
+				  $("#TestSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
+			      $("#TestSlideButton a").css("color", "#FFFFFF");
 				 
 			    });
 			    $("#VideoSlideButton").click(function() {
 			      $("#PhotoSlideContant").hide();
+			      $("#PhotoSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
+			      $("#PhotoSlideButton a").css("color", "#FFFFFF");
 			      $("#VideoSlideContant").show();
+			      $("#VideoSlideButton a").css("background-color", "#FFFFFF");
+			      $("#VideoSlideButton a").css("color", "${jobDetail.getColor().substring(4)}");
 				  $("#TestSlideContant").hide();
+				  $("#TestSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
+			      $("#TestSlideButton a").css("color", "#FFFFFF");
 				 
 			    });
 				$("#TestSlideButton").click(function() {
 			      $("#PhotoSlideContant").hide();
+			      $("#PhotoSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
+			      $("#PhotoSlideButton a").css("color", "#FFFFFF");
 			      $("#VideoSlideContant").hide();
+			      $("#VideoSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
+			      $("#VideoSlideButton a").css("color", "#FFFFFF");
 				  $("#TestSlideContant").show();
+				  $("#TestSlideButton a").css("background-color", "#FFFFFF");
+			      $("#TestSlideButton a").css("color", "${jobDetail.getColor().substring(4)}");
 				 
 			    });
 		    }
