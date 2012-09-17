@@ -265,5 +265,4 @@ public class NSCustomer {
 		this.recordType = recordType;
 	}
 
-
 }

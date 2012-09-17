@@ -3,8 +3,10 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 import java.util.Date;
 
 /**
+ * This class has been created to hold the values of Billing address
  * @author muralikc
- * 
+ * @version 1.0
+ * @created Aug 27, 2012
  */
 public class BillingAddressForm {
 

@@ -1,16 +1,14 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 
 /**
+ * This class has been created to hold the values of customer id, Account address, Billing address, Invoice info
+ * credit card info, purchase job posting info, payment method. 
  * @author muralikc
- * 
+ * @version 1.0
+ * @created Aug 27, 2012
  */
-
 public class PaymentGatewayForm {
 
 	private int nsCustomerId;

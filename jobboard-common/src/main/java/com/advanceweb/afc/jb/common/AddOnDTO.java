@@ -1,7 +1,8 @@
 package com.advanceweb.afc.jb.common;
 
 /**
- * anilm
+ * This class has bean created to hold the values of AddOns 
+ * @author anilm
  * @version 1.0
  * @created Aug 24, 2012
  */

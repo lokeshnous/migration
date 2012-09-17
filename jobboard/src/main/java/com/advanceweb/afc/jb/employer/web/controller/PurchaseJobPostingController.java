@@ -158,7 +158,7 @@ public class PurchaseJobPostingController {
 	}
 
 	/**
-	 * This method is added to proceed to payment gateway screens  
+	 * This method is added to proceed to payment gateway screen  
 	 * @param purchaseJobPostForm
 	 * @param session
 	 * @return model

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.advanceweb.afc.jb.netsuite.service.impl;
 
 import java.io.IOException;
@@ -31,7 +28,8 @@ import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 
 /**
  * @author anilm
- *
+ * @version 1.0
+ * @since 
  */
 @Service("nsSalesOrderService")
 public class NSSalesOrderServiceImpl implements NSSalesOrderService{
@@ -148,7 +146,7 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 			throw new RuntimeException(
 					"Failed to get a string represenation of the response", e);
 		}

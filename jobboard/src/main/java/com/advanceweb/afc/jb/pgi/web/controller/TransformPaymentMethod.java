@@ -12,26 +12,24 @@ import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.OrderPaymentDTO;
 import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.common.SalesOrderDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.AdmOrderHeader;
-import com.advanceweb.afc.jb.data.entities.AdmOrderItem;
 import com.advanceweb.afc.jb.employer.web.controller.AddOnForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 
 /**
+ * This class has been created to transform dto to form & form dto 
  * @author muralikc
- * 
+ * @version 1.0
+ * @created Aug 27, 2012
  */
 @Repository("transformPaymentMethod")
 public class TransformPaymentMethod {
 
 	/**
 	 * Converting AccontAddressDTO to Form
-	 * 
 	 * @param accountAddressDTO
-	 * @return
+	 * @return accountAddressForm
 	 */
 	public AccountAddressForm transformAccountAddrDtoToForm(
 			AccountAddressDTO accountAddressDTO) {
@@ -53,9 +51,8 @@ public class TransformPaymentMethod {
 
 	/**
 	 * Converting BillingAddressDTO to Form
-	 * 
 	 * @param billingAddressDTO
-	 * @return
+	 * @return billingAddressForm
 	 */
 	public BillingAddressForm transformBillingAddressDtoToForm(
 			AccountAddressDTO billingAddressDTO) {
@@ -85,9 +82,8 @@ public class TransformPaymentMethod {
 
 	/**
 	 * Converting BillingAddressForm To DTO for saving the data
-	 * 
 	 * @param billingAddressForm
-	 * @return
+	 * @return billingAddressDTO
 	 */
 	public AccountAddressDTO transformBillingAddreFormToDto(
 			BillingAddressForm billingAddressForm) {
@@ -115,9 +111,8 @@ public class TransformPaymentMethod {
 	
 	/**
 	 * Converting BillingAddressForm To DTO for saving the data
-	 * 
 	 * @param billingAddressForm
-	 * @return
+	 * @return accountBillingDTO
 	 */
 	public AccountBillingDTO transformDataBillingAddreFormToDto(
 			BillingAddressForm billingAddressForm) {
@@ -135,8 +130,9 @@ public class TransformPaymentMethod {
 	}
 	
 	/**
+	 * This method will transform paymentGatewayForm OrderDetailsDTO
 	 * @param paymentGatewayForm
-	 * @return
+	 * @return orderDetailsDTO
 	 */
 	public OrderDetailsDTO transformToOrderDetailsDTO(PaymentGatewayForm paymentGatewayForm){
 		
@@ -173,8 +169,9 @@ public class TransformPaymentMethod {
 	}
 	
 	/**
+	 * This method will transform BillingAddressForm to AccountAddressDTO
 	 * @param addressForm
-	 * @return
+	 * @return accountAddressDTO
 	 */
 	private AccountAddressDTO transformToAccountAddressDTO(BillingAddressForm addressForm){
 		AccountAddressDTO accountAddressDTO = new AccountAddressDTO();
@@ -193,8 +190,9 @@ public class TransformPaymentMethod {
 	}
 	
 	/**
+	 * This method will transform PaymentGatewayForm to SalesOrderDTO
 	 * @param paymentGatewayForm
-	 * @return
+	 * @return salesOrderDTO
 	 */
 	private SalesOrderDTO transformTopaymentGatewayForm(PaymentGatewayForm paymentGatewayForm){
 		SalesOrderDTO salesOrderDTO  = new SalesOrderDTO();
@@ -215,8 +213,9 @@ public class TransformPaymentMethod {
 	}
 	
 	/**
+	 * This method will transform JobPostingsForm list to SalesItemDTO
 	 * @param jobPostingsCart
-	 * @return
+	 * @return salesItemDTOList
 	 */
 	private List<SalesItemDTO> transformToSalesItemDTO(List<JobPostingsForm> jobPostingsCart){
 		List<SalesItemDTO> salesItemDTOList = new ArrayList<SalesItemDTO>();
@@ -238,6 +237,11 @@ public class TransformPaymentMethod {
 	}
 	
 	
+	/**
+	 * This method will transform JobPostingsForm list to jobPostingPlanDTO list
+	 * @param jobPostingCart
+	 * @return jobPostingPlanDTOList
+	 */
 	private List<JobPostingPlanDTO> transformTojobPostingPlanDTOList(List<JobPostingsForm> jobPostingCart){
 		List<JobPostingPlanDTO> jobPostingPlanDTOList = new ArrayList<JobPostingPlanDTO>();
 		
