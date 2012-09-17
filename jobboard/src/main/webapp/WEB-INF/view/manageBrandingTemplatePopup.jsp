@@ -12,7 +12,7 @@
 		$("#tb_manage_brand_template img").click(function(event) {
 
 			var action = $(this).attr("alt");
-			var rowObj = $(this).parent().parent().parent();
+			var rowObj = $(this).parent().parent().parent().parent();			
 			var templateId = rowObj.attr("id");
 			
 			switch (action) {
@@ -20,7 +20,7 @@
 			case "delete":{
 				if (confirm("Are you sure you want to delete?")) {
 						$.ajax({url: "${pageContext.request.contextPath}/brandingTemplates/employer/deleteBrandingTemplate.html?templateId="+templateId,
-							type: "POST",
+							type: "GET",
 							success: function(data){ 
 							    if(data.success != null){
 							    	rowObj.remove();

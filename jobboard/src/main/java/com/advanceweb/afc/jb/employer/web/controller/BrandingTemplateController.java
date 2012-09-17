@@ -91,7 +91,7 @@ public class BrandingTemplateController {
 	private static final String STR_TEMPLATE_ = "Template_";
 	private static final String STR_BRANDTEMPLATEPREVIEW = "brandTemplatePreview";
 	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
-	
+	private static final String STR_UNDERSCORE = "_";
 	
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -221,7 +221,6 @@ public class BrandingTemplateController {
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
 
-
 		brandingTemplateForm.setBrowsePath("create");
 
 		// Modify the names of media files to save on File server
@@ -331,8 +330,7 @@ public class BrandingTemplateController {
 		int facility_id = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
-
-
+		
 		BrandingTemplateDTO templateDTO = brandingTemplateService
 				.editBrandingTemplate(templateId);
 
@@ -448,9 +446,9 @@ public class BrandingTemplateController {
 		mainImageOrigName = brandingTemplateForm.getMainImageFileData()
 				.getOriginalFilename();
 
-		logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + "_"
+		logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
 				+ logoOrigName;
-		mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + "_"
+		mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
 				+ mainImageOrigName;
 
 		brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia
@@ -471,7 +469,7 @@ public class BrandingTemplateController {
 						.isEmpty()) {
 
 					image.setMediaPath(baseDirectoryPathImageAndMedia
-							+ STR_TEMPLATE_ + random.nextInt(10000) + "_"
+							+ STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
 							+ image.getAddImageFileData().getOriginalFilename());
 					listModImages.add(image);
 				}
@@ -486,7 +484,7 @@ public class BrandingTemplateController {
 			for (VideoForm video : listVideos) {
 				if (!video.getVideoFileData().getOriginalFilename().isEmpty()) {
 					video.setMediaPath(baseDirectoryPathImageAndMedia
-							+ STR_TEMPLATE_ + random.nextInt(10000) + "_"
+							+ STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
 							+ video.getVideoFileData().getOriginalFilename());
 					listModVideos.add(video);
 				}
@@ -655,7 +653,6 @@ public class BrandingTemplateController {
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
 
-		
 		TestimonyForm testimonyForm = new TestimonyForm();
 		ArrayList<TestimonyForm> nonEmptyTestimonyList = new ArrayList<TestimonyForm>();
 		nonEmptyTestimonyList.add(testimonyForm);
@@ -698,17 +695,24 @@ public class BrandingTemplateController {
 		ArrayList<TestimonyForm> nonEmptyList = new ArrayList<TestimonyForm>();
 		nonEmptyList.add(testimonyForm);
 		brandingTemplateForm.setListTestimony(nonEmptyList);
+		
+//		if(null != form.getMainImagePath())
+//		{
+////			TODO
+//			getOriginalName(form.getMainImagePath());
+//		}
+		
+		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		if (brandingTemplateForm.getBrowsePath().equalsIgnoreCase("manage")) {
-			// model.setViewName("redirect:/brandingTemplates/employer/manageBrandingTemplate.html");
 			model.setViewName(STR_EMPDASHBOARD);
 
 		} else {
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		}
 
-		// Dummy list created to have a non zero List
-
+		
+		
 		return model;
 	}
 
@@ -935,6 +939,13 @@ public class BrandingTemplateController {
 		}
 		}
 		
+		
+//		if(null!=brandingTemplateForm.getMainImagePath())
+//		{
+//			TODO
+//		}
+		
+		
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit.substring(0, imageSizeLimit.length()-3));
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		// model.setViewName("editBrandingTemplate");
@@ -1010,7 +1021,7 @@ public class BrandingTemplateController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/employer/deleteBrandingTemplate", method = RequestMethod.POST)
+	@RequestMapping(value = "/employer/deleteBrandingTemplate", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject deleteEmpBrandTemp(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -1030,4 +1041,37 @@ public class BrandingTemplateController {
 		}
 	}
 
+	/**
+	 * This method retrieves the original name of file present in file server.
+	 * 
+	 * @param filePath
+	 * @return OriginalFileName
+	 */
+	public String getOriginalName(String filePath) {
+		int index1 = 0;
+		int index2 = 0;
+		int index3 = 0;
+		String fileName;
+		String ModifiedFileName1;
+		String ModifiedFileName2;
+		String OriginalFileName;
+
+		fileName = filePath;
+
+		index1 = fileName.lastIndexOf("/");
+		if (index1 == -1) {
+			index1 = fileName.lastIndexOf("\\");
+		}
+
+		ModifiedFileName1 = fileName.substring(index1 + 1);
+
+		index2 = ModifiedFileName1.indexOf(STR_UNDERSCORE);
+		ModifiedFileName2 = ModifiedFileName1.substring(index2 + 1);
+
+		index3 = ModifiedFileName2.indexOf(STR_UNDERSCORE);
+		OriginalFileName = ModifiedFileName2.substring(index3 + 1);
+
+		return OriginalFileName;
+	}
+	
 }

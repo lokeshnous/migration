@@ -27,20 +27,38 @@
 			    // Then add a click handlers to the buttons
 			    $("#PhotoSlideButton").click(function() {
 			      $("#PhotoSlideContant").show();
+			      $("#PhotoSlideButton a").css("background-color", "#FFFFFF");
+			      $("#PhotoSlideButton a").css("color", "${brandingTemplateForm.getColor().substring(4)}");
 			      $("#VideoSlideContant").hide();
+			      $("#VideoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			      $("#VideoSlideButton a").css("color", "#FFFFFF");
 				  $("#TestSlideContant").hide();
+				  $("#TestSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			      $("#TestSlideButton a").css("color", "#FFFFFF");
 				 
 			    });
 			    $("#VideoSlideButton").click(function() {
 			      $("#PhotoSlideContant").hide();
+			      $("#PhotoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			      $("#PhotoSlideButton a").css("color", "#FFFFFF");
 			      $("#VideoSlideContant").show();
+			      $("#VideoSlideButton a").css("background-color", "#FFFFFF");
+			      $("#VideoSlideButton a").css("color", "${brandingTemplateForm.getColor().substring(4)}");
 				  $("#TestSlideContant").hide();
+				  $("#TestSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			      $("#TestSlideButton a").css("color", "#FFFFFF");
 				 
 			    });
 				$("#TestSlideButton").click(function() {
 			      $("#PhotoSlideContant").hide();
+			      $("#PhotoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			      $("#PhotoSlideButton a").css("color", "#FFFFFF");
 			      $("#VideoSlideContant").hide();
+			      $("#VideoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			      $("#VideoSlideButton a").css("color", "#FFFFFF");
 				  $("#TestSlideContant").show();
+				  $("#TestSlideButton a").css("background-color", "#FFFFFF");
+			      $("#TestSlideButton a").css("color", "${brandingTemplateForm.getColor().substring(4)}");
 				 
 			    });
 		    }
@@ -49,13 +67,18 @@
 		<script type="text/javascript">
 		function popImage(path) {
 			
-			$.nmManual('../brandingTemplates/viewImage.html?id='+path);
-		}
-		
-		function popTestimony(path) {
-			
-			$.nmManual('../brandingTemplates/viewTestimonial.html?id='+path);
-		}
+			/* $.nmManual('../brandingTemplates/viewImage.html?id='+path); */
+			/* path.preventDefault(); */
+
+			$.nmManual('../brandingTemplates/viewImage.html?id=' + path,  {sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+
+			}
+
+			function popTestimony(path) {
+
+				$.nmManual('../brandingTemplates/viewTestimonial.html?id='
+						+ path,  {sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+			}
 		</script>
 		</head>
 
@@ -178,9 +201,9 @@
 	                    
 	                     <div class="featured_emp_slider" id="test"  >
 	                     	<!--Photo Area  -->
-							<div id="slider1PrevBtn" ></div>
+							<div id="slider2PrevBtn" ></div>
 							<!-- Photo -->
-							<div id="slider1">
+							<div id="slider2">
 							<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listAddImages}" varStatus="status" step="4">
 									<div class="slider1Frames">
@@ -217,7 +240,7 @@
 									</div>
 								</c:forEach>
 								</div>
-							<div id="slider1NextBtn"></div>	
+							<div id="slider2NextBtn"></div>	
 						</div> 
 	                   </div>	
 	               </div>
@@ -226,9 +249,9 @@
 	               	<div class="row">
 	                     <div class="featured_emp_slider" id="test"  >
 	                     	<!--  -->
-							<div id="slider1PrevBtn" ></div>
+							<div id="slider3PrevBtn" ></div>
 								<!-- Testimonials -->
-								<div id="slider1">
+								<div id="slider3">
 								<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
@@ -261,7 +284,7 @@
 								</div>
 								
 							
-							<div id="slider1NextBtn"></div>	
+							<div id="slider3NextBtn"></div>	
 								
 							
 								
