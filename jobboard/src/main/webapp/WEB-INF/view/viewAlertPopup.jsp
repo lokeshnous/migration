@@ -65,8 +65,9 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>VIEW ALERTS</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
-				height="19" onclick="cancelProcess();" alt=""></a>
+			<img title="Close" class="nyroModalClose"
+				src="../resources/images/Close.png" width="19" height="19"
+				title="Close" alt="cancel">
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -96,7 +97,7 @@
 					</table>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<input type="button" onclick="cancelProcess();" class="orange"
+					<input type="button"  class="nyroModalClose btn_sm orange"
 						value="Cancel" />
 					<!-- <a href="" class="btn_sm orange">Cancel</a> -->
 				</div>

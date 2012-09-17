@@ -40,8 +40,9 @@ function cancelProcess(){
 		style="display: block">
 		<div class="popupHeader marginBottom0">
 			<h2>SET ALERTS</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
-				height="19" onclick="cancelProcess();" alt=""></a>
+			<img title="Close" class="nyroModalClose"
+				src="../resources/images/Close.png" width="19" height="19"
+				title="Close" alt="cancel">
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="GET" action="../alerts/employer/saveAlerts.html"
@@ -86,8 +87,7 @@ function cancelProcess(){
 				<div class="popUpButtonRow">
 					<input type="button" id="save" value="Save" class="orange" />
 					<!-- <a href="" class="btn_sm orange">Save</a> -->
-					<input type="button" value="Cancel" onclick="cancelProcess()"
-						class="orange" name="Cancel" />
+					<input type="button" value="Cancel" class="nyroModalClose btn_sm orange" name="Cancel" />
 				</div>
 			</form:form>
 		</div>
