@@ -60,7 +60,7 @@ public class JobPostServiceTest extends ServiceTest{
 	@Test
 	public void editJob(){
 		JobPostDTO dto = new JobPostDTO();
-		dto = employerJobPost.editJob(1606);
+		dto = employerJobPost.editJob(1606,5);
 		Assert.assertEquals(dto.getJobId(), 1606);
 	}
 	@Test
