@@ -54,4 +54,11 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO) {
 		return jobSeekerSubscriptionsDAO.coverLetterSaveByjobSeeker(rclDTO);
 	}
+	/**
+	 * To find out the status it is public or private
+	 */
+	@Override
+	public boolean findActiveStatus(int userId,int status) {
+		return jobSeekerSubscriptionsDAO.findActiveStatus(userId,status);
+	}
 }
