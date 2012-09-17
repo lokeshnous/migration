@@ -16,4 +16,11 @@ public interface CoverLetterService {
 	 * @return boolean
 	 */
 	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO);
+	/**
+	 * 
+	 * @param userId
+	 * @param status
+	 * @return boolean value.
+	 */
+	public boolean findActiveStatus(int userId,int status);
 }
