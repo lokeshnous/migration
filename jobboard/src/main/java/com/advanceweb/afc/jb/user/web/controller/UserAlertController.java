@@ -196,12 +196,41 @@ public class UserAlertController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+
 		List<ManageAccessPermissionDTO> jbOwnerList = null;
 		try {
 			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
 		} catch (JobBoardServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+
+		if (jbOwnerList != null
+				&& !jbOwnerList.isEmpty()
+				&& (roleList.getRoleId() == Integer
+						.valueOf(MMJBCommonConstants.EMPLOYER_ROLE_ID))) {
+			// If logged in user role is 5 then we get all job owners of
+			// employer But we are going to disable the add new job owner link
+			// in pop up
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
+			try {
+				jbOwnerList = alertService.getJobOwner(facilityId, userId);
+			} catch (JobBoardException e) {
+				LOGGER.info("Error occurred while getting the data for set alert"
+						+ e);
+			}
+			// If logged in user role is 6 then we get only logged in user name
+			// in the drop down list
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
+			try {
+				jbOwnerList = alertService.getOwnerDetails(userId);
+			} catch (JobBoardException e) {
+				LOGGER.info("Error occurred while getting the data for set alert"
+						+ e);
+			}
 		}
 		List<UserAlertDTO> alertList = alertService.viewalerts(userId,
 				facilityId, jbOwnerList);

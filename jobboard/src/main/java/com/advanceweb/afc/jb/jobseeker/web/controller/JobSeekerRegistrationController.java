@@ -2,9 +2,9 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 /**
  * @Author : Sasibhushana
-   @Version: 1.0
-   @Created: Jul 12, 2012
-   @Purpose: This class is used as controller for job seeker regigstration
+ @Version: 1.0
+ @Created: Jul 12, 2012
+ @Purpose: This class is used as controller for job seeker regigstration
  */
 import java.util.ArrayList;
 import java.util.List;
@@ -51,22 +51,23 @@ import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 @SessionAttributes("registerForm")
 @Scope("session")
 public class JobSeekerRegistrationController {
-	private static final Logger LOGGER = Logger.getLogger(JobSeekerRegistrationController.class);
+	private static final Logger LOGGER = Logger
+			.getLogger(JobSeekerRegistrationController.class);
 	@Autowired
-    protected AuthenticationManager customAuthenticationManager;
-	
+	protected AuthenticationManager customAuthenticationManager;
+
 	@Autowired
 	private ProfileRegistration profileRegistration;
 
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
-	
+
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
-			
+
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-	
+
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
 
@@ -78,35 +79,36 @@ public class JobSeekerRegistrationController {
 
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
-	
+
 	@Value("${js.all.req.fields}")
 	private String reqFields;
-	
+
 	@Value("${js.email.exists}")
 	private String emailExists;
-	
-	
+
 	@Value("${js.password.empty}")
 	private String pwdEmpty;
-	
+
 	@Value("${js.conform.pass.empty}")
 	private String conformPassEmpty;
-	
+
 	@Value("${js.pwd.hint}")
 	private String pwdHint;
-	
+
 	@Value("${js.pwd.not.equal}")
 	private String pwdNotEqual;
 	
-	
-	//Spring ReCaptcha
-/*	private String recaptcha_response;
-	private String recaptcha_challenge;
-	private String remoteAddr;*/
-	
+	@Value("${js.pwd.equal}")
+	private String pwdEqual;
+
+	// Spring ReCaptcha
+	/*
+	 * private String recaptcha_response; private String recaptcha_challenge;
+	 * private String remoteAddr;
+	 */
+
 	private Long placeKey;
-	
-	
+
 	/**
 	 * This method is called to display job seeker registration page Step1
 	 * Create Your Account
@@ -114,48 +116,50 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/createJobSeekerCreateYrAcct",method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistrationStep1(HttpSession session) {		
-		
+	@RequestMapping(value = "/createJobSeekerCreateYrAcct", method = RequestMethod.GET)
+	public ModelAndView createJobSeekerRegistrationStep1(HttpSession session) {
+
 		ModelAndView model = new ModelAndView();
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
-		
-		 UserDTO userDTO=null; 
-		 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
-			 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
-			 registerForm = new JobSeekerRegistrationForm();
-			 registerForm.setPassword(userDTO.getPassword());
-			 registerForm.setRetypepassword(userDTO.getPassword());
-			 registerForm.setEmailId(userDTO.getEmailId());
-			 registerForm.setConfirmEmailId(userDTO.getEmailId());
-			 registerForm.setUserId(String.valueOf(userDTO.getUserId()));
-			 registerForm.setbReadOnly(true);
-			 session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
-			 session.setAttribute("userId", userDTO.getUserId());
-			 session.setAttribute("userEmail", userDTO.getEmailId());
-		 }
-		
+
+		UserDTO userDTO = null;
+		if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
+			userDTO = (UserDTO) session
+					.getAttribute(MMJBCommonConstants.USER_DTO);
+			registerForm = new JobSeekerRegistrationForm();
+			registerForm.setPassword(userDTO.getPassword());
+			registerForm.setRetypepassword(userDTO.getPassword());
+			registerForm.setEmailId(userDTO.getEmailId());
+			registerForm.setConfirmEmailId(userDTO.getEmailId());
+			registerForm.setUserId(String.valueOf(userDTO.getUserId()));
+			registerForm.setbReadOnly(true);
+			session.setAttribute("userName", userDTO.getFirstName() + " "
+					+ userDTO.getLastName());
+			session.setAttribute("userId", userDTO.getUserId());
+			session.setAttribute("userEmail", userDTO.getEmailId());
+		}
+
 		model.setViewName("jobSeekerCreateAccount");
-		model.addObject("registerForm", registerForm);	
+		model.addObject("registerForm", registerForm);
 		return model;
-		
+
 	}
-	
-	
+
 	/**
-	 * This method is called to display job seeker registration page
-	 * Create Your information
+	 * This method is called to display job seeker registration page Create Your
+	 * information
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/createJobSeekerYourInfo",method = RequestMethod.POST, params="Next")
-	public ModelAndView createJobSeekerRegistration(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm, 
+	@RequestMapping(value = "/createJobSeekerYourInfo", method = RequestMethod.POST, params = "Next")
+	public ModelAndView createJobSeekerRegistration(
+			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpServletRequest req, HttpSession session) {
-		
-		 placeKey = (new Random()).nextLong();		
-		 ModelAndView model = new ModelAndView();
-		
+
+		placeKey = (new Random()).nextLong();
+		ModelAndView model = new ModelAndView();
+
 		try {
 			// Spring Recaptcha Starts here
 
@@ -195,34 +199,31 @@ public class JobSeekerRegistrationController {
 					model.setViewName("jobSeekerCreateAccount");
 					return model;
 				}
-				
-				
-				
+
 				/**
 				 * OpenAM code starts here for Validate Email-Id
-		         * 
-			     * @auther Santhosh Gampa
-			     * @since Sep 4 2012
-		         *
+				 * 
+				 * @auther Santhosh Gampa
+				 * @since Sep 4 2012
+				 * 
 				 */
-				boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(registerForm.getEmailId());
-		    	if(isinvaliduser){
-		    		LOGGER.info("OpenAM : user is already exist !");
-		    		model.setViewName("jobSeekerCreateAccount");
+				boolean isinvaliduser = OpenAMEUtility
+						.openAMValidateEmail(registerForm.getEmailId());
+				if (isinvaliduser) {
+					LOGGER.info("OpenAM : user is already exist !");
+					model.setViewName("jobSeekerCreateAccount");
 					result.rejectValue("emailId", "NotEmpty", emailExists);
 					return model;
-		    	}else{
-		    		LOGGER.info("OpenAM : valid user!");
-		    	}
-		    	
-		    	//Ends of OpenAM code
-		    	
+				} else {
+					LOGGER.info("OpenAM : valid user!");
+				}
+
+				// Ends of OpenAM code
 
 				if (profileRegistration
 						.validateEmail(registerForm.getEmailId())) {
 					model.setViewName("jobSeekerCreateAccount");
-					result.rejectValue("emailId", "NotEmpty",
-							emailExists);
+					result.rejectValue("emailId", "NotEmpty", emailExists);
 					return model;
 				}
 			}
@@ -248,13 +249,13 @@ public class JobSeekerRegistrationController {
 			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_LINKEDIN,
 					followuplinklinkedin);
 		} catch (Exception e) {
-			//TODO
+			// TODO
 			LOGGER.error(e);
 		}
 		return model;
-		
+
 	}
-	
+
 	/**
 	 * This method is called to save employee registration
 	 * 
@@ -263,100 +264,113 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Finish")
-	public ModelAndView saveJobSeekerRegistration(@ModelAttribute("registerForm")  JobSeekerRegistrationForm registerForm,
-			BindingResult result, HttpSession session, HttpServletRequest request) {
-			ModelAndView model = new ModelAndView();
-			HashMap<String, String> hashmap = new HashMap<String, String>();
+	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Finish")
+	public ModelAndView saveJobSeekerRegistration(
+			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+			BindingResult result, HttpSession session,
+			HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+		HashMap<String, String> hashmap = new HashMap<String, String>();
 		try {
-			
-			if (((Long) session.getAttribute("LAST_PLACE_KEY"))!=null && ((Long) session.getAttribute("LAST_PLACE_KEY")).equals(placeKey)) {
-					model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
-					return model;
-				}
-			
-				if(null != registerForm.getListProfAttribForms()){
-					model.setViewName("jobSeekerCreateAccountInfo");
-					for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
-						hashmap.put(form.getStrLabelName(), form.getStrLabelValue());
-						//Checking validation for input text box
-						if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue()) 
-								&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
-							model.addObject("message",reqFields);
-							return model;
-						}
-						
-						//Checking validation for dropdowns & checkboxes etc
-						if(form.getbRequired() !=0 && MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
-								&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
-								|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
-							model.addObject("message",reqFields);
-							return model;
-						}
-						//validation mobile number
-						if(MMJBCommonConstants.PHONE_NUMBER.equals(form.getStrLabelName()) && !StringUtils.isEmpty(form.getStrLabelValue())
-								&& !registerValidation.validateMobileNumberPattern(form.getStrLabelValue())){
-							model.addObject("message",jobseekerRegPhoneMsg);
-							return model;
-						}
+
+			if (((Long) session.getAttribute("LAST_PLACE_KEY")) != null
+					&& ((Long) session.getAttribute("LAST_PLACE_KEY"))
+							.equals(placeKey)) {
+				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+				return model;
+			}
+
+			if (null != registerForm.getListProfAttribForms()) {
+				model.setViewName("jobSeekerCreateAccountInfo");
+				for (JobSeekerProfileAttribForm form : registerForm
+						.getListProfAttribForms()) {
+					hashmap.put(form.getStrLabelName(), form.getStrLabelValue());
+					// Checking validation for input text box
+					if (form.getbRequired() != 0
+							&& StringUtils.isEmpty(form.getStrLabelValue())
+							&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
+									.getStrLabelName())) {
+						model.addObject("message", reqFields);
+						return model;
+					}
+
+					// Checking validation for dropdowns & checkboxes etc
+					if (form.getbRequired() != 0
+							&& MMJBCommonConstants.ZERO.equals(form
+									.getStrLabelValue())
+							&& (MMJBCommonConstants.DROP_DOWN.equals(form
+									.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
+									.equals(form.getStrAttribType()))) {
+						model.addObject("message", reqFields);
+						return model;
+					}
+					// validation mobile number
+					if (MMJBCommonConstants.PHONE_NUMBER.equals(form
+							.getStrLabelName())
+							&& !StringUtils.isEmpty(form.getStrLabelValue())
+							&& !registerValidation
+									.validateMobileNumberPattern(form
+											.getStrLabelValue())) {
+						model.addObject("message", jobseekerRegPhoneMsg);
+						return model;
 					}
 				}
-			
-			
-				JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-				UserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
-				List<ProfileAttribDTO> attribLists = transformJobSeekerRegistration.
-						transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
-				jsRegistrationDTO.setAttribList(attribLists);
-				jsRegistrationDTO.setMerUserDTO(userDTO);
+			}
 
-				// Call to service layer
+			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
+			UserDTO userDTO = transformJobSeekerRegistration
+					.createUserDTO(registerForm);
+			List<ProfileAttribDTO> attribLists = transformJobSeekerRegistration
+					.transformProfileAttribFormToDTO(registerForm
+							.getListProfAttribForms());
+			jsRegistrationDTO.setAttribList(attribLists);
+			jsRegistrationDTO.setMerUserDTO(userDTO);
 
+			// Call to service layer
 
-				userDTO = profileRegistration.createUser(jsRegistrationDTO);
+			userDTO = profileRegistration.createUser(jsRegistrationDTO);
 
-				/**
-				 * OpenAM code starts here for creating users in OpenDJ
-				 * 
-				 * @auther Santhosh Gampa
-				 * @since Sep 4 2012
-				 * 
-				 */
-				boolean isCreated=OpenAMEUtility.openAMCreateUser(userDTO, hashmap);
-				LOGGER.info("Open AM : User is created!"+isCreated);
-				// Ends of OpenAM code
+			/**
+			 * OpenAM code starts here for creating users in OpenDJ
+			 * 
+			 * @auther Santhosh Gampa
+			 * @since Sep 4 2012
+			 * 
+			 */
+			boolean isCreated = OpenAMEUtility.openAMCreateUser(userDTO,
+					hashmap);
+			LOGGER.info("Open AM : User is created!" + isCreated);
+			// Ends of OpenAM code
 
-				
+			session.setAttribute("userName", userDTO.getFirstName() + " "
+					+ userDTO.getLastName());
+			session.setAttribute("userId", userDTO.getUserId());
+			session.setAttribute("userEmail", userDTO.getEmailId());
+			session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
 
-				session.setAttribute("userName", userDTO.getFirstName()+" "+userDTO.getLastName());
-				session.setAttribute("userId", userDTO.getUserId());
-				session.setAttribute("userEmail", userDTO.getEmailId());
-				session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
-				
-				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
-			    authenticateUserAndSetSession(userDTO, request);
-			    
+			model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+			authenticateUserAndSetSession(userDTO, request);
+
 		} catch (Exception e) {
-			//TODO
+			// TODO
 			LOGGER.error(e);
 		}
 		return model;
 	}
-	
-	 private void authenticateUserAndSetSession(UserDTO user,
-		        HttpServletRequest request)
-		{
-		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_JOB_SEEKER));
-		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-		            user.getEmailId(), user.getPassword(),authList);
-		    token.setDetails(new WebAuthenticationDetails(request));
-		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
-		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-		}
-	
-	
-	
+
+	private void authenticateUserAndSetSession(UserDTO user,
+			HttpServletRequest request) {
+		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_JOB_SEEKER));
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				user.getEmailId(), user.getPassword(), authList);
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authenticatedUser = customAuthenticationManager
+				.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+	}
+
 	/**
 	 * This method is called to save employee registration
 	 * 
@@ -365,12 +379,14 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Back")
-	public ModelAndView backToCreateJobSeekerCreateYrAcct(@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
+	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Back")
+	public ModelAndView backToCreateJobSeekerCreateYrAcct(
+			@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
-		return new ModelAndView("jobSeekerCreateAccount","registerForm", registerForm);
+		return new ModelAndView("jobSeekerCreateAccount", "registerForm",
+				registerForm);
 	}
-		
+
 	/**
 	 * This method is called to navigate to home page on click of cancel
 	 * 
@@ -379,12 +395,12 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/saveJobSeekerProfile",method = RequestMethod.POST, params="Cancel")
+	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Cancel")
 	public ModelAndView backToHomePage() {
 
-		return new ModelAndView("healthcarejobs/advanceweb.html","", "");
+		return new ModelAndView("healthcarejobs/advanceweb.html", "", "");
 	}
-			
+
 	/**
 	 * This method is called to view/modify job seeker profile settings
 	 * 
@@ -393,29 +409,29 @@ public class JobSeekerRegistrationController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/viewJobSeekerProfile", method=RequestMethod.GET)
+	@RequestMapping(value = "/viewJobSeekerProfile", method = RequestMethod.GET)
 	public ModelAndView viewJobSeekerProfileSettings(HttpSession session) {
-		
+
 		ModelAndView model = new ModelAndView();
 		try {
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
 			// Call to service layer
-			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration.viewProfile
-					((Integer) session.getAttribute("userId"));
-			List<JobSeekerProfileAttribForm> listProfAttribForms = 
-					transformJobSeekerRegistration.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
+			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
+					.viewProfile((Integer) session.getAttribute("userId"));
+			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
+					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
 			form.setListProfAttribForms(listProfAttribForms);
 			form.setEmailId(jsRegistrationDTO.getEmailId());
 			model.addObject("registerForm", form);
 			model.setViewName("jobseekerEditProfileSettings");
-			
+
 		} catch (Exception e) {
-			//TODO
+			// TODO
 			LOGGER.error(e);
 		}
 		return model;
 	}
-	
+
 	/**
 	 * This method is called to view/modify job seeker profile settings
 	 * 
@@ -425,34 +441,40 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/updateJobSeekerProfile", method=RequestMethod.POST)
-	public String updateJobSeekerProfileSettings(@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+	@RequestMapping(value = "/updateJobSeekerProfile", method = RequestMethod.POST)
+	public String updateJobSeekerProfileSettings(
+			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session) {
 		String firstName = "";
-		String lastName= "";
+		String lastName = "";
 		/**
 		 * Added by Santhosh Gampa for OpenAM integration
 		 */
 		HashMap<String, String> hm = new HashMap<String, String>();
 
-		
-		try {	
-			
-			if(null != registerForm.getListProfAttribForms()){
-				for(JobSeekerProfileAttribForm form : registerForm.getListProfAttribForms()){
+		try {
+
+			if (null != registerForm.getListProfAttribForms()) {
+				for (JobSeekerProfileAttribForm form : registerForm
+						.getListProfAttribForms()) {
 					// Hold the required value for openAM
 					hm.put(form.getStrLabelName(), form.getStrLabelValue());
 
-					//Checking validation for input text box
-					if(form.getbRequired() !=0 && StringUtils.isEmpty(form.getStrLabelValue())){
+					// Checking validation for input text box
+					if (form.getbRequired() != 0
+							&& StringUtils.isEmpty(form.getStrLabelValue())) {
 						return "Please fill the required fields";
 					}
-					
-					//Checking validation for dropdowns & checkboxes etc
-					if(form.getbRequired() !=0 && !MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName()) 
-							&& MMJBCommonConstants.ZERO.equals(form.getStrLabelValue()) 
-							&& (MMJBCommonConstants.DROP_DOWN.equals(form.getStrAttribType())
-							|| MMJBCommonConstants.CHECK_BOX.equals(form.getStrAttribType()))){
+
+					// Checking validation for dropdowns & checkboxes etc
+					if (form.getbRequired() != 0
+							&& !MMJBCommonConstants.LABEL_SUSBSCRIPTION
+									.equals(form.getStrLabelName())
+							&& MMJBCommonConstants.ZERO.equals(form
+									.getStrLabelValue())
+							&& (MMJBCommonConstants.DROP_DOWN.equals(form
+									.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
+									.equals(form.getStrAttribType()))) {
 						return "Please fill the required fields";
 					}
 					// validation mobile number
@@ -465,58 +487,66 @@ public class JobSeekerRegistrationController {
 						return jobseekerRegPhoneMsg;
 					}
 
-					//validation mobile number
-					if(MMJBCommonConstants.EMAIL_ADDRESS.equals(form.getStrLabelName())){
-						if(!registerValidation.validateEmailPattern(form.getStrLabelValue())){
+					// validation mobile number
+					if (MMJBCommonConstants.EMAIL_ADDRESS.equals(form
+							.getStrLabelName())) {
+						if (!registerValidation.validateEmailPattern(form
+								.getStrLabelValue())) {
 							return "Please enter the correct E-Mail Address";
-						}else{
-							if(!(registerForm.getEmailId().equals(form.getStrLabelValue())) 
-									&& profileRegistration.validateEmail(form.getStrLabelValue())){
+						} else {
+							if (!(registerForm.getEmailId().equals(form
+									.getStrLabelValue()))
+									&& profileRegistration.validateEmail(form
+											.getStrLabelValue())) {
 								return "Email address already exists";
 							}
 						}
-					}					
+					}
 				}
 			}
-			
+
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
-			List<ProfileAttribDTO> attribList = transformJobSeekerRegistration.
-					transformProfileAttribFormToDTO(registerForm.getListProfAttribForms());
-			UserDTO userDTO = transformJobSeekerRegistration.createUserDTO(registerForm);
+			List<ProfileAttribDTO> attribList = transformJobSeekerRegistration
+					.transformProfileAttribFormToDTO(registerForm
+							.getListProfAttribForms());
+			UserDTO userDTO = transformJobSeekerRegistration
+					.createUserDTO(registerForm);
 			userDTO.setUserId((Integer) session.getAttribute("userId"));
 			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
-			
+
 			// OpenAM code for Modify the user profile details
 			// Added by Santhosh Gampa on Sep 4 2012
 			boolean isUdated = OpenAMEUtility.openAMUpdateUser(userDTO, hm);
-			LOGGER.info("User Profile updated in OpenAM - "+isUdated);
+			LOGGER.info("User Profile updated in OpenAM - " + isUdated);
 			// End of OpenAM code
 
-			
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
-			
-			for (JobSeekerProfileAttribForm attribForm : registerForm.getListProfAttribForms()) {
-				if(attribForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.FIRST_NAME)){
+
+			for (JobSeekerProfileAttribForm attribForm : registerForm
+					.getListProfAttribForms()) {
+				if (attribForm.getStrLabelName().equalsIgnoreCase(
+						MMJBCommonConstants.FIRST_NAME)) {
 					firstName = attribForm.getStrLabelValue();
-				}else if(attribForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.LAST_NAME)){
+				} else if (attribForm.getStrLabelName().equalsIgnoreCase(
+						MMJBCommonConstants.LAST_NAME)) {
 					lastName = attribForm.getStrLabelValue();
-					//break;
+					// break;
 				}
 			}
-			
-			session.setAttribute(MMJBCommonConstants.USER_NAME, firstName+" "+lastName);
-			
+
+			session.setAttribute(MMJBCommonConstants.USER_NAME, firstName + " "
+					+ lastName);
+
 		} catch (Exception e) {
-			//TODO
+			// TODO
 			LOGGER.error(e);
 		}
-		
+
 		return "";
 	}
-	
-	
+
 	/**
 	 * This method is called to view/modify job seeker profile settings
 	 * 
@@ -526,42 +556,44 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/jobSeekerUpdatePassword",method = RequestMethod.POST)
+	@RequestMapping(value = "/jobSeekerUpdatePassword", method = RequestMethod.POST)
 	public String updateNewPassword(ChangePasswordForm form, HttpSession session) {
-		try {		
-			
-			JobSeekerRegistrationDTO jsRegistrationDTO = new  JobSeekerRegistrationDTO();
-			
-			String errorMessage =validatePasswords(form.getPassword(), form.getRetypepassword());
-			if(!StringUtils.isEmpty(errorMessage)){
+		try {
+
+			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
+
+			String errorMessage = validatePasswords(form.getPassword(),
+					form.getRetypepassword(), form.getCurrentPassword());
+			if (!StringUtils.isEmpty(errorMessage)) {
 				return errorMessage;
 			}
-			
-			UserDTO userDTO = transformJobSeekerRegistration.transformChangePasswordFormToMerUserDTO(form);
+
+			UserDTO userDTO = transformJobSeekerRegistration
+					.transformChangePasswordFormToMerUserDTO(form);
 			userDTO.setUserId((Integer) session.getAttribute("userId"));
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
 			// Call to service layer
-			if(profileRegistration.validatePassword(jsRegistrationDTO)){
-				
+			if (profileRegistration.validatePassword(jsRegistrationDTO)) {
+
 				// OpenAM User Update password
 				// Added by Santhosh Gampa on 4th Sep 2012
-				boolean isUdated =OpenAMEUtility.openAMUpdatePassword(form.getEmailId(),form.getPassword());
-				LOGGER.info("User password updated - "+isUdated);
+				boolean isUdated = OpenAMEUtility.openAMUpdatePassword(
+						form.getEmailId(), form.getPassword());
+				LOGGER.info("User password updated - " + isUdated);
 				// Ends OpenAM User Update password
 
 				profileRegistration.changePassword(jsRegistrationDTO);
-			}else{
-				return "Invalid Current Password";				
+			} else {
+				return "Invalid Current Password";
 			}
 		} catch (Exception e) {
-			//TODO
+			// TODO
 			LOGGER.error(e);
 		}
 		return "";
 	}
-	
-	
+
 	/**
 	 * This method is called to validate passwords
 	 * 
@@ -569,34 +601,39 @@ public class JobSeekerRegistrationController {
 	 * @param retypePassword
 	 * @return
 	 */
-	private String validatePasswords(String password, String retypePassword){
-		 if(StringUtils.isEmpty(password)){
-			 return pwdEmpty;
-		 }
-		 
-		 if(StringUtils.isEmpty(retypePassword)){
-			 return conformPassEmpty;
-		 }
-		 
-		 if(!StringUtils.isEmpty(password) 
-				 && !StringUtils.isEmpty(retypePassword)){
-			 
-			 if(!registerValidation.validatePasswordPattern(password)){
-				 return pwdHint; 
-			 }
-			 
-			 if(!registerValidation.validatePasswordPattern(retypePassword)){
-				 return pwdHint; 
-			 }
-			 
-			 if(!password.equals(retypePassword)){
+	private String validatePasswords(String password, String retypePassword,
+			String currentPassword) {
+		if (StringUtils.isEmpty(password)) {
+			return pwdEmpty;
+		}
+
+		if (StringUtils.isEmpty(retypePassword)) {
+			return conformPassEmpty;
+		}
+
+		if (!StringUtils.isEmpty(password)
+				&& !StringUtils.isEmpty(retypePassword)) {
+
+			if (!registerValidation.validatePasswordPattern(password)) {
+				return pwdHint;
+			}
+
+			if (!registerValidation.validatePasswordPattern(retypePassword)) {
+				return pwdHint;
+			}
+
+			if (!password.equals(retypePassword)) {
 				return pwdNotEqual;
-			 }
-		 }
-		 
-		 return null;
+			}
+			
+			if(currentPassword.equals(password)){
+				return pwdEqual;
+			}
+		}
+
+		return null;
 	}
-	
+
 	/**
 	 * This method is called to view/modify job seeker profile settings
 	 * 
@@ -606,10 +643,10 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(value="/jobSeekerChangePassword",method = RequestMethod.GET)
+	@RequestMapping(value = "/jobSeekerChangePassword", method = RequestMethod.GET)
 	public String jsChangePassword(Map model, HttpSession session) {
-		
-		try {		
+
+		try {
 			ChangePasswordForm form = new ChangePasswordForm();
 			form.setEmailId((String) session.getAttribute("userEmail"));
 			model.put("changePasswordForm", form);
@@ -618,6 +655,5 @@ public class JobSeekerRegistrationController {
 		}
 		return "jobseekerchangepassword";
 	}
-	
 
 }
