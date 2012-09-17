@@ -61,12 +61,17 @@ public class JobseekerCoverLetterController {
 
 		try{
 			int userId = (Integer) session.getAttribute("userId");
+			//boolean findActive=coverLetterService.findActiveStatus(userId,resCoverLetterForm.getActive());
+			//if(findActive){
+			//	return "Error";
+			//}else{
 			ResCoverLetterDTO dto=new ResCoverLetterDTO();
 			dto.setName(resCoverLetterForm.getName());
 			dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
 			dto.setActive(resCoverLetterForm.getActive());
 			dto.setUserId(userId);
 			coverLetterService.coverLetterSaveByjobSeeker(dto);
+		//	}
 		}catch (Exception e) {
 			LOGGER.info("Manager Edit Job Posting Search Option");
 		}
