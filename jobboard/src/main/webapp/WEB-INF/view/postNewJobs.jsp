@@ -7,7 +7,7 @@
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
-
+	<jsp:include page="common/include.jsp" />
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 		<!-- JAVASCRIPT FILES -->
@@ -17,7 +17,7 @@
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-		<jsp:include page="common/include.jsp" />
+		
 		<script type="text/javascript">
 		
 		
@@ -33,8 +33,8 @@
 			
 		    jQuery(document).ready(function(){
 		    	
-		    $(".postingInventory").displaypopup(".postingInventory",
-						"790", "360");
+		    /* $(".postingInventory").displaypopup(".postingInventory",
+						"790", "360"); */
 		    	
 			$( "#scheduleStartDivId" ).hide();		    
 		    $("#postNewJobButId").click(function(){

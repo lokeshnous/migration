@@ -50,7 +50,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setBlindAd(dto.isbHideCompName()?1:0);
 		 
 		 //Job Posting Details
-		 jpJob.setJpJobType(null);
+		// jpJob.setJpJobType(null);
 		 
 		 //Job Title and Number
 		 jpJob.setJobtitle(dto.getJobTitle());

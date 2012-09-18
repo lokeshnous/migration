@@ -143,43 +143,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpTemplate template = hibernateTemplate.get(JpTemplate.class,
 					Integer.valueOf(dto.getBrandTemplate()));
 			
-			List<AdmInventoryDetail> invList = hibernateTemplate.find(
-					FIND_INVENTORY_DETAILS_BY_INV_ID, Integer.valueOf(dto.getJobPostingType()));
-			JpJobType jobType=new JpJobType();
-			if (!invList.isEmpty()) {
-				AdmInventoryDetail admInventoryDetail = invList.get(0);
-				if (MMJBCommonConstants.JOB_TYPE_COMBO
-						.equals(admInventoryDetail.getProductType())) {
-					List<JpJobTypeCombo> comboList = hibernateTemplate.find(
-							"from JpJobTypeCombo combo where combo.comboId=?",
-							admInventoryDetail.getProductId());
-					if (!comboList.isEmpty()) {
-						JpJobTypeCombo combo = comboList.get(0);
-						if (null != combo.getJobType()
-								&& combo.getJobType()
-										.equalsIgnoreCase(
-												MMJBCommonConstants.STANDARD_JOB_POSTING)) {
-							jobType = hibernateTemplate
-									.load(JpJobType.class,
-											MMJBCommonConstants.JOB_POST_TYPE_POSTING_ID);
-						} else if (null != combo.getJobType()
-								&& combo.getJobType()
-										.equalsIgnoreCase(
-												MMJBCommonConstants.JOB_POSTING_SLOT)) {
-							jobType = hibernateTemplate.load(JpJobType.class,
-									MMJBCommonConstants.JOB_POST_TYPE_SLOT_ID);
-						}
-					}
-				} else {
-					List<JpJobType> jpTypleList = hibernateTemplate.find(
-							"from JpJobType type where type.jobTypeId=?",
-							admInventoryDetail.getProductId());
-					if (!jpTypleList.isEmpty()) {
-						jobType = jpTypleList.get(0);
-					}
-				}
-
-			}
+			JpJobType jobType = getJobTypeDetails(dto);
 			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
 			
@@ -209,6 +173,51 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param dto
+	 * @return
+	 */
+	private JpJobType getJobTypeDetails(JobPostDTO dto) {
+		List<AdmInventoryDetail> invList = hibernateTemplate.find(
+				FIND_INVENTORY_DETAILS_BY_INV_ID, Integer.valueOf(dto.getJobPostingType()));
+		JpJobType jobType=new JpJobType();
+		if (!invList.isEmpty()) {
+			AdmInventoryDetail admInventoryDetail = invList.get(0);
+			if (MMJBCommonConstants.JOB_TYPE_COMBO
+					.equals(admInventoryDetail.getProductType())) {
+				List<JpJobTypeCombo> comboList = hibernateTemplate.find(
+						"from JpJobTypeCombo combo where combo.comboId=?",
+						admInventoryDetail.getProductId());
+				if (!comboList.isEmpty()) {
+					JpJobTypeCombo combo = comboList.get(0);
+					if (null != combo.getJobType()
+							&& combo.getJobType()
+									.equalsIgnoreCase(
+											MMJBCommonConstants.STANDARD_JOB_POSTING)) {
+						jobType = hibernateTemplate
+								.load(JpJobType.class,
+										MMJBCommonConstants.JOB_POST_TYPE_POSTING_ID);
+					} else if (null != combo.getJobType()
+							&& combo.getJobType()
+									.equalsIgnoreCase(
+											MMJBCommonConstants.JOB_POSTING_SLOT)) {
+						jobType = hibernateTemplate.load(JpJobType.class,
+								MMJBCommonConstants.JOB_POST_TYPE_SLOT_ID);
+					}
+				}
+			} else {
+				List<JpJobType> jpTypleList = hibernateTemplate.find(
+						"from JpJobType type where type.jobTypeId=?",
+						admInventoryDetail.getProductId());
+				if (!jpTypleList.isEmpty()) {
+					jobType = jpTypleList.get(0);
+				}
+			}
+
+		}
+		return jobType;
 	}
 
 	/**
@@ -259,31 +268,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (job != null) {
 
 				dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
-
-				List<AdmInventoryDetail> invList = hibernateTemplate.find(
-						FIND_INVENTORY_DETAILS_BY_INV_ID, jobPostType);
-				if (!invList.isEmpty()) {
-					AdmInventoryDetail admInventoryDetail = invList.get(0);
-					if (MMJBCommonConstants.JOB_TYPE_COMBO
-							.equals(admInventoryDetail.getProductType())) {
-						List<JpJobTypeCombo> comboList = hibernateTemplate
-								.find("from JpJobTypeCombo combo where combo.comboId=?",
-										admInventoryDetail.getProductId());
-						if (!comboList.isEmpty()) {
-							JpJobTypeCombo combo = comboList.get(0);
-							dto.setJobPostingType(combo.getAddons());
-						}
-					} else {
-						List<JpJobType> jpTypleList = hibernateTemplate.find(
-								"from JpJobType type where type.jobTypeId=?",
-								admInventoryDetail.getProductId());
-						if (!jpTypleList.isEmpty()) {
-							JpJobType type = jpTypleList.get(0);
-							dto.setJobPostingType(type.getName());
-						}
-					}
-
-				}
 
 			}
 		} catch (DataAccessException e) {
