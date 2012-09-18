@@ -200,6 +200,7 @@
 		<!--Right-->
 		<div class="dBEmpRightColumns BorderLeft">
 			<div class="dashboardPanal">
+			<div> 
 				<div class="activity">
 					<img src="../resources/images/tranBg.png" width="30" height="30">
 				</div>
@@ -301,6 +302,7 @@
 						</div>
 					</div>
 
+				</div>
 				</div>
 				<div class=" rowBox Padding0">
 					<div class="innerColumn marginRight10">
