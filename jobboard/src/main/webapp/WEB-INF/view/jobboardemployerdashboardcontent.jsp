@@ -211,7 +211,17 @@
 							<thead>
 								<tr class="borderTopNone">
 									<th width="46%" align="left" scope="col"><h2
-											class="noTopBorder noTopBottomBorder">Metrics</h2></th>
+											class="HeadTopBottomBorder">Metrics</h2>
+											<select class="jb_input3">
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+											<option>6</option>
+											<option>7</option>
+											</select>
+											</th>
 									<th width="18%" align="center" scope="col"
 										class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
 									<th width="18%" align="center" scope="col"
