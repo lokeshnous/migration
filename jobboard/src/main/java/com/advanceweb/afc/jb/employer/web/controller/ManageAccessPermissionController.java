@@ -13,7 +13,6 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -171,7 +170,7 @@ public class ManageAccessPermissionController {
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while creating the new job owner", jbex);
 		}
-		LOGGER.info("Email : Sending Email....!");
+		LOGGER.info("Email : sent Email!");
 		sendEmail(manageAccessPermissionForm, userDTO, request);
 
 		warningMessage.put("success", jobOwnerAddSuccess);
@@ -232,7 +231,6 @@ public class ManageAccessPermissionController {
 	 * @param request
 	 * @return
 	 */
-	@Async
 	public void sendEmail(ManageAccessPermissionForm manageAccessPermissionForm, UserDTO userDTO,
 			HttpServletRequest request) {
 		EmailDTO emailDTO = new EmailDTO();
@@ -242,7 +240,6 @@ public class ManageAccessPermissionController {
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + "?page=employer";
 		try {
-			System.out.println("now before sending mail:"+System.currentTimeMillis());
 			employerToAddress[0] = new InternetAddress(manageAccessPermissionForm.getOwnerEmail());
 			emailDTO.setToAddress(employerToAddress);
 			emailDTO.setFromAddress(advanceWebAddress);
@@ -262,8 +259,6 @@ public class ManageAccessPermissionController {
 			emailDTO.setBody(forgotPwdMailBody);
 			emailDTO.setHtmlFormat(true);
 			emailService.sendEmail(emailDTO);
-			LOGGER.info("Email : sent Email!");
-			System.out.println("after sending mail:"+System.currentTimeMillis());
 		} catch (AddressException ex) {
 			LOGGER.error("Error:" + ex);
 		}
