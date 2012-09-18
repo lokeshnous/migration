@@ -183,6 +183,44 @@ public class JobSearchController {
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	
+	
+	private @Value("${SUBJECT_OF_MAIL}")
+	String SUBJECT_OF_MAIL;
+
+	private @Value("${BODY_OFMAIL_FIRST}")
+	String BODY_OFMAIL_FIRST;
+	 
+	private @Value("${BODY_OFMAIL_SECOND}")
+	String BODY_OFMAIL_SECOND;
+	 
+	private @Value("${JOB_TITLE_HEADING}")
+	String JOB_TITLE_HEADING;
+	
+	private @Value("${COMAPNY_NAME_HEADING}")
+	String COMAPNY_NAME_HEADING;
+
+	private @Value("${URL_LINK_FIRST}")
+	String URL_LINK_FIRST;
+	 
+	private @Value("${URL_LINK_SECOND}")
+	String URL_LINK_SECOND;
+	 
+	private @Value("${URL_REDIRECT_MAIL}")
+	String URL_REDIRECT_MAIL;
+	
+	private @Value("${ERROR_SENDING_MAIL}")
+	String ERROR_SENDING_MAIL;
+	
+	private @Value("${EMAIL_MESSAGE}")
+	String EMAIL_MESSAGE;
+	
+	private @Value("${WEB_MAIL_SERVER}")
+	String WEB_MAIL_SERVER;
+	private @Value("${EMAIL_MESSAGE_BLANK}")
+	String EMAIL_MESSAGE_BLANK;
+	
 
 	@Autowired
 	ClickController clickController;
@@ -878,7 +916,7 @@ public class JobSearchController {
 		try {
 			String data = sendtofriendmail.getEmail().toString();
 			if((null==data.trim())||("".equals(data.trim()))){
-				return MMJBCommonConstants.EMAIL_MESSAGE_BLANK;
+				return EMAIL_MESSAGE_BLANK;
 			}
 			data = data.replace(',', ';');
 			int len = data.length();
@@ -902,14 +940,14 @@ public class JobSearchController {
 							.getAttribute(MMJBCommonConstants.USER_EMAIL);
 				}
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress(MMJBCommonConstants.WEB_MAIL_SERVER);
+				jobSeekerEmailDTO.setFromAddress(WEB_MAIL_SERVER);
 
 				int iterationCount = 0;
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
 					
 					if (!validateEmailPattern(string.trim())) {
-						return MMJBCommonConstants.EMAIL_MESSAGE;
+						return EMAIL_MESSAGE;
 					}
 
 					jobSeekerToAddress[iterationCount] = new InternetAddress(string.trim());
@@ -921,13 +959,11 @@ public class JobSearchController {
 				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
-					msgSubject = MMJBCommonConstants.SUBJECT_OF_MAIL+" "
-							+ jobseekerName;
+					msgSubject =SUBJECT_OF_MAIL+" "+ jobseekerName;
 					
 				} else {
 					jobseekerName = "XXXX-XXX";
-					msgSubject = MMJBCommonConstants.SUBJECT_OF_MAIL+" "
-							+ jobseekerName;
+					msgSubject =SUBJECT_OF_MAIL+" "+ jobseekerName;
 				}
 						
 				
@@ -935,17 +971,13 @@ public class JobSearchController {
 				SearchedJobDTO searchedJobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
-				String Subject = MMJBCommonConstants.SUBJECT_OF_MAIL+" "
-						+ jobseekerName;
-				String bodyHead1 = MMJBCommonConstants.BODY_OFMAIL_FIRST+" "
-						+ jobseekerName +" "+MMJBCommonConstants.BODY_OFMAIL_SECOND;
+				String Subject =SUBJECT_OF_MAIL+" "+ jobseekerName;
+				String bodyHead1 =BODY_OFMAIL_FIRST+" "+ jobseekerName +" "+BODY_OFMAIL_SECOND;
 				String bodyHead2 = sendtofriendmail.getMessage();
-				String jobTitle = MMJBCommonConstants.JOB_TITLE_HEADING;
-				String companyName = MMJBCommonConstants.COMAPNY_NAME_HEADING;
+				String jobTitle =JOB_TITLE_HEADING;
+				String companyName =COMAPNY_NAME_HEADING;
 				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl = MMJBCommonConstants.URL_LINK_FIRST
-						+""+jobUrl
-						+""+MMJBCommonConstants.URL_LINK_SECOND;
+				String joburl =URL_LINK_FIRST+""+jobUrl+""+URL_LINK_SECOND;
 				mesg = mesg
 						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -961,7 +993,7 @@ public class JobSearchController {
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info(MMJBCommonConstants.ERROR_SENDING_MAIL);
+				LOGGER.info(ERROR_SENDING_MAIL);
 			}
 
 		} catch (Exception e) {
@@ -969,10 +1001,10 @@ public class JobSearchController {
 			throw new MailParseException(e);
 		}
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			modelData.setViewName(MMJBCommonConstants.URL_REDIRECT_MAIL);
+			modelData.setViewName(URL_REDIRECT_MAIL);
 			return "";
 		} else {
-			modelData.setViewName(MMJBCommonConstants.URL_REDIRECT_MAIL);
+			modelData.setViewName(URL_REDIRECT_MAIL);
 			return "";
 		}
 
