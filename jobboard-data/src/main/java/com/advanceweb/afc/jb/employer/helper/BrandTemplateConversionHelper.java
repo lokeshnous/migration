@@ -34,7 +34,7 @@ public class BrandTemplateConversionHelper {
 	 * @return EmpBrandTempDTO
 	 */
 	public BrandingTemplateDTO convertToBrandTemplateDTO(
-			JpTemplate jpBrandingTemp) {
+			JpTemplate jpBrandingTemp,int count) {
 
 		BrandingTemplateDTO jpBrandTempDTO = new BrandingTemplateDTO();
 		jpBrandTempDTO.setJpBrandTempId(jpBrandingTemp.getTemplateId());
@@ -50,7 +50,9 @@ public class BrandTemplateConversionHelper {
 		jpBrandTempDTO.setListTestimony(transformTemplateTestimonyToDTO(jpBrandingTemp));
 		jpBrandTempDTO.setListAddImages(transformAddImageToDTO(jpBrandingTemp));
 		jpBrandTempDTO.setListVideos(transformVideoToDTO(jpBrandingTemp));
-		
+		// added to set the number of time used by
+		jpBrandTempDTO.setCount(count);
+			
 		return jpBrandTempDTO;
 
 	}

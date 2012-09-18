@@ -17,6 +17,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityPackage;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.JpTemplateMedia;
 import com.advanceweb.afc.jb.data.entities.JpTemplateTestimonial;
@@ -39,7 +40,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			.getLogger(BrandingTemplateDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplateCareer;
-	
+
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -63,16 +64,21 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 						.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
 								userRole.getRolePK().getUserId(),
 								userRole.getRolePK().getRoleId()).get(0);
-//				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
-//						.find("from  JpTemplate where admFacility.facilityId=?",
-//								userFacility.getAdmFacility().getFacilityId());
+				// List<JpTemplate> brandingTemplateList =
+				// hibernateTemplateCareer
+				// .find("from  JpTemplate where admFacility.facilityId=?",
+				// userFacility.getAdmFacility().getFacilityId());
 				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
 						.find("from  JpTemplate where admFacility.facilityId=? and deleteDt is null",
 								userFacility.getAdmFacility().getFacilityId());
 				templatesDTO = new ArrayList<BrandingTemplateDTO>();
 				for (JpTemplate template : brandingTemplateList) {
+					// get the count of template id used by
+					int count = hibernateTemplateCareer
+							.find("from JpJob jb where jb.jpTemplate.templateId=? and jb.active=1",
+									template.getTemplateId()).size();
 					templatesDTO.add(brandTemplateConversionHelper
-							.convertToBrandTemplateDTO(template));
+							.convertToBrandTemplateDTO(template, count));
 				}
 			}
 		} catch (HibernateException e) {
@@ -87,34 +93,40 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 */
 	@Override
 	public Boolean createEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
-		
+
 		Boolean status = null;
 		try {
-			JpTemplate jpTemplate = brandTemplateConversionHelper.convertToJPTemplate(brandingTemplatesDTO);
-			
-			
-//			hibernateTemplateCareer.save(jpTemplate);
+			JpTemplate jpTemplate = brandTemplateConversionHelper
+					.convertToJPTemplate(brandingTemplatesDTO);
+
+			// hibernateTemplateCareer.save(jpTemplate);
 			hibernateTemplateCareer.saveOrUpdate(jpTemplate);
-			
-			if (!brandingTemplatesDTO.getIsSilverCustomer()){
-				
-				List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper.transformTemplateTestimony(brandingTemplatesDTO.getListTestimony(), jpTemplate);
-				List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper.transformVideo(brandingTemplatesDTO.getListVideos(), jpTemplate);
-				
-				listMediaEntity.addAll(brandTemplateConversionHelper.transformAddImage(brandingTemplatesDTO.getListAddImages(), jpTemplate));
+
+			if (!brandingTemplatesDTO.getIsSilverCustomer()) {
+
+				List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper
+						.transformTemplateTestimony(
+								brandingTemplatesDTO.getListTestimony(),
+								jpTemplate);
+				List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper
+						.transformVideo(brandingTemplatesDTO.getListVideos(),
+								jpTemplate);
+
+				listMediaEntity.addAll(brandTemplateConversionHelper
+						.transformAddImage(
+								brandingTemplatesDTO.getListAddImages(),
+								jpTemplate));
 				jpTemplate.setJpTemplateTestimonials(listTestimonyEntity);
 				jpTemplate.setJpTemplateMedias(listMediaEntity);
-				
-				
-//			hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
-			for(JpTemplateTestimonial testimonialEntity :listTestimonyEntity)
-			{
-				hibernateTemplateCareer.saveOrUpdate(testimonialEntity);
+
+				// hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
+				for (JpTemplateTestimonial testimonialEntity : listTestimonyEntity) {
+					hibernateTemplateCareer.saveOrUpdate(testimonialEntity);
+				}
+
+				hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
 			}
-			
-			hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
-			}
-			
+
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
@@ -154,12 +166,13 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	@Override
 	public BrandingTemplateDTO editBrandingTemplate(int templateId) {
 		BrandingTemplateDTO templatesDTO = new BrandingTemplateDTO();
+		int count = 0;
 		try {
 			if (templateId != 0) {
 				JpTemplate template = (JpTemplate) hibernateTemplateCareer.get(
 						JpTemplate.class, templateId);
 				templatesDTO = brandTemplateConversionHelper
-						.convertToBrandTemplateDTO(template);
+						.convertToBrandTemplateDTO(template, count);
 			}
 		} catch (HibernateException e) {
 			// logger call
@@ -228,27 +241,29 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return packageId;
 
 	}
-	
-	
+
 	/**
-	 * This method is used to get the net suite customer id based on
-	 * adm facility id.
+	 * This method is used to get the net suite customer id based on adm
+	 * facility id.
+	 * 
 	 * @param int admFacilityID
 	 * @return int NSCustomerID
 	 */
-	
+
 	public List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
 
 		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
 		try {
 			@SuppressWarnings("unchecked")
 			List<AdmFacility> admFacilityList = hibernateTemplateCareer
-					.find(" from  AdmFacility WHERE  facilityId  = '" + admFacilityID + "'");
+					.find(" from  AdmFacility WHERE  facilityId  = '"
+							+ admFacilityID + "'");
 
 			if (admFacilityList != null) {
 				for (AdmFacility admFacilityObj : admFacilityList) {
 					FacilityDTO admFacilityDTO = new FacilityDTO();
-					admFacilityDTO.setNsCustomerID(admFacilityObj.getNsCustomerID());
+					admFacilityDTO.setNsCustomerID(admFacilityObj
+							.getNsCustomerID());
 					admFacilityDTOList.add(admFacilityDTO);
 				}
 			}
@@ -258,7 +273,5 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		}
 		return admFacilityDTOList;
 	}
-
-	
 
 }

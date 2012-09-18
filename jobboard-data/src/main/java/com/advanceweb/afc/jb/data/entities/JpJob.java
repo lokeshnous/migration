@@ -27,6 +27,7 @@ public class JpJob implements Serializable {
 	@Column(name="account_num")
 	private String accountNum;
 
+	@Column(name="active")
 	private byte active;
 
 	@Column(name="admin_user_id")

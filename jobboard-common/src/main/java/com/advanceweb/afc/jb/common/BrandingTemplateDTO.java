@@ -30,6 +30,7 @@ public class BrandingTemplateDTO {
 	private String companyOverview;
 	private CommonsMultipartFile logoFileData;
 	private CommonsMultipartFile mainImageFileData;
+	private int count;
 	
 //	Muli media section
 	private List<TestimonyDTO> listTestimony;
@@ -157,6 +158,14 @@ public class BrandingTemplateDTO {
 
 	public void setListVideos(List<VideoDTO> listVideos) {
 		this.listVideos = listVideos;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 
