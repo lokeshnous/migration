@@ -37,6 +37,8 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 @RequestMapping("/pgiController")
 @SessionAttributes("paymentGatewayForm")
 public class PaymentGatewayController {
+	private static final String STATUS_CODE = "statusCode";
+
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayController.class);
 	
@@ -66,87 +68,13 @@ public class PaymentGatewayController {
 		
 		paymentGatewayForm.setNsCustomerId(nsCustomerId);
 		InvoiceForm invoiceForm = new InvoiceForm();
-		//invoiceForm.setInvoiceEnabled(true);
+		
 		invoiceForm.setInvoiceEnabled(userDTO.isInvoiceEnabled());
 		paymentGatewayForm.setInvoiceForm(invoiceForm);
 		model.addObject("paymentGatewayForm",paymentGatewayForm);
 		
 		paymentGatewayForm.setPurchaseJobPostForm((PurchaseJobPostForm)session.getAttribute("purchaseJobPostForm"));
 		model.setViewName("gatewayPaymentMethod");
-		return model;
-	}
-
-	@RequestMapping(value = "/paymentMethod", method = RequestMethod.POST)
-	public ModelAndView gatewayPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
-			BindingResult result, HttpSession session) {
-		ModelAndView model = new ModelAndView();
-		// Getting the facility id from the session
-		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
-
-		// Fetching the Account address from the database
-		AccountAddressDTO accountAddressDTO = paymentGatewayService
-				.getConatactByFacilityId(facilityId);
-		// Fetching the Billing address from the database
-		AccountAddressDTO billingAddressDTO = paymentGatewayService
-				.getBillingAddByFacilityId(facilityId);
-		if (billingAddressDTO == null) {
-			billingAddressDTO = new AccountAddressDTO();
-		}
-		// Getting the countries from the database
-		List<CountryDTO> countryList = populateDropdownsService
-				.getCountryList();
-		// Getting the States from the database
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		
-		AccountAddressForm accountAddressForm = null;
-		BillingAddressForm billingAddressForm = null;
-		
-		if(null == paymentGatewayForm.getAccountAddressForm()){
-			// Converting AccountAddressDTO to Form
-			accountAddressForm = transformPaymentMethod
-					.transformAccountAddrDtoToForm(accountAddressDTO);
-			paymentGatewayForm.setAccountAddressForm(accountAddressForm);
-		}
-		if(null == paymentGatewayForm.getBillingAddressForm()){
-			// Converting BillingAddressDTO to Form
-			billingAddressForm = transformPaymentMethod
-					.transformBillingAddressDtoToForm(billingAddressDTO);
-			paymentGatewayForm.setBillingAddressForm(billingAddressForm);
-		}
-		
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
-
-		if (paymentGatewayForm.getPaymentMethod().equalsIgnoreCase(
-				MMJBCommonConstants.CREDIT_CARD)) {
-			if(null != paymentGatewayForm.getCreditCardInfoForm()){
-				paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo(null);
-				paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode(null);
-			}
-			paymentGatewayForm.setInvoiceForm(null);
-			model.addObject("paymentGatewayForm", paymentGatewayForm);
-			model.setViewName("gatewayCreditBilling");
-		} else {
-			paymentGatewayForm.setCreditCardInfoForm(null);
-			model.addObject("paymentGatewayForm", paymentGatewayForm);
-			model.setViewName("gatewayInvoiceBilling");
-		}
-		return model;
-	}
-
-	@RequestMapping(value = "/paymentCreditBackMethod", method = RequestMethod.GET)
-	public ModelAndView gatewayPaymentBackMethod(@Valid PaymentGatewayForm paymentGatewayForm,
-			HttpSession session) {
-		ModelAndView model = new ModelAndView();
-		List<CountryDTO> countryList = populateDropdownsService
-				.getCountryList();
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
-		paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo(null);
-		paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode(null);
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
-		model.setViewName("gatewayCreditBilling");
 		return model;
 	}
 	
@@ -162,8 +90,65 @@ public class PaymentGatewayController {
 		model.setViewName("gatewayPaymentMethod");
 		return model;
 	}
-	@RequestMapping(value = "/paymentInvoiceBackMethod", method = RequestMethod.GET)
-	public ModelAndView gatewayInvoiceBackMethod(@Valid PaymentGatewayForm paymentGatewayForm,
+
+	
+	@RequestMapping(value = "/paymentBillingInfo", method = RequestMethod.POST)
+	public ModelAndView paymentBillingInfo(@Valid PaymentGatewayForm paymentGatewayForm,
+			BindingResult result, HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		// Getting the facility id from the session
+		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
+		// Fetching the Account address from the database
+		AccountAddressDTO accountAddressDTO = paymentGatewayService
+				.getConatactByFacilityId(facilityId);
+		// Fetching the Billing address from the database
+		AccountAddressDTO billingAddressDTO = paymentGatewayService
+				.getBillingAddByFacilityId(facilityId);
+		if (billingAddressDTO == null) {
+			billingAddressDTO = new AccountAddressDTO();
+		}
+		
+		AccountAddressForm accountAddressForm = null;
+		BillingAddressForm billingAddressForm = null;
+		
+		if(null == paymentGatewayForm.getAccountAddressForm()){
+			// Converting AccountAddressDTO to Form
+			accountAddressForm = transformPaymentMethod.transformAccountAddrDtoToForm(accountAddressDTO);
+			paymentGatewayForm.setAccountAddressForm(accountAddressForm);
+		}
+		if(null == paymentGatewayForm.getBillingAddressForm()){
+			// Converting BillingAddressDTO to Form
+			billingAddressForm = transformPaymentMethod.transformBillingAddressDtoToForm(billingAddressDTO);
+			paymentGatewayForm.setBillingAddressForm(billingAddressForm);
+		}
+		
+		// Getting the countries from the database
+		List<CountryDTO> countryList = populateDropdownsService
+						.getCountryList();
+		// Getting the States from the database
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+				
+		model.addObject("countryList", countryList);
+		model.addObject("stateList", stateList);
+
+		if (paymentGatewayForm.getPaymentMethod().equalsIgnoreCase(
+				MMJBCommonConstants.CREDIT_CARD) && null != paymentGatewayForm.getCreditCardInfoForm()) {
+			paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo(null);
+			paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode(null);
+			paymentGatewayForm.setInvoiceForm(null);
+		
+		} else {
+			paymentGatewayForm.setCreditCardInfoForm(null);
+		}
+		
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		model.setViewName("gatewayBillingInfo");
+		return model;
+	}
+	
+	@RequestMapping(value = "/paymentBillingInfoBack", method = RequestMethod.GET)
+	public ModelAndView paymentBillingInfoBack(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		List<CountryDTO> countryList = populateDropdownsService
@@ -171,106 +156,94 @@ public class PaymentGatewayController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
-		model.setViewName("gatewayInvoiceBilling");
-//		form.getInvoiceForm().setPurchaseOrderNo("");
-		return model;
-	}
-	
-	@RequestMapping(value = "/editPaymentMethod", method = RequestMethod.GET)
-	public ModelAndView gatewayPaymentBack(PaymentGatewayForm paymentGatewayForm) {
-		ModelAndView model = new ModelAndView();
+		
+		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getCreditCardInfoForm()){
+			paymentGatewayForm.getCreditCardInfoForm().setCreditCardNo(null);
+			paymentGatewayForm.getCreditCardInfoForm().setSecuriyCode(null);
+		}
+		else if(MMJBCommonConstants.INVOICE.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getInvoiceForm()){
+			paymentGatewayForm.getInvoiceForm().setPurchaseOrderNo(null);
+		}
+		
 		model.addObject("paymentGatewayForm", paymentGatewayForm);
-		System.out.println(paymentGatewayForm);
-		model.setViewName("redirect:/pgiController/callPaymentMethod.html");	
+		model.setViewName("gatewayBillingInfo");
 		return model;
 	}
 	
-	@RequestMapping(value = "/callInvoiceConfirmOrder", method = RequestMethod.POST)
-	public ModelAndView gatewayConfirmOrder(@Valid PaymentGatewayForm paymentGatewayForm,
+	@RequestMapping(value = "/backToConfirmOrder", method = RequestMethod.GET)
+	public ModelAndView backToConfirmOrder(PaymentGatewayForm paymentGatewayForm,
+			HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		model.setViewName("gatewayConfirmOrder");
+		return model;
+	}
+	
+	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
+	public ModelAndView confirmOrder(@Valid PaymentGatewayForm paymentGatewayForm,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		paymentGatewayValidation.validateInvoice(paymentGatewayForm, result);
-
-		// Getting street address, city, state, country, zip code, purchase oder
-		// number for displaying the confirm order page
-		String stAddr = paymentGatewayForm.getBillingAddressForm().getStreetForBillingAddr();
-		String city = paymentGatewayForm.getBillingAddressForm()
-				.getCityOrTownForBillingAddr();
-		String state = paymentGatewayForm.getBillingAddressForm().getStateBillingAddress();
-		String country = paymentGatewayForm.getBillingAddressForm()
-				.getCountryForBillingAddr();
-		String zipCode = paymentGatewayForm.getBillingAddressForm()
-				.getZipCodeForBillingAddr();
-		String orderNo = paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo();
-		model.addObject("stAddr", stAddr);
-		model.addObject("city", city);
-		model.addObject("state", state);
-		model.addObject("country", country);
-		model.addObject("zipCode", zipCode);
-		model.addObject("orderNo", orderNo);
-		List<CountryDTO> countryList = populateDropdownsService
-				.getCountryList();
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-
+		
+		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getCreditCardInfoForm()){
+			paymentGatewayValidation.validate(paymentGatewayForm, result);
+		}
+		else if(MMJBCommonConstants.INVOICE.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getInvoiceForm()){
+			paymentGatewayValidation.validateInvoice(paymentGatewayForm, result);
+		}
+		
 		if (result.hasErrors()) {
+			
+			List<CountryDTO> countryList = populateDropdownsService.getCountryList();
+			List<StateDTO> stateList = populateDropdownsService.getStateList();
 			model.addObject("countryList", countryList);
 			model.addObject("stateList", stateList);
-			model.setViewName("gatewayInvoiceBilling");
+			
+			model.setViewName("gatewayBillingInfo");
 			return model;
 		}
-		model.setViewName("gatewayInvoiceConfirmOrder");
+		
+		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getCreditCardInfoForm()){
+			String creditCardNo = paymentGatewayForm.getCreditCardInfoForm().getCreditCardNo();
+			String cardType = paymentGatewayForm.getCreditCardInfoForm().getCardType();
+			// Getting last 4 digits of the credit card
+			if (creditCardNo.length() != 0) {
+				creditCardNo = creditCardNo.substring(creditCardNo.length() - 4);
+			}
+			model.addObject("creditCardNo", creditCardNo);
+			model.addObject("cardType", cardType);
+		}
+		else if(MMJBCommonConstants.INVOICE.equals(paymentGatewayForm.getPaymentMethod()) && 
+				null != paymentGatewayForm.getInvoiceForm()){
+			String orderNo = paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo();
+			model.addObject("orderNo", orderNo);
+		}
+		model.setViewName("gatewayConfirmOrder");
 		return model;
 	}
-
-	@RequestMapping(value = "/callCreditConfirmOrder", method = RequestMethod.POST)
-	public ModelAndView gatewayCreditConfirmOrder(
-			@Valid PaymentGatewayForm paymentGatewayForm, HttpSession session,
-			BindingResult result) {
-		// validate the credit card information
+	 
+	/**
+	 * This method will be called on clicking cancel. It clears out all the session data
+	 * @param paymentGatewayForm
+	 * @param session
+	 * @return model
+	 */
+	@RequestMapping(value="/cancelPayment",method = RequestMethod.GET)
+	public ModelAndView cancelPayment(PaymentGatewayForm paymentGatewayForm,
+			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		paymentGatewayValidation.validate(paymentGatewayForm, result);
-		// Getting street address, city, state, country, zip code, credit card
-		// number, cardType for displaying the confirm order page
-		String stAddr = paymentGatewayForm.getBillingAddressForm().getStreetForBillingAddr();
-		String city = paymentGatewayForm.getBillingAddressForm()
-				.getCityOrTownForBillingAddr();
-		String state = paymentGatewayForm.getBillingAddressForm().getStateBillingAddress();
-		String country = paymentGatewayForm.getBillingAddressForm()
-				.getCountryForBillingAddr();
-		String zipCode = paymentGatewayForm.getBillingAddressForm()
-				.getZipCodeForBillingAddr();
-		String creditCardNo = paymentGatewayForm.getCreditCardInfoForm().getCreditCardNo();
-		String cardType = paymentGatewayForm.getCreditCardInfoForm().getCardType();
-		// Getting last 4 digits of the credit card
-		if (creditCardNo.length() != 0) {
-			creditCardNo = creditCardNo.substring(creditCardNo.length() - 4);
-		}
-		model.addObject("stAddr", stAddr);
-		model.addObject("city", city);
-		model.addObject("state", state);
-		model.addObject("country", country);
-		model.addObject("zipCode", zipCode);
-		model.addObject("creditCardNo", creditCardNo);
-		model.addObject("cardType", cardType);
-
-		List<CountryDTO> countryList = populateDropdownsService
-				.getCountryList();
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		if (result.hasErrors()) {
-			model.addObject("countryList", countryList);
-			model.addObject("stateList", stateList);
-			model.setViewName("gatewayCreditBilling");
-			return model;
-		}
-		model.setViewName("gatewayCreditConfirmOrder");
-		return model;
-	}
-
-	@RequestMapping(value = "/callThankYouPage", method = RequestMethod.GET)
-	public ModelAndView gatewayThankyouPage() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("gatewayThankYou");
-		return model;
+		
+		session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
+		paymentGatewayForm = new PaymentGatewayForm();
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		
+		model.setViewName("redirect:/employer/employerDashBoard.html");
+		return 	model;
 	}
 	
 	/**
@@ -279,14 +252,17 @@ public class PaymentGatewayController {
 	 * @param session
 	 * @return String
 	 */
-	@RequestMapping(value="/removeJobPost",method = RequestMethod.POST)
-	public @ResponseBody String removeJobPost(PaymentGatewayForm paymentGatewayForm,
+	@RequestMapping(value="/removeJobPost",method = RequestMethod.GET)
+	public ModelAndView removeJobPost(PaymentGatewayForm paymentGatewayForm,
 			@RequestParam("cartItemIndex") int cartItemIndex, HttpSession session) {
 		PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();		
 		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
-		return 	"success";
+		ModelAndView model = new ModelAndView();
+		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		model.setViewName("redirect:/pgiController/backToConfirmOrder.html");
+		return 	model;
 	}
 	
 	@RequestMapping(value="/placeOrder",method = RequestMethod.POST)
@@ -305,8 +281,6 @@ public class PaymentGatewayController {
 		int netSuiteStatus = Integer.parseInt(userDTO.getNsStatus());
 		
 		Map<Integer,String> statusCode = userDTO.getNsStatusCode();
-		//once the payment is success clear out the form data & related session data
-		session.removeAttribute("purchaseJobPostForm");
 		
 		ModelAndView model = new ModelAndView();
 		
@@ -314,6 +288,9 @@ public class PaymentGatewayController {
 		
 		if(netSuiteStatus == MMJBCommonConstants.STATUS_CODE_200){
 			LOGGER.info(statusCode.get(netSuiteStatus));
+			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);	
+			//once the payment is success clear out the form data & related session data
+			session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
 			//clear out all the form data
 			paymentGatewayForm = new PaymentGatewayForm();
 						
@@ -325,6 +302,7 @@ public class PaymentGatewayController {
 						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
 										MMJBCommonConstants.BAD_REQUEST_400);
 						errorMessage = MMJBCommonConstants.BAD_REQUEST_400;
+						model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_400);
 						break;
 				case MMJBCommonConstants.STATUS_CODE_401 :
 						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
@@ -362,7 +340,12 @@ public class PaymentGatewayController {
 						errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
 						break;	
 			}
-			paymentGatewayForm = new PaymentGatewayForm();
+			
+			if(netSuiteStatus != MMJBCommonConstants.STATUS_CODE_400){
+				//once the payment is success clear out the form data & related session data
+				session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
+					paymentGatewayForm = new PaymentGatewayForm();
+			}		
 		}
 		model.addObject("errorMessage", errorMessage);		
 		model.addObject("paymentGatewayForm", paymentGatewayForm);

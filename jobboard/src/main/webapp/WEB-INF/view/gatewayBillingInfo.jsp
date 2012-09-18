@@ -12,18 +12,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
-<title>ADVANCE Heathcare Jobs</title>
-
 <link href="../resources/css/Gateway.css" rel="stylesheet"
 	type="text/css">
-
-<!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<title>ADVANCE Heathcare Jobs</title>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		
@@ -33,12 +24,13 @@
 		$('[id^=security_code]').keypress(validateNumber);
 		
 		$("#continueToNext").click(function(){
-			$("#creditBillingForm").attr("action","${pageContext.request.contextPath}/pgiController/callCreditConfirmOrder.html");
-			$("#creditBillingForm").submit();
+			$("#billingForm").attr("action","${pageContext.request.contextPath}/pgiController/confirmOrder.html");
+			$("#billingForm").submit();
 		});
 		
 		$('#firstname2').focus();
 	});
+	
 	function copyAccToBillingAddr(obj) {
 		var isSelected = obj.value;
 		
@@ -53,6 +45,7 @@
 			$("#phone2").val($("#phone").val());
 		}
 	}
+	
 	function validateNumber(event) {
 	    var keyval = window.event ? event.keyCode : event.which;
 
@@ -82,7 +75,7 @@
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/callCreditConfirmOrder.html" id="creditBillingForm"
+					<form:form action="../pgiController/callCreditConfirmOrder.html" id="billingForm"
 						method="POST" commandName="paymentGatewayForm">
 
 						<div class="row">
@@ -283,7 +276,9 @@
 						<form:hidden path="billingAddressForm.facilityContactId" />
 						<div class"clearfix"></div>
 						<p class="borderBottomDotted marginBottom15">&nbsp;</p>
-						<!-- payment info -->
+						
+						<c:if test="${paymentGatewayForm.paymentMethod == 'ccp'}">
+							<!-- credit payment info -->
 						<h3 class="gatewayBreadcrumbs main_section">Payment
 							Information</h3>
 						<div class="rowEvenNewSpacing">
@@ -400,11 +395,33 @@
 						<div class="validationMsg">
 							<form:errors path="creditCardInfoForm.securiyCode" />
 						</div>
+						
+						<!-- Credit info end -->
+						</c:if>
+						
+						<c:if test="${paymentGatewayForm.paymentMethod == 'inv'}"> 
+							<h3 class="gatewayBreadcrumbs main_section">Invoice
+							Information</h3>
+
+						<div class="rowEvenNewSpacing">
+							<span class="lableText3">Purchase Order Number:</span>
+							<form:input path="invoiceForm.purchaseOrderNo" type="text"
+								name="PO_number" id="PO_number"
+								class="job_seeker_password textBox350 " />
+							<span class="required">(Required)</span>
+						</div>
+						<div>
+							<font color="red" style="padding-left: 185px"> <form:errors
+									path="invoiceForm.purchaseOrderNo" />
+							</font>
+						</div>
+						</c:if>
+						
 						<div class="clearfix"></div>
 						<div class="buttonContainer">
 							<span class="floatLeft">
 								<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a>
-								<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Cancel</a>
+								<a href="<%=request.getContextPath()%>/pgiController/cancelPayment.html" class="btn_sm orange">Cancel</a>
 								<a href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html" class="btn_sm orange">Back</a>	
 						</div>
 

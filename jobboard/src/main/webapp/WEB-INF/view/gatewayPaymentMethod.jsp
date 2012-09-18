@@ -24,7 +24,7 @@
 		jQuery(".megamenu").megamenu();
 		
 		$("#continueToNext").click(function(){
-			$("#paymentMethodForm").attr("action","${pageContext.request.contextPath}/pgiController/paymentMethod.html");
+			$("#paymentMethodForm").attr("action","${pageContext.request.contextPath}/pgiController/paymentBillingInfo.html");
 			$("#paymentMethodForm").submit();
 		});
 	});
@@ -68,7 +68,7 @@
 						<div class="buttonContainer">
 						  <span class="floatLeft">	
 							<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a>
-							<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" 
+							<a href="<%=request.getContextPath()%>/pgiController/cancelPayment.html" 
 								class="btn_sm orange">Cancel</a>
 						  </span>		
 						</div>

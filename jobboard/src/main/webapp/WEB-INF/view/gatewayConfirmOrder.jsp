@@ -12,9 +12,10 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
 		jQuery(".megamenu").megamenu();
 		
-		$("#jobPostingsCart a").click(function(){
+		/* $("#jobPostingsCart a").click(function(){
 			if($(this).html()== "Remove"){
 				$.ajax({url: "${pageContext.request.contextPath}/pgiController/removeJobPost.html",
 					type: "POST",
@@ -30,17 +31,15 @@
 				});
 			}
 			
+		}); */
+		
+		$("#continueToNext").click(function(){
+			$("#creditConfirmForm").attr("action","${pageContext.request.contextPath}/pgiController/placeOrder.html");
+			$("#creditConfirmForm").submit();
 		});
 	});
+	
 </script>
-<script type="text/javascript">
-		    function cancelProcess(){
-		    	//window.location.href = '../pgiController/';
-		    }		
-		    function backProcess(){
-		    	window.location.href = '../pgiController/paymentInvoiceBackMethod.html';
-		    }		
-		</script>
 </head>
 
 <body class="job_board">
@@ -50,17 +49,15 @@
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
 			<div class="main">
-
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
-
 				<div class="gateway">
 					<h2>Order Process</h2>
 					<h3 class="gatewayBreadcrumbs">
 						Billing and Payment >> <span class="nextStep">Confirm Order
 							>></span>
 					</h3>
-					<form:form action="../pgiController/placeOrder.html"
-						method="POST" class="firstForm" modelAttribute="paymentGatewayForm">
+					<form:form action="../pgiController/placeOrder.html" id="creditConfirmForm"
+						method="POST" class="firstForm" modelAttribute="form">
 						<div class="row">
 							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
 							<p class="form_notes review_order">Please review your order
@@ -68,7 +65,10 @@
 								changes, you can click on the appropriate 'Edit' links below.
 								This transaction will be final once you hit the 'Place Order'
 								button, so please review carefully before proceeding.</p>
-							<h3 class="gatewayBreadcrumbs main_section">Order Detials</h3>
+
+							<h3 class="gatewayBreadcrumbs main_section">Order Details</h3>
+
+							<!-- cart details start-->
 							<div id="jobPostingsCart">
 
 								<div class="rowEvenNewSpacing marginTop20">
@@ -120,10 +120,10 @@
 															Subtotal</label></td>
 													<td width="7%" align="Left"><span
 														class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
-													<td width="19%"><input name="healthCareSubSplty2"
+													<td width="19%"><input name="healthCareSubSplty2" readonly="readonly"
 														type="text" class="jb_input75 marginTop0 mar"
-														value="${cartItem.quantity}" /><a href="#"
-														class="marginLeft20" id="<%=i++%>">Remove</a></td>
+														value="${cartItem.quantity}" /><a href="<%=request.getContextPath()%>/pgiController/removeJobPost.html?cartItemIndex=<%=i++%>"
+														class="marginLeft20" >Remove</a></td>
 												</tr>
 											</table>
 										</div>
@@ -148,54 +148,60 @@
 										</div>
 									</div>
 								</div>
-							
-							<p class="borderBottomDotted marginBottom15">&nbsp;</p>
-							<h3 class="gatewayBreadcrumbs main_section">Payment
-								Information</h3>
-							<table class="indent10 gatewayTable" width="540" border="0"
-								cellspacing="0" cellpadding="0">
-								<thead>
+								<!-- cart details end -->
+
+
+								<p class="marginBottom15">&nbsp;</p>
+								<h3 class="gatewayBreadcrumbs main_section">Payment
+									Information</h3>
+								<table class="gatewayTable indent10" width="540" border="0"
+									cellspacing="0" cellpadding="0">
+									<thead>
+										<tr>
+											<th align="left" scope="col">Bill To</th>
+											<th align="center" scope="col">Payment Method</th>
+											<th align="right" scope="col">Order Total</th>
+										</tr>
+									</thead>
+
 									<tr>
-										<th align="left" scope="col">Bill To</th>
-										<th align="center" scope="col">Payment Method</th>
-										<th align="right" scope="col">Order Total</th>
+										<td align="left"><span class="paymentLineHeight">
+												${paymentGatewayForm.billingAddressForm.streetForBillingAddr} <br>
+												 ${paymentGatewayForm.billingAddressForm.cityOrTownForBillingAddr} <br> 
+												 ${paymentGatewayForm.billingAddressForm.stateBillingAddress} <br>
+												${paymentGatewayForm.billingAddressForm.countryForBillingAddr} <br>
+												${paymentGatewayForm.billingAddressForm.zipCodeForBillingAddr} <br> <span><a
+													id="edit"
+													href="<%=request.getContextPath()%>/pgiController/paymentBillingInfoBack.html">Edit</a></span>
+										</span></td>
+										<td align="center" valign="top"><span
+											class="paymentLineHeight"> 
+											
+											<c:if test="${paymentGatewayForm.paymentMethod == 'ccp'}">
+												Credit Card
+											</c:if>	 
+											<c:if test="${paymentGatewayForm.paymentMethod == 'inv'}">
+												Invoice
+											</c:if>
+											
+											<br> <span><a
+													href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html">Edit</a></span>
+										</span></td>
+										<td align="right" valign="top"><span
+											class="paymentLineHeight">$</span><span
+											class="paymentLineHeight">${purchaseJobPostForm.grandTotal}</span></td>
 									</tr>
-								</thead>
-								<tr>
-									<td align="left">
-										<span class="paymentLineHeight">
-												${stAddr} <br> 
-												${city} <br> 
-												${state} <br>
-												${country} <br> 
-												${zipCode} <br>
-												<a href="../pgiController/paymentInvoiceBackMethod.html">Edit</a>
-										</span>
-									</td>
-									<td align="center" valign="top">
-										<span class="paymentLineHeight">
-											Invoice <br> 
-											<a href="../pgiController/callPaymentMethod.html">Edit</a>
-										</span>
-									</td>
-									<td align="right" valign="top"><span
-										class="paymentLineHeight">$</span>${purchaseJobPostForm.grandTotal}</td>
-								</tr>
-							</table>
-						</div>
-						<div class="buttonContainer indent10">
-							<span class="floatLeft"> <input type="submit"
-								class="orange" value="Place Order" /> 
-								<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="white" name="Cancel" />
-								<input type="button" value="Back" onclick="backProcess()"
-									class="white" name="Back" />
-								<!-- <a href=""
-								class="btn_sm white">Cancel</a> <a
-								href="../pgiController/paymentInvoiceBackMethod.html"
-								class="btn_sm white">Back</a> -->
-							</span>
-						</div>
+								</table>
+							</div>
+							<br>
+							<div class="buttonContainer indent10">
+								<span class="floatLeft"> 
+									<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a> 
+									<a href="<%=request.getContextPath()%>/pgiController/cancelPayment.html" class="btn_sm orange">Cancel</a>
+									<a href="<%=request.getContextPath()%>/pgiController/paymentBillingInfoBack.html" class="btn_sm orange">Back</a>
+								</span>
+							</div>
+							<br><br>
 					</form:form>
 				</div>
 				<!-- gateway -->

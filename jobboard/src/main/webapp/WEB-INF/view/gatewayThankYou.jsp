@@ -55,7 +55,12 @@
 						</c:if>
 						
 						<div class="buttonContainer">
-							<span class="floatLeft"><a href="../employer/employerDashBoard.html" class="btn_sm orange">Return</a></span>
+							<c:if test="${statusCode == '400'}">
+								<span class="floatLeft"><a href="<%=request.getContextPath()%>/pgiController/backToConfirmOrder.html" class="btn_sm orange">Return</a></span>
+							</c:if>
+							<c:if test="${statusCode == '200'}">
+								<span class="floatLeft"><a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="btn_sm orange">Return</a></span>
+							</c:if>
 						</div>
 					</form:form>
 				</div>

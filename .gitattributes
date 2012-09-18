@@ -555,10 +555,8 @@ jobboard/src/main/webapp/WEB-INF/view/employerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployerdetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployers.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/gatewayCreditBilling.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/gatewayCreditConfirmOrder.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/gatewayInvoiceBilling.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/gatewayInvoiceConfirmOrder.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayBillingInfo.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/gatewayConfirmOrder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/gatewayPaymentMethod.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/gatewayThankYou.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
