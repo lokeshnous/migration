@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class UserDTO {
@@ -41,7 +42,15 @@ public class UserDTO {
 	private Date xmlFeedEndDate;
 	private SalesOrderDTO salesOrderDTO;
 	private String packageName;
+	private List<String> emailList;
 	
+	
+	public List<String> getEmailList() {
+		return emailList;
+	}
+	public void setEmailList(List<String> emailList) {
+		this.emailList = emailList;
+	}
 	public String getPackageName() {
 		return packageName;
 	}

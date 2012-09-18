@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -16,6 +18,7 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,6 +91,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private static final String PACKAGE_TYPE_STRING = "custentitypackagetype";
 	private static final String NAME_STRING = "name";
+	
+	private static final String CONTACT_ROLES_STRING = "contactroles";
+	private static final String EMAIL_STRING = "email";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -447,8 +453,14 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					+ jsonObject.get(XMLFEED_END_DATE_STRING));
 		}
 
-		setPackageTypeInUserDTO(userDTO, jsonObject);
-
+		try{
+			setPackageTypeInUserDTO(userDTO, jsonObject);
+			List<String> emailList = setContactEmailList(jsonObject);
+			userDTO.setEmailList(emailList);
+		}catch(Exception e){
+			LOGGER.error("Exception occurred while getting package type and email from Netsuite customer object "+e);
+		}
+		
 		LOGGER.info("IS_FEATURED===>" + jsonObject.get(IS_FEATURED));
 		LOGGER.info("IS_INVOICE_ENABLED===>"
 				+ jsonObject.get(IS_INVOICE_ENABLED));
@@ -456,6 +468,22 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				+ jsonObject.get(IS_XML_FEED_ENABLED));
 
 		return userDTO;
+	}
+
+	private List<String> setContactEmailList(
+			org.codehaus.jettison.json.JSONObject jsonObject)
+			throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		List<String> emailList = new ArrayList<String>();
+		if(jsonObject.has(CONTACT_ROLES_STRING)){
+			jsonArray = (JSONArray) jsonObject.get(CONTACT_ROLES_STRING);
+		}
+		for(int index = 0; index < jsonArray.length(); index++ ){
+			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
+			emailList.add(innerJsonObj.getString(CONTACT_ROLES_STRING));
+		}
+		LOGGER.info("EmailList is "+emailList);
+		return emailList;
 	}
 
 	/**

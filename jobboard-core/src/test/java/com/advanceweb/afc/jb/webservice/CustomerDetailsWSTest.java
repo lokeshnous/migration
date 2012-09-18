@@ -2,7 +2,8 @@ package com.advanceweb.afc.jb.webservice;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -32,7 +33,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Calling to authorize an user
         //customerDetailsWSTest.authorizeUser("customer", "NS101");
         //calling to authorise user using POST
-        customerDetailsWSTest.getCustomerDetails("customer",465670);
+        customerDetailsWSTest.getCustomerDetails();
         //Call for item services
         //customerDetailsWSTest.getItemServices();
         // Call fro craeting salesorder
@@ -41,7 +42,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
         // Call for create Customer
         	//customerDetailsWSTest.createCustomer("Customer1", "company");
         //customerDetailsWSTest.createCashSales();
-      customerDetailsWSTest.updateCustomer();
+      //customerDetailsWSTest.updateCustomer();
 
 	}
 
@@ -98,14 +99,13 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	 
 	 
 	 
-	 private String getCustomerDetails(String recdType, int custId){
+	 private String getCustomerDetails(){
 		// String authorization = getAuthString();
-		 Object recordType = recdType;
-		 Object cutomerId = custId;
+		
 	    
 	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
 	     
-		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=467173");//465670
+		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=465670");//465670
 	     /*client.header("Authorization", authorization);
 	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
@@ -121,7 +121,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 			
 			
 			try {
-				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				/*org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
 				//jsonObject.has("contactroles");
 				System.out.println(jsonObject.has("contactroles"));
 				JSONArray jsonArray = new JSONArray();
@@ -132,12 +132,32 @@ public class CustomerDetailsWSTest extends ServiceTest {
 				for(int index = 0; index < jsonArray.length(); index++ ){
 					JSONObject innerJsonObj = jsonArray.getJSONObject(index);
 				System.out.println("contacts=>"+innerJsonObj.getString("email"));
+				}*/
+				/*org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				//jsonObject.has("contactroles");
+				System.out.println(jsonObject.has("custentitypackagetype"));
+				org.codehaus.jettison.json.JSONObject jsonObj  = (JSONObject) jsonObject.get("custentitypackagetype");
+				if(jsonObj.has("name")){
+					System.out.println(jsonObj.get("name"));
 				}
+				*/
 				//Iterator<String> myIter = jsonObject.keys();
 				/*if(jsonObject.has("contactroles")){
 					
 				}*/
 				
+				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				JSONArray jsonArray = new JSONArray();
+				List<String> emailList = new ArrayList<String>();
+				if(jsonObject.has("contactroles")){
+					jsonArray = (JSONArray) jsonObject.get("contactroles");
+				}
+				for(int index = 0; index < jsonArray.length(); index++ ){
+					org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
+					emailList.add(innerJsonObj.getString("email"));
+					System.out.println("contacts=>"+innerJsonObj.getString("email"));
+				}
+				System.out.println("emailList=="+emailList);
 				
 				System.out.println(jsonObject.get("contactroles"));
 				
