@@ -470,6 +470,14 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		return userDTO;
 	}
 
+	/**
+	 * This method is used to get the Email address from the netsuite customer object and
+	 * returning a list of emails.
+	 * @param jsonObject
+	 * @return List<String> emailList
+	 * @throws JSONException
+	 */
+	
 	private List<String> setContactEmailList(
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
@@ -482,7 +490,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
 			emailList.add(innerJsonObj.getString(CONTACT_ROLES_STRING));
 		}
-		LOGGER.info("EmailList is "+emailList);
+		LOGGER.info("Email List is "+emailList);
 		return emailList;
 	}
 
@@ -540,6 +548,14 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	}
 
+	
+	/**
+	 * This method is used to convert a String date to Date object
+	 * into the required format.
+	 * @param date
+	 * @return Date object
+	 */
+	
 	public Date convertToDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				MMJBCommonConstants.DISP_DATE_PATTERN);
