@@ -2718,13 +2718,18 @@ input.fileType {
 	visibility: hidden;
 }
 
-h2.noTopBottomBorder { /* no top & bottom borders */
+h2.noTopBottomBorder,h2.HeadTopBottomBorder { /* no top & bottom borders */
 	color: #6b7b84;
 	font-size: 18px;
 	font-weight: normal;
 	padding: 0px 0 5px 0;
 	border: none;
 }
+h2.HeadTopBottomBorder{
+	width:70px; 
+	float:left;
+}
+DropBox
 /* New Style start*/
 a.link_color1_emphasized,a.link_color2_emphasized,.link_color2_selected
 	{
