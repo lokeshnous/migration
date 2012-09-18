@@ -488,7 +488,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		}
 		for(int index = 0; index < jsonArray.length(); index++ ){
 			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
-			emailList.add(innerJsonObj.getString(CONTACT_ROLES_STRING));
+			if(innerJsonObj.has(CONTACT_ROLES_STRING)){
+				emailList.add(innerJsonObj.getString(CONTACT_ROLES_STRING));
+			}
 		}
 		LOGGER.info("Email List is "+emailList);
 		return emailList;
