@@ -605,6 +605,7 @@ jobboard/src/main/webapp/WEB-INF/view/uploadfile.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/uploadfileindex.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewAlertPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewCopyPasteResume.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/viewEditCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewTestimony.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/web.xml -text

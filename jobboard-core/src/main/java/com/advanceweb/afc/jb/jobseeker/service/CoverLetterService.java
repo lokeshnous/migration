@@ -64,4 +64,25 @@ public interface CoverLetterService {
 	 */
 	
 	public List<ResCoverLetterDTO> getJobOwnerList( int userId) throws JobBoardServiceException;
+	/**
+	 * 
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	public boolean isDelete(int userId,int coverLetterId);
+	/**
+	 * 
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	public boolean isupDateCover(int userId,int coverLetterId);
+	/**
+	 * 
+	 * @param coverletterId
+	 * @return
+	 */
+	ResCoverLetterDTO getCoverList(int coverletterId);
+	
 }

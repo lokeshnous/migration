@@ -367,9 +367,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		return isUpdate;
 	}
 
-	
-	
-	
+	/**
+	 * display option of cover letter
+	 * @author kartikm
+	 * @version 1.0.1
+	 * @param userId
+	 * @return list
+	 */
 	@Override
 	public List<ResCoverLetterDTO> getJobOwnerList(int userId) {
 		List<ResCoverLetterDTO> resCov=new ArrayList<ResCoverLetterDTO>();
@@ -381,6 +385,54 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		}
 		return resCov;
 
+	}
+	
+	/**
+	 * Delete option of cover letter
+	 * @author kartikm
+	 * @version 1.0.1
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	public boolean isDelete(int userId,int coverLetterId){
+		
+		return true;
+	}
+	/**
+	 * Delete option of cover letter
+	 * @author kartikm
+	 * @version 1.0.1
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	public boolean isupDateCover(int userId,int coverLetterId){
+		
+		return true;
+	}
+	/**
+	 * view and update option of cover letter
+	 * @author kartikm
+	 * @version 1.0.1
+	 * @param userId
+	 * @param status
+	 * @return ResCoverLetterDTO
+	 */
+	
+	public ResCoverLetterDTO getCoverList(int coverletterId){
+		ResCoverLetterDTO resCovDTO=new ResCoverLetterDTO();
+		try {
+			List<ResCoverletter> resList=new ArrayList<ResCoverletter>();
+			if (coverletterId > 0){
+				resList=hibernateTemplateCareers.find("from ResCoverletter rs where rs.coverletterId=?",coverletterId);
+			}
+			resCovDTO=jsSubscriptionHelper.toTransFormListToDTO(resList);
+		} catch (DataAccessException e) {
+			LOGGER.info("Error for update of employee data");
+		}
+		return resCovDTO;	
+		
 	}
 	
 	

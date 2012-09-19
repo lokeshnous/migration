@@ -134,5 +134,76 @@ public class JobseekerCoverLetterController {
 		}
 		return model;
 	}
+	
+	
+	
+	/**
+	 * This method is called to Account Setting update page and
+	 * editAccountSetting method take Bean class binding result from Jsp pages
+	 * Seession for UserId and FacilityId.
+	 * 
+	 * @author kartikm
+	 * @param model
+	 * @return true
+	 */
+	@RequestMapping(value = "/deleteManageExistProfile", method = RequestMethod.GET)
+	public ModelAndView deleteExitProfileSettings(HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		ResCoverLetterForm resCoverLetterForm = new ResCoverLetterForm();
+		try {
+			int userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+			int coverLetterId=36;
+			boolean isdelete=coverLetterService.isDelete(userId,coverLetterId);
+			
+			List<ResCoverLetterDTO> jbOwnerList = new ArrayList<ResCoverLetterDTO>();
+			try {
+				jbOwnerList = coverLetterService.getJobOwnerList(userId);
+			} catch (JobBoardException jbex) {
+				LOGGER.error("Error occured while updating the job owner", jbex);
+			}
+			model.addObject("jobOwners", jbOwnerList);
+			model.addObject("employeeAccountForm", resCoverLetterForm);
+			model.setViewName("jobSeekerManageExitWright");
+		} catch (Exception e) {
 
+			LOGGER.info("This is Account Addresss edite option error");
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/jobseekerViewCoverLetter", method = RequestMethod.GET)
+	public ModelAndView jobseekerViewCoverLetter(HttpServletRequest request,
+			HttpSession session, ResCoverLetterForm resCoverLetterForm,
+			BindingResult result) {
+		ModelAndView model = new ModelAndView();
+		
+		try {
+			int userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+			String covId=request.getParameter("coverletterId");
+			String covType=request.getParameter("type");
+			int coverletterId=Integer.parseInt(covId);
+			ResCoverLetterDTO listOfCoverLetter=coverLetterService.getCoverList(coverletterId);
+			if (listOfCoverLetter!=null){
+				resCoverLetterForm.setActive(listOfCoverLetter.getActive());
+				resCoverLetterForm.setCoverletterId(listOfCoverLetter.getCoverletterId());
+				resCoverLetterForm.setCoverletterText(listOfCoverLetter.getCoverletterText());
+				resCoverLetterForm.setName(listOfCoverLetter.getName());
+				resCoverLetterForm.setUserId(listOfCoverLetter.getUserId());
+			}		
+			
+			model.addObject("covType", covType);
+			model.addObject("employeeAccountForm", resCoverLetterForm);
+			model.setViewName("viewEditCoverLetter");
+		} catch (Exception e) {
+
+			LOGGER.info("This is Account Addresss edite option error");
+		}
+		return model;
+	}
+	
+	
+	
+	
 }

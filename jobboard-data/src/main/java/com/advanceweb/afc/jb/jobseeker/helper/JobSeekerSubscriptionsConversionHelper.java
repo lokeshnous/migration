@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscriptionPK;
+import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 
 /**
  * 
@@ -84,5 +86,26 @@ public class JobSeekerSubscriptionsConversionHelper {
 		}		
 		return false;		
 	}
+	/**
+	 * 
+	 * @param subDTO
+	 * @return
+	 */
+	public ResCoverLetterDTO toTransFormListToDTO(List<ResCoverletter> subDTO){
+		ResCoverLetterDTO rfc=new ResCoverLetterDTO();
+		if(rfc!=null){
+			for(ResCoverletter resFac : subDTO){
+				rfc.setActive(resFac.getActive());
+				rfc.setCoverletterId(resFac.getCoverletterId());
+				rfc.setCoverletterText(resFac.getCoverletterText());
+				rfc.setName(resFac.getName());
+				rfc.setUserId(resFac.getUserId());
+				//rfc.setCreateDt(resFac.getCreateDt());
+			}
+		}
+		return rfc;		
+	}
+	
+	
 	
 }

@@ -75,4 +75,27 @@ public interface JobSeekerSubscriptionsDAO {
 	 */
 	
 	public List<ResCoverLetterDTO> getJobOwnerList( int userId) throws JobBoardDataException;
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	public boolean isDelete(int userId,int coverLetterId);
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	public boolean isupDateCover(int userId,int coverLetterId);
+	/**
+	 * 
+	 * @param coverletterId
+	 * @return
+	 */
+	public ResCoverLetterDTO getCoverList(int coverletterId);
+	
 }

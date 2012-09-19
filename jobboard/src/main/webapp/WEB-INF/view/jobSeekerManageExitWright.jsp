@@ -10,8 +10,7 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		$("#createCoverLett").displaypopup(
-				"#createCoverLett", "400", "350");
+		
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -50,32 +49,22 @@
 									<c:if test="${job.active=='0'}">Private</c:if>														
 									</td>
 									<td align="center" valign="middle">${job.updateDt}</td>
-									<td align="center"><a href="#"> <img width="20"
-											height="20" alt=""
-											src="<%=request.getContextPath()%>/resources/images/View.png"
-											complete="complete" />
-									</a> <a href="#"> <img width="20" height="20" alt=""
-											src="<%=request.getContextPath()%>/resources/images/Edit.png"
-											complete="complete" />
-									</a> <a href="#"> <img width="20" height="20" alt=""
-											src="<%=request.getContextPath()%>/resources/images/Download.png"
-											complete="complete" />
-									</a> <a href="#"> <img width="20" height="20" alt=""
-											src="<%=request.getContextPath()%>/resources/images/Print2.png"
-											complete="complete" />
-									</a> <a href="#"> <img width="20" height="20" alt=""
-											src="<%=request.getContextPath()%>/resources/images/Delete.png"
-											complete="complete" />
-									</a></td>
+									<td align="center">
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=View" class="nyroModal"> <img width="20" height="20" alt="" class="view"/></a>
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=Edit" class="nyroModal"> <img width="20" height="20" alt="" class="editFile"/></a> 
+										 <a href="#"> <img width="20" height="20" alt="" class="download"/></a> 
+										 <a href="#"> <img width="20" height="20" alt="" class="print"/></a> 
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDeleteCoverLetter.html?coverletterId=${job.coverletterId}" class="nyroModal"> <img width="20" height="20" alt="" class="delete"/></a>
+									 </td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 				<div class="row marginTop5 paddingBottom10">
-					<span class="floatLeft marginTop10"><a class="btn_sm orange" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett"> 
-					 New Cover Letter </a> <a
-						class="btn_sm orange" href=""> Cancel </a>
+					<span class="floatLeft marginTop10">
+					   <a class="btn_sm orange nyroModal" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover">New Cover Letter </a> 
+					   <a class="btn_sm orange" href=""> Cancel </a>
 					</span> <span class="floatLeft marginTop10 marginLeft5"> </span>
 				</div>
 			</form:form>

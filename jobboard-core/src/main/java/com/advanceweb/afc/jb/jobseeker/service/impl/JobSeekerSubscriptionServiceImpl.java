@@ -3,13 +3,13 @@ package com.advanceweb.afc.jb.jobseeker.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
-import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerSubscriptionsDAO;
@@ -25,7 +25,8 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("jobSeekerSubscriptionService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionService,CoverLetterService {
-
+	private static final Logger LOGGER = Logger
+			.getLogger("JobSeekerSubscriptionServiceImpl.class");
 	@Autowired
 	private JobSeekerSubscriptionsDAO jobSeekerSubscriptionsDAO;
 
@@ -111,5 +112,38 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 		}
 		return manageAccessPermissionDTOs;
 	}
+	/**
+	 * To find out the status it is public or private
+	 */
+	@Override
+	public boolean isDelete(int userId,int coverLetterId) {
+		return jobSeekerSubscriptionsDAO.isDelete(userId,coverLetterId);
+	}
+	/**
+	 * 
+	 * @param userId
+	 * @param status
+	 * @return boolean
+	 */
+	@Override
+	public boolean isupDateCover(int userId,int coverLetterId){
+		return jobSeekerSubscriptionsDAO.isupDateCover(userId,coverLetterId);
+	}
+	/**
+	 * 
+	 */
+	@Override
+	public ResCoverLetterDTO getCoverList(int coverletterId){
+		ResCoverLetterDTO resDTO=new ResCoverLetterDTO();
+		try {
+			resDTO=jobSeekerSubscriptionsDAO.getCoverList(coverletterId);
+			
+		}catch (Exception e) {
+			LOGGER.info("Error for employee registration edit");
+		}
+		return resDTO;
+	}
+	
+	
 	
 }
