@@ -4,9 +4,12 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 /**
- * @author kartikm
- *
- */
+  * This method is called for create cover letter
+  * etc.
+  * @author kartikm
+  * @version V.0.1
+  *
+  */
 public class ResCoverLetterForm {
 	private int coverletterId;
 	private String name;

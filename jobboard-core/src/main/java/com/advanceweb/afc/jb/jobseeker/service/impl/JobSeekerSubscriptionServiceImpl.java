@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerSubscriptionsDAO;
 import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * 
@@ -51,6 +55,7 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 	 * @return
 	 */
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO) {
 		return jobSeekerSubscriptionsDAO.coverLetterSaveByjobSeeker(rclDTO);
 	}
@@ -61,4 +66,50 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 	public boolean findActiveStatus(int userId,int status) {
 		return jobSeekerSubscriptionsDAO.findActiveStatus(userId,status);
 	}
+	
+	/**
+	 * To find out the status it is public or private
+	 */
+	@Override
+	public boolean findFirstActiveStatus(int userId,int status) {
+		return jobSeekerSubscriptionsDAO.findFirstActiveStatus(userId,status);
+	}
+	
+	/**
+	 * To find out the status it is public or private
+	 */
+	@Override
+	public boolean findDuplicateActiveStatus(int userId,int status) {
+		return jobSeekerSubscriptionsDAO.findDuplicateActiveStatus(userId,status);
+	}
+	/**
+	 * To find out the status it is public or private
+	 */
+	@Override
+	public boolean findNameActiveStatus(int userId,String name) {
+		return jobSeekerSubscriptionsDAO.findNameActiveStatus(userId,name);
+	}
+	
+	/**
+	 * To Save the Cover letter of particular user
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean coverLetterUpdateByjobSeeker(ResCoverLetterDTO rclDTO) {
+		return jobSeekerSubscriptionsDAO.coverLetterUpdateByjobSeeker(rclDTO);
+	}
+	
+	@Override
+	public List<ResCoverLetterDTO> getJobOwnerList(int userId) throws JobBoardServiceException {
+		List<ResCoverLetterDTO> manageAccessPermissionDTOs = new ArrayList<ResCoverLetterDTO>();
+		try {
+			manageAccessPermissionDTOs = jobSeekerSubscriptionsDAO.getJobOwnerList(userId);
+		} catch (JobBoardDataException jdex) {			
+			throw new JobBoardServiceException("Error while fetching the job owner..." + jdex);
+		}
+		return manageAccessPermissionDTOs;
+	}
+	
 }

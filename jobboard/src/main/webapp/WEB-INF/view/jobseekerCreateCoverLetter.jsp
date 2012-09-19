@@ -76,6 +76,7 @@
 								</div>
 							</div>
 						</div>
+						<div id="errmsg" class="FormErrorDisplayText"></div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter marginTop10">
 								Body Text:
@@ -100,7 +101,7 @@
 							</span>
 							<span class="required">								
 									<label class="greyLabel">
-									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="5" path="active"  label="Private"/>										
+									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private"/>										
 									</label>
 							</span>
 							<div class="toolTip marginTop6 marginLeft10">

@@ -41,6 +41,9 @@ jQuery(document).ready(
 					"#viewMySavedSearchesId", "790", "252");
 			$("#createCoverLett").displaypopup(
 					"#createCoverLett", "400", "350");
+			$("#manageCoverLett").displaypopup(
+					"#manageCoverLett", "400", "350");
+			
 			
 		});
 </script>
@@ -217,9 +220,10 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<!-- <a href="#"> -->${msg.jsManageExistingCoverLetters}<!-- </a> -->
+												<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/manageExistProfile.html?resumeType=manageCover" id="manageCoverLett">${msg.jsManageExistingCoverLetters}</a> 
+												
 											</p>
-
+											
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
