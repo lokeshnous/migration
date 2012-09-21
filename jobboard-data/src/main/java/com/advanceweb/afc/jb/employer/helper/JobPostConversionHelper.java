@@ -42,6 +42,9 @@ public class JobPostConversionHelper<JobPostForm> {
 		
 		 JpJob jpJob=new JpJob();
 		 //Post New Job
+		 if(dto.getJobId()>0){
+			 jpJob.setJobId(dto.getJobId());
+		 }
 		 jpJob.setName(dto.getCompanyName());
 		 jpJob.setAccountNum(dto.getCustomerNo());
 		 jpJob.setJobNumber(dto.getJobNumber());
@@ -64,7 +67,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setAdtext(dto.getJobDesc());
 		 jpJob.setStartDt(DateUtils.convertStringToSQLDate(dto.getScheduleStartDt()));
 		 jpJob.setEndDt(DateUtils.convertStringToSQLDate(dto.getScheduleExpiryDt()));
-		 
+		 jpJob.setEmploymentType(Integer.valueOf(dto.getEmploymentType()));
 		 if(null != template && template.getTemplateId() !=0 ){
 			 jpJob.setJpTemplate(template);
 		 }else{
@@ -279,7 +282,7 @@ public class JobPostConversionHelper<JobPostForm> {
 			jobPostDTO.setJobZip(jpJob.getJpJobLocations().get(0)
 					.getJpLocation().getPostcode());
 		}
-		// jobPostDTO.setEmploymentType(jpJob.get)
+		 jobPostDTO.setEmploymentType(String.valueOf(jpJob.getEmploymentType()));
 		jobPostDTO.setReqSkills(jpJob.getSkills());
 		jobPostDTO.setJobDesc(jpJob.getAdtext());
 		jobPostDTO.setTrackPixel(jpJob.getTrackingPixel());

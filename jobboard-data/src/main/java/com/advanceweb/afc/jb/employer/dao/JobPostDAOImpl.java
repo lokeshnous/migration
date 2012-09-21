@@ -150,7 +150,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
 					template, admFacility);
 			jpJob.setJpJobType(jobType);
-			hibernateTemplate.save(jpJob);
+			hibernateTemplate.saveOrUpdate(jpJob);
 			
 			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
 			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();

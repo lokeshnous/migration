@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 /**
  * 
@@ -38,6 +39,14 @@ public interface ManageAccessPermissionService {
 	 * @return
 	 */
 	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId, int userId) throws JobBoardServiceException;
+	
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public MerUser getUserListByEmail(String email) throws JobBoardServiceException;
 	
 	
 

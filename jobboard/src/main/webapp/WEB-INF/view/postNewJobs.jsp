@@ -153,6 +153,16 @@
 											.attr(
 													"disabled",
 													true);
+									$(
+									"#postNewJobFormId :button")
+									.attr(
+											"hidden",
+											true);
+									$(
+									"#cancel")
+									.attr(
+											"hidden",
+											true);
 								});
 
 			}
@@ -210,6 +220,7 @@
 <div class="main_wrapper_outside">
           <div class="main_wrapper_inside">
 <form:hidden path="readOnly"/>
+<form:hidden path="jobId"/>
     <div class="main">
       <jsp:include page="../templates/templates_header.jsp"></jsp:include>
               <div class="clearfix"></div>
@@ -475,7 +486,8 @@
 	              <input type="button" value="Post new job" class="btn_sm white"  id="postNewJobButId"/>
 	              <input type="button" value="Schedule job" class="btn_sm white"  id="scheduleNewJobButId">
 	              <input type="button" value="Save as draft" class="btn_sm white" name="SaveAsDraft" id="saveAsDraftJobButId">
-	              <input type="submit" value="Cancel" class="btn_sm white" name="Cancel">
+	              <input type="submit" value="Cancel" class="btn_sm white" name="Cancel" id="cancel" >
+	             
 	              <input type="submit" value="Post new job" class="btn_sm white" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;"/>
 	              <input type="submit" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;"/>
 	              <input type="submit" value="Save as draft" class="btn_sm white" name="SaveAsDraft" id="savePostJobButHideId" style="visibility: hidden;"/>

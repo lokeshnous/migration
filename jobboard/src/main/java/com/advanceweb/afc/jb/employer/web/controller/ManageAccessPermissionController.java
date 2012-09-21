@@ -25,10 +25,12 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -160,19 +162,30 @@ public class ManageAccessPermissionController {
 			warningMessage.put("failure", jobOwnerExist);
 			return warningMessage;
 		}
+		
 		UserDTO userDTO = transformEmpReg
 				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
+		
+		try {
+			MerUser merUser = manageAccessPermissionService
+					.getUserListByEmail(manageAccessPermissionForm
+							.getOwnerEmail());
+			if (null != merUser && merUser.getUserId() > 0) {
+				userDTO.setUserId(merUser.getUserId());
+			}
+		} catch (JobBoardServiceException ex) {
+			LOGGER.error(ex);
+		}
 		empDTO.setMerUserDTO(userDTO);
-
 		try {
 			manageAccessPermissionService.createJobOwner(empDTO,
 					facilityIdParent, userIdParent);
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while creating the new job owner", jbex);
 		}
-		LOGGER.info("Email : sent Email!");
-		sendEmail(manageAccessPermissionForm, userDTO, request);
 
+		sendEmail(manageAccessPermissionForm, userDTO, request);
+		LOGGER.info("Email : sent Email!");
 		warningMessage.put("success", jobOwnerAddSuccess);
 		return warningMessage;
 	}

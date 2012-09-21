@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 	/**
@@ -47,5 +48,11 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 	 */
 	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
 			int userId)throws JobBoardDataException;
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public MerUser getUserListByEmail(String email)throws JobBoardDataException;
 
 }

@@ -26,6 +26,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
+import com.mysql.jdbc.StringUtils;
 
 /**
  * To save new job Owner * @author deviprasadm
@@ -44,6 +45,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
 
+	private static final String VERIFY_EMAIL = "from MerUser where email = ? and deleteDt is NOT NULL";
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -59,29 +61,38 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			int userIdp) {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO);
+			
 			if (null != merUser) {
-				// saving employer credentials
-				hibernateTemplateTracker.saveOrUpdate(merUser);
+				if (null != empDTO.getMerUserDTO()
+						&& empDTO.getMerUserDTO().getUserId() > 0) {
+					merUser.setUserId(empDTO.getMerUserDTO().getUserId());
+					// saving employer credentials
+					hibernateTemplateTracker.saveOrUpdate(merUser);
+				} else {
+					if (null != merUser) {
+						// saving employer credentials
+						hibernateTemplateTracker.saveOrUpdate(merUser);
+					}
+					// saving the data in Adm_User_Role
+					saveAdmUserRole(empDTO, userIdp, merUser);
+
+					// saving the data in adm_facility
+					AdmFacility facility = saveFacilityDetails(facilityIdP,
+							userIdp, merUser);
+
+					// saving the data in the adm_user_facility
+					AdmUserFacility userfacility = new AdmUserFacility();
+					AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
+					facilityPK.setFacilityId(facility.getFacilityId());
+					facilityPK.setUserId(merUser.getUserId());
+					facilityPK.setRoleId(empDTO.getRollId());
+					userfacility.setFacilityPK(facilityPK);
+					userfacility.setCreateUserId(0);
+					// userfacility.setAdmRole();
+					userfacility.setCreateDt(new Date());
+					hibernateTemplateCareers.saveOrUpdate(userfacility);
+				}
 			}
-
-			// saving the data in Adm_User_Role
-			saveAdmUserRole(empDTO, userIdp, merUser);
-
-			// saving the data in adm_facility
-			AdmFacility facility = saveFacilityDetails(facilityIdP, userIdp,
-					merUser);
-
-			// saving the data in the adm_user_facility
-			AdmUserFacility userfacility = new AdmUserFacility();
-			AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
-			facilityPK.setFacilityId(facility.getFacilityId());
-			facilityPK.setUserId(merUser.getUserId());
-			facilityPK.setRoleId(empDTO.getRollId());
-			userfacility.setFacilityPK(facilityPK);
-			userfacility.setCreateUserId(0);
-			// userfacility.setAdmRole();
-			userfacility.setCreateDt(new Date());
-			hibernateTemplateCareers.saveOrUpdate(userfacility);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
@@ -332,6 +343,27 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			LOGGER.error(e);
 		}
 		return null;
+
+	}
+	@Override
+	public MerUser getUserListByEmail(String email) {
+		MerUser user = null;
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+
+				List<MerUser> usersList = hibernateTemplateTracker.find(
+						VERIFY_EMAIL, email);
+
+				if (null != usersList && !usersList.isEmpty()) {
+					user = usersList.get(0);
+
+				}
+
+			}
+		} catch (Exception exception) {
+			LOGGER.error(exception);
+		}
+		return user;
 
 	}
 

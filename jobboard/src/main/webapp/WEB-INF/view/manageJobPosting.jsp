@@ -385,8 +385,8 @@
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><div
 													class="editFile"></div></a><a title="view"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><div
-													class="view"></div></a><a title="check" href="#"><div class="check" name="check"
-													id="${job.jobId}"><img title="delete" src="../resources/images/tranBg.png" class="check"></div></a>
+													class="view"></div></a><%-- <a title="check" href="#"><div class="check" name="check"
+													id="${job.jobId}"><img title="delete" src="../resources/images/tranBg.png" class="check"></div></a> --%>
 										</div></td>
 								</tr>
 								</c:forEach>

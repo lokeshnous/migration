@@ -147,7 +147,6 @@ public class JobPostController {
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
 		}
-		
 		// Should be used while posting the job
 		//Calling net suite to check whether the employer is featured or not 
 		//And to know, whether the employer is applicable for free job posting
@@ -175,6 +174,9 @@ public class JobPostController {
 		
 		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
+		if(form.getJobId()>0){
+			dto.setJobId(form.getJobId());
+		}
 		dto.setbFeatured(userDTO.isFeatured());
 		dto.setbActive(true);
 		dto.setFacilityId((Integer) session
@@ -205,8 +207,12 @@ public class JobPostController {
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
 		}
+		
 		form.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
+		if(form.getJobId()>0){
+			dto.setJobId(form.getJobId());
+		}
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		employerJobPost.savePostJob(dto);
@@ -235,6 +241,9 @@ public class JobPostController {
 		}
 		form.setJobStatus(MMJBCommonConstants.POST_JOB_DRAFT);
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
+		if(form.getJobId()>0){
+			dto.setJobId(form.getJobId());
+		}
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		employerJobPost.savePostJob(dto);
@@ -377,6 +386,7 @@ public class JobPostController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		List<FromZipcodeDTO> zipCodeList = populateDropdownsService
 				.getFromZipcodeList();
+		jobPostform.setJobId(jobId);
 		model.addObject(JOB_POST_FORM, jobPostform);
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);

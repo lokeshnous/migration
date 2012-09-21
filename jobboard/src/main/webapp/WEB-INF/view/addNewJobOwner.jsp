@@ -14,6 +14,7 @@
 		    jQuery(document).ready(function(){
 		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
 		    	$("#saveNewOwner").click(function() {
+		    			$("#jobOwnerErrorMsg").html("");
 			    		var ownerName = $.trim($("#ownerName").val());
 						var ownerEmail = $.trim($("#ownerEmail").val());
 						var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;           
