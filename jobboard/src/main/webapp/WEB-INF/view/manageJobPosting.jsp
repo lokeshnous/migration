@@ -366,7 +366,7 @@
 											path="jobPostDTOList[${status.index}].autoRenew"
 											id="selectAutoRenew"
 											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-											name="select1">
+											name="select1" disabled="true">
 											<form:options items="${autoRenewList}" itemLabel="optionId"
 												itemValue="optionName" />
 										</form:select>
@@ -374,7 +374,7 @@
 											path="jobPostDTOList[${status.index}].brandTemplate"
 											id="selectTemplate"
 											class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
-											name="select">
+											name="select" disabled="true">
 											<form:option value="0" label="Select One" />
 											<form:options items="${templateList}" itemLabel="optionName"
 												itemValue="optionId" />
