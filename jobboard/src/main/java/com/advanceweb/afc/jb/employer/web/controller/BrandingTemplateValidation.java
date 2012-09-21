@@ -35,12 +35,12 @@ public class BrandingTemplateValidation {
 		  }
 	
 	  	/**
-		 * Validating the image file
+		 * Validating the Main image file
 		 * @param brandingTemplateForm
 		 * @param errors
 		 * @return void
 		 */
-		public void validateImage(BrandingTemplateForm brandingTemplateForm, Errors errors){
+		public void validateMainImage(BrandingTemplateForm brandingTemplateForm, Errors errors){
 		
 			int imageLength = brandingTemplateForm.getMainImagePath().length();
 			String fileExtension = brandingTemplateForm.getMainImagePath().substring(imageLength-4, imageLength);
@@ -50,36 +50,36 @@ public class BrandingTemplateValidation {
 				errors.rejectValue("mainImageFileData", STR_NOTEMPTY, "Please select the appropriate Image");
 			}
 			
-			imageLength = brandingTemplateForm.getLogoPath().length();
-			fileExtension = brandingTemplateForm.getLogoPath().substring(imageLength-4, imageLength);
-			
-			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_GIF) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_TIF)))
-			{
-				errors.rejectValue("logoFileData", STR_NOTEMPTY, "Please select the appropriate Logo");
-			}
-		}
-	
-		/**
-		 * Validating the image file size
-		 * @param brandingTemplateForm
-		 * @param errors
-		 * @return void
-		 */
-		public void validateImageSize(BrandingTemplateForm brandingTemplateForm, Errors errors){
-
 			long imageSize = brandingTemplateForm.getMainImageFileData().getSize();
 			if (imageSize==0 || imageSize>imageSizeLimit)
 			{
 				errors.rejectValue("mainImageFileData", STR_NOTEMPTY, "Please select the appropriate Image size");
 			}
-			imageSize = brandingTemplateForm.getLogoFileData().getSize();
+			
+		}
+		
+		/**
+		 * Validating the Logo image file
+		 * @param brandingTemplateForm
+		 * @param errors
+		 * @return void
+		 */
+		public void validateLogo(BrandingTemplateForm brandingTemplateForm, Errors errors){
+			
+			int imageLength = brandingTemplateForm.getLogoPath().length();
+			String fileExtension = brandingTemplateForm.getLogoPath().substring(imageLength-4, imageLength);
+			
+			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_GIF) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_TIF)))
+			{
+				errors.rejectValue("logoFileData", STR_NOTEMPTY, "Please select the appropriate Logo");
+			}
+			
+			long imageSize = brandingTemplateForm.getLogoFileData().getSize();
 			if (imageSize==0 || imageSize>imageSizeLimit)
 			{
 				errors.rejectValue("logoFileData", STR_NOTEMPTY, "Please select the appropriate Logo size");
 			}
-			
 		}
-	
 		
 		
 		/**
@@ -94,14 +94,16 @@ public class BrandingTemplateValidation {
 			String fileExtension;
 	
 			for (AddImageForm image : brandingTemplateForm.getListAddImages()) {
-				// Debug for null path
-				imageLength = image.getMediaPath().length();
-				fileExtension = image.getMediaPath().substring(imageLength - 4,	imageLength);
-				if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_GIF) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) 
-				{
-					return ("Please select the appropriate Additional Image");
+
+				if(image.getAddImageFileData().getSize() > 0)
+				{	
+					imageLength = image.getMediaPath().length();
+					fileExtension = image.getMediaPath().substring(imageLength - 4,	imageLength);
+					if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_GIF) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) 
+					{
+						return ("Please select the appropriate Additional Image");
+					}
 				}
-	
 			}
 	
 			return null;
@@ -119,12 +121,13 @@ public class BrandingTemplateValidation {
 			long imageSize;
 	
 			for (AddImageForm image : brandingTemplateForm.getListAddImages()) {
-				// Debug for null path
-				imageSize = image.getAddImageFileData().getSize();
-				if (imageSize == 0 || imageSize > imageSizeLimit) {
-					return ("Please select the appropriate Additional Image Size");
+				if(image.getAddImageFileData().getSize() > 0)
+				{
+					imageSize = image.getAddImageFileData().getSize();
+					if (imageSize > imageSizeLimit) {
+						return ("Please select the appropriate Additional Image Size");
+					}
 				}
-	
 			}
 	
 			return null;
@@ -144,13 +147,14 @@ public class BrandingTemplateValidation {
 			String fileExtension;
 	
 			for (VideoForm video : brandingTemplateForm.getListVideos()) {
-				// Debug for null path
-				videoLength = video.getMediaPath().length();
-				fileExtension = video.getMediaPath().substring(videoLength - 4,	videoLength);
-				if (!(fileExtension.contains(MMJBCommonConstants.VIDEO_TYPE_MOV) || fileExtension.contains(MMJBCommonConstants.VIDEO_TYPE_MPG))) {
-					return ("Please select the appropriate Video");
+				if(video.getVideoFileData().getSize() > 0)
+				{
+					videoLength = video.getMediaPath().length();
+					fileExtension = video.getMediaPath().substring(videoLength - 4,	videoLength);
+					if (!(fileExtension.contains(MMJBCommonConstants.VIDEO_TYPE_MOV) || fileExtension.contains(MMJBCommonConstants.VIDEO_TYPE_MPG))) {
+						return ("Please select the appropriate Video");
+					}
 				}
-	
 			}
 	
 			return null;
@@ -168,12 +172,13 @@ public class BrandingTemplateValidation {
 			long videoSize;
 	
 			for (VideoForm video : brandingTemplateForm.getListVideos()) {
-				// Debug for null path
-				videoSize = video.getVideoFileData().getSize();
-				if (videoSize == 0 || videoSize > videoSizeLimit) {
-					return ("Please select the appropriate Video Size");
+				if(video.getVideoFileData().getSize() > 0)
+				{
+					videoSize = video.getVideoFileData().getSize();
+					if (videoSize > videoSizeLimit) {
+						return ("Please select the appropriate Video Size");
+					}
 				}
-	
 			}
 	
 			return null;
@@ -189,11 +194,15 @@ public class BrandingTemplateValidation {
 	public void validateSilver(Object target, Errors errors) {
 		
 		BrandingTemplateForm brandingTemplateForm = (BrandingTemplateForm) target;
-		validateImage(brandingTemplateForm, errors);
-		if (!errors.hasErrors())
+		if(null == brandingTemplateForm.getChosenLogo() || brandingTemplateForm.getLogoFileData().getSize() > 0)
 		{
-		validateImageSize(brandingTemplateForm, errors);
+			validateLogo(brandingTemplateForm, errors);
 		}
+		if (!errors.hasErrors() && null == brandingTemplateForm.getChosenMainImage() || brandingTemplateForm.getMainImageFileData().getSize() > 0)
+		{
+			validateMainImage(brandingTemplateForm, errors);
+		}
+		
 	}	
 	
 	/**

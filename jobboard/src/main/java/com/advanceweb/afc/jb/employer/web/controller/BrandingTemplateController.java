@@ -105,9 +105,7 @@ public class BrandingTemplateController {
 			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm brandingTemplateForm,
 			BindingResult result, HttpSession session) {
 
-		
 		// Introduced a new variable "templateForm" to resolve PMD issue.
-		 
 		BrandingTemplateForm brandingTemplate = brandingTemplateForm;
 
 		Boolean status = null;
@@ -126,7 +124,6 @@ public class BrandingTemplateController {
 		brandingTemplate = checkBrand(brandingTemplate, facility_id);
 				
 		// Modify the names of media files to save on File server
-
 		brandingTemplate = modifyMediaName(brandingTemplate);
 
 		// Validate the form data
@@ -163,7 +160,6 @@ public class BrandingTemplateController {
 		}
 
 		// Upload the media files to File server
-
 		status = uploadMedia(brandingTemplate);
 		if (!status) {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
@@ -177,9 +173,6 @@ public class BrandingTemplateController {
 		// Transform form data to DTO
 		empBrandTempDTO = transformEmpoyerBrandTemplate
 				.createEmpBrandTempDTO(brandingTemplate);
-		// model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
-
-		// model.setViewName("manageBrandingTemplatePopup");
 
 		// Call to service layer and DAO
 		status = brandingTemplateService.createEmpBrandTemp(empBrandTempDTO);
@@ -197,9 +190,6 @@ public class BrandingTemplateController {
 			return model;
 
 		}
-
-		// return model;
-
 	}
 
 	@ResponseBody
@@ -317,6 +307,7 @@ public class BrandingTemplateController {
 		}
 		
 		brandingTemplateForm.setPackageId(packageId);
+		
 		return brandingTemplateForm;
 	}
 
@@ -441,21 +432,31 @@ public class BrandingTemplateController {
 		String mainImageModifiedName = null;
 		Random random = new Random();
 
-		logoOrigName = brandingTemplateForm.getLogoFileData()
-				.getOriginalFilename();
-		mainImageOrigName = brandingTemplateForm.getMainImageFileData()
-				.getOriginalFilename();
+		
 
-		logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
-				+ logoOrigName;
-		mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
-				+ mainImageOrigName;
+		if(brandingTemplateForm.getLogoFileData().getSize() > 0)
+		{
+			logoOrigName = brandingTemplateForm.getLogoFileData()
+					.getOriginalFilename();
+			logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
+					+ logoOrigName;
+			
+			brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia
+					+ logoModifiedName);
+		}
 
-		brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia
-				+ logoModifiedName);
-		brandingTemplateForm.setMainImagePath(baseDirectoryPathImageAndMedia
-				+ mainImageModifiedName);
-
+		if(brandingTemplateForm.getMainImageFileData().getSize() > 0)
+		{
+			mainImageOrigName = brandingTemplateForm.getMainImageFileData()
+					.getOriginalFilename();
+			mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
+					+ mainImageOrigName;
+			brandingTemplateForm.setMainImagePath(baseDirectoryPathImageAndMedia
+					+ mainImageModifiedName);
+		}
+		
+		
+		
 		// Only for Multi media section
 		if (!brandingTemplateForm.getIsSilverCustomer()) {
 
@@ -465,12 +466,14 @@ public class BrandingTemplateController {
 
 			for (AddImageForm image : listImages) {
 
-				if (!image.getAddImageFileData().getOriginalFilename()
-						.isEmpty()) {
-
+				if (image.getAddImageFileData().getSize() > 0) 
+				{
 					image.setMediaPath(baseDirectoryPathImageAndMedia
 							+ STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
 							+ image.getAddImageFileData().getOriginalFilename());
+				}
+				if(null != image.getMediaPath())
+				{
 					listModImages.add(image);
 				}
 			}
@@ -482,10 +485,14 @@ public class BrandingTemplateController {
 			listVideos = brandingTemplateForm.getListVideos();
 
 			for (VideoForm video : listVideos) {
-				if (!video.getVideoFileData().getOriginalFilename().isEmpty()) {
+				if (video.getVideoFileData().getSize() > 0) {
 					video.setMediaPath(baseDirectoryPathImageAndMedia
 							+ STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
 							+ video.getVideoFileData().getOriginalFilename());
+					
+				}
+				if(null != video.getMediaPath())
+				{
 					listModVideos.add(video);
 				}
 			}
@@ -522,25 +529,33 @@ public class BrandingTemplateController {
 				brandingTemplateForm.getMainImagePath());
 		try {
 
-			MultipartFile logoFile = brandingTemplateForm.getLogoFileData();
-			MultipartFile mainImageFile = brandingTemplateForm
-					.getMainImageFileData();
-			logoFile.transferTo(logoFileDest);
-			mainImageFile.transferTo(mainImageFileDest);
-
+			
+			if(brandingTemplateForm.getLogoFileData().getSize() > 0)
+			{
+				MultipartFile logoFile = brandingTemplateForm.getLogoFileData();
+				logoFile.transferTo(logoFileDest);
+			}
+			
+			if(brandingTemplateForm.getMainImageFileData().getSize() > 0)
+			{
+				MultipartFile mainImageFile = brandingTemplateForm.getMainImageFileData();
+				mainImageFile.transferTo(mainImageFileDest);
+			}
+			
 			if (!brandingTemplateForm.getIsSilverCustomer()) {
 
-				for (AddImageForm addImageForm : brandingTemplateForm
-						.getListAddImages()) {
-					addImageForm.getAddImageFileData().transferTo(
-							new File(addImageForm.getMediaPath()));
-
+				for (AddImageForm addImageForm : brandingTemplateForm.getListAddImages()) {
+					if(addImageForm.getAddImageFileData().getSize() > 0)
+					{
+						addImageForm.getAddImageFileData().transferTo(new File(addImageForm.getMediaPath()));
+					}
 				}
 
 				for (VideoForm videoForm : brandingTemplateForm.getListVideos()) {
-					videoForm.getVideoFileData().transferTo(
-							new File(videoForm.getMediaPath()));
-
+					if(videoForm.getVideoFileData().getSize() > 0)
+					{
+						videoForm.getVideoFileData().transferTo(new File(videoForm.getMediaPath()));
+					}
 				}
 			}
 			status = Boolean.TRUE;
@@ -691,17 +706,25 @@ public class BrandingTemplateController {
 		BrandingTemplateForm brandingTemplateForm = form;
 
 		ModelAndView model = new ModelAndView();
-		TestimonyForm testimonyForm = new TestimonyForm();
-		ArrayList<TestimonyForm> nonEmptyList = new ArrayList<TestimonyForm>();
-		nonEmptyList.add(testimonyForm);
-		brandingTemplateForm.setListTestimony(nonEmptyList);
+//		TestimonyForm testimonyForm = new TestimonyForm();
+//		ArrayList<TestimonyForm> nonEmptyList = new ArrayList<TestimonyForm>();
+//		nonEmptyList.add(testimonyForm);
+//		brandingTemplateForm.setListTestimony(nonEmptyList);
 		
-//		if(null != form.getMainImagePath())
-//		{
-////			TODO
-//			getOriginalName(form.getMainImagePath());
-//		}
+		if(!brandingTemplateForm.getIsSilverCustomer())
+		{
+			brandingTemplateForm = verifyMultimediaContent(brandingTemplateForm);
+		}
 		
+		if(null != brandingTemplateForm.getMainImagePath())
+		{
+			brandingTemplateForm.setChosenMainImage(getOriginalName(brandingTemplateForm.getMainImagePath()));
+		}
+		
+		if(null != brandingTemplateForm.getLogoPath())
+		{
+			brandingTemplateForm.setChosenLogo(getOriginalName(brandingTemplateForm.getLogoPath()));
+		}
 		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		if (brandingTemplateForm.getBrowsePath().equalsIgnoreCase("manage")) {
@@ -918,33 +941,21 @@ public class BrandingTemplateController {
 		ModelAndView model = new ModelAndView();
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
-		//TODO write the below logic in a separate common method
+		
 		if(!brandingTemplateForm.getIsSilverCustomer())
 		{
-		if (null == brandingTemplateForm.getListTestimony() || brandingTemplateForm.getListTestimony().isEmpty()) {
-			List<TestimonyForm> listEmptyTestimonies = new ArrayList<TestimonyForm>();
-			listEmptyTestimonies.add(new TestimonyForm());
-			brandingTemplateForm.setListTestimony(listEmptyTestimonies);
-		}
-		if (null == brandingTemplateForm.getListAddImages() || brandingTemplateForm.getListAddImages().isEmpty()) {
-			
-			List<AddImageForm> listEmptyAddImages = new ArrayList<AddImageForm>();
-			listEmptyAddImages.add(new AddImageForm());
-			brandingTemplateForm.setListAddImages(listEmptyAddImages);
-		}
-		if (null == brandingTemplateForm.getListVideos() || brandingTemplateForm.getListVideos().isEmpty()) {
-			List<VideoForm> listEmptyVideos = new ArrayList<VideoForm>();
-			listEmptyVideos.add(new VideoForm());
-			brandingTemplateForm.setListVideos(listEmptyVideos);
-		}
+			brandingTemplateForm = verifyMultimediaContent(brandingTemplateForm);
 		}
 		
+		if(null != brandingTemplateForm.getMainImagePath())
+		{
+			brandingTemplateForm.setChosenMainImage(getOriginalName(brandingTemplateForm.getMainImagePath()));
+		}
 		
-//		if(null!=brandingTemplateForm.getMainImagePath())
-//		{
-//			TODO
-//		}
-		
+		if(null != brandingTemplateForm.getLogoPath())
+		{
+			brandingTemplateForm.setChosenLogo(getOriginalName(brandingTemplateForm.getLogoPath()));
+		}
 		
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit.substring(0, imageSizeLimit.length()-3));
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
@@ -1054,24 +1065,78 @@ public class BrandingTemplateController {
 		String fileName;
 		String ModifiedFileName1;
 		String ModifiedFileName2;
-		String OriginalFileName;
+		String OriginalFileName = "";
 
-		fileName = filePath;
+		if (null != filePath) {
+			fileName = filePath;
 
-		index1 = fileName.lastIndexOf("/");
-		if (index1 == -1) {
-			index1 = fileName.lastIndexOf("\\");
+			index1 = fileName.lastIndexOf("/");
+			if (index1 == -1) {
+				index1 = fileName.lastIndexOf("\\");
+			}
+
+			ModifiedFileName1 = fileName.substring(index1 + 1);
+
+			index2 = ModifiedFileName1.indexOf(STR_UNDERSCORE);
+			ModifiedFileName2 = ModifiedFileName1.substring(index2 + 1);
+
+			index3 = ModifiedFileName2.indexOf(STR_UNDERSCORE);
+			OriginalFileName = ModifiedFileName2.substring(index3 + 1);
 		}
-
-		ModifiedFileName1 = fileName.substring(index1 + 1);
-
-		index2 = ModifiedFileName1.indexOf(STR_UNDERSCORE);
-		ModifiedFileName2 = ModifiedFileName1.substring(index2 + 1);
-
-		index3 = ModifiedFileName2.indexOf(STR_UNDERSCORE);
-		OriginalFileName = ModifiedFileName2.substring(index3 + 1);
-
 		return OriginalFileName;
 	}
 	
+	
+	public BrandingTemplateForm verifyMultimediaContent(BrandingTemplateForm form)
+	{
+		BrandingTemplateForm brandingTemplateForm = form;
+		if (null == brandingTemplateForm.getListTestimony() || brandingTemplateForm.getListTestimony().isEmpty()) {
+			List<TestimonyForm> listEmptyTestimonies = new ArrayList<TestimonyForm>();
+			listEmptyTestimonies.add(new TestimonyForm());
+			brandingTemplateForm.setListTestimony(listEmptyTestimonies);
+		}
+		if (null == brandingTemplateForm.getListAddImages() || brandingTemplateForm.getListAddImages().isEmpty()) {
+			
+			List<AddImageForm> listEmptyAddImages = new ArrayList<AddImageForm>();
+			listEmptyAddImages.add(new AddImageForm());
+			brandingTemplateForm.setListAddImages(listEmptyAddImages);
+		}
+		if (null == brandingTemplateForm.getListVideos() || brandingTemplateForm.getListVideos().isEmpty()) {
+			List<VideoForm> listEmptyVideos = new ArrayList<VideoForm>();
+			listEmptyVideos.add(new VideoForm());
+			brandingTemplateForm.setListVideos(listEmptyVideos);
+		}
+		
+		if(null != brandingTemplateForm.getListAddImages())
+		{
+			List<AddImageForm> updatedAddImagesList = new ArrayList<AddImageForm>();
+			for(AddImageForm image : brandingTemplateForm.getListAddImages())
+			{
+				if(null != image.getMediaPath())
+				{
+					image.setChosenAddImage(getOriginalName(image.getMediaPath()));
+				}
+				updatedAddImagesList.add(image);
+			}
+			
+			brandingTemplateForm.setListAddImages(updatedAddImagesList);
+		}
+		
+		if(null != brandingTemplateForm.getListVideos())
+		{
+			List<VideoForm> updatedVideoList = new ArrayList<VideoForm>();
+			for(VideoForm video : brandingTemplateForm.getListVideos())
+			{
+				if(null != video.getMediaPath())
+				{
+					video.setChosenVideo(getOriginalName(video.getMediaPath()));
+				}
+				updatedVideoList.add(video);
+			}
+			
+			brandingTemplateForm.setListVideos(updatedVideoList);
+		}
+		
+		return brandingTemplateForm;
+	}
 }

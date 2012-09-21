@@ -11,6 +11,7 @@ import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.common.TestimonyDTO;
 import com.advanceweb.afc.jb.common.VideoDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 /**
  * 
@@ -38,42 +39,34 @@ public class TransformEmployerBrandTemplate {
 			dto.setJpBrandTempId(Integer.parseInt(brandingTemplateForm
 					.getTemplateId()));
 		}
-		
+
 		dto.setEmployerId(brandingTemplateForm.getEmployerId());
 		dto.setFacilityId(brandingTemplateForm.getFacilityId());
 		dto.setLogoPath(brandingTemplateForm.getLogoPath());
 		dto.setColor(brandingTemplateForm.getColor());
-		dto.setCreatedDate(DateUtils.convertSQLDateTimeToStdDateTime(new Date().toString()));
+		dto.setCreatedDate(DateUtils.convertSQLDateTimeToStdDateTime(new Date()
+				.toString()));
 		dto.setTemplateName(brandingTemplateForm.getTemplateName());
 		dto.setCompanyOverview(brandingTemplateForm.getCompanyOverview());
 		dto.setMainImagePath(brandingTemplateForm.getMainImagePath());
 		dto.setLogoFileData(brandingTemplateForm.getLogoFileData());
 		dto.setMainImageFileData(brandingTemplateForm.getMainImageFileData());
 
-		// Multi media section
-//		dto.setTestimony(brandingTemplateForm.getTestimony());
-//		dto.setAddImagePath(brandingTemplateForm.getAddImagePath());
-//		dto.setAddImageFileData(brandingTemplateForm.getAddImageFileData());
-//		dto.setVideoPath(brandingTemplateForm.getVideoPath());
-//		dto.setVideoFileData(brandingTemplateForm.getVideoFileData());
+		// Multimedia section
+		if (!brandingTemplateForm.getIsSilverCustomer()) {
+			List<TestimonyDTO> listTestimonyDTO = transformTestimonyDTO(brandingTemplateForm
+					.getListTestimony());
+			dto.setListTestimony(listTestimonyDTO);
 
-		
-		if(!brandingTemplateForm.getIsSilverCustomer())
-		{
-		List<TestimonyDTO> listTestimonyDTO = transformTestimonyDTO(brandingTemplateForm.getListTestimony());
-		dto.setListTestimony(listTestimonyDTO);
-		
-		List<AddImageDTO> listAddImageDTO = transformAddImageDTO(brandingTemplateForm.getListAddImages());
-		dto.setListAddImages(listAddImageDTO);
-		
-		
-		List<VideoDTO> listVideoDTO = transformVideoDTO(brandingTemplateForm.getListVideos());
-		dto.setListVideos(listVideoDTO);
-		
-		
-		
+			List<AddImageDTO> listAddImageDTO = transformAddImageDTO(brandingTemplateForm
+					.getListAddImages());
+			dto.setListAddImages(listAddImageDTO);
+
+			List<VideoDTO> listVideoDTO = transformVideoDTO(brandingTemplateForm
+					.getListVideos());
+			dto.setListVideos(listVideoDTO);
 		}
-		
+
 		dto.setIsSilverCustomer(brandingTemplateForm.getIsSilverCustomer());
 
 		return dto;
@@ -134,21 +127,14 @@ public class TransformEmployerBrandTemplate {
 		List<TestimonyDTO> listTestimonyDTO = new ArrayList<TestimonyDTO>();
 
 		if (null != testimonies) {
-
 			for (TestimonyForm testimonyForm : testimonies) {
-
 				TestimonyDTO dto = new TestimonyDTO();
-
 				dto.setTestimony(testimonyForm.getTestimony());
-
+				dto.setTestimonyId(testimonyForm.getTestimonyId());
 				listTestimonyDTO.add(dto);
-
 			}
-
 		}
-
 		return listTestimonyDTO;
-
 	}	
 	
 	
@@ -165,7 +151,7 @@ public class TransformEmployerBrandTemplate {
 			for (TestimonyDTO dto : testimonies) {
 				TestimonyForm form = new TestimonyForm();
 				form.setTestimony(dto.getTestimony());
-
+				form.setTestimonyId(dto.getTestimonyId());
 				listTestimonyForm.add(form);
 			}
 		}
@@ -183,25 +169,18 @@ public class TransformEmployerBrandTemplate {
 	public List<AddImageDTO> transformAddImageDTO(List<AddImageForm> addImages) {
 
 		List<AddImageDTO> listAddImageDTO = new ArrayList<AddImageDTO>();
-
 		if (null != addImages) {
 
 			for (AddImageForm addImageForm : addImages) {
-
-//				TODO null check on addImageForm before saving
 				AddImageDTO dto = new AddImageDTO();
-
 				dto.setAddImageFileData(addImageForm.getAddImageFileData());
 				dto.setMediaPath(addImageForm.getMediaPath());
-				dto.setMediaType("Additional Image");
+				dto.setMediaType(MMJBCommonConstants.ADDITIONAL_IMAGE);
+				dto.setAddImageId(addImageForm.getAddImageId());
 				listAddImageDTO.add(dto);
-
 			}
-
 		}
-
 		return listAddImageDTO;
-
 	}	
 	
 	
@@ -220,6 +199,7 @@ public class TransformEmployerBrandTemplate {
 				form.setAddImageFileData(dto.getAddImageFileData());
 				form.setMediaPath(dto.getMediaPath());
 				form.setMediaType(dto.getMediaType());
+				form.setAddImageId(dto.getAddImageId());
 				listAddImageForm.add(form);
 			}
 		}
@@ -236,25 +216,17 @@ public class TransformEmployerBrandTemplate {
 	public List<VideoDTO> transformVideoDTO(List<VideoForm> videos) {
 
 		List<VideoDTO> listVideoDTO = new ArrayList<VideoDTO>();
-
 		if (null != videos) {
-
-			
 			for (VideoForm videoForm : videos) {
-//				TODO null check on videoForm before saving
 				VideoDTO dto = new VideoDTO();
-
 				dto.setVideoFileData(videoForm.getVideoFileData());
 				dto.setMediaPath(videoForm.getMediaPath());
-				dto.setMediaType("Video");
+				dto.setMediaType(MMJBCommonConstants.VIDEO);
+				dto.setVideoId(videoForm.getVideoId());
 				listVideoDTO.add(dto);
-
 			}
-
 		}
-
 		return listVideoDTO;
-
 	}	
 	
 	
@@ -273,6 +245,7 @@ public class TransformEmployerBrandTemplate {
 				form.setVideoFileData(dto.getVideoFileData());
 				form.setMediaPath(dto.getMediaPath());
 				form.setMediaType(dto.getMediaType());
+				form.setVideoId(dto.getVideoId());
 				listVideoForm.add(form);
 			}
 		}

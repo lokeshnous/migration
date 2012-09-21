@@ -21,7 +21,7 @@ public class BrandingTemplateDelegateImpl implements BrandingTemplateDelegate{
 	private static final Logger LOGGER = Logger
 			.getLogger(BrandingTemplateDelegateImpl.class);
 	
-	private String CUSTOMER_STRING = "customer";
+	private static final String CUSTOMER_STRING = "customer";
 	
 	@Autowired
 	private NSCustomerService nsCustomerService;

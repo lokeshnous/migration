@@ -14,6 +14,7 @@ public class AddImageDTO {
 	private CommonsMultipartFile addImageFileData;
 	private String mediaType;
 	private String mediaPath;
+	private int addImageId;
 
 	public CommonsMultipartFile getAddImageFileData() {
 		return addImageFileData;
@@ -37,6 +38,14 @@ public class AddImageDTO {
 
 	public void setMediaPath(String mediaPath) {
 		this.mediaPath = mediaPath;
+	}
+
+	public int getAddImageId() {
+		return addImageId;
+	}
+
+	public void setAddImageId(int addImageId) {
+		this.addImageId = addImageId;
 	}
 
 	

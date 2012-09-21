@@ -37,6 +37,8 @@ public class BrandingTemplateForm {
 	private String videoSizeLimit;
 	private String testimonyContainer;
 	private int packageId;
+	private String chosenLogo;
+	private String chosenMainImage;
 	
 	public int getFacilityId() {
 		return facilityId;
@@ -153,6 +155,22 @@ public class BrandingTemplateForm {
 
 	public List<VideoForm> getListVideos() {
 		return listVideos;
+	}
+
+	public String getChosenLogo() {
+		return chosenLogo;
+	}
+
+	public void setChosenLogo(String chosenLogo) {
+		this.chosenLogo = chosenLogo;
+	}
+
+	public String getChosenMainImage() {
+		return chosenMainImage;
+	}
+
+	public void setChosenMainImage(String chosenMainImage) {
+		this.chosenMainImage = chosenMainImage;
 	}
 
 	public int getPackageId() {

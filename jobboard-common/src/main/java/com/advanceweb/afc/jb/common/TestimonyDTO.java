@@ -10,6 +10,8 @@ package com.advanceweb.afc.jb.common;
 public class TestimonyDTO {
 	
 	private String testimony;
+	
+	private int testimonyId;
 
 	public String getTestimony() {
 		return testimony;
@@ -18,5 +20,14 @@ public class TestimonyDTO {
 	public void setTestimony(String testimony) {
 		this.testimony = testimony;
 	}
+
+	public int getTestimonyId() {
+		return testimonyId;
+	}
+
+	public void setTestimonyId(int testimonyId) {
+		this.testimonyId = testimonyId;
+	}
+	
 	
 }

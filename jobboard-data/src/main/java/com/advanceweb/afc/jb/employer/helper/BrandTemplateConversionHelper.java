@@ -50,6 +50,7 @@ public class BrandTemplateConversionHelper {
 		jpBrandTempDTO.setListTestimony(transformTemplateTestimonyToDTO(jpBrandingTemp));
 		jpBrandTempDTO.setListAddImages(transformAddImageToDTO(jpBrandingTemp));
 		jpBrandTempDTO.setListVideos(transformVideoToDTO(jpBrandingTemp));
+
 		// added to set the number of time used by
 		jpBrandTempDTO.setCount(count);
 			
@@ -67,6 +68,7 @@ public class BrandTemplateConversionHelper {
 			BrandingTemplateDTO brandingTemplatesDTO)
 	{
 		JpTemplate jpBrandTemp = new JpTemplate();
+
 		jpBrandTemp.setTemplateId(brandingTemplatesDTO.getJpBrandTempId());
 		jpBrandTemp.setTemplateName(brandingTemplatesDTO.getTemplateName());
 		jpBrandTemp.setCompanyOverview(brandingTemplatesDTO.getCompanyOverview());
@@ -75,14 +77,21 @@ public class BrandTemplateConversionHelper {
 		jpBrandTemp.setColorPalette(brandingTemplatesDTO.getColor());
 		jpBrandTemp.setCreateDt(new Date());
 		jpBrandTemp.setCreateUserId(brandingTemplatesDTO.getEmployerId());
-
+		
 		AdmFacility facility = new AdmFacility();
 		facility.setFacilityId(brandingTemplatesDTO.getFacilityId());
-		
 		jpBrandTemp.setAdmFacility(facility);
 
+		if (!brandingTemplatesDTO.getIsSilverCustomer()){
+			List<JpTemplateTestimonial> listTestimonyEntity = transformTemplateTestimony(brandingTemplatesDTO.getListTestimony(), jpBrandTemp);
+			List<JpTemplateMedia> listMediaEntity = transformVideo(brandingTemplatesDTO.getListVideos(), jpBrandTemp);
+			listMediaEntity.addAll(transformAddImage(brandingTemplatesDTO.getListAddImages(), jpBrandTemp));
+			
+			jpBrandTemp.setJpTemplateTestimonials(listTestimonyEntity);
+			jpBrandTemp.setJpTemplateMedias(listMediaEntity);
+		}
+		
 		return jpBrandTemp;
-
 	}
 	
 	
@@ -98,12 +107,14 @@ public class BrandTemplateConversionHelper {
 	 */
 	public List<JpTemplateTestimonial> transformTemplateTestimony(
 		List<TestimonyDTO> listTestimonyDTO, JpTemplate jpTemplate) {
+	
 		List<JpTemplateTestimonial> testimonyEntityList = new ArrayList<JpTemplateTestimonial>();
 		if (null != testimonyEntityList) {
 			for (TestimonyDTO dto : listTestimonyDTO) {
 				JpTemplateTestimonial entity = new JpTemplateTestimonial();
 				
 				entity.setTestimonial(dto.getTestimony());
+				entity.setTemplateTestimonialId(dto.getTestimonyId());
 				entity.setJpTemplate(jpTemplate);
 				testimonyEntityList.add(entity);
 			}
@@ -126,7 +137,8 @@ public class BrandTemplateConversionHelper {
 				TestimonyDTO dto = new TestimonyDTO();
 				
 				dto.setTestimony(entity.getTestimonial());
-						
+				dto.setTestimonyId(entity.getTemplateTestimonialId());	
+				
 				listTestimonyDTO.add(dto);
 			}
 		}
@@ -151,7 +163,8 @@ public class BrandTemplateConversionHelper {
 				
 				entity.setMediaPath(dto.getMediaPath());
 				entity.setMediaType(dto.getMediaType());
-
+				entity.setTemplateMediaId(dto.getAddImageId());
+				
 				entity.setJpTemplate(jpTemplate);
 				addImageEntityList.add(entity);
 			}
@@ -177,6 +190,7 @@ public class BrandTemplateConversionHelper {
 				
 				dto.setMediaPath(entity.getMediaPath());
 				dto.setMediaType(entity.getMediaType());
+				dto.setAddImageId(entity.getTemplateMediaId());
 						
 				listAddImageDTO.add(dto);
 				}
@@ -203,7 +217,8 @@ public class BrandTemplateConversionHelper {
 				
 				entity.setMediaPath(dto.getMediaPath());
 				entity.setMediaType(dto.getMediaType());
-
+				entity.setTemplateMediaId(dto.getVideoId());
+				
 				entity.setJpTemplate(jpTemplate);
 				videoEntityList.add(entity);
 			}
@@ -229,7 +244,8 @@ public class BrandTemplateConversionHelper {
 				
 				dto.setMediaPath(entity.getMediaPath());
 				dto.setMediaType(entity.getMediaType());
-						
+				dto.setVideoId(entity.getTemplateMediaId());
+				
 				listVideoDTO.add(dto);
 				}
 			}

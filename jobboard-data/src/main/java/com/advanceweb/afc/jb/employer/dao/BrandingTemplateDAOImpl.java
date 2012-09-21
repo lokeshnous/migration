@@ -17,10 +17,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityPackage;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
-import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
-import com.advanceweb.afc.jb.data.entities.JpTemplateMedia;
-import com.advanceweb.afc.jb.data.entities.JpTemplateTestimonial;
 import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 
 /**
@@ -96,42 +93,16 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 
 		Boolean status = null;
 		try {
-			JpTemplate jpTemplate = brandTemplateConversionHelper
-					.convertToJPTemplate(brandingTemplatesDTO);
 
-			// hibernateTemplateCareer.save(jpTemplate);
+			JpTemplate jpTemplate = brandTemplateConversionHelper.convertToJPTemplate(brandingTemplatesDTO);
+			
 			hibernateTemplateCareer.saveOrUpdate(jpTemplate);
-
-			if (!brandingTemplatesDTO.getIsSilverCustomer()) {
-
-				List<JpTemplateTestimonial> listTestimonyEntity = brandTemplateConversionHelper
-						.transformTemplateTestimony(
-								brandingTemplatesDTO.getListTestimony(),
-								jpTemplate);
-				List<JpTemplateMedia> listMediaEntity = brandTemplateConversionHelper
-						.transformVideo(brandingTemplatesDTO.getListVideos(),
-								jpTemplate);
-
-				listMediaEntity.addAll(brandTemplateConversionHelper
-						.transformAddImage(
-								brandingTemplatesDTO.getListAddImages(),
-								jpTemplate));
-				jpTemplate.setJpTemplateTestimonials(listTestimonyEntity);
-				jpTemplate.setJpTemplateMedias(listMediaEntity);
-
-				// hibernateTemplateCareer.saveOrUpdateAll(listTestimonyEntity);
-				for (JpTemplateTestimonial testimonialEntity : listTestimonyEntity) {
-					hibernateTemplateCareer.saveOrUpdate(testimonialEntity);
-				}
-
-				hibernateTemplateCareer.saveOrUpdateAll(listMediaEntity);
-			}
 
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
 			// logger call
-			LOGGER.info("ERROR2");
+			LOGGER.info("ERROR2"+e);
 		}
 		return status;
 

@@ -11,6 +11,16 @@ public class TestimonyForm {
 	
 	private String testimony;
 
+	private int testimonyId;
+	
+	public int getTestimonyId() {
+		return testimonyId;
+	}
+
+	public void setTestimonyId(int testimonyId) {
+		this.testimonyId = testimonyId;
+	}
+
 	public String getTestimony() {
 		return testimony;
 	}

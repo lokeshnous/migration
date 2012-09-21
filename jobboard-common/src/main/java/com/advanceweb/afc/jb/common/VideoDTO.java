@@ -14,6 +14,7 @@ public class VideoDTO {
 	private CommonsMultipartFile videoFileData;
 	private String mediaType;
 	private String mediaPath;
+	private int videoId;
 	
 	public CommonsMultipartFile getVideoFileData() {
 		return videoFileData;
@@ -37,6 +38,14 @@ public class VideoDTO {
 
 	public void setMediaPath(String mediaPath) {
 		this.mediaPath = mediaPath;
+	}
+
+	public int getVideoId() {
+		return videoId;
+	}
+
+	public void setVideoId(int videoId) {
+		this.videoId = videoId;
 	}
 
 }

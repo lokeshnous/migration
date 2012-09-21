@@ -166,6 +166,12 @@
 										is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg, .gif,
 										.png and .tif.</span>
 								</div>
+								<label class="MultimediaLabel">
+									<c:if test="${brandingTemplateForm.chosenLogo != null}">
+										You uploaded <Strong>${brandingTemplateForm.chosenLogo}</Strong> as your Logo, you can upload a different Logo.
+									</c:if>
+								</label>
+								
 								<div class="clearfix"></div>
 								<div class="FormErrorDisplayText">
 									<form:errors path="logoFileData" />
@@ -209,6 +215,11 @@
 										limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg,
 										.gif, .png and .tif.</span>
 								</div>
+								<label class="MultimediaLabel">
+									<c:if test="${brandingTemplateForm.chosenMainImage != null}">
+										You uploaded <Strong>${brandingTemplateForm.chosenMainImage}</Strong> as your Main Image, you can upload a different Main Image.
+									</c:if>
+								</label>
 								<div class="clearfix"></div>
 								<div class="FormErrorDisplayText">
 									<form:errors path="mainImageFileData" />
@@ -242,7 +253,7 @@
 									<!-- <div class="floatLeft marginRight10"></div> -->
 									<span class="floatLeft marginRight10">
 									 
-										<form:textarea path="listTestimony[${status.index}].testimony" class="textareaBoxCResume" Height="200" rows="5" cols="30" />
+										<form:textarea path="listTestimony[${status.index}].testimony" class="textareaBoxCResumeTemplate" rows="5" cols="30" />
 									</span>	
 									</div>
 								</c:forEach>
@@ -252,7 +263,7 @@
 								<span class="required" ><a href="#" id="testimonyAjaxCallId">Add Another Testimonial</a></span>
 							</div>	
 							
-							<div class="toolTip01 marginTop10 marginLeft5">
+							<div class="toolTip colorPkrAreaToolTip">
 								<span class="classicA">If you have any testimonials that
 									you would like to include, enter them here. They will appear
 									as text in the interactive gallery.</span>
@@ -266,16 +277,21 @@
 									<!-- <div class="rowEvenNewSpacing MarginBottom10"> -->
 									<div class="rowEvenNewSpacing">
 									<c:if test="${status.count == 1}">   
-							            <span class="lableTextCoverletter marginTop10 width150">Additional Images:</span> 
+							            <span class="lableTextCoverletter">Additional Images:</span> 
 							         </c:if>   
 									<c:if test="${status.count != 1}">   
-							            <span class="lableTextCoverletter marginTop10 width150"></span> 
+							            <span class="lableTextCoverletter"></span> 
 							         </c:if>  									         
 									<!-- <div class="floatLeft marginRight10"></div> -->
 									<span class="floatLeft marginRight10">
 									 
 										<form:input path="listAddImages[${status.index}].addImageFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType" size="20" />
 									</span>	
+									<label class="MultimediaLabel">
+									<c:if test="${brandingTemplateForm.listAddImages[status.index].chosenAddImage != null}">
+										You uploaded <Strong>${brandingTemplateForm.listAddImages[status.index].chosenAddImage}</Strong> as your Additional Image, you can upload a different Additional Image.
+									</c:if>
+									</label>
 									</div>
 								</c:forEach>
 							</div>	
@@ -284,7 +300,7 @@
 								<span class="required"><a href="#" id="imageAjaxCallId">Add Another Image</a></span>
 							</div>	
 								
-							<div class="toolTip marginTop8 marginLeft5">
+							<div class="toolTip colorPkrAreaToolTip">
 								<span class="classic">These images will appear as
 										thumbnails in an interactive gallery prominently displayed on
 										your job posting template. They will expand to full size upon
@@ -320,7 +336,7 @@
 								<span class="required"><a href="#" id="videoAjaxCallId">Add Another	Video</a></span>
 							</div>	
 								
-							<div class="toolTip marginTop8 marginLeft5">
+							<div class="toolTip colorPkrAreaToolTip">
 								<span class="classic">These videos will appear as
 									thumbnails in your interactive gallery. They will expand to
 									full size and play upon being clicked. The file size limit is
