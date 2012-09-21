@@ -365,14 +365,23 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return accountProfileDTO;
 	}
 
-	
+	/**
+	 * This method is called to Account Setting update page and
+	 * editAccountSetting method take Bean class binding result from Jsp pages
+	 * Seession for UserId and FacilityId.
+	 * 
+	 * @author kartikm
+	 * @param apd
+	 * @param admfacilityid
+	 * @return true
+	 */	
 	public boolean editUser(AccountProfileDTO apd, int admfacilityid,
 
 			int userId, String billing) {
 		boolean isUpdate = false;
 		
 		try{
-		if (billing.equals("PRIMARY")){
+			if ("PRIMARY".equals(billing)){
 			// update meruser Entity		
 						MerUser mer = hibernateTemplateTracker.get(MerUser.class, userId);
 						mer.setFirstName(apd.getFirstName());
@@ -425,7 +434,16 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return isUpdate;
 
 	}
-
+	/**
+	 * This method is called to Account Setting update page and
+	 * editAccountSetting method take Bean class binding result from Jsp pages
+	 * Seession for UserId and FacilityId.
+	 * 
+	 * @author kartikm
+	 * @param userId
+	 * @param contactType
+	 * @return AdmFacilityContactDTO
+	 */
 
 	
 	@Override
@@ -464,7 +482,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				return true;
 			}
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.info("Error for update of employee data");
 		}
 		
 		return false;
