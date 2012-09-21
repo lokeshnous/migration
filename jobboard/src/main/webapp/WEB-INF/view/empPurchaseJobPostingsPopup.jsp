@@ -72,12 +72,8 @@
 				if($(this).is(':checked')){
 					count++;
 					var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
-					var reg = new RegExp("^1?[1-9]$|^[1-2]0$");
+					
 					if("" == quantity || null == quantity){
-						alert("Please enter quantity in numerics");
-						return;
-					}
-					else if(!reg.test(quantity)){
 						alert("Please enter quantity in numerics");
 						return;
 					}
@@ -173,7 +169,7 @@
 								<td width="7%" align="Left" id="${jobPosting.jobPostPlanCretitAmt}"><span
 									class="link_color2_selected"><span>$</span><span>${jobPosting.jobPostPlanCretitAmt}</span></span></td>
 								<td width="19%"><input type="text"
-									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" /></td>
+									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" maxlength="2"/></td>
 								<input type="hidden" id="${jobPosting.jobPostNetSuiteId}"></input>	
 							</tr>
 							</thead>
