@@ -269,6 +269,8 @@ public class JobSearchController {
 
 			if(MMJBCommonConstants.ZERO_INT != jobDTO.getTemplateId())
 			{
+				List<JobPostDTO> jobPostDTOList = jobSearchService.getRecentJobsPostedByEmployer(jobDTO.getFacilityId(), jobDTO.getJobID());
+				model.put("jobDTOList", jobPostDTOList);
 				modelView.setViewName("jobseekerJobDetailsTemplate");
 			}
 			else

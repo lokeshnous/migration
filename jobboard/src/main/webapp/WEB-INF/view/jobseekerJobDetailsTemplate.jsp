@@ -396,10 +396,12 @@
                               <h1 class="FontSize18">More Job Opportunities <br />
                         From This Employer </h1>
                             </div>
-                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
-                      </a></div>
-                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
+                    <c:forEach items="${jobDTOList}" var="jobDTO">   
+	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId})">
+	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
+	                      </a></div>
+                    </c:forEach> 
+                    <!-- <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
                       <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
                       </a></div>
                     <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
@@ -410,7 +412,7 @@
                       </a></div>
                     <div class="BlueBoxCont borderBottomNone"><a href="#" class="TextColorA02Link">
                       <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
-                      </a></div>
+                      </a></div> -->
                  </div>
                	 </div>
                  

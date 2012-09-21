@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.search.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.job.dao.JobSearchDAO;
 import com.advanceweb.afc.jb.search.JobSearchDelegate;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
-import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
-import com.advanceweb.afc.jb.job.dao.JobSearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -125,6 +127,18 @@ public class JobSearchServiceImpl implements JobSearchService {
 
 	public long getTotalActiveJobs(){
 		return jobSearchDAO.getTotalActiveJobs();
+	}
+	
+	/**
+	 * This method will fetch the last five job details based on posted date for
+	 * the selected employer.
+	 * 
+	 * @param jobId
+	 * @return List<JobPostDTO> object
+	 */
+
+	public List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID){
+		return jobSearchDAO.getRecentJobsPostedByEmployer(facilityID, jobID);
 	}
 	
 }

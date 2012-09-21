@@ -1,9 +1,11 @@
 package com.advanceweb.afc.jb.search.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -91,4 +93,14 @@ public interface JobSearchService {
 	 */
 	
 	long getTotalActiveJobs();
+	
+	/**
+	 * This method will fetch the last five job details based on posted date for
+	 * the selected employer.
+	 * 
+	 * @param jobId
+	 * @return List<JobPostDTO> object
+	 */
+
+	List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID);
 }

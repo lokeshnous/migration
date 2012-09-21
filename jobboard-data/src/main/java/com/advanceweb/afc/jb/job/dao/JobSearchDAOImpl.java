@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.job.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -28,6 +30,7 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper
  * @since 10 July 2012
  * 
  */
+@SuppressWarnings("unchecked")
 @Repository("jobSearchDAO")
 public class JobSearchDAOImpl implements JobSearchDAO {
 
@@ -68,9 +71,51 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			LOGGER.info("viewJobDetails ERROR");
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info("ex-ERROR "+ex);
+			LOGGER.info("ex-ERROR " + ex);
 		}
 		return jobDetail;
+	}
+
+	/**
+	 * This method will fetch the last five job details based on posted date for
+	 * the selected employer.
+	 * 
+	 * @param jobId
+	 * @return List<SearchedJobDTO> object
+	 */
+
+	public List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID) {
+
+		List<JobPostDTO> srchJobList = new ArrayList<JobPostDTO>();
+
+		try {
+			hibernateTemplate.setMaxResults(5);
+			List<JpJob> jpJobList = hibernateTemplate.find(" from  JpJob WHERE  admFacility="
+					+ facilityID
+					+ " and jobId not in ("+jobID+") ORDER BY  createDt DESC");
+
+			if (jpJobList != null) {
+				for(JpJob jpJob : jpJobList){
+					if(jpJob.getJobId() != facilityID){
+						JobPostDTO jobPostDTO = new JobPostDTO();
+						jobPostDTO.setJobTitle(jpJob.getJobtitle());
+						//jobPostDTO.setJobCity(jpJob.get);
+						//jobPostDTO.setJobCountry(jobCountry);
+						//jobPostDTO.setJobState();
+						jobPostDTO.setJobId(jpJob.getJobId());
+						jobPostDTO.setJobDesc(jpJob.getAdtext());
+						srchJobList.add(jobPostDTO);
+					}
+				}
+			}
+
+		} catch (HibernateException e) {
+			LOGGER.info("HibernateException occurred while getting recent jobs posted by the Employer"+e);
+		} catch (Exception ex) {
+			LOGGER.info("Error occurred while getting recent jobs posted by the Employer "
+					+ ex);
+		}
+		return srchJobList;
 	}
 
 	/**
@@ -180,20 +225,22 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		}
 		return jobApplyTypeDTO;
 	}
-	
-	
+
 	/**
 	 * This method is used to get the total number of Active jobs.
+	 * 
 	 * @return long
 	 */
-	
-	public long getTotalActiveJobs(){
+
+	public long getTotalActiveJobs() {
 		long totalNoOfActiveJobs = 0L;
 		try {
-			totalNoOfActiveJobs = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from JpJob where active=1"));
-			LOGGER.info("Total number of Active Job is "+totalNoOfActiveJobs);
+			totalNoOfActiveJobs = DataAccessUtils.intResult(hibernateTemplate
+					.find("select count(*) from JpJob where active=1"));
+			LOGGER.info("Total number of Active Job is " + totalNoOfActiveJobs);
 		} catch (HibernateException he) {
-			LOGGER.info("Error occured while getting the Total Active Jobs from Database" + he);
+			LOGGER.info("Error occured while getting the Total Active Jobs from Database"
+					+ he);
 		}
 		return totalNoOfActiveJobs;
 	}
