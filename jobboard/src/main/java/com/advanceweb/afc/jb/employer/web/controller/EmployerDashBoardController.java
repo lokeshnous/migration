@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,7 +40,9 @@ public class EmployerDashBoardController {
 	private PopulateDropdowns populateDropdownsService;
 
 	@RequestMapping("/employerDashBoard")
-	public ModelAndView displayDashBoard(HttpSession session) {
+	public ModelAndView displayDashBoard(
+			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
+			HttpSession session) {
 		String enableAccess = "true";
 		String enablePostEditAccess = "true";
 		ModelAndView model = new ModelAndView();
@@ -60,8 +63,34 @@ public class EmployerDashBoardController {
 		model.addObject("enableAccess", enableAccess);
 		model.addObject("enablePostEditAccess", enablePostEditAccess);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
-		MetricsDTO metricsDTO = new MetricsDTO();
 
+		// Get All facilities
+		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
+		try {
+			downDTOs = loginService.getFacilityGroup(facilityId);
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occurred while getting data for metrics" + e);
+		}
+
+		//getting the metrics details
+		jbPostTotalList = getMetricsDetails(facilityId);
+
+		model.addObject("downDTOs", downDTOs);
+		model.addObject("jbPostTotalList", jbPostTotalList);
+		model.addObject("employerDashBoardForm", employerDashBoardForm);
+		model.setViewName("employerDashboard");
+		return model;
+	}
+
+	/**
+	 * This method is to get the metrics details for facility
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	private List<MetricsDTO> getMetricsDetails(int facilityId) {
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		MetricsDTO metricsDTO = new MetricsDTO();
 		// Get the job post details of logged in employer
 		List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
 
@@ -125,9 +154,7 @@ public class EmployerDashBoardController {
 		metricsDTO.setClicks(swAvgClicks);
 		metricsDTO.setApplies(swAvgApplies);
 		jbPostTotalList.add(2, metricsDTO);
-
-		model.addObject("jbPostTotalList", jbPostTotalList);
-		model.setViewName("employerDashboard");
-		return model;
+		
+		return jbPostTotalList;
 	}
 }

@@ -1,14 +1,16 @@
 package com.advanceweb.afc.jb.login.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
@@ -100,5 +102,23 @@ public class LoginServiceImpl implements LoginService {
 							+ jde);
 		}
 		return returnVal;
+	}
+
+	/**
+	 * This method is to get all list of facilities
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public List<DropDownDTO> getFacilityGroup(int facilityId)
+			throws JobBoardServiceException {
+		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
+		try {
+			downDTOs = userDAO.getFacilityGroup(facilityId);
+		} catch (JobBoardDataException e) {
+			// TODO Auto-generated catch block
+		}
+		return downDTOs;
 	}
 }

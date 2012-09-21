@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.login.service;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -63,4 +64,14 @@ public interface LoginService {
 	 * @throws JobBoardServiceException
 	 */
 	long getEmployerCount() throws JobBoardServiceException;
+
+	/**
+	 * This method is to get all list of facilities
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	List<DropDownDTO> getFacilityGroup(int facilityId)
+			throws JobBoardServiceException;
 }

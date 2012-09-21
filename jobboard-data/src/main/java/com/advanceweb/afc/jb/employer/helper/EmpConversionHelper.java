@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -196,5 +197,29 @@ public class EmpConversionHelper {
 			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
 		}
 		return manageAccessPermissionDTOList;
+	}
+
+	/**
+	 * This method is to get all list of facilities
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public List<DropDownDTO> transformFacilityToDropDownDTO(
+			List<AdmFacility> facilityList, int facilityId) {
+		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
+
+		for (AdmFacility admFacility : facilityList) {
+			DropDownDTO dto = new DropDownDTO();
+			dto.setOptionId(admFacility.getFacilityId().toString());
+			if (admFacility.getFacilityId() == facilityId) {
+				dto.setOptionName("*");
+			} else {
+				dto.setOptionName(admFacility.getName());
+			}
+			downDTOs.add(dto);
+		}
+		return downDTOs;
 	}
 }

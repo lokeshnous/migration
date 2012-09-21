@@ -10,10 +10,12 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
@@ -60,6 +62,7 @@ public class UserDaoImpl implements UserDao {
 		return userDTO;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleDTO> getUserRole(int userId) {
 		List<AdmUserRole> roleList = hibernateTemplate.find(
@@ -122,9 +125,11 @@ public class UserDaoImpl implements UserDao {
 	 * @param facilityId
 	 * @return metricsDTO
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MetricsDTO> getJobPostTotal(int facilityId) {
-
+		
+		
 		List<JpJobStat> jobStatsList = hibernateTemplate
 				.find("SELECT js from JpJobStat js, JpJob jb where "
 						+ "jb.jobId = js.jobId and "
@@ -148,5 +153,34 @@ public class UserDaoImpl implements UserDao {
 					"Error occured while getting the Result from Database" + he);
 		}
 		return count;
+	}
+
+	/**
+	 * This method is to get all list of facilities
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	@SuppressWarnings("unchecked")
+	public List<DropDownDTO> getFacilityGroup(int facilityId)
+			throws JobBoardDataException {
+
+		AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
+				"from AdmFacility e where e.facilityId=?", facilityId).get(0);
+
+		List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
+
+		try {
+			facilityList = hibernateTemplate.find(
+					"from AdmFacility e where e.facilityParentId=?",
+					admFacility.getFacilityParentId());
+		} catch (HibernateException e) {
+			throw new JobBoardDataException(
+					"Error occured while getting the facility details from Database"
+							+ e);
+		}
+		return conversionHelper.transformFacilityToDropDownDTO(facilityList,
+				facilityId);
 	}
 }
