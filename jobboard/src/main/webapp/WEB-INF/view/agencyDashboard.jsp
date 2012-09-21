@@ -2,7 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				$("#changePassword").displaypopup("#changePassword", "780",
+				 $("#changePassword").displaypopup("#changePassword", "780",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
 						"770", "360");
@@ -24,6 +23,8 @@
 						"750", "350");
 				$("#manageEmployers").displaypopup("#manageEmployers", "750",
 						"350");
+				$(".employerMetrics").displaypopup(".employerMetrics", "750",
+				"350"); 
 				jQuery(".megamenu").megamenu();
 			});
 </script>
@@ -143,14 +144,14 @@
 				<div class="clearfix"></div>
 				<!--Start:MidContant-->
 				<div class="MidContent_Wrapper floatLeft">
-					<div class="dashboardHeader">
-						<h1 class=" FontSize20">[Ad Agency Name] Dashboard</h1>
+					<div class="AgencyDashboardHeader">
+						<h1 class="FontSize20">[Ad Agency Name] Dashboard</h1>
 					</div>
 					<div class="MidContent_Wrapper FloatLeft">
 						<div class="dashboardcolumn1">
 							<div class="dashboardPanal">
-								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/UserProfile.jpg" width="30"
+								<div class="dashboardPanalIconHolder profile">
+									<img src="../resources/images/tranBg.png" width="30"
 										height="30" alt="User Profile">
 								</div>
 
@@ -179,8 +180,8 @@
 							</div>
 							<!---->
 							<div class="dashboardPanal">
-								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/Subscriptions.jpg" width="30"
+								<div class="dashboardPanalIconHolder subscriptions">
+									<img src="../resources/images/tranBg.png" width="30"
 										height="30" alt="Subscription">
 								</div>
 
@@ -201,8 +202,8 @@
 							</div>
 							<!---->
 							<div class="dashboardPanal">
-								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/media.png" width="30" height="30"
+								<div class="dashboardPanalIconHolder Solutions">
+									<img src="../resources/images/tranBg.png" width="30" height="30"
 										alt="Subscription">
 								</div>
 
@@ -222,24 +223,32 @@
 						<!--Right-->
 						<div class="dashboardcolumn2">
 							<div class="dashboardPanal">
-								<div class="dashboardPanalIconHolder width10P">
-									<img src="../resources/images/Resume.jpg" width="30"
+								<div class="dashboardPanalIconHolder resume">
+									<img src="../resources/images/tranBg.png" width="30"
 										height="30" alt="Resume">
 								</div>
 
 								<div class="dashboardPanalAGCcontent marginTop5 FloatLeft">
 									<h2 class="noTopBorder">Employers</h2>
+									
+									<c:forEach items="${emplyrsByState}" var="assocEmplyrsName"
+							varStatus="status">
 									<div class="lableTextDashBoard">
-										<h3 class="TextColor01">Colorado</h3>
+										<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
 									</div>
 									<div class="lableTextDashBoard">
+									<c:forEach items="${assocEmplyrsName.value}" var="emplyrsName"
+							          varStatus="emplyrsStatus">
 										<p>
-											<a href="">Vail Valley Medical Center</a>
+											<a class="employerMetrics" href="<%=request.getContextPath()%>/agency/showEmployerMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a> 
 										</p>
+										 </c:forEach>
 									</div>
+									<br><br><br>
+									</c:forEach> 
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="rowEvenTB10Spacing"></div>
-									<div class="rowEvenNewSpacing">
+									<div class="row">
 										<a
 											href="<%=request.getContextPath()%>/agency/addEmployer.html"
 											id="createEmployerpopup" class="btn_sm orange">ADD
