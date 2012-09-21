@@ -20,27 +20,82 @@
 </head>
 <body>
 	<!-- JAVASCRIPT FILES -->
-	<script type="text/javascript"
+	<!--<script type="text/javascript"
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="javascripts/jquery.cycle.all.min.js"></script>
 	<script type="text/javascript" src="javascripts/slider.js"></script>
 	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
 	
-	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>
+	 <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="jquery.autocomplete.min.js"></script> -->
 	<script type="text/javascript">
 		jQuery(document)
 				.ready(
-						function() {						
+						function() {	
+							
+							var IdData = new Array();
+				        	var NameData = new Array();
+				        	
+							var empName = $("#emplyrNameAutoComplte").val();
+							if (empName == '') {
+								empName = 'a';									
+							}
+							
+							$.ajax({
+						        type: "GET",
+						        url: "${pageContext.request.contextPath}/agency/getEmployerNamesList.html?term="+empName,
+						        dataType: "json",							        
+						        contentType: "application/json; charset=utf-8",
+						        success: function(data) {							        	
+						        								        	
+						        	for (var x = 0; x < data.EmpList.length; x++) {
+						        		
+						               IdData.push(data.EmpList[x].ID);
+						               
+						               NameData.push(data.EmpList[x].NAME);
+						            }
+						        	
+						        	$("#emplyrNameAutoComplte").autocomplete({
+						        		source: NameData,
+						        		select : function(event, ui) {
+						        			var IndexVal = $.inArray(ui.item.value, NameData);					        			
+						        			
+						        			var IdVal = IdData[IndexVal];
+						        			
+											$("#emplyrNameAutoComplte")
+													.val(ui.item.value);
+											
+											$.ajax({
+												url: '${pageContext.request.contextPath}/agency/getEmployerDetails.html?facilityId='+IdVal,
+												success : function(data) {															
+													$('#city').val(data.city);
+													$('#street').val(data.street);		
+													$('#zipCode').val(data.postcode);
+													$('#state').val(data.state);	
+													$('#country').val(data.country);
+													$('#phone').val(data.phone);
+													$('#facilityId').val(data.facilityId);
+												},
+											});	
+											
+						        		},
+						        	});
+										
+						        },
+						        error: function(XMLHttpRequest, textStatus, errorThrown) {
+						           alert(textStatus);
+						        }
+						    });
+							
 							//Auto complete for employer name
-							 $("#emplyrNameAutoComplte")
+							 /*$("#emplyrNameAutoComplte")
 									.autocomplete(
 											{
 												source : '${pageContext.request.contextPath}/agency/getEmployerNamesList.html',
-												select : function(event, ui) {
+												select : function(event, ui) {													
 													$("#emplyrNameAutoComplte")
-															.val(ui.item.value);
+															.val(ui.item.value(0));
 													$.ajax({
 														url: '${pageContext.request.contextPath}/agency/getEmployerDetails.html?name='+$("#emplyrNameAutoComplte").val(),
 														success : function(data) {															
@@ -54,8 +109,8 @@
 														},
 													});	
 												},
-											});
-							jQuery(".megamenu").megamenu();
+											});*/
+							//jQuery(".megamenu").megamenu();
 						});
 
 		function MM_jumpMenu(targ, selObj, restore) { //v3.0
@@ -71,12 +126,12 @@
 	<form:form method="post"
 		action="../agency/addEmployerDetails.html"
 		commandName="empRegisterForm" enctype="multipart/form-data">
-		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
+		<div id="empRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
 			<div class="popupHeader">
 				<h2>ADD EMPLOYER</h2>
-				<a href="#"><img src="../resources/images/Close.png" width="19" title="Close"
-					height="19" alt="" onclick="parent.$.nmTop().close();"></a>
+				<a href="#"><img src="../resources/images/Close.png" width="19"
+					height="19" alt="" class="nyroModalClose"></a>
 			</div>
 			<form:hidden path="facilityId" id="facilityId"/>
 
@@ -126,8 +181,9 @@
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"><input type="submit"
-						style="margin-top: -4px;" value="Save" class="btn_sm orange">
-						<a href="" class="btn_sm orange">Cancel</a></span>
+						style="margin-top: -4px;" value="Save" class="btn_sm orange"/>
+						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	
+						</span>
 				</div> 
 				<div class="clearfix"></div>
 
