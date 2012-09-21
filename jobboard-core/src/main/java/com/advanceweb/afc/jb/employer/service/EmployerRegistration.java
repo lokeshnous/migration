@@ -51,14 +51,20 @@ public class EmployerRegistration implements ProfileRegistration,
 	 * @throws JobBoardServiceException
 	 */
 	public UserDTO createUser(ProfileDTO profileDTO) {
-		try {
+		
+		UserDTO userDTO = null;
+		
+		try {			
+			
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
-			return employerDelegate.createUser(empProfileDTO);
+			userDTO = (UserDTO)employerDelegate.createUser(empProfileDTO);
+			
 		} catch (JobBoardServiceException e) {
 			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
 			return null;
 		}
 
+		return userDTO;
 	}
 
 	/**

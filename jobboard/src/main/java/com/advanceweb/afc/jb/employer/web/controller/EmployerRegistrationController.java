@@ -106,6 +106,9 @@ public class EmployerRegistrationController {
 	
 	@Value("${view.media.kit.url}")
 	private String viewMediaUrl;
+	
+	@Value("${ns.validate.user}")
+	private String nsValidateUser;
 
 	@Autowired
 	private LoginService loginService;
@@ -180,8 +183,9 @@ public class EmployerRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
-		if(userDTO == null){
-			model.addObject("Error occurred while interaction with NetSuite.. Please try again.");
+		
+		if(userDTO.getEmailId() == null){
+			model.addObject("message", nsValidateUser);
 			return model;
 		}else{
 			model.addObject("empRegisterForm", empRegForm);
