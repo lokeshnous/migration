@@ -136,9 +136,9 @@
 								<div class="floatLeft">
 									<form:input path="templateName" id="templateName" class="jb_input2Coverletter FontSize15" />
 								</div>
-								<div>
-									<span class="lableText3"></span> <FONT color="red"><form:errors
-											path="templateName" /></FONT>
+								<div class="clearfix"></div>
+								<div class="FormErrorDisplayText">
+									<form:errors path="templateName" />
 								</div>
 							</div>
 						</div>
