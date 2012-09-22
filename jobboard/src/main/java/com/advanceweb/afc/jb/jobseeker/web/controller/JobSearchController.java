@@ -876,7 +876,7 @@ public class JobSearchController {
 		try {
 
 			int jobId = Integer.parseInt(request.getParameter("id"));
-			String parentId = request.getParameter("currentUrlData");
+			String parentId = request.getParameter("currentUrl");
 			String fullPath = request
 					.getRequestURL()
 					.toString()
