@@ -16,7 +16,6 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.ManageAccessPermissionDAO;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
-import com.advanceweb.afc.jb.search.engine.solr.AbstractSolrSearchDelegate;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 /**
  * 

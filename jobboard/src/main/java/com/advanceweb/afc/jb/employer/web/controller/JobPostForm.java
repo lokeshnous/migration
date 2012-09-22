@@ -59,9 +59,9 @@ public class JobPostForm {
     private String statusValue;
     private String noOfPage;
     private String noOfPageLower;
-    private int beginVal=1;
+    private int beginVal=1;/*
     private String brandTemplateValue;
-    private String autoRenewVal;
+    private String autoRenewVal;*/
     
 	private boolean xmlStartEndDateEnabled;
     
@@ -405,7 +405,7 @@ public class JobPostForm {
 	public void setXmlStartEndDateEnabled(boolean xmlStartEndDateEnabled) {
 		this.xmlStartEndDateEnabled = xmlStartEndDateEnabled;
 	}
-	public String getBrandTemplateValue() {
+	/*public String getBrandTemplateValue() {
 		return brandTemplateValue;
 	}
 
@@ -419,7 +419,7 @@ public class JobPostForm {
 
 	public void setAutoRenewVal(String autoRenewVal) {
 		this.autoRenewVal = autoRenewVal;
-	}
+	}*/
 
 	
 }

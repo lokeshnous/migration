@@ -66,7 +66,8 @@ public class JobPostDTO implements Serializable {
     private int userId;
     
     private boolean bActive;
-    
+   /* private String brandTemplateVal;
+    private String autoRenewVal="No";*/
 	public int getJobId() {
 		return jobId;
 	}
@@ -464,6 +465,34 @@ public class JobPostDTO implements Serializable {
 	public void setXmlStartEndDateEnabled(boolean xmlStartEndDateEnabled) {
 		this.xmlStartEndDateEnabled = xmlStartEndDateEnabled;
 	}
+
+/*	*//**
+	 * @return the brandTemplateVal
+	 *//*
+	public String getBrandTemplateVal() {
+		return brandTemplateVal;
+	}
+
+	*//**
+	 * @param brandTemplateVal the brandTemplateVal to set
+	 *//*
+	public void setBrandTemplateVal(String brandTemplateVal) {
+		this.brandTemplateVal = brandTemplateVal;
+	}
+
+	*//**
+	 * @return the autoRenewVal
+	 *//*
+	public String isAutoRenewVal() {
+		return autoRenewVal;
+	}
+
+	*//**
+	 * @param autoRenewVal the autoRenewVal to set
+	 *//*
+	public void setAutoRenewVal(String autoRenewVal) {
+		this.autoRenewVal = autoRenewVal;
+	}*/
 
 		
 }
