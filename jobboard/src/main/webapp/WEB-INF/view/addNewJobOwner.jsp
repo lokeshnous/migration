@@ -30,7 +30,7 @@
 							$("#jobOwnerErrorMsg").html("<span>Please enter correct email address.</span>");	
 						
 						}else {		
-							$("#jobOwnerErrorMsg").html("<span>Processing your data please wait.....</span>");
+							$("#jobOwnerErrorMsg").html("<span>Processing...</span>");
 							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
 				    			data:$('#addJobOwnerForm').serialize(),
 								type: "POST",
@@ -64,7 +64,6 @@
 
 		<div class="popUpContainerWrapper">
 		<span class="lableText3"></span>
-		<div id="processingMsg" class="FormErrorDisplayText"></div>
 		<div id="jobOwnerErrorMsg" class="FormErrorDisplayText"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"

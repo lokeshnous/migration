@@ -21,6 +21,7 @@
 								.click(
 										function(event) {
 											if (validate()) {
+												$("#errmsg").html("<span>Processing...</span>");
 												var file = $("#filePath").val();
 												$("form").attr("action","${pageContext.request.contextPath}/anonymoususerjobapply/saveAnonymousUserJobapply.html");
 												$("#applyJobForm").submit();

@@ -20,6 +20,9 @@
 		$("#purchaseJobPostingId3").displaypopup("#purchaseJobPostingId3",
 				"770", "360");
 	});
+	function sendEmail(){
+		$("#processingMsg").html("<span>Processing...</span>");
+	}
 </script>
 </head>
 
@@ -43,6 +46,7 @@
 						<span class="floatRight"><a href="${viewMediaUrl}" target="_blank"
 							class="btn_sm white marginRight5">VIEW MEDIA KIT</a></span>
 					</div>
+					<div id="processingMsg" class="FormErrorDisplayText"></div>
 					<!--***-->
 					<div class=" clearfix"></div>
 					<div class="MidContent_Wrapper FloatLeft marginTop15">
@@ -224,8 +228,8 @@
 										href="#"><img src="../resources/images/more_orange.png"
 											width="11" height="10"></a></span>
 								</p>
-								<span class="FloatLeft marginTop60"><a
-									href="../employerPostJobs/sendEmailForGold.html?package=gold"
+								<span class="FloatLeft marginTop60"><a onclick="sendEmail();"
+									href="../employerPostJobs/sendEmailForGold.html?package=gold" 
 									class="btn_sm orange">REQUEST PRICING</a></span>
 								<div class="PlayDemo marginTop50">
 									<a

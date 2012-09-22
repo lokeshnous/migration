@@ -14,7 +14,8 @@
 	jQuery(document).ready(function() {
 		$("#waitmsg").hide();
 		
-		$('#emailbutton').click(function(){			
+		$('#emailbutton').click(function(){	
+			$("#emailmsg").html("<span>Processing...</span>");
 			var email = $("#email").val();			
 			/* $("#emailbutton").hide();
 			$("#cancelbutton").hide();
@@ -24,7 +25,8 @@
 			
 			$.ajax({url:"jobSeekerForgotPWDPopUp.html?email="+email,
 				type:"POST",
-				success: function(data) {	
+				success: function(data) {
+					$("#processingMsg").html("<span></span>");
 					var substr = data.split(',');
 					if(substr[0] == '${MMJBCommonConstantsok}'){
 						$('body').css('cursor','default');  
@@ -56,7 +58,8 @@
 
 <body class="job_board">
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
-		style="display: block">
+		style="display: block">		
+		<div id="processingMsg" class="FormErrorDisplayText"></div>
 		<div class="popupHeader">
 			<h2>FORGOT YOUR PASSWORD?</h2>
 			<a href="#"><img title="Close" src="../resources/images/Close.png" width="19" height="19" onclick="parent.$.nmTop().close();"
