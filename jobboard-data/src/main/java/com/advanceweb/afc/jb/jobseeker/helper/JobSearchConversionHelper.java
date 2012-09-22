@@ -153,13 +153,12 @@ public class JobSearchConversionHelper {
 			}
 			admSaveJob.setCreateDt(createdDate);
 			String strAppliedDate = jobDTO.getAppliedDt();
-			@SuppressWarnings("unused")
 			java.sql.Date appliedDate = null;
 			if (strAppliedDate != null) {
 				appliedDate = DateUtils
 						.convertDateStringToSQLDate(strAppliedDate);
 			}
-			// admSaveJob.setAppliedDt(appliedDate);
+			admSaveJob.setAppliedDt(appliedDate);
 			String strDeleteDt = jobDTO.getDeleteDt();
 			java.sql.Date deleteDtDate = null;
 			if (strDeleteDt != null) {
