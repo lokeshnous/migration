@@ -129,7 +129,6 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		int jobId = searchedJobDTO.getJobID();
 		try {
 			if (userId != 0) {
-				@SuppressWarnings("unchecked")
 				List<AdmSaveJob> admSaveJobs = hibernateTemplate
 						.find("from AdmSaveJob where jpJob.jobId = ? and userId = ? and deleteDt is null",
 								jobId, userId);
@@ -208,15 +207,17 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 * 
 	 * @param jobId
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
 		JobApplyTypeDTO jobApplyTypeDTO = null;
 		try {
 			JpJob jpJob = new JpJob();
 			jpJob.setJobId(jobId);
+			// Removed the active column as per the need
+//			List<JpJobApply> jpJobApply = hibernateTemplate.find(
+//					"from JpJobApply where jpJob = ? and active = 1", jpJob);
 			List<JpJobApply> jpJobApply = hibernateTemplate.find(
-					"from JpJobApply where jpJob = ? and active = 1", jpJob);
+					"from JpJobApply where jpJob = ?", jpJob);
 			List<JobApplyTypeDTO> jobApplyTypeDTOs = jobSearchConversionHelper
 					.transformJpJobApplytoJobApplyTypeDTO(jpJobApply);
 			jobApplyTypeDTO = jobApplyTypeDTOs.get(0);

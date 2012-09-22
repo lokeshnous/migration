@@ -344,7 +344,7 @@ public class JobSearchController {
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
 		}
 		
-		form.setUseremail(userEmail);
+ 		form.setUseremail(userEmail);
 		
 		try {
 			// Get the Job details
@@ -363,6 +363,9 @@ public class JobSearchController {
 							jobApplyTypeDTO.getApplyMethod());
 					jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
 					return jsonObject;
+				}
+				if(searchedJobDTO.getEmployerEmailAddress() == null) {
+					searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO.getApplyLink());
 				}
 
 			// Check for job seeker login
@@ -465,7 +468,7 @@ public class JobSearchController {
 			jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		} catch (Exception e) {
 			// loggers call
-			LOGGER.info("applyJob ERROR");
+			LOGGER.info("applyJob ERROR"+e);
 		}
 		return jsonObject;
 	}
