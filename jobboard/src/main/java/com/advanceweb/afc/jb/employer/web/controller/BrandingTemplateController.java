@@ -178,7 +178,7 @@ public class BrandingTemplateController {
 		status = brandingTemplateService.createEmpBrandTemp(empBrandTempDTO);
 		if (status) {
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
-			model.setViewName("employerDashboard");
+			model.setViewName(STR_EMPDASHBOARD);
 			return model;
 		} else {
 
