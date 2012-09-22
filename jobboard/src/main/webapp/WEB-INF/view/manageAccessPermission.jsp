@@ -19,7 +19,7 @@
 		    	
 				val=$(this).attr("id");
 				if (val != ""
-					&& confirm("Do you want to Delete?")){
+					&& confirm("Are your sure you want to delete?")){
 					
 					$.ajax({url : "${pageContext.request.contextPath}/employer/deleteJobOwner.html?userId="+ val,
 		    			data:$('#manageAcceccPermissionForm').serialize(),
@@ -45,7 +45,7 @@
 					success : function(dataFound) {	
 						var listSize=$('#totalSize').val();
 						if(listSize>0){
-						alert("Permissions Changed Successfully.");
+						alert("Permissions changed successfully.");
 						 $("#manageAccessPerm").click();
 						};
 					  },

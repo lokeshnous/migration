@@ -14,7 +14,7 @@
 		    jQuery(document).ready(function(){
 		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
 		    	$("#saveNewOwner").click(function() {
-		    			$("#jobOwnerErrorMsg").html("");
+		    			$("#jobOwnerErrorMsg").html("<span> </span>");
 			    		var ownerName = $.trim($("#ownerName").val());
 						var ownerEmail = $.trim($("#ownerEmail").val());
 						var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;           
@@ -29,7 +29,8 @@
 						}else if(!email_regex.test(ownerEmail)){
 							$("#jobOwnerErrorMsg").html("<span>Please enter correct email address.</span>");	
 						
-						}else {						
+						}else {		
+							$("#jobOwnerErrorMsg").html("<span>Processing your data please wait.....</span>");
 							$.ajax({url : "${pageContext.request.contextPath}/employer/saveNewJobOwner.html",
 				    			data:$('#addJobOwnerForm').serialize(),
 								type: "POST",
@@ -63,6 +64,7 @@
 
 		<div class="popUpContainerWrapper">
 		<span class="lableText3"></span>
+		<div id="processingMsg" class="FormErrorDisplayText"></div>
 		<div id="jobOwnerErrorMsg" class="FormErrorDisplayText"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
