@@ -132,8 +132,6 @@ public class JpJob implements Serializable {
 	@Column(name="job_status")
 	private String jobStatus;
 	
-	@Column(name="employment_type")
-	private int employmentType;
 	//bi-directional many-to-one association to AdmSaveJob
 	@OneToMany(mappedBy=JP_JOB)
 	private List<AdmSaveJob> admSaveJobs;
@@ -568,14 +566,6 @@ public class JpJob implements Serializable {
 
 	public void setJobStatus(String jobStatus) {
 		this.jobStatus = jobStatus;
-	}
-
-	public int getEmploymentType() {
-		return this.employmentType;
-	}
-
-	public void setEmploymentType(int employmentType) {
-		this.employmentType = employmentType;
 	}
 	
 	

@@ -67,7 +67,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setAdtext(dto.getJobDesc());
 		 jpJob.setStartDt(DateUtils.convertStringToSQLDate(dto.getScheduleStartDt()));
 		 jpJob.setEndDt(DateUtils.convertStringToSQLDate(dto.getScheduleExpiryDt()));
-		 jpJob.setEmploymentType(Integer.valueOf(dto.getEmploymentType()));
+		 jpJob.setPositionType(dto.getEmploymentType());
 		 if(null != template && template.getTemplateId() !=0 ){
 			 jpJob.setJpTemplate(template);
 		 }else{
@@ -190,7 +190,7 @@ public class JobPostConversionHelper<JobPostForm> {
 							now.add(Calendar.DAY_OF_MONTH, 30);
 							job.setEndDt(now.getTime());
 						}
-
+						jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 						long endtDateAsTimestamp = job.getEndDt().getTime();
 						long endDate = endtDateAsTimestamp / getRidOfTime;
 
@@ -282,7 +282,7 @@ public class JobPostConversionHelper<JobPostForm> {
 			jobPostDTO.setJobZip(jpJob.getJpJobLocations().get(0)
 					.getJpLocation().getPostcode());
 		}
-		 jobPostDTO.setEmploymentType(String.valueOf(jpJob.getEmploymentType()));
+		 jobPostDTO.setEmploymentType(jpJob.getPositionType());
 		jobPostDTO.setReqSkills(jpJob.getSkills());
 		jobPostDTO.setJobDesc(jpJob.getAdtext());
 		jobPostDTO.setTrackPixel(jpJob.getTrackingPixel());

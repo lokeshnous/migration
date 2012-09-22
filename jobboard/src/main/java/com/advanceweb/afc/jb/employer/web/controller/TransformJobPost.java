@@ -69,6 +69,7 @@ public class TransformJobPost {
 		
 		//Auto Renew
 		jobPostDTO.setAutoRenew(form.isAutoRenew());
+		jobPostDTO.setAutoRenewVal(form.getAutoRenewVal());
 		jobPostDTO.setScheduleStartDt(form.getScheduleStartDate());
 		jobPostDTO.setScheduleExpiryDt(form.getScheduleEndDate());
 		

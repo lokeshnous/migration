@@ -60,8 +60,10 @@ public class JobPostForm {
     private String noOfPage;
     private String noOfPageLower;
     private int beginVal=1;
+    private String brandTemplateValue;
+    private String autoRenewVal;
     
-    private boolean xmlStartEndDateEnabled;
+	private boolean xmlStartEndDateEnabled;
     
     
 	public int getJobId() {
@@ -403,6 +405,21 @@ public class JobPostForm {
 	public void setXmlStartEndDateEnabled(boolean xmlStartEndDateEnabled) {
 		this.xmlStartEndDateEnabled = xmlStartEndDateEnabled;
 	}
-	
+	public String getBrandTemplateValue() {
+		return brandTemplateValue;
+	}
+
+	public void setBrandTemplateValue(String brandTemplateValue) {
+		this.brandTemplateValue = brandTemplateValue;
+	}
+
+	public String getAutoRenewVal() {
+		return autoRenewVal;
+	}
+
+	public void setAutoRenewVal(String autoRenewVal) {
+		this.autoRenewVal = autoRenewVal;
+	}
+
 	
 }
