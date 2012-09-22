@@ -344,6 +344,14 @@
 							</div>
 						</div>
 						
+						<div class="row">
+						<c:if test="${not empty errorMessage}">
+				    	<div id="errmsg" style="color: red" align="left" >
+			    		<c:out value="${errorMessage}"></c:out>
+						</div>
+						</c:if>
+						</div>
+				
 					</div>		
 					</c:if>		
 							<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
@@ -378,11 +386,7 @@
 						
 				</div>
 				
-				<c:if test="${not empty errorMessage}">
-				    	<div id="errmsg" style="color: red" align="left" >
-			    		<c:out value="${errorMessage}"></c:out>
-					</div>
-				</c:if>
+				
 				
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
