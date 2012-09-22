@@ -8,16 +8,19 @@
 	<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
  		$('#send').click(function(){			
- 			
+ 			$("#mailSending").html("<span>Processing...</span>");
 			$.ajax({url:"${pageContext.request.contextPath}/jobsearch/sendtofriendpost.html",
 				data:$('#formid').serialize(),
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
-						//alert("Successfully sent!");						
+						//alert("Successfully sent!");
+						$("#mailSending").html("<span></span>");
 						parent.$.nmTop().close();
 					}else{
+						$("#mailSending").html("<span></span>");
 						$("#errmsg").html(data);
 					}
 				 },
@@ -60,7 +63,7 @@
 			<form:form method="post" action="../jobsearch/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
 				<form:input type="hidden" name="jobId" id="jobId" path="jobId"/>
 			    <form:input type="hidden" name="joburl" id="joburl" path="joburl"/>
-   
+   				<div id="mailSending" class="validationMsg"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Your Friend's Email Address:
