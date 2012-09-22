@@ -51,20 +51,19 @@
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="gateway">
-					<h2>Order Process</h2>
+					<h2>Order Process</h2><br />
 					<h3 class="gatewayBreadcrumbs">
-						Billing and Payment >> <span class="nextStep">Confirm Order
-							>></span>
-					</h3>
+						Billing and Payment >> Confirm Order >> Review Order
+					</h3><br />
 					<form:form action="../pgiController/placeOrder.html" id="creditConfirmForm"
 						method="POST" class="firstForm" modelAttribute="form">
 						<div class="row">
-							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
+							<!-- <h3 class="gatewayBreadcrumbs main_section">Review Order</h3> -->
 							<p class="form_notes review_order">Please review your order
 								details and payment information. If you need to make any
 								changes, you can click on the appropriate 'Edit' links below.
 								This transaction will be final once you hit the 'Place Order'
-								button, so please review carefully before proceeding.</p>
+								button, so please review carefully before proceeding.</p><br />
 
 							<h3 class="gatewayBreadcrumbs main_section">Order Details</h3>
 

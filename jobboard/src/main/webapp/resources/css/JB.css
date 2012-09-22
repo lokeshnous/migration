@@ -1897,7 +1897,7 @@ select {
 	float: left;
 }
 
-.lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6,.lableText7 {
+.lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6,.lableText7,.lableText8 {
 	width: 160px;
 	float: left;
 	padding: 4px 15px 0 0;
@@ -1918,6 +1918,10 @@ select {
 }
 .lableText7{
 	width: 126px !important;
+}
+.lableText8{
+	width: 81px !important;
+	text-align:left !important;
 }
 .splLableText {
 	width: auto;
@@ -3902,16 +3906,18 @@ orange:hover {
 	line-height: 16px;
 }
 
-.FormErrorDisplay {
+.FormErrorDisplay  {
 	margin-left: 175px;
 	color: red;
 }
 
-.FormErrorDisplayText {
+.FormErrorDisplayText,.FormErrorDisplayText01  {
 	float: left;
 	color: red;
 }
-
+.FormErrorDisplayText01{
+	margin-left:10px;
+}
 .DisplayResumeName {
 	font-size: 18px !important;
 	color: #6B7B84;
