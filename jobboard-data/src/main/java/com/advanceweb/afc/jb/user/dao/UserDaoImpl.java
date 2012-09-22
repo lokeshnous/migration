@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 		MerUser user = null;
 		@SuppressWarnings("unchecked")
 		List<MerUser> userList = hibernateTemplateTracker.find(
-				" from  MerUser user where user.email=?", email);
+				" from  MerUser user where user.email=? and deleteDt is null", email);
 		if (userList != null && !userList.isEmpty()) {
 			user = userList.get(0);
 			userDTO = new UserDTO();
