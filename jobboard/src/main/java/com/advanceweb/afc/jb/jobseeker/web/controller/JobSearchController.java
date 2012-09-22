@@ -874,13 +874,22 @@ public class JobSearchController {
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
 			BindingResult result, HttpServletRequest request, Model model) {
-		
+
 		try {
-		
+
 			int jobId = Integer.parseInt(request.getParameter("id"));
+			String parentId = request.getParameter("currentUrlData");
+			String fullPath = request
+					.getRequestURL()
+					.toString()
+					.replace(
+							request.getServletPath(),
+							"/jobsearch/viewJobDetails.html?id=" + jobId
+									+ "&currentUrl=" + parentId
+									+ "&clickType=view");
 			sendtofriendmail.setJobId(jobId);
-			sendtofriendmail.setJoburl(request.getRequestURL().toString());
-			model.addAttribute("joburl", request.getRequestURL().toString());
+			sendtofriendmail.setJoburl(fullPath.toString());
+			model.addAttribute("joburl", fullPath.toString());
 			model.addAttribute("jobId", request.getParameter("id"));
 			model.addAttribute(CURRENT_URL, request.getParameter(CURRENT_URL));
 			model.addAttribute("sendtofriendmail", sendtofriendmail);
