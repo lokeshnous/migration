@@ -102,7 +102,7 @@ function copyAccToBillingAddr(obj) {
 						//alert("Data send successfully !");	
 						parent.$.nmTop().close();
 					}else{
-						$("#errmsg").html(data);
+						$("#errmsgData").html(data);
 					}
 				 },
 			});
@@ -221,6 +221,10 @@ function copyAccToBillingAddr(obj) {
 					<form:form action="../agency/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
 				<div class="row marginLeft20 marginTop25">
 					<h3>Billing Contact</h3>
+				</div>
+				<div class="rowEvenNewSpacing">
+					<span class="lableText3"> </span>
+					<div id="errmsgData" class="FormErrorDisplayText"></div>
 				</div>
 				<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Use my account address </span>
