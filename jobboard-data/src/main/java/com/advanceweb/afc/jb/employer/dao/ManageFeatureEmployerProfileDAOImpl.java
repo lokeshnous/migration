@@ -42,7 +42,8 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	private EmployerRegistrationConversionHelper employerRegistrationConversionHelper;
 	
 	private HibernateTemplate hibernateTemplate;
-
+	@Autowired
+	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -60,7 +61,11 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		facility.setFacilityType("FACILITY");
 		facility.setAdminUserId(1);
 		facility.setCreateDt(new Date());
-
+		int nsCustomerID = 0;
+		List<FacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
+				.getNSCustomerIDFromAdmFacility(Integer.valueOf(companyProfileDTO.getFacilityid()));
+		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
+		facility.setNsCustomerID(nsCustomerID);
 		try {
 			if (companyProfileDTO != null) {
 				session.saveOrUpdate(facility);
