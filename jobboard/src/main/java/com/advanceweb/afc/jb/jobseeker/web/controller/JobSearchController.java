@@ -174,8 +174,6 @@ public class JobSearchController {
 	/*@Value("${notempty}")
 	private String notempty;*/
 
-	@Value("${jobseekerSuggestFrdSub}")
-	private String jobseekerSuggestFrdSub;
 
 	@SuppressWarnings("unused")
 	@Value("${jobseekerSuggestFrdBody}")
