@@ -152,7 +152,7 @@ public class AgencyDashBoardController {
 	@RequestMapping(value = "/employeeBillingSetting", method = RequestMethod.POST)
 	public String editBillingSetting(EmployeeAccountForm employeeBillingForm,
 			BindingResult result, HttpSession session) {
-
+		boolean isUpdated = false;
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			int facilityId = (Integer) session
@@ -173,7 +173,11 @@ public class AgencyDashBoardController {
 						.transformBillingProfileFormToDto(employeeBillingForm);
 				empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
-				LOGGER.info("This is Billing Addresss edite option done successfully");
+				if (isUpdated) {
+					LOGGER.info("This is Account Addresss edite option done successfully");
+				} else {
+					return MMJBCommonConstants.UPDATE_ERROR;
+				}
 
 			} else {
 				// if (listProfAttribForms.getEmail().toString()
