@@ -43,8 +43,6 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	
 	private HibernateTemplate hibernateTemplate;
 	@Autowired
-	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
-	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
@@ -62,8 +60,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		facility.setAdminUserId(1);
 		facility.setCreateDt(new Date());
 		int nsCustomerID = 0;
-		List<FacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
-				.getNSCustomerIDFromAdmFacility(Integer.valueOf(companyProfileDTO.getFacilityid()));
+		List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer.valueOf(companyProfileDTO.getFacilityid()));
 		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
 		facility.setNsCustomerID(nsCustomerID);
 		try {
