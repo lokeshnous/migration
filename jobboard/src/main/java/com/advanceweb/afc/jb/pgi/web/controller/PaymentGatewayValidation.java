@@ -97,7 +97,7 @@ public class PaymentGatewayValidation {
 	private void validatePurchaseOrderNO(InvoiceForm form, Errors errors) {
 		if (StringUtils.isEmpty(form.getPurchaseOrderNo())) {
 			errors.rejectValue("invoiceForm.purchaseOrderNo", "NotEmpty",
-					"Invoice Number Shold not be blank.");
+					"Invoice Number should not be blank.");
 		}
 
 	}
