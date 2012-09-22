@@ -21,6 +21,21 @@
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
+function validateNumber(event) {
+    var keyval = window.event ? event.keyCode : event.which;
+
+    if (event.keyCode == 8 || event.keyCode == 46
+     || event.keyCode == 37 || event.keyCode == 39) {
+        return true;
+    }
+    else if ( keyval < 48 || keyval > 57 ) {
+        return false;
+    }
+    else return true;
+};
+</script>
+
+<script type="text/javascript">
 
 	//Limit text area characters
 	function limitText(limitField, limitCount, limitNum) {
@@ -167,7 +182,7 @@
 				},
 			});
 		});
-		
+		$('[id^=zipCode]').keypress(validateNumber);
 	});
 	
 	//jQuery(".megamenu").megamenu();
@@ -317,8 +332,11 @@
 									</div>
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Zip Code:</span>
+										
 										<form:input path="contactInfoForm.postalCode"
-											class="job_seeker_password textBox350" />
+											type="text" name="zipCode" id="zipCode"
+											class="job_seeker_password textBox350" maxlength="5" />
+																						
 										<span class="required">(Required)</span>
 									</div>
 									<div>

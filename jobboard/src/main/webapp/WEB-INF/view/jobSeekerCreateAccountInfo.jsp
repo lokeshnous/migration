@@ -16,9 +16,23 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+<script type="text/javascript">
+function validateNumber(event) {
+    var keyval = window.event ? event.keyCode : event.which;
 
+    if (event.keyCode == 8 || event.keyCode == 46
+     || event.keyCode == 37 || event.keyCode == 39) {
+        return true;
+    }
+    else if ( keyval < 48 || keyval > 57 ) {
+        return false;
+    }
+    else return true;
+};
+</script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -102,8 +116,11 @@
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Zip Code:</span>
 		
-										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
-											class="job_seeker_password textBox350" />
+											<form:input
+											path="listProfAttribForms[${status.index}].strLabelValue"
+											type="text" name="zipCode" id="zipCode"
+											class="job_seeker_password textBox350" maxlength="5" />
+											
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>

@@ -29,6 +29,7 @@
 		});
 		
 		$('#firstname2').focus();
+		$('[id^=zip]').keypress(validateNumber);
 	});
 	
 	function copyAccToBillingAddr(obj) {
@@ -151,9 +152,11 @@
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">ZIP Code:</span>
+							
 							<form:input path="accountAddressForm.zipCode" type="text"
 								name="zip" id="zip" readonly="true"
 								class="job_seeker_password textBox350 " />
+								
 						</div>
 
 						<div class="rowEvenNewSpacing">

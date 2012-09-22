@@ -187,7 +187,7 @@ function copyAccToBillingAddr(obj) {
 						<span class="lableText3">
 							ZIP Code:
 						</span>
-						<form:input maxlength="6" path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
+						<form:input maxlength="5" id="zipCode" path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 ">
@@ -268,7 +268,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> ZIP Code: </span>
-						<form:input maxlength="6" path="billingAddressForm.zipCodeForBillingAddr" name="zipCode2" id="zipCode2"
+						<form:input maxlength="5" path="billingAddressForm.zipCodeForBillingAddr" name="zipCode2" id="zipCode2"
 							class="job_seeker_password" type="text" />
 							
 					</div>
