@@ -131,7 +131,7 @@ public class TransformEmployerRegistration {
 		dto.setPassword(form.getPassword());
 		dto.setEmailId(form.getEmailId());
 		dto.setUserId(form.getUserId());
-
+		dto.setHelthSystem(form.isHelthSystem());
 		return dto;
 	}
 

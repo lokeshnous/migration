@@ -66,6 +66,16 @@ public class EmployerRegistrationForm {
 
 	private boolean bReadOnly;
 
+	private boolean helthSystem;
+	
+	public boolean isHelthSystem() {
+		return helthSystem;
+	}
+
+	public void setHelthSystem(boolean helthSystem) {
+		this.helthSystem = helthSystem;
+	}
+
 	/**
 	 * @return the firstName
 	 */

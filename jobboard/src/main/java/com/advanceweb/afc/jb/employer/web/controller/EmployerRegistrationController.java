@@ -200,7 +200,11 @@ public class EmployerRegistrationController {
 					infoDTO.getFacilityId());
 			model.addObject("viewMediaUrl", viewMediaUrl);
 			model.setViewName("jobBoardEmployerPostJobs01");
-			authenticateUserAndSetSession(userDTO, request);
+			String role=MMJBCommonConstants.ROLE_FACILITY;
+			if(empRegForm.isHelthSystem()){
+				role=MMJBCommonConstants.ROLE_FACILITY_GROUP;
+			}
+			authenticateUserAndSetSession(userDTO, request,role);
 
 			return model;
 		}
@@ -277,10 +281,9 @@ public class EmployerRegistrationController {
 	 * @param request
 	 */
 	private void authenticateUserAndSetSession(UserDTO user,
-			HttpServletRequest request) {
+			HttpServletRequest request,String role) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		authList.add(new GrantedAuthorityImpl(
-				MMJBCommonConstants.ROLE_FACILITY_ADMIN));
+		authList.add(new GrantedAuthorityImpl(role));
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				user.getEmailId(), user.getPassword(), authList);
 
