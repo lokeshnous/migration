@@ -406,6 +406,7 @@ jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminJobPostingInventoryController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminLoginForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminManageFacilitiesContorller.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/TransformAdminImpersonation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text
@@ -531,6 +532,7 @@ jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobPostInventory.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobSave.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/adminFacilityToFacGroup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminImpersonation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
