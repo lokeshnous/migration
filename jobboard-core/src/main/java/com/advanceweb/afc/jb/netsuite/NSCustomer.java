@@ -32,8 +32,6 @@ public class NSCustomer {
 	
 	private String ccStreet;
 	
-	private List<NSItem> item = new ArrayList<NSItem>();
-	
 	private String firstName;
 	
 	private String middleName;
@@ -63,6 +61,8 @@ public class NSCustomer {
 	private String city;
 	
 	private boolean custEntityFeaturedEmployee;
+	
+	private List<NSItem> item = new ArrayList<NSItem>();
 	
 	public boolean isCustEntityFeaturedEmployee() {
 		return custEntityFeaturedEmployee;
