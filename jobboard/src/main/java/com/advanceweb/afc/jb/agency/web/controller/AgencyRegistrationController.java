@@ -160,7 +160,7 @@ public class AgencyRegistrationController {
 				.getUserId());
 		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 				infoDTO.getFacilityId());
-		model.setViewName(AGENCY_DASHBOARD);
+		model.setViewName("redirect:/agency/agencyDashboard.html");
 		authenticateUserAndSetSession(userDTO, request);
 		LOGGER.info("Registration is completed.");
 		return model;
@@ -239,7 +239,7 @@ public class AgencyRegistrationController {
 			HttpServletRequest request) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl(
-				MMJBCommonConstants.ROLE_FACILITY_ADMIN));
+				MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				user.getEmailId(), user.getPassword(), authList);
 
