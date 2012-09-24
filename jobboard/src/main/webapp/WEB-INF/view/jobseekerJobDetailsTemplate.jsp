@@ -405,18 +405,6 @@
 	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
 	                      </a></div>
                     </c:forEach> 
-                    <!-- <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
-                      </a></div>
-                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
-                      </a></div>
-                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
-                      </a></div>
-                    <div class="BlueBoxCont borderBottomNone"><a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor02">Nurse Team Lead/RN Manager</h3>
-                      </a></div> -->
                  </div>
                	 </div>
                  
@@ -426,18 +414,11 @@
                     <div class="BlueBoxContA"> <a href="#" class="UnderLineNone">
                       <h2 class="more_link noTopBottomBorder more_link02">News From This Employer<span>More</span></h2>
                       </a> </div>
-                    <div class="BlueBoxCont"> <a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor01 FontSize12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h3>
+                       <c:forEach items="${newsDTOList}" var="newsDTO">   
+                    <div class="BlueBoxCont"> <a href="${newsDTO.link}" class="TextColorA02Link">
+                      <h3 class="TextColor01 FontSize12">${newsDTO.title}</h3>
                       </a> </div>
-                    <div class="BlueBoxCont"> <a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor01 FontSize12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h3>
-                      </a> </div>
-                    <div class="BlueBoxCont"> <a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor01 FontSize12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h3>
-                      </a> </div>
-                    <div class="BlueBoxCont borderBottomNone"> <a href="#" class="TextColorA02Link">
-                      <h3 class="TextColor01 FontSize12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h3>
-                      </a> </div>
+                      </c:forEach> 
 	             </div>
 	             </div>
                  </c:if>

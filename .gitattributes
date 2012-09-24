@@ -51,6 +51,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ManageAccessPermissio
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetaSearchTypeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetricsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/MetroAreaDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/NewsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/OrderDetailsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/OrderPaymentDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/PackageInformationDTO.java -text
@@ -111,6 +112,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/AgencyRegistr
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/BrandingTemplateService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmloyerRegistartionService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerDelegate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerNewsFeedService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
@@ -119,6 +121,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/Branding
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerDelegateImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerNewsFeedServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeatureEmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text

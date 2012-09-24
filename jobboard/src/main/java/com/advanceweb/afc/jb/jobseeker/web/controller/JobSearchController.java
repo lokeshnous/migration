@@ -48,12 +48,14 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
+import com.advanceweb.afc.jb.common.NewsDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
+import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.home.web.controller.ClickController;
@@ -107,6 +109,9 @@ public class JobSearchController {
 	
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
+	
+	@Autowired
+	private EmployerNewsFeedService employerNewsFeedService;
 
 	@Value("${jobSearchValidateKeyword}")
 	private String jobSearchValidateKeyword;
@@ -182,8 +187,6 @@ public class JobSearchController {
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	
-	
-	
 	private @Value("${SUBJECT_OF_MAIL}")
 	String SUBJECT_OF_MAIL;
 
@@ -222,6 +225,8 @@ public class JobSearchController {
 
 	@Autowired
 	ClickController clickController;
+	
+	private static final String PLATINUM_LIST = "PlatinumNewsList";
 	
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -268,6 +273,12 @@ public class JobSearchController {
 			if(MMJBCommonConstants.ZERO_INT != jobDTO.getTemplateId())
 			{
 				List<JobPostDTO> jobPostDTOList = jobSearchService.getRecentJobsPostedByEmployer(jobDTO.getFacilityId(), jobDTO.getJobID());
+				
+				//For getting the News feed from XML file
+				Map<String, List<NewsDTO>> newsMap = employerNewsFeedService.getNewsFromXML();
+				List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
+				
+				model.put("newsDTOList", newsDTOList);
 				model.put("jobDTOList", jobPostDTOList);
 				modelView.setViewName("jobseekerJobDetailsTemplate");
 			}

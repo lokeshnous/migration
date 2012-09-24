@@ -134,9 +134,11 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		NSCustomer nsCustomer = getNSCustomerForUpdateUser(userDTO);
 		String jsonCustomer = JsonUtil.toJson(nsCustomer);
+		
 		JSONObject json = getIsPerson(jsonCustomer);
 
 		Map<String, String> queryparamMap = updateCustomerQueryMap();
+		LOGGER.info("Json Data sent to NS is "+json);
 		Response response = netSuiteMethod.netSuitePost(queryparamMap,
 				json.toString());
 
