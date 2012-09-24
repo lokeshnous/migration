@@ -85,7 +85,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 						"/employerRegistration/employerregistration.html");
 			}
 
-		} else if (isFacilityGroup(authentication, pageValue)) {
+		} else if (isFacilitySystem(authentication, pageValue)) {
 
 			/**
 			 * Added to put facility id in the session
@@ -128,22 +128,22 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	}
 
 	/**
-	 * Method return true if authenticated by FACILITY GROUP otherwise false.
+	 * Method return true if authenticated by FACILITY SYSTEM otherwise false.
 	 * 
 	 * @param authentication
 	 * @param pageValue
 	 * @return
 	 */
-	private boolean isFacilityGroup(Authentication authentication,
+	private boolean isFacilitySystem(Authentication authentication,
 			String pageValue) {
 		return authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_GROUP))
+						MMJBCommonConstants.ROLE_FACILITY_SYSTEM))
 				&& pageValue.equals(MMJBCommonConstants.AGENCY);
 	}
 
 	/**
-	 * Method return true if authenticated by FACILITY otherwise false.
+	 * Method return true if authenticated by FACILITY or FACILITY_GROUP otherwise false.
 	 * 
 	 * @param authentication
 	 * @param pageValue
@@ -151,7 +151,8 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	 */
 	private boolean isFacility(Authentication authentication, String pageValue) {
 		return authentication.getAuthorities().contains(
-				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
+				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY)) | authentication.getAuthorities().contains(
+						new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP)  )
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER);
 	}
 

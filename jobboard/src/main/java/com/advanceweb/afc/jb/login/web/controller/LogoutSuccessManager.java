@@ -24,7 +24,7 @@ public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 		response.setHeader("Cache-Control", "no-store");
 		response.setHeader("Cache-Control", "must-revalidate");
 		response.setDateHeader("Expires", 0);
-		if (null ==authentication ) {
+		if (null == authentication) {
 			response.sendRedirect(request.getContextPath()
 					+ "/healthcarejobs/advanceweb.html");
 		} else {
@@ -36,12 +36,15 @@ public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
 						+ MMJBCommonConstants.JOBSEEKER_LOGOUT_URL);
 			} else if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
-							MMJBCommonConstants.ROLE_FACILITY))) {
+							MMJBCommonConstants.ROLE_FACILITY))
+					| authentication.getAuthorities().contains(
+							new SimpleGrantedAuthority(
+									MMJBCommonConstants.ROLE_FACILITY_GROUP))) {
 				response.sendRedirect(request.getContextPath()
 						+ MMJBCommonConstants.EMPLOYER_LOGOUT_URL);
 			} else if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
-							MMJBCommonConstants.ROLE_FACILITY_GROUP))) {
+							MMJBCommonConstants.ROLE_FACILITY_SYSTEM))) {
 				response.sendRedirect(request.getContextPath()
 						+ MMJBCommonConstants.AGENCY_LOGOUT_URL);
 			}
