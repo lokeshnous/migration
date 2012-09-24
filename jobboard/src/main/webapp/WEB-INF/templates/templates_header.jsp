@@ -66,7 +66,7 @@ html.busy, html.busy * {
 					<!-- loginHeader -->
 				</div>
 			</security:authorize>
-			<security:authorize access="hasRole('ROLE_FACILITY')">
+			<security:authorize access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
@@ -75,7 +75,7 @@ html.busy, html.busy * {
 						</span><br>
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
-								${msg.commonVerticalBar}<a href="../employer/employerDashBoard.html">${msg.commonDashboard}</a></span>
+								${msg.commonVerticalBar}<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
 					<!-- loginHeader -->
@@ -93,7 +93,7 @@ html.busy, html.busy * {
 				</div>
 			</security:authorize>
 			<!-- loginHeader -->
-			<security:authorize access="hasRole('ROLE_FACILITY_GROUP')">
+			<security:authorize access="hasRole('ROLE_FACILITY_SYSTEM')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
@@ -102,7 +102,7 @@ html.busy, html.busy * {
 						</span><br>
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
-								${msg.commonVerticalBar}<a href="">${msg.commonDashboard}</a></span>
+								${msg.commonVerticalBar}<a href="<%=request.getContextPath()%>/agency/agencyDashboard.html">${msg.commonDashboard}</a></span>
 						</div>
 					</div>
 					<!-- loginHeader -->
@@ -121,7 +121,7 @@ html.busy, html.busy * {
 			</security:authorize>
 			<%-- <c:if test="${sessionScope.userId == null}">  --%>
 			<security:authorize
-				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP')">
+				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
 				<div class="headerLoginSectionColumns width205">
 					<span class="boldText">Job Seeker:</span><br>
 					<div class="PopUpToolTip">
