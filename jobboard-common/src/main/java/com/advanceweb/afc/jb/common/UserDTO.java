@@ -43,8 +43,14 @@ public class UserDTO {
 	private SalesOrderDTO salesOrderDTO;
 	private String packageName;
 	private List<String> emailList;
+	private boolean helthSystem;
 	
-	
+	public boolean isHelthSystem() {
+		return helthSystem;
+	}
+	public void setHelthSystem(boolean helthSystem) {
+		this.helthSystem = helthSystem;
+	}
 	public List<String> getEmailList() {
 		return emailList;
 	}
