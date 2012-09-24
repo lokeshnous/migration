@@ -21,6 +21,22 @@ public class JobPostingInventoryDTO {
 	private String addon;
 	private String days;
 	private int productId;
+	private int invDetailId;
+
+	/**
+	 * @return the invDetailId
+	 */
+	public int getInvDetailId() {
+		return invDetailId;
+	}
+
+	/**
+	 * @param invDetailId
+	 *            the invDetailId to set
+	 */
+	public void setInvDetailId(int invDetailId) {
+		this.invDetailId = invDetailId;
+	}
 
 	/**
 	 * @return the userId
