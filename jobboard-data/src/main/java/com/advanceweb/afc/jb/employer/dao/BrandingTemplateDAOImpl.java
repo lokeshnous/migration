@@ -1,11 +1,14 @@
 package com.advanceweb.afc.jb.employer.dao;
 
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -29,6 +32,7 @@ import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
  * 
  */
 @Repository("brandingTemplateDAO")
+@SuppressWarnings("unchecked")
 public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	@Autowired
 	private BrandTemplateConversionHelper brandTemplateConversionHelper;
@@ -48,7 +52,6 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	/**
 	 * Fetch the job posting Branding Templates
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<BrandingTemplateDTO> getBrandingTemplate(int userId) {
 		List<BrandingTemplateDTO> templatesDTO = null;
@@ -225,7 +228,6 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 
 		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
 		try {
-			@SuppressWarnings("unchecked")
 			List<AdmFacility> admFacilityList = hibernateTemplateCareer
 					.find(" from  AdmFacility WHERE  facilityId  = '"
 							+ admFacilityID + "'");
@@ -245,4 +247,33 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return admFacilityDTOList;
 	}
 
+	
+	/**
+	 * This method is used the get the Branding Template Purchase information
+	 * @param facilityId
+	 * @return
+	 */
+	public boolean getBrandPurchaseInfo(int facilityId) {
+		boolean isBTEnabled = false;
+		int productId = 0;
+		Query getInventoryData = hibernateTemplateCareer.getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(" { call GetInventoryDetails(?) }");
+		getInventoryData.setInteger(0, facilityId);
+		List<?> invetoryDeatil = getInventoryData.list();
+		Iterator<?> iterator = invetoryDeatil.iterator();
+		while (iterator.hasNext()) {
+			Object[] row = (Object[]) iterator.next();
+			productId = ((Integer) row[0]);
+			if (productId == 1) {
+				// If the value is 1 implies the customer has purchased Branding
+				// Template
+				isBTEnabled = true;
+				return isBTEnabled;
+			}
+		}
+		return isBTEnabled;
+	}
+
+	
 }

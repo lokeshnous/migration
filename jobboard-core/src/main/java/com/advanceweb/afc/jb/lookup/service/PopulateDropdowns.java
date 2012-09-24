@@ -185,7 +185,11 @@ public interface PopulateDropdowns {
 	String populateStateAutoComplete(String city);
 
 	List<String> populatePostalCodeAutoComplete(String postalCode);
-
+	
+	List<String> populateCompanyAutoComplete(String company, int facilityParentId);
+	
+	List<DropDownDTO> populateTemplateAutoComplete(String company);
+	
 	String getPostalCode(String city, String state);
 
 	String getCountry(String city, String state, String postalCode);

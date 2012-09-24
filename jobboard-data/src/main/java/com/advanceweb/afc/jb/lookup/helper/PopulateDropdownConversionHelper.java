@@ -481,11 +481,14 @@ public class PopulateDropdownConversionHelper {
 	public List<DropDownDTO> transformJpTemplateToDropDownDTO(List<JpTemplate> templateList){
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
 		for(JpTemplate template: templateList){
-			DropDownDTO dropdownDTO = new DropDownDTO();
-			dropdownDTO.setOptionId(String.valueOf(template.getTemplateId()));
-			dropdownDTO.setOptionName(template.getTemplateName());
-			
-			dropdownList.add(dropdownDTO);
+			if(null == template.getDeleteDt())
+			{
+				DropDownDTO dropdownDTO = new DropDownDTO();
+				dropdownDTO.setOptionId(String.valueOf(template.getTemplateId()));
+				dropdownDTO.setOptionName(template.getTemplateName());
+				
+				dropdownList.add(dropdownDTO);
+			}
 		}
 		return dropdownList;		
 		

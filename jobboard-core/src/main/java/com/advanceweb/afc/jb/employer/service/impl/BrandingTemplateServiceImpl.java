@@ -103,5 +103,15 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
 	}
 
+	/**
+	 * This method is used the get the Branding Template Purchase information
+	 * @param facilityId
+	 * @return
+	 */
+	@Override
+	public	boolean getBrandPurchaseInfo(int facilityId){
+		
+		return brandingTemplateDAO.getBrandPurchaseInfo(facilityId);
+	}
 	
 }

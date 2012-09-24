@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,9 +34,12 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * @Author : Prince Mathew
@@ -47,6 +51,10 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @Controller
 @RequestMapping("/employer")
 public class JobPostController {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(JobPostController.class);
+	
 	@Autowired
 	private JobPostService employerJobPost;
 
@@ -55,7 +63,13 @@ public class JobPostController {
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
-
+	
+	@Autowired
+	private BrandingTemplateService brandingTemplateService;
+	
+	@Autowired
+	private LoginService loginService;
+	
 	@Value("${deleteFail}")
 	private String deleteFailErrMsg;
 	@Value("${repostFail}")
@@ -80,14 +94,21 @@ public class JobPostController {
 
 		ModelAndView model = new ModelAndView();
 		JobPostForm jobPostForm = new JobPostForm();
+		List<DropDownDTO> templateList;
 		
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> templateList = populateDropdownsService
-				.populateBrandingTemplateDropdown(
-						employerInfoDTO.getFacilityId(),
-						employerInfoDTO.getUserId());
+		
+		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
+				.getFacilityId())) {
+			templateList = populateDropdownsService
+					.populateBrandingTemplateDropdown(
+							employerInfoDTO.getFacilityId(),
+							employerInfoDTO.getUserId());
+		} else {
+			templateList = new ArrayList<DropDownDTO>();
+		}
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(employerInfoDTO.getFacilityId());
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
@@ -309,16 +330,23 @@ public class JobPostController {
 	}
 
 	private ModelAndView populateDropdowns(ModelAndView model, HttpSession session) {
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),
-				"facility_admin");
+		List<DropDownDTO> templateList;
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
+				(Integer) session.getAttribute("userId"), "facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> templateList = populateDropdownsService
-				.populateBrandingTemplateDropdown(
-						employerInfoDTO.getFacilityId(),
-						employerInfoDTO.getUserId());
+		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
+				.getFacilityId())) {
+			templateList = populateDropdownsService
+					.populateBrandingTemplateDropdown(
+							employerInfoDTO.getFacilityId(),
+							employerInfoDTO.getUserId());
+		} else {
+			templateList = new ArrayList<DropDownDTO>();
+		}
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
-				.populateJobPostingTypeDropdowns(employerInfoDTO.getFacilityId());
+				.populateJobPostingTypeDropdowns(employerInfoDTO
+						.getFacilityId());
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
 				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId(),
@@ -353,6 +381,7 @@ public class JobPostController {
 	public ModelAndView editJob(HttpServletRequest request,HttpSession session,
 			JobPostForm jobPostFormP, @RequestParam("jobId") int jobId) {
 		JobPostForm jobPostForm =jobPostFormP;
+		List<DropDownDTO> templateList;
 		int jobPostType = employerJobPost
 				.getinvDetIdByJobId(jobId, (Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID),
@@ -372,10 +401,16 @@ public class JobPostController {
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-		List<DropDownDTO> templateList = populateDropdownsService
-				.populateBrandingTemplateDropdown(
-						employerInfoDTO.getFacilityId(),
-						employerInfoDTO.getUserId());
+		
+		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
+				.getFacilityId())) {
+			templateList = populateDropdownsService
+					.populateBrandingTemplateDropdown(
+							employerInfoDTO.getFacilityId(),
+							employerInfoDTO.getUserId());
+		} else {
+			templateList = new ArrayList<DropDownDTO>();
+		}
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(employerInfoDTO.getFacilityId());
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
@@ -452,6 +487,57 @@ public class JobPostController {
 		return country;
 	}
 
+	@RequestMapping(value = "/getCompanyList", method = RequestMethod.GET, headers = "Accept=*/*")
+	@ResponseBody
+	public List<String> getCompanyList(@RequestParam("term") String query, HttpSession session) {
+		int facilityId=0;
+		int facilityParentId=0;
+		// 	Retrieve facilityId from session.
+		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		
+		try {
+			facilityParentId = loginService.getFacilityParent(facilityId);
+		} catch (JobBoardServiceException e) {
+			LOGGER.error(e);
+		}
+
+		List<String> companyList = populateDropdownsService
+				.populateCompanyAutoComplete(query, facilityParentId);
+
+		return companyList;
+	}
+	
+	@RequestMapping(value = "/getTemplate")
+	@ResponseBody
+	public List<DropDownDTO> getTemplate(@RequestParam("company") String company) {
+
+		List<DropDownDTO> companyTemplateList = populateDropdownsService.populateTemplateAutoComplete(company);
+		return companyTemplateList;
+	}
+	
+	@RequestMapping(value = "/getFacilityTemplate")
+	@ResponseBody
+	public List<DropDownDTO> getFacilityTemplate(
+			@RequestParam("isChecked") boolean isChecked,
+			@RequestParam("company") String company, HttpSession session) {
+
+		List<DropDownDTO> templateList;
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
+				(Integer) session.getAttribute("userId"), "facility_admin");
+
+		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
+				.getFacilityId()) && isChecked) {
+			templateList = populateDropdownsService
+					.populateBrandingTemplateDropdown(
+							employerInfoDTO.getFacilityId(),
+							employerInfoDTO.getUserId());
+		} else {
+			templateList = getTemplate(company);
+		}
+
+		return templateList;
+	}
+	
 	/**
 	 * This method is called to display jobs list belonging to a logged in
 	 * employer
@@ -465,6 +551,7 @@ public class JobPostController {
 	public ModelAndView getJobPostDetails(HttpServletRequest request,
 			HttpSession session, JobPostForm jobPostform) {
 		ModelAndView model = new ModelAndView();
+		List<DropDownDTO> templateList;
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
 		String jobStatus = (null!=jobPostform.getStatusValue()?jobPostform.getStatusValue():null!=request.getParameter("jobStatus")?request.getParameter("jobStatus"):null);
 		jobPostform.setStatusValue(jobStatus);
@@ -515,10 +602,16 @@ public class JobPostController {
 
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(1,
 				"facility_admin");
-		List<DropDownDTO> templateList = populateDropdownsService
-				.populateBrandingTemplateDropdown(
-						employerInfoDTO.getFacilityId(),
-						employerInfoDTO.getUserId());
+		
+		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
+				.getFacilityId())) {
+			templateList = populateDropdownsService
+					.populateBrandingTemplateDropdown(
+							employerInfoDTO.getFacilityId(),
+							employerInfoDTO.getUserId());
+		} else {
+			templateList = new ArrayList<DropDownDTO>();
+		}
 		jobPostform.setJobPostDTOList(postedJobList);
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		if(null != next && !next.isEmpty()){

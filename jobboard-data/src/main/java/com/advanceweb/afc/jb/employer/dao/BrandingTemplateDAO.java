@@ -81,5 +81,11 @@ public interface BrandingTemplateDAO {
 	
 	List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID);
 	
+	/**
+	 * This method is used the get the Branding Template Purchase information
+	 * @param facilityId
+	 * @return
+	 */
+	public	boolean getBrandPurchaseInfo(int facilityId);
 
 }

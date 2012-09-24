@@ -34,7 +34,7 @@
 						"360");
 				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp", "770",
 				"360"); 
-				
+
 			});
 	window.onload = function() {
 		loadMetricsDetails();

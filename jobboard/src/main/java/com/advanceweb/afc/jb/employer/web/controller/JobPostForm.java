@@ -45,6 +45,7 @@ public class JobPostForm {
 	private String trackPixel;
 	
 	private String brandTemplate;
+	private boolean bTemplateOverride;
 	
 	private boolean autoRenew;
 
@@ -232,6 +233,14 @@ public class JobPostForm {
 
 	public void setBrandTemplate(String brandTemplate) {
 		this.brandTemplate = brandTemplate;
+	}
+
+	public boolean isbTemplateOverride() {
+		return bTemplateOverride;
+	}
+
+	public void setbTemplateOverride(boolean bTemplateOverride) {
+		this.bTemplateOverride = bTemplateOverride;
 	}
 
 	public boolean isbHideCity() {

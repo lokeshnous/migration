@@ -9,6 +9,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
+
 public interface UserDao {
 	UserDTO getUser(String email);
 
@@ -48,6 +49,15 @@ public interface UserDao {
 	List<DropDownDTO> getFacilityGroup(int facilityId)
 			throws JobBoardDataException;
 
+	/**
+	 * This method is to get facility parent id
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	int getFacilityParent(int facilityId) throws JobBoardDataException;
+	
 	/**
 	 * This method to update the automatic generated password to DB
 	 * 

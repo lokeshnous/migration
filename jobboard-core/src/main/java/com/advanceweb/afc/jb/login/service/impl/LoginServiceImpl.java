@@ -123,6 +123,23 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	/**
+	 * This method is to get facility parent id
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	public int getFacilityParent(int facilityId)
+			throws JobBoardServiceException{
+		int facilityParentId=0;
+		try {
+			facilityParentId = userDAO.getFacilityParent(facilityId);
+		} catch (JobBoardDataException e) {
+			// TODO Auto-generated catch block
+		}
+		return facilityParentId;
+	}
+	/**
 	 * This method to update the automatic generated password to DB
 	 * 
 	 * @param emailAddress

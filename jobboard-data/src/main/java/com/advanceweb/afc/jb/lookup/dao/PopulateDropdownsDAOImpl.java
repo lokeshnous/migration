@@ -492,12 +492,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	@Override
 	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
 			int userId) {
-
 		try {
 			List<AdmFacility> facilityList = hibernateTemplate.find(
 					"from AdmFacility adm where adm.facilityId=?", facilityId);
 			if (null != facilityList && !facilityList.isEmpty()) {
 				AdmFacility facility = facilityList.get(0);
+
 				List<JpTemplate> templateList = facility.getJpTemplates();
 				return dropdownHelper
 						.transformJpTemplateToDropDownDTO(templateList);
@@ -607,6 +607,71 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	@Override
+	public List<String> populateCompanyAutoComplete(String company, int facilityParentId) {
+		List<String> companyNameList = new ArrayList<String>();
+		try {
+			List<Object> admFacilityList = hibernateTemplate
+					.find("select distinct fac.name from  AdmFacility fac WHERE fac.facilityParentId=? and fac.name like'"
+							+ company + "%' ORDER BY  fac.name ASC", facilityParentId);
+
+			if (admFacilityList != null) {
+				for (Object obj : admFacilityList) {
+					companyNameList.add((String) obj);
+				}
+			}
+			return companyNameList;
+
+		} catch (DataAccessException e) {
+
+			LOGGER.error(e);
+		}
+		return null;
+	}
+	
+	@Override
+	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
+		int facilityId=0;
+		int templateId=0;
+		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
+		try {
+			
+			List<Object> admFacilityList = hibernateTemplate
+					.find("select distinct fac.facilityId from  AdmFacility fac WHERE fac.name='"
+							+ company + "' ORDER BY  fac.name ASC");
+
+			if (admFacilityList != null && !admFacilityList.isEmpty()) {
+				facilityId = (Integer)admFacilityList.get(0);
+			}
+			
+			List<Object> admFacilityPackageList = hibernateTemplate
+					.find("select fac.templateId from  AdmFacilityPackage fac WHERE fac.facilityId=?",
+							facilityId);
+
+			if (admFacilityPackageList != null && !admFacilityPackageList.isEmpty()) {
+				templateId = (Integer)admFacilityPackageList.get(0);
+			}
+			
+			List<Object> jpTemplateList = hibernateTemplate
+					.find("select distinct jtem.templateName from  JpTemplate jtem WHERE jtem.templateId=?",
+							templateId);
+
+			if (jpTemplateList != null && !jpTemplateList.isEmpty()) {
+				DropDownDTO dto = new DropDownDTO();
+				dto.setOptionId(""+templateId);
+				dto.setOptionName((String) jpTemplateList.get(0));
+				templateList.add(dto);
+				return templateList;
+			}
+		} catch (DataAccessException e) {
+
+			LOGGER.error(e);
+			return templateList;
+		}
+
+		return templateList;
+	}
+	
 	@Override
 	public String getPostalCode(String city, String state) {
 

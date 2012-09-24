@@ -83,6 +83,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 
 		 jpJob.setAdmFacility(admFacility);
 		 jpJob.setActive((byte)(dto.isbActive()?1:0));
+		 jpJob.setTemplateOverride(dto.isbTemplateOverride()?1:0);
 		 
 		 return jpJob;
 	 }
@@ -291,6 +292,7 @@ public class JobPostConversionHelper<JobPostForm> {
 					.getTemplateId()));
 		}
 
+		jobPostDTO.setbTemplateOverride(jpJob.getTemplateOverride()==1?true:false);
 		return jobPostDTO;
 
 	}

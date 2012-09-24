@@ -252,6 +252,19 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
+	public List<String> populateCompanyAutoComplete(String company, int facilityParentId) {
+
+		return populateDropdownsDAO.populateCompanyAutoComplete(company, facilityParentId);
+	}
+	
+	
+	@Override
+	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
+
+		return populateDropdownsDAO.populateTemplateAutoComplete(company);
+	}
+	
+	@Override
 	public String getPostalCode(String city, String state) {
 		return populateDropdownsDAO.getPostalCode(city, state);
 	}

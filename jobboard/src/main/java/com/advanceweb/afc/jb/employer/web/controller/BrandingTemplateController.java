@@ -706,10 +706,6 @@ public class BrandingTemplateController {
 		BrandingTemplateForm brandingTemplateForm = form;
 
 		ModelAndView model = new ModelAndView();
-//		TestimonyForm testimonyForm = new TestimonyForm();
-//		ArrayList<TestimonyForm> nonEmptyList = new ArrayList<TestimonyForm>();
-//		nonEmptyList.add(testimonyForm);
-//		brandingTemplateForm.setListTestimony(nonEmptyList);
 		
 		if(!brandingTemplateForm.getIsSilverCustomer())
 		{
@@ -733,8 +729,6 @@ public class BrandingTemplateController {
 		} else {
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		}
-
-		
 		
 		return model;
 	}
@@ -910,11 +904,18 @@ public class BrandingTemplateController {
 	@RequestMapping(value = "/employer/manageBrandingTemplate", method = RequestMethod.GET)
 	public ModelAndView fetchEmpBrandTemp(
 			Map<String, List<BrandingTemplateDTO>> model, HttpSession session) {
-		List<BrandingTemplateDTO> brandTemplateList = brandingTemplateService
-				.getBrandingTemplate((Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID));
-		model.put("templatesList", brandTemplateList);
-		return new ModelAndView("manageBrandingTemplatePopup");
+			boolean isBrandPurchased = false;
+			// 	Retrieve facilityId from session.
+			int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			isBrandPurchased = brandingTemplateService.getBrandPurchaseInfo(facilityId);
+			ModelAndView modelView = new ModelAndView();
+			List<BrandingTemplateDTO> brandTemplateList = brandingTemplateService
+					.getBrandingTemplate((Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
+			model.put("templatesList", brandTemplateList);
+			modelView.addObject("isBrandPurchased",isBrandPurchased);
+			modelView.setViewName("manageBrandingTemplatePopup");
+			return modelView;
 	}
 
 	/**

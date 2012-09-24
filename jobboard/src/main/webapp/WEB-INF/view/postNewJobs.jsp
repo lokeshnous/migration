@@ -19,6 +19,35 @@
 		
 		<script type="text/javascript">
 		
+		function populateTemplates()
+		{
+			  
+			  var isChecked=$("#templateOverride" ).is(':checked');
+					
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getFacilityTemplate.html?isChecked='+isChecked+'&company='+$("#companyAutoPopulation").val(),
+						success : function(data) {
+							$('#templateId option').remove()
+
+							$('#templateId').append('<option value="0">None</option>');
+							
+							var dataLen = data.length;
+							if (dataLen > 0) {
+							
+								if (dataLen > 1) {
+									
+									for (var i=0; i < dataLen; i++) {
+										$('#templateId').append('<option value="' + data[i]["optionId"] + '">' + data[i]["optionName"] + '</option>');
+									}
+									
+								} else {
+									$('#templateId').append('<option value="' + data[0]["optionId"] + '" selected="selected">' + data[0]["optionName"] + '</option>');
+								}
+								
+							}
+						},
+						});
+		}
 		
 			//Limit text area characters
 			function limitText(limitField, limitCount, limitNum) {
@@ -197,6 +226,40 @@
 				}
 			});
 
+			
+			//Auto complete on selecting Company name
+			$("#companyAutoPopulation").autocomplete({
+				source: '${pageContext.request.contextPath}/employer/getCompanyList.html',
+				width:500,
+				select: function(event, ui) {
+					$("#companyAutoPopulation").val(ui.item.value);				
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getTemplate.html?company='+$("#companyAutoPopulation").val(),
+					success : function(data) {
+						$('#templateId option').remove()
+
+						$('#templateId').append('<option value="0">None</option>');
+						
+						var dataLen = data.length;
+						if (dataLen > 0) {
+						
+							if (dataLen > 1) {
+								
+								for (var i=0; i < dataLen; i++) {
+									$('#templateId').append('<option value="' + data[i]["optionId"] + '">' + data[i]["optionName"] + '</option>');
+								}
+								
+							} else {
+								$('#templateId').append('<option value="' + data[0]["optionId"] + '" selected="selected">' + data[0]["optionName"] + '</option>');
+							}
+							
+						}
+					},
+					});
+				},
+			}); 
+			
+			
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
@@ -252,7 +315,7 @@
                 <div class="toolTip colorPkrAreaToolTip"><span class="classic">This is the customer number shown in your employer profile.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
-                <form:input path="companyName" class="job_seeker_password textBox350"  readonly="true"/>
+                <form:input path="companyName" class="job_seeker_password textBox350"  id="companyAutoPopulation"/>
               </div>
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Display Company Name:</span>
@@ -428,13 +491,24 @@
                 <h3>Job Posting Branding Template</h3>
 
               </div>
-                      <div class="rowEvenNewSpacing MarginBottom10"><span class="lableText3 ">Branding Template:</span>
-						<form:select path="brandTemplate" class="jb_input3 jb_input_width3">
-							<form:option value="0" label="Select" />
-							<form:options items="${templateList}" itemValue="optionId" itemLabel="optionName" />
-						</form:select>
-                        <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
+              <div class="rowEvenNewSpacing MarginBottom10"><span class="lableText3 ">Branding Template:</span>
+					<form:select path="brandTemplate" class="jb_input3 jb_input_width3" id="templateId">
+						<form:option value="0" label="None" />
+						<%-- <c:if test="$("#templateOverride" ).is(':checked')"> --%>
+						<form:options items="${templateList}" itemValue="optionId" itemLabel="optionName"/>
+						<%-- </c:if> --%>
+					</form:select>
+                       <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
+                       
+                       <div class="floatLeft width210"><span class="required marginRight10">
+	                  <form:checkbox path="bTemplateOverride" onchange="populateTemplates()" id="templateOverride"/>
+	                  </span>
+	                      <div class="Auto">
+	                    		<p>Override Package Template</p>
+	                  	  </div>
+            		 	</div>
               </div>
+              
               <div class="clearfix"></div>
                       <div class="paddingBottom05 MarginBottom10 marginTop10"></div>
                       <div class="row marginTop10">

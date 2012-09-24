@@ -66,6 +66,7 @@ public class TransformJobPost {
 		
 		//Job Posting Branding Template
 		jobPostDTO.setBrandTemplate(form.getBrandTemplate());
+		jobPostDTO.setbTemplateOverride(form.isbTemplateOverride());
 		
 		//Auto Renew
 		jobPostDTO.setAutoRenew(form.isAutoRenew());
@@ -104,6 +105,7 @@ public class TransformJobPost {
 		jobPostform.setJobDesc(jobPostDTO.getJobDesc());
 		jobPostform.setTrackPixel(jobPostDTO.getTrackPixel());
 		jobPostform.setBrandTemplate(jobPostDTO.getBrandTemplate());
+		jobPostform.setbTemplateOverride(jobPostDTO.isbTemplateOverride());
 		return jobPostform;
 		
 	}

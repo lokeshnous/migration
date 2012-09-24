@@ -74,6 +74,16 @@ public interface LoginService {
 	 */
 	List<DropDownDTO> getFacilityGroup(int facilityId)
 			throws JobBoardServiceException;
+	
+	/**
+	 * This method is to get facility parent id
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	int getFacilityParent(int facilityId)
+			throws JobBoardServiceException;
 
 	/**
 	 * This method to update the automatic generated password to DB

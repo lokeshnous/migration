@@ -45,6 +45,7 @@ public class JobPostDTO implements Serializable {
 	private String jobDesc;
 	private String trackPixel;
 	private String brandTemplate;
+	private boolean bTemplateOverride;
 	
 	private boolean autoRenew;
 	private String startDt;
@@ -282,6 +283,14 @@ public class JobPostDTO implements Serializable {
 
 	public void setBrandTemplate(String brandTemplate) {
 		this.brandTemplate = brandTemplate;
+	}
+
+	public boolean isbTemplateOverride() {
+		return bTemplateOverride;
+	}
+
+	public void setbTemplateOverride(boolean bTemplateOverride) {
+		this.bTemplateOverride = bTemplateOverride;
 	}
 
 	/**

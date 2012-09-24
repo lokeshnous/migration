@@ -81,7 +81,12 @@ public interface BrandingTemplateService {
 	 */
 	int getNSCustomerIDFromAdmFacility(int admFacilityID);
 	
-	
+	/**
+	 * This method is used the get the Branding Template Purchase information
+	 * @param facilityId
+	 * @return
+	 */
+	boolean getBrandPurchaseInfo(int facilityId);
 	
 
 }
