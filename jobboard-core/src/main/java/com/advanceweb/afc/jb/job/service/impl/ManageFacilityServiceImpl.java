@@ -48,7 +48,6 @@ public class ManageFacilityServiceImpl implements ManageFacilityService {
 		}
 		return manageFacilityDTO;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<FacilityDTO> getFacilityListByGroup(int facilityId)
 			throws JobBoardServiceException {

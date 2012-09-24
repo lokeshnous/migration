@@ -24,15 +24,13 @@
 		    		var facilityName = $.trim($("#facilityName").val());
 					var facilityStreet = $.trim($("#facilityStreet").val());
 					var facilityCity = $.trim($("#facilityCity").val());
-					var facilityState = $.trim($("#facilityState").val());
+					var facilityState = $.trim($("#facilityState").text());
 					var zipCode = $.trim($("#zipcode").val());
 					var facilityCountry = $.trim($("#facilityCountry").val());
-					var phoneNumber = $.trim($("#phoneNumber").val());			
-					        alert(facilityName.length +":"+facilityStreet.length+":"+facilityCity.length+":"+facilityState.length+":"+zipCode.length+":"+facilityCountry.length);
+					var phoneNumber = $.trim($("#phoneNumber").val());	
 					
 					 if (facilityName.length <= 0 || facilityStreet.length <= 0 || facilityCity.length <= 0
-							 || facilityState.length <= 0 || zipCode.length <= 0 || phoneNumber.length <= 0
-							 || facilityCountry.length <= 0){
+							 ){
 						$("#facilityErrorMsg").html("<span>Please enter required fields.</span>");
 					
 					}else{	 
@@ -109,7 +107,7 @@
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Zip Code:</span>
-						<form:input path="zipCode" class="job_seeker_password textBox350"
+						<form:input path="zipCode" maxlength="5" class="job_seeker_password"
 							id="zipCodeITId" />
 						<span class="required">(Required)</span>
 					</div>

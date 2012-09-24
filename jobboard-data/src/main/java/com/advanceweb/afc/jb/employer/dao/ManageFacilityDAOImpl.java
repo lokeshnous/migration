@@ -151,6 +151,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			facility.setColorPalette(facilityP.getColorPalette());
 			facility.setCompanyNews(facilityP.getCompanyNews());
 			facility.setCompanyOverview(facilityP.getCompanyOverview());
+			facility.setNsCustomerID(facilityP.getNsCustomerID());
 
 		}
 
@@ -208,12 +209,9 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		LOGGER.info("delete Facility Id ----" + facilityId);
 		AdmFacility admFacility = hibernateTemplateCareers.get(
 				AdmFacility.class, facilityId);
-
-		boolean bDelete = false;
 		try {
 			admFacility.setDeleteDt(new Timestamp(new Date().getTime()));
 			hibernateTemplateCareers.saveOrUpdate(admFacility);
-			bDelete = true;
 
 		} catch (DataAccessException e) {
 			LOGGER.error(e);

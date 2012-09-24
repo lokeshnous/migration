@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +51,10 @@ public class ManageFacilityController {
 	private PopulateDropdowns populateDropdownsService;
 	@Autowired
 	private JobPostService employerJobPost;
-
+	@Autowired
+	EmployerRegistrationValidation registerValidation;
+	@Value("${jobseekerRegPhoneMsg}")
+	private String jobseekerRegPhoneMsg;
 	@RequestMapping(value = "/addFacility")
 	public ModelAndView addfacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
@@ -121,14 +125,20 @@ public class ManageFacilityController {
 		JSONObject message = new JSONObject();
 
 		ManageFacilityDTO facilityDTO = transformFacilityFromtoFacilityDTO(facilityForm);
-		/*
-		 * try { facilityService.createFacility(facilityDTO, (Integer) session
-		 * .getAttribute(MMJBCommonConstants.FACILITY_ID));
-		 * message.put("success", "Added successfully"); } catch
-		 * (JobBoardServiceException ex) {
-		 * LOGGER.error("Error occured while saving the Facility ", ex);
-		 * message.put("failure", "Error occured While saving data"); }
-		 */
+		if(!registerValidation.validateMobileNumberPattern(facilityForm
+							.getPhoneNumber())){
+			message.put("failure", jobseekerRegPhoneMsg);
+			return message;
+		}
+
+		try {
+			facilityService.createFacility(facilityDTO, (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID));
+			message.put("success", "Added successfully");
+		} catch (JobBoardServiceException ex) {
+			LOGGER.error("Error occured while saving the Facility ", ex);
+			message.put("failure", "Error occured While saving data");
+		}
 
 		return message;
 
