@@ -351,7 +351,8 @@ public class JobPostController {
 	 */
 	@RequestMapping(value = "/editJob", method = RequestMethod.GET)
 	public ModelAndView editJob(HttpServletRequest request,HttpSession session,
-			JobPostForm jobPostform, @RequestParam("jobId") int jobId) {
+			JobPostForm jobPostFormP, @RequestParam("jobId") int jobId) {
+		JobPostForm jobPostForm =jobPostFormP;
 		int jobPostType = employerJobPost
 				.getinvDetIdByJobId(jobId, (Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID),
@@ -360,10 +361,10 @@ public class JobPostController {
 		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId,jobPostType);
 		String readOnly = request.getParameter("readOnly");
 		if (null != readOnly && readOnly.equalsIgnoreCase("true")) {
-			jobPostform.setReadOnly(true);
+			jobPostForm.setReadOnly(true);
 		}
 		jobPostDTO.setJobPostingType(String.valueOf(jobPostType));
-		jobPostform=transformJobPost.transformJobPostDTOToForm(jobPostform, jobPostDTO);
+		jobPostForm=transformJobPost.transformJobPostDTOToForm(jobPostForm, jobPostDTO);
 	
 		ModelAndView model = new ModelAndView();
 		
@@ -386,8 +387,8 @@ public class JobPostController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		List<FromZipcodeDTO> zipCodeList = populateDropdownsService
 				.getFromZipcodeList();
-		jobPostform.setJobId(jobId);
-		model.addObject(JOB_POST_FORM, jobPostform);
+		jobPostForm.setJobId(jobId);
+		model.addObject(JOB_POST_FORM, jobPostForm);
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);
 		model.addObject("countryList", countryList);

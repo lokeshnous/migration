@@ -331,6 +331,9 @@
 								</strong></th>
 								<th width="7%" align="center" valign="middle" class="FontSize11"><strong>End<br />
 										Date
+								</strong></th>								
+								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Company<br />
+										Name
 								</strong></th>
 								<th width="5%" align="center" valign="middle" class="FontSize11"><strong>Views</strong></th>
 								<th width="4%" align="center" valign="middle" class="FontSize11"><strong>Clicks</strong></th>
@@ -359,6 +362,7 @@
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
 									<td align="center" valign="middle">${job.endDt}</td>
+									<td align="center" valign="middle">${job.companyName}</td>
 									<td align="center" valign="middle">${job.views}</td>
 									<td align="center" valign="middle">${job.clicks}</td>
 									<td align="center" valign="middle">${job.applies}</td>
