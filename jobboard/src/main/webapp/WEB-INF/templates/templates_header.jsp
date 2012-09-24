@@ -8,6 +8,21 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- <script type="text/javascript">
+//$("*").css("cursor", "progress");
+  $("html").bind("ajaxStart", function(){  
+     $(this).addClass('busy');  
+   }).bind("ajaxStop", function(){  
+     $(this).removeClass('busy');  
+   }); 
+</script>
+<style type="text/css">
+html.busy, html.busy * {  
+  cursor: wait !important; 
+ /* cursor : url(../resources/images/ads/google-loading-icon.gif), -moz-zoom-in, auto; */
+   
+} 
+</style> -->
 </head>
 
 <body class="job_board">

@@ -72,7 +72,7 @@
 							<%-- </form:form>     --%>
 
 							<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-								onclick="postYourResume();">Post Your Resume</a>
+								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
 					</div>
 					<!-- search_form -->

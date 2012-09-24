@@ -33,7 +33,7 @@
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<jsp:include page="jobboardsearchresultsHeader.jsp"></jsp:include>
-				<div class="searchContent" style="display: none;">
+				<div class="searchContent" style="display: none;"  id="tableContent">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
 					<br class="clearfix" />
 				</div>

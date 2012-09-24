@@ -45,7 +45,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
 					MMUtils.isNull(jobDTO.getAdText()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
-					MMUtils.isNull(jobDTO.getCompany()));
+					jobDTO.getCompany());
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
 					MMUtils.isNull(jobDTO.getJobTitle()));
 			String location = null;

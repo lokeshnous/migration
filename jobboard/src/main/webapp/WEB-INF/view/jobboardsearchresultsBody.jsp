@@ -166,15 +166,15 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${totalNoOfRecords != null}">
+							<c:if test="${totalNoOfRecords != 0}">
 							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 						</c:if>
 						</div>
 						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page:</span> -->
-						<c:if test="${totalNoOfRecords != null}">
+						<c:if test="${totalNoOfRecords != null and totalNoOfRecords != null}">
 						<c:if test="${currentPage > 9 && noOfPages gt 10}">
-							<td><a
+							<td><a class="cursor"
 								onclick="getPrevPages(${begin - 10}, ${begin-10});">
 									<img src="../resources/images/ArrowLeft.png"> Previous
 							</a></td>
@@ -187,12 +187,12 @@
 									</c:when>
                    				 <c:otherwise>
                        				 <span><c:if test="${i lt begin+10}">
-                       				 <a onclick="getNextPage(${i});" >${i}</a></c:if></span>
+                       				 <a onclick="getNextPage(${i});" class="cursor">${i}</a></c:if></span>
                    				 </c:otherwise>
                				 </c:choose> 
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
-           				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});"
+           				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});" class="cursor"
 							>Next<img src="../resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
@@ -215,19 +215,29 @@
 					<div class="searchResultsItem">
 					<c:forEach items="${searchResultsList}" var="job" varStatus="status">
 					<%-- <form:hidden path="jobDTOs[${status.index}].jobId"/> --%>
-						<ul class="searchResultsJobInfo closed" id="searchResultsJobInfo${job.JobId}" onclick="trackClick(${job.JobId});">
-							<li class="searchResultsColumn1">${job.JobTitle}</li>
-							
-							<li class="searchResultsColumn2">${job.Company}</li>
-							
-							<li class="searchResultsColumn3">
-							<c:if test="${!(job.HideCity == 1 || job.HideState == 1 || job.HideCountry == 1)}">
+								<ul
+									<c:choose>
+										<c:when test="${job.IsPremium == 0}">
+										   class="searchResultsJobInfo closed" 
+										</c:when>
+										<c:otherwise>
+									       class="searchResultsJobInfo closed orange-bg" 
+										</c:otherwise>
+									</c:choose>
+									id="searchResultsJobInfo${job.JobId}"
+									onclick="trackClick(${job.JobId});">
+									<li class="searchResultsColumn1">${job.JobTitle}</li>
+
+									<li class="searchResultsColumn2">${job.Company}</li>
+
+									<li class="searchResultsColumn3"><c:if
+											test="${!(job.HideCity == 1 || job.HideState == 1 || job.HideCountry == 1)}">
 							${job.City}
 							</c:if></li>
-							
-							<li class="searchResultsColumn4">${job.PostedDate}</li>
-						</ul>
-						<div class="searchResultsSubContent">
+
+									<li class="searchResultsColumn4">${job.PostedDate}</li>
+								</ul>
+								<div class="searchResultsSubContent">
 
 							<%-- <p class="searchResultsSubContentJobDescription" >
 								<span class="bold">Job Description:</span>
@@ -324,7 +334,7 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${totalNoOfRecords != null}">
+							<c:if test="${totalNoOfRecords != null and totalNoOfRecords != 0}">
 							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 						</c:if>
 						</div>
@@ -332,7 +342,7 @@
 						<!-- <span>Page: </span> -->
 						<c:if test="${totalNoOfRecords != null}">
 						<c:if test="${currentPage > 9 && noOfPages gt 10}">
-							<td><a
+							<td><a class="cursor"
 								onclick="getPrevPages(${begin - 10}, ${begin-10});">
 									<img src="../resources/images/ArrowLeft.png"> Previous
 							</a></td>
@@ -345,13 +355,13 @@
 									</c:when>
                    				 <c:otherwise>
                        				 <span><c:if test="${i lt begin+10}">
-                       				 <a onclick="getNextPage(${i});" >${i}</a></c:if></span>
+                       				 <a onclick="getNextPage(${i});" class="cursor">${i}</a></c:if></span>
                    				 </c:otherwise>
                				 </c:choose> 
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
            				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});"
-							>Next<img src="../resources/images/ArrowRight.png">
+							class="cursor">Next<img src="../resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
        					</c:if>   

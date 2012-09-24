@@ -284,7 +284,7 @@
               </div>
 
               <div class="rowEvenNewSpacing"> <span class="lableText3">Job Posting Inventory:</span>              
-              		<span class="FloatLeft marginTop6">
+              		<span class="lableText3">
               			<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html?page=postJobPage" class="postingInventory" id="postingInventory" >View Job Posting Inventory</a>
               		</span>            
              </div>

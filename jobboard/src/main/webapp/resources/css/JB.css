@@ -4110,3 +4110,6 @@ orange:hover {
     font-weight:bold;  
     font-family:
 }
+.cursor{
+	cursor:pointer !important;
+}
