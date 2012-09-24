@@ -16,6 +16,9 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 
+import java.security.SecureRandom;
+import java.math.BigInteger;
+
 
 
 public class OpenAMEUtility {
@@ -30,6 +33,18 @@ public class OpenAMEUtility {
 	private final static String _AUTHENTICATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/authenticate?";
 	private final static String _LOGOUT_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/logout?subjectid=";
 
+	
+	
+	
+	
+	
+	public static String newPassword(){
+		SecureRandom srandom = new SecureRandom();
+		String tempassword = new BigInteger(52, srandom).toString(32);
+		return tempassword;
+	}
+	
+	
 	/**
 	 * To get a token id from OpenAM instance
 	 * 

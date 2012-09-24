@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -179,8 +180,16 @@ public class LoginFormController {
 				jobSeekerToAdd[0] = new InternetAddress(email);
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
 				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
+				
+				//OpenAM code for forget password
+				String tempassword=OpenAMEUtility.newPassword();
+				System.out.println(tempassword);
+				boolean updatepassword=OpenAMEUtility.openAMUpdatePassword(emailAddress, tempassword);
+				
+				
 				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
 						"?temporarypassword", formDTO.getPassword());
+				
 				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
 						jonseekerloginUrl);
 				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
