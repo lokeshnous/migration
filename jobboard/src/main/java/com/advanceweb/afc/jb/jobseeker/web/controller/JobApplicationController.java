@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -110,6 +112,16 @@ public class JobApplicationController {
 			int jobId = (Integer) session.getAttribute("jobId");
 			SearchedJobDTO searchedJobDTO = jobSearchService
 					.viewJobDetails(jobId);
+			
+			
+			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
+					.applyJobDetails(jobId);
+
+			if (searchedJobDTO.getEmployerEmailAddress() == null) {
+				searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO
+						.getApplyLink());
+			}
+							
 			// Adding path for
 			String loginPath = navigationPath.substring(2);
 			String employerloginUrl = request.getRequestURL().toString()
