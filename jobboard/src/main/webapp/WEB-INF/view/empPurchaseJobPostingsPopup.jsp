@@ -73,7 +73,7 @@
 					count++;
 					var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
 					
-					if("" == quantity || null == quantity){
+					if("" == quantity || null == quantity || isNaN(quantity)){
 						alert("Please enter quantity in numerics");
 						return;
 					}
