@@ -32,6 +32,9 @@
 						.displaypopup("#setAlertPopUp", "770", "360");
 				$("#viewAlertPopUp").displaypopup("#viewAlertPopUp", "770",
 						"360");
+				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp", "770",
+				"360"); 
+				
 			});
 	window.onload = function() {
 		loadMetricsDetails();
@@ -121,6 +124,14 @@
 									Featured Employer Profile</a>
 							</p>
 						</div>
+						<security:authorize access="hasRole('ROLE_FACILITY_GROUP')">
+						<div class="lableTextDashBoard">
+							<p>
+								<a id="manageFacilityPopUp"
+									href="<%=request.getContextPath()%>/facility/updateFacilityDetail.html">Manage Facility List</a>
+							</p>
+						</div>
+						</security:authorize>
 						<div class="FormErrorDisplayText">
 							${error}<br /> <br />
 						</div>
