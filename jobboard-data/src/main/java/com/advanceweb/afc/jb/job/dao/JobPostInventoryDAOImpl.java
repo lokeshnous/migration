@@ -63,6 +63,7 @@ public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 			dto.setAddon((String) row[3]);
 			dto.setQuantity(qty.intValue());
 			dto.setAvailableQty(availqty.intValue());
+			dto.setInvDetailId((Integer) row[6]);
 			inventoryDTOs.add(dto);
 		}
 		return inventoryDTOs;
