@@ -93,7 +93,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String NAME_STRING = "name";
 	
 	private static final String CONTACT_ROLES_STRING = "contactroles";
-	private static final String EMAIL_STRING = "email";
+	//private static final String EMAIL_STRING = "email";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
