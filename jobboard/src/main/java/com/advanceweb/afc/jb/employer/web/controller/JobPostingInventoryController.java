@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,9 +29,6 @@ import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 @RequestMapping("/inventory")
 public class JobPostingInventoryController {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(JobPostingInventoryController.class);
-
 	@Autowired
 	private JobPostInventoryService inventoryService;
 
@@ -53,9 +49,9 @@ public class JobPostingInventoryController {
 
 		if (page != null && page.equals(MMJBCommonConstants.POST_JOB_PAGE)) {
 			inventoryForm.setPostJobPage("true");
-		}else{
+		} else {
 			status = "true";
-			
+
 		}
 
 		int userId = (Integer) session

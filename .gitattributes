@@ -600,6 +600,7 @@ jobboard/src/main/webapp/WEB-INF/view/manageBrandingTemplatePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageFeatureEmpPro.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/metricsDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/postNewJobs.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/registrationsuccess.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/setAlertPopup.jsp -text

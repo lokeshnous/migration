@@ -1,9 +1,11 @@
 package com.advanceweb.afc.jb.user.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -18,7 +20,6 @@ import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
-import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
@@ -125,17 +126,25 @@ public class UserDaoImpl implements UserDao {
 	 * @param facilityId
 	 * @return metricsDTO
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<MetricsDTO> getJobPostTotal(int facilityId) {
-		
-		
-		List<JpJobStat> jobStatsList = hibernateTemplate
-				.find("SELECT js from JpJobStat js, JpJob jb where "
-						+ "jb.jobId = js.jobId and "
-						+ "jb.admFacility.facilityId	= " + facilityId);
 
-		return conversionHelper.transformJpJobStatToMetricsDTO(jobStatsList);
+		Query getMetricsData = hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(" { call GetMetricsData(?) }");
+		getMetricsData.setInteger(0, facilityId);
+		List<?> metricsDeatil = getMetricsData.list();
+		Iterator<?> iterator = metricsDeatil.iterator();
+		List<MetricsDTO> DTOs = new ArrayList<MetricsDTO>();
+		while (iterator.hasNext()) {
+			MetricsDTO dto = new MetricsDTO();
+			Object[] row = (Object[]) iterator.next();
+			dto.setViews((Integer) row[0]);
+			dto.setClicks((Integer) row[1]);
+			dto.setApplies((Integer) row[2]);
+			DTOs.add(dto);
+		}
+		return DTOs;
 	}
 
 	/**

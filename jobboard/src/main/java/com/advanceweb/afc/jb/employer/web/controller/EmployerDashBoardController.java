@@ -3,13 +3,20 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -43,6 +50,7 @@ public class EmployerDashBoardController {
 	public ModelAndView displayDashBoard(
 			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
 			HttpSession session) {
+		session.removeAttribute("jbPostTotalList");
 		String enableAccess = "true";
 		String enablePostEditAccess = "true";
 		ModelAndView model = new ModelAndView();
@@ -72,14 +80,54 @@ public class EmployerDashBoardController {
 			LOGGER.info("Error occurred while getting data for metrics" + e);
 		}
 
-		//getting the metrics details
+		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 
 		model.addObject("downDTOs", downDTOs);
 		model.addObject("jbPostTotalList", jbPostTotalList);
+		session.setAttribute("jbPostTotalList", jbPostTotalList);
 		model.addObject("employerDashBoardForm", employerDashBoardForm);
 		model.setViewName("employerDashboard");
 		return model;
+	}
+
+	/**
+	 * This method is used to display the metrics details for selected employer
+	 * in the drop down
+	 * 
+	 * @param employerDashBoardForm
+	 * @param result
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/viewEmployerMetrics", method = RequestMethod.GET)
+	public @ResponseBody
+	void viewEmployerMetrics(
+			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
+			BindingResult result, HttpSession session,
+			@RequestParam("selEmployerId") int selEmployerId) {
+		session.removeAttribute("jbPostTotalList");
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		// getting the metrics details
+		jbPostTotalList = getMetricsDetails(selEmployerId);
+		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		return;
+	}
+
+	/**
+	 * Get the metric details page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/metricsDetails")
+	public ModelAndView getMetricsDetails(HttpServletResponse response,
+			HttpServletRequest request, Model model) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("metricsDetails");
+		return modelAndView;
 	}
 
 	/**
@@ -154,7 +202,7 @@ public class EmployerDashBoardController {
 		metricsDTO.setClicks(swAvgClicks);
 		metricsDTO.setApplies(swAvgApplies);
 		jbPostTotalList.add(2, metricsDTO);
-		
+
 		return jbPostTotalList;
 	}
 }

@@ -33,6 +33,40 @@
 				$("#viewAlertPopUp").displaypopup("#viewAlertPopUp", "770",
 						"360");
 			});
+	window.onload = function() {
+		loadMetricsDetails();
+	};
+	function loadMetricsDetails(){
+		$.ajaxSetup({ cache: false });
+		$.ajax({
+			url : '../employer/metricsDetails.html',
+			data : ({}),
+			
+			success : function(data) {
+			$("#metricsDetails").html(data);
+			},
+			error : function(data) {
+				alert('Unable to process');
+			},
+			complete : function(data) {
+				// do nothing for now.
+			}
+		}
+		);
+	}
+	function changeMetrics(){
+		var selEmployerId = $("#selEmployer").val();
+		$.ajax({url:"${pageContext.request.contextPath}/employer/viewEmployerMetrics.html?selEmployerId="+selEmployerId,
+			data:$('#selEmployerId').serialize(),
+			type:"GET",
+			success: function(data) {			
+		loadMetricsDetails();
+			 },
+				error : function(data) {
+					alert('Unable to process');
+				}
+		});
+	}
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -215,7 +249,7 @@
 													class="HeadTopBottomBorder">Metrics</h2> 
 												<form:select
 													class="jb_input3" path="selEmployer" items="${downDTOs}"
-													itemValue="optionId" itemLabel="optionName">
+													itemValue="optionId" itemLabel="optionName" onchange="changeMetrics();">
 												</form:select>
 											</th>
 											<th width="18%" align="center" scope="col"
@@ -226,22 +260,9 @@
 												class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${jbPostTotalList}" var="jobList">
-											<tr class="gridB">
-												<td><input name="radio2" type="radio" id="radio4"
-													value="radio" class="marginLeft10 marginRight10"> <label
-													for="radio2">${jobList.getMetricsName()}</label></td>
-												<td align="center" valign="middle"
-													class="BorderLeft TcolorA">${jobList.getViews()}</td>
-												<td align="center" valign="middle"
-													class="BorderLeft TcolorB">${jobList.getClicks()}</td>
-												<td align="center" valign="middle"
-													class="BorderLeft TcolorC">${jobList.getApplies()}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+									</table>
+									<br/>
+									<div id="metricsDetails" ></div>								
 							</div>
 							<!--T-->
 							<div class="rowBox EDPricec">
