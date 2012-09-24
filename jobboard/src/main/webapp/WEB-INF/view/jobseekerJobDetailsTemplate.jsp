@@ -415,7 +415,7 @@
                       <h2 class="more_link noTopBottomBorder more_link02">News From This Employer<span>More</span></h2>
                       </a> </div>
                        <c:forEach items="${newsDTOList}" var="newsDTO">   
-                    <div class="BlueBoxCont"> <a href="${newsDTO.link}" class="TextColorA02Link">
+                    <div class="BlueBoxCont"> <a href="${newsDTO.link}" target="_blank" class="TextColorA02Link">
                       <h3 class="TextColor01 FontSize12">${newsDTO.title}</h3>
                       </a> </div>
                       </c:forEach> 
