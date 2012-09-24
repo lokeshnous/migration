@@ -119,28 +119,39 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			// saving the data in adm_facility
 			AdmFacility facility = empHelper
 					.transformEmpDTOToAdmFAcility(empDTO);
-			
-			facility.setFacilityType(MMJBCommonConstants.FACILITY);
-			// TODO: Remove hard code values
-			facility.setEmail(empDTO.getMerUserDTO().getEmailId());
-			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
-			facility.setNsCustomerID(empDTO.getMerUserDTO().getNsCustomerID());
-			facility.setCreateDt(new Date());
-			facility.setCreateUserId(null);
-			facility.setAccountNumber(null);
-			facility.setNameDisplay(null);
-			facility.setUrl(null);
-			facility.setUrlDisplay(null);
-			facility.setEmailDisplay(null);
-			facility.setLogoPath(null);
-			facility.setAdminUserId(null);
-			facility.setCreateUserId(0);
-			facility.setPromoMediaPath(null);
-			facility.setColorPalette(null);
-			facility.setCompanyNews(null);
-			facility.setCompanyOverview(null);
-			hibernateTemplateCareers.save(facility);
+			if(empDTO.getMerUserDTO().isHelthSystem()){
+				setFacility(facility,MMJBCommonConstants.FACILITY_GROUP,empDTO,MMJBCommonConstants.ZERO_INT);
+				int parentFacilityId=(Integer) hibernateTemplateCareers.save(facility);
+				// saving the data in adm_facility_contact
+				AdmFacilityContact contact = empHelper
+						.transformEmpDTOToAdmFacilityContact(empDTO, facility);
+				/**
+				 *  creating employer Users in OpenAM 
+				 */
+				boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+				LOGGER.info("Open AM :Employee User is created!"+isCreated);
+				// Ends OpenAM code
 
+				hibernateTemplateCareers.saveOrUpdate(contact);
+
+				// saving the data in the adm_user_facility
+				setUserFacility(facility,merUser.getUserId(),roleId);
+				
+				// saving the data for child facility related to the facility group
+				AdmFacility childFacility = empHelper
+						.transformEmpDTOToAdmFAcility(empDTO);
+				setFacility(childFacility,MMJBCommonConstants.FACILITY,empDTO,parentFacilityId);
+				childFacility.setCreateUserId(merUser.getUserId());
+				hibernateTemplateCareers.save(childFacility);
+				AdmFacilityContact childFacilityContact = empHelper
+						.transformEmpDTOToAdmFacilityContact(empDTO, childFacility);
+				hibernateTemplateCareers.save(childFacilityContact);
+				
+			}
+			else{
+				setFacility(facility,MMJBCommonConstants.FACILITY,empDTO,MMJBCommonConstants.ZERO_INT);
+			hibernateTemplateCareers.save(facility);
+			
 			// saving the data in adm_facility_contact
 			AdmFacilityContact contact = empHelper
 					.transformEmpDTOToAdmFacilityContact(empDTO, facility);
@@ -150,24 +161,11 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
 			LOGGER.info("Open AM :Employee User is created!"+isCreated);
 			// Ends OpenAM code
-
-			contact.setContactType(MMJBCommonConstants.PRIMARY);
-			contact.setCreateDt(new Date());
-			contact.setEmail(empDTO.getMerUserDTO().getEmailId());
-			contact.setActive(1);
 			hibernateTemplateCareers.saveOrUpdate(contact);
 
 			// saving the data in the adm_user_facility
-			AdmUserFacility userfacility = new AdmUserFacility();
-			AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
-			facilityPK.setFacilityId(facility.getFacilityId());
-			facilityPK.setUserId(merUser.getUserId());
-			facilityPK.setRoleId(roleId);
-			userfacility.setFacilityPK(facilityPK);
-			userfacility.setCreateUserId(0);
-			// userfacility.setAdmRole();
-			userfacility.setCreateDt(new Date());
-			hibernateTemplateCareers.saveOrUpdate(userfacility);
+			setUserFacility(facility,merUser.getUserId(),roleId);
+			}
 			return empHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {
@@ -175,7 +173,28 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		}
 		return null;
 	}
-
+	// This method will be called to set the details of facility
+	private AdmFacility setFacility(AdmFacility facility,String role,EmployerProfileDTO empDTO,int parentFacilityId){
+		
+		facility.setFacilityType(role);
+		facility.setEmail(empDTO.getMerUserDTO().getEmailId());
+		facility.setFacilityParentId(parentFacilityId);
+		facility.setNsCustomerID(empDTO.getMerUserDTO().getNsCustomerID());
+		facility.setCreateDt(new Date());
+		return facility;
+	}
+	//This method will be called to save the data in adm_user_facility 
+	private void setUserFacility(AdmFacility facility, int userId, int roleId) {
+		AdmUserFacility userfacility = new AdmUserFacility();
+		AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
+		facilityPK.setFacilityId(facility.getFacilityId());
+		facilityPK.setUserId(userId);
+		facilityPK.setRoleId(roleId);
+		userfacility.setFacilityPK(facilityPK);
+		userfacility.setCreateUserId(0);
+		userfacility.setCreateDt(new Date());
+		hibernateTemplateCareers.saveOrUpdate(userfacility);
+	}
 	/**
 	 * 
 	 * @param employerId
