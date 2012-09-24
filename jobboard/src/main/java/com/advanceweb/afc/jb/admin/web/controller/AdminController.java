@@ -105,27 +105,28 @@ public class AdminController {
 		boolean adminuserDto = impersonateUserService.impersonateUser(adminDTO);
 		return "";
 	}
-	/**
-	 * 
-	 * @param session
-	 * @return
-	 */
+//	/**
+//	 * 
+//	 * @param session
+//	 * @return
+//	 */
+//	
+//	@RequestMapping(value="/editJobPosting")
+//	public ModelAndView editJobPosting(HttpSession session){
+//		ModelAndView model = new ModelAndView();
+//		session.removeAttribute("postedJobList");
+//		model.setViewName("adminEditJobPosting");
+//		return model;
+//		
+//	}
+//	@RequestMapping(value="/editJobPostInventory")
+//	public ModelAndView editJobPostInventory(){
+//		ModelAndView model = new ModelAndView();
+//		model.setViewName("adminEditJobPostInventory");
+//		return model;
+//		
+//	}
 	
-	@RequestMapping(value="/editJobPosting")
-	public ModelAndView editJobPosting(HttpSession session){
-		ModelAndView model = new ModelAndView();
-		session.removeAttribute("postedJobList");
-		model.setViewName("adminEditJobPosting");
-		return model;
-		
-	}
-	@RequestMapping(value="/editJobPostInventory")
-	public ModelAndView editJobPostInventory(){
-		ModelAndView model = new ModelAndView();
-		model.setViewName("adminEditJobPostInventory");
-		return model;
-		
-	}
 	/**
 	 * @author kartikm
 	 * Called a function to get the adminEditJobSave page.

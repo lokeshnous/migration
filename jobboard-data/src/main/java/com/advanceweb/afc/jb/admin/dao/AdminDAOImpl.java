@@ -8,10 +8,14 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AdminDTO;
-//import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.EmpSearchDTO;
+import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -29,6 +33,9 @@ public class AdminDAOImpl implements AdminDAO {
 	private static final String ADM_FACILITY = "from AdmFacility af where af.facilityId=?";
 	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=? and e.password=?";
 	private static final String VALIDATE_ADM_USERID = "from AdmFacility af where af.adminUserId =?";
+	private static final String GET_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =?";
+	private static final String GET_NS_ID_BY_COMPNAME= "from AdmFacility af1 where af1.name =?";
+	private static final String GET_USERID_BY_FAC_ID = "from AdmUserFacility auf1 where auf1.facilityPK.facilityId=?";  
 
 	private HibernateTemplate hibernateTemplateTracker;
 
@@ -42,6 +49,8 @@ public class AdminDAOImpl implements AdminDAO {
 				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateEmail(String email) {
@@ -144,4 +153,90 @@ public class AdminDAOImpl implements AdminDAO {
 		return status;
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public EmpSearchDTO validateCompName(String empList) {
+		EmpSearchDTO dto = new EmpSearchDTO();
+		boolean status = false;
+		try {
+			if (!empList.isEmpty() ) {
+				List<AdmFacility> usersList = hibernateTemplateCareers.find(
+						GET_NS_ID_BY_COMPNAME, empList);
+
+				if (null != usersList && !usersList.isEmpty()) {
+					AdmFacility user = usersList.get(0);
+					int nsId = user.getNsCustomerID();
+					dto.setNsId(nsId);
+				}
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
+		return dto;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean validateNetSuitId(int nsId) {
+		boolean status = false;
+		try {
+			if (nsId != 0) {
+				List<AdmFacility> usersList = hibernateTemplateCareers.find(
+						GET_NS_ID, nsId);
+
+				if (null != usersList && !usersList.isEmpty()) {
+					AdmFacility user = usersList.get(0);
+					if (null != user) {
+						status = true;
+					}
+				}
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
+		return status;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public EmpSearchDTO getUserIdAndFacilityId(int nsId) {
+		EmpSearchDTO dto = new EmpSearchDTO();
+		int facId = 0;
+		List<AdmFacility> facility = hibernateTemplateCareers.find(GET_NS_ID,
+				nsId);
+		if (facility != null) {
+			AdmFacility af = facility.get(0);
+			facId = af.getFacilityId();
+			dto.setFacilityId(facId);
+		}
+		List<AdmUserFacility> userFacility = hibernateTemplateCareers.find(
+				GET_USERID_BY_FAC_ID, facId);
+		if (userFacility != null) {
+			AdmUserFacility facilityList = userFacility.get(0);
+			dto.setUserId(facilityList.getFacilityPK().getUserId());
+		}
+		return dto;
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean saveModifiedData(
+			List<JobPostingInventoryDTO> searchedJobsDTOs) {
+
+		JobPostingInventoryDTO jobPostInvDTO = new JobPostingInventoryDTO();
+		try {
+			for (int i = 0; i < searchedJobsDTOs.size(); i++) {
+				jobPostInvDTO = (JobPostingInventoryDTO) searchedJobsDTOs
+						.get(i);
+				AdmInventoryDetail searchResults = (AdmInventoryDetail) hibernateTemplateCareers
+						.get(AdmInventoryDetail.class,
+								jobPostInvDTO.getInvDetailId());
+				searchResults.setAvailableqty(jobPostInvDTO.getAvailableQty());
+				hibernateTemplateCareers.update(searchResults);
+			}
+		} catch (HibernateException e) {
+			LOGGER.error("ERROR" +e);
+		}
+		return true;
+	}
+	
 }

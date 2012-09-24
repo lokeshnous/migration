@@ -22,6 +22,36 @@ public class InventoryForm {
 	private String addon;
 	private String days;
 	private String postJobPage;
+	private String fname;
+	private String netSuitId;
+
+	/**
+	 * @return the netSuitId
+	 */
+	public String getNetSuitId() {
+		return netSuitId;
+	}
+
+	/**
+	 * @param netSuitId the netSuitId to set
+	 */
+	public void setNetSuitId(String netSuitId) {
+		this.netSuitId = netSuitId;
+	}
+
+	/**
+	 * @return the fname
+	 */
+	public String getFname() {
+		return fname;
+	}
+
+	/**
+	 * @param fname the fname to set
+	 */
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
 
 	/**
 	 * @return the userId

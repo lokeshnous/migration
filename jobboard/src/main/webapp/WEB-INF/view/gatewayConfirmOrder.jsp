@@ -135,7 +135,7 @@
 												cellspacing="0">
 												<tr cellpadding="0" cellspacing="0" border="0">
 													<td width="32%" align="Left"><h3 class="TextColorA01">Grand
-															Total:</h3></td>
+															Total:</h3><br></td>
 													<td width="7%" align="Left"><h3 class="TextColorA01">
 															<span>$</span>${purchaseJobPostForm.grandTotal}
 														</h3></td>
@@ -152,7 +152,7 @@
 
 								<p class="marginBottom15">&nbsp;</p>
 								<h3 class="gatewayBreadcrumbs main_section">Payment
-									Information</h3>
+									Information</h3><br>
 								<table class="gatewayTable indent10" width="540" border="0"
 									cellspacing="0" cellpadding="0">
 									<thead>

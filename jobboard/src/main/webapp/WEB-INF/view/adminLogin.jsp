@@ -11,6 +11,13 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" /> -->
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+	<!-- <script type="text/javascript" src="jquery.autocomplete.min.js"></script> -->
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
@@ -37,7 +44,7 @@ JAVASCRIPT FILES
 					"790", "360");
 		    $("#editJobPosting").displaypopup("#editJobPosting",
 					"790", "450");
-		    $("#inventory").displaypopup("#inventory",
+		    $(".inventory").displaypopup(".inventory",
 					"790", "360");
 		});
 		</script>
@@ -157,7 +164,8 @@ JAVASCRIPT FILES
 				<form:form method="POST">
 					<div class="AdminLinkAlign"><a id="impersonation" class="boldText" href="<%=request.getContextPath()%>/admin/login.html">Impersonation</a></div>
 					<div class="AdminLinkAlign"><a id="editJobPosting" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPosting.html">Manage/Edit Job Posting</a></div>
-					<div class="AdminLinkAlign"><a id="inventory" class="boldText" href="<%=request.getContextPath()%>/admininventory/employer/jobInventory.html">Manage/Edit Job Posting Inventory</a></div>
+					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/admininventory/employer1/jobInventory1.html">Manage/Edit Job Posting Inventory</a></div>
+					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/admin/facilityToFacilityGroup.html">Impersonation for Facility to Facility Group</a></div>
 				</form:form>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
