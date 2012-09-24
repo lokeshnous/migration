@@ -47,4 +47,14 @@ public interface UserDao {
 	 */
 	List<DropDownDTO> getFacilityGroup(int facilityId)
 			throws JobBoardDataException;
+
+	/**
+	 * This method to update the automatic generated password to DB
+	 * 
+	 * @param emailAddress
+	 * @param tempassword
+	 * @throws JobBoardServiceException
+	 */
+	void saveNewPWD(String emailAddress, String tempassword)
+			throws JobBoardDataException;
 }

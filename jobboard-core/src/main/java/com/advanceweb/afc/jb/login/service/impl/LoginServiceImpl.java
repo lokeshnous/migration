@@ -121,4 +121,20 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return downDTOs;
 	}
+
+	/**
+	 * This method to update the automatic generated password to DB
+	 * 
+	 * @param emailAddress
+	 * @param tempassword
+	 * @throws JobBoardServiceException
+	 */
+	public void saveNewPWD(String emailAddress, String tempassword)
+			throws JobBoardServiceException {
+		try {
+			userDAO.saveNewPWD(emailAddress, tempassword);
+		} catch (JobBoardDataException e) {
+			// TODO Auto-generated catch block
+		}
+	}
 }

@@ -49,7 +49,8 @@ public class UserDaoImpl implements UserDao {
 		MerUser user = null;
 		@SuppressWarnings("unchecked")
 		List<MerUser> userList = hibernateTemplateTracker.find(
-				" from  MerUser user where user.email=? and deleteDt is null", email);
+				" from  MerUser user where user.email=? and deleteDt is null",
+				email);
 		if (userList != null && !userList.isEmpty()) {
 			user = userList.get(0);
 			userDTO = new UserDTO();
@@ -191,5 +192,27 @@ public class UserDaoImpl implements UserDao {
 		}
 		return conversionHelper.transformFacilityToDropDownDTO(facilityList,
 				facilityId);
+	}
+
+	/**
+	 * This method to update the automatic generated password to DB
+	 * 
+	 * @param emailAddress
+	 * @param tempassword
+	 * @throws JobBoardServiceException
+	 */
+	public void saveNewPWD(String email, String tempassword)
+			throws JobBoardDataException {
+		try {
+			MerUser search = (MerUser) hibernateTemplateTracker.find(
+					"from MerUser e where e.email=?", email).get(0);
+			search.setPassword(tempassword);
+			hibernateTemplateTracker.saveOrUpdate(search);
+		} catch (HibernateException e) {
+			throw new JobBoardDataException(
+					"Error occured while updating generated password to merUser table"
+							+ e);
+		}
+
 	}
 }

@@ -74,4 +74,14 @@ public interface LoginService {
 	 */
 	List<DropDownDTO> getFacilityGroup(int facilityId)
 			throws JobBoardServiceException;
+
+	/**
+	 * This method to update the automatic generated password to DB
+	 * 
+	 * @param emailAddress
+	 * @param tempassword
+	 * @throws JobBoardServiceException
+	 */
+	void saveNewPWD(String emailAddress, String tempassword)
+			throws JobBoardServiceException;
 }

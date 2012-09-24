@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -180,25 +181,35 @@ public class LoginFormController {
 				jobSeekerToAdd[0] = new InternetAddress(email);
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAdd);
 				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
-				
-				//OpenAM code for forget password
-				String tempassword=OpenAMEUtility.newPassword();
-				System.out.println(tempassword);
-				boolean updatepassword=OpenAMEUtility.openAMUpdatePassword(emailAddress, tempassword);
-				
-				
-				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
-						"?temporarypassword", formDTO.getPassword());
-				
-				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
-						jonseekerloginUrl);
-				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
-				jobSeekerEmailDTO.setHtmlFormat(true);
-				emailService.sendEmail(jobSeekerEmailDTO);
+
+				// Automatic generated password from OpenAM
+				String tempassword = OpenAMEUtility.newPassword();
+
+				if (tempassword != null) {
+					// Updating the generated password to OpenAm
+					boolean updatepassword = OpenAMEUtility
+							.openAMUpdatePassword(emailAddress, tempassword);
+
+					// Updating the generated password to merUser table.
+					try {
+						loginService.saveNewPWD(emailAddress, tempassword);
+					} catch (JobBoardException e) {
+						LOGGER.info("Temporary password could not be generated");
+					}
+
+					String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
+							"?temporarypassword", formDTO.getPassword());
+
+					forgotPwdMailBody = forgotPwdMailBody.replace(
+							"?jsLoginLink", jonseekerloginUrl);
+					jobSeekerEmailDTO.setBody(forgotPwdMailBody);
+					jobSeekerEmailDTO.setHtmlFormat(true);
+					emailService.sendEmail(jobSeekerEmailDTO);
+				}
 
 			} catch (Exception e) {
 				// loggers call
-				LOGGER.info("ERROR");
+				LOGGER.info("ERROR  ");
 			}
 			finalresult = MMJBCommonConstants.OK_STRING;
 		} else {
