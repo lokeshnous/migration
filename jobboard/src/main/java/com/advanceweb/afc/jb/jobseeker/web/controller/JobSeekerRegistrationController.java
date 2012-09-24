@@ -276,7 +276,7 @@ public class JobSeekerRegistrationController {
 			if (((Long) session.getAttribute("LAST_PLACE_KEY")) != null
 					&& ((Long) session.getAttribute("LAST_PLACE_KEY"))
 							.equals(placeKey)) {
-				model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+				model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 				return model;
 			}
 
@@ -348,7 +348,7 @@ public class JobSeekerRegistrationController {
 			session.setAttribute("userEmail", userDTO.getEmailId());
 			session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
 
-			model.setViewName("forward:/jobSeeker/jobSeekerDashBoard.html");
+			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 			authenticateUserAndSetSession(userDTO, request);
 
 		} catch (Exception e) {
