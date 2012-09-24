@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.helper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -320,10 +321,15 @@ public class EmployerRegistrationConversionHelper {
 						.getStrLabelName())) {
 					facilityContact.setPhone2(attribDTO.getStrLabelValue());
 				}
-				AdmFacility admFacility = new AdmFacility();
+				/*AdmFacility admFacility = new AdmFacility();
 				admFacility.setFacilityId(facility.getFacilityId());
-				facilityContact.setAdmFacility(admFacility);
+				facilityContact.setAdmFacility(admFacility);*/
 			}
+			facilityContact.setContactType(MMJBCommonConstants.PRIMARY);
+			facilityContact.setCreateDt(new Date());
+			facilityContact.setEmail(dto.getMerUserDTO().getEmailId());
+			facilityContact.setActive(1);
+			facilityContact.setAdmFacility(facility);
 		}
 
 		return facilityContact;
