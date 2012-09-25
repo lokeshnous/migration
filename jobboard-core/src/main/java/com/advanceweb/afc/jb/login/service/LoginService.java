@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
@@ -64,6 +65,7 @@ public interface LoginService {
 	 * @throws JobBoardServiceException
 	 */
 	long getEmployerCount() throws JobBoardServiceException;
+	FacilityDTO getFacilityByFacilityId(int facilityId);
 
 	/**
 	 * This method is to get all list of facilities
@@ -94,4 +96,5 @@ public interface LoginService {
 	 */
 	void saveNewPWD(String emailAddress, String tempassword)
 			throws JobBoardServiceException;
+
 }

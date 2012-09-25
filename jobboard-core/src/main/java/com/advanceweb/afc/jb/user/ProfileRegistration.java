@@ -3,9 +3,9 @@ package com.advanceweb.afc.jb.user;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 
 /**
  * @author rajeshkb
@@ -75,13 +75,5 @@ public interface ProfileRegistration {
 	 */
 	boolean validateProfileAttributes(int jobseekerId);
 
-	public boolean saveEmployerDetails(AccountProfileDTO dto);
-
-	boolean deleteAssocEmployer(String facilityId, int userId);
-
-	boolean addEmployer(AccountProfileDTO accountDto, int agencyFacilityId,
-			int userId);
-
-	List<AdmFacility> getAssocEmployerNames(int userId, int agencyFacilityId);
 
 }

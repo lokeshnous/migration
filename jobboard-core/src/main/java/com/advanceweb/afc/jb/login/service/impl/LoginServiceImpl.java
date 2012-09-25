@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
@@ -104,6 +106,11 @@ public class LoginServiceImpl implements LoginService {
 		return returnVal;
 	}
 
+	@Override
+	public FacilityDTO getFacilityByFacilityId(int facilityId) {
+		return userDAO.getFacilityByFacilityId(facilityId);
+	}
+
 	/**
 	 * This method is to get all list of facilities
 	 * 
@@ -154,4 +161,5 @@ public class LoginServiceImpl implements LoginService {
 			// TODO Auto-generated catch block
 		}
 	}
-}
+
+	}
