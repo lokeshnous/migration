@@ -46,16 +46,7 @@ public class AdminJobPostingInventoryController {
 			.getLogger(AdminJobPostingInventoryController.class);
 
 	@Autowired
-	private PopulateDropdowns populateDropdownsService;
-
-	@Autowired
 	AdminService adminService;
-
-	@RequestMapping(value = "/emplyrAutoComplte", method = RequestMethod.GET, headers = "Accept=*/*")
-	public @ResponseBody
-	List<String> getEmployerList(@RequestParam("empList") String empList) {
-		return populateDropdownsService.getEmployerNamesList(empList);
-	}
 
 	@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
 	public @ResponseBody

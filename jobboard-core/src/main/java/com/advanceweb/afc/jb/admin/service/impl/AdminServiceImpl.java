@@ -114,32 +114,7 @@ public class AdminServiceImpl implements ProfileRegistration,
 		return null;
 	}
 
-	@Override
-	public boolean saveEmployerDetails(AccountProfileDTO dto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteAssocEmployer(String facilityId, int userId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto,
-			int agencyFacilityId, int userId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId,
-			int agencyFacilityId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	/**
 	 * This method to get job posting inventory details
 	 * 
