@@ -161,7 +161,7 @@
 										height="30" alt="User Profile">
 								</div>
 
-								<div class="dashboardPanalAGCcontent marginTop5">
+								<div class="dashboardPanalAGCcontent ">
 									<h2 class="noTopBorder">Profile Management</h2>
 									<div class="lableTextDashBoard">
 										<p>
@@ -194,7 +194,7 @@
 										height="30" alt="Subscription">
 								</div>
 
-								<div class="dashboardPanalAGCcontent marginTop5">
+								<div class="dashboardPanalAGCcontent ">
 									<h2 class="noTopBorder">Current Subscriptions</h2>
 									<div class="lableTextDashBoard">
 										<p>E-newsletters</p>
@@ -216,7 +216,7 @@
 										height="30" alt="Subscription">
 								</div>
 
-								<div class="dashboardPanalAGCcontent marginTop5">
+								<div class="dashboardPanalAGCcontent ">
 									<h2 class="noTopBorder">Media</h2>
 
 
@@ -237,7 +237,7 @@
 										height="30" alt="Resume">
 								</div>
 
-								<div class="dashboardPanalAGCcontent marginTop5 FloatLeft">
+								<div class="dashboardPanalAGCcontent">
 									<h2 class="noTopBorder">Employers</h2>
 									
 									<c:forEach items="${emplyrsByState}" var="assocEmplyrsName"

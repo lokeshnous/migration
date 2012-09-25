@@ -1542,6 +1542,8 @@ div.searchResultsSubContent .btn_sm {
 	margin: 0 5px 10px 0;
 }
 
+.lableText3 input[type="checkbox"]{margin:2px 0 0 0;}
+
 .leftFormHolder input[type="file"] {
 	border: 1px solid #ccc;
 	height: 25px;
@@ -2077,11 +2079,13 @@ h2.sectionSubHeader2 {
 	margin: 0px 10px 0px 0;
 	vertical-align: middle;
 }
+.dashboardPanalAGCcontent {float: left;
+width:400px;
+margin-top:5px;}
 
-.dashboardHeader h1 span {
-	font-size: 26px;
+.dashboardHeader h1{
+	font-size: 20px;
 	color: #fff;
-	font-weight: bold;
 }
 
 .dashboardcolumn1,.dashboardcolumn2 {
@@ -2098,7 +2102,7 @@ h2.sectionSubHeader2 {
 	border-left: 1px solid #999;
 	border-left: 1px solid #CCCCCC;
 	padding-left: 10px;
-	min-height: 350px;
+	min-height: 330px;
 }
 
 .dashboardPanal {
