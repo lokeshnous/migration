@@ -162,7 +162,7 @@ html.busy, html.busy * {
 				</div>
 				<div class="headerLoginSectionColumns">
 					<span class="boldText">Ad Agency:</span><br> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=agency">Login</a>
-					| <a href="../agencyRegistration/agencyregistration.html">Post Jobs</a>
+					| <a href="<%=request.getContextPath()%>/agencyRegistration/agencyregistration.html">Post Jobs</a>
 				</div>
 
 			</security:authorize>
