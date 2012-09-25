@@ -17,6 +17,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -181,17 +182,20 @@ public class UserDaoImpl implements UserDao {
 
 		List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
 
-		try {
-			facilityList = hibernateTemplate.find(
-					"from AdmFacility e where e.facilityParentId=?",
-					admFacility.getFacilityParentId());
-		} catch (HibernateException e) {
-			throw new JobBoardDataException(
-					"Error occured while getting the facility details from Database"
-							+ e);
+		if (admFacility.getFacilityType().equals(
+				MMJBCommonConstants.FACILITY_GROUP)) {
+			try {
+				facilityList = hibernateTemplate.find(
+						"from AdmFacility e where e.facilityParentId=?",
+						facilityId);
+			} catch (HibernateException e) {
+				throw new JobBoardDataException(
+						"Error occured while getting the facility details from Database"
+								+ e);
+			}
 		}
 		return conversionHelper.transformFacilityToDropDownDTO(facilityList,
-				facilityId);
+				admFacility, facilityId);
 	}
 
 	/**
@@ -199,11 +203,11 @@ public class UserDaoImpl implements UserDao {
 	 * 
 	 * @param facilityId
 	 * @return
-	 * @throws JobBoardDataException 
+	 * @throws JobBoardDataException
 	 * @throws JobBoardServiceException
 	 */
 	public int getFacilityParent(int facilityId) throws JobBoardDataException {
-		int facilityParentId=0;
+		int facilityParentId = 0;
 		AdmFacility admFacility;
 		try {
 			admFacility = (AdmFacility) hibernateTemplate.find(
@@ -218,8 +222,7 @@ public class UserDaoImpl implements UserDao {
 
 		return facilityParentId;
 	}
-	
-	
+
 	/**
 	 * This method to update the automatic generated password to DB
 	 * 

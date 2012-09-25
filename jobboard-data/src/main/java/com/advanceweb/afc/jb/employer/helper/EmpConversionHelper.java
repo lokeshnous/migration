@@ -207,17 +207,17 @@ public class EmpConversionHelper {
 	 * @throws JobBoardServiceException
 	 */
 	public List<DropDownDTO> transformFacilityToDropDownDTO(
-			List<AdmFacility> facilityList, int facilityId) {
+			List<AdmFacility> facilityList, AdmFacility admFacility,
+			int facilityId) {
 		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
-
-		for (AdmFacility admFacility : facilityList) {
-			DropDownDTO dto = new DropDownDTO();
-			dto.setOptionId(admFacility.getFacilityId().toString());
-			if (admFacility.getFacilityId() == facilityId) {
-				dto.setOptionName("*");
-			} else {
-				dto.setOptionName(admFacility.getName());
-			}
+		DropDownDTO dto = new DropDownDTO();
+		dto.setOptionId(admFacility.getFacilityId().toString());
+		dto.setOptionName("*" + " " + admFacility.getName());
+		downDTOs.add(dto);
+		for (AdmFacility facility : facilityList) {
+			dto = new DropDownDTO();
+			dto.setOptionId(facility.getFacilityId().toString());
+			dto.setOptionName(facility.getName());
 			downDTOs.add(dto);
 		}
 		return downDTOs;
