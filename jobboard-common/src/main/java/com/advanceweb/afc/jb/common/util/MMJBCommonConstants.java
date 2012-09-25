@@ -208,6 +208,12 @@ public interface MMJBCommonConstants {
 	String PAGE_VALUE = "pageValue";
 	String FACILITY_ID = "facilityId";
 
+	//For Agency Impersonation 
+	String AGENCY_USER_ID="agencyUserId";
+	String AGENCY_FACILITY_ID="agencyFacilityId";
+	String AGENCY_USER_NAME="agencyUserName";
+	String AGENCY_EMAIL="agencyEmail";
+	
 	// For Duplicate Submission
 	String LAST_PLACE_KEY = "LAST_PLACE_KEY";
 
