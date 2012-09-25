@@ -28,10 +28,10 @@
 			    
 		    	// Then hide the second div
 			    $("#VideoSlideContant").hide();
-			    $("#VideoSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+			    $("#VideoSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
 			    $("#VideoSlideButton a").css("color", "#FFFFFF");
 				$("#TestSlideContant").hide();
-				$("#TestSlideButton a").css("background-color", "${brandingTemplateForm.getColor().substring(4)}");
+				$("#TestSlideButton a").css("background-color", "${jobDetail.getColor().substring(4)}");
 			    $("#TestSlideButton a").css("color", "#FFFFFF");
 
 				// Then add a click handlers to the buttons
