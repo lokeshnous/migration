@@ -261,4 +261,20 @@ public class TransformEmployerRegistration {
 
 		return dto;
 	}
+	
+	
+	public AccountProfileDTO transformToDto(
+			EmployerRegistrationForm form) {
+		AccountProfileDTO dto = new AccountProfileDTO();
+		dto.setFirstName(form.getFirstName());
+		dto.setState(form.getState());
+		dto.setStreet(form.getStreet());
+		dto.setCountry(form.getCountry());
+		dto.setZipCode(form.getZipCode());
+		dto.setPhone(form.getPrimaryPhone());
+		dto.setCity(form.getCity());
+		dto.setFacilityId(form.getFacilityId());
+
+		return dto;
+	}
 }

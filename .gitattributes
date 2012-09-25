@@ -637,6 +637,7 @@ jobboard/src/main/webapp/resources/css/basic_ie.css -text
 jobboard/src/main/webapp/resources/css/demo.css -text
 jobboard/src/main/webapp/resources/css/displaytag.css -text
 jobboard/src/main/webapp/resources/css/ie.css -text
+jobboard/src/main/webapp/resources/css/jquery-auto-ui[!!-~]-.css -text
 jobboard/src/main/webapp/resources/css/jquery-ui.css -text
 jobboard/src/main/webapp/resources/css/jquery.dataTables.css -text
 jobboard/src/main/webapp/resources/css/jquery.megamenu.css -text
@@ -724,6 +725,7 @@ jobboard/src/main/webapp/resources/js/expandCollapse.js -text
 jobboard/src/main/webapp/resources/js/html5.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.min.js -text
+jobboard/src/main/webapp/resources/js/jquery-ui.js -text
 jobboard/src/main/webapp/resources/js/jquery-ui.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.colorPicker.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.all.min.js -text

@@ -4023,9 +4023,19 @@ orange:hover {
 .DropDownAreaToolTip{
 	margin-top: 15px !important;
 }
+/*
+.ui-autocomplete {height: 120px;} */
+
 .ui-autocomplete {
-	height: 120px;
+	 background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    height: 120px;
+    overflow: auto;
+    padding: 10px;
+    width: 300px;
+	
 }
+.ui-autocomplete a, .ui-autocomplete a:hover { color:#6B7B84; }
 
 /* For Branding template*/
 .templateslider{
