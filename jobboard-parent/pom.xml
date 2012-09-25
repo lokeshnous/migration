@@ -11,13 +11,13 @@
 	<url>http://afc.advanceweb.com/jobboard</url>
 
 	<properties>
-		<!--  Project settings -->
+		<!-- Project settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
-		<!--  Global properties -->
+
+		<!-- Global properties -->
 		<maven.build.timestamp.format>EEE, d MMM yyyy HH:mm:ss Z</maven.build.timestamp.format>
-		
-		<!--  Library versions -->
+
+		<!-- Library versions -->
 		<cxf.version>2.5.2</cxf.version>
 		<hibernate.version>3.5.0-Final</hibernate.version>
 		<jackson.version>1.9.7</jackson.version>
@@ -28,11 +28,19 @@
 	</properties>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/env/${env}/resources</directory>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>2.5.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -45,7 +53,7 @@
 		<profile>
 			<id>dev</id>
 			<activation>
-				<activeByDefault></activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
 				<env>dev</env>
