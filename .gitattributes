@@ -107,6 +107,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/AdminServic
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/AgencyDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/ImpersonateAgencyService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/impl/AgencyDelegateImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/impl/ImpersonateAgencyServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/AutoRenewalJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobBoardCronTrigger.java -text

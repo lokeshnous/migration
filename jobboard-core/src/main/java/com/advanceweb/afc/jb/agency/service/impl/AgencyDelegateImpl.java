@@ -6,8 +6,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.agency.dao.ImpersonateAgencyDAO;
 import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
@@ -33,10 +35,14 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 
 	@Autowired
 	private NSCustomerService nsCustomerService;
+	@Autowired
+	private ImpersonateAgencyDAO impersonateAgencyDAO;
 
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
-
+	
+	private static final String CUSTOMER_STRING = "customer"; 
+	
 	/**
 	 * This method is used to create a user through NetSuite and based on the
 	 * status returned from Net Suite, it will create the user in the Job board.
@@ -131,4 +137,46 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 		return userDTO;
 	}
 
+
+	/**
+	 * This method is used to get the net suite customer id based on adm
+	 * facility id.
+	 * 
+	 * @param int admFacilityID
+	 * @return int nsCustomerID
+	 */
+
+	public int getNSCustomerIDFromAdmFacility(int admFacilityID) {
+		int nsCustomerID = 0;
+		List<FacilityDTO> admFacilityDTOList = impersonateAgencyDAO
+				.getNSCustomerIDFromAdmFacility(admFacilityID);
+		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
+		return nsCustomerID;
+	}
+
+	/**
+	 * This method is used to get the net suite customer details based on
+	 * customer id.
+	 * @param int admFacilityID
+	 * @return UserDTO
+	 */
+
+	public UserDTO getNSCustomerDetails(int nsCustomerID) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setEntityId(nsCustomerID);
+		userDTO.setRecordType(CUSTOMER_STRING);
+
+		try {
+			
+			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
+			
+		} catch (JobBoardNetSuiteServiceException jbns) {
+			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+					+ jbns);
+		}
+		return userDTO;
+
+	}
+	
+	
 }
