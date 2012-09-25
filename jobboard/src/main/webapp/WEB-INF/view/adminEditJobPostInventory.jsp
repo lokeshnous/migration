@@ -52,7 +52,7 @@ function closePopup() {
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('[id^=nsId]').keypress(validateNumber);
-		$(".job_seeker_Resume").keypress(validateNumber);
+		$(".onlyNum").keypress(validateNumber);
 			var empList = $.trim($("#empList").val());
 			var nsId = $.trim($("#nsId").val());
 		function cancelProcess() {
@@ -139,9 +139,8 @@ function closePopup() {
 			 $("#ErrorMsg").text("");
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/jobPostSearch.html?empList="+empList+"&nsId="+nsId,
 				success: function(data){ 
-						 var pp = true;
-						 //alert(data.success == pp);
-						 if (data.success == pp) {	
+						 var response = true;
+						 if (data.success == response) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
 							$.nmManual('${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html');							
 						 }else{
@@ -166,7 +165,7 @@ function closePopup() {
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
-			<h2>JOB POSTING INVENTORY</h2>
+			<h2>MANAGE / EDIT JOB POSTING INVENTORY</h2>
 			<a href="#"><img src="../resources/images/Close.png"
 				title="Close" width="19" height="19" onclick="closePopup();"
 				alt=""></a>
@@ -184,7 +183,7 @@ function closePopup() {
 					class="job_seeker_Resume" value="${empList}"/>
 
 				<span class="lableText6">Net Suite ID Number:</span>
-				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume"
+				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
 
 				<input type="button" value="find" name="find" id="find"
@@ -213,7 +212,7 @@ function closePopup() {
 									<td align="center">${jbPostList.getQuantity()}</td>
 									<td align="center">
 									
-									<input id="tb_save_search_${rowCount.index+1}" class="job_seeker_Resume"
+									<input id="tb_save_search_${rowCount.index+1}" class="job_seeker_Resume onlyNum"
 										type="text" value="${jbPostList.getAvailableQty()}" /></td>
 								</tr>
 							</c:forEach>							
@@ -242,7 +241,7 @@ function closePopup() {
 									<td align="center">${jbSlotList.getQuantity()}</td>
 									<td align="center">
 									<input id="jp_slot_save_${rowCount.index+1}"
-									 class="job_seeker_Resume"
+									 class="job_seeker_Resume onlyNum"
 										type="text" value="${jbSlotList.getAvailableQty()}" /></td>
 								</tr>
 							</c:forEach>

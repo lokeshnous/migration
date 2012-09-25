@@ -413,10 +413,8 @@
 								class="job_seeker_password textBox350 " />
 							<span class="required">(Required)</span>
 						</div>
-						<div>
-							<font color="red" style="padding-left: 185px"> <form:errors
-									path="invoiceForm.purchaseOrderNo" />
-							</font>
+						<div class="validationMsg">
+							<form:errors path="invoiceForm.purchaseOrderNo" />
 						</div>
 						</c:if>
 						

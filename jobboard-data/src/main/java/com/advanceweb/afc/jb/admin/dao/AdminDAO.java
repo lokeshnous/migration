@@ -50,5 +50,21 @@ public interface AdminDAO {
 	 * @return
 	 */
 	EmpSearchDTO validateCompName(String empList);
+	
+	/**
+	 * @param facilityId
+	 * @return
+	 */
+	List<EmpSearchDTO> getEmpdataByNetSuiteId(int nsId);
+	
+	
+	/**
+	 * This method to get job posting inventory details
+	 * 
+	 * @param userId
+	 * @param facilityId
+	 * @return JobPostingInventoryDTO
+	 */
+	List<JobPostingInventoryDTO> getInventoryDetails(int userId, int facilityId);
 
 }

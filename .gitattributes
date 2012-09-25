@@ -102,8 +102,8 @@ jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/netSuite.properties -text
 jobboard-core/pom.xml -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/ImpersonateUserService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/ImpersonateUserServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/AdminService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/AdminServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/AgencyDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/impl/AgencyDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text
@@ -411,8 +411,8 @@ jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminJobPostingInventoryController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminLoginForm.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminManageFacilitiesContorller.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminValidation.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/EditFacilityGroupContorller.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/TransformAdminImpersonation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/agency/web/controller/AgencyProfileAttribForm.java -text

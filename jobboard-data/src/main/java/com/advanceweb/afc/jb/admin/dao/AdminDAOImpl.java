@@ -1,9 +1,13 @@
 package com.advanceweb.afc.jb.admin.dao;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -21,11 +25,12 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.mysql.jdbc.StringUtils;
 
-@Repository("impersonateDAO")
+@Transactional
+@Repository("adminDAO")
 public class AdminDAOImpl implements AdminDAO {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("ImpersonateDAOImpl.class");
+			.getLogger("AdminDAOImpl.class");
 
 	private static final String GET_EMAIL = "from MerUser e where e.email = ?";
 	private static final String USER_ROLE = "from AdmUserRole aur where aur.rolePK.userId = ?";
@@ -160,7 +165,7 @@ public class AdminDAOImpl implements AdminDAO {
 		EmpSearchDTO dto = new EmpSearchDTO();
 		boolean status = false;
 		try {
-			if (!empList.isEmpty() ) {
+			if (!empList.isEmpty()) {
 				List<AdmFacility> usersList = hibernateTemplateCareers.find(
 						GET_NS_ID_BY_COMPNAME, empList);
 
@@ -231,12 +236,61 @@ public class AdminDAOImpl implements AdminDAO {
 						.get(AdmInventoryDetail.class,
 								jobPostInvDTO.getInvDetailId());
 				searchResults.setAvailableqty(jobPostInvDTO.getAvailableQty());
-				hibernateTemplateCareers.update(searchResults);
+				hibernateTemplateCareers.saveOrUpdate(searchResults);
 			}
 		} catch (HibernateException e) {
 			LOGGER.error("ERROR" +e);
 		}
 		return true;
+	}
+
+
+	@Override
+	public List<EmpSearchDTO> getEmpdataByNetSuiteId(int nsId) {
+		List<EmpSearchDTO> dto = new ArrayList<EmpSearchDTO>();
+		try {
+			if (nsId != 0) {
+				
+
+			}
+		} catch (HibernateException e) {
+			LOGGER.info("ERROR" + e);
+		}
+		return null;
+	}
+
+
+	/**
+	 * This method to get job posting inventory details
+	 * 
+	 * @param userId
+	 * @param facilityId
+	 * @return JobPostingInventoryDTO
+	 */
+	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
+			int facilityId) {
+		Query getInventoryData = hibernateTemplateCareers.getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(" { call AdminGetInventoryDetails(?) }");
+		getInventoryData.setInteger(0, facilityId);
+		List<?> invetoryDeatil = getInventoryData.list();
+		Iterator<?> iterator = invetoryDeatil.iterator();
+		List<JobPostingInventoryDTO> inventoryDTOs = new ArrayList<JobPostingInventoryDTO>();
+		while (iterator.hasNext()) {
+			JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
+			Object[] row = (Object[]) iterator.next();
+			BigDecimal qty = (BigDecimal) row[4];
+			BigDecimal availqty = (BigDecimal) row[5];
+			dto.setProductId((Integer) row[0]);
+			dto.setProductType((String) row[1]);
+			dto.setJbType((String) row[2]);
+			dto.setAddon((String) row[3]);
+			dto.setQuantity(qty.intValue());
+			dto.setAvailableQty(availqty.intValue());
+			dto.setInvDetailId((Integer) row[6]);
+			inventoryDTOs.add(dto);
+		}
+		return inventoryDTOs;
 	}
 	
 }

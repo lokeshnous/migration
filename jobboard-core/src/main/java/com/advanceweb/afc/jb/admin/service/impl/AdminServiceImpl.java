@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.admin.dao.AdminDAO;
-import com.advanceweb.afc.jb.admin.service.ImpersonateUserService;
+import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
@@ -14,14 +14,16 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.job.dao.JobPostInventoryDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Service("adminService")
-public class ImpersonateUserServiceImpl implements ProfileRegistration,
-		ImpersonateUserService {
+public class AdminServiceImpl implements ProfileRegistration,
+		AdminService {
 
 	@Autowired
 	private AdminDAO adminDAO;
+	
 
 	@Override
 	public boolean validateEmail(String email) {
@@ -52,6 +54,11 @@ public class ImpersonateUserServiceImpl implements ProfileRegistration,
 	public boolean saveModifiedData(
 			List<JobPostingInventoryDTO> searchedJobsDTOs) {
 		return adminDAO.saveModifiedData(searchedJobsDTOs);
+	}
+	
+	@Override
+	public List<EmpSearchDTO> getEmpdataByNetSuiteId(int nsId) {
+		return adminDAO.getEmpdataByNetSuiteId(nsId);
 	}
 
 	@Override
@@ -133,7 +140,15 @@ public class ImpersonateUserServiceImpl implements ProfileRegistration,
 		return null;
 	}
 
-	
-
-	
+	/**
+	 * This method to get job posting inventory details
+	 * 
+	 * @param userId
+	 * @param facilityId
+	 * @return JobPostingInventoryDTO
+	 */
+	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
+			int facilityId) {
+		return adminDAO.getInventoryDetails(userId, facilityId);
+	}
 }

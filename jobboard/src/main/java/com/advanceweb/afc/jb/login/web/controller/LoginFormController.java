@@ -187,6 +187,7 @@ public class LoginFormController {
 
 				if (tempassword != null) {
 					// Updating the generated password to OpenAm
+					
 					boolean updatepassword = OpenAMEUtility
 							.openAMUpdatePassword(emailAddress, tempassword);
 

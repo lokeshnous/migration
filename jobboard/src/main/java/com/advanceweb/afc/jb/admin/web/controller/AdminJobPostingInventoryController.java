@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.admin.service.ImpersonateUserService;
+import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -46,13 +46,10 @@ public class AdminJobPostingInventoryController {
 			.getLogger(AdminJobPostingInventoryController.class);
 
 	@Autowired
-	private JobPostInventoryService inventoryService;
-
-	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
 	@Autowired
-	ImpersonateUserService impersonateUserService;
+	AdminService adminService;
 
 	@RequestMapping(value = "/emplyrAutoComplte", method = RequestMethod.GET, headers = "Accept=*/*")
 	public @ResponseBody
@@ -82,7 +79,7 @@ public class AdminJobPostingInventoryController {
 			int nsId = 0;
 			int empNsId = 0;
 			if (empList.length() != 0) {
-				EmpSearchDTO dto = impersonateUserService
+				EmpSearchDTO dto = adminService
 						.validateCompName(empList);
 				if (dto.getNsId() != 0) {
 					empNsId = dto.getNsId();
@@ -105,7 +102,7 @@ public class AdminJobPostingInventoryController {
 
 			if (id.length() != 0) {
 				nsId = Integer.parseInt(id);
-				boolean val = impersonateUserService.validateNetSuitId(nsId);
+				boolean val = adminService.validateNetSuitId(nsId);
 				if (val) {
 					session.setAttribute(MMJBCommonConstants.NS_CUSTOMER_ID,
 							nsId);
@@ -141,12 +138,12 @@ public class AdminJobPostingInventoryController {
 			int nsId = (Integer) session
 					.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
 
-			EmpSearchDTO dto1 = impersonateUserService
+			EmpSearchDTO dto1 = adminService
 					.getUserIdAndFacilityId(nsId);
 			int userId = dto1.getUserId();
 			int facilityId = dto1.getFacilityId();
 
-			List<JobPostingInventoryDTO> inventiryDTO = inventoryService
+			List<JobPostingInventoryDTO> inventiryDTO = adminService
 					.getInventoryDetails(userId, facilityId);
 
 			List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
@@ -236,7 +233,7 @@ public class AdminJobPostingInventoryController {
 			jobPostDTOs.add(jobPostInvDto);
 		}
 		// update the data in DB
-		boolean saveData = impersonateUserService.saveModifiedData(jobPostDTOs);
+		boolean saveData = adminService.saveModifiedData(jobPostDTOs);
 		JSONObject saveStatusJson = new JSONObject();
 		if (saveData) {
 			saveStatusJson.put("success", "Data Updated Successfully");

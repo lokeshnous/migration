@@ -24,7 +24,7 @@
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
 
-    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 9 || event.keyCode == 46
+    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 46
      || event.keyCode == 37 || event.keyCode == 39) {
         return true;
     }

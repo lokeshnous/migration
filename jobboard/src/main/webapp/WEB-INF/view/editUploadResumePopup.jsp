@@ -53,7 +53,7 @@
 					$("#resumeErrorMsg").html("<span style='color:red'>File size should not exceed more than 750KB. Please try again.</span>");
 				}
 				else {
-					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required parameters.</span>");
+					$("#resumeErrorMsg").html("<span style='color:red'>Please enter the required fields.</span>");
 				}
 			});
 		 

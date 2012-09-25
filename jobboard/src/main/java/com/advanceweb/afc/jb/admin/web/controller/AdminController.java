@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 import com.advanceweb.afc.jb.job.service.JobPostService;
-import com.advanceweb.afc.jb.admin.service.ImpersonateUserService;
+import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -58,7 +58,7 @@ public class AdminController {
 	TransformAdminImpersonation transformAdminImpersonation;
 	
 	@Autowired
-	ImpersonateUserService impersonateUserService;
+	AdminService service;
 	
 	@RequestMapping(value = "/adminMenu", method = RequestMethod.GET)
 	public ModelAndView adminMenuPage(ModelMap map) {
@@ -98,11 +98,11 @@ public class AdminController {
 			LOGGER.info("OpenAM : Invalid User E-mail, password");
 			return "Not a valid User E-Mail Or Password";
 		}
-		if(!impersonateUserService.validateAdminCredentials(form.getUserEmail(), form.getPassword())){
+		if(!service.validateAdminCredentials(form.getUserEmail(), form.getPassword())){
 			return "Not a valid User E-Mail Or Password";
 		}
 		AdminDTO adminDTO =transformAdminImpersonation.transformAdminFormToDTO(form);
-		boolean adminuserDto = impersonateUserService.impersonateUser(adminDTO);
+		boolean adminuserDto = service.impersonateUser(adminDTO);
 		return "";
 	}
 	/**

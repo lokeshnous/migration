@@ -94,7 +94,7 @@ function closePopup() {
 			    stringObj = inveId +"="+ availQty;
 			    stringObjNew = stringObj +";" + stringObjNew ;
 			 });
-			$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
+			$.ajax({url: "${pageContext.request.contextPath}/impersonationForFacility/saveEditedFacilty.html?stringObjNew="+stringObjNew,
 				success: function(data){ 
 				    if(data.success != null){
 				    	parent.$.nmTop().close();
@@ -110,10 +110,6 @@ function closePopup() {
 			}); 
 		}); 
 		$("#find").click(function(event){	
-			/* if (empList == ''|| nsId == ''){
-				$("#ErrorMsg").text("Please enter Employee List or Net Suite Id to continue");
-				return false;
-			} */
 			empList = $.trim($("#empList").val());
 			nsId = $.trim($("#nsId").val()); 
 			 $("#ErrorMsg").text("");
@@ -123,7 +119,7 @@ function closePopup() {
 						 //alert(data.success == pp);
 						 if (data.success == pp) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
-							$.nmManual('${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html');							
+							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html');							
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
 						 }
@@ -170,9 +166,18 @@ function closePopup() {
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange" />
 			</div>
+			<div class="row">
+				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
+				<c:forEach items="${facilityList}" varStatus="item">
+					${item.name}
+				</c:forEach>
+				
+				<form:checkbox path="${facilityList.isHealthSystem}" label="${healthSystemLable}"/>
+			</div>
 				<input type="hidden" name="nsId" />
 				<input type="hidden" name="empList" />
 				<input type="hidden" name="pageValue" value="inventoryPage" />
+				
 				<div class="row marginTop20 paddingBottom10">
 					<a id="save" href="" class="purchaseJobPostings btn_sm orange">SAVE</a>
 					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>

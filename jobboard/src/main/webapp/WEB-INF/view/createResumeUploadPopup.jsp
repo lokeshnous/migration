@@ -84,7 +84,7 @@
 					} else {
 						$("#resumeErrorMsg")
 								.html(
-										"<span>Please enter the required parameters.</span>");
+										"<span>Please enter the required fields.</span>");
 					}
 				});
 		
