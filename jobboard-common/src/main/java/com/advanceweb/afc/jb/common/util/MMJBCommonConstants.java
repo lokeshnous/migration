@@ -231,7 +231,8 @@ public interface MMJBCommonConstants {
 	String POST_JOB_INACTIVE = "Inactive";
 	byte ACTIVE = 1;
 	byte INACTIVE = 0;
-
+	String STANDARD_POSTING = "Standard Posting";
+	String SLOT_POSTING = "Slot Posting ";
 	// For Apply job type
 	String APPLY_TO_URL = "ApplyToURL";
 	String APPLY_TO_ATS = "ApplyToATS";
