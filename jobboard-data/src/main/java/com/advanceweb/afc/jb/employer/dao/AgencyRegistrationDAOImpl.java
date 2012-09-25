@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.employer.dao;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.agency.helper.AgencyRegistrationConversionHelper;
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -54,7 +52,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
-
+	
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
@@ -302,54 +300,6 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 		return false;
 	}
 
-	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto,
-			int agencyFacilityId, int userId) {
-		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
-				accountDto.getFacilityId());
-//		facility.setAdminUserId(2162);// TODO: REMOVE HARD CODE AGENCY USER ID
-//		facility.setFacilityParentId(393);
-		facility.setAdminUserId(userId);
-		facility.setFacilityParentId(agencyFacilityId);
-		hibernateTemplateCareers.update(facility);
-		return true;
-	}
 
-	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId,
-			int agencyFacilityId) {
-	//	@SuppressWarnings("unchecked")
-//		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
-//				.find("from AdmFacility where adminUserId=2162 and facilityParentId=393 and deleteUserId=0");
-		List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
-				.find("from AdmFacility where adminUserId=" + userId
-						+ " and facilityParentId=" + agencyFacilityId
-						+ " and deleteUserId=0");
-
-		return assocEmplyrs;
-	}
-
-	@Override
-	public boolean saveEmployerDetails(AccountProfileDTO dto) {
-		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
-				dto.getFacilityId());
-		facility.setCity(dto.getCity());
-		facility.setStreet(dto.getStreet());
-		facility.setCountry(dto.getCountry());
-		facility.setPostcode(dto.getZipCode());
-		hibernateTemplateCareers.update(facility);
-		return true;
-	}
-
-	@Override
-	public boolean deleteAssocEmployer(String facilityId, int userId) {
-		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
-				Integer.parseInt(facilityId));
-		facility.setDeleteUserId(userId);
-		Date deleteDt = new Timestamp(new Date().getTime());
-		facility.setDeleteDt(deleteDt);
-		hibernateTemplateCareers.update(facility);
-		return true;
-
-	}
+	
 }

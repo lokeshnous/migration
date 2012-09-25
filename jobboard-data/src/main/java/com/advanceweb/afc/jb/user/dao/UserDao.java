@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
-
 
 public interface UserDao {
 	UserDTO getUser(String email);
@@ -38,6 +38,9 @@ public interface UserDao {
 	 * @throws JobBoardDataException
 	 */
 	long getEmployerCount() throws JobBoardDataException;
+	int getfacility(int facilityId);
+	UserDTO getUserByUserId(int userId);
+	FacilityDTO getFacilityByFacilityId(int facilityId);
 
 	/**
 	 * This method is to get all list of facilities
@@ -67,4 +70,5 @@ public interface UserDao {
 	 */
 	void saveNewPWD(String emailAddress, String tempassword)
 			throws JobBoardDataException;
+
 }

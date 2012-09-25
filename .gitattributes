@@ -228,6 +228,8 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTe
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/dao/ImpersonateAgencyDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/dao/ImpersonateAgencyDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/helper/AgencyRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/common/util/OpenAMEUtility.java -text
@@ -361,6 +363,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmpl
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/BrandTemplateConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmpConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegistrationConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/FacilityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobPostConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAOImpl.java -text

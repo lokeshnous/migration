@@ -1,11 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
-import java.util.List;
-
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 
 /**
  * @author rajeshkb
@@ -45,15 +41,8 @@ public interface AgencyRegistrationDAO {
 
 	boolean validateProfileAttributes(int jobseekerId);		
 
-	boolean saveEmployerDetails(AccountProfileDTO dto);
-
-	boolean deleteAssocEmployer(String facilityId, int userId);
-
-	List<AdmFacility> getAssocEmployerNames(int userId, int agencyFacilityId);
-
-	boolean addEmployer(AccountProfileDTO accountDto, int agencyFacilityId,
-			int userId);
-
 	boolean validateEmail(String email);
+
+	
 
 }

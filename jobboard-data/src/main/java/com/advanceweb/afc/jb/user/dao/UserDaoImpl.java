@@ -8,19 +8,24 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
@@ -65,7 +70,6 @@ public class UserDaoImpl implements UserDao {
 		return userDTO;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleDTO> getUserRole(int userId) {
 		List<AdmUserRole> roleList = hibernateTemplate.find(
@@ -102,7 +106,6 @@ public class UserDaoImpl implements UserDao {
 	 * @param userId
 	 * @return EmployerInfoDTO
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public EmployerInfoDTO facilityDetails(int userId) {
 		EmployerInfoDTO employerInfoDTO = null;
@@ -164,6 +167,42 @@ public class UserDaoImpl implements UserDao {
 					"Error occured while getting the Result from Database" + he);
 		}
 		return count;
+	}
+	
+	public int getfacility(int facilityId){
+		AdmRole role = DataAccessUtils.uniqueResult(hibernateTemplate.find(
+				"from AdmRole role where role.name=?", "facility_admin"));
+		AdmUserFacility facility=DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",role.getRoleId(),facilityId));
+		return facility.getFacilityPK().getUserId();
+	}
+	
+	@Override
+	public UserDTO getUserByUserId(int userId) {
+		UserDTO userDTO = null;
+		MerUser user = null;
+		@SuppressWarnings("unchecked")
+		List<MerUser> userList = hibernateTemplateTracker.find(
+				" from  MerUser user where user.userId=?", userId);
+		if (userList != null && !userList.isEmpty()) {
+			user = userList.get(0);
+			userDTO = new UserDTO();
+
+			userDTO.setEmailId(user.getEmail());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setUserId(user.getUserId());
+			userDTO.setPassword(user.getPassword());
+		}
+		return userDTO;
+	}
+	
+	public FacilityDTO getFacilityByFacilityId(int facilityId){
+		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplate.find(
+				"from AdmFacility facility where facility.facilityId=?",facilityId));
+		FacilityDTO dto=new FacilityDTO();
+		dto.setFacilityId(facility.getFacilityId());
+		dto.setName(facility.getName());
+		return dto;
 	}
 
 	/**

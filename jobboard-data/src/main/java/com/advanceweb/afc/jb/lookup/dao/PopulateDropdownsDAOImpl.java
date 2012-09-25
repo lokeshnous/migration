@@ -497,7 +497,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					"from AdmFacility adm where adm.facilityId=?", facilityId);
 			if (null != facilityList && !facilityList.isEmpty()) {
 				AdmFacility facility = facilityList.get(0);
-
 				List<JpTemplate> templateList = facility.getJpTemplates();
 				return dropdownHelper
 						.transformJpTemplateToDropDownDTO(templateList);
@@ -768,109 +767,5 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	}
 
-	@Override
-	public List<String> getEmployerNamesList(String employerName) {
-		List<String> emplyrNamesList = new ArrayList<String>();
-		try {
-			// List<MerUser> usersList = hibernateTemplateTracker
-			// .find("from MerUser merUsr where merUsr.firstName like '%"
-			// + employerName + "%'");
-			// for (MerUser user : usersList) {
-			// List<Object> emplyrNamesList = hibernateTemplate
-			// .find("select admUsrRole.id from AdmUserRole admUsrRole where admUsrRole.id.roleId="
-			// + MMJBCommonConstants.EMPLOYER_ROLE_ID
-			// + " and admUsrRole.id.userId='"
-			// + user.getUserId() + "'");
-			// if (null != emplyrNamesList && emplyrNamesList.size() > 0) {
-			// emplyrs.add(user.getFirstName());
-			// }
-			// }
-
-			/*
-			 * List<Integer> emplyrs = hibernateTemplate .find(
-			 * "select admFacility.facilityId from AdmFacility admFacility where admFacility.name like '%"
-			 * + employerName + "%'"); if (emplyrs != null &&
-			 * !emplyrs.isEmpty()) { for (Integer object : emplyrs) {
-			 * List<Integer> facilities = hibernateTemplate .find(
-			 * "select admUsrFaclty.admFacility.facilityId from AdmUserFacility admUsrFaclty where admUsrFaclty.admRole="
-			 * + MMJBCommonConstants.EMPLOYER_ROLE_ID +
-			 * " and admUsrFaclty.admFacility.facilityId=?", object); if
-			 * (facilities != null && !facilities.isEmpty()) { List<Object>
-			 * emplyrNames = hibernateTemplate .find(
-			 * "select admFacility.name from AdmFacility admFacility where admFacility.facilityId=?"
-			 * , facilities.get(0)); if (emplyrNames != null &&
-			 * !emplyrNames.isEmpty()) {
-			 * emplyrNamesList.add(emplyrNames.get(0).toString()); } } }
-			 * 
-			 * }
-			 */
-
-			/*
-			 * List<Object[]> emplyrs = hibernateTemplate .find(
-			 * "select admFacility.facilityId,admFacility.name from AdmFacility admFacility where admFacility.name like '%"
-			 * + employerName + "%'"); if (emplyrs != null &&
-			 * !emplyrs.isEmpty()) { for (Object[] emplyr : emplyrs) {
-			 * List<Integer> facilities = hibernateTemplate .find(
-			 * "select admUsrFaclty.admFacility.facilityId from AdmUserFacility admUsrFaclty where admUsrFaclty.admRole="
-			 * + MMJBCommonConstants.EMPLOYER_ROLE_ID +
-			 * " and admUsrFaclty.admFacility.facilityId=?",
-			 * Integer.parseInt(String.valueOf(emplyr[0]))); if (facilities !=
-			 * null && !facilities.isEmpty()) { EmployerInfoDTO empDto = new
-			 * EmployerInfoDTO(); empDto.setFacilityId(Integer.parseInt(String
-			 * .valueOf(emplyr[0])));
-			 * empDto.setCustomerNamel(String.valueOf(emplyr[1]));
-			 * emplyrNamesList.add(empDto); }
-			 * 
-			 * }
-			 * 
-			 * }
-			 */
-			emplyrNamesList = hibernateTemplate
-					.find("select name from AdmFacility where name like '%"
-							+ employerName + "%' and facilityType='FACILITY'");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return emplyrNamesList;
-	}
-
-	@Override
-	public Map<String, Object> getEmployerDetails(String employerName) {
-
-		Map<String, Object> employerDetails = new HashMap<String, Object>();
-		// TODO: PHONE NUMBER DISPLAY
-		// List<Object> emplyrDetailsList = hibernateTemplate
-		// .find("select admFacility.city,admFacility.street,admFacility.postcode,admFacility.state,admFacility.country,admFacility.admFacilityContacts.phone from AdmFacility admFacility where admFacility.name=?",
-		// employerName);
-		List<Object> emplyrDetailsList = hibernateTemplate
-				.find("select admFacility.city,admFacility.street,admFacility.postcode,admFacility.state,admFacility.country,admFacility.facilityId,admFacility.name from AdmFacility admFacility where admFacility.name=?",
-						employerName);
-		if (emplyrDetailsList != null && !emplyrDetailsList.isEmpty()) {
-			Object[] emplyrDetails = (Object[]) emplyrDetailsList.get(0);
-			employerDetails.put("city", emplyrDetails[0]);
-			employerDetails.put("street", emplyrDetails[1]);
-			employerDetails.put("postcode", emplyrDetails[2]);
-			employerDetails.put("state", emplyrDetails[3]);
-			employerDetails.put("country", emplyrDetails[4]);
-			employerDetails.put("facilityId", emplyrDetails[5]);
-			employerDetails.put("name", emplyrDetails[6]);
-			List<Object> phoneattrIdList = hibernateTemplateTracker
-					.find("select merProfAttrb.profileAttribId from MerProfileAttrib merProfAttrb where merProfAttrb.name= '"
-							+ MMJBCommonConstants.PHONE + "'");
-			// List<Object> phoneattrIdList = hibernateTemplateTracker
-			// .find("select merProfAttrb.profileAttribId from MerProfileAttrib merProfAttrb where merProfAttrb.name='Phone'");
-			List<Object> userIdList = hibernateTemplate
-					.find("select admUsrFacilty.facilityPK.userId from AdmUserFacility admUsrFacilty where admUsrFacilty.admFacility.facilityId="
-							+ emplyrDetails[5]);
-			List<Object> phoneNumList = hibernateTemplateTracker
-					.find("select merUsrProfile.attribValue from MerUserProfile merUsrProfile where merUsrProfile.merProfileAttrib.profileAttribId="
-							+ phoneattrIdList.get(0)
-							+ "and merUsrProfile.merUser.userId="
-							+ userIdList.get(0));
-			employerDetails.put("phone", phoneNumList.get(0));
-		}
-
-		return employerDetails;
-	}
+	
 }

@@ -205,14 +205,4 @@ public interface PopulateDropdownsDAO {
 
 	Map<String, String> getJobStatusList();
 
-	/**
-	 * @Author :Srikanth K
-	 * @Purpose:Get complete Employers list
-	 * @Created:Jul 10, 2012
-	 * @Return :List of employers in DB
-	 * 
-	 */
-	List<String> getEmployerNamesList(String employerName);
-
-	Map<String, Object> getEmployerDetails(String employerName);
 }
