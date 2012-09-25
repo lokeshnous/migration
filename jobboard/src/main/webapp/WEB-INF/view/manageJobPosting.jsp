@@ -318,20 +318,20 @@
 							<thead>
 							<tr class="LightGrayBG Height35">
 								<th width="2%" align="center" valign="middle" class="">&nbsp;</th>
-								<th width="6%" align="center" valign="middle" class="FontSize11">Adv Job
+								<th width="5%" align="center" valign="middle" class="FontSize11">Adv Job
 										ID</th>
-								<th width="6%" align="center" valign="middle" class="FontSize11">Job
+								<th width="4%" align="center" valign="middle" class="FontSize11">Job
 										ID</th>
-								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
+								<th width="12%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Title</strong></th>
-								<th width="11%" align="center" valign="middle" class="FontSize11"><strong>Location</strong></th>
-								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Job<br />
+								<th width="10%" align="center" valign="middle" class="FontSize11"><strong>Location</strong></th>
+								<th width="6%" align="center" valign="middle" class="FontSize11"><strong>Job<br />
 										Status
 								</strong></th>
 								<th width="7%" align="center" valign="middle" class="FontSize11"><strong>Start<br />
 										Date
 								</strong></th>
-								<th width="7%" align="center" valign="middle" class="FontSize11"><strong>End<br />
+								<th width="5%" align="center" valign="middle" class="FontSize11"><strong>End<br />
 										Date
 								</strong></th>								
 								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Company<br />
