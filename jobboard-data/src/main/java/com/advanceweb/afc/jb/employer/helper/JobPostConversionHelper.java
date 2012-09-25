@@ -158,23 +158,22 @@ public class JobPostConversionHelper<JobPostForm> {
 				}
 				if (null != job.getStartDt()) {
 					jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
-					long startDateAsTimestamp = job.getStartDt().getTime();
-					long currentTimestamp = System.currentTimeMillis();
-					long getRidOfTime = 1000 * 60 * 60 * 24;
-					long startDate = startDateAsTimestamp / getRidOfTime;
-					long currentTimestampWithoutTime = currentTimestamp
-							/ getRidOfTime;
-					 if (job.getActive() == 0
-							&& startDate > currentTimestampWithoutTime) {
+					Date startDt=new Date(job.getStartDt().getTime());
+					long startDateAsTimestamp = startDt.getTime();
+					long currentTimestamp = new Date().getTime();
+					if (job.getActive() == 0
+							&& startDateAsTimestamp > currentTimestamp) {
 						jobPostDTO
 								.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 					} else if (null != job.getEndDt()) {
 						jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-						long endtDateAsTimestamp = job.getEndDt().getTime();
-						long endDate = endtDateAsTimestamp / getRidOfTime;
+
+						Date endtDt=new Date(job.getStartDt().getTime());
+						long endtDateAsTimestamp = endtDt.getTime();
+						//long endDate = endtDateAsTimestamp / getRidOfTime;
 
 						if (job.getActive() == 1
-								&& endDate < currentTimestampWithoutTime) {
+								&& endtDateAsTimestamp < currentTimestamp) {
 							jobPostDTO
 									.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
 						}
@@ -184,7 +183,7 @@ public class JobPostConversionHelper<JobPostForm> {
 						// time
 						// being, as we need end date to check the status,I have
 						// added 30 day to the start date.
-					if (startDate <= currentTimestampWithoutTime) {
+					if (startDateAsTimestamp <= currentTimestamp) {
 						if (null == job.getEndDt()) {
 							Calendar now = Calendar.getInstance();
 							now.setTime(job.getStartDt());
@@ -193,11 +192,10 @@ public class JobPostConversionHelper<JobPostForm> {
 						}
 						jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 						long endtDateAsTimestamp = job.getEndDt().getTime();
-						long endDate = endtDateAsTimestamp / getRidOfTime;
+						//long endDate = endtDateAsTimestamp / getRidOfTime;
 
 						if (job.getActive() == 1
-
-						&& endDate > currentTimestampWithoutTime) {
+						&& endtDateAsTimestamp > currentTimestamp) {
 							jobPostDTO
 									.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 						}
