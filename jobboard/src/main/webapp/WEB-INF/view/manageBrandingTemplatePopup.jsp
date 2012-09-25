@@ -76,7 +76,7 @@
                 <thead>
                  <tr  class="borderTopNone">
                     <th align="left" scope="col" >Name</th>
-                    <th align="left" scope="col"> # of Jobs Used By</th>
+                    <th align="left" scope="col"> Job Template Usage</th>
                     <th width="18%" align="center" scope="col"> Last Modified</th>
                     <th width="21%" align="center" scope="col">Actions</th>
                   </tr>
