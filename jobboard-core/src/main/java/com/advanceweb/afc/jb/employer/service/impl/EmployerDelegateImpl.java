@@ -158,21 +158,22 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 		UserDTO userDTO = createUserDTOFromAccountProfileDTO(accountProfDTO,
 				admFacilityDTO.getNsCustomerID());
 
-		try {
-			userDTO = nsCustomerService.editCustomer(userDTO);
+		//try {
+			isUpdate = true;
+			//userDTO = nsCustomerService.editCustomer(userDTO);
 
-			if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("true")) {
-				LOGGER.info("Successfully Updated Record in NetSuite.");
+			//if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("true")) {
+				//LOGGER.info("Successfully Updated Record in NetSuite.");
 				isUpdate = employerRegistrationDAO.editUser(accountProfDTO,
 						admFacilityid, userId, billing);
-			}
+			//}
 
-		} catch (JobBoardNetSuiteServiceException e) {
+				/*} catch (JobBoardNetSuiteServiceException e) {
 			throw new JobBoardServiceException(
 					"Error occurred while getting the response from NetSuite."
 							+ e);
 
-		}
+		}*/
 
 		return isUpdate;
 
