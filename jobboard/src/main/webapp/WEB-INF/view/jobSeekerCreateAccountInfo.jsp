@@ -16,6 +16,13 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+
+<link href="../resources/css/jquery-ui.css" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>
+<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
@@ -35,6 +42,56 @@ function validateNumber(event) {
 		    	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 			$('.focus').focus();
+			//Auto complete on selecting city
+			$("#cityAutoPopulation").autocomplete({
+				source: '${pageContext.request.contextPath}/employer/getCityList.html',
+				width:500,
+				select: function(event, ui) {
+					$("#cityAutoPopulation").val(ui.item.value);				
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityAutoPopulation").val(),
+					success : function(data) {
+						$('#stateDpId').val(data);
+
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val(),
+						success : function(data) {
+							$('#zipCode').val(data);
+						},
+						});						
+							$.ajax({
+							url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
+							success : function(country) {
+								$('#countryDpId').val(country);
+							},
+						}); 						
+					},
+					});
+				},
+			}); 
+
+			//Auto complete on selecting zipcode			
+			$("#zipCode").autocomplete({
+				source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+				select: function(event, ui) {
+					$("#zipCode").val(ui.item.value);	
+					$('#cityAutoPopulation').val("");
+					$('#stateDpId').val("");
+					$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zipCode").val(),
+						success : function(data) {
+							$('#stateDpId').val(data.state);
+							$('#countryDpId').val(data.country);
+							$("#cityAutoPopulation").val(data.city);
+						},error : function(data) {
+							alert('Unable to process');
+						},
+						complete : function(data) {
+						}
+					});		
+				}
+			});	
+			
 		});
 		</script>
 		<script type="text/javascript">
@@ -128,7 +185,8 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'City'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">City:</span>
-										<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+										<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" 
+										id="cityAutoPopulation"/>
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>
@@ -136,7 +194,7 @@ function validateNumber(event) {
 									<div class="row">
 										<span class="lableTextSelect ">State /
 											Province:</span>
-												<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+												<form:select path="listProfAttribForms[${status.index}].strLabelValue" id="stateDpId" class="jb_input3 jb_input_width3">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />
@@ -147,7 +205,7 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'Country'}">
 									<div class="row">
 										<span class="lableTextSelect ">Country:</span>
-												<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+												<form:select path="listProfAttribForms[${status.index}].strLabelValue" id="countryDpId" class="jb_input3 jb_input_width3">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />

@@ -39,6 +39,57 @@ function validateNumber(event) {
 		$('[id^=zipCode]').keypress(validateNumber);
 		jQuery(".megamenu").megamenu();
 		$('.focus').focus();
+		
+		//Auto complete on selecting city
+		$("#cityAutoPopulation").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getCityList.html',
+			width:500,
+			select: function(event, ui) {
+				$("#cityAutoPopulation").val(ui.item.value);				
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityAutoPopulation").val(),
+				success : function(data) {
+					$('#stateDpId').val(data);
+
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val(),
+					success : function(data) {
+						$('#zipCode').val(data);
+					},
+					});						
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
+						success : function(country) {
+							$('#countryDpId').val(country);
+						},
+					}); 						
+				},
+				});
+			},
+		}); 
+
+		//Auto complete on selecting zipcode			
+		$("#zipCode").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+			select: function(event, ui) {
+				$("#zipCode").val(ui.item.value);	
+				$('#cityAutoPopulation').val("");
+				$('#stateDpId').val("");
+				$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zipCode").val(),
+					success : function(data) {
+						$('#stateDpId').val(data.state);
+						$('#countryDpId').val(data.country);
+						$("#cityAutoPopulation").val(data.city);
+					},error : function(data) {
+						alert('Unable to process');
+					},
+					complete : function(data) {
+					}
+				});		
+			}
+		});	
+		
 	});
 </script>
 <script type="text/javascript">
@@ -198,7 +249,7 @@ function validateNumber(event) {
 										<span class="lableText3">City / Town:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
-											type="text" name="healthCareSubSplty"
+											type="text" name="healthCareSubSplty" id="cityAutoPopulation"
 											class="job_seeker_password textBox350 
 " />
 										<span class="required">(Required)</span>
@@ -208,7 +259,7 @@ function validateNumber(event) {
 									<div class="row">
 										<span class="lableTextSelect marginTop13 ">State /
 											Province:</span>
-										<form:select name="Country" id="Country"
+										<form:select name="stateDpId" id="stateDpId"
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											class="jb_input3 jb_input_width3">
 											<form:option value="0" label="Select" />
@@ -233,7 +284,7 @@ function validateNumber(event) {
 										<span class="lableTextSelect marginTop13 ">Country:</span>
 										<form:select
 											path="listProfAttribForms[${status.index}].strLabelValue"
-											name="Country" id="Country" class="jb_input3 jb_input_width3">
+											name="countryDpId" id="countryDpId" class="jb_input3 jb_input_width3">
 											<form:option value="0" label="Select" />
 											<form:options items="${profAttrib.dropdown}"
 												itemValue="optionId" itemLabel="optionName" />

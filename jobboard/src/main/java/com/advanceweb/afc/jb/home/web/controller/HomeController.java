@@ -9,11 +9,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +34,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
@@ -79,6 +86,9 @@ public class HomeController {
 
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
+	
+	@Autowired
+	private CheckSessionMap checkSessionMap;
 
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
@@ -340,25 +350,152 @@ public class HomeController {
 
 		return "jspviewcontent";
 	}
-	
-	/**
-	 * This method is used to get the total number of Active jobs.
-	 * @param HttpServletRequest
-	 * @return String
-	 */
-	//To do: Take it from SOLR. Not from DB.
-	@ResponseBody
-	@RequestMapping(value = "/activeJobs", method = RequestMethod.GET)
-	public String activeJobs(HttpServletRequest request) {
-		long totalNoOfActiveJobs = 0;
-		try {
-			totalNoOfActiveJobs = jobSearchService.getTotalActiveJobs();
-			
-		} catch (Exception e) {// Catch exception if any
-			LOGGER.error(e);
+     
+		/**
+		 * This method is used to get the total number of Active jobs.
+		 * @param HttpServletRequest
+		 * @return String
+		 */
+		//To do: Take it from SOLR. Not from DB.
+		@ResponseBody
+		@RequestMapping(value = "/activeJobs", method = RequestMethod.GET)
+		public String activeJobs(HttpServletRequest request) {
+			long totalNoOfActiveJobs = 0;
+			try {
+				totalNoOfActiveJobs = jobSearchService.getTotalActiveJobs();
+				
+			} catch (Exception e) {// Catch exception if any
+				LOGGER.error(e);
+			}
+			return String.valueOf(totalNoOfActiveJobs);
 		}
-		return String.valueOf(totalNoOfActiveJobs);
-	}
-	
+		
+		/**
+		 * Called  to play the video
+		 * 
+		 * @param response
+		 * @param request
+		 * @param brandingTemplateForm
+		 */
+		/*@RequestMapping("/viewVideo")
+		public void getPhoto(HttpServletResponse response, HttpServletRequest request,
+				BrandingTemplateForm brandingTemplateForm) {
+
+			try {
+				
+				String imageId = (String)request.getAttribute("id");
+//				FileInputStream fileInputStream = new FileInputStream(new File(imageId)); 
+//				BufferedImage originalImage = ImageIO.read(new File(imageId));
+				
+//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				
+				File file = new File("C://video.mp4");
+//				String strFileContent= null;  
+			    try
+			    {
+			      //create FileInputStream object
+			      FileInputStream fin = new FileInputStream(file);
+			     
+			      
+			       * Create byte array large enough to hold the content of the file.
+			       * Use File.length to determine size of the file in bytes.
+			       
+			     
+			       byte fileContent[] = new byte[(int)file.length()];
+			     
+			       
+			        * To read content of the file in byte array, use
+			        * int read(byte[] byteArray) method of java FileInputStream class.
+			        *
+			        
+			       fin.read(fileContent);
+			     
+			       //create string from byte array
+//			       strFileContent = new String(fileContent);
+			     
+			       System.out.println("File content : " +fileContent.length);
+//			       System.out.println(strFileContent);
+			       writeVideo(response, fileContent);
+			     
+			    }
+			    catch(FileNotFoundException e)
+			    {
+			      System.out.println("File not found" + e);
+			    }
+			    catch(IOException ioe)
+			    {
+			      System.out.println("Exception while reading the file " + ioe);
+			    }
+//				ImageIO.write(fileInputStream,
+//						imageId.substring(imageId.length() - 3, imageId.length()),
+//						baos);
+//				baos.flush();
+//				byte[] imageInByte = baos.toByteArray();
+//				baos.close();
+	//
+//				ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
+//				// Display the image
+			} catch (Exception e) {
+				
+				//LOGGER.error(e);
+
+			}
+		}*/
+		
+		/**
+		 * Writes the report to the output stream
+		 *//*
+		public void writeVideo(HttpServletResponse response, byte[] fileContent) {
+
+			try {
+				// Retrieve the output stream
+				ServletOutputStream outputStream = response.getOutputStream();
+				// Write to the output stream
+				outputStream.write(fileContent);
+				// Flush the stream
+				outputStream.flush();
+				// Close the stream
+				outputStream.close();
+
+			} catch (Exception e) {
+				//LOGGER.error(e);
+			}
+		}*/
+		
+			
+		/**
+		 * This method is called to get the search results by company 
+		 * name for feature employer
+		 * 
+		 * @param request
+		 * @param response
+		 * @param session
+		 * @param keywords
+		 * @return
+		 */
+		@RequestMapping(value = "/searchByCompany", method = RequestMethod.GET)
+		public @ResponseBody
+		JSONObject searchByCompany(HttpServletRequest request,
+				HttpServletResponse response, HttpSession session,
+				@RequestParam("keywords") String keywords) {
+
+			JSONObject jsonObject = new JSONObject();
+
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
+
+			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
+					MMJBCommonConstants.BASIC_SEARCH_TYPE);
+			sessionMap.put(SearchParamDTO.KEYWORDS, keywords);
+			sessionMap.put(SearchParamDTO.CITY_STATE, MMJBCommonConstants.EMPTY);
+			sessionMap.put(SearchParamDTO.RADIUS, MMJBCommonConstants.ZERO);
+			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+
+			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
+
+			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
+					MMJBCommonConstants.BASIC_SEARCH_TYPE);
+			return jsonObject;
+		}
 
 }

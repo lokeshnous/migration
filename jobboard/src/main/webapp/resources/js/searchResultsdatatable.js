@@ -439,3 +439,21 @@ jQuery(document).ready(function() {
 						$("#sortingId").attr("class", "cursor table-sorted-asc");
 					}
 				}
+				
+				function getSearchByCompany(compName){
+				$.ajax({url: "../healthcarejobs/searchByCompany.html?keywords="+compName,
+						success: function(data){ 
+							$.each(data, function(key, val) {
+								 if (key == "searchtype" && val == "basic") {									
+									parent.window.location.href = '../jobsearch/findJobPage.html';
+								}								
+							}); 						
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							
+						}
+					});
+			    }

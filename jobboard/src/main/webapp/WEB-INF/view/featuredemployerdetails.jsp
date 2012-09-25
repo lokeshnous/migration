@@ -15,6 +15,7 @@
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
+<script src="../resources/js/searchResultsdatatable.js"></script>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -43,6 +44,22 @@
 					<div class="featuredEmployerLeft" style="background: ${employerProfileManagementForm.primaryColor}">
 						<div class="featuredEmployerVideo">
 							&nbsp;
+							<!-- <div name="mediaspace" id="mediaspace"></div> -->
+							<!-- <script type='text/javascript' src="../resources/js/silverlight.js"></script>
+	<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+	<script type="text/javascript">
+		var cnt = document.getElementById("mediaspace");
+		var src = '../resources/js/wmvplayer.xaml';
+		var cfg = {
+			file:'../healthcarejobs/viewVideo.html',
+			//file:'file:///C://video.mp4',
+			//file:'../resources/js/video.mp4',
+			height:'240',
+			width:'320',
+			autostart:'false'
+		};
+		var ply = new jeroenwijering.Player(cnt,src,cfg);
+	</script> -->
 							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0"
 								marginwidth="0" src="" frameborder="0" height="180"
 								scrolling="no" width="255"></iframe> 
@@ -87,7 +104,7 @@ Your browser does not support the video tag.
 								href="mailto:${employerProfileManagementForm.companyEmail }">
 								${employerProfileManagementForm.companyEmail } </a>
 						</div>
-						<a href="#"><div class="featuredEmployerViewAllJobLink">
+						<a class="cursor" onclick="getSearchByCompany('${employerProfileManagementForm.companyName}');"><div class="featuredEmployerViewAllJobLink">
 								View all job postings from this Employer</div></a>
 					</div>
 
