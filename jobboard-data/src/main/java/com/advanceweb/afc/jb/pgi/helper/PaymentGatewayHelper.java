@@ -146,11 +146,13 @@ public class PaymentGatewayHelper {
 	 * @param jobPostingPlanDTOList
 	 * @return
 	 */
-	public List<AdmOrderItem> transformToAdmOrderItemList(AdmOrderHeader admOrderHeader, List<JobPostingPlanDTO> jobPostingPlanDTOList){
+	public List<AdmOrderItem> transformToAdmOrderItemList(AdmOrderHeader admOrderHeader, List<JobPostingPlanDTO> jobPostingPlanDTOList, 
+			String orderStatusStr){
 		
 		List<AdmOrderItem> admOrderItemList = new ArrayList<AdmOrderItem>();
 		AdmOrderItem admOrderItem = null;
 		int itemNumber = 0;
+		
 		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
 			admOrderItem = new AdmOrderItem();
 			
@@ -160,7 +162,7 @@ public class PaymentGatewayHelper {
 			admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE);
 			admOrderItem.setProductName(jobPostingPlanDTO.getJobPostPlanName());
 			admOrderItem.setQtyOrdered(jobPostingPlanDTO.getQuanity());
-			admOrderItem.setOrderStatus("APPROVED");
+			admOrderItem.setOrderStatus(orderStatusStr);
 			admOrderItem.setItemNumber(++itemNumber);
 			admOrderItemList.add(admOrderItem);
 			
@@ -172,7 +174,7 @@ public class PaymentGatewayHelper {
 				admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE_ADDON);
 				admOrderItem.setProductName(addOnDTO.getAddOnName());
 				admOrderItem.setQtyOrdered(jobPostingPlanDTO.getQuanity());
-				admOrderItem.setOrderStatus("APPROVED");
+				admOrderItem.setOrderStatus(orderStatusStr);
 				admOrderItem.setItemNumber(itemNumber);
 				admOrderItemList.add(admOrderItem);
 			}
@@ -206,41 +208,24 @@ public class PaymentGatewayHelper {
 	/**
 	 * @param admOrderHeader
 	 * @param orderPaymentDTO
-	 * @return
+	 * @return admOrderPayment
 	 */
-	public AdmOrderPayment transformToAdmOrderPayment(AdmOrderHeader admOrderHeader, OrderPaymentDTO orderPaymentDTO){
+	public AdmOrderPayment transformToAdmOrderPayment(AdmOrderHeader admOrderHeader, OrderPaymentDTO orderPaymentDTO, int orderStatus){
 		AdmOrderPayment admOrderPayment = new AdmOrderPayment(); 
 		admOrderPayment.setAdmOrderHeader(admOrderHeader);
 		admOrderPayment.setMethod(orderPaymentDTO.getMethod());
-		admOrderPayment.setPaidAmt(Float.parseFloat(orderPaymentDTO.getPaidAmount()));
-		admOrderPayment.setPaymentNumber(Integer.parseInt(orderPaymentDTO.getPaymentNumber()));
+		
+		if(MMJBCommonConstants.INVOICE.equals(admOrderPayment.getMethod())){
+			admOrderPayment.setPaymentNumber(Integer.parseInt(orderPaymentDTO.getPaymentNumber()));
+		}
+		
+		if(MMJBCommonConstants.STATUS_CODE_200 == orderStatus){
+			admOrderPayment.setPaidAmt(Float.parseFloat(orderPaymentDTO.getPaidAmount()));
+			admOrderPayment.setTransactionId(orderPaymentDTO.getTransactionId());
+		}
+		
 		admOrderPayment.setTranResponse(orderPaymentDTO.getTransactionResponse());
 		admOrderPayment.setTransDate(orderPaymentDTO.getTransactionDate());
 		return admOrderPayment;
 	}
-	/*
-	public List<AdmInventoryDetail> transformToAdmInventoryDetail(AdmFacilityInventory admFacilityInventory, List<JobPostingPlanDTO> jobPostingPlanDTOList){
-		List<AdmInventoryDetail> AdmInventoryDetailList = new ArrayList<AdmInventoryDetail>();
-		AdmInventoryDetail AdmInventoryDetail = null;
-		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
-			AdmInventoryDetail = new AdmInventoryDetail();
-			
-			AdmInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
-			AdmInventoryDetail.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
-			AdmInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE);
-			//AdmInventoryDetail.setQty(jobPostingPlanDTO.getQuanity());
-			AdmInventoryDetailList.add(AdmInventoryDetail);
-			
-			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
-				AdmInventoryDetail = new AdmInventoryDetail();
-				AdmInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
-				AdmInventoryDetail.setProductId(Integer.parseInt(addOnDTO.getAddOnId()));
-				AdmInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE_ADDON);
-				//AdmInventoryDetail.setQty(jobPostingPlanDTO.getQuanity());
-				
-				AdmInventoryDetailList.add(AdmInventoryDetail);
-			}
-		}
-		return AdmInventoryDetailList;
-	}*/
 }

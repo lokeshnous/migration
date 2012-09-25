@@ -54,17 +54,25 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 				
 				int start = netSuiteResponse.lastIndexOf("(");
 				int end = netSuiteResponse.lastIndexOf(")");				
-				String paymentNumber = netSuiteResponse.substring(start+1, end);
+				String transactionId = netSuiteResponse.substring(start+1, end);
 				
-				orderDetailsDTO.getOrderPaymentDTO().setPaymentNumber(paymentNumber);
 				orderDetailsDTO.getOrderPaymentDTO().setTransactionDate(new Date());
-				orderDetailsDTO.getOrderPaymentDTO().setTransactionId("");
+				orderDetailsDTO.getOrderPaymentDTO().setTransactionId(transactionId);
 				paymentGatewayDao.saveOrderDetails(orderDetailsDTO);
+				
 				LOGGER.error("Transaction success : "+userDTO.getNsStatusCode());
 			}
 			else{
+				
 				//payment is failed - save only order
-				orderDetailsDTO.setOrderPaymentDTO(null);
+				orderDetailsDTO.setOrderStatus(netSuiteStatus);
+				
+				String netSuiteResponse = userDTO.getNsStatusCode().get(netSuiteStatus);
+				orderDetailsDTO.getOrderPaymentDTO().setTransactionResponse(netSuiteResponse);
+				orderDetailsDTO.getOrderPaymentDTO().setTransactionDate(new Date());
+				
+				
+				//orderDetailsDTO.setOrderPaymentDTO(null);
 				paymentGatewayDao.saveOrderDetails(orderDetailsDTO);
 				LOGGER.error("Transaction failed :"+userDTO.getNsStatusCode());
 			}	

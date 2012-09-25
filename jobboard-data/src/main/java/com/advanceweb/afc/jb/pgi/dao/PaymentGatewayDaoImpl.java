@@ -38,6 +38,10 @@ import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
 @Repository("paymentGatewayDao")
 public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 
+	private static final String ORDER_STATUS_FAILURE = "FAILURE";
+
+	private static final String ORDER_STATUS_APPROVED = "APPROVED";
+
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayDaoImpl.class);
 
@@ -188,9 +192,18 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			admFacility.setFacilityId(orderDetailsDTO.getFacilityId());
 			admOrderHeader.setAdmFacility(admFacility);
 
+			String orderStatusStr = null;
+			
+			if(MMJBCommonConstants.STATUS_CODE_200 == orderDetailsDTO.getOrderStatus()){
+				orderStatusStr = ORDER_STATUS_APPROVED;
+			}
+			else{
+				orderStatusStr = ORDER_STATUS_FAILURE;
+			}
+			
 			List<AdmOrderItem> admOrderItemList = paymentGatewayHelper
 					.transformToAdmOrderItemList(admOrderHeader,
-							orderDetailsDTO.getJobPostingPlanDTOList());
+							orderDetailsDTO.getJobPostingPlanDTOList(),orderStatusStr);
 			admOrderHeader.setAdmOrderItem(admOrderItemList);
 
 			AdmOrderAddress admOrderAddress = paymentGatewayHelper
@@ -201,13 +214,14 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			if(null != orderDetailsDTO.getOrderPaymentDTO()){
 				AdmOrderPayment admOrderPayment = paymentGatewayHelper
 						.transformToAdmOrderPayment(admOrderHeader,
-								orderDetailsDTO.getOrderPaymentDTO());
+								orderDetailsDTO.getOrderPaymentDTO(),orderDetailsDTO.getOrderStatus());
 				admOrderHeader.setAdmOrderPayment(admOrderPayment);
 			}
 
 			admOrderHeader.setOrderDate(new Date());
 			admOrderHeader.setOrderTotal(orderDetailsDTO.getOrderTotal());
-			admOrderHeader.setStatus("APPROVED");
+			
+			admOrderHeader.setStatus(orderStatusStr);
 
 			hibernateTemplate.saveOrUpdate(admOrderHeader);
 			
@@ -264,7 +278,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 	/**
 	 * @param admFacilityInventory
 	 * @param jobPostingPlanDTO
-	 * @return
+	 * @return admInventoryDetail
 	 */
 	private AdmInventoryDetail transformToAdmInventoryDetail(AdmFacilityInventory admFacilityInventory, JobPostingPlanDTO jobPostingPlanDTO){
 		 AdmInventoryDetail admInventoryDetail = new AdmInventoryDetail();

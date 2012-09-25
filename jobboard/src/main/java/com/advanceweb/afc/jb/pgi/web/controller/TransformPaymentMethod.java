@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.OrderPaymentDTO;
 import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.common.SalesOrderDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.AddOnForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
@@ -149,6 +150,10 @@ public class TransformPaymentMethod {
 		//payment detail will come from netsuite  
 		OrderPaymentDTO orderPaymentDTO = new OrderPaymentDTO();
 		orderPaymentDTO.setMethod(paymentGatewayForm.getPaymentMethod());
+		
+		if(MMJBCommonConstants.INVOICE.equals(orderPaymentDTO.getMethod())){
+			orderPaymentDTO.setPaymentNumber(paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo());
+		}	
 		orderPaymentDTO.setPaidAmount(String.valueOf(purchaseJobPostForm.getGrandTotal()));
 		orderDetailsDTO.setOrderPaymentDTO(orderPaymentDTO);
 		
