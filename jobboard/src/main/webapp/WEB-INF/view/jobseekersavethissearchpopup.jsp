@@ -17,6 +17,13 @@ function closePopup() {
 	parent.$.nmTop().close();
 }
 	jQuery(document).ready(function() {
+		$.nmFilters({
+			custom: {
+			afterShowCont: function(nm) {
+				$('#searchTitleName').focus();
+				}
+			}
+		 });
 		jQuery(".megamenu").megamenu();
 		$("#saveData").click(function(event){	
 			var searchName = $.trim($("#searchTitleName").val());
