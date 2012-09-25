@@ -10,13 +10,49 @@
 <link href="../resources/js/colorPicker.css" type='text/css'
 	rel='stylesheet'>
 <jsp:include page="common/include.jsp" />
+<script src="../resources/js/jquery.validate.js"></script>
 
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 
+
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		$('#save').click(function() { 
+			//alert('123');
+			$("#promoMediaErrMsg").text('');
+			$("#logoErrMsg").text('');
+			$("#errMsg").text('');
+	        var hasError = true;
+			if($('#textfield4').val()!=''){
+					var ext = $('#textfield4').val().split('.').pop().toLowerCase();
+					if($.inArray(ext, ['mov','mpg']) == -1) {
+					hasError = false;
+		            $("#promoMediaErrMsg").text('Please enter the valid file');
+				}
+			}
+			if($('#textfield5').val()!=''){
+					var ext = $('#textfield5').val().split('.').pop().toLowerCase();
+					if($.inArray(ext, ['gif','png','jpg','tif']) == -1) {
+		            $("#logoErrMsg").text('Please enter the valid file');
+		            hasError = false;
+				}
+			}
+	        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	        var emailaddressVal = $("#companyEmaiAddress").val();
+	        if(emailaddressVal == '') {
+	            hasError = false;
+	            $("#errMsg").text('Please enter the E-Mail Address');
+	        }
+	        else if(!emailReg.test(emailaddressVal)) {
+	            $("#errMsg").text('Enter a valid email address.');
+	            hasError = false;
+	        }
+	        return hasError; 
+	    });
+		
+		
 		$('#colorPkr').colorPicker();
 		var error = $('#FormErrorDisplayText').text();
 		$('#FormErrorDisplayText').text("");
@@ -24,7 +60,6 @@
 			alert(error);
 			cancelProcess();
 		}
-		$('#companyName').focus();
 	});
 </script>
 
@@ -40,7 +75,7 @@
 
 <body class="job_board">
 	<form:form method="Post" action="saveemployerprofile.html"
-		commandName="employerProfileManagementForm"
+		commandName="employerProfileManagementForm" id="myForm"
 		enctype="multipart/form-data">
 		<div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
@@ -54,7 +89,8 @@
 					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 					<div class="clearfix"></div>
 					<!--nav-->
-					<div id="FormErrorDisplayText" class="FormErrorDisplayText">${error}</div>
+					<div id="FormErrorDisplayText" class="FormErrorDisplayText"
+						align="center">${error}</div>
 					<!-- ad_col_right -->
 					<!-- content_wrapper -->
 					<div class="popupHeader Padding0  OrangeBG marginBottom5">
@@ -103,12 +139,12 @@
 								Address:</div>
 							<div class="input_grp5 ">
 								<div class="floatLeft">
-									<form:input path="companyEmail" name="Exclude"
+									<form:input path="companyEmail" name="Exclude" id="companyEmaiAddress"
 										class="jb_input2Coverletter width300" />
 
 								</div>
 								<div class="FormErrorDisplayText">
-									<form:errors path="companyEmail" />
+									<span id="errMsg" ></span>
 								</div>
 							</div>
 
@@ -164,7 +200,7 @@
 									health system.</span>
 							</div>
 							<div class="FormErrorDisplayText">
-								<form:errors path="positionalMedia" />
+								<span id="promoMediaErrMsg"></span>
 							</div>
 						</div>
 					</div>
@@ -173,17 +209,17 @@
 						<div class="input_grp5 ">
 							<div class="floatLeft">
 								<form:input path="logoUrl" name="textfield4" type="file"
-									id="textfield4" size="20"
+									id="textfield5" size="20" 
 									class="job_seeker_login_email fileType" />
 							</div>
 							<div class="FormErrorDisplayText">
-								<form:errors path="logoUrl" />
+								<span id="logoErrMsg"></span>
 							</div>
 						</div>
 					</div>
 					<div class="row paddingBottom10">
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
-							<span class="floatLeft marginTop10"> <input type="submit"
+							<span class="floatLeft marginTop10"> <input type="submit" id="save"
 								value="Save" name="Save" class="orange" /> <input type="button"
 								value="Cancel" onclick="cancelProcess()" class="orange"
 								name="Cancel" /> <%-- <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
