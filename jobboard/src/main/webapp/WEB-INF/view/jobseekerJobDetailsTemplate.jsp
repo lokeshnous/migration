@@ -334,7 +334,7 @@
                           <div class="row">
                     <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
                     <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobID});" >Apply now</a> 
-                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" >save job</a></span> </div>
+                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" >save this job</a></span> </div>
                  <br/><br/>
 			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
                   </div>
@@ -449,7 +449,7 @@
 	                          <div class="row">
 	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
 	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="btapplyThisJob(${jobDetail.jobID});" >Apply now</a> 
-	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId">save job</a>
+	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId">save this job</a>
 	                    </span> </div>
 	                     <br/><br/>
 			     <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
