@@ -1,20 +1,16 @@
 package com.advanceweb.afc.jb.jobseeker.service;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -108,32 +104,6 @@ public class JobSeekerRegistration implements ProfileRegistration {
 
 	public boolean validateProfileAttributes(int jobseekerId) {
 		return jobSeekerRegistrationDAO.validateProfileAttributes(jobseekerId);
-	}
-
-	@Override
-	public boolean saveEmployerDetails(AccountProfileDTO dto) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteAssocEmployer(String facilityId, int userId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto,
-			int agencyFacilityId, int userId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId,
-			int agencyFacilityId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
