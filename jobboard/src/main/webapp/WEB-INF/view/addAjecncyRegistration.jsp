@@ -273,8 +273,8 @@
 									<input type="button" value="Cancel" onclick="cancelProcess()"
 										class="btn_sm orange" name="Cancel" />
 								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
-							<span class="floatLeft marginTop10">I'll set up my profile
-								later. <a href="#">Continue</a> to the site now.
+							<span class="floatLeft marginTop10"><!-- I'll set up my profile
+								later. <a href="#">Continue</a> to the site now. -->
 							</span>
 						</div>
 						<!-- Step 2 -->
