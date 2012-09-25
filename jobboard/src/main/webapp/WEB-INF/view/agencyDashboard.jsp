@@ -15,7 +15,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				 $("#changePassword").displaypopup("#changePassword", "780",
+				$("#changePassword").displaypopup("#changePassword", "780",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
 						"770", "360");
@@ -24,7 +24,9 @@
 				$("#manageEmployers").displaypopup("#manageEmployers", "750",
 						"350");
 				$(".employerMetrics").displaypopup(".employerMetrics", "750",
-				"350"); 
+						"350");
+				$("#accessPermissioPopUp").displaypopup(
+						"#accessPermissioPopUp", "770", "360");
 				jQuery(".megamenu").megamenu();
 			});
 </script>
@@ -145,7 +147,9 @@
 				<!--Start:MidContant-->
 				<div class="MidContent_Wrapper floatLeft">
 					<div class="AgencyDashboardHeader">
-						<h1 class="FontSize20">[Ad Agency Name] Dashboard</h1>
+						<h1 class="FontSize20">
+							[<%=(String) session.getAttribute("userName")%>]Dashboard
+						</h1>
 					</div>
 					<div class="MidContent_Wrapper FloatLeft">
 						<div class="dashboardcolumn1">
@@ -173,7 +177,10 @@
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a href="">Manage Access Permissions</a>
+											<a id="accessPermissioPopUp"
+												href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage
+												Access Permissions</a>
+
 										</p>
 									</div>
 								</div>
@@ -203,8 +210,8 @@
 							<!---->
 							<div class="dashboardPanal">
 								<div class="dashboardPanalIconHolder Solutions">
-									<img src="../resources/images/tranBg.png" width="30" height="30"
-										alt="Subscription">
+									<img src="../resources/images/tranBg.png" width="30"
+										height="30" alt="Subscription">
 								</div>
 
 								<div class="dashboardPanalAGCcontent marginTop5">
@@ -230,22 +237,25 @@
 
 								<div class="dashboardPanalAGCcontent marginTop5 FloatLeft">
 									<h2 class="noTopBorder">Employers</h2>
-									
+
 									<c:forEach items="${emplyrsByState}" var="assocEmplyrsName"
-							varStatus="status">
-									<div class="lableTextDashBoard">
-										<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
-									</div>
-									<div class="lableTextDashBoard">
-									<c:forEach items="${assocEmplyrsName.value}" var="emplyrsName"
-							          varStatus="emplyrsStatus">
-										<p>
-											<a class="employerMetrics" href="<%=request.getContextPath()%>/agency/showEmployerMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a> 
-										</p>
-										 </c:forEach>
-									</div>
-									<br><br><br>
-									</c:forEach> 
+										varStatus="status">
+										<div class="lableTextDashBoard">
+											<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
+										</div>
+										<div class="lableTextDashBoard">
+											<c:forEach items="${assocEmplyrsName.value}"
+												var="emplyrsName" varStatus="emplyrsStatus">
+												<p>
+													<a class="employerMetrics"
+														href="<%=request.getContextPath()%>/agency/showEmployerMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a>
+												</p>
+											</c:forEach>
+										</div>
+										<br>
+										<br>
+										<br>
+									</c:forEach>
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="row">
