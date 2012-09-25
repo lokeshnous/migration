@@ -49,7 +49,7 @@
 	<body class="job_board">
 	        <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
 	          <div class="popupHeader">
-	            <h2>You do not have access. Please contact Advance web Admin </h2>
+	            <h2>${errorMessage}</h2>
 	            <img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
 					height="19" alt="Close"></div>
 	        </div>

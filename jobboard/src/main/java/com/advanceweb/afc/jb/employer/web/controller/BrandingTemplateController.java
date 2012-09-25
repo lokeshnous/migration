@@ -79,7 +79,10 @@ public class BrandingTemplateController {
 	 
 	private @Value("${empBrandTemplateError}")
 	String empBrandTemplateError;
-	 
+	
+	private @Value("${empBrandTemplatePurchase}")
+	String empBrandTemplatePurchase;
+	
 	private @Value("${defaultColor}")
 	String defaultColor;
 	 
@@ -914,6 +917,7 @@ public class BrandingTemplateController {
 							.getAttribute(MMJBCommonConstants.USER_ID));
 			model.put("templatesList", brandTemplateList);
 			modelView.addObject("isBrandPurchased",isBrandPurchased);
+			modelView.addObject("errorMessage", empBrandTemplatePurchase);
 			modelView.setViewName("manageBrandingTemplatePopup");
 			return modelView;
 	}
