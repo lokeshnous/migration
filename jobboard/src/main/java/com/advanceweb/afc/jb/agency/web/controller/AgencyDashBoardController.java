@@ -10,10 +10,22 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,21 +34,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.agency.service.ImpersonateAgencyService;
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.web.controller.EmployeeAccountForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileAttribForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationForm;
-import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationValidation;
-//import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationValidation;
 import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistration;
+import com.advanceweb.afc.jb.exception.JobBoardException;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
@@ -58,12 +74,15 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class AgencyDashBoardController {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("EmployerRegistrationController.class");
-
-	private static final String _FORM_VIEW = "agencyDashboard";
-
+			.getLogger(AgencyDashBoardController.class);
 	@Autowired
 	private EmloyerRegistartionService empRegService;
+	@Autowired
+    protected AuthenticationManager customAuthenticationManager;
+	@Autowired
+	private LoginService loginService;
+	@Autowired
+	private ImpersonateAgencyService impersonateAgencyService;
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
 	@Autowired
@@ -75,18 +94,33 @@ public class AgencyDashBoardController {
 
 	@Autowired
 	private ProfileRegistration employerRegistration;
-	@Autowired
-	EmployerRegistrationValidation registerValidation;
-
-	@Autowired
-	private ProfileRegistration agencyRegistration;
-
-	// @Autowired
-	// private ProfileRegistration employerRegistration;
-
+	
+	/*@Autowired
+	EmployerRegistrationValidation registerValidation;*/
+	
 	@RequestMapping("/agencyDashboard")
-	public ModelAndView displayDashBoard() {
-		return new ModelAndView(_FORM_VIEW);
+	public ModelAndView displayDashBoard(HttpSession session) {
+        ModelAndView model = new ModelAndView();
+		int agencyUserId = (Integer) session.getAttribute("userId");
+		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
+		Set<String> stateList = new HashSet<String>();
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<FacilityDTO> assocEmplyrsNames = impersonateAgencyService
+				.getAssocEmployerNames(agencyUserId, facilityId);
+		for (FacilityDTO assocEmplyr : assocEmplyrsNames) {
+			String state = assocEmplyr.getState();
+			if (stateList.add(state)) {
+				List<FacilityDTO> emplyrs = new ArrayList<FacilityDTO>();
+				emplyrs.add(assocEmplyr);
+				emplyrsByState.put(state, emplyrs);
+			} else {
+				emplyrsByState.get(state).add(assocEmplyr);
+			}
+		}
+		model.addObject("emplyrsByState", emplyrsByState);
+		model.setViewName("agencyDashboard");
+		return model;
 	}
 
 	/**
@@ -121,7 +155,7 @@ public class AgencyDashBoardController {
 				}
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
-				// By passing net suite call
+
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
 				if (isUpdated) {
@@ -332,45 +366,25 @@ public class AgencyDashBoardController {
 				.transformDTOToProfileAttribForm(registerDTO, null);
 		empRegisterForm.setListProfAttribForms(listProfAttribForms);
 		model.addObject("empRegisterForm", empRegisterForm);
-		// List<CountryDTO> countryList = populateDropdownsService
-		// .getCountryList();
-		// List<StateDTO> stateList = populateDropdownsService.getStateList();
-		// model.addObject("countryList", countryList);
-		// model.addObject("stateList", stateList);
 		model.setViewName("agencyAddEmployer");
 		return model;
 	}
 
-	// @RequestMapping(value = "/manageEmployers", method = RequestMethod.GET)
-	// public ModelAndView manageEmployers() {
-	// ModelAndView model = new ModelAndView();
-	// List<String> employersList = new ArrayList<String>();
-	// model.setViewName("agencyManageEmployers");
-	// return model;
-	//
-	// }
-
 	@RequestMapping(value = "/editEmployer", method = RequestMethod.GET)
 	public ModelAndView editEmployer(
-			@RequestParam("employerName") String employerName) {
+			@RequestParam("facilityId") int facilityId) {
 		ModelAndView model = new ModelAndView();
 		try {
 			EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
-
-			List<CountryDTO> countryList = populateDropdownsService
-					.getCountryList();
-
-			List<StateDTO> stateList = populateDropdownsService.getStateList();
 			EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
 					.getProfileAttributes();
 			List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 					.transformDTOToProfileAttribForm(registerDTO, null);
 			empRegisterForm.setListProfAttribForms(listProfAttribForms);
 
-			Map<String, Object> profAttribFormsMap = populateDropdownsService
-					.getEmployerDetails(employerName);
+			Map<String, Object> profAttribFormsMap = impersonateAgencyService
+					.getEmployerDetails(facilityId);
 			model.setViewName("agencyEditEmployer");
-
 			if (profAttribFormsMap != null && !profAttribFormsMap.isEmpty()) {
 				empRegisterForm
 						.setFirstName(profAttribFormsMap.get("name") != null ? profAttribFormsMap
@@ -378,28 +392,26 @@ public class AgencyDashBoardController {
 				empRegisterForm
 						.setStreet(profAttribFormsMap.get("street") != null ? profAttribFormsMap
 								.get("street").toString() : "");
-
+				empRegisterForm
+				.setPrimaryPhone(profAttribFormsMap.get("phone") != null ? profAttribFormsMap
+						.get("phone").toString() : "");
+				
 				empRegisterForm
 						.setZipCode(profAttribFormsMap.get("postcode") != null ? profAttribFormsMap
 								.get("postcode").toString() : "");
-
-				empRegisterForm
+				empRegisterForm 
 						.setState(profAttribFormsMap.get("state") != null ? profAttribFormsMap
 								.get("state").toString() : "");
 
-				empRegisterForm
+				empRegisterForm 
 						.setCountry(profAttribFormsMap.get("country") != null ? profAttribFormsMap
-								.get("country").toString() : "");
+								.get("country").toString() : "") ;
 				empRegisterForm
 						.setCity(profAttribFormsMap.get("city") != null ? profAttribFormsMap
 								.get("city").toString() : "");
 				empRegisterForm.setFacilityId((Integer) profAttribFormsMap
 						.get("facilityId"));
 			}
-			empRegisterForm.setListProfAttribForms(listProfAttribForms);
-
-			model.addObject("countryList", countryList);
-			model.addObject("stateList", stateList);
 			model.addObject("listProfAttribForms", profAttribFormsMap);
 			model.addObject("empRegisterForm", empRegisterForm);
 
@@ -413,43 +425,58 @@ public class AgencyDashBoardController {
 
 	@RequestMapping(value = "/getEmployerNamesList", method = RequestMethod.GET, headers = "Accept=*/*")
 	public @ResponseBody
-	List<String> getEmployerNamesList(@RequestParam("term") String query) {
-
-		return populateDropdownsService.getEmployerNamesList(query);
-
+	JSONObject getEmployerNamesList(@RequestParam("term") String name) {
+		List<FacilityDTO> dtoList=impersonateAgencyService.getEmployerNamesList(name);
+		JSONArray jsonRows = new JSONArray();
+		JSONObject jsonObj2 = new JSONObject();
+		for(FacilityDTO dto:dtoList){
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("value", dto.getName());
+			jsonObj.put("ID", dto.getFacilityId());
+			jsonObj.put("NAME", dto.getName());
+			jsonRows.add(jsonObj);
+		}
+		jsonObj2.put("EmpList", jsonRows);
+		return jsonObj2;
 	}
 
 	@RequestMapping(value = "/getEmployerDetails")
 	@ResponseBody
-	public Map<String, Object> getEmployerDetails(
-			@RequestParam("name") String employerName) {
-		return populateDropdownsService.getEmployerDetails(employerName);
-
+	public Map<String, Object> getEmployerDetails(@RequestParam("facilityId") int facilityId) {
+		return  impersonateAgencyService.getEmployerDetails(facilityId);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/addEmployerDetails", method = RequestMethod.POST)
-	public ModelAndView addEmployerDetails(
+	public String addEmployerDetails(
 			EmployerRegistrationForm employerRegistrationForm,
 			BindingResult result, HttpSession session) {
-		ModelAndView model = new ModelAndView();
 		try {
-
 			AccountProfileDTO dto = transformEmpReg
 					.transformEmployerFormToDto(employerRegistrationForm);
+			if (StringUtils.isEmpty(dto.getFirstName())) {
+				return "Please fill the required field";
+			}
 			int agencyUserId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			agencyRegistration.addEmployer(dto, facilityId, agencyUserId);
-
-			model.setViewName("employerDashboard");
-
-			return model;
+			String email=(String)session
+					.getAttribute(MMJBCommonConstants.USER_EMAIL);
+			int nsCustomerID = impersonateAgencyService.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
+			UserDTO userDTO =impersonateAgencyService.getNSCustomerDetails(nsCustomerID);
+			List<String> emailList = userDTO.getEmailList();
+			if(emailList!=null && emailList.contains(email)){
+				impersonateAgencyService.addEmployer(dto, facilityId, agencyUserId);
+			}
+			else{
+				return "You are not allowed to add the selected employer. Please contact administrator.";
+			}
 		} catch (Exception e) {
-			model.setViewName("employerDashboard");
-			return model;
+			
+			return "Error while saving the record";
 		}
+		return "";
 	}
 
 	@RequestMapping(value = "/manageEmployers", method = RequestMethod.GET)
@@ -461,88 +488,153 @@ public class AgencyDashBoardController {
 					.getAttribute(MMJBCommonConstants.USER_ID);
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			List<AdmFacility> assocEmplyrsNames = agencyRegistration
+			List<FacilityDTO> assocEmplyrsNames = impersonateAgencyService
 					.getAssocEmployerNames(agencyUserId, facilityId);
 
 			model.addObject("assocEmplyrsNames", assocEmplyrsNames);
 			model.setViewName("agencyManageEmployers");
-			// model.addObject("employerRegForm", employerRegForm);
-
 		} catch (Exception e) {
 			LOGGER.info("Error is occured in controllr");
 			LOGGER.error("ERROR"+e);
 		}
 
 		return model;
-
 	}
-
-	@RequestMapping(value = "/saveEmployerDetails", method = RequestMethod.GET)
-	public ModelAndView saveEmployerDetails(
-			EmployerRegistrationForm employerRegistrationForm,
-			BindingResult result) {
-		ModelAndView model = new ModelAndView();
-		try {
-
-			AccountProfileDTO dto = transformEmpReg
-					.transformEmployerFormToDto(employerRegistrationForm);
-
-			agencyRegistration.saveEmployerDetails(dto);
-
-			model.setViewName("employerDashboard");
-
-			return model;
-		} catch (Exception e) {
-			model.setViewName("employerDashboard");
-			return model;
-		}
-
-	}
-
+	
 	@ResponseBody
-	@RequestMapping(value = "/deleteAssocEmployer", method = RequestMethod.GET)
-	public ModelAndView deleteAssocEmployer(
+	@RequestMapping(value = "/deleteAssocEmployer", method = RequestMethod.POST)
+	public JSONObject  deleteAssocEmployer(
 			@RequestParam("facilityId") String facilityId, HttpSession session) {
-		ModelAndView model = new ModelAndView();
-		try {
-			int userId = (Integer) session.getAttribute("userId");
-			agencyRegistration.deleteAssocEmployer(facilityId, userId);
-
-			model.setViewName("employerDashboard");
-
-			return model;
-		} catch (Exception e) {
-			model.setViewName("employerDashboard");
-			return model;
+		int userId = (Integer) session.getAttribute("userId");
+		boolean deleteStatus = impersonateAgencyService.deleteAssocEmployer(facilityId, userId);
+		JSONObject deleteStatusJson = new JSONObject();
+		if (deleteStatus) {
+			deleteStatusJson.put("success", "Deleted");
+			return deleteStatusJson;
+		} else {
+			deleteStatusJson.put("failed", "Failed");
+			return deleteStatusJson;
 		}
 	}
-
-	@RequestMapping(value = "/getAssocEmployersByState", method = RequestMethod.GET)
-	public ModelAndView getAssocEmployersByState(HttpSession session) {
+	
+	@RequestMapping(value = "/impersonateAgencyToEmployer", method = RequestMethod.GET)
+	public ModelAndView impersonateAgencyToEmployer(@RequestParam("facilityId") int facilityId,HttpSession session,HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		int agencyUserId = (Integer) session.getAttribute("userId");
-		Map<String, List<AdmFacility>> emplyrsByState = new HashMap<String, List<AdmFacility>>();
-		Set<String> stateList = new HashSet<String>();
-
-		int facilityId = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		List<AdmFacility> assocEmplyrsNames = agencyRegistration
-				.getAssocEmployerNames(agencyUserId, facilityId);
-		for (AdmFacility assocEmplyr : assocEmplyrsNames) {
-			String state = assocEmplyr.getState();
-			if (stateList.add(state)) {
-				List<AdmFacility> emplyrs = new ArrayList<AdmFacility>();
-				emplyrs.add(assocEmplyr);
-				emplyrsByState.put(state, emplyrs);
-			} else {
-				emplyrsByState.get(state).add(assocEmplyr);
-			}
-		}
-
-		model.addObject("emplyrsByState", emplyrsByState);
-		model.setViewName("agencyDashboard");
+		session.setAttribute(MMJBCommonConstants.AGENCY_USER_ID,session.getAttribute(MMJBCommonConstants.USER_ID));
+		session.setAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID,session.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		session.setAttribute(MMJBCommonConstants.AGENCY_USER_NAME,session.getAttribute(MMJBCommonConstants.USER_NAME));
+		session.setAttribute(MMJBCommonConstants.AGENCY_EMAIL,session.getAttribute(MMJBCommonConstants.USER_EMAIL));
+		int userId=impersonateAgencyService.getfacility(facilityId);
+		UserDTO userDTO=impersonateAgencyService.getUserByUserId(userId);
+		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
+		session.setAttribute(MMJBCommonConstants.USER_NAME, userDTO.getFirstName()
+				+ " " + userDTO.getLastName());
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL, userDTO.getEmailId());
+		session.setAttribute(MMJBCommonConstants.FACILITY_ID, facilityId);
+		model.setViewName("redirect:/employer/employerDashBoard.html");
+		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY));
+		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+		    		userDTO.getEmailId(), userDTO.getPassword(),authList);
+		    token.setDetails(new WebAuthenticationDetails(request));
+		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
+		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 		return model;
-
+	}
+	
+	
+	@RequestMapping(value = "/impersonateEmployerToAgency", method = RequestMethod.GET)
+	public ModelAndView impersonateEmployerToAgency(HttpSession session,HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+		session.setAttribute(MMJBCommonConstants.USER_ID,session.getAttribute(MMJBCommonConstants.AGENCY_USER_ID));
+		session.setAttribute(MMJBCommonConstants.FACILITY_ID,session.getAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID));
+		session.setAttribute(MMJBCommonConstants.USER_NAME,session.getAttribute(MMJBCommonConstants.AGENCY_USER_NAME));
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL,session.getAttribute(MMJBCommonConstants.AGENCY_EMAIL));
+		UserDTO userDTO=impersonateAgencyService.getUserByUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+		model.setViewName("redirect:/agency/agencyDashboard.html");
+		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP));
+		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+		    		userDTO.getEmailId(), userDTO.getPassword(),authList);
+		    token.setDetails(new WebAuthenticationDetails(request));
+		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
+		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+		return model;
 	}
 
+	@RequestMapping(value = "/showEmployerMetrics", method = RequestMethod.GET)
+	public ModelAndView showEmployerMetrics(@RequestParam("facilityId") int facilityId,HttpSession session,HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+	List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+	MetricsDTO metricsDTO = new MetricsDTO();
+
+	// Get the job post details of logged in employer
+	List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
+	FacilityDTO employerDetails=loginService.getFacilityByFacilityId(facilityId);
+	// Geting mtrics values from look up table
+	List<DropDownDTO> metricsList = populateDropdownsService
+			.populateDropdown("Metrics");
+
+	// jbPostTotalList will be having job post total details for metrics
+	int views = 0;
+	int clicks = 0;
+	int applies = 0;
+	int size = metricsDTOs.size();
+	for (int i = 0; i < metricsDTOs.size(); i++) {
+		MetricsDTO dto = new MetricsDTO();
+		dto = (MetricsDTO) metricsDTOs.get(i);
+		views = views + dto.getViews();
+		clicks = clicks + dto.getClicks();
+		applies = applies + dto.getApplies();
+	}
+	metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
+	metricsDTO.setViews(views);
+	metricsDTO.setClicks(clicks);
+	metricsDTO.setApplies(applies);
+	jbPostTotalList.add(0, metricsDTO);
+	metricsDTO = new MetricsDTO();
+
+	// Calculating average per job posting
+	int avgViews = 0;
+	int avgClicks = 0;
+	int avgApplies = 0;
+	if (size > 0) {
+		avgViews = views / size;
+		avgClicks = clicks / size;
+		avgApplies = applies / size;
+	}
+	metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+	metricsDTO.setViews(avgViews);
+	metricsDTO.setClicks(avgClicks);
+	metricsDTO.setApplies(avgApplies);
+	jbPostTotalList.add(1, metricsDTO);
+	metricsDTO = new MetricsDTO();
+
+	// Calculating site - wide average per job posting
+	int swAvgViews = 0;
+	int swAvgClicks = 0;
+	int swAvgApplies = 0;
+	long count = 0;
+	try {
+		count = loginService.getEmployerCount();
+	} catch (JobBoardException e) {
+		LOGGER.info("Error occured while getting the Result from Database");
+	}
+
+	if (count > 0) {
+		swAvgViews = (int) (views / count);
+		swAvgClicks = (int) (clicks / count);
+		swAvgApplies = (int) (applies / count);
+	}
+	metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
+	metricsDTO.setViews(swAvgViews);
+	metricsDTO.setClicks(swAvgClicks);
+	metricsDTO.setApplies(swAvgApplies);
+	jbPostTotalList.add(2, metricsDTO);
+
+	model.addObject("jbPostTotalList", jbPostTotalList);
+	model.addObject("employerDetails",employerDetails);
+	model.setViewName("employersMetricsPopup");
+	return model;
+	}
 }
