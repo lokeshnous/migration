@@ -111,6 +111,16 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 				authList.add(new SimpleGrantedAuthority(
 						MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
 			}
+			if (userRole.getRoleName().equals(
+					MMJBCommonConstants.FACILITY_FULL_ACCESS)) {
+				authList.add(new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_FACILITY_FULL_ACCESS));
+			}
+			if (userRole.getRoleName().equals(
+					MMJBCommonConstants.FACILITY_POST_EDIT)) {
+				authList.add(new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_FACILITY_POST_EDIT));
+			}
 		}
 		return authList;
 	}

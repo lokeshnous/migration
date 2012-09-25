@@ -223,7 +223,7 @@ public class EmployerProfileManagementController {
 							.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension
 						.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) {
 				errors.rejectValue("logoUrl", STR_NOTEMPTY,
-						"Please select the appropriate image");
+						"Please select the appropriate logo");
 			}
 		}
 	}

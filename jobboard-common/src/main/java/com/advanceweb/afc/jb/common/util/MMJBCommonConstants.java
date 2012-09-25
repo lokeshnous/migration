@@ -172,6 +172,8 @@ public interface MMJBCommonConstants {
 	String AGENCY = "agency";
 	String FACILITY_ADMIN = "facility_admin";
 	String FACILITY_USER = "facility_user";
+	String FACILITY_FULL_ACCESS = "Full_Access";
+	String FACILITY_POST_EDIT = "Post_Edit";
 	String ROLE_MERION_ADMIN = "ROLE_MERION_ADMIN";
 	String ROLE_JOB_SEEKER = "ROLE_JOB_SEEKER";
 	String ROLE_FACILITY_ADMIN = "ROLE_FACILITY_ADMIN";
@@ -182,6 +184,8 @@ public interface MMJBCommonConstants {
 	String ROLE_FACILITY = "ROLE_FACILITY";
 	String ROLE_FACILITY_GROUP = "ROLE_FACILITY_GROUP";
 	String ROLE_FACILITY_SYSTEM = "ROLE_FACILITY_SYSTEM";
+	String ROLE_FACILITY_FULL_ACCESS="ROLE_FACILITY_FULL_ACCESS";
+	String ROLE_FACILITY_POST_EDIT="ROLE_FACILITY_POST_EDIT";
 
 	// For Login Failure URL
 	String JOBSEEKER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=jobSeeker";

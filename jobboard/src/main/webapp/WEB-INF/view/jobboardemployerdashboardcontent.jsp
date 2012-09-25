@@ -107,8 +107,9 @@
 									id="accountSettingpopUp">Account Settings</a>
 							</p>
 						</div>
-						<c:if
-							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}">
+						<%-- <c:if
+							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}"> --%>
+							<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
 							<div class="lableTextDashBoard">
 								<p>
 									<a id="accessPermissioPopUp"
@@ -116,7 +117,8 @@
 										Access Permissions</a>
 								</p>
 							</div>
-						</c:if>
+							</security:authorize>
+						<%-- </c:if> --%>
 						<div class="lableTextDashBoard">
 							<p>
 								<a
@@ -145,7 +147,8 @@
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Job Posting</h2>
-						<c:if test="${ enablePostEditAccess eq 'true'}">
+						<%-- <c:if test="${ enablePostEditAccess eq 'true'}"> --%>
+						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 							<div class="lableTextDashBoard">
 								<p>
 									<a id="purchaseJobPostings"
@@ -153,7 +156,8 @@
 										Job Postings</a>
 								</p>
 							</div>
-						</c:if>
+							</security:authorize>
+						<%-- </c:if> --%>
 						<div class="lableTextDashBoard">
 							<p>
 								<a
@@ -199,13 +203,15 @@
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Manage Applicants</h2>
-						<c:if test="${enablePostEditAccess eq 'true'}">
+						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
+					<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 							<div class="lableTextDashBoard">
 								<p>
 									<a href="">Purchase Resume Search Packages</a>
 								</p>
 							</div>
-						</c:if>
+							</security:authorize>
+						<%-- </c:if> --%>
 						<div class="lableTextDashBoard">
 							<p>
 								<a href="">Manage Job-Seekers</a>

@@ -464,14 +464,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and a.active = 1 and a.startDt <= CURRENT_DATE  and a.deleteDt is NULL");
+										+ " and a.active = 1 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE  and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and a.active = 1 and (a.startDt <= CURRENT_DATE and a.endDt >= CURRENT_DATE)  and a.deleteDt is NULL")
+										+ " and a.active = 1 and (DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)  and a.deleteDt is NULL")
 						.uniqueResult();
 
 			} else if (null != jobStatus
@@ -501,14 +501,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+										+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 1 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
+										+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL) and a.deleteDt is NULL")
 						.uniqueResult();
 			} else if (null != jobStatus
 					&& jobStatus
@@ -519,14 +519,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL");
+										+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 1 and a.endDt < CURRENT_DATE) and a.deleteDt is NULL")
+										+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE) and a.deleteDt is NULL")
 						.uniqueResult();
 			} else if (null != jobStatus
 					&& jobStatus
@@ -537,14 +537,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL");
+										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 0 and a.startDt > CURRENT_DATE) and a.deleteDt is NULL")
+										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE) and a.deleteDt is NULL")
 						.uniqueResult();
 			}
 
