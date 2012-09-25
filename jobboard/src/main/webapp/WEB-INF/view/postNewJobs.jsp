@@ -261,6 +261,7 @@
 			
 			
 		    jQuery(".megamenu").megamenu();
+		    $('#jobOwner').focus();
 		});
 		</script>
 

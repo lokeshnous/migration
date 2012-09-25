@@ -12,6 +12,14 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	$.nmFilters({
+		    	    custom: {
+		    	        afterShowCont: function(nm) {
+		    	        	$('#ownerName').focus();
+		    	        }
+		    	    }
+		    	});
+
 		    	$("#accessPermissioPopUp1").displaypopup("#accessPermissioPopUp1","770","360");
 		    	$("#saveNewOwner").click(function() {
 		    			$("#jobOwnerErrorMsg").html("<span> </span>");

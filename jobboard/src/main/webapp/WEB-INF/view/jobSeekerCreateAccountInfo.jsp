@@ -20,7 +20,7 @@
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
 
-    if (event.keyCode == 8 || event.keyCode == 46
+    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 46
      || event.keyCode == 37 || event.keyCode == 39) {
         return true;
     }
@@ -34,6 +34,7 @@ function validateNumber(event) {
 		    jQuery(document).ready(function(){
 		    	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
+			$('.focus').focus();
 		});
 		</script>
 		<script type="text/javascript">
@@ -74,7 +75,7 @@ function validateNumber(event) {
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">First Name:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
-											class="job_seeker_password textBox350" />
+											class="job_seeker_password textBox350 focus" />
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>

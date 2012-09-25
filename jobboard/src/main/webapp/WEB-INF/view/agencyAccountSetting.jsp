@@ -66,7 +66,13 @@ function copyAccToBillingAddr(obj) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#firstName').focus();
+    	        }
+    	    }
+    	});
  		$('#btn-submit').click(function(){			
  			
 			$.ajax({url:"${pageContext.request.contextPath}/agency/employeeAccountSetting.html",

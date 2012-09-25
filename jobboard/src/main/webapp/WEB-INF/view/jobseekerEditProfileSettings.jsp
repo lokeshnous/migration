@@ -11,7 +11,7 @@
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
 
-    if (event.keyCode == 8 || event.keyCode == 46
+    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 46
      || event.keyCode == 37 || event.keyCode == 39) {
         return true;
     }
@@ -23,7 +23,13 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('.focus').focus();
+    	        }
+    	    }
+    	});
  		$('#save').click(function(){			
  			
 			$.ajax({url:"${pageContext.request.contextPath}/jobseekerregistration/updateJobSeekerProfile.html",
@@ -69,7 +75,7 @@ function validateNumber(event) {
 						<c:if test="${profAttrib.strLabelName == 'First Name'}">
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">First Name:</span>
-								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350 focus" />
 								<span class="required">(Required)</span>
 							</div>
 						</c:if>

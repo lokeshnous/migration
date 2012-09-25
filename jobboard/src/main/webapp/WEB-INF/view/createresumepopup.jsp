@@ -13,7 +13,13 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-	
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#resumeType').focus();
+    	        }
+    	    }
+    	});
 		 $("#resumeType").change(function() {
 				var resumeType = $.trim($("#resumeType").val());
 				switch(resumeType){

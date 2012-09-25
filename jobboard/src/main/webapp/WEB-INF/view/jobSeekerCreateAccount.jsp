@@ -16,6 +16,7 @@
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
+		    $('#emailId').focus();
 		});
 		</script>
 		<script type="text/javascript">

@@ -13,7 +13,14 @@
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    	
+		    	$.nmFilters({
+		    	    custom: {
+		    	        afterShowCont: function(nm) {
+		    	        	$('#currentPassword').focus();
+		    	        }
+		    	    }
+		    	});
+
 		 		$('#save').click(function(){			
 		 			
 					$.ajax({url:"${pageContext.request.contextPath}/jobseekerregistration/jobSeekerUpdatePassword.html",

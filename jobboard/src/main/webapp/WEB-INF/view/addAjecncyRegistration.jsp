@@ -24,7 +24,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-
+		$('.focus').focus();
 	});
 </script>
 <script type="text/javascript">
@@ -65,7 +65,7 @@
 										<span class="lableText3">First Name:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
-											class="job_seeker_password textBox350" />
+											class="job_seeker_password textBox350 focus" />
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>

@@ -24,6 +24,7 @@
 			alert(error);
 			cancelProcess();
 		}
+		$('#companyName').focus();
 	});
 </script>
 

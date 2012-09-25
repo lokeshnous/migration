@@ -9,7 +9,14 @@
 <jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		jQuery(document).ready(function(){  
-			 	
+			$.nmFilters({
+	    	    custom: {
+	    	        afterShowCont: function(nm) {
+	    	        	$('#name').focus();
+	    	        }
+	    	    }
+	    	});
+
 			$('#save').click(function(){			
 	 			
 				$.ajax({url:"${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerCoverLetterSub.html",
