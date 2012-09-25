@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
 
 /**
  * @author rajeshkb
@@ -88,7 +88,8 @@ public class AgencyRegistration implements ProfileRegistration {
 
 	@Override
 	public boolean validateEmail(String email) {
-		return agencyRegistrationDAO.validateEmail(email);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -103,28 +104,5 @@ public class AgencyRegistration implements ProfileRegistration {
 		return agencyRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}
 
-	@Override
-	public boolean addEmployer(AccountProfileDTO accountDto,
-			int agencyFacilityId, int userId) {
-		return agencyRegistrationDAO.addEmployer(accountDto, agencyFacilityId,
-				userId);
-	}
-
-	@Override
-	public List<AdmFacility> getAssocEmployerNames(int userId,
-			int agencyFacilityId) {
-		return agencyRegistrationDAO.getAssocEmployerNames(userId,
-				agencyFacilityId);
-	}
-
-	@Override
-	public boolean saveEmployerDetails(AccountProfileDTO dto) {
-		return agencyRegistrationDAO.saveEmployerDetails(dto);
-	}
-
-	@Override
-	public boolean deleteAssocEmployer(String facilityId, int userId) {
-		return agencyRegistrationDAO.deleteAssocEmployer(facilityId, userId);
-	}
 
 }
