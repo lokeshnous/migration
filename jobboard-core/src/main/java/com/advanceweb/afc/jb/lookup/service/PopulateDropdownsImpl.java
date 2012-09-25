@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
@@ -283,15 +284,5 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	@Override
 	public Map<String, String> getJobStatusList() {
 		return populateDropdownsDAO.getJobStatusList();
-	}
-
-	@Override
-	public List<String> getEmployerNamesList(String employerName) {
-		return populateDropdownsDAO.getEmployerNamesList(employerName);
-	}
-
-	@Override
-	public Map<String, Object> getEmployerDetails(String employerName) {
-		return populateDropdownsDAO.getEmployerDetails(employerName);
 	}
 }
