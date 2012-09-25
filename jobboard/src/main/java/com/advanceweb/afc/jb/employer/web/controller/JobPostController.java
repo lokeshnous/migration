@@ -91,11 +91,11 @@ public class JobPostController {
 
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
 	public ModelAndView showPostJob(HttpSession session) {
-
+		int facilityId=0;
 		ModelAndView model = new ModelAndView();
 		JobPostForm jobPostForm = new JobPostForm();
 		List<DropDownDTO> templateList;
-		
+		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
@@ -121,7 +121,9 @@ public class JobPostController {
 		List<FromZipcodeDTO> zipCodeList = populateDropdownsService
 				.getFromZipcodeList();
 
-		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
+//		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
+		
+		List<DropDownDTO> companyList = getCompanyList(facilityId);
 
 		// The following commented section can be deleted.
 
@@ -141,6 +143,7 @@ public class JobPostController {
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
+		model.addObject("companyList", companyList);
 		// Populating Dropdowns
 
 		model.addObject(JOB_POST_FORM, jobPostForm);
@@ -382,6 +385,10 @@ public class JobPostController {
 			JobPostForm jobPostFormP, @RequestParam("jobId") int jobId) {
 		JobPostForm jobPostForm =jobPostFormP;
 		List<DropDownDTO> templateList;
+		int facilityId=0;
+		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<DropDownDTO> companyList = getCompanyList(facilityId);
+		
 		int jobPostType = employerJobPost
 				.getinvDetIdByJobId(jobId, (Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID),
@@ -431,6 +438,7 @@ public class JobPostController {
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
+		model.addObject("companyList", companyList);
 		model.setViewName(POST_NEW_JOBS);
 		return model;
 	}
@@ -487,22 +495,16 @@ public class JobPostController {
 		return country;
 	}
 
-	@RequestMapping(value = "/getCompanyList", method = RequestMethod.GET, headers = "Accept=*/*")
-	@ResponseBody
-	public List<String> getCompanyList(@RequestParam("term") String query, HttpSession session) {
-		int facilityId=0;
+	public List<DropDownDTO> getCompanyList(int facilityId) {
 		int facilityParentId=0;
-		// 	Retrieve facilityId from session.
-		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		
 		try {
 			facilityParentId = loginService.getFacilityParent(facilityId);
 		} catch (JobBoardServiceException e) {
 			LOGGER.error(e);
 		}
 
-		List<String> companyList = populateDropdownsService
-				.populateCompanyAutoComplete(query, facilityParentId);
+		List<DropDownDTO> companyList = populateDropdownsService
+				.populateCompanyNames(facilityId, facilityParentId);
 
 		return companyList;
 	}

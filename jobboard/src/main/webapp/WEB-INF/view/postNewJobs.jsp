@@ -49,6 +49,31 @@
 						});
 		}
 		
+		function callTemplate()
+		{
+			$.ajax({
+			url: '${pageContext.request.contextPath}/employer/getTemplate.html?company='+$("#companyAutoPopulation").val(),
+			success : function(data) {
+				$('#templateId option').remove();
+
+				$('#templateId').append('<option value="0">None</option>');
+				
+				var dataLen = data.length;
+				if (dataLen > 0) {
+				
+					if (dataLen > 1) {
+						
+						for (var i=0; i < dataLen; i++) {
+							$('#templateId').append('<option value="' + data[i]["optionId"] + '">' + data[i]["optionName"] + '</option>');
+						}
+						
+					} else {
+						$('#templateId').append('<option value="' + data[0]["optionId"] + '" selected="selected">' + data[0]["optionName"] + '</option>');
+					}
+				}
+			},
+			});
+		}
 			//Limit text area characters
 			function limitText(limitField, limitCount, limitNum) {
 			/* 		alert(limitField.value.length+""+limitCount.value+""+limitNum); */
@@ -249,39 +274,6 @@
 			});
 
 			
-			//Auto complete on selecting Company name
-			$("#companyAutoPopulation").autocomplete({
-				source: '${pageContext.request.contextPath}/employer/getCompanyList.html',
-				width:500,
-				select: function(event, ui) {
-					$("#companyAutoPopulation").val(ui.item.value);				
-					$.ajax({
-					url: '${pageContext.request.contextPath}/employer/getTemplate.html?company='+$("#companyAutoPopulation").val(),
-					success : function(data) {
-						$('#templateId option').remove()
-
-						$('#templateId').append('<option value="0">None</option>');
-						
-						var dataLen = data.length;
-						if (dataLen > 0) {
-						
-							if (dataLen > 1) {
-								
-								for (var i=0; i < dataLen; i++) {
-									$('#templateId').append('<option value="' + data[i]["optionId"] + '">' + data[i]["optionName"] + '</option>');
-								}
-								
-							} else {
-								$('#templateId').append('<option value="' + data[0]["optionId"] + '" selected="selected">' + data[0]["optionName"] + '</option>');
-							}
-							
-						}
-					},
-					});
-				},
-			}); 
-			
-			
 		    jQuery(".megamenu").megamenu();
 		    $('#jobOwner').focus();
 		});
@@ -337,8 +329,12 @@
 			    <form:input path="customerNo" class="job_seeker_password textBox350"  readonly="true"/>
                 <div class="toolTip colorPkrAreaToolTip"><span class="classic">This is the customer number shown in your employer profile.</span></div>
               </div>
-                      <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
-                <form:input path="companyName" class="job_seeker_password textBox350"  id="companyAutoPopulation"/>
+              <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
+                <%-- <form:input path="companyName" class="job_seeker_password textBox350"  id="companyAutoPopulation"/> --%>
+                	<form:select path="companyName" class="jb_input3 jb_input_width3" id="companyAutoPopulation" onchange="callTemplate()">
+						<%-- <form:option value="0" label="None" /> --%>
+						<form:options items="${companyList}" itemValue="optionId" itemLabel="optionName"/>
+					</form:select>
               </div>
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Display Company Name:</span>
@@ -522,9 +518,7 @@
               <div class="rowEvenNewSpacing MarginBottom10"><span class="lableText3 ">Branding Template:</span>
 					<form:select path="brandTemplate" class="jb_input3 jb_input_width3" id="templateId">
 						<form:option value="0" label="None" />
-						<%-- <c:if test="$("#templateOverride" ).is(':checked')"> --%>
 						<form:options items="${templateList}" itemValue="optionId" itemLabel="optionName"/>
-						<%-- </c:if> --%>
 					</form:select>
                        <div class="toolTip colorPkrAreaToolTip"><span class="classic">Select one of these templates to give your job posting a branded look. New branding templates can be created by clicking on the related link when you return to your dashboard.</span></div>
                        

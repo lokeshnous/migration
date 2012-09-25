@@ -625,25 +625,37 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<String> populateCompanyAutoComplete(String company, int facilityParentId) {
-		List<String> companyNameList = new ArrayList<String>();
+	public List<DropDownDTO> populateCompanyNames(int facilityId, int facilityParentId) {
+		List<DropDownDTO> companyNames = new ArrayList<DropDownDTO>();
 		try {
-			List<Object> admFacilityList = hibernateTemplate
-					.find("select distinct fac.name from  AdmFacility fac WHERE fac.facilityParentId=? and fac.name like'"
-							+ company + "%' ORDER BY  fac.name ASC", facilityParentId);
-
-			if (admFacilityList != null) {
-				for (Object obj : admFacilityList) {
-					companyNameList.add((String) obj);
+			if(MMJBCommonConstants.ZERO_INT == facilityParentId)
+			{
+				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
+						"from  AdmFacility fac WHERE fac.facilityParentId=?",
+						facilityId);
+				for (AdmFacility facility : listAdmFacility) {
+					DropDownDTO dto = new DropDownDTO();
+					dto.setOptionId(String.valueOf(facility.getFacilityId()));
+					dto.setOptionName(facility.getName());
+					companyNames.add(dto);
+				
 				}
 			}
-			return companyNameList;
-
+			else{
+				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
+						"from  AdmFacility fac WHERE fac.facilityParentId=?",
+						facilityParentId);
+				for (AdmFacility facility : listAdmFacility) {
+					DropDownDTO dto = new DropDownDTO();
+					dto.setOptionId(String.valueOf(facility.getFacilityId()));
+					dto.setOptionName(facility.getName());
+					companyNames.add(dto);
+				}
+			}
 		} catch (DataAccessException e) {
-
 			LOGGER.error(e);
 		}
-		return null;
+		return companyNames;
 	}
 	
 	@Override
@@ -653,14 +665,15 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		try {
 			
-			List<Object> admFacilityList = hibernateTemplate
-					.find("select distinct fac.facilityId from  AdmFacility fac WHERE fac.name='"
-							+ company + "' ORDER BY  fac.name ASC");
-
-			if (admFacilityList != null && !admFacilityList.isEmpty()) {
-				facilityId = (Integer)admFacilityList.get(0);
-			}
+//			List<Object> admFacilityList = hibernateTemplate
+//					.find("select distinct fac.facilityId from  AdmFacility fac WHERE fac.name='"
+//							+ company + "' ORDER BY  fac.name ASC");
+//
+//			if (admFacilityList != null && !admFacilityList.isEmpty()) {
+//				facilityId = (Integer)admFacilityList.get(0);
+//			}
 			
+			facilityId = Integer.parseInt(company);
 			List<Object> admFacilityPackageList = hibernateTemplate
 					.find("select fac.templateId from  AdmFacilityPackage fac WHERE fac.facilityId=?",
 							facilityId);

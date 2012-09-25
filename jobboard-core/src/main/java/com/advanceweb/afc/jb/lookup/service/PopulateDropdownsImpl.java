@@ -253,9 +253,9 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
-	public List<String> populateCompanyAutoComplete(String company, int facilityParentId) {
+	public List<DropDownDTO> populateCompanyNames(int facilityid, int facilityParentId) {
 
-		return populateDropdownsDAO.populateCompanyAutoComplete(company, facilityParentId);
+		return populateDropdownsDAO.populateCompanyNames(facilityid, facilityParentId);
 	}
 	
 	

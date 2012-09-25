@@ -193,7 +193,7 @@ public interface PopulateDropdownsDAO {
 
 	List<String> populatePostalCodeAutoComplete(String postalCode);
 	
-	List<String> populateCompanyAutoComplete(String company, int facilityParentId);
+	List<DropDownDTO> populateCompanyNames(int facilityid, int facilityParentId);
 	
 	List<DropDownDTO> populateTemplateAutoComplete(String company);
 	
