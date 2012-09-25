@@ -318,10 +318,10 @@
 									<!-- <div class="rowEvenNewSpacing MarginBottom10"> -->
 									<div class="rowEvenNewSpacing">
 									<c:if test="${status.count == 1}">   
-							            <span class="lableTextCoverletter marginTop10 width150">Videos:</span> 
+							            <span class="lableTextCoverletter width150">Videos:</span> 
 							         </c:if>   
 									<c:if test="${status.count != 1}">   
-							            <span class="lableTextCoverletter marginTop10 width150"></span> 
+							            <span class="lableTextCoverletter width150"></span> 
 							         </c:if>  									         
 									<!-- <div class="floatLeft marginRight10"></div> -->
 									<span class="floatLeft marginRight10">
