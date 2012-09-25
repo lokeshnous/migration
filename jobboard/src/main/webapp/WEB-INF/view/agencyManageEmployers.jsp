@@ -48,6 +48,9 @@ jQuery(document).ready(function() {
 	
 	
 });
+		function closePopup() {
+			parent.window.location.reload();
+		}
 </script>
 </head>
 
@@ -57,7 +60,7 @@ jQuery(document).ready(function() {
 		<div class="popupHeader">
 			<h2>Manage Employer</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" alt="" class="nyroModalClose"></a>
+				height="19" alt="" onclick="closePopup();"></a>
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="">
@@ -85,8 +88,8 @@ jQuery(document).ready(function() {
 					</table>
 				</div>
 				<div class="row marginTop5 paddingBottom10">
-					<span class="floatLeft marginTop10"> <a href="#"
-						class="nyroModalClose btn_sm orange">Cancel</a></span>
+					<span class="floatLeft marginTop10"> <a href="#" onclick="closePopup();"
+						class="btn_sm orange">Cancel</a></span>
 				</div>
 			</form:form>
 		</div>

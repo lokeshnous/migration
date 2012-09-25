@@ -8,14 +8,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+<!-- <script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script> -->
+	<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<!-- <script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script> -->
+	<script type="text/javascript" src="../resources/js/jquery-ui.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				$("#changePassword").displaypopup("#changePassword", "780",
+				 $("#changePassword").displaypopup("#changePassword", "780",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
 						"770", "360");
@@ -237,25 +239,22 @@
 
 								<div class="dashboardPanalAGCcontent marginTop5 FloatLeft">
 									<h2 class="noTopBorder">Employers</h2>
-
+									
 									<c:forEach items="${emplyrsByState}" var="assocEmplyrsName"
-										varStatus="status">
-										<div class="lableTextDashBoard">
-											<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
-										</div>
-										<div class="lableTextDashBoard">
-											<c:forEach items="${assocEmplyrsName.value}"
-												var="emplyrsName" varStatus="emplyrsStatus">
-												<p>
-													<a class="employerMetrics"
-														href="<%=request.getContextPath()%>/agency/showEmployerMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a>
-												</p>
-											</c:forEach>
-										</div>
-										<br>
-										<br>
-										<br>
-									</c:forEach>
+							varStatus="status">
+									<div class="lableTextDashBoard">
+										<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
+									</div>
+									<div class="lableTextDashBoard">
+									<c:forEach items="${assocEmplyrsName.value}" var="emplyrsName"
+							          varStatus="emplyrsStatus">
+										<p>
+											<a class="employerMetrics" href="<%=request.getContextPath()%>/agency/showEmployerMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a> 
+										</p>
+										 </c:forEach>
+									</div>
+									<br><br><br>
+									</c:forEach> 
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="row">

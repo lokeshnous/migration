@@ -14,9 +14,12 @@
 	type="text/css" />
 <link href="../resources/css/SliderStyles.css" rel="stylesheet"
 	type="text/css">
-<link rel="stylesheet" type="text/css" media="screen"
+<!-- <link rel="stylesheet" type="text/css" media="screen"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
+ -->
+ <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
+	type="text/css">
+ <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
 </head>
 <body>
 	<!-- JAVASCRIPT FILES -->
@@ -88,29 +91,22 @@
 						        }
 						    });
 							
-							//Auto complete for employer name
-							 /*$("#emplyrNameAutoComplte")
-									.autocomplete(
-											{
-												source : '${pageContext.request.contextPath}/agency/getEmployerNamesList.html',
-												select : function(event, ui) {													
-													$("#emplyrNameAutoComplte")
-															.val(ui.item.value(0));
-													$.ajax({
-														url: '${pageContext.request.contextPath}/agency/getEmployerDetails.html?name='+$("#emplyrNameAutoComplte").val(),
-														success : function(data) {															
-															$('#city').val(data.city);
-															$('#street').val(data.street);		
-															$('#zipCode').val(data.postcode);
-															$('#state').val(data.state);	
-															$('#country').val(data.country);
-															$('#phone').val(data.phone);
-															$('#facilityId').val(data.facilityId);
-														},
-													});	
-												},
-											});*/
-							//jQuery(".megamenu").megamenu();
+							$('#save').click(function(){			
+					 			
+								$.ajax({url:"${pageContext.request.contextPath}/agency/addEmployerDetails.html",
+									data:$('#employerAdd').serialize(),
+									type:"POST",
+									success: function(data) {
+										if(data == ''){
+											alert("Data saved successfully !");
+											parent.$.nmTop().close();
+											window.location.reload();
+										}else{
+											$("#errmsg").html(data);
+										}
+									 },
+								});
+							}); 
 						});
 
 		function MM_jumpMenu(targ, selObj, restore) { //v3.0
@@ -123,7 +119,7 @@
 </head>
 
 <body class="job_board">
-	<form:form method="post"
+	<form:form method="post" id="employerAdd"
 		action="../agency/addEmployerDetails.html"
 		commandName="empRegisterForm" enctype="multipart/form-data">
 		<div id="empRegister1" class="job_seeker_login popUpContainer"
@@ -133,6 +129,8 @@
 				<a href="#"><img src="../resources/images/Close.png" width="19"
 					height="19" alt="" class="nyroModalClose"></a>
 			</div>
+			<div id="errmsg" class="validationMsg">
+				</div>
 			<form:hidden path="facilityId" id="facilityId"/>
 
 			<div class="popUpContainerWrapper">
@@ -148,40 +146,40 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Street Address:</span> <input readonly
-						type="text" name="street" id="street" class="job_seeker_email" /> <span
-						class="required">(Required)</span>
+						type="text" name="street" id="street" class="job_seeker_email" /> <!-- <span
+						class="required">(Required)</span> -->
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">City:</span> <input readonly type="text"
-						name="city" id="city" class="job_seeker_email" /> <span class="required">(Required)</span>
+						name="city" id="city" class="job_seeker_email" /> <!-- <span class="required">(Required)</span> -->
 				</div>				
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">State:</span> <input readonly type="text"
-						name="state" id="state" class="job_seeker_email" /> <span
-						class="required">(Required)</span>
+						name="state" id="state" class="job_seeker_email" /> <!-- <span
+						class="required">(Required)</span> -->
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Country:</span> <input readonly
-						type="text" id="country" name="country" class="job_seeker_email" /> <span
-						class="required">(Required)</span>
+						type="text" id="country" name="country" class="job_seeker_email" /> <!-- <span
+						class="required">(Required)</span> -->
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Zip Code:</span> <input readonly
-						type="text" id="zipCode" name="zipCode" class="job_seeker_email" /> <span
-						class="required">(Required)</span>
+						type="text" id="zipCode" name="zipCode" class="job_seeker_email" /> <!-- <span
+						class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Phone:</span> <input readonly type="text"
-						name="primaryPhone" id="phone" class="job_seeker_email" /> <span
-						class="required">(Required)</span>
+						name="primaryPhone" id="phone" class="job_seeker_email" /> <!-- <span
+						class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"><input type="submit"
-						style="margin-top: -4px;" value="Save" class="btn_sm orange"/>
+					<span class="floatLeft marginTop10"><input type="button"
+						style="margin-top: -4px;" id="save" value="Save" class="btn_sm orange"/>
 						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	
 						</span>
 				</div> 
