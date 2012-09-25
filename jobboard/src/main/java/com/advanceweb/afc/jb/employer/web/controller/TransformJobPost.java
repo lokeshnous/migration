@@ -105,6 +105,11 @@ public class TransformJobPost {
 		jobPostform.setJobDesc(jobPostDTO.getJobDesc());
 		jobPostform.setTrackPixel(jobPostDTO.getTrackPixel());
 		jobPostform.setBrandTemplate(jobPostDTO.getBrandTemplate());
+		jobPostform.setbHideCity(jobPostDTO.isbHideCity());
+		jobPostform.setbHideState(jobPostDTO.isbHideState());
+		jobPostform.setbHideCountry(jobPostDTO.isbHideCountry());
+		jobPostform.setbHideCompName(jobPostDTO.isbHideCompName());
+		jobPostform.setbHideZipCode(jobPostDTO.isbHideZipCode());
 		jobPostform.setbTemplateOverride(jobPostDTO.isbTemplateOverride());
 		return jobPostform;
 		

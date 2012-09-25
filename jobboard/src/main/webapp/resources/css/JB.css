@@ -1914,7 +1914,7 @@ select {
 	width: 280px !important;
 }
 .lableText6{
-	width: 138px !important;
+	width: 83px !important;
 }
 .lableText7{
 	width: 126px !important;
@@ -4112,4 +4112,18 @@ orange:hover {
 }
 .cursor{
 	cursor:pointer !important;
+}
+.nyroModalCont iframe {
+    width: 770px;
+    height: 360px;
+}
+.lableText6-span{
+  	padding-left: 51px;
+    width: 25px;
+}
+.searchResultsJobDescription{
+	height: 42px; 
+	overflow: hidden;
+	margin-bottom: 5px;
+	min-width: 757px;
 }

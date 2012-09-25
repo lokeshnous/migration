@@ -377,19 +377,19 @@
                       <div class="row marginLeft30 marginTop8 width450">
                		<span class="floatLeft"> <p >Choose your preferred method to receive application. </p></span><span class="required requiredTopmargin2">(Required)</span>
               </div>
-                      <div class="rowEvenNewSpacing"><span class="required">
-                      <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail" id="applyToEMailId"/>
+                      <div class="rowEvenNewSpacing"><span class="required lableText6-span">
+                      <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToEMail" id="applyToEMailId" />
                         </span><span class="lableText6">Apply-to Email:</span>
                 <form:input path="applyEmail" class="job_seeker_password textBox350"  id="applyToEMailTSId" readonly="readonly"/>
 
                 <span class="required requiredWidth">Enter the email address where you would like resumes to be sent.</span> </div>
-                      <div class="rowEvenNewSpacing"><span class="required">
+                      <div class="rowEvenNewSpacing"><span class="required lableText6-span">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToURL" id="applyToURLId"/>
                         </span><span class="lableText6">Apply-to URL</span>
                 <form:input path="applyUrl" class="job_seeker_password textBox350"  id="applyToURLTSId" readonly="readonly"/>
                 <span class="required requiredWidth">Enter the URL where you would like to send job-seekers to apply.</span> </div>
 
-                      <div class="rowEvenNewSpacing"><span class="required">
+                      <div class="rowEvenNewSpacing"><span class="required lableText6-span">
                         <form:radiobutton path="applMethod" class="marginLeft30" value="ApplyToATS" id="applyToATSId"/>
                         </span><span  class="lableText6">Apply-to ATS</span>
                <form:input path="atsUrl" class="job_seeker_password textBox350" id="applyToATSIPId" readonly="readonly"/>

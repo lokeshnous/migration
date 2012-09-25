@@ -282,6 +282,32 @@ public class JobPostConversionHelper<JobPostForm> {
 					.getJpLocation().getCountry());
 			jobPostDTO.setJobZip(jpJob.getJpJobLocations().get(0)
 					.getJpLocation().getPostcode());
+			
+			// get detail from JpLocation entity
+			int hideCity = 1;
+			int hideState = 1;
+			int hideCountry = 1;
+			int hidePostcode = 1;
+			int hideCompName = 1;
+			try{
+				List<JpJobLocation> jobLocations = jpJob.getJpJobLocations();
+				JpJobLocation jobJobLocation = jobLocations.get(0);
+				hideCity = jobJobLocation.getHideCity();
+				hideState = jobJobLocation.getHideState();
+				hideCountry = jobJobLocation.getHideCountry();
+				hidePostcode = jobJobLocation.getHidePostcode();
+			}catch (Exception e) {
+				//LOGGER.info("Locations not found for Job Id :"+searchedJobDTO.getJobID());
+			}
+
+				jobPostDTO.setbHideCity(hideCity == 1?true:false);
+				jobPostDTO.setbHideState(hideState == 1?true:false);
+				jobPostDTO.setbHideCountry(hideCountry == 1?true:false);
+				jobPostDTO.setbHideZipCode(hidePostcode == 1?true:false);
+				
+				hideCompName = jpJob.getBlindAd();
+				jobPostDTO.setbHideCompName(hideCompName == 1?true:false);
+			
 		}
 		 jobPostDTO.setEmploymentType(jpJob.getPositionType());
 		jobPostDTO.setReqSkills(jpJob.getSkills());

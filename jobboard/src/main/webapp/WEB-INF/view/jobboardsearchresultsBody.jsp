@@ -244,7 +244,7 @@
 								${job.AdText}
 							</p> --%>
 
-								<div style="height: 42px; overflow: hidden;margin-bottom: 5px;">
+								<div class="searchResultsJobDescription">
 								<p class="searchResultsSubContentJobDescription">								
 									<span class="bold">Job Description:</span>
 									${job.AdText}

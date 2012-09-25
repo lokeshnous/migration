@@ -12,8 +12,8 @@
 		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    $("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
-		    $("#manageAccessPerm").displaypopup("#manageAccessPerm","770","360");
+		    $("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","790","360");
+		    $("#manageAccessPerm").displaypopup("#manageAccessPerm","790","360");
 		   
 		    $("#managePermission a").click(function() {
 		    	
