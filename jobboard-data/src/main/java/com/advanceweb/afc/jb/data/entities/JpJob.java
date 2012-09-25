@@ -133,7 +133,7 @@ public class JpJob implements Serializable {
 	private String jobStatus;
 	
 	@Column(name="template_override")
-	private int templateOverride;
+	private int templateOverride=0;
 		
 	//bi-directional many-to-one association to AdmSaveJob
 	@OneToMany(mappedBy=JP_JOB)
