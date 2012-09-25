@@ -355,8 +355,8 @@ public class EmployerRegistrationController {
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 				//By passing netsuite call
-				isUpdated = true;//empRegService.editUser(dto, admfacilityid, userId,
-						//MMJBCommonConstants.PRIMARY);
+				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
+						MMJBCommonConstants.PRIMARY);
 				if(isUpdated){
 					LOGGER.info("This is Account Addresss edite option done successfully");
 				}else{
