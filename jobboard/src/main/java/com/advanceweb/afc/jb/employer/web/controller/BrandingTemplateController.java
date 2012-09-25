@@ -133,6 +133,10 @@ public class BrandingTemplateController {
 		brandingTemplateValidation.validateSilver(brandingTemplate, result);
 
 		if (result.hasErrors()) {
+			if (!brandingTemplateForm.getIsSilverCustomer())
+			{
+				verifyMultimediaContent(brandingTemplateForm);
+			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
 			model.addObject("errorMessage", null);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
@@ -154,6 +158,7 @@ public class BrandingTemplateController {
 				if (brandingTemplate.getListVideos().isEmpty()) {
 					brandingTemplate.getListVideos().add(new VideoForm());
 				}
+				verifyMultimediaContent(brandingTemplateForm);
 				model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
 				model.addObject("errorMessage", errorMessage);
 				model.setViewName(STR_CREATEBRANDINGTEMPLATE);
@@ -223,6 +228,10 @@ public class BrandingTemplateController {
 		brandingTemplateValidation.validateSilver(brandingTemplateForm, result);
 
 		if (result.hasErrors()) {
+			if (!brandingTemplateForm.getIsSilverCustomer())
+			{
+				verifyMultimediaContent(brandingTemplateForm);
+			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 			model.addObject("errorMessage", null);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
@@ -244,6 +253,7 @@ public class BrandingTemplateController {
 				if (brandingTemplateForm.getListVideos().isEmpty()) {
 					brandingTemplateForm.getListVideos().add(new VideoForm());
 				}
+				verifyMultimediaContent(brandingTemplateForm);
 				model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 				model.addObject("errorMessage", errorMessage);
 				model.setViewName(STR_CREATEBRANDINGTEMPLATE);
