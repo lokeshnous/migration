@@ -648,6 +648,8 @@ jobboard/src/main/webapp/resources/css/jquery.dataTables.css -text
 jobboard/src/main/webapp/resources/css/jquery.megamenu.css -text
 jobboard/src/main/webapp/resources/css/screen.css -text
 jobboard/src/main/webapp/resources/css/site.css -text
+jobboard/src/main/webapp/resources/images/01_ascending.gif -text
+jobboard/src/main/webapp/resources/images/01_descending.gif -text
 jobboard/src/main/webapp/resources/images/Addbutton.png -text
 jobboard/src/main/webapp/resources/images/ArrowLeft.png -text
 jobboard/src/main/webapp/resources/images/ArrowRight.png -text

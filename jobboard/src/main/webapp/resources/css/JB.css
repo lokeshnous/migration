@@ -4137,3 +4137,15 @@ orange:hover {
 	margin-bottom: 5px;
 	min-width: 757px;
 }
+.table-sorted-asc{
+	background-image: url("../images/01_ascending.gif");
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+.table-sorted-desc{
+	background-image: url("../images/01_descending.gif");
+    background-position: left center;
+    background-repeat: no-repeat;
+	
+}
+

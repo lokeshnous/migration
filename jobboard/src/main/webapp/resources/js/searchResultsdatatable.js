@@ -432,3 +432,10 @@ jQuery(document).ready(function() {
 				}
 				}
 	
+				function sortTable() {
+					if($("#sortingId").attr('class').match('cursor table-sorted-asc')){
+						$("#sortingId").attr("class", "cursor table-sorted-desc");
+					}else{
+						$("#sortingId").attr("class", "cursor table-sorted-asc");
+					}
+				}
