@@ -600,7 +600,7 @@ public class JobPostController {
 			}
 		}
 
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(1,
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),
 				"facility_admin");
 		
 		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
