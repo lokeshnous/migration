@@ -130,6 +130,7 @@ public class JobPostConversionHelper<JobPostForm> {
 			
 		 JobPostDTO jobPostDTO=new JobPostDTO();
 		 jobPostDTO.setCompanyName(dto.getFacility());
+		 jobPostDTO.setJobNumber(dto.getJobNumber());
 		 jobPostDTO.setJobTitle(dto.getJobtitle());
 		 jobPostDTO.setJobNumber(dto.getJobNumber());
 		 jobPostDTO.setJobId(dto.getJobId());
@@ -150,6 +151,8 @@ public class JobPostConversionHelper<JobPostForm> {
 				JobPostDTO jobPostDTO = new JobPostDTO();
 				jobPostDTO.setJobId(job.getJobId());
 				jobPostDTO.setJobTitle(job.getJobtitle());
+				jobPostDTO.setCompanyName(job.getName());
+				jobPostDTO.setJobNumber(job.getJobNumber());
 				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
 				//jobPostDTO.setJobPostingType(job.getJpJobType().getName());
 				if (null != job.getJpTemplate()) {
@@ -244,7 +247,8 @@ public class JobPostConversionHelper<JobPostForm> {
 	public JobPostDTO transformJpJobToJobPostDTO(JpJob jpJob) {
 		JobPostDTO jobPostDTO = new JobPostDTO();
 		jobPostDTO.setCompanyName(jpJob.getName());
-		jobPostDTO.setCustomerNo(jpJob.getJobNumber());
+		//jobPostDTO.setCustomerNo(jpJob.getJobNumber());
+		jobPostDTO.setJobNumber(jpJob.getJobNumber());
 		jobPostDTO.setDisCompanyName(jpJob.getFacility());
 		jobPostDTO.setJobOwner(String.valueOf(jpJob.getAdminUserId()));
 		jobPostDTO.setJobTitle(jpJob.getJobtitle());
@@ -310,6 +314,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jobPostDTO.setEmploymentType(jpJob.getPositionType());
 		jobPostDTO.setReqSkills(jpJob.getSkills());
 		jobPostDTO.setJobDesc(jpJob.getAdtext());
+		jobPostDTO.setFacilityId(jpJob.getAdmFacility().getFacilityId());
 		jobPostDTO.setTrackPixel(jpJob.getTrackingPixel());
 		if (null != jpJob.getJpTemplate()) {
 			jobPostDTO.setBrandTemplate(String.valueOf(jpJob.getJpTemplate()

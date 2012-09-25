@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -268,7 +270,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (job != null) {
 
 				dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
-
+				int nsCustomerID = 0;
+				List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer.valueOf(dto.getFacilityId()));
+				nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
+				dto.setCustomerNo(String.valueOf(nsCustomerID));
 			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -1012,4 +1017,32 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return invDetailId;
 	}
+	/**
+	 * This method is used to get the net suite customer id based on
+	 * adm facility id.
+	 * @param int admFacilityID
+	 * @return int NSCustomerID
+	 */
+	
+	public List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
+
+		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
+		try {
+			List<AdmFacility> admFacilityList = hibernateTemplate
+					.find(" from  AdmFacility WHERE  facilityId  = '" + admFacilityID + "'");
+
+			if (admFacilityList != null) {
+				for (AdmFacility admFacilityObj : admFacilityList) {
+					FacilityDTO admFacilityDTO = new FacilityDTO();
+					admFacilityDTO.setNsCustomerID(admFacilityObj.getNsCustomerID());
+					admFacilityDTOList.add(admFacilityDTO);
+				}
+			}
+
+		} catch (HibernateException e) {
+			LOGGER.debug(e);
+		}
+		return admFacilityDTOList;
+	}
+
 }

@@ -318,6 +318,8 @@
 							<thead>
 							<tr class="LightGrayBG Height35">
 								<th width="2%" align="center" valign="middle" class="">&nbsp;</th>
+								<th width="6%" align="center" valign="middle" class="FontSize11">Adv Job
+										ID</th>
 								<th width="6%" align="center" valign="middle" class="FontSize11">Job
 										ID</th>
 								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
@@ -356,6 +358,8 @@
 										name="checkbox" id=${job.jobId } value="${job.jobId}"></td>
 									<td align="center" valign="middle"><a
 										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
+									<td align="center" valign="middle"><a
+										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobNumber}</a></td>
 									<td align="center" valign="middle"><a
 										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
 									<td align="center" valign="middle">${job.location}</td>
