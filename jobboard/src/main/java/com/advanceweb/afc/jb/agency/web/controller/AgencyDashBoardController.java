@@ -40,6 +40,7 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
@@ -104,8 +105,25 @@ public class AgencyDashBoardController {
 		int agencyUserId = (Integer) session.getAttribute("userId");
 		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
 		Set<String> stateList = new HashSet<String>();
+		String enableAccess = "true";
+		String enablePostEditAccess = "true";
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		//added for manage access permission
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+		if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
+			enableAccess = "false";
+			model.addObject("enableAccess", enableAccess);
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
+			enablePostEditAccess = "false";
+			model.addObject("enablePostEditAccess", enablePostEditAccess);
+		}
+		model.addObject("enableAccess", enableAccess);
+		model.addObject("enablePostEditAccess", enablePostEditAccess);
 		List<FacilityDTO> assocEmplyrsNames = impersonateAgencyService
 				.getAssocEmployerNames(agencyUserId, facilityId);
 		for (FacilityDTO assocEmplyr : assocEmplyrsNames) {

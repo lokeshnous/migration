@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -177,6 +179,7 @@
 												id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
+									<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
 									<div class="lableTextDashBoard">
 										<p>
 											<a id="accessPermissioPopUp"
@@ -185,6 +188,7 @@
 
 										</p>
 									</div>
+									</security:authorize>
 								</div>
 							</div>
 							<!---->
