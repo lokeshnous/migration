@@ -176,8 +176,10 @@ function validateNumber(event) {
 										<span class="required">(Required)</span>
 									</div>
                                         <div class="rowEvenNewSpacing">
-										<span class="lableText3">Health System:</span>
-										<form:checkbox path="helthSystem" />
+										<span class="lableText3"></span>
+										<div class="floatLeft">
+										Health System:&nbsp;&nbsp; </div> <div class="floatLeft"> <form:checkbox path="helthSystem" />
+										</div>
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Street Address'}">

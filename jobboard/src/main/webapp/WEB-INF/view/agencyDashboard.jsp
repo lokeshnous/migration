@@ -148,8 +148,8 @@
 				<div class="clearfix"></div>
 				<!--Start:MidContant-->
 				<div class="MidContent_Wrapper floatLeft">
-					<div class="AgencyDashboardHeader">
-						<h1 class="FontSize20">
+					<div class="dashboardHeader">
+						<h1>
 							[<%=(String) session.getAttribute("userName")%>]Dashboard
 						</h1>
 					</div>
