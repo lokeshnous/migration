@@ -567,6 +567,7 @@ jobboard/src/main/webapp/WEB-INF/view/createResumeUploadPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editBrandingTemplate.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editCopyPasteResumePopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/editJobPost.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editUploadResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empPurchaseJobPostingsPopup.jsp -text

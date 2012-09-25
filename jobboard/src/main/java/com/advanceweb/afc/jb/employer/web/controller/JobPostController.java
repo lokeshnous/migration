@@ -52,6 +52,8 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @RequestMapping("/employer")
 public class JobPostController {
 	
+	private static final String EDIT_JOB_POST = "editJobPost";
+
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostController.class);
 	
@@ -430,7 +432,7 @@ public class JobPostController {
 		List<FromZipcodeDTO> zipCodeList = populateDropdownsService
 				.getFromZipcodeList();
 		jobPostForm.setJobId(jobId);
-		model.addObject(JOB_POST_FORM, jobPostForm);
+		
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);
 		model.addObject("countryList", countryList);
@@ -439,7 +441,22 @@ public class JobPostController {
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		model.addObject("companyList", companyList);
-		model.setViewName(POST_NEW_JOBS);
+		
+		for(DropDownDTO DropDownDto : jbPostingTypeList){
+			if(jobPostType == Integer.parseInt(DropDownDto.getOptionId())){
+				if(DropDownDto.getOptionName().contains("Standard Posting")){
+					jobPostForm.setEnableJobTitle(true);
+				}
+			}
+		}
+		
+		if (null != readOnly && readOnly.equalsIgnoreCase("false")) {
+			model.setViewName(EDIT_JOB_POST);
+		}
+		else{
+			model.setViewName(POST_NEW_JOBS);
+		}
+		model.addObject(JOB_POST_FORM, jobPostForm);
 		return model;
 	}
 

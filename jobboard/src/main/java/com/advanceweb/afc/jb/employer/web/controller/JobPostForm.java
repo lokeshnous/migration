@@ -60,7 +60,9 @@ public class JobPostForm {
     private String statusValue;
     private String noOfPage;
     private String noOfPageLower;
-    private int beginVal=1;/*
+    private int beginVal=1;
+    private boolean enableJobTitle;
+    /*
     private String brandTemplateValue;
     private String autoRenewVal;*/
     
@@ -430,5 +432,12 @@ public class JobPostForm {
 		this.autoRenewVal = autoRenewVal;
 	}*/
 
-	
+	public boolean isEnableJobTitle() {
+		return enableJobTitle;
+	}
+
+	public void setEnableJobTitle(boolean enableJobTitle) {
+		this.enableJobTitle = enableJobTitle;
+	}
+
 }

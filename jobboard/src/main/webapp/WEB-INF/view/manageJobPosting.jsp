@@ -390,7 +390,7 @@
 									<td align="center" valign="middle"><div
 											class="row width80 SearchIcons">
 											<a title="edit"
-												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}"><div
+												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=false"><div
 													class="editFile"></div></a><a title="view"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><div
 													class="view"></div></a><%-- <a title="check" href="#"><div class="check" name="check"
