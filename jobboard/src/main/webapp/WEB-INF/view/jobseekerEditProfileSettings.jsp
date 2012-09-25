@@ -41,6 +41,8 @@ function validateNumber(event) {
 						parent.$.nmTop().close();
 						window.location.reload();
 					}else{
+						var href = $('#BackToTopId').attr('href');
+      					location.href = href;
 						$("#errmsg").html(data);
 					}
 				 },
@@ -263,8 +265,7 @@ function validateNumber(event) {
 					<input type="button" value="Save" class="orange" id="save"/>
 					<input type="button" value="Cancel" onclick="cancelProcess()"
 									class="orange" name="Cancel" />
-
-					
+					<a href="#jobSeekerRegister1" id="BackToTopId" style="display: none;">Back To Top</a>
 					<!-- <a href="#" class="btn_sm orange"
 						onclick="parent.$.nmTop().close();">Cancel</a> -->
 				</div>
