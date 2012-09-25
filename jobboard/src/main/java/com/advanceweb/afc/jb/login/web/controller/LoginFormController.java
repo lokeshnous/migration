@@ -187,7 +187,7 @@ public class LoginFormController {
 
 				if (tempassword != null) {
 					// Updating the generated password to OpenAm
-					
+
 					boolean updatepassword = OpenAMEUtility
 							.openAMUpdatePassword(emailAddress, tempassword);
 
@@ -199,7 +199,7 @@ public class LoginFormController {
 					}
 
 					String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
-							"?temporarypassword", formDTO.getPassword());
+							"?temporarypassword", tempassword);
 
 					forgotPwdMailBody = forgotPwdMailBody.replace(
 							"?jsLoginLink", jonseekerloginUrl);
