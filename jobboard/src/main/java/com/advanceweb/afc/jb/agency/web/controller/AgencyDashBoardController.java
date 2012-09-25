@@ -121,9 +121,9 @@ public class AgencyDashBoardController {
 				}
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
-
-				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
-						MMJBCommonConstants.PRIMARY);
+				// By passing net suite call
+				isUpdated = true;//empRegService.editUser(dto, admfacilityid, userId,
+						//MMJBCommonConstants.PRIMARY);
 				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
 				} else {
