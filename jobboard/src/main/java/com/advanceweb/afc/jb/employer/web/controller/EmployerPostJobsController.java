@@ -158,7 +158,7 @@ public class EmployerPostJobsController {
 
 			}
 		} catch (Exception e) {
-			LOGGER.info("Error while sending email for gold",e);;
+			LOGGER.info("Error while sending email for gold",e);
 		}
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return model;
