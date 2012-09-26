@@ -521,29 +521,36 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
 						List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
 						if(!comboList.isEmpty()){
+							
 							JpJobTypeCombo combo = comboList.get(0);
+							if(combo.getJobType().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
+								dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + "+"
+										+ combo.getAddons().trim());
+							}
+							else if(combo.getJobType().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
+								dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + "+"
+										+ combo.getAddons().trim());
+							}
 							if(combo.getAddons().contains("Job Posting")){
 								combo.setAddons(combo.getAddons().replace("Job Posting",""));
 								if(combo.getAddons().contains("Upgrade+")){
 									combo.setAddons(combo.getAddons().replace("Upgrade",""));
 								}
 							}
-							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + "+"
-									+ combo.getAddons().trim());
 							jbPostings.add(dto);
 						}
 					}else{
 						List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
 						if(!jpTypleList.isEmpty()){
 							JpJobType type = jpTypleList.get(0);
-							if(type.getName().contains("Job Posting")){
-								type.setName(type.getName().replace("Job Posting",""));
-								if(type.getName().contains("Upgrade+")){
-									type.setName(type.getName().replace("Upgrade",""));
-								}
+							
+							/*if(type.getName().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
+								dto.setOptionName(type.getName().trim());
 							}
-							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + "+"
-									+type.getName().trim());
+							else if(type.getName().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
+								dto.setOptionName(type.getName().trim());
+							}*/
+							dto.setOptionName(type.getName());
 							jbPostings.add(dto);
 						}
 					}
