@@ -41,7 +41,6 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-//import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
@@ -518,6 +517,10 @@ public class AgencyDashBoardController {
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			String email=(String)session
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
+			FacilityDTO facility=loginService.getFacilityByFacilityId(facilityId);
+			if(facility.getFacilityParentId()!=0){
+				return "The employer has been linked with other agency. Please contact administrator.";
+			}
 			int nsCustomerID = impersonateAgencyService.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
 			UserDTO userDTO =impersonateAgencyService.getNSCustomerDetails(nsCustomerID);
 			List<String> emailList = userDTO.getEmailList();
@@ -635,7 +638,7 @@ public class AgencyDashBoardController {
 	// Get the job post details of logged in employer
 	List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
 	FacilityDTO employerDetails=loginService.getFacilityByFacilityId(facilityId);
-	// Geting mtrics values from look up table
+	// Getting metrics values from look up table
 	List<DropDownDTO> metricsList = populateDropdownsService
 			.populateDropdown("Metrics");
 

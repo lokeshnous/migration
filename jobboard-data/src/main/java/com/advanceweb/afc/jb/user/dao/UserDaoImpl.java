@@ -201,6 +201,8 @@ public class UserDaoImpl implements UserDao {
 		dto.setFacilityId(facility.getFacilityId());
 		dto.setName(facility.getName());
 		dto.setRoleId(facility.getAdmUserFacilities().get(0).getFacilityPK().getRoleId());
+		dto.setFacilityParentId(facility.getFacilityParentId());
+		dto.setLogoPath(facility.getLogoPath());
 		return dto;
 	}
 

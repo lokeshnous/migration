@@ -127,7 +127,6 @@ public class ImpersonateAgencyDAOImpl implements  ImpersonateAgencyDAO{
 
 	@Override
 	public Map<String, Object> getEmployerDetails(int facilityId) {
-
 		Map<String, Object> employerDetails = new HashMap<String, Object>();
 		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplateCareers
 				.find("from AdmFacility admFacility where admFacility.facilityId=?",
