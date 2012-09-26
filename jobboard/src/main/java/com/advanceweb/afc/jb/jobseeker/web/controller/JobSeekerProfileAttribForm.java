@@ -21,6 +21,7 @@ public class JobSeekerProfileAttribForm {
 	private List<DropDownDTO> dropdown;
 	
 	
+	
 	public String getStrLabelName() {
 		return strLabelName;
 	}

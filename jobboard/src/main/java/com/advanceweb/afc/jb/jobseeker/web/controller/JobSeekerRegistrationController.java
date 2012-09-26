@@ -7,10 +7,10 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
  @Purpose: This class is used as controller for job seeker regigstration
  */
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,10 +41,9 @@ import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 
 @Controller
 @RequestMapping("/jobseekerregistration")
@@ -97,7 +96,7 @@ public class JobSeekerRegistrationController {
 
 	@Value("${js.pwd.not.equal}")
 	private String pwdNotEqual;
-	
+
 	@Value("${js.pwd.equal}")
 	private String pwdEqual;
 
@@ -284,16 +283,28 @@ public class JobSeekerRegistrationController {
 				model.setViewName("jobSeekerCreateAccountInfo");
 				for (JobSeekerProfileAttribForm form : registerForm
 						.getListProfAttribForms()) {
-					hashmap.put(form.getStrLabelName(), form.getStrLabelValue());
-					// Checking validation for input text box
-					if (form.getbRequired() != 0
-							&& StringUtils.isEmpty(form.getStrLabelValue())
-							&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
-									.getStrLabelName())) {
-						model.addObject("message", reqFields);
-						return model;
+
+					System.out.println("Val==" + form.getStrLabelValue());
+
+					if (form.getStrLabelValue() != null
+							&& form.getStrLabelValue().equalsIgnoreCase("10")) {
+						form.setStrLabelValue(registerForm.getOtherProfession());
 					}
 
+					if (form.getStrLabelName().equals("My Industry")) {
+						hashmap.put(form.getStrLabelName(), "Health Care");
+					} else {
+						hashmap.put(form.getStrLabelName(),
+								form.getStrLabelValue());
+						// Checking validation for input text box
+						if (form.getbRequired() != 0
+								&& StringUtils.isEmpty(form.getStrLabelValue())
+								&& !MMJBCommonConstants.EMAIL_ADDRESS
+										.equals(form.getStrLabelName())) {
+							model.addObject("message", reqFields);
+							return model;
+						}
+					}
 					// Checking validation for dropdowns & checkboxes etc
 					if (form.getbRequired() != 0
 							&& MMJBCommonConstants.ZERO.equals(form
@@ -322,7 +333,7 @@ public class JobSeekerRegistrationController {
 					.createUserDTO(registerForm);
 			List<ProfileAttribDTO> attribLists = transformJobSeekerRegistration
 					.transformProfileAttribFormToDTO(registerForm
-							.getListProfAttribForms());
+							.getListProfAttribForms(), registerForm);
 			jsRegistrationDTO.setAttribList(attribLists);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
@@ -420,6 +431,15 @@ public class JobSeekerRegistrationController {
 					.viewProfile((Integer) session.getAttribute("userId"));
 			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
 					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
+
+			for (JobSeekerProfileAttribForm profileForm : listProfAttribForms) {
+						if(profileForm.getStrLabelValue()!= null 
+								&& profileForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.MYPROFESSION) 
+								&& !isInteger(profileForm.getStrLabelValue())) {
+							form.setOtherProfession(profileForm.getStrLabelValue());
+						}
+			}
+
 			form.setListProfAttribForms(listProfAttribForms);
 			form.setEmailId(jsRegistrationDTO.getEmailId());
 			model.addObject("registerForm", form);
@@ -508,7 +528,7 @@ public class JobSeekerRegistrationController {
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 			List<ProfileAttribDTO> attribList = transformJobSeekerRegistration
 					.transformProfileAttribFormToDTO(registerForm
-							.getListProfAttribForms());
+							.getListProfAttribForms(), registerForm);
 			UserDTO userDTO = transformJobSeekerRegistration
 					.createUserDTO(registerForm);
 			userDTO.setUserId((Integer) session.getAttribute("userId"));
@@ -625,8 +645,8 @@ public class JobSeekerRegistrationController {
 			if (!password.equals(retypePassword)) {
 				return pwdNotEqual;
 			}
-			
-			if(currentPassword.equals(password)){
+
+			if (currentPassword.equals(password)) {
 				return pwdEqual;
 			}
 		}
@@ -655,5 +675,18 @@ public class JobSeekerRegistrationController {
 		}
 		return "jobseekerchangepassword";
 	}
+	
+    public boolean isInteger( String input )  
+    {  
+       try  
+       {  
+          Integer.parseInt( input );  
+          return true;  
+       }  
+       catch( Exception e)  
+       {  
+          return false;  
+       }  
+    }  
 
 }

@@ -41,6 +41,16 @@ function validateNumber(event) {
 		    jQuery(document).ready(function(){
 		    	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
+
+ 			$("#OtherProffession").hide();
+			$('#MyProfession').change(function() {
+			    if($("#MyProfession :selected").text() == "Others"){
+			         $("#OtherProffession").show();
+			    }else{
+			    	$("#OtherProffession").hide();
+			    }
+			});
+		    
 			$('.focus').focus();
 			//Auto complete on selecting city
 			$("#cityAutoPopulation").autocomplete({
@@ -92,6 +102,7 @@ function validateNumber(event) {
 				}
 			});	
 			
+
 		});
 		</script>
 		<script type="text/javascript">
@@ -118,7 +129,7 @@ function validateNumber(event) {
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
 						<h3 class="marginLeft10"> Contact Information </h3>
 						<c:if test="${not empty message}">
-							<div class="rowEvenNewSpacing">
+							<div class="rowEvenNewSpacing">	
 							<span class="lableText3"></span>
 							<span class="FormErrorDisplayText">${message}<br /></span>
 								
@@ -232,7 +243,7 @@ function validateNumber(event) {
 									</div>
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">My Industry:</span>
-										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
+										<form:input readonly="true" path="myIndustry"
 											class="job_seeker_password textBox350" />
 										<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter the industry you serve.
@@ -245,8 +256,14 @@ function validateNumber(event) {
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">My Profession:</span>
 		
-										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
-											class="job_seeker_password textBox350" />
+												<form:select id="MyProfession" path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+													<form:option value="0" label="Select" />
+													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+														itemLabel="optionName" />
+												</form:select>
+		
+										<form:input id="OtherProffession" path="otherProfession"
+											class="job_seeker_password textBox150" />
 										<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter the general field in which
 												you work. Example: Respiratory Therapy</span>
@@ -300,40 +317,7 @@ function validateNumber(event) {
 											</form:select>
 									</div>
 								</c:if>
-
-								<c:if test="${profAttrib.strLabelName == 'Ethnicity'}">
-									<div class="rowH3Holder">
-										<h3 class="marginLeft10">Equal Opportunity / Affirmative Action</h3>
-									</div>
-									<div class="row">
-										<span class="lableTextSelect ">Ethnicity:</span>
-											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-												<form:option value="0" label="Select" />
-												<form:options items="${profAttrib.dropdown}" itemValue="optionId" itemLabel="optionName" />
-											</form:select>
-									</div>
-								</c:if>
-								<c:if test="${profAttrib.strLabelName == 'Gender'}">
-									<div class="row">
-										<span class="lableTextSelect">Gender:</span>
-											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-												<form:option value="0" label="Select" />
-												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-													itemLabel="optionName" />
-											</form:select>
-									</div>
-								</c:if>
-								<c:if test="${profAttrib.strLabelName == 'Veteran Status'}">
-									<div class="row">
-										<span class="lableTextSelect ">Veteran
-											Status:</span>
-											<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-												<form:option value="0" label="Select" />
-												<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-													itemLabel="optionName" />
-											</form:select>
-									</div>
-								</c:if>
+								
 								<c:if test="${profAttrib.strLabelName == 'Subscriptions'}">
 									<div class="rowH3Holder">
 										<h3 class="marginLeft10">Subscriptions</h3>

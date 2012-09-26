@@ -1529,6 +1529,9 @@ div.searchResultsSubContent .btn_sm {
 .textBox350 {
 	width: 350px !important;
 }
+.textBox150 {
+	width: 150px !important;
+}
 
 .leftFormHolder input,.popUpContainer input.job_seeker_email,.popUpContainer input.job_seeker_password,.job_seeker_email
 	{

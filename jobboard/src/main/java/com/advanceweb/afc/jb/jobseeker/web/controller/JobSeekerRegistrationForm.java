@@ -12,7 +12,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String confirmEmailId;
 	private String newsLetterEmailId;
 	@NotEmpty(message="Industry should not be blank.")
-	private String myIndustry;
+	private String myIndustry="Health Care";
 	@NotEmpty(message="Profession should not be blank.")
 	private String myProfession;
 	@NotEmpty(message="Speciality should not be blank.")
@@ -33,7 +33,18 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String userId;	
 	private boolean bReadOnly;
 	private List<JobSeekerProfileAttribForm> listProfAttribForms;
+	private String otherProfession;
 	
+	
+	
+	public String getOtherProfession() {
+		return otherProfession;
+	}
+
+	public void setOtherProfession(String otherProfession) {
+		this.otherProfession = otherProfession;
+	}
+
 	private CommonsMultipartFile fileData;
 	private String fileName;
 	

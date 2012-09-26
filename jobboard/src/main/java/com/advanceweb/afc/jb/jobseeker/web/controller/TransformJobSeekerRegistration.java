@@ -24,10 +24,10 @@ public class TransformJobSeekerRegistration {
 	 * @return
 	 */
 	public JobSeekerRegistrationForm jsRegistrationDTOToJobSeekerRegistrationForm(
-			JobSeekerRegistrationDTO jsRegistrationDTO, JobSeekerRegistrationForm form) {
+			JobSeekerRegistrationDTO jsRegistrationDTO,
+			JobSeekerRegistrationForm form) {
 
-				
-		if(null != jsRegistrationDTO.getAddressDTO()){
+		if (null != jsRegistrationDTO.getAddressDTO()) {
 			AddressDTO dto = jsRegistrationDTO.getAddressDTO();
 			form.setAddressLine1(dto.getAddress1());
 			form.setAddressLine2(dto.getAddress2());
@@ -37,8 +37,8 @@ public class TransformJobSeekerRegistration {
 			form.setPostalCode(dto.getZipCode());
 			form.setPhoneNo(dto.getPhone());
 		}
-		
-		if(null != jsRegistrationDTO.getMerUserDTO()){
+
+		if (null != jsRegistrationDTO.getMerUserDTO()) {
 			UserDTO dto = jsRegistrationDTO.getMerUserDTO();
 			form.setEmailId(dto.getEmailId());
 			form.setFirstName(dto.getFirstName());
@@ -48,32 +48,31 @@ public class TransformJobSeekerRegistration {
 			form.setMyIndustry(dto.getIndustry());
 			form.setMyJobTitle(dto.getJobTitle());
 			form.setMyProfession(dto.getProfession());
-			form.setMySpeciality(dto.getSpeciality());		
+			form.setMySpeciality(dto.getSpeciality());
 		}
-		
-		if(null != jsRegistrationDTO.getJobSeekerProfileDTO()){
-			JobSeekerProfileDTO dto = jsRegistrationDTO.getJobSeekerProfileDTO();
+
+		if (null != jsRegistrationDTO.getJobSeekerProfileDTO()) {
+			JobSeekerProfileDTO dto = jsRegistrationDTO
+					.getJobSeekerProfileDTO();
 			form.setEthenticity(dto.getEthinicity());
 			form.setGender(dto.getGender());
-			form.setVeteranStatus(dto.getVeteranStatus());	
+			form.setVeteranStatus(dto.getVeteranStatus());
 			form.setEmploymentType(dto.getEmploymentInformation());
 		}
 
 		return form;
 	}
 
-
-	
 	/**
 	 * Convering Job Seeker Registration Form to AddressDTO
 	 * 
 	 * @param form
 	 * @return
 	 */
-	public AddressDTO createAddressDTO(ContactInfoForm form){
+	public AddressDTO createAddressDTO(ContactInfoForm form) {
 		// Address DTO
 		AddressDTO dto = new AddressDTO();
-		
+
 		dto.setAddress1(form.getAddressLine1());
 		dto.setAddress2(form.getAddressLine2());
 		dto.setCity(form.getCity());
@@ -85,68 +84,70 @@ public class TransformJobSeekerRegistration {
 		return dto;
 
 	}
-	
+
 	/**
 	 * Converting Job Seeker Registration Form to MerUserDTO
 	 * 
 	 * @param form
 	 * @return
 	 */
-	public UserDTO createUserDTO(JobSeekerRegistrationForm form){
-		
-		UserDTO dto = new UserDTO();		
+	public UserDTO createUserDTO(JobSeekerRegistrationForm form) {
+
+		UserDTO dto = new UserDTO();
 		dto.setFirstName(form.getFirstName());
 		dto.setLastName(form.getLastName());
 		dto.setMiddleName(form.getMiddleName());
 		dto.setPassword(form.getPassword());
 		dto.setEmailId(form.getEmailId());
-		dto.setUserId(null != form.getUserId() ? Integer.valueOf(form.getUserId()):0);
-		
+		dto.setUserId(null != form.getUserId() ? Integer.valueOf(form
+				.getUserId()) : 0);
+
 		return dto;
 	}
-	
+
 	/**
 	 * Converting Job Seeker Registration Form to JobSeekerProfileDTO
 	 * 
 	 * @param form
 	 * @return
 	 */
-	public JobSeekerProfileDTO createJSProfileSettingsDTO(JobSeekerRegistrationForm form){
+	public JobSeekerProfileDTO createJSProfileSettingsDTO(
+			JobSeekerRegistrationForm form) {
 		// JobSeekerProfileDTO
 		JobSeekerProfileDTO dto = new JobSeekerProfileDTO();
 		dto.setEmploymentInformation(form.getEmploymentType());
 		dto.setGender(form.getGender());
 		dto.setEthinicity(form.getEthenticity());
 		dto.setVeteranStatus(form.getVeteranStatus());
-		
+
 		// jobSeekerProfileDTO.setJobSeekerId(jobSeekerId);
 
-		
 		return dto;
 	}
-	
+
 	/**
 	 * Convering Change Password Form to MerUserDTO
 	 * 
 	 * @param form
 	 * @return
 	 */
-	public UserDTO transformChangePasswordFormToMerUserDTO(ChangePasswordForm form){
+	public UserDTO transformChangePasswordFormToMerUserDTO(
+			ChangePasswordForm form) {
 		UserDTO dto = new UserDTO();
 		dto.setEmailId(form.getEmailId());
 		dto.setPassword(form.getPassword());
 		dto.setCurrentPassword(form.getCurrentPassword());
-		
+
 		return dto;
 	}
 
-	public List<JobSeekerProfileAttribForm> transformDTOToProfileAttribForm(JobSeekerRegistrationDTO registerDTO,
-			UserDTO userDTO){
-		
+	public List<JobSeekerProfileAttribForm> transformDTOToProfileAttribForm(
+			JobSeekerRegistrationDTO registerDTO, UserDTO userDTO) {
+
 		List<JobSeekerProfileAttribForm> listForms = new ArrayList<JobSeekerProfileAttribForm>();
-		
-		if(null != registerDTO.getAttribList()){
-			for(ProfileAttribDTO dto : registerDTO.getAttribList()){
+
+		if (null != registerDTO.getAttribList()) {
+			for (ProfileAttribDTO dto : registerDTO.getAttribList()) {
 				JobSeekerProfileAttribForm form = new JobSeekerProfileAttribForm();
 				form.setDropdown(dto.getDropdown());
 				form.setStrAttribType(dto.getStrAttribType());
@@ -155,48 +156,66 @@ public class TransformJobSeekerRegistration {
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setbRequired(dto.getbRequired());
 				form.setbRequired(dto.getbRequired());
-				if(null != userDTO){
-					if(form.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+				if (null != userDTO) {
+					if (form.getStrLabelName().equals(
+							MMJBCommonConstants.FIRST_NAME)) {
 						form.setStrLabelValue(userDTO.getFirstName());
 					}
-					if(form.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+					if (form.getStrLabelName().equals(
+							MMJBCommonConstants.LAST_NAME)) {
 						form.setStrLabelValue(userDTO.getLastName());
 					}
-					if(form.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)){
+					if (form.getStrLabelName().equals(
+							MMJBCommonConstants.MIDDLE_NAME)) {
 						form.setStrLabelValue(userDTO.getMiddleName());
 					}
 				}
 				listForms.add(form);
 			}
 		}
-		
-		return listForms;		
+
+		return listForms;
 	}
-	
+
 	/**
 	 * 
 	 * @param attributeList
 	 * @return
 	 */
-	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(List<JobSeekerProfileAttribForm> attributeList){
-		
+	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(
+			List<JobSeekerProfileAttribForm> attributeList, JobSeekerRegistrationForm regForm) {
+
 		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
-		
-		if(null != attributeList){
-			for(JobSeekerProfileAttribForm form : attributeList){
+
+		if (null != attributeList) {
+			for (JobSeekerProfileAttribForm form : attributeList) {
 				ProfileAttribDTO dto = new ProfileAttribDTO();
-				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
-					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
-				}else{
-					dto.setStrLabelValue(form.getStrLabelValue());
+				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
+						.getStrLabelName())) {
+
+					dto.setStrLabelValue(StringUtils
+							.arrayToCommaDelimitedString(form.getSubs()));
+				} else {
+					if (form.getStrLabelName().equals(MMJBCommonConstants.MYINDUSTRY)) {
+						dto.setStrLabelValue(MMJBCommonConstants.HEALTHCARE);
+					} else {
+						dto.setStrLabelValue(form.getStrLabelValue());
+					}
+					
+					if(regForm != null && 
+							regForm.getOtherProfession() != null && 
+							form.getStrLabelName().equals(MMJBCommonConstants.MYPROFESSION)
+							&& form.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.ID_VAL)){
+						dto.setStrLabelValue(regForm.getOtherProfession());
+					}
 				}
 				dto.setStrAttribType(form.getStrAttribType());
 				dto.setStrLabelName(form.getStrLabelName());
-				dto.setStrProfileAttribId(form.getStrProfileAttribId());				
+				dto.setStrProfileAttribId(form.getStrProfileAttribId());
 				dtoList.add(dto);
 			}
 		}
-		
-		return dtoList;		
+
+		return dtoList;
 	}
 }

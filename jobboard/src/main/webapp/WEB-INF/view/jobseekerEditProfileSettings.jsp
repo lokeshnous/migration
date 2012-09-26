@@ -30,6 +30,29 @@ function validateNumber(event) {
     	        }
     	    }
     	});
+		$.nmFilters({
+		    	    custom: {
+		    	        afterShowCont: function(nm) {
+		    	        	if($("#otherProfession").val() != null && $("#otherProfession").val() != "null"
+		    	        			&& $("#otherProfession").val() != ""){
+		    	        		$("#MyProfession :selected").text("Others");
+		    	        		
+		    	        	}else{
+		    	        		$("#otherProfession").hide();
+		    	        	}
+		    	        }
+		    	    }
+		    	});
+		$('#MyProfession').change(function() {
+			 if($("#MyProfession :selected").text() == "Others"){
+		         $("#otherProfession").show();
+		    }else{
+		    	$("#otherProfession").hide();
+		    }
+		});
+
+
+		
  		$('#save').click(function(){			
  			
 			$.ajax({url:"${pageContext.request.contextPath}/jobseekerregistration/updateJobSeekerProfile.html",
@@ -172,7 +195,7 @@ function validateNumber(event) {
 							</div>		
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Industry:</span> 
-								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<form:input readonly="true" path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
 								<div class="toolTip01 marginTop5 marginLeft5">
 									<span class="classic">Enter the industry you serve.
 										Example: Healthcare</span>
@@ -183,7 +206,12 @@ function validateNumber(event) {
 						<c:if test="${profAttrib.strLabelName == 'My Profession'}">
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">My Profession:</span> 
-								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<form:select id="MyProfession" path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+										<form:option value="0" label="Select" />
+										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
+											itemLabel="optionName" />
+								</form:select>
+									<form:input path="otherProfession" class="job_seeker_password textBox150" />
 								<div class="toolTip01 marginTop5 marginLeft5">
 									<span class="classic">Enter the general field in which you
 										work. Example: Respiratory Therapy</span>
@@ -223,40 +251,7 @@ function validateNumber(event) {
 									</form:select>
 							</div>
 						</c:if>
-						<c:if test="${profAttrib.strLabelName == 'Ethnicity'}">
-							<div class="rowH3Holder">
-								<h3>Equal Opportunity / Affirmative Action</h3>
-							</div>
-			
-							<div class="row">
-								<span class="lableTextSelect ">Ethnicity:</span> 
-									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-										<form:option value="0" label="Select" />
-										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-											itemLabel="optionName" />
-									</form:select>
-							</div>
-						</c:if>
-						<c:if test="${profAttrib.strLabelName == 'Gender'}">
-							<div class="row">
-								<span class="lableTextSelect ">Gender:</span> 
-									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-										<form:option value="0" label="Select" />
-										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-											itemLabel="optionName" />
-									</form:select>
-							</div>
-						</c:if>
-						<c:if test="${profAttrib.strLabelName == 'Veteran Status'}">
-							<div class="row">
-								<span class="lableTextSelect ">Veteran Status:</span> 
-									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
-										<form:option value="0" label="Select" />
-										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
-											itemLabel="optionName" />
-									</form:select>
-							</div>
-						</c:if>
+						
 				</c:forEach>
 				<form:hidden path="emailId"/>
 				<div class="popUpButtonRow">

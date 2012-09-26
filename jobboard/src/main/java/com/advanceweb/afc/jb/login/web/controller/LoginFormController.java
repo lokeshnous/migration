@@ -148,7 +148,7 @@ public class LoginFormController {
 
 		// User Validation based on email address of user
 		if (formDTO != null) {
-			value = loginValidator.validateEmailValues(email, formDTO, page);
+			//value = loginValidator.validateEmailValues(email, formDTO, page);
 		}
 
 		// Sending mail to the logged in user if he is valid user
