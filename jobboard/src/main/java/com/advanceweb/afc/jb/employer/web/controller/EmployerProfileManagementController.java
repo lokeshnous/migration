@@ -225,7 +225,7 @@ public class EmployerProfileManagementController {
 							.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension
 						.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) {
 				errors.rejectValue("logoUrl", STR_NOTEMPTY,
-						"Please select the appropriate logo");
+						"Please select an appropriate logo");
 			}
 		}
 	}
@@ -262,7 +262,7 @@ public class EmployerProfileManagementController {
 						.contains(MMJBCommonConstants.VIDEO_TYPE_MOV)|| fileExtension
 						.contains(MMJBCommonConstants.MEDIA_TYPE_WMV))) {
 				errors.rejectValue("positionalMedia", STR_NOTEMPTY,
-						"Please select the appropriate media file");
+						"Please select an appropriate media file");
 			}
 		}
 	}

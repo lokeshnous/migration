@@ -28,13 +28,13 @@
 					var ext = $('#textfield4').val().split('.').pop().toLowerCase();
 					if($.inArray(ext, ['Mp4','wmv']) == -1) {
 					hasError = false;
-		            $("#promoMediaErrMsg").text('Please enter the valid file');
+		            $("#promoMediaErrMsg").text('Please enter a valid file');
 				}
 			}
 			if($('#textfield5').val()!=''){
 					var ext = $('#textfield5').val().split('.').pop().toLowerCase();
 					if($.inArray(ext, ['gif','png','jpg','tif']) == -1) {
-		            $("#logoErrMsg").text('Please enter the valid file');
+		            $("#logoErrMsg").text('Please enter a valid file');
 		            hasError = false;
 				}
 			} 
