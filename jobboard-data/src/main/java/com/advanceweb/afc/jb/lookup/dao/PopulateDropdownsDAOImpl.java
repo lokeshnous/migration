@@ -661,21 +661,14 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		try {
 			
-//			List<Object> admFacilityList = hibernateTemplate
-//					.find("select distinct fac.facilityId from  AdmFacility fac WHERE fac.name='"
-//							+ company + "' ORDER BY  fac.name ASC");
-//
-//			if (admFacilityList != null && !admFacilityList.isEmpty()) {
-//				facilityId = (Integer)admFacilityList.get(0);
-//			}
-			
 			facilityId = Integer.parseInt(company);
-			List<Object> admFacilityPackageList = hibernateTemplate
-					.find("select fac.templateId from  AdmFacilityPackage fac WHERE fac.facilityId=?",
+			
+			List<Object> admFacilityList = hibernateTemplate
+					.find("select fac.templateId from  AdmFacility fac WHERE fac.facilityId=?",
 							facilityId);
-
-			if (admFacilityPackageList != null && !admFacilityPackageList.isEmpty()) {
-				templateId = (Integer)admFacilityPackageList.get(0);
+			
+			if (admFacilityList != null && !admFacilityList.isEmpty()) {
+				templateId = (Integer)admFacilityList.get(0);
 			}
 			
 			List<Object> jpTemplateList = hibernateTemplate

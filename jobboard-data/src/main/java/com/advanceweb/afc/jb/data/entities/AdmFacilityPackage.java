@@ -31,9 +31,6 @@ public class AdmFacilityPackage implements Serializable {
 	@Column(name = "package_id")
 	private int packageId;
 
-	@Column(name = "template_id")
-	private int templateId;
-
 	@Column(name = "start_dt")
 	private Date startDate;
 
@@ -62,14 +59,6 @@ public class AdmFacilityPackage implements Serializable {
 
 	public void setPackageId(int packageId) {
 		this.packageId = packageId;
-	}
-
-	public int getTemplateId() {
-		return templateId;
-	}
-
-	public void setTemplateId(int templateId) {
-		this.templateId = templateId;
 	}
 
 	public Date getStartDate() {

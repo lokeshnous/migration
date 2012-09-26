@@ -20,7 +20,6 @@ import com.advanceweb.afc.jb.common.ManageFacilityDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityPackage;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 /**
@@ -36,7 +35,6 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			.getLogger(ManageFacilityDAOImpl.class);
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=? and facilityType='FACILITY_GROUP'";
 	private static final String FIND_ADM_FACILITY_DETAILS = "from AdmFacility where facilityId=?";
-	private static final String FIND_ADM_FACILITY_TEMPLATE = "from AdmFacilityPackage where facilityId=?";
 	private HibernateTemplate hibernateTemplateCareers;
 
 	@Autowired
@@ -60,8 +58,6 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityList = hibernateTemplateCareers.find(
 					FIND_ADM_FACILITY_DETAILS, facilityId);
 		}
-		List<AdmFacilityPackage> admFacilityPackage = hibernateTemplateCareers
-				.find(FIND_ADM_FACILITY_TEMPLATE, facilityId);
 		if (null != admFacilityList && !admFacilityList.isEmpty()) {
 			facilityDTO.setFacilityId(admFacilityList.get(0).getFacilityId());
 			facilityDTO.setFacilityName(admFacilityList.get(0).getName());
@@ -73,10 +69,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			facilityDTO.setFacilityStreet(admFacilityList.get(0).getStreet());
 			facilityDTO.setPhoneNumber(admFacilityList.get(0).getStreet());
 			facilityDTO.setZipCode(admFacilityList.get(0).getPostcode());
-			if (null != admFacilityPackage && !admFacilityPackage.isEmpty()) {
-				facilityDTO.setTemplateId(String.valueOf(admFacilityPackage
-						.get(0).getTemplateId()));
-			}
+			facilityDTO.setTemplateId(String.valueOf(admFacilityList.get(0).getTemplateId()));
 		}
 
 		return facilityDTO;
@@ -152,6 +145,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			facility.setCompanyNews(facilityP.getCompanyNews());
 			facility.setCompanyOverview(facilityP.getCompanyOverview());
 			facility.setNsCustomerID(facilityP.getNsCustomerID());
+			facility.setTemplateId(facilityP.getTemplateId());
 
 		}
 
