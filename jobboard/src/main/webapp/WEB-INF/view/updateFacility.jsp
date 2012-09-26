@@ -18,7 +18,7 @@
 <script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    	$("#addFacility").displaypopup("#addFacility","770","360");
+		    	$("#addFacility").displaypopup("#addFacility","790","360");
 		    	
 		    	$("#tb_manage_facility img").click(function(event) {
 
