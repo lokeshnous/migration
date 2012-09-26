@@ -104,7 +104,7 @@ function closePopup() {
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
 							 $("#facilityListId").html('');
-							 //$("#healthSystemId").is(':checked') = false;
+							 $("#healthSystemId").attr('checked', false);
 						 }
 						 //alert(data.nsId);
 				},
