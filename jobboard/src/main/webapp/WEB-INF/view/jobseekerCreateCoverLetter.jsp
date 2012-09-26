@@ -111,7 +111,7 @@
 									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private"/>										
 									</label>
 							</span>
-							<div class="toolTip marginTop6 marginLeft10">
+							<div class="toolTip colorPkrAreaToolTip">
 								<span class="classic"><p>
 									You can only have one Cover Letter Visibility to employers at a time, so select 
 									Private if you already have a public cover letter  saved to your profile. Otherwise, 

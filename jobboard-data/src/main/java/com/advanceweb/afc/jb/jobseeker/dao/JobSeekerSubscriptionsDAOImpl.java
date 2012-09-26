@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -396,16 +397,24 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 */
 	@Override
 	public List<ResCoverLetterDTO> getJobOwnerList(int userId) {
-		List<ResCoverLetterDTO> resCov = new ArrayList<ResCoverLetterDTO>();
+		//List<ResCoverLetterDTO> resCov = new ArrayList<ResCoverLetterDTO>();
+		List<ResCoverletter> resCov = new ArrayList<ResCoverletter>();
 		try {
-			resCov = hibernateTemplateCareers
+			Query query = hibernateTemplateCareers
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery("Select rs from ResCoverletter rs where rs.userId="+userId+ "and deleteDt is null");
+			
+			resCov=query.list();
+			/*resCov = hibernateTemplateCareers
 					.find("from ResCoverletter rs where rs.userId=? and deleteDt is null",
-							userId);
+							userId);*/
 
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
-		return resCov;
+		
+		return jsSubscriptionHelper.transformCoverLeterlistToDTO(resCov);
 
 	}
 

@@ -1,6 +1,9 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -106,6 +109,48 @@ public class JobSeekerSubscriptionsConversionHelper {
 		return rfc;		
 	}
 	
+/**
+ * 	
+ * @param coverLet
+ * @return List
+ * @author kartikm
+ * This is list to DTO converter
+ * @version v.0.1
+ */
+	
+	public List<ResCoverLetterDTO> transformCoverLeterlistToDTO(
+			List<ResCoverletter> coverLet) {
+		List<ResCoverLetterDTO> manageCoverLetterDTOList = new ArrayList<ResCoverLetterDTO>();
+		int i = 0;
+		for (ResCoverletter merUser : coverLet) {
+			ResCoverLetterDTO res=new ResCoverLetterDTO();
+			res.setActive(merUser.getActive());
+			res.setName(merUser.getName());
+			res.setCoverletterId(merUser.getCoverletterId());		
+			res.setCreateDt(dateToStringConveter(merUser.getCreateDt()));
+			res.setCoverletterText(merUser.getCoverletterText());
+			res.setUpdateDt(dateToStringConveter(merUser.getUpdateDt()));
+			res.setUserId(merUser.getUserId());
+			manageCoverLetterDTOList.add(res);
+			i=i+1;
+		}
+		return manageCoverLetterDTOList;
+
+	}
+/**
+ * 	
+ * @param date
+ * @return date of string format
+ * Date format to String format converter
+ * @author kartikm
+ * @version v.0.1
+ */
+	
+	public String dateToStringConveter(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	    String strDate = sdf.format(date);
+		return strDate;
+	}
 	
 	
 }
