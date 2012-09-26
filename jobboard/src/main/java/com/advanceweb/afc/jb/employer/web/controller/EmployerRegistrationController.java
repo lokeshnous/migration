@@ -367,19 +367,19 @@ public class EmployerRegistrationController {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
-				}else if (null == employeeAccountForm.getFirstName()) {
+				}else if ((null == employeeAccountForm.getFirstName()) ||("".equals(employeeAccountForm.getFirstName()))){
 					return accountFirstName;
-				}else if (null == employeeAccountForm.getLastName()) {
+				}else if ((null == employeeAccountForm.getLastName())||("".equals(employeeAccountForm.getLastName()))) {
 					return accountLastName;
-				}else if (null == employeeAccountForm.getZipCode()) {
+				}else if ((null == employeeAccountForm.getZipCode())||("".equals(employeeAccountForm.getZipCode()))) {
 					return accountZipCode;
-				}else if (null == employeeAccountForm.getCityOrTown()) {
+				}else if ((null == employeeAccountForm.getCityOrTown())||("".equals(employeeAccountForm.getCityOrTown()))) {
 					return accountCity;
-				}else if (null == employeeAccountForm.getCompany()) {
+				}else if ((null == employeeAccountForm.getCompany())||("".equals(employeeAccountForm.getCompany()))) {
 					return accountCompanyName;
-				}else if (null == employeeAccountForm.getCountry()) {
+				}else if ((null == employeeAccountForm.getCountry())||("".equals(employeeAccountForm.getCountry()))) {
 					return accountCountry;
-				}else if (null == employeeAccountForm.getState()) {
+				}else if ((null == employeeAccountForm.getState())||("".equals(employeeAccountForm.getState()))) {
 					return accountState;
 				}else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
@@ -430,25 +430,31 @@ public class EmployerRegistrationController {
 				return MMJBCommonConstants.PHONE_NO;
 			} else if (null == employeeBillingForm.getPhone()) {
 				return MMJBCommonConstants.PHONE_NULL_NO;
-			} else if (null == employeeBillingForm.getBillingAddressForm()
-					.getFnameForBillingAddr()) {
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getFnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getFnameForBillingAddr()))) {
 				return accountFirstName;
-			} else if (null == employeeBillingForm.getBillingAddressForm()
-					.getLnameForBillingAddr()) {
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getLnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getLnameForBillingAddr()))) {
 				return accountLastName;
-			} else if (null == employeeBillingForm.getBillingAddressForm()
-					.getZipCodeForBillingAddr()) {
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getZipCodeForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getZipCodeForBillingAddr()))) {
 				return accountZipCode;
-			} else if (null == employeeBillingForm.getBillingAddressForm()
-					.getCityOrTownForBillingAddr()) {
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getCityOrTownForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getCityOrTownForBillingAddr()))) {
 				return accountCity;
-			} else if (null == employeeBillingForm.getCompany()) {
+			} else if ((null == employeeBillingForm.getCompany())||("".equals(employeeBillingForm.getCompany()))) {
 				return accountCompanyName;
-			} else if (null == employeeBillingForm.getBillingAddressForm()
-					.getCountryForBillingAddr()) {
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getCountryForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getCountryForBillingAddr()))) {
 				return accountCountry;
-			} else if (null == employeeBillingForm.getBillingAddressForm()
-					.getStateBillingAddress()) {
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getStateBillingAddress())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getStateBillingAddress()))) {
 				return accountState;
 			}
 
