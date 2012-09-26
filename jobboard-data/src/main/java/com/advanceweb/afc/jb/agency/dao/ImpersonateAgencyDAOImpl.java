@@ -1,8 +1,6 @@
 package com.advanceweb.afc.jb.agency.dao;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.employer.helper.FacilityConversionHelper;
 
@@ -128,7 +125,7 @@ public class ImpersonateAgencyDAOImpl implements  ImpersonateAgencyDAO{
 	@Override
 	public Map<String, Object> getEmployerDetails(int facilityId) {
 		Map<String, Object> employerDetails = new HashMap<String, Object>();
-		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplateCareers
+		AdmFacility facility = (AdmFacility)DataAccessUtils.uniqueResult(hibernateTemplateCareers
 				.find("from AdmFacility admFacility where admFacility.facilityId=?",
 						facilityId));
 		if (facility != null ) {

@@ -168,9 +168,9 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public int getfacility(int facilityId){
-		AdmRole role = DataAccessUtils.uniqueResult(hibernateTemplate.find(
+		AdmRole role =(AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate.find(
 				"from AdmRole role where role.name=?", "facility_admin"));
-		AdmUserFacility facility=DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",role.getRoleId(),facilityId));
+		AdmUserFacility facility = (AdmUserFacility)DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",role.getRoleId(),facilityId));
 		return facility.getFacilityPK().getUserId();
 	}
 	
@@ -195,7 +195,7 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public FacilityDTO getFacilityByFacilityId(int facilityId){
-		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplate.find(
+		AdmFacility facility = (AdmFacility) DataAccessUtils.uniqueResult(hibernateTemplate.find(
 				"from AdmFacility facility where facility.facilityId=?",facilityId));
 		FacilityDTO dto=new FacilityDTO();
 		dto.setFacilityId(facility.getFacilityId());

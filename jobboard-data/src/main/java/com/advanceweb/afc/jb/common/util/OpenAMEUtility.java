@@ -3,21 +3,19 @@ package com.advanceweb.afc.jb.common.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.SecureRandom;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
-
-import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.MerUser;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
-
-import java.security.SecureRandom;
-import java.math.BigInteger;
+import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.data.entities.MerUser;
 
 
 
@@ -32,10 +30,6 @@ public class OpenAMEUtility {
 	private final static String _READ_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/read?admin=";
 	private final static String _AUTHENTICATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/authenticate?";
 	private final static String _LOGOUT_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/logout?subjectid=";
-
-	
-	
-	
 	
 	
 	public static String newPassword(){
