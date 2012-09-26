@@ -1901,7 +1901,11 @@ select {
 	padding: 17px 5px 0 0;
 	float: left;
 }
-
+.lableText20 {
+	width: 7px;
+	padding: 5px 5px 0 0;
+	float: left;
+}
 .lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6,.lableText7,.lableText8 {
 	width: 160px;
 	float: left;

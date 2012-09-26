@@ -185,8 +185,8 @@ function closePopup() {
 				<span class="lableText8">Employee List: &nbsp;&nbsp; </span>
 				<input type="text" id="empList" name="empList"
 					class="job_seeker_Resume" value="${empList}"/>
-
-				<span class="lableText6">Net Suite ID Number:</span>
+				<span class="lableText20">&nbsp;OR&nbsp;</span>
+				<span class="lableText3">Net Suite ID Number:</span>
 				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
 

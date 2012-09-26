@@ -77,8 +77,8 @@ function closePopup() {
 		$("#save").click(function(event){
 			$.ajax({url: "${pageContext.request.contextPath}/impersonationForFacility/saveEditedFacilty.html",
 				success: function(data){ 
-				    if(data.success != null){
 				    	alert("Data saved successfully");
+				    if(data.success != null){
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){
@@ -97,13 +97,14 @@ function closePopup() {
 			 $("#ErrorMsg").text("");
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/jobPostSearch.html?empList="+empList+"&nsId="+nsId,
 				success: function(data){ 
-						 var pp = true;
-						 alert(data.success == pp);
-						 if (data.success == pp) {	
+						 var val = true;
+						 if (data.success == val) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
 							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html');							
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
+							 $("#facilityListId").html('');
+							 //$("#healthSystemId").is(':checked') = false;
 						 }
 						 //alert(data.nsId);
 				},
@@ -124,7 +125,7 @@ function closePopup() {
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
-			<h2>JOB POSTING INVENTORY</h2>
+			<h2>MANAGE/EDIT FACILITY</h2>
 			<a href="#"><img src="../resources/images/Close.png"
 				title="Close" width="19" height="19" onclick="closePopup();"
 				alt=""></a>
@@ -140,20 +141,23 @@ function closePopup() {
 				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
 				<form:input path="compName" id="empList" name="empList"
 					class="job_seeker_Resume" value="${empList}"/>
+					<span class="lableText20">&nbsp;OR&nbsp;</span>
 
-				<span class="lableText6">Net Suite ID Number:</span>
+				<span class="lableText3">Net Suite ID Number:</span>
 				<form:input path="nsId" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
 
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange" />
 			</div>
-			<div class="row">
+			<div class="row" >
 				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
+				<div id="facilityListId">
 				<c:forEach items="${facilityList}" var="item">
 					${item.companyName}<br/>
 				</c:forEach>
-				<form:checkbox path="healthSystem" label="${isHealthLable}"/> 
+				</div>
+				<form:checkbox path="healthSystem" label="Health System" id="healthSystemId"/> 
 			</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">

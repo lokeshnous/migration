@@ -59,7 +59,7 @@ public class AdminJobPostingInventoryController {
 			session.setAttribute("nsId", id);
 			if (StringUtils.isEmpty(empList) && StringUtils.isEmpty(id)) {
 				status = false;
-				jsonObject.put("errMsg", "enter fields");
+				jsonObject.put("errMsg", "Please enter any one field");
 				jsonObject.put("success", status);
 				return jsonObject;
 			}
@@ -78,9 +78,9 @@ public class AdminJobPostingInventoryController {
 					}
 				} else {
 					status = false;
-					jsonObject.put("errMsg", "Wrong comp name");
+					jsonObject.put("errMsg", "Please enter valid company name");
 					if (id.length() != 0) {
-						jsonObject.put("errMsg", "Wrong comp name & id");
+						jsonObject.put("errMsg", "Please enter valid company name OR Net Suite Id");
 						jsonObject.put("success", status);
 						return jsonObject;
 					}
@@ -88,21 +88,29 @@ public class AdminJobPostingInventoryController {
 			}
 
 			if (id.length() != 0) {
+				try{
 				nsId = Integer.parseInt(id);
+				}catch(Exception ex){
+					status = false;
+					LOGGER.info("Excption occurred in jobSearchByComName Netsute Format : "+ex);
+					jsonObject.put("errMsg", "Please enter valid Net Suite Id");
+					jsonObject.put("success", status);
+					return jsonObject;
+				}
 				boolean val = adminService.validateNetSuitId(nsId);
 				if (val) {
 					session.setAttribute(MMJBCommonConstants.NS_CUSTOMER_ID,
 							nsId);
 				} else {
 					status = false;
-					jsonObject.put("errMsg", "Wrong comp id");
+					jsonObject.put("errMsg", "Please enter valid Net Suite Id");
 					jsonObject.put("success", status);
 					return jsonObject;
 				}
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("Manager Edit Job Posting Search Option");
+			LOGGER.info("Excption occurred in jobSearchByComName : "+e);
 		}
 		jsonObject.put("success", status);
 		return jsonObject;
