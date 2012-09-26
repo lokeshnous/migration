@@ -120,7 +120,7 @@
 								scraping, we pull them over from your website each week. Contact
 								us today for pricing!
 							<div class="clearfix"></div>
-							<span class="FloatLeft marginTop40"><a
+							<span class="FloatLeft marginTop40"><a onclick="sendEmail();"
 								name="purchaseJobPostingId2"
 								href="../employerPostJobs/sendEmailForGold.html?package=ezpost"
 								class="btn_sm orange">REQUEST PRICING</a></span>
@@ -270,7 +270,7 @@
 											src="../resources/images/more_orange.png" width="11"
 											height="10"></a></span>
 								</p>
-								<span class="FloatLeft marginTop20"><a
+								<span class="FloatLeft marginTop20"><a onclick="sendEmail();"
 									href="../employerPostJobs/sendEmailForGold.html?package=platinum"
 									class="btn_sm orange">REQUEST PRICING</a></span>
 								<div class="PlayDemo marginTop15">
