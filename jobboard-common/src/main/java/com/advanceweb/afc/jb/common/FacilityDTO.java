@@ -63,6 +63,16 @@ public class FacilityDTO {
 	private int  facilityParentId;
 
 	private int nsCustomerID;
+	private int roleId;
+	
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
 
 	public Integer getFacilityId() {
 		return facilityId;
