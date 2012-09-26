@@ -104,6 +104,9 @@ public class AdmFacility implements Serializable {
 	@Column(name="ns_customer_id")
 	private int nsCustomerID;
 	
+	@Column(name="template_id")
+	private int templateId=0;
+	
 	//bi-directional many-to-one association to AdmFacility
 //	@OneToMany(mappedBy="admFacility")
 //	private List<AdmFacility> admFacilities;
@@ -428,6 +431,14 @@ public class AdmFacility implements Serializable {
 
 	public void setNsCustomerID(int nsCustomerID) {
 		this.nsCustomerID = nsCustomerID;
+	}
+
+	public int getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(int templateId) {
+		this.templateId = templateId;
 	}
 
 	public List<AdmFacilityInventory> getAdmFacilityInventories() {
