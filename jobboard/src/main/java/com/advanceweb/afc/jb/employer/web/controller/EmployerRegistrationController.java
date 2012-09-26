@@ -109,7 +109,26 @@ public class EmployerRegistrationController {
 	
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
-
+	
+	@Value("${account_first_name}")
+	private String accountFirstName;
+	@Value("${account_last_name}")
+	private String accountLastName;
+	@Value("${account_company_name}")
+	private String accountCompanyName;
+	@Value("${account_zip_code}")
+	private String accountZipCode;
+	@Value("${account_state}")
+	private String accountState;
+	@Value("${account_country}")
+	private String accountCountry;
+	@Value("${account_city}")
+	private String accountCity;
+	
+			
+			
+			
+			
 	@Autowired
 	private LoginService loginService;
 
@@ -348,6 +367,20 @@ public class EmployerRegistrationController {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
+				}else if (null == employeeAccountForm.getFirstName()) {
+					return accountFirstName;
+				}else if (null == employeeAccountForm.getLastName()) {
+					return accountLastName;
+				}else if (null == employeeAccountForm.getZipCode()) {
+					return accountZipCode;
+				}else if (null == employeeAccountForm.getCityOrTown()) {
+					return accountCity;
+				}else if (null == employeeAccountForm.getCompany()) {
+					return accountCompanyName;
+				}else if (null == employeeAccountForm.getCountry()) {
+					return accountCountry;
+				}else if (null == employeeAccountForm.getState()) {
+					return accountState;
 				}else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
 					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
@@ -397,24 +430,46 @@ public class EmployerRegistrationController {
 				return MMJBCommonConstants.PHONE_NO;
 			} else if (null == employeeBillingForm.getPhone()) {
 				return MMJBCommonConstants.PHONE_NULL_NO;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getFnameForBillingAddr()) {
+				return accountFirstName;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getLnameForBillingAddr()) {
+				return accountLastName;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getZipCodeForBillingAddr()) {
+				return accountZipCode;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getCityOrTownForBillingAddr()) {
+				return accountCity;
+			} else if (null == employeeBillingForm.getCompany()) {
+				return accountCompanyName;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getCountryForBillingAddr()) {
+				return accountCountry;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getStateBillingAddress()) {
+				return accountState;
 			}
 
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
 						.transformBillingProfileFormToDto(employeeBillingForm);
-				isUpdated=empRegService.editUser(dto, admfacilityid, userId,
+				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
-				if(isUpdated){
+				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
-				}else{
+				} else {
 					return MMJBCommonConstants.UPDATE_ERROR;
 				}
 
 			} else {
-				//if (listProfAttribForms.getEmail().toString().equals(employeeBillingForm.getEmail())) {
-					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				//}
+				// if
+				// (listProfAttribForms.getEmail().toString().equals(employeeBillingForm.getEmail()))
+				// {
+				// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				// }
 				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 				AccountBillingDTO billingAddressDTO = transformPaymentMethod
 						.transformDataBillingAddreFormToDto(billingAddressForm);
