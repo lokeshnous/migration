@@ -157,9 +157,9 @@ public class CustomerDetailsWSTest extends ServiceTest {
 					emailList.add(innerJsonObj.getString("email"));
 					System.out.println("contacts=>"+innerJsonObj.getString("email"));
 				}
-				System.out.println("emailList=="+emailList);
+//				System.out.println("emailList=="+emailList);
 				
-				System.out.println(jsonObject.get("contactroles"));
+//				System.out.println(jsonObject.get("contactroles"));
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -177,7 +177,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 			e.printStackTrace();
 			throw new RuntimeException("Failed to get a string represenation of the response",e);
 		}
-		System.out.println("Result for get Customer Details user="+jsonResult);
+//		System.out.println("Result for get Customer Details user="+jsonResult);
 		
 		return jsonResult;
 	 }
@@ -203,7 +203,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
             e.printStackTrace();
             throw new RuntimeException("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for GET ItemServices details="+jsonResponseString);
+//        System.out.println("Json Response String for GET ItemServices details="+jsonResponseString);
         return jsonResponseString;
 		 
 	 }
