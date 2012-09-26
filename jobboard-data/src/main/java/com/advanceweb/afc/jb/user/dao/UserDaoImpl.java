@@ -166,18 +166,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		return count;
 	}
-
-	@SuppressWarnings("unchecked")
-	public int getfacility(int facilityId) {
+	
+	public int getfacility(int facilityId){
 		AdmRole role = DataAccessUtils.uniqueResult(hibernateTemplate.find(
 				"from AdmRole role where role.name=?", "facility_admin"));
-		AdmUserFacility facility = DataAccessUtils
-				.uniqueResult(hibernateTemplate
-						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
-								role.getRoleId(), facilityId));
+		AdmUserFacility facility=DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",role.getRoleId(),facilityId));
 		return facility.getFacilityPK().getUserId();
 	}
-
+	
 	@Override
 	public UserDTO getUserByUserId(int userId) {
 		UserDTO userDTO = null;
@@ -197,15 +193,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userDTO;
 	}
-
-	@SuppressWarnings("unchecked")
-	public FacilityDTO getFacilityByFacilityId(int facilityId) {
-		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplate
-				.find("from AdmFacility facility where facility.facilityId=?",
-						facilityId));
-		FacilityDTO dto = new FacilityDTO();
+	
+	public FacilityDTO getFacilityByFacilityId(int facilityId){
+		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplate.find(
+				"from AdmFacility facility where facility.facilityId=?",facilityId));
+		FacilityDTO dto=new FacilityDTO();
 		dto.setFacilityId(facility.getFacilityId());
 		dto.setName(facility.getName());
+		dto.setRoleId(facility.getAdmUserFacilities().get(0).getFacilityPK().getRoleId());
 		return dto;
 	}
 
