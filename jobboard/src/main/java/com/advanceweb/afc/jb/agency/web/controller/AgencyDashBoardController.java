@@ -105,25 +105,8 @@ public class AgencyDashBoardController {
 		int agencyUserId = (Integer) session.getAttribute("userId");
 		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
 		Set<String> stateList = new HashSet<String>();
-		String enableAccess = "true";
-		String enablePostEditAccess = "true";
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		//added for manage access permission
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
-		if (roleList.getRoleId() == Integer
-				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
-			enableAccess = "false";
-			model.addObject("enableAccess", enableAccess);
-		} else if (roleList.getRoleId() == Integer
-				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
-			enablePostEditAccess = "false";
-			model.addObject("enablePostEditAccess", enablePostEditAccess);
-		}
-		model.addObject("enableAccess", enableAccess);
-		model.addObject("enablePostEditAccess", enablePostEditAccess);
 		List<FacilityDTO> assocEmplyrsNames = impersonateAgencyService
 				.getAssocEmployerNames(agencyUserId, facilityId);
 		for (FacilityDTO assocEmplyr : assocEmplyrsNames) {
@@ -542,6 +525,13 @@ public class AgencyDashBoardController {
 		session.setAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID,session.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		session.setAttribute(MMJBCommonConstants.AGENCY_USER_NAME,session.getAttribute(MMJBCommonConstants.USER_NAME));
 		session.setAttribute(MMJBCommonConstants.AGENCY_EMAIL,session.getAttribute(MMJBCommonConstants.USER_EMAIL));
+		FacilityDTO facilityDto=loginService.getFacilityByFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		if((facilityDto.getRoleId()==6)){
+			session.setAttribute("postEdit","postEdit");
+		}
+		if((facilityDto.getRoleId()==5)){
+			session.setAttribute("fullAcess","fullAcess");
+		}
 		int userId=impersonateAgencyService.getfacility(facilityId);
 		UserDTO userDTO=impersonateAgencyService.getUserByUserId(userId);
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
@@ -568,6 +558,8 @@ public class AgencyDashBoardController {
 		session.setAttribute(MMJBCommonConstants.FACILITY_ID,session.getAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID));
 		session.setAttribute(MMJBCommonConstants.USER_NAME,session.getAttribute(MMJBCommonConstants.AGENCY_USER_NAME));
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL,session.getAttribute(MMJBCommonConstants.AGENCY_EMAIL));
+		session.removeAttribute("postEdit");
+		session.removeAttribute("fullAcess");
 		UserDTO userDTO=impersonateAgencyService.getUserByUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 		model.setViewName("redirect:/agency/agencyDashboard.html");
 		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
