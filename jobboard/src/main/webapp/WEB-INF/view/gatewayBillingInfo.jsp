@@ -32,6 +32,8 @@
 		$('[id^=zip]').keypress(validateNumber);
 	});
 	
+	
+	
 	function copyAccToBillingAddr(obj) {
 		var isSelected = obj.value;
 		
@@ -387,7 +389,7 @@
 							<span class="lableText3">Security Code:</span>
 							<form:password path="creditCardInfoForm.securiyCode"
 								name="security_code" id="security_code" 
-								class="job_seeker_password tinyTextBox " />
+								class="job_seeker_password tinyTextBox " maxlength="4"/>
 							<div class="toolTip colorPkrAreaToolTip"><span class="classic">For Visa, MasterCard, and Discover this number is the last 3 digits on back of your card on the signature strip. For American Express this number is the 4 digits above card number at the right on the front of your card.</span></div>	
 							<!-- <span class="floatLeft marginTop6"><img
 								src="../resources/images/Tips_blue_Icon.png" /></span>  -->
@@ -421,7 +423,7 @@
 						<div class="clearfix"></div>
 						<div class="buttonContainer">
 							<span class="floatLeft">
-								<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a>
+								<a id="continueToNext" href="#" class="btn_sm orange" >Continue to Next Step</a>
 								<a href="<%=request.getContextPath()%>/pgiController/cancelPayment.html" class="btn_sm orange">Cancel</a>
 								<a href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html" class="btn_sm orange">Back</a>	
 						</div>
