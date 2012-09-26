@@ -19,15 +19,14 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		$('#save').click(function() { 
-			//alert('123');
+		$('#save').click(function() {
 			$("#promoMediaErrMsg").text('');
 			$("#logoErrMsg").text('');
 			$("#errMsg").text('');
 	        var hasError = true;
-			if($('#textfield4').val()!=''){
+			 if($('#textfield4').val()!=''){
 					var ext = $('#textfield4').val().split('.').pop().toLowerCase();
-					if($.inArray(ext, ['mov','mpg']) == -1) {
+					if($.inArray(ext, ['Mp4','wmv']) == -1) {
 					hasError = false;
 		            $("#promoMediaErrMsg").text('Please enter the valid file');
 				}
@@ -38,7 +37,7 @@
 		            $("#logoErrMsg").text('Please enter the valid file');
 		            hasError = false;
 				}
-			}
+			} 
 	        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 	        var emailaddressVal = $("#companyEmaiAddress").val();
 	        if(emailaddressVal == '') {

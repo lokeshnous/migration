@@ -105,6 +105,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getFacilityId());
 				employerInfoDTO.setRoleId(userFacility.getFacilityPK()
 						.getRoleId());
+				employerInfoDTO.setCustomerNo(String.valueOf(facility.getNsCustomerID()));
 			}
 		}
 
@@ -365,8 +366,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 		boolean bDeactivate = false;
 		try {
 			JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-
-			if (job.getActive() == MMJBCommonConstants.ACTIVE) {
+			Date startDt=new Date(job.getStartDt().getTime());
+			long startDateAsTimestamp = startDt.getTime();
+			long currentTimestamp = new Date().getTime();
+			long endtDateAsTimestamp = job.getEndDt().getTime();
+			if (job.getActive() == MMJBCommonConstants.ACTIVE && (startDateAsTimestamp<=currentTimestamp && endtDateAsTimestamp>currentTimestamp)) {
 				// System should deactivate the job posting which are in
 				// “Active”
 				// status

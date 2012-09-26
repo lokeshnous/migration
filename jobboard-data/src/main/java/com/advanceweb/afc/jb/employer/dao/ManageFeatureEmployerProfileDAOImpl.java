@@ -41,10 +41,15 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	@Autowired
 	private EmployerRegistrationConversionHelper employerRegistrationConversionHelper;
 	
-	private HibernateTemplate hibernateTemplate;
+
+	private HibernateTemplate hibernateTemplateCareers;
+	
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactory) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
+		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
+
 	}
 	
 	/**
@@ -53,9 +58,10 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
-		Session session = sessionFactory.getCurrentSession();
-		AdmFacility facility = employerRegistrationConversionHelper
-				.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO);
+		
+		AdmFacility facility = hibernateTemplateCareers.load(AdmFacility.class, Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
+		facility=employerRegistrationConversionHelper
+		.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO,facility);
 		facility.setFacilityType("FACILITY");
 		facility.setAdminUserId(1);
 		facility.setCreateDt(new Date());
@@ -65,7 +71,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		facility.setNsCustomerID(nsCustomerID);
 		try {
 			if (companyProfileDTO != null) {
-				session.saveOrUpdate(facility);
+				hibernateTemplateCareers.update(facility);
 			}
 
 		} catch (HibernateException e) {
@@ -118,9 +124,8 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 
 		try {
 			if (employerId != 0) {
-				Session session = sessionFactory.openSession();
 
-				AdmFacility admFacility = (AdmFacility) session.get(
+				AdmFacility admFacility = (AdmFacility) hibernateTemplateCareers.get(
 						AdmFacility.class, Long.valueOf(employerId).intValue());
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility
 						.getFacilityId()));
@@ -184,7 +189,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
 		try {
 			@SuppressWarnings("unchecked")
-			List<AdmFacility> admFacilityList = hibernateTemplate
+			List<AdmFacility> admFacilityList = hibernateTemplateCareers
 					.find(" from  AdmFacility WHERE  facilityId  = '" + admFacilityID + "'");
 
 			if (admFacilityList != null) {

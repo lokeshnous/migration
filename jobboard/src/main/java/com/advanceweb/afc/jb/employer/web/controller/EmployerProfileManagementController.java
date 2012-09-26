@@ -87,6 +87,7 @@ public class EmployerProfileManagementController {
 						.getCompanyEmail());
 				employerProfileManagementForm.setPositionTitle(companyProfileDTO
 						.getPositionTitle());
+				
 				employerProfileManagementForm.setLogoPath(companyProfileDTO
 						.getLogoPath());
 				employerProfileManagementForm.setPrimaryColor(companyProfileDTO.getPrimaryColor());
@@ -119,8 +120,9 @@ public class EmployerProfileManagementController {
 		CompanyProfileDTO companyProfileDTO =  manageFeatureEmployerProfile
 				.getEmployerDetails((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		companyProfileDTO.setCompanyName(managementForm.getCompanyName());
+		//companyProfileDTO.setCompanyName(managementForm.getCompanyName());
 		companyProfileDTO.setCompanyOverview(managementForm.getCompanyOverview());
+		
 //		Validate email id
 		checkEmail(managementForm.getCompanyEmail(), result);
 		/*companyProfileDTO.setFacilityid( (String) session
@@ -257,7 +259,8 @@ public class EmployerProfileManagementController {
 							.contains(MMJBCommonConstants.MEDIA_TYPE_PPT)
 					|| fileExtension
 							.contains(MMJBCommonConstants.MEDIA_TYPE_PPTX) || fileExtension
-						.contains(MMJBCommonConstants.VIDEO_TYPE_MOV))) {
+						.contains(MMJBCommonConstants.VIDEO_TYPE_MOV)|| fileExtension
+						.contains(MMJBCommonConstants.MEDIA_TYPE_WMV))) {
 				errors.rejectValue("positionalMedia", STR_NOTEMPTY,
 						"Please select the appropriate media file");
 			}

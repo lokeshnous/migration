@@ -31,7 +31,7 @@
 					
 					 if (facilityName.length <= 0 || facilityStreet.length <= 0 || facilityCity.length <= 0
 							 ){
-						$("#facilityErrorMsg").html("<span>Please enter required fields.</span>");
+						$("#facilityErrorMsg").html("<span> Please enter the required fields.</span>");
 					
 					}else{	 
 						$.ajax({url : "${pageContext.request.contextPath}/facility/saveNewFacility.html",

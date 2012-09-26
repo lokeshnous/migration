@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.lookup.dao;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -30,7 +28,6 @@ import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.JobPostedDateDTO;
-import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.MetroAreaDTO;
@@ -66,7 +63,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
-	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productId";
+	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
@@ -516,38 +513,37 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 		try {
 			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
-			List<JobPostingInventoryDTO> inventiryDTO = getInventoryDetails(0, facilityId);
 			List<AdmInventoryDetail> invList = hibernateTemplate.find(FIND_INVENTORY_DETAILS, facilityId);
 			if (!invList.isEmpty()) {
-				for (JobPostingInventoryDTO inv : inventiryDTO) {					
+				for (AdmInventoryDetail inv : invList) {					
 					DropDownDTO dto = new DropDownDTO();
 					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
-					if(MMJBCommonConstants.JOB_POSTING_SLOT.equals(inv.getJbType())){
+					if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
 						List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
 						if(!comboList.isEmpty()){
 							JpJobTypeCombo combo = comboList.get(0);
-							if(inv.getAddon().contains("Job Posting")){
-								inv.setAddon(inv.getAddon().replace("Job Posting",""));
-								if(inv.getAddon().contains("Upgrade+")){
-									inv.setAddon(inv.getAddon().replace("Upgrade",""));
+							if(combo.getAddons().contains("Job Posting")){
+								combo.setAddons(combo.getAddons().replace("Job Posting",""));
+								if(combo.getAddons().contains("Upgrade+")){
+									combo.setAddons(combo.getAddons().replace("Upgrade",""));
 								}
 							}
 							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + "+"
-									+ inv.getAddon().trim());
+									+ combo.getAddons().trim());
 							jbPostings.add(dto);
 						}
 					}else{
 						List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
 						if(!jpTypleList.isEmpty()){
 							JpJobType type = jpTypleList.get(0);
-							if(inv.getAddon().contains("Job Posting")){
-								inv.setAddon(inv.getAddon().replace("Job Posting",""));
-								if(inv.getAddon().contains("Upgrade+")){
-									inv.setAddon(inv.getAddon().replace("Upgrade",""));
+							if(type.getName().contains("Job Posting")){
+								type.setName(type.getName().replace("Job Posting",""));
+								if(type.getName().contains("Upgrade+")){
+									type.setName(type.getName().replace("Upgrade",""));
 								}
 							}
 							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + "+"
-									+inv.getAddon().trim());
+									+type.getName().trim());
 							jbPostings.add(dto);
 						}
 					}
@@ -796,38 +792,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		}
 		return null;
 
-	}
-	/**
-	 * This method to get job posting inventory details
-	 * 
-	 * @param userId
-	 * @param facilityId
-	 * @return JobPostingInventoryDTO
-	 */
-	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
-			int facilityId) {
-		Query getInventoryData = hibernateTemplate.getSessionFactory()
-				.getCurrentSession()
-				.createSQLQuery(" { call GetInventoryDetails(?) }");
-		getInventoryData.setInteger(0, facilityId);
-		List<?> invetoryDeatil = getInventoryData.list();
-		Iterator<?> iterator = invetoryDeatil.iterator();
-		List<JobPostingInventoryDTO> inventoryDTOs = new ArrayList<JobPostingInventoryDTO>();
-		while (iterator.hasNext()) {
-			JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
-			Object[] row = (Object[]) iterator.next();
-			BigDecimal qty = (BigDecimal) row[4];
-			BigDecimal availqty = (BigDecimal) row[5];
-			dto.setProductId((Integer) row[0]);
-			dto.setProductType((String) row[1]);
-			dto.setJbType((String) row[2]);
-			dto.setAddon((String) row[3]);
-			dto.setQuantity(qty.intValue());
-			dto.setAvailableQty(availqty.intValue());
-			dto.setInvDetailId((Integer) row[6]);
-			inventoryDTOs.add(dto);
-		}
-		return inventoryDTOs;
 	}
 	
 }

@@ -126,6 +126,7 @@ public class JobPostController {
 //		jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
 		
 		List<DropDownDTO> companyList = getCompanyList(facilityId);
+		jobPostForm.setCustomerNo(employerInfoDTO.getCustomerNo());
 
 		// The following commented section can be deleted.
 
