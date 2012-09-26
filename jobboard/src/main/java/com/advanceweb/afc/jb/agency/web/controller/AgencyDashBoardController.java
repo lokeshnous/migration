@@ -19,6 +19,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,7 +41,7 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+//import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
@@ -96,6 +97,21 @@ public class AgencyDashBoardController {
 	@Autowired
 	private ProfileRegistration employerRegistration;
 	
+	
+	@Value("${account_first_name}")
+	private String accountFirstName;
+	@Value("${account_last_name}")
+	private String accountLastName;
+	@Value("${account_company_name}")
+	private String accountCompanyName;
+	@Value("${account_zip_code}")
+	private String accountZipCode;
+	@Value("${account_state}")
+	private String accountState;
+	@Value("${account_country}")
+	private String accountCountry;
+	@Value("${account_city}")
+	private String accountCity;
 	/*@Autowired
 	EmployerRegistrationValidation registerValidation;*/
 	
@@ -150,6 +166,20 @@ public class AgencyDashBoardController {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
+				}else if (null == employeeAccountForm.getFirstName()) {
+					return accountFirstName;
+				}else if (null == employeeAccountForm.getLastName()) {
+					return accountLastName;
+				}else if (null == employeeAccountForm.getZipCode()) {
+					return accountZipCode;
+				}else if (null == employeeAccountForm.getCityOrTown()) {
+					return accountCity;
+				}else if (null == employeeAccountForm.getCompany()) {
+					return accountCompanyName;
+				}else if (null == employeeAccountForm.getCountry()) {
+					return accountCountry;
+				}else if (null == employeeAccountForm.getState()) {
+					return accountState;
 				}else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
 					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
@@ -200,6 +230,26 @@ public class AgencyDashBoardController {
 				return MMJBCommonConstants.PHONE_NO;
 			} else if (null == employeeBillingForm.getPhone()) {
 				return MMJBCommonConstants.PHONE_NULL_NO;
+			}else if (null == employeeBillingForm.getBillingAddressForm()
+					.getFnameForBillingAddr()) {
+				return accountFirstName;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getLnameForBillingAddr()) {
+				return accountLastName;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getZipCodeForBillingAddr()) {
+				return accountZipCode;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getCityOrTownForBillingAddr()) {
+				return accountCity;
+			} else if (null == employeeBillingForm.getCompany()) {
+				return accountCompanyName;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getCountryForBillingAddr()) {
+				return accountCountry;
+			} else if (null == employeeBillingForm.getBillingAddressForm()
+					.getStateBillingAddress()) {
+				return accountState;
 			}
 
 			if (listProfAttribForms.getCount() > 0) {
