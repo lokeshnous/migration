@@ -134,7 +134,7 @@
 					backgroundColor:'#F0F0F0',
 					buttons: {
 						"Schedule": function() {
-							if($("#startDate").val() != ''){
+							if($.trim($("#startDate").val()) != ''){
 								$( this ).dialog( "close" );
 								$("#scheduleJobButHideId").click();
 							}else{
