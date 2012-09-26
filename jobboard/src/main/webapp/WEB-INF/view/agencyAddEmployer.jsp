@@ -41,9 +41,9 @@
 				        	var NameData = new Array();
 				        	
 							var empName = $("#emplyrNameAutoComplte").val();
-							if (empName == '') {
-								empName = 'a';									
-							}
+							/* if (empName == '') {
+								empName = '';									
+							} */
 							
 							$.ajax({
 						        type: "GET",

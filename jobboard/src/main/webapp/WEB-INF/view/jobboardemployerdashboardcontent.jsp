@@ -92,6 +92,8 @@
 
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Profile Management</h2>
+						<c:if test="<%=!(session.getAttribute(\"postEdit\")!=null )%>">
+						<c:if test="<%=!(session.getAttribute(\"fullAcess\")!=null )%>">
 						<div class="lableTextDashBoard">
 							<p>
 								<a
@@ -110,6 +112,7 @@
 						<%-- <c:if
 							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}"> --%>
 							<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
+							
 							<div class="lableTextDashBoard">
 								<p>
 									<a id="accessPermissioPopUp"
@@ -117,7 +120,10 @@
 										Access Permissions</a>
 								</p>
 							</div>
+							
 							</security:authorize>
+							</c:if>
+							</c:if>
 						<%-- </c:if> --%>
 						<div class="lableTextDashBoard">
 							<p>
@@ -148,6 +154,7 @@
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Job Posting</h2>
 						<%-- <c:if test="${ enablePostEditAccess eq 'true'}"> --%>
+						<c:if test="<%=!(session.getAttribute(\"postEdit\")!=null)%>">
 						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 							<div class="lableTextDashBoard">
 								<p>
@@ -157,7 +164,7 @@
 								</p>
 							</div>
 							</security:authorize>
-						<%-- </c:if> --%>
+						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
 								<a
@@ -203,6 +210,7 @@
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Manage Applicants</h2>
+						<c:if test="<%=!(session.getAttribute(\"postEdit\")!=null)%>">
 						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 					<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 							<div class="lableTextDashBoard">
@@ -211,7 +219,7 @@
 								</p>
 							</div>
 							</security:authorize>
-						<%-- </c:if> --%>
+						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
 								<a href="">Manage Job-Seekers</a>
