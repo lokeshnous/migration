@@ -340,7 +340,7 @@
 								<span class="classic">These videos will appear as
 									thumbnails in your interactive gallery. They will expand to
 									full size and play upon being clicked. The file size limit is
-									XX MB. Accepted file types include .mov and .mpg.</span>
+									${brandingTemplateForm.videoSizeLimit} MB. Accepted file types include .mov and .mpg.</span>
 							</div>
 						</div>
 						

@@ -73,6 +73,9 @@ public class BrandingTemplateController {
 
 	private @Value("${imageSizeLimit}")
 	String imageSizeLimit;
+	
+	private @Value("${videoSizeLimit}")
+	String videoSizeLimit;
 
 	private @Value("${empBrandFileError}")
 	String empBrandFileError;
@@ -696,7 +699,9 @@ public class BrandingTemplateController {
 		nonEmptyVideoList.add(videoForm);
 		brandingTemplateForm.setListVideos(nonEmptyVideoList);
 
-		brandingTemplateForm.setImageSizeLimit(imageSizeLimit.substring(0, imageSizeLimit.length()-3));
+		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
+		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
+		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		// Dummy list created to have a non zero List
@@ -972,7 +977,9 @@ public class BrandingTemplateController {
 			brandingTemplateForm.setChosenLogo(getOriginalName(brandingTemplateForm.getLogoPath()));
 		}
 		
-		brandingTemplateForm.setImageSizeLimit(imageSizeLimit.substring(0, imageSizeLimit.length()-3));
+		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
+		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
+		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		// model.setViewName("editBrandingTemplate");
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);

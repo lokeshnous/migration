@@ -255,7 +255,8 @@ public interface MMJBCommonConstants {
 	int INT_PLATINUM = 3;
 	String ADDITIONAL_IMAGE = "Additional Image";
 	String VIDEO = "Video";
-	
+	int KILO_BYTE=1000;
+	int MEGA_BYTE=1000000;
 	
 	// Media file format-Manage Featured Employer Profile
 	String VIDEO_TYPE_MOV = ".mov";
