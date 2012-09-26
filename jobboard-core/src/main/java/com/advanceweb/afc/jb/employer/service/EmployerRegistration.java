@@ -39,10 +39,10 @@ public class EmployerRegistration implements ProfileRegistration,
 	public EmployerRegistration() {
 
 	}
-
-	public void finalize() throws Throwable {
-
-	}
+// Commented empty finalize method for PMD fix
+//	public void finalize() throws Throwable {
+//
+//	}
 
 	/**
 	 * /**
