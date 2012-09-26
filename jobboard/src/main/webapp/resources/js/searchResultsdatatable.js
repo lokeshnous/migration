@@ -73,6 +73,8 @@ jQuery(document).ready(function() {
 				success : function(data) {
 					$.each(data, function(key, val) {
 						if (key == "applyLink") {
+							$('#topjobActionInfo'+jobId).html("");
+							$('#topjobActionInfo').html("");
 							window.open(val, '_blank');
 						}
 					});
@@ -391,6 +393,7 @@ jQuery(document).ready(function() {
 						success : function(data) {
 							$.each(data, function(key, val) {
 								if (key == "applyLink") {
+									$('#bottomjobActionInfo').html("");
 									window.open(val, '_blank');
 								}
 							});
