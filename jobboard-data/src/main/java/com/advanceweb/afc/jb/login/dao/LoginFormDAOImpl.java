@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.advanceweb.afc.jb.common.LoginDTO;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
@@ -51,8 +53,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
 
-		if (listMerUser != null && !listMerUser.isEmpty())
-		{
+		if (listMerUser != null && !listMerUser.isEmpty()) {
 			MerUser merUserNew = listMerUser.get(0);
 			loggedinUserId = merUserNew.getUserId();
 			loginFormDTO.setEmailAddress(merUserNew.getEmail());
@@ -66,8 +67,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 			List<AdmUserRole> listAdmUserRole = hibernateTemplate
 					.find("from AdmUserRole e where e.id.userId = "
 							+ loggedinUserId);
-			
-			
+
 			if (listAdmUserRole != null && !listAdmUserRole.isEmpty()) {
 				AdmUserRole admUserRoleNew = listAdmUserRole.get(0);
 				loginFormDTO.setRoleId(admUserRoleNew.getRolePK().getRoleId());
@@ -75,26 +75,33 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		}
 		return loginFormDTO;
 	}
-	
+
 	/**
 	 * Get the user password based on email
+	 * 
 	 * @param email
 	 * @return
 	 */
-	public LoginDTO getUserEmailDetails(String email){
+	public LoginDTO getUserEmailDetails(String email) {
 		LoginDTO userDetailsLoginFormDTO = new LoginDTO();
-		
+
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
-		
+
 		if (!(listMerUser.isEmpty()) && !listMerUser.isEmpty()) {
 			MerUser merUserNew = listMerUser.get(0);
-			//loggedinUserId = merUserNew.getUserId();
 			userDetailsLoginFormDTO.setEmailAddress(merUserNew.getEmail());
 			userDetailsLoginFormDTO.setPassword(merUserNew.getPassword());
 			userDetailsLoginFormDTO.setUserID(merUserNew.getUserId());
 		}
-		
+
+		if (userDetailsLoginFormDTO.getUserID() != 0) {
+			AdmUserFacility facility = (AdmUserFacility) hibernateTemplate
+					.find("from AdmUserFacility e where e.id.userId = "
+							+ userDetailsLoginFormDTO.getUserID()).get(0);
+			userDetailsLoginFormDTO
+					.setRoleId(facility.getAdmRole().getRoleId());
+		}
 		return userDetailsLoginFormDTO;
 	}
 }

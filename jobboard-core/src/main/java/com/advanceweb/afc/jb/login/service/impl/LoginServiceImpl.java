@@ -12,7 +12,6 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;

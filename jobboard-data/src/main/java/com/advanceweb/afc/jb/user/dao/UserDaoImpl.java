@@ -19,13 +19,11 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
-import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
@@ -168,14 +166,18 @@ public class UserDaoImpl implements UserDao {
 		}
 		return count;
 	}
-	
-	public int getfacility(int facilityId){
+
+	@SuppressWarnings("unchecked")
+	public int getfacility(int facilityId) {
 		AdmRole role = DataAccessUtils.uniqueResult(hibernateTemplate.find(
 				"from AdmRole role where role.name=?", "facility_admin"));
-		AdmUserFacility facility=DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",role.getRoleId(),facilityId));
+		AdmUserFacility facility = DataAccessUtils
+				.uniqueResult(hibernateTemplate
+						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
+								role.getRoleId(), facilityId));
 		return facility.getFacilityPK().getUserId();
 	}
-	
+
 	@Override
 	public UserDTO getUserByUserId(int userId) {
 		UserDTO userDTO = null;
@@ -195,11 +197,13 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userDTO;
 	}
-	
-	public FacilityDTO getFacilityByFacilityId(int facilityId){
-		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplate.find(
-				"from AdmFacility facility where facility.facilityId=?",facilityId));
-		FacilityDTO dto=new FacilityDTO();
+
+	@SuppressWarnings("unchecked")
+	public FacilityDTO getFacilityByFacilityId(int facilityId) {
+		AdmFacility facility = DataAccessUtils.uniqueResult(hibernateTemplate
+				.find("from AdmFacility facility where facility.facilityId=?",
+						facilityId));
+		FacilityDTO dto = new FacilityDTO();
 		dto.setFacilityId(facility.getFacilityId());
 		dto.setName(facility.getName());
 		return dto;
@@ -224,9 +228,9 @@ public class UserDaoImpl implements UserDao {
 		if (admFacility.getFacilityType().equals(
 				MMJBCommonConstants.FACILITY_GROUP)) {
 			try {
-				facilityList = hibernateTemplate.find(
-						"from AdmFacility e where e.facilityParentId=?",
-						facilityId);
+				facilityList = hibernateTemplate
+						.find("from AdmFacility e where e.facilityParentId=? and e.deleteDt is Null",
+								facilityId);
 			} catch (HibernateException e) {
 				throw new JobBoardDataException(
 						"Error occured while getting the facility details from Database"

@@ -23,8 +23,8 @@ public class LoginFormValidator {
 
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String NOTEMPTY="NotEmpty";
-	
+	private static final String NOTEMPTY = "NotEmpty";
+
 	public boolean supports(Class<?> form) {
 		return JobSeekerRegistrationForm.class.isAssignableFrom(form);
 	}
@@ -46,7 +46,8 @@ public class LoginFormValidator {
 		if (!StringUtils.isEmpty(loginForm.getEmailAddress())
 				&& !validateEmailPattern(loginForm.getEmailAddress())) {
 
-			errors.rejectValue("emailAddress", NOTEMPTY, "Please enter valid Email address");
+			errors.rejectValue("emailAddress", NOTEMPTY,
+					"Please enter valid Email address");
 
 		}
 	}
@@ -141,22 +142,40 @@ public class LoginFormValidator {
 	}
 
 	/**
-	 * Validation for forgot password
+	 * Validation for forgot password based on email and user role id
 	 * 
 	 * @param form
 	 * @param userDetailsLoginFormDTO
 	 * @return
 	 */
 	public boolean validateEmailValues(String email,
-			LoginDTO userDetailsLoginFormDTO) {
+			LoginDTO userDetailsLoginFormDTO, String page) {
 
-		if (email != null && userDetailsLoginFormDTO != null
-				&& email.equals(userDetailsLoginFormDTO.getEmailAddress())) {
+		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
+			if (email != null
+					&& userDetailsLoginFormDTO != null
+					&& email.equals(userDetailsLoginFormDTO.getEmailAddress())
+					&& userDetailsLoginFormDTO.getRoleId() == MMJBCommonConstants.JOBSEEKER_ROLE_ID) {
 
-			return true;
+				return true;
 
+			}
+		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
+			if (email != null
+					&& userDetailsLoginFormDTO != null
+					&& email.equals(userDetailsLoginFormDTO.getEmailAddress())
+					&& userDetailsLoginFormDTO.getRoleId() == MMJBCommonConstants.EMPLOYER_ROLE_ID) {
+
+				return true;
+
+			}
+		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
+			if (email != null && userDetailsLoginFormDTO != null
+					&& email.equals(userDetailsLoginFormDTO.getEmailAddress())) {
+				return true;
+
+			}
 		}
 		return false;
-
 	}
 }
