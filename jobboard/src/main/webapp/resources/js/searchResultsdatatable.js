@@ -63,6 +63,7 @@ jQuery(document).ready(function() {
 		}
 		function applyThisJob(jobId) {
 			$('#topjobActionInfo'+jobId).html("Processing...");
+			$('#topjobActionInfo').html("Processing...");
 			$.ajax({
 				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
 				data : ({
@@ -380,7 +381,7 @@ jQuery(document).ready(function() {
 				}
 
 				function btapplyThisJob(jobId) {
-					$('#bottomjobActionInfo'+jobId).html("Processing...");
+					$('#bottomjobActionInfo').html("Processing...");
 					$.ajax({
 						url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
 						data : ({
