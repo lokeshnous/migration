@@ -91,12 +91,13 @@ function closePopup() {
 		
 		
 		$("#save").click(function(event){
+			$("#ErrorMsg").text("");
 			if(!validateTable()){
-				alert("Please enter the value!");
+				$("#ErrorMsg").text("Please enter the value!");
 				return false;
 			}
 			if(!validateTable1()){
-				alert("Please enter the value!");
+				$("#ErrorMsg").text("Please enter the value!");
 				return false;
 			}
 			var stringObj;
@@ -145,6 +146,9 @@ function closePopup() {
 							$.nmManual('${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html');							
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
+							 $("#tb_save_search tbody").remove();
+							 $("#jp_slot_save tbody").remove();
+							 
 						 }
 						 //alert(data.nsId);
 				},

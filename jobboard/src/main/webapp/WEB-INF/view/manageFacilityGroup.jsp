@@ -52,7 +52,7 @@ function closePopup() {
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('[id^=nsId]').keypress(validateNumber);
-		$(".job_seeker_Resume").keypress(validateNumber);
+		$(".onlyNum").keypress(validateNumber);
 			var empList = $.trim($("#empList").val());
 			var nsId = $.trim($("#nsId").val());
 		function cancelProcess() {
@@ -75,28 +75,10 @@ function closePopup() {
 		}
 		
 		$("#save").click(function(event){
-			if(!validateTable()){
-				alert("Please enter the value!");
-				return false;
-			}
-			var stringObj;
-			var stringObjNew = '';
-			//storing data in key  value manner
-			$('#tb_save_search > tbody > tr').each(function(){
-			    var inveId  = $(this).attr("id");   
-			    var availQty = $(this).find("td").eq(3).children().val(); 
-			    stringObj = inveId +"="+ availQty;
-			    stringObjNew = stringObj +";" + stringObjNew ;
-			 });
-			$('#jp_slot_save > tbody > tr').each(function(){
-			    var inveId  = $(this).attr("id");   
-			    var availQty = $(this).find("td").eq(3).children().val(); 
-			    stringObj = inveId +"="+ availQty;
-			    stringObjNew = stringObj +";" + stringObjNew ;
-			 });
-			$.ajax({url: "${pageContext.request.contextPath}/impersonationForFacility/saveEditedFacilty.html?stringObjNew="+stringObjNew,
+			$.ajax({url: "${pageContext.request.contextPath}/impersonationForFacility/saveEditedFacilty.html",
 				success: function(data){ 
 				    if(data.success != null){
+				    	alert("Data saved successfully");
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){
@@ -116,7 +98,7 @@ function closePopup() {
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/jobPostSearch.html?empList="+empList+"&nsId="+nsId,
 				success: function(data){ 
 						 var pp = true;
-						 //alert(data.success == pp);
+						 alert(data.success == pp);
 						 if (data.success == pp) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
 							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html');							
@@ -126,7 +108,7 @@ function closePopup() {
 						 //alert(data.nsId);
 				},
 				error: function(response) {
-					//alert("Server Error : "+response.status);
+					alert("Server Error : "+response.status);
 				},
 				complete: function() {
 				}
@@ -151,16 +133,16 @@ function closePopup() {
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="GET" action="../admininventory/save.html"
-				commandName="inventoryForm">
+			<form:form method="GET" action="../impersonationForFacility/saveEditedFacilty.html"
+				commandName="adminForm">
 
 			<div class="row">
-				<span class="lableText8">Employee List: &nbsp;&nbsp; </span>
-				<input type="text" id="empList" name="empList"
+				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
+				<form:input path="compName" id="empList" name="empList"
 					class="job_seeker_Resume" value="${empList}"/>
 
 				<span class="lableText6">Net Suite ID Number:</span>
-				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume"
+				<form:input path="nsId" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
 
 				<input type="button" value="find" name="find" id="find"
@@ -168,18 +150,14 @@ function closePopup() {
 			</div>
 			<div class="row">
 				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
-				<c:forEach items="${facilityList}" varStatus="item">
-					${item.name}
+				<c:forEach items="${facilityList}" var="item">
+					${item.companyName}<br/>
 				</c:forEach>
-				
-				<form:checkbox path="${facilityList.isHealthSystem}" label="${healthSystemLable}"/>
+				<form:checkbox path="healthSystem" label="${isHealthLable}"/> 
 			</div>
-				<input type="hidden" name="nsId" />
-				<input type="hidden" name="empList" />
 				<input type="hidden" name="pageValue" value="inventoryPage" />
-				
 				<div class="row marginTop20 paddingBottom10">
-					<a id="save" href="" class="purchaseJobPostings btn_sm orange">SAVE</a>
+					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange">
 					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
 				</div>
 			</form:form>

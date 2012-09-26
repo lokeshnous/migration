@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.admin.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,10 +16,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.admin.helper.AdminConversionHelper;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -29,8 +33,10 @@ import com.mysql.jdbc.StringUtils;
 @Repository("adminDAO")
 public class AdminDAOImpl implements AdminDAO {
 
-	private static final Logger LOGGER = Logger
-			.getLogger("AdminDAOImpl.class");
+	private static final Logger LOGGER = Logger.getLogger("AdminDAOImpl.class");
+
+	@Autowired
+	AdminConversionHelper adminConversionHelper;
 
 	private static final String GET_EMAIL = "from MerUser e where e.email = ?";
 	private static final String USER_ROLE = "from AdmUserRole aur where aur.rolePK.userId = ?";
@@ -38,9 +44,10 @@ public class AdminDAOImpl implements AdminDAO {
 	private static final String ADM_FACILITY = "from AdmFacility af where af.facilityId=?";
 	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=? and e.password=?";
 	private static final String VALIDATE_ADM_USERID = "from AdmFacility af where af.adminUserId =?";
-	private static final String GET_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =?";
-	private static final String GET_NS_ID_BY_COMPNAME= "from AdmFacility af1 where af1.name =?";
-	private static final String GET_USERID_BY_FAC_ID = "from AdmUserFacility auf1 where auf1.facilityPK.facilityId=?";  
+	private static final String GET_ADM_FACILITY_BY_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =?";
+	private static final String GET_NS_ID_BY_COMPNAME = "from AdmFacility af1 where af1.name =?";
+	private static final String GET_USERID_BY_FAC_ID = "from AdmUserFacility auf1 where auf1.facilityPK.facilityId=?";
+	private static final String GET_FACILITY_CONTACT_BY_FAC_ID = "from AdmFacilityContact ac where ac.admFacility.facilityId = ? and ac.contactType='PRIMARY'";
 
 	private HibernateTemplate hibernateTemplateTracker;
 
@@ -54,8 +61,7 @@ public class AdminDAOImpl implements AdminDAO {
 				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateEmail(String email) {
@@ -81,8 +87,7 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return status;
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateAdminCredentials(String email, String password) {
@@ -122,43 +127,43 @@ public class AdminDAOImpl implements AdminDAO {
 				MerUser user = usersList.get(0);
 				admUserId = user.getUserId();
 			}
-			//getting user Id for emp / agency
+			// getting user Id for emp / agency
 			List<MerUser> usersList1 = hibernateTemplateTracker.find(GET_EMAIL,
 					adminDTO.getEmpOrAgencyEmail());
 			int facilityId = 0;
 			AdmUserFacility facility = null;
 			if (null != usersList1 && !usersList1.isEmpty()) {
 				MerUser user1 = usersList1.get(0);
-				List<AdmUserFacility> facilityList = hibernateTemplateCareers.find(
-						FACILITY_ID, user1.getUserId());
+				List<AdmUserFacility> facilityList = hibernateTemplateCareers
+						.find(FACILITY_ID, user1.getUserId());
 				if (null != facilityList && !facilityList.isEmpty()) {
 					facility = facilityList.get(0);
 					facilityId = facility.getFacilityPK().getFacilityId();
 				}
 			}
-			List<AdmFacility> admFacilityList = hibernateTemplateCareers.find(ADM_FACILITY,
-					facilityId);
-			AdmFacility admfacility =admFacilityList.get(0);
+			List<AdmFacility> admFacilityList = hibernateTemplateCareers.find(
+					ADM_FACILITY, facilityId);
+			AdmFacility admfacility = admFacilityList.get(0);
 			admfacility.setAdminUserId(admUserId);
-			List<AdmFacility> admList = hibernateTemplateCareers.find(VALIDATE_ADM_USERID,
-					admUserId);
-			
+			List<AdmFacility> admList = hibernateTemplateCareers.find(
+					VALIDATE_ADM_USERID, admUserId);
+
 			if (admList.isEmpty()) {
 				hibernateTemplateCareers.update(admfacility);
-			}else{
+			} else {
 				AdmFacility fac = admList.get(0);
 				fac.setAdminUserId(0);
 				hibernateTemplateCareers.saveOrUpdate(fac);
 				hibernateTemplateCareers.update(admfacility);
 			}
-			
+
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
 		return status;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public EmpSearchDTO validateCompName(String empList) {
@@ -180,6 +185,7 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return dto;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateNetSuitId(int nsId) {
@@ -187,7 +193,7 @@ public class AdminDAOImpl implements AdminDAO {
 		try {
 			if (nsId != 0) {
 				List<AdmFacility> usersList = hibernateTemplateCareers.find(
-						GET_NS_ID, nsId);
+						GET_ADM_FACILITY_BY_NS_ID, nsId);
 
 				if (null != usersList && !usersList.isEmpty()) {
 					AdmFacility user = usersList.get(0);
@@ -201,13 +207,14 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return status;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public EmpSearchDTO getUserIdAndFacilityId(int nsId) {
 		EmpSearchDTO dto = new EmpSearchDTO();
 		int facId = 0;
-		List<AdmFacility> facility = hibernateTemplateCareers.find(GET_NS_ID,
-				nsId);
+		List<AdmFacility> facility = hibernateTemplateCareers.find(
+				GET_ADM_FACILITY_BY_NS_ID, nsId);
 		if (facility != null) {
 			AdmFacility af = facility.get(0);
 			facId = af.getFacilityId();
@@ -221,7 +228,7 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return dto;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveModifiedData(
@@ -239,26 +246,26 @@ public class AdminDAOImpl implements AdminDAO {
 				hibernateTemplateCareers.saveOrUpdate(searchResults);
 			}
 		} catch (HibernateException e) {
-			LOGGER.error("ERROR" +e);
+			LOGGER.error("ERROR" + e);
 		}
 		return true;
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<EmpSearchDTO> getEmpdataByNetSuiteId(int nsId) {
-		List<EmpSearchDTO> dto = new ArrayList<EmpSearchDTO>();
+		List<EmpSearchDTO> emplist = null;
 		try {
 			if (nsId != 0) {
-				
-
+				List<AdmFacility> usersList = hibernateTemplateCareers.find(
+						GET_ADM_FACILITY_BY_NS_ID, nsId);
+				emplist = adminConversionHelper.convertEntityTodDTO(usersList);
 			}
 		} catch (HibernateException e) {
 			LOGGER.info("ERROR" + e);
 		}
-		return null;
+		return emplist;
 	}
-
 
 	/**
 	 * This method to get job posting inventory details
@@ -292,5 +299,103 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return inventoryDTOs;
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public void saveFacility(int nsId) {
+		List<AdmFacility> usersList = hibernateTemplateCareers.find(
+				GET_ADM_FACILITY_BY_NS_ID, nsId);
+		if (!usersList.isEmpty() && usersList != null) {
+			AdmFacility facility = usersList.get(0);
+			int facilityId = facility.getFacilityId();
+			List<AdmFacilityContact> faciCont = hibernateTemplateCareers.find(
+					GET_FACILITY_CONTACT_BY_FAC_ID, facilityId);
+
+			AdmFacilityContact contact = faciCont.get(0);
+			AdmFacility facility2 = new AdmFacility();
+			facility2.setFacilityType(MMJBCommonConstants.FACILITY);
+			facility2.setFacilityParentId(facility.getFacilityId());
+			facility2.setName(facility.getName());
+			facility2.setStreet(facility.getStreet());
+			facility2.setCity(facility.getCity());
+			facility2.setState(facility.getState());
+			facility2.setPostcode(facility.getPostcode());
+			facility2.setCountry(facility.getCountry());
+			facility2.setEmail(facility.getEmail());
+			facility2.setCreateUserId(facility.getCreateUserId());
+			facility2.setNsCustomerID(facility.getNsCustomerID());
+			facility2.setCreateDt(new Date());
+			// AdmFacility facility3 = (AdmFacility)
+			// hibernateTemplateCareers.save(facility2);
+			hibernateTemplateCareers.save(facility2);
+			AdmFacilityContact admFaclityContact = new AdmFacilityContact();
+			admFaclityContact.setAdmFacility(facility2);
+			admFaclityContact.setFirstName(contact.getFirstName());
+			admFaclityContact.setMiddleName(contact.getLastName());
+			admFaclityContact.setContactType(MMJBCommonConstants.PRIMARY);
+			admFaclityContact.setLastName(contact.getLastName());
+			admFaclityContact.setJobTitle(contact.getJobTitle());
+			admFaclityContact.setCompany(contact.getCompany());
+			admFaclityContact.setStreet(contact.getStreet());
+			admFaclityContact.setState(contact.getState());
+			admFaclityContact.setPostcode(contact.getPostcode());
+			admFaclityContact.setCity(contact.getCity());
+			admFaclityContact.setStreet2(contact.getStreet2());
+			admFaclityContact.setCountry(contact.getCountry());
+			admFaclityContact.setEmail(contact.getEmail());
+			admFaclityContact.setPhone(contact.getPhone());
+			admFaclityContact.setPhone2(contact.getPhone2());
+			admFaclityContact.setCreateDt(new Date());
+			admFaclityContact.setActive(1);
+			hibernateTemplateCareers.save(admFaclityContact);
+
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean saveEditFacilityGroup(EmpSearchDTO dto) {
+		int nsId = dto.getNsId();
+		boolean healthSys = dto.isHealthSystem();
+		try {
+			if (healthSys) {
+				List<AdmFacility> usersList = hibernateTemplateCareers.find(
+						GET_ADM_FACILITY_BY_NS_ID, nsId);
+				if (usersList != null && !usersList.isEmpty()) {
+					AdmFacility facility = usersList.get(0);
+					facility.setFacilityType(MMJBCommonConstants.FACILITY_GROUP);
+					facility.setFacilityParentId(Integer
+							.parseInt(MMJBCommonConstants.ZERO));
+					hibernateTemplateCareers.update(facility);
+					saveFacility(nsId);
+				}
+			} else {
+				List<AdmFacility> usersList = hibernateTemplateCareers.find(
+						GET_ADM_FACILITY_BY_NS_ID, nsId);
+				for (AdmFacility admFacility : usersList) {
+
+					if (admFacility.getFacilityType().equalsIgnoreCase(
+							MMJBCommonConstants.FACILITY_GROUP)) {
+						admFacility
+								.setFacilityType(MMJBCommonConstants.FACILITY);
+						hibernateTemplateCareers.update(admFacility);
+					} else {
+						// get facility contact by facility & delete
+						List<AdmFacilityContact> facilityContacts = hibernateTemplateCareers
+								.find(GET_FACILITY_CONTACT_BY_FAC_ID,
+										admFacility.getFacilityId());
+						AdmFacilityContact facilityContact = facilityContacts
+								.get(0);
+						hibernateTemplateCareers.delete(facilityContact);
+						hibernateTemplateCareers.delete(admFacility);
+
+					}
+				}
+			}
+		} catch (HibernateException e) {
+			LOGGER.error("ERROR" + e);
+		}
+		return false;
+	}
+
 }

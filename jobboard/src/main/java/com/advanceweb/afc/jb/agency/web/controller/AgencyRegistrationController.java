@@ -77,6 +77,9 @@ public class AgencyRegistrationController {
 	
 	@Value("${age.email.exists}")
 	private String emailExists;
+	
+	@Value("${ns.validate.user}")
+	private String nsValidateUser;
 
 	@Autowired
 	private LoginService loginService;
@@ -149,18 +152,24 @@ public class AgencyRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createUser(empDTO);
-
-		model.addObject("agencyRegForm", agencyRegistrationForm);
-		session.setAttribute(MMJBCommonConstants.USER_NAME,
-				userDTO.getFirstName() + " " + userDTO.getLastName());
-		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL,
-				userDTO.getEmailId());
-		EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
-				.getUserId());
-		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
-				infoDTO.getFacilityId());
-		model.setViewName("redirect:/agency/agencyDashboard.html");
+		
+		if (userDTO.getEmailId() == null) {
+			model.addObject("message", nsValidateUser);
+			return model;
+		} else {
+			model.addObject("agencyRegForm", agencyRegistrationForm);
+			session.setAttribute(MMJBCommonConstants.USER_NAME,
+					userDTO.getFirstName() + " " + userDTO.getLastName());
+			session.setAttribute(MMJBCommonConstants.USER_ID,
+					userDTO.getUserId());
+			session.setAttribute(MMJBCommonConstants.USER_EMAIL,
+					userDTO.getEmailId());
+			EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
+					.getUserId());
+			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
+					infoDTO.getFacilityId());
+			model.setViewName("redirect:/agency/agencyDashboard.html");
+		}
 		authenticateUserAndSetSession(userDTO, request);
 		LOGGER.info("Registration is completed.");
 		return model;
@@ -217,14 +226,14 @@ public class AgencyRegistrationController {
 		}
 		registerValidation.validate(agencyRegistrationForm, result);
 
-		if (result.hasErrors()) {
-			 model.setViewName(AGENCYREG);
-			return false;
-		}
-		if (agencyRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
+//		if (result.hasErrors()) {
+//			 model.setViewName(AGENCYREG);
+//			return false;
+//		}
+		if (!agencyRegistrationForm.isbReadOnly() && agencyRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
 			result.rejectValue("emailId", "NotEmpty",
 					emailExists);
-			 model.setViewName(AGENCYREG);
+//			 model.setViewName(AGENCYREG);
 			return false;
 		}
 

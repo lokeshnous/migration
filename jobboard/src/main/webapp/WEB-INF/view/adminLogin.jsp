@@ -46,6 +46,8 @@ JAVASCRIPT FILES
 					"790", "450");
 		    $(".inventory").displaypopup(".inventory",
 					"790", "360");
+		    $(".manageFacilityGroup").displaypopup(".manageFacilityGroup",
+					"790", "360");
 		});
 		</script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
@@ -164,8 +166,8 @@ JAVASCRIPT FILES
 				<form:form method="POST">
 					<div class="AdminLinkAlign"><a id="impersonation" class="boldText" href="<%=request.getContextPath()%>/admin/login.html">Impersonation</a></div>
 					<div class="AdminLinkAlign"><a id="editJobPosting" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPosting.html">Manage/Edit Job Posting</a></div>
-					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/admininventory/employer1/jobInventory1.html">Manage/Edit Job Posting Inventory</a></div>
-					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/impersonationForFacility/facilityToFacilityGroup.html">Impersonation for Facility to Facility Group</a></div>
+					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/admin/employer1/jobInventorypopup.html">Manage/Edit Job Posting Inventory</a></div>
+					<div class="AdminLinkAlign"><a id="manageFacilityGroupId" class="inventory boldText" href="<%=request.getContextPath()%>/admin/employer1/manageFacilityGroup.html">Manage/Edit Facility Group </a></div>
 				</form:form>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">

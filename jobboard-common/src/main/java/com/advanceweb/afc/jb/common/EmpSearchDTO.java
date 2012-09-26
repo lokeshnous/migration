@@ -10,6 +10,52 @@ public class EmpSearchDTO {
 	private int userId;
 	private int facilityId;
 	private int nsId;
+	private int facParentId;
+	private String facilityType;
+	private boolean isHealthSystem; 
+
+
+	/**
+	 * @return the isHealthSystem
+	 */
+	public boolean isHealthSystem() {
+		return isHealthSystem;
+	}
+
+	/**
+	 * @param isHealthSystem the isHealthSystem to set
+	 */
+	public void setHealthSystem(boolean isHealthSystem) {
+		this.isHealthSystem = isHealthSystem;
+	}
+
+	/**
+	 * @return the facilityType
+	 */
+	public String getFacilityType() {
+		return facilityType;
+	}
+
+	/**
+	 * @param facilityType the facilityType to set
+	 */
+	public void setFacilityType(String facilityType) {
+		this.facilityType = facilityType;
+	}
+
+	/**
+	 * @return the facParentId
+	 */
+	public int getFacParentId() {
+		return facParentId;
+	}
+
+	/**
+	 * @param facParentId the facParentId to set
+	 */
+	public void setFacParentId(int facParentId) {
+		this.facParentId = facParentId;
+	}
 
 	/**
 	 * @return the nsId

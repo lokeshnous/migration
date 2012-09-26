@@ -62,5 +62,11 @@ public interface AdminService {
 	 */
 	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
 			int facilityId);
+	
+	/**
+	 * @param nsId
+	 * @return
+	 */
+	public boolean saveEditFacilityGroup(EmpSearchDTO dto);
 
 }

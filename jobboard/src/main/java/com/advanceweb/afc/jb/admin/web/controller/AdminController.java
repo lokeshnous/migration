@@ -28,6 +28,7 @@ import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.AdminDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -119,13 +120,37 @@ public class AdminController {
 		return model;
 		
 	}
-	/*@RequestMapping(value="/editJobPostInventory")
-	public ModelAndView editJobPostInventory(){
+	/**
+	 * This method to get job posting inventory details
+	 * 
+	 * @param model
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/employer1/jobInventorypopup", method = RequestMethod.GET)
+	public ModelAndView jobInventory(
+			HttpSession session) {
 		ModelAndView model = new ModelAndView();
+		session.removeAttribute("empList");
+		session.removeAttribute("nsId");
 		model.setViewName("adminEditJobPostInventory");
 		return model;
-		
-	}*/
+	}
+	
+	/**
+	 * This method to get Manage / Edit facility group
+	 * 
+	 * @param model
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/employer1/manageFacilityGroup", method = RequestMethod.GET)
+	public ModelAndView manageFacilityGroup(
+			@ModelAttribute("adminForm") AdminForm adminForm, HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		session.removeAttribute("empList");
+		session.removeAttribute("nsId");
+		model.setViewName("manageFacilityGroup");
+		return model;
+	}
 	/**
 	 * @author kartikm
 	 * Called a function to get the adminEditJobSave page.

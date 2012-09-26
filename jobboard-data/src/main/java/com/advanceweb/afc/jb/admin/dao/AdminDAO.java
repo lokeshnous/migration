@@ -66,5 +66,11 @@ public interface AdminDAO {
 	 * @return JobPostingInventoryDTO
 	 */
 	List<JobPostingInventoryDTO> getInventoryDetails(int userId, int facilityId);
+	
+	/**
+	 * @param nsId
+	 * @return
+	 */
+	boolean saveEditFacilityGroup(EmpSearchDTO dto);
 
 }

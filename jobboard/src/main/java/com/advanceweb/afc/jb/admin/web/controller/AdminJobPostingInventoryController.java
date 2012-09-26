@@ -28,8 +28,6 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.InventoryForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
-import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
-import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
  * 
@@ -55,8 +53,6 @@ public class AdminJobPostingInventoryController {
 		JSONObject jsonObject = new JSONObject();
 		boolean status = true;
 		try {
-			session.removeAttribute("empList");
-			session.removeAttribute("nsId");
 			String empList = request.getParameter("empList");
 			String id = request.getParameter("nsId");
 			session.setAttribute("empList", empList);
@@ -111,7 +107,7 @@ public class AdminJobPostingInventoryController {
 		jsonObject.put("success", status);
 		return jsonObject;
 	}
-
+	
 	/**
 	 * This method to get job posting inventory details
 	 * 
@@ -197,7 +193,7 @@ public class AdminJobPostingInventoryController {
 			model.addObject("jbSlotList", jbSlotList);
 		}
 		// session.removeAttribute("empList");
-		session.removeAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
+//		session.removeAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
 		model.setViewName("adminEditJobPostInventory");
 		return model;
 	}

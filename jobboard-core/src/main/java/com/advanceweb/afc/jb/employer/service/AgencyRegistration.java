@@ -89,7 +89,7 @@ public class AgencyRegistration implements ProfileRegistration {
 	@Override
 	public boolean validateEmail(String email) {
 		// TODO Auto-generated method stub
-		return false;
+		return agencyRegistrationDAO.validateEmail(email);
 	}
 
 	@Override

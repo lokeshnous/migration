@@ -7,14 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.admin.dao.AdminDAO;
 import com.advanceweb.afc.jb.admin.service.AdminService;
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
-import com.advanceweb.afc.jb.job.dao.JobPostInventoryDAO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Service("adminService")
@@ -61,6 +58,10 @@ public class AdminServiceImpl implements ProfileRegistration,
 		return adminDAO.getEmpdataByNetSuiteId(nsId);
 	}
 
+	public boolean saveEditFacilityGroup(EmpSearchDTO dto){
+		return adminDAO.saveEditFacilityGroup(dto);
+	}
+	
 	@Override
 	public boolean deleteProfile(int profileId) {
 		// TODO Auto-generated method stub

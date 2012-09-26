@@ -45,7 +45,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
-	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is not NULL";
+	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is NULL";
 	
 	@Autowired
 	private AgencyRegistrationConversionHelper agencyHelper;
