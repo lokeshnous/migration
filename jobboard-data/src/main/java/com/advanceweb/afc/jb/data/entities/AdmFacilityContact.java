@@ -4,69 +4,74 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the adm_facility_contact database table.
  * 
  */
 @Entity
-@Table(name="adm_facility_contact")
+@Table(name = "adm_facility_contact")
 public class AdmFacilityContact implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="facility_contact_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "facility_contact_id")
 	private int facilityContactId;
-	
+
 	private int active;
 
+	@Column(name = "city")
 	private String city;
 
+	@Column(name = "company")
 	private String company;
 
-	@Column(name="contact_type")
+	@Column(name = "contact_type")
 	private String contactType;
 
+	@Column(name = "country")
 	private String country;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="create_dt")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_dt")
 	private Date createDt;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="delete_dt")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "delete_dt")
 	private Date deleteDt;
 
 	private String email;
 
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
 
-	@Column(name="job_title")
+	@Column(name = "job_title")
 	private String jobTitle;
 
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name="middle_name")
+	@Column(name = "middle_name")
 	private String middleName;
 
+	@Column(name = "phone")
 	private String phone;
 
 	private String phone2;
 
+	@Column(name = "postcode")
 	private String postcode;
 
+	@Column(name = "state")
 	private String state;
 
 	private String street;
 
 	private String street2;
 
-	//bi-directional many-to-one association to AdmFacility
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="facility_id")
+	// bi-directional many-to-one association to AdmFacility
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "facility_id")
 	private AdmFacility admFacility;
 
 	public int getFacilityContactId() {
@@ -120,8 +125,9 @@ public class AdmFacilityContact implements Serializable {
 	public Date getCreateDt() {
 		return this.createDt;
 	}
-	public void setCreateDt(Date createDt) {		
-	    	 this.createDt = createDt;	
+
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
 	}
 
 	public Date getDeleteDt() {
@@ -129,9 +135,8 @@ public class AdmFacilityContact implements Serializable {
 	}
 
 	public void setDeleteDt(final Date deleteDt) {
-		    	 this.deleteDt = deleteDt;
-	     }
-	
+		this.deleteDt = deleteDt;
+	}
 
 	public String getEmail() {
 		return this.email;
@@ -228,5 +233,5 @@ public class AdmFacilityContact implements Serializable {
 	public void setAdmFacility(AdmFacility admFacility) {
 		this.admFacility = admFacility;
 	}
-	
+
 }

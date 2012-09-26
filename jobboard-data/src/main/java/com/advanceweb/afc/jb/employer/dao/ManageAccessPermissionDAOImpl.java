@@ -25,6 +25,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserFacilityPK;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
@@ -46,6 +47,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	private EmployerRegistrationConversionHelper empHelper;
 
 	private static final String VERIFY_EMAIL = "from MerUser where email = ? and deleteDt is NOT NULL";
+
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -61,7 +63,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			int userIdp) {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO);
-			
+
 			if (null != merUser) {
 				if (null != empDTO.getMerUserDTO()
 						&& empDTO.getMerUserDTO().getUserId() > 0) {
@@ -72,6 +74,14 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 					if (null != merUser) {
 						// saving employer credentials
 						hibernateTemplateTracker.saveOrUpdate(merUser);
+					}
+					// saving the employer profile
+					List<MerUserProfile> merUserProfiles = empHelper
+							.transformMerUserDTOToMerUserProfiles(empDTO,
+									merUser);
+					if (merUserProfiles != null) {
+						hibernateTemplateTracker
+								.saveOrUpdateAll(merUserProfiles);
 					}
 					// saving the data in Adm_User_Role
 					saveAdmUserRole(empDTO, userIdp, merUser);
@@ -112,8 +122,12 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		AdmFacility facilityP = (AdmFacility) hibernateTemplateCareers.find(
 				FIND_ADM_FACILITY, facilityIdP).get(0);
 		AdmFacility facility = new AdmFacility();
-
-		facility.setFacilityType(MMJBCommonConstants.FACILITY);
+		if (facilityP.getFacilityType().equals(
+				MMJBCommonConstants.FACILITY_SYSTEM)) {
+			facility.setFacilityType(MMJBCommonConstants.FACILITY_SYSTEM);
+		} else {
+			facility.setFacilityType(MMJBCommonConstants.FACILITY);
+		}
 		facility.setFacilityParentId(facilityIdP);
 		facility.setCreateDt(new Date());
 		facility.setCreateUserId(userIdp);
@@ -213,15 +227,16 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	public boolean deleteJobOwner(int jobOwnerId) {
 		MerUser ownerDetails = hibernateTemplateTracker.get(MerUser.class,
 				jobOwnerId);
-		LOGGER.info("delete Emailid ----"+ownerDetails.getEmail());
+		LOGGER.info("delete Emailid ----" + ownerDetails.getEmail());
 		/**
-		 *  Delete Job owner from OpenAM 
+		 * Delete Job owner from OpenAM
 		 */
-	
-		boolean isDeleted=OpenAMEUtility.openAMDeleteUser(ownerDetails.getEmail());
-		LOGGER.info("Open AM :Employee add owner User is created!"+isDeleted);
-		//Ends OpenAM code
-		
+
+		boolean isDeleted = OpenAMEUtility.openAMDeleteUser(ownerDetails
+				.getEmail());
+		LOGGER.info("Open AM :Employee add owner User is created!" + isDeleted);
+		// Ends OpenAM code
+
 		boolean bDelete = false;
 		try {
 			ownerDetails.setDeleteDt(new Timestamp(new Date().getTime()));
@@ -262,7 +277,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 					// update the role in AdmUserFacility
 					AdmUserFacility admUserFacilityNew = (AdmUserFacility) hibernateTemplateCareers
 							.load(AdmUserFacility.class,
-									admUserFacility.getFacilityPK());				
+									admUserFacility.getFacilityPK());
 
 					if (null != admUserRole.getRolePK()
 							&& admUserRole.getRolePK().getUserId() > 0) {
@@ -272,17 +287,46 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 						if (admUserRole.getRolePK().getRoleId() != accessPermissionDTO
 								.getTypeOfAccess()) {
 							// update the role in AdmUserRole
-							Query updateAdmUserRole = hibernateTemplateCareers.getSessionFactory().getCurrentSession().createSQLQuery(" { call UpdateAdmUserRole(?,?,?) }");
-							updateAdmUserRole.setInteger(0,accessPermissionDTO.getTypeOfAccess());  // first parameter, index starts with 0
-							updateAdmUserRole.setInteger(1,admUserRoleNew.getRolePK().getRoleId()); // secon parameter
-							updateAdmUserRole.setInteger(2,admUserRoleNew.getRolePK().getUserId());
+							Query updateAdmUserRole = hibernateTemplateCareers
+									.getSessionFactory()
+									.getCurrentSession()
+									.createSQLQuery(
+											" { call UpdateAdmUserRole(?,?,?) }");
+							updateAdmUserRole.setInteger(0,
+									accessPermissionDTO.getTypeOfAccess()); // first
+																			// parameter,
+																			// index
+																			// starts
+																			// with
+																			// 0
+							updateAdmUserRole.setInteger(1, admUserRoleNew
+									.getRolePK().getRoleId()); // secon
+																// parameter
+							updateAdmUserRole.setInteger(2, admUserRoleNew
+									.getRolePK().getUserId());
 							// update the role in AdmUserFacility
-							Query updateAdmFacilityUserRole = hibernateTemplateCareers.getSessionFactory().getCurrentSession().createSQLQuery(" { call UpdateAdmUserFacility(?,?,?,?) }");
-							updateAdmFacilityUserRole.setInteger(0,accessPermissionDTO.getTypeOfAccess());  // first parameter, index starts with 0
-							updateAdmFacilityUserRole.setInteger(1,admUserFacilityNew.getFacilityPK().getRoleId()); // secon parameter
-							updateAdmFacilityUserRole.setInteger(2,admUserFacilityNew.getFacilityPK().getUserId());
-							updateAdmFacilityUserRole.setInteger(3,admUserFacilityNew.getFacilityPK().getFacilityId());
-							
+							Query updateAdmFacilityUserRole = hibernateTemplateCareers
+									.getSessionFactory()
+									.getCurrentSession()
+									.createSQLQuery(
+											" { call UpdateAdmUserFacility(?,?,?,?) }");
+							updateAdmFacilityUserRole.setInteger(0,
+									accessPermissionDTO.getTypeOfAccess()); // first
+																			// parameter,
+																			// index
+																			// starts
+																			// with
+																			// 0
+							updateAdmFacilityUserRole.setInteger(1,
+									admUserFacilityNew.getFacilityPK()
+											.getRoleId()); // secon parameter
+							updateAdmFacilityUserRole.setInteger(2,
+									admUserFacilityNew.getFacilityPK()
+											.getUserId());
+							updateAdmFacilityUserRole.setInteger(3,
+									admUserFacilityNew.getFacilityPK()
+											.getFacilityId());
+
 							updateAdmFacilityUserRole.executeUpdate();
 							updateAdmUserRole.executeUpdate();
 						}
@@ -345,6 +389,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		return null;
 
 	}
+
 	@Override
 	public MerUser getUserListByEmail(String email) {
 		MerUser user = null;
