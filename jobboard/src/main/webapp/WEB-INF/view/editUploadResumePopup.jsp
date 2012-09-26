@@ -68,7 +68,8 @@
 							} else if (data.duplicateResume != null) {
 								$("#resumeErrorMsg").append("<br/><span style='color:red'>"+ data.duplicateResume+ "</span>");
 							} else {
-								$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
+								$("#uploadResumeForm").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateResumeUpload.html");
+								$("#uploadResumeForm").attr("method","POST");
 								$("#uploadResumeForm").submit();
 							}
 						},
