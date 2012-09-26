@@ -18,6 +18,7 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 		<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 		
+		
 		<script type="text/javascript">
 		
 		function populateTemplates()
@@ -151,6 +152,7 @@
   			 if(!validateData()){
 		    		return false;
 		    	}
+  			$("#errMsgDialog").text("");
 				$( "#scheduleStartDivId" ).dialog({
 					resizable: false,
 					height:400,
@@ -164,6 +166,8 @@
 							if($("#startDate").val() != ''){
 								$( this ).dialog( "close" );
 								$("#scheduleJobButHideId").click();
+							}else{
+								$("#errMsgDialog").text("Please Enter the Dates.");
 							}
 						},
 						"Cancel": function() {
@@ -560,6 +564,9 @@
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Expiry Date:</span>               
                			<form:input path="" class="job_seeker_password" id="endDate" readonly="true"/>
                		</div>
+               		<div class="rowEvenNewSpacing">  
+              	  	<div id="errMsgDialog" class="validationMsg"> </div>
+              	  	</div>
 		 	  </div> 
 			   
 			   <div class="clearfix"></div>

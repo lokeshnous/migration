@@ -64,14 +64,31 @@
 		     $(".postingInventory").displaypopup(".postingInventory",
 						"790", "360"); 
 		    	
-			$( "#scheduleStartDivId" ).hide();		    
+			$( "#scheduleStartDivId" ).hide();
+			function validateData(){
+				 $("#errTrackPixcel").text('');
+				var hasError = true;
+		    	var trackUrl = $('#trackPixel').val()
+		    	var regExUrl = /^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i; 
+		    	if(!regExUrl.test(trackUrl)) {
+		    		hasError = false;
+		            $("#errTrackPixcel").text('Please enter the valid url');
+		    		}
+		    	return hasError;
+			}
 		    $("#postNewJobButId").click(function(){
+		    	if(!validateData()){
+		    		return false;
+		    	}
 		    	if(confirm("Do you want to post this job?")){
 		    		$("#postNewJobButHideId").click();
 		    	}
 		    });
 		    
 		    $("#saveAsDraftJobButId").click(function(){
+		    	if(!validateData()){
+		    		return false;
+		    	}
 		    	if(confirm("Do you want to save this job as Draft?")){
 		    		$("#savePostJobButHideId").click();
 		    	}
@@ -103,6 +120,10 @@
 		    
 			//Popup on click of schedule button
   		   $("#scheduleNewJobButId").click(function() {
+  			 if(!validateData()){
+		    		return false;
+		    	}
+  			 $("#errMsgDialog").text("");
 				$( "#scheduleStartDivId" ).dialog({
 					resizable: false,
 					height:400,
@@ -116,6 +137,8 @@
 							if($("#startDate").val() != ''){
 								$( this ).dialog( "close" );
 								$("#scheduleJobButHideId").click();
+							}else{
+								$("#errMsgDialog").text("Please Enter the Dates.");
 							}
 						},
 						"Cancel": function() {
@@ -525,6 +548,9 @@
                		<div class="rowEvenNewSpacing"> <span class="lableText3">Expiry Date:</span>               
                			<form:input path="" class="job_seeker_password" id="endDate" readonly="true"/>
                		</div>
+               		<div class="rowEvenNewSpacing">  
+              	  	<div id="errMsgDialog" class="validationMsg"> </div>
+              	  	</div>
 		 	  </div> 
 			   
 			   <div class="clearfix"></div>
