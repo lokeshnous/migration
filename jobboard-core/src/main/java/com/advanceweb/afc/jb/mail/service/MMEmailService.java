@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailParseException;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Service;
 @Service("emailService")
 public class MMEmailService implements MMEmail {
 
+	private static final Logger LOGGER = Logger
+			.getLogger("MMEmailService.class");
+	
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -59,7 +63,9 @@ public class MMEmailService implements MMEmail {
 				}
 			}
 			mailSender.send(message);
+			LOGGER.info("Mail has been sent.");
 		} catch (MessagingException e) {
+			LOGGER.error("sendEmail Exception : "+e);
 			throw new MailParseException(e);
 		}
 	}

@@ -163,6 +163,9 @@ public class JobSearchController {
 	@Value("${applyJobSuccessMsg}")
 	private String applyJobSuccessMsg;
 
+	@Value("${commonMailErrMsg}")
+	private String commonMailErrMsg;
+
 	@Value("${applyJobErrMsg}")
 	private String applyJobErrMsg;
 	
@@ -312,18 +315,18 @@ public class JobSearchController {
 	}
 
 	/**
-	 * The apply for job action is called as per the conditions and getting
-	 * saved in DB. Check for login , navigate to login page if necessary login
-	 * by ADVACNE Guest navigate to Anonymous User Form apply for job or
-	 * navigate to employer web page to apply job
+	 * Method called to apply for job
 	 * 
 	 * @param form
-	 * @param jobId
 	 * @param map
+	 * @param userID
+	 * @param jobId
+	 * @param currentUrl
+	 * @param response
+	 * @param model
+	 * @param clickType
 	 * @param session
 	 * @param request
-	 * @param currentUrl
-	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
@@ -412,15 +415,12 @@ public class JobSearchController {
 				jsonObject.put(ajaxMsg, resumeNotFoundMsg);
 				return jsonObject;
 			}
-
+			try{
 			EmailDTO employerEmailDTO = new EmailDTO();
 			employerEmailDTO.setFromAddress(advanceWebAddress);
 			InternetAddress[] employerToAddress = new InternetAddress[1];
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
-			// TODO: Remove hard codes of mails
-//			 employerToAddress[0] = new InternetAddress(
-//			 "pramodap@nousinfo.com");
 			employerEmailDTO.setToAddress(employerToAddress);
 			String employerMailSub = employeJobApplicationSub.replace(
 					"?jobseekername", userName);
@@ -440,9 +440,6 @@ public class JobSearchController {
 			jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
 			InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 			jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
-			// TODO: Remove hard codes of mails
-			// jobSeekerToAddress[0] = new
-			// InternetAddress("pramodap@nousinfo.com");
 			jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 			String jobseekerMailSub = jobseekerJobApplicationSub.replace(
 					"?companyname", searchedJobDTO.getCompanyName());
@@ -455,7 +452,12 @@ public class JobSearchController {
 			jobSeekerEmailDTO.setHtmlFormat(true);
 			emailService.sendEmail(jobSeekerEmailDTO);
 			LOGGER.info("Mail sent to jobseeker");
-
+			} catch (Exception e) {
+				jsonObject.put(ajaxMsg, commonMailErrMsg);
+				LOGGER.info("Apply job Mail Exception :"+e);
+				return jsonObject;
+			}
+			
 			// save the applied job in DB
 			Date currentDate = new Date();
 			AppliedJobDTO applyJobDTO = null;
@@ -478,13 +480,17 @@ public class JobSearchController {
 			}
 			jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		} catch (Exception e) {
-			// loggers call
 			LOGGER.info("applyJob ERROR"+e);
 		}
 		return jsonObject;
 	}
 
-	
+	/**
+	 * Method called to fetch the public assigned resume by user Id
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	private List<String> fetchPublicVisibleResume(int userId) {
 		List<String> attachmentpaths = null;
 		try {
@@ -529,7 +535,6 @@ public class JobSearchController {
 				attachmentpaths = new ArrayList<String>();
 				attachmentpaths.add(resumeDTO.getFilePath());
 			}
-			//employerEmailDTO.setAttachmentPaths(attachmentpaths);
 		} catch (Exception e) {
 			LOGGER.info("Resume not found");
 		}
