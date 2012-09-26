@@ -623,6 +623,7 @@ jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/managefacility.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/metricsDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/postNewJobs.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/printCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/registrationsuccess.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/setAlertPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/updateFacility.jsp -text

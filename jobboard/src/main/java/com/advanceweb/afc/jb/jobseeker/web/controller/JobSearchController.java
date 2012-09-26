@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -888,6 +890,31 @@ public class JobSearchController {
 
 			int jobId = Integer.parseInt(request.getParameter("id"));
 			String parentId = request.getParameter("currentUrl");
+			
+			
+			/*InetAddress addr = InetAddress.getLocalHost();
+			String httpData="http://";
+		    // Get IP Address
+		    byte[] ipAddr = addr.getAddress();
+		    // Get hostname
+		    String hostname = addr.getHostName();
+		    int port=request.getServerPort();
+		    String pathData=hostname+":"+port;
+		    String fullLength=pathData.toString();
+		    String folderPath=request.getServletPath();
+		    String str[] = folderPath.split("/");
+			//int countString = str.length;
+		    String foldername="";
+		   // for (int i=1;i<countString-1;i++)
+		  //  {
+		    	foldername=str[1].toString();
+		 //   }
+		    String pathValue="/"+foldername+"/".toString();
+		    
+		    String fullPath=httpData+""+fullLength+""+pathValue+"jobsearch/viewJobDetails.html?id=" + jobId
+					+ "&currentUrl=" + parentId
+					+ "&clickType=view".toString();*/
+		    
 			String fullPath = request
 					.getRequestURL()
 					.toString()

@@ -102,6 +102,16 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 		return jobSeekerSubscriptionsDAO.coverLetterUpdateByjobSeeker(rclDTO);
 	}
 	
+	/**
+	 * @param rclDTO
+	 * @return boolean
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean coverLetterEditByjobSeeker(ResCoverLetterDTO rclDTO){
+		return jobSeekerSubscriptionsDAO.coverLetterEditByjobSeeker(rclDTO);
+	}
+	
 	@Override
 	public List<ResCoverLetterDTO> getJobOwnerList(int userId) throws JobBoardServiceException {
 		List<ResCoverLetterDTO> manageAccessPermissionDTOs = new ArrayList<ResCoverLetterDTO>();

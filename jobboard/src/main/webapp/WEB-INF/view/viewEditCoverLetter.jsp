@@ -51,7 +51,7 @@
 		</script>
 	<script src="javascripts/expandCollapse.js" type="text/javascript"></script>
 	</head>
-	<body class="job_board">
+	<body class="job_board" on_load="javascript:window.print();window.close();">
 		
 		<form:form action="jobseekerCoverLetterSub.html" method="POST" commandName="resCoverLetterForm" id="resCovLetForm" name="resCovLetForm" enctype="multipart/form-data">
 		<div class="main_wrapper_outside">
@@ -61,16 +61,82 @@
 						<h2>
 							CREATE NEW COVER LETTER 
 						</h2>
-						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
+						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
 					</div>
+					
 					<div class="row ">
+					 <!--This is view option Begin  -->					
+					<c:if test="${covType=='View'}">
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter">
 								Cover Letter Name:
 							</div>
 							<div class="input_grp5 ">
-								<div class="floatLeft">
-									<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text"/>							
+								<div class="floatLeft">								
+									<form:input readonly="true" path="name" name="name" id="name" class="jb_input2Coverletter" type="text"/>														
+								</div>
+								<div class="required2">
+									(Required)
+								</div>
+							</div>
+						</div>
+						
+						<div class="row marginTop15">
+							<div class="lableTextCoverletter marginTop10">
+								Body Text:
+							</div>
+							
+							<div class="input_grp5 ">
+								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
+								id="coverletterText"
+									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
+									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);" readonly="true"/>
+								<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.<p>
+
+							</div>
+							
+						</div>						
+						
+						<div class="row marginTop15 MarginBottom10">
+							<div class="lableTextCoverletter">
+								Cover Letter Visibility:
+							</div>
+							
+							<span class="required">								
+									<label class="greyLabel">
+										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public" readonly="true" /> 
+									</label>
+							</span>
+							<span class="required">								
+									<label class="greyLabel">
+									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private" readonly="true" />										
+									</label>
+							</span>
+							
+							<div class="toolTip marginTop6 marginLeft10">
+								<span class="classic">
+									You can only have one Cover Letter Visibility to employers at a time, so select 
+									Private if you already have a public cover letter  saved to your profile. Otherwise, 
+									you may select Public and employers will be able to view your cover letter immediately.
+									
+								</span>
+							</div>
+							<div class="required2">
+								(Required)
+							</div>
+						</div>
+						</c:if>
+						
+						 <!--This is view option End  -->
+						 <!--This is Edit option Begin  -->
+						<c:if test="${covType=='Edit'}">
+						<div class="row marginTop15">
+							<div class="lableTextCoverletter">
+								Cover Letter Name:
+							</div>
+							<div class="input_grp5 ">
+								<div class="floatLeft">								
+									<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text"/>														
 								</div>
 								<div class="required2">
 									(Required)
@@ -82,49 +148,81 @@
 							<div class="lableTextCoverletter marginTop10">
 								Body Text:
 							</div>
+							
 							<div class="input_grp5 ">
 								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
 								id="coverletterText"
 									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
-									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"/>
+									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);" />
 								<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.<p>
 
 							</div>
-						</div>
+							
+						</div>						
+						
 						<div class="row marginTop15 MarginBottom10">
 							<div class="lableTextCoverletter">
 								Cover Letter Visibility:
 							</div>
+							
 							<span class="required">								
 									<label class="greyLabel">
-										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public"/> 
+										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public" /> 
 									</label>
 							</span>
 							<span class="required">								
 									<label class="greyLabel">
-									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private"/>										
+									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private"  />										
 									</label>
 							</span>
+							
 							<div class="toolTip marginTop6 marginLeft10">
-								<span class="classic"><p>
+								<span class="classic">
 									You can only have one Cover Letter Visibility to employers at a time, so select 
 									Private if you already have a public cover letter  saved to your profile. Otherwise, 
 									you may select Public and employers will be able to view your cover letter immediately.
-									</p>
+									
 								</span>
 							</div>
 							<div class="required2">
 								(Required)
 							</div>
-						</div>
-						<c:if test="${covType=='Edit'}">
+						</div>						
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
-								<input type="button" value="Save" name="save" id="save" class="btn_sm orange" />
-								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel"/>	
+								<input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" />
+								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel" title="Cancel"/>	
 							</span>
 						</div>
 					   </c:if>
+					    <!--This is Edit option End  -->			  
+					   <!--This is down load option Begin  -->
+					   <c:if test="${covType=='Download'}">
+						<div class="row marginTop15">
+							<div class="lableTextCoverletter">
+								Cover Letter Name:
+							</div>
+							<div class="input_grp5 ">
+								<div class="floatLeft">								
+								<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text" readonly="true"/>						
+								</div>
+								
+							</div>
+						</div>
+						<div id="errmsg" class="FormErrorDisplayText"></div>
+						<div class="row marginTop15">
+							<div class="lableTextCoverletter marginTop10">
+								Body Text:
+							</div>
+							
+							<div class="input_grp5 ">
+								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
+								id="coverletterText" readonly="true"/>
+							</div>
+							
+						</div>						
+						</c:if>
+					    <!--This is down load option End  -->					   
 					</div>
 					
 				</div>

@@ -57,6 +57,11 @@ public interface CoverLetterService {
 	 */
 	public boolean coverLetterUpdateByjobSeeker(ResCoverLetterDTO rclDTO);
 	/**
+	 * @param rclDTO
+	 * @return boolean
+	 */
+	public boolean coverLetterEditByjobSeeker(ResCoverLetterDTO rclDTO);
+	/**
 	 * 
 	 * @param userId userId
 	 * @return list ResCoverLetterDTO

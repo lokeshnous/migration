@@ -24,7 +24,6 @@ import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
 
-
 /**
  * @version 1.0
  * @author sharadk
@@ -33,68 +32,75 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHe
 @SuppressWarnings("unchecked")
 @Repository("jobSeekerSubscriptionsDAO")
 public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO {
-	
-	private static final String SELECTED_CURRENT_SUBS="from AdmUserSubscription sub where sub.id.userId=?";
-	private static final Logger LOGGER = Logger.getLogger(JobSeekerSubscriptionsDAOImpl.class);
-	//private static final ResPrivacy ResCoverletter = null;
-	//private static final MAX_RESULT="select MAX(rs.coverletterId),rs.userId,rs.name,rs.coverletterText,rs.active,rs.createDt,rs.updateDt,rs.deleteDt";
 
+	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
+	private static final Logger LOGGER = Logger
+			.getLogger(JobSeekerSubscriptionsDAOImpl.class);
+	// private static final ResPrivacy ResCoverletter = null;
+	// private static final
+	// MAX_RESULT="select MAX(rs.coverletterId),rs.userId,rs.name,rs.coverletterText,rs.active,rs.createDt,rs.updateDt,rs.deleteDt";
 
-	
 	private HibernateTemplate hibernateTemplateCareers;
-	
+
 	@Autowired
 	private JobSeekerSubscriptionsConversionHelper jsSubscriptionHelper;
-	
+
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactoryMerionTracker, SessionFactory sessionFactory) {
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
-		
+
 	}
-	
-	
 
 	/**
 	 * save subscription
 	 */
 
 	@Override
-	@Transactional(readOnly = false, propagation=Propagation.REQUIRED)
-	public boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId) {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean saveJobSeekerSubscription(
+			List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId) {
 		try {
-			
-			if(userId != 0){
-				List<AdmUserSubscription> listSubsAlerts= hibernateTemplateCareers.find(SELECTED_CURRENT_SUBS,userId);				
-				List<AdmUserSubscription> userAlerts = jsSubscriptionHelper.transformjsSubsDTOToAdmUserSubs(listSubsDTO, listSubsAlerts);
+
+			if (userId != 0) {
+				List<AdmUserSubscription> listSubsAlerts = hibernateTemplateCareers
+						.find(SELECTED_CURRENT_SUBS, userId);
+				List<AdmUserSubscription> userAlerts = jsSubscriptionHelper
+						.transformjsSubsDTOToAdmUserSubs(listSubsDTO,
+								listSubsAlerts);
 				hibernateTemplateCareers.deleteAll(listSubsAlerts);
 				hibernateTemplateCareers.saveOrUpdateAll(userAlerts);
-			}		
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
-		
+
 		return true;
 	}
 
 	/**
 	 * To get current subscriptions of the user
+	 * 
 	 * @param userId
 	 * @return
 	 */
 	@Override
 	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId) {
-		
+
 		List<JobSeekerSubscriptionsDTO> listSubscriptiosns = null;
 		try {
-			List<AdmUserSubscription> listSubs= hibernateTemplateCareers.find(SELECTED_CURRENT_SUBS,userId);
-			listSubscriptiosns = jsSubscriptionHelper.transformMerUserAlertsTojsSubsDTO(listSubs);
+			List<AdmUserSubscription> listSubs = hibernateTemplateCareers.find(
+					SELECTED_CURRENT_SUBS, userId);
+			listSubscriptiosns = jsSubscriptionHelper
+					.transformMerUserAlertsTojsSubsDTO(listSubs);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
-		
+
 		return listSubscriptiosns;
 	}
-	
+
 	/**
 	 * @author kartikm
 	 * @Purpose:Save of Cover letter when submit the cover letter text
@@ -106,7 +112,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO) {
 		ResCoverletter resUpdate = new ResCoverletter();
-		ResCoverletter resUpd = new ResCoverletter();
+		// ResCoverletter resUpd = new ResCoverletter();
 		ResPrivacy rpupdate = new ResPrivacy();
 		boolean isUpdate = false;
 		try {
@@ -120,39 +126,44 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			} catch (Exception e) {
 				LOGGER.info("Info data error date conversion");
 			}
-			
-				// this is save option in ResCoverletter
-				ResCoverletter res = new ResCoverletter();
-				res.setUserId(rclDTO.getUserId());
-				res.setName(rclDTO.getName());
-				res.setCoverletterText(rclDTO.getCoverletterText());
-				res.setActive(rclDTO.getActive());
-				res.setCreateDt(todayDate);
-				res.setUpdateDt(todayDate);
-				hibernateTemplateCareers.save(res);
-				// this is save option in ResCoverletterPriv
-				List<ResPrivacy> rpData = hibernateTemplateCareers.find(
-						"from ResPrivacy rp where rp.description=?",
-						rclDTO.getActive());
-				if (null != rpData && !rpData.isEmpty()) {
-					int privId = rpData.get(0).getPrivacyId();					
-					int primaryId = 0;
-					primaryId = (Integer) hibernateTemplateCareers.getSessionFactory().getCurrentSession().createQuery("select MAX(rs.coverletterId) from ResCoverletter rs").uniqueResult();;					
-					//int primaryId = resIndex.get(0).getCoverletterId();
-					ResCoverletterPriv resPriv = new ResCoverletterPriv();
-					resPriv.setResCoverletter(resUpdate);
-					resPriv.setResPrivacy(rpupdate);
-					resPriv.getResCoverletter().setCoverletterId(primaryId);
-					resPriv.getResPrivacy().setPrivacyId(privId);
-					resPriv.setActive(rclDTO.getActive());
-					resPriv.setCreateDt(todayDate);
-					resPriv.setCreateUserId(rclDTO.getUserId());
-					hibernateTemplateCareers.save(resPriv);
-				}
 
-			
+			// this is save option in ResCoverletter
+			ResCoverletter res = new ResCoverletter();
+			res.setUserId(rclDTO.getUserId());
+			res.setName(rclDTO.getName());
+			res.setCoverletterText(rclDTO.getCoverletterText());
+			res.setActive(rclDTO.getActive());
+			res.setCreateDt(todayDate);
+			res.setUpdateDt(todayDate);
+			hibernateTemplateCareers.save(res);
+			// this is save option in ResCoverletterPriv
+			List<ResPrivacy> rpData = hibernateTemplateCareers.find(
+					"from ResPrivacy rp where rp.description=?",
+					rclDTO.getActive());
+			if (null != rpData && !rpData.isEmpty()) {
+				int privId = rpData.get(0).getPrivacyId();
+				int primaryId = 0;
+				primaryId = (Integer) hibernateTemplateCareers
+						.getSessionFactory()
+						.getCurrentSession()
+						.createQuery(
+								"select MAX(rs.coverletterId) from ResCoverletter rs")
+						.uniqueResult();
+				;
+				// int primaryId = resIndex.get(0).getCoverletterId();
+				ResCoverletterPriv resPriv = new ResCoverletterPriv();
+				resPriv.setResCoverletter(resUpdate);
+				resPriv.setResPrivacy(rpupdate);
+				resPriv.getResCoverletter().setCoverletterId(primaryId);
+				resPriv.getResPrivacy().setPrivacyId(privId);
+				resPriv.setActive(rclDTO.getActive());
+				resPriv.setCreateDt(todayDate);
+				resPriv.setCreateUserId(rclDTO.getUserId());
+				hibernateTemplateCareers.save(resPriv);
+			}
+
 		} catch (DataAccessException e) {
-			LOGGER.info("Error"+ e);
+			LOGGER.info("Error" + e);
 			LOGGER.error("Not save Cover letter");
 		}
 		return isUpdate;
@@ -197,12 +208,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	public boolean findActiveStatus(int userId, int status) {
 		boolean isUpdate = false;
 		try {
-			List<ResCoverletter> res = hibernateTemplateCareers.find(
-					"from ResCoverletter rs where rs.userId=?", userId);
+			List<ResCoverletter> res = hibernateTemplateCareers
+					.find("from ResCoverletter rs where rs.userId=? and deleteDt is null",
+							userId);
 			if (null != res && !res.isEmpty()) {
 				int countData = res.size();
 
-				if ((countData < 5)&&(countData >= 0)){
+				if ((countData < 5) && (countData >= 0)) {
 					isUpdate = true;
 				} else {
 					isUpdate = false;
@@ -214,7 +226,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		}
 		return isUpdate;
 	}
-	
+
 	/**
 	 * @author kartikm
 	 * @Purpose:Find the status of the cover letter that is public or private
@@ -227,12 +239,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	public boolean findFirstActiveStatus(int userId, int status) {
 		boolean isUpdate = false;
 		try {
-			List<ResCoverletter> res = hibernateTemplateCareers.find(
-					"from ResCoverletter rs where rs.userId=?", userId);
+			List<ResCoverletter> res = hibernateTemplateCareers
+					.find("from ResCoverletter rs where rs.userId=? and deleteDt is null",
+							userId);
 			if (null != res && !res.isEmpty()) {
-				isUpdate=false;
-			}else{
-				isUpdate=true;
+				isUpdate = false;
+			} else {
+				isUpdate = true;
 			}
 
 		} catch (DataAccessException e) {
@@ -240,6 +253,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		}
 		return isUpdate;
 	}
+
 	/**
 	 * @author kartikm
 	 * @Purpose:Find the status of the cover letter that is public or private
@@ -252,11 +266,12 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	public boolean findNameActiveStatus(int userId, String name) {
 		boolean isUpdate = false;
 		try {
-			List<ResCoverletter> res = hibernateTemplateCareers.find(
-					"from ResCoverletter rs where rs.userId=? and name=?", userId,name);
+			List<ResCoverletter> res = hibernateTemplateCareers
+					.find("from ResCoverletter rs where rs.userId=? and name=? and deleteDt is null",
+							userId, name);
 			if (null != res && !res.isEmpty()) {
-				
-				isUpdate=true;
+
+				isUpdate = true;
 			}
 
 		} catch (DataAccessException e) {
@@ -264,6 +279,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		}
 		return isUpdate;
 	}
+
 	/**
 	 * @author kartikm
 	 * @Purpose:Find the status of the cover letter that is public or private
@@ -276,12 +292,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	public boolean findDuplicateActiveStatus(int userId, int status) {
 		boolean isUpdate = false;
 		try {
-			List<ResCoverletter> res = hibernateTemplateCareers.find(
-					"from ResCoverletter rs where rs.userId=? and rs.active=?", userId,status);
+			List<ResCoverletter> res = hibernateTemplateCareers
+					.find("from ResCoverletter rs where rs.userId=? and rs.active=? and deleteDt is null",
+							userId, status);
 			if (null != res && !res.isEmpty()) {
 				int countData = res.size();
 
-				if (countData>0){
+				if (countData > 0) {
 					isUpdate = true;
 				} else {
 					isUpdate = false;
@@ -293,8 +310,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		}
 		return isUpdate;
 	}
-	
-	
+
 	/**
 	 * @author kartikm
 	 * @Purpose:Save of Cover letter when submit the cover letter text
@@ -306,7 +322,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean coverLetterUpdateByjobSeeker(ResCoverLetterDTO rclDTO) {
 		ResCoverletter resUpdate = new ResCoverletter();
-		ResCoverletter resUpd = new ResCoverletter();
+		// ResCoverletter resUpd = new ResCoverletter();
 		ResPrivacy rpupdate = new ResPrivacy();
 		boolean isUpdate = false;
 		try {
@@ -322,10 +338,10 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			}
 
 			if (rclDTO.getActive() == 1) {
-				
+
 				int primaryIdData = 0;
 				List<ResCoverletter> resData = hibernateTemplateCareers
-						.find("from ResCoverletter rs where rs.userId=? and rs.active=?",
+						.find("from ResCoverletter rs where rs.userId=? and rs.active=? and deleteDt is null",
 								rclDTO.getUserId(), rclDTO.getActive());
 				if (null != resData && !resData.isEmpty()) {
 					primaryIdData = resData.get(0).getCoverletterId();
@@ -335,33 +351,36 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 					resUpdateCov.setActive(0);
 					resUpdateCov.setUpdateDt(todayDate);
 					hibernateTemplateCareers.update(resUpdateCov);
-					
+
 					List<ResPrivacy> rpData = hibernateTemplateCareers.find(
-							"from ResPrivacy rp where rp.description=?",0);
-					if (null != rpData && !rpData.isEmpty()) {						
-						int privId = rpData.get(0).getPrivacyId();
+							"from ResPrivacy rp where rp.description=?", 0);
+					if (null != rpData && !rpData.isEmpty()) {
+						// int privId = rpData.get(0).getPrivacyId();
 						int coverLetterPrivId = 0;
 						List<ResCoverletterPriv> resCovPriv = hibernateTemplateCareers
 								.find("from ResCoverletterPriv rs where rs.createUserId=? and rs.resPrivacy.privacyId=?",
-										rclDTO.getUserId(),1);
-						//ResCoverletterPriv list = resCovPriv.get(0);
-						
-					coverLetterPrivId= resCovPriv.get(0).getCoverletterPrivId();
-					ResCoverletterPriv resPriv = new ResCoverletterPriv();
-					resPriv.setResCoverletter(resUpdate);
-					resPriv.setResPrivacy(rpupdate);
-					resPriv=hibernateTemplateCareers.get(ResCoverletterPriv.class,coverLetterPrivId);
-					//resPriv.setResPrivacy();
-					//resPriv.getResPrivacy().setPrivacyId(privId);
-					resPriv.setActive(0);
-					//resPriv.set
-					hibernateTemplateCareers.saveOrUpdate(resPriv);
-					isUpdate=true;
-				}}}
-				
-			
+										rclDTO.getUserId(), 1);
+						// ResCoverletterPriv list = resCovPriv.get(0);
+
+						coverLetterPrivId = resCovPriv.get(0)
+								.getCoverletterPrivId();
+						ResCoverletterPriv resPriv = new ResCoverletterPriv();
+						resPriv.setResCoverletter(resUpdate);
+						resPriv.setResPrivacy(rpupdate);
+						resPriv = hibernateTemplateCareers.get(
+								ResCoverletterPriv.class, coverLetterPrivId);
+						// resPriv.setResPrivacy();
+						// resPriv.getResPrivacy().setPrivacyId(privId);
+						resPriv.setActive(0);
+						// resPriv.set
+						hibernateTemplateCareers.saveOrUpdate(resPriv);
+						isUpdate = true;
+					}
+				}
+			}
+
 		} catch (DataAccessException e) {
-			LOGGER.info("Error"+ e);
+			LOGGER.info("Error" + e);
 			LOGGER.error("Not save Cover letter");
 		}
 		return isUpdate;
@@ -369,6 +388,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 
 	/**
 	 * display option of cover letter
+	 * 
 	 * @author kartikm
 	 * @version 1.0.1
 	 * @param userId
@@ -376,9 +396,11 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 */
 	@Override
 	public List<ResCoverLetterDTO> getJobOwnerList(int userId) {
-		List<ResCoverLetterDTO> resCov=new ArrayList<ResCoverLetterDTO>();
-		try {			
-			resCov=hibernateTemplateCareers.find("from ResCoverletter rs where rs.userId=?",userId);
+		List<ResCoverLetterDTO> resCov = new ArrayList<ResCoverLetterDTO>();
+		try {
+			resCov = hibernateTemplateCareers
+					.find("from ResCoverletter rs where rs.userId=? and deleteDt is null",
+							userId);
 
 		} catch (Exception e) {
 			LOGGER.error(e);
@@ -386,54 +408,156 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		return resCov;
 
 	}
-	
+
 	/**
 	 * Delete option of cover letter
+	 * 
 	 * @author kartikm
 	 * @version 1.0.1
 	 * @param userId
 	 * @param status
 	 * @return boolean
 	 */
-	public boolean isDelete(int userId,int coverLetterId){
-		
-		return true;
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean isDelete(int userId, int coverLetterId) {
+		boolean isUpdate = false;
+		Date todayDate = null;
+		Calendar currentDate = Calendar.getInstance();
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		try {
+			String dateNow = formatter.format(currentDate.getTime());
+			todayDate = dateConveter(dateNow);
+		} catch (Exception e) {
+			LOGGER.info("Info data error date conversion");
+		}
+		try {
+			ResCoverletter resCov = new ResCoverletter();
+			ResCoverletter resUpdate = new ResCoverletter();
+			ResPrivacy rpupdate = new ResPrivacy();
+			resCov = hibernateTemplateCareers.get(ResCoverletter.class,
+					coverLetterId);
+			resCov.setDeleteDt(todayDate);
+			hibernateTemplateCareers.update(resCov);
+			// int primaryIdData=0;
+			List<ResCoverletterPriv> resCovPriv = hibernateTemplateCareers
+					.find("from ResCoverletterPriv rs where rs.resCoverletter.coverletterId=?",
+							coverLetterId);
+
+			int coverLetterPrivId = 0;
+			coverLetterPrivId = resCovPriv.get(0).getCoverletterPrivId();
+			ResCoverletterPriv resPriv = new ResCoverletterPriv();
+			resPriv.setResCoverletter(resUpdate);
+			resPriv.setResPrivacy(rpupdate);
+			resPriv = hibernateTemplateCareers.get(ResCoverletterPriv.class,
+					coverLetterPrivId);
+			resPriv.setDeleteUserId(userId);
+			resPriv.setDeleteDt(todayDate);
+			hibernateTemplateCareers.update(resPriv);
+			isUpdate = true;
+		} catch (Exception e) {
+			System.out.print(e);
+
+		}
+		return isUpdate;
 	}
+
 	/**
 	 * Delete option of cover letter
+	 * 
 	 * @author kartikm
 	 * @version 1.0.1
 	 * @param userId
 	 * @param status
 	 * @return boolean
 	 */
-	public boolean isupDateCover(int userId,int coverLetterId){
-		
+	public boolean isupDateCover(int userId, int coverLetterId) {
+
 		return true;
 	}
+
 	/**
 	 * view and update option of cover letter
+	 * 
 	 * @author kartikm
 	 * @version 1.0.1
 	 * @param userId
 	 * @param status
 	 * @return ResCoverLetterDTO
 	 */
-	
-	public ResCoverLetterDTO getCoverList(int coverletterId){
-		ResCoverLetterDTO resCovDTO=new ResCoverLetterDTO();
+
+	public ResCoverLetterDTO getCoverList(int coverletterId) {
+		ResCoverLetterDTO resCovDTO = new ResCoverLetterDTO();
 		try {
-			List<ResCoverletter> resList=new ArrayList<ResCoverletter>();
-			if (coverletterId > 0){
-				resList=hibernateTemplateCareers.find("from ResCoverletter rs where rs.coverletterId=?",coverletterId);
+			List<ResCoverletter> resList = new ArrayList<ResCoverletter>();
+			if (coverletterId > 0) {
+				resList = hibernateTemplateCareers
+						.find("from ResCoverletter rs where rs.coverletterId=? and deleteDt is null",
+								coverletterId);
 			}
-			resCovDTO=jsSubscriptionHelper.toTransFormListToDTO(resList);
+			resCovDTO = jsSubscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
 			LOGGER.info("Error for update of employee data");
 		}
-		return resCovDTO;	
-		
+		return resCovDTO;
+
 	}
-	
-	
+
+	/**
+	 * @author kartikm
+	 * @Purpose:Save of Cover letter when submit the cover letter text
+	 * @Created:Sept 14, 2012
+	 * @param rclDTO
+	 * @return isUpdate
+	 */
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean coverLetterEditByjobSeeker(ResCoverLetterDTO rclDTO) {
+		ResCoverletter resUpdate = new ResCoverletter();
+		ResPrivacy rpupdate = new ResPrivacy();
+		boolean isUpdate = false;
+		try {
+			Date todayDate = null;
+			Calendar currentDate = Calendar.getInstance();
+			SimpleDateFormat formatter = new SimpleDateFormat(
+					"MM/dd/yyyy HH:mm:ss");
+			try {
+				String dateNow = formatter.format(currentDate.getTime());
+				todayDate = dateConveter(dateNow);
+			} catch (Exception e) {
+				LOGGER.info("Info data error date conversion");
+			}
+			int primaryIdData = 0;
+
+			primaryIdData = rclDTO.getCoverletterId();
+			ResCoverletter resUpdateCov = hibernateTemplateCareers.get(
+					ResCoverletter.class, primaryIdData);
+			resUpdateCov.setActive(rclDTO.getActive());
+			resUpdateCov.setName(rclDTO.getName());
+			resUpdateCov.setCoverletterText(rclDTO.getCoverletterText());
+			resUpdateCov.setUpdateDt(todayDate);
+			hibernateTemplateCareers.update(resUpdateCov);
+
+			List<ResCoverletterPriv> resCovPriv = hibernateTemplateCareers
+					.find("from ResCoverletterPriv rs where rs.resCoverletter.coverletterId=?",
+							primaryIdData);
+
+			int coverLetterPrivId = 0;
+			coverLetterPrivId = resCovPriv.get(0).getCoverletterPrivId();
+			ResCoverletterPriv resPriv = new ResCoverletterPriv();
+			resPriv.setResCoverletter(resUpdate);
+			resPriv.setResPrivacy(rpupdate);
+			resPriv = hibernateTemplateCareers.get(ResCoverletterPriv.class,
+					coverLetterPrivId);
+			resPriv.setActive(rclDTO.getActive());
+			hibernateTemplateCareers.update(resPriv);
+			isUpdate = true;
+
+		} catch (DataAccessException e) {
+			LOGGER.info("Error" + e);
+			LOGGER.error("Not save Cover letter");
+		}
+		return isUpdate;
+	}
+
 }

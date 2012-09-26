@@ -8,12 +8,28 @@
 <title>Advance Health care job</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
+
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
+	
 		jQuery(".megamenu").megamenu();
 	});
+	
+	
+    
+
+	
+ function openwin(where) {
+		window.open(where,"TempWindow","width=300,height=210,resizable=yes,status=yes");
+		} 
+
+ function printPopup(id){
+	 var coverletterId = id.replace("print","");
+	 //$.nmManual('../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId='+coverletterId+'&type=Print');
+	document.location.href =('../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId='+coverletterId+'&type=Print');
+ } 
 </script>
+
 <script src="javascripts/expandCollapse.js" type="text/javascript"></script>
 </head>
 <body class="job_board">
@@ -32,8 +48,7 @@
 						cellPadding="0">
 						<thead>
 							<tr class="borderTopNone">
-								<th width="38%" align="left" scope="col">Cover Letter Name
-								</th>
+								<th width="38%" align="center" scope="col">Cover Letter Name</th>
 								<th width="23%" align="center" scope="col">Visibility*</th>
 								<th width="18%" align="center" scope="col">Modified</th>
 								<th width="21%" align="center" scope="col">Actions</th>
@@ -50,11 +65,13 @@
 									</td>
 									<td align="center" valign="middle">${job.updateDt}</td>
 									<td align="center">
-										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=View" class="nyroModal"> <img width="20" height="20" alt="" class="view"/></a>
-										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=Edit" class="nyroModal"> <img width="20" height="20" alt="" class="editFile"/></a> 
-										 <a href="#"> <img width="20" height="20" alt="" class="download"/></a> 
-										 <a href="#"> <img width="20" height="20" alt="" class="print"/></a> 
-										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDeleteCoverLetter.html?coverletterId=${job.coverletterId}" class="nyroModal"> <img width="20" height="20" alt="" class="delete"/></a>
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=View" class="nyroModal" title="View"> <img width="20" height="20" alt="" class="view"/></a>
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=Edit" class="nyroModal" title="Edit"> <img width="20" height="20" alt="" class="editFile"/></a> 
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDownloadCoverLetter.html?coverletterId=${job.coverletterId}"> <img width="20" height="20" alt="" class="download" /></a>
+										 <%-- <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId=${job.coverletterId}&type=Print" class="print" class="btnPrint"> <img width="20" height="20" alt="" class="print"/></a> --%>								
+										 <a title="Print" id="print${job.coverletterId}" onclick="printPopup(this.id)"><img width="20" height="20" alt="" class="print"/></a> 
+										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/deleteManageExistCoverLetter.html?coverletterId=${job.coverletterId}" class="nyroModal" title="Delete"> <img width="20" height="20" alt="" class="delete"/></a>
+										 
 									 </td>
 								</tr>
 							</c:forEach>
@@ -63,10 +80,11 @@
 				</div>
 				<div class="row marginTop5 paddingBottom10">
 					<span class="floatLeft marginTop10">
-					   <a class="btn_sm orange nyroModal" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover">New Cover Letter </a> 
-					   <a class="btn_sm orange" href=""> Cancel </a>
+					   <a class="btn_sm orange nyroModal" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" title="New Cover Letter">New Cover Letter </a> 
+					   <a class="btn_sm orange" href="" title="Cancel"> Cancel </a>
 					</span> <span class="floatLeft marginTop10 marginLeft5"> </span>
 				</div>
+				<!-- <iframe id="printPage" name="printPage" src="../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; border: 0px none; z-index: -1;"></iframe> -->
 			</form:form>
 		</div>
 		<div class="clearfix"></div>

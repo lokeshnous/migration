@@ -68,6 +68,11 @@ public interface JobSeekerSubscriptionsDAO {
 	 */
 	public boolean coverLetterUpdateByjobSeeker(ResCoverLetterDTO rclDTO);
 	/**
+	 * @param rclDTO
+	 * @return boolean
+	 */
+	public boolean coverLetterEditByjobSeeker(ResCoverLetterDTO rclDTO);
+	/**
 	 * 
 	 * @param userId userId
 	 * @return List List
