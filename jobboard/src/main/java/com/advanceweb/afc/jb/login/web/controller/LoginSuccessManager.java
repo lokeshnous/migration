@@ -74,7 +74,13 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
 
-			if (profileRegistration.validateProfileAttributes(user.getUserId())) {
+			// job owners does not have data in mer user profile table but if
+			// they have role as 5 or 6 then they should directly redirect to
+			// the dash board once they login
+			if ((profileRegistration
+					.validateProfileAttributes(user.getUserId()))
+					|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
+							.getRoleId() != 6)))) {
 				sendRedirect(request, response,
 						"/employer/employerDashBoard.html");
 
@@ -95,7 +101,13 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
 
-			if (profileRegistration.validateProfileAttributes(user.getUserId())) {
+			// job owners does not have data in mer user profile table but if
+			// they have role as 5 or 6 then they should directly redirect to
+			// the dash board once they login
+			if ((profileRegistration
+					.validateProfileAttributes(user.getUserId()))
+					|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
+							.getRoleId() != 6)))) {
 
 				sendRedirect(request, response, "/agency/agencyDashboard.html");
 
@@ -143,7 +155,8 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	}
 
 	/**
-	 * Method return true if authenticated by FACILITY or FACILITY_GROUP otherwise false.
+	 * Method return true if authenticated by FACILITY or FACILITY_GROUP
+	 * otherwise false.
 	 * 
 	 * @param authentication
 	 * @param pageValue
@@ -151,8 +164,10 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	 */
 	private boolean isFacility(Authentication authentication, String pageValue) {
 		return authentication.getAuthorities().contains(
-				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY)) | authentication.getAuthorities().contains(
-						new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP)  )
+				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
+				| authentication.getAuthorities().contains(
+						new SimpleGrantedAuthority(
+								MMJBCommonConstants.ROLE_FACILITY_GROUP))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER);
 	}
 
