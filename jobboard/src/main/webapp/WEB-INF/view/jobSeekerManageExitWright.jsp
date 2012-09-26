@@ -8,29 +8,15 @@
 <title>Advance Health care job</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
-<script type="text/javascript">
-function printPopup(id) {
-	
-	 var coverletterId = id.replace("print","");
-	printWindow = window.open( myWindow, "../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId="+coverletterId+"&type=Print");
-	printWindow.print();
-	printWindow.close(); 
-//printWindow = new Object();
-//printWindow.window.location = "../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId="+coverletterId+"&type=Print";
-//printWindow.window.print();
-}
-</script>
+
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 	
 		jQuery(".megamenu").megamenu();
 	});
 	
-	
-    
 
-	
- /* function openwin(where) {
+function openwin(where) {
 		window.open(where,"TempWindow","width=300,height=210,resizable=yes,status=yes");
 		} 
 
@@ -38,7 +24,7 @@ function printPopup(id) {
 	 var coverletterId = id.replace("print","");
 	 //$.nmManual('../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId='+coverletterId+'&type=Print');
 	document.location.href =('../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId='+coverletterId+'&type=Print');
- }  */
+ } 
 </script>
 
 <script src="javascripts/expandCollapse.js" type="text/javascript"></script>
