@@ -5,12 +5,15 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,6 +58,8 @@ public class ManageFacilityController {
 	EmployerRegistrationValidation registerValidation;
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	private Pattern pattern;
+	private Matcher matcher;
 	@RequestMapping(value = "/addFacility")
 	public ModelAndView addfacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
@@ -125,12 +130,17 @@ public class ManageFacilityController {
 		JSONObject message = new JSONObject();
 
 		ManageFacilityDTO facilityDTO = transformFacilityFromtoFacilityDTO(facilityForm);
-		if(!registerValidation.validateMobileNumberPattern(facilityForm
-							.getPhoneNumber())){
+		if (!registerValidation.validateMobileNumberPattern(facilityForm
+				.getPhoneNumber())) {
 			message.put("failure", jobseekerRegPhoneMsg);
 			return message;
 		}
-
+		
+		if (!StringUtils.isEmpty(facilityForm.getZipCode())
+				&& !validateNumericsPattern(facilityForm.getZipCode())) {
+			message.put("failure", "Please enter numeric value for zip code ");
+			return message;
+		}
 		try {
 			facilityService.createFacility(facilityDTO, (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID));
@@ -234,4 +244,16 @@ public class ManageFacilityController {
 		return manageFacilityDTO;
 
 	}
+	/**
+	 * Validating Number Pattern
+	 * @param emailId
+	 * @return
+	 */
+	private boolean validateNumericsPattern(String value) {
+		pattern = Pattern.compile(MMJBCommonConstants.NUMERICS_PATTERN);
+		matcher = pattern.matcher(value);
+		return matcher.matches();
+	}
+
+	
 }
