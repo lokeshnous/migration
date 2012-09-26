@@ -184,8 +184,8 @@ public interface MMJBCommonConstants {
 	String ROLE_FACILITY = "ROLE_FACILITY";
 	String ROLE_FACILITY_GROUP = "ROLE_FACILITY_GROUP";
 	String ROLE_FACILITY_SYSTEM = "ROLE_FACILITY_SYSTEM";
-	String ROLE_FACILITY_FULL_ACCESS="ROLE_FACILITY_FULL_ACCESS";
-	String ROLE_FACILITY_POST_EDIT="ROLE_FACILITY_POST_EDIT";
+	String ROLE_FACILITY_FULL_ACCESS = "ROLE_FACILITY_FULL_ACCESS";
+	String ROLE_FACILITY_POST_EDIT = "ROLE_FACILITY_POST_EDIT";
 
 	// For Login Failure URL
 	String JOBSEEKER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=jobSeeker";
@@ -208,12 +208,12 @@ public interface MMJBCommonConstants {
 	String PAGE_VALUE = "pageValue";
 	String FACILITY_ID = "facilityId";
 
-	//For Agency Impersonation 
-	String AGENCY_USER_ID="agencyUserId";
-	String AGENCY_FACILITY_ID="agencyFacilityId";
-	String AGENCY_USER_NAME="agencyUserName";
-	String AGENCY_EMAIL="agencyEmail";
-	
+	// For Agency Impersonation
+	String AGENCY_USER_ID = "agencyUserId";
+	String AGENCY_FACILITY_ID = "agencyFacilityId";
+	String AGENCY_USER_NAME = "agencyUserName";
+	String AGENCY_EMAIL = "agencyEmail";
+
 	// For Duplicate Submission
 	String LAST_PLACE_KEY = "LAST_PLACE_KEY";
 
@@ -255,9 +255,9 @@ public interface MMJBCommonConstants {
 	int INT_PLATINUM = 3;
 	String ADDITIONAL_IMAGE = "Additional Image";
 	String VIDEO = "Video";
-	int KILO_BYTE=1000;
-	int MEGA_BYTE=1000000;
-	
+	int KILO_BYTE = 1000;
+	int MEGA_BYTE = 1000000;
+
 	// Media file format-Manage Featured Employer Profile
 	String VIDEO_TYPE_MOV = ".mov";
 	String VIDEO_TYPE_MPG = ".mpg";
@@ -297,8 +297,8 @@ public interface MMJBCommonConstants {
 	String JOB_TYPE = "JOB_TYPE";
 	String JOB_TYPE_ADDON = "ADDON";
 	String JOB_TYPE_COMBO = "JOB_TYPE_COMBO";
-	
-	//netsuite status code 
+
+	// netsuite status code
 	int STATUS_CODE_200 = 200;
 	int STATUS_CODE_400 = 400;
 	int STATUS_CODE_401 = 401;
@@ -308,17 +308,16 @@ public interface MMJBCommonConstants {
 	int STATUS_CODE_415 = 415;
 	int STATUS_CODE_500 = 500;
 	int STATUS_CODE_503 = 503;
-	
+
 	String SUCCESS_200 = "The RESTlet web service request was executed successfully.";
 	String BAD_REQUEST_400 = "Invalid credit card information or billing address.";
 	String UNAUTHORIZED_401 = "This is not a valid NetSuite login session for the RESTlet calls.";
 	String FORBIDDEN_403 = "RESTlet request sent to invalid domain, meaning a domain other than https://rest.netsuite.com.";
-	String NOT_FOUND_404 = "A RESTlet script is not defined in the RESTlet request.";		 
+	String NOT_FOUND_404 = "A RESTlet script is not defined in the RESTlet request.";
 	String METHOD_NOT_ALLOWED_405 = "The RESTlet request method is not valid.";
-	String UNSUPPORTED_MEDIA_TYPE_415 ="An unsupported content type was specified. (Only JSON and text are allowed.)";
-	String INTERNAL_SERVER_ERROR_500 = "(unexpected errors): Occurs for non-user errors that cannot be recovered by resubmitting the same request. Contact Customer Support to file a case."; 
+	String UNSUPPORTED_MEDIA_TYPE_415 = "An unsupported content type was specified. (Only JSON and text are allowed.)";
+	String INTERNAL_SERVER_ERROR_500 = "(unexpected errors): Occurs for non-user errors that cannot be recovered by resubmitting the same request. Contact Customer Support to file a case.";
 	String SERVICE_UNAVAILABLE_503 = "The server is temporarily unavailable. Please contact your system administrator.";
-	
 
 	String NEXT = "next";
 	int[] FILTER_VALS = { 20, 30, 40, 50 };
@@ -336,6 +335,7 @@ public interface MMJBCommonConstants {
 	String UNIQUEKEY_PRIMARYKEY_VIOLATED = "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";
 	String SYSTEM_ERROR_CODE = "System encountered unexpected error.Please contact your techinal support team to resolve the issue.";
 	int EMPLOYER_ROLE_ID = 3;
+	int JOBSEEKER_ROLE_ID = 2;
 	String PHONE = "Phone";
 
 	// Added for set alerts task
@@ -355,8 +355,8 @@ public interface MMJBCommonConstants {
 	int PLAN_DAYS = 30;
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
 	String POST_JOB_PAGE = "postJobPage";
-    int JOB_POST_TYPE_POSTING_ID=1;
-    int JOB_POST_TYPE_SLOT_ID=2;
+	int JOB_POST_TYPE_POSTING_ID = 1;
+	int JOB_POST_TYPE_SLOT_ID = 2;
 	// FOR MAIL RELATED
 	String SUBJECT_OF_MAIL = "A job opportunity sent to you by";
 	String BODY_OFMAIL_FIRST = "Here’s a job opportunity that ";
