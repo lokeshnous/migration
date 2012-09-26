@@ -12,8 +12,8 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    	$("#addFacility").displaypopup("#addFacility","770","360");
-		    	$("#updateFacility").displaypopup("#updateFacility","770","360");
+		    	$("#addFacility").displaypopup("#addFacility","790","360");
+		    	$("#updateFacility").displaypopup("#updateFacility","790","360");
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
