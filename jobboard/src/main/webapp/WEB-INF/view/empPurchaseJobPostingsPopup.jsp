@@ -169,7 +169,7 @@
 								<td width="7%" align="Left" id="${jobPosting.jobPostPlanCretitAmt}"><span
 									class="link_color2_selected"><span>$</span><span>${jobPosting.jobPostPlanCretitAmt}</span></span></td>
 								<td width="19%"><input type="text"
-									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" maxlength="2"/></td>
+									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" maxlength="9"/></td>
 								<input type="hidden" id="${jobPosting.jobPostNetSuiteId}"></input>	
 							</tr>
 							</thead>
