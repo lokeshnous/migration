@@ -366,7 +366,14 @@
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
 									<td align="center" valign="middle">${job.endDt}</td>
-									<td align="center" valign="middle">${job.companyName}</td>
+									<td align="center" valign="middle"><form:select
+											path="jobPostDTOList[${status.index}].companyName"
+											id="selectAutoRenew"
+											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
+											name="select1" disabled="true">
+											<form:options items="${companyList}" itemLabel="optionName"
+												itemValue="optionId" />
+										</form:select>
 									<td align="center" valign="middle">${job.views}</td>
 									<td align="center" valign="middle">${job.clicks}</td>
 									<td align="center" valign="middle">${job.applies}</td>

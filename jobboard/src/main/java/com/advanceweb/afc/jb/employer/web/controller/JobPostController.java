@@ -573,6 +573,9 @@ public class JobPostController {
 		ModelAndView model = new ModelAndView();
 		List<DropDownDTO> templateList;
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
+		int facilityId=0;
+		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<DropDownDTO> companyList = getCompanyList(facilityId);
 		String jobStatus = (null!=jobPostform.getStatusValue()?jobPostform.getStatusValue():null!=request.getParameter("jobStatus")?request.getParameter("jobStatus"):null);
 		jobPostform.setStatusValue(jobStatus);
 		DropDownDTO dto = new DropDownDTO();
@@ -619,7 +622,8 @@ public class JobPostController {
 						.getTotalNumberOfJobRecordsByStatus();
 			}
 		}
-
+		// to set the company Id
+		
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),
 				"facility_admin");
 		
@@ -651,6 +655,8 @@ public class JobPostController {
 		model.addObject("autoRenewList", autoRenewList);
 		model.addObject("jobStatusList",
 				populateDropdownsService.getJobStatusList());
+		
+		model.addObject("companyList", companyList);
 		model.setViewName("manageJobPosting");
 
 		return model;

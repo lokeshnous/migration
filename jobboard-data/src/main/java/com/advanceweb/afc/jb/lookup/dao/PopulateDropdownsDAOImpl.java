@@ -636,13 +636,22 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
 						"from  AdmFacility fac WHERE fac.facilityParentId=?",
 						facilityId);
-				for (AdmFacility facility : listAdmFacility) {
-					DropDownDTO dto = new DropDownDTO();
-					dto.setOptionId(String.valueOf(facility.getFacilityId()));
-					dto.setOptionName(facility.getName());
-					companyNames.add(dto);
-				
+//				TODO remove the below if once the issue #205 is fixed
+				if(listAdmFacility.isEmpty() || null == listAdmFacility)
+				{
+					listAdmFacility = hibernateTemplate.find(
+							"from  AdmFacility fac WHERE fac.facilityId=?",
+							facilityId);
 				}
+					for (AdmFacility facility : listAdmFacility) {
+						DropDownDTO dto = new DropDownDTO();
+						dto.setOptionId(String.valueOf(facility.getFacilityId()));
+						dto.setOptionName(facility.getName());
+						companyNames.add(dto);
+					
+					}
+				
+				
 			}
 			else{
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(

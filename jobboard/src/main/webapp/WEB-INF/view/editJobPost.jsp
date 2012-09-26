@@ -49,6 +49,31 @@
 						});
 		}
 		
+		function callTemplate()
+		{
+			$.ajax({
+			url: '${pageContext.request.contextPath}/employer/getTemplate.html?company='+$("#companyAutoPopulation").val(),
+			success : function(data) {
+				$('#templateId option').remove();
+
+				$('#templateId').append('<option value="0">None</option>');
+				
+				var dataLen = data.length;
+				if (dataLen > 0) {
+				
+					if (dataLen > 1) {
+						
+						for (var i=0; i < dataLen; i++) {
+							$('#templateId').append('<option value="' + data[i]["optionId"] + '">' + data[i]["optionName"] + '</option>');
+						}
+						
+					} else {
+						$('#templateId').append('<option value="' + data[0]["optionId"] + '" selected="selected">' + data[0]["optionName"] + '</option>');
+					}
+				}
+			},
+			});
+		}
 			//Limit text area characters
 			function limitText(limitField, limitCount, limitNum) {
 			/* 		alert(limitField.value.length+""+limitCount.value+""+limitNum); */
@@ -229,39 +254,6 @@
 			});
 
 			
-			//Auto complete on selecting Company name
-			$("#companyAutoPopulation").autocomplete({
-				source: '${pageContext.request.contextPath}/employer/getCompanyList.html',
-				width:500,
-				select: function(event, ui) {
-					$("#companyAutoPopulation").val(ui.item.value);				
-					$.ajax({
-					url: '${pageContext.request.contextPath}/employer/getTemplate.html?company='+$("#companyAutoPopulation").val(),
-					success : function(data) {
-						$('#templateId option').remove()
-
-						$('#templateId').append('<option value="0">None</option>');
-						
-						var dataLen = data.length;
-						if (dataLen > 0) {
-						
-							if (dataLen > 1) {
-								
-								for (var i=0; i < dataLen; i++) {
-									$('#templateId').append('<option value="' + data[i]["optionId"] + '">' + data[i]["optionName"] + '</option>');
-								}
-								
-							} else {
-								$('#templateId').append('<option value="' + data[0]["optionId"] + '" selected="selected">' + data[0]["optionName"] + '</option>');
-							}
-							
-						}
-					},
-					});
-				},
-			}); 
-			
-			
 		    jQuery(".megamenu").megamenu();
 		    $('#jobOwner').focus();
 		});
@@ -318,7 +310,10 @@
                 <div class="toolTip colorPkrAreaToolTip"><span class="classic">This is the customer number shown in your employer profile.</span></div>
               </div>
                       <div class="rowEvenNewSpacing"> <span class="lableText3">Company Name:</span>
-                <form:input path="companyName" class="job_seeker_password textBox350"  id="companyAutoPopulation" readonly="true"/>
+                <form:select path="companyName" class="jb_input3 jb_input_width3" id="companyAutoPopulation" onchange="callTemplate()" >
+						<%-- <form:option value="0" label="None" /> --%>
+						<form:options items="${companyList}" itemValue="optionId" itemLabel="optionName" readonly="true"/>
+					</form:select>
               </div>
 
                <div class="rowEvenNewSpacing"> <span class="lableText3">Display Company Name:</span>
