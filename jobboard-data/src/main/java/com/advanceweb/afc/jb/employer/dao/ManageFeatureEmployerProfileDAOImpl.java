@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,9 +14,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 
@@ -62,16 +61,13 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		AdmFacility facility = hibernateTemplateCareers.load(AdmFacility.class, Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
 		facility=employerRegistrationConversionHelper
 		.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO,facility);
-		facility.setFacilityType("FACILITY");
-		facility.setAdminUserId(1);
-		facility.setCreateDt(new Date());
 		int nsCustomerID = 0;
 		List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer.valueOf(companyProfileDTO.getFacilityid()));
 		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
 		facility.setNsCustomerID(nsCustomerID);
 		try {
 			if (companyProfileDTO != null) {
-				hibernateTemplateCareers.update(facility);
+				hibernateTemplateCareers.saveOrUpdate(facility);
 			}
 
 		} catch (HibernateException e) {
