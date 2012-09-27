@@ -93,7 +93,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String NAME_STRING = "name";
 	
 	private static final String CONTACT_ROLES_STRING = "contactroles";
-	//private static final String EMAIL_STRING = "email";
+	private static final String EMAIL_STRING = "email";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -490,8 +490,8 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		}
 		for(int index = 0; index < jsonArray.length(); index++ ){
 			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
-			if(innerJsonObj.has(CONTACT_ROLES_STRING)){
-				emailList.add(innerJsonObj.getString(CONTACT_ROLES_STRING));
+			if(innerJsonObj.has(EMAIL_STRING)){
+				emailList.add(innerJsonObj.getString(EMAIL_STRING));
 			}
 		}
 		LOGGER.info("Email List is "+emailList);
