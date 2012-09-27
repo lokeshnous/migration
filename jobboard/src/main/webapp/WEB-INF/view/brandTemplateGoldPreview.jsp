@@ -293,7 +293,7 @@
         
       </div>
               <div class="clearfix"></div>
-              <div class="ad_wrapper marginTop0"><img src="images/ads/banner_ad_fpo.png" /> </div>
+              <div class="ad_wrapper marginTop0"><img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
             </div>
     <!-- main --> 
     
