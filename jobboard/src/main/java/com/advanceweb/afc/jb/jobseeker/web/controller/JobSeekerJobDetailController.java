@@ -92,5 +92,25 @@ public class JobSeekerJobDetailController {
 		model.put("savedJobDTOList", savedJobDTOList);
 		return new ModelAndView("jobseekermysavedjobspopup");
 	}
+	
+	/**
+	 * @author kartikm
+	 * @version v.0.1
+	 * @param session
+	 * @param model
+	 * @return jobSeekerViewCount
+	 * @Perpous this is view job by employer count
+	 */
+	
+	@RequestMapping(value = "/viewResumeCount")
+	public ModelAndView viewResumeCount(HttpSession session, Map model) {
+		/*List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
+				.getSavedJobs((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
+		model.put("savedJobDTOList", savedJobDTOList);*/
+		return new ModelAndView("jobSeekerViewCount");
+	}
+	
+	
 
 }
