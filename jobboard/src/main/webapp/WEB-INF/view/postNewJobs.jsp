@@ -126,7 +126,6 @@
 							return hasError;
 						}
 						$("#postNewJobButId").click(function() {
-							alert("postNewJobButId");
 							if (!validateData()) {
 								return false;
 							}
@@ -137,7 +136,6 @@
 						    			 $(this).removeAttr('disabled');
 						    		});
 								}
-								alert("yes");
 								$("#postNewJobButHideId").click();
 							}
 						});
