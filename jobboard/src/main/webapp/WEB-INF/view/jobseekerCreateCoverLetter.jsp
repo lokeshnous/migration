@@ -60,81 +60,81 @@
 	<body class="job_board">
 		
 		<form:form action="jobseekerCoverLetterSub.html" method="POST" commandName="resCoverLetterForm" id="resCovLetForm" name="resCovLetForm" enctype="multipart/form-data">
-		<div class="main_wrapper_outside">
-			<div class="main_wrapper_inside">
-				<div class="main">
+		<div class="job_seeker_login popUpContainer" id="jobSeekerRegister1" style="display: block;">
 					<div class="popupHeader">
 						<h2>
 							CREATE NEW COVER LETTER 
 						</h2>
-						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/></a>
+						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
 					</div>
+					<div class="popUpContainerWrapper">
 					<div class="row ">
-						<div class="row marginTop15">
-							<div class="lableTextCoverletter">
+						<div class="rowEvenNewSpacing">
+								<span class="lableText3">
 								Cover Letter Name:
-							</div>
-							<div class="input_grp5 ">
-								<div class="floatLeft">
-									<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text"/>							
-								</div>
+								</span>
+								<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text"/>
 								<div class="required2">
 									(Required)
 								</div>
-							</div>
-						</div>
-						<div id="errmsg" class="FormErrorDisplayText"></div>
-						<div class="row marginTop15">
-							<div class="lableTextCoverletter marginTop10">
+							</div>	
+							<div class="rowEvenNewSpacing">
+								<span class="lableText3"> </span>
+									<div id="errmsg" class="FormErrorDisplayText"></div>
+							</div>					
+						<div class="rowEvenNewSpacing">
+								<span class="lableText3">
 								Body Text:
-							</div>
-							<div class="input_grp5 ">
-								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
+								</span>
+								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
 								id="coverletterText"
 									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
 									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"/>
-								<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.<p>
-
-							</div>
-						</div>
-						<div class="row marginTop15 MarginBottom10">
-							<div class="lableTextCoverletter">
+								<p class="magrin_top0">
+								<span class="lableText3">
+								
+								</span>
+								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.
+								</p>
+							</div>						
+						<div class="rowEvenNewSpacing">
+								<span class="lableText3">
 								Cover Letter Visibility:
-							</div>
-							<span class="required">								
+								</span>
+								<span class="required">								
 									<label class="greyLabel">
-										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public"/> 
+										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public" /> 
 									</label>
 							</span>
 							<span class="required">								
 									<label class="greyLabel">
-									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private"/>										
+									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private"  />										
 									</label>
 							</span>
+							
 							<div class="toolTip colorPkrAreaToolTip">
-								<span class="classic"><p>
+								<span class="classic">
 									You can only have one Cover Letter Visibility to employers at a time, so select 
 									Private if you already have a public cover letter  saved to your profile. Otherwise, 
 									you may select Public and employers will be able to view your cover letter immediately.
-									</p>
+									
 								</span>
 							</div>
 							<div class="required2">
 								(Required)
 							</div>
-						</div>
+					 </div>						
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
-						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" name="save" id="save" class="btn_sm orange" />
-							<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel"/>
-								
-						</span>
-					</div>
-					</div>
+							<span class="floatLeft marginTop10">
+								<input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" />
+								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel" title="Cancel"/>	
+							</span>
+						</div>			
 					
+				 </div>	
 				</div>
 			</div>
-		</div>
+		
 		</form:form>
 		
 	</body>
