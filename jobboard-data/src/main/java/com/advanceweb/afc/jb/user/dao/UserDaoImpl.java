@@ -81,6 +81,7 @@ public class UserDaoImpl implements UserDao {
 				userDTO.setLastName(merUser.getLastName());
 				userDTO.setUserId(merUser.getUserId());
 				userDTO.setPassword(user.getPassword());
+				userDTO.setAdmin(true);
 
 			} else {
 				userDTO = new UserDTO();

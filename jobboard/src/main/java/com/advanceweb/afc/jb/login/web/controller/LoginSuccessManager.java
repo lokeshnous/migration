@@ -37,8 +37,10 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		response.setHeader("Cache-Control", "must-revalidate");
 		response.setDateHeader("Expires", 0);
 		UserDTO user = loginService.getUser(authentication.getName());
-
 		HttpSession session = request.getSession(false);
+		if(user.isAdmin()){
+			session.setAttribute("postEdit","postEdit");
+		}
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
 				+ " " + user.getLastName());

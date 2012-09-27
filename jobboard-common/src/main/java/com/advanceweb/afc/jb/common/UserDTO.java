@@ -44,7 +44,15 @@ public class UserDTO {
 	private String packageName;
 	private List<String> emailList;
 	private boolean helthSystem;
+	private boolean admin;
 	
+	
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 	public boolean isHelthSystem() {
 		return helthSystem;
 	}
