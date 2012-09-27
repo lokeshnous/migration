@@ -271,6 +271,24 @@ public class UserDaoImpl implements UserDao {
 				facilityList = hibernateTemplate
 						.find("from AdmFacility e where e.facilityParentId=? and e.deleteDt is Null",
 								facilityId);
+				for (int i = 0; i < facilityList.size(); i++) {
+					AdmFacility facility = facilityList.get(i);
+					int facId = facility.getFacilityId();
+					try {
+						AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplate
+								.find("from AdmUserFacility af where af.admFacility.facilityId=?",
+										facId).get(0);
+						// if facility has role 5 or 6 then he is the job owner
+						// need to remove it from metrics drop down list
+						if ((userFacility.getAdmRole().getRoleId() != Integer
+								.parseInt(MMJBCommonConstants.FULL_ACCESS))
+								|| (userFacility.getAdmRole().getRoleId() != Integer
+										.parseInt(MMJBCommonConstants.MANAGEEDITACCESS))) {
+							facilityList.remove(i);
+						}
+					} catch (Exception e) {
+					}
+				}
 			} catch (HibernateException e) {
 				throw new JobBoardDataException(
 						"Error occured while getting the facility details from Database"
