@@ -201,6 +201,7 @@
 							if (!validateData()) {
 								return false;
 							}
+							$("#errMsgDialog").text("");
 							$("#scheduleStartDivId").dialog({
 								resizable : false,
 								height : 400,
@@ -214,6 +215,8 @@
 										if ($("#startDate").val() != '') {
 											$(this).dialog("close");
 											$("#scheduleJobButHideId").click();
+										}else{
+											$("#errMsgDialog").text("Please Enter the Dates.");
 										}
 									},
 									"Cancel" : function() {
@@ -826,6 +829,9 @@
 										<form:input path="" class="job_seeker_password" id="endDate"
 											readonly="true" />
 									</div>
+									<div class="rowEvenNewSpacing">  
+				              	  		<div id="errMsgDialog" class="validationMsg"> </div>
+				              	  	</div>
 								</div>
 
 								<div class="clearfix"></div>
