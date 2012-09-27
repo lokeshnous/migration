@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 				var endDate=$("#endDt").val();
 		        var txtVal =  $('#endDt').val();
 		        if(isDate(txtVal)){
-		            alert('Valid Date');
+		           // alert('Valid Date');
 		        //	return true;
 		        	$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
 						 success: function(data){ 
