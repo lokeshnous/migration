@@ -142,7 +142,8 @@ public class LoginFormValidator {
 	}
 
 	/**
-	 * Validation for forgot password based on email and user role id
+	 * Validation for forgot password based on the email, page value and user
+	 * role id
 	 * 
 	 * @param form
 	 * @param userDetailsLoginFormDTO
@@ -161,15 +162,13 @@ public class LoginFormValidator {
 
 			}
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
-			if (email != null
-					&& userDetailsLoginFormDTO != null
-					&& email.equals(userDetailsLoginFormDTO.getEmailAddress())
-					&& userDetailsLoginFormDTO.getRoleId() == MMJBCommonConstants.EMPLOYER_ROLE_ID) {
+			if (email != null && userDetailsLoginFormDTO != null
+					&& email.equals(userDetailsLoginFormDTO.getEmailAddress())) {
 
 				return true;
 
 			}
-		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
+		} else if (page.equals(MMJBCommonConstants.AGENCY)) {
 			if (email != null && userDetailsLoginFormDTO != null
 					&& email.equals(userDetailsLoginFormDTO.getEmailAddress())) {
 				return true;
