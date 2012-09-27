@@ -21,7 +21,7 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 	 * @param userIdp
 	 * @return
 	 */
-	public UserDTO createJobOwner(EmployerProfileDTO profileDTO,
+	UserDTO createJobOwner(EmployerProfileDTO profileDTO,
 			int facilityIdP, int userIdp) throws JobBoardDataException;
 
 	/**
@@ -29,14 +29,14 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 	 * @param jobOwnerId
 	 * @return
 	 */
-	public boolean deleteJobOwner(int jobOwnerId)throws JobBoardDataException;
+	boolean deleteJobOwner(int jobOwnerId)throws JobBoardDataException;
 
 	/**
 	 * 
 	 * @param accessPermissionDTO
 	 * @return
 	 */
-	public boolean updateJobOwner(
+	boolean updateJobOwner(
 			List<ManageAccessPermissionDTO> accessPermissionDTO)throws JobBoardDataException;
 
 	/**
@@ -46,13 +46,13 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 	 * @param roleId
 	 * @return
 	 */
-	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
+	List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
 			int userId)throws JobBoardDataException;
 	/**
 	 * 
 	 * @param email
 	 * @return
 	 */
-	public MerUser getUserListByEmail(String email)throws JobBoardDataException;
+	MerUser getUserListByEmail(String email)throws JobBoardDataException;
 
 }
