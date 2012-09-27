@@ -189,7 +189,16 @@ public class JobseekerCoverLetterController {
 		}
 	}
 
-	
+	/**
+	 * @author kartikm
+	 * @version v.0.1
+	 * @description this is for view option of cover letter
+	 * @param request
+	 * @param session
+	 * @param resCoverLetterForm
+	 * @param result
+	 * @return
+	 */
 	
 	
 	@RequestMapping(value = "/jobseekerViewCoverLetter", method = RequestMethod.GET)
@@ -221,7 +230,18 @@ public class JobseekerCoverLetterController {
 		}
 		return model;
 	}
-	
+	/**
+	 * @author kartikm
+	 * @version v.0.1
+	 * @date 22 Sept.2012
+	 * @Need : This is for down load option
+	 * @param request
+	 * @param session
+	 * @param resCoverLetterForm
+	 * @param result
+	 * @param response
+	 * @return
+	 */
 	
 	//@ResponseBody
 	@RequestMapping(value = "/jobseekerDownloadCoverLetter", method = RequestMethod.GET)
@@ -377,7 +397,17 @@ public class JobseekerCoverLetterController {
 		return "";
 		
 	}
-	
+	/**
+	 * @author kartikm
+	 * @version v.0.1
+	 * @date 20Sept.2012
+	 * @perpous This is for print cover letter 
+	 * @param request
+	 * @param session
+	 * @param resCoverLetterForm
+	 * @param result
+	 * @return
+	 */
 	@RequestMapping(value = "/jobseekerPrintCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobseekerPrintCoverLetter(HttpServletRequest request,
 			HttpSession session, ResCoverLetterForm resCoverLetterForm,
