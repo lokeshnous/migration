@@ -22,7 +22,7 @@ public interface ProfileRegistration {
 	 * @return Object of UserDTO
 	 */
 
-	public UserDTO createUser(ProfileDTO profileDTO);
+	UserDTO createUser(ProfileDTO profileDTO);
 
 	/**
 	 * 
