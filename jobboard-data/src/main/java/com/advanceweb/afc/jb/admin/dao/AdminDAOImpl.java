@@ -91,6 +91,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateAdminCredentials(String email, String password) {
+		boolean status = false;
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)
 					&& !StringUtils.isEmptyOrWhitespaceOnly(password)) {
@@ -103,7 +104,8 @@ public class AdminDAOImpl implements AdminDAO {
 							USER_ROLE, user.getUserId());
 					if (null != useList && !useList.isEmpty()) {
 						if (useList.get(0).getAdmRole().getRoleId() == 1) {
-							return (null != useList ? true : false);
+							status = true;
+//							return (null != useList ? true : false);
 						}
 					}
 				}
@@ -111,7 +113,7 @@ public class AdminDAOImpl implements AdminDAO {
 		} catch (HibernateException e) {
 			LOGGER.error(e);
 		}
-		return false;
+		return status;
 	}
 
 	@SuppressWarnings("unchecked")
