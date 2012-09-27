@@ -79,7 +79,7 @@ public class AgencyDashBoardController {
 	@Autowired
 	private EmloyerRegistartionService empRegService;
 	@Autowired
-    protected AuthenticationManager customAuthenticationManager;
+	protected AuthenticationManager customAuthenticationManager;
 	@Autowired
 	private LoginService loginService;
 	@Autowired
@@ -95,8 +95,7 @@ public class AgencyDashBoardController {
 
 	@Autowired
 	private ProfileRegistration employerRegistration;
-	
-	
+
 	@Value("${account_first_name}")
 	private String accountFirstName;
 	@Value("${account_last_name}")
@@ -111,12 +110,14 @@ public class AgencyDashBoardController {
 	private String accountCountry;
 	@Value("${account_city}")
 	private String accountCity;
-	/*@Autowired
-	EmployerRegistrationValidation registerValidation;*/
-	
+
+	/*
+	 * @Autowired EmployerRegistrationValidation registerValidation;
+	 */
+
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session) {
-        ModelAndView model = new ModelAndView();
+		ModelAndView model = new ModelAndView();
 		int agencyUserId = (Integer) session.getAttribute("userId");
 		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
 		Set<String> stateList = new HashSet<String>();
@@ -161,25 +162,32 @@ public class AgencyDashBoardController {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
-				}  else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
+				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
 				} else if (null == employeeAccountForm.getPhone()) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
-				}else if ((null == employeeAccountForm.getFirstName()) ||("".equals(employeeAccountForm.getFirstName()))){
+				} else if ((null == employeeAccountForm.getFirstName())
+						|| ("".equals(employeeAccountForm.getFirstName()))) {
 					return accountFirstName;
-				}else if ((null == employeeAccountForm.getLastName())||("".equals(employeeAccountForm.getLastName()))) {
+				} else if ((null == employeeAccountForm.getLastName())
+						|| ("".equals(employeeAccountForm.getLastName()))) {
 					return accountLastName;
-				}else if ((null == employeeAccountForm.getZipCode())||("".equals(employeeAccountForm.getZipCode()))) {
+				} else if ((null == employeeAccountForm.getZipCode())
+						|| ("".equals(employeeAccountForm.getZipCode()))) {
 					return accountZipCode;
-				}else if ((null == employeeAccountForm.getCityOrTown())||("".equals(employeeAccountForm.getCityOrTown()))) {
+				} else if ((null == employeeAccountForm.getCityOrTown())
+						|| ("".equals(employeeAccountForm.getCityOrTown()))) {
 					return accountCity;
-				}else if ((null == employeeAccountForm.getCompany())||("".equals(employeeAccountForm.getCompany()))) {
+				} else if ((null == employeeAccountForm.getCompany())
+						|| ("".equals(employeeAccountForm.getCompany()))) {
 					return accountCompanyName;
-				}else if ((null == employeeAccountForm.getCountry())||("".equals(employeeAccountForm.getCountry()))) {
+				} else if ((null == employeeAccountForm.getCountry())
+						|| ("".equals(employeeAccountForm.getCountry()))) {
 					return accountCountry;
-				}else if ((null == employeeAccountForm.getState())||("".equals(employeeAccountForm.getState()))) {
+				} else if ((null == employeeAccountForm.getState())
+						|| ("".equals(employeeAccountForm.getState()))) {
 					return accountState;
-				}else if (employerRegistration
+				} else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
 					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				}
@@ -228,29 +236,36 @@ public class AgencyDashBoardController {
 			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
 				return MMJBCommonConstants.PHONE_NO;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getFnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getFnameForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getFnameForBillingAddr()))) {
 				return accountFirstName;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getLnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getLnameForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getLnameForBillingAddr()))) {
 				return accountLastName;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getZipCodeForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getZipCodeForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getZipCodeForBillingAddr()))) {
 				return accountZipCode;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCityOrTownForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getCityOrTownForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getCityOrTownForBillingAddr()))) {
 				return accountCity;
-			} else if ((null == employeeBillingForm.getCompany())||("".equals(employeeBillingForm.getCompany()))) {
+			} else if ((null == employeeBillingForm.getCompany())
+					|| ("".equals(employeeBillingForm.getCompany()))) {
 				return accountCompanyName;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCountryForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getCountryForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getCountryForBillingAddr()))) {
 				return accountCountry;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStateBillingAddress())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getStateBillingAddress())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getStateBillingAddress()))) {
 				return accountState;
 			}
@@ -348,8 +363,7 @@ public class AgencyDashBoardController {
 						.getBillingAddressForm()
 						.setFnameForBillingAddr(listBillingForms.getFirstName());
 				employeeBillingForm.getBillingAddressForm()
-						.setLnameForBillingAddr(
-								listBillingForms.getLastName());
+						.setLnameForBillingAddr(listBillingForms.getLastName());
 				employeeBillingForm.setCompany(listBillingForms
 						.getCompanyName());
 				employeeBillingForm.getBillingAddressForm()
@@ -425,8 +439,7 @@ public class AgencyDashBoardController {
 	}
 
 	@RequestMapping(value = "/editEmployer", method = RequestMethod.GET)
-	public ModelAndView editEmployer(
-			@RequestParam("facilityId") int facilityId) {
+	public ModelAndView editEmployer(@RequestParam("facilityId") int facilityId) {
 		ModelAndView model = new ModelAndView();
 		try {
 			EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
@@ -447,19 +460,19 @@ public class AgencyDashBoardController {
 						.setStreet(profAttribFormsMap.get("street") != null ? profAttribFormsMap
 								.get("street").toString() : "");
 				empRegisterForm
-				.setPrimaryPhone(profAttribFormsMap.get("phone") != null ? profAttribFormsMap
-						.get("phone").toString() : "");
-				
+						.setPrimaryPhone(profAttribFormsMap.get("phone") != null ? profAttribFormsMap
+								.get("phone").toString() : "");
+
 				empRegisterForm
 						.setZipCode(profAttribFormsMap.get("postcode") != null ? profAttribFormsMap
 								.get("postcode").toString() : "");
-				empRegisterForm 
+				empRegisterForm
 						.setState(profAttribFormsMap.get("state") != null ? profAttribFormsMap
 								.get("state").toString() : "");
 
-				empRegisterForm 
+				empRegisterForm
 						.setCountry(profAttribFormsMap.get("country") != null ? profAttribFormsMap
-								.get("country").toString() : "") ;
+								.get("country").toString() : "");
 				empRegisterForm
 						.setCity(profAttribFormsMap.get("city") != null ? profAttribFormsMap
 								.get("city").toString() : "");
@@ -471,7 +484,7 @@ public class AgencyDashBoardController {
 
 		} catch (Exception e) {
 			LOGGER.info("Error is occured in controllr");
-			LOGGER.error("ERROR"+e);
+			LOGGER.error("ERROR" + e);
 		}
 
 		return model;
@@ -480,10 +493,11 @@ public class AgencyDashBoardController {
 	@RequestMapping(value = "/getEmployerNamesList", method = RequestMethod.GET, headers = "Accept=*/*")
 	public @ResponseBody
 	JSONObject getEmployerNamesList(@RequestParam("term") String name) {
-		List<FacilityDTO> dtoList=impersonateAgencyService.getEmployerNamesList(name);
+		List<FacilityDTO> dtoList = impersonateAgencyService
+				.getEmployerNamesList(name);
 		JSONArray jsonRows = new JSONArray();
 		JSONObject jsonObj2 = new JSONObject();
-		for(FacilityDTO dto:dtoList){
+		for (FacilityDTO dto : dtoList) {
 			JSONObject jsonObj = new JSONObject();
 			jsonObj.put("value", dto.getName());
 			jsonObj.put("ID", dto.getFacilityId());
@@ -496,8 +510,9 @@ public class AgencyDashBoardController {
 
 	@RequestMapping(value = "/getEmployerDetails")
 	@ResponseBody
-	public Map<String, Object> getEmployerDetails(@RequestParam("facilityId") int facilityId) {
-		return  impersonateAgencyService.getEmployerDetails(facilityId);
+	public Map<String, Object> getEmployerDetails(
+			@RequestParam("facilityId") int facilityId) {
+		return impersonateAgencyService.getEmployerDetails(facilityId);
 	}
 
 	@ResponseBody
@@ -509,29 +524,32 @@ public class AgencyDashBoardController {
 			AccountProfileDTO dto = transformEmpReg
 					.transformEmployerFormToDto(employerRegistrationForm);
 			if (StringUtils.isEmpty(dto.getFirstName())) {
-				return "Please fill the required field";
+				return "Please enter the required field";
 			}
 			int agencyUserId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			String email=(String)session
+			String email = (String) session
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
-			FacilityDTO facility=loginService.getFacilityByFacilityId(facilityId);
-			if(facility.getFacilityParentId()!=0){
+			FacilityDTO facility = loginService
+					.getFacilityByFacilityId(facilityId);
+			if (facility.getFacilityParentId() != 0) {
 				return "The employer has been linked with other agency. Please contact administrator.";
 			}
-			int nsCustomerID = impersonateAgencyService.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
-			UserDTO userDTO =impersonateAgencyService.getNSCustomerDetails(nsCustomerID);
+			int nsCustomerID = impersonateAgencyService
+					.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
+			UserDTO userDTO = impersonateAgencyService
+					.getNSCustomerDetails(nsCustomerID);
 			List<String> emailList = userDTO.getEmailList();
-			if(emailList!=null && emailList.contains(email)){
-				impersonateAgencyService.addEmployer(dto, facilityId, agencyUserId);
-			}
-			else{
+			if (emailList != null && emailList.contains(email)) {
+				impersonateAgencyService.addEmployer(dto, facilityId,
+						agencyUserId);
+			} else {
 				return "You are not allowed to add the selected employer. Please contact administrator.";
 			}
 		} catch (Exception e) {
-			
+
 			return "Error while saving the record";
 		}
 		return "";
@@ -553,18 +571,19 @@ public class AgencyDashBoardController {
 			model.setViewName("agencyManageEmployers");
 		} catch (Exception e) {
 			LOGGER.info("Error is occured in controllr");
-			LOGGER.error("ERROR"+e);
+			LOGGER.error("ERROR" + e);
 		}
 
 		return model;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/deleteAssocEmployer", method = RequestMethod.POST)
-	public JSONObject  deleteAssocEmployer(
+	public JSONObject deleteAssocEmployer(
 			@RequestParam("facilityId") String facilityId, HttpSession session) {
 		int userId = (Integer) session.getAttribute("userId");
-		boolean deleteStatus = impersonateAgencyService.deleteAssocEmployer(facilityId, userId);
+		boolean deleteStatus = impersonateAgencyService.deleteAssocEmployer(
+				facilityId, userId);
 		JSONObject deleteStatusJson = new JSONObject();
 		if (deleteStatus) {
 			deleteStatusJson.put("success", "Deleted");
@@ -574,134 +593,156 @@ public class AgencyDashBoardController {
 			return deleteStatusJson;
 		}
 	}
-	
+
 	@RequestMapping(value = "/impersonateAgencyToEmployer", method = RequestMethod.GET)
-	public ModelAndView impersonateAgencyToEmployer(@RequestParam("facilityId") int facilityId,HttpSession session,HttpServletRequest request) {
+	public ModelAndView impersonateAgencyToEmployer(
+			@RequestParam("facilityId") int facilityId, HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		session.setAttribute(MMJBCommonConstants.AGENCY_USER_ID,session.getAttribute(MMJBCommonConstants.USER_ID));
-		session.setAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID,session.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		session.setAttribute(MMJBCommonConstants.AGENCY_USER_NAME,session.getAttribute(MMJBCommonConstants.USER_NAME));
-		session.setAttribute(MMJBCommonConstants.AGENCY_EMAIL,session.getAttribute(MMJBCommonConstants.USER_EMAIL));
-		FacilityDTO facilityDto=loginService.getFacilityByFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		if((facilityDto.getRoleId()==6)){
-			session.setAttribute("postEdit","postEdit");
+		session.setAttribute(MMJBCommonConstants.AGENCY_USER_ID,
+				session.getAttribute(MMJBCommonConstants.USER_ID));
+		session.setAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID,
+				session.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		session.setAttribute(MMJBCommonConstants.AGENCY_USER_NAME,
+				session.getAttribute(MMJBCommonConstants.USER_NAME));
+		session.setAttribute(MMJBCommonConstants.AGENCY_EMAIL,
+				session.getAttribute(MMJBCommonConstants.USER_EMAIL));
+		FacilityDTO facilityDto = loginService
+				.getFacilityByFacilityId((Integer) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		if ((facilityDto.getRoleId() == 6)) {
+			session.setAttribute("postEdit", "postEdit");
 		}
-		if((facilityDto.getRoleId()==5)){
-			session.setAttribute("fullAcess","fullAcess");
+		if ((facilityDto.getRoleId() == 5)) {
+			session.setAttribute("fullAcess", "fullAcess");
 		}
-		int userId=impersonateAgencyService.getfacility(facilityId);
-		UserDTO userDTO=impersonateAgencyService.getUserByUserId(userId);
+		int userId = impersonateAgencyService.getfacility(facilityId);
+		UserDTO userDTO = impersonateAgencyService.getUserByUserId(userId);
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
-		session.setAttribute(MMJBCommonConstants.USER_NAME, userDTO.getFirstName()
-				+ " " + userDTO.getLastName());
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL, userDTO.getEmailId());
+		session.setAttribute(MMJBCommonConstants.USER_NAME,
+				userDTO.getFirstName() + " " + userDTO.getLastName());
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL,
+				userDTO.getEmailId());
 		session.setAttribute(MMJBCommonConstants.FACILITY_ID, facilityId);
 		model.setViewName("redirect:/employer/employerDashBoard.html");
-		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY));
-		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-		    		userDTO.getEmailId(), userDTO.getPassword(),authList);
-		    token.setDetails(new WebAuthenticationDetails(request));
-		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
-		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY));
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				userDTO.getEmailId(), userDTO.getPassword(), authList);
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authenticatedUser = customAuthenticationManager
+				.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 		return model;
 	}
-	
-	
+
 	@RequestMapping(value = "/impersonateEmployerToAgency", method = RequestMethod.GET)
-	public ModelAndView impersonateEmployerToAgency(HttpSession session,HttpServletRequest request) {
+	public ModelAndView impersonateEmployerToAgency(HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		session.setAttribute(MMJBCommonConstants.USER_ID,session.getAttribute(MMJBCommonConstants.AGENCY_USER_ID));
-		session.setAttribute(MMJBCommonConstants.FACILITY_ID,session.getAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID));
-		session.setAttribute(MMJBCommonConstants.USER_NAME,session.getAttribute(MMJBCommonConstants.AGENCY_USER_NAME));
-		session.setAttribute(MMJBCommonConstants.USER_EMAIL,session.getAttribute(MMJBCommonConstants.AGENCY_EMAIL));
+		session.setAttribute(MMJBCommonConstants.USER_ID,
+				session.getAttribute(MMJBCommonConstants.AGENCY_USER_ID));
+		session.setAttribute(MMJBCommonConstants.FACILITY_ID,
+				session.getAttribute(MMJBCommonConstants.AGENCY_FACILITY_ID));
+		session.setAttribute(MMJBCommonConstants.USER_NAME,
+				session.getAttribute(MMJBCommonConstants.AGENCY_USER_NAME));
+		session.setAttribute(MMJBCommonConstants.USER_EMAIL,
+				session.getAttribute(MMJBCommonConstants.AGENCY_EMAIL));
 		session.removeAttribute("postEdit");
 		session.removeAttribute("fullAcess");
-		UserDTO userDTO=impersonateAgencyService.getUserByUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+		UserDTO userDTO = impersonateAgencyService
+				.getUserByUserId((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
 		model.setViewName("redirect:/agency/agencyDashboard.html");
-		 List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		 authList.add(new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY_GROUP));
-		    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-		    		userDTO.getEmailId(), userDTO.getPassword(),authList);
-		    token.setDetails(new WebAuthenticationDetails(request));
-		    Authentication authenticatedUser = customAuthenticationManager.authenticate(token);
-		    SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_GROUP));
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				userDTO.getEmailId(), userDTO.getPassword(), authList);
+		token.setDetails(new WebAuthenticationDetails(request));
+		Authentication authenticatedUser = customAuthenticationManager
+				.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 		return model;
 	}
 
 	@RequestMapping(value = "/showEmployerMetrics", method = RequestMethod.GET)
-	public ModelAndView showEmployerMetrics(@RequestParam("facilityId") int facilityId,HttpSession session,HttpServletRequest request) {
+	public ModelAndView showEmployerMetrics(
+			@RequestParam("facilityId") int facilityId, HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-	List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
-	MetricsDTO metricsDTO = new MetricsDTO();
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		MetricsDTO metricsDTO = new MetricsDTO();
 
-	// Get the job post details of logged in employer
-	List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
-	FacilityDTO employerDetails=loginService.getFacilityByFacilityId(facilityId);
-	// Getting metrics values from look up table
-	List<DropDownDTO> metricsList = populateDropdownsService
-			.populateDropdown("Metrics");
+		// Get the job post details of logged in employer
+		List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
+		FacilityDTO employerDetails = loginService
+				.getFacilityByFacilityId(facilityId);
+		// Getting metrics values from look up table
+		List<DropDownDTO> metricsList = populateDropdownsService
+				.populateDropdown("Metrics");
 
-	// jbPostTotalList will be having job post total details for metrics
-	int views = 0;
-	int clicks = 0;
-	int applies = 0;
-	int size = metricsDTOs.size();
-	for (int i = 0; i < metricsDTOs.size(); i++) {
-		MetricsDTO dto = new MetricsDTO();
-		dto = (MetricsDTO) metricsDTOs.get(i);
-		views = views + dto.getViews();
-		clicks = clicks + dto.getClicks();
-		applies = applies + dto.getApplies();
-	}
-	metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
-	metricsDTO.setViews(views);
-	metricsDTO.setClicks(clicks);
-	metricsDTO.setApplies(applies);
-	jbPostTotalList.add(0, metricsDTO);
-	metricsDTO = new MetricsDTO();
+		// jbPostTotalList will be having job post total details for metrics
+		int views = 0;
+		int clicks = 0;
+		int applies = 0;
+		int size = metricsDTOs.size();
+		for (int i = 0; i < metricsDTOs.size(); i++) {
+			MetricsDTO dto = new MetricsDTO();
+			dto = (MetricsDTO) metricsDTOs.get(i);
+			views = views + dto.getViews();
+			clicks = clicks + dto.getClicks();
+			applies = applies + dto.getApplies();
+		}
+		metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
+		metricsDTO.setViews(views);
+		metricsDTO.setClicks(clicks);
+		metricsDTO.setApplies(applies);
+		jbPostTotalList.add(0, metricsDTO);
+		metricsDTO = new MetricsDTO();
 
-	// Calculating average per job posting
-	int avgViews = 0;
-	int avgClicks = 0;
-	int avgApplies = 0;
-	if (size > 0) {
-		avgViews = views / size;
-		avgClicks = clicks / size;
-		avgApplies = applies / size;
-	}
-	metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
-	metricsDTO.setViews(avgViews);
-	metricsDTO.setClicks(avgClicks);
-	metricsDTO.setApplies(avgApplies);
-	jbPostTotalList.add(1, metricsDTO);
-	metricsDTO = new MetricsDTO();
+		// Calculating average per job posting
+		int avgViews = 0;
+		int avgClicks = 0;
+		int avgApplies = 0;
+		if (size > 0) {
+			avgViews = views / size;
+			avgClicks = clicks / size;
+			avgApplies = applies / size;
+		}
+		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+		metricsDTO.setViews(avgViews);
+		metricsDTO.setClicks(avgClicks);
+		metricsDTO.setApplies(avgApplies);
+		jbPostTotalList.add(1, metricsDTO);
+		metricsDTO = new MetricsDTO();
 
-	// Calculating site - wide average per job posting
-	int swAvgViews = 0;
-	int swAvgClicks = 0;
-	int swAvgApplies = 0;
-	long count = 0;
-	try {
-		count = loginService.getEmployerCount();
-	} catch (JobBoardException e) {
-		LOGGER.info("Error occured while getting the Result from Database");
-	}
+		// Calculating site - wide average per job posting
+		int swAvgViews = 0;
+		int swAvgClicks = 0;
+		int swAvgApplies = 0;
+		long count = 0;
+		try {
+			count = loginService.getEmployerCount();
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occured while getting the Result from Database");
+		}
 
-	if (count > 0) {
-		swAvgViews = (int) (views / count);
-		swAvgClicks = (int) (clicks / count);
-		swAvgApplies = (int) (applies / count);
-	}
-	metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
-	metricsDTO.setViews(swAvgViews);
-	metricsDTO.setClicks(swAvgClicks);
-	metricsDTO.setApplies(swAvgApplies);
-	jbPostTotalList.add(2, metricsDTO);
+		if (count > 0) {
+			swAvgViews = (int) (views / count);
+			swAvgClicks = (int) (clicks / count);
+			swAvgApplies = (int) (applies / count);
+		}
+		metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
+		metricsDTO.setViews(swAvgViews);
+		metricsDTO.setClicks(swAvgClicks);
+		metricsDTO.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, metricsDTO);
 
-	model.addObject("jbPostTotalList", jbPostTotalList);
-	model.addObject("employerDetails",employerDetails);
-	model.setViewName("employersMetricsPopup");
-	return model;
+		model.addObject("jbPostTotalList", jbPostTotalList);
+		model.addObject("employerDetails", employerDetails);
+		model.setViewName("employersMetricsPopup");
+		return model;
 	}
 }
