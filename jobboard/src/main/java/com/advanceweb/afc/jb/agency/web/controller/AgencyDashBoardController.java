@@ -207,6 +207,8 @@ public class AgencyDashBoardController {
 
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
+				session.setAttribute(MMJBCommonConstants.USER_NAME, employeeAccountForm.getFirstName() + " "
+						+ employeeAccountForm.getLastName());
 				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
 				} else {
@@ -408,7 +410,7 @@ public class AgencyDashBoardController {
 			model.addObject("stateList", stateList);
 			model.addObject("listProfAttribForms", listProfAttribForms);
 			model.addObject("count", listBillingForms.getCount());
-			model.setViewName("accountSetting");
+			model.setViewName("agencyAccountSetting");
 			model.addObject("employeeAccountForm", employeeAccountForm);
 			model.addObject("employeeBillingForm", employeeBillingForm);
 
