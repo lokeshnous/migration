@@ -11,7 +11,48 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-	
+		
+		$("#tb_cover_letter img").click(function(event) {
+			
+			var action = $(this).attr("class");
+			var rowObj = $(this).parent().parent().parent();
+			var saveSearchId = rowObj.attr("id");
+			
+			//var saveSearchedUrl = rowObj.attr("href");
+			//var searchName = $("#searchName").text();
+			
+			//alert(action);
+			switch (action) {
+			 case "edit":		
+				
+			   break; 
+			case "delete":{
+				var r=confirm("Are you sure you want to delete?");
+				if(r==true){
+					$.ajax({url: "${pageContext.request.contextPath}/jobSeekerCoverLetter/deleteManageExistCoverLetter.html?coverletterId="+saveSearchId,
+							success: function(data){ 
+							    if(data.success != null){
+							    	rowObj.remove();
+							    }
+							    if(data.failure != null){
+							    	alert(data.failure);
+							    }
+							},
+							error: function(response) {
+								alert("Server Error : "+response.status);
+							},
+							complete: function() {
+								
+							}
+						});
+					}
+					break;
+			}
+			}
+		});	
+		
+		
+		
 		jQuery(".megamenu").megamenu();
 	});
 	
@@ -41,7 +82,7 @@ function openwin(where) {
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="GET" commandname ="resCoverLetterForm">
 				<div class="rowEvenNewSpacing marginTop0">
-					<table width="100%" class="grid" border="0" cellSpacing="0"
+					<table id="tb_cover_letter" width="100%" class="grid" border="0" cellSpacing="0"
 						cellPadding="0">
 						<thead>
 							<tr class="borderTopNone">
@@ -54,7 +95,7 @@ function openwin(where) {
 						
 						<tbody>
 							<c:forEach items="${jobOwners}" var="job" varStatus="status">
-								<tr>
+								<tr id="${job.coverletterId}">
 									<td align="center" valign="middle">${job.name}</td>
 									<td align="center" valign="middle">	
 									<c:if test="${job.active=='1'}">Public</c:if>
@@ -67,7 +108,7 @@ function openwin(where) {
 										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDownloadCoverLetter.html?coverletterId=${job.coverletterId}"> <img width="20" height="20" alt="" class="download" /></a>
 										 <%-- <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId=${job.coverletterId}&type=Print" class="print" class="btnPrint"> <img width="20" height="20" alt="" class="print"/></a> --%>								
 										 <a title="Print" id="print${job.coverletterId}" onclick="printPopup(this.id)"><img width="20" height="20" alt="" class="print"/></a> 
-										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/deleteManageExistCoverLetter.html?coverletterId=${job.coverletterId}" class="nyroModal" title="Delete"> <img width="20" height="20" alt="" class="delete"/></a>
+										 <a href="#" title="Delete"> <img width="20" height="20" alt="" class="delete"/></a>
 										 
 									 </td>
 								</tr>
