@@ -33,7 +33,7 @@ public interface JobPostDAO {
 	boolean executeActiveJobWorker(List<JobPostDTO> jobsList);
 	boolean executeAutoRenewalJobWorker(List<JobPostDTO> jobsList);
 	List<JobPostDTO> retreiveAllScheduledJobs();
-	public List<JobPostDTO> retreiveAllExpiredJobs();
+	List<JobPostDTO> retreiveAllExpiredJobs();
 	
 	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
 	boolean validateAvailableCredits(int invDtlId, int facilityId);
@@ -50,11 +50,11 @@ public interface JobPostDAO {
 	 * @return boolean value
 	 * @throws JobBoardServiceException
 	 */
-	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
+	boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
 	/**
 	 * 
 	 * @param jobId
 	 * @return
 	 */
-	public int getinvDetIdByJobId(int jobId,int facilityId,int userId);
+	int getinvDetIdByJobId(int jobId,int facilityId,int userId);
 }
