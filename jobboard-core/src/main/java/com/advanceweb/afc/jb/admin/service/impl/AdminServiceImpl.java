@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.admin.dao.AdminDAO;
 import com.advanceweb.afc.jb.admin.service.AdminService;
@@ -15,6 +17,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 @Service("adminService")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class AdminServiceImpl implements ProfileRegistration,
 		AdminService {
 

@@ -913,8 +913,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// numberOfStartDate=twoDateDifferentValue(todayDate,startDateValue);
 			if (numberOfDays >= 0) {
 				mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
+				mer.setActive((byte) 1);
 			} else if (numberOfDays < 0) {
 				mer.setJobStatus(MMJBCommonConstants.STATUS_INACTIVE);
+				mer.setActive((byte) 0);
 			}
 			mer.setEndDt(endDateValue);
 			hibernateTemplate.update(mer);

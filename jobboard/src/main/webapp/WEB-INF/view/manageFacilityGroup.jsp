@@ -55,7 +55,7 @@ function validateFacility() {
 		$("#ErrorMsg").text("Please find.");
 		valid = false;
 	}
-	alert(valid);
+	//alert(valid);
 	return valid;
 }
 </script>
@@ -149,26 +149,30 @@ function validateFacility() {
 				commandName="adminForm">
 
 			<div class="row">
-				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
+				<span class="splLableText">Company Name: </span>
 				<form:input path="compName" id="empList" name="empList"
 					class="job_seeker_Resume" value="${empList}"/>
-					<span class="lableText20">&nbsp;OR&nbsp;</span>
+						<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR&nbsp;</span>
 
-				<span class="lableText3">Net Suite ID Number:</span>
+				<span class="lableText7">Net Suite ID Number:</span>
 				<form:input path="nsId" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
 
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange" />
 			</div>
-			<div class="row" >
-				<span class="lableText8">Company Name: &nbsp;&nbsp; </span>
-				<div id="facilityListId">
+			<div class="rowEvenNewSpacing" >
+				<span class="splLableText">Company Name:</span>
+				<div id="facilityListId" class="splLableText" >
+				<div class="floatLeft">
 				<c:forEach items="${facilityList}" var="item">
 					${item.companyName}<br/>
 				</c:forEach>
 				</div>
+				</div>
+				<div class="splLableText" >
 				<form:checkbox path="healthSystem" label="Health System" id="healthSystemId"/> 
+				</div>
 			</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">

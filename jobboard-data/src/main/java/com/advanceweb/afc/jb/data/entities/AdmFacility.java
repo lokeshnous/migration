@@ -53,14 +53,14 @@ public class AdmFacility implements Serializable {
 
 	private String country;
 
-    @Temporal( TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
 	private Date createDt;
 
 	@Column(name="create_user_id")
 	private Integer createUserId;
 
-    @Temporal( TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
@@ -449,7 +449,4 @@ public class AdmFacility implements Serializable {
 			List<AdmFacilityInventory> admFacilityInventories) {
 		this.admFacilityInventories = admFacilityInventories;
 	}
-
-	
-	
 }

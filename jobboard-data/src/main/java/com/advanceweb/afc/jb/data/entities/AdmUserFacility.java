@@ -37,7 +37,7 @@ public class AdmUserFacility implements Serializable {
 	private AdmRole admRole;
 
 	//bi-directional many-to-one association to AdmFacility
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="facility_id", insertable=false, updatable=false)
 	private AdmFacility admFacility;
 

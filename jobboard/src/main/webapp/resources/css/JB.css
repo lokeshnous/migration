@@ -1546,7 +1546,7 @@ div.searchResultsSubContent .btn_sm {
 }
 
 .lableText3 input[type="checkbox"]{margin:2px 0 0 0;}
-
+input[type="checkbox"]{margin:2px 5px 0 0;}
 .leftFormHolder input[type="file"] {
 	border: 1px solid #ccc;
 	height: 25px;
@@ -1674,12 +1674,6 @@ input.textBox2 {
 	float: left;
 	padding: 50px 50px 100px 50px;
 	background-color: #FFF;
-}
-
-.radioLableText {
-	float: left;
-	padding: 6px 5px 0 0;
-	width: auto;
 }
 
 .popUpContainerWrapper {
@@ -1901,11 +1895,7 @@ select {
 	padding: 17px 5px 0 0;
 	float: left;
 }
-.lableText20 {
-	width: 7px;
-	padding: 5px 5px 0 0;
-	float: left;
-}
+
 .lableText3,.lableTextSelect,.lableText4,.lableText5,.lableText6,.lableText7,.lableText8 {
 	width: 160px;
 	float: left;

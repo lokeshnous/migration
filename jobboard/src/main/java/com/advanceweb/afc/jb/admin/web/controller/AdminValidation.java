@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -18,6 +19,9 @@ public class AdminValidation {
 
 	private Pattern pattern;
 	private Matcher matcher;
+
+	@Value("${loginErrMsg}")
+	private String loginErrMsg;
 
 	public boolean supports(Class<?> form) {
 		return AdminLoginForm.class.isAssignableFrom(form);
@@ -34,8 +38,7 @@ public class AdminValidation {
 		if (StringUtils.isEmpty(form.getEmpOrAgencyEmail())
 				|| StringUtils.isEmpty(form.getPassword())
 				|| StringUtils.isEmpty(form.getUserEmail())) {
-			errors.rejectValue("empOrAgencyEmail", "NotEmpty",
-					"Please fill all the fields");
+			errors.rejectValue("empOrAgencyEmail", "NotEmpty", loginErrMsg);
 		}
 		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())) {
 			if (!validateEmailPattern(form.getEmpOrAgencyEmail())) {

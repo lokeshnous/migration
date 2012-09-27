@@ -59,7 +59,7 @@ public class AdminJobPostingInventoryController {
 			session.setAttribute("nsId", id);
 			if (StringUtils.isEmpty(empList) && StringUtils.isEmpty(id)) {
 				status = false;
-				jsonObject.put("errMsg", "Please enter any one field");
+				jsonObject.put("errMsg", "Please enter any one data to find");
 				jsonObject.put("success", status);
 				return jsonObject;
 			}

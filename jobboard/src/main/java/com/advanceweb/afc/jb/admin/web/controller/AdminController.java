@@ -71,8 +71,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/login")
-	public ModelAndView adminImpersonationPage(){
+	public ModelAndView adminImpersonationPage(@ModelAttribute ("adminLoginForm") AdminLoginForm form){
 		ModelAndView model = new ModelAndView();
+		AdminLoginForm adminLoginForm= new AdminLoginForm();
+		model.addObject("adminLoginForm", adminLoginForm);
 		model.setViewName("adminImpersonation");
 		return model;
 		
@@ -96,11 +98,11 @@ public class AdminController {
 		if(isAuthenticated){
 			LOGGER.info("OpenAM : valid user!");
 		}else{
-			LOGGER.info("OpenAM : Invalid User E-mail, password");
-			return "Not a valid User E-Mail Or Password";
+			LOGGER.info("OpenAM : Invalid User e-mail or password");
+			return "Invalid User e-mail or password";
 		}
 		if(!service.validateAdminCredentials(form.getUserEmail(), form.getPassword())){
-			return "Not a valid User E-Mail Or Password";
+			return "Invalid User e-mail or password";
 		}
 		AdminDTO adminDTO =transformAdminImpersonation.transformAdminFormToDTO(form);
 		boolean adminuserDto = service.impersonateUser(adminDTO);

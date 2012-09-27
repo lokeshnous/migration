@@ -134,6 +134,7 @@ public class AdminDAOImpl implements AdminDAO {
 					adminDTO.getEmpOrAgencyEmail());
 			int facilityId = 0;
 			AdmUserFacility facility = null;
+			AdmFacility admfacility=null;
 			if (null != usersList1 && !usersList1.isEmpty()) {
 				MerUser user1 = usersList1.get(0);
 				List<AdmUserFacility> facilityList = hibernateTemplateCareers
@@ -142,21 +143,25 @@ public class AdminDAOImpl implements AdminDAO {
 					facility = facilityList.get(0);
 					facilityId = facility.getFacilityPK().getFacilityId();
 				}
+				//hibernateTemplateCareers.evict(facilityList);
+				 admfacility = facilityList.get(0).getAdmFacility();
 			}
-			List<AdmFacility> admFacilityList = hibernateTemplateCareers.find(
-					ADM_FACILITY, facilityId);
-			AdmFacility admfacility = admFacilityList.get(0);
-			admfacility.setAdminUserId(admUserId);
+			
+//			List<AdmFacility> admFacilityList = hibernateTemplateCareers.find(
+//					ADM_FACILITY, facilityId);
+			//AdmFacility admfacility = //admFacilityList.get(0);
+					//AdmFacility admfacility = facilityList.get(0).getAdmFacility();
+			
 			List<AdmFacility> admList = hibernateTemplateCareers.find(
 					VALIDATE_ADM_USERID, admUserId);
-
-			if (admList.isEmpty()) {
-				hibernateTemplateCareers.update(admfacility);
-			} else {
+			admfacility.setAdminUserId(admUserId);
+			if (!admList.isEmpty()) {
 				AdmFacility fac = admList.get(0);
 				fac.setAdminUserId(0);
-				hibernateTemplateCareers.saveOrUpdate(fac);
-				hibernateTemplateCareers.update(admfacility);
+				hibernateTemplateCareers.update(fac);
+				hibernateTemplateCareers.saveOrUpdate(admfacility);
+			} else {		
+				hibernateTemplateCareers.saveOrUpdate(admfacility);
 			}
 
 		} catch (Exception e) {

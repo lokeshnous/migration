@@ -17,9 +17,8 @@
 							class="grid" id="tb_manage_job">
 							<thead>
 							<tr class="LightGrayBG Height35">
-								<th width="6%" align="center" valign="middle" class="FontSize11">Job Id</th>
-								<th width="10%" align="center" valign="middle" class="FontSize11">Adv. Job
-										ID</th>
+								<th width="6%" align="center" valign="middle" class="FontSize11">Adv. Job Id</th>
+								<th width="10%" align="center" valign="middle" class="FontSize11">Job ID</th>
 								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Title</strong></th>
 								<th width="11%" align="center" valign="middle" class="FontSize11"><strong>Location</strong></th>
@@ -40,7 +39,7 @@
 						 <c:forEach items="${postedJobList}" var="job"	varStatus="status">								
 								<tr class="Height35">
 									<td align="center" valign="middle">${job.jobId}</td>
-									<td align="center" valign="middle">${job.jobId}</td>
+									<td align="center" valign="middle">${job.jobNumber}</td>
 									<td align="center" valign="middle">${job.jobTitle}</td>
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
