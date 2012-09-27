@@ -51,7 +51,7 @@
 		</script>
 	<script src="javascripts/expandCollapse.js" type="text/javascript"></script>
 	</head>
-	<body class="job_board" on_load="javascript:window.print();window.close();">
+	<body class="job_board">
 		
 		<form:form action="jobseekerCoverLetterSub.html" method="POST" commandName="resCoverLetterForm" id="resCovLetForm" name="resCovLetForm" enctype="multipart/form-data">
 					
