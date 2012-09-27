@@ -124,8 +124,11 @@ public class EmployerRegistrationController {
 	private String accountCountry;
 	@Value("${account_city}")
 	private String accountCity;
+	@Value("${js.email.blank}")
+	private String accountEmail;
+	@Value("${account_Street}")
+	private String accountStreet;
 	
-			
 			
 			
 			
@@ -365,7 +368,9 @@ public class EmployerRegistrationController {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
 				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
-				} else if (null == employeeAccountForm.getPhone()) {
+				} else if ((null == employeeAccountForm.getEmail())||("".equals(employeeAccountForm.getEmail()))) {
+					return accountEmail;
+				} else if ((null == employeeAccountForm.getPhone())||("".equals(employeeAccountForm.getPhone()))) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
 				}else if ((null == employeeAccountForm.getFirstName()) ||("".equals(employeeAccountForm.getFirstName()))){
 					return accountFirstName;
@@ -381,7 +386,10 @@ public class EmployerRegistrationController {
 					return accountCountry;
 				}else if ((null == employeeAccountForm.getState())||("".equals(employeeAccountForm.getState()))) {
 					return accountState;
-				}else if (employerRegistration
+				}else if ((null == employeeAccountForm.getStreetAddress())||("".equals(employeeAccountForm.getStreetAddress()))) {
+					return accountStreet;
+				}
+				else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
 					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
 				} 
@@ -428,7 +436,9 @@ public class EmployerRegistrationController {
 				return MMJBCommonConstants.EMAIL_MESSAGE;
 			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
 				return MMJBCommonConstants.PHONE_NO;
-			} else if (null == employeeBillingForm.getPhone()) {
+			} else if ((null == employeeBillingForm.getEmail())||("".equals(employeeBillingForm.getEmail()))) {
+				return accountEmail;
+			} else if ((null == employeeBillingForm.getPhone())||("".equals(employeeBillingForm.getPhone()))) {
 				return MMJBCommonConstants.PHONE_NULL_NO;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
 					.getFnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
@@ -456,6 +466,10 @@ public class EmployerRegistrationController {
 					.getStateBillingAddress())||("".equals(employeeBillingForm.getBillingAddressForm()
 							.getStateBillingAddress()))) {
 				return accountState;
+			}else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getStreetForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+							.getStreetForBillingAddr()))) {
+				return accountStreet;
 			}
 
 			if (listProfAttribForms.getCount() > 0) {
