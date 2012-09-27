@@ -171,7 +171,10 @@ public class HomeController {
 				.getPositionTitle());
 		employerProfileManagementForm.setLogoPath(companyProfileDTO
 				.getLogoPath());
-		employerProfileManagementForm.setPrimaryColor(companyProfileDTO.getPrimaryColor().replace("HEX #", "#"));
+		if (null != companyProfileDTO.getPrimaryColor()) {
+			employerProfileManagementForm.setPrimaryColor(companyProfileDTO
+					.getPrimaryColor().replace("HEX #", "#"));
+		}
 		model.addAttribute("windowmediaplayerfilepath",
 				windowmediaplayerfilepath);
 		model.addAttribute("employerProfileManagementForm",
