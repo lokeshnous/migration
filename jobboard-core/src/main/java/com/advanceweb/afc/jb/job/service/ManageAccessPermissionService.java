@@ -18,19 +18,19 @@ public interface ManageAccessPermissionService {
 	 * @param profileDTO
 	 * @throws JobBoardServiceException 
 	 */
-	public UserDTO createJobOwner(EmployerProfileDTO profileDTO,int facilityIdParent,int userId) throws JobBoardServiceException;
+	UserDTO createJobOwner(EmployerProfileDTO profileDTO,int facilityIdParent,int userId) throws JobBoardServiceException;
 
 	/**
 	 * 
 	 * @param profileId
 	 */
-	public boolean deleteJobOwner(int profileId) throws JobBoardServiceException;
+	boolean deleteJobOwner(int profileId) throws JobBoardServiceException;
 
 	/**
 	 * 
 	 * @param profileDTO
 	 */
-	public boolean updateJobOwner(List<ManageAccessPermissionDTO> accessPermissionDTO) throws JobBoardServiceException;
+	boolean updateJobOwner(List<ManageAccessPermissionDTO> accessPermissionDTO) throws JobBoardServiceException;
 	/**
 	 * 
 	 * @param facilityId
@@ -38,7 +38,7 @@ public interface ManageAccessPermissionService {
 	 * @param roleId
 	 * @return
 	 */
-	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId, int userId) throws JobBoardServiceException;
+	List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId, int userId) throws JobBoardServiceException;
 	
 	/**
 	 * 
@@ -46,7 +46,7 @@ public interface ManageAccessPermissionService {
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	public MerUser getUserListByEmail(String email) throws JobBoardServiceException;
+	MerUser getUserListByEmail(String email) throws JobBoardServiceException;
 	
 	
 
