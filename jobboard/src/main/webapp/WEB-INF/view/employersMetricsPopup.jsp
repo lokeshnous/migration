@@ -27,41 +27,17 @@
             <form action="" method="">
               <div class="rowEvenNewSpacing marginTop0"><div class="FloatLeft"> 
                 <!--T-->
-                <div class="row"> 
-                <div class="floatLeft"><img src="../resources/images/VailValleylogo.png" width="204" height="50" alt="logo"></div>
+                <div class="row">
+               <c:if test="${not empty employerDetails.logoPath}">
+                <div class="floatLeft"><img src="<%=request.getContextPath()%>/agency/viewImage.html?path=${employerDetails.logoPath}" width="204" height="50" alt="logo"></div>
+               </c:if>
+               <c:if test="${empty employerDetails.logoPath}">
+                <div class="floatLeft" style="width:204px;height:50px;"></div>
+               </c:if>
                 <div class="floatRight marginTop20"><a href="<%=request.getContextPath()%>/agency/impersonateAgencyToEmployer.html?facilityId=${employerDetails.facilityId}">Go To ${employerDetails.name} Dashboard</a> </div>
+                
                 </div>
 <div class="row">
-                          <!-- <table width="100%" border="0" cellspacing="0" cellpadding="0" class="grid marginTop3">
-                    <tr  class="borderTopNone">
-                              <th width="46%" align="left" scope="col"><h2 class="noTopBorder noTopBottomBorder">Metrics</h2></th>
-                              <th width="18%" align="center" scope="col" class="BorderLeftWhite" ><div class="EDPrice">VIEWS</div></th>
-                              <th width="18%" align="center" scope="col" class="BorderLeftWhite"><div class="EDPriceA">CLICKS</div></th>
-                              <th width="18%" align="center" scope="col" class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
-                            </tr>
-                    <tr class="gridB">
-                              <td><input name="radio2" type="radio" id="radio4" value="radio" class="marginLeft10 marginRight10">
-                        <label for="radio2">Your Job Posting Totals</label></td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorA">1000</td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorB">100</td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorC">10</td>
-                            </tr>
-                    <tr class="gridB">
-                              <td><input name="radio2" type="radio" id="radio4" value="radio" class="marginLeft10 marginRight10">
-                        <label for="radio2">Your Averages Per Job Posting</label></td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorA">200</td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorB">20</td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorC">2</td>
-                            </tr>
-                    <tr class="gridB">
-                              <td class="TBorderNone"><input name="radio2" type="radio" id="radio4" value="radio" class="marginLeft10 marginRight10">
-                        <label for="radio2">Site-wide Averages Per Job Posting</label></td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorA TBorderNone">300</td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorB TBorderNone">30</td>
-                              <td align="center" valign="middle" class="BorderLeft TcolorC TBorderNone">3</td>
-                            </tr>
-                  </table> -->
-                  
                   <table width="100%" border="0" cellspacing="0" cellpadding="0"
 							class="grid marginTop3">
 							<thead>
