@@ -81,8 +81,9 @@ function copyAccToBillingAddr(obj) {
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
-						//alert("Data save successfully !");	
+						//alert("Data save successfully !");
 						parent.$.nmTop().close();
+						window.location.reload();
 					}else{
 						var href = $('#BackToTopId').attr('href');
       					location.href = href;
