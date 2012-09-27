@@ -23,13 +23,13 @@ public class OpenAMEUtility {
 
 	private static final Logger LOGGER = Logger.getLogger("OpenAMUtility.class");
 
-	private final static String _TOKEN_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/authenticate?username=amadmin&password=nous@123";
-	private final static String _CREATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/create?admin=";
-	private final static String _UPDATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/update?admin=";
-	private final static String _DELETE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/delete?admin=";
-	private final static String _READ_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/read?admin=";
-	private final static String _AUTHENTICATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/authenticate?";
-	private final static String _LOGOUT_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/logout?subjectid=";
+	private final static String _TOKEN_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/authenticate?username=amadmin&password=nous@123";
+	private final static String _CREATE_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/create?admin=";
+	private final static String _UPDATE_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/update?admin=";
+	private final static String _DELETE_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/delete?admin=";
+	private final static String _READ_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/read?admin=";
+	private final static String _AUTHENTICATE_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/authenticate?";
+	private final static String _LOGOUT_URL = "http://nibc1354.nousinfo.com:8080/openam/identity/logout?subjectid=";
 	
 	
 	public static String newPassword(){
