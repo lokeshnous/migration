@@ -52,7 +52,6 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @RequestMapping("/employer")
 public class JobPostController {
 	
-	private static final String EDIT_JOB_POST = "editJobPost";
 
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostController.class);
@@ -387,6 +386,12 @@ public class JobPostController {
 	public ModelAndView editJob(HttpServletRequest request,HttpSession session,
 			JobPostForm jobPostFormP, @RequestParam("jobId") int jobId) {
 		JobPostForm jobPostForm =jobPostFormP;
+		ModelAndView model = new ModelAndView();
+		
+		String readOnly = request.getParameter("readOnly");
+		String jobStatus = request.getParameter("jobStatus");
+		jobPostForm.setJobStatus(jobStatus);
+		
 		List<DropDownDTO> templateList;
 		int facilityId=0;
 		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
@@ -398,15 +403,10 @@ public class JobPostController {
 						(Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId,jobPostType);
-		String readOnly = request.getParameter("readOnly");
-		if (null != readOnly && readOnly.equalsIgnoreCase("true")) {
-			jobPostForm.setReadOnly(true);
-		}
+		
 		jobPostDTO.setJobPostingType(String.valueOf(jobPostType));
 		jobPostForm=transformJobPost.transformJobPostDTOToForm(jobPostForm, jobPostDTO);
 	
-		ModelAndView model = new ModelAndView();
-		
 		// Populating Dropdowns
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
 		List<DropDownDTO> empTypeList = populateDropdownsService
@@ -443,19 +443,39 @@ public class JobPostController {
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		model.addObject("companyList", companyList);
 		
-		for(DropDownDTO DropDownDto : jbPostingTypeList){
-			if(jobPostType == Integer.parseInt(DropDownDto.getOptionId())){
-				if(DropDownDto.getOptionName().contains("Standard Posting")){
-					jobPostForm.setEnableJobTitle(true);
-				}
-			}
-		}
-		
-		if (null != readOnly && readOnly.equalsIgnoreCase("false")) {
-			model.setViewName(EDIT_JOB_POST);
-		}
-		else{
+		jobPostForm.setActiveInactive(false);
+		if (null != readOnly && readOnly.equalsIgnoreCase("true")) {
+			jobPostForm.setReadOnly(true);
 			model.setViewName(POST_NEW_JOBS);
+		}
+			
+		if (null != readOnly && readOnly.equalsIgnoreCase("false")) {
+			
+			if(MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus) || 
+					MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus))
+			{
+				jobPostForm.setReadOnly(true);
+				jobPostForm.setEnableJobTitle(false);
+				jobPostForm.setActiveInactive(true);
+				for(DropDownDTO DropDownDto : jbPostingTypeList){
+					if(jobPostType == Integer.parseInt(DropDownDto.getOptionId())){
+						if(DropDownDto.getOptionName().contains(MMJBCommonConstants.SLOT_POSTING)){
+							jobPostForm.setEnableJobTitle(true);
+						}
+					}
+				}
+				model.setViewName(POST_NEW_JOBS);
+			}
+			else if(MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus) || 
+					MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus))
+			{
+				jobPostForm.setReadOnly(false);
+				model.setViewName(POST_NEW_JOBS);
+			}
+			else if(MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)){
+				jobPostForm.setReadOnly(true);
+				model.setViewName(POST_NEW_JOBS);
+			}
 		}
 		model.addObject(JOB_POST_FORM, jobPostForm);
 		return model;
