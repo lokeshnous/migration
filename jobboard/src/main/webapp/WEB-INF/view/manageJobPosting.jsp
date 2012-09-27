@@ -357,11 +357,11 @@
 									<td align="center" valign="middle"><input type="checkbox"
 										name="checkbox" id=${job.jobId } value="${job.jobId}"></td>
 									<td align="center" valign="middle"><a
-										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobId}</a></td>
+										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&jobStatus=${job.jobStatus}&readOnly=false">${job.jobId}</a></td>
 									<td align="center" valign="middle"><a
-										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobNumber}</a></td>
+										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&jobStatus=${job.jobStatus}&readOnly=false">${job.jobNumber}</a></td>
 									<td align="center" valign="middle"><a
-										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}">${job.jobTitle}</a></td>
+										href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&jobStatus=${job.jobStatus}&readOnly=false">${job.jobTitle}</a></td>
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
