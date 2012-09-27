@@ -63,7 +63,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
-	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
+	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productId";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
