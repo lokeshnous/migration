@@ -11,5 +11,5 @@ import com.advanceweb.afc.jb.common.UserDTO;
  *
  */
 public interface PaymentGatewayDelegate {
-	public UserDTO createOrder(OrderDetailsDTO orderDetailsDTO); 
+	UserDTO createOrder(OrderDetailsDTO orderDetailsDTO); 
 }
