@@ -48,7 +48,7 @@ public interface JobPostService {
 	 * @return boolean value
 	 * @throws JobBoardServiceException
 	 */
-	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
+	boolean jobSaveByAdmin(JobPostDTO apd, int jobId);
 	/**
 	 * 
 	 * @param jobId
@@ -56,5 +56,5 @@ public interface JobPostService {
 	 * @param userId
 	 * @return
 	 */
-	public int getinvDetIdByJobId(int jobId,int facilityId,int userId);
+	int getinvDetIdByJobId(int jobId,int facilityId,int userId);
 }
