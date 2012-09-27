@@ -47,6 +47,17 @@ function validateNumber(event) {
 function closePopup() {
 	parent.window.location.reload();
 }
+function validateFacility() {
+	var valid = true;
+	var compName = $.trim($("#empList").val());
+	var netsuiteId= $.trim($("#nsId").val()); 
+	if(compName == "" && netsuiteId == ""){
+		$("#ErrorMsg").text("Please find.");
+		valid = false;
+	}
+	alert(valid);
+	return valid;
+}
 </script>
 
 	<script type="text/javascript">
@@ -161,7 +172,7 @@ function closePopup() {
 			</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
-					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange">
+					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange" onclick="return validateFacility();">
 					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
 				</div>
 			</form:form>

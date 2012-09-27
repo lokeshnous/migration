@@ -32,7 +32,7 @@
 						.displaypopup("#setAlertPopUp", "770", "360");
 				$("#viewAlertPopUp").displaypopup("#viewAlertPopUp", "770",
 						"360");
-				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp", "770",
+				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp", "790",
 				"360"); 
 
 			});

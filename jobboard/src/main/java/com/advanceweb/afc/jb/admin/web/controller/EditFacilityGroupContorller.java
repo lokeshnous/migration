@@ -73,8 +73,12 @@ public class EditFacilityGroupContorller {
 			return model;
 		}
 		EmpSearchDTO dto = new EmpSearchDTO();
+		if(!adminForm.getCompName().isEmpty()){
+			int nsId =(Integer) session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
+			adminForm.setNsId(String.valueOf(nsId));
+		}
 		dto = transformAdminImpersonation.convertFormToDTO(adminForm);
-		boolean val = adminService.saveEditFacilityGroup(dto);
+		adminService.saveEditFacilityGroup(dto);
 		model.setViewName("adminLogin");
 		return model;
 

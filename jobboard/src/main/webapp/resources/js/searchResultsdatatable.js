@@ -87,6 +87,8 @@ jQuery(document).ready(function() {
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
+							$('#topjobActionInfo'+jobId).html("");
+							$('#topjobActionInfo').html("");
 							window.location.href = val;
 						}
 					});
@@ -405,6 +407,7 @@ jQuery(document).ready(function() {
 							});
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
+									$('#bottomjobActionInfo').html("");
 									window.location.href = val;
 								}
 							});

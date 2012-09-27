@@ -19,12 +19,12 @@
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				 $("#changePassword").displaypopup("#changePassword", "780",
+				 $("#changePassword").displaypopup("#changePassword", "790",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
-						"770", "360");
+						"790", "360");
 				$("#createEmployerpopup").displaypopup("#createEmployerpopup",
-						"750", "350");
+						"790", "350");
 				$("#manageEmployers").displaypopup("#manageEmployers", "750",
 						"350");
 				$(".employerMetrics").displaypopup(".employerMetrics", "750",
