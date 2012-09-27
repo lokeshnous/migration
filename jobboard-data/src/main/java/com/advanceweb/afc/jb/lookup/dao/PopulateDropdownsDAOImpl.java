@@ -63,7 +63,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
-	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productId";
+	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productType,dtl.productId";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
@@ -533,7 +533,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 							}
 							if(combo.getAddons().contains("Job Posting")){
 								combo.setAddons(combo.getAddons().replace("Job Posting",""));
-								if(combo.getAddons().contains("Upgrade+")){
+								if(combo.getAddons().contains("Upgrade".trim())){
 									combo.setAddons(combo.getAddons().replace("Upgrade",""));
 								}
 							}
@@ -544,13 +544,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 						if(!jpTypleList.isEmpty()){
 							JpJobType type = jpTypleList.get(0);
 							
-							/*if(type.getName().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
-								dto.setOptionName(type.getName().trim());
+							if(type.getName().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
+								dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
 							}
 							else if(type.getName().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
-								dto.setOptionName(type.getName().trim());
-							}*/
-							dto.setOptionName(type.getName());
+								dto.setOptionName(MMJBCommonConstants.SLOT_POSTING);
+							}
+							//dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
 							jbPostings.add(dto);
 						}
 					}
