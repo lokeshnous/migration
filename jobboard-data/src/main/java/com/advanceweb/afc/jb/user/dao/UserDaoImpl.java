@@ -50,22 +50,59 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserDTO getUser(String email) {
 		UserDTO userDTO = null;
-		MerUser user = null;
-		@SuppressWarnings("unchecked")
-		List<MerUser> userList = hibernateTemplateTracker.find(
-				" from  MerUser user where user.email=? and deleteDt is null",
-				email);
-		if (userList != null && !userList.isEmpty()) {
-			user = userList.get(0);
-			userDTO = new UserDTO();
 
-			userDTO.setEmailId(user.getEmail());
-			userDTO.setFirstName(user.getFirstName());
-			userDTO.setLastName(user.getLastName());
-			userDTO.setUserId(user.getUserId());
-			userDTO.setPassword(user.getPassword());
+		@SuppressWarnings("unchecked")
+		MerUser user = DataAccessUtils
+				.uniqueResult(hibernateTemplateTracker
+						.find(" from  MerUser user where user.email=? and deleteDt is null",
+								email));
+
+		if (user != null) {
+			boolean result = isAdmin(user.getUserId());
+			if (result) {
+
+				@SuppressWarnings("unchecked")
+				List<AdmFacility> facility = hibernateTemplate.find(
+						"from AdmFacility a where a.adminUserId=?",
+						user.getUserId());
+				@SuppressWarnings("unchecked")
+				List<AdmUserFacility> admFacility = hibernateTemplate
+						.find("from AdmUserFacility a where a.facilityPK.facilityId=?",
+								facility.get(0).getFacilityId());
+				int userId = admFacility.get(0).getFacilityPK().getUserId();
+				@SuppressWarnings("unchecked")
+				MerUser merUser = DataAccessUtils
+						.uniqueResult(hibernateTemplateTracker
+								.find(" from  MerUser user where user.userId=? and deleteDt is null",
+										userId));
+				userDTO = new UserDTO();
+				userDTO.setEmailId(merUser.getEmail());
+				userDTO.setFirstName(merUser.getFirstName());
+				userDTO.setLastName(merUser.getLastName());
+				userDTO.setUserId(merUser.getUserId());
+				userDTO.setPassword(user.getPassword());
+
+			} else {
+				userDTO = new UserDTO();
+				userDTO.setEmailId(user.getEmail());
+				userDTO.setFirstName(user.getFirstName());
+				userDTO.setLastName(user.getLastName());
+				userDTO.setUserId(user.getUserId());
+				userDTO.setPassword(user.getPassword());
+			}
 		}
 		return userDTO;
+	}
+
+	private boolean isAdmin(int userId) {
+		boolean result = false;
+		List<AdmUserRole> user = hibernateTemplate.find(
+				"from AdmUserRole adm where adm.rolePK.userId=?", userId);
+		if (user != null && !user.isEmpty())
+			if (user.get(0).getRolePK().getRoleId() == 1) {
+				result = true;
+			}
+		return result;
 	}
 
 	@Override
@@ -166,14 +203,17 @@ public class UserDaoImpl implements UserDao {
 		}
 		return count;
 	}
-	
-	public int getfacility(int facilityId){
-		AdmRole role =(AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-				"from AdmRole role where role.name=?", "facility_admin"));
-		AdmUserFacility facility = (AdmUserFacility)DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",role.getRoleId(),facilityId));
+
+	public int getfacility(int facilityId) {
+		AdmRole role = (AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate
+				.find("from AdmRole role where role.name=?", "facility_admin"));
+		AdmUserFacility facility = (AdmUserFacility) DataAccessUtils
+				.uniqueResult(hibernateTemplate
+						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
+								role.getRoleId(), facilityId));
 		return facility.getFacilityPK().getUserId();
 	}
-	
+
 	@Override
 	public UserDTO getUserByUserId(int userId) {
 		UserDTO userDTO = null;
@@ -193,14 +233,17 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userDTO;
 	}
-	
-	public FacilityDTO getFacilityByFacilityId(int facilityId){
-		AdmFacility facility = (AdmFacility) DataAccessUtils.uniqueResult(hibernateTemplate.find(
-				"from AdmFacility facility where facility.facilityId=?",facilityId));
-		FacilityDTO dto=new FacilityDTO();
+
+	public FacilityDTO getFacilityByFacilityId(int facilityId) {
+		AdmFacility facility = (AdmFacility) DataAccessUtils
+				.uniqueResult(hibernateTemplate
+						.find("from AdmFacility facility where facility.facilityId=?",
+								facilityId));
+		FacilityDTO dto = new FacilityDTO();
 		dto.setFacilityId(facility.getFacilityId());
 		dto.setName(facility.getName());
-		dto.setRoleId(facility.getAdmUserFacilities().get(0).getFacilityPK().getRoleId());
+		dto.setRoleId(facility.getAdmUserFacilities().get(0).getFacilityPK()
+				.getRoleId());
 		dto.setFacilityParentId(facility.getFacilityParentId());
 		dto.setLogoPath(facility.getLogoPath());
 		return dto;
