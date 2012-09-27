@@ -328,7 +328,7 @@ public class EmployerRegistrationController {
 	 */
 	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
 	public String jsChangePassword(@Valid EmployerRegistrationForm form,
-			 BindingResult result) {
+			BindingResult result) {
 
 		try {
 			EmployerProfileDTO empDTO = new EmployerProfileDTO();
@@ -347,7 +347,8 @@ public class EmployerRegistrationController {
 	/**
 	 * This method is called to Account Setting update page and
 	 * editAccountSetting method take Bean class binding result from Jsp pages
-	 * Seession for UserId and FacilityId. 
+	 * Seession for UserId and FacilityId.
+	 * 
 	 * @author kartikm
 	 * @param model
 	 * @return true
@@ -357,7 +358,7 @@ public class EmployerRegistrationController {
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
 			BindingResult result, HttpSession session) {
 		boolean isUpdated = false;
-		
+
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
@@ -368,42 +369,55 @@ public class EmployerRegistrationController {
 					return MMJBCommonConstants.EMAIL_MESSAGE;
 				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
 					return MMJBCommonConstants.PHONE_NO;
-				} else if ((null == employeeAccountForm.getEmail())||("".equals(employeeAccountForm.getEmail()))) {
+				} else if ((null == employeeAccountForm.getEmail())
+						|| ("".equals(employeeAccountForm.getEmail()))) {
 					return accountEmail;
-				} else if ((null == employeeAccountForm.getPhone())||("".equals(employeeAccountForm.getPhone()))) {
+				} else if ((null == employeeAccountForm.getPhone())
+						|| ("".equals(employeeAccountForm.getPhone()))) {
 					return MMJBCommonConstants.PHONE_NULL_NO;
-				}else if ((null == employeeAccountForm.getFirstName()) ||("".equals(employeeAccountForm.getFirstName()))){
+				} else if ((null == employeeAccountForm.getFirstName())
+						|| ("".equals(employeeAccountForm.getFirstName()))) {
 					return accountFirstName;
-				}else if ((null == employeeAccountForm.getLastName())||("".equals(employeeAccountForm.getLastName()))) {
+				} else if ((null == employeeAccountForm.getLastName())
+						|| ("".equals(employeeAccountForm.getLastName()))) {
 					return accountLastName;
-				}else if ((null == employeeAccountForm.getZipCode())||("".equals(employeeAccountForm.getZipCode()))) {
+				} else if ((null == employeeAccountForm.getZipCode())
+						|| ("".equals(employeeAccountForm.getZipCode()))) {
 					return accountZipCode;
-				}else if ((null == employeeAccountForm.getCityOrTown())||("".equals(employeeAccountForm.getCityOrTown()))) {
+				} else if ((null == employeeAccountForm.getCityOrTown())
+						|| ("".equals(employeeAccountForm.getCityOrTown()))) {
 					return accountCity;
-				}else if ((null == employeeAccountForm.getCompany())||("".equals(employeeAccountForm.getCompany()))) {
+				} else if ((null == employeeAccountForm.getCompany())
+						|| ("".equals(employeeAccountForm.getCompany()))) {
 					return accountCompanyName;
-				}else if ((null == employeeAccountForm.getCountry())||("".equals(employeeAccountForm.getCountry()))) {
+				} else if ((null == employeeAccountForm.getCountry())
+						|| ("".equals(employeeAccountForm.getCountry()))) {
 					return accountCountry;
-				}else if ((null == employeeAccountForm.getState())||("".equals(employeeAccountForm.getState()))) {
+				} else if ((null == employeeAccountForm.getState())
+						|| ("".equals(employeeAccountForm.getState()))) {
 					return accountState;
-				}else if ((null == employeeAccountForm.getStreetAddress())||("".equals(employeeAccountForm.getStreetAddress()))) {
+				} else if ((null == employeeAccountForm.getStreetAddress())
+						|| ("".equals(employeeAccountForm.getStreetAddress()))) {
 					return accountStreet;
-				}
-				else if (employerRegistration
+				} else if (employerRegistration
 						.validateEmail(employeeAccountForm.getEmail())) {
-					//return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				} 
+					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+				}
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
-				//By passing netsuite call
+				// By passing netsuite call
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-				if(isUpdated){
+
+				session.setAttribute(MMJBCommonConstants.USER_NAME,
+						employeeAccountForm.getFirstName() + " "
+								+ employeeAccountForm.getLastName());
+				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
-				}else{
+				} else {
 					return MMJBCommonConstants.UPDATE_ERROR;
 				}
-				
+
 			}
 
 		} catch (Exception e) {
@@ -416,7 +430,8 @@ public class EmployerRegistrationController {
 	/**
 	 * This method is called to Billing Setting update page and
 	 * editBillingSetting method take Bean class binding result from Jsp pages
-	 * Seession for UserId and FacilityId. 
+	 * Seession for UserId and FacilityId.
+	 * 
 	 * @author kartikm
 	 * @param model
 	 * @return true
@@ -436,38 +451,48 @@ public class EmployerRegistrationController {
 				return MMJBCommonConstants.EMAIL_MESSAGE;
 			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
 				return MMJBCommonConstants.PHONE_NO;
-			} else if ((null == employeeBillingForm.getEmail())||("".equals(employeeBillingForm.getEmail()))) {
+			} else if ((null == employeeBillingForm.getEmail())
+					|| ("".equals(employeeBillingForm.getEmail()))) {
 				return accountEmail;
-			} else if ((null == employeeBillingForm.getPhone())||("".equals(employeeBillingForm.getPhone()))) {
+			} else if ((null == employeeBillingForm.getPhone())
+					|| ("".equals(employeeBillingForm.getPhone()))) {
 				return MMJBCommonConstants.PHONE_NULL_NO;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getFnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getFnameForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getFnameForBillingAddr()))) {
 				return accountFirstName;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getLnameForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getLnameForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getLnameForBillingAddr()))) {
 				return accountLastName;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getZipCodeForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getZipCodeForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getZipCodeForBillingAddr()))) {
 				return accountZipCode;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCityOrTownForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getCityOrTownForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getCityOrTownForBillingAddr()))) {
 				return accountCity;
-			} else if ((null == employeeBillingForm.getCompany())||("".equals(employeeBillingForm.getCompany()))) {
+			} else if ((null == employeeBillingForm.getCompany())
+					|| ("".equals(employeeBillingForm.getCompany()))) {
 				return accountCompanyName;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCountryForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getCountryForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getCountryForBillingAddr()))) {
 				return accountCountry;
 			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStateBillingAddress())||("".equals(employeeBillingForm.getBillingAddressForm()
+					.getStateBillingAddress())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getStateBillingAddress()))) {
 				return accountState;
-			}else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStreetForBillingAddr())||("".equals(employeeBillingForm.getBillingAddressForm()
+			} else if ((null == employeeBillingForm.getBillingAddressForm()
+					.getStreetForBillingAddr())
+					|| ("".equals(employeeBillingForm.getBillingAddressForm()
 							.getStreetForBillingAddr()))) {
 				return accountStreet;
 			}
