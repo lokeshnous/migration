@@ -36,9 +36,10 @@ public class EmployerRegistration implements ProfileRegistration,
 	@Autowired
 	private EmployerDelegate employerDelegate;
 
-	public EmployerRegistration() {
-
-	}
+// Commented unused constructor
+//	public EmployerRegistration() {
+//
+//	}
 // Commented empty finalize method for PMD fix
 //	public void finalize() throws Throwable {
 //
