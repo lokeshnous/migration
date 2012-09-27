@@ -44,7 +44,8 @@ jQuery(document).ready(
 			$("#manageCoverLett").displaypopup(
 					"#manageCoverLett", "400", "350");
 			
-			
+			$("#profileViewCount").displaypopup(
+					"#profileViewCount", "400", "350");
 		});
 </script>
 </head>
@@ -171,7 +172,8 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<!--<a href="#">-->${msg.jsEmployersViewedProfile}<!-- </a> -->
+												 <a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewResumeCount.html"
+													id="profileViewCount">${msg.jsEmployersViewedProfile} </a> 
 											</p>
 										</div>
 
