@@ -52,7 +52,6 @@ public class AgencyRegistrationController {
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistrationController.class);
 	private static final String AGENCY_REG_FORM = "agencyRegForm";
-	private static final String AGENCY_DASHBOARD = "agencyDashboard";
 	private static final String MESSAGE = "message";
 	@Autowired
 	private ProfileRegistration agencyRegistration;
@@ -71,13 +70,13 @@ public class AgencyRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-	
+
 	@Value("${age.all.req.fields}")
 	private String reqFields;
-	
+
 	@Value("${age.email.exists}")
 	private String emailExists;
-	
+
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
 
@@ -100,16 +99,17 @@ public class AgencyRegistrationController {
 
 		AgencyProfileDTO registerDTO = (AgencyProfileDTO) agencyRegistration
 				.getProfileAttributes();
-		 UserDTO userDTO=null; 
-		 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
-			 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
-			 agencyRegForm.setEmailId(userDTO.getEmailId());
-			 agencyRegForm.setConfirmEmailId(userDTO.getEmailId());
-			 agencyRegForm.setPassword(userDTO.getPassword());
-			 agencyRegForm.setConfirmPassword(userDTO.getPassword());
-			 agencyRegForm.setUserId(userDTO.getUserId());
-			 agencyRegForm.setbReadOnly(true);
-		 }
+		UserDTO userDTO = null;
+		if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
+			userDTO = (UserDTO) session
+					.getAttribute(MMJBCommonConstants.USER_DTO);
+			agencyRegForm.setEmailId(userDTO.getEmailId());
+			agencyRegForm.setConfirmEmailId(userDTO.getEmailId());
+			agencyRegForm.setPassword(userDTO.getPassword());
+			agencyRegForm.setConfirmPassword(userDTO.getPassword());
+			agencyRegForm.setUserId(userDTO.getUserId());
+			agencyRegForm.setbReadOnly(true);
+		}
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 		agencyRegForm.setListProfAttribForms(listProfAttribForms);
@@ -152,7 +152,7 @@ public class AgencyRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createUser(empDTO);
-		
+
 		if (userDTO.getEmailId() == null) {
 			model.addObject("message", nsValidateUser);
 			return model;
@@ -175,8 +175,9 @@ public class AgencyRegistrationController {
 		return model;
 	}
 
-	private boolean validateEmpRegForm(AgencyRegistrationForm agencyRegistrationForm,
-			ModelAndView model, BindingResult result) {
+	private boolean validateEmpRegForm(
+			AgencyRegistrationForm agencyRegistrationForm, ModelAndView model,
+			BindingResult result) {
 		boolean status = true;
 
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
@@ -189,8 +190,7 @@ public class AgencyRegistrationController {
 						&& StringUtils.isEmpty(form.getStrLabelValue())
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 								.getStrLabelName())) {
-					model.addObject(MESSAGE,
-							reqFields);
+					model.addObject(MESSAGE, reqFields);
 					return false;
 				}
 
@@ -201,8 +201,7 @@ public class AgencyRegistrationController {
 						&& (MMJBCommonConstants.DROP_DOWN.equals(form
 								.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
 								.equals(form.getStrAttribType()))) {
-					model.addObject(MESSAGE,
-							reqFields);
+					model.addObject(MESSAGE, reqFields);
 					return false;
 				}
 				// validation mobile number
@@ -226,14 +225,15 @@ public class AgencyRegistrationController {
 		}
 		registerValidation.validate(agencyRegistrationForm, result);
 
-//		if (result.hasErrors()) {
-//			 model.setViewName(AGENCYREG);
-//			return false;
-//		}
-		if (!agencyRegistrationForm.isbReadOnly() && agencyRegistration.validateEmail(agencyRegistrationForm.getEmailId())) {
-			result.rejectValue("emailId", "NotEmpty",
-					emailExists);
-//			 model.setViewName(AGENCYREG);
+		if (result.hasErrors()) {
+			// model.setViewName(AGENCYREG);
+			return false;
+		}
+		if (!agencyRegistrationForm.isbReadOnly()
+				&& agencyRegistration.validateEmail(agencyRegistrationForm
+						.getEmailId())) {
+			result.rejectValue("emailId", "NotEmpty", emailExists);
+			// model.setViewName(AGENCYREG);
 			return false;
 		}
 
