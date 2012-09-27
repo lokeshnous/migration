@@ -52,7 +52,7 @@ function validateFacility() {
 	var compName = $.trim($("#empList").val());
 	var netsuiteId= $.trim($("#nsId").val()); 
 	if(compName == "" && netsuiteId == ""){
-		$("#ErrorMsg").text("Please find.");
+		$("#ErrorMsg").text("Please enter any one data to find");
 		valid = false;
 	}
 	//alert(valid);
