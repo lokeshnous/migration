@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.afc.jb.common.FacilityDTO;
+//import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -35,15 +36,6 @@ public class EmployerRegistration implements ProfileRegistration,
 
 	@Autowired
 	private EmployerDelegate employerDelegate;
-
-// Commented unused constructor
-//	public EmployerRegistration() {
-//
-//	}
-// Commented empty finalize method for PMD fix
-//	public void finalize() throws Throwable {
-//
-//	}
 
 	/**
 	 * /**
@@ -92,7 +84,7 @@ public class EmployerRegistration implements ProfileRegistration,
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerRegistrationDAO.changePassword(empProfileDTO);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
 		}
 		return false;
 	}
@@ -145,9 +137,14 @@ public class EmployerRegistration implements ProfileRegistration,
 		boolean isUpdate = false;
 
 		try {
-
+			if(MMJBCommonConstants.PRIMARY.equals(billing)){
+			
 			isUpdate = employerDelegate.editUser(apd, admFacilityid, userId,
 					billing);
+			}else{
+				isUpdate = employerRegistrationDAO.editUser(apd,
+						admFacilityid, userId, billing);
+			}
 
 		} catch (JobBoardServiceException jbe) {
 			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
