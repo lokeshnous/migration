@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.employer.helper.FacilityConversionHelper;
 
 @Repository("impersonateAgencyDAO")
@@ -107,9 +108,9 @@ public class ImpersonateAgencyDAOImpl implements  ImpersonateAgencyDAO{
 	public List<FacilityDTO> getEmployerNamesList(String employerName) {
 		List<FacilityDTO> emplyrNamesList = new ArrayList<FacilityDTO>();
 		try {
-			List<AdmFacility> facility= hibernateTemplateCareers
-					.find("from AdmFacility where name like '"+employerName+"%' and facilityType='FACILITY'");
 			
+			List<AdmFacility> facility= hibernateTemplateCareers
+					.find("from AdmFacility adm where adm.name like '"+employerName+"%' and adm.facilityType!='FACILITY_SYSTEM' and adm.facilityParentId='0'");
 			for(AdmFacility adm:facility){
 				FacilityDTO dto= new FacilityDTO();
 				dto.setName(adm.getName());

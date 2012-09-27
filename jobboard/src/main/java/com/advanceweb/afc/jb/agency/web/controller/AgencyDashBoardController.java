@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.agency.web.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,7 +13,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
@@ -20,6 +26,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -96,6 +106,14 @@ public class AgencyDashBoardController {
 	@Autowired
 	private ProfileRegistration employerRegistration;
 
+	@Value("${requiredField}")
+	private String requiredField;
+	@Value("${employerLinked}")
+	private String employerLinked;
+	@Value("${employerAddValidation}")
+	private String employerAddValidation;
+	@Value("${alreadyAdded}")
+	private String alreadyAdded;
 	@Value("${account_first_name}")
 	private String accountFirstName;
 	@Value("${account_last_name}")
@@ -110,6 +128,11 @@ public class AgencyDashBoardController {
 	private String accountCountry;
 	@Value("${account_city}")
 	private String accountCity;
+
+	/*
+	 * @Autowired EmployerRegistrationValidation registerValidation;
+	 */
+
 	@Value("${js.email.blank}")
 	private String accountEmail;
 	@Value("${account_Street}")
@@ -195,6 +218,7 @@ public class AgencyDashBoardController {
 				} else if ((null == employeeAccountForm.getState())
 						|| ("".equals(employeeAccountForm.getState()))) {
 					return accountState;
+
 				} else if ((null == employeeAccountForm.getStreetAddress())
 						|| ("".equals(employeeAccountForm.getStreetAddress()))) {
 					return accountStreet;
@@ -207,8 +231,9 @@ public class AgencyDashBoardController {
 
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-				session.setAttribute(MMJBCommonConstants.USER_NAME, employeeAccountForm.getFirstName() + " "
-						+ employeeAccountForm.getLastName());
+				session.setAttribute(MMJBCommonConstants.USER_NAME,
+						employeeAccountForm.getFirstName() + " "
+								+ employeeAccountForm.getLastName());
 				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
 				} else {
@@ -548,7 +573,7 @@ public class AgencyDashBoardController {
 			AccountProfileDTO dto = transformEmpReg
 					.transformEmployerFormToDto(employerRegistrationForm);
 			if (StringUtils.isEmpty(dto.getFirstName())) {
-				return "Please enter the required field";
+				return requiredField;
 			}
 			int agencyUserId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
@@ -556,10 +581,13 @@ public class AgencyDashBoardController {
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			String email = (String) session
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
-			FacilityDTO facility = loginService
-					.getFacilityByFacilityId(facilityId);
+			FacilityDTO facility = loginService.getFacilityByFacilityId(dto
+					.getFacilityId());
+			if (facility.getFacilityParentId() == facilityId) {
+				return alreadyAdded;
+			}
 			if (facility.getFacilityParentId() != 0) {
-				return "The employer has been linked with other agency. Please contact administrator.";
+				return employerLinked;
 			}
 			int nsCustomerID = impersonateAgencyService
 					.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
@@ -570,7 +598,7 @@ public class AgencyDashBoardController {
 				impersonateAgencyService.addEmployer(dto, facilityId,
 						agencyUserId);
 			} else {
-				return "You are not allowed to add the selected employer. Please contact administrator.";
+				return employerAddValidation;
 			}
 		} catch (Exception e) {
 
@@ -768,5 +796,67 @@ public class AgencyDashBoardController {
 		model.addObject("employerDetails", employerDetails);
 		model.setViewName("employersMetricsPopup");
 		return model;
+	}
+
+	@RequestMapping("/viewImage")
+	public void getImage(@RequestParam("path") String imagePath,
+			HttpServletResponse response, HttpServletRequest request) {
+
+		try {
+			BufferedImage originalImage = ImageIO.read(new File(imagePath));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(
+					originalImage,
+					imagePath.substring(imagePath.length() - 3,
+							imagePath.length()), baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+
+			ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
+			// Display the image
+			writeToOutputStream(response, result.getBody());
+		} catch (Exception e) {
+
+			LOGGER.error(e);
+
+		}
+	}
+
+	/**
+	 * Writes to the output stream
+	 */
+	private void writeToOutputStream(HttpServletResponse response,
+			byte[] byteArray) {
+		ServletOutputStream outputStream = null;
+		try {
+			// Retrieve the output stream
+			outputStream = response.getOutputStream();
+			// Write to the output stream
+			outputStream.write(byteArray);
+			// Flush the stream
+			outputStream.flush();
+			// Close the stream
+			outputStream.close();
+
+		} catch (Exception e) {
+			LOGGER.error(e);
+		} finally {
+			try {
+				outputStream.close();
+			} catch (Exception e) {
+				LOGGER.error(e);
+			}
+		}
+	}
+
+	private ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
+		byte[] byteData = imageInByte;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.setContentType(MediaType.IMAGE_PNG);
+		responseHeaders.setContentLength(byteData.length);
+
+		return new ResponseEntity<byte[]>(byteData, responseHeaders,
+				HttpStatus.OK);
 	}
 }
