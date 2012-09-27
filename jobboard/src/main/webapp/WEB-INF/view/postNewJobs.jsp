@@ -133,7 +133,11 @@
 								
 								if ($("#activeInactive").val() == 'true') {
 									$('#postNewJobFormId select').each(function(){
-						    			 $(this).removeAttr('disabled');
+										$(this).attr("disabled", false);
+						    		});
+									
+									$('#postNewJobFormId input').each(function(){
+										$(this).attr("disabled", false);
 						    		});
 								}
 								$("#postNewJobButHideId").click();
@@ -345,6 +349,8 @@
 
 							$("#postNewJobButId").attr("hidden", false);
 							$('#postNewJobButId').attr("disabled", false);
+							$("#postNewJobButId").attr("value","Save");
+							$('#postNewJobButHideId').attr("disabled", false);							
 
 						}
 						
