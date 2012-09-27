@@ -90,7 +90,7 @@ public interface EmployerRegistrationDAO {
 	boolean editUser(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing);
 
-	public boolean validateProfileAttributes(int jobseekerId); 
+	boolean validateProfileAttributes(int jobseekerId); 
 	
 	/**
 	 * 
@@ -98,7 +98,7 @@ public interface EmployerRegistrationDAO {
 	 * @return
 	 */
 	
-	public FacilityDTO getNSCustomerIDFromAdmFacility(String name);
+	FacilityDTO getNSCustomerIDFromAdmFacility(String name);
 	
 	
 
