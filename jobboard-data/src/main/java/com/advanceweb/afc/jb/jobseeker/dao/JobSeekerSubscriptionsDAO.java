@@ -32,14 +32,14 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @param rclDTO.
 	 * @return boolean.
 	 */
-	public boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO);
+	boolean coverLetterSaveByjobSeeker(ResCoverLetterDTO rclDTO);
 	/**
 	 * 
 	 * @param userId
 	 * @param status
 	 * @return boolean value.
 	 */
-	public boolean findActiveStatus(int userId,int status);
+	boolean findActiveStatus(int userId,int status);
 	/**
 	 * 
 	 * @param userId
@@ -47,31 +47,31 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @return boolean value.
 	 * 
 	 */
-	public boolean findFirstActiveStatus(int userId,int status);
+	boolean findFirstActiveStatus(int userId,int status);
 	/**
 	 * 
 	 * @param userId
 	 * @param status
 	 * @return boolean value.
 	 */
-	public boolean findNameActiveStatus(int userId,String name);
+	boolean findNameActiveStatus(int userId,String name);
 	/**
 	 * 
 	 * @param userId
 	 * @param status
 	 * @return boolean value.
 	 */
-	public boolean findDuplicateActiveStatus(int userId,int status);
+	boolean findDuplicateActiveStatus(int userId,int status);
 	/**
 	 * @param rclDTO
 	 * @return boolean
 	 */
-	public boolean coverLetterUpdateByjobSeeker(ResCoverLetterDTO rclDTO);
+	boolean coverLetterUpdateByjobSeeker(ResCoverLetterDTO rclDTO);
 	/**
 	 * @param rclDTO
 	 * @return boolean
 	 */
-	public boolean coverLetterEditByjobSeeker(ResCoverLetterDTO rclDTO);
+	boolean coverLetterEditByjobSeeker(ResCoverLetterDTO rclDTO);
 	/**
 	 * 
 	 * @param userId userId
@@ -79,7 +79,7 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @throws JobBoardDataException JobBoardDataException
 	 */
 	
-	public List<ResCoverLetterDTO> getJobOwnerList( int userId) throws JobBoardDataException;
+	List<ResCoverLetterDTO> getJobOwnerList( int userId) throws JobBoardDataException;
 	
 	/**
 	 * 
@@ -87,7 +87,7 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @param status
 	 * @return boolean
 	 */
-	public boolean isDelete(int userId,int coverLetterId);
+	boolean isDelete(int userId,int coverLetterId);
 	
 	/**
 	 * 
@@ -95,12 +95,12 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @param status
 	 * @return boolean
 	 */
-	public boolean isupDateCover(int userId,int coverLetterId);
+	boolean isupDateCover(int userId,int coverLetterId);
 	/**
 	 * 
 	 * @param coverletterId
 	 * @return
 	 */
-	public ResCoverLetterDTO getCoverList(int coverletterId);
+	ResCoverLetterDTO getCoverList(int coverletterId);
 	
 }
