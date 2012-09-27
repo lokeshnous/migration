@@ -67,9 +67,9 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			facilityDTO.setFacilityCountry(admFacilityList.get(0).getCountry());
 			facilityDTO.setFacilityState(admFacilityList.get(0).getState());
 			facilityDTO.setFacilityStreet(admFacilityList.get(0).getStreet());
-			facilityDTO.setPhoneNumber(admFacilityList.get(0).getStreet());
+			//facilityDTO.setPhoneNumber(admFacilityList.get(0).getAdmFacilityContacts());
 			facilityDTO.setZipCode(admFacilityList.get(0).getPostcode());
-			facilityDTO.setTemplateId(String.valueOf(admFacilityList.get(0).getTemplateId()));
+			//facilityDTO.setTemplateId(String.valueOf(admFacilityList.get(0).getTemplateId()));
 		}
 
 		return facilityDTO;
@@ -170,7 +170,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityContact.setMiddleName(admFacilityContactP
 					.getMiddleName());
 			admFacilityContact.setJobTitle(admFacilityContactP.getJobTitle());
-			admFacilityContact.setPhone(admFacilityContactP.getPhone());
+			admFacilityContact.setPhone(manageFacilityDTO.getPhoneNumber());
 			admFacilityContact.setPhone2(admFacilityContactP.getPhone2());
 			admFacilityContact.setContactType(admFacilityContactP
 					.getContactType());
