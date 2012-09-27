@@ -59,6 +59,9 @@ public class SaveSearchController {
 	@Value("${saveThisSearchErrMsg}")
 	private String saveThisSearchErrMsg;
 
+	@Value("${savedSearchsLimit}")
+	private String savedSearchsLimit;
+
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
@@ -74,6 +77,17 @@ public class SaveSearchController {
 	JSONObject saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
 			BindingResult result, Map<String, JobSearchResultForm> model,
 			@RequestParam("searchName") String searchName, HttpSession session) {
+		
+		// Before user saves his search need to check save search
+		// records are more than 5 searches.
+		// if yes then delete the first saved search
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+				.viewMySavedSearches(userId);
+		int savedSearchCount = saveSearchedJobsDTOList.size();
+		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
+			saveSearchService.deleteFirstSearch(userId);
+		}
 
 		JSONObject jsonObject = new JSONObject();
 		Map<String, String> sessionMap = checkSessionMap
@@ -82,8 +96,8 @@ public class SaveSearchController {
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put("NavigationPath", navigationPath);
 		} else {
-			int userId = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
+//			int userId = (Integer) session
+//					.getAttribute(MMJBCommonConstants.USER_ID);
 			SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
 			if (StringUtils.isEmpty(searchName)) {
@@ -197,19 +211,7 @@ public class SaveSearchController {
 						"../jobSeeker/jobSeekerDashBoard");
 
 			} else {
-				// Before user saves his search need to check save search
-				// records are more than 5 searches.
-				// if yes then delete the first saved search
-				int userId = (Integer) session.getAttribute("userId");
-				List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-						.viewMySavedSearches(userId);
-				int savedSearchCount = 0;
 				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
-					savedSearchCount = saveSearchedJobsDTOList.size();
-					if (savedSearchCount == 5) {
-						saveSearchService.deleteFirstSearch(userId);
-					}
-
 					model.put("SaveSearchForm", new SaveSearchForm());
 					jsonObject.put("LoggedInNavigationPath",
 							"../savedSearches/displaySaveThisSearchPopup");
