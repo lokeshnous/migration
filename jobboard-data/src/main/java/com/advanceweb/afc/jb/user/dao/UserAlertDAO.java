@@ -59,7 +59,7 @@ public interface UserAlertDAO {
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	public List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
+	List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
 			int userId) throws JobBoardDataException;
 
 	/**
@@ -69,6 +69,6 @@ public interface UserAlertDAO {
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	public List<ManageAccessPermissionDTO> getOwnerDetails(int userId)
+	List<ManageAccessPermissionDTO> getOwnerDetails(int userId)
 			throws JobBoardDataException;
 }
