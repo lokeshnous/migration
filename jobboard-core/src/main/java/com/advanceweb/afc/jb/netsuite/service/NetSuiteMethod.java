@@ -22,7 +22,7 @@ public interface NetSuiteMethod {
 	 * @return Response object
 	 */
 	
-	public Response netSuiteGet(Map<String, String> queryparamMap, String paramString);
+	Response netSuiteGet(Map<String, String> queryparamMap, String paramString);
 	
 	/**
 	 * This method is used to call the WebClent post method.
@@ -30,6 +30,6 @@ public interface NetSuiteMethod {
 	 * @param String paramString
 	 * @return Object 
 	 */
-	public Response netSuitePost(Map<String, String> queryparamMap, Object obj);
+	Response netSuitePost(Map<String, String> queryparamMap, Object obj);
 
 }
