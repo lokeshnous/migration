@@ -26,8 +26,9 @@ public class AdmFacilityJpAuditPK implements Serializable {
 	@Column(name="inventory_detail_id")
 	private int inventoryDetailId;
 
-    public AdmFacilityJpAuditPK() {
-    }
+//	Commented unused constructor
+//    public AdmFacilityJpAuditPK() {
+//    }
 	public int getFacilityId() {
 		return this.facilityId;
 	}

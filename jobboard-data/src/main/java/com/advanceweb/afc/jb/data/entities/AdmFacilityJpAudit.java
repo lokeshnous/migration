@@ -22,9 +22,10 @@ public class AdmFacilityJpAudit implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
 	private Date createDt;
-
-    public AdmFacilityJpAudit() {
-    }
+    
+// Commented unused constructor
+//    public AdmFacilityJpAudit() {
+//    }
 
 	public AdmFacilityJpAuditPK getId() {
 		return this.id;
