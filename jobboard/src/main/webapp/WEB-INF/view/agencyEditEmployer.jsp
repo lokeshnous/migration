@@ -40,12 +40,12 @@
 				<a href="#"><img src="../resources/images/Close.png" width="19"
 					height="19" alt="" class="nyroModalClose"></a>
 			</div>
-			<div id="errmsg" class="validationMsg">
-				</div>
 			<form:hidden path="facilityId" id="facilityId"/>
 			<div class="popUpContainerWrapper">
 				<div class="rowEvenNewSpacing marginTop10 marginLeft15">
 					<h3>EMPLOYER DETAILS</h3>
+				</div>
+				<div id="errmsg" class="validationMsg">
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Employer Name:</span>

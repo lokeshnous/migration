@@ -65,17 +65,16 @@
 				<h2>ADD FACILITY</h2>
 				<a href="#"><img src="../resources/images/Close.png" width="19"
 					height="19" alt=""></a>
-			</div>
-			<div id="facilityErrorMsg" class="FormErrorDisplayText"></div>
+			</div>			
 			<div class="popUpContainerWrapper">
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4"><h3 class=" color1">FACILITY
 							DETAILS</h3></span>
 				</div>
-
+				
 				<div class="popUpContainerWrapper">
-
+				<div id="facilityErrorMsg" class="validationMsg"></div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Facility Name:</span>
 						<form:input path="facilityName"
