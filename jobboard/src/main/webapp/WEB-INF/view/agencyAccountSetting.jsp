@@ -73,8 +73,7 @@ function copyAccToBillingAddr(obj) {
     	        }
     	    }
     	});
- 		$('#btn-submit').click(function(){			
- 			
+ 		$('#btn-submit').click(function(){
 			$.ajax({url:"${pageContext.request.contextPath}/agency/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
@@ -145,11 +144,14 @@ function copyAccToBillingAddr(obj) {
 				<img width="19" height="19" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
 				</a>
 			</div>
-			<div id="errmsg" class="validationMsg"></div>
 			<div class="popUpContainerWrapper">
 				<form:form action="../agency/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
+					</div>
+					<div class="rowEvenNewSpacing">
+					<span class="lableText3"> </span>
+					<div id="errmsg" class="FormErrorDisplayText"></div>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
