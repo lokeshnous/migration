@@ -18,6 +18,6 @@ public interface JobBoardSchedulerService {
 	/**
 	 * Any processes that will be scheduled should be configured in this method
 	 */
-	public void execute();
+	void execute();
 
 }
