@@ -645,7 +645,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				}
 					for (AdmFacility facility : listAdmFacility) {
 						DropDownDTO dto = new DropDownDTO();
-						dto.setOptionId(String.valueOf(facility.getFacilityId()));
+						dto.setOptionId(facility.getName());
 						dto.setOptionName(facility.getName());
 						companyNames.add(dto);
 					

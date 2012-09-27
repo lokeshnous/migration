@@ -14,7 +14,6 @@ import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
 import com.advanceweb.afc.jb.common.EthenticityDTO;
 import com.advanceweb.afc.jb.common.ExcludeFromDTO;
-import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.GenderDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
