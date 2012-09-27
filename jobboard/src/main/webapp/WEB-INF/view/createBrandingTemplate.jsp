@@ -20,7 +20,7 @@
                 function() {                    
 
                         $("#brandingpreview").displaypopup("#brandingpreview","770","360");
-                        
+     
                       //Adding Testimonies
                 		$('#testimonyAjaxCallId').live('click', function() {
                 			$.ajax({
@@ -114,7 +114,7 @@
 
 <body class="job_board">
 	<div class="ad_page_top">
-		<img src="images/ads/banner_ad_fpo.png" />
+		<img src="../resources/images/ads/banner_ad_fpo.png" />
 	</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
@@ -260,7 +260,7 @@
 							</div>								
 							
 							<div id="testimony">
-								<span class="required" ><a href="#" id="testimonyAjaxCallId">Add Another Testimonial</a></span>
+								<span class="required" ><a href="#nogo" id="testimonyAjaxCallId">Add Another Testimonial</a></span>
 							</div>	
 							
 							<div class="toolTip colorPkrAreaToolTip">
@@ -297,7 +297,7 @@
 							</div>	
 								
 							<div id="image">
-								<span class="required"><a href="#" id="imageAjaxCallId">Add Another Image</a></span>
+								<span class="required"><a href="#nogo" id="imageAjaxCallId">Add Another Image</a></span>
 							</div>	
 								
 							<div class="toolTip colorPkrAreaToolTip">
@@ -308,9 +308,7 @@
 										Accepted file types include .jpg, .gif, .png and .tif.</span>
 							</div>
 						</div>
-						
-						
-						
+					
 						<div class="row">
 							<div id="videosSectionDivId">
 								<c:forEach items="${brandingTemplateForm.listVideos}" var="videos" varStatus="status">
@@ -333,7 +331,7 @@
 							</div>	
 								
 							<div id="video">
-								<span class="required"><a href="#" id="videoAjaxCallId">Add Another	Video</a></span>
+								<span class="required"><a href="#nogo" id="videoAjaxCallId">Add Another	Video</a></span>
 							</div>	
 								
 							<div class="toolTip colorPkrAreaToolTip">
@@ -373,8 +371,6 @@
 								
 								<%-- <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm white">Cancel</a> --%>
 								<input type="submit" value="Cancel" class="white" name="Cancel"/>
-								
-								
 								</span>
 						</div>
 						</form:form>
@@ -390,7 +386,7 @@
 				
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
-					<img src="images/ads/banner_ad_fpo.png" />
+					<img src="../resources/images/ads/banner_ad_fpo.png" />
 				</div>
 
 			</div>
