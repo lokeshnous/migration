@@ -12,11 +12,8 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
-import com.advanceweb.afc.jb.ServiceTest;
-
-public class CustomerDetailsWSTest extends ServiceTest {
+public class CustomerDetailsWSTest{
 	private static final Logger LOGGER = Logger
 			.getLogger(CustomerDetailsWSTest.class);
 
@@ -25,7 +22,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 
         CustomerDetailsWSTest customerDetailsWSTest = new CustomerDetailsWSTest();
 
-        String str = "";
+        
         
         
         // Calling for customer details
@@ -93,8 +90,8 @@ public class CustomerDetailsWSTest extends ServiceTest {
         String email = "pravinma@nousinfo.com";
         String password = "pravin123";
         String role = "3";
-        String authorization = "NLAuth nlauth_account=" + account + ", nlauth_email=" + email + ", nlauth_signature=" + password + ", nlauth_role=" + role + "";
-		return authorization;
+        //String authorization = "NLAuth nlauth_account=" + account + ", nlauth_email=" + email + ", nlauth_signature=" + password + ", nlauth_role=" + role;
+		return "NLAuth nlauth_account=" + account + ", nlauth_email=" + email + ", nlauth_signature=" + password + ", nlauth_role=" + role;
 	 }
 	 
 	 
@@ -105,7 +102,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	    
 	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
 	     
-		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=465670");//465670
+		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=469773");//465670
 	     /*client.header("Authorization", authorization);
 	     client.header("Content-Type", "application/json");*/
 		 Response response = client.get();
@@ -147,6 +144,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 				}*/
 				
 				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				//System.out.println(jsonObject);
 				JSONArray jsonArray = new JSONArray();
 				List<String> emailList = new ArrayList<String>();
 				if(jsonObject.has("contactroles")){
@@ -155,7 +153,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 				for(int index = 0; index < jsonArray.length(); index++ ){
 					org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
 					emailList.add(innerJsonObj.getString("email"));
-					System.out.println("contacts=>"+innerJsonObj.getString("email"));
+					//System.out.println("contacts=>"+innerJsonObj.getString("email"));
 				}
 //				System.out.println("emailList=="+emailList);
 				
@@ -163,7 +161,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.info(e);
 			}
 			
 			
@@ -174,8 +172,8 @@ public class CustomerDetailsWSTest extends ServiceTest {
 			
 			
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Failed to get a string represenation of the response",e);
+			LOGGER.info(e);
+			//throw new RuntimeException("Failed to get a string represenation of the response",e);
 		}
 //		System.out.println("Result for get Customer Details user="+jsonResult);
 		
@@ -187,11 +185,11 @@ public class CustomerDetailsWSTest extends ServiceTest {
 	  * @return
 	  */
 	 
-	 private String getItemServices(){
+	 /*private String getItemServices(){
 		//String authorization = getAuthString();
 		WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=149&deploy=1");
-		/*client.header("Authorization", authorization);
-	    client.header("Content-Type", "application/json");*/
+		client.header("Authorization", authorization);
+	    client.header("Content-Type", "application/json");
 		
         Response response = client.get();
         String jsonResponseString= null;
@@ -200,13 +198,13 @@ public class CustomerDetailsWSTest extends ServiceTest {
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        	LOGGER.info(e);
+           // throw new RuntimeException("Failed to get a string represenation of the response",e);
         }
 //        System.out.println("Json Response String for GET ItemServices details="+jsonResponseString);
         return jsonResponseString;
 		 
-	 }
+	 }*/
 	 
 	 
 	 public String createSalesOrder(String itemIntrnlId, int custId, int locId, int discId){
@@ -230,17 +228,17 @@ public class CustomerDetailsWSTest extends ServiceTest {
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        	LOGGER.info(e);
+           // throw new RuntimeException("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for create Sales Order ="+jsonResponseString);
+        //System.out.println("Json Response String for create Sales Order ="+jsonResponseString);
         return jsonResponseString;
 	 }
 	 
 	 
 	 public String createCustomer(String compName, String recdType){
-		 String companyName = compName;
-		 String recordType = recdType;
+		// String companyName = compName;
+		 //String recordType = recdType;
 		 
 		 String authorization = getAuthString();
 		 
@@ -252,7 +250,7 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		// Object entityId = "{\"internalid\":\"0\",\"phone\":\"(000) 999-7777\",\"recordtype\":\"customer\",\"companyname\":\"asdsa\",\"ccnumber\":\"null\",\"ccexpiredate\":\"null\",\"ccname\":\"null\",\"cczipcode\":\"null\",\"ccstreet\":\"null\",\"item\":\"[]\",\"firstname\":\"bdd\",\"middlename\":\"dbdfb\",\"lastname\":\"dbdf\",\"email\":\"null\",\"zip\":\"123456\",\"state\":\"gu\",\"country\":\"us\",\"altphone\":\"\",\"isperson\":\"T\",\"addr1\":\"bdbfd@gmail.com\",\"city\":\"sasa\"}";
 		//Json Response String for create Customer ="463566"
 		 //Json Response String for create Customer ="Record already exist.Try again with other company name"
-		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"xsss\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tvd222SDF\",\"middlename\":\"teststs\",\"lastname\":\"test222aSSS\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		 Object entityId = "{\"internalid\":0,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"xsss\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"test456\",\"middlename\":\"teststs\",\"lastname\":\"test456\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
 		 
 		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=154&deploy=1");
 		client.header("Authorization", authorization);
@@ -268,10 +266,10 @@ public class CustomerDetailsWSTest extends ServiceTest {
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        	LOGGER.info(e);
+           // throw new RuntimeException("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for create Customer ="+jsonResponseString);
+       // System.out.println("Json Response String for create Customer ="+jsonResponseString);
         return jsonResponseString;
 	 }
 	 
@@ -289,11 +287,14 @@ public class CustomerDetailsWSTest extends ServiceTest {
 		 //Object ent="{"customerId":"\460460,"customerName":"Customer5","recordType":"customer"}";
 
 		 //Working
-		 //Object entityId = "{\"recordtype\": \"customer\", \"internalid\": 460460, \"phone\" : \"121-454-789\"}";
+		 Object entityId = "{\"recordtype\": \"customer\", \"internalid\": 474281, \"phone\" : \"(000) 999-9999\", \"companyname\":\"nstest66116\",\"firstname\":\"nstest66611\",\"middlename\":\"test11\",\"lastname\":\"nstest66611\",\"altphone\":\"(000) 666-6666\",\"custentityfeaturedemployee\":false,\"item\":[],}";
 		 
-		 Object entityId = "{\"internalid\":467173,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		 //Object entityId = "{\"internalid\":467173,\"phone\":\"(000) 666-6666\",\"recordtype\":\"customer\",\"companyname\":\"dddd\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"item\":[],\"firstname\":\"tesFGFtsts\",\"middlename\":\"teststs\",\"lastname\":\"teststs\",\"email\":null,\"zip\":\"111111\",\"state\":\"ae\",\"country\":\"us\",\"altphone\":\"(000) 666-6666\",\"isperson\":\"T\",\"addr1\":\"teststs@gmail.com\",\"city\":\"teststs@gmail.com\"}";
+		 //471880
+		 //Object entityId = " {\"internalid\":474281,\"phone\":\"(000) 999-9999\",\"recordtype\":\"customer\",\"companyname\":\"nstest666\",\"ccnumber\":null,\"ccexpiredate\":null,\"ccname\":null,\"cczipcode\":null,\"ccstreet\":null,\"firstname\":\"nstest666\",\"middlename\":null,\"lastname\":\"nstest666\",\"email\":null,\"state\":\"gu\",\"country\":\"us\",\"altphone\":null,\"entity\":null,\"paymentmethod\":null,\"cardtype\":null,\"isperson\":\"T\",\"custentityfeaturedemployee\":false,\"item\":[]}";
+		// Object entityId = "{\"internalid\":474281,\"phone\":\"(000) 999-9999\",\"recordtype\":\"customer\",\"companyname\":\"nstest666\",\"firstname\":\"nstest666\",\"middlename\":\"test\",\"lastname\":\"nstest666\",\"zip\":\"44654\",\"state\":\"gu\",\"country\":\"us\",\"altphone\":\"(000) 999-9999\",\"isperson\":\"T\",\"addr1\":\"nstest666\",\"city\":\"nstest666\"}";
 		 
-		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=156&deploy=1");
+		WebClient client = WebClient.create("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=156&deploy=2");
 		client.header("Authorization", authorization);
 	    client.header("Content-Type", "application/json");
 	    
@@ -307,10 +308,10 @@ public class CustomerDetailsWSTest extends ServiceTest {
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        	LOGGER.info(e);
+            //throw new RuntimeException("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for create Customer ="+jsonResponseString);
+       // System.out.println("Json Response String for create Customer ="+jsonResponseString);
         return jsonResponseString;
 	 }
 	 
@@ -332,10 +333,10 @@ public class CustomerDetailsWSTest extends ServiceTest {
         	jsonResponseString = IOUtils.readStringFromStream((InputStream)response.getEntity());
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to get a string represenation of the response",e);
+        	LOGGER.info(e);
+           // throw new RuntimeException("Failed to get a string represenation of the response",e);
         }
-        System.out.println("Json Response String for Cash Sales ="+jsonResponseString);
+        //System.out.println("Json Response String for Cash Sales ="+jsonResponseString);
         return jsonResponseString;
 	 }
 	
