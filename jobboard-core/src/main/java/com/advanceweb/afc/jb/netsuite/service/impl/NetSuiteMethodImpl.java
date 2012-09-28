@@ -72,8 +72,7 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 		client.header(AUTHORIZATION_STRING, authorization);
 		client.header(CONTENT_TYPE_STRING, CONTENT_TYPE_VALUE);
 		
-		LOGGER.info("Web Client=>"+client);
-		LOGGER.info("Web Client=>"+client.getCurrentURI());
+		LOGGER.info("Web Client URI"+client.getCurrentURI());
 		
 		return client;
 	}

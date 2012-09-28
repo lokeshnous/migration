@@ -339,7 +339,7 @@ public class EmployerRegistrationController {
 			employerRegistration.changePassword(empDTO);
 			// model.put("jobSeekerRegistrationForm", jsRegistrationForm);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("Error occurred while changing the password."+e);
 		}
 		return "registrationsuccess";
 	}

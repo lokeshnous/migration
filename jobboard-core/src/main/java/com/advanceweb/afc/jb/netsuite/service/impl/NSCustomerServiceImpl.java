@@ -31,7 +31,6 @@ import com.advanceweb.afc.jb.netsuite.NetSuiteHelper;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
-import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * This service class helps to call the different WebServices from NetSuite.
@@ -348,9 +347,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
 			if (jsonResponse.contains(ERROR_STRING)) {
-				LOGGER.info("Error occurred while record updation in NetSuite.");
+				LOGGER.info("Error occurred while record updation in Net Suite.");
 				throw new JobBoardNetSuiteServiceException(
-						"Error occurred while record updation in NetSuite.");
+						"Error occurred while updating record in NetSuite.");
 			} else if (jsonResponse.contains("updated")) {
 				userDTO.setNsStatus(TRUE_STRING);
 			}
