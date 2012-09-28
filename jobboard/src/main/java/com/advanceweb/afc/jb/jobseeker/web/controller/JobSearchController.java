@@ -273,7 +273,11 @@ public class JobSearchController {
 			}
 
 
-			if(MMJBCommonConstants.ZERO_INT != jobDTO.getTemplateId())
+			if(MMJBCommonConstants.ZERO_INT == jobDTO.getTemplateId())
+			{
+				modelView.setViewName("jobseekerJobDetails");
+			}
+			else
 			{
 				List<JobPostDTO> jobPostDTOList = jobSearchService.getRecentJobsPostedByEmployer(jobDTO.getFacilityId(), jobDTO.getJobID());
 				
@@ -284,10 +288,6 @@ public class JobSearchController {
 				model.put("newsDTOList", newsDTOList);
 				model.put("jobDTOList", jobPostDTOList);
 				modelView.setViewName("jobseekerJobDetailsTemplate");
-			}
-			else
-			{
-				modelView.setViewName("jobseekerJobDetails");
 			}
 			
 		} catch (Exception e) {
