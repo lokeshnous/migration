@@ -89,6 +89,7 @@ public class JobPostController {
 	private static final String USER_ID="userId";
 	private static final String TEMPLATE_LIST="templateList";
 	private static final String FACILITY_ADMIN="facility_admin";
+	private static final String COMPANY_LIST="companyList";
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
@@ -147,7 +148,7 @@ public class JobPostController {
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
-		model.addObject("companyList", companyList);
+		model.addObject(COMPANY_LIST, companyList);
 		// Populating Dropdowns
 
 		model.addObject(JOB_POST_FORM, jobPostForm);
@@ -338,6 +339,9 @@ public class JobPostController {
 
 	private ModelAndView populateDropdowns(ModelAndView model, HttpSession session) {
 		List<DropDownDTO> templateList;
+		int facilityId=0;
+		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		List<DropDownDTO> companyList = getCompanyList(facilityId);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
@@ -371,6 +375,7 @@ public class JobPostController {
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
+		model.addObject(COMPANY_LIST, companyList);
 		// Populating Dropdowns
 
 		return model;
@@ -514,7 +519,7 @@ public class JobPostController {
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
-		model.addObject("companyList", companyList);
+		model.addObject(COMPANY_LIST, companyList);
 		return jbPostingTypeList;
 	}
 
@@ -695,6 +700,13 @@ public class JobPostController {
 			templateList = new ArrayList<DropDownDTO>();
 		}
 		jobPostform.setJobPostDTOList(postedJobList);
+		for (JobPostDTO jobPostDTO : postedJobList) {
+			for (DropDownDTO dropDownDTO : companyList) {
+					if(jobPostDTO.getCompanyName().equalsIgnoreCase(dropDownDTO.getOptionId())){
+						jobPostDTO.setCompanyName(dropDownDTO.getOptionName());
+					}
+			}
+		}
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		if (null == next || !next.isEmpty()) {
 			jobPostform.setBeginVal((page / 10) * 10);
@@ -712,7 +724,7 @@ public class JobPostController {
 		model.addObject("jobStatusList",
 				populateDropdownsService.getJobStatusList());
 		
-		model.addObject("companyList", companyList);
+		model.addObject(COMPANY_LIST, companyList);
 		model.setViewName("manageJobPosting");
 
 		return model;

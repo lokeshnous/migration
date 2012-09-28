@@ -636,7 +636,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
 						"from  AdmFacility fac WHERE fac.facilityParentId=?",
 						facilityId);
-//				TODO remove the below if once the issue #205 is fixed
+
 				if(listAdmFacility.isEmpty() || null == listAdmFacility)
 				{
 					listAdmFacility = hibernateTemplate.find(
@@ -645,10 +645,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				}
 					for (AdmFacility facility : listAdmFacility) {
 						DropDownDTO dto = new DropDownDTO();
-						dto.setOptionId(facility.getName());
+						dto.setOptionId(String.valueOf(facility.getFacilityId()));
 						dto.setOptionName(facility.getName());
 						companyNames.add(dto);
-					
 					}
 				
 				
@@ -693,7 +692,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 			if (jpTemplateList != null && !jpTemplateList.isEmpty()) {
 				DropDownDTO dto = new DropDownDTO();
-				dto.setOptionId(""+templateId);
+				dto.setOptionId(String.valueOf(templateId));
 				dto.setOptionName((String) jpTemplateList.get(0));
 				templateList.add(dto);
 				return templateList;

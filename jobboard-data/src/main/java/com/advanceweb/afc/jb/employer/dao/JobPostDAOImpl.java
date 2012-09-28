@@ -1051,5 +1051,5 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return admFacilityDTOList;
 	}
-
+	
 }
