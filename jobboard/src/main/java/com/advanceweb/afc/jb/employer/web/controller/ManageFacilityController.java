@@ -55,11 +55,11 @@ public class ManageFacilityController {
 	@Autowired
 	private JobPostService employerJobPost;
 	@Autowired
-	EmployerRegistrationValidation registerValidation;
+	private EmployerRegistrationValidation registerValidation;
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-	private Pattern pattern;
-	private Matcher matcher;
+	private static final String FAILURE_MSG="failure";
+	
 	@RequestMapping(value = "/addFacility")
 	public ModelAndView addfacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
@@ -132,13 +132,13 @@ public class ManageFacilityController {
 		ManageFacilityDTO facilityDTO = transformFacilityFromtoFacilityDTO(facilityForm);
 		if (!registerValidation.validateMobileNumberPattern(facilityForm
 				.getPhoneNumber())) {
-			message.put("failure", jobseekerRegPhoneMsg);
+			message.put(FAILURE_MSG, jobseekerRegPhoneMsg);
 			return message;
 		}
 		
 		if (!StringUtils.isEmpty(facilityForm.getZipCode())
 				&& !validateNumericsPattern(facilityForm.getZipCode())) {
-			message.put("failure", "Please enter numeric value for zip code ");
+			message.put(FAILURE_MSG, "Please enter numeric value for zip code ");
 			return message;
 		}
 		try {
@@ -147,7 +147,7 @@ public class ManageFacilityController {
 			message.put("success", "Added successfully");
 		} catch (JobBoardServiceException ex) {
 			LOGGER.error("Error occured while saving the Facility ", ex);
-			message.put("failure", "Error occured While saving data");
+			message.put(FAILURE_MSG, "Error occured While saving data");
 		}
 
 		return message;
@@ -166,7 +166,7 @@ public class ManageFacilityController {
 
 		} catch (JobBoardServiceException ex) {
 			LOGGER.error("Error occured while saving the Facility ", ex);
-			return "failure";
+			return FAILURE_MSG;
 		}
 
 		return "";
@@ -250,6 +250,8 @@ public class ManageFacilityController {
 	 * @return
 	 */
 	private boolean validateNumericsPattern(String value) {
+		Pattern pattern;
+	    Matcher matcher;
 		pattern = Pattern.compile(MMJBCommonConstants.NUMERICS_PATTERN);
 		matcher = pattern.matcher(value);
 		return matcher.matches();

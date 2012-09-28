@@ -86,7 +86,9 @@ public class JobPostController {
 	private static final String ERROR_MESSAGE = "errorMessage";
 	private static final String FORWORD_MANAGE_JOBPOST = "forward:/employer/manageJobPost.html";
 	private static final String UPDATE_JOBS = "/updateJobs";
-	
+	private static final String USER_ID="userId";
+	private static final String TEMPLATE_LIST="templateList";
+	private static final String FACILITY_ADMIN="facility_admin";
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
@@ -97,7 +99,7 @@ public class JobPostController {
 		JobPostForm jobPostForm = new JobPostForm();
 		List<DropDownDTO> templateList;
 		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute(USER_ID),FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		
@@ -141,7 +143,7 @@ public class JobPostController {
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);
 		model.addObject("countryList", countryList);
-		model.addObject("templateList", templateList);
+		model.addObject(TEMPLATE_LIST, templateList);
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
@@ -337,7 +339,7 @@ public class JobPostController {
 	private ModelAndView populateDropdowns(ModelAndView model, HttpSession session) {
 		List<DropDownDTO> templateList;
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
-				(Integer) session.getAttribute("userId"), "facility_admin");
+				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
@@ -365,7 +367,7 @@ public class JobPostController {
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);
 		model.addObject("countryList", countryList);
-		model.addObject("templateList", templateList);
+		model.addObject(TEMPLATE_LIST, templateList);
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
@@ -384,31 +386,102 @@ public class JobPostController {
 	 */
 	@RequestMapping(value = "/editJob", method = RequestMethod.GET)
 	public ModelAndView editJob(HttpServletRequest request,HttpSession session,
-			JobPostForm jobPostFormP, @RequestParam("jobId") int jobId) {
-		JobPostForm jobPostForm =jobPostFormP;
+ JobPostForm jobPostFormP,
+			@RequestParam("jobId") int jobId) {
+		JobPostForm jobPostForm = jobPostFormP;
 		ModelAndView model = new ModelAndView();
-		
+
 		String readOnly = request.getParameter("readOnly");
 		String jobStatus = request.getParameter("jobStatus");
 		jobPostForm.setJobStatus(jobStatus);
-		
-		List<DropDownDTO> templateList;
-		int facilityId=0;
-		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
+		int facilityId = 0;
+		facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<DropDownDTO> companyList = getCompanyList(facilityId);
-		
+
 		int jobPostType = employerJobPost
 				.getinvDetIdByJobId(jobId, (Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID),
 						(Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
-		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId,jobPostType);
-		
+		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId, jobPostType);
+
 		jobPostDTO.setJobPostingType(String.valueOf(jobPostType));
-		jobPostForm=transformJobPost.transformJobPostDTOToForm(jobPostForm, jobPostDTO);
-	
+		jobPostForm = transformJobPost.transformJobPostDTOToForm(jobPostForm,
+				jobPostDTO);
+
 		// Populating Dropdowns
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),"facility_admin");
+		List<DropDownDTO> jbPostingTypeList = populateDropDowns(session, jobId,
+				jobPostForm, model, companyList);
+
+		jobPostForm.setActiveInactive(false);
+		if (null != readOnly) {
+			if (readOnly.equalsIgnoreCase("true")) {
+				jobPostForm.setReadOnly(true);
+				model.setViewName(POST_NEW_JOBS);
+			} else if (readOnly.equalsIgnoreCase("false")) {
+
+				setReadOnlyFlag(jobPostForm, model, jobStatus, jobPostType,
+						jbPostingTypeList);
+			}
+		}
+		model.addObject(JOB_POST_FORM, jobPostForm);
+		return model;
+	}
+
+	/**
+	 * @param jobPostForm
+	 * @param model
+	 * @param jobStatus
+	 * @param jobPostType
+	 * @param jbPostingTypeList
+	 */
+	private void setReadOnlyFlag(JobPostForm jobPostForm, ModelAndView model,
+			String jobStatus, int jobPostType,
+			List<DropDownDTO> jbPostingTypeList) {
+		if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
+				|| MMJBCommonConstants.POST_JOB_INACTIVE
+						.equals(jobStatus)) {
+			jobPostForm.setReadOnly(true);
+			jobPostForm.setEnableJobTitle(false);
+			jobPostForm.setActiveInactive(true);
+			for (DropDownDTO DropDownDto : jbPostingTypeList) {
+				if (jobPostType == Integer.parseInt(DropDownDto
+						.getOptionId())
+						&& DropDownDto.getOptionName().contains(
+								MMJBCommonConstants.SLOT_POSTING)) {
+
+					jobPostForm.setEnableJobTitle(true);
+
+				}
+			}
+			model.setViewName(POST_NEW_JOBS);
+		} else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
+				|| MMJBCommonConstants.POST_JOB_SCHEDULED
+						.equals(jobStatus)) {
+			jobPostForm.setReadOnly(false);
+			model.setViewName(POST_NEW_JOBS);
+		} else if (MMJBCommonConstants.POST_JOB_EXPIRED
+				.equals(jobStatus)) {
+			jobPostForm.setReadOnly(true);
+			model.setViewName(POST_NEW_JOBS);
+		}
+	}
+
+	/**
+	 * @param session
+	 * @param jobId
+	 * @param jobPostForm
+	 * @param model
+	 * @param companyList
+	 * @return
+	 */
+	private List<DropDownDTO> populateDropDowns(HttpSession session, int jobId,
+			JobPostForm jobPostForm, ModelAndView model,
+			List<DropDownDTO> companyList) {
+		List<DropDownDTO> templateList;
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute(USER_ID),FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		
@@ -437,48 +510,12 @@ public class JobPostController {
 		model.addObject("stateList", stateList);
 		model.addObject("empTypeList", empTypeList);
 		model.addObject("countryList", countryList);
-		model.addObject("templateList", templateList);
+		model.addObject(TEMPLATE_LIST, templateList);
 		model.addObject("jbOwnerList", jbOwnerList);
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		model.addObject("companyList", companyList);
-		
-		jobPostForm.setActiveInactive(false);
-		if (null != readOnly && readOnly.equalsIgnoreCase("true")) {
-			jobPostForm.setReadOnly(true);
-			model.setViewName(POST_NEW_JOBS);
-		}
-			
-		if (null != readOnly && readOnly.equalsIgnoreCase("false")) {
-			
-			if(MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus) || 
-					MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus))
-			{
-				jobPostForm.setReadOnly(true);
-				jobPostForm.setEnableJobTitle(false);
-				jobPostForm.setActiveInactive(true);
-				for(DropDownDTO DropDownDto : jbPostingTypeList){
-					if(jobPostType == Integer.parseInt(DropDownDto.getOptionId())){
-						if(DropDownDto.getOptionName().contains(MMJBCommonConstants.SLOT_POSTING)){
-							jobPostForm.setEnableJobTitle(true);
-						}
-					}
-				}
-				model.setViewName(POST_NEW_JOBS);
-			}
-			else if(MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus) || 
-					MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus))
-			{
-				jobPostForm.setReadOnly(false);
-				model.setViewName(POST_NEW_JOBS);
-			}
-			else if(MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)){
-				jobPostForm.setReadOnly(true);
-				model.setViewName(POST_NEW_JOBS);
-			}
-		}
-		model.addObject(JOB_POST_FORM, jobPostForm);
-		return model;
+		return jbPostingTypeList;
 	}
 
 	@RequestMapping(value = "/getCityList", method = RequestMethod.GET, headers = "Accept=*/*")
@@ -551,8 +588,7 @@ public class JobPostController {
 	@ResponseBody
 	public List<DropDownDTO> getTemplate(@RequestParam("company") String company) {
 
-		List<DropDownDTO> companyTemplateList = populateDropdownsService.populateTemplateAutoComplete(company);
-		return companyTemplateList;
+		return populateDropdownsService.populateTemplateAutoComplete(company);
 	}
 	
 	@RequestMapping(value = "/getFacilityTemplate")
@@ -563,7 +599,7 @@ public class JobPostController {
 
 		List<DropDownDTO> templateList;
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
-				(Integer) session.getAttribute("userId"), "facility_admin");
+				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 
 		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
 				.getFacilityId()) && isChecked) {
@@ -596,7 +632,9 @@ public class JobPostController {
 		int facilityId=0;
 		facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<DropDownDTO> companyList = getCompanyList(facilityId);
-		String jobStatus = (null!=jobPostform.getStatusValue()?jobPostform.getStatusValue():null!=request.getParameter("jobStatus")?request.getParameter("jobStatus"):null);
+		String jobStatus = (null == jobPostform.getStatusValue() ? null == request
+				.getParameter("jobStatus") ? null : request
+				.getParameter("jobStatus") : jobPostform.getStatusValue());
 		jobPostform.setStatusValue(jobStatus);
 		DropDownDTO dto = new DropDownDTO();
 		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
@@ -644,8 +682,8 @@ public class JobPostController {
 		}
 		// to set the company Id
 		
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute("userId"),
-				"facility_admin");
+		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo((Integer) session.getAttribute(USER_ID),
+				FACILITY_ADMIN);
 		
 		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
 				.getFacilityId())) {
@@ -658,20 +696,18 @@ public class JobPostController {
 		}
 		jobPostform.setJobPostDTOList(postedJobList);
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-		if(null != next && !next.isEmpty()){
-			
-			jobPostform.setBeginVal(Integer.parseInt(next));
-			page=Integer.parseInt(next);
-		}
-		else{
-			jobPostform.setBeginVal((page/10)*10);
+		if (null == next || !next.isEmpty()) {
+			jobPostform.setBeginVal((page / 10) * 10);
+		} else {
+			jobPostform.setBeginVal(Integer.parseInt(next));			
+			page = Integer.parseInt(next);
 		}
 		
 		model.addObject("noOfPages", noOfPages);
 		model.addObject("currentPage", page);
 		model.addObject("begin",(jobPostform.getBeginVal()<=0?1:jobPostform.getBeginVal()));
 		model.addObject(JOB_POST_FORM, jobPostform);
-		model.addObject("templateList", templateList);
+		model.addObject(TEMPLATE_LIST, templateList);
 		model.addObject("autoRenewList", autoRenewList);
 		model.addObject("jobStatusList",
 				populateDropdownsService.getJobStatusList());
@@ -871,5 +907,6 @@ public class JobPostController {
 		return matcher.matches();
 	}
 	
+
 	
 }
