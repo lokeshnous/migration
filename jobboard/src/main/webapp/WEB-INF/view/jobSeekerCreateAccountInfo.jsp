@@ -245,18 +245,18 @@ function validateNumber(event) {
 										<span class="lableText3">My Industry:</span>
 										<form:input readonly="true" path="myIndustry"
 											class="job_seeker_password textBox350" />
-										<div class="toolTip marginTop5 marginLeft5">
+										<!-- <div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Enter the industry you serve.
 												Example: Healthcare</span>
 										</div>
-										<span class="required">(Required)</span>
+										<span class="required">(Required)</span> -->
 									</div>
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'My Profession'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">My Profession:</span>
 		
-												<form:select id="MyProfession" path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+												<form:select id="MyProfession" path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width2">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />

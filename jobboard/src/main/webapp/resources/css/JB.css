@@ -625,6 +625,11 @@ select.jb_input_width3 {
 	padding: 3px; /* MM: Added */
 }
 
+select.jb_input_width2 {
+	width: 180px !important;
+	padding: 3px; /* MM: Added */
+}
+
 .input_grp2 {
 	margin-left: 18px;
 	width: 130px;
