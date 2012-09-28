@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.common.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
@@ -9,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -22,15 +24,24 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 public class OpenAMEUtility {
 
 	private static final Logger LOGGER = Logger.getLogger("OpenAMUtility.class");
+	static Properties prop ;
+	static{
+		try{	    
+			 prop = new Properties();
+			InputStream dataProp = OpenAMEUtility.class.getResourceAsStream("/openam.properties");
+			prop.load(dataProp);
+		   }catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+	private final static String _TOKEN_URL = prop.getProperty("openAMServiceURL")+"authenticate?username="+prop.getProperty("openAM.admin.username")+"&password="+prop.getProperty("openAM.admin.password");
+	private final static String _CREATE_URL = prop.getProperty("openAMServiceURL")+"create?admin=";
+	private final static String _UPDATE_URL = prop.getProperty("openAMServiceURL")+"update?admin=";
+	private final static String _DELETE_URL = prop.getProperty("openAMServiceURL")+"delete?admin=";
+	private final static String _READ_URL = prop.getProperty("openAMServiceURL")+"read?admin=";
+	private final static String _AUTHENTICATE_URL = prop.getProperty("openAMServiceURL")+"authenticate?";
+	private final static String _LOGOUT_URL = prop.getProperty("openAMServiceURL")+"logout?subjectid=";
 
-	private final static String _TOKEN_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/authenticate?username=amadmin&password=nous@123";
-	private final static String _CREATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/create?admin=";
-	private final static String _UPDATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/update?admin=";
-	private final static String _DELETE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/delete?admin=";
-	private final static String _READ_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/read?admin=";
-	private final static String _AUTHENTICATE_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/authenticate?";
-	private final static String _LOGOUT_URL = "http://wisw0013.nousinfo.com:8080/openam/identity/logout?subjectid=";
-	
 	
 	public static String newPassword(){
 		SecureRandom srandom = new SecureRandom();
@@ -217,7 +228,7 @@ public class OpenAMEUtility {
 			HashMap<String, String> hashmap) {
 
 		String telephone = (String) hashmap.get("Phone Number");
-		String address = (String) hashmap.get("Street Address");
+		String address = (String) (hashmap.get("Street Address")+","+hashmap.get("Street Address1")+","+hashmap.get("City")+","+hashmap.get("State / Province")+","+hashmap.get("Country"));
 		StringBuffer attributes = new StringBuffer();
 
 		attributes.append("&identity_name=" + userDTO.getEmailId());
@@ -242,12 +253,13 @@ public class OpenAMEUtility {
 	 */
 
 	public static boolean openAMUpdateUser(UserDTO userDTO,
-			HashMap<String, String> hashMap) {
+			HashMap<String, String> hashmap) {
 
-		String firstname = (String) hashMap.get("First Name");
-		String lastname = (String) hashMap.get("Last Name");
-		String telephone = (String) hashMap.get("Phone Number");
-		String address = (String) hashMap.get("Street Address");
+		String firstname = (String) hashmap.get("First Name");
+		String lastname = (String) hashmap.get("Last Name");
+		String telephone = (String) hashmap.get("Phone Number");
+		String address = (String) (hashmap.get("Street Address")+","+hashmap.get("Street Address1")+","+hashmap.get("City")+","+hashmap.get("State / Province")+","+hashmap.get("Country"));
+		
 
 		StringBuffer attributes = new StringBuffer();
 
