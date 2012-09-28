@@ -29,10 +29,10 @@ public class EditFacilityGroupContorller {
 			.getLogger("AdminManageFacilitiesContorller.class");
 
 	@Autowired
-	AdminService adminService;
+	private AdminService adminService;
 	
 	@Autowired
-	TransformAdminImpersonation transformAdminImpersonation;
+	private TransformAdminImpersonation transformAdminImpersonation;
 
 	@RequestMapping(value = "/jobSearchBycompanyName")
 	public ModelAndView jobSearchBycompanyName(
@@ -41,8 +41,6 @@ public class EditFacilityGroupContorller {
 		ModelAndView model = new ModelAndView();
 		int nsId = (Integer) session
 				.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
-		EmpSearchDTO dto1 = adminService.getUserIdAndFacilityId(nsId);
-		int usId = dto1.getUserId();
 		List<EmpSearchDTO> dto = adminService.getEmpdataByNetSuiteId(nsId);
 		model.addObject("facilityList", dto);
 		boolean isHealthSys = false;
@@ -79,6 +77,7 @@ public class EditFacilityGroupContorller {
 		}
 		dto = transformAdminImpersonation.convertFormToDTO(adminForm);
 		adminService.saveEditFacilityGroup(dto);
+		LOGGER.info("Data saved successfully");
 		model.setViewName("adminLogin");
 		return model;
 

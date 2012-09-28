@@ -31,6 +31,7 @@ public class AdminConversionHelper {
 			searchDto.setNsId(admFacility.getNsCustomerID());
 			dto.add(searchDto);
 		}
+		LOGGER.info("convertEntityTodDTO");
 		return dto;
 
 	}

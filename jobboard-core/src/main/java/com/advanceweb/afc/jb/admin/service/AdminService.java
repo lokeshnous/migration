@@ -60,13 +60,13 @@ public interface AdminService {
 	 * @param facilityId
 	 * @return
 	 */
-	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
+	List<JobPostingInventoryDTO> getInventoryDetails(int userId,
 			int facilityId);
 	
 	/**
 	 * @param nsId
 	 * @return
 	 */
-	public boolean saveEditFacilityGroup(EmpSearchDTO dto);
+	boolean saveEditFacilityGroup(EmpSearchDTO dto);
 
 }

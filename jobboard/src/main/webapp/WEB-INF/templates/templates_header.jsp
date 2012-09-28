@@ -256,11 +256,11 @@ html.busy, html.busy * {
 						</a>
 					</div>
 				</div></li>
-			<li><a href="javascript:">Education</a></li>
-			<li><a href="javascript:">Events</a></li>
-			<li><a href="javascript:">Community</a></li>
-			<li><a href="javascript:">Healthcare Shop</a></li>
-			<li><a href="javascript:">Custom Promotions</a></li>
+			<li><a title="Coming Sooon" href="javascript:">Education</a></li>
+			<li><a title="Coming Sooon" href="javascript:">Events</a></li>
+			<li><a title="Coming Sooon" href="javascript:">Community</a></li>
+			<li><a title="Coming Sooon" href="javascript:">Healthcare Shop</a></li>
+			<li><a title="Coming Sooon" href="javascript:">Custom Promotions</a></li>
 		</ul>
 	</div>
 	<!--nav-->

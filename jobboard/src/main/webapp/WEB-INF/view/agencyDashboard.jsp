@@ -208,7 +208,7 @@
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a href="">Modify Subscriptions</a>
+											<a title="Coming Soon" href="">Modify Subscriptions</a>
 										</p>
 									</div>
 								</div>
@@ -226,7 +226,7 @@
 
 									<div class="lableTextDashBoard">
 										<p>
-											<a href=""><em>ADVANCE</em> Recruitment Solutions Media
+											<a title="Coming Sooon" href=""><em>ADVANCE</em> Recruitment Solutions Media
 												Kit</a>
 										</p>
 									</div>

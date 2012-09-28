@@ -48,9 +48,12 @@
 		<div class="popUpContainerWrapper">
 			<div class="popUpContainerWrapper">
 			<div class="lableText5"></div>
-			<div id="errmsg" class="FormErrorDisplayText"></div>
 				<form:form method="POST" action="" commandName="adminLoginForm" id="adminLoginFormId">
 					<div class="row">
+					<div class="row">
+						<div class="lableText5"></div>
+						<div id="errmsg" class="validationMsg"></div>
+						</div>
 						<div class="rowEvenNewSpacing">
 							<div class="lableText5">Email Address of Employer / Agency:</div>
 							<form:input path="empOrAgencyEmail" name="Exclude" class="job_seeker_email" />

@@ -193,15 +193,9 @@ public class AdminJobPostingInventoryController {
 					jbSlotList.add(dto);
 				}
 			}
-			// model.addObject("nsId", nsId);
-			// String empList = (String) session.getAttribute("empList");
-
-			// model.addObject("empList", empList);
 			model.addObject("jbPostList", jbPostList);
 			model.addObject("jbSlotList", jbSlotList);
 		}
-		// session.removeAttribute("empList");
-//		session.removeAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
 		model.setViewName("adminEditJobPostInventory");
 		return model;
 	}

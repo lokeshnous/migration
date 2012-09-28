@@ -36,12 +36,11 @@ public class AdminDAOImpl implements AdminDAO {
 	private static final Logger LOGGER = Logger.getLogger("AdminDAOImpl.class");
 
 	@Autowired
-	AdminConversionHelper adminConversionHelper;
+	private AdminConversionHelper adminConversionHelper;
 
 	private static final String GET_EMAIL = "from MerUser e where e.email = ?";
 	private static final String USER_ROLE = "from AdmUserRole aur where aur.rolePK.userId = ?";
 	private static final String FACILITY_ID = "from AdmUserFacility auf where auf.facilityPK.userId =?";
-	private static final String ADM_FACILITY = "from AdmFacility af where af.facilityId=?";
 	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=? and e.password=?";
 	private static final String VALIDATE_ADM_USERID = "from AdmFacility af where af.adminUserId =?";
 	private static final String GET_ADM_FACILITY_BY_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =?";
@@ -105,7 +104,7 @@ public class AdminDAOImpl implements AdminDAO {
 					if (null != useList && !useList.isEmpty()) {
 						if (useList.get(0).getAdmRole().getRoleId() == 1) {
 							status = true;
-//							return (null != useList ? true : false);
+							// return (null != useList ? true : false);
 						}
 					}
 				}
@@ -134,7 +133,7 @@ public class AdminDAOImpl implements AdminDAO {
 					adminDTO.getEmpOrAgencyEmail());
 			int facilityId = 0;
 			AdmUserFacility facility = null;
-			AdmFacility admfacility=null;
+			AdmFacility admfacility = null;
 			if (null != usersList1 && !usersList1.isEmpty()) {
 				MerUser user1 = usersList1.get(0);
 				List<AdmUserFacility> facilityList = hibernateTemplateCareers
@@ -143,15 +142,16 @@ public class AdminDAOImpl implements AdminDAO {
 					facility = facilityList.get(0);
 					facilityId = facility.getFacilityPK().getFacilityId();
 				}
-				//hibernateTemplateCareers.evict(facilityList);
-				 admfacility = facilityList.get(0).getAdmFacility();
+				// hibernateTemplateCareers.evict(facilityList);
+				admfacility = facilityList.get(0).getAdmFacility();
 			}
-			
-//			List<AdmFacility> admFacilityList = hibernateTemplateCareers.find(
-//					ADM_FACILITY, facilityId);
-			//AdmFacility admfacility = //admFacilityList.get(0);
-					//AdmFacility admfacility = facilityList.get(0).getAdmFacility();
-			
+
+			// List<AdmFacility> admFacilityList =
+			// hibernateTemplateCareers.find(
+			// ADM_FACILITY, facilityId);
+			// AdmFacility admfacility = //admFacilityList.get(0);
+			// AdmFacility admfacility = facilityList.get(0).getAdmFacility();
+
 			List<AdmFacility> admList = hibernateTemplateCareers.find(
 					VALIDATE_ADM_USERID, admUserId);
 			admfacility.setAdminUserId(admUserId);
@@ -159,10 +159,8 @@ public class AdminDAOImpl implements AdminDAO {
 				AdmFacility fac = admList.get(0);
 				fac.setAdminUserId(0);
 				hibernateTemplateCareers.update(fac);
-				hibernateTemplateCareers.saveOrUpdate(admfacility);
-			} else {		
-				hibernateTemplateCareers.saveOrUpdate(admfacility);
 			}
+			hibernateTemplateCareers.saveOrUpdate(admfacility);
 
 		} catch (Exception e) {
 			LOGGER.error(e);
@@ -175,7 +173,6 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public EmpSearchDTO validateCompName(String empList) {
 		EmpSearchDTO dto = new EmpSearchDTO();
-		boolean status = false;
 		try {
 			if (!empList.isEmpty()) {
 				List<AdmFacility> usersList = hibernateTemplateCareers.find(
@@ -236,6 +233,7 @@ public class AdminDAOImpl implements AdminDAO {
 		return dto;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveModifiedData(
@@ -246,11 +244,12 @@ public class AdminDAOImpl implements AdminDAO {
 			for (int i = 0; i < searchedJobsDTOs.size(); i++) {
 				jobPostInvDTO = (JobPostingInventoryDTO) searchedJobsDTOs
 						.get(i);
-				AdmInventoryDetail searchResults = (AdmInventoryDetail) hibernateTemplateCareers
-						.get(AdmInventoryDetail.class,
+				List<AdmInventoryDetail> searchResults = hibernateTemplateCareers
+						.find("from AdmInventoryDetail a where a.invDetailId =?",
 								jobPostInvDTO.getInvDetailId());
-				searchResults.setAvailableqty(jobPostInvDTO.getAvailableQty());
-				hibernateTemplateCareers.saveOrUpdate(searchResults);
+				AdmInventoryDetail list = searchResults.get(0);
+				list.setAvailableqty(jobPostInvDTO.getAvailableQty());
+				hibernateTemplateCareers.saveOrUpdate(list);
 			}
 		} catch (HibernateException e) {
 			LOGGER.error("ERROR" + e);
@@ -331,8 +330,6 @@ public class AdminDAOImpl implements AdminDAO {
 			facility2.setCreateUserId(facility.getCreateUserId());
 			facility2.setNsCustomerID(facility.getNsCustomerID());
 			facility2.setCreateDt(new Date());
-			// AdmFacility facility3 = (AdmFacility)
-			// hibernateTemplateCareers.save(facility2);
 			hibernateTemplateCareers.save(facility2);
 			AdmFacilityContact admFaclityContact = new AdmFacilityContact();
 			admFaclityContact.setAdmFacility(facility2);

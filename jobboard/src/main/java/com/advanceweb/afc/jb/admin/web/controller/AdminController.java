@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.admin.web.controller;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,13 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
-import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.AdminDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
+import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
+import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -56,10 +55,10 @@ public class AdminController {
 	private ProfileRegistration adminService;
 	
 	@Autowired
-	TransformAdminImpersonation transformAdminImpersonation;
+	private TransformAdminImpersonation transformAdminImpersonation;
 	
 	@Autowired
-	AdminService service;
+	private AdminService service;
 	
 	@RequestMapping(value = "/adminMenu", method = RequestMethod.GET)
 	public ModelAndView adminMenuPage(ModelMap map) {

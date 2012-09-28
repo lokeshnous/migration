@@ -71,7 +71,9 @@
 							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->
 							<%-- </form:form>     --%>
 
-							<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+						<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
+							<a href="" title="Coming Soon">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
 					</div>
@@ -87,7 +89,7 @@
 								<li>Post a resume to be found by registered employers</li>
 								<li>Create a Job Alert and more for free</li>
 							</ul>
-							<a href="">Create an Account</a>
+							<a title="Coming Soon" href="">Create an Account</a>
 						</div>
 					</security:authorize>
 					<!-- search_info_box1 -->

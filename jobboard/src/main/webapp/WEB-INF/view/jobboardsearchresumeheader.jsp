@@ -103,7 +103,7 @@
 								<a href="#" class="btn_sm orange margin0"
 									onclick="searchResume();">SEARCH</a><br>
 								<div class="floatLeft marginTop10">
-									<a href="">Advanced Search</a>
+									<a title="Coming Soon" href="">Advanced Search</a>
 								</div>
 							</div>
 						</div>

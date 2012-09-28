@@ -215,19 +215,19 @@
 					<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 							<div class="lableTextDashBoard">
 								<p>
-									<a href="">Purchase Resume Search Packages</a>
+									<a title="Coming Soon" href="">Purchase Resume Search Packages</a>
 								</p>
 							</div>
 							</security:authorize>
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="">Manage Job-Seekers</a>
+								<a title="Coming Soon" href="">Manage Job-Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="">My Saved Resume Searches</a>
+								<a title="Coming Soon" href="">My Saved Resume Searches</a>
 							</p>
 						</div>
 					</div>
@@ -248,7 +248,7 @@
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="">Modify Subscriptions</a>
+								<a title="Coming Soon" href="">Modify Subscriptions</a>
 							</p>
 						</div>
 					</div>
@@ -386,7 +386,7 @@
 									<h2 class="noTopBorder">Solutions</h2>
 									<div class="lableTextDashBoard">
 										<p>
-											<a href=""><em>ADVANCE </em>Recruitment Solutions Media
+											<a title="Coming Soon" href=""><em>ADVANCE </em>Recruitment Solutions Media
 												Kit</a>
 										</p>
 									</div>
