@@ -131,8 +131,15 @@
 								return false;
 							}
 							if (confirm("Do you want to post this job?")) {
-								
-								if ($("#activeInactive").val() == 'true') {
+								$("#postNewJobButHideId").click();
+							}
+						});
+						
+						$("#saveJobPostId").click(function() {
+							if (!validateData()) {
+								return false;
+							}
+							if ($("#activeInactive").val() == 'true') {
 									$('#postNewJobFormId select').each(function(){
 										$(this).attr("disabled", false);
 						    		});
@@ -140,9 +147,8 @@
 									$('#postNewJobFormId input').each(function(){
 										$(this).attr("disabled", false);
 						    		});
-								}
-								$("#postNewJobButHideId").click();
 							}
+							$("#postNewJobButHideId").click();
 						});
 
 						$("#saveAsDraftJobButId")
@@ -351,9 +357,8 @@
 							
 							$("#jobDesc").attr("disabled", false);
 
-							$("#postNewJobButId").attr("hidden", false);
-							$('#postNewJobButId').attr("disabled", false);
-							$("#postNewJobButId").attr("value","Save");
+							$("#saveJobPostId").attr("hidden", false);
+							$('#saveJobPostId').attr("disabled", false);
 							$('#postNewJobButHideId').attr("disabled", false);							
 
 						}
@@ -856,6 +861,9 @@
 					<input type="button" value="Save as draft" class="btn_sm white"	name="SaveAsDraft" id="saveAsDraftJobButId"> 
 					<!-- <input type="submit" value="Cancel" class="btn_sm white" name="Cancel" id="cancel"> -->
 					
+					<c:if test="${jobPostForm.activeInactive == true}">
+							<input type="button" value="Save" class="btn_sm white" id="saveJobPostId"/>
+					</c:if>
 					<a href="<%=request.getContextPath()%>/employer/manageJobPost.html" id="cancel" class="btn_sm white">Cancel</a>
 					<input type="submit" value="Post new job" class="btn_sm white" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;" /> 
 					<input type="submit" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;" /> 
