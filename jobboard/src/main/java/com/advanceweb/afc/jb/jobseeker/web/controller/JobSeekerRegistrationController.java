@@ -284,10 +284,8 @@ public class JobSeekerRegistrationController {
 				for (JobSeekerProfileAttribForm form : registerForm
 						.getListProfAttribForms()) {
 
-					System.out.println("Val==" + form.getStrLabelValue());
-
 					if (form.getStrLabelValue() != null
-							&& form.getStrLabelValue().equalsIgnoreCase("10")) {
+							&& form.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.ID_VAL)) {
 						form.setStrLabelValue(registerForm.getOtherProfession());
 					}
 
