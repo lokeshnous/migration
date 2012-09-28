@@ -52,8 +52,8 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 				String netSuiteResponse = userDTO.getNsStatusCode().get(MMJBCommonConstants.STATUS_CODE_200);
 				orderDetailsDTO.getOrderPaymentDTO().setTransactionResponse(netSuiteResponse);
 				
-				int start = netSuiteResponse.lastIndexOf("(");
-				int end = netSuiteResponse.lastIndexOf(")");				
+				int start = netSuiteResponse.lastIndexOf('(');
+				int end = netSuiteResponse.lastIndexOf(')');				
 				String transactionId = netSuiteResponse.substring(start+1, end);
 				
 				orderDetailsDTO.getOrderPaymentDTO().setTransactionDate(new Date());
@@ -70,7 +70,6 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 				String netSuiteResponse = userDTO.getNsStatusCode().get(netSuiteStatus);
 				orderDetailsDTO.getOrderPaymentDTO().setTransactionResponse(netSuiteResponse);
 				orderDetailsDTO.getOrderPaymentDTO().setTransactionDate(new Date());
-				
 				
 				//orderDetailsDTO.setOrderPaymentDTO(null);
 				paymentGatewayDao.saveOrderDetails(orderDetailsDTO);

@@ -1,10 +1,10 @@
 package com.advanceweb.afc.jb.netsuite.service.impl;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -58,7 +58,7 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 		
 		String jsonCustomer = JsonUtil.toJson(nsCustomer);
 		
-		LOGGER.info("Json for Customer=>"+jsonCustomer.toLowerCase());
+		LOGGER.info("Json for Customer=>"+jsonCustomer.toLowerCase(Locale.US));
 		
 		Map<String, String> queryparamMap = createQueryMap();
 		
@@ -145,10 +145,8 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 				userDTO.setNsStatus(String.valueOf(response.getStatus()));
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.error(e);
-			throw new RuntimeException(
-					"Failed to get a string represenation of the response", e);
 		}
 		
 		return userDTO;

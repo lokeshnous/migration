@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,17 +29,28 @@ import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 
 /**
+ * This class has been added to handle the Purchase Job Posting activities such as 
+ * select payment method, fill the billing information, confirm the order & place the order 
  * @author muralikc
- * 
+ * @since 
  */
 @Controller
 @RequestMapping("/pgiController")
 @SessionAttributes("paymentGatewayForm")
 public class PaymentGatewayController {
-	private static final String STATUS_CODE = "statusCode";
 
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayController.class);
+	
+	private static final String STATE_LIST = "stateList";
+	private static final String COUNTRY_LIST = "countryList";
+	private static final String STATUS_CODE = "statusCode";
+	
+	private static final String THANK_YOU_FORM = "gatewayThankYou";
+	private static final String CONFIRM_ORDER_FORM = "gatewayConfirmOrder";
+	private static final String BILLING_INFO_FORM = "gatewayBillingInfo";
+	private static final String GATEWAY_PAYMENT_FORM = "gatewayPaymentMethod";
+	private static final String PAYMENT_GATEWAY_FORM = "paymentGatewayForm";
 	
 	@Autowired
 	private PaymentGatewayService paymentGatewayService;
@@ -71,10 +81,10 @@ public class PaymentGatewayController {
 		
 		invoiceForm.setInvoiceEnabled(userDTO.isInvoiceEnabled());
 		paymentGatewayForm.setInvoiceForm(invoiceForm);
-		model.addObject("paymentGatewayForm",paymentGatewayForm);
+		model.addObject(PAYMENT_GATEWAY_FORM,paymentGatewayForm);
 		
 		paymentGatewayForm.setPurchaseJobPostForm((PurchaseJobPostForm)session.getAttribute("purchaseJobPostForm"));
-		model.setViewName("gatewayPaymentMethod");
+		model.setViewName(GATEWAY_PAYMENT_FORM);
 		return model;
 	}
 	
@@ -82,12 +92,10 @@ public class PaymentGatewayController {
 	public ModelAndView gatewayPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		List<CountryDTO> countryList = populateDropdownsService
-				.getCountryList();
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
-		model.setViewName("gatewayPaymentMethod");
+		//add country & state list to model
+		addCountryStateList(model);
+		
+		model.setViewName(GATEWAY_PAYMENT_FORM);
 		return model;
 	}
 
@@ -123,14 +131,8 @@ public class PaymentGatewayController {
 			paymentGatewayForm.setBillingAddressForm(billingAddressForm);
 		}
 		
-		// Getting the countries from the database
-		List<CountryDTO> countryList = populateDropdownsService
-						.getCountryList();
-		// Getting the States from the database
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-				
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
+		//add country & state list to model
+		addCountryStateList(model);
 
 		if (paymentGatewayForm.getPaymentMethod().equalsIgnoreCase(
 				MMJBCommonConstants.CREDIT_CARD) && null != paymentGatewayForm.getCreditCardInfoForm()) {
@@ -142,8 +144,8 @@ public class PaymentGatewayController {
 			paymentGatewayForm.setCreditCardInfoForm(null);
 		}
 		
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
-		model.setViewName("gatewayBillingInfo");
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
+		model.setViewName(BILLING_INFO_FORM);
 		return model;
 	}
 	
@@ -151,11 +153,9 @@ public class PaymentGatewayController {
 	public ModelAndView paymentBillingInfoBack(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		List<CountryDTO> countryList = populateDropdownsService
-				.getCountryList();
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
+		//add country & state list to model
+		
+		addCountryStateList(model);
 		
 		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
 				&& null != paymentGatewayForm.getCreditCardInfoForm()){
@@ -167,8 +167,8 @@ public class PaymentGatewayController {
 			paymentGatewayForm.getInvoiceForm().setPurchaseOrderNo(null);
 		}
 		
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
-		model.setViewName("gatewayBillingInfo");
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
+		model.setViewName(BILLING_INFO_FORM);
 		return model;
 	}
 	
@@ -177,8 +177,8 @@ public class PaymentGatewayController {
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
-		model.setViewName("gatewayConfirmOrder");
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
+		model.setViewName(CONFIRM_ORDER_FORM);
 		return model;
 	}
 	
@@ -187,23 +187,13 @@ public class PaymentGatewayController {
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		
-		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
-				&& null != paymentGatewayForm.getCreditCardInfoForm()){
-			paymentGatewayValidation.validate(paymentGatewayForm, result);
-		}
-		else if(MMJBCommonConstants.INVOICE.equals(paymentGatewayForm.getPaymentMethod()) 
-				&& null != paymentGatewayForm.getInvoiceForm()){
-			paymentGatewayValidation.validateInvoice(paymentGatewayForm, result);
-		}
+		validateBillingForm(paymentGatewayForm, result);
 		
 		if (result.hasErrors()) {
+			//add country & state list to model
+			addCountryStateList(model);
 			
-			List<CountryDTO> countryList = populateDropdownsService.getCountryList();
-			List<StateDTO> stateList = populateDropdownsService.getStateList();
-			model.addObject("countryList", countryList);
-			model.addObject("stateList", stateList);
-			
-			model.setViewName("gatewayBillingInfo");
+			model.setViewName(BILLING_INFO_FORM);
 			return model;
 		}
 		
@@ -223,8 +213,28 @@ public class PaymentGatewayController {
 			String orderNo = paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo();
 			model.addObject("orderNo", orderNo);
 		}
-		model.setViewName("gatewayConfirmOrder");
+		model.setViewName(CONFIRM_ORDER_FORM);
 		return model;
+	}
+
+	private void validateBillingForm(PaymentGatewayForm paymentGatewayForm,
+			BindingResult result) {
+		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getCreditCardInfoForm()){
+			paymentGatewayValidation.validate(paymentGatewayForm, result);
+		}
+		else if(MMJBCommonConstants.INVOICE.equals(paymentGatewayForm.getPaymentMethod()) 
+				&& null != paymentGatewayForm.getInvoiceForm()){
+			paymentGatewayValidation.validateInvoice(paymentGatewayForm, result);
+		}
+	}
+
+	private void addCountryStateList(ModelAndView model) {
+		// Getting the countries from the database & Getting the States from the database
+		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		model.addObject(COUNTRY_LIST, countryList);
+		model.addObject(STATE_LIST, stateList);
 	}
 	 
 	/**
@@ -240,7 +250,7 @@ public class PaymentGatewayController {
 		
 		session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
 		paymentGatewayForm = new PaymentGatewayForm();
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return 	model;
@@ -260,7 +270,7 @@ public class PaymentGatewayController {
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		ModelAndView model = new ModelAndView();
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName("redirect:/pgiController/backToConfirmOrder.html");
 		return 	model;
 	}
@@ -338,7 +348,14 @@ public class PaymentGatewayController {
 						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
 										MMJBCommonConstants.SERVICE_UNAVAILABLE_503);
 						errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
-						break;	
+						break;
+				default:
+						LOGGER.info(statusCode.get(netSuiteStatus));
+						model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);	
+						//once the payment is success clear out the form data & related session data
+						session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
+						//clear out all the form data
+						paymentGatewayForm = new PaymentGatewayForm();
 			}
 			
 			if(netSuiteStatus != MMJBCommonConstants.STATUS_CODE_400){
@@ -348,8 +365,8 @@ public class PaymentGatewayController {
 			}		
 		}
 		model.addObject("errorMessage", errorMessage);		
-		model.addObject("paymentGatewayForm", paymentGatewayForm);
-		model.setViewName("gatewayThankYou");
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
+		model.setViewName(THANK_YOU_FORM);
 		return model;
 	}
 
