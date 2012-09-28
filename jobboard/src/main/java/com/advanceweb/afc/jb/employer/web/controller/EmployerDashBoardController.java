@@ -111,7 +111,7 @@ public class EmployerDashBoardController {
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(selEmployerId);
 		session.setAttribute("jbPostTotalList", jbPostTotalList);
-		return;
+		
 	}
 
 	/**
