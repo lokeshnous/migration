@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.employer.service;
 
-import java.util.List;
+//import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
+//import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
-import com.advanceweb.afc.jb.common.FacilityDTO;
+//import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
