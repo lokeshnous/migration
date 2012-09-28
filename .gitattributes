@@ -435,7 +435,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTem
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployeeAccountForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardController.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerPostJobsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementController.java -text
@@ -452,6 +451,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageAcces
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageAccessPermissionForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageFacilityController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageFacilityForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/MetricsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostingController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/SearchResumeController.java -text

@@ -8,7 +8,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
  * 
  */
 
-public class EmployerDashBoardForm {
+public class MetricsForm {
 
 	private String selEmployer;
 
