@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -37,6 +38,9 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerSubscriptionsDAOImpl.class);
+
+	private static final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
+	private static final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	// private static final ResPrivacy ResCoverletter = null;
 	// private static final
 	// MAX_RESULT="select MAX(rs.coverletterId),rs.userId,rs.name,rs.coverletterText,rs.active,rs.createDt,rs.updateDt,rs.deleteDt";
@@ -120,12 +124,12 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			Date todayDate = null;
 			Calendar currentDate = Calendar.getInstance();
 			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MM/dd/yyyy HH:mm:ss");
+					OLD_FORMAT, Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
-			} catch (Exception e) {
-				LOGGER.info("Info data error date conversion");
+			} catch (Exception ex) {
+				LOGGER.info("Error:Cover letter save by job seeker" + ex);
 			}
 
 			// this is save option in ResCoverletter
@@ -150,7 +154,6 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 						.createQuery(
 								"select MAX(rs.coverletterId) from ResCoverletter rs")
 						.uniqueResult();
-				;
 				// int primaryId = resIndex.get(0).getCoverletterId();
 				ResCoverletterPriv resPriv = new ResCoverletterPriv();
 				resPriv.setResCoverletter(resUpdate);
@@ -180,15 +183,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 */
 	public Date dateConveter(String date) {
 		Date dateValue = null;
-		final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
-		final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
 		String newDateString;
-		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT,Locale.US);
 		try {
-			Date d = sdf.parse(date);
+			Date dateConv = sdf.parse(date);
 			sdf.applyPattern(NEW_FORMAT);
-			newDateString = sdf.format(d);
-			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);
+			newDateString = sdf.format(dateConv);
+			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT,Locale.US);
 			dateValue = sdfSource.parse(newDateString);
 		} catch (ParseException e) {
 			LOGGER.info("Date parsing in Job save by admin wrong");
@@ -222,8 +223,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 				}
 			}
 
-		} catch (DataAccessException e) {
-			LOGGER.error("Not find  Cover letter count");
+		} catch (DataAccessException ex) {
+			LOGGER.error("Error: Find count for active status" + ex);
 		}
 		return isUpdate;
 	}
@@ -243,10 +244,11 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			List<ResCoverletter> res = hibernateTemplateCareers
 					.find("from ResCoverletter rs where rs.userId=? and deleteDt is null",
 							userId);
-			if (null != res && !res.isEmpty()) {
-				isUpdate = false;
-			} else {
+			if (null == res || res.isEmpty()) {
 				isUpdate = true;
+				
+			} else {
+				isUpdate = false;
 			}
 
 		} catch (DataAccessException e) {
@@ -330,7 +332,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			Date todayDate = null;
 			Calendar currentDate = Calendar.getInstance();
 			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MM/dd/yyyy HH:mm:ss");
+					OLD_FORMAT,Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
@@ -433,7 +435,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		boolean isUpdate = false;
 		Date todayDate = null;
 		Calendar currentDate = Calendar.getInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat(OLD_FORMAT,Locale.US);
 		try {
 			String dateNow = formatter.format(currentDate.getTime());
 			todayDate = dateConveter(dateNow);
@@ -464,8 +466,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			resPriv.setDeleteDt(todayDate);
 			hibernateTemplateCareers.update(resPriv);
 			isUpdate = true;
-		} catch (Exception e) {
-			System.out.print(e);
+		} catch (Exception ex) {
+			LOGGER.info("Error: Delete Cover Letter" + ex);
 
 		}
 		return isUpdate;
@@ -529,7 +531,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			Date todayDate = null;
 			Calendar currentDate = Calendar.getInstance();
 			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MM/dd/yyyy HH:mm:ss");
+					OLD_FORMAT,Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);

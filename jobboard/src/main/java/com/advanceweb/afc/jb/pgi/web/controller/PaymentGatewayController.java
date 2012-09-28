@@ -244,8 +244,9 @@ public class PaymentGatewayController {
 	 * @return model
 	 */
 	@RequestMapping(value="/cancelPayment",method = RequestMethod.GET)
-	public ModelAndView cancelPayment(PaymentGatewayForm paymentGatewayForm,
+	public ModelAndView cancelPayment(PaymentGatewayForm paymentGatewayFormP,
 			HttpSession session) {
+		PaymentGatewayForm paymentGatewayForm=paymentGatewayFormP;
 		ModelAndView model = new ModelAndView();
 		
 		session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
@@ -276,7 +277,8 @@ public class PaymentGatewayController {
 	}
 	
 	@RequestMapping(value="/placeOrder",method = RequestMethod.POST)
-	public ModelAndView placeOrder(PaymentGatewayForm paymentGatewayForm, HttpSession session) {
+	public ModelAndView placeOrder(PaymentGatewayForm paymentGatewayFormP, HttpSession session) {
+		PaymentGatewayForm paymentGatewayForm = paymentGatewayFormP;
 		//call web service here. If order success save order details in db & move to Thank you page else move to error page
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
 		
