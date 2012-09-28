@@ -1,9 +1,9 @@
 package com.advanceweb.afc.jb.user;
 
-import java.util.List;
+//import java.util.List;
 
-import com.advanceweb.afc.jb.common.AccountProfileDTO;
-import com.advanceweb.afc.jb.common.FacilityDTO;
+//import com.advanceweb.afc.jb.common.AccountProfileDTO;
+//import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 
