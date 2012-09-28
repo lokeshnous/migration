@@ -44,7 +44,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
-import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
@@ -173,61 +172,50 @@ public class JobSearchController {
 	@Value("${ajaxMsg}")
 	private String ajaxMsg;
 
-	/*@Value("${invalidemail}")
-	private String invalidemail;*/
-
 	@Value("${ajaxNavigationPath}")
 	private String ajaxNavigationPath;
-
-	/*@Value("${notempty}")
-	private String notempty;*/
-
-
-	@SuppressWarnings("unused")
-	@Value("${jobseekerSuggestFrdBody}")
-	private String jobseekerSuggestFrdBody;
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	
 	private @Value("${SUBJECT_OF_MAIL}")
-	String SUBJECT_OF_MAIL;
+	String subjectOfMail;
 
-	private @Value("${BODY_OFMAIL_FIRST}")
-	String BODY_OFMAIL_FIRST;
+	@Value("${BODY_OFMAIL_FIRST}")
+	private String bodyOfmailFirst;
 	 
-	private @Value("${BODY_OFMAIL_SECOND}")
-	String BODY_OFMAIL_SECOND;
+	@Value("${BODY_OFMAIL_SECOND}")
+	private String bodyOfmailSecond;
 	 
-	private @Value("${JOB_TITLE_HEADING}")
-	String JOB_TITLE_HEADING;
+	@Value("${JOB_TITLE_HEADING}")
+	private String jobTitleHeading;
 	
-	private @Value("${COMAPNY_NAME_HEADING}")
-	String COMAPNY_NAME_HEADING;
+	@Value("${COMAPNY_NAME_HEADING}")
+	private String comapnyNameHeading;
 
-	private @Value("${URL_LINK_FIRST}")
-	String URL_LINK_FIRST;
+	@Value("${URL_LINK_FIRST}")
+	private String urlLinkFirst;
 	 
-	private @Value("${URL_LINK_SECOND}")
-	String URL_LINK_SECOND;
+	@Value("${URL_LINK_SECOND}")
+	private String urlLinkSecond;
 	 
-	private @Value("${URL_REDIRECT_MAIL}")
-	String URL_REDIRECT_MAIL;
+	@Value("${URL_REDIRECT_MAIL}")
+	private String urlRedirectMail;
 	
-	private @Value("${ERROR_SENDING_MAIL}")
-	String ERROR_SENDING_MAIL;
+	@Value("${ERROR_SENDING_MAIL}")
+	private String errorSendingMail;
 	
-	private @Value("${EMAIL_MESSAGE}")
-	String EMAIL_MESSAGE;
+	@Value("${EMAIL_MESSAGE}")
+	private String emailMessage;
 	
-	private @Value("${WEB_MAIL_SERVER}")
-	String WEB_MAIL_SERVER;
-	private @Value("${EMAIL_MESSAGE_BLANK}")
-	String EMAIL_MESSAGE_BLANK;
+	@Value("${WEB_MAIL_SERVER}")
+	private String webMailServer;
 	
-
+	@Value("${EMAIL_MESSAGE_BLANK}")
+	private String emailMessageBlank;
+	
 	@Autowired
-	ClickController clickController;
+	private ClickController clickController;
 	
 	private static final String PLATINUM_LIST = "PlatinumNewsList";
 	
@@ -497,7 +485,7 @@ public class JobSearchController {
 			if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
 					.equalsIgnoreCase(resumeDTO.getResumeType())) {
 				// TODO: Need to clarify
-				
+				LOGGER.info("Resume type : resume type builder");
 			} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
 					.equalsIgnoreCase(resumeDTO.getResumeType())) {
 				try {
@@ -527,7 +515,7 @@ public class JobSearchController {
 			}else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
 					.equalsIgnoreCase(resumeDTO.getResumeType())) {
 				// TODO: Need to clarify
-				
+				LOGGER.info("Resume type : resume type upload");
 			}
 			if (resumeDTO.getFilePath() != null) {
 				attachmentpaths = new ArrayList<String>();
@@ -604,34 +592,14 @@ public class JobSearchController {
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap, HttpServletRequest request) {
 		 JSONObject jsonObject = new JSONObject();
-		// TODO :Need to Use sessionMap
-		LOGGER.info("Removing from session....");
-		session.removeAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST);
-		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
-		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
-		session.removeAttribute(MMJBCommonConstants.RECORDS_PER_PAGE);
-		session.removeAttribute(MMJBCommonConstants.RECORDS_COUNT);
-		session.removeAttribute(MMJBCommonConstants.TOTAL_NO_RECORDS);
-		session.removeAttribute(MMJBCommonConstants.START_ROW);
-		session.removeAttribute(MMJBCommonConstants.END_ROW);
-		session.removeAttribute(MMJBCommonConstants.BEGIN_VAL);
-		session.removeAttribute(MMJBCommonConstants.BEGIN);
-		session.removeAttribute("filterVals");
-		session.removeAttribute("filterVal");
+		removeSession(session);
 		
 		JobSearchResultDTO jobSearchResultDTO = null;
-		// Map<String, String> paramMap = new HashMap<String, String>();
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
 		String searchName = MMJBCommonConstants.EMPTY;
 		
-		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
-			jsonObject.put(ajaxMsg, jobSearchValidateKeyword);
-			return jsonObject;
-		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase("0"))
-				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
-						.trim())) {
-			jsonObject.put(ajaxMsg, jobSearchValidateCity);
+		if(!validateJobSearch(jobSearchResultForm, jsonObject)){
 			return jsonObject;
 		}
 
@@ -662,22 +630,22 @@ public class JobSearchController {
 
 		int page = 1;
 		int displayRecordsPerPage = 0;
-		if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
-			page = Integer.parseInt(request.getParameter(MMJBCommonConstants.PAGE));
-		}
-		if (request.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE) != null) {
-			displayRecordsPerPage = Integer.parseInt(request
-					.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE));
-		}
-		String next = request.getParameter(MMJBCommonConstants.NEXT);
 		int recordsPerPage = 0;
-
 		int noOfRecords = 0;
-		if (0 == displayRecordsPerPage) {
-			displayRecordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
-		}
+		String next = request.getParameter(MMJBCommonConstants.NEXT);
 
 		try {
+			if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
+				page = Integer.parseInt(request.getParameter(MMJBCommonConstants.PAGE));
+			}
+			if (request.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE) != null) {
+				displayRecordsPerPage = Integer.parseInt(request
+						.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE));
+			}
+			
+			if (0 == displayRecordsPerPage) {
+				displayRecordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
+			}
 			recordsPerPage = displayRecordsPerPage;			
 			long start = (page - 1) * recordsPerPage;			
 			long rows = recordsPerPage;
@@ -694,8 +662,6 @@ public class JobSearchController {
 			noOfRecords = (int) jobSearchResultDTO.getResultCount();
 
 			// TODO: Advertise part is not done
-			// session.setAttribute("AddsPerPage",
-			// MMJBCommonConstants.ADDS_PER_PAGE);
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
 		}
@@ -715,18 +681,38 @@ public class JobSearchController {
 			jobSrchJsonObj = jsonConverterService
 					.convertToJSON(jobSearchResultDTO);
 		}
-		// Set the Filter values for search table
-		List<DropDownDTO> filterVals = new ArrayList<DropDownDTO>();
-		for (int val : MMJBCommonConstants.FILTER_VALS) {
-			DropDownDTO downDTO = new DropDownDTO();
-			downDTO.setOptionId(String.valueOf(val));
-			downDTO.setOptionName(val+" Miles");			
-			filterVals.add(downDTO);
+		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj);
+		return jobSrchJsonObj;
+	}
+
+	/**
+	 * @param jobSearchResultForm
+	 * @param jsonObject
+	 */
+	public boolean validateJobSearch(JobSearchResultForm jobSearchResultForm,
+			JSONObject jsonObject) {
+		boolean status = true;
+		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
+			jsonObject.put(ajaxMsg, jobSearchValidateKeyword);
+			status = false;
+		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase("0"))
+				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
+						.trim())) {
+			jsonObject.put(ajaxMsg, jobSearchValidateCity);
+			status = false;
 		}
-		session.setAttribute("filterVals",
-				filterVals);
-		session.setAttribute("filterVal",
-				displayRecordsPerPage+"");
+		return status;
+	}
+
+	/**
+	 * @param session
+	 * @param page
+	 * @param noOfPages
+	 * @param beginVal
+	 * @param jobSrchJsonObj
+	 */
+	private void setSessionForGrid(HttpSession session, int page,
+			int noOfPages, int beginVal, JSONObject jobSrchJsonObj) {
 		//TODO: Need to use session Map
 		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
 				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
@@ -738,7 +724,26 @@ public class JobSearchController {
 		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1 : beginVal));
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		return jobSrchJsonObj;
+	}
+
+	/**
+	 * removing session for search results grid
+	 * 
+	 * @param session
+	 */
+	private void removeSession(HttpSession session) {
+		// TODO :Need to Use sessionMap
+		LOGGER.info("Removing from session....");
+		session.removeAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST);
+		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
+		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
+		session.removeAttribute(MMJBCommonConstants.RECORDS_PER_PAGE);
+		session.removeAttribute(MMJBCommonConstants.RECORDS_COUNT);
+		session.removeAttribute(MMJBCommonConstants.TOTAL_NO_RECORDS);
+		session.removeAttribute(MMJBCommonConstants.START_ROW);
+		session.removeAttribute(MMJBCommonConstants.END_ROW);
+		session.removeAttribute(MMJBCommonConstants.BEGIN_VAL);
+		session.removeAttribute(MMJBCommonConstants.BEGIN);
 	}
 
 	/**
@@ -780,15 +785,15 @@ public class JobSearchController {
 		AppliedJobDTO appliedJobDTO = jobSearchService.fetchSavedOrAppliedJob(
 				searchedJobDTO, userId);
 		if (appliedJobDTO != null) {
-			if (appliedJobDTO.getAppliedDt() != null) {
-				applyJobErrMsg = applyJobErrMsg.replace("?", appliedJobDTO
-						.getAppliedDt().toString());
-				jsonObject.put(ajaxMsg, applyJobErrMsg);
-				return jsonObject;
-			} else {
+			if (appliedJobDTO.getAppliedDt() == null) {
 				saveThisJobErrMsg = saveThisJobErrMsg.replace("?",
 						appliedJobDTO.getCreateDt().toString());
 				jsonObject.put(ajaxMsg, saveThisJobErrMsg);
+				return jsonObject;
+			} else {
+				applyJobErrMsg = applyJobErrMsg.replace("?", appliedJobDTO
+						.getAppliedDt().toString());
+				jsonObject.put(ajaxMsg, applyJobErrMsg);
 				return jsonObject;
 			}
 		}
@@ -927,8 +932,8 @@ public class JobSearchController {
 									+ "&currentUrl=" + parentId
 									+ "&clickType=view");
 			sendtofriendmail.setJobId(jobId);
-			sendtofriendmail.setJoburl(fullPath.toString());
-			model.addAttribute("joburl", fullPath.toString());
+			sendtofriendmail.setJoburl(fullPath);
+			model.addAttribute("joburl", fullPath);
 			model.addAttribute("jobId", request.getParameter("id"));
 			model.addAttribute(CURRENT_URL, request.getParameter(CURRENT_URL));
 			model.addAttribute("sendtofriendmail", sendtofriendmail);
@@ -969,7 +974,7 @@ public class JobSearchController {
 		try {
 			String data = sendtofriendmail.getEmail().toString();
 			if((null==data.trim())||("".equals(data.trim()))){
-				return EMAIL_MESSAGE_BLANK;
+				return emailMessageBlank;
 			}
 			data = data.replace(',', ';');
 			int len = data.length();
@@ -993,14 +998,14 @@ public class JobSearchController {
 							.getAttribute(MMJBCommonConstants.USER_EMAIL);
 				}
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress(WEB_MAIL_SERVER);
+				jobSeekerEmailDTO.setFromAddress(webMailServer);
 
 				int iterationCount = 0;
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
 					
 					if (!validateEmailPattern(string.trim())) {
-						return EMAIL_MESSAGE;
+						return emailMessage;
 					}
 
 					jobSeekerToAddress[iterationCount] = new InternetAddress(string.trim());
@@ -1009,14 +1014,13 @@ public class JobSearchController {
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 				String msgSubject="";
-				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+				if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+					jobseekerName = "XXXX-XXX";
+					msgSubject =subjectOfMail+" "+ jobseekerName;
+				} else {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
-					msgSubject =SUBJECT_OF_MAIL+" "+ jobseekerName;
-					
-				} else {
-					jobseekerName = "XXXX-XXX";
-					msgSubject =SUBJECT_OF_MAIL+" "+ jobseekerName;
+					msgSubject =subjectOfMail+" "+ jobseekerName;
 				}
 						
 				
@@ -1024,13 +1028,13 @@ public class JobSearchController {
 				SearchedJobDTO searchedJobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
-				String Subject =SUBJECT_OF_MAIL+" "+ jobseekerName;
-				String bodyHead1 =BODY_OFMAIL_FIRST+" "+ jobseekerName +" "+BODY_OFMAIL_SECOND;
+				String Subject =subjectOfMail+" "+ jobseekerName;
+				String bodyHead1 =bodyOfmailFirst+" "+ jobseekerName +" "+bodyOfmailSecond;
 				String bodyHead2 = sendtofriendmail.getMessage();
-				String jobTitle =JOB_TITLE_HEADING;
-				String companyName =COMAPNY_NAME_HEADING;
+				String jobTitle =jobTitleHeading;
+				String companyName =comapnyNameHeading;
 				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl =URL_LINK_FIRST+""+jobUrl+""+URL_LINK_SECOND;
+				String joburl =urlLinkFirst+jobUrl+urlLinkSecond;
 				mesg = mesg
 						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -1046,7 +1050,7 @@ public class JobSearchController {
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info(ERROR_SENDING_MAIL);
+				LOGGER.info(errorSendingMail);
 			}
 
 		} catch (Exception e) {
@@ -1054,10 +1058,10 @@ public class JobSearchController {
 			throw new MailParseException(e);
 		}
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			modelData.setViewName(URL_REDIRECT_MAIL);
+			modelData.setViewName(urlRedirectMail);
 			return "";
 		} else {
-			modelData.setViewName(URL_REDIRECT_MAIL);
+			modelData.setViewName(urlRedirectMail);
 			return "";
 		}
 
