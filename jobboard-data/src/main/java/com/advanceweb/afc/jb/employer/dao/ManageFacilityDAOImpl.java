@@ -22,9 +22,10 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+
 /**
  * @author deviprasadm
- *
+ * 
  */
 
 @SuppressWarnings("unchecked")
@@ -59,7 +60,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityList = hibernateTemplateCareers.find(
 					FIND_ADM_FACILITY_DETAILS, facilityId);
 		}
-		if (null != admFacilityList && admFacilityList.size() > 0) {
+		if (null != admFacilityList && admFacilityList.isEmpty()) {
 			admFacility = admFacilityList.get(0);
 		}
 		if (null != admFacility) {
@@ -83,7 +84,6 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		return facilityDTO;
 	}
 
-	
 	@Override
 	public List<FacilityDTO> getFacilityListByGroup(int facilityId)
 			throws JobBoardDataException {
@@ -162,7 +162,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		hibernateTemplateCareers.saveOrUpdate(facility);
 
 		// saving the data in adm_facility_contact as per the logged in User
-		
+
 		Date currentDate = new Date();
 		if (null != admFacilityContactP) {
 
@@ -189,9 +189,8 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityContact.setAdmFacility(facility);
 			hibernateTemplateCareers.saveOrUpdate(admFacilityContact);
 
-
 		}
-		
+
 	}
 
 	@Override
