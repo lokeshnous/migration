@@ -48,7 +48,7 @@ public class EmployerDashBoardController {
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
-			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
+			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,
 			HttpSession session) {
 		session.removeAttribute("jbPostTotalList");
 		String enableAccess = "true";
@@ -103,7 +103,7 @@ public class EmployerDashBoardController {
 	@RequestMapping(value = "/viewEmployerMetrics", method = RequestMethod.GET)
 	public @ResponseBody
 	void viewEmployerMetrics(
-			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
+			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,
 			BindingResult result, HttpSession session,
 			@RequestParam("selEmployerId") int selEmployerId) {
 		session.removeAttribute("jbPostTotalList");
