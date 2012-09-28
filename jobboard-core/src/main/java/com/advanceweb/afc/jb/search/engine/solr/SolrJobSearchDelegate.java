@@ -67,7 +67,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 		/*
 		 * Check whether all the parameters coming from the UI is blank or not.
 		 */
-		if (validateInputParams(searchName, inputParams)) {
+		if (validateInputParams(inputParams)) {
 			LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
 			return null;
 		}
@@ -136,8 +136,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 	 *            - The user input parameters
 	 * @return true if the parameters are valid, else false
 	 */
-	private boolean validateInputParams(final String searchName,
-			final Map<String, String> inputParams) {
+	private boolean validateInputParams(final Map<String, String> inputParams) {
 
 		if (StringUtils.isEmpty(inputParams.get(SearchParamDTO.SEARCH_SEQ))) {
 			LOGGER.info(" Sequence ID is not present in the Search query.");
