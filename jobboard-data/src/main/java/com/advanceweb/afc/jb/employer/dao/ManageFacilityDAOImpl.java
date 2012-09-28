@@ -51,6 +51,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		LOGGER.info("Fetching Facility Details");
 		ManageFacilityDTO facilityDTO = new ManageFacilityDTO();
 		List<AdmFacility> admFacilityList;
+		AdmFacility admFacility = null;
 		if (isGroup) {
 			admFacilityList = hibernateTemplateCareers.find(FIND_ADM_FACILITY,
 					facilityId);
@@ -58,18 +59,25 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityList = hibernateTemplateCareers.find(
 					FIND_ADM_FACILITY_DETAILS, facilityId);
 		}
-		if (null != admFacilityList && !admFacilityList.isEmpty()) {
-			facilityDTO.setFacilityId(admFacilityList.get(0).getFacilityId());
-			facilityDTO.setFacilityName(admFacilityList.get(0).getName());
-			facilityDTO.setFacilityType(admFacilityList.get(0)
-					.getFacilityType());
-			facilityDTO.setFacilityCity(admFacilityList.get(0).getCity());
-			facilityDTO.setFacilityCountry(admFacilityList.get(0).getCountry());
-			facilityDTO.setFacilityState(admFacilityList.get(0).getState());
-			facilityDTO.setFacilityStreet(admFacilityList.get(0).getStreet());
-			//facilityDTO.setPhoneNumber(admFacilityList.get(0).getAdmFacilityContacts());
-			facilityDTO.setZipCode(admFacilityList.get(0).getPostcode());
-			//facilityDTO.setTemplateId(String.valueOf(admFacilityList.get(0).getTemplateId()));
+		if (null != admFacilityList && admFacilityList.size() > 0) {
+			admFacility = admFacilityList.get(0);
+		}
+		if (null != admFacility) {
+			facilityDTO.setFacilityId(admFacility.getFacilityId());
+			facilityDTO.setFacilityName(admFacility.getName());
+			facilityDTO.setFacilityType(admFacility.getFacilityType());
+			facilityDTO.setFacilityCity(admFacility.getCity());
+			facilityDTO.setFacilityCountry(admFacility.getCountry());
+			facilityDTO.setFacilityState(admFacility.getState());
+			facilityDTO.setFacilityStreet(admFacility.getStreet());
+			if (null != admFacility.getAdmFacilityContacts()
+					&& admFacility.getAdmFacilityContacts().size() > 0) {
+				facilityDTO.setPhoneNumber(admFacility.getAdmFacilityContacts()
+						.get(0).getPhone());
+			}
+			facilityDTO.setZipCode(admFacility.getPostcode());
+			facilityDTO.setTemplateId(String.valueOf(admFacility
+					.getTemplateId()));
 		}
 
 		return facilityDTO;
@@ -151,9 +159,10 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 
 		AdmFacilityContact admFacilityContactP = facilityP
 				.getAdmFacilityContacts().get(0);
+		hibernateTemplateCareers.saveOrUpdate(facility);
 
 		// saving the data in adm_facility_contact as per the logged in User
-		List<AdmFacilityContact> admFacilityContactList = new ArrayList<AdmFacilityContact>();
+		
 		Date currentDate = new Date();
 		if (null != admFacilityContactP) {
 
@@ -177,25 +186,12 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityContact.setCreateDt(currentDate);
 			admFacilityContact.setEmail(admFacilityContactP.getEmail());
 			admFacilityContact.setActive(admFacilityContactP.getActive());
-			admFacilityContact.setCreateDt(currentDate);
 			admFacilityContact.setAdmFacility(facility);
-			admFacilityContactList.add(admFacilityContact);
+			hibernateTemplateCareers.saveOrUpdate(admFacilityContact);
+
 
 		}
-
-		facility.setAdmFacilityContacts(admFacilityContactList);
-		hibernateTemplateCareers.saveOrUpdate(facility);
-
-		// Saving data in Adm facility Pacakage (Template)
-
-		/*
-		 * AdmFacilityPackage admFacilityPackage = new AdmFacilityPackage();
-		 * admFacilityPackage.setFacilityId(facility.getFacilityId());
-		 * admFacilityPackage
-		 * .setTemplateId(Integer.valueOf(manageFacilityDTO.getTemplateId()));
-		 * admFacilityPackage.setStartDate(currentDate);
-		 * hibernateTemplateCareers.saveOrUpdate(admFacilityPackage);
-		 */
+		
 	}
 
 	@Override
