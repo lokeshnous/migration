@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -32,8 +33,8 @@ import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 @Service("employerNewsFeedService")
 public class EmployerNewsFeedServiceImpl implements EmployerNewsFeedService {
 
-	/*private static final Logger LOGGER = Logger
-			.getLogger(EmployerNewsFeedServiceImpl.class);*/
+	private static final Logger LOGGER = Logger
+			.getLogger(EmployerNewsFeedServiceImpl.class);
 	
 	private static final String ITEM_STRING = "item";
 	private static final String TITLE_STRING = "title";
@@ -74,16 +75,16 @@ public class EmployerNewsFeedServiceImpl implements EmployerNewsFeedService {
 				Node nNode = nList.item(val);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-					if(Integer.parseInt(getTagValue(FACILITY_STRING, eElement)) != 0){
-						NewsDTO newsDTOForPlatinum = new NewsDTO();
-						newsDTOForPlatinum.setTitle(getTagValue(TITLE_STRING, eElement));
-						newsDTOForPlatinum.setLink(getTagValue(LINK_STRING, eElement));
-						newsDTOListForPlatinum.add(newsDTOForPlatinum);
-					}else{
+					if(Integer.parseInt(getTagValue(FACILITY_STRING, eElement)) == 0){
 						NewsDTO newsDTOForHomePage = new NewsDTO();
 						newsDTOForHomePage.setTitle(getTagValue(TITLE_STRING, eElement));
 						newsDTOForHomePage.setLink(getTagValue(LINK_STRING, eElement));
 						newsDTOListForHomePage.add(newsDTOForHomePage);
+					}else{
+						NewsDTO newsDTOForPlatinum = new NewsDTO();
+						newsDTOForPlatinum.setTitle(getTagValue(TITLE_STRING, eElement));
+						newsDTOForPlatinum.setLink(getTagValue(LINK_STRING, eElement));
+						newsDTOListForPlatinum.add(newsDTOForPlatinum);
 					}
 				}
 			}
@@ -92,7 +93,7 @@ public class EmployerNewsFeedServiceImpl implements EmployerNewsFeedService {
 			newsMap.put(HOMEPAGE_LIST, newsDTOListForHomePage);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.info("Error occurred while parsing the XML."+e);
 		}
 		
 		
