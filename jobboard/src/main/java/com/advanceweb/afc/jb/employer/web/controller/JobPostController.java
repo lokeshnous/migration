@@ -872,12 +872,4 @@ public class JobPostController {
 	}
 	
 	
-	public void getNSCustomerDetails(HttpSession session){
-		
-		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility((Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
-	}	
-	
 }
