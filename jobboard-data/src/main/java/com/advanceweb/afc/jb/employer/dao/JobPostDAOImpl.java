@@ -126,9 +126,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 		try {
 			JpLocation location = null;
 			// Retrieving location Id based on the data selection while posting
-			// the new job			
-			if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
-					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId())){
+			// the new job		
+			
+			if(!(dto.getJobId()>0) &&(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
+					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId()))){
 				return false;
 			}				
 			

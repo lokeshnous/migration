@@ -433,7 +433,7 @@ public class JobPostForm {
 		this.autoRenewVal = autoRenewVal;
 	}*/
 
-	public boolean isActiveInactive() {
+	public boolean getActiveInactive() {
 		return activeInactive;
 	}
 
