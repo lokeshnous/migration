@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -83,25 +84,29 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 	 * @return
 	 */
 	public LoginDTO getUserEmailDetails(String email) {
-		LoginDTO userDetailsLoginFormDTO = new LoginDTO();
+		LoginDTO userDetailsDTO = new LoginDTO();
 
 		List<MerUser> listMerUser = hibernateTemplateTracker
 				.find("from MerUser where email = '" + email + "'");
 
 		if (!(listMerUser.isEmpty()) && !listMerUser.isEmpty()) {
 			MerUser merUserNew = listMerUser.get(0);
-			userDetailsLoginFormDTO.setEmailAddress(merUserNew.getEmail());
-			userDetailsLoginFormDTO.setPassword(merUserNew.getPassword());
-			userDetailsLoginFormDTO.setUserID(merUserNew.getUserId());
+			userDetailsDTO.setEmailAddress(merUserNew.getEmail());
+			userDetailsDTO.setPassword(merUserNew.getPassword());
+			userDetailsDTO.setUserID(merUserNew.getUserId());
 		}
 
-		if (userDetailsLoginFormDTO.getUserID() != 0) {
+		if (userDetailsDTO.getUserID() != 0) {
 			AdmUserFacility facility = (AdmUserFacility) hibernateTemplate
 					.find("from AdmUserFacility e where e.id.userId = "
-							+ userDetailsLoginFormDTO.getUserID()).get(0);
-			userDetailsLoginFormDTO
-					.setRoleId(facility.getAdmRole().getRoleId());
+							+ userDetailsDTO.getUserID()).get(0);
+
+			AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
+					"from AdmFacility a where a.facilityId=?",
+					facility.getAdmFacility().getFacilityId()).get(0);
+			userDetailsDTO.setRoleId(facility.getAdmRole().getRoleId());
+			userDetailsDTO.setFacilityType(admFacility.getFacilityType());
 		}
-		return userDetailsLoginFormDTO;
+		return userDetailsDTO;
 	}
 }

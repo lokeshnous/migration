@@ -13,6 +13,7 @@ public class LoginDTO {
 	private String password;
 	private int userID;
 	private int roleId;
+	private String facilityType;
 
 	/**
 	 * @return the emailAddress
@@ -70,6 +71,20 @@ public class LoginDTO {
 	 */
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
+	}
+
+	/**
+	 * @return the facilityType
+	 */
+	public String getFacilityType() {
+		return facilityType;
+	}
+
+	/**
+	 * @param facilityType the facilityType to set
+	 */
+	public void setFacilityType(String facilityType) {
+		this.facilityType = facilityType;
 	}
 
 }
