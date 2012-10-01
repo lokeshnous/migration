@@ -11,12 +11,27 @@
 
 <jsp:include page="common/include.jsp" />
 
-		<!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="javascripts/slider.js"></script>
-		<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
-		<script type="text/javascript">
+<!-- JAVASCRIPT FILES -->
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
+<script type="text/javascript" src="javascripts/slider.js"></script>
+<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+<script type="text/javascript">
+function validateNumber(event) {
+    var keyval = window.event ? event.keyCode : event.which;
+
+    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 46
+     || event.keyCode == 37 || event.keyCode == 39) {
+        return true;
+    }
+    else if ( keyval < 48 || keyval > 57 ) {
+        return false;
+    }
+    else return true;
+};
+</script>
+<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	$("#cancelAddFacility").displaypopup("#cancelAddFacility","770","360");
 		    	$("#saveNewFacility").click(function() {
@@ -51,30 +66,31 @@
 					}				
 
 					});
+		    	$('[id^=zipCodeITId]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>
-		</head>
+</head>
 
 <body class="job_board">
 	<form:form commandName="manageFacilityForm" id="addFacility">
-	<form:hidden path="facilityId"/>
+		<form:hidden path="facilityId" />
 		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
 			<div class="popupHeader">
 				<h2>ADD FACILITY</h2>
 				<a href="#"><img src="../resources/images/Close.png" width="19"
 					height="19" alt=""></a>
-			</div>			
+			</div>
 			<div class="popUpContainerWrapper">
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4"><h3 class=" color1">FACILITY
 							DETAILS</h3></span>
 				</div>
-				
+
 				<div class="popUpContainerWrapper">
-				<div id="facilityErrorMsg" class="validationMsg"></div>
+					<div id="facilityErrorMsg" class="validationMsg"></div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Facility Name:</span>
 						<form:input path="facilityName"
@@ -106,8 +122,8 @@
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Zip Code:</span>
-						<form:input path="zipCode" maxlength="5" class="job_seeker_password"
-							id="zipCodeITId" />
+						<form:input  path="zipCode" maxlength="5"
+							class="job_seeker_password" id="zipCodeITId" />
 						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
