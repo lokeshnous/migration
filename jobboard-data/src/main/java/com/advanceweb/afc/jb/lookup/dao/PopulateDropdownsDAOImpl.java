@@ -558,7 +558,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			}
 			return jbPostings;
 		} catch (Exception e) {
-			e.printStackTrace();
 			LOGGER.error(e);
 		}
 		return null;
@@ -631,36 +630,46 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public List<DropDownDTO> populateCompanyNames(int facilityId, int facilityParentId) {
 		List<DropDownDTO> companyNames = new ArrayList<DropDownDTO>();
 		try {
-			if(MMJBCommonConstants.ZERO_INT == facilityParentId)
-			{
+			if (MMJBCommonConstants.ZERO_INT == facilityParentId) {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
 						"from  AdmFacility fac WHERE fac.facilityParentId=?",
 						facilityId);
 
-				if(listAdmFacility.isEmpty() || null == listAdmFacility)
-				{
+				if (null == listAdmFacility || listAdmFacility.isEmpty()) {
 					listAdmFacility = hibernateTemplate.find(
 							"from  AdmFacility fac WHERE fac.facilityId=?",
 							facilityId);
+
 				}
-					for (AdmFacility facility : listAdmFacility) {
+				for (AdmFacility facility : listAdmFacility) {
+					// Do not display job owners
+					Object[] inputs = { facility.getFacilityId(), 5, 6 };
+					List<AdmUserFacility> admUsersList = hibernateTemplate
+							.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
+									inputs);
+					if (null == admUsersList || admUsersList.isEmpty()) {
 						DropDownDTO dto = new DropDownDTO();
 						dto.setOptionId(String.valueOf(facility.getFacilityId()));
 						dto.setOptionName(facility.getName());
 						companyNames.add(dto);
 					}
-				
-				
-			}
-			else{
+				}
+			} else {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
 						"from  AdmFacility fac WHERE fac.facilityParentId=?",
 						facilityParentId);
 				for (AdmFacility facility : listAdmFacility) {
-					DropDownDTO dto = new DropDownDTO();
-					dto.setOptionId(String.valueOf(facility.getFacilityId()));
-					dto.setOptionName(facility.getName());
-					companyNames.add(dto);
+					// Do not display job owners
+					Object[] inputs = { facility.getFacilityId(), 5, 6 };
+					List<AdmUserFacility> admUsersList = hibernateTemplate
+							.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
+									inputs);
+					if (null == admUsersList || admUsersList.isEmpty()) {
+						DropDownDTO dto = new DropDownDTO();
+						dto.setOptionId(String.valueOf(facility.getFacilityId()));
+						dto.setOptionName(facility.getName());
+						companyNames.add(dto);
+					}
 				}
 			}
 		} catch (DataAccessException e) {
