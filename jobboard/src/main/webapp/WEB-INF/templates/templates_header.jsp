@@ -77,7 +77,7 @@ html.busy, html.busy * {
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html">${msg.commonDashboard}</a>
 								<c:if test="<%=session.getAttribute(\"agencyUserId\")!=null%>"> 
-								<a href="<%=request.getContextPath()%>/agency/impersonateEmployerToAgency.html">Agency Dashboard</a></c:if></span>
+								<a href="<%=request.getContextPath()%>/agency/impersonateFacilityToAgency.html">Agency Dashboard</a></c:if></span>
 						</div>
 					</div>
 					<!-- loginHeader -->
