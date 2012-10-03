@@ -64,7 +64,15 @@ public class FacilityDTO {
 
 	private int nsCustomerID;
 	private int roleId;
-	
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	public int getRoleId() {
 		return roleId;
