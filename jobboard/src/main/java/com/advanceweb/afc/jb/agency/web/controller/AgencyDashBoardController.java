@@ -38,14 +38,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.jb.agency.service.ImpersonateAgencyService;
+import com.advanceweb.afc.jb.agency.service.AgencyService;
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
@@ -62,15 +64,15 @@ import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.web.controller.EmployeeAccountForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileAttribForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationForm;
+import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistration;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-
-//import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
  * 
@@ -90,12 +92,11 @@ public class AgencyDashBoardController {
 	private EmloyerRegistartionService empRegService;
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
-	
 	@Autowired
 	private FacilityService facilityService;
 
 	@Autowired
-	private ImpersonateAgencyService impersonateAgencyService;
+	private AgencyService agencyService;
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
 	@Autowired
@@ -147,23 +148,28 @@ public class AgencyDashBoardController {
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int agencyUserId = (Integer) session.getAttribute("userId");
 		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
 		Set<String> stateList = new HashSet<String>();
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		List<FacilityDTO> assocEmplyrsNames = impersonateAgencyService
-				.getAssocEmployerNames(agencyUserId, facilityId);
-		for (FacilityDTO assocEmplyr : assocEmplyrsNames) {
-			String state = assocEmplyr.getState();
-			if (stateList.add(state)) {
-				List<FacilityDTO> emplyrs = new ArrayList<FacilityDTO>();
-				emplyrs.add(assocEmplyr);
-				emplyrsByState.put(state, emplyrs);
-			} else {
-				emplyrsByState.get(state).add(assocEmplyr);
+		List<FacilityDTO> assocEmplyrsNames;
+		try {
+			assocEmplyrsNames = agencyService
+					.getLinkedFacilityNames(facilityId);
+			for (FacilityDTO assocEmplyr : assocEmplyrsNames) {
+				String state = assocEmplyr.getState();
+				if (stateList.add(state)) {
+					List<FacilityDTO> emplyrs = new ArrayList<FacilityDTO>();
+					emplyrs.add(assocEmplyr);
+					emplyrsByState.put(state, emplyrs);
+				} else {
+					emplyrsByState.get(state).add(assocEmplyr);
+				}
 			}
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while getting the linked facilities related to the corresponding agency");
 		}
+
 		model.addObject("emplyrsByState", emplyrsByState);
 		model.setViewName("agencyDashboard");
 		return model;
@@ -474,8 +480,8 @@ public class AgencyDashBoardController {
 		return matcher.matches();
 	}
 
-	@RequestMapping(value = "/addEmployer", method = RequestMethod.GET)
-	public ModelAndView addEmployer(HttpSession session) {
+	@RequestMapping(value = "/getAddFacilityPopup", method = RequestMethod.GET)
+	public ModelAndView getAddFacilityPopup(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
 
@@ -489,8 +495,9 @@ public class AgencyDashBoardController {
 		return model;
 	}
 
-	@RequestMapping(value = "/editEmployer", method = RequestMethod.GET)
-	public ModelAndView editEmployer(@RequestParam("facilityId") int facilityId) {
+	@RequestMapping(value = "/viewFacilityDetails", method = RequestMethod.GET)
+	public ModelAndView getFacilityDetailsPopup(
+			@RequestParam("facilityId") int facilityId) {
 		ModelAndView model = new ModelAndView();
 		try {
 			EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
@@ -499,76 +506,72 @@ public class AgencyDashBoardController {
 			List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 					.transformDTOToProfileAttribForm(registerDTO, null);
 			empRegisterForm.setListProfAttribForms(listProfAttribForms);
-
-			Map<String, Object> profAttribFormsMap = impersonateAgencyService
-					.getEmployerDetails(facilityId);
+			FacilityDTO facilityDTO = agencyService
+					.getLinkedFacilityDetails(facilityId);
 			model.setViewName("agencyEditEmployer");
-			if (profAttribFormsMap != null && !profAttribFormsMap.isEmpty()) {
-				empRegisterForm
-						.setFirstName(profAttribFormsMap.get("name") != null ? profAttribFormsMap
-								.get("name").toString() : "");
-				empRegisterForm
-						.setStreet(profAttribFormsMap.get("street") != null ? profAttribFormsMap
-								.get("street").toString() : "");
-				empRegisterForm
-						.setPrimaryPhone(profAttribFormsMap.get("phone") != null ? profAttribFormsMap
-								.get("phone").toString() : "");
+			if (facilityDTO != null) {
+				empRegisterForm.setFirstName(facilityDTO.getName());
+				empRegisterForm.setStreet(facilityDTO.getStreet());
+				empRegisterForm.setPrimaryPhone(facilityDTO.getPhone());
 
-				empRegisterForm
-						.setZipCode(profAttribFormsMap.get("postcode") != null ? profAttribFormsMap
-								.get("postcode").toString() : "");
-				empRegisterForm
-						.setState(profAttribFormsMap.get("state") != null ? profAttribFormsMap
-								.get("state").toString() : "");
+				empRegisterForm.setZipCode(facilityDTO.getPostcode());
+				empRegisterForm.setState(facilityDTO.getState());
 
-				empRegisterForm
-						.setCountry(profAttribFormsMap.get("country") != null ? profAttribFormsMap
-								.get("country").toString() : "");
-				empRegisterForm
-						.setCity(profAttribFormsMap.get("city") != null ? profAttribFormsMap
-								.get("city").toString() : "");
-				empRegisterForm.setFacilityId((Integer) profAttribFormsMap
-						.get("facilityId"));
+				empRegisterForm.setCountry(facilityDTO.getCountry());
+				empRegisterForm.setCity(facilityDTO.getCity());
+				empRegisterForm.setFacilityId(facilityDTO.getFacilityId());
 			}
-			model.addObject("listProfAttribForms", profAttribFormsMap);
+			model.addObject("listProfAttribForms", facilityDTO);
 			model.addObject("empRegisterForm", empRegisterForm);
 
-		} catch (Exception e) {
-			LOGGER.info("Error is occured in controllr");
-			LOGGER.error("ERROR" + e);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while getting the linked facility" + e);
 		}
 
 		return model;
 	}
 
-	@RequestMapping(value = "/getEmployerNamesList", method = RequestMethod.GET, headers = "Accept=*/*")
+	@RequestMapping(value = "/getFacilityNamesList", method = RequestMethod.GET, headers = "Accept=*/*")
 	public @ResponseBody
-	JSONObject getEmployerNamesList(@RequestParam("term") String name) {
-		List<FacilityDTO> dtoList = impersonateAgencyService
-				.getEmployerNamesList(name);
-		JSONArray jsonRows = new JSONArray();
-		JSONObject jsonObj2 = new JSONObject();
-		for (FacilityDTO dto : dtoList) {
-			JSONObject jsonObj = new JSONObject();
-			jsonObj.put("value", dto.getName());
-			jsonObj.put("ID", dto.getFacilityId());
-			jsonObj.put("NAME", dto.getName());
-			jsonRows.add(jsonObj);
+	JSONObject getFacilityNamesList(@RequestParam("term") String name) {
+		List<FacilityDTO> dtoList;
+		JSONObject jsonObject = new JSONObject();
+		try {
+			dtoList = agencyService.getFacilityNames(name);
+			JSONArray jsonRows = new JSONArray();
+			for (FacilityDTO dto : dtoList) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("value", dto.getName());
+				jsonObj.put("ID", dto.getFacilityId());
+				jsonObj.put("NAME", dto.getName());
+				jsonRows.add(jsonObj);
+			}
+			jsonObject.put("EmpList", jsonRows);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while getting the Facility List Details based on the Facility Name"
+					+ e);
 		}
-		jsonObj2.put("EmpList", jsonRows);
-		return jsonObj2;
+
+		return jsonObject;
 	}
 
-	@RequestMapping(value = "/getEmployerDetails")
+	@RequestMapping(value = "/getSelectedFacility")
 	@ResponseBody
-	public Map<String, Object> getEmployerDetails(
+	public FacilityDTO getSelectedFacility(
 			@RequestParam("facilityId") int facilityId) {
-		return impersonateAgencyService.getEmployerDetails(facilityId);
+		FacilityDTO facilityDTO = null;
+		try {
+			facilityDTO = agencyService.getLinkedFacilityDetails(facilityId);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while getting the Facility Details based on the facilityId"
+					+ e);
+		}
+		return facilityDTO;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/addEmployerDetails", method = RequestMethod.POST)
-	public String addEmployerDetails(
+	@RequestMapping(value = "/linkSelectedFacility", method = RequestMethod.POST)
+	public String linkSelectedFacility(
 			EmployerRegistrationForm employerRegistrationForm,
 			BindingResult result, HttpSession session) {
 		try {
@@ -577,8 +580,6 @@ public class AgencyDashBoardController {
 			if (StringUtils.isEmpty(dto.getFirstName())) {
 				return requiredField;
 			}
-			int agencyUserId = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			String email = (String) session
@@ -591,65 +592,65 @@ public class AgencyDashBoardController {
 			if (facility.getFacilityParentId() != 0) {
 				return employerLinked;
 			}
-			int nsCustomerID = impersonateAgencyService
-					.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
-			UserDTO userDTO = impersonateAgencyService
-					.getNSCustomerDetails(nsCustomerID);
+			FacilityDTO facilityDTO = facilityService
+					.getFacilityByFacilityId(dto.getFacilityId());
+			UserDTO userDTO = agencyService.getNSCustomerDetails(facilityDTO
+					.getNsCustomerID());
 			List<String> emailList = userDTO.getEmailList();
 			if (emailList != null && emailList.contains(email)) {
-				impersonateAgencyService.addEmployer(dto, facilityId,
-						agencyUserId);
+				agencyService.linkFacility(dto, facilityId);
 			} else {
 				return employerAddValidation;
 			}
-		} catch (Exception e) {
-
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while linking the selected facility to the corresponding agency"
+					+ e);
 			return "Error while saving the record";
 		}
 		return "";
 	}
 
-	@RequestMapping(value = "/manageEmployers", method = RequestMethod.GET)
-	public ModelAndView manageEmployers(HttpSession session) {
+	@RequestMapping(value = "/getManageFacilityPopup", method = RequestMethod.GET)
+	public ModelAndView getManageFacilityPopup(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		try {
-
-			int agencyUserId = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			List<FacilityDTO> assocEmplyrsNames = impersonateAgencyService
-					.getAssocEmployerNames(agencyUserId, facilityId);
+			List<FacilityDTO> assocEmplyrsNames = agencyService
+					.getLinkedFacilityNames(facilityId);
 
 			model.addObject("assocEmplyrsNames", assocEmplyrsNames);
 			model.setViewName("agencyManageEmployers");
-		} catch (Exception e) {
-			LOGGER.info("Error is occured in controllr");
-			LOGGER.error("ERROR" + e);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while fetching the all linked facility to the corresponding agency"
+					+ e);
 		}
 
 		return model;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteAssocEmployer", method = RequestMethod.POST)
-	public JSONObject deleteAssocEmployer(
-			@RequestParam("facilityId") String facilityId, HttpSession session) {
-		int userId = (Integer) session.getAttribute("userId");
-		boolean deleteStatus = impersonateAgencyService.deleteAssocEmployer(
-				facilityId, userId);
+	@RequestMapping(value = "/deleteAssocFacility", method = RequestMethod.POST)
+	public JSONObject deleteAssocFacility(
+			@RequestParam("facilityId") int facilityId, HttpSession session) {
+		boolean deleteStatus;
 		JSONObject deleteStatusJson = new JSONObject();
-		if (deleteStatus) {
-			deleteStatusJson.put("success", "Deleted");
-			return deleteStatusJson;
-		} else {
-			deleteStatusJson.put("failed", "Failed");
-			return deleteStatusJson;
+		deleteStatusJson.put("failed", "Failed");
+
+		try {
+			deleteStatus = agencyService.deleteAssocEmployer(facilityId);
+			if (deleteStatus) {
+				deleteStatusJson.put("success", "Deleted");
+				return deleteStatusJson;
+			}
+		} catch (JobBoardServiceException e) {
+			LOGGER.debug("Error while unlinking the facility from the Agency");
 		}
+		return deleteStatusJson;
 	}
 
-	@RequestMapping(value = "/impersonateAgencyToEmployer", method = RequestMethod.GET)
-	public ModelAndView impersonateAgencyToEmployer(
+	@RequestMapping(value = "/impersonateAgencyToFacility", method = RequestMethod.GET)
+	public ModelAndView impersonateAgencyToFacility(
 			@RequestParam("facilityId") int facilityId, HttpSession session,
 			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
@@ -664,14 +665,15 @@ public class AgencyDashBoardController {
 		FacilityDTO facilityDto = facilityService
 				.getFacilityByFacilityId((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		session.setAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS,
+				MMJBCommonConstants.FACILITY_FULL_ACCESS);
 		if ((facilityDto.getRoleId() == 6)) {
-			session.setAttribute("postEdit", "postEdit");
+			session.setAttribute(MMJBCommonConstants.FACILITY_POST_EDIT,
+					MMJBCommonConstants.FACILITY_POST_EDIT);
+			session.removeAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS);
 		}
-		if ((facilityDto.getRoleId() == 5)) {
-			session.setAttribute("fullAcess", "fullAcess");
-		}
-		int userId = impersonateAgencyService.getfacility(facilityId);
-		UserDTO userDTO = impersonateAgencyService.getUserByUserId(userId);
+		int userId = agencyService.getfacility(facilityId);
+		UserDTO userDTO = agencyService.getUserByUserId(userId);
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
 				userDTO.getFirstName() + " " + userDTO.getLastName());
@@ -691,8 +693,8 @@ public class AgencyDashBoardController {
 		return model;
 	}
 
-	@RequestMapping(value = "/impersonateEmployerToAgency", method = RequestMethod.GET)
-	public ModelAndView impersonateEmployerToAgency(HttpSession session,
+	@RequestMapping(value = "/impersonateFacilityToAgency", method = RequestMethod.GET)
+	public ModelAndView impersonateFacilityToAgency(HttpSession session,
 			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		session.setAttribute(MMJBCommonConstants.USER_ID,
@@ -703,11 +705,10 @@ public class AgencyDashBoardController {
 				session.getAttribute(MMJBCommonConstants.AGENCY_USER_NAME));
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL,
 				session.getAttribute(MMJBCommonConstants.AGENCY_EMAIL));
-		session.removeAttribute("postEdit");
-		session.removeAttribute("fullAcess");
-		UserDTO userDTO = impersonateAgencyService
-				.getUserByUserId((Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID));
+		session.removeAttribute(MMJBCommonConstants.FACILITY_POST_EDIT);
+		session.removeAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS);
+		UserDTO userDTO = agencyService.getUserByUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
 		model.setViewName("redirect:/agency/agencyDashboard.html");
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(
@@ -721,19 +722,83 @@ public class AgencyDashBoardController {
 		return model;
 	}
 
-	@RequestMapping(value = "/showEmployerMetrics", method = RequestMethod.GET)
-	public ModelAndView showEmployerMetrics(
-			@RequestParam("facilityId") int facilityId, HttpSession session,
-			HttpServletRequest request) {
+	/**
+	 * This method is used to display the metrics details for selected employer
+	 * in the drop down
+	 * 
+	 * @param employerDashBoardForm
+	 * @param result
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/showFacilityMetrics", method = RequestMethod.GET)
+	public @ResponseBody
+	ModelAndView showFacilityMetrics(
+			@ModelAttribute("metricsForm") MetricsForm metricsForm,
+			BindingResult result, HttpSession session,
+			@RequestParam("facilityId") int facilityId) {
 		ModelAndView model = new ModelAndView();
+		session.removeAttribute("jbPostTotalList");
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
+		FacilityDTO employerDetails = facilityService
+				.getFacilityByFacilityId(facilityId);
+		try {
+			downDTOs = facilityService.getFacilityGroup(facilityId);
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occurred while getting data for metrics" + e);
+		}
+		// getting the metrics details
+		jbPostTotalList = getMetricsDetails(facilityId);
+		model.addObject("downDTOs", downDTOs);
+		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		model.addObject("employerDetails", employerDetails);
+		model.setViewName("employersMetricsPopup");
+		return model;
+	}
+
+	@RequestMapping(value = "/viewFacilityMetrics", method = RequestMethod.GET)
+	public @ResponseBody
+	void showMetrics(@ModelAttribute("metricsForm") MetricsForm metricsForm,
+			BindingResult result, HttpSession session,
+			@RequestParam("facilityId") int facilityId) {
+		session.removeAttribute("jbPostTotalList");
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		// getting the metrics details
+		jbPostTotalList = getMetricsDetails(facilityId);
+		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		return;
+	}
+
+	/**
+	 * Get the metric details page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/metricsDetails")
+	public ModelAndView getMetricsDetails(HttpServletResponse response,
+			HttpServletRequest request, Model model) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("metricsDetails");
+		return modelAndView;
+	}
+
+	/**
+	 * This method is to get the metrics details for facility
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	private List<MetricsDTO> getMetricsDetails(int facilityId) {
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		MetricsDTO metricsDTO = new MetricsDTO();
-
 		// Get the job post details of logged in employer
 		List<MetricsDTO> metricsDTOs = facilityService
 				.getJobPostTotal(facilityId);
-		FacilityDTO employerDetails = facilityService
-				.getFacilityByFacilityId(facilityId);
+
 		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
 				.populateDropdown("Metrics");
@@ -795,11 +860,58 @@ public class AgencyDashBoardController {
 		metricsDTO.setApplies(swAvgApplies);
 		jbPostTotalList.add(2, metricsDTO);
 
-		model.addObject("jbPostTotalList", jbPostTotalList);
-		model.addObject("employerDetails", employerDetails);
-		model.setViewName("employersMetricsPopup");
-		return model;
+		return jbPostTotalList;
 	}
+
+	/*
+	 * @RequestMapping(value = "/showEmployerMetrics", method =
+	 * RequestMethod.GET) public ModelAndView showEmployerMetrics(
+	 * 
+	 * @RequestParam("facilityId") int facilityId, HttpSession session,
+	 * HttpServletRequest request) { ModelAndView model = new ModelAndView();
+	 * List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+	 * MetricsDTO metricsDTO = new MetricsDTO();
+	 * 
+	 * // Get the job post details of logged in employer List<MetricsDTO>
+	 * metricsDTOs = loginService.getJobPostTotal(facilityId); FacilityDTO
+	 * employerDetails = loginService .getFacilityByFacilityId(facilityId); //
+	 * Getting metrics values from look up table List<DropDownDTO> metricsList =
+	 * populateDropdownsService .populateDropdown("Metrics");
+	 * 
+	 * // jbPostTotalList will be having job post total details for metrics int
+	 * views = 0; int clicks = 0; int applies = 0; int size =
+	 * metricsDTOs.size(); for (int i = 0; i < metricsDTOs.size(); i++) {
+	 * MetricsDTO dto = new MetricsDTO(); dto = (MetricsDTO) metricsDTOs.get(i);
+	 * views = views + dto.getViews(); clicks = clicks + dto.getClicks();
+	 * applies = applies + dto.getApplies(); }
+	 * metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
+	 * metricsDTO.setViews(views); metricsDTO.setClicks(clicks);
+	 * metricsDTO.setApplies(applies); jbPostTotalList.add(0, metricsDTO);
+	 * metricsDTO = new MetricsDTO();
+	 * 
+	 * // Calculating average per job posting int avgViews = 0; int avgClicks =
+	 * 0; int avgApplies = 0; if (size > 0) { avgViews = views / size; avgClicks
+	 * = clicks / size; avgApplies = applies / size; }
+	 * metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+	 * metricsDTO.setViews(avgViews); metricsDTO.setClicks(avgClicks);
+	 * metricsDTO.setApplies(avgApplies); jbPostTotalList.add(1, metricsDTO);
+	 * metricsDTO = new MetricsDTO();
+	 * 
+	 * // Calculating site - wide average per job posting int swAvgViews = 0;
+	 * int swAvgClicks = 0; int swAvgApplies = 0; long count = 0; try { count =
+	 * loginService.getEmployerCount(); } catch (JobBoardException e) {
+	 * LOGGER.info("Error occured while getting the Result from Database"); }
+	 * 
+	 * if (count > 0) { swAvgViews = (int) (views / count); swAvgClicks = (int)
+	 * (clicks / count); swAvgApplies = (int) (applies / count); }
+	 * metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
+	 * metricsDTO.setViews(swAvgViews); metricsDTO.setClicks(swAvgClicks);
+	 * metricsDTO.setApplies(swAvgApplies); jbPostTotalList.add(2, metricsDTO);
+	 * 
+	 * model.addObject("jbPostTotalList", jbPostTotalList);
+	 * model.addObject("employerDetails", employerDetails);
+	 * model.setViewName("employersMetricsPopup"); return model; }
+	 */
 
 	@RequestMapping("/viewImage")
 	public void getImage(@RequestParam("path") String imagePath,
@@ -816,7 +928,7 @@ public class AgencyDashBoardController {
 			byte[] imageInByte = baos.toByteArray();
 			baos.close();
 
-			ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
+			ResponseEntity<byte[]> result = getResponseEntity(imageInByte);
 			// Display the image
 			writeToOutputStream(response, result.getBody());
 		} catch (Exception e) {
@@ -853,7 +965,7 @@ public class AgencyDashBoardController {
 		}
 	}
 
-	private ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
+	private ResponseEntity<byte[]> getResponseEntity(byte[] imageInByte) {
 		byte[] byteData = imageInByte;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.setContentType(MediaType.IMAGE_PNG);
