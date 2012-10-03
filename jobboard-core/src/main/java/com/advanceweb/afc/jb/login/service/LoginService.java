@@ -2,11 +2,7 @@ package com.advanceweb.afc.jb.login.service;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.EmployerInfoDTO;
-import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
