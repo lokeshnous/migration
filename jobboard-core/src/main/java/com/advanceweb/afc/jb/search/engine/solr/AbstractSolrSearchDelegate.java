@@ -195,16 +195,18 @@ public abstract class AbstractSolrSearchDelegate {
 
 		/** Iterating Search parameter List and forming the SOLR query. **/
 		for (SearchParamDTO mSrchParamDTO : srchReplacedParamDTOList) {
-			searchquery.setParam(mSrchParamDTO.getParameterName(),
+			/*searchquery.setParam(mSrchParamDTO.getParameterName(),
+					mSrchParamDTO.getParameterValue());*/
+			searchquery.add(mSrchParamDTO.getParameterName(),
 					mSrchParamDTO.getParameterValue());
 		}
 
 		/** Adding the facets to SOLR query */
-		searchquery.addFacetField(SearchFacetDTO.FACET_CITY);
+		/*searchquery.addFacetField(SearchFacetDTO.FACET_CITY);
 		searchquery.addFacetField(SearchFacetDTO.FACET_COMPANY);
 		// searchquery.addFacetField(MMJBCommonConstants.RADIUS);
 		searchquery.addFacetField(SearchFacetDTO.FACET_POSTED_DATE);
-		searchquery.addFacetField(SearchFacetDTO.FACET_STATE);
+		searchquery.addFacetField(SearchFacetDTO.FACET_STATE);*/
 
 		LOGGER.info("Search query: " + searchquery);
 		return searchquery;
@@ -239,13 +241,18 @@ public abstract class AbstractSolrSearchDelegate {
 
 		// Creating Lists of Facets(List<String>) by iterating the
 		// FacetFieldList
+		
 		for (FacetField facetField : facetFieldList) {
 			List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
-			for (Count countObj : facetField.getValues()) {
-				searchFacetDTOList.add(new SearchFacetDTO(countObj.getName(),
-						countObj.getCount()));
+			if(facetField.getValues() == null){
+				LOGGER.info(facetField.getName()+" facet not found.");
+			}else{
+				for (Count countObj : facetField.getValues()) {
+					searchFacetDTOList.add(new SearchFacetDTO(countObj.getName(),
+							countObj.getCount()));
+				}
+				facetMap.put(facetField.getName(), searchFacetDTOList);
 			}
-			facetMap.put(facetField.getName(), searchFacetDTOList);
 		}
 		resultDTO.setFacetMap(facetMap);
 

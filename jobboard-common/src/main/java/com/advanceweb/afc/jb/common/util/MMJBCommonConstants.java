@@ -110,8 +110,17 @@ public interface MMJBCommonConstants {
 	String SELECT = "select";
 
 	// Search type Names
-	String LOCATION_SEARCH = "LOCATION";
-	String KEYWORD_SEARCH = "KEYWORD";
+	String LOCATION_SEARCH = "LOCATION-FILTER-JB2";
+	String KEYWORD_SEARCH = "KEYWORD-FILTER-JB2";
+	
+	// Solr param
+	String SORT_PARAM = "sortParam";
+	String FIRST_FQ_PARAM  = "firstFQParam";
+	String SECOND_FQ_PARAM = "secondFQParam";
+	String THIRD_FQ_PARAM = "thirdFQParam";
+	String FOURTH_FQ_PARAM = "fouthFQParam";
+	String POSTED_DT = "posted_dt";
+	
 
 	// Solr Date pattern
 	String JSON_DATE_FORMAT = "MMM-dd-yyyy";

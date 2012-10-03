@@ -17,10 +17,10 @@
 		<constructor-arg>
 			<map>
 				<!-- The values should be provided with no space between field names -->
-				<entry key="KEYWORD"
-					value="keywords,rows,start,sessionid,searchName,search_seq" />
-				<entry key="LOCATION"
-					value="position,radius,keywords,rows,start,sessionid,searchName,search_seq" />
+				<entry key="KEYWORD-FILTER-JB2"
+					value="keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam" />
+				<entry key="LOCATION-FILTER-JB2"
+					value="position,radius,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam" />
 			</map>
 		</constructor-arg>
 	</bean>

@@ -598,6 +598,12 @@ public class JobSearchController {
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
 		String searchName = MMJBCommonConstants.EMPTY;
+		// IMP:::This value should be taken from the UI while sorting
+		String sortByParam = MMJBCommonConstants.POSTED_DT;
+		String firstFQParam = "";
+		String secondFQParam = ""; 
+		String thirdFQParam = "";
+		String fouthFQParam = "";
 		
 		if(!validateJobSearch(jobSearchResultForm, jsonObject)){
 			return jsonObject;
@@ -625,8 +631,12 @@ public class JobSearchController {
 
 		// Putting all the parameters coming from the UI into a Map for further
 		// processing.
+		
+		
+		
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
-				sessionId, searchName, sessionMap);
+				sessionId, searchName, sessionMap, sortByParam, firstFQParam,
+				secondFQParam, thirdFQParam, fouthFQParam);
 
 		int page = 1;
 		int displayRecordsPerPage = 0;
@@ -1125,7 +1135,9 @@ public class JobSearchController {
 
 	private Map<String, String> getParameterMap(
 			JobSearchResultForm jobSearchResultForm, String sessionId,
-			String searchName, Map<String, String> sessionMap) {
+			String searchName, Map<String, String> sessionMap,
+			String sortByParam, String firstFQParam,
+			String secondFQParam, String thirdFQParam, String fouthFQParam) {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 
@@ -1140,6 +1152,13 @@ public class JobSearchController {
 		paramMap.put(SearchParamDTO.SEARCH_SEQ,
 				sessionMap.get(SearchParamDTO.SEARCH_SEQ));
 		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
+		
+		//For testing. Remove it while committing
+		paramMap.put(MMJBCommonConstants.SORT_PARAM, sortByParam);
+		paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM, firstFQParam);
+		paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
+		paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
+		paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
 
 		return paramMap;
 
