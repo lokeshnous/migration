@@ -6,12 +6,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.advanceweb.afc.jb.agency.dao.ImpersonateAgencyDAO;
+import com.advanceweb.afc.jb.agency.dao.AgencyDAO;
 import com.advanceweb.afc.jb.agency.service.AgencyDelegate;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
@@ -36,7 +37,7 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 	@Autowired
 	private NSCustomerService nsCustomerService;
 	@Autowired
-	private ImpersonateAgencyDAO impersonateAgencyDAO;
+	private AgencyDAO impersonateAgencyDAO;
 
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
@@ -146,14 +147,20 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 	 * @return int nsCustomerID
 	 */
 
-	public int getNSCustomerIDFromAdmFacility(int admFacilityID) {
+/*	public int getNSCustomerIDFromAdmFacility(int admFacilityID) {
 		int nsCustomerID = 0;
-		List<FacilityDTO> admFacilityDTOList = impersonateAgencyDAO
-				.getNSCustomerIDFromAdmFacility(admFacilityID);
-		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
+		FacilityDTO facilityDTO;
+		try {
+			facilityDTO = impersonateAgencyDAO
+					.getNSCustomerIDFromAdmFacility(admFacilityID);
+		} catch (JobBoardDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		nsCustomerID = facilityDTO.getNsCustomerID();
 		return nsCustomerID;
 	}
-
+*/
 	/**
 	 * This method is used to get the net suite customer details based on
 	 * customer id.
