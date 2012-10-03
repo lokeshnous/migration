@@ -11,14 +11,13 @@
 
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript" src="../resources/js/slider.js"></script>
-<link href="../resources/css/jquery-ui.css" rel="stylesheet"
-	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+<!-- commenting this because its creating problem in auto complete drop down of edit profile settings screen 
+<link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css"> -->
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.js"></script>
 <!-- <link rel="stylesheet" type="text/css"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /> -->
 	<script type="text/javascript">

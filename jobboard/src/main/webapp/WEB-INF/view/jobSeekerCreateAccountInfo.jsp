@@ -77,10 +77,10 @@ function validateNumber(event) {
 						}); 						
 					},
 					});
-				},
+				}
 			}); 
 
-			//Auto complete on selecting zipcode			
+			//Auto complete on selecting zipcode
 			$("#zipCode").autocomplete({
 				source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
 				select: function(event, ui) {
@@ -99,9 +99,20 @@ function validateNumber(event) {
 						complete : function(data) {
 						}
 					});		
-				}
+				}				
 			});	
 			
+			$("#zipCode").change(function(){
+				$('#cityAutoPopulation').val("");
+				$('#stateDpId').val("");
+				$('#countryDpId').val("");
+			});
+			
+			$("#cityAutoPopulation").change(function(){
+				$('#zipCode').val("");
+				$('#stateDpId').val("");
+				$('#countryDpId').val("");
+			});
 
 		});
 		</script>
@@ -136,7 +147,7 @@ function validateNumber(event) {
 							</div>
 						</c:if>
 						<form:form method="Post" action="saveJobSeekerProfile.html" commandName="registerForm" enctype="multipart/form-data">
-
+							<form:hidden path="clickBack"/>
 							<c:forEach items="${registerForm.listProfAttribForms}" var="profAttrib" varStatus="status">							
 		
 								<c:if test="${profAttrib.strLabelName == 'First Name'}">
@@ -346,7 +357,7 @@ function validateNumber(event) {
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
 								<input type="submit" value="Back" class="orange"
-									name="Back" /> <input type="submit" value="Finish"
+									name="Back" /> <input type="submit" id="finishId" value="Finish"
 									class="orange" name="Finish" />
 									<c:if test="${registerForm.bReadOnly == false}"> 
 										<input type="button" value="Cancel" onclick="cancelProcess();"

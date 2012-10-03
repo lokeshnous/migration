@@ -34,6 +34,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private boolean bReadOnly;
 	private List<JobSeekerProfileAttribForm> listProfAttribForms;
 	private String otherProfession;
+	private boolean clickBack;
 	
 	
 	
@@ -231,6 +232,14 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	public void setbReadOnly(boolean bReadOnly) {
 		this.bReadOnly = bReadOnly;
+	}
+
+	public boolean isClickBack() {
+		return clickBack;
+	}
+
+	public void setClickBack(boolean clickBack) {
+		this.clickBack = clickBack;
 	}	
 	
 }

@@ -226,17 +226,19 @@ public class JobSeekerRegistrationController {
 					return model;
 				}
 			}
-
-			JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration
-					.getProfileAttributes();
-			UserDTO userDTO = null;
-			if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
-				userDTO = (UserDTO) session
-						.getAttribute(MMJBCommonConstants.USER_DTO);
+			
+			if(!registerForm.isClickBack()){
+				JobSeekerRegistrationDTO registerDTO = (JobSeekerRegistrationDTO) profileRegistration
+						.getProfileAttributes();
+				UserDTO userDTO = null;
+				if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
+					userDTO = (UserDTO) session
+							.getAttribute(MMJBCommonConstants.USER_DTO);
+				}
+				List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
+						.transformDTOToProfileAttribForm(registerDTO, userDTO);
+				registerForm.setListProfAttribForms(listProfAttribForms);
 			}
-			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
-					.transformDTOToProfileAttribForm(registerDTO, userDTO);
-			registerForm.setListProfAttribForms(listProfAttribForms);
 			model.setViewName("jobSeekerCreateAccountInfo");
 			model.addObject("registerForm", registerForm);
 			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
@@ -390,10 +392,13 @@ public class JobSeekerRegistrationController {
 	 */
 	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Back")
 	public ModelAndView backToCreateJobSeekerCreateYrAcct(
-			@ModelAttribute("registerForm") @Valid JobSeekerRegistrationForm registerForm,
+			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
-		return new ModelAndView("jobSeekerCreateAccount", "registerForm",
-				registerForm);
+		ModelAndView model = new ModelAndView();
+		registerForm.setClickBack(true);
+		model.addObject("registerForm",registerForm);
+		model.setViewName("jobSeekerCreateAccount");
+		return model;
 	}
 
 	/**

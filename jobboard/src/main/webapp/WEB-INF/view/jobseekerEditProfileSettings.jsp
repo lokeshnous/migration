@@ -6,7 +6,19 @@
 <html lang="en">
 <head>
 <title>ADVANCE Heathcare Jobs</title>
-<jsp:include page="common/include.jsp" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- STYLESHEETS -->
+<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
+	type="text/css" />
+<link href="../resources/css/SliderStyles.css" rel="stylesheet"
+	type="text/css">
+<!-- <link rel="stylesheet" type="text/css" media="screen"
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+ -->
+ <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
+	type="text/css">
+
 <script type="text/javascript">
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
@@ -72,6 +84,69 @@ function validateNumber(event) {
 			});
 		}); 
  		$('[id^=zipCode]').keypress(validateNumber);
+ 		
+ 		//Auto complete on selecting city
+		$("#cityAutoPopulation").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getCityList.html',
+			width:500,
+			select: function(event, ui) {
+				$("#cityAutoPopulation").val(ui.item.value);				
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityAutoPopulation").val(),
+				success : function(data) {
+					$('#stateDpId').val(data);
+
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val(),
+					success : function(data) {
+						$('#zipCode').val(data);
+					},
+					});						
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
+						success : function(country) {
+							$('#countryDpId').val(country);
+						},
+					}); 						
+				},
+				});
+			}
+		}); 
+
+		//Auto complete on selecting zipcode			
+		$("#zipCode").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+			select: function(event, ui) {
+				$("#zipCode").val(ui.item.value);	
+				$('#cityAutoPopulation').val("");
+				$('#stateDpId').val("");
+				$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zipCode").val(),
+					success : function(data) {
+						$('#stateDpId').val(data.state);
+						$('#countryDpId').val(data.country);
+						$("#cityAutoPopulation").val(data.city);
+					},error : function(data) {
+						alert('Unable to process');
+					},
+					complete : function(data) {
+					}
+				});		
+			}
+		});	
+ 		
+		$("#zipCode").change(function(){
+			$('#cityAutoPopulation').val("");
+			$('#stateDpId').val("");
+			$('#countryDpId').val("");
+		});
+		
+		$("#cityAutoPopulation").change(function(){
+			$('#zipCode').val("");
+			$('#stateDpId').val("");
+			$('#countryDpId').val("");
+		});
+ 		
 		jQuery(".megamenu").megamenu();
 	});
 </script>
@@ -138,14 +213,14 @@ function validateNumber(event) {
 						<c:if test="${profAttrib.strLabelName == 'City'}">
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">City:</span>
-								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" id="cityAutoPopulation"/>
 								<span class="required">(Required)</span>
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'State / Province'}">
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">State:</span>
-									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3" id="stateDpId">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 											itemLabel="optionName" />
@@ -168,7 +243,7 @@ function validateNumber(event) {
 						<c:if test="${profAttrib.strLabelName == 'Country'}">
 							<div class="row">
 								<span class="lableTextSelect">Country:</span>
-									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3">
+									<form:select path="listProfAttribForms[${status.index}].strLabelValue" class="jb_input3 jb_input_width3" id="countryDpId">
 										<form:option value="0" label="Select" />
 										<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 											itemLabel="optionName" />
