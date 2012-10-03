@@ -23,8 +23,8 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
-import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 
 /**
@@ -41,7 +41,7 @@ public class EmployerDashBoardController {
 			.getLogger(EmployerDashBoardController.class);
 
 	@Autowired
-	private LoginService loginService;
+	private FacilityService facilityService;
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
@@ -58,7 +58,7 @@ public class EmployerDashBoardController {
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
-		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+		EmployerInfoDTO roleList = facilityService.facilityDetails(userId);
 		if (roleList.getRoleId() == Integer
 				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
 			enableAccess = "false";
@@ -75,7 +75,7 @@ public class EmployerDashBoardController {
 		// Get All facilities
 		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
 		try {
-			downDTOs = loginService.getFacilityGroup(facilityId);
+			downDTOs = facilityService.getFacilityGroup(facilityId);
 		} catch (JobBoardException e) {
 			LOGGER.info("Error occurred while getting data for metrics" + e);
 		}
@@ -111,7 +111,7 @@ public class EmployerDashBoardController {
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(selEmployerId);
 		session.setAttribute("jbPostTotalList", jbPostTotalList);
-		
+
 	}
 
 	/**
@@ -140,7 +140,8 @@ public class EmployerDashBoardController {
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		MetricsDTO metricsDTO = new MetricsDTO();
 		// Get the job post details of logged in employer
-		List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
+		List<MetricsDTO> metricsDTOs = facilityService
+				.getJobPostTotal(facilityId);
 
 		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
@@ -187,7 +188,7 @@ public class EmployerDashBoardController {
 		int swAvgApplies = 0;
 		long count = 0;
 		try {
-			count = loginService.getEmployerCount();
+			count = facilityService.getEmployerCount();
 		} catch (JobBoardException e) {
 			LOGGER.info("Error occured while getting the Result from Database");
 		}

@@ -25,10 +25,10 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.web.controller.UserAlertForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
-import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.UserAlertService;
 
@@ -50,13 +50,13 @@ public class UserAlertController {
 	private UserAlertService alertService;
 
 	@Autowired
+	private FacilityService facilityService;
+
+	@Autowired
 	private ManageAccessPermissionService permissionService;
 
 	@Autowired
 	private TransferUserAlert transferUserAlert;
-
-	@Autowired
-	private LoginService loginService;
 
 	@Value("${dataDeleteSuccess}")
 	private String dataDeleteSuccess;
@@ -89,7 +89,7 @@ public class UserAlertController {
 
 		// Added to check whether logged in job owner has rights to set the
 		// alerts
-		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+		EmployerInfoDTO roleList = facilityService.facilityDetails(userId);
 		if (roleList.getRoleId() == Integer
 				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
 			enableAccess = "false";
@@ -196,7 +196,7 @@ public class UserAlertController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		EmployerInfoDTO roleList = loginService.facilityDetails(userId);
+		EmployerInfoDTO roleList = facilityService.facilityDetails(userId);
 
 		List<ManageAccessPermissionDTO> jbOwnerList = null;
 		try {

@@ -118,6 +118,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmloyerRegist
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerNewsFeedService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerRegistration.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/FacilityService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
@@ -126,6 +127,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/Branding
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerNewsFeedServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/FacilityServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeatureEmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text
@@ -353,6 +355,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/BrandingTemplateD
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/BrandingTemplateDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmployerRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/EmployerRegistrationDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/FacilityDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/FacilityDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/JobPostDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/JobPostDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageAccessPermissionDAO.java -text

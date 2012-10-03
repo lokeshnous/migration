@@ -34,7 +34,7 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -60,6 +60,9 @@ public class AgencyRegistrationController {
 	private TransformAgencyRegistration transformAgencyRegistration;
 
 	@Autowired
+	private FacilityService facilityService;
+
+	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
 	@Autowired
@@ -79,9 +82,6 @@ public class AgencyRegistrationController {
 
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
-
-	@Autowired
-	private LoginService loginService;
 
 	private final static String AGENCYREG = "addAjecncyRegistration";
 
@@ -164,7 +164,7 @@ public class AgencyRegistrationController {
 					userDTO.getUserId());
 			session.setAttribute(MMJBCommonConstants.USER_EMAIL,
 					userDTO.getEmailId());
-			EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
+			EmployerInfoDTO infoDTO = facilityService.facilityDetails(userDTO
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());

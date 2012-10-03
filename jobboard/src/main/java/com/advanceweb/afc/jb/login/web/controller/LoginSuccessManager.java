@@ -15,12 +15,16 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
 	private LoginService loginService;
+
+	@Autowired
+	private FacilityService facilityService;
 
 	@Autowired
 	private ProfileRegistration profileRegistration;
@@ -38,8 +42,8 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		response.setDateHeader("Expires", 0);
 		UserDTO user = loginService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
-		if(user.isAdmin()){
-			session.setAttribute("postEdit","postEdit");
+		if (user.isAdmin()) {
+			session.setAttribute("postEdit", "postEdit");
 		}
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
@@ -71,7 +75,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 			/**
 			 * Added to put facility id in the session
 			 */
-			EmployerInfoDTO infoDTO = loginService.facilityDetails(user
+			EmployerInfoDTO infoDTO = facilityService.facilityDetails(user
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
@@ -98,7 +102,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 			/**
 			 * Added to put facility id in the session
 			 */
-			EmployerInfoDTO infoDTO = loginService.facilityDetails(user
+			EmployerInfoDTO infoDTO = facilityService.facilityDetails(user
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());

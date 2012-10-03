@@ -58,12 +58,12 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.web.controller.EmployeeAccountForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileAttribForm;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationForm;
 import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistration;
 import com.advanceweb.afc.jb.exception.JobBoardException;
-import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
@@ -90,8 +90,10 @@ public class AgencyDashBoardController {
 	private EmloyerRegistartionService empRegService;
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
+	
 	@Autowired
-	private LoginService loginService;
+	private FacilityService facilityService;
+
 	@Autowired
 	private ImpersonateAgencyService impersonateAgencyService;
 	@Autowired
@@ -170,7 +172,7 @@ public class AgencyDashBoardController {
 	/**
 	 * This method is called to Account Setting update page and
 	 * editAccountSetting method take Bean class binding result from Jsp pages
-	 * Seession for UserId and FacilityId.
+	 * Session for UserId and FacilityId.
 	 * 
 	 * @author kartikm
 	 * @param model
@@ -581,7 +583,7 @@ public class AgencyDashBoardController {
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			String email = (String) session
 					.getAttribute(MMJBCommonConstants.USER_EMAIL);
-			FacilityDTO facility = loginService.getFacilityByFacilityId(dto
+			FacilityDTO facility = facilityService.getFacilityByFacilityId(dto
 					.getFacilityId());
 			if (facility.getFacilityParentId() == facilityId) {
 				return alreadyAdded;
@@ -659,7 +661,7 @@ public class AgencyDashBoardController {
 				session.getAttribute(MMJBCommonConstants.USER_NAME));
 		session.setAttribute(MMJBCommonConstants.AGENCY_EMAIL,
 				session.getAttribute(MMJBCommonConstants.USER_EMAIL));
-		FacilityDTO facilityDto = loginService
+		FacilityDTO facilityDto = facilityService
 				.getFacilityByFacilityId((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		if ((facilityDto.getRoleId() == 6)) {
@@ -728,8 +730,9 @@ public class AgencyDashBoardController {
 		MetricsDTO metricsDTO = new MetricsDTO();
 
 		// Get the job post details of logged in employer
-		List<MetricsDTO> metricsDTOs = loginService.getJobPostTotal(facilityId);
-		FacilityDTO employerDetails = loginService
+		List<MetricsDTO> metricsDTOs = facilityService
+				.getJobPostTotal(facilityId);
+		FacilityDTO employerDetails = facilityService
 				.getFacilityByFacilityId(facilityId);
 		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
@@ -776,7 +779,7 @@ public class AgencyDashBoardController {
 		int swAvgApplies = 0;
 		long count = 0;
 		try {
-			count = loginService.getEmployerCount();
+			count = facilityService.getEmployerCount();
 		} catch (JobBoardException e) {
 			LOGGER.info("Error occured while getting the Result from Database");
 		}

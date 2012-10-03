@@ -43,12 +43,13 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
-import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+
 /**
  * 
  * @author Sasibhushana
@@ -66,7 +67,7 @@ public class EmployerRegistrationController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerRegistrationController.class);
-	//private static final String _FORM_VIEW = "employerDashboard";
+	// private static final String _FORM_VIEW = "employerDashboard";
 
 	@Autowired
 	private ProfileRegistration employerRegistration;
@@ -79,6 +80,9 @@ public class EmployerRegistrationController {
 
 	@Autowired
 	private PaymentGatewayService fetchAdmFacilityConatact;
+
+	@Autowired
+	private FacilityService facilityService;
 
 	@Autowired
 	private EmployerRegistrationValidation registerValidation;
@@ -97,19 +101,19 @@ public class EmployerRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-	
+
 	@Value("${emp.all.req.fields}")
 	private String reqFields;
-	
+
 	@Value("${emp.email.exists}")
 	private String emailExists;
-	
+
 	@Value("${view.media.kit.url}")
 	private String viewMediaUrl;
-	
+
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
-	
+
 	@Value("${account_first_name}")
 	private String accountFirstName;
 	@Value("${account_last_name}")
@@ -128,12 +132,6 @@ public class EmployerRegistrationController {
 	private String accountEmail;
 	@Value("${account_Street}")
 	private String accountStreet;
-	
-			
-			
-			
-	@Autowired
-	private LoginService loginService;
 
 	private final static String EMPLOYERREG = "employerregistration";
 
@@ -151,16 +149,17 @@ public class EmployerRegistrationController {
 
 		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
 				.getProfileAttributes();
-		 UserDTO userDTO=null; 
-		 if(session.getAttribute(MMJBCommonConstants.USER_DTO) != null){
-			 userDTO = (UserDTO) session.getAttribute(MMJBCommonConstants.USER_DTO);
-			 empRegisterForm.setEmailId(userDTO.getEmailId());
-			 empRegisterForm.setConfirmEmailId(userDTO.getEmailId());
-			 empRegisterForm.setPassword(userDTO.getPassword());
-			 empRegisterForm.setConfirmPassword(userDTO.getPassword());
-			 empRegisterForm.setUserId(userDTO.getUserId());
-			 empRegisterForm.setbReadOnly(true);
-		 }
+		UserDTO userDTO = null;
+		if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
+			userDTO = (UserDTO) session
+					.getAttribute(MMJBCommonConstants.USER_DTO);
+			empRegisterForm.setEmailId(userDTO.getEmailId());
+			empRegisterForm.setConfirmEmailId(userDTO.getEmailId());
+			empRegisterForm.setPassword(userDTO.getPassword());
+			empRegisterForm.setConfirmPassword(userDTO.getPassword());
+			empRegisterForm.setUserId(userDTO.getUserId());
+			empRegisterForm.setbReadOnly(true);
+		}
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 
@@ -205,32 +204,33 @@ public class EmployerRegistrationController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
-		
-		if(userDTO.getEmailId() == null){
+
+		if (userDTO.getEmailId() == null) {
 			model.addObject("message", nsValidateUser);
 			return model;
-		}else{
+		} else {
 			model.addObject("empRegisterForm", empRegForm);
 			session.setAttribute(MMJBCommonConstants.USER_NAME,
 					userDTO.getFirstName() + " " + userDTO.getLastName());
-			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
+			session.setAttribute(MMJBCommonConstants.USER_ID,
+					userDTO.getUserId());
 			session.setAttribute(MMJBCommonConstants.USER_EMAIL,
 					userDTO.getEmailId());
-			EmployerInfoDTO infoDTO = loginService.facilityDetails(userDTO
+			EmployerInfoDTO infoDTO = facilityService.facilityDetails(userDTO
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
 			model.addObject("viewMediaUrl", viewMediaUrl);
 			model.setViewName("jobBoardEmployerPostJobs01");
-			String role=MMJBCommonConstants.ROLE_FACILITY;
-			if(empRegForm.isHelthSystem()){
-				role=MMJBCommonConstants.ROLE_FACILITY_GROUP;
+			String role = MMJBCommonConstants.ROLE_FACILITY;
+			if (empRegForm.isHelthSystem()) {
+				role = MMJBCommonConstants.ROLE_FACILITY_GROUP;
 			}
-			authenticateUserAndSetSession(userDTO, request,role);
+			authenticateUserAndSetSession(userDTO, request, role);
 
 			return model;
 		}
-		
+
 	}
 
 	/**
@@ -283,9 +283,9 @@ public class EmployerRegistrationController {
 			}
 		}
 		registerValidation.validate(empRegForm, result);
-		if (!empRegForm.isbReadOnly() && employerRegistration.validateEmail(empRegForm.getEmailId())) {
-			result.rejectValue("emailId", "NotEmpty",
-					emailExists);
+		if (!empRegForm.isbReadOnly()
+				&& employerRegistration.validateEmail(empRegForm.getEmailId())) {
+			result.rejectValue("emailId", "NotEmpty", emailExists);
 			// model.setViewName(employerReg);
 			return false;
 		}
@@ -303,7 +303,7 @@ public class EmployerRegistrationController {
 	 * @param request
 	 */
 	private void authenticateUserAndSetSession(UserDTO user,
-			HttpServletRequest request,String role) {
+			HttpServletRequest request, String role) {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl(role));
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
@@ -339,7 +339,7 @@ public class EmployerRegistrationController {
 			employerRegistration.changePassword(empDTO);
 			// model.put("jobSeekerRegistrationForm", jsRegistrationForm);
 		} catch (Exception e) {
-			LOGGER.info("Error occurred while changing the password."+e);
+			LOGGER.info("Error occurred while changing the password." + e);
 		}
 		return "registrationsuccess";
 	}
@@ -537,7 +537,8 @@ public class EmployerRegistrationController {
 
 	/**
 	 * This method is called to Account Setting display page call from dash
-	 * board of employer 
+	 * board of employer
+	 * 
 	 * @author kartikm
 	 * @param model
 	 * @return true
@@ -577,7 +578,7 @@ public class EmployerRegistrationController {
 			/**
 			 * this is for billing pages
 			 */
-			//int count = 0;
+			// int count = 0;
 			AdmFacilityContactDTO listBillingForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 			if ((listBillingForms.getCount() > 0)) {
@@ -590,8 +591,7 @@ public class EmployerRegistrationController {
 						.getBillingAddressForm()
 						.setFnameForBillingAddr(listBillingForms.getFirstName());
 				employeeBillingForm.getBillingAddressForm()
-						.setLnameForBillingAddr(
-								listBillingForms.getLastName());
+						.setLnameForBillingAddr(listBillingForms.getLastName());
 				employeeBillingForm.setCompany(listBillingForms
 						.getCompanyName());
 				employeeBillingForm.getBillingAddressForm()

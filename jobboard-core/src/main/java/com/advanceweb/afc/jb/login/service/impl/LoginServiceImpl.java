@@ -67,85 +67,6 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	/**
-	 * This method is to get the facilityId for logged in user
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	@Override
-	public EmployerInfoDTO facilityDetails(int userId) {
-		return userDAO.facilityDetails(userId);
-	}
-
-	/**
-	 * This method is get the metrics details for logged in employer
-	 * 
-	 * @param facilityId
-	 * @return metricsDTO
-	 */
-	public List<MetricsDTO> getJobPostTotal(int facilityId) {
-		return userDAO.getJobPostTotal(facilityId);
-	}
-
-	/**
-	 * This method is used to get the total count of employer
-	 * 
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-	public long getEmployerCount() throws JobBoardServiceException {
-		long returnVal = 0;
-		try {
-			returnVal = userDAO.getEmployerCount();
-		} catch (JobBoardDataException jde) {
-			throw new JobBoardServiceException(
-					"Error occured while getting the Result from Database"
-							+ jde);
-		}
-		return returnVal;
-	}
-
-	@Override
-	public FacilityDTO getFacilityByFacilityId(int facilityId) {
-		return userDAO.getFacilityByFacilityId(facilityId);
-	}
-
-	/**
-	 * This method is to get all list of facilities
-	 * 
-	 * @param facilityId
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-	public List<DropDownDTO> getFacilityGroup(int facilityId)
-			throws JobBoardServiceException {
-		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
-		try {
-			downDTOs = userDAO.getFacilityGroup(facilityId);
-		} catch (JobBoardDataException e) {
-			// TODO Auto-generated catch block
-		}
-		return downDTOs;
-	}
-
-	/**
-	 * This method is to get facility parent id
-	 * 
-	 * @param facilityId
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-	public int getFacilityParent(int facilityId)
-			throws JobBoardServiceException{
-		int facilityParentId=0;
-		try {
-			facilityParentId = userDAO.getFacilityParent(facilityId);
-		} catch (JobBoardDataException e) {
-			// TODO Auto-generated catch block
-		}
-		return facilityParentId;
-	}
-	/**
 	 * This method to update the automatic generated password to DB
 	 * 
 	 * @param emailAddress
@@ -161,4 +82,4 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
-	}
+}
