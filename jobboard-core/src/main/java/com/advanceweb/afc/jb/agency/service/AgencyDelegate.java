@@ -25,17 +25,6 @@ public interface AgencyDelegate {
 	 */
 	
 	UserDTO createUser(AgencyProfileDTO agencyProfileDTO) throws JobBoardServiceException;
-	
-	
-	/**
-	 * This method is used to get the net suite customer id based on
-	 * adm facility id.
-	 * @param int admFacilityID
-	 * @return int NSCustomerID
-	 */
-	
-	int getNSCustomerIDFromAdmFacility(int admFacilityID);
-	
 	/**
 	 * This method is ude to get the customer details from net suite.
 	 * @param nsCustomerID
