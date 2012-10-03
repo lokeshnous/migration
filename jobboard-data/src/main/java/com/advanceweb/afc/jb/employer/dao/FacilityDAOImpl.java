@@ -134,6 +134,7 @@ public class FacilityDAOImpl implements FacilityDAO {
 				.getRoleId());
 		dto.setFacilityParentId(facility.getFacilityParentId());
 		dto.setLogoPath(facility.getLogoPath());
+		dto.setNsCustomerID(facility.getNsCustomerID());
 		return dto;
 	}
 
