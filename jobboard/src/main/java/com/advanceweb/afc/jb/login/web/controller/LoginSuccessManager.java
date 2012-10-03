@@ -42,8 +42,8 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 		response.setDateHeader("Expires", 0);
 		UserDTO user = loginService.getUser(authentication.getName());
 		HttpSession session = request.getSession(false);
-		if (user.isAdmin()) {
-			session.setAttribute("postEdit", "postEdit");
+		if(user.isAdmin()){
+			session.setAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS,MMJBCommonConstants.FACILITY_FULL_ACCESS);
 		}
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
