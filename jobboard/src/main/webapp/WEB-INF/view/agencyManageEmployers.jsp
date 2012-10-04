@@ -22,14 +22,14 @@ jQuery(document).ready(function() {
 		switch (action) {
 		case "delete":{
 			if (confirm("Are you sure you want to delete?")) {
-					$.ajax({url: "${pageContext.request.contextPath}/agency/deleteAssocEmployer.html?facilityId="+facilityId,
+					$.ajax({url: "${pageContext.request.contextPath}/agency/deleteAssocFacility.html?facilityId="+facilityId,
 						type: "POST",
 						success: function(data){ 
 						    if(data.success != null){
 						    	rowObj.remove();
 						    }
 						    if(data.failure != null){
-						    	alert(data.failure);
+						    	alert(data.failed);
 						    }
 						},
 						error: function(response) {
@@ -77,7 +77,7 @@ jQuery(document).ready(function() {
 								<td>${assocEmplyrsName.name}</td>
 								<td align="center">
 									<a  
-									href="<%=request.getContextPath()%>/agency/editEmployer.html?facilityId=${assocEmplyrsName.facilityId}" class="nyroModal">
+									href="<%=request.getContextPath()%>/agency/viewFacilityDetails.html?facilityId=${assocEmplyrsName.facilityId}" class="nyroModal">
 									<img src="../resources/images/Edit.png" width="20" height="20"
 									alt="">
 								</a>&nbsp;
