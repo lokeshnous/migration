@@ -29,6 +29,7 @@
 					<div class="content_columns_search_results">
 						<div class="column1">
 							<div class="section">
+							<c:if test="${currentSearchList != null}">
 								<h2>Current Search</h2>
 								<c:forEach items="${currentSearchList}" var="item">
 									<div class="buttonRow">
@@ -44,6 +45,7 @@
 										<a href="#" class="btn_sm orange nyroModal" id="saveThisSearchId" onclick="saveThisSearch();">Save This Search</a>
 									</div>
 								</div>
+								</c:if>
 							</div>
 							<div class="section">
 								<h2>Refine Results</h2>
