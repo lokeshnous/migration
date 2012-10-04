@@ -34,15 +34,15 @@ import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelpe
 public class ManageFeatureEmployerProfileDAOImpl implements
 		ManageFeatureEmployerProfileDAO {
 
-	private static final Logger LOGGER = Logger.getLogger(ManageFeatureEmployerProfileDAOImpl.class);
+	private static final Logger LOGGER = Logger
+			.getLogger(ManageFeatureEmployerProfileDAOImpl.class);
 	@Autowired
 	private SessionFactory sessionFactory;
 	@Autowired
 	private EmployerRegistrationConversionHelper employerRegistrationConversionHelper;
-	
 
 	private HibernateTemplate hibernateTemplateCareers;
-	
+
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -50,19 +50,22 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 
 	}
-	
+
 	/**
 	 * Saving Manage Featured Employer Profile
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
-		
-		AdmFacility facility = hibernateTemplateCareers.load(AdmFacility.class, Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
-		facility=employerRegistrationConversionHelper
-		.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO,facility);
+
+		AdmFacility facility = hibernateTemplateCareers.load(AdmFacility.class,
+				Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
+		facility = employerRegistrationConversionHelper
+				.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO,
+						facility);
 		int nsCustomerID = 0;
-		List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer.valueOf(companyProfileDTO.getFacilityid()));
+		List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer
+				.valueOf(companyProfileDTO.getFacilityid()));
 		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
 		facility.setNsCustomerID(nsCustomerID);
 		try {
@@ -86,26 +89,31 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		Session session = sessionFactory.openSession();
 
 		try {
-			
-			List<?> admFacilityList = session.createQuery("from AdmFacility").list();
-			
-			for (Iterator<?> iterator = admFacilityList.iterator(); iterator.hasNext();) {
-				
+
+			// modified to bring all facility groups in futured employer list.
+			List<?> admFacilityList = session.createQuery(
+					"from AdmFacility where facilityParentId = 0").list();
+
+			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
+					.hasNext();) {
+
 				CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
 				AdmFacility admFacility = (AdmFacility) iterator.next();
-				companyProfileDTO.setFacilityid(String.valueOf(admFacility.getFacilityId()));
+				companyProfileDTO.setFacilityid(String.valueOf(admFacility
+						.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
 				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
-				companyProfileDTO.setCompanyOverview(admFacility.getCompanyOverview());
+				companyProfileDTO.setCompanyOverview(admFacility
+						.getCompanyOverview());
 
 				// companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
 				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
 				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
-				
+
 				// companyProfileDTO.setPositionTitle(facility.get);
 				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
 				companyProfileDTOList.add(companyProfileDTO);
-				
+
 			}
 		} catch (HibernateException e) {
 			LOGGER.error(e);
@@ -121,8 +129,9 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 		try {
 			if (employerId != 0) {
 
-				AdmFacility admFacility = (AdmFacility) hibernateTemplateCareers.get(
-						AdmFacility.class, Long.valueOf(employerId).intValue());
+				AdmFacility admFacility = (AdmFacility) hibernateTemplateCareers
+						.get(AdmFacility.class, Long.valueOf(employerId)
+								.intValue());
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility
 						.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
@@ -137,12 +146,16 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 				// }
 				// }
 				// companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
-				companyProfileDTO.setCompanyWebsite(admFacility.getUrlDisplay());
-				companyProfileDTO.setCompanyEmail(admFacility.getEmailDisplay());
+				companyProfileDTO
+						.setCompanyWebsite(admFacility.getUrlDisplay());
+				companyProfileDTO
+						.setCompanyEmail(admFacility.getEmailDisplay());
 				// companyProfileDTO.setPositionTitle(facility.get);
 				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
-				companyProfileDTO.setPrimaryColor(admFacility.getColorPalette());
-				companyProfileDTO.setPositionalMedia(admFacility.getPromoMediaPath());
+				companyProfileDTO
+						.setPrimaryColor(admFacility.getColorPalette());
+				companyProfileDTO.setPositionalMedia(admFacility
+						.getPromoMediaPath());
 
 			}
 		} catch (HibernateException e) {
@@ -174,24 +187,27 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 	}
 
 	/**
-	 * This method is used to get the net suite customer id based on
-	 * adm facility id.
+	 * This method is used to get the net suite customer id based on adm
+	 * facility id.
+	 * 
 	 * @param int admFacilityID
 	 * @return int NSCustomerID
 	 */
-	
+
 	public List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
 
 		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
 		try {
 			@SuppressWarnings("unchecked")
 			List<AdmFacility> admFacilityList = hibernateTemplateCareers
-					.find(" from  AdmFacility WHERE  facilityId  = '" + admFacilityID + "'");
+					.find(" from  AdmFacility WHERE  facilityId  = '"
+							+ admFacilityID + "'");
 
 			if (admFacilityList != null) {
 				for (AdmFacility admFacilityObj : admFacilityList) {
 					FacilityDTO admFacilityDTO = new FacilityDTO();
-					admFacilityDTO.setNsCustomerID(admFacilityObj.getNsCustomerID());
+					admFacilityDTO.setNsCustomerID(admFacilityObj
+							.getNsCustomerID());
 					admFacilityDTOList.add(admFacilityDTO);
 				}
 			}
