@@ -298,6 +298,11 @@ public interface MMJBCommonConstants {
 	String BEGIN_VAL = "beginVal";
 	String BEGIN = "begin";
 	String PAGE = "page";
+	String CURRENT_SEARCH_LIST = "currentSearchList";	
+	String MILES = " Miles";	
+	String HASHMAP_KEY = "key";	
+	String HASHMAP_VALUE = "value";	
+	
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
 	String EMAIL_MESSAGE = "Please enter correct Email address.";

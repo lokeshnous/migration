@@ -179,41 +179,41 @@ public class JobSearchController {
 	private String advanceWebAddress;
 	
 	private @Value("${SUBJECT_OF_MAIL}")
-	String subjectOfMail;
+	String SUBJECT_OF_MAIL;
 
-	@Value("${BODY_OFMAIL_FIRST}")
-	private String bodyOfmailFirst;
+	private @Value("${BODY_OFMAIL_FIRST}")
+	String BODY_OFMAIL_FIRST;
 	 
-	@Value("${BODY_OFMAIL_SECOND}")
-	private String bodyOfmailSecond;
+	private @Value("${BODY_OFMAIL_SECOND}")
+	String BODY_OFMAIL_SECOND;
 	 
-	@Value("${JOB_TITLE_HEADING}")
-	private String jobTitleHeading;
+	private @Value("${JOB_TITLE_HEADING}")
+	String JOB_TITLE_HEADING;
 	
-	@Value("${COMAPNY_NAME_HEADING}")
-	private String comapnyNameHeading;
+	private @Value("${COMAPNY_NAME_HEADING}")
+	String COMAPNY_NAME_HEADING;
 
-	@Value("${URL_LINK_FIRST}")
-	private String urlLinkFirst;
+	private @Value("${URL_LINK_FIRST}")
+	String URL_LINK_FIRST;
 	 
-	@Value("${URL_LINK_SECOND}")
-	private String urlLinkSecond;
+	private @Value("${URL_LINK_SECOND}")
+	String URL_LINK_SECOND;
 	 
-	@Value("${URL_REDIRECT_MAIL}")
-	private String urlRedirectMail;
+	private @Value("${URL_REDIRECT_MAIL}")
+	String URL_REDIRECT_MAIL;
 	
-	@Value("${ERROR_SENDING_MAIL}")
-	private String errorSendingMail;
+	private @Value("${ERROR_SENDING_MAIL}")
+	String ERROR_SENDING_MAIL;
 	
-	@Value("${EMAIL_MESSAGE}")
-	private String emailMessage;
+	private @Value("${EMAIL_MESSAGE}")
+	String EMAIL_MESSAGE;
 	
-	@Value("${WEB_MAIL_SERVER}")
-	private String webMailServer;
+	private @Value("${WEB_MAIL_SERVER}")
+	String WEB_MAIL_SERVER;
+	private @Value("${EMAIL_MESSAGE_BLANK}")
+	String EMAIL_MESSAGE_BLANK;
 	
-	@Value("${EMAIL_MESSAGE_BLANK}")
-	private String emailMessageBlank;
-	
+
 	@Autowired
 	private ClickController clickController;
 	
@@ -696,6 +696,8 @@ public class JobSearchController {
 	}
 
 	/**
+	 * Method called to validate the search criteria
+	 * 
 	 * @param jobSearchResultForm
 	 * @param jsonObject
 	 */
@@ -705,7 +707,7 @@ public class JobSearchController {
 		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
 			jsonObject.put(ajaxMsg, jobSearchValidateKeyword);
 			status = false;
-		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase("0"))
+		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(MMJBCommonConstants.ZERO))
 				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
 						.trim())) {
 			jsonObject.put(ajaxMsg, jobSearchValidateCity);
@@ -715,6 +717,8 @@ public class JobSearchController {
 	}
 
 	/**
+	 * Method to create the session value and add the current search results.
+	 * 
 	 * @param session
 	 * @param page
 	 * @param noOfPages
@@ -723,15 +727,48 @@ public class JobSearchController {
 	 */
 	private void setSessionForGrid(HttpSession session, int page,
 			int noOfPages, int beginVal, JSONObject jobSrchJsonObj) {
-		//TODO: Need to use session Map
+		// Load the current search results list
+		List<HashMap<String, Object>> currentSearchList = new ArrayList<HashMap<String, Object>>();
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> sessionMap = (HashMap<String, String>) session
+				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+		String keyWords = sessionMap.get(SearchParamDTO.KEYWORDS).trim();
+		if (!keyWords.isEmpty()) {
+			String[] keyWordslist = keyWords.split(" ");
+			for (String keyWord : keyWordslist) {
+				if (!keyWord.trim().isEmpty()) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put(MMJBCommonConstants.HASHMAP_KEY, SearchParamDTO.KEYWORDS);
+					map.put(MMJBCommonConstants.HASHMAP_VALUE, keyWord);
+					currentSearchList.add(map);
+				}
+			}
+		}
+		String city = sessionMap.get(SearchParamDTO.CITY_STATE).trim();
+		if (!city.isEmpty()) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put(MMJBCommonConstants.HASHMAP_KEY, SearchParamDTO.CITY_STATE);
+			map.put(MMJBCommonConstants.HASHMAP_VALUE, city);
+			currentSearchList.add(map);
+		}
+		String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
+		if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put(MMJBCommonConstants.HASHMAP_KEY, SearchParamDTO.RADIUS);
+			map.put(MMJBCommonConstants.HASHMAP_VALUE, radius+MMJBCommonConstants.MILES);
+			currentSearchList.add(map);
+		}
+		// TODO: Need to use session Map
 		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
 				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST, currentSearchList);
 		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
 		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
 		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
-		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1 : beginVal));
+		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
+				: beginVal));
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 	}
@@ -745,6 +782,7 @@ public class JobSearchController {
 		// TODO :Need to Use sessionMap
 		LOGGER.info("Removing from session....");
 		session.removeAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST);
+		session.removeAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
 		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
 		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
 		session.removeAttribute(MMJBCommonConstants.RECORDS_PER_PAGE);
@@ -984,7 +1022,7 @@ public class JobSearchController {
 		try {
 			String data = sendtofriendmail.getEmail().toString();
 			if((null==data.trim())||("".equals(data.trim()))){
-				return emailMessageBlank;
+				return EMAIL_MESSAGE_BLANK;
 			}
 			data = data.replace(',', ';');
 			int len = data.length();
@@ -1008,14 +1046,14 @@ public class JobSearchController {
 							.getAttribute(MMJBCommonConstants.USER_EMAIL);
 				}
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress(webMailServer);
+				jobSeekerEmailDTO.setFromAddress(WEB_MAIL_SERVER);
 
 				int iterationCount = 0;
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
 					
 					if (!validateEmailPattern(string.trim())) {
-						return emailMessage;
+						return EMAIL_MESSAGE;
 					}
 
 					jobSeekerToAddress[iterationCount] = new InternetAddress(string.trim());
@@ -1024,13 +1062,14 @@ public class JobSearchController {
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 				String msgSubject="";
-				if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-					jobseekerName = "XXXX-XXX";
-					msgSubject =subjectOfMail+" "+ jobseekerName;
-				} else {
+				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
-					msgSubject =subjectOfMail+" "+ jobseekerName;
+					msgSubject =SUBJECT_OF_MAIL+" "+ jobseekerName;
+					
+				} else {
+					jobseekerName = "XXXX-XXX";
+					msgSubject =SUBJECT_OF_MAIL+" "+ jobseekerName;
 				}
 						
 				
@@ -1038,13 +1077,13 @@ public class JobSearchController {
 				SearchedJobDTO searchedJobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
-				String Subject =subjectOfMail+" "+ jobseekerName;
-				String bodyHead1 =bodyOfmailFirst+" "+ jobseekerName +" "+bodyOfmailSecond;
+				String Subject =SUBJECT_OF_MAIL+" "+ jobseekerName;
+				String bodyHead1 =BODY_OFMAIL_FIRST+" "+ jobseekerName +" "+BODY_OFMAIL_SECOND;
 				String bodyHead2 = sendtofriendmail.getMessage();
-				String jobTitle =jobTitleHeading;
-				String companyName =comapnyNameHeading;
+				String jobTitle =JOB_TITLE_HEADING;
+				String companyName =COMAPNY_NAME_HEADING;
 				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl =urlLinkFirst+jobUrl+urlLinkSecond;
+				String joburl =URL_LINK_FIRST+""+jobUrl+""+URL_LINK_SECOND;
 				mesg = mesg
 						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -1060,7 +1099,7 @@ public class JobSearchController {
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info(errorSendingMail);
+				LOGGER.info(ERROR_SENDING_MAIL);
 			}
 
 		} catch (Exception e) {
@@ -1068,10 +1107,10 @@ public class JobSearchController {
 			throw new MailParseException(e);
 		}
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			modelData.setViewName(urlRedirectMail);
+			modelData.setViewName(URL_REDIRECT_MAIL);
 			return "";
 		} else {
-			modelData.setViewName(urlRedirectMail);
+			modelData.setViewName(URL_REDIRECT_MAIL);
 			return "";
 		}
 
@@ -1321,5 +1360,62 @@ public class JobSearchController {
 		
 		searchedJobDTO.setPackageId(packageId);
 		return searchedJobDTO;
+	}
+	
+	/**
+	 * Delete the Current Search item
+	 * 
+	 * @param session
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/deleteCurrentSearch")
+	public @ResponseBody
+	JSONObject deleteCurrentSearch(HttpSession session,
+			HttpServletResponse response, HttpServletRequest request,
+			JobSearchResultForm jobSearchResultForm, BindingResult result,
+			Model model) {
+		JSONObject jsonObject = new JSONObject();
+		// boolean status = true;
+		try {
+			String key = request.getParameter(MMJBCommonConstants.HASHMAP_KEY);
+			String value = request
+					.getParameter(MMJBCommonConstants.HASHMAP_VALUE);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put(MMJBCommonConstants.HASHMAP_KEY, key);
+			map.put(MMJBCommonConstants.HASHMAP_VALUE, value);
+			LOGGER.info("Deleting the current search : "
+					+ map.get(MMJBCommonConstants.HASHMAP_KEY) + "-"
+					+ map.get(MMJBCommonConstants.HASHMAP_VALUE));
+			@SuppressWarnings("unchecked")
+			List<HashMap<String, Object>> currentSearchList = (List<HashMap<String, Object>>) session
+					.getAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
+			currentSearchList.remove(map);
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
+			jsonObject.put(MMJBCommonConstants.AUTOLOAD, true);
+			if (key.equalsIgnoreCase(SearchParamDTO.KEYWORDS)) {
+				String keyWord = sessionMap.get(SearchParamDTO.KEYWORDS);
+				keyWord = keyWord.replace(value, MMJBCommonConstants.EMPTY);
+				jsonObject.put(SearchParamDTO.KEYWORDS, keyWord);
+			} else if (key.equalsIgnoreCase(SearchParamDTO.CITY_STATE)) {
+				String city = sessionMap.get(SearchParamDTO.CITY_STATE);
+				city = city.replace(value, MMJBCommonConstants.EMPTY);
+				jsonObject.put(SearchParamDTO.CITY_STATE, city);
+			} else if (key.equalsIgnoreCase(SearchParamDTO.RADIUS)) {
+				String radius = sessionMap.get(SearchParamDTO.RADIUS);
+				radius = radius.replace(value, MMJBCommonConstants.ZERO);
+				jsonObject.put(SearchParamDTO.RADIUS, radius);
+			}
+
+			session.removeAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
+			session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
+					currentSearchList);
+		} catch (Exception e) {
+			LOGGER.error("JobSearchController : deleteCurrentSearch Ex :" + e);
+		}
+		return jsonObject;
 	}
 }

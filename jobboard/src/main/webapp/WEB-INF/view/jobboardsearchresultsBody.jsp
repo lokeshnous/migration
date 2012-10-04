@@ -23,38 +23,22 @@
 								</h1>
 							</div>
 						</div>
-
-
 					</div>
 
 					<div class="clearfix"></div>
 					<div class="content_columns_search_results">
 						<div class="column1">
-
-
 							<div class="section">
 								<h2>Current Search</h2>
-								<div class="buttonRow">
-									Nurse
-									<div class="floatRight">
-										<a href="" style="visibility:hidden;"><img src="../resources/images/CloseGray.jpg"
-											alt="close" width="15" height="15"> </a>
+								<c:forEach items="${currentSearchList}" var="item">
+									<div class="buttonRow">
+										${item.value}
+										<div class="floatRight">
+											<a onclick="deleteCurrentSearch('${item.key}','${item.value}')" class="cursor"><img src="../resources/images/Close.png"
+												alt="close" width="15" height="15"> </a>
+										</div>
 									</div>
-								</div>
-								<div class="buttonRow">
-									10001
-									<div class="floatRight">
-										<a href="" style="visibility:hidden;"><img src="../resources/images/CloseGray.jpg"
-											alt="close"> </a>
-									</div>
-								</div>
-								<div class="buttonRow">
-									25 miles
-									<div class="floatRight">
-										<a href="" style="visibility:hidden;"><img src="../resources/images/CloseGray.jpg"
-											alt="close" width="15" height="15"> </a>
-									</div>
-								</div>
+								</c:forEach>
 								<div class="section">
 									<div class="SaveSearchButton">
 										<a href="#" class="btn_sm orange nyroModal" id="saveThisSearchId" onclick="saveThisSearch();">Save This Search</a>
@@ -112,38 +96,6 @@
 						</div>
 						<!-- column1 -->
 
-						<!-- <div class="column2">
-
-							<div class="searchResults">
-
-								<table id="jobSearchResultTable">
-
-									
-
-									<div id="jobSearchResultDiv" class="searchResultsListing">
-
-
-										<div class="searchResultsItem">
-											<table cellpadding="0" cellspacing="0" style="width: 100%"
-												border="0" class="display" id="jsonTable">
-												<thead>
-													<tr >
-														<th class="searchResultsColumn1">Job Title</th>
-														<th class="searchResultsColumn2">Employer</th>
-														<th class="searchResultsColumn3">Location</th>
-														<th class="searchResultsColumn4">Date Posted</th>
-													</tr>
-												</thead>
-											</table>
-										</div>
-										<div id="pager2"></div>
-
-									</div>
-
-
-								</table>
-							</div>
-						</div> -->
 		<div class="column2">
 <div class="searchResults">
 				<div class="searchResultsNavigation">
@@ -166,7 +118,7 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${totalNoOfRecords != 0}">
+							<c:if test="${totalNoOfRecords != null and totalNoOfRecords != 0}">
 							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
 						</c:if>
 						</div>
@@ -242,11 +194,6 @@
 									<li class="searchResultsColumn4">${job.PostedDate}</li>
 								</ul>
 								<div class="searchResultsSubContent">
-
-							<%-- <p class="searchResultsSubContentJobDescription" >
-								<span class="bold">Job Description:</span>
-								${job.AdText}
-							</p> --%>
 
 								<div class="searchResultsJobDescription">
 								<p class="searchResultsSubContentJobDescription">								
