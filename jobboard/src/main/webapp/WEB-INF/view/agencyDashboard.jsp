@@ -208,7 +208,7 @@
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Soon" href="">Modify Subscriptions</a>
+											<a href="">Modify Subscriptions</a>
 										</p>
 									</div>
 								</div>
@@ -253,7 +253,7 @@
 									<c:forEach items="${assocEmplyrsName.value}" var="emplyrsName"
 							          varStatus="emplyrsStatus">
 										<p>
-											<a class="employerMetrics" href="<%=request.getContextPath()%>/agency/showEmployerMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a> 
+											<a class="employerMetrics" href="<%=request.getContextPath()%>/agency/showFacilityMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a> 
 										</p>
 										 </c:forEach>
 									</div>
@@ -263,10 +263,10 @@
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="row">
 										<a
-											href="<%=request.getContextPath()%>/agency/addEmployer.html"
+											href="<%=request.getContextPath()%>/agency/getAddFacilityPopup.html"
 											id="createEmployerpopup" class="btn_sm orange">ADD
 											EMPLOYER</a><a
-											href="<%=request.getContextPath()%>/agency/manageEmployers.html"
+											href="<%=request.getContextPath()%>/agency/getManageFacilityPopup.html"
 											id="manageEmployers" class="btn_sm orange">MANAGE
 											EMPLOYERS</a>
 									</div>
