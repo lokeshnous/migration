@@ -1,3 +1,4 @@
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -92,8 +93,8 @@
 
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Profile Management</h2>
-						<c:if test="<%=!(session.getAttribute(\"postEdit\")!=null )%>">
-						<c:if test="<%=!(session.getAttribute(\"fullAcess\")!=null )%>">
+						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null )%>">
+						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS)!=null )%>">
 						<div class="lableTextDashBoard">
 							<p>
 								<a
@@ -154,7 +155,7 @@
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Job Posting</h2>
 						<%-- <c:if test="${ enablePostEditAccess eq 'true'}"> --%>
-						<c:if test="<%=!(session.getAttribute(\"postEdit\")!=null)%>">
+						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
 						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 							<div class="lableTextDashBoard">
 								<p>
@@ -210,7 +211,7 @@
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Manage Applicants</h2>
-						<c:if test="<%=!(session.getAttribute(\"postEdit\")!=null)%>">
+						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
 						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 					<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 							<div class="lableTextDashBoard">
