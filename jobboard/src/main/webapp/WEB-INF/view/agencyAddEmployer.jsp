@@ -47,7 +47,7 @@
 							
 							$.ajax({
 						        type: "GET",
-						        url: "${pageContext.request.contextPath}/agency/getEmployerNamesList.html?term="+empName,
+						        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
 						        dataType: "json",							        
 						        contentType: "application/json; charset=utf-8",
 						        success: function(data) {							        	
@@ -70,7 +70,7 @@
 													.val(ui.item.value);
 											
 											$.ajax({
-												url: '${pageContext.request.contextPath}/agency/getEmployerDetails.html?facilityId='+IdVal,
+												url: '${pageContext.request.contextPath}/agency/getSelectedFacility.html?facilityId='+IdVal,
 												success : function(data) {															
 													$('#city').val(data.city);
 													$('#street').val(data.street);		
@@ -93,7 +93,7 @@
 							
 							$('#save').click(function(){			
 					 			
-								$.ajax({url:"${pageContext.request.contextPath}/agency/addEmployerDetails.html",
+								$.ajax({url:"${pageContext.request.contextPath}/agency/linkSelectedFacility.html",
 									data:$('#employerAdd').serialize(),
 									type:"POST",
 									success: function(data) {
@@ -120,7 +120,7 @@
 
 <body class="job_board">
 	<form:form method="post" id="employerAdd"
-		action="../agency/addEmployerDetails.html"
+		action="../agency/linkSelectedFacility.html"
 		commandName="empRegisterForm" enctype="multipart/form-data">
 		<div id="empRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
