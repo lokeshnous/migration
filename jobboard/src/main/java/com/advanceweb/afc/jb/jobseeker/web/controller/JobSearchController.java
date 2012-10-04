@@ -1407,7 +1407,7 @@ public class JobSearchController {
 			} else if (key.equalsIgnoreCase(SearchParamDTO.RADIUS)) {
 				String radius = sessionMap.get(SearchParamDTO.RADIUS);
 				radius = radius.replace(value, MMJBCommonConstants.ZERO);
-				jsonObject.put(SearchParamDTO.RADIUS, radius);
+				jsonObject.put(SearchParamDTO.RADIUS, radius+MMJBCommonConstants.MILES);
 			}
 
 			session.removeAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);

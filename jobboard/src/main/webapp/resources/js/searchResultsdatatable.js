@@ -181,6 +181,11 @@ jQuery(document).ready(function() {
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
+						$.each(data, function(key, val) {
+							if (key == "AjaxMSG") {
+								$('#findSearchInfo').html(val);
+							}
+						});	
 							processPaginationReq("20");
 							$("#TotalRecord").text(data["TotalNoRecords"]);
 							});
