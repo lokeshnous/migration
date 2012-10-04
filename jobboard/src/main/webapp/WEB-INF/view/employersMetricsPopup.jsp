@@ -10,12 +10,44 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
 		<jsp:include page="common/include.jsp"/>
-<!-- 
-		STYLESHEETS
-		<link href="stylesheets/JB.css" rel="stylesheet" type="text/css" />
-		<link href="stylesheets/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="stylesheets/SliderStyles.css" rel="stylesheet" type="text/css"> -->
-
+		
+		<script type="text/javascript">
+	jQuery(document).ready(
+	window.onload = function() {
+		loadMetricsDetails();
+	});
+	function loadMetricsDetails(){
+		$.ajaxSetup({ cache: false });
+		$.ajax({
+			url : '${pageContext.request.contextPath}/agency/metricsDetails.html',
+			data : ({}),
+			
+			success : function(data) {
+			$("#metricsDetails").html(data);
+			},
+			error : function(data) {
+				alert('Unable to process');
+			},
+			complete : function(data) {
+				// do nothing for now.
+			}
+		}
+		);
+	}
+	function changeMetrics(){
+		var selEmployerId = $("#selEmployer").val();
+		$.ajax({url:"${pageContext.request.contextPath}/agency/viewFacilityMetrics.html?facilityId="+selEmployerId,
+			data:$('#selEmployerId').serialize(),
+			type:"GET",
+			success: function(data) {			
+		loadMetricsDetails();
+			 },
+				error : function(data) {
+					alert('Unable to process');
+				}
+		});
+	}
+</script>
 		</head>
 
 		<body class="job_board">
@@ -24,7 +56,7 @@
             <h2>EMPLOYER DETAILS</h2>
             <a href="#"><img src="../resources/images/Close.png" class="nyroModalClose" width="19" height="19" alt=""></a></div>
           <div class="popUpContainerWrapper">
-            <form action="" method="">
+   <form:form commandName="metricsForm" id="empMetrics">
               <div class="rowEvenNewSpacing marginTop0"><div class="FloatLeft"> 
                 <!--T-->
                 <div class="row">
@@ -34,38 +66,33 @@
                <c:if test="${empty employerDetails.logoPath}">
                 <div class="floatLeft" style="width:204px;height:50px;"></div>
                </c:if>
-                <div class="floatRight marginTop20"><a href="<%=request.getContextPath()%>/agency/impersonateAgencyToEmployer.html?facilityId=${employerDetails.facilityId}">Go To ${employerDetails.name} Dashboard</a> </div>
+                <div class="floatRight marginTop20"><a href="<%=request.getContextPath()%>/agency/impersonateAgencyToFacility.html?facilityId=${employerDetails.facilityId}">Go To ${employerDetails.name} Dashboard</a> </div>
                 
                 </div>
-<div class="row">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0"
-							class="grid marginTop3">
-							<thead>
-								<tr class="borderTopNone">
-									<th width="46%" align="left" scope="col"><h2
-											class="noTopBorder noTopBottomBorder">Metrics</h2></th>
-									<th width="18%" align="center" scope="col"
-										class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
-									<th width="18%" align="center" scope="col"
-										class="BorderLeftWhite"><div class="EDPriceA">CLICKS</div></th>
-									<th width="18%" align="center" scope="col"
-										class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${jbPostTotalList}" var="jobList">
-									<tr class="gridB">
-										<td><input name="radio2" type="radio" id="radio4"
-											value="radio" class="marginLeft10 marginRight10"> <label
-											for="radio2">${jobList.getMetricsName()}</label></td>
-										<td align="center" valign="middle" class="BorderLeft TcolorA">${jobList.getViews()}</td>
-										<td align="center" valign="middle" class="BorderLeft TcolorB">${jobList.getClicks()}</td>
-										<td align="center" valign="middle" class="BorderLeft TcolorC">${jobList.getApplies()}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-                        </div>
+                        <div class="rowEvenNewSpacing marginTop10">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0"
+									class="grid marginTop3">
+									<thead>
+										<tr class="borderTopNone">
+											<th width="46%" align="left" scope="col"><h2
+													class="HeadTopBottomBorder">Metrics</h2> 
+												<form:select
+													class="jb_input3" path="selEmployer" items="${downDTOs}"
+													itemValue="optionId" itemLabel="optionName" onchange="changeMetrics();">
+												</form:select>
+											</th>
+											<th width="18%" align="center" scope="col"
+												class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
+											<th width="18%" align="center" scope="col"
+												class="BorderLeftWhite"><div class="EDPriceA">CLICKS</div></th>
+											<th width="18%" align="center" scope="col"
+												class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
+										</tr>
+									</thead>
+									</table>
+									<br/>
+									<div id="metricsDetails" ></div>								
+							</div>
                 <!--T-->
                 <div class="rowBox EDPricec marginLeft5">
                           <div class="floatLeft marginTop3"><strong>&nbsp;&nbsp;&nbsp;Date range</strong></div>
@@ -84,7 +111,7 @@
                         </div>
                 <!--T-->
                 <div class="rowBox marginLeft5">
-<div class="rowBox Padding0 AutoWidth AutoHeight">
+				<div class="rowBox Padding0 AutoWidth AutoHeight">
                           <div class="EDBoxMinW">
                           <div class="EDBox02">
                     <div class="row borderBottomDotted Height25">
@@ -105,7 +132,7 @@
                         </div>
               
               </div></div>
-            </form>
+            </form:form>
           </div>
           <div class="clearfix"></div>
         </div>
