@@ -107,7 +107,7 @@
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"><!-- <input type="button" id="save"
 						style="margin-top: -4px;" value="Save" class="btn_sm orange"> -->
-						<a class="nyroModal btn_sm orange" href="<%=request.getContextPath()%>/agency/manageEmployers.html">Cancel</a></span>
+						<a class="nyroModal btn_sm orange" href="<%=request.getContextPath()%>/agency/getManageFacilityPopup.html">Cancel</a></span>
 				</div>
 				<div class="clearfix"></div>
 
