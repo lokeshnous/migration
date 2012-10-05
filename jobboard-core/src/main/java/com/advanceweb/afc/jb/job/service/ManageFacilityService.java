@@ -21,14 +21,14 @@ public interface ManageFacilityService {
 	 * @param userId
 	 * @return
 	 */
-	public ManageFacilityDTO getFacilityList(int facilityId,boolean isGroup) throws JobBoardServiceException;
+	ManageFacilityDTO getFacilityList(int facilityId,boolean isGroup) throws JobBoardServiceException;
 	/**
 	 * 
 	 * @param facilityId
 	 * @param userId
 	 * @return
 	 */
-	public List<FacilityDTO> getFacilityListByGroup(int facilityId) throws JobBoardServiceException;
+	List<FacilityDTO> getFacilityListByGroup(int facilityId) throws JobBoardServiceException;
 	
 	/**
 	 * 
@@ -36,13 +36,13 @@ public interface ManageFacilityService {
 	 * @param facilityIdParent
 	 * @throws JobBoardServiceException
 	 */
-	public void createFacility(ManageFacilityDTO manageFacilityDTO,int facilityIdParent) throws JobBoardServiceException;
+	void createFacility(ManageFacilityDTO manageFacilityDTO,int facilityIdParent) throws JobBoardServiceException;
 	/**
 	 * 
 	 * @param facilityId
 	 * @throws JobBoardServiceException
 	 */
-	public void deleteFacility(int facilityId) throws JobBoardServiceException;
+	void deleteFacility(int facilityId) throws JobBoardServiceException;
 	
 
 }
