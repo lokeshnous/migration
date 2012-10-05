@@ -86,6 +86,6 @@ public interface BrandingTemplateDAO {
 	 * @param facilityId
 	 * @return
 	 */
-	public	boolean getBrandPurchaseInfo(int facilityId);
+	boolean getBrandPurchaseInfo(int facilityId);
 
 }
