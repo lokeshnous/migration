@@ -23,7 +23,7 @@ public interface ManageFacilityDAO {
 	 * @param userId
 	 * @return
 	 */
-	public ManageFacilityDTO getFacilityList(int facilityId, boolean isGroup)
+	ManageFacilityDTO getFacilityList(int facilityId, boolean isGroup)
 			throws JobBoardDataException;
 
 	/**
@@ -32,7 +32,7 @@ public interface ManageFacilityDAO {
 	 * @return
 	 * @throws JobBoardDataException 
 	 */
-	public List<FacilityDTO> getFacilityListByGroup(int facilityId) throws JobBoardDataException;
+	List<FacilityDTO> getFacilityListByGroup(int facilityId) throws JobBoardDataException;
 	
 	/**
 	 * 
@@ -40,11 +40,11 @@ public interface ManageFacilityDAO {
 	 * @param facilityIdParent
 	 * @throws JobBoardServiceException
 	 */
-	public void createFacility(ManageFacilityDTO manageFacilityDTO,int facilityIdParent) throws JobBoardDataException;
+	void createFacility(ManageFacilityDTO manageFacilityDTO,int facilityIdParent) throws JobBoardDataException;
 	/**
 	 * 
 	 * @param facilityId
 	 * @throws JobBoardDataException
 	 */
-	public void deleteFacility(int facilityId) throws JobBoardDataException;
+	void deleteFacility(int facilityId) throws JobBoardDataException;
 }
