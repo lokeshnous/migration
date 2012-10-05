@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 
 /**
@@ -53,7 +53,7 @@ public class SaveSearchConversionHelper {
 			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDt());
 			
 			if(admSaveSearch.getModifyDt() != null){
-				saveSearchedJobsDTO.setModifyDate(DateUtils.convertSQLDateToStdDate(admSaveSearch.getModifyDt().toString()));
+				saveSearchedJobsDTO.setModifyDate(CommonUtil.convertSQLDateToStdDateString(admSaveSearch.getModifyDt().toString()));
 			}
 			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());		
 			searchedJobsDTOList.add(saveSearchedJobsDTO);

@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
@@ -68,8 +68,8 @@ public class EmpConversionHelper {
 						alertDTO.setFacilityAlertId(admUserAlert
 								.getFacilityAlertId());
 						alertDTO.setJobOwner(permissionDTO.getOwnerName());
-						alertDTO.setSetDate(DateUtils
-								.convertSQLDateToStdDate(admUserAlert
+						alertDTO.setSetDate(CommonUtil
+								.convertSQLDateToStdDateString(admUserAlert
 										.getCreateDt().toString()));
 						alertDTOs.add(alertDTO);
 					}

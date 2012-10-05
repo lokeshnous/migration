@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.SavedJobDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
@@ -43,13 +43,13 @@ public class JobSeekerJobDetailConversionHelper {
 
 				 Date appliedDate = job.getAppliedDt();
 				 if(appliedDate != null){
-				 appliedJobDTO.setAppliedDt(DateUtils
+				 appliedJobDTO.setAppliedDt(CommonUtil
 				 .convertSQLDateTimeToStdDateTime(appliedDate
 				 .toString()));
 				 }
 				 Date createdDate = job.getCreateDt();
 				 if(createdDate != null){
-				 appliedJobDTO.setCreateDt(DateUtils
+				 appliedJobDTO.setCreateDt(CommonUtil
 				 .convertSQLDateTimeToStdDateTime(createdDate
 				 .toString()));
 				 }
@@ -73,7 +73,7 @@ public class JobSeekerJobDetailConversionHelper {
 			for (AdmSaveJob job : entity) {
 				AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
 				appliedJobDTO.setSaveJobId(job.getSaveJobId());
-				appliedJobDTO.setCreateDt(DateUtils.convertSQLDateToStdDate(job
+				appliedJobDTO.setCreateDt(CommonUtil.convertSQLDateToStdDateString(job
 						.getCreateDt().toString()));
 				appliedJobDTO.setFacilityName(job.getFacilityName());
 				appliedJobDTO.setJobTitle(job.getJobtitle());

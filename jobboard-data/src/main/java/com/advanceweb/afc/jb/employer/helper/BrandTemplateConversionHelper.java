@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddImageDTO;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.TestimonyDTO;
 import com.advanceweb.afc.jb.common.VideoDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.JpTemplateMedia;
@@ -43,7 +43,7 @@ public class BrandTemplateConversionHelper {
 		jpBrandTempDTO.setMainImagePath(jpBrandingTemp.getMainImagePath());
 		jpBrandTempDTO.setLogoPath(jpBrandingTemp.getLogoPath());
 		jpBrandTempDTO.setColor(jpBrandingTemp.getColorPalette());
-		jpBrandTempDTO.setCreatedDate(DateUtils.convertSQLDateTimeToStdDateTime(jpBrandingTemp.getCreateDt().toString()));
+		jpBrandTempDTO.setCreatedDate(CommonUtil.convertSQLDateTimeToStdDateTime(jpBrandingTemp.getCreateDt().toString()));
 		
 //		Multi media section
 

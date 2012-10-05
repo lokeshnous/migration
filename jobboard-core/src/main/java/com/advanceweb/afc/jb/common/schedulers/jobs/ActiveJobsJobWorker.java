@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-//import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;

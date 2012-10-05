@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.search.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.data.entities.MetaSearchParam;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;

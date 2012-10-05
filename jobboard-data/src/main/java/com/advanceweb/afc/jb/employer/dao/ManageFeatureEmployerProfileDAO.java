@@ -3,9 +3,9 @@ package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 
 /**
  * Created EmployerJobPostingDAO

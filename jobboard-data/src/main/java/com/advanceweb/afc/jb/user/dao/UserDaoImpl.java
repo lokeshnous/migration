@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
 		UserDTO userDTO = null;
 
 		@SuppressWarnings("unchecked")
-		MerUser user = DataAccessUtils
+		MerUser user = (MerUser)DataAccessUtils
 				.uniqueResult(hibernateTemplateTracker
 						.find(" from  MerUser user where user.email=? and deleteDt is null",
 								email));
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 								facility.get(0).getFacilityId());
 				int userId = admFacility.get(0).getFacilityPK().getUserId();
 				@SuppressWarnings("unchecked")
-				MerUser merUser = DataAccessUtils
+				MerUser merUser = (MerUser) DataAccessUtils
 						.uniqueResult(hibernateTemplateTracker
 								.find(" from  MerUser user where user.userId=? and deleteDt is null",
 										userId));

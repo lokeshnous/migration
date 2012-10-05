@@ -22,8 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
-import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -183,30 +181,30 @@ public class LoginFormController {
 				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
 
 				// Automatic generated password from OpenAM
-				String tempassword = OpenAMEUtility.newPassword();
+				//String tempassword = OpenAMEUtility.newPassword();
 
-				if (tempassword != null) {
+				//if (tempassword != null) {
 					// Updating the generated password to OpenAm
 
-					boolean updatepassword = OpenAMEUtility
-							.openAMUpdatePassword(emailAddress, tempassword);
+//					boolean updatepassword = OpenAMEUtility
+//							.openAMUpdatePassword(emailAddress, tempassword);
 
 					// Updating the generated password to merUser table.
-					try {
-						loginService.saveNewPWD(emailAddress, tempassword);
-					} catch (JobBoardException e) {
-						LOGGER.info("Temporary password could not be generated");
-					}
+//					try {
+//						loginService.saveNewPWD(emailAddress, tempassword);
+//					} catch (JobBoardException e) {
+//						LOGGER.info("Temporary password could not be generated");
+//					}
 
-					String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
-							"?temporarypassword", tempassword);
+					//String forgotPwdMailBody = jobseekerForgotPwdBody.replace("?temporarypassword", tempassword);
+					String forgotPwdMailBody = jobseekerForgotPwdBody.replace("?temporarypassword", formDTO.getPassword());
 
 					forgotPwdMailBody = forgotPwdMailBody.replace(
 							"?jsLoginLink", jonseekerloginUrl);
 					jobSeekerEmailDTO.setBody(forgotPwdMailBody);
 					jobSeekerEmailDTO.setHtmlFormat(true);
 					emailService.sendEmail(jobSeekerEmailDTO);
-				}
+				//}
 
 			} catch (Exception e) {
 				// loggers call

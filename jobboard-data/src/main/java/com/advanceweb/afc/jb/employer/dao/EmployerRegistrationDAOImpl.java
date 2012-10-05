@@ -19,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
-import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
@@ -38,8 +38,6 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
-
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 /**
  * @author rajeshkb
  * @version 1.0
@@ -128,8 +126,8 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				/**
 				 *  creating employer Users in OpenAM 
 				 */
-				boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
-				LOGGER.info("Open AM :Employee User is created!"+isCreated);
+//				boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+//				LOGGER.info("Open AM :Employee User is created!"+isCreated);
 				// Ends OpenAM code
 
 				hibernateTemplateCareers.saveOrUpdate(contact);
@@ -158,8 +156,8 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			/**
 			 *  creating employer Users in OpenAM 
 			 */
-			boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
-			LOGGER.info("Open AM :Employee User is created!"+isCreated);
+//			boolean isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+//			LOGGER.info("Open AM :Employee User is created!"+isCreated);
 			// Ends OpenAM code
 			hibernateTemplateCareers.saveOrUpdate(contact);
 
@@ -251,8 +249,8 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 						// OpenAM User Update password
 						// Added by Santhosh Gampa on 4th Sep 2012
 						
-						boolean isUdated =OpenAMEUtility.openAMUpdatePassword(merUser.getEmail(),merUser.getPassword());
-						LOGGER.info("User password updated - "+isUdated);
+//						boolean isUdated =OpenAMEUtility.openAMUpdatePassword(merUser.getEmail(),merUser.getPassword());
+//						LOGGER.info("User password updated - "+isUdated);
 						//OpenAM code ends 
 
 			hibernateTemplateTracker.saveOrUpdate(merUser);
@@ -334,16 +332,16 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		     * @since Sep 4 2012
 	         *
 			 */
-			boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(email);
-			if(isinvaliduser){
-	    		LOGGER.info("OpenAM : user is already exist !");
-	    		//model.setViewName("jobSeekerCreateAccount");
-				//result.rejectValue("emailId", "NotEmpty", "Email address already exists");
-				return true;
-	    	}else{
-	    		LOGGER.info("OpenAM : valid user!");
-	    		
-	    	}
+//			boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(email);
+//			if(isinvaliduser){
+//	    		LOGGER.info("OpenAM : user is already exist !");
+//	    		//model.setViewName("jobSeekerCreateAccount");
+//				//result.rejectValue("emailId", "NotEmpty", "Email address already exists");
+//				return true;
+//	    	}else{
+//	    		LOGGER.info("OpenAM : valid user!");
+//	    		
+//	    	}
 	    	//End of OpenAM code
 	    	
 			
@@ -412,8 +410,8 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				AdmFacilityContact.class, admfacilityid);
 		// OpenAM code for Modify the user profile details
 		// Added by Santhosh Gampa on Sep 6 2012
-		boolean isUdated = OpenAMEUtility.openAMUpdateEmp(apd);
-		LOGGER.info("User Profile updated in OpenAM - "+isUdated);
+//		boolean isUdated = OpenAMEUtility.openAMUpdateEmp(apd);
+//		LOGGER.info("User Profile updated in OpenAM - "+isUdated);
 		//OpenAm code ends
 
 		facility.setFirstName(apd.getFirstName());

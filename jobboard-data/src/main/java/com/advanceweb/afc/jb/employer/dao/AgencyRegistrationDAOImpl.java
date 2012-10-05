@@ -19,7 +19,6 @@ import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
@@ -274,16 +273,16 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 		     * @since Sep 4 2012
 	         *
 			 */
-			boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(email);
-			if(isinvaliduser){
-	    		LOGGER.info("OpenAM : user is already exist !");
+//			boolean isinvaliduser= OpenAMEUtility.openAMValidateEmail(email);
+//			if(isinvaliduser){
+//	    		LOGGER.info("OpenAM : user is already exist !");
 	    		//model.setViewName("jobSeekerCreateAccount");
 				//result.rejectValue("emailId", "NotEmpty", "Email address already exists");
-				return true;
-	    	}else{
-	    		LOGGER.info("OpenAM : valid user!");
-	    		
-	    	}
+//				return true;
+//	    	}else{
+//	    		LOGGER.info("OpenAM : valid user!");
+//	    		
+//	    	}
 	    	//End of OpenAM code
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
 			

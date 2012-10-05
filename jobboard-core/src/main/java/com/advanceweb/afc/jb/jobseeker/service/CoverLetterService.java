@@ -5,7 +5,6 @@ package com.advanceweb.afc.jb.jobseeker.service;
 
 import java.util.List;
 
-
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 

@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
+
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 
 /**

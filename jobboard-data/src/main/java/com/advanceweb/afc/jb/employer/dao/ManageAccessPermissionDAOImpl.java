@@ -17,7 +17,6 @@ import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
@@ -161,10 +160,10 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				/**
 				 * creating add Job owner Users in OpenAM
 				 */
-				boolean isCreated = OpenAMEUtility.openAMCreateEmp(merUser,
-						contact);
-				LOGGER.info("Open AM :Employee add owner User is created!"
-						+ isCreated);
+//				boolean isCreated = OpenAMEUtility.openAMCreateEmp(merUser,
+//						contact);
+//				LOGGER.info("Open AM :Employee add owner User is created!"
+//						+ isCreated);
 				// Ends OpenAM code
 
 				AdmFacilityContact admFacilityContact = new AdmFacilityContact();
@@ -232,9 +231,9 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		 * Delete Job owner from OpenAM
 		 */
 
-		boolean isDeleted = OpenAMEUtility.openAMDeleteUser(ownerDetails
-				.getEmail());
-		LOGGER.info("Open AM :Employee add owner User is created!" + isDeleted);
+//		boolean isDeleted = OpenAMEUtility.openAMDeleteUser(ownerDetails
+//				.getEmail());
+//		LOGGER.info("Open AM :Employee add owner User is created!" + isDeleted);
 		// Ends OpenAM code
 
 		boolean bDelete = false;

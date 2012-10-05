@@ -14,7 +14,6 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -41,7 +40,6 @@ import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
@@ -206,16 +204,16 @@ public class JobSeekerRegistrationController {
 				 * @since Sep 4 2012
 				 * 
 				 */
-				boolean isinvaliduser = OpenAMEUtility
-						.openAMValidateEmail(registerForm.getEmailId());
-				if (isinvaliduser) {
-					LOGGER.info("OpenAM : user is already exist !");
-					model.setViewName("jobSeekerCreateAccount");
-					result.rejectValue("emailId", "NotEmpty", emailExists);
-					return model;
-				} else {
-					LOGGER.info("OpenAM : valid user!");
-				}
+//				boolean isinvaliduser = OpenAMEUtility
+//						.openAMValidateEmail(registerForm.getEmailId());
+//				if (isinvaliduser) {
+//					LOGGER.info("OpenAM : user is already exist !");
+//					model.setViewName("jobSeekerCreateAccount");
+//					result.rejectValue("emailId", "NotEmpty", emailExists);
+//					return model;
+//				} else {
+//					LOGGER.info("OpenAM : valid user!");
+//				}
 
 				// Ends of OpenAM code
 
@@ -348,9 +346,9 @@ public class JobSeekerRegistrationController {
 			 * @since Sep 4 2012
 			 * 
 			 */
-			boolean isCreated = OpenAMEUtility.openAMCreateUser(userDTO,
-					hashmap);
-			LOGGER.info("Open AM : User is created!" + isCreated);
+//			boolean isCreated = OpenAMEUtility.openAMCreateUser(userDTO,
+//					hashmap);
+//			LOGGER.info("Open AM : User is created!" + isCreated);
 			// Ends of OpenAM code
 
 			session.setAttribute("userName", userDTO.getFirstName() + " "
@@ -540,8 +538,8 @@ public class JobSeekerRegistrationController {
 
 			// OpenAM code for Modify the user profile details
 			// Added by Santhosh Gampa on Sep 4 2012
-			boolean isUdated = OpenAMEUtility.openAMUpdateUser(userDTO, hm);
-			LOGGER.info("User Profile updated in OpenAM - " + isUdated);
+//			boolean isUdated = OpenAMEUtility.openAMUpdateUser(userDTO, hm);
+//			LOGGER.info("User Profile updated in OpenAM - " + isUdated);
 			// End of OpenAM code
 
 			// Call to service layer
@@ -601,9 +599,9 @@ public class JobSeekerRegistrationController {
 
 				// OpenAM User Update password
 				// Added by Santhosh Gampa on 4th Sep 2012
-				boolean isUdated = OpenAMEUtility.openAMUpdatePassword(
-						form.getEmailId(), form.getPassword());
-				LOGGER.info("User password updated - " + isUdated);
+//				boolean isUdated = OpenAMEUtility.openAMUpdatePassword(
+//						form.getEmailId(), form.getPassword());
+//				LOGGER.info("User password updated - " + isUdated);
 				// Ends OpenAM User Update password
 
 				profileRegistration.changePassword(jsRegistrationDTO);

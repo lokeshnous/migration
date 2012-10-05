@@ -24,13 +24,11 @@ import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.OpenAMEUtility;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
-import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -71,6 +69,10 @@ public class ManageAccessPermissionController {
 	
 	@Autowired
 	private MMEmailService emailService;
+
+	@Autowired
+	LoginService loginService; 
+	
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -145,15 +147,15 @@ public class ManageAccessPermissionController {
 		 * @since Sep 4 2012
 		 * 
 		 */
-		boolean isinvaliduser = OpenAMEUtility
-				.openAMValidateEmail(manageAccessPermissionForm.getOwnerEmail());
-		if (isinvaliduser) {
-			LOGGER.info("OpenAM : user is already exist !");
-			warningMessage.put("failure", jobOwnerExist);
-			return warningMessage;
-		} else {
-			LOGGER.info("OpenAM : valid user!");
-		}
+//		boolean isinvaliduser = OpenAMEUtility
+//				.openAMValidateEmail(manageAccessPermissionForm.getOwnerEmail());
+//		if (isinvaliduser) {
+//			LOGGER.info("OpenAM : user is already exist !");
+//			warningMessage.put("failure", jobOwnerExist);
+//			return warningMessage;
+//		} else {
+//			LOGGER.info("OpenAM : valid user!");
+//		}
 
 		// End of openAM code
 
@@ -166,16 +168,20 @@ public class ManageAccessPermissionController {
 		UserDTO userDTO = transformEmpReg
 				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
 		
-		try {
-			MerUser merUser = manageAccessPermissionService
-					.getUserListByEmail(manageAccessPermissionForm
-							.getOwnerEmail());
-			if (null != merUser && merUser.getUserId() > 0) {
-				userDTO.setUserId(merUser.getUserId());
-			}
-		} catch (JobBoardServiceException ex) {
-			LOGGER.error(ex);
-		}
+		UserDTO userDTOID =loginService.getUser(manageAccessPermissionForm.getOwnerEmail());
+		userDTO.setUserId(userDTOID.getUserId());
+		
+//		try {
+//			MerUser merUser = manageAccessPermissionService
+//					.getUserListByEmail(manageAccessPermissionForm
+//							.getOwnerEmail());
+//			if (null != merUser && merUser.getUserId() > 0) {
+//				userDTO.setUserId(merUser.getUserId());
+//			}
+//		} catch (JobBoardServiceException ex) {
+//			LOGGER.error(ex);
+//		}
+		
 		empDTO.setMerUserDTO(userDTO);
 		try {
 			manageAccessPermissionService.createJobOwner(empDTO,

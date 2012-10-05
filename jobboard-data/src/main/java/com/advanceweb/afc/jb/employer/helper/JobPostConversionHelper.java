@@ -12,9 +12,9 @@ import java.util.Locale;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddOnDTO;
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpAddon;
@@ -65,8 +65,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setSkills(dto.getReqSkills());
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
 		 jpJob.setAdtext(dto.getJobDesc());
-		 jpJob.setStartDt(DateUtils.convertStringToSQLDate(dto.getScheduleStartDt()));
-		 jpJob.setEndDt(DateUtils.convertStringToSQLDate(dto.getScheduleExpiryDt()));
+		 jpJob.setStartDt(CommonUtil.convertStringToSQLDate(dto.getScheduleStartDt()));
+		 jpJob.setEndDt(CommonUtil.convertStringToSQLDate(dto.getScheduleExpiryDt()));
 		 jpJob.setPositionType(dto.getEmploymentType());
 		 if(null != template && template.getTemplateId() !=0 ){
 			 jpJob.setJpTemplate(template);

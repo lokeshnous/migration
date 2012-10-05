@@ -3,7 +3,9 @@ package com.advanceweb.afc.jb.data.entities;
 
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * The primary key class for the adm_facility_jp_audit database table.

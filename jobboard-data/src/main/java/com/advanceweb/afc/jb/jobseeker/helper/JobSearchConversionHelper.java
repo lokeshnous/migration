@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -148,21 +149,20 @@ public class JobSearchConversionHelper {
 			String strCreatedDate = jobDTO.getCreateDt();
 			java.sql.Date createdDate = null;
 			if (strCreatedDate != null) {
-				createdDate = DateUtils
-						.convertDateStringToSQLDate(strCreatedDate);
+				createdDate = (Date) CommonUtil.convertDateStringToSQLDate(strCreatedDate);
 			}
 			admSaveJob.setCreateDt(createdDate);
 			String strAppliedDate = jobDTO.getAppliedDt();
 			java.sql.Date appliedDate = null;
 			if (strAppliedDate != null) {
-				appliedDate = DateUtils
+				appliedDate = (Date) CommonUtil
 						.convertDateStringToSQLDate(strAppliedDate);
 			}
 			admSaveJob.setAppliedDt(appliedDate);
 			String strDeleteDt = jobDTO.getDeleteDt();
 			java.sql.Date deleteDtDate = null;
 			if (strDeleteDt != null) {
-				deleteDtDate = DateUtils
+				deleteDtDate = (Date) CommonUtil
 						.convertDateStringToSQLDate(strDeleteDt);
 			}
 			// admSaveJob.setAppliedDt(appliedDate);
