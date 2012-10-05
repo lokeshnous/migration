@@ -236,6 +236,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/helper/AdminConversionHe
 jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/dao/AgencyDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/dao/AgencyDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/agency/helper/AgencyRegistrationConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/common/CommonUtil.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Agency.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Employer.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Job.java -text
