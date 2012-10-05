@@ -28,13 +28,13 @@
 					var ext = $('#textfield4').val().split('.').pop().toLowerCase();
 					if($.inArray(ext, ['Mp4','wmv']) == -1) {
 					hasError = false;
-		            $("#promoMediaErrMsg").text('Please enter a valid file');
+		            $("#promoMediaErrMsg").text('Please select an appropriate video file');
 				}
 			}
 			if($('#textfield5').val()!=''){
 					var ext = $('#textfield5').val().split('.').pop().toLowerCase();
 					if($.inArray(ext, ['gif','png','jpg','tif']) == -1) {
-		            $("#logoErrMsg").text('Please enter a valid file');
+		            $("#logoErrMsg").text('Please select an appropriate logo');
 		            hasError = false;
 				}
 			} 
@@ -193,7 +193,7 @@
 									class="job_seeker_login_email fileType" />
 
 							</div>
-							<div class="toolTip colorPkrAreaToolTip">
+							<div class="toolTip colorPkrAreaToolTip">&nbsp;
 								<span class="classic">Upload a video, slideshow or
 									animated .gif that shines the spotlight on your facility or
 									health system.</span>
@@ -210,6 +210,8 @@
 								<form:input path="logoUrl" name="textfield4" type="file"
 									id="textfield5" size="20" 
 									class="job_seeker_login_email fileType" />
+							</div>
+							<div class="colorPkrArea">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			
 							</div>
 							<div class="FormErrorDisplayText">
 								<span id="logoErrMsg"></span>
