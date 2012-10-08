@@ -86,14 +86,15 @@ public interface JobSearchService {
 	 * @param jobId
 	 */
 	JobApplyTypeDTO applyJobDetails(int jobId);
-	
+
 	/**
 	 * This method is used to get the total number of Active jobs.
+	 * 
 	 * @return long
 	 */
-	
+
 	long getTotalActiveJobs();
-	
+
 	/**
 	 * This method will fetch the last five job details based on posted date for
 	 * the selected employer.
@@ -103,4 +104,25 @@ public interface JobSearchService {
 	 */
 
 	List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID);
+
+	/**
+	 * This method is used to get the browse jobs by title
+	 * 
+	 * @return List<SearchedJobDTO> object
+	 */
+	List<SearchedJobDTO> getJobsByTitle();
+
+	/**
+	 * This method is used to get the browse jobs list by Employer
+	 * 
+	 * @return
+	 */
+	List<SearchedJobDTO> getJobsByEmployer();
+
+	/**
+	 * This method is used to get the browse jobs list by location
+	 * 
+	 * @return
+	 */
+	List<SearchedJobDTO> getJobsByLocation();
 }

@@ -567,6 +567,9 @@ jobboard/src/main/webapp/WEB-INF/view/anonymousSaveThisSearchPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateGoldPreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplatePreview.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/brandTemplateSilverPreview.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/browseByEmployer.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/browseByJobTitle.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/browseByLocation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createBrandingTemplate.jsp -text

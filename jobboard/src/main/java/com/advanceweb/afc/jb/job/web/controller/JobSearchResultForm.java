@@ -1,8 +1,7 @@
 package com.advanceweb.afc.jb.job.web.controller;
 
 public class JobSearchResultForm {
-	
-	
+
 	private String keywords;
 	private String rows;
 	private String start;
@@ -11,8 +10,10 @@ public class JobSearchResultForm {
 	private String searchtype;
 	private String saveSearchName;
 	private boolean autoload;
-	
-	
+	private String jobTitlePage;
+	private String employerPage;
+	private String locationPage;
+
 	public boolean isAutoload() {
 		return autoload;
 	}
@@ -77,5 +78,28 @@ public class JobSearchResultForm {
 		this.saveSearchName = saveSearchName;
 	}
 
+	public String getJobTitlePage() {
+		return jobTitlePage;
+	}
+
+	public void setJobTitlePage(String jobTitlePage) {
+		this.jobTitlePage = jobTitlePage;
+	}
+
+	public String getEmployerPage() {
+		return employerPage;
+	}
+
+	public void setEmployerPage(String employerPage) {
+		this.employerPage = employerPage;
+	}
+
+	public String getLocationPage() {
+		return locationPage;
+	}
+
+	public void setLocationPage(String locationPage) {
+		this.locationPage = locationPage;
+	}
 
 }

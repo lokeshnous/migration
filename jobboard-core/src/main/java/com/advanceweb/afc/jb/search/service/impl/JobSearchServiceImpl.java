@@ -119,16 +119,17 @@ public class JobSearchServiceImpl implements JobSearchService {
 	public JobApplyTypeDTO applyJobDetails(int jobId) {
 		return jobSearchDAO.applyJobDetails(jobId);
 	}
-	
+
 	/**
 	 * This method is used to get the total number of Active jobs.
+	 * 
 	 * @return long
 	 */
 
-	public long getTotalActiveJobs(){
+	public long getTotalActiveJobs() {
 		return jobSearchDAO.getTotalActiveJobs();
 	}
-	
+
 	/**
 	 * This method will fetch the last five job details based on posted date for
 	 * the selected employer.
@@ -137,8 +138,36 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 * @return List<JobPostDTO> object
 	 */
 
-	public List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID){
+	public List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID,
+			long jobID) {
 		return jobSearchDAO.getRecentJobsPostedByEmployer(facilityID, jobID);
 	}
-	
+
+	/**
+	 * This method is used to get the browse jobs by title
+	 * 
+	 * @return List<SearchedJobDTO> object
+	 */
+	public List<SearchedJobDTO> getJobsByTitle() {
+		return jobSearchDAO.getJobsByTitle();
+	}
+
+	/**
+	 * This method is used to get the browse jobs list by Employer
+	 * 
+	 * @return
+	 */
+	public List<SearchedJobDTO> getJobsByEmployer() {
+		return jobSearchDAO.getJobsByEmployer();
+	}
+
+	/**
+	 * This method is used to get the browse jobs list by location
+	 * 
+	 * @return
+	 */
+	public List<SearchedJobDTO> getJobsByLocation() {
+		return jobSearchDAO.getJobsByLocation();
+	}
+
 }

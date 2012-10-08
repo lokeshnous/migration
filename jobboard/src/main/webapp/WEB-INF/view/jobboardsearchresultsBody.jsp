@@ -9,7 +9,15 @@
 		</head>
 
 		<body>
-<form:form method="POST" action="" commandName="jobSearchResultForm">
+		<c:choose>
+		<c:when test="${jobTitlePage}">
+			<jsp:include page="browseByJobTitle.jsp"></jsp:include>
+		</c:when> 
+		<c:when test="${locationPage}">
+			<jsp:include page="browseByLocation.jsp"></jsp:include>
+		</c:when> 
+		<c:otherwise>
+			<form:form method="POST" action="" commandName="jobSearchResultForm">
 					
 					<div class="row">
 
@@ -327,5 +335,7 @@
 
 					</div> 
 					</form:form>
+					</c:otherwise>
+		</c:choose>
 </body>
 </html>

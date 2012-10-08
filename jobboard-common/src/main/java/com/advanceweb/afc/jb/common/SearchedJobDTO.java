@@ -41,7 +41,10 @@ public class SearchedJobDTO {
 	private List<TestimonyDTO> listTestimony;
 	private List<AddImageDTO> listAddImages;
 	private List<VideoDTO> listVideos;
-	
+	// Added for Browse jobs task
+	private int count;
+	private int locationId;
+
 	public String getAreaOfInterest() {
 		return areaOfInterest;
 	}
@@ -280,5 +283,20 @@ public class SearchedJobDTO {
 		this.color = color;
 	}
 
-	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getLocationId() {
+		return locationId;
+	}
+
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
+	}
+
 }
