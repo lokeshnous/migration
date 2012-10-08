@@ -133,6 +133,7 @@
             <a onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a onclick="getByEmployer()" class="cursor">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a onclick="getByLocation()" class="cursor">By Location</a>
+            </div>
 
             <!-- browse_bar -->
             
