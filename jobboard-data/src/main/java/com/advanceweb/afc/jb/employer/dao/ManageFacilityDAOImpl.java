@@ -60,7 +60,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			admFacilityList = hibernateTemplateCareers.find(
 					FIND_ADM_FACILITY_DETAILS, facilityId);
 		}
-		if (null != admFacilityList && admFacilityList.isEmpty()) {
+		if (null != admFacilityList && !admFacilityList.isEmpty()) {
 			admFacility = admFacilityList.get(0);
 		}
 		if (null != admFacility) {
