@@ -88,6 +88,7 @@ public class AgencyDashBoardController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyDashBoardController.class);
+	private static final String FACILITY_ID = "facilityId";
 	@Autowired
 	private EmloyerRegistartionService empRegService;
 	@Autowired
@@ -497,7 +498,7 @@ public class AgencyDashBoardController {
 
 	@RequestMapping(value = "/viewFacilityDetails", method = RequestMethod.GET)
 	public ModelAndView getFacilityDetailsPopup(
-			@RequestParam("facilityId") int facilityId) {
+			@RequestParam(FACILITY_ID) int facilityId) {
 		ModelAndView model = new ModelAndView();
 		try {
 			EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
@@ -558,7 +559,7 @@ public class AgencyDashBoardController {
 	@RequestMapping(value = "/getSelectedFacility")
 	@ResponseBody
 	public FacilityDTO getSelectedFacility(
-			@RequestParam("facilityId") int facilityId) {
+			@RequestParam(FACILITY_ID) int facilityId) {
 		FacilityDTO facilityDTO = null;
 		try {
 			facilityDTO = agencyService.getLinkedFacilityDetails(facilityId);
@@ -632,7 +633,7 @@ public class AgencyDashBoardController {
 	@ResponseBody
 	@RequestMapping(value = "/deleteAssocFacility", method = RequestMethod.POST)
 	public JSONObject deleteAssocFacility(
-			@RequestParam("facilityId") int facilityId, HttpSession session) {
+			@RequestParam(FACILITY_ID) int facilityId, HttpSession session) {
 		boolean deleteStatus;
 		JSONObject deleteStatusJson = new JSONObject();
 		deleteStatusJson.put("failed", "Failed");
@@ -651,7 +652,7 @@ public class AgencyDashBoardController {
 
 	@RequestMapping(value = "/impersonateAgencyToFacility", method = RequestMethod.GET)
 	public ModelAndView impersonateAgencyToFacility(
-			@RequestParam("facilityId") int facilityId, HttpSession session,
+			@RequestParam(FACILITY_ID) int facilityId, HttpSession session,
 			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		session.setAttribute(MMJBCommonConstants.AGENCY_USER_ID,
@@ -736,7 +737,7 @@ public class AgencyDashBoardController {
 	ModelAndView showFacilityMetrics(
 			@ModelAttribute("metricsForm") MetricsForm metricsForm,
 			BindingResult result, HttpSession session,
-			@RequestParam("facilityId") int facilityId) {
+			@RequestParam(FACILITY_ID) int facilityId) {
 		ModelAndView model = new ModelAndView();
 		session.removeAttribute("jbPostTotalList");
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
@@ -761,13 +762,13 @@ public class AgencyDashBoardController {
 	public @ResponseBody
 	void showMetrics(@ModelAttribute("metricsForm") MetricsForm metricsForm,
 			BindingResult result, HttpSession session,
-			@RequestParam("facilityId") int facilityId) {
+			@RequestParam(FACILITY_ID) int facilityId) {
 		session.removeAttribute("jbPostTotalList");
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 		session.setAttribute("jbPostTotalList", jbPostTotalList);
-		return;
+		// return;
 	}
 
 	/**
@@ -862,56 +863,6 @@ public class AgencyDashBoardController {
 
 		return jbPostTotalList;
 	}
-
-	/*
-	 * @RequestMapping(value = "/showEmployerMetrics", method =
-	 * RequestMethod.GET) public ModelAndView showEmployerMetrics(
-	 * 
-	 * @RequestParam("facilityId") int facilityId, HttpSession session,
-	 * HttpServletRequest request) { ModelAndView model = new ModelAndView();
-	 * List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
-	 * MetricsDTO metricsDTO = new MetricsDTO();
-	 * 
-	 * // Get the job post details of logged in employer List<MetricsDTO>
-	 * metricsDTOs = loginService.getJobPostTotal(facilityId); FacilityDTO
-	 * employerDetails = loginService .getFacilityByFacilityId(facilityId); //
-	 * Getting metrics values from look up table List<DropDownDTO> metricsList =
-	 * populateDropdownsService .populateDropdown("Metrics");
-	 * 
-	 * // jbPostTotalList will be having job post total details for metrics int
-	 * views = 0; int clicks = 0; int applies = 0; int size =
-	 * metricsDTOs.size(); for (int i = 0; i < metricsDTOs.size(); i++) {
-	 * MetricsDTO dto = new MetricsDTO(); dto = (MetricsDTO) metricsDTOs.get(i);
-	 * views = views + dto.getViews(); clicks = clicks + dto.getClicks();
-	 * applies = applies + dto.getApplies(); }
-	 * metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
-	 * metricsDTO.setViews(views); metricsDTO.setClicks(clicks);
-	 * metricsDTO.setApplies(applies); jbPostTotalList.add(0, metricsDTO);
-	 * metricsDTO = new MetricsDTO();
-	 * 
-	 * // Calculating average per job posting int avgViews = 0; int avgClicks =
-	 * 0; int avgApplies = 0; if (size > 0) { avgViews = views / size; avgClicks
-	 * = clicks / size; avgApplies = applies / size; }
-	 * metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
-	 * metricsDTO.setViews(avgViews); metricsDTO.setClicks(avgClicks);
-	 * metricsDTO.setApplies(avgApplies); jbPostTotalList.add(1, metricsDTO);
-	 * metricsDTO = new MetricsDTO();
-	 * 
-	 * // Calculating site - wide average per job posting int swAvgViews = 0;
-	 * int swAvgClicks = 0; int swAvgApplies = 0; long count = 0; try { count =
-	 * loginService.getEmployerCount(); } catch (JobBoardException e) {
-	 * LOGGER.info("Error occured while getting the Result from Database"); }
-	 * 
-	 * if (count > 0) { swAvgViews = (int) (views / count); swAvgClicks = (int)
-	 * (clicks / count); swAvgApplies = (int) (applies / count); }
-	 * metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
-	 * metricsDTO.setViews(swAvgViews); metricsDTO.setClicks(swAvgClicks);
-	 * metricsDTO.setApplies(swAvgApplies); jbPostTotalList.add(2, metricsDTO);
-	 * 
-	 * model.addObject("jbPostTotalList", jbPostTotalList);
-	 * model.addObject("employerDetails", employerDetails);
-	 * model.setViewName("employersMetricsPopup"); return model; }
-	 */
 
 	@RequestMapping("/viewImage")
 	public void getImage(@RequestParam("path") String imagePath,
