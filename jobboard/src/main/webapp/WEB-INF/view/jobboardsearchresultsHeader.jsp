@@ -129,7 +129,10 @@
                     </div>
             <!-- search_info_box2 -->
             
-            <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;<!-- <a href="" ></a> -->By Job Title&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->By Employer&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->By Location&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->By Employment Type</div>
+            <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;
+            <a onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a onclick="getByEmployer()" class="cursor">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a onclick="getByLocation()" class="cursor">By Location</a>
 
             <!-- browse_bar -->
             

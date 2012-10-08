@@ -517,3 +517,73 @@ jQuery(document).ready(function() {
 						}
 					});
 				}
+				
+				function getByJobTitle() {
+					var navUrl =  "../jobsearch/searchJbsByTitle.html";
+					$.ajax({url: navUrl,
+						success: function(data){
+							$(".otherContent").attr("style","display: none");
+							$(".searchContent").attr("style","display: block");
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							// nothing to do now
+						}
+					});
+				}
+								
+				function getByEmployer() {
+					var navUrl =  "../jobsearch/searchJbsByEmployer.html";
+					$.ajax({url: navUrl,
+						success: function(data){
+							$(".otherContent").attr("style","display: none");
+							$(".searchContent").attr("style","display: block");
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							// nothing to do now
+						}
+					});
+				}
+				
+				function getByLocation() {
+					var navUrl =  "../jobsearch/searchJbsByLocation.html";
+					$.ajax({url: navUrl,
+						success: function(data){
+							$(".otherContent").attr("style","display: none");
+							$(".searchContent").attr("style","display: block");
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							// nothing to do now
+						}
+					});
+				}
+				
+				function searchByTitle(jobTitle){
+				$.ajax({url: "../jobsearch/searchByTitle.html?keywords="+jobTitle,
+						success: function(data){ 
+								if(data.keywords != null){
+									$("#keywords").val(data.keywords);
+								}else if(data.cityState != null){
+									$("#cityState").val(data.cityState);
+								}else if(data.radius != null){
+									$("#radius").val(data.radius);
+								}
+								$("#autoload").val(true);
+								findJobs();							
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							
+						}
+					});
+			    }
