@@ -27,16 +27,11 @@ public class AgencyDAOImpl implements AgencyDAO {
 	private FacilityConversionHelper facilityConversionHelper;
 
 	private HibernateTemplate hibernateTemplateCareers;
-	private HibernateTemplate hibernateTemplateTracker;
 
 	@Autowired
 	public void setHibernateTemplate(
-			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
-		this.hibernateTemplateTracker = new HibernateTemplate(
-				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
-
 	}
 
 	/**
