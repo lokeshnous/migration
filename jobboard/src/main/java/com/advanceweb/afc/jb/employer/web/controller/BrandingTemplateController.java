@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,22 +72,21 @@ public class BrandingTemplateController {
 
 	private @Value("${imageSizeLimit}")
 	String imageSizeLimit;
-	
+
 	private @Value("${videoSizeLimit}")
 	String videoSizeLimit;
 
 	private @Value("${empBrandFileError}")
 	String empBrandFileError;
-	 
+
 	private @Value("${empBrandTemplateError}")
 	String empBrandTemplateError;
-	
+
 	private @Value("${empBrandTemplatePurchase}")
 	String empBrandTemplatePurchase;
-	
+
 	private @Value("${defaultColor}")
 	String defaultColor;
-	 
 
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
@@ -98,7 +96,8 @@ public class BrandingTemplateController {
 	private static final String STR_BRANDTEMPLATEPREVIEW = "brandTemplatePreview";
 	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
 	private static final String STR_UNDERSCORE = "_";
-	
+	private static final String STR_ERRORMESSAGE = "errorMessage";
+
 	/**
 	 * The method is called to create the job posting Branding Template.
 	 * 
@@ -117,7 +116,7 @@ public class BrandingTemplateController {
 		Boolean status = null;
 		BrandingTemplateDTO empBrandTempDTO = new BrandingTemplateDTO();
 		ModelAndView model = new ModelAndView();
-		
+
 		// Retrieve facilityId and userId from session.
 		int facility_id = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
@@ -128,7 +127,7 @@ public class BrandingTemplateController {
 
 		// Read the Silver/Gold customer details from database
 		brandingTemplate = checkBrand(brandingTemplate, facility_id);
-				
+
 		// Modify the names of media files to save on File server
 		brandingTemplate = modifyMediaName(brandingTemplate);
 
@@ -136,38 +135,18 @@ public class BrandingTemplateController {
 		brandingTemplateValidation.validateSilver(brandingTemplate, result);
 
 		if (result.hasErrors()) {
-			if (!brandingTemplateForm.getIsSilverCustomer())
-			{
+			if (!brandingTemplateForm.getIsSilverCustomer()) {
 				verifyMultimediaContent(brandingTemplateForm);
 			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
-			model.addObject("errorMessage", null);
+			model.addObject(STR_ERRORMESSAGE, null);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 		}
 
-		if (!brandingTemplate.getIsSilverCustomer()) {
-			String errorMessage = brandingTemplateValidation.validateNonSilver(
-					brandingTemplate, result);
-
-			if (!StringUtils.isEmpty(errorMessage)) {
-				if (brandingTemplate.getListTestimony().isEmpty()) {
-					brandingTemplate.getListTestimony()
-							.add(new TestimonyForm());
-				}
-				if (brandingTemplate.getListAddImages().isEmpty()) {
-					brandingTemplate.getListAddImages().add(new AddImageForm());
-				}
-				if (brandingTemplate.getListVideos().isEmpty()) {
-					brandingTemplate.getListVideos().add(new VideoForm());
-				}
-				verifyMultimediaContent(brandingTemplateForm);
-				model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
-				model.addObject("errorMessage", errorMessage);
-				model.setViewName(STR_CREATEBRANDINGTEMPLATE);
-				return model;
-			}
-
+		if (!brandingTemplate.getIsSilverCustomer()
+				&& !validateNonSilverCust(brandingTemplate, result, model)) {
+			return model;
 		}
 
 		// Upload the media files to File server
@@ -176,7 +155,6 @@ public class BrandingTemplateController {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					empBrandFileError);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
-			status = null;
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
 			return model;
 		}
@@ -195,12 +173,37 @@ public class BrandingTemplateController {
 
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					empBrandTemplateError);
-			status = null;
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 
 		}
+	}
+
+	public boolean validateNonSilverCust(BrandingTemplateForm brandingTemplate,
+			BindingResult result, ModelAndView model) {
+		String errorMessage = brandingTemplateValidation.validateNonSilver(
+				brandingTemplate, result);
+
+		if (!StringUtils.isEmpty(errorMessage)) {
+			if (brandingTemplate.getListTestimony().isEmpty()) {
+				brandingTemplate.getListTestimony().add(new TestimonyForm());
+			}
+			if (brandingTemplate.getListAddImages().isEmpty()) {
+				brandingTemplate.getListAddImages().add(new AddImageForm());
+			}
+			if (brandingTemplate.getListVideos().isEmpty()) {
+				brandingTemplate.getListVideos().add(new VideoForm());
+			}
+			verifyMultimediaContent(brandingTemplate);
+			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
+			model.addObject(STR_ERRORMESSAGE, errorMessage);
+			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 
 	@ResponseBody
@@ -218,7 +221,8 @@ public class BrandingTemplateController {
 		ModelAndView model = new ModelAndView();
 
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int facility_id = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
 
@@ -231,38 +235,18 @@ public class BrandingTemplateController {
 		brandingTemplateValidation.validateSilver(brandingTemplateForm, result);
 
 		if (result.hasErrors()) {
-			if (!brandingTemplateForm.getIsSilverCustomer())
-			{
+			if (!brandingTemplateForm.getIsSilverCustomer()) {
 				verifyMultimediaContent(brandingTemplateForm);
 			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
-			model.addObject("errorMessage", null);
+			model.addObject(STR_ERRORMESSAGE, null);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 		}
 
-		if (!brandingTemplateForm.getIsSilverCustomer()) {
-			String errorMessage = brandingTemplateValidation.validateNonSilver(
-					brandingTemplateForm, result);
-			if (!StringUtils.isEmpty(errorMessage)) {
-				if (brandingTemplateForm.getListTestimony().isEmpty()) {
-					brandingTemplateForm.getListTestimony().add(
-							new TestimonyForm());
-				}
-				if (brandingTemplateForm.getListAddImages().isEmpty()) {
-					brandingTemplateForm.getListAddImages().add(
-							new AddImageForm());
-				}
-				if (brandingTemplateForm.getListVideos().isEmpty()) {
-					brandingTemplateForm.getListVideos().add(new VideoForm());
-				}
-				verifyMultimediaContent(brandingTemplateForm);
-				model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
-				model.addObject("errorMessage", errorMessage);
-				model.setViewName(STR_CREATEBRANDINGTEMPLATE);
-				return model;
-			}
-
+		if (!brandingTemplateForm.getIsSilverCustomer()
+				&& !validateNonSilverCust(brandingTemplateForm, result, model)) {
+			return model;
 		}
 
 		// Upload the media files to File server
@@ -271,20 +255,18 @@ public class BrandingTemplateController {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					"An error occured while saving the file");
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
-			status = null;
 			return model;
 		}
 
-		if(null==brandingTemplateForm.getColor() || brandingTemplateForm.getColor().isEmpty())
-		{
+		if (null == brandingTemplateForm.getColor()
+				|| brandingTemplateForm.getColor().isEmpty()) {
 			brandingTemplateForm.setColor(defaultColor);
 		}
-			model.setViewName(STR_BRANDTEMPLATEPREVIEW);
-
+		model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 
 		return model;
 	}
-	
+
 	/**
 	 * The method is called to read the branding information from database.
 	 * 
@@ -292,52 +274,48 @@ public class BrandingTemplateController {
 	 * @param facility_id
 	 * @return brandingTemplate
 	 */
-	public BrandingTemplateForm checkBrand(BrandingTemplateForm form, int facility_id)
-	{
+	public BrandingTemplateForm checkBrand(BrandingTemplateForm form,
+			int facility_id) {
 		int packageId = 1;
 		BrandingTemplateForm brandingTemplateForm = form;
-		
+
 		// Getting the customer ID from Adm Facility table.
-		int nsCustomerID = brandingTemplateService.getNSCustomerIDFromAdmFacility(facility_id);
-		
-		UserDTO userDTO = brandingTemplateService.getBrandingInformation(nsCustomerID);
+		int nsCustomerID = brandingTemplateService
+				.getNSCustomerIDFromAdmFacility(facility_id);
+
+		UserDTO userDTO = brandingTemplateService
+				.getBrandingInformation(nsCustomerID);
 
 		if (null != userDTO.getPackageName()) {
-			if (userDTO.getPackageName().equalsIgnoreCase("Gold") ) 
-			{
+			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_GOLD;
-			} 
-			else if(userDTO.getPackageName().equalsIgnoreCase("Platinum"))
-			{
+			} else if (userDTO.getPackageName().equalsIgnoreCase("Platinum")) {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_PLATINUM;
-			}else 
-			{
+			} else {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
 			}
-		}
-		else
-		{
+		} else {
 			brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
 		}
-		
+
 		brandingTemplateForm.setPackageId(packageId);
-		
+
 		return brandingTemplateForm;
 	}
 
 	@RequestMapping(value = "/previewExisting", method = RequestMethod.GET)
-	public ModelAndView previewExisting(
-			BrandingTemplateForm form,
+	public ModelAndView previewExisting(BrandingTemplateForm form,
 			@RequestParam("templateId") int templateId, HttpSession session) {
 
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int facility_id = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
-		
+
 		BrandingTemplateDTO templateDTO = brandingTemplateService
 				.editBrandingTemplate(templateId);
 
@@ -348,11 +326,11 @@ public class BrandingTemplateController {
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
 
-		if(null==brandingTemplateForm.getColor() || brandingTemplateForm.getColor().isEmpty())
-		{
+		if (null == brandingTemplateForm.getColor()
+				|| brandingTemplateForm.getColor().isEmpty()) {
 			brandingTemplateForm.setColor(defaultColor);
 		}
-		
+
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 		return model;
@@ -360,7 +338,8 @@ public class BrandingTemplateController {
 	}
 
 	@RequestMapping("/viewTestimonial")
-	public ModelAndView enlargeTestimonial(@RequestParam("id") String testimonyId,
+	public ModelAndView enlargeTestimonial(
+			@RequestParam("id") String testimonyId,
 			HttpServletResponse response, HttpServletRequest request,
 			BrandingTemplateForm brandingTemplateForm) {
 		ModelAndView model = new ModelAndView();
@@ -369,7 +348,7 @@ public class BrandingTemplateController {
 		model.setViewName("viewTestimony");
 		return model;
 	}
-	
+
 	@RequestMapping("/viewImage")
 	public void getPhoto(@RequestParam("id") String imageId,
 			HttpServletResponse response, HttpServletRequest request,
@@ -399,7 +378,7 @@ public class BrandingTemplateController {
 	 * Writes the report to the output stream
 	 */
 	public void write(HttpServletResponse response, byte[] byteArray) {
-		ServletOutputStream outputStream =null;
+		ServletOutputStream outputStream = null;
 		try {
 			// Retrieve the output stream
 			outputStream = response.getOutputStream();
@@ -412,11 +391,10 @@ public class BrandingTemplateController {
 
 		} catch (Exception e) {
 			LOGGER.error(e);
-		}
-		finally{
-			try{
-			outputStream.close();
-			}catch (Exception e) {
+		} finally {
+			try {
+				outputStream.close();
+			} catch (Exception e) {
 				LOGGER.error(e);
 			}
 		}
@@ -448,88 +426,88 @@ public class BrandingTemplateController {
 		String mainImageModifiedName = null;
 		Random random = new Random();
 
-		
-
-		if(brandingTemplateForm.getLogoFileData().getSize() > 0)
-		{
+		if (brandingTemplateForm.getLogoFileData().getSize() > 0) {
 			logoOrigName = brandingTemplateForm.getLogoFileData()
 					.getOriginalFilename();
-			logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
-					+ logoOrigName;
-			
+			logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000)
+					+ STR_UNDERSCORE + logoOrigName;
+
 			brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia
 					+ logoModifiedName);
 		}
 
-		if(brandingTemplateForm.getMainImageFileData().getSize() > 0)
-		{
+		if (brandingTemplateForm.getMainImageFileData().getSize() > 0) {
 			mainImageOrigName = brandingTemplateForm.getMainImageFileData()
 					.getOriginalFilename();
-			mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
-					+ mainImageOrigName;
-			brandingTemplateForm.setMainImagePath(baseDirectoryPathImageAndMedia
-					+ mainImageModifiedName);
+			mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000)
+					+ STR_UNDERSCORE + mainImageOrigName;
+			brandingTemplateForm
+					.setMainImagePath(baseDirectoryPathImageAndMedia
+							+ mainImageModifiedName);
 		}
-		
-		
-		
+
 		// Only for Multi media section
 		if (!brandingTemplateForm.getIsSilverCustomer()) {
-
-			List<AddImageForm> listImages = new ArrayList<AddImageForm>();
-			List<AddImageForm> listModImages = new ArrayList<AddImageForm>();
-			listImages = brandingTemplateForm.getListAddImages();
-
-			for (AddImageForm image : listImages) {
-
-				if (image.getAddImageFileData().getSize() > 0) 
-				{
-					image.setMediaPath(baseDirectoryPathImageAndMedia
-							+ STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
-							+ image.getAddImageFileData().getOriginalFilename());
-				}
-				if(null != image.getMediaPath())
-				{
-					listModImages.add(image);
-				}
-			}
-
-			brandingTemplateForm.setListAddImages(listModImages);
-
-			List<VideoForm> listVideos = new ArrayList<VideoForm>();
-			List<VideoForm> listModVideos = new ArrayList<VideoForm>();
-			listVideos = brandingTemplateForm.getListVideos();
-
-			for (VideoForm video : listVideos) {
-				if (video.getVideoFileData().getSize() > 0) {
-					video.setMediaPath(baseDirectoryPathImageAndMedia
-							+ STR_TEMPLATE_ + random.nextInt(10000) + STR_UNDERSCORE
-							+ video.getVideoFileData().getOriginalFilename());
-					
-				}
-				if(null != video.getMediaPath())
-				{
-					listModVideos.add(video);
-				}
-			}
-			brandingTemplateForm.setListVideos(listModVideos);
-
-			List<TestimonyForm> listTestimonies = new ArrayList<TestimonyForm>();
-			List<TestimonyForm> listModTestimonies = new ArrayList<TestimonyForm>();
-			listTestimonies = brandingTemplateForm.getListTestimony();
-
-			for (TestimonyForm testimony : listTestimonies) {
-				if (!testimony.getTestimony().isEmpty()) {
-
-					listModTestimonies.add(testimony);
-				}
-			}
-			brandingTemplateForm.setListTestimony(listModTestimonies);
-
+			modifyMultiMediaName(brandingTemplateForm, random);
 		}
 
 		return brandingTemplateForm;
+	}
 
+	/**
+	 * @param brandingTemplateForm
+	 * @param random
+	 */
+	private void modifyMultiMediaName(
+			BrandingTemplateForm brandingTemplateForm, Random random) {
+		List<AddImageForm> listImages = new ArrayList<AddImageForm>();
+		List<AddImageForm> listModImages = new ArrayList<AddImageForm>();
+		listImages = brandingTemplateForm.getListAddImages();
+
+		for (AddImageForm image : listImages) {
+
+			if (image.getAddImageFileData().getSize() > 0) {
+				image.setMediaPath(baseDirectoryPathImageAndMedia
+						+ STR_TEMPLATE_ + random.nextInt(10000)
+						+ STR_UNDERSCORE
+						+ image.getAddImageFileData().getOriginalFilename());
+			}
+			if (null != image.getMediaPath()) {
+				listModImages.add(image);
+			}
+		}
+
+		brandingTemplateForm.setListAddImages(listModImages);
+
+		List<VideoForm> listVideos = new ArrayList<VideoForm>();
+		List<VideoForm> listModVideos = new ArrayList<VideoForm>();
+		listVideos = brandingTemplateForm.getListVideos();
+
+		for (VideoForm video : listVideos) {
+			if (video.getVideoFileData().getSize() > 0) {
+				video.setMediaPath(baseDirectoryPathImageAndMedia
+						+ STR_TEMPLATE_ + random.nextInt(10000)
+						+ STR_UNDERSCORE
+						+ video.getVideoFileData().getOriginalFilename());
+
+			}
+			if (null != video.getMediaPath()) {
+				listModVideos.add(video);
+			}
+		}
+		brandingTemplateForm.setListVideos(listModVideos);
+
+		List<TestimonyForm> listTestimonies = new ArrayList<TestimonyForm>();
+		List<TestimonyForm> listModTestimonies = new ArrayList<TestimonyForm>();
+		listTestimonies = brandingTemplateForm.getListTestimony();
+
+		for (TestimonyForm testimony : listTestimonies) {
+			if (!testimony.getTestimony().isEmpty()) {
+
+				listModTestimonies.add(testimony);
+			}
+		}
+		brandingTemplateForm.setListTestimony(listModTestimonies);
 	}
 
 	/**
@@ -545,112 +523,44 @@ public class BrandingTemplateController {
 				brandingTemplateForm.getMainImagePath());
 		try {
 
-			
-			if(brandingTemplateForm.getLogoFileData().getSize() > 0)
-			{
+			if (brandingTemplateForm.getLogoFileData().getSize() > 0) {
 				MultipartFile logoFile = brandingTemplateForm.getLogoFileData();
 				logoFile.transferTo(logoFileDest);
 			}
-			
-			if(brandingTemplateForm.getMainImageFileData().getSize() > 0)
-			{
-				MultipartFile mainImageFile = brandingTemplateForm.getMainImageFileData();
+
+			if (brandingTemplateForm.getMainImageFileData().getSize() > 0) {
+				MultipartFile mainImageFile = brandingTemplateForm
+						.getMainImageFileData();
 				mainImageFile.transferTo(mainImageFileDest);
 			}
-			
+
 			if (!brandingTemplateForm.getIsSilverCustomer()) {
 
-				for (AddImageForm addImageForm : brandingTemplateForm.getListAddImages()) {
-					if(addImageForm.getAddImageFileData().getSize() > 0)
-					{
-						addImageForm.getAddImageFileData().transferTo(new File(addImageForm.getMediaPath()));
+				for (AddImageForm addImageForm : brandingTemplateForm
+						.getListAddImages()) {
+					if (addImageForm.getAddImageFileData().getSize() > 0) {
+						addImageForm.getAddImageFileData().transferTo(
+								new File(addImageForm.getMediaPath()));
 					}
 				}
 
 				for (VideoForm videoForm : brandingTemplateForm.getListVideos()) {
-					if(videoForm.getVideoFileData().getSize() > 0)
-					{
-						videoForm.getVideoFileData().transferTo(new File(videoForm.getMediaPath()));
+					if (videoForm.getVideoFileData().getSize() > 0) {
+						videoForm.getVideoFileData().transferTo(
+								new File(videoForm.getMediaPath()));
 					}
 				}
 			}
 			status = Boolean.TRUE;
 
-		} catch (IllegalStateException e) {
-
-			status = Boolean.FALSE;
-
-			LOGGER.error("ERROR OCCURED: " + e);
-
-		} catch (IOException e) {
-
-			status = Boolean.FALSE;
-			LOGGER.error("ERROR OCCURED: " + e);
-
 		} catch (Exception e) {
-
 			status = Boolean.FALSE;
 			LOGGER.error("ERROR OCCURED: " + e);
-
 		}
 
 		return status;
 
 	}
-
-	/**
-	 * The method is called to view the job posting Branding Template.
-	 * 
-	 * @param model
-	 * @return
-	 */
-	// @RequestMapping(value = "/viewEmpBrandTemp", method = RequestMethod.POST)
-	// public ModelAndView viewEmpBrandTemp(Map model) {
-	// EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-	// empBrandTempDTO.setJpBrandTempId(1);
-	// empBrandTempDTO = empBrandTemp.viewEmpBrandTemp(empBrandTempDTO);
-	// return new ModelAndView("empBrandTempView");
-	// }
-
-	/**
-	 * The method is called to edit the job posting Branding Template.
-	 * 
-	 * @param model
-	 * @return
-	 */
-	// @RequestMapping(value = "/editEmpBrandTemp", method = RequestMethod.POST)
-	// public ModelAndView editEmpBrandTemp(Map model) {
-	// EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-	// empBrandTempDTO.setTemplateName("Test Template Desc updated");
-	// empBrandTempDTO.setEmployerId(30);
-	// empBrandTempDTO.setJpBrandTempId(9);
-	// empBrandTempDTO.setImagePath("c://imageupd2.jpg");
-	// empBrandTempDTO.setLogoPath("c://logoupd2.jpg");
-	// empBrandTempDTO.setColor("#ffff00");
-	// // empBrandTempDTO.setUpdatedDate(new Date().toString());
-	// empBrandTempDTO = empBrandTemp.editEmpBrandTemp(empBrandTempDTO);
-	// return new ModelAndView("empBrandTempEdit");
-	// }
-
-	/**
-	 * The method is called to delete the job posting Branding Template.
-	 * 
-	 * @param model
-	 * @return
-	 */
-	// @RequestMapping(value = "/deleteEmpBrandTemp", method =
-	// RequestMethod.POST)
-	// public ModelAndView deleteEmpBrandTemp(Map model) {
-	// Boolean status = null;
-	// EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-	//
-	// empBrandTempDTO.setJpBrandTempId(11);
-	// status = empBrandTemp.deleteEmpBrandTemp(empBrandTempDTO);
-	// if (status) {
-	// return null;
-	// }
-	// return new ModelAndView("empBrandTempListPopup");
-	// }
 
 	/**
 	 * The method is called to close the manageBrandingTemplatePopup.
@@ -662,8 +572,6 @@ public class BrandingTemplateController {
 	// @RequestMapping(value = "/cancelBrandTemp", method = RequestMethod.GET)
 	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params = "Cancel")
 	public ModelAndView cancelBrandTemp(Map model) {
-		// return new
-		// ModelAndView("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		return new ModelAndView(STR_EMPDASHBOARD);
 	}
 
@@ -676,11 +584,11 @@ public class BrandingTemplateController {
 	@RequestMapping(value = "/newBrandingTemplate", method = RequestMethod.GET)
 	public ModelAndView newBrandTemp(Map modelMap, HttpSession session) {
 		BrandingTemplateForm brandingTemplateForm = new BrandingTemplateForm();
-		// modelMap.put(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		ModelAndView model = new ModelAndView();
 
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int facility_id = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
 
@@ -701,7 +609,7 @@ public class BrandingTemplateController {
 
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
-		
+
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		// Dummy list created to have a non zero List
@@ -724,22 +632,23 @@ public class BrandingTemplateController {
 		BrandingTemplateForm brandingTemplateForm = form;
 
 		ModelAndView model = new ModelAndView();
-		
-		if(!brandingTemplateForm.getIsSilverCustomer())
-		{
+
+		if (!brandingTemplateForm.getIsSilverCustomer()) {
 			brandingTemplateForm = verifyMultimediaContent(brandingTemplateForm);
 		}
-		
-		if(null != brandingTemplateForm.getMainImagePath())
-		{
-			brandingTemplateForm.setChosenMainImage(getOriginalName(brandingTemplateForm.getMainImagePath()));
+
+		if (null != brandingTemplateForm.getMainImagePath()) {
+			brandingTemplateForm
+					.setChosenMainImage(getOriginalName(brandingTemplateForm
+							.getMainImagePath()));
 		}
-		
-		if(null != brandingTemplateForm.getLogoPath())
-		{
-			brandingTemplateForm.setChosenLogo(getOriginalName(brandingTemplateForm.getLogoPath()));
+
+		if (null != brandingTemplateForm.getLogoPath()) {
+			brandingTemplateForm
+					.setChosenLogo(getOriginalName(brandingTemplateForm
+							.getLogoPath()));
 		}
-		
+
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		if (brandingTemplateForm.getBrowsePath().equalsIgnoreCase("manage")) {
 			model.setViewName(STR_EMPDASHBOARD);
@@ -747,7 +656,7 @@ public class BrandingTemplateController {
 		} else {
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		}
-		
+
 		return model;
 	}
 
@@ -769,9 +678,10 @@ public class BrandingTemplateController {
 
 		model.addObject("testimonyPosId", brandingTemplateForm
 				.getListTestimony().size());
-		
-		boolean isTestimonialEmpty = (null == brandingTemplateForm.getListTestimony()?true:false);
-		
+
+		boolean isTestimonialEmpty = (null == brandingTemplateForm
+				.getListTestimony() ? true : false);
+
 		if (isTestimonialEmpty) {
 			List<TestimonyForm> listTestimonies = new ArrayList<TestimonyForm>();
 			listTestimonies.add(testimony);
@@ -846,73 +756,6 @@ public class BrandingTemplateController {
 	}
 
 	/**
-	 * The method is called to create a the empBrandTemplatePreview popup.
-	 * 
-	 * @param model
-	 * @return
-	 */
-	// @RequestMapping(value = "/empBrandTemplatePreview", method =
-	// RequestMethod.GET)
-	// public ModelAndView previewBrandingTemplate(Map model) {
-	// model.put(STR_BRANDINGTEMPLATEFORM, new BrandingTemplateForm());
-	// return new ModelAndView("empBrandTemplatePreview");
-	// }
-
-	// @RequestMapping(value = "/viewResumeBuilder", method =
-	// RequestMethod.POST)
-	// public ModelAndView viewResumeBuilder(BrandingTemplateForm
-	// brandingTemplateForm,
-	// BindingResult result, @RequestParam("resumeId") int resumeId,
-	// HttpServletRequest request, HttpServletResponse response) {
-	//
-	// ModelAndView model = new ModelAndView();
-	// ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-	// createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
-	// List<CertificationsForm> listCertForm = transCreateResume
-	// .transformCertForm(resumeDTO.getListCertDTO());
-	// List<ReferenceForm> listRefForm = transCreateResume
-	// .transformReferenceForm(resumeDTO.getListRefDTO());
-	// List<EducationForm> listEduForm = transCreateResume
-	// .transformEducationForm(resumeDTO.getListEduDTO());
-	// List<WorkExpForm> listWorkExpForm = transCreateResume
-	// .transformWorkExpForm(resumeDTO.getListWorkExpDTO());
-	// List<LanguageForm> listLangForm = transCreateResume
-	// .transformLanguageForm(resumeDTO.getListLangDTO());
-	// ContactInfoForm contactForm = transCreateResume
-	// .transformContactInfoForm(resumeDTO.getContactInfoDTO());
-	// List<PhoneDetailForm> listPhoneDtl = transCreateResume
-	// .transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
-	//
-	// createResume.setListCertForm(listCertForm);
-	// createResume.setListEduForm(listEduForm);
-	// createResume.setListLangForm(listLangForm);
-	// createResume.setListRefForm(listRefForm);
-	// createResume.setListWorkExpForm(listWorkExpForm);
-	// createResume.setContactInfoForm(contactForm);
-	// createResume.setListPhoneDtlForm(listPhoneDtl);
-	// resumeDTO.getContactInfoDTO();
-	// if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
-	// .getResumeType())) {
-	// model.addObject("createResume", createResume);
-	// model.setViewName("viewresume");
-	// } else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
-	// .getResumeType())) {
-	// try {
-	// model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
-	// + resumeDTO.getFilePath());
-	// return model;
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// } else {
-	// model.addObject("createResume", createResume);
-	// model.setViewName("viewCopyPasteResume");
-	// }
-	// return model;
-	//
-	// }
-
-	/**
 	 * The method is called to fetch the job posting Branding Templates
 	 * 
 	 * @param Map
@@ -922,19 +765,21 @@ public class BrandingTemplateController {
 	@RequestMapping(value = "/employer/manageBrandingTemplate", method = RequestMethod.GET)
 	public ModelAndView fetchEmpBrandTemp(
 			Map<String, List<BrandingTemplateDTO>> model, HttpSession session) {
-			boolean isBrandPurchased = false;
-			// 	Retrieve facilityId from session.
-			int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			isBrandPurchased = brandingTemplateService.getBrandPurchaseInfo(facilityId);
-			ModelAndView modelView = new ModelAndView();
-			List<BrandingTemplateDTO> brandTemplateList = brandingTemplateService
-					.getBrandingTemplate((Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));
-			model.put("templatesList", brandTemplateList);
-			modelView.addObject("isBrandPurchased",isBrandPurchased);
-			modelView.addObject("errorMessage", empBrandTemplatePurchase);
-			modelView.setViewName("manageBrandingTemplatePopup");
-			return modelView;
+		boolean isBrandPurchased = false;
+		// Retrieve facilityId from session.
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		isBrandPurchased = brandingTemplateService
+				.getBrandPurchaseInfo(facilityId);
+		ModelAndView modelView = new ModelAndView();
+		List<BrandingTemplateDTO> brandTemplateList = brandingTemplateService
+				.getBrandingTemplate((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
+		model.put("templatesList", brandTemplateList);
+		modelView.addObject("isBrandPurchased", isBrandPurchased);
+		modelView.addObject(STR_ERRORMESSAGE, empBrandTemplatePurchase);
+		modelView.setViewName("manageBrandingTemplatePopup");
+		return modelView;
 	}
 
 	/**
@@ -945,41 +790,43 @@ public class BrandingTemplateController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/editTemplate", method = RequestMethod.GET)
-	public ModelAndView editEmpBrandTemp(
-			BrandingTemplateForm form,
+	public ModelAndView editEmpBrandTemp(BrandingTemplateForm form,
 			@RequestParam("templateId") int templateId, HttpSession session) {
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int facility_id = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
-		
+
 		BrandingTemplateDTO templateDTO = brandingTemplateService
 				.editBrandingTemplate(templateId);
 
-		templateDTO.setIsSilverCustomer(brandingTemplateForm.getIsSilverCustomer());
+		templateDTO.setIsSilverCustomer(brandingTemplateForm
+				.getIsSilverCustomer());
 		ModelAndView model = new ModelAndView();
 		transformEmpoyerBrandTemplate.fromBrandDTOToBrandForm(
 				brandingTemplateForm, templateDTO);
-		
-		if(!brandingTemplateForm.getIsSilverCustomer())
-		{
+
+		if (!brandingTemplateForm.getIsSilverCustomer()) {
 			brandingTemplateForm = verifyMultimediaContent(brandingTemplateForm);
 		}
-		
-		if(null != brandingTemplateForm.getMainImagePath())
-		{
-			brandingTemplateForm.setChosenMainImage(getOriginalName(brandingTemplateForm.getMainImagePath()));
+
+		if (null != brandingTemplateForm.getMainImagePath()) {
+			brandingTemplateForm
+					.setChosenMainImage(getOriginalName(brandingTemplateForm
+							.getMainImagePath()));
 		}
-		
-		if(null != brandingTemplateForm.getLogoPath())
-		{
-			brandingTemplateForm.setChosenLogo(getOriginalName(brandingTemplateForm.getLogoPath()));
+
+		if (null != brandingTemplateForm.getLogoPath()) {
+			brandingTemplateForm
+					.setChosenLogo(getOriginalName(brandingTemplateForm
+							.getLogoPath()));
 		}
-		
+
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
-		
+
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		// model.setViewName("editBrandingTemplate");
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
@@ -1007,10 +854,10 @@ public class BrandingTemplateController {
 		ModelAndView model = new ModelAndView();
 
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int facility_id = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		// Read the Silver/Gold customer details from database
 		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
-
 
 		// Modify the names of media files to save on File server
 		brandingTemplateForm = modifyMediaName(brandingTemplateForm);
@@ -1031,7 +878,6 @@ public class BrandingTemplateController {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					"An error occured while saving the file");
 			model.setViewName("editBrandingTemplate");
-			status = null;
 			return model;
 		}
 
@@ -1092,9 +938,9 @@ public class BrandingTemplateController {
 		if (null != filePath) {
 			fileName = filePath;
 
-			index1 = fileName.lastIndexOf("/");
+			index1 = fileName.lastIndexOf('/');
 			if (index1 == -1) {
-				index1 = fileName.lastIndexOf("\\");
+				index1 = fileName.lastIndexOf('\\');
 			}
 
 			ModifiedFileName1 = fileName.substring(index1 + 1);
@@ -1107,58 +953,71 @@ public class BrandingTemplateController {
 		}
 		return OriginalFileName;
 	}
-	
-	
-	public BrandingTemplateForm verifyMultimediaContent(BrandingTemplateForm form)
-	{
+
+	/**
+	 * This method verifies the MultiMedia content
+	 * 
+	 * @param form
+	 * @return
+	 */
+	public BrandingTemplateForm verifyMultimediaContent(
+			BrandingTemplateForm form) {
 		BrandingTemplateForm brandingTemplateForm = form;
-		if (null == brandingTemplateForm.getListTestimony() || brandingTemplateForm.getListTestimony().isEmpty()) {
+		if (null == brandingTemplateForm.getListTestimony()
+				|| brandingTemplateForm.getListTestimony().isEmpty()) {
 			List<TestimonyForm> listEmptyTestimonies = new ArrayList<TestimonyForm>();
 			listEmptyTestimonies.add(new TestimonyForm());
 			brandingTemplateForm.setListTestimony(listEmptyTestimonies);
 		}
-		if (null == brandingTemplateForm.getListAddImages() || brandingTemplateForm.getListAddImages().isEmpty()) {
-			
+		if (null == brandingTemplateForm.getListAddImages()
+				|| brandingTemplateForm.getListAddImages().isEmpty()) {
+
 			List<AddImageForm> listEmptyAddImages = new ArrayList<AddImageForm>();
 			listEmptyAddImages.add(new AddImageForm());
 			brandingTemplateForm.setListAddImages(listEmptyAddImages);
 		}
-		if (null == brandingTemplateForm.getListVideos() || brandingTemplateForm.getListVideos().isEmpty()) {
+		if (null == brandingTemplateForm.getListVideos()
+				|| brandingTemplateForm.getListVideos().isEmpty()) {
 			List<VideoForm> listEmptyVideos = new ArrayList<VideoForm>();
 			listEmptyVideos.add(new VideoForm());
 			brandingTemplateForm.setListVideos(listEmptyVideos);
 		}
-		
-		if(null != brandingTemplateForm.getListAddImages())
-		{
+
+		verifyChosenMediaContent(brandingTemplateForm);
+
+		return brandingTemplateForm;
+	}
+
+	/**
+	 * This method is used to verify the MultiMedia file content chosen by user
+	 * 
+	 * @param brandingTemplateForm
+	 */
+	private void verifyChosenMediaContent(
+			BrandingTemplateForm brandingTemplateForm) {
+		if (null != brandingTemplateForm.getListAddImages()) {
 			List<AddImageForm> updatedAddImagesList = new ArrayList<AddImageForm>();
-			for(AddImageForm image : brandingTemplateForm.getListAddImages())
-			{
-				if(null != image.getMediaPath())
-				{
-					image.setChosenAddImage(getOriginalName(image.getMediaPath()));
+			for (AddImageForm image : brandingTemplateForm.getListAddImages()) {
+				if (null != image.getMediaPath()) {
+					image.setChosenAddImage(getOriginalName(image
+							.getMediaPath()));
 				}
 				updatedAddImagesList.add(image);
 			}
-			
+
 			brandingTemplateForm.setListAddImages(updatedAddImagesList);
 		}
-		
-		if(null != brandingTemplateForm.getListVideos())
-		{
+
+		if (null != brandingTemplateForm.getListVideos()) {
 			List<VideoForm> updatedVideoList = new ArrayList<VideoForm>();
-			for(VideoForm video : brandingTemplateForm.getListVideos())
-			{
-				if(null != video.getMediaPath())
-				{
+			for (VideoForm video : brandingTemplateForm.getListVideos()) {
+				if (null != video.getMediaPath()) {
 					video.setChosenVideo(getOriginalName(video.getMediaPath()));
 				}
 				updatedVideoList.add(video);
 			}
-			
+
 			brandingTemplateForm.setListVideos(updatedVideoList);
 		}
-		
-		return brandingTemplateForm;
 	}
 }

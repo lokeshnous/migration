@@ -1,116 +1,87 @@
 package com.advanceweb.afc.jb.employer.service;
 
-//import static org.junit.Assert.assertNotNull;
-//import static org.junit.Assert.assertTrue;
-//
-//import java.util.Date;
-//import java.util.List;
-//
-//import org.junit.Ignore;
-//import org.junit.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Ignore;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.advanceweb.afc.jb.ServiceTest;
-//import com.advanceweb.afc.jb.common.EmpBrandTempDTO;
-//import com.advanceweb.afc.jb.common.MerUserDTO;
-//import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
+import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
 
 /**
- * <code>EmpBrandTempServiceTest</code> is a Test class for EmpBrandTemp
+ * <code>BrandTemplateServiceTest</code> is a Test class for EmpBrandTemp
  * 
  * @author Pramoda Patil
  * @version 1.0
  * @since 24 July 2012
  * 
  */
-public class BrandTemplateServiceTest extends ServiceTest {/*
+public class BrandTemplateServiceTest extends ServiceTest {
 
 	@Autowired
 	private BrandingTemplateDAO empBrandTempDAO;
 
-	*//**
+	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#fetchEmpBrandTemp(MerUserDTO)}
-	 *//*
-	 *TODO:need to change after the table changes
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#getBrandingTemplate(templateId)}
+	 */
 	@Test
-	public void fetchEmpBrandTemp() {
-		MerUserDTO merUserDTO = new MerUserDTO();
-		merUserDTO.setUserId(33);
-		List<EmpBrandTempDTO> templatesDTOs = empBrandTempDAO
-				.fetchEmpBrandTemp(merUserDTO);
+	public void testFetchEmpBrandTemp() {
+		int templateId = 1;
+		List<BrandingTemplateDTO> templatesDTOs = empBrandTempDAO
+				.getBrandingTemplate(templateId);
 		assertNotNull("Fetching the job posting templates", templatesDTOs);
 	}
 
-	*//**
+	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#createEmpBrandTemp(EmpBrandTempDTO)}
-	 *//*
-	 *TODO:need to change after the table changes
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#createEmpBrandTemp(empBrandTempDTO)}
+	 */
 	@Test
-	public void createEmpBrandTemp() {
+	public void testCreateEmpBrandTemp() {
 		Boolean status = null;
-		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-//		empBrandTempDTO.setDescription("Test Template Desc");
+		BrandingTemplateDTO empBrandTempDTO = new BrandingTemplateDTO();
+
 		empBrandTempDTO.setEmployerId(33);
 		empBrandTempDTO.setMainImagePath("c://image2.jpg");
 		empBrandTempDTO.setLogoPath("c://logo2.jpg");
 		empBrandTempDTO.setColor("#ff0000");
-		empBrandTempDTO.setCreatedDate(new Date());
-//		empBrandTempDTO.setUpdatedDate(null);
+		empBrandTempDTO.setCreatedDate(new Date().toString());
+		empBrandTempDTO.setCompanyOverview("Overview test");
 		status = empBrandTempDAO.createEmpBrandTemp(empBrandTempDTO);
 		assertTrue("Create job posting template", status);
 	}
 
-	*//**
+	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#viewEmpBrandTemp(EmpBrandTempDTO)}
-	 *//*
-	 *TODO:need to change after the table changes
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#editBrandingTemplate(templateId)}
+	 */
 	@Test
-	public void viewEmpBrandTemp() {
-		EmpBrandTempDTO empBrandTempDTO = null;
-		EmpBrandTempDTO brandingTemplatesDTO = new EmpBrandTempDTO();
-		brandingTemplatesDTO.setJpBrandTempId(11);
-		empBrandTempDTO = empBrandTempDAO
-				.viewEmpBrandTemp(brandingTemplatesDTO);
-		assertNotNull("Fetch selected job posting template", empBrandTempDTO);
+	public void testEditEmpBrandTemp() {
+		int templateId = 1;
+		BrandingTemplateDTO templatesDTO = empBrandTempDAO
+				.editBrandingTemplate(templateId);
+		assertNotNull("Update selected job posting template", templatesDTO);
 	}
 
-	*//**
+	/**
 	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#editEmpBrandTemp(EmpBrandTempDTO)}
-	 *//*
-	 *TODO:need to change after the table changes
-	@Test
-	public void editEmpBrandTemp() {
-		EmpBrandTempDTO empBrandTempDTO = null;
-		EmpBrandTempDTO updatedEmpBrandTempDTO = new EmpBrandTempDTO();
-//		updatedEmpBrandTempDTO.setDescription("Test Template Desc updated");
-		updatedEmpBrandTempDTO.setEmployerId(36);
-		updatedEmpBrandTempDTO.setJpBrandTempId(11);
-		updatedEmpBrandTempDTO.setMainImagePath("c://imageupd2.jpg");
-		updatedEmpBrandTempDTO.setLogoPath("c://logoupd2.jpg");
-		updatedEmpBrandTempDTO.setColor("#ffff00");
-//		updatedEmpBrandTempDTO.setUpdatedDate(new Date().toString());
-		empBrandTempDTO = empBrandTempDAO
-				.editEmpBrandTemp(updatedEmpBrandTempDTO);
-		assertNotNull("Update selected job posting template", empBrandTempDTO);
-	}
-
-	*//**
-	 * Test method for
-	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#deleteEmpBrandTemp(EmpBrandTempDTO)}
+	 * {@link com.advanceweb.afc.jb.employer.service.impl.BrandingTemplateServiceImpl#deleteBrandingTemplate(templateId,userId)}
 	 * .
-	 *//*
-	 *TODO:need to change after the table changes
+	 */
 	@Ignore("Test fails if repeatedly deleting deleted record")
 	@Test
-	public void deleteEmpBrandTemp() {
+	public void testDeleteEmpBrandTemp() {
 		Boolean status = null;
-		EmpBrandTempDTO empBrandTempDTO = new EmpBrandTempDTO();
-		empBrandTempDTO.setJpBrandTempId(8);
-		status = empBrandTempDAO.deleteEmpBrandTemp(empBrandTempDTO);
+		int templateId = 1;
+		int userId = 1;
+		status = empBrandTempDAO.deleteBrandingTemplate(templateId, userId);
 		assertTrue("Delete job posting template", status);
 	}
-*/}
+}
