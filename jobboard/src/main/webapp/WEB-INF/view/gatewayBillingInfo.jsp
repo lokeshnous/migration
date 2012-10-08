@@ -14,6 +14,8 @@
 <jsp:include page="common/include.jsp" />
 <link href="../resources/css/Gateway.css" rel="stylesheet"
 	type="text/css">
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.js"></script>	
 <title>ADVANCE Heathcare Jobs</title>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -30,9 +32,74 @@
 		
 		$('#firstname2').focus();
 		$('[id^=zip]').keypress(validateNumber);
+		
+		//Disable browser 'Save Password' functionality, clear out card number & security code
+		$('#billingForm').attr('autocomplete', 'off');
+		$("#card_number").val("");
+		$("#security_code").val("");
+		
+		//Auto complete on selecting city
+		$("#cityTown2").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getCityList.html',
+			width:500,
+			select: function(event, ui) {
+				$("#cityTown2").val(ui.item.value);				
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityTown2").val(),
+				success : function(data) {
+					$('#State2').val(data);
+
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityTown2").val()+'&state='+$("#State2").val(),
+					success : function(data) {
+						$('#zip2').val(data);
+					},
+					});						
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityTown2").val()+'&state='+$("#State2").val()+'&postalCode='+$("#zip2").val(),
+						success : function(country) {
+							$('#Country2').val(country);
+						},
+					}); 						
+				},
+				});
+			}
+		}); 
+
+		//Auto complete on selecting zipcode			
+		$("#zip2").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+			select: function(event, ui) {
+				$("#zip2").val(ui.item.value);	
+				$('#cityTown2').val("");
+				$('#State2').val("");
+				$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zip2").val(),
+					success : function(data) {
+						$('#State2').val(data.state);
+						$('#Country2').val(data.country);
+						$("#cityTown2").val(data.city);
+					},error : function(data) {
+						alert('Unable to process');
+					},
+					complete : function(data) {
+					}
+				});		
+			}
+		});	
+ 		
+		$("#zip2").change(function(){
+			$('#cityTown2').val("");
+			$('#State2').val("");
+			$('#Country2').val("");
+		});
+		
+		$("#cityTown2").change(function(){
+			$('#zip2').val("");
+			$('#State2').val("");
+			$('#Country2').val("");
+		});
 	});
-	
-	
 	
 	function copyAccToBillingAddr(obj) {
 		var isSelected = obj.value;

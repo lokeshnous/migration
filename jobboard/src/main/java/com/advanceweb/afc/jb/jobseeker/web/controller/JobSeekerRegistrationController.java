@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -284,9 +285,14 @@ public class JobSeekerRegistrationController {
 				for (JobSeekerProfileAttribForm form : registerForm
 						.getListProfAttribForms()) {
 
-					if (form.getStrLabelValue() != null
-							&& form.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.ID_VAL)) {
-						form.setStrLabelValue(registerForm.getOtherProfession());
+					if (form.getStrLabelName() != null
+							&& form.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.MYPROFESSION)) {
+						for(DropDownDTO dropDown:form.getDropdown()){
+							if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName()) && 
+									form.getStrLabelValue().equals(dropDown.getOptionId())){
+								form.setStrLabelValue(registerForm.getOtherProfession());
+							}
+						}
 					}
 
 					if (form.getStrLabelName().equals("My Industry")) {
@@ -434,11 +440,17 @@ public class JobSeekerRegistrationController {
 					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
 
 			for (JobSeekerProfileAttribForm profileForm : listProfAttribForms) {
-						if(profileForm.getStrLabelValue()!= null 
+						
+				if(profileForm.getStrLabelValue()!= null 
 								&& profileForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.MYPROFESSION) 
 								&& !isInteger(profileForm.getStrLabelValue())) {
 							form.setOtherProfession(profileForm.getStrLabelValue());
-						}
+							for(DropDownDTO dropDown:profileForm.getDropdown()){
+								if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName())){
+									profileForm.setStrLabelValue(dropDown.getOptionId());
+								}
+							}
+				}
 			}
 
 			form.setListProfAttribForms(listProfAttribForms);

@@ -42,7 +42,12 @@ function validateNumber(event) {
 		    	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 
- 			$("#OtherProffession").hide();
+		    if($("#MyProfession :selected").text() == "Others"){
+		         $("#OtherProffession").show();
+		    }else{
+		    	$("#OtherProffession").hide();
+		    }
+		    
 			$('#MyProfession').change(function() {
 			    if($("#MyProfession :selected").text() == "Others"){
 			         $("#OtherProffession").show();

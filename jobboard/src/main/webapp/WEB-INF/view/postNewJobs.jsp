@@ -335,6 +335,18 @@
 														});
 											}
 										});
+						$("#zipCodeITId").change(function(){
+							$('#cityAutoPopulation').val("");
+							$('#stateDpId').val("");
+							$('#countryDpId').val("");
+						});
+						
+						$("#cityAutoPopulation").change(function(){
+							$('#zipCodeITId').val("");
+							$('#stateDpId').val("");
+							$('#countryDpId').val("");
+						});
+						
 						if ($("#readOnly").val() == 'true') {
 							$('#postNewJobFormId').each(
 									function() {

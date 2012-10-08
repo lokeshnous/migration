@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
@@ -204,9 +205,14 @@ public class TransformJobSeekerRegistration {
 					
 					if(regForm != null && 
 							regForm.getOtherProfession() != null && 
-							form.getStrLabelName().equals(MMJBCommonConstants.MYPROFESSION)
-							&& form.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.ID_VAL)){
-						dto.setStrLabelValue(regForm.getOtherProfession());
+							form.getStrLabelName().equals(MMJBCommonConstants.MYPROFESSION)){
+						for(DropDownDTO dropDown:form.getDropdown()){
+							if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName())&& 
+									form.getStrLabelValue().equals(dropDown.getOptionId())){
+								dto.setStrLabelValue(regForm.getOtherProfession());
+							}
+						}
+						
 					}
 				}
 				dto.setStrAttribType(form.getStrAttribType());

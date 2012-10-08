@@ -35,26 +35,13 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		$.nmFilters({
-    	    custom: {
-    	        afterShowCont: function(nm) {
-    	        	$('.focus').focus();
-    	        }
-    	    }
-    	});
-		$.nmFilters({
-		    	    custom: {
-		    	        afterShowCont: function(nm) {
-		    	        	if($("#otherProfession").val() != null && $("#otherProfession").val() != "null"
-		    	        			&& $("#otherProfession").val() != ""){
-		    	        		$("#MyProfession :selected").text("Others");
-		    	        		
-		    	        	}else{
-		    	        		$("#otherProfession").hide();
-		    	        	}
-		    	        }
-		    	    }
-		    	});
+		
+		if($("#MyProfession :selected").text() == "Others"){
+	         $("#otherProfession").show();
+	    }else{
+	    	$("#otherProfession").hide();
+	    }
+		 
 		$('#MyProfession').change(function() {
 			 if($("#MyProfession :selected").text() == "Others"){
 		         $("#otherProfession").show();

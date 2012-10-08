@@ -31,7 +31,7 @@ public interface MMJBCommonConstants {
 	String RESUME_VISIBILITY = "ResumeVisibility";
 	String VISIBILITY = "Visibility";
 	String MYPROFESSION = "My Profession";
-	String ID_VAL = "10";
+	String PROFESSION_OTHERS = "Others";
 	String MYINDUSTRY = "My Industry";
 	String HEALTHCARE = "Health Care";
 
