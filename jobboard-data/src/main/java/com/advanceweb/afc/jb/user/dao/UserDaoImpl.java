@@ -88,8 +88,8 @@ public class UserDaoImpl implements UserDao {
 		boolean result = false;
 		List<AdmUserRole> user = hibernateTemplate.find(
 				"from AdmUserRole adm where adm.rolePK.userId=?", userId);
-		if (user != null && !user.isEmpty())
-			if (user.get(0).getRolePK().getRoleId() == 1) {
+		if (user != null && !user.isEmpty() && user.get(0).getRolePK().getRoleId() == 1)
+			{
 				result = true;
 			}
 		return result;
