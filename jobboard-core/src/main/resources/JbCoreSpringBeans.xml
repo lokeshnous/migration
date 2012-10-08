@@ -18,9 +18,9 @@
 			<map>
 				<!-- The values should be provided with no space between field names -->
 				<entry key="KEYWORD-FILTER-JB2"
-					value="keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam" />
+					value="keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder" />
 				<entry key="LOCATION-FILTER-JB2"
-					value="position,radius,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam" />
+					value="position,radius,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder" />
 			</map>
 		</constructor-arg>
 	</bean>

@@ -615,8 +615,9 @@ public class JobSearchController {
 		String secondFQParam = "";
 		String thirdFQParam = "";
 		String fouthFQParam = "";
-
-		if (!validateJobSearch(jobSearchResultForm, jsonObject)) {
+		String sortOrder = MMJBCommonConstants.DESC_STR;
+		
+		if(!validateJobSearch(jobSearchResultForm, jsonObject)){
 			return jsonObject;
 		}
 
@@ -645,7 +646,7 @@ public class JobSearchController {
 
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
 				sessionId, searchName, sessionMap, sortByParam, firstFQParam,
-				secondFQParam, thirdFQParam, fouthFQParam);
+				secondFQParam, thirdFQParam, fouthFQParam, sortOrder);
 
 		int page = 1;
 		int displayRecordsPerPage = 0;
@@ -1192,8 +1193,10 @@ public class JobSearchController {
 	private Map<String, String> getParameterMap(
 			JobSearchResultForm jobSearchResultForm, String sessionId,
 			String searchName, Map<String, String> sessionMap,
-			String sortByParam, String firstFQParam, String secondFQParam,
-			String thirdFQParam, String fouthFQParam) {
+			String sortByParam, String firstFQParam,
+			String secondFQParam, String thirdFQParam, String fouthFQParam,
+			String sortOrder) {
+
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 
@@ -1215,6 +1218,7 @@ public class JobSearchController {
 		paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
 		paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
 		paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
+		paramMap.put(MMJBCommonConstants.SORT_ORDER, sortOrder);
 
 		return paramMap;
 

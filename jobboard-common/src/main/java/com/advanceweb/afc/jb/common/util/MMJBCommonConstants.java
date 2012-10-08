@@ -120,6 +120,8 @@ public interface MMJBCommonConstants {
 	String THIRD_FQ_PARAM = "thirdFQParam";
 	String FOURTH_FQ_PARAM = "fouthFQParam";
 	String POSTED_DT = "posted_dt";
+	String SORT_ORDER = "sortOrder";
+	String DESC_STR = "desc";
 	
 
 	// Solr Date pattern
