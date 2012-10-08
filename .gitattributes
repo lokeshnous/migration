@@ -461,7 +461,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageFacil
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/MetricsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostingController.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/SearchResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TestimonyForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerBrandTemplate.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
