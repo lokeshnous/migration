@@ -717,8 +717,8 @@ public class JobSearchController {
 	}
 
 	/**
-	 * Method to create the session value and add the current search results.
-	 * 
+	 * This method is used to setting the required values into the session
+	 * for displaying the results in the grid.
 	 * @param session
 	 * @param page
 	 * @param noOfPages
@@ -919,11 +919,13 @@ public class JobSearchController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
-	public ModelAndView forwardToAdvanceJobSearch(
+	public ModelAndView forwardToAdvanceJobSearch(HttpSession session,
 			Map<String, JobSearchResultForm> model) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.put("jobSearchResultForm", jobSearchResultForm);
+		removeSession(session);
 		return new ModelAndView("jobboardadvancedsearch");
+		
 	}
 
 	/**

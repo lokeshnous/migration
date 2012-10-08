@@ -150,6 +150,44 @@ jQuery(document).ready(function() {
 									
 								});
 								
+								$("#submitvalAdv").click(
+										function(event) {
+
+											$("#errorMsg").html("");
+											$("#autoload").val(false);
+											$('#findSearchInfo').html("");
+											$("#rows").val(25000);
+											$("#start").val("0");
+
+											keywords = $("#keywords").val();
+											cityState = $("#cityState").val();
+											radius = $("#radius").val();
+											rows = $("#rows").val();
+											start = $("#start").val();
+											searchtype = $("#searchtype").val();
+
+											var navUrl = "../jobsearch/searchJob.html?keywords="
+													+ keywords + "&cityState=" + cityState
+													+ "&radius=" + radius + "&rows=" + rows
+													+ "&start=" + start + "&searchtype="
+													+ searchtype;
+
+											$.getJSON(navUrl, function(data) {
+												$.ajaxSetup({
+													cache : true
+												});
+												$.each(data, function(key, val) {
+													if (key == "AjaxMSG") {
+														$('#findSearchInfo').html(val);
+													}
+												});
+												processPaginationReq("20");
+												
+											});
+											return true;
+
+										});
+								
 							});
 			
 			

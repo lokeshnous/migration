@@ -73,7 +73,7 @@
 
 						<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
-							<a href="" title="Coming Soon">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+							<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
 					</div>
