@@ -20,13 +20,13 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
- * A custom authentication manager that allows access if the user details exist
+ * A  authentication manager that allows access if the user details exist
  * in the database otherwise, throw a {@link BadCredentialsException}
  */
 public class DatabaseAuthenticationManager implements AuthenticationManager {
 	
 	private static final Logger LOGGER = Logger
-			.getLogger("DatabaseAuthenticationManager.class");
+			.getLogger(DatabaseAuthenticationManager.class);
 
 
 	@Autowired
@@ -38,11 +38,10 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 	@Value("${wrongPassword}")
 	private String wrongPassword;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.security.authentication.AuthenticationManager#
-	 * authenticate(org.springframework.security.core.Authentication)
+	/**
+	 * This method is used to authenticate the use with DB 
+	 * @param Authentication object, which contains the user id and password provided by the user 
+	 * @return Authentication
 	 */
 	public Authentication authenticate(Authentication auth)
 			throws AuthenticationException {
@@ -56,12 +55,15 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 		try {
 			user = userDAO.getUser(auth.getName());
 			if (user == null) {
+				LOGGER.debug("User not found with the given email id:"+auth.getName());
 				throw new BadCredentialsException(userNotExist);
 			}
 		} catch (Exception e) {
+			LOGGER.debug("Error while fetching the data with the given email id:"+auth.getName());
 			throw new BadCredentialsException(userNotExist);
 		}
 		if (!(user.getPassword().equals(auth.getCredentials()))) {
+			LOGGER.debug("User password is not matching with the given password");
 			throw new BadCredentialsException(wrongPassword);
 		}
 		return new UsernamePasswordAuthenticationToken(auth.getName(),
@@ -69,58 +71,144 @@ public class DatabaseAuthenticationManager implements AuthenticationManager {
 	}
 
 	/**
-	 * @param userId
-	 * @return
+	 * This method is used to get the roles of the corresponding user
+	 * @param int userId
+	 * @return Collection<SimpleGrantedAuthority>
 	 */
 	public Collection<SimpleGrantedAuthority> getAuthorities(int userId) {
 		List<SimpleGrantedAuthority> authList = new ArrayList<SimpleGrantedAuthority>();
 
 		List<UserRoleDTO> roleList = userDAO.getUserRole(userId);
 		for (UserRoleDTO userRole : roleList) {
-			if (userRole.getRoleName().equals(MMJBCommonConstants.MERION_ADMIN)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_MERION_ADMIN));
-			}
-			if (userRole.getRoleName().equals(MMJBCommonConstants.JOBSEEKER)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_JOB_SEEKER));
-			}
-			if (userRole.getRoleName().equals(
-					MMJBCommonConstants.FACILITY_ADMIN)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_ADMIN));
-			}
-			if (userRole.getRoleName()
-					.equals(MMJBCommonConstants.FACILITY_USER)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_USER));
-			}
-			if (userRole.getRoleName().equals(MMJBCommonConstants.FACILITY)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY));
-			}
-			if (userRole.getRoleName().equals(
-					MMJBCommonConstants.FACILITY_GROUP)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_GROUP));
-			}
-			if (userRole.getRoleName().equals(
-					MMJBCommonConstants.FACILITY_SYSTEM)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
-			}
-			if (userRole.getRoleName().equals(
-					MMJBCommonConstants.FACILITY_FULL_ACCESS)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_FULL_ACCESS));
-			}
-			if (userRole.getRoleName().equals(
-					MMJBCommonConstants.FACILITY_POST_EDIT)) {
-				authList.add(new SimpleGrantedAuthority(
-						MMJBCommonConstants.ROLE_FACILITY_POST_EDIT));
-			}
+			
+			isMerionAdmin(userRole.getRoleName(),authList);
+			
+		    isJobSeeker(userRole.getRoleName(),authList);
+			
+		    isFacilityAdmin(userRole.getRoleName(),authList);
+			
+		    isFacilityUser(userRole.getRoleName(),authList);
+			
+		    isFacility(userRole.getRoleName(),authList);
+			
+		    isFacilityGroupe(userRole.getRoleName(),authList);
+			
+		    isFacilitySystem(userRole.getRoleName(),authList);
+			
+		    isFullAccess(userRole.getRoleName(),authList);
+			
+		    isPostEdit(userRole.getRoleName(),authList);
 		}
 		return authList;
 	}
-
+	
+	/**
+	 * This method is used to add the role of Merion Admin 
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isMerionAdmin(String roleName,List<SimpleGrantedAuthority> authList){
+		if (roleName.equals(MMJBCommonConstants.MERION_ADMIN)) {
+			authList.add(new SimpleGrantedAuthority(
+					MMJBCommonConstants.ROLE_MERION_ADMIN));
+		}
+	}
+	
+	/**
+	 * This method is used to add the role of Job Seeker 
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isJobSeeker(String roleName,List<SimpleGrantedAuthority> authList){
+		if (roleName.equals(MMJBCommonConstants.JOBSEEKER)) {
+			authList.add(new SimpleGrantedAuthority(
+					MMJBCommonConstants.ROLE_JOB_SEEKER));
+		}
+	}
+	
+	/**
+	 * This method is used to add the role of Facility Admin 
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isFacilityAdmin(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName.equals(
+			MMJBCommonConstants.FACILITY_ADMIN)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_ADMIN));
+	}
+	}
+	
+	/**
+	 * This method is used to add the role of Facility User 
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isFacilityUser(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName
+			.equals(MMJBCommonConstants.FACILITY_USER)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_USER));
+	}
+	}
+	/**
+	 * This method is used to add the role of Facility
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isFacility(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName.equals(MMJBCommonConstants.FACILITY)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY));
+	}
+	}
+	
+	/**
+	 * This method is used to add the role of Facility Group
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isFacilityGroupe(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName.equals(
+			MMJBCommonConstants.FACILITY_GROUP)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_GROUP));
+	}	
+}
+	/**
+	 * This method is used to add the role of Facility System
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isFacilitySystem(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName.equals(
+			MMJBCommonConstants.FACILITY_SYSTEM)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
+	}
+	}
+	/**
+	 * This method is used to add the role of Full Access
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isFullAccess(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName.equals(
+			MMJBCommonConstants.FACILITY_FULL_ACCESS)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_FULL_ACCESS));
+	}
+	}
+	/**
+	 * This method is used to add the role of Post Edit
+	 * @param String roleName
+	 * @param List<SimpleGrantedAuthority> authList
+	 */
+	private void isPostEdit(String roleName,List<SimpleGrantedAuthority> authList){
+	if (roleName.equals(
+			MMJBCommonConstants.FACILITY_POST_EDIT)) {
+		authList.add(new SimpleGrantedAuthority(
+				MMJBCommonConstants.ROLE_FACILITY_POST_EDIT));
+	}
+	}
 }
