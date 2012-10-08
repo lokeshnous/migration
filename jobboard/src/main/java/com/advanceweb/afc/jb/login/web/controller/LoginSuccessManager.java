@@ -52,24 +52,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 
 		if (isJobSeeker(authentication, pageValue)) {
 
-			if (profileRegistration.validateProfileAttributes(user.getUserId())) {
-
-				/**
-				 * if the user already registered
-				 */
-				sendRedirect(request, response,
-						"/jobSeeker/jobSeekerDashBoard.html");
-
-			} else {
-				/**
-				 * if the logged in user is new
-				 */
-				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-				sendRedirect(request, response,
-						"/jobseekerregistration/createJobSeekerCreateYrAcct.html");
-
-			}
-
+			redirectJobSeeker(user,request,response,session);
 		} else if (isFacility(authentication, pageValue)) {
 
 			/**
@@ -79,24 +62,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
-
-			// job owners does not have data in mer user profile table but if
-			// they have role as 5 or 6 then they should directly redirect to
-			// the dash board once they login
-			if ((profileRegistration
-					.validateProfileAttributes(user.getUserId()))
-					|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
-							.getRoleId() != 6)))) {
-				sendRedirect(request, response,
-						"/employer/employerDashBoard.html");
-
-			} else {
-
-				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-				sendRedirect(request, response,
-						"/employerRegistration/employerregistration.html");
-			}
-
+			redirectFacility(user,infoDTO,request,response,session);
 		} else if (isFacilitySystem(authentication, pageValue)) {
 
 			/**
@@ -106,22 +72,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
-
-			// job owners does not have data in mer user profile table but if
-			// they have role as 5 or 6 then they should directly redirect to
-			// the dash board once they login
-			if ((profileRegistration
-					.validateProfileAttributes(user.getUserId()))
-					|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
-							.getRoleId() != 6)))) {
-
-				sendRedirect(request, response, "/agency/agencyDashboard.html");
-
-			} else {
-				session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-				sendRedirect(request, response,
-						"/agencyRegistration/agencyregistration.html");
-			}
+			redirectFacilitySystem(user,infoDTO,request,response,session);
 		} else {
 
 			session.invalidate();
@@ -192,4 +143,93 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 								MMJBCommonConstants.ROLE_JOB_SEEKER))
 				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER);
 	}
-}
+	
+	/**
+	 * Method to redirect job seeker to the corresponding page depending on the condition
+	 * 
+	 * @param UserDTO user
+	 * @param HttpServletRequest
+	 * @param HttpServletResponse response
+	 * @param HttpSession session
+	 */
+	private void redirectJobSeeker(UserDTO user,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
+		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
+
+			/**
+			 * if the user already registered
+			 */
+			sendRedirect(request, response,
+					"/jobSeeker/jobSeekerDashBoard.html");
+
+		} else {
+			/**
+			 * if the logged in user is new
+			 */
+			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+			sendRedirect(request, response,
+					"/jobseekerregistration/createJobSeekerCreateYrAcct.html");
+
+		}
+	}
+	/**
+	 * Method to redirect facility to the corresponding page depending on the condition
+	 * 
+	 * @param UserDTO user
+	 * @param EmployerInfoDTO
+	 * @param HttpServletRequest
+	 * @param HttpServletResponse response
+	 * @param HttpSession session
+	 */
+	private void redirectFacility(UserDTO user,EmployerInfoDTO infoDTO,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
+		 // job owners does not have data in mer user profile table but if
+		 // they have role as 5 or 6 then they should directly redirect to
+		 // the dash board once they login
+		//TODO: This condition need to be change to support old data 
+		if ((profileRegistration
+				.validateProfileAttributes(user.getUserId()))
+				|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
+						.getRoleId() != 6)))) {
+			sendRedirect(request, response,
+					"/employer/employerDashBoard.html");
+
+		} else {
+
+			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+			sendRedirect(request, response,
+					"/employerRegistration/employerregistration.html");
+		}
+
+		}
+	
+	/**
+	 * Method to redirect facility system to the corresponding page depending on the condition
+	 * 
+	 * @param UserDTO user
+	 * @param EmployerInfoDTO
+	 * @param HttpServletRequest
+	 * @param HttpServletResponse response
+	 * @param HttpSession session
+	 */
+	private void redirectFacilitySystem(UserDTO user,EmployerInfoDTO infoDTO,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
+		
+		
+		// job owners does not have data in mer user profile table but if
+		// they have role as 5 or 6 then they should directly redirect to
+		// the dash board once they login
+		//TODO: This condition need to be change to support old data 
+					if ((profileRegistration
+							.validateProfileAttributes(user.getUserId()))
+							|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
+									.getRoleId() != 6)))) {
+
+						sendRedirect(request, response, "/agency/agencyDashboard.html");
+
+					} else {
+						session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+						sendRedirect(request, response,
+								"/agencyRegistration/agencyregistration.html");
+					}
+
+		}
+	}
+
