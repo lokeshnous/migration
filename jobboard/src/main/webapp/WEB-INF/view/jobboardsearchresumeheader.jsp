@@ -8,26 +8,8 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<!-- STYLESHEETS -->
-<link href="stylesheets/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
-<link href="stylesheets/SliderStyles.css" rel="stylesheet"
-	type="text/css">
-<!-- JAVASCRIPT FILES -->
-
-<script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery(".megamenu").megamenu();
-	});
-
-	function searchResume() {
-		$(".otherContent").attr("style", "display: none");
-		$(".searchContent").attr("style", "display: block");
-	}
-</script>
 </head>
 
 <body class="job_board">
@@ -37,7 +19,7 @@
 		<!--nav-->
 		<!--Start:MidContant-->
 		<div class="row">
-			<form method="">
+			<form:form method="" action="" commandName="searchResumeForm">
 				<div class="job_search_Resume">
 
 					<div class="row ">
@@ -48,7 +30,7 @@
 						</div>
 						<div class="row marginTop10 marginBottom10">
 							<div class=" floatLeft  width255">
-								<input type="text" name="keywords" id="keywords"
+								<form:input path="keywords" maxlength="60" id="keywords"
 									class="jb_input2" />
 								<div class="floatLeft">
 									<div class="toolTipBefore">
@@ -65,18 +47,18 @@
 							</div>
 							<div class="floatLeft marginLeft10">
 
-								<select name="phrase" id="phrase" class="jb_input3 margin0">
-									<option>Match exact phrase</option>
-									<option>Match any word</option>
-								</select>
+								<form:select path="phrase" id="phrase" class="jb_input3 margin0">
+									<form:option label="Match exact phrase" value="Match exact phrase"/>
+									<form:option label="Match any word" value="Match any word"/>
+								</form:select>
 							</div>
 							<div class="FloatLeft marginLeft10 width255">
 
-								<input type="text" name="city_state" id="city_state"
+								<form:input path="cityState" id="cityState"
 									class="jb_input2" />
 
 								<div class="toolTipBefore">
-									<label for="city_state">City and State or ZIP Code </label>
+									<label for="city_state">City and State or ZIP Code</label>
 								</div>
 								<div class="toolTip">
 									<span class="classic"><p>Narrow your search to
@@ -86,30 +68,34 @@
 							</div>
 							<div class="floatLeft marginLeft10">
 
-								<select name="radius" id="radius" class="jb_input3">
-									<option>--</option>
-									<option>5</option>
-									<option>10</option>
-									<option>25</option>
-									<option>50</option>
-									<option>100</option>
-								</select>
+								<form:select path="radius" id="radius" class="jb_input3">
+									<form:option label="--" value="0" />
+									<form:option label="5 Miles" value="5" />
+									<form:option label="10 Miles" value="10" />
+									<form:option label="25 Miles" value="25" />
+									<form:option label="50 Miles" value="50" />
+									<form:option label="100 Miles" value="100" />
+								</form:select>
 								<div class="clearfix"></div>
 								<div class="toolTipBefore">
 									<label for="city_state">Radius</label>
 								</div>
 							</div>
 							<div class="floatRight marginTop5 marginLeft10">
-								<a href="#" class="btn_sm orange margin0"
-									onclick="searchResume();">SEARCH</a><br>
+							<!-- Setting the hidden parameters for pagination -->
+							<form:hidden path="start" id="start"/>
+            				<form:hidden path="rows" id="rows"/>
+							<form:hidden path="searchtype" id="searchtype" value= "resume"/>
+							
+							<input type="button" id="submitval" onclick="searchResume();"
+								value="SEARCH" class="btn_sm orange margin0" />
+								<!-- <a href="#" class="btn_sm orange margin0"
+									onclick="searchResume();">SEARCH</a><br> -->
 								<div class="floatLeft marginTop10">
 									<a title="Coming Soon" href="">Advanced Search</a>
 								</div>
 							</div>
 						</div>
-
-
-
 
 					</div>
 
@@ -119,7 +105,7 @@
 
 					<div class="clearfix"></div>
 				</div>
-			</form>
+			 </form:form>    
 		</div>
 
 	</div>

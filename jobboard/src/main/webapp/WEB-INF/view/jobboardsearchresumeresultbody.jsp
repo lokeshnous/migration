@@ -9,24 +9,8 @@
 <html lang="en">
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<jsp:include page="common/include.jsp" />
 		<title>ADVANCE Heathcare Jobs</title>
 
-		<!-- STYLESHEETS -->
-		<link href="stylesheets/jquery.megamenu.css" rel="stylesheet" type="text/css" />
-		<link href="stylesheets/SliderStyles.css" rel="stylesheet" type="text/css">
-        
-
-		<!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="javascripts/slider.js"></script>
-		<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
-		<script type="text/javascript">
-		    jQuery(document).ready(function(){
-		    jQuery(".megamenu").megamenu();
-		});
-		</script>
         <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 		</head>
 		
@@ -37,7 +21,7 @@
 			<div class="row">
 					<div class="row marginTop5 paddingBottom05">
 						<div class="floatLeft">
-							<h1 class="FontSize24">200 resumes match your results</h1>
+							<h1 class="FontSize24"><%-- <span>${totalNoOfRecords}</span> --%>200 resumes match your results</h1>
 						</div>
 					</div>
 

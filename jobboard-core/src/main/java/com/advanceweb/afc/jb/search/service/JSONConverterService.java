@@ -4,6 +4,7 @@ package com.advanceweb.afc.jb.search.service;
 import net.sf.json.JSONObject;
 
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
+import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 
 /**
  * This class has been created as a service interface for converting to JSON object
@@ -21,5 +22,13 @@ public interface JSONConverterService {
 	 */
 	JSONObject convertToJSON(final JobSearchResultDTO jSResultDTO);
 	
+	/**
+	 * This method will convert the ResumeSearchResultDTO to JSON object
+	 * @param ResumeSearchResultDTO
+	 * @return JSONObject
+	 */
+	JSONObject convertToJSONForResume(final ResumeSearchResultDTO resumeSearchResultDTO);
+	
+
 
 }

@@ -26,6 +26,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
 
 /**
  * @author Prince
@@ -50,6 +51,7 @@ public class EmployerDashBoardController {
 	public ModelAndView displayDashBoard(
 			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,
 			HttpSession session) {
+		SearchResumeForm searchResumeForm = new SearchResumeForm();
 		session.removeAttribute("jbPostTotalList");
 		String enableAccess = "true";
 		String enablePostEditAccess = "true";
@@ -86,6 +88,7 @@ public class EmployerDashBoardController {
 		model.addObject("downDTOs", downDTOs);
 		model.addObject("jbPostTotalList", jbPostTotalList);
 		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		model.addObject("searchResumeForm", searchResumeForm);
 		model.addObject("employerDashBoardForm", employerDashBoardForm);
 		model.setViewName("employerDashboard");
 		return model;

@@ -11,9 +11,11 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
+import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 
 /**
@@ -125,6 +127,21 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		return jobSrchJsonObj;
 	}
 
+	/**
+	 * This method will convert the ResumeSearchResultDTO to JSON object
+	 * @param ResumeSearchResultDTO
+	 * @return JSONObject
+	 */
+	public JSONObject convertToJSONForResume(final ResumeSearchResultDTO resumeSearchResultDTO){
+		
+		final JSONObject jobSrchJsonObj = new JSONObject();
+		final JSONArray jsonRows = new JSONArray();
+		final List<ResumeDTO> jobDTOList = resumeSearchResultDTO.getResultList();
+		
+		return jobSrchJsonObj;
+	}
+	
+	
 	/**
 	 * This method converts the date in string format to required format for
 	 * displaying it in the job search result page.

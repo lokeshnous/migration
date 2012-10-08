@@ -20,8 +20,7 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 	public ResumeSearchResultDTO resumeSearch(String searchName,
 			Map<String, String> paramMap, long start, long rows)
 			throws JobBoardServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		return resumeSearchDelegate.resumeSearch(searchName, paramMap, start, rows);
 	}
 
 }

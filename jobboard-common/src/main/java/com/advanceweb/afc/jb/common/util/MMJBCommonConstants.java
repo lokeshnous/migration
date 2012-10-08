@@ -385,5 +385,11 @@ public interface MMJBCommonConstants {
 	String URL_LINK_SECOND = "><b>View this job now</b></a> to learn more and submit your application.";
 	String URL_REDIRECT_MAIL = "redirect:/healthcarejobs/advanceweb.html";
 	String ERROR_SENDING_MAIL = "ERROR For sending mail option of SendToFriend method";
+	
+	// Added for Resume search
+	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";
+	String RESUME_KEYWORD_SEARCH = "CANDIDATE-KEYWORD";
+	String RESUME_SEARCH_SESSION_MAP = "resumeSessionMap";
+		
 
 }

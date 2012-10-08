@@ -4,16 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
+<!-- JAVASCRIPT FILES -->
+<script type="text/javascript" src="../resources/js/slider.js"></script>
+<link href="../resources/css/jquery-ui.css" rel="stylesheet"
+	type="text/css">
+<script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>
+<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+<script src="../resources/js/resumesearchresult.js"></script>
 
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
-	jQuery(document).ready(
-			function() {
-				$("#changePassword").displaypopup("#changePassword", "790",
-						"370");
-				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
-						"770", "360");
-				jQuery(".megamenu").megamenu();
-			});
+	jQuery(document).ready(function() {
+		jQuery(".megamenu").megamenu();
+
+	});
 </script>
 
 </head>
@@ -31,17 +36,17 @@
 				<!--Start:MidContant-->
 				<div class="row">
 					<form method="">
-						
 
-								<!-- Include the resume header page -->
 
-								<jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include>
+						<!-- Include the resume header page -->
 
-								<div class="searchContent" style="display: none;">
-									<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
-								</div>
+						<jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include>
 
-							
+						<div class="searchContent" style="display: none;">
+							<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
+						</div>
+
+
 						<!-- search_info_box2 -->
 						<!-- browse_bar -->
 

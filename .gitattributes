@@ -194,6 +194,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SOLRSearchH
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SOLRSearchParamBuilder.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchDelegate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrResumeDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrResumeSearchDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JSONConverterService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JobSearchService.java -text
@@ -520,6 +521,8 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ReferenceForm
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/ResumeValidator.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/SearchResumeController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/SearchResumeForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/TransformCreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/TransferUserAlert.java -text
@@ -762,6 +765,7 @@ jobboard/src/main/webapp/resources/js/lpr.gif -text
 jobboard/src/main/webapp/resources/js/lprogress.css -text
 jobboard/src/main/webapp/resources/js/lprogress.js -text
 jobboard/src/main/webapp/resources/js/lprogress.min.js -text
+jobboard/src/main/webapp/resources/js/resumesearchresult.js -text
 jobboard/src/main/webapp/resources/js/screenshot.png -text
 jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
