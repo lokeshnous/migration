@@ -2,9 +2,9 @@ package com.advanceweb.afc.jb.login.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
@@ -23,6 +23,9 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 
 @Service("loginService")
 public class LoginServiceImpl implements LoginService {
+
+	private static final Logger LOGGER = Logger
+			.getLogger(LoginServiceImpl.class);
 
 	@Autowired
 	private LoginFormDAO loginFormDAO;
@@ -73,7 +76,8 @@ public class LoginServiceImpl implements LoginService {
 		try {
 			userDAO.saveNewPWD(emailAddress, tempassword);
 		} catch (JobBoardDataException e) {
-			// TODO Auto-generated catch block
+			LOGGER.info("Error occurred while saving the generated password"
+					+ e);
 		}
 	}
 
