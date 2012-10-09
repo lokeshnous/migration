@@ -221,10 +221,8 @@
 									<div class="input_grp3">
 										<form:select path="stateProvince" class="jb_input3"	id="stateProvince">
 											<form:option label="NO PREFERENCE" value="NO PREFERENCE"/>
-											<c:forEach items="${stateList}" var="state">
-												<form:option label="${state.stateValue}" value="${state.stateValue}" />
-												<%-- <c:out value="${state.stateValue}"></c:out> --%>
-											</c:forEach>
+											<form:options items="${stateList}" itemLabel="stateValue"
+												itemValue="stateValue" />
 										</form:select>
 									</div>
 
