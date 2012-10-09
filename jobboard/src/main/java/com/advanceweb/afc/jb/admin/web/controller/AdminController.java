@@ -59,6 +59,8 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 
+	private static final String LOGINFORM ="adminLoginForm";
+	
 	@RequestMapping(value = "/adminMenu", method = RequestMethod.GET)
 	public ModelAndView adminMenuPage(ModelMap map) {
 		ModelAndView model = new ModelAndView();
@@ -70,7 +72,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/login")
 	public ModelAndView adminImpersonationPage(
-			@ModelAttribute("adminLoginForm") AdminLoginForm form) {
+			@ModelAttribute(LOGINFORM) AdminLoginForm form) {
 		ModelAndView model = new ModelAndView();
 		AdminLoginForm adminLoginForm = new AdminLoginForm();
 		model.addObject("adminLoginForm", adminLoginForm);
@@ -83,8 +85,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public String impersonateTheUser(
-			@ModelAttribute("adminLoginForm") AdminLoginForm form,
-			BindingResult result) {
+			@ModelAttribute(LOGINFORM) AdminLoginForm form, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		adminValidation.validate(form, result);
 		model.setViewName("adminLogin");

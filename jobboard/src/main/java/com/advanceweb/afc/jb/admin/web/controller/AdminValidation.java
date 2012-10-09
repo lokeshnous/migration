@@ -17,8 +17,8 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("adminValidation")
 public class AdminValidation {
 
-	private Pattern pattern;
-	private Matcher matcher;
+	public Pattern pattern;
+	public Matcher matcher;
 
 	@Value("${loginErrMsg}")
 	private String loginErrMsg;
@@ -40,11 +40,10 @@ public class AdminValidation {
 				|| StringUtils.isEmpty(form.getUserEmail())) {
 			errors.rejectValue("empOrAgencyEmail", "NotEmpty", loginErrMsg);
 		}
-		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())) {
-			if (!validateEmailPattern(form.getEmpOrAgencyEmail())) {
-				errors.rejectValue("empOrAgencyEmail", "NotEmpty",
-						"Invalid Employer/Agency Email address");
-			}
+		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())
+				&& !validateEmailPattern(form.getEmpOrAgencyEmail())) {
+			errors.rejectValue("empOrAgencyEmail", "NotEmpty",
+					"Invalid Employer/Agency Email address");
 		}
 		if (!StringUtils.isEmpty(form.getUserEmail())) {
 			if (!validateEmailPattern(form.getUserEmail())) {

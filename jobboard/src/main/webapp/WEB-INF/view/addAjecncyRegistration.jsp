@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+<%@ page language="java" import="java.util.*" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -20,6 +22,7 @@
 	src="/media/js/jquery.js"></script>
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
+<script src="../resources/js/recaptcha_ajax.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
@@ -303,6 +306,31 @@
 									</div>
 								</c:if>
 							</c:forEach>
+							<div class="row marginTop15">
+								<span class="lableText3">&nbsp;</span>
+								<%
+									ResourceBundle resource = ResourceBundle
+												.getBundle("messages_en");
+										String pubKey = resource.getString("public_key");
+										String privKey = resource.getString("private_key");
+										/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
+										ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
+												false);
+										out.print(c.createRecaptchaHtml(null, null));
+								%>
+							</div>
+							<div>
+								<c:out value=""></c:out>
+							</div>
+							<div>
+								<span class="lableText3"></span> <FONT color="red"> <c:if
+										test="${not empty errorMessage}">
+										<div id="errmsg" style="color: red" align="left">
+											<c:out value="${errorMessage}"></c:out>
+										</div>
+									</c:if>
+								</FONT>
+							</div>
 
 							<%-- <div class="rowEvenNewSpacing"></div>
 							<div class="row">

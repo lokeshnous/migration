@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,12 +79,19 @@ public class AgencyRegistrationController {
 
 	@Value("${age.all.req.fields}")
 	private String reqFields;
-
+	
 	@Value("${age.email.exists}")
 	private String emailExists;
 
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
+	
+
+	private String recaptcha_response;
+	private String recaptcha_challenge;
+	private String remoteAddr;
+
+	private Long placeKey;
 
 	private final static String AGENCYREG = "addAjecncyRegistration";
 
@@ -132,9 +142,42 @@ public class AgencyRegistrationController {
 	@RequestMapping(value = "/saveAgencyRegistraion", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(AGENCY_REG_FORM) AgencyRegistrationForm agencyRegistrationForm,
-			HttpServletRequest request, Map<?, ?> map, HttpSession session,
+			HttpServletRequest request, Map<?, ?> map, HttpSession session,HttpServletRequest req,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
+		
+		// Spring Recaptcha Starts here
+
+				if (StringUtils.isEmpty(req
+						.getParameter("recaptcha_response_field"))) {
+					model.setViewName(AGENCYREG);
+					model.addObject("errorMessage", "Captcha should not be blank");
+					return model;
+				}
+
+				if (req.getParameter("recaptcha_response_field") != null) {
+					recaptcha_response = req
+							.getParameter("recaptcha_response_field");
+					recaptcha_challenge = req
+							.getParameter("recaptcha_challenge_field");
+					remoteAddr = req.getRemoteAddr();
+				}
+
+				ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+				reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
+
+				ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
+						remoteAddr, recaptcha_challenge, recaptcha_response);
+				// Send HTTP request to validate user's Captcha
+
+				if (!reCaptchaResponse.isValid()) { 
+					// Check if valid
+					model.setViewName(AGENCYREG);
+					model.addObject("errorMessage", "Captcha is invalid!");
+					return model;
+				}
+				
+				
 
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);

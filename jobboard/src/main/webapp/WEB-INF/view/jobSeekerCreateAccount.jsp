@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+<%@ page language="java" import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -6,11 +9,13 @@
 
 <html lang="en">
 		<head>
+
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
 
 
 		<!-- JAVASCRIPT FILES -->
+		<script src="../resources/js/recaptcha_ajax.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
@@ -74,13 +79,18 @@
 					<form:errors path="retypepassword" /> 
 				</div>
 
-<%-- 	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span> 
-					<%
-				        /* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
-				        ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lel19USAAAAAPRKVOy7gFpRBpn6iSPONG1o9ouZ", "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN", false);
-				        out.print(c.createRecaptchaHtml(null, null));
-				    %>
-				 </div> --%>
+ 	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span>
+								<%
+									ResourceBundle resource = ResourceBundle
+												.getBundle("messages_en");
+										String pubKey = resource.getString("public_key");
+										String privKey = resource.getString("private_key");
+										/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
+										ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
+												false);
+										out.print(c.createRecaptchaHtml(null, null));
+								%>
+							</div>
 				 <div>
 				 	<c:out value=""></c:out>
 				 </div>

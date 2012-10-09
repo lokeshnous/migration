@@ -6,17 +6,11 @@ package com.advanceweb.afc.jb.admin.web.controller;
  */
 public class AdminForm {
 	
-	private boolean isHealthSystem;
+	private boolean healthSystem;
 	private String compName;
 	private String nsId;
 	
 
-	/**
-	 * @return the isHealthSystem
-	 */
-	public boolean isHealthSystem() {
-		return isHealthSystem;
-	}
 
 	/**
 	 * @return the compName
@@ -47,10 +41,18 @@ public class AdminForm {
 	}
 
 	/**
-	 * @param isHealthSystem the isHealthSystem to set
+	 * @return the healthSystem
 	 */
-	public void setHealthSystem(boolean isHealthSystem) {
-		this.isHealthSystem = isHealthSystem;
+	public boolean isHealthSystem() {
+		return healthSystem;
 	}
+
+	/**
+	 * @param healthSystem the healthSystem to set
+	 */
+	public void setHealthSystem(boolean healthSystem) {
+		this.healthSystem = healthSystem;
+	}
+
 
 }

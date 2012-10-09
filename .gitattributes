@@ -767,6 +767,7 @@ jobboard/src/main/webapp/resources/js/lpr.gif -text
 jobboard/src/main/webapp/resources/js/lprogress.css -text
 jobboard/src/main/webapp/resources/js/lprogress.js -text
 jobboard/src/main/webapp/resources/js/lprogress.min.js -text
+jobboard/src/main/webapp/resources/js/recaptcha_ajax.js -text
 jobboard/src/main/webapp/resources/js/resumesearchresult.js -text
 jobboard/src/main/webapp/resources/js/screenshot.png -text
 jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text

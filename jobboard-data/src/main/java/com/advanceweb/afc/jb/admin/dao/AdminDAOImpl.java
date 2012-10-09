@@ -27,10 +27,10 @@ import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
-import com.mysql.jdbc.StringUtils;
 
 @Transactional
 @Repository("adminDAO")
+@SuppressWarnings("unchecked")
 public class AdminDAOImpl implements AdminDAO {
 
 	private static final Logger LOGGER = Logger.getLogger("AdminDAOImpl.class");
@@ -61,39 +61,36 @@ public class AdminDAOImpl implements AdminDAO {
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateEmail(String email) {
 		boolean status = false;
 		try {
-			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+//			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						GET_EMAIL, email);
-
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
 					List<AdmUserRole> useList = hibernateTemplateCareers.find(
 							USER_ROLE, user.getUserId());
-					if (null != useList && !useList.isEmpty()) {
-						if (useList.get(0).getAdmRole().getRoleId() == 3) {
+					if (null != useList && !useList.isEmpty() && useList.get(0).getAdmRole().getRoleId() == 3) {
+//						if (useList.get(0).getAdmRole().getRoleId() == 3) {
 							status = true;
-						}
+//						}
 					}
 				}
-			}
+//			}
 		} catch (HibernateException e) {
 			LOGGER.error(e);
 		}
 		return status;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateAdminCredentials(String email, String password) {
 		boolean status = false;
 		try {
-			if (!StringUtils.isEmptyOrWhitespaceOnly(email)
-					&& !StringUtils.isEmptyOrWhitespaceOnly(password)) {
+//			if (!StringUtils.isEmptyOrWhitespaceOnly(email)
+//					&& !StringUtils.isEmptyOrWhitespaceOnly(password)) {
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						VALIDATE_ADMIN, email, password);
 
@@ -101,21 +98,20 @@ public class AdminDAOImpl implements AdminDAO {
 					MerUser user = usersList.get(0);
 					List<AdmUserRole> useList = hibernateTemplateCareers.find(
 							USER_ROLE, user.getUserId());
-					if (null != useList && !useList.isEmpty()) {
-						if (useList.get(0).getAdmRole().getRoleId() == 1) {
+					if (null != useList && !useList.isEmpty() && useList.get(0).getAdmRole().getRoleId() == 1) {
+//						if (useList.get(0).getAdmRole().getRoleId() == 1) {
 							status = true;
-							// return (null != useList ? true : false);
 						}
 					}
-				}
-			}
+//				}
+//			}
 		} catch (HibernateException e) {
 			LOGGER.error(e);
 		}
 		return status;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public boolean impersonateUser(AdminDTO adminDTO) {
 		boolean status = true;
@@ -131,19 +127,18 @@ public class AdminDAOImpl implements AdminDAO {
 			// getting user Id for emp / agency
 			List<MerUser> usersList1 = hibernateTemplateTracker.find(GET_EMAIL,
 					adminDTO.getEmpOrAgencyEmail());
-			int facilityId = 0;
-			AdmUserFacility facility = null;
+			//int facilityId = 0;
+			//AdmUserFacility facility = null;
 			AdmFacility admfacility = null;
 			if (null != usersList1 && !usersList1.isEmpty()) {
 				MerUser user1 = usersList1.get(0);
 				List<AdmUserFacility> facilityList = hibernateTemplateCareers
 						.find(FACILITY_ID, user1.getUserId());
 				if (null != facilityList && !facilityList.isEmpty()) {
-					facility = facilityList.get(0);
-					facilityId = facility.getFacilityPK().getFacilityId();
+					//facility = facilityList.get(0);
+					//facilityId = facility.getFacilityPK().getFacilityId();
+					admfacility = facilityList.get(0).getAdmFacility();
 				}
-				// hibernateTemplateCareers.evict(facilityList);
-				admfacility = facilityList.get(0).getAdmFacility();
 			}
 
 			// List<AdmFacility> admFacilityList =
@@ -169,7 +164,6 @@ public class AdminDAOImpl implements AdminDAO {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public EmpSearchDTO validateCompName(String empList) {
 		EmpSearchDTO dto = new EmpSearchDTO();
@@ -190,7 +184,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return dto;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateNetSuitId(int nsId) {
 		boolean status = false;
@@ -199,11 +192,11 @@ public class AdminDAOImpl implements AdminDAO {
 				List<AdmFacility> usersList = hibernateTemplateCareers.find(
 						GET_ADM_FACILITY_BY_NS_ID, nsId);
 
-				if (null != usersList && !usersList.isEmpty()) {
-					AdmFacility user = usersList.get(0);
-					if (null != user) {
+				if (null != usersList && !usersList.isEmpty() &&  usersList.get(0) != null) {
+//					AdmFacility user = usersList.get(0);
+//					if (null != user) {
 						status = true;
-					}
+//					}
 				}
 			}
 		} catch (HibernateException e) {
@@ -212,7 +205,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return status;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public EmpSearchDTO getUserIdAndFacilityId(int nsId) {
 		EmpSearchDTO dto = new EmpSearchDTO();
@@ -233,7 +225,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return dto;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveModifiedData(
@@ -257,7 +248,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<EmpSearchDTO> getEmpdataByNetSuiteId(int nsId) {
 		List<EmpSearchDTO> emplist = null;
@@ -306,7 +296,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return inventoryDTOs;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void saveFacility(int nsId) {
 		List<AdmFacility> usersList = hibernateTemplateCareers.find(
 				GET_ADM_FACILITY_BY_NS_ID, nsId);
@@ -355,7 +344,6 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveEditFacilityGroup(EmpSearchDTO dto) {

@@ -40,11 +40,15 @@ import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 @RequestMapping("/admininventory")
 public class AdminJobPostingInventoryController {
 
+	private static final String SUCCESS = "success";
+
+	private static final String ERR_MSG = "errMsg";
+
 	private static final Logger LOGGER = Logger
 			.getLogger(AdminJobPostingInventoryController.class);
 
 	@Autowired
-	AdminService adminService;
+	private AdminService adminService;
 
 	@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
 	public @ResponseBody
@@ -59,42 +63,22 @@ public class AdminJobPostingInventoryController {
 			session.setAttribute("nsId", id);
 			if (StringUtils.isEmpty(empList) && StringUtils.isEmpty(id)) {
 				status = false;
-				jsonObject.put("errMsg", "Please enter any one data to find");
-				jsonObject.put("success", status);
+				jsonObject.put(ERR_MSG, "Please enter any one data to find");
+				jsonObject.put(SUCCESS, status);
 				return jsonObject;
 			}
 			int nsId = 0;
-			int empNsId = 0;
 			if (empList.length() != 0) {
-				EmpSearchDTO dto = adminService
-						.validateCompName(empList);
-				if (dto.getNsId() != 0) {
-					empNsId = dto.getNsId();
-					session.setAttribute(MMJBCommonConstants.NS_CUSTOMER_ID,
-							empNsId);
-					if (id.length() == 0 || (Integer.parseInt(id) == empNsId)) {
-						jsonObject.put("success", status);
-						return jsonObject;
-					}
-				} else {
-					status = false;
-					jsonObject.put("errMsg", "Please enter valid company name");
-					if (id.length() != 0) {
-						jsonObject.put("errMsg", "Please enter valid company name OR Net Suite Id");
-						jsonObject.put("success", status);
-						return jsonObject;
-					}
-				}
+				return validate(empList,id,session);
 			}
-
 			if (id.length() != 0) {
 				try{
 				nsId = Integer.parseInt(id);
 				}catch(Exception ex){
 					status = false;
 					LOGGER.info("Excption occurred in jobSearchByComName Netsute Format : "+ex);
-					jsonObject.put("errMsg", "Please enter valid Net Suite Id");
-					jsonObject.put("success", status);
+					jsonObject.put(ERR_MSG, "Please enter valid Net Suite Id");
+					jsonObject.put(SUCCESS, status);
 					return jsonObject;
 				}
 				boolean val = adminService.validateNetSuitId(nsId);
@@ -103,19 +87,50 @@ public class AdminJobPostingInventoryController {
 							nsId);
 				} else {
 					status = false;
-					jsonObject.put("errMsg", "Please enter valid Net Suite Id");
-					jsonObject.put("success", status);
+					jsonObject.put(ERR_MSG, "Please enter valid Net Suite Id");
+					jsonObject.put(SUCCESS, status);
 					return jsonObject;
 				}
 			}
-
 		} catch (Exception e) {
 			LOGGER.info("Excption occurred in jobSearchByComName : "+e);
 		}
-		jsonObject.put("success", status);
+		jsonObject.put(SUCCESS, status);
 		return jsonObject;
 	}
 	
+	/**
+	 * @param empList
+	 * @param id
+	 * @param session
+	 * @return
+	 */
+	public JSONObject validate(String empList,String id,HttpSession session){
+		JSONObject jsonObject = new JSONObject();
+		boolean status = true;
+		int empNsId = 0;
+		EmpSearchDTO dto = adminService
+				.validateCompName(empList);
+		if (dto.getNsId() == 0) {
+			status = false;
+			jsonObject.put(ERR_MSG, "Please enter valid company name");
+			if (id.length() != 0) {
+				jsonObject.put(ERR_MSG, "Please enter valid company name OR Net Suite Id");
+				jsonObject.put(SUCCESS, status);
+				return jsonObject;
+			}
+		} else {
+			empNsId = dto.getNsId();
+			session.setAttribute(MMJBCommonConstants.NS_CUSTOMER_ID,
+					empNsId);
+			if (id.length() == 0 || (Integer.parseInt(id) == empNsId)) {
+				jsonObject.put(SUCCESS, status);
+				return jsonObject;
+			}
+		}
+		return jsonObject;
+	
+	}
 	/**
 	 * This method to get job posting inventory details
 	 * 
@@ -126,78 +141,81 @@ public class AdminJobPostingInventoryController {
 	public ModelAndView jobInventory(
 			@ModelAttribute("alertForm") InventoryForm inventoryForm,
 			BindingResult result, HttpSession session) {
-
 		ModelAndView model = new ModelAndView();
-
 		if (session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID) != null) {
 			int nsId = (Integer) session
 					.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
-
 			EmpSearchDTO dto1 = adminService
 					.getUserIdAndFacilityId(nsId);
 			int userId = dto1.getUserId();
 			int facilityId = dto1.getFacilityId();
-
 			List<JobPostingInventoryDTO> inventiryDTO = adminService
 					.getInventoryDetails(userId, facilityId);
-
 			List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
 			List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
-			JobPostingInventoryDTO postingInventoryDTO = new JobPostingInventoryDTO();
+//			JobPostingInventoryDTO postingInventoryDTO = new JobPostingInventoryDTO();
 			String Duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS)
 					+ " " + MMJBCommonConstants.DAYS;
-			for (int i = 0; i < inventiryDTO.size(); i++) {
-				postingInventoryDTO = inventiryDTO.get(i);
-				JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
-				if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-						MMJBCommonConstants.STANDARD_JOB_POSTING)
-						&& postingInventoryDTO.getProductType().equals(
-								MMJBCommonConstants.JOB_TYPE_COMBO)) {
-					dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
-							+ postingInventoryDTO.getAddon());
-					dto.setDuration(Duration);
-					dto.setQuantity(postingInventoryDTO.getQuantity());
-					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-					jbPostList.add(dto);
-				} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-						MMJBCommonConstants.STANDARD_JOB_POSTING)
-						&& postingInventoryDTO.getProductType().equals(
-								MMJBCommonConstants.JOB_TYPE)) {
-					dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
-					dto.setDuration(Duration);
-					dto.setQuantity(postingInventoryDTO.getQuantity());
-					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-					jbPostList.add(dto);
-				} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-						MMJBCommonConstants.JOB_POSTING_SLOT)
-						&& postingInventoryDTO.getProductType().equals(
-								MMJBCommonConstants.JOB_TYPE_COMBO)) {
-					dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
-							+ postingInventoryDTO.getAddon());
-					dto.setDuration(Duration);
-					dto.setQuantity(postingInventoryDTO.getQuantity());
-					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-					jbSlotList.add(dto);
-				} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-						MMJBCommonConstants.JOB_POSTING_SLOT)
-						&& postingInventoryDTO.getProductType().equals(
-								MMJBCommonConstants.JOB_TYPE)) {
-					dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
-					dto.setDuration(Duration);
-					dto.setQuantity(postingInventoryDTO.getQuantity());
-					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-					jbSlotList.add(dto);
-				}
+			for (int index = 0; index < inventiryDTO.size(); index++) {
+				getInventoryDetails(inventiryDTO, jbPostList, jbSlotList,
+						Duration, index);
 			}
 			model.addObject("jbPostList", jbPostList);
 			model.addObject("jbSlotList", jbSlotList);
 		}
 		model.setViewName("adminEditJobPostInventory");
 		return model;
+	}
+
+	private void getInventoryDetails(List<JobPostingInventoryDTO> inventiryDTO,
+			List<JobPostingInventoryDTO> jbPostList,
+			List<JobPostingInventoryDTO> jbSlotList, String Duration, int index) {
+		JobPostingInventoryDTO postingInventoryDTO;
+		postingInventoryDTO = inventiryDTO.get(index);
+		JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
+		if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+				MMJBCommonConstants.STANDARD_JOB_POSTING)
+				&& postingInventoryDTO.getProductType().equals(
+						MMJBCommonConstants.JOB_TYPE_COMBO)) {
+			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
+					+ postingInventoryDTO.getAddon());
+			dto.setDuration(Duration);
+			dto.setQuantity(postingInventoryDTO.getQuantity());
+			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+			jbPostList.add(dto);
+		} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+				MMJBCommonConstants.STANDARD_JOB_POSTING)
+				&& postingInventoryDTO.getProductType().equals(
+						MMJBCommonConstants.JOB_TYPE)) {
+			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
+			dto.setDuration(Duration);
+			dto.setQuantity(postingInventoryDTO.getQuantity());
+			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+			jbPostList.add(dto);
+		} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+				MMJBCommonConstants.JOB_POSTING_SLOT)
+				&& postingInventoryDTO.getProductType().equals(
+						MMJBCommonConstants.JOB_TYPE_COMBO)) {
+			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
+					+ postingInventoryDTO.getAddon());
+			dto.setDuration(Duration);
+			dto.setQuantity(postingInventoryDTO.getQuantity());
+			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+			jbSlotList.add(dto);
+		} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
+				MMJBCommonConstants.JOB_POSTING_SLOT)
+				&& postingInventoryDTO.getProductType().equals(
+						MMJBCommonConstants.JOB_TYPE)) {
+			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
+			dto.setDuration(Duration);
+			dto.setQuantity(postingInventoryDTO.getQuantity());
+			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+			jbSlotList.add(dto);
+		}
 	}
 
 	@RequestMapping(value = "/saveAvailJobQty", method = RequestMethod.GET)
@@ -225,7 +243,7 @@ public class AdminJobPostingInventoryController {
 		boolean saveData = adminService.saveModifiedData(jobPostDTOs);
 		JSONObject saveStatusJson = new JSONObject();
 		if (saveData) {
-			saveStatusJson.put("success", "Data Updated Successfully");
+			saveStatusJson.put(SUCCESS, "Data Updated Successfully");
 		} else {
 			saveStatusJson.put("failed", "Failed to update the data");
 		}
