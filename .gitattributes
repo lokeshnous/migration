@@ -487,7 +487,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerR
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationValidation.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerSubscriptionForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerSubscriptionsController.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerAdvanceSearch.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerAdvanceSearchForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerCoverLetterController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ResCoverLetterForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearchController.java -text
@@ -557,6 +557,7 @@ jobboard/src/main/webapp/WEB-INF/view/adminEditJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobSave.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminImpersonation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminLogin.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/advanceresumesearch.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAccountSetting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyAddEmployer.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/agencyDashboard.jsp -text

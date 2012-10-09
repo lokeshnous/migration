@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -57,7 +58,7 @@
 
 							<!--changed from an h1 to an h2-->
 							<h2 class="noTopBottomBorder">Advanced Search</h2>
-						<form:form method="" action="" commandName="jobSearchResultForm">
+						<form:form method="" action="" commandName="jobseekerAdvanceSearchForm">
 							<div class="job_Advancedsearch_devider">
 								<div class="input_grp1">
 								<form:input path="keywords" maxlength="60" id="keywords" cssClass="jb_input1" />
@@ -218,61 +219,13 @@
 											State / Province:</label>
 									</div>
 									<div class="input_grp3">
-										<select name="StateProvince" class="jb_input3"
-											id="StateProvince">
-											<option selected>NO PREFERENCE</option>
-											<option>Alabama</option>
-											<option>Alaska</option>
-											<option>Arizona</option>
-											<option>Arkansas</option>
-											<option>California</option>
-											<option>Colorado</option>
-											<option>Connecticut</option>
-											<option>Delaware</option>
-											<option>District of Columbia</option>
-											<option>Florida</option>
-											<option>Georgia</option>
-											<option>Hawaii</option>
-											<option>Idaho</option>
-											<option>Illinois</option>
-											<option>Indiana</option>
-											<option>Iowa</option>
-											<option>Kansas</option>
-											<option>Kentucky</option>
-											<option>Louisiana</option>
-											<option>Maine</option>
-											<option>Maryland</option>
-											<option>Massachusetts</option>
-											<option>Michigan</option>
-											<option>Minnesota</option>
-											<option>Mississippi</option>
-											<option>Missouri</option>
-											<option>Montana</option>
-											<option>Nebraska</option>
-											<option>Nevada</option>
-											<option>New Hampshire</option>
-											<option>New Jersey</option>
-											<option>New Mexico</option>
-											<option>New York</option>
-											<option>North Carolina</option>
-											<option>North Dakota</option>
-											<option>Ohio</option>
-											<option>Oklahoma</option>
-											<option>Oregon</option>
-											<option>Pennsylvania</option>
-											<option>Rhode Island</option>
-											<option>South Carolina</option>
-											<option>South Dakota</option>
-											<option>Tennessee</option>
-											<option>Texas</option>
-											<option>Utah</option>
-											<option>Vermont</option>
-											<option>Virginia</option>
-											<option>Washington</option>
-											<option>West Virginia</option>
-											<option>Wisconsin</option>
-											<option>Wyoming</option>
-										</select>
+										<form:select path="stateProvince" class="jb_input3"	id="stateProvince">
+											<form:option label="NO PREFERENCE" value="NO PREFERENCE"/>
+											<c:forEach items="${stateList}" var="state">
+												<form:option label="${state.stateValue}" value="${state.stateValue}" />
+												<%-- <c:out value="${state.stateValue}"></c:out> --%>
+											</c:forEach>
+										</form:select>
 									</div>
 
 								</div>

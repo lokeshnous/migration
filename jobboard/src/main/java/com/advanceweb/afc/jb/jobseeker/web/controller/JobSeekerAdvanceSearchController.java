@@ -38,7 +38,7 @@ public class JobSeekerAdvanceSearchController {
 	@RequestMapping(value="/jobseekeradvancesearch",method = RequestMethod.GET)
 	public ModelAndView createJobSeekerAdvanceSearch(Map model) {
 		
-		JobseekerAdvanceSearch jobseekerAdvanceSearchForm = new JobseekerAdvanceSearch();
+		JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm = new JobseekerAdvanceSearchForm();
 		List<RadiusDTO> radiusList=populateDropdownsService.getRadiusList(); 
 		List<ExcludeFromDTO> excludeFromList=populateDropdownsService.getExcludeFromList(); 
 		List<FromZipcodeDTO> fromZipcodeList=populateDropdownsService.getFromZipcodeList();

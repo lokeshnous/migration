@@ -44,24 +44,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
+import com.advanceweb.afc.jb.common.ExcludeFromDTO;
+import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobPostedDateDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
+import com.advanceweb.afc.jb.common.MetroAreaDTO;
 import com.advanceweb.afc.jb.common.NewsDTO;
+import com.advanceweb.afc.jb.common.RadiusDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
+import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.home.web.controller.ClickController;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
+import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -111,6 +120,9 @@ public class JobSearchController {
 
 	@Autowired
 	private EmployerNewsFeedService employerNewsFeedService;
+	
+	@Autowired
+	private PopulateDropdowns populateDropdownsService;
 
 	@Value("${jobSearchValidateKeyword}")
 	private String jobSearchValidateKeyword;
@@ -939,12 +951,26 @@ public class JobSearchController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
-	public ModelAndView forwardToAdvanceJobSearch(HttpSession session,
-			Map<String, JobSearchResultForm> model) {
-		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-		model.put("jobSearchResultForm", jobSearchResultForm);
+	public ModelAndView advanceSearch(HttpSession session, 
+			JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm) {
+		ModelAndView model = new ModelAndView();
+		//JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm = new JobseekerAdvanceSearchForm();
+		//List<RadiusDTO> radiusList = populateDropdownsService.getRadiusList(); 
+		//List<ExcludeFromDTO> excludeFromList = populateDropdownsService.getExcludeFromList(); 
+		//List<FromZipcodeDTO> fromZipcodeList = populateDropdownsService.getFromZipcodeList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		//List<MetroAreaDTO> metroAreaList = populateDropdownsService.getMetroAreaList();
+		//List<EmploymentTypeDTO> employmentTypeList = populateDropdownsService.getEmploymentTypeList();
+		//List<JobPostedDateDTO> jobPostedDateList = populateDropdownsService.getJobPostedDateList();
+		
+		LOGGER.info("State List="+stateList.size());
+		
+		model.addObject("stateList",stateList);
+		model.addObject("jobseekerAdvanceSearchForm", jobseekerAdvanceSearchForm);
+		model.setViewName("jobboardadvancedsearch");
+		
 		removeSession(session);
-		return new ModelAndView("jobboardadvancedsearch");
+		return model;
 
 	}
 
