@@ -24,7 +24,6 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
-import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
