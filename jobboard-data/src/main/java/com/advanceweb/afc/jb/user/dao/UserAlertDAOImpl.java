@@ -60,7 +60,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @param userId
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserAlertDTO> viewalerts(int userId, int facilityId,
 			List<ManageAccessPermissionDTO> jbOwnerList) {
@@ -103,7 +102,7 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @param dropDownName
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public List<DropDownDTO> populateValues(String dropDownName) {
 		List<AdmAlert> admAlerts = hibernateTemplate.find(
@@ -118,7 +117,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @param alertDTOs
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs) {
 		try {
@@ -152,7 +150,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ManageAccessPermissionDTO> getJobOwner(int facilityId,
 			int userId) {
@@ -212,7 +209,6 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<ManageAccessPermissionDTO> getOwnerDetails(int userId) {
 		try {

@@ -30,8 +30,8 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 public class RegistrationConversionHelper {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(RegistrationConversionHelper.class); 
-	
+			.getLogger(RegistrationConversionHelper.class);
+
 	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto,
 			MerUser entity) {
 		/**
@@ -59,24 +59,28 @@ public class RegistrationConversionHelper {
 
 		for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
-			MerUserProfilePK pk = new MerUserProfilePK();
+			MerUserProfilePK profilePK = new MerUserProfilePK();
 			MerUserProfile profile = new MerUserProfile();
 
 			profile.setAttribValue(attribDTO.getStrLabelValue());
 
-			if (MMJBCommonConstants.FIRST_NAME.equals(attribDTO.getStrLabelName())) {
+			if (MMJBCommonConstants.FIRST_NAME.equals(attribDTO
+					.getStrLabelName())) {
 				entity.setFirstName(attribDTO.getStrLabelValue());
 			}
 
-			if (MMJBCommonConstants.MIDDLE_NAME.equals(attribDTO.getStrLabelName())) {
+			if (MMJBCommonConstants.MIDDLE_NAME.equals(attribDTO
+					.getStrLabelName())) {
 				entity.setMiddleName(attribDTO.getStrLabelValue());
 			}
 
-			if (MMJBCommonConstants.LAST_NAME.equals(attribDTO.getStrLabelName())) {
+			if (MMJBCommonConstants.LAST_NAME.equals(attribDTO
+					.getStrLabelName())) {
 				entity.setLastName(attribDTO.getStrLabelValue());
 			}
 
-			if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO.getStrLabelName())
+			if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
+					.getStrLabelName())
 					&& null != attribDTO.getStrLabelValue()
 					&& !attribDTO.getStrLabelValue().isEmpty()) {
 				entity.setEmail(attribDTO.getStrLabelValue());
@@ -84,7 +88,7 @@ public class RegistrationConversionHelper {
 
 			if (null != attribDTO.getStrProfileAttribId()
 					&& !attribDTO.getStrProfileAttribId().isEmpty()) {
-				pk.setProfileAttribId(Integer.valueOf(attribDTO
+				profilePK.setProfileAttribId(Integer.valueOf(attribDTO
 						.getStrProfileAttribId()));
 			}
 
@@ -268,16 +272,21 @@ public class RegistrationConversionHelper {
 							.getProfileAttribId()));
 					dto.setbRequired((labels.contains(dto.getStrLabelName()) ? 1
 							: 0));
-					if (MMJBCommonConstants.DROP_DOWN.equals(dto.getStrAttribType())
-							|| MMJBCommonConstants.CHECK_BOX.equals(dto.getStrAttribType())) {
+					if (MMJBCommonConstants.DROP_DOWN.equals(dto
+							.getStrAttribType())
+							|| MMJBCommonConstants.CHECK_BOX.equals(dto
+									.getStrAttribType())) {
 						// populating countries
-						if (MMJBCommonConstants.LABEL_COUNTRY.equals(dto.getStrLabelName())) {
+						if (MMJBCommonConstants.LABEL_COUNTRY.equals(dto
+								.getStrLabelName())) {
 							dto.setDropdown(countryList);
 
-						} else if (MMJBCommonConstants.LABEL_STATE.equals(dto.getStrLabelName())) {
+						} else if (MMJBCommonConstants.LABEL_STATE.equals(dto
+								.getStrLabelName())) {
 							dto.setDropdown(stateList); // populating states
 
-						} else if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(dto.getStrLabelName())) {
+						} else if (MMJBCommonConstants.LABEL_SUSBSCRIPTION
+								.equals(dto.getStrLabelName())) {
 							dto.setDropdown(subsList); // populating states
 						} else {
 							List<MerProfileAttribList> dropdownVals = entity
@@ -300,20 +309,19 @@ public class RegistrationConversionHelper {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public  List<String> getLablesByProperties(String string) {
+	public List<String> getLablesByProperties(String string) {
 		List<String> labels = new ArrayList<String>();
 		Set set = null;
 		Properties entries = null;
 		try {
-			entries = PropertiesLoaderUtils
-					.loadAllProperties(string);
+			entries = PropertiesLoaderUtils.loadAllProperties(string);
 			set = entries.keySet();
 			Iterator itr = set.iterator();
 			while (itr.hasNext()) {
 				labels.add(entries.getProperty((String) itr.next()));
 			}
 		} catch (IOException e) {
-			LOGGER.info("ERROR in JobSeekerRegistrationDTO",e);
+			LOGGER.info("ERROR in JobSeekerRegistrationDTO", e);
 		}
 		return labels;
 	}

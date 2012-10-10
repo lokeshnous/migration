@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,140 +16,148 @@ import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 /**
  * 
  * @author Sasibhushana
- *
+ * 
  * @Version 1.0
  * @Since 2nd July, 2012
  */
 @Repository("jsSubscriptionHelper")
 public class JobSeekerSubscriptionsConversionHelper {
-	
+
 	/**
 	 * Converting into Job seeker Subscriptions DTO
+	 * 
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	public List<JobSeekerSubscriptionsDTO> transformMerUserAlertsTojsSubsDTO(List<AdmUserSubscription> listSubs){
-		
+	public List<JobSeekerSubscriptionsDTO> transformMerUserAlertsTojsSubsDTO(
+			List<AdmUserSubscription> listSubs) {
+
 		List<JobSeekerSubscriptionsDTO> subsList = new ArrayList<JobSeekerSubscriptionsDTO>();
-		
-		if(null != listSubs){
-			for(AdmUserSubscription alert : listSubs){
+
+		if (null != listSubs) {
+			for (AdmUserSubscription alert : listSubs) {
 				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
-				dto.setSubscriptionId(alert.getSubscriptionPK().getSubscriptionId());
-				dto.setUserId(alert.getSubscriptionPK().getUserId());			
+				dto.setSubscriptionId(alert.getSubscriptionPK()
+						.getSubscriptionId());
+				dto.setUserId(alert.getSubscriptionPK().getUserId());
 				subsList.add(dto);
 			}
-		}		
-		return subsList;		
+		}
+		return subsList;
 	}
-	
-	
+
 	/**
 	 * Converting into MerUserAlerts entity
+	 * 
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	public List<AdmUserSubscription> transformjsSubsDTOToAdmUserSubs(List<JobSeekerSubscriptionsDTO> listSubsDTO, 
-			List<AdmUserSubscription> listSubsAlerts){
-		
+	public List<AdmUserSubscription> transformjsSubsDTOToAdmUserSubs(
+			List<JobSeekerSubscriptionsDTO> listSubsDTO,
+			List<AdmUserSubscription> listSubsAlerts) {
+
 		List<AdmUserSubscription> subsEntityList = new ArrayList<AdmUserSubscription>();
-		
-		if(null != listSubsDTO){
-			for(JobSeekerSubscriptionsDTO dto : listSubsDTO){
-				if(!validateAdmUserSubscriptions(dto, listSubsAlerts)){
+
+		if (null != listSubsDTO) {
+			for (JobSeekerSubscriptionsDTO dto : listSubsDTO) {
+				if (!validateAdmUserSubscriptions(dto, listSubsAlerts)) {
 					AdmUserSubscription entity = new AdmUserSubscription();
-						AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
-						subscription.setSubscriptionId(dto.getSubscriptionId());
-						subscription.setUserId(dto.getUserId());
+					AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
+					subscription.setSubscriptionId(dto.getSubscriptionId());
+					subscription.setUserId(dto.getUserId());
 					entity.setSubscriptionPK(subscription);
 					entity.setActive(dto.getActive());
 					subsEntityList.add(entity);
 				}
 			}
-		}		
-		return subsEntityList;		
+		}
+		return subsEntityList;
 	}
-	
+
 	/**
 	 * Converting into MerUserAlerts entity
+	 * 
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	private boolean validateAdmUserSubscriptions(JobSeekerSubscriptionsDTO subDTO, List<AdmUserSubscription> listSubsAlerts){
-			
-		if(null != subDTO && null != listSubsAlerts){
-			for(AdmUserSubscription entity : listSubsAlerts){
-				if(subDTO.getSubscriptionId() == entity.getSubscriptionPK().getSubscriptionId() && 
-						subDTO.getUserId() == entity.getSubscriptionPK().getUserId()){
+	private boolean validateAdmUserSubscriptions(
+			JobSeekerSubscriptionsDTO subDTO,
+			List<AdmUserSubscription> listSubsAlerts) {
+
+		if (null != subDTO && null != listSubsAlerts) {
+			for (AdmUserSubscription entity : listSubsAlerts) {
+				if (subDTO.getSubscriptionId() == entity.getSubscriptionPK()
+						.getSubscriptionId()
+						&& subDTO.getUserId() == entity.getSubscriptionPK()
+								.getUserId()) {
 					listSubsAlerts.remove(entity);
 					return true;
 				}
 			}
-		}		
-		return false;		
+		}
+		return false;
 	}
+
 	/**
 	 * 
 	 * @param subDTO
 	 * @return
 	 */
-	public ResCoverLetterDTO toTransFormListToDTO(List<ResCoverletter> subDTO){
-		ResCoverLetterDTO rfc=new ResCoverLetterDTO();
-		if(rfc!=null){
-			for(ResCoverletter resFac : subDTO){
+	public ResCoverLetterDTO toTransFormListToDTO(List<ResCoverletter> subDTO) {
+		ResCoverLetterDTO rfc = new ResCoverLetterDTO();
+		if (rfc != null) {
+			for (ResCoverletter resFac : subDTO) {
 				rfc.setActive(resFac.getActive());
 				rfc.setCoverletterId(resFac.getCoverletterId());
 				rfc.setCoverletterText(resFac.getCoverletterText());
 				rfc.setName(resFac.getName());
 				rfc.setUserId(resFac.getUserId());
-				//rfc.setCreateDt(resFac.getCreateDt());
+				// rfc.setCreateDt(resFac.getCreateDt());
 			}
 		}
-		return rfc;		
+		return rfc;
 	}
-	
-/**
- * 	
- * @param coverLet
- * @return List
- * @author kartikm
- * This is list to DTO converter
- * @version v.0.1
- */
-	
+
+	/**
+	 * 
+	 * @param coverLet
+	 * @return List
+	 * @author kartikm This is list to DTO converter
+	 * @version v.0.1
+	 */
+
 	public List<ResCoverLetterDTO> transformCoverLeterlistToDTO(
 			List<ResCoverletter> coverLet) {
 		List<ResCoverLetterDTO> manageCoverLetterDTOList = new ArrayList<ResCoverLetterDTO>();
-		int i = 0;
+		int clIndex = 0;
 		for (ResCoverletter merUser : coverLet) {
-			ResCoverLetterDTO res=new ResCoverLetterDTO();
+			ResCoverLetterDTO res = new ResCoverLetterDTO();
 			res.setActive(merUser.getActive());
 			res.setName(merUser.getName());
-			res.setCoverletterId(merUser.getCoverletterId());		
+			res.setCoverletterId(merUser.getCoverletterId());
 			res.setCreateDt(dateToStringConveter(merUser.getCreateDt()));
 			res.setCoverletterText(merUser.getCoverletterText());
 			res.setUpdateDt(dateToStringConveter(merUser.getUpdateDt()));
 			res.setUserId(merUser.getUserId());
 			manageCoverLetterDTOList.add(res);
-			i=i+1;
+			clIndex = clIndex + 1;
 		}
 		return manageCoverLetterDTOList;
 
 	}
-/**
- * 	
- * @param date
- * @return date of string format
- * Date format to String format converter
- * @author kartikm
- * @version v.0.1
- */
-	
-	public String dateToStringConveter(Date date){
+
+	/**
+	 * 
+	 * @param date
+	 * @return date of string format Date format to String format converter
+	 * @author kartikm
+	 * @version v.0.1
+	 */
+
+	public String dateToStringConveter(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-	    String strDate = sdf.format(date);
+		String strDate = sdf.format(date);
 		return strDate;
 	}
-	
-	
+
 }

@@ -35,11 +35,11 @@ import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 
 /**
- * This method is called for create cover letter
- * etc.
+ * This method is called for create cover letter etc.
+ * 
  * @author kartikm
  * @version V.0.1
- *
+ * 
  */
 @Controller
 @RequestMapping("/jobSeekerCoverLetter")
@@ -50,10 +50,10 @@ public class JobseekerCoverLetterController {
 			.getLogger("JobseekerCoverLetterController.class");
 	@Autowired
 	CoverLetterService coverLetterService;
-	
+
 	private @Value("${resumeDeleteSuccess}")
 	String resumeDeleteSuccess;
-	
+
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 
@@ -90,16 +90,17 @@ public class JobseekerCoverLetterController {
 			dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
 			dto.setActive(resCoverLetterForm.getActive());
 			dto.setUserId(userId);
-			//this for first time 
+			// this for first time
 			boolean findFirstActive = coverLetterService.findFirstActiveStatus(
 					userId, resCoverLetterForm.getActive());
 			// this is for max and min count
 			boolean findActive = coverLetterService.findActiveStatus(userId,
 					resCoverLetterForm.getActive());
-			//this is for duplicate name
+			// this is for duplicate name
 			boolean findName = coverLetterService.findNameActiveStatus(userId,
 					resCoverLetterForm.getName());
-			//this is for one private to public convert checking it already present or not
+			// this is for one private to public convert checking it already
+			// present or not
 			boolean findDuplicate = coverLetterService
 					.findDuplicateActiveStatus(userId,
 							resCoverLetterForm.getActive());
@@ -154,9 +155,7 @@ public class JobseekerCoverLetterController {
 		}
 		return model;
 	}
-	
-	
-	
+
 	/**
 	 * This method is called to Account Setting update page and
 	 * editAccountSetting method take Bean class binding result from Jsp pages
@@ -166,8 +165,7 @@ public class JobseekerCoverLetterController {
 	 * @param model
 	 * @return true
 	 */
-	
-	
+
 	@RequestMapping(value = "/deleteManageExistCoverLetter", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject deleteManageExistCoverLetter(HttpServletRequest request,
@@ -175,9 +173,9 @@ public class JobseekerCoverLetterController {
 			@RequestParam("coverletterId") int coverletterId) {
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
-		boolean isdelete=coverLetterService.isDelete(userId,coverletterId);
-		
-		JSONObject deleteStatusJson = new JSONObject();		
+		boolean isdelete = coverLetterService.isDelete(userId, coverletterId);
+
+		JSONObject deleteStatusJson = new JSONObject();
 		if (isdelete) {
 			deleteStatusJson.put("success", resumeDeleteSuccess);
 			return deleteStatusJson;
@@ -197,25 +195,27 @@ public class JobseekerCoverLetterController {
 	 * @param result
 	 * @return
 	 */
-	
-	
+
 	@RequestMapping(value = "/jobseekerViewCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobseekerViewCoverLetter(HttpServletRequest request,
 			HttpSession session, ResCoverLetterForm resCoverLetterForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
-		
+
 		try {
-			//int userId = (Integer) session
-			//		.getAttribute(MMJBCommonConstants.USER_ID);
-			String covId=request.getParameter("coverletterId");
-			String covType=request.getParameter("type");
-			int coverletterId=Integer.parseInt(covId);
-			ResCoverLetterDTO listOfCoverLetter=coverLetterService.getCoverList(coverletterId);
-			if (listOfCoverLetter!=null){
+			// int userId = (Integer) session
+			// .getAttribute(MMJBCommonConstants.USER_ID);
+			String covId = request.getParameter("coverletterId");
+			String covType = request.getParameter("type");
+			int coverletterId = Integer.parseInt(covId);
+			ResCoverLetterDTO listOfCoverLetter = coverLetterService
+					.getCoverList(coverletterId);
+			if (listOfCoverLetter != null) {
 				resCoverLetterForm.setActive(listOfCoverLetter.getActive());
-				resCoverLetterForm.setCoverletterId(listOfCoverLetter.getCoverletterId());
-				resCoverLetterForm.setCoverletterText(listOfCoverLetter.getCoverletterText());
+				resCoverLetterForm.setCoverletterId(listOfCoverLetter
+						.getCoverletterId());
+				resCoverLetterForm.setCoverletterText(listOfCoverLetter
+						.getCoverletterText());
 				resCoverLetterForm.setName(listOfCoverLetter.getName());
 				resCoverLetterForm.setUserId(listOfCoverLetter.getUserId());
 			}
@@ -224,10 +224,11 @@ public class JobseekerCoverLetterController {
 			model.setViewName("viewEditCoverLetter");
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error"+e);
+			LOGGER.info("This is Account Addresss edite option error" + e);
 		}
 		return model;
 	}
+
 	/**
 	 * @author kartikm
 	 * @version v.0.1
@@ -240,99 +241,103 @@ public class JobseekerCoverLetterController {
 	 * @param response
 	 * @return
 	 */
-	
-	//@ResponseBody
+
+	// @ResponseBody
 	@RequestMapping(value = "/jobseekerDownloadCoverLetter", method = RequestMethod.GET)
-	public ModelAndView jobseekerDownloadCoverLetter(HttpServletRequest request,
-			HttpSession session, ResCoverLetterForm resCoverLetterForm,
-			BindingResult result,HttpServletResponse response) {
-		//ModelAndView model = new ModelAndView();
-		
-		//String file = null;
+	public ModelAndView jobseekerDownloadCoverLetter(
+			HttpServletRequest request, HttpSession session,
+			ResCoverLetterForm resCoverLetterForm, BindingResult result,
+			HttpServletResponse response) {
+		// ModelAndView model = new ModelAndView();
+
+		// String file = null;
 		try {
-		
-			String covId=request.getParameter("coverletterId");
-			
-			int coverletterId=Integer.parseInt(covId);
-			ResCoverLetterDTO listOfCoverLetter=coverLetterService.getCoverList(coverletterId);
-			if (listOfCoverLetter!=null){
+
+			String covId = request.getParameter("coverletterId");
+
+			int coverletterId = Integer.parseInt(covId);
+			ResCoverLetterDTO listOfCoverLetter = coverLetterService
+					.getCoverList(coverletterId);
+			if (listOfCoverLetter != null) {
 				resCoverLetterForm.setActive(listOfCoverLetter.getActive());
-				resCoverLetterForm.setCoverletterId(listOfCoverLetter.getCoverletterId());
-				resCoverLetterForm.setCoverletterText(listOfCoverLetter.getCoverletterText());
+				resCoverLetterForm.setCoverletterId(listOfCoverLetter
+						.getCoverletterId());
+				resCoverLetterForm.setCoverletterText(listOfCoverLetter
+						.getCoverletterText());
 				resCoverLetterForm.setName(listOfCoverLetter.getName());
 				resCoverLetterForm.setUserId(listOfCoverLetter.getUserId());
-			
-			    String fileName="";
-				
-			        fileName=listOfCoverLetter.getName();
-			        LOGGER.info("Filename:"+fileName);
-			        String fName=fileName;
-			        FileOutputStream fs = new FileOutputStream(fName);
-			        OutputStreamWriter out = new OutputStreamWriter(fs);
-			        out.write(listOfCoverLetter.getName());
-			        out.write(listOfCoverLetter.getCoverletterText());
-			        response.setContentType( "application/msword");
-			        response.setHeader("Content-Disposition","attachment; filename="+fName);
-			        response.setHeader("Cache-Control", "no-cache");
-			        byte[] bytesGot = listOfCoverLetter.getCoverletterText().getBytes();
-			        ServletOutputStream outs = response.getOutputStream();
-			        outs.write(bytesGot);
-			        
-			        
-			       /* String filePath = "C:\\test reference-material";
-			        File f=new File(filePath, fileName);
-			        String fileType = fileName.substring(fileName.indexOf(".")+1,fileName.length());
-			        LOGGER.info("Filetype:"+fileType+";"+f.length());*/
 
-			       // if (fileType.trim().equalsIgnoreCase("txt")) {
-			           // response.setContentType( "text/plain" );
-			       /* } else if (fileType.trim().equalsIgnoreCase("doc")) {
-			            response.setContentType( "application/msword" );
-			        } else if (fileType.trim().equalsIgnoreCase("xls")) {
-			            response.setContentType( "application/vnd.ms-excel" );
-			        } else if (fileType.trim().equalsIgnoreCase("pdf")) {
-			            response.setContentType( "application/pdf" );
-			            LOGGER.info("content type set to pdf");
-			        } else {
-			            response.setContentType( "application/octet-stream" );
-			        }
-*/
-			       // response.setContentLength((int)f.length());
-			         /*   PrintWriter out = response.getWriter(); 
-			            out.write(fileName);
-			            out.write("\n");
-			            out.write(listOfCoverLetter.getCoverletterText());
-			         String fName=fileName+".txt";*/
-			       //  response.setHeader("Content-Disposition","attachment; filename="+fName);
+				String fileName = MMJBCommonConstants.EMPTY;
 
-			      //  response.setHeader("Cache-Control", "no-cache");
-			       /* byte[] buf = new byte[8192];
-			        FileInputStream inStream = new FileInputStream(f);
-			        int sizeRead = 0;
-			        while ((sizeRead = inStream.read(buf, 0, buf.length)) > 0) {
-			        	LOGGER.info("size:"+sizeRead);
-			            outStream.write(buf, 0, sizeRead);
-			        }
-			        inStream.close();*/
-			       // outStream.close();
-			        
-			       
-			        
-			        outs.flush();
-			        outs.close(); 			        
-			        out.close();
-			        out.flush();
-			    }			
-			
+				fileName = listOfCoverLetter.getName();
+				LOGGER.info("Filename:" + fileName);
+				String fName = fileName;
+				FileOutputStream outputStream = new FileOutputStream(fName);
+				OutputStreamWriter out = new OutputStreamWriter(outputStream);
+				out.write(listOfCoverLetter.getName());
+				out.write(listOfCoverLetter.getCoverletterText());
+				response.setContentType("application/msword");
+				response.setHeader("Content-Disposition",
+						"attachment; filename=" + fName);
+				response.setHeader("Cache-Control", "no-cache");
+				byte[] bytesGot = listOfCoverLetter.getCoverletterText()
+						.getBytes();
+				ServletOutputStream outs = response.getOutputStream();
+				outs.write(bytesGot);
+
+				/*
+				 * String filePath = "C:\\test reference-material"; File f=new
+				 * File(filePath, fileName); String fileType =
+				 * fileName.substring
+				 * (fileName.indexOf(".")+1,fileName.length());
+				 * LOGGER.info("Filetype:"+fileType+";"+f.length());
+				 */
+
+				// if (fileType.trim().equalsIgnoreCase("txt")) {
+				// response.setContentType( "text/plain" );
+				/*
+				 * } else if (fileType.trim().equalsIgnoreCase("doc")) {
+				 * response.setContentType( "application/msword" ); } else if
+				 * (fileType.trim().equalsIgnoreCase("xls")) {
+				 * response.setContentType( "application/vnd.ms-excel" ); } else
+				 * if (fileType.trim().equalsIgnoreCase("pdf")) {
+				 * response.setContentType( "application/pdf" );
+				 * LOGGER.info("content type set to pdf"); } else {
+				 * response.setContentType( "application/octet-stream" ); }
+				 */
+				// response.setContentLength((int)f.length());
+				/*
+				 * PrintWriter out = response.getWriter(); out.write(fileName);
+				 * out.write("\n");
+				 * out.write(listOfCoverLetter.getCoverletterText()); String
+				 * fName=fileName+".txt";
+				 */
+				// response.setHeader("Content-Disposition","attachment; filename="+fName);
+
+				// response.setHeader("Cache-Control", "no-cache");
+				/*
+				 * byte[] buf = new byte[8192]; FileInputStream inStream = new
+				 * FileInputStream(f); int sizeRead = 0; while ((sizeRead =
+				 * inStream.read(buf, 0, buf.length)) > 0) {
+				 * LOGGER.info("size:"+sizeRead); outStream.write(buf, 0,
+				 * sizeRead); } inStream.close();
+				 */
+				// outStream.close();
+
+				outs.flush();
+				outs.close();
+				out.close();
+				out.flush();
+			}
+
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error"+e);
+			LOGGER.info("This is Account Addresss edite option error" + e);
 		}
-			
-	     
-		return new ModelAndView(); 
+
+		return new ModelAndView();
 	}
-	
+
 	/**
 	 * This method is called to Account Setting update page and
 	 * editAccountSetting method take Bean class binding result from Jsp pages
@@ -344,22 +349,23 @@ public class JobseekerCoverLetterController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/jobseekerupdateCoverLetter", method = RequestMethod.POST)
-	public String updateCoverLetter(ResCoverLetterForm resCoverLetterForm,BindingResult result, HttpSession session){
-	//	boolean isUpdated = false;
-		try{
+	public String updateCoverLetter(ResCoverLetterForm resCoverLetterForm,
+			BindingResult result, HttpSession session) {
+		// boolean isUpdated = false;
+		try {
 			int userId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
 			ResCoverLetterDTO dto = new ResCoverLetterDTO();
-			if(("".equals(resCoverLetterForm.getName()))||(null==resCoverLetterForm.getName()))
-			{
+			if (("".equals(resCoverLetterForm.getName()))
+					|| (null == resCoverLetterForm.getName())) {
 				return "";
-			}else{
+			} else {
 				dto.setName(resCoverLetterForm.getName());
 			}
-			if(("".equals(resCoverLetterForm.getCoverletterText()))||(null==resCoverLetterForm.getCoverletterText()))
-			{
+			if (("".equals(resCoverLetterForm.getCoverletterText()))
+					|| (null == resCoverLetterForm.getCoverletterText())) {
 				return "";
-			}else{
+			} else {
 				dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
 			}
 			dto.setActive(resCoverLetterForm.getActive());
@@ -371,35 +377,33 @@ public class JobseekerCoverLetterController {
 			boolean findDuplicate = coverLetterService
 					.findDuplicateActiveStatus(userId,
 							resCoverLetterForm.getActive());
-			
+
 			if (findName) {
 				return "Cover Letter Name already exists, Please try again";
-			}else if (resCoverLetterForm.getActive()==1){
-					if (findDuplicate) {
+			} else if (resCoverLetterForm.getActive() == 1) {
+				if (findDuplicate) {
 					coverLetterService.coverLetterUpdateByjobSeeker(dto);
-					coverLetterService.coverLetterEditByjobSeeker(dto);				
-				    }
-					 else{
-							coverLetterService.coverLetterEditByjobSeeker(dto);
-						}
-			}else{
+					coverLetterService.coverLetterEditByjobSeeker(dto);
+				} else {
+					coverLetterService.coverLetterEditByjobSeeker(dto);
+				}
+			} else {
 				coverLetterService.coverLetterEditByjobSeeker(dto);
 			}
-			
-			
-		}catch(Exception e)
-		{
-			LOGGER.info("This is cover letter update option give error");	
+
+		} catch (Exception e) {
+			LOGGER.info("This is cover letter update option give error");
 		}
-		
+
 		return "";
-		
+
 	}
+
 	/**
 	 * @author kartikm
 	 * @version v.0.1
 	 * @date 20Sept.2012
-	 * @perpous This is for print cover letter 
+	 * @perpous This is for print cover letter
 	 * @param request
 	 * @param session
 	 * @param resCoverLetterForm
@@ -411,26 +415,29 @@ public class JobseekerCoverLetterController {
 			HttpSession session, ResCoverLetterForm resCoverLetterForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
-		
-		try {			
-			String covId=request.getParameter("coverletterId");
-			String covType=request.getParameter("type");
-			int coverletterId=Integer.parseInt(covId);
-			ResCoverLetterDTO listOfCoverLetter=coverLetterService.getCoverList(coverletterId);
-			if (listOfCoverLetter!=null){
+
+		try {
+			String covId = request.getParameter("coverletterId");
+			String covType = request.getParameter("type");
+			int coverletterId = Integer.parseInt(covId);
+			ResCoverLetterDTO listOfCoverLetter = coverLetterService
+					.getCoverList(coverletterId);
+			if (listOfCoverLetter != null) {
 				resCoverLetterForm.setActive(listOfCoverLetter.getActive());
-				resCoverLetterForm.setCoverletterId(listOfCoverLetter.getCoverletterId());
-				resCoverLetterForm.setCoverletterText(listOfCoverLetter.getCoverletterText());
+				resCoverLetterForm.setCoverletterId(listOfCoverLetter
+						.getCoverletterId());
+				resCoverLetterForm.setCoverletterText(listOfCoverLetter
+						.getCoverletterText());
 				resCoverLetterForm.setName(listOfCoverLetter.getName());
 				resCoverLetterForm.setUserId(listOfCoverLetter.getUserId());
 			}
-			
+
 			model.addObject("covType", covType);
 			model.addObject("employeeAccountForm", resCoverLetterForm);
 			model.setViewName("printCoverLetter");
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error"+e);
+			LOGGER.info("This is Account Addresss edite option error" + e);
 		}
 		return model;
 	}

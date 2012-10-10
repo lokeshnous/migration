@@ -119,9 +119,10 @@ public class EmployerRegistrationConversionHelper {
 	 * @return
 	 */
 	public AdmFacility transformMerCompanyProfileDTOToAdmFacility(
-			CompanyProfileDTO companyProfileDTO,AdmFacility facility) {
-		AdmFacility admFacility =facility;
-		admFacility.setFacilityId(Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
+			CompanyProfileDTO companyProfileDTO, AdmFacility facility) {
+		AdmFacility admFacility = facility;
+		admFacility.setFacilityId(Long.valueOf(
+				companyProfileDTO.getFacilityid()).intValue());
 		admFacility.setName(companyProfileDTO.getCompanyName());
 		admFacility.setCompanyNews(companyProfileDTO.getCompanyNews());
 		admFacility.setCompanyOverview(companyProfileDTO.getCompanyOverview());
@@ -233,9 +234,8 @@ public class EmployerRegistrationConversionHelper {
 	 */
 	public AdmFacility transformEmpDTOToAdmFAcility(EmployerProfileDTO dto) {
 
+		AdmFacility admFacility = new AdmFacility();
 
-		AdmFacility admFacility= new AdmFacility();
-		
 		if (null != dto.getAttribList()) {
 			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 				if (MMJBCommonConstants.EMAIL_ADDRESS.equals(attribDTO
@@ -259,7 +259,7 @@ public class EmployerRegistrationConversionHelper {
 				} else if (MMJBCommonConstants.COMPANY_EMP.equals(attribDTO
 						.getStrLabelName())) {
 					admFacility.setName(attribDTO.getStrLabelValue());
-				} 
+				}
 
 			}
 		}
@@ -321,9 +321,11 @@ public class EmployerRegistrationConversionHelper {
 						.getStrLabelName())) {
 					facilityContact.setPhone2(attribDTO.getStrLabelValue());
 				}
-				/*AdmFacility admFacility = new AdmFacility();
-				admFacility.setFacilityId(facility.getFacilityId());
-				facilityContact.setAdmFacility(admFacility);*/
+				/*
+				 * AdmFacility admFacility = new AdmFacility();
+				 * admFacility.setFacilityId(facility.getFacilityId());
+				 * facilityContact.setAdmFacility(admFacility);
+				 */
 			}
 			facilityContact.setContactType(MMJBCommonConstants.PRIMARY);
 			facilityContact.setCreateDt(new Date());
@@ -579,17 +581,18 @@ public class EmployerRegistrationConversionHelper {
 	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(
 			List<MerUser> merUsers, List<Integer> roleId) {
 		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
-		int i = 0;
+		int roleIndex = 0;
 		for (MerUser merUser : merUsers) {
 			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
 			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
 					+ merUser.getFirstName());
-			if (roleId.size() > i && null != roleId.get(i)) {
-				manageAccessPermissionDTO.setTypeOfAccess(roleId.get(i));
+			if (roleId.size() > roleIndex && null != roleId.get(roleIndex)) {
+				manageAccessPermissionDTO
+						.setTypeOfAccess(roleId.get(roleIndex));
 			}
 			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
-			i = i + 1;
+			roleIndex = roleIndex + 1;
 		}
 		return manageAccessPermissionDTOList;
 

@@ -202,8 +202,7 @@ public class UserAlertController {
 		try {
 			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
 		} catch (JobBoardServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.info("error in viewalerts" + e);
 		}
 
 		if (jbOwnerList != null

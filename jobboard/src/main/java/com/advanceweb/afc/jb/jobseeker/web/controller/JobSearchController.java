@@ -94,7 +94,7 @@ public class JobSearchController {
 	private MMEmailService emailService;
 
 	@Autowired
-	private JSONConverterService jsonConverterService;
+	private JSONConverterService jsonConService;
 
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerService;
@@ -109,19 +109,19 @@ public class JobSearchController {
 	private CheckSessionMap checkSessionMap;
 
 	@Autowired
-	private BrandingTemplateService brandingTemplateService;
+	private BrandingTemplateService BTempService;
 
 	@Autowired
-	private EmployerNewsFeedService employerNewsFeedService;
+	private EmployerNewsFeedService newsFeedService;
 
 	@Autowired
-	private PopulateDropdowns populateDropdownsService;
+	private PopulateDropdowns dropdwnService;
 
 	@Value("${jobSearchValidateKeyword}")
-	private String jobSearchValidateKeyword;
+	private String jbSearchValKeyword;
 
 	@Value("${jobSearchValidateCity}")
-	private String jobSearchValidateCity;
+	private String jbSearchValCity;
 
 	@Value("${navigationPath}")
 	private String navigationPath;
@@ -281,7 +281,7 @@ public class JobSearchController {
 								jobDTO.getJobID());
 
 				// For getting the News feed from XML file
-				Map<String, List<NewsDTO>> newsMap = employerNewsFeedService
+				Map<String, List<NewsDTO>> newsMap = newsFeedService
 						.getNewsFromXML();
 				List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
 
@@ -705,8 +705,7 @@ public class JobSearchController {
 		if (jobSearchResultDTO != null) {
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
-			jobSrchJsonObj = jsonConverterService
-					.convertToJSON(jobSearchResultDTO);
+			jobSrchJsonObj = jsonConService.convertToJSON(jobSearchResultDTO);
 		}
 		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj);
 		return jobSrchJsonObj;
@@ -722,13 +721,13 @@ public class JobSearchController {
 			JSONObject jsonObject) {
 		boolean status = true;
 		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
-			jsonObject.put(ajaxMsg, jobSearchValidateKeyword);
+			jsonObject.put(ajaxMsg, jbSearchValKeyword);
 			status = false;
 		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(
 				MMJBCommonConstants.ZERO))
 				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
 						.trim())) {
-			jsonObject.put(ajaxMsg, jobSearchValidateCity);
+			jsonObject.put(ajaxMsg, jbSearchValCity);
 			status = false;
 		}
 		return status;
@@ -958,7 +957,7 @@ public class JobSearchController {
 		// populateDropdownsService.getExcludeFromList();
 		// List<FromZipcodeDTO> fromZipcodeList =
 		// populateDropdownsService.getFromZipcodeList();
-		List<StateDTO> stateList = populateDropdownsService.getStateList();
+		List<StateDTO> stateList = dropdwnService.getStateList();
 		// List<MetroAreaDTO> metroAreaList =
 		// populateDropdownsService.getMetroAreaList();
 		// List<EmploymentTypeDTO> employmentTypeList =
@@ -1382,11 +1381,10 @@ public class JobSearchController {
 		SearchedJobDTO searchedJobDTO = dto;
 
 		// Getting the customer ID from Adm Facility table.
-		int nsCustomerID = brandingTemplateService
+		int nsCustomerID = BTempService
 				.getNSCustomerIDFromAdmFacility(searchedJobDTO.getFacilityId());
 
-		UserDTO userDTO = brandingTemplateService
-				.getBrandingInformation(nsCustomerID);
+		UserDTO userDTO = BTempService.getBrandingInformation(nsCustomerID);
 
 		if (null != userDTO.getPackageName()) {
 			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {

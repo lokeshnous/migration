@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 @Transactional
 @Repository("inventoryDAO")
 public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
-
-	private static final Logger LOGGER = Logger
-			.getLogger(JobPostInventoryDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
 

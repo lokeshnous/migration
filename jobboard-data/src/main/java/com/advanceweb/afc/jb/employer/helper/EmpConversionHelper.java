@@ -164,17 +164,18 @@ public class EmpConversionHelper {
 	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(
 			List<MerUser> merUsers, List<Integer> roleId) {
 		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
-		int i = 0;
+		int roleIndex = 0;
 		for (MerUser merUser : merUsers) {
 			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
 			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
 					+ merUser.getFirstName());
-			if (roleId.size() > i && null != roleId.get(i)) {
-				manageAccessPermissionDTO.setTypeOfAccess(roleId.get(i));
+			if (roleId.size() > roleIndex && null != roleId.get(roleIndex)) {
+				manageAccessPermissionDTO
+						.setTypeOfAccess(roleId.get(roleIndex));
 			}
 			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
-			i = i + 1;
+			roleIndex = roleIndex + 1;
 		}
 		return manageAccessPermissionDTOList;
 

@@ -48,14 +48,7 @@ import com.advanceweb.afc.jb.web.utils.ReadFile;
 @RequestMapping(value = "/healthcarejobs")
 public class HomeController {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(HomeController.class);
-	
-	@Value("${IMG_WIDTH}")
-	private String imgwidth;
-
-	@Value("${IMG_HEIGHT}")
-	private String imgheight;
+	private static final Logger LOGGER = Logger.getLogger(HomeController.class);
 
 	@Value("${basedirectorypath}")
 	private String basedirectorypath;
@@ -86,13 +79,13 @@ public class HomeController {
 
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
-	
+
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
-	
+
 	@Autowired
 	private JobSearchService jobSearchService;
 
@@ -134,9 +127,9 @@ public class HomeController {
 			model.addAttribute("healthcarenew",
 					"<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
 			model.addAttribute("careerstoolresource", "");
-			e.printStackTrace();
+			LOGGER.info("Error occurred while getting the html content for home page"
+					+ e);
 		}
-		// return "jspviewcontent";
 		return "home";
 	}
 
@@ -198,14 +191,13 @@ public class HomeController {
 			// Display the image
 			write(response, result.getBody());
 		} catch (Exception e) {
-
+			LOGGER.info("Error" + e);
 		}
 	}
 
 	@RequestMapping("/viewImage")
 	public void getImage(@RequestParam("id") String imageId,
-			HttpServletResponse response, HttpServletRequest request
-			) {
+			HttpServletResponse response, HttpServletRequest request) {
 
 		try {
 			BufferedImage originalImage = ImageIO.read(new File(imageId));
@@ -221,12 +213,10 @@ public class HomeController {
 			// Display the image
 			write(response, result.getBody());
 		} catch (Exception e) {
-
-//			LOGGER.error(e);
-
+			LOGGER.info(e);
 		}
 	}
-	
+
 	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
 		// Get bytes from somewhere...
 		byte[] byteData = imageInByte;
@@ -313,6 +303,7 @@ public class HomeController {
 			outputStream.close();
 
 		} catch (Exception e) {
+			LOGGER.info(e);
 		}
 	}
 
@@ -332,6 +323,7 @@ public class HomeController {
 			outputStream.close();
 
 		} catch (Exception e) {
+			LOGGER.info(e);
 		}
 	}
 
@@ -340,165 +332,146 @@ public class HomeController {
 		try {
 			File directorycreation = new File(basedirectorypath + directory);
 			directorycreation.mkdir();
-			List<String> li = new ArrayList<String>();
-			li.add(healthcarenewsfilename);
-			li.add(careertoolfilename);
-			CopyUtil.copy(li, basedirectorypath + directory);
+			List<String> list = new ArrayList<String>();
+			list.add(healthcarenewsfilename);
+			list.add(careertoolfilename);
+			CopyUtil.copy(list, basedirectorypath + directory);
 			model.addAttribute("copyhtml", true);
 		} catch (Exception e) {// Catch exception if any
 			// System.err.println("Error: " + e.getMessage());
 			model.addAttribute("copyhtml", "");
-			e.printStackTrace();
+			LOGGER.info("Error while copying the HTML files" + e);
 		}
 
 		return "jspviewcontent";
 	}
-     
-		/**
-		 * This method is used to get the total number of Active jobs.
-		 * @param HttpServletRequest
-		 * @return String
-		 */
-		//To do: Take it from SOLR. Not from DB.
-		@ResponseBody
-		@RequestMapping(value = "/activeJobs", method = RequestMethod.GET)
-		public String activeJobs(HttpServletRequest request) {
-			long totalNoOfActiveJobs = 0;
-			try {
-				totalNoOfActiveJobs = jobSearchService.getTotalActiveJobs();
-				
-			} catch (Exception e) {// Catch exception if any
-				LOGGER.error(e);
-			}
-			return String.valueOf(totalNoOfActiveJobs);
+
+	/**
+	 * This method is used to get the total number of Active jobs.
+	 * 
+	 * @param HttpServletRequest
+	 * @return String
+	 */
+	// To do: Take it from SOLR. Not from DB.
+	@ResponseBody
+	@RequestMapping(value = "/activeJobs", method = RequestMethod.GET)
+	public String activeJobs(HttpServletRequest request) {
+		long totalNoOfActiveJobs = 0;
+		try {
+			totalNoOfActiveJobs = jobSearchService.getTotalActiveJobs();
+
+		} catch (Exception e) {// Catch exception if any
+			LOGGER.error(e);
 		}
-		
-		/**
-		 * Called  to play the video
-		 * 
-		 * @param response
-		 * @param request
-		 * @param brandingTemplateForm
-		 */
-		/*@RequestMapping("/viewVideo")
-		public void getPhoto(HttpServletResponse response, HttpServletRequest request,
-				BrandingTemplateForm brandingTemplateForm) {
+		return String.valueOf(totalNoOfActiveJobs);
+	}
 
-			try {
-				
-				String imageId = (String)request.getAttribute("id");
-//				FileInputStream fileInputStream = new FileInputStream(new File(imageId)); 
-//				BufferedImage originalImage = ImageIO.read(new File(imageId));
-				
-//				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				
-				File file = new File("C://video.mp4");
-//				String strFileContent= null;  
-			    try
-			    {
-			      //create FileInputStream object
-			      FileInputStream fin = new FileInputStream(file);
-			     
-			      
-			       * Create byte array large enough to hold the content of the file.
-			       * Use File.length to determine size of the file in bytes.
-			       
-			     
-			       byte fileContent[] = new byte[(int)file.length()];
-			     
-			       
-			        * To read content of the file in byte array, use
-			        * int read(byte[] byteArray) method of java FileInputStream class.
-			        *
-			        
-			       fin.read(fileContent);
-			     
-			       //create string from byte array
-//			       strFileContent = new String(fileContent);
-			     
-			       System.out.println("File content : " +fileContent.length);
-//			       System.out.println(strFileContent);
-			       writeVideo(response, fileContent);
-			     
-			    }
-			    catch(FileNotFoundException e)
-			    {
-			      System.out.println("File not found" + e);
-			    }
-			    catch(IOException ioe)
-			    {
-			      System.out.println("Exception while reading the file " + ioe);
-			    }
-//				ImageIO.write(fileInputStream,
-//						imageId.substring(imageId.length() - 3, imageId.length()),
-//						baos);
-//				baos.flush();
-//				byte[] imageInByte = baos.toByteArray();
-//				baos.close();
-	//
-//				ResponseEntity<byte[]> result = handleGetMyBytesRequest(imageInByte);
-//				// Display the image
-			} catch (Exception e) {
-				
-				//LOGGER.error(e);
+	/**
+	 * Called to play the video
+	 * 
+	 * @param response
+	 * @param request
+	 * @param brandingTemplateForm
+	 */
+	/*
+	 * @RequestMapping("/viewVideo") public void getPhoto(HttpServletResponse
+	 * response, HttpServletRequest request, BrandingTemplateForm
+	 * brandingTemplateForm) {
+	 * 
+	 * try {
+	 * 
+	 * String imageId = (String)request.getAttribute("id"); // FileInputStream
+	 * fileInputStream = new FileInputStream(new File(imageId)); //
+	 * BufferedImage originalImage = ImageIO.read(new File(imageId));
+	 * 
+	 * // ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	 * 
+	 * File file = new File("C://video.mp4"); // String strFileContent= null;
+	 * try { //create FileInputStream object FileInputStream fin = new
+	 * FileInputStream(file);
+	 * 
+	 * 
+	 * Create byte array large enough to hold the content of the file. Use
+	 * File.length to determine size of the file in bytes.
+	 * 
+	 * 
+	 * byte fileContent[] = new byte[(int)file.length()];
+	 * 
+	 * 
+	 * To read content of the file in byte array, use int read(byte[] byteArray)
+	 * method of java FileInputStream class.
+	 * 
+	 * 
+	 * fin.read(fileContent);
+	 * 
+	 * //create string from byte array // strFileContent = new
+	 * String(fileContent);
+	 * 
+	 * System.out.println("File content : " +fileContent.length); //
+	 * System.out.println(strFileContent); writeVideo(response, fileContent);
+	 * 
+	 * } catch(FileNotFoundException e) { System.out.println("File not found" +
+	 * e); } catch(IOException ioe) {
+	 * System.out.println("Exception while reading the file " + ioe); } //
+	 * ImageIO.write(fileInputStream, // imageId.substring(imageId.length() - 3,
+	 * imageId.length()), // baos); // baos.flush(); // byte[] imageInByte =
+	 * baos.toByteArray(); // baos.close(); // // ResponseEntity<byte[]> result
+	 * = handleGetMyBytesRequest(imageInByte); // // Display the image } catch
+	 * (Exception e) {
+	 * 
+	 * //LOGGER.error(e);
+	 * 
+	 * } }
+	 */
 
-			}
-		}*/
-		
-		/**
-		 * Writes the report to the output stream
-		 *//*
-		public void writeVideo(HttpServletResponse response, byte[] fileContent) {
+	/**
+	 * Writes the report to the output stream
+	 */
+	/*
+	 * public void writeVideo(HttpServletResponse response, byte[] fileContent)
+	 * {
+	 * 
+	 * try { // Retrieve the output stream ServletOutputStream outputStream =
+	 * response.getOutputStream(); // Write to the output stream
+	 * outputStream.write(fileContent); // Flush the stream
+	 * outputStream.flush(); // Close the stream outputStream.close();
+	 * 
+	 * } catch (Exception e) { //LOGGER.error(e); } }
+	 */
 
-			try {
-				// Retrieve the output stream
-				ServletOutputStream outputStream = response.getOutputStream();
-				// Write to the output stream
-				outputStream.write(fileContent);
-				// Flush the stream
-				outputStream.flush();
-				// Close the stream
-				outputStream.close();
+	/**
+	 * This method is called to get the search results by company name for
+	 * feature employer
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param keywords
+	 * @return
+	 */
+	@RequestMapping(value = "/searchByCompany", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject searchByCompany(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			@RequestParam("keywords") String keywords) {
 
-			} catch (Exception e) {
-				//LOGGER.error(e);
-			}
-		}*/
-		
-			
-		/**
-		 * This method is called to get the search results by company 
-		 * name for feature employer
-		 * 
-		 * @param request
-		 * @param response
-		 * @param session
-		 * @param keywords
-		 * @return
-		 */
-		@RequestMapping(value = "/searchByCompany", method = RequestMethod.GET)
-		public @ResponseBody
-		JSONObject searchByCompany(HttpServletRequest request,
-				HttpServletResponse response, HttpSession session,
-				@RequestParam("keywords") String keywords) {
+		JSONObject jsonObject = new JSONObject();
 
-			JSONObject jsonObject = new JSONObject();
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
 
-			Map<String, String> sessionMap = checkSessionMap
-					.getSearchSessionMap(session);
+		sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
+				MMJBCommonConstants.BASIC_SEARCH_TYPE);
+		sessionMap.put(SearchParamDTO.KEYWORDS, keywords);
+		sessionMap.put(SearchParamDTO.CITY_STATE, MMJBCommonConstants.EMPTY);
+		sessionMap.put(SearchParamDTO.RADIUS, MMJBCommonConstants.ZERO);
+		sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
 
-			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
-					MMJBCommonConstants.BASIC_SEARCH_TYPE);
-			sessionMap.put(SearchParamDTO.KEYWORDS, keywords);
-			sessionMap.put(SearchParamDTO.CITY_STATE, MMJBCommonConstants.EMPTY);
-			sessionMap.put(SearchParamDTO.RADIUS, MMJBCommonConstants.ZERO);
-			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+		session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 
-			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
-
-			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
-					MMJBCommonConstants.BASIC_SEARCH_TYPE);
-			return jsonObject;
-		}
+		jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
+				MMJBCommonConstants.BASIC_SEARCH_TYPE);
+		return jsonObject;
+	}
 
 }
