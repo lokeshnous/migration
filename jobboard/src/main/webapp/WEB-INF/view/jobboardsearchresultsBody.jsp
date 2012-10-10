@@ -171,8 +171,8 @@
 						<li class="searchResultsColumn1">Job Title</li>
 						<li class="searchResultsColumn2">Employer</li>
 						<li class="searchResultsColumn3">Location</li>
-						<li class="searchResultsColumn4">Date Posted 
-						<a class="cursor table-sorted-asc" style="text-decoration: none;" id="sortingId" onclick="sortTable();">
+						<li class="searchResultsColumn4">Date Posted
+						<a class="cursor table-sorted-${sortOrder}" style="text-decoration: none;" id="sortingId" onclick="sortTable();">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						</a> 
 						</li>

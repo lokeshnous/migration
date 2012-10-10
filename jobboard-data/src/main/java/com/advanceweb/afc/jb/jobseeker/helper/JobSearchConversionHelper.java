@@ -42,7 +42,7 @@ public class JobSearchConversionHelper {
 	String defaultColor;
 	
 	@Autowired
-	BrandTemplateConversionHelper brandTemplateConversionHelper;
+	private BrandTemplateConversionHelper brandTemplateConversionHelper;
 	/**
 	 * Entity to view job dto
 	 * 
@@ -68,31 +68,7 @@ public class JobSearchConversionHelper {
 				searchedJobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
 			}
 
-			// get detail from JpLocation entity
-			int hideCity = 1;
-			int hideState = 1;
-			int hideCountry = 1;
-			JpLocation jpLocation = null;
-			try{
-				List<JpJobLocation> jobLocations = entity.getJpJobLocations();
-				JpJobLocation jobJobLocation = jobLocations.get(0);
-				jpLocation = jobJobLocation.getJpLocation();
-				hideCity = jobJobLocation.getHideCity();
-				hideState = jobJobLocation.getHideState();
-				hideCountry = jobJobLocation.getHideCountry();
-			}catch (Exception e) {
-				LOGGER.info("Locations not found for Job Id :"+searchedJobDTO.getJobID());
-			}
-
-			if (hideCity != 1) {
-				searchedJobDTO.setCity(jpLocation.getCity());
-			}
-			if (hideState != 1) {
-				searchedJobDTO.setStateFullName(jpLocation.getStateFullname());
-			}
-			if (hideCountry != 1) {
-				searchedJobDTO.setCountry(jpLocation.getCountry());
-			}
+			transformJpLocationtosearchedJobDTO(entity, searchedJobDTO);
 
 			// get the template details
 //			searchedJobDTO.setCompanyOverview(entity.getKeywords());
@@ -128,6 +104,41 @@ public class JobSearchConversionHelper {
 
 		}
 		return searchedJobDTO;
+	}
+
+	/**
+	 * Transform the 
+	 * 
+	 * @param entity
+	 * @param searchedJobDTO
+	 */
+	public void transformJpLocationtosearchedJobDTO(JpJob entity,
+			SearchedJobDTO searchedJobDTO) {
+		// get detail from JpLocation entity
+		int hideCity = 1;
+		int hideState = 1;
+		int hideCountry = 1;
+		JpLocation jpLocation = null;
+		try{
+			List<JpJobLocation> jobLocations = entity.getJpJobLocations();
+			JpJobLocation jobJobLocation = jobLocations.get(0);
+			jpLocation = jobJobLocation.getJpLocation();
+			hideCity = jobJobLocation.getHideCity();
+			hideState = jobJobLocation.getHideState();
+			hideCountry = jobJobLocation.getHideCountry();
+		}catch (Exception e) {
+			LOGGER.info("Locations not found for Job Id :"+searchedJobDTO.getJobID());
+		}
+
+		if (hideCity != 1) {
+			searchedJobDTO.setCity(jpLocation.getCity());
+		}
+		if (hideState != 1) {
+			searchedJobDTO.setStateFullName(jpLocation.getStateFullname());
+		}
+		if (hideCountry != 1) {
+			searchedJobDTO.setCountry(jpLocation.getCountry());
+		}
 	}
 
 	/**

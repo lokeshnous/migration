@@ -2,9 +2,11 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -39,12 +41,19 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 public class EmployerProfileManagementController {
 	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
 	private static final String STR_NOTEMPTY = "NotEmpty";
+	private static final String STR_UNDERSCORE = "_";
 
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 	
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
+	
+	private @Value("${appMediaPath}")
+	String appMediaPath;
+	
+	private @Value("${featureEmployerPrefix}")
+	String featureEmployerPrefix;
 	
 	private @Value("${isFeaturedEmployerErrorMsg}")
 	String isFeaturedEmployerErrorMsg;
@@ -115,9 +124,11 @@ public class EmployerProfileManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/saveemployerprofile", method = RequestMethod.POST)
-	public ModelAndView saveEmployeeProf(EmployerProfileManagementForm managementForm, BindingResult result,HttpSession session) {
+	public ModelAndView saveEmployeeProf(
+			EmployerProfileManagementForm managementForm, BindingResult result,
+			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		CompanyProfileDTO companyProfileDTO =  manageFeatureEmployerProfile
+		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
 				.getEmployerDetails((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		//companyProfileDTO.setCompanyName(managementForm.getCompanyName());
@@ -132,6 +143,7 @@ public class EmployerProfileManagementController {
         companyProfileDTO.setPrimaryColor(managementForm.getPrimaryColor());
         companyProfileDTO.setCompanyNews(managementForm.getCompanyNews());
         String fileName = null, filePath = null;
+        Random random = new Random();
         
 		try {
 			MultipartFile logoUrl = managementForm.getLogoUrl();
@@ -145,8 +157,10 @@ public class EmployerProfileManagementController {
 			} else {
 				if (null != logoUrl && logoUrl.getSize() > 0) {
 					fileName = logoUrl.getOriginalFilename();
-					filePath = baseDirectoryPathImageAndMedia + fileName;
-
+					String modifiedFileName = featureEmployerPrefix+STR_UNDERSCORE
+							+ random.nextInt(10000) + STR_UNDERSCORE + fileName;
+					
+					filePath = baseDirectoryPathImageAndMedia + modifiedFileName;
 					companyProfileDTO.setLogoPath(filePath);
 					File dest = new File(filePath);
 					logoUrl.transferTo(dest);
@@ -154,9 +168,10 @@ public class EmployerProfileManagementController {
 				}
 				if (null != promoMedia && promoMedia.getSize() > 0) {
 					fileName = promoMedia.getOriginalFilename();
-					filePath = baseDirectoryPathImageAndMedia + fileName;
-
-					companyProfileDTO.setPositionTitle(filePath);
+					String modifiedFileName = featureEmployerPrefix+STR_UNDERSCORE
+							+ random.nextInt(10000) + STR_UNDERSCORE + fileName;
+					companyProfileDTO.setPositionTitle(modifiedFileName);
+					filePath = System.getProperty("catalina.home") + appMediaPath + modifiedFileName;
 					File transfer = new File(filePath);
 					promoMedia.transferTo(transfer);
 
@@ -207,11 +222,12 @@ public class EmployerProfileManagementController {
 		matcher = pattern.matcher(emailId);
 		return matcher.matches();
 	}
+	
 	/**
 	 * Validating Image File Format
 	 * 
-	 * @param emailId
-	 * @return
+	 * @param fileName
+	 * @param errors
 	 */
 	public void validateImageFileFormat(String fileName, Errors errors) {
 		int imageLength = fileName.length();
@@ -229,11 +245,12 @@ public class EmployerProfileManagementController {
 			}
 		}
 	}
+	
 	/**
-	 * Validating Vedio File Format
+	 * Validating Video File Format
 	 * 
-	 * @param emailId
-	 * @return
+	 * @param fileName
+	 * @param errors
 	 */
 	public void validateMediaFileFormat(String fileName, Errors errors) {
 		int imageLength = fileName.length();

@@ -48,8 +48,9 @@ import com.advanceweb.afc.jb.web.utils.ReadFile;
 @RequestMapping(value = "/healthcarejobs")
 public class HomeController {
 
-	private static final Logger LOGGER = Logger.getLogger(HomeController.class);
-
+	private static final Logger LOGGER = Logger
+			.getLogger(HomeController.class);
+	
 	@Value("${basedirectorypath}")
 	private String basedirectorypath;
 
@@ -65,8 +66,8 @@ public class HomeController {
 	@Value("${logoPath}")
 	private String logoPath;
 
-	@Value("${windowmediaplayerfilepath}")
-	private String windowmediaplayerfilepath;
+	@Value("${mediaPath}")
+	private String mediaPath;
 
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
@@ -144,6 +145,14 @@ public class HomeController {
 		return "featuredemployers";
 	}
 
+	/**
+	 * Method called to get the feature employer details by facility Id
+	 * 
+	 * @param employerProfileManagementForm
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/featuredemployerdetails", method = RequestMethod.GET)
 	public String getfeaturedemployerbyid(
 			EmployerProfileManagementForm employerProfileManagementForm,
@@ -168,8 +177,13 @@ public class HomeController {
 			employerProfileManagementForm.setPrimaryColor(companyProfileDTO
 					.getPrimaryColor().replace("HEX #", "#"));
 		}
+		// TODO: Remove the hard codes used to check video : file server is not fully mentained
+		String path =request.getRequestURL().toString()
+				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY);
+		
+		path = path + mediaPath + companyProfileDTO.getPositionalMedia();
 		model.addAttribute("windowmediaplayerfilepath",
-				windowmediaplayerfilepath);
+				path);
 		model.addAttribute("employerProfileManagementForm",
 				employerProfileManagementForm);
 		return "featuredemployerdetails";
@@ -365,79 +379,6 @@ public class HomeController {
 		}
 		return String.valueOf(totalNoOfActiveJobs);
 	}
-
-	/**
-	 * Called to play the video
-	 * 
-	 * @param response
-	 * @param request
-	 * @param brandingTemplateForm
-	 */
-	/*
-	 * @RequestMapping("/viewVideo") public void getPhoto(HttpServletResponse
-	 * response, HttpServletRequest request, BrandingTemplateForm
-	 * brandingTemplateForm) {
-	 * 
-	 * try {
-	 * 
-	 * String imageId = (String)request.getAttribute("id"); // FileInputStream
-	 * fileInputStream = new FileInputStream(new File(imageId)); //
-	 * BufferedImage originalImage = ImageIO.read(new File(imageId));
-	 * 
-	 * // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	 * 
-	 * File file = new File("C://video.mp4"); // String strFileContent= null;
-	 * try { //create FileInputStream object FileInputStream fin = new
-	 * FileInputStream(file);
-	 * 
-	 * 
-	 * Create byte array large enough to hold the content of the file. Use
-	 * File.length to determine size of the file in bytes.
-	 * 
-	 * 
-	 * byte fileContent[] = new byte[(int)file.length()];
-	 * 
-	 * 
-	 * To read content of the file in byte array, use int read(byte[] byteArray)
-	 * method of java FileInputStream class.
-	 * 
-	 * 
-	 * fin.read(fileContent);
-	 * 
-	 * //create string from byte array // strFileContent = new
-	 * String(fileContent);
-	 * 
-	 * System.out.println("File content : " +fileContent.length); //
-	 * System.out.println(strFileContent); writeVideo(response, fileContent);
-	 * 
-	 * } catch(FileNotFoundException e) { System.out.println("File not found" +
-	 * e); } catch(IOException ioe) {
-	 * System.out.println("Exception while reading the file " + ioe); } //
-	 * ImageIO.write(fileInputStream, // imageId.substring(imageId.length() - 3,
-	 * imageId.length()), // baos); // baos.flush(); // byte[] imageInByte =
-	 * baos.toByteArray(); // baos.close(); // // ResponseEntity<byte[]> result
-	 * = handleGetMyBytesRequest(imageInByte); // // Display the image } catch
-	 * (Exception e) {
-	 * 
-	 * //LOGGER.error(e);
-	 * 
-	 * } }
-	 */
-
-	/**
-	 * Writes the report to the output stream
-	 */
-	/*
-	 * public void writeVideo(HttpServletResponse response, byte[] fileContent)
-	 * {
-	 * 
-	 * try { // Retrieve the output stream ServletOutputStream outputStream =
-	 * response.getOutputStream(); // Write to the output stream
-	 * outputStream.write(fileContent); // Flush the stream
-	 * outputStream.flush(); // Close the stream outputStream.close();
-	 * 
-	 * } catch (Exception e) { //LOGGER.error(e); } }
-	 */
 
 	/**
 	 * This method is called to get the search results by company name for

@@ -11,10 +11,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -113,15 +112,12 @@ public class JobSearchController {
 
 	@Autowired
 	private EmployerNewsFeedService employerNewsFeedService;
+	
+	@Autowired
+	private JobSearchValidator jobSearchValidator;
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
-
-	@Value("${jobSearchValidateKeyword}")
-	private String jbSearchValKeyword;
-
-	@Value("${jobSearchValidateCity}")
-	private String jbSearchValCity;
 
 	@Value("${navigationPath}")
 	private String navigationPath;
@@ -215,6 +211,7 @@ public class JobSearchController {
 
 	private @Value("${WEB_MAIL_SERVER}")
 	String webMailServer;
+	
 	private @Value("${EMAIL_MESSAGE_BLANK}")
 	String emailMsgBlank;
 
@@ -250,7 +247,7 @@ public class JobSearchController {
 					&& clickType
 							.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)) {
 				clickController.getclickevent(jobId, clickType, request,
-						response, model1);
+						response);
 			}
 
 			Map<String, String> sessionMap = null;
@@ -300,15 +297,13 @@ public class JobSearchController {
 
 	@RequestMapping(value = "/clicksTrack")
 	public ModelAndView trackClicks(HttpServletResponse response,
-			HttpServletRequest request, Model model,
-			@RequestParam("id") int jobId,
+			HttpServletRequest request, @RequestParam("id") int jobId,
 			@RequestParam("clickType") String clickType) {
 
 		ModelAndView modelAndView = new ModelAndView();
 
 		if (clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)) {
-			clickController.getclickevent(jobId, clickType, request, response,
-					model);
+			clickController.getclickevent(jobId, clickType, request, response);
 		}
 
 		return modelAndView;
@@ -331,68 +326,32 @@ public class JobSearchController {
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject applyJob(@Valid ApplyJobForm form, Map<String, Object> map,
+	JSONObject applyJob(@Valid ApplyJobForm forma, Map<String, Object> map,
 			@RequestParam String userID, @RequestParam("id") int jobId,
 			@RequestParam(CURRENT_URL) String currentUrl,
-			HttpServletResponse response, Model model,
-			@RequestParam("clickType") String clickType, HttpSession session,
+			HttpServletResponse response, HttpSession session,
 			HttpServletRequest request) {
 
 		JSONObject jsonObject = new JSONObject();
-
-		if (clickType.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)) {
-			clickController.getclickevent(jobId, clickType, request, response,
-					model);
-		}
-
-		form.setJobID(jobId);
-		int userId = 0;
-		String userName = null;
-		String userEmail = null;
-
-		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			userId = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
-			userName = (String) session
-					.getAttribute(MMJBCommonConstants.USER_NAME);
-			userEmail = (String) session
-					.getAttribute(MMJBCommonConstants.USER_EMAIL);
-		}
-
-		form.setUseremail(userEmail);
-
+		clickController.getclickevent(jobId,
+				MMJBCommonConstants.CLICKTYPE_APPLY, request, response);
 		try {
 			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchService
-					.viewJobDetails(form.getJobID());
-
-			// apply job by apply type like by ATS, Website or Email
-			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
-					.applyJobDetails(form.getJobID());
-
-			if (jobApplyTypeDTO != null
-					&& (jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
-							MMJBCommonConstants.APPLY_TO_ATS) || jobApplyTypeDTO
-							.getApplyMethod().equalsIgnoreCase(
-									MMJBCommonConstants.APPLY_TO_URL))) {
-				jsonObject.put("applyMethod", jobApplyTypeDTO.getApplyMethod());
-				jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
+					.viewJobDetails(jobId);
+			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService.applyJobDetails(jobId);
+			if (!jobSearchValidator.validateApplyType(jobId, jsonObject, jobApplyTypeDTO)) {
 				return jsonObject;
 			}
 			if (searchedJobDTO.getEmployerEmailAddress() == null) {
 				searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO
 						.getApplyLink());
 			}
-
-			// Check for job seeker login
-			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-				map.put("loginForm", new LoginForm());
-				jsonObject.put(ajaxNavigationPath, navigationPath
-						+ dothtmlExtention + jobseekerPageExtention);
-				session.setAttribute("jobId", jobId);
-				session.setAttribute(CURRENT_URL, currentUrl);
+			if (!jobSearchValidator.isLoggedIn(map, jobId, currentUrl, session, jsonObject)) {
 				return jsonObject;
 			}
+			int userId = (Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID);
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(searchedJobDTO, userId);
@@ -403,14 +362,6 @@ public class JobSearchController {
 				return jsonObject;
 			}
 
-			// Send mail to Employer regarding job application
-			String loginPath = navigationPath.substring(2);
-			String jonseekerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + jobseekerPageExtention;
-			String employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + employerPageExtention;
 			// Fetch the public resume
 			List<String> attachmentpaths = fetchPublicVisibleResume(userId);
 			if (attachmentpaths == null) {
@@ -418,74 +369,118 @@ public class JobSearchController {
 				return jsonObject;
 			}
 			try {
-				EmailDTO employerEmailDTO = new EmailDTO();
-				employerEmailDTO.setFromAddress(advanceWebAddress);
-				InternetAddress[] employerToAddress = new InternetAddress[1];
-				employerToAddress[0] = new InternetAddress(
-						searchedJobDTO.getEmployerEmailAddress());
-				employerEmailDTO.setToAddress(employerToAddress);
-				String employerMailSub = employeJobApplicationSub.replace(
-						"?jobseekername", userName);
-				employerEmailDTO.setSubject(employerMailSub);
-				String employerMailBody = employeJobApplicationBody.replace(
-						"?empDashboardLink", employerloginUrl);
-				employerMailBody = employerMailBody.replace("?jobseekername",
-						userName);
-				employerEmailDTO.setBody(employerMailBody);
-				employerEmailDTO.setHtmlFormat(true);
-				employerEmailDTO.setAttachmentPaths(attachmentpaths);
-				emailService.sendEmail(employerEmailDTO);
-				LOGGER.info("Mail sent to employer");
-
-				// Send confirmation mail to job seeker regarding job
-				// application
-				EmailDTO jobSeekerEmailDTO = new EmailDTO();
-				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
-				InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
-				jobSeekerToAddress[0] = new InternetAddress(form.getUseremail());
-				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-				String jobseekerMailSub = jobseekerJobApplicationSub.replace(
-						"?companyname", searchedJobDTO.getCompanyName());
-				jobSeekerEmailDTO.setSubject(jobseekerMailSub);
-				String jobseekerMailBody = jobseekerJobApplicationBody.replace(
-						"?jsdashboardLink", jonseekerloginUrl);
-				jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-						searchedJobDTO.getCompanyName());
-				jobSeekerEmailDTO.setBody(jobseekerMailBody);
-				jobSeekerEmailDTO.setHtmlFormat(true);
-				emailService.sendEmail(jobSeekerEmailDTO);
-				LOGGER.info("Mail sent to jobseeker");
+				sendMailOfAppliedJob(session, request, searchedJobDTO,
+						attachmentpaths);
 			} catch (Exception e) {
 				jsonObject.put(ajaxMsg, commonMailErrMsg);
 				LOGGER.info("Apply job Mail Exception :" + e);
 				return jsonObject;
 			}
 
-			// save the applied job in DB
-			Date currentDate = new Date();
-			AppliedJobDTO applyJobDTO = null;
-			if (appliedJobDTO == null || appliedJobDTO.getAppliedDt() != null) {
-				applyJobDTO = new AppliedJobDTO();
-				JobPostDTO jpJob = new JobPostDTO();
-				jpJob.setJobId(form.getJobID());
-				applyJobDTO.setJpJob(jpJob);
-				applyJobDTO.setUserId(userId);
-				applyJobDTO.setJobTitle(searchedJobDTO.getJobTitle());
-				applyJobDTO.setFacilityName(searchedJobDTO.getCompanyName());
-				applyJobDTO.setCreateDt(currentDate.toString());
-				applyJobDTO.setAppliedDt(currentDate.toString());
-				applyJobDTO.setDeleteDt(null);
-				jobSearchService.saveOrApplyJob(applyJobDTO);
-			} else {
-				applyJobDTO = appliedJobDTO;
-				applyJobDTO.setAppliedDt(currentDate.toString());
-				jobSearchService.updateSaveOrApplyJob(applyJobDTO);
-			}
+			saveAppliedJob(jobId, userId, searchedJobDTO, appliedJobDTO);
 			jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		} catch (Exception e) {
 			LOGGER.info("applyJob ERROR" + e);
 		}
 		return jsonObject;
+	}
+
+	/**
+	 * Send mail of applied job to jobseeker and employer
+	 * 
+	 * @param form
+	 * @param request
+	 * @param userName
+	 * @param searchedJobDTO
+	 * @param attachmentpaths
+	 * @throws AddressException
+	 */
+	public void sendMailOfAppliedJob(HttpSession session,
+			HttpServletRequest request, 
+			SearchedJobDTO searchedJobDTO, List<String> attachmentpaths)
+			throws AddressException {
+		String userName = (String) session
+				.getAttribute(MMJBCommonConstants.USER_NAME);
+		String userEmail = (String) session
+				.getAttribute(MMJBCommonConstants.USER_EMAIL);
+		// Send mail to Employer regarding job application
+		String loginPath = navigationPath.substring(2);
+		EmailDTO employerEmailDTO = new EmailDTO();
+		employerEmailDTO.setFromAddress(advanceWebAddress);
+		InternetAddress[] employerToAddress = new InternetAddress[1];
+		employerToAddress[0] = new InternetAddress(
+				searchedJobDTO.getEmployerEmailAddress());
+		employerEmailDTO.setToAddress(employerToAddress);
+		String employerMailSub = employeJobApplicationSub.replace(
+				"?jobseekername", userName);
+		employerEmailDTO.setSubject(employerMailSub);
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
+		String employerMailBody = employeJobApplicationBody.replace(
+				"?empDashboardLink", employerloginUrl);
+		employerMailBody = employerMailBody.replace("?jobseekername",
+				userName);
+		employerEmailDTO.setBody(employerMailBody);
+		employerEmailDTO.setHtmlFormat(true);
+		employerEmailDTO.setAttachmentPaths(attachmentpaths);
+		emailService.sendEmail(employerEmailDTO);
+		LOGGER.info("Mail sent to employer");
+
+		// Send confirmation mail to job seeker regarding job
+		// application
+		EmailDTO jobSeekerEmailDTO = new EmailDTO();
+		jobSeekerEmailDTO.setFromAddress(advanceWebAddress);
+		InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
+		jobSeekerToAddress[0] = new InternetAddress(userEmail);
+		jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
+		String jobseekerMailSub = jobseekerJobApplicationSub.replace(
+				"?companyname", searchedJobDTO.getCompanyName());
+		jobSeekerEmailDTO.setSubject(jobseekerMailSub);
+		String jonseekerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + jobseekerPageExtention;
+		String jobseekerMailBody = jobseekerJobApplicationBody.replace(
+				"?jsdashboardLink", jonseekerloginUrl);
+		jobseekerMailBody = jobseekerMailBody.replace("?companyname",
+				searchedJobDTO.getCompanyName());
+		jobSeekerEmailDTO.setBody(jobseekerMailBody);
+		jobSeekerEmailDTO.setHtmlFormat(true);
+		emailService.sendEmail(jobSeekerEmailDTO);
+		LOGGER.info("Mail sent to jobseeker");
+	}
+
+
+	/**
+	 * Save or Update the applied job
+	 * 
+	 * @param form
+	 * @param userId
+	 * @param searchedJobDTO
+	 * @param appliedJobDTO
+	 */
+	public void saveAppliedJob(int jobId, int userId,
+			SearchedJobDTO searchedJobDTO, AppliedJobDTO appliedJobDTO) {
+		// save the applied job in DB
+		Date currentDate = new Date();
+		AppliedJobDTO applyJobDTO = null;
+		if (appliedJobDTO == null || appliedJobDTO.getAppliedDt() != null) {
+			applyJobDTO = new AppliedJobDTO();
+			JobPostDTO jpJob = new JobPostDTO();
+			jpJob.setJobId(jobId);
+			applyJobDTO.setJpJob(jpJob);
+			applyJobDTO.setUserId(userId);
+			applyJobDTO.setJobTitle(searchedJobDTO.getJobTitle());
+			applyJobDTO.setFacilityName(searchedJobDTO.getCompanyName());
+			applyJobDTO.setCreateDt(currentDate.toString());
+			applyJobDTO.setAppliedDt(currentDate.toString());
+			applyJobDTO.setDeleteDt(null);
+			jobSearchService.saveOrApplyJob(applyJobDTO);
+		} else {
+			applyJobDTO = appliedJobDTO;
+			applyJobDTO.setAppliedDt(currentDate.toString());
+			jobSearchService.updateSaveOrApplyJob(applyJobDTO);
+		}
 	}
 
 	/**
@@ -608,6 +603,8 @@ public class JobSearchController {
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
+		// set the sort order for search results
+		String sortOrder = setSortOrder(session, request);
 		removeSession(session);
 
 		JobSearchResultDTO jobSearchResultDTO = null;
@@ -622,9 +619,8 @@ public class JobSearchController {
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
 		String fifthFQParam = MMJBCommonConstants.EMPTY;
 		String facetSort = MMJBCommonConstants.COUNT_STR;
-		String sortOrder = MMJBCommonConstants.DESC_STR;
-
-		if (!validateJobSearch(jobSearchResultForm, jsonObject)) {
+		
+		if (!jobSearchValidator.validateJobSearch(jobSearchResultForm, jsonObject)) {
 			return jsonObject;
 		}
 
@@ -702,11 +698,11 @@ public class JobSearchController {
 
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		int beginVal = 0;
-		if (null != next && !next.isEmpty()) {
+		if (null == next || next.isEmpty()) {
+			beginVal = (page / 10) * 10;
+		} else {
 			beginVal = Integer.parseInt(next);
 			page = Integer.parseInt(next);
-		} else {
-			beginVal = (page / 10) * 10;
 		}
 		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
@@ -720,25 +716,39 @@ public class JobSearchController {
 	}
 
 	/**
-	 * Method called to validate the search criteria
+	 * Method helps to set the sort order in session
 	 * 
-	 * @param jobSearchResultForm
-	 * @param jsonObject
+	 * @param session
+	 * @param request
+	 * @return
 	 */
-	public boolean validateJobSearch(JobSearchResultForm jobSearchResultForm,
-			JSONObject jsonObject) {
-		boolean status = true;
-		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
-			jsonObject.put(ajaxMsg, jbSearchValKeyword);
-			status = false;
-		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(
-				MMJBCommonConstants.ZERO))
-				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
-						.trim())) {
-			jsonObject.put(ajaxMsg, jbSearchValCity);
-			status = false;
+	public String setSortOrder(HttpSession session, HttpServletRequest request) {
+		String sortOrder = MMJBCommonConstants.DESC_STR;
+		boolean isSorting = Boolean.parseBoolean(request
+				.getParameter("isSorting"));
+		if (session.getAttribute(MMJBCommonConstants.SORT_ORDER) == null) {
+			session.setAttribute(MMJBCommonConstants.SORT_ORDER,
+					MMJBCommonConstants.DESC_STR);
 		}
-		return status;
+		if (isSorting) {
+			String prevOrder = (String) session
+					.getAttribute(MMJBCommonConstants.SORT_ORDER);
+			if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
+				sortOrder = prevOrder;
+			} else {
+				if (prevOrder.equalsIgnoreCase(MMJBCommonConstants.DESC_STR)) {
+					session.setAttribute(MMJBCommonConstants.SORT_ORDER,
+							MMJBCommonConstants.ASC_STR);
+					sortOrder = MMJBCommonConstants.ASC_STR;
+				} else {
+					session.setAttribute(MMJBCommonConstants.SORT_ORDER,
+							MMJBCommonConstants.DESC_STR);
+					sortOrder = MMJBCommonConstants.DESC_STR;
+				}
+			}
+
+		}
+		return sortOrder;
 	}
 
 	/**
@@ -984,7 +994,6 @@ public class JobSearchController {
 
 		removeSession(session);
 		return model;
-
 	}
 
 	/**
@@ -1108,7 +1117,7 @@ public class JobSearchController {
 				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
 				for (String string : str) {
 
-					if (!validateEmailPattern(string.trim())) {
+					if (!jobSearchValidator.validateEmailPattern(string.trim())) {
 						return emailMsg;
 					}
 
@@ -1119,13 +1128,13 @@ public class JobSearchController {
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
 				String msgSubject = MMJBCommonConstants.EMPTY;
-				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+				if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+
+					jobseekerName = "XXXX-XXX";
+					msgSubject = subOfmail + " " + jobseekerName;
+				} else {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
-					msgSubject = subOfmail + " " + jobseekerName;
-
-				} else {
-					jobseekerName = "XXXX-XXX";
 					msgSubject = subOfmail + " " + jobseekerName;
 				}
 
@@ -1175,19 +1184,6 @@ public class JobSearchController {
 	}
 
 	/**
-	 * 
-	 * @param emailAddress
-	 *            emailAddress.
-	 * @return true.
-	 */
-
-	private boolean validateEmailPattern(String emailAddress) {
-		Pattern pattern = Pattern.compile(MMJBCommonConstants.EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(emailAddress);
-		return matcher.matches();
-	}
-
-	/**
 	 * This method will be used for Autocomplete for city, state or Postcode and
 	 * Return List<String>.
 	 * 
@@ -1228,7 +1224,6 @@ public class JobSearchController {
 	 * @param sessionMap
 	 * @return Map<String, String>
 	 */
-
 	private Map<String, String> getParameterMap(
 			JobSearchResultForm jobSearchResultForm, String sessionId,
 			String searchName, Map<String, String> sessionMap,

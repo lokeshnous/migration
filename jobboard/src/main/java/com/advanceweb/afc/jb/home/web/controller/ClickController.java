@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,11 +24,12 @@ public class ClickController {
 	private static final Logger LOGGER = Logger
 			.getLogger("ClickController.class");
 
+	@SuppressWarnings("static-access")
 	@ResponseBody
 	@RequestMapping(value = "/clickevent", method = RequestMethod.GET)
 	public String getclickevent(@RequestParam("jobid") int jobid,
 			@RequestParam("type") String type, HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+			HttpServletResponse response) {
 		String finalresult = MMJBCommonConstants.ERROR_STRING;
 
 		try {

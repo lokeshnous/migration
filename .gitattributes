@@ -477,6 +477,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/CheckSessi
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ContactInfoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobApplicationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSearchController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSearchValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerAdvanceSearchController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerDashBoardForm.java -text
@@ -650,6 +651,7 @@ jobboard/src/main/webapp/WEB-INF/view/viewTestimony.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/web.xml -text
 jobboard/src/main/webapp/index.jsp -text
+jobboard/src/main/webapp/resources/MediaFiles/wmvplayer.xaml -text
 jobboard/src/main/webapp/resources/css/Gateway.css -text
 jobboard/src/main/webapp/resources/css/JB.css -text
 jobboard/src/main/webapp/resources/css/SliderStyles.css -text
@@ -772,5 +774,7 @@ jobboard/src/main/webapp/resources/js/recaptcha_ajax.js -text
 jobboard/src/main/webapp/resources/js/resumesearchresult.js -text
 jobboard/src/main/webapp/resources/js/screenshot.png -text
 jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text
+jobboard/src/main/webapp/resources/js/silverlight.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
+jobboard/src/main/webapp/resources/js/wmvplayer.js -text
 /pom.xml -text

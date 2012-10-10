@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
 			$('#topjobActionInfo'+jobId).html("Processing...");
 			$('#topjobActionInfo').html("Processing...");
 			$.ajax({
-				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
+				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 				data : ({
 					userID : "userID"
 				}),
@@ -106,6 +106,9 @@ jQuery(document).ready(function() {
 			var rows ;
 			var start ;
 			var searchtype ;
+			var isSorting ;
+			var sortOrder ;
+			
 			
 			$(document)
 					.ready(
@@ -129,9 +132,11 @@ jQuery(document).ready(function() {
 									rows = $("#rows").val();
 									start = $("#start").val();
 									searchtype = $("#searchtype").val();
+									isSorting  = false;
 									
 									var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
-									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
+									+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype+
+									"&isSorting="+isSorting;
 									$("#TotalRecord").text("");
 									$.getJSON(navUrl,function(data) {
 										 $.ajaxSetup({ cache: true });
@@ -165,12 +170,12 @@ jQuery(document).ready(function() {
 											rows = $("#rows").val();
 											start = $("#start").val();
 											searchtype = $("#searchtype").val();
-
+											isSorting = false;
 											var navUrl = "../jobsearch/searchJob.html?keywords="
 													+ keywords + "&cityState=" + cityState
 													+ "&radius=" + radius + "&rows=" + rows
 													+ "&start=" + start + "&searchtype="
-													+ searchtype;
+													+ searchtype+"&isSorting="+isSorting;
 
 											$.getJSON(navUrl, function(data) {
 												$.ajaxSetup({
@@ -215,8 +220,10 @@ jQuery(document).ready(function() {
 					rows = $("#rows").val();
 					start = $("#start").val();
 					searchtype = $("#searchtype").val();
+					isSorting = false;
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
-					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype;
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype+
+					"&isSorting="+isSorting;;
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
 						$.each(data, function(key, val) {
@@ -274,7 +281,8 @@ jQuery(document).ready(function() {
 					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&page="+page+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize;
+					+"&page="+page+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize
+					+"&isSorting="+isSorting;
 					$.getJSON(navUrl, function(data) {
 						processPaginationReq(pageSize);
 					});
@@ -285,7 +293,8 @@ jQuery(document).ready(function() {
 					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&page="+page+"&next="+begin+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize;
+					+"&page="+page+"&next="+begin+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize
+					+"&isSorting="+isSorting;
 					$.getJSON(navUrl, function(data) {
 						processPaginationReq(pageSize);
 					});
@@ -296,7 +305,8 @@ jQuery(document).ready(function() {
 					var pageSize = $("#noOfPage").val();
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&page="+page+"&next="+begin+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize;
+					+"&page="+page+"&next="+begin+"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize
+					+"&isSorting="+isSorting;
 					$.getJSON(navUrl, function(data) {
 						processPaginationReq(pageSize);
 					});
@@ -347,18 +357,20 @@ jQuery(document).ready(function() {
 
 				function applyFilter() {
 					var pageSize = $("#noOfPage").val();
+					isSorting = false;
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&displayRecordsPerPage="+ pageSize;
+					+"&displayRecordsPerPage="+ pageSize+"&isSorting="+isSorting;
 					$.getJSON(navUrl, function(data) {
 						processPaginationReq(pageSize);
 					});
 				}
 				function applyLowerFilter() {
 					var pageSize = $("#noOfPageLower").val();
+					isSorting = false;
 					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype
-					+"&displayRecordsPerPage="+ pageSize;
+					+"&displayRecordsPerPage="+ pageSize+"&isSorting="+isSorting;
 					$.getJSON(navUrl, function(data) {
 						processPaginationReq(pageSize);
 						
@@ -424,7 +436,7 @@ jQuery(document).ready(function() {
 				function btapplyThisJob(jobId) {
 					$('#bottomjobActionInfo').html("Processing...");
 					$.ajax({
-						url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null&clickType=apply',
+						url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 						data : ({
 							userID : "userID"
 						}),
@@ -469,11 +481,15 @@ jQuery(document).ready(function() {
 				}
 	
 				function sortTable() {
-					if($("#sortingId").attr('class').match('cursor table-sorted-asc')){
-						$("#sortingId").attr("class", "cursor table-sorted-desc");
-					}else{
-						$("#sortingId").attr("class", "cursor table-sorted-asc");
-					}
+					var pageSize = $("#noOfPage").val();
+					isSorting = true;
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype+
+					"&pageSize"+pageSize+"&displayRecordsPerPage="+ pageSize
+					+"&isSorting="+isSorting;
+					$.getJSON(navUrl, function(data) {
+						processPaginationReq(pageSize);
+					});
 				}
 				
 				function getSearchByCompany(compName){
@@ -481,7 +497,7 @@ jQuery(document).ready(function() {
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								 if (key == "searchtype" && val == "basic") {									
-									parent.window.location.href = '../jobsearch/findJobPage.html';
+									 parent.window.location.href = '../jobsearch/findJobPage.html';
 								}								
 							}); 						
 						},

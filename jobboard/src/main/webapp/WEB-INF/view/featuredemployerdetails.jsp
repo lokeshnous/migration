@@ -44,54 +44,22 @@
 					<div class="featuredEmployerLeft" style="background: ${employerProfileManagementForm.primaryColor}">
 						<div class="featuredEmployerVideo">
 							&nbsp;
-							<!-- <div name="mediaspace" id="mediaspace"></div> -->
-							<!-- <script type='text/javascript' src="../resources/js/silverlight.js"></script>
+							<div id="mediaspacePath" style="display: none;">${windowmediaplayerfilepath}</div> 
+							<div name="mediaspace" id="mediaspace"></div> 
+							<script type='text/javascript' src="../resources/js/silverlight.js"></script>
 	<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
 	<script type="text/javascript">
 		var cnt = document.getElementById("mediaspace");
-		var src = '../resources/js/wmvplayer.xaml';
+		var src = '../resources/MediaFiles/wmvplayer.xaml';
+		var filePath = $("#mediaspacePath").text();
 		var cfg = {
-			file:'../healthcarejobs/viewVideo.html',
-			//file:'file:///C://video.mp4',
-			//file:'../resources/js/video.mp4',
-			height:'240',
-			width:'320',
+			file: filePath,
+			height:'165',
+			width:'260',
 			autostart:'false'
 		};
 		var ply = new jeroenwijering.Player(cnt,src,cfg);
-	</script> -->
-							<iframe runat="server" id="ifrmMultimediaPlayer" marginheight="0"
-								marginwidth="0" src="" frameborder="0" height="180"
-								scrolling="no" width="255"></iframe> 
-								
-							
-		<!-- <video width="320" height="240" controls="controls">
-		  <source src="movie.mp4" type="video/mp4" />
-		   <source src="C://Wildlife.wmv" type="video/wmv" />
-		  <source src="movie.ogg" type="video/ogg" />
-		  Your browser does not support the video tag.
-		</video> -->
-		
-		 <!-- <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"></script>
-        <script type="text/javascript" src="http://github.com/ahmednuaman/vid/raw/master/jquery.vid.js"></script>
-        --><!--  <div id="flash" style="width: 255px; height: 180px;"></div> -->
-       <!-- <embed src="http://www.youtube.com/v/opVb89Cmrtk&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
-  </embed> -->
- <!--        <script type="text/javascript">
-       
-            $(document).ready( function()
-            {
-                var api = $( '#flash' ).vid({
-                    
-                });
-            });
-        
-        </script> -->
-<!--  <video width="320" height="240" controls="controls">
-  <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />   
-   <source src="../healthcarejobs/viewVideo.html" type="video/mp4" />      
-Your browser does not support the video tag.
-</video>  --> 
+	</script> 
 						</div>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">

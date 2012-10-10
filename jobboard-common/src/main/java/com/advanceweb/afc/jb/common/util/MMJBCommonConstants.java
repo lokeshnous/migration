@@ -124,6 +124,7 @@ public interface MMJBCommonConstants {
 	String POSTED_DT = "posted_dt";
 	String SORT_ORDER = "sortOrder";
 	String DESC_STR = "desc";
+	String ASC_STR = "asc";
 	String COUNT_STR = "count";
 	String FACET_SORT = "facetSort";
 	
