@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -33,6 +34,9 @@ import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 @Transactional
 @Repository("facilityDAO")
 public class FacilityDAOImpl implements FacilityDAO {
+
+	private static final Logger LOGGER = Logger
+			.getLogger(FacilityDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplate;
 
@@ -176,6 +180,8 @@ public class FacilityDAOImpl implements FacilityDAO {
 							facilityList.remove(i);
 						}
 					} catch (Exception e) {
+						LOGGER.info("Error while getting Facility details for metrics"
+								+ e);
 					}
 				}
 			} catch (HibernateException e) {

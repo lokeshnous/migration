@@ -50,7 +50,9 @@ public class FacilityServiceImpl implements FacilityService {
 		try {
 			facilityParentId = facilityDAO.getFacilityParent(facilityId);
 		} catch (JobBoardDataException e) {
-			// TODO Auto-generated catch block
+			throw new JobBoardServiceException(
+					"Error occured while getting parent id for facility from Database"
+							+ e);
 		}
 		return facilityParentId;
 	}
@@ -68,7 +70,9 @@ public class FacilityServiceImpl implements FacilityService {
 		try {
 			downDTOs = facilityDAO.getFacilityGroup(facilityId);
 		} catch (JobBoardDataException e) {
-			// TODO Auto-generated catch block
+			throw new JobBoardServiceException(
+					"Error occured while getting facility group from Database"
+							+ e);
 		}
 		return downDTOs;
 	}
