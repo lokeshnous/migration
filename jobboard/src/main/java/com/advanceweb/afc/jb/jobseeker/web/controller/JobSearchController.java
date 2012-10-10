@@ -620,7 +620,7 @@ public class JobSearchController {
 		String secondFQParam = MMJBCommonConstants.EMPTY;
 		String thirdFQParam = MMJBCommonConstants.EMPTY;
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
-		String fifthFQParam = "";
+		String fifthFQParam = MMJBCommonConstants.EMPTY;
 		String facetSort = MMJBCommonConstants.COUNT_STR;
 		String sortOrder = MMJBCommonConstants.DESC_STR;
 
