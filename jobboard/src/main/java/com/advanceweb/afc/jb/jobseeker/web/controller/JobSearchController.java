@@ -603,10 +603,13 @@ public class JobSearchController {
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
+		
+		boolean refined = Boolean.valueOf(request.getParameter(MMJBCommonConstants.REFINED));
+		session.setAttribute(MMJBCommonConstants.REFINED, refined);
 		// set the sort order for search results
 		String sortOrder = setSortOrder(session, request);
 		removeSession(session);
-
+		
 		JobSearchResultDTO jobSearchResultDTO = null;
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
@@ -636,6 +639,7 @@ public class JobSearchController {
 		} else if (!StringUtils.isEmpty(jobSearchResultForm.getCityState()
 				.trim())) {
 			searchName = MMJBCommonConstants.LOCATION_SEARCH;
+			session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
 		}
 		int searchSeq = MMJBCommonConstants.ZERO_INT;
 		String sessionId = null;
@@ -647,6 +651,11 @@ public class JobSearchController {
 			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 
 		}
+		Map<String, String> mapFQParams =getFQParams(request,session);
+		secondFQParam = mapFQParams.get(MMJBCommonConstants.SECOND_FQ_PARAM);
+		thirdFQParam = mapFQParams.get(MMJBCommonConstants.THIRD_FQ_PARAM);
+		fouthFQParam = mapFQParams.get(MMJBCommonConstants.FOURTH_FQ_PARAM);
+		
 		// Putting all the parameters coming from the UI into a Map for further
 		// processing.
 
@@ -715,6 +724,58 @@ public class JobSearchController {
 		return jobSrchJsonObj;
 	}
 
+	/**
+	 * This method provides a map of FQ parameters for Solr
+	 * 
+	 * @param request
+	 * @return mapFQ
+	 */
+	public Map<String, String> getFQParams(HttpServletRequest request, HttpSession session) {
+		String secondFQParam = "";
+		String thirdFQParam = "";
+		String fouthFQParam = "";
+
+		Map<String, String> mapFQ = new HashMap<String, String>();
+
+		if (null != request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
+				&& !request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
+						.isEmpty()) {
+			secondFQParam = MMJBCommonConstants.FQ_COMPANY
+					+ request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
+					+ '"';
+			session.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM, request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM));
+		}
+
+		if (null != request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
+				&& !request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
+						.isEmpty()) {
+			thirdFQParam = MMJBCommonConstants.FQ_STATE
+					+ request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
+					+ '"';
+			session.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
+		}
+
+		if (null != request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
+				&& !request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
+						.isEmpty()) {
+			fouthFQParam = MMJBCommonConstants.FQ_CITY
+					+ request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
+					+ '"';
+			session.setAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM, request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM));
+		}
+		if (null != request.getParameter(MMJBCommonConstants.RADIUS)
+				&& !request.getParameter(MMJBCommonConstants.RADIUS)
+						.isEmpty()) {
+			session.setAttribute(MMJBCommonConstants.REFINERADIUS, request.getParameter(MMJBCommonConstants.RADIUS));
+		}
+		
+		mapFQ.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
+		mapFQ.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
+		mapFQ.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
+		
+		return mapFQ;
+	}
+	
 	/**
 	 * Method helps to set the sort order in session
 	 * 
@@ -799,6 +860,12 @@ public class JobSearchController {
 		// TODO: Need to use session Map
 		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
 				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.CITY,
+					jobSrchJsonObj.get(MMJBCommonConstants.CITY));
+		session.setAttribute(MMJBCommonConstants.STATE,
+					jobSrchJsonObj.get(MMJBCommonConstants.STATE));
+		session.setAttribute(MMJBCommonConstants.COMPANY,
+					jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
 		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
 				currentSearchList);
 		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
@@ -824,6 +891,9 @@ public class JobSearchController {
 		session.removeAttribute("employerPage");
 		session.removeAttribute("locationPage");
 		session.removeAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST);
+		session.removeAttribute(MMJBCommonConstants.CITY);
+		session.removeAttribute(MMJBCommonConstants.STATE);
+		session.removeAttribute(MMJBCommonConstants.COMPANY);
 		session.removeAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
 		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
 		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
@@ -834,6 +904,16 @@ public class JobSearchController {
 		session.removeAttribute(MMJBCommonConstants.END_ROW);
 		session.removeAttribute(MMJBCommonConstants.BEGIN_VAL);
 		session.removeAttribute(MMJBCommonConstants.BEGIN);
+		session.removeAttribute(MMJBCommonConstants.DISPLAY_RADIUS);
+		
+//		Remove FQ params for non Refine Search
+		if(null == session.getAttribute(MMJBCommonConstants.REFINED) || session.getAttribute(MMJBCommonConstants.REFINED).toString().isEmpty() || !Boolean.valueOf(session.getAttribute(MMJBCommonConstants.REFINED).toString()))
+		{
+			session.removeAttribute(MMJBCommonConstants.SECOND_FQ_PARAM);
+			session.removeAttribute(MMJBCommonConstants.THIRD_FQ_PARAM);
+			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
+			session.removeAttribute(MMJBCommonConstants.REFINERADIUS);
+		}
 	}
 
 	/**
@@ -1238,10 +1318,12 @@ public class JobSearchController {
 				.getCityState().trim());
 		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
 				.trim());
+		paramMap.put(SearchParamDTO.REFINED, String.valueOf(jobSearchResultForm.isRefined()));
 		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
 		paramMap.put(SearchParamDTO.SEARCH_SEQ,
 				sessionMap.get(SearchParamDTO.SEARCH_SEQ));
 		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
+		
 
 		// For testing. Remove it while committing
 		paramMap.put(MMJBCommonConstants.SORT_PARAM, sortByParam);

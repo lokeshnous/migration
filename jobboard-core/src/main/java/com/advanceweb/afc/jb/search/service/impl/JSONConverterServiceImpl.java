@@ -1,9 +1,11 @@
 package com.advanceweb.afc.jb.search.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -15,6 +17,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
+import com.advanceweb.afc.jb.search.SearchFacetDTO;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 
 /**
@@ -119,6 +122,9 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 
 		}
 
+//		Get the refine results along with the job count
+		fetchRefineResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
+		
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jSResultDTO.getResultCount());
 		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
@@ -154,4 +160,56 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 				MMJBCommonConstants.JSON_DATE_FORMAT, Locale.US);
 		return formatter.format(date);
 	}
+	
+	/**
+	 * This method retrieves the Refine Results data and updates the JSONObject
+	 * 
+	 * @param searchFacetMap
+	 * @param jobSrchJsonObj
+	 */
+	private void fetchRefineResults(Map<String, List<SearchFacetDTO>> searchFacetMap, JSONObject jobSrchJsonObj)
+	{
+		final Map<String, List<SearchFacetDTO>> searchFacetDTOMap = searchFacetMap;
+
+//		Get the list of cities along with the job count		
+		List<String> cityDisplayList = generateRefineResults(searchFacetDTOMap.get(SearchFacetDTO.FACET_CITY));
+		
+//		Get the list of states along with the job count
+		List<String> stateDisplayList = generateRefineResults(searchFacetDTOMap.get(SearchFacetDTO.FACET_STATE));
+
+//		Get the list of Employers along with the job count
+		List<String> employerDisplayList = generateRefineResults(searchFacetDTOMap.get(SearchFacetDTO.FACET_COMPANY));
+		
+		jobSrchJsonObj.put(MMJBCommonConstants.CITY, cityDisplayList);
+		jobSrchJsonObj.put(MMJBCommonConstants.STATE, stateDisplayList);
+		jobSrchJsonObj.put(MMJBCommonConstants.COMPANY, employerDisplayList);
+		
+	}
+
+	/**
+	 * This method provides the facetList along with the count of jobs in each facet
+	 * 
+	 * @param facetList
+	 * @return displayFacetList
+	 */
+	private List<String> generateRefineResults(List<SearchFacetDTO> facetList) {
+		List<String> displayFacetList = new ArrayList<String>();
+		String displayFacet=MMJBCommonConstants.EMPTY;
+		if(null != facetList)
+		{
+			for(SearchFacetDTO dto : facetList)
+			{
+				if(null != dto && MMJBCommonConstants.ZERO_INT != dto.getCount())
+				{
+					displayFacet = dto.getFacetValue();
+					displayFacet=displayFacet.concat(MMJBCommonConstants.SPACE_OPN_BRCKT);
+					displayFacet=displayFacet.concat(String.valueOf(dto.getCount()));
+					displayFacet=displayFacet.concat(MMJBCommonConstants.CLSG_BRCKT);
+					displayFacetList.add(displayFacet);
+				}
+			}
+		}
+		return displayFacetList;
+	}
+	
 }

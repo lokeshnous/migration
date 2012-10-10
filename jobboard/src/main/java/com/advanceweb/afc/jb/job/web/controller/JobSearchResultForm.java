@@ -10,6 +10,7 @@ public class JobSearchResultForm {
 	private String searchtype;
 	private String saveSearchName;
 	private boolean autoload;
+	private boolean refined;
 	private String jobTitlePage;
 	private String employerPage;
 	private String locationPage;
@@ -87,6 +88,14 @@ public class JobSearchResultForm {
 		this.saveSearchName = saveSearchName;
 	}
 
+	public boolean isRefined() {
+		return refined;
+	}
+	
+	public void setRefined(boolean refined) {
+		this.refined = refined;
+	}
+	
 	public String getJobTitlePage() {
 		return jobTitlePage;
 	}

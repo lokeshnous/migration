@@ -68,7 +68,7 @@ public interface MMJBCommonConstants {
 
 	String CITY = "city";
 	String STATE = "state";
-	// String COMPANY = "company";
+	String COMPANY = "company";
 
 	String AD_TEXT = "AdText";
 	String CAP_COMPANY = "Company";
@@ -392,6 +392,17 @@ public interface MMJBCommonConstants {
 	String URL_LINK_SECOND = "><b>View this job now</b></a> to learn more and submit your application.";
 	String URL_REDIRECT_MAIL = "redirect:/healthcarejobs/advanceweb.html";
 	String ERROR_SENDING_MAIL = "ERROR For sending mail option of SendToFriend method";
+	
+//	For Refine Search
+	String SPACE_OPN_BRCKT = " (";
+	String CLSG_BRCKT = ")";
+	String DISPLAY_RADIUS = "displayRadius";
+	String FQ_COMPANY = "{!tag=dt}company:\"";
+	String FQ_STATE = "{!tag=dt}state:\"";
+	String FQ_CITY = "{!tag=dt}city:\"";
+	String REFINED = "refined";
+	String REFINERADIUS = "refineRadius";
+	String RADIUS = "radius";
 	
 	// Added for Resume search
 	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";

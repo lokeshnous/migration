@@ -116,8 +116,7 @@ jQuery(document).ready(function() {
 								$(".megamenu").megamenu();
 								var autoLoad = $("#autoload").val();
 								if(autoLoad == true || autoLoad == "true"){	
-									findJobs();
-								
+									findJobs();								
 								}
 								$("#submitval").click(function(event) {
 									$("#errorMsg").html("");
@@ -532,6 +531,77 @@ jQuery(document).ready(function() {
 							
 						}
 					});
+				}
+
+				
+				function refineByRadius(selectedRadius){
+					$("#selectedRadius").val(selectedRadius);
+					validateRadius();
+					refineSearch();
+				}
+				
+				function refineByCompany(selectedComp){
+					var company = selectedComp.split(" (");
+					$("#selectedCompany").val(company[0]);
+					refineSearch();
+				}
+				
+				function refineByState(selectedState){
+					var state = selectedState.split(" (");
+					$("#selectedState").val(state[0]);
+					refineSearch();
+				}
+				
+				function refineByCity(selectedCity){
+					var city = selectedCity.split(" (");
+					$("#selectedCity").val(city[0]);
+					refineSearch();
+				}
+				
+				function refineSearch() {
+				
+					$("#autoload").val(false);
+					$("#rows").val(25000);
+					$("#start").val("0");
+					$("#refined").val(true);
+					
+					keywords = $("#keywords").val();
+					cityState = $("#cityState").val();
+					radius = $("#radius").val();
+					rows = $("#rows").val();
+					start = $("#start").val();
+					searchtype = $("#searchtype").val();
+					isSorting = false;
+					
+					refined = $("#refined").val();
+					var secondFQParam = $("#selectedCompany").val();
+					var thirdFQParam = $("#selectedState").val();
+					var fouthFQParam = $("#selectedCity").val();
+					if($("#selectedRadius").val() != 0 || $("#selectedRadius").val() != "")
+					{
+						radius = $("#selectedRadius").val();
+					}
+					
+					var navUrl =  "../jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype+
+					"&isSorting="+isSorting+"&secondFQParam="+secondFQParam+"&thirdFQParam="+thirdFQParam+
+					"&fouthFQParam="+fouthFQParam+"&refined="+refined;
+					$("#TotalRecord").text("");
+					$.getJSON(navUrl,function(data) {
+						 $.ajaxSetup({ cache: true });
+						$.each(data, function(key, val) {
+							if (key == "AjaxMSG") {
+								$('#findSearchInfo').html(val);
+							}
+						});										
+						processPaginationReq("20");
+						$("#TotalRecord").text(data["TotalNoRecords"]);
+					});
+					$(".otherContent").attr("style","display: none");
+					$(".searchContent").attr("style","display: block");
+					
+					return true;
+				
 				}
 				
 				function getByJobTitle() {

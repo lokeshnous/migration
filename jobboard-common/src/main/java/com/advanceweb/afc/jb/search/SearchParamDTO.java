@@ -19,6 +19,7 @@ public class SearchParamDTO {
 	public static final String START = "start";
 	public static final String SEARCH_SESSION_MAP = "sessionMap";
 	public static final String PHRASE = "phrase";
+	public static final String REFINED = "refined";
 
 	private int searchParamId;
 

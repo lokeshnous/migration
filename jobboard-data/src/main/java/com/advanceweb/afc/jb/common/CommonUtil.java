@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,7 @@ public class CommonUtil {
 
 	public static Date convertToDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				MMJBCommonConstants.DISP_DATE_PATTERN);
+				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH);
 		Date convertedDate = null;
 		try {
 			convertedDate = dateFormat.parse(date);
@@ -50,7 +51,7 @@ public class CommonUtil {
 
 	public static Date convertDateStringToSQLDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				MMJBCommonConstants.NEWDATE_PATTERN);
+				MMJBCommonConstants.NEWDATE_PATTERN, Locale.ENGLISH);
 		Date convertedDate = null;
 		try {
 			convertedDate = dateFormat.parse(date);
@@ -71,7 +72,7 @@ public class CommonUtil {
 							MMJBCommonConstants.SQL_DATE_PATTERN,
 							Locale.ENGLISH).parse(dateString));
 		} catch (ParseException e) {
-			LOGGER.info("" + e);
+			LOGGER.info(e);
 		}
 		return stdDateFormat;
 	}
@@ -101,9 +102,31 @@ public class CommonUtil {
 							Locale.ENGLISH).format(startDate)).getTime());
 		} catch (ParseException e) {
 			LOGGER.info(e);
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return sqltDate;
 	}
 
+	/**
+	 * This method helps to convert Date from string To java.util.Date
+	 * 
+	 * @param dateInStr
+	 *            : Date in string
+	 * @return Date object from util package
+	 */
+	public static Date convertDateStringToDate(String dateInStr) {
+		String pattern = MMJBCommonConstants.DATE_PATTERN;
+		DateFormat formater = new SimpleDateFormat(pattern,Locale.ENGLISH);
+		Date utilDate = null;
+		
+		try {
+			if (null != dateInStr) {
+				utilDate=(Date)formater.parse(dateInStr);
+			}
+		} catch (ParseException e) {
+			LOGGER.info("convertDateStringToDate Exception");
+		}
+		return utilDate;
+	}
+	
 }

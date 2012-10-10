@@ -63,46 +63,60 @@
 
 								<div class="refineResults">
 
+									<c:if test="${displayRadius}">
 									<span class="refineResultsItem plus">Radius</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><!-- <a href="" ></a> -->5 miles</li>
-											<li><!-- <a href="" ></a> -->10 miles</li>
-											<li><!-- <a href="" ></a> -->25 miles</li>
-											<li><!-- <a href="" ></a> -->50 miles</li>
-											<li><!-- <a href="" ></a> -->100 miles</li>
+											<li><a onclick="refineByRadius('5')" >5 Miles</a></li>
+											<li><a onclick="refineByRadius('10')" >10 Miles</a></li>
+											<li><a onclick="refineByRadius('25')" >25 Miles</a></li>
+											<li><a onclick="refineByRadius('50')" >50 Miles</a></li>
+											<li><a onclick="refineByRadius('100')" >100 Miles</a></li>
 										</ul>
 									</div>
-
+									</c:if>
 									<span class="refineResultsItem plus">Employer</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><!-- <a href="" ></a> -->Allegiant (5)</li>
-											<li><!-- <a href="" ></a> -->Nova Care (2)</li>
-											<li><!-- <a href="" ></a> -->Mount Sinai (3)</li>
+											<%-- <c:if test="refined!=true"> --%>
+											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
+												<li><a onclick="refineByCompany('${company[status.index]}');">${company[status.index]}</a></li>
+											</c:forEach>
+											<%-- </c:if> --%>
 										</ul>
 									</div>
-
+									
+									<input type="hidden" name="refined" id="refined" />
+									
 									<span class="refineResultsItem plus">State</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><!-- <a href="" ></a> -->Virginia (5)</li>
-											<li><!-- <a href="" ></a> -->Maryland (2)</li>
-											<li><!-- <a href="" ></a> -->New York (3)</li>
+											<c:forEach items="${state}" var="displayState" varStatus="status">
+												<%-- <li><a href="#" >${state[status.index]}</a></li> --%>
+												<li><a onclick="refineByState('${state[status.index]}');">${state[status.index]}</a></li>
+											</c:forEach>
 										</ul>
 									</div>
 
 									<span class="refineResultsItem plus">City</span>
 									<div class="refineResultsSubContent">
 										<ul>
-											<li><!-- <a href="" ></a> -->Alexandria (5)</li>
-											<li><!-- <a href="" ></a> -->Baltimore (2)</li>
-											<li><!-- <a href="" ></a> -->Manhattan (3)</li>
+										<c:forEach items="${city}" var="displayCity" varStatus="status">
+											<%-- <c:if test="${fouthFQParam == city[status.index] }">
+											<b>
+											</c:if> --%>
+											<li><a onclick="refineByCity('${city[status.index]}');">${city[status.index]}</a></li>
+											<%-- <c:if test="${fouthFQParam == city[status.index] }">
+											</b>
+											</c:if> --%>
+										</c:forEach>
 										</ul>
 									</div>
 								</div>
-
-
+							<input type="hidden" name="selectedRadius" id="selectedRadius" value="${refineRadius}"/>
+							<input type="hidden" name="selectedCompany" id="selectedCompany" value="${secondFQParam}" />
+							<input type="hidden" name="selectedState" id="selectedState" value="${thirdFQParam}" />
+							<input type="hidden" name="selectedCity" id="selectedCity" value="${fouthFQParam}" />
 							</div>
 
 
