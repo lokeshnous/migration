@@ -2,42 +2,18 @@ package com.advanceweb.afc.jb.common.util;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.advanceweb.afc.jb.common.JobDTO;
-
 
 @SuppressWarnings("unchecked")
 public class JsonUtil {
 	
-	public static void main(String[] str) {
-
-		// Populating the JobDTO
-				//JobDTO jobDTO = JsonUtil.populateObject();
-		// Converting into JSON format
-				//String objJson = JsonUtil.convertToJson(jobDTO);
-		// Retrieving to DTO object
-			   //jobDTO = (JobDTO)JsonUtil.retrieveFromJson(objJson, JobDTO.class);
-		
-		//Test for cutomer
-		/*JobDTO custDTO = new JobDTO();
-		custDTO.setInternalID(460460);
-		custDTO.setPhone("121-454-789");
-		custDTO.setRecordType("customer");
-		custDTO.setCompanyName("MyCompany");*/
-		
-		//String objJson = JsonUtil.toObject(jobDTO, JobDTO.class);
-		//objJson = objJson.toLowerCase();
-		//LOGGER.info("objJson in Lowercase=>"+objJson);
-		
-		//CustomerDetailsWSTest customerDetailsWSTest = new CustomerDetailsWSTest();
-		//customerDetailsWSTest.updateCustomer((Object)objJson);
-		//customerDetailsWSTest.createCustomer(compName, recdType);
-
-	}
+	private static final Logger LOGGER = Logger
+			.getLogger(JsonUtil.class);
 
 	/**
 	 * Converting the DTO into JSON string.
@@ -54,11 +30,11 @@ public class JsonUtil {
 			jsonString = mapper.writeValueAsString(obj);
 
 		} catch (JsonGenerationException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		
@@ -81,11 +57,11 @@ public class JsonUtil {
 			obj = mapper.readValue(jsonString, clazz);
 
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.info(e);
 		}
 
 		// Displaying the DTO attributes
@@ -101,7 +77,7 @@ public class JsonUtil {
 	 * @return JobDTO object
 	 */
 
-	private static JobDTO populateObject() {
+	/*private static JobDTO populateObject() {
 		JobDTO jobDTO = new JobDTO();
 		jobDTO.setAdText("<b>Assistant Program Manager</b><br />"
 				+ "<b>Area of Interest</b> : Rehabilitation Services - OT<br/><b>Position Type</b>"
@@ -115,7 +91,7 @@ public class JsonUtil {
 		jobDTO.setState("KARNATAKA");
 		return jobDTO;
 
-	}
+	}*/
 
 	/**
 	 * Displaying the DTO attributes
