@@ -31,7 +31,6 @@ import com.advanceweb.afc.jb.netsuite.NetSuiteHelper;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
-import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * This service class helps to call the different WebServices from NetSuite.
