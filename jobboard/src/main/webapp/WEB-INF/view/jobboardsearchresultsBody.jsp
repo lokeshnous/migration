@@ -12,10 +12,13 @@
 		<c:choose>
 		<c:when test="${jobTitlePage}">
 			<jsp:include page="browseByJobTitle.jsp"></jsp:include>
+		</c:when>
+		<c:when test="${employerPage}">
+			<jsp:include page="browseByEmployer.jsp"></jsp:include>
 		</c:when> 
 		<c:when test="${locationPage}">
 			<jsp:include page="browseByLocation.jsp"></jsp:include>
-		</c:when> 
+		</c:when> 		
 		<c:otherwise>
 			<form:form method="POST" action="" commandName="jobSearchResultForm">
 					

@@ -35,6 +35,13 @@
 	             </c:forEach>
 	             </ul>
      		 </div>
+     		 <div class="LocationNameArea LocationBorderRight LocationPaddingLeft">
+     		 <ul>
+	            <c:forEach items="${jbsByLocationList}" var="locationList" begin="5" end="${jbsByLocationList.size()}" step="4">
+	             	<li><a class="link_color2_basic" href="#">${locationList.stateFullName} ( ${locationList.count} )</a></li>
+	             </c:forEach>
+	             </ul>
+     		 </div>
      		 
 	</div>
 </div>

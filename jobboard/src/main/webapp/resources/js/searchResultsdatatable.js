@@ -522,6 +522,7 @@ jQuery(document).ready(function() {
 					var navUrl =  "../jobsearch/searchJbsByTitle.html";
 					$.ajax({url: navUrl,
 						success: function(data){
+							processPaginationReq("20");
 							$(".otherContent").attr("style","display: none");
 							$(".searchContent").attr("style","display: block");
 						},
@@ -538,6 +539,7 @@ jQuery(document).ready(function() {
 					var navUrl =  "../jobsearch/searchJbsByEmployer.html";
 					$.ajax({url: navUrl,
 						success: function(data){
+							processPaginationReq("20");
 							$(".otherContent").attr("style","display: none");
 							$(".searchContent").attr("style","display: block");
 						},
@@ -554,6 +556,7 @@ jQuery(document).ready(function() {
 					var navUrl =  "../jobsearch/searchJbsByLocation.html";
 					$.ajax({url: navUrl,
 						success: function(data){
+							processPaginationReq("20");
 							$(".otherContent").attr("style","display: none");
 							$(".searchContent").attr("style","display: block");
 						},
@@ -587,3 +590,5 @@ jQuery(document).ready(function() {
 						}
 					});
 			    }
+				
+				
