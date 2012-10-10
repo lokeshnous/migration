@@ -109,7 +109,7 @@ public class JobSearchController {
 	private CheckSessionMap checkSessionMap;
 
 	@Autowired
-	private BrandingTemplateService BTempService;
+	private BrandingTemplateService bTempService;
 
 	@Autowired
 	private EmployerNewsFeedService newsFeedService;
@@ -1397,10 +1397,10 @@ public class JobSearchController {
 		SearchedJobDTO searchedJobDTO = dto;
 
 		// Getting the customer ID from Adm Facility table.
-		int nsCustomerID = BTempService
+		int nsCustomerID = bTempService
 				.getNSCustomerIDFromAdmFacility(searchedJobDTO.getFacilityId());
 
-		UserDTO userDTO = BTempService.getBrandingInformation(nsCustomerID);
+		UserDTO userDTO = bTempService.getBrandingInformation(nsCustomerID);
 
 		if (null != userDTO.getPackageName()) {
 			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {
@@ -1586,6 +1586,19 @@ public class JobSearchController {
 		return jsonObject;
 	}
 
+	/**
+	 * This method is used to set the FQ param values into the Map and return the 
+	 * Map.
+	 * @param firstFQParam
+	 * @param secondFQParam
+	 * @param thirdFQParam
+	 * @param fouthFQParam
+	 * @param fifthFQParam
+	 * @param sortOrder
+	 * @param facetSort
+	 * @return Map<String, String>
+	 */
+	
 	public Map<String, String> getFQMap(String firstFQParam,
 			String secondFQParam, String thirdFQParam, String fouthFQParam,
 			String fifthFQParam, String sortOrder, String facetSort) {
