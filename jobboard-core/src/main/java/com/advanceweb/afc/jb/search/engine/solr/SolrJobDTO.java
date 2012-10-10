@@ -99,7 +99,7 @@ public class SolrJobDTO implements Serializable{
 	private int isPremium;
 	
 	@Field("is_universal_geo")
-	private boolean isUniversalGeo;
+	private boolean universalGeo;
 	
 	@Field("hide_city")
 	private int hideCity;
@@ -143,11 +143,11 @@ public class SolrJobDTO implements Serializable{
 	}
 
 	public boolean isUniversalGeo() {
-		return isUniversalGeo;
+		return universalGeo;
 	}
 
 	public void setUniversalGeo(boolean isUniversalGeo) {
-		this.isUniversalGeo = isUniversalGeo;
+		this.universalGeo = isUniversalGeo;
 	}
 
 	public int getHideCity() {

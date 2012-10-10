@@ -11,7 +11,6 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobDTO;
-import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
@@ -135,8 +134,8 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 	public JSONObject convertToJSONForResume(final ResumeSearchResultDTO resumeSearchResultDTO){
 		
 		final JSONObject jobSrchJsonObj = new JSONObject();
-		final JSONArray jsonRows = new JSONArray();
-		final List<ResumeDTO> jobDTOList = resumeSearchResultDTO.getResultList();
+		//final JSONArray jsonRows = new JSONArray();
+		//final List<ResumeDTO> jobDTOList = resumeSearchResultDTO.getResultList();
 		
 		return jobSrchJsonObj;
 	}

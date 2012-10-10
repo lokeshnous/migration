@@ -13,6 +13,15 @@ public class JobSearchResultForm {
 	private String jobTitlePage;
 	private String employerPage;
 	private String locationPage;
+	private boolean browseBy;
+	
+	public boolean isBrowseBy() {
+		return browseBy;
+	}
+
+	public void setBrowseBy(boolean browseBy) {
+		this.browseBy = browseBy;
+	}
 
 	public boolean isAutoload() {
 		return autoload;

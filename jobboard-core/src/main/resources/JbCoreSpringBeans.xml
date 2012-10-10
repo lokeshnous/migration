@@ -21,6 +21,8 @@
 					value="keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder" />
 				<entry key="LOCATION-FILTER-JB2"
 					value="position,radius,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder" />
+				<entry key="BROWSE-JB2"
+					value="sortParam,sortOrder,facetSort,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,fifthFQParam,sessionid,searchName,search_seq" />
 			</map>
 		</constructor-arg>
 	</bean>

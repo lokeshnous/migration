@@ -112,6 +112,7 @@ public interface MMJBCommonConstants {
 	// Search type Names
 	String LOCATION_SEARCH = "LOCATION-FILTER-JB2";
 	String KEYWORD_SEARCH = "KEYWORD-FILTER-JB2";
+	String BROWSE_SEARCH = "BROWSE-JB2";
 	
 	// Solr param
 	String SORT_PARAM = "sortParam";
@@ -119,9 +120,12 @@ public interface MMJBCommonConstants {
 	String SECOND_FQ_PARAM = "secondFQParam";
 	String THIRD_FQ_PARAM = "thirdFQParam";
 	String FOURTH_FQ_PARAM = "fouthFQParam";
+	String FIFTH_FQ_PARAM = "fifthFQParam";
 	String POSTED_DT = "posted_dt";
 	String SORT_ORDER = "sortOrder";
 	String DESC_STR = "desc";
+	String COUNT_STR = "count";
+	String FACET_SORT = "facetSort";
 	
 
 	// Solr Date pattern

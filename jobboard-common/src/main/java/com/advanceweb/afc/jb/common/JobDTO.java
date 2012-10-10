@@ -70,7 +70,7 @@ public class JobDTO implements Serializable{
 	
 	private int isPremium;
 	
-	private boolean isUniversalGeo;
+	private boolean universalGeo;
 	
 	private int hideCity;
 	
@@ -108,11 +108,11 @@ public class JobDTO implements Serializable{
 	}
 
 	public boolean isUniversalGeo() {
-		return isUniversalGeo;
+		return universalGeo;
 	}
 
 	public void setUniversalGeo(boolean isUniversalGeo) {
-		this.isUniversalGeo = isUniversalGeo;
+		this.universalGeo = isUniversalGeo;
 	}
 
 	public int getHideCity() {

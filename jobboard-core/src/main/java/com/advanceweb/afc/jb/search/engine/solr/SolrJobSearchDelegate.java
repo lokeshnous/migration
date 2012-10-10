@@ -142,6 +142,9 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 			LOGGER.info(" Sequence ID is not present in the Search query.");
 		}
 
+		if(SearchParamDTO.SEARCH_NAME.equalsIgnoreCase(MMJBCommonConstants.BROWSE_SEARCH)){
+			return false;
+		}
 		LOGGER.info("Validating search inputs"
 				+ inputParams.get(SearchParamDTO.KEYWORDS) + ","
 				+ inputParams.get(SearchParamDTO.CITY_STATE) + ","

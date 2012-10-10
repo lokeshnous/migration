@@ -620,19 +620,25 @@ public class JobSearchController {
 		String secondFQParam = MMJBCommonConstants.EMPTY;
 		String thirdFQParam = MMJBCommonConstants.EMPTY;
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
+		String fifthFQParam = "";
+		String facetSort = MMJBCommonConstants.COUNT_STR;
 		String sortOrder = MMJBCommonConstants.DESC_STR;
 
 		if (!validateJobSearch(jobSearchResultForm, jsonObject)) {
 			return jsonObject;
 		}
-
+		
 		// Check if city state and radius field is not empty to check for
 		// LOCATION search
 		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
 			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
 				searchName = MMJBCommonConstants.KEYWORD_SEARCH;
 			}
-		} else {
+		} else if (jobSearchResultForm.isBrowseBy()) {
+			searchName = MMJBCommonConstants.BROWSE_SEARCH;
+
+		} else if (!StringUtils.isEmpty(jobSearchResultForm.getCityState()
+				.trim())) {
 			searchName = MMJBCommonConstants.LOCATION_SEARCH;
 		}
 		int searchSeq = MMJBCommonConstants.ZERO_INT;
@@ -645,13 +651,14 @@ public class JobSearchController {
 			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 
 		}
-
 		// Putting all the parameters coming from the UI into a Map for further
 		// processing.
 
+		Map<String, String> fqParamMap = getFQMap(firstFQParam, secondFQParam,
+				thirdFQParam, fouthFQParam, fifthFQParam, sortOrder, facetSort);
+
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
-				sessionId, searchName, sessionMap, sortByParam, firstFQParam,
-				secondFQParam, thirdFQParam, fouthFQParam, sortOrder);
+				sessionId, searchName, sessionMap, sortByParam, fqParamMap);
 
 		int page = 1;
 		int displayRecordsPerPage = 0;
@@ -949,6 +956,7 @@ public class JobSearchController {
 	public ModelAndView advanceSearch(HttpSession session,
 			JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm) {
 		ModelAndView model = new ModelAndView();
+
 		// JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm = new
 		// JobseekerAdvanceSearchForm();
 		// List<RadiusDTO> radiusList =
@@ -970,6 +978,7 @@ public class JobSearchController {
 		model.addObject("stateList", stateList);
 		model.addObject("jobseekerAdvanceSearchForm",
 				jobseekerAdvanceSearchForm);
+
 		model.setViewName("jobboardadvancedsearch");
 
 		removeSession(session);
@@ -1198,7 +1207,6 @@ public class JobSearchController {
 			 * Returning the List<String> based on Post code search or CityState
 			 * search
 			 */
-
 			if (MMUtils.isIntNumber(keyword)) {
 				return MMUtils.convertToPostcodeStringList(locationDTOList);
 			} else {
@@ -1223,8 +1231,7 @@ public class JobSearchController {
 	private Map<String, String> getParameterMap(
 			JobSearchResultForm jobSearchResultForm, String sessionId,
 			String searchName, Map<String, String> sessionMap,
-			String sortByParam, String firstFQParam, String secondFQParam,
-			String thirdFQParam, String fouthFQParam, String sortOrder) {
+			String sortByParam, Map<String, String> fqParamMap) {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 
@@ -1242,11 +1249,20 @@ public class JobSearchController {
 
 		// For testing. Remove it while committing
 		paramMap.put(MMJBCommonConstants.SORT_PARAM, sortByParam);
-		paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM, firstFQParam);
-		paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
-		paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
-		paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
-		paramMap.put(MMJBCommonConstants.SORT_ORDER, sortOrder);
+		paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
+				fqParamMap.get(MMJBCommonConstants.FIRST_FQ_PARAM));
+		paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
+				fqParamMap.get(MMJBCommonConstants.SECOND_FQ_PARAM));
+		paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
+				fqParamMap.get(MMJBCommonConstants.THIRD_FQ_PARAM));
+		paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
+				fqParamMap.get(MMJBCommonConstants.FOURTH_FQ_PARAM));
+		paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
+				fqParamMap.get(MMJBCommonConstants.FIFTH_FQ_PARAM));
+		paramMap.put(MMJBCommonConstants.SORT_ORDER,
+				fqParamMap.get(MMJBCommonConstants.SORT_ORDER));
+		paramMap.put(MMJBCommonConstants.FACET_SORT,
+				fqParamMap.get(MMJBCommonConstants.FACET_SORT));
 
 		return paramMap;
 
@@ -1569,4 +1585,21 @@ public class JobSearchController {
 				MMJBCommonConstants.BASIC_SEARCH_TYPE);
 		return jsonObject;
 	}
+
+	public Map<String, String> getFQMap(String firstFQParam,
+			String secondFQParam, String thirdFQParam, String fouthFQParam,
+			String fifthFQParam, String sortOrder, String facetSort) {
+
+		Map<String, String> fqMap = new HashMap<String, String>();
+		fqMap.put(MMJBCommonConstants.FIRST_FQ_PARAM, firstFQParam);
+		fqMap.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
+		fqMap.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
+		fqMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
+		fqMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM, fifthFQParam);
+		fqMap.put(MMJBCommonConstants.SORT_ORDER, sortOrder);
+		fqMap.put(MMJBCommonConstants.FACET_SORT, facetSort);
+
+		return fqMap;
+	}
+
 }
