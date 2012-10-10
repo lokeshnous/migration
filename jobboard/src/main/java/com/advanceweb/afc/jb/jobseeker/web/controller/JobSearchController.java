@@ -94,10 +94,10 @@ public class JobSearchController {
 	private MMEmailService emailService;
 
 	@Autowired
-	private JSONConverterService jsonConService;
+	private JSONConverterService jsonConverterService;
 
 	@Autowired
-	private JobSeekerJobDetailService jobSeekerService;
+	private JobSeekerJobDetailService jobSeekerJobDetailService;
 
 	@Autowired
 	private JobSearchService jobSearchService;
@@ -109,13 +109,13 @@ public class JobSearchController {
 	private CheckSessionMap checkSessionMap;
 
 	@Autowired
-	private BrandingTemplateService bTempService;
+	private BrandingTemplateService brandingTemplateService;
 
 	@Autowired
-	private EmployerNewsFeedService newsFeedService;
+	private EmployerNewsFeedService employerNewsFeedService;
 
 	@Autowired
-	private PopulateDropdowns dropdwnService;
+	private PopulateDropdowns populateDropdownsService;
 
 	@Value("${jobSearchValidateKeyword}")
 	private String jbSearchValKeyword;
@@ -281,7 +281,7 @@ public class JobSearchController {
 								jobDTO.getJobID());
 
 				// For getting the News feed from XML file
-				Map<String, List<NewsDTO>> newsMap = newsFeedService
+				Map<String, List<NewsDTO>> newsMap = employerNewsFeedService
 						.getNewsFromXML();
 				List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
 
@@ -627,7 +627,7 @@ public class JobSearchController {
 		if (!validateJobSearch(jobSearchResultForm, jsonObject)) {
 			return jsonObject;
 		}
-		
+
 		// Check if city state and radius field is not empty to check for
 		// LOCATION search
 		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
@@ -712,7 +712,8 @@ public class JobSearchController {
 		if (jobSearchResultDTO != null) {
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
-			jobSrchJsonObj = jsonConService.convertToJSON(jobSearchResultDTO);
+			jobSrchJsonObj = jsonConverterService
+					.convertToJSON(jobSearchResultDTO);
 		}
 		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj);
 		return jobSrchJsonObj;
@@ -848,12 +849,12 @@ public class JobSearchController {
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int savedJobsCount = 0;
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerService
+		List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
 				.getSavedJobs(userId);
 		savedJobsCount = savedJobDTOList.size();
 		if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
 			int oldJobId = savedJobDTOList.get(0).getSaveJobId();
-			jobSeekerService.updateAppliedSavedJobs(oldJobId);
+			jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
 		}
 
 		// Get the Job details
@@ -965,7 +966,7 @@ public class JobSearchController {
 		// populateDropdownsService.getExcludeFromList();
 		// List<FromZipcodeDTO> fromZipcodeList =
 		// populateDropdownsService.getFromZipcodeList();
-		List<StateDTO> stateList = dropdwnService.getStateList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		// List<MetroAreaDTO> metroAreaList =
 		// populateDropdownsService.getMetroAreaList();
 		// List<EmploymentTypeDTO> employmentTypeList =
@@ -1397,10 +1398,11 @@ public class JobSearchController {
 		SearchedJobDTO searchedJobDTO = dto;
 
 		// Getting the customer ID from Adm Facility table.
-		int nsCustomerID = bTempService
+		int nsCustomerID = brandingTemplateService
 				.getNSCustomerIDFromAdmFacility(searchedJobDTO.getFacilityId());
 
-		UserDTO userDTO = bTempService.getBrandingInformation(nsCustomerID);
+		UserDTO userDTO = brandingTemplateService
+				.getBrandingInformation(nsCustomerID);
 
 		if (null != userDTO.getPackageName()) {
 			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {
@@ -1587,8 +1589,9 @@ public class JobSearchController {
 	}
 
 	/**
-	 * This method is used to set the FQ param values into the Map and return the 
-	 * Map.
+	 * This method is used to set the FQ param values into the Map and return
+	 * the Map.
+	 * 
 	 * @param firstFQParam
 	 * @param secondFQParam
 	 * @param thirdFQParam
@@ -1598,7 +1601,7 @@ public class JobSearchController {
 	 * @param facetSort
 	 * @return Map<String, String>
 	 */
-	
+
 	public Map<String, String> getFQMap(String firstFQParam,
 			String secondFQParam, String thirdFQParam, String fouthFQParam,
 			String fifthFQParam, String sortOrder, String facetSort) {
