@@ -120,7 +120,7 @@ public class JobSearchController {
 
 	@Autowired
 	private EmployerNewsFeedService employerNewsFeedService;
-	
+
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
@@ -623,10 +623,10 @@ public class JobSearchController {
 		String searchName = MMJBCommonConstants.EMPTY;
 		// IMP:::This value should be taken from the UI while sorting
 		String sortByParam = MMJBCommonConstants.POSTED_DT;
-		String firstFQParam = "";
-		String secondFQParam = "";
-		String thirdFQParam = "";
-		String fouthFQParam = "";
+		String firstFQParam = MMJBCommonConstants.EMPTY;
+		String secondFQParam = MMJBCommonConstants.EMPTY;
+		String thirdFQParam = MMJBCommonConstants.EMPTY;
+		String fouthFQParam = MMJBCommonConstants.EMPTY;
 		String sortOrder = MMJBCommonConstants.DESC_STR;
 
 		if (!validateJobSearch(jobSearchResultForm, jsonObject)) {
@@ -810,6 +810,9 @@ public class JobSearchController {
 	private void removeSession(HttpSession session) {
 		// TODO :Need to Use sessionMap
 		LOGGER.info("Removing from session....");
+		session.removeAttribute("jobTitlePage");
+		session.removeAttribute("employerPage");
+		session.removeAttribute("locationPage");
 		session.removeAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST);
 		session.removeAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
 		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
@@ -951,24 +954,32 @@ public class JobSearchController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
-	public ModelAndView advanceSearch(HttpSession session, 
+	public ModelAndView advanceSearch(HttpSession session,
 			JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm) {
 		ModelAndView model = new ModelAndView();
-		//JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm = new JobseekerAdvanceSearchForm();
-		//List<RadiusDTO> radiusList = populateDropdownsService.getRadiusList(); 
-		//List<ExcludeFromDTO> excludeFromList = populateDropdownsService.getExcludeFromList(); 
-		//List<FromZipcodeDTO> fromZipcodeList = populateDropdownsService.getFromZipcodeList();
+		// JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm = new
+		// JobseekerAdvanceSearchForm();
+		// List<RadiusDTO> radiusList =
+		// populateDropdownsService.getRadiusList();
+		// List<ExcludeFromDTO> excludeFromList =
+		// populateDropdownsService.getExcludeFromList();
+		// List<FromZipcodeDTO> fromZipcodeList =
+		// populateDropdownsService.getFromZipcodeList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
-		//List<MetroAreaDTO> metroAreaList = populateDropdownsService.getMetroAreaList();
-		//List<EmploymentTypeDTO> employmentTypeList = populateDropdownsService.getEmploymentTypeList();
-		//List<JobPostedDateDTO> jobPostedDateList = populateDropdownsService.getJobPostedDateList();
-		
-		LOGGER.info("State List="+stateList.size());
-		
-		model.addObject("stateList",stateList);
-		model.addObject("jobseekerAdvanceSearchForm", jobseekerAdvanceSearchForm);
+		// List<MetroAreaDTO> metroAreaList =
+		// populateDropdownsService.getMetroAreaList();
+		// List<EmploymentTypeDTO> employmentTypeList =
+		// populateDropdownsService.getEmploymentTypeList();
+		// List<JobPostedDateDTO> jobPostedDateList =
+		// populateDropdownsService.getJobPostedDateList();
+
+		LOGGER.info("State List=" + stateList.size());
+
+		model.addObject("stateList", stateList);
+		model.addObject("jobseekerAdvanceSearchForm",
+				jobseekerAdvanceSearchForm);
 		model.setViewName("jobboardadvancedsearch");
-		
+
 		removeSession(session);
 		return model;
 
@@ -1060,10 +1071,11 @@ public class JobSearchController {
 		String finalmailbody;
 		StringBuffer mesg = new StringBuffer();
 		StringBuffer dataString = new StringBuffer();
-		String bodyMesg = "";
+		String bodyMesg = MMJBCommonConstants.EMPTY;
 		try {
 			String data = sendtofriendmail.getEmail().toString();
-			if ((null == data.trim()) || ("".equals(data.trim()))) {
+			if ((null == data.trim())
+					|| (MMJBCommonConstants.EMPTY.equals(data.trim()))) {
 				return emailMsgBlank;
 			}
 			data = data.replace(',', ';');
@@ -1104,7 +1116,7 @@ public class JobSearchController {
 
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-				String msgSubject = "";
+				String msgSubject = MMJBCommonConstants.EMPTY;
 				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
@@ -1126,7 +1138,8 @@ public class JobSearchController {
 				String jobTitle = jobTitleHeading;
 				String companyName = cmpNameHeading;
 				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl = urlLinkFirst + "" + jobUrl + "" + urlLinkSecond;
+				String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY
+						+ jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
 				mesg = mesg
 						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -1470,6 +1483,7 @@ public class JobSearchController {
 			HttpSession session, JobSearchResultForm jobSearchResultForm,
 			BindingResult result) {
 		JSONObject jsonObject = new JSONObject();
+		removeSession(session);
 		try {
 			jobSearchResultForm.setJobTitlePage("true");
 			List<SearchedJobDTO> jbsByTitleList = jobSearchService
@@ -1489,11 +1503,13 @@ public class JobSearchController {
 	 * @return jsonObject
 	 */
 	@RequestMapping(value = "/searchJbsByEmployer", method = RequestMethod.GET)
-	public JSONObject searchJbsByEmployer(HttpServletRequest request,
+	public @ResponseBody
+	JSONObject searchJbsByEmployer(HttpServletRequest request,
 			HttpSession session, JobSearchResultForm jobSearchResultForm,
 			BindingResult result) {
 
 		JSONObject jsonObject = new JSONObject();
+		removeSession(session);
 		try {
 			jobSearchResultForm.setEmployerPage("true");
 			List<SearchedJobDTO> jbsByEmployerList = jobSearchService
@@ -1514,10 +1530,12 @@ public class JobSearchController {
 	 * @return jsonObject
 	 */
 	@RequestMapping(value = "/searchJbsByLocation", method = RequestMethod.GET)
-	public JSONObject searchJbsByLocation(HttpServletRequest request,
+	public @ResponseBody
+	JSONObject searchJbsByLocation(HttpServletRequest request,
 			HttpSession session, JobSearchResultForm jobSearchResultForm,
 			BindingResult result) {
 		JSONObject jsonObject = new JSONObject();
+		removeSession(session);
 		try {
 			jobSearchResultForm.setLocationPage("true");
 			List<SearchedJobDTO> jbsByLocationList = jobSearchService
