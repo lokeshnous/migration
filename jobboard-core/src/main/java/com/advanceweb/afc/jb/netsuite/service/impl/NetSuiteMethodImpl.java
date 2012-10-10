@@ -106,7 +106,7 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 	private String createAuthorization(){
 		String authorization = "NLAuth nlauth_account=" + netSuiteCredential.getAccount()
 				+ ", nlauth_email=" + netSuiteCredential.getEmail() + ", nlauth_signature=" + netSuiteCredential.getPassword()
-				+ ", nlauth_role=" + netSuiteCredential.getRole() + "";
+				+ ", nlauth_role=" + netSuiteCredential.getRole();
 		
 		LOGGER.info("Authorization=>"+authorization);
 		return authorization;
