@@ -33,11 +33,11 @@ public class UserDTO {
 	private Map<Integer,String> nsStatusCode;
 	private String recordType;
 	private int entityId;
-	private boolean isFeatured;
+	private boolean featured;
 	private Date featuredStartDate;
 	private Date featuredEndDate;
-	private boolean isInvoiceEnabled;
-	private boolean isXmlFeedEnabled;
+	private boolean invoiceEnabled;
+	private boolean xmlFeedEnabled;
 	private Date xmlFeedStartDate;
 	private Date xmlFeedEndDate;
 	private SalesOrderDTO salesOrderDTO;
@@ -228,10 +228,10 @@ public class UserDTO {
 		this.entityId = entityId;
 	}
 	public boolean isFeatured() {
-		return isFeatured;
+		return featured;
 	}
 	public void setFeatured(boolean isFeatured) {
-		this.isFeatured = isFeatured;
+		this.featured = isFeatured;
 	}
 	public Date getFeaturedStartDate() {
 		return featuredStartDate;
@@ -246,16 +246,16 @@ public class UserDTO {
 		this.featuredEndDate = featuredEndDate;
 	}
 	public boolean isInvoiceEnabled() {
-		return isInvoiceEnabled;
+		return invoiceEnabled;
 	}
 	public void setInvoiceEnabled(boolean isInvoiceEnabled) {
-		this.isInvoiceEnabled = isInvoiceEnabled;
+		this.invoiceEnabled = isInvoiceEnabled;
 	}
 	public boolean isXmlFeedEnabled() {
-		return isXmlFeedEnabled;
+		return xmlFeedEnabled;
 	}
 	public void setXmlFeedEnabled(boolean isXmlFeedEnabled) {
-		this.isXmlFeedEnabled = isXmlFeedEnabled;
+		this.xmlFeedEnabled = isXmlFeedEnabled;
 	}
 	public Date getXmlFeedStartDate() {
 		return xmlFeedStartDate;
