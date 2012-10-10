@@ -41,6 +41,9 @@ import com.mysql.jdbc.StringUtils;
 @Repository("agencyRegistrationDAO")
 @SuppressWarnings("unchecked")
 public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger("AgencyRegistrationDAOImpl.class");
 
 	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
@@ -66,9 +69,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 	}
 
-	private static final Logger LOGGER = Logger
-
-	.getLogger(AgencyRegistrationDAOImpl.class);
+	
 
 	/**
 	 * 
@@ -257,7 +258,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 				return true;
 			}
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error("ERROR" +e);
 		}
 
 		return false;
@@ -284,15 +285,15 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 //	    		
 //	    	}
 	    	//End of OpenAM code
-			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
-			
+//			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+//			
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						VERIFY_EMAIL, email);
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
 					return (null != user ? true : false);
 				}
-			}
+//			}
 		} catch (HibernateException e) {
 			LOGGER.error(e);
 		}

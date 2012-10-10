@@ -58,10 +58,10 @@ public class AdminJobPostingInventoryController {
 		boolean status = true;
 		try {
 			String empList = request.getParameter("empList");
-			String id = request.getParameter("nsId");
+			String netSuiteId = request.getParameter("nsId");
 			session.setAttribute("empList", empList);
-			session.setAttribute("nsId", id);
-			if (StringUtils.isEmpty(empList) && StringUtils.isEmpty(id)) {
+			session.setAttribute("nsId", netSuiteId);
+			if (StringUtils.isEmpty(empList) && StringUtils.isEmpty(netSuiteId)) {
 				status = false;
 				jsonObject.put(ERR_MSG, "Please enter any one data to find");
 				jsonObject.put(SUCCESS, status);
@@ -69,11 +69,11 @@ public class AdminJobPostingInventoryController {
 			}
 			int nsId = 0;
 			if (empList.length() != 0) {
-				return validate(empList,id,session);
+				return validate(empList,netSuiteId,session);
 			}
-			if (id.length() != 0) {
+			if (netSuiteId.length() != 0) {
 				try{
-				nsId = Integer.parseInt(id);
+				nsId = Integer.parseInt(netSuiteId);
 				}catch(Exception ex){
 					status = false;
 					LOGGER.info("Excption occurred in jobSearchByComName Netsute Format : "+ex);
@@ -101,11 +101,11 @@ public class AdminJobPostingInventoryController {
 	
 	/**
 	 * @param empList
-	 * @param id
+	 * @param netSuiteId
 	 * @param session
 	 * @return
 	 */
-	public JSONObject validate(String empList,String id,HttpSession session){
+	public JSONObject validate(String empList,String netSuiteId,HttpSession session){
 		JSONObject jsonObject = new JSONObject();
 		boolean status = true;
 		int empNsId = 0;
@@ -114,7 +114,7 @@ public class AdminJobPostingInventoryController {
 		if (dto.getNsId() == 0) {
 			status = false;
 			jsonObject.put(ERR_MSG, "Please enter valid company name");
-			if (id.length() != 0) {
+			if (netSuiteId.length() != 0) {
 				jsonObject.put(ERR_MSG, "Please enter valid company name OR Net Suite Id");
 				jsonObject.put(SUCCESS, status);
 				return jsonObject;
@@ -123,7 +123,7 @@ public class AdminJobPostingInventoryController {
 			empNsId = dto.getNsId();
 			session.setAttribute(MMJBCommonConstants.NS_CUSTOMER_ID,
 					empNsId);
-			if (id.length() == 0 || (Integer.parseInt(id) == empNsId)) {
+			if (netSuiteId.length() == 0 || (Integer.parseInt(netSuiteId) == empNsId)) {
 				jsonObject.put(SUCCESS, status);
 				return jsonObject;
 			}

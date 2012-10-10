@@ -12,21 +12,22 @@ public class EmpSearchDTO {
 	private int nsId;
 	private int facParentId;
 	private String facilityType;
-	private boolean isHealthSystem; 
+	private boolean healthSystem; 
+
 
 
 	/**
-	 * @return the isHealthSystem
+	 * @return the healthSystem
 	 */
 	public boolean isHealthSystem() {
-		return isHealthSystem;
+		return healthSystem;
 	}
 
 	/**
-	 * @param isHealthSystem the isHealthSystem to set
+	 * @param healthSystem the healthSystem to set
 	 */
-	public void setHealthSystem(boolean isHealthSystem) {
-		this.isHealthSystem = isHealthSystem;
+	public void setHealthSystem(boolean healthSystem) {
+		this.healthSystem = healthSystem;
 	}
 
 	/**

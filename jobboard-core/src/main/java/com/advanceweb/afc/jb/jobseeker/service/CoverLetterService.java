@@ -6,6 +6,7 @@ package com.advanceweb.afc.jb.jobseeker.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -88,5 +89,7 @@ public interface CoverLetterService {
 	 * @return
 	 */
 	ResCoverLetterDTO getCoverList(int coverletterId);
+	
+	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId);
 	
 }

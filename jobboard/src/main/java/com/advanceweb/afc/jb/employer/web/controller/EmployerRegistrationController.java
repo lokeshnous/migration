@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -136,13 +135,16 @@ public class EmployerRegistrationController {
 	private String accountEmail;
 	@Value("${account_Street}")
 	private String accountStreet;
-	
+
 	// Spring ReCaptcha
 
-		private String recaptcha_response;
-		private String recaptcha_challenge;
-		private String remoteAddr;
+	private String recaptchaResponse;
+	private String recaptchaChallenge;
+	private String remoteAddr;
 	private final static String EMPLOYERREG = "employerregistration";
+	private final static String EMPREGFORM = "empRegisterForm";
+	private final static String MESSAGE = "message";
+
 	/**
 	 * This method is called to display job seeker registration page
 	 * 
@@ -172,7 +174,7 @@ public class EmployerRegistrationController {
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 
 		empRegisterForm.setListProfAttribForms(listProfAttribForms);
-		model.addObject("empRegisterForm", empRegisterForm);
+		model.addObject(EMPREGFORM, empRegisterForm);
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
@@ -193,7 +195,7 @@ public class EmployerRegistrationController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/saveEmployerProfile", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
-			@ModelAttribute("empRegisterForm") EmployerRegistrationForm empRegForm,
+			@ModelAttribute(EMPREGFORM) EmployerRegistrationForm empRegForm,
 			HttpServletRequest request, Map map, HttpSession session,HttpServletRequest req,
 			BindingResult result) {
 		
@@ -209,9 +211,9 @@ public class EmployerRegistrationController {
 		}
 
 		if (req.getParameter("recaptcha_response_field") != null) {
-			recaptcha_response = req
+			recaptchaResponse = req
 					.getParameter("recaptcha_response_field");
-			recaptcha_challenge = req
+			recaptchaChallenge = req
 					.getParameter("recaptcha_challenge_field");
 			remoteAddr = req.getRemoteAddr();
 		}
@@ -220,7 +222,7 @@ public class EmployerRegistrationController {
 		reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
 
 		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
-				remoteAddr, recaptcha_challenge, recaptcha_response);
+				remoteAddr, recaptchaChallenge, recaptchaResponse);
 		// Send HTTP request to validate user's Captcha
 
 		if (!reCaptchaResponse.isValid()) { 
@@ -246,10 +248,10 @@ public class EmployerRegistrationController {
 		userDTO = employerRegistration.createUser(empDTO);
 
 		if (userDTO.getEmailId() == null) {
-			model.addObject("message", nsValidateUser);
+			model.addObject(MESSAGE, nsValidateUser);
 			return model;
 		} else {
-			model.addObject("empRegisterForm", empRegForm);
+			model.addObject(EMPREGFORM, empRegForm);
 			session.setAttribute(MMJBCommonConstants.USER_NAME,
 					userDTO.getFirstName() + " " + userDTO.getLastName());
 			session.setAttribute(MMJBCommonConstants.USER_ID,
@@ -272,6 +274,10 @@ public class EmployerRegistrationController {
 		}
 
 	}
+	
+	public void validateMobileNo(){
+		
+	}
 
 	/**
 	 * validation for EmployerRegistration Form
@@ -286,23 +292,21 @@ public class EmployerRegistrationController {
 		boolean status = true;
 		for (EmployerProfileAttribForm form : empRegForm
 				.getListProfAttribForms()) {
-
 			// Checking validation for input text box
 			if (form.getbRequired() != 0
 					&& StringUtils.isEmpty(form.getStrLabelValue())
 					&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 							.getStrLabelName())) {
-				model.addObject("message", reqFields);
+				model.addObject(MESSAGE, reqFields);
 				return false;
 			}
-
 			// Checking validation for dropdowns & checkboxes etc
 			if (form.getbRequired() != 0
 					&& MMJBCommonConstants.ZERO.equals(form.getStrLabelValue())
 					&& (MMJBCommonConstants.DROP_DOWN.equals(form
 							.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX
 							.equals(form.getStrAttribType()))) {
-				model.addObject("message", reqFields);
+				model.addObject(MESSAGE, reqFields);
 				return false;
 			}
 			// validation mobile number
@@ -311,14 +315,14 @@ public class EmployerRegistrationController {
 					&& !StringUtils.isEmpty(form.getStrLabelValue())
 					&& !registerValidation.validateMobileNumberPattern(form
 							.getStrLabelValue())) {
-				model.addObject("message", jobseekerRegPhoneMsg);
+				model.addObject(MESSAGE, jobseekerRegPhoneMsg);
 				return false;
 			} else if (MMJBCommonConstants.SECONDARY_PHONE.equals(form
 					.getStrLabelName())
 					&& !StringUtils.isEmpty(form.getStrLabelValue())
 					&& !registerValidation.validateMobileNumberPattern(form
 							.getStrLabelValue())) {
-				model.addObject("message", jobseekerRegPhoneMsg);
+				model.addObject(MESSAGE, jobseekerRegPhoneMsg);
 				return false;
 			}
 		}
@@ -329,12 +333,10 @@ public class EmployerRegistrationController {
 			// model.setViewName(employerReg);
 			return false;
 		}
-
 		if (result.hasErrors()) {
 			// model.setViewName(employerReg);
 			return false;
 		}
-
 		return status;
 	}
 

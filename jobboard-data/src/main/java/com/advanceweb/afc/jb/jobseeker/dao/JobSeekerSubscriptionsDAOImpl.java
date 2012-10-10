@@ -20,10 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
+import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
 
 /**
@@ -569,6 +571,24 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 			LOGGER.error("Not save Cover letter");
 		}
 		return isUpdate;
+	}
+
+	@Override
+	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId) {
+		
+		ResCoverLetterDTO resCovDTO = new ResCoverLetterDTO();
+		try {
+			List<ResCoverletter> resList = new ArrayList<ResCoverletter>();
+			if (jobSeekerId > 0) {
+				resList = hibernateTemplateCareers
+						.find("from ResCoverletter where userId = " + jobSeekerId
+								+ " AND active = " + MMJBCommonConstants.VISIBILITY_PUBLIC+ "and deleteDt is null");
+			}
+			resCovDTO = jsSubscriptionHelper.toTransFormListToDTO(resList);
+		} catch (DataAccessException e) {
+			LOGGER.info("Error for update of employee data");
+		}
+		return resCovDTO;
 	}
 
 }

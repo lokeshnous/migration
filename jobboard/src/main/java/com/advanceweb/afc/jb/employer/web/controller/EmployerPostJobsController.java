@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Date;
 
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpSession;
 
@@ -47,6 +48,8 @@ public class EmployerPostJobsController {
 
 	@Autowired
 	private PaymentGatewayService fetchAdmFacilityConatact;
+	
+	private static final String COMPANYNAME = "?Companyname";
 
 	@RequestMapping(value = "/sendEmailForGold")
 	public ModelAndView sendEmailForGold(HttpSession session,
@@ -89,12 +92,12 @@ public class EmployerPostJobsController {
 				employerToAddress[0] = new InternetAddress(salesWebAddress);
 				employerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
-						"?Companyname", companyName);
+						COMPANYNAME, companyName);
 				employerEmailDTO.setSubject(jobseekerMailSub);
 				String jobseekerMailBody = goldOrPlatinumPricingReqBody
 						.replace("?Date", new Date().toString())
 						.replace("?Employername", userName)
-						.replace("?Companyname", companyName)
+						.replace(COMPANYNAME, companyName)
 						.replace("?Emailaddress", userEmail)
 						.replace("?Phonenumber", phoneNo)
 						.replace("?Mailingaddress", userEmail)
@@ -113,12 +116,12 @@ public class EmployerPostJobsController {
 				employerToAddress[0] = new InternetAddress(salesWebAddress);
 				employerEmailDTO.setToAddress(employerToAddress);
 				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
-						"?Companyname", companyName);
+						COMPANYNAME, companyName);
 				employerEmailDTO.setSubject(jobseekerMailSub);
 				String jobseekerMailBody = goldOrPlatinumPricingReqBody
 						.replace("?Date", new Date().toString())
 						.replace("?Employername", userName)
-						.replace("?Companyname", companyName)
+						.replace(COMPANYNAME, companyName)
 						.replace("?Emailaddress", userEmail)
 						.replace("?Phonenumber", phoneNo)
 						.replace("?Mailingaddress", userEmail)
@@ -132,29 +135,8 @@ public class EmployerPostJobsController {
 			} else if (packageId
 					.equalsIgnoreCase(MMJBCommonConstants.PACKAGE_PLATINUM)) {
 
-				InternetAddress[] employerToAddress = new InternetAddress[1];
-
-				employerToAddress[0] = new InternetAddress(
-						salesWebAddress);
-				employerEmailDTO.setToAddress(employerToAddress);
-				String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
-						"?Companyname", companyName);
-				employerEmailDTO.setSubject(jobseekerMailSub);
-				String jobseekerMailBody = goldOrPlatinumPricingReqBody
-						.replace("?Date", new java.util.Date().toString())
-						.replace("?Employername", userName)
-						.replace("?Companyname", companyName)
-						.replace("?Emailaddress", userEmail)
-						.replace("?Phonenumber", phoneNo)
-						.replace("?Mailingaddress", userEmail)
-						.replace("?Packagetype",
-								MMJBCommonConstants.PACKAGE_PLATINUM);
-				// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-				// searchedJobDTO.getCompanyName());
-				employerEmailDTO.setBody(jobseekerMailBody);
-				employerEmailDTO.setHtmlFormat(true);
-				emailService.sendEmail(employerEmailDTO);
-				// LOGGER.info("Mail sent to jobseeker");
+				sendEmailForPlatinum(employerEmailDTO, companyName, phoneNo,
+						userName, userEmail);
 
 			}
 		} catch (Exception e) {
@@ -162,6 +144,34 @@ public class EmployerPostJobsController {
 		}
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return model;
+	}
+
+	private void sendEmailForPlatinum(EmailDTO employerEmailDTO,
+			String companyName, String phoneNo, String userName,
+			String userEmail) throws AddressException {
+		InternetAddress[] employerToAddress = new InternetAddress[1];
+
+		employerToAddress[0] = new InternetAddress(
+				salesWebAddress);
+		employerEmailDTO.setToAddress(employerToAddress);
+		String jobseekerMailSub = goldOrPlatinumPricingReqSub.replace(
+				COMPANYNAME, companyName);
+		employerEmailDTO.setSubject(jobseekerMailSub);
+		String jobseekerMailBody = goldOrPlatinumPricingReqBody
+				.replace("?Date", new java.util.Date().toString())
+				.replace("?Employername", userName)
+				.replace(COMPANYNAME, companyName)
+				.replace("?Emailaddress", userEmail)
+				.replace("?Phonenumber", phoneNo)
+				.replace("?Mailingaddress", userEmail)
+				.replace("?Packagetype",
+						MMJBCommonConstants.PACKAGE_PLATINUM);
+		// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
+		// searchedJobDTO.getCompanyName());
+		employerEmailDTO.setBody(jobseekerMailBody);
+		employerEmailDTO.setHtmlFormat(true);
+		emailService.sendEmail(employerEmailDTO);
+		// LOGGER.info("Mail sent to jobseeker");
 	}
 
 }

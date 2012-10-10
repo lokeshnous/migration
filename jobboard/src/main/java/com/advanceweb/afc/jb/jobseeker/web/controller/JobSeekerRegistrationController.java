@@ -103,8 +103,8 @@ public class JobSeekerRegistrationController {
 
 	// Spring ReCaptcha
 
-	private String recaptcha_response;
-	private String recaptcha_challenge;
+	private String recaptchaResponse;
+	private String recaptchaChallenge;
 	private String remoteAddr;
 
 	private Long placeKey;
@@ -171,9 +171,9 @@ public class JobSeekerRegistrationController {
 			}
 
 			if (req.getParameter("recaptcha_response_field") != null) {
-				recaptcha_response = req
+				recaptchaResponse = req
 						.getParameter("recaptcha_response_field");
-				recaptcha_challenge = req
+				recaptchaChallenge = req
 						.getParameter("recaptcha_challenge_field");
 				remoteAddr = req.getRemoteAddr();
 			}
@@ -182,7 +182,7 @@ public class JobSeekerRegistrationController {
 			reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
 
 			ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
-					remoteAddr, recaptcha_challenge, recaptcha_response);
+					remoteAddr, recaptchaChallenge, recaptchaResponse);
 			// Send HTTP request to validate user's Captcha
 
 			if (!reCaptchaResponse.isValid()) { // Check if valid

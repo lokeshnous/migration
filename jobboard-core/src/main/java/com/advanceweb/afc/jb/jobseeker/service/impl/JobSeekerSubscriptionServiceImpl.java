@@ -153,6 +153,11 @@ public class JobSeekerSubscriptionServiceImpl implements JobSeekerSubscriptionSe
 		}
 		return resDTO;
 	}
+
+	@Override
+	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId) {
+		return jobSeekerSubscriptionsDAO.fetchPublicCoverLetter(jobSeekerId);
+	}
 	
 	
 	

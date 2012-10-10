@@ -53,9 +53,10 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class AgencyRegistrationController {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(AgencyRegistrationController.class);
+			.getLogger("AgencyRegistrationController.class");
 	private static final String AGENCY_REG_FORM = "agencyRegForm";
 	private static final String MESSAGE = "message";
+	
 	@Autowired
 	private ProfileRegistration agencyRegistration;
 
@@ -87,11 +88,9 @@ public class AgencyRegistrationController {
 	private String nsValidateUser;
 	
 
-	private String recaptcha_response;
-	private String recaptcha_challenge;
+	private String recaptchaResponse;
+	private String recaptchaChallenge;
 	private String remoteAddr;
-
-	private Long placeKey;
 
 	private final static String AGENCYREG = "addAjecncyRegistration";
 
@@ -123,7 +122,7 @@ public class AgencyRegistrationController {
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 		agencyRegForm.setListProfAttribForms(listProfAttribForms);
-		model.addObject("agencyRegForm", agencyRegForm);
+		model.addObject(AGENCY_REG_FORM, agencyRegForm);
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
@@ -156,9 +155,9 @@ public class AgencyRegistrationController {
 				}
 
 				if (req.getParameter("recaptcha_response_field") != null) {
-					recaptcha_response = req
+					recaptchaResponse = req
 							.getParameter("recaptcha_response_field");
-					recaptcha_challenge = req
+					recaptchaChallenge = req
 							.getParameter("recaptcha_challenge_field");
 					remoteAddr = req.getRemoteAddr();
 				}
@@ -167,7 +166,7 @@ public class AgencyRegistrationController {
 				reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
 
 				ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
-						remoteAddr, recaptcha_challenge, recaptcha_response);
+						remoteAddr, recaptchaChallenge, recaptchaResponse);
 				// Send HTTP request to validate user's Captcha
 
 				if (!reCaptchaResponse.isValid()) { 
@@ -197,10 +196,10 @@ public class AgencyRegistrationController {
 		userDTO = agencyRegistration.createUser(empDTO);
 
 		if (userDTO.getEmailId() == null) {
-			model.addObject("message", nsValidateUser);
+			model.addObject(MESSAGE, nsValidateUser);
 			return model;
 		} else {
-			model.addObject("agencyRegForm", agencyRegistrationForm);
+			model.addObject(AGENCY_REG_FORM, agencyRegistrationForm);
 			session.setAttribute(MMJBCommonConstants.USER_NAME,
 					userDTO.getFirstName() + " " + userDTO.getLastName());
 			session.setAttribute(MMJBCommonConstants.USER_ID,

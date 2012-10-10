@@ -102,5 +102,10 @@ public interface JobSeekerSubscriptionsDAO {
 	 * @return
 	 */
 	ResCoverLetterDTO getCoverList(int coverletterId);
-	
+
+	/**
+	 * @param jobSeekerId
+	 * @return
+	 */
+	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId);
 }

@@ -49,13 +49,13 @@ public class JobseekerCoverLetterController {
 	private static final Logger LOGGER = Logger
 			.getLogger("JobseekerCoverLetterController.class");
 	@Autowired
-	CoverLetterService coverLetterService;
+	private CoverLetterService coverLetterService;
 
-	private @Value("${resumeDeleteSuccess}")
-	String resumeDeleteSuccess;
+	@Value("${resumeDeleteSuccess}")
+	private String resumeDeleteSuccess;
 
-	private @Value("${resumeDeleteFailure}")
-	String resumeDeleteFailure;
+	@Value("${resumeDeleteFailure}")
+	private String resumeDeleteFailure;
 
 	@RequestMapping(value = "/createCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobSeekerCoverPage(ModelMap map) {

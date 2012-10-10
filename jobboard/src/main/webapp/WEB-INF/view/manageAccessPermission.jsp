@@ -105,7 +105,7 @@
 					</table>
 				</div>
               <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10">
-              <c:if test="${manageAccessPermissionForm.manageAccessPermissiondetails != null && .size() == 0}">
+              <c:if test="${manageAccessPermissionForm.manageAccessPermissiondetails != null && manageAccessPermissionForm.manageAccessPermissiondetails.size() > 0}">
               <a href="#" class="btn_sm orange" id="saveClicked">Save</a> </c:if>
               <a class="nyroModalClose btn_sm orange">Cancel</a></span> 
               <a hidden="hidden" href="<%=request.getContextPath()%>/employer/manageAccessPermission.html" id="manageAccessPerm"></a>

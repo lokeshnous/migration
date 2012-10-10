@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,9 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
  */
 @Repository("empHelper")
 public class EmployerRegistrationConversionHelper {
+	
+	private static final Logger LOGGER = Logger
+			.getLogger("EmployerRegistrationConversionHelper.class");
 
 	/**
 	 * Converting MerUserDTO to MerUser
@@ -211,11 +215,9 @@ public class EmployerRegistrationConversionHelper {
 						merUserProfilePK.setProfileAttribId(Integer
 								.valueOf(attribDTO.getStrProfileAttribId()));
 					}
-
 					if (user.getUserId() != 0) {
 						merUserProfilePK.setUserId(user.getUserId());
 					}
-
 					profile.setProfilePK(merUserProfilePK);
 					listProfiles.add(profile);
 				}
@@ -379,7 +381,7 @@ public class EmployerRegistrationConversionHelper {
 				labels.add(entries.getProperty((String) itr.next()));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("ERROR" +e);
 		}
 		Properties profileAttributes = null;
 		List<String> profileAttribs = new ArrayList<String>();
@@ -393,7 +395,7 @@ public class EmployerRegistrationConversionHelper {
 						.next()));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("ERROR" +e);
 		}
 
 		EmployerProfileDTO registerDTO = new EmployerProfileDTO();

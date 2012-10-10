@@ -177,10 +177,10 @@ public class AdminController {
 			HttpSession session, JobPostForm jobPostform, BindingResult result) {
 		JSONObject jsonObject = new JSONObject();
 		try {
-			String id = request.getParameter("advJobId");
+			String advJobId = request.getParameter("advJobId");
 			session.removeAttribute("postedJobList");
 			List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
-			int advSearchId = Integer.parseInt(id);
+			int advSearchId = Integer.parseInt(advJobId);
 			postedJobList = employerJobPost
 					.retrieveAllJobPostByADvSearch(advSearchId);
 			session.setAttribute("postedJobList", postedJobList);
@@ -224,8 +224,8 @@ public class AdminController {
 
 		try {
 			JobPostDTO dto = new JobPostDTO();
-			String id = request.getParameter("advJobId");
-			int jobId = Integer.parseInt(id);
+			String advJobId = request.getParameter("advJobId");
+			int jobId = Integer.parseInt(advJobId);
 			String endDate = request.getParameter("endDate");
 			String startDate = request.getParameter("startDate");
 			dto.setJobId(jobId);

@@ -52,7 +52,7 @@
 					<div class="row">
 					<div class="row">
 						<div class="lableText5"></div>
-						<div id="errmsg" class="validationMsg"></div>
+						<div id="errmsg" class="FormErrorDisplayText"></div>
 						</div>
 						<div class="rowEvenNewSpacing">
 							<div class="lableText5">Email Address of Employer / Agency:</div>

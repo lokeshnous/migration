@@ -40,6 +40,10 @@ public interface FacilityDAO {
 	 */
 	long getEmployerCount() throws JobBoardDataException;
 
+	/**
+	 * @param facilityId
+	 * @return
+	 */
 	FacilityDTO getFacilityByFacilityId(int facilityId);
 
 	/**
