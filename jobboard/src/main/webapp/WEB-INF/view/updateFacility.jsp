@@ -59,8 +59,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Manage Facilities</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" alt=""></a>
+			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose" alt="close">
 		</div>
 		<div id="facilityErrorMsg" class="FormErrorDisplayText"></div>
 		<div class="popUpContainerWrapper">
@@ -79,7 +78,7 @@
 								var="facility" varStatus="status">
 								<form:hidden path="facilityDTOList[${status.index}].facilityId" />
 								<tr id="${facility.facilityId}">
-									<td><a href="#">${facility.name}</a></td>
+									<td><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal">${facility.name}</a></td>
 									<td>template</td>
 									<td align="center"><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal"><img
 									src="../resources/images/Edit.png" width="20" height="20"

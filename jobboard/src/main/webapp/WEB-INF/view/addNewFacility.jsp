@@ -78,9 +78,11 @@ function validateNumber(event) {
 		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
 			<div class="popupHeader">
-				<h2>ADD FACILITY</h2>
-				<a href="#"><img src="../resources/images/Close.png" width="19"
-					height="19" alt=""></a>
+			<c:choose>
+			<c:when test="${manageFacilityForm.facilityId>0}"><h2>Update FACILITY</h2></c:when>
+			<c:otherwise><h2>ADD FACILITY</h2></c:otherwise>
+			</c:choose>
+			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose" alt="close">
 			</div>
 			<div class="popUpContainerWrapper">
 
@@ -114,7 +116,7 @@ function validateNumber(event) {
 						<span class="lableText4">State:</span>
 						<form:select path="facilityState"
 							class="jb_input3 jb_input_width3" id="stateDpId">
-							<form:option value="0" label="Select" />
+							<form:option value="" label="Select" />
 							<form:options items="${stateList}" itemValue="stateValue"
 								itemLabel="stateValue" />
 						</form:select>
@@ -130,7 +132,7 @@ function validateNumber(event) {
 						<span class="lableText4">Country:</span>
 						<form:select path="facilityCountry"
 							class="jb_input3 jb_input_width3" id="countryDpId">
-							<form:option value="0" label="Select" />
+							<form:option value="" label="Select" />
 							<form:options items="${countryList}" itemValue="countryValue"
 								itemLabel="countryValue" />
 						</form:select>

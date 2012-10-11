@@ -169,7 +169,9 @@ public class ManageAccessPermissionController {
 				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
 		
 		UserDTO userDTOID =loginService.getUser(manageAccessPermissionForm.getOwnerEmail());
+		if(null != userDTOID && userDTOID.getUserId() > 0){
 		userDTO.setUserId(userDTOID.getUserId());
+		}
 		
 //		try {
 //			MerUser merUser = manageAccessPermissionService
