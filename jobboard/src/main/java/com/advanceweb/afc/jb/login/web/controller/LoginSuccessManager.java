@@ -205,21 +205,20 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param HttpServletResponse response
 	 * @param HttpSession session
 	 */
-	private void redirectFacilitySystem(UserDTO user,EmployerInfoDTO infoDTO,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
-		
-		
-		
-					if ((profileRegistration
-							.validateProfileAttributes(user.getUserId()))) {
+	private void redirectFacilitySystem(UserDTO user, EmployerInfoDTO infoDTO,
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws IOException, ServletException {
 
-						sendRedirect(request, response, "/agency/agencyDashboard.html");
+		if ((profileRegistration.validateProfileAttributes(user.getUserId()))) {
 
-					} else {
-						session.setAttribute(MMJBCommonConstants.USER_DTO, user);
-						sendRedirect(request, response,
-								"/agencyRegistration/agencyregistration.html");
-					}
+			sendRedirect(request, response, "/agency/agencyDashboard.html");
 
+		} else {
+			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
+			sendRedirect(request, response,
+					"/agencyRegistration/agencyregistration.html");
 		}
+
+	}
 	}
 
