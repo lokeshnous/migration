@@ -130,6 +130,11 @@ public class ManageFacilityController {
 		JSONObject message = new JSONObject();
 
 		ManageFacilityDTO facilityDTO = transformFacilityFromtoFacilityDTO(facilityForm);
+		if (StringUtils.isEmpty(facilityForm.getZipCode())|| StringUtils.isEmpty(facilityForm.getFacilityCountry())
+				||StringUtils.isEmpty(facilityForm.getFacilityState())||StringUtils.isEmpty(facilityForm.getPhoneNumber())){
+			message.put(FAILURE_MSG, "Please enter the required fields.");
+			return message;
+		}
 		if (!registerValidation.validateMobileNumberPattern(facilityForm
 				.getPhoneNumber())) {
 			message.put(FAILURE_MSG, jobseekerRegPhoneMsg);
@@ -137,14 +142,18 @@ public class ManageFacilityController {
 		}
 		
 		if (!StringUtils.isEmpty(facilityForm.getZipCode())
-				&& !validateNumericsPattern(facilityForm.getZipCode())) {
+				&& !validateNumericsPattern(facilityForm.getZipCode().trim())) {
 			message.put(FAILURE_MSG, "Please enter numeric value for zip code ");
 			return message;
 		}
 		try {
 			facilityService.createFacility(facilityDTO, (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID));
+			if(facilityForm.getFacilityId()>0){
+				message.put("success", "Updated successfully");
+			}else{
 			message.put("success", "Added successfully");
+			}
 		} catch (JobBoardServiceException ex) {
 			LOGGER.error("Error occured while saving the Facility ", ex);
 			message.put(FAILURE_MSG, "Error occured While saving data");
