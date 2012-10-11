@@ -249,7 +249,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 
 		}
 
-		return (locations.isEmpty()) ? null : locations.get(0);
+		return (locations.isEmpty()) ? new LocationDTO() : locations.get(0);
 
 	}
 
