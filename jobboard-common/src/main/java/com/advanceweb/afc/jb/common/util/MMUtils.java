@@ -11,10 +11,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
+
 import com.advanceweb.afc.jb.common.LocationDTO;
 
 public class MMUtils {
 
+	private static final Logger LOGGER = Logger
+			.getLogger(MMUtils.class);
+	
 	/**
 	 * This method checks whether the String parameter is int or not.
 	 * 
@@ -133,7 +138,7 @@ public class MMUtils {
 		try {
 			date = parser.parse(dateFormat.format(date));
 		} catch (ParseException e) {
-//			LOGGER.info("getCurrentDateAndTime Exception");
+			LOGGER.info("Exception while getting Current Date And Time");
 		}
 		return date;
 
