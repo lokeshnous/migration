@@ -36,7 +36,7 @@ public class MMUtils {
 
 		List<String> list = new ArrayList<String>();
 		for (LocationDTO locDTO : locationDTOList) {
-			list.add(locDTO.getCity() + ", " + locDTO.getState());
+			list.add(locDTO.getCity() + "," + locDTO.getState());
 		}
 		return list;
 	}
