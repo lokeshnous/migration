@@ -302,11 +302,15 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		boolean bDelete = false;
+		Date startDt = new Date(job.getStartDt().getTime());
+		Date endtDt = new Date(job.getEndDt().getTime());
+		long endtDateAsTimestamp = endtDt.getTime();
+		long starttDateAsTimestamp = startDt.getTime();
+		long currentTimestamp = new Date().getTime();
 		try {
 			if (null != job.getEndDt() && null != job.getStartDt()) {
-				int compareEndDate = job.getEndDt().compareTo(new Date());
-				if ((job.getActive() == 1 && compareEndDate < 0)
-						|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+				if ((job.getActive() == 1 && endtDateAsTimestamp < currentTimestamp)
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)) {
 					// System deletes the job postings which are in "inactive"
 					// or
 					// “Expired” status
@@ -476,7 +480,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and a.active = 1 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE  and a.deleteDt is NULL");
+										+ " and a.active = 1 and(DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)  and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
@@ -495,14 +499,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 0 and a.startDt is not NULL) and a.deleteDt is NULL");
+										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and (a.active = 0 and a.startDt is not NULL) and a.deleteDt is NULL")
+										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE) and a.deleteDt is NULL")
 						.uniqueResult();
 			} else if (null != jobStatus
 					&& jobStatus

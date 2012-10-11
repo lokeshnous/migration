@@ -632,12 +632,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			if (MMJBCommonConstants.ZERO_INT == facilityParentId) {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
-						"from  AdmFacility fac WHERE fac.facilityParentId=?",
-						facilityId);
+						"from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
+						facilityId );
 
 				if (null == listAdmFacility || listAdmFacility.isEmpty()) {
 					listAdmFacility = hibernateTemplate.find(
-							"from  AdmFacility fac WHERE fac.facilityId=?",
+							"from  AdmFacility fac WHERE fac.facilityId=? and fac.deleteDt is null",
 							facilityId);
 
 				}
@@ -656,7 +656,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				}
 			} else {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
-						"from  AdmFacility fac WHERE fac.facilityParentId=?",
+						"from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
 						facilityParentId);
 				for (AdmFacility facility : listAdmFacility) {
 					// Do not display job owners

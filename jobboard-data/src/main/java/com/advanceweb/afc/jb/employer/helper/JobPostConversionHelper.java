@@ -171,7 +171,7 @@ public class JobPostConversionHelper<JobPostForm> {
 					} else if (null != job.getEndDt()) {
 						jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 
-						Date endtDt=new Date(job.getStartDt().getTime());
+						Date endtDt=new Date(job.getEndDt().getTime());
 						long endtDateAsTimestamp = endtDt.getTime();
 						//long endDate = endtDateAsTimestamp / getRidOfTime;
 
