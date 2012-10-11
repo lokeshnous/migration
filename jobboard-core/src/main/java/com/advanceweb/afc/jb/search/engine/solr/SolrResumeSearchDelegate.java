@@ -115,7 +115,7 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 
 		List<ResumeDTO> resumeList = new ArrayList<ResumeDTO>();
 		for (SolrResumeDTO dto : searchResult.getResultList()) {
-			resumeList.add(copyToResumeDTO(dto));
+			//resumeList.add(copyToResumeDTO(dto));
 		}
 		result.setResultList(resumeList);
 
@@ -157,10 +157,10 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 	 * @return List<JobDTO>
 	 */
 
-	private ResumeDTO copyToResumeDTO(SolrResumeDTO solrResumeDTO) {
+	/*private ResumeDTO copyToResumeDTO(SolrResumeDTO solrResumeDTO) {
 
 		ResumeDTO resumeDTO = new ResumeDTO();
-		/*jobDTO.setAdText(jobSearchDTO.getAdText());
+		jobDTO.setAdText(jobSearchDTO.getAdText());
 		jobDTO.setApplyOnline(jobSearchDTO.getApplyOnline());
 		jobDTO.setBlindAd(jobSearchDTO.getBlindAd());
 		jobDTO.setCity(jobSearchDTO.getCity());
@@ -193,11 +193,11 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 		jobDTO.setHideState(jobSearchDTO.getHideState());
 		jobDTO.setHidePostcode(jobSearchDTO.getHidePostcode());
 		jobDTO.setHideCountry(jobSearchDTO.getHideCountry());
-		jobDTO.setCountry(jobSearchDTO.getCountry());*/
+		jobDTO.setCountry(jobSearchDTO.getCountry());
 
 		return resumeDTO;
 
-	}
+	}*/
 
 	/**
 	 * Finds a city from the given combination of city and state or zip code. If
