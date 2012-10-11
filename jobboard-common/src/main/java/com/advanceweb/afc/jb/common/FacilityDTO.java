@@ -63,9 +63,13 @@ public class FacilityDTO {
 	private int  facilityParentId;
 
 	private int nsCustomerID;
+	
 	private int roleId;
+	
 	private String phone;
 
+	private String templateName;
+	
 	public String getPhone() {
 		return phone;
 	}
@@ -180,6 +184,14 @@ public class FacilityDTO {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
 	}
 
 	public void setEmail(String email) {

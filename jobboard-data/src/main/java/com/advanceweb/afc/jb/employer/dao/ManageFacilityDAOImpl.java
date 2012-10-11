@@ -36,6 +36,8 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			.getLogger(ManageFacilityDAOImpl.class);
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=? and facilityType='FACILITY_GROUP'";
 	private static final String FIND_ADM_FACILITY_DETAILS = "from AdmFacility where facilityId=?";
+	private static final String NONE = "None";
+	
 	private HibernateTemplate hibernateTemplateCareers;
 
 	@Autowired
@@ -106,6 +108,16 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 				if (null == admUsersList || admUsersList.isEmpty()) {
 					facilityDTO.setFacilityId(facility.getFacilityId());
 					facilityDTO.setName(facility.getName());
+
+					List<Object> templateNames = hibernateTemplateCareers
+							.find("select tnam.templateName from  JpTemplate tnam where tnam.templateId=? and tnam.deleteDt is null",
+									facility.getTemplateId());
+					if (null != templateNames && !templateNames.isEmpty()) {
+						facilityDTO.setTemplateName(templateNames.get(0)
+								.toString());
+					} else {
+						facilityDTO.setTemplateName(NONE);
+					}
 					facilityDTOList.add(facilityDTO);
 				}
 
@@ -153,7 +165,7 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			facility.setCompanyNews(facilityP.getCompanyNews());
 			facility.setCompanyOverview(facilityP.getCompanyOverview());
 			facility.setNsCustomerID(facilityP.getNsCustomerID());
-			facility.setTemplateId(facilityP.getTemplateId());
+			facility.setTemplateId(Integer.parseInt(manageFacilityDTO.getTemplateId()));
 
 		}
 

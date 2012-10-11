@@ -79,7 +79,7 @@
 								<form:hidden path="facilityDTOList[${status.index}].facilityId" />
 								<tr id="${facility.facilityId}">
 									<td><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal">${facility.name}</a></td>
-									<td>template</td>
+									<td>${facility.templateName}</td>
 									<td align="center"><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal"><img
 									src="../resources/images/Edit.png" width="20" height="20"
 									alt=""></a>&nbsp;<a href="#">
