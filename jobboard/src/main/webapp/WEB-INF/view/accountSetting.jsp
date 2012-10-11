@@ -225,7 +225,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Edit" name="btn-submit" id="btn-submit" class="btn_sm orange" />
+							<input type="button" value="Save" name="btn-submit" id="btn-submit" class="btn_sm orange" />
 							<input type="button" name="Cancel" id="Cancel" value="Cancel" class="btn_sm orange" />
 								
 						</span>
@@ -309,7 +309,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Edit" name="btn-submit2" id="btn-submit2" class="btn_sm orange" />
+							<input type="button" value="Save" name="btn-submit2" id="btn-submit2" class="btn_sm orange" />
 							<input type="button" name="CancelData"  id="CancelData" value="Cancel" class="btn_sm orange" />
 						<a href="#jobSeekerRegister1" id="BackToTopId" style="display: none;">Back To Top</a>
 						<a href="#billingId" id="BackToMdlId" style="display: none;">Back To Middle</a>
