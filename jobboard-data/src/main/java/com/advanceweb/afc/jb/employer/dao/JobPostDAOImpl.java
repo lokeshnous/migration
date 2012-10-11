@@ -495,14 +495,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.createQuery(
 								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and a.active = 0 and a.deleteDt is NULL");
+										+ " and (a.active = 0 and a.startDt is not NULL) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
 								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
 										+ userId
-										+ " and a.active = 0 and a.deleteDt is NULL")
+										+ " and (a.active = 0 and a.startDt is not NULL) and a.deleteDt is NULL")
 						.uniqueResult();
 			} else if (null != jobStatus
 					&& jobStatus
@@ -618,7 +618,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			List<JobPostDTO> scheduledJobDTOs = jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
 			return scheduledJobDTOs;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}			
 		return null;		
 	}
@@ -634,7 +634,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			List<JobPostDTO> scheduledJobDTOs = jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
 			return scheduledJobDTOs;
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}			
 		return null;		
 	}
@@ -661,7 +661,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 			
 		} catch (DataAccessException e) {
 			LOGGER.error("Failed to retreive expired jobs  ");
-			e.printStackTrace();
 			LOGGER.error(e);
 		}
 		
@@ -707,7 +706,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			}
 			
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}	
 		LOGGER.info("Executed -> executeActiveJobWorker()");
 		return false;
@@ -753,7 +752,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			}
 			
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> executeActiveJobWorker()");
 		return false;
@@ -788,7 +787,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 						hibernateTemplate.saveOrUpdate(dtl);
 					} catch (Exception e) {
 						LOGGER.error(" Exception has been occured while the posting the job for Inventory Detail Id: " +invDtlId);
-						e.printStackTrace();
+						
 					}	
 					return true;
 				}else{
@@ -798,7 +797,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			}
 			
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> decreaseAvailableCredits()");
 		return false;
@@ -870,7 +869,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			}
 			
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> decreaseAvailableCredits()");
 		return false;
