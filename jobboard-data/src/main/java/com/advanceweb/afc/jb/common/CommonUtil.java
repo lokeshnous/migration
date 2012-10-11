@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.mysql.jdbc.StringUtils;
 
 public class CommonUtil {
 
@@ -128,5 +129,34 @@ public class CommonUtil {
 		}
 		return utilDate;
 	}
+	
+	/**
+	 * This method helps to convert UtilDate To SQLDate format.
+	 * 
+	 * @param sqlDate
+	 * @return
+	 */
+	public static Date convtStringToSQLDate(String strDate) {
+
+		Date sqltDate = null;
+
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(strDate)) {
+
+				sqltDate = new java.sql.Date(new SimpleDateFormat(
+						MMJBCommonConstants.SQL_DATE_PATTERN, Locale.ENGLISH)
+						.parse(new SimpleDateFormat(
+								MMJBCommonConstants.SQL_DATE_PATTERN,
+								Locale.ENGLISH).format(new SimpleDateFormat(
+								MMJBCommonConstants.DISP_DATE_PATTERN,
+								Locale.ENGLISH).parse(strDate))).getTime());
+
+			}
+		} catch (ParseException e) {
+			LOGGER.info("convertDateStringToSQLDate Exception");
+		}
+		return sqltDate;
+	}
+	
 	
 }

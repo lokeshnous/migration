@@ -65,8 +65,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setSkills(dto.getReqSkills());
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
 		 jpJob.setAdtext(dto.getJobDesc());
-		 jpJob.setStartDt(CommonUtil.convertStringToSQLDate(dto.getScheduleStartDt()));
-		 jpJob.setEndDt(CommonUtil.convertStringToSQLDate(dto.getScheduleExpiryDt()));
+		 jpJob.setStartDt(CommonUtil.convtStringToSQLDate(dto.getScheduleStartDt()));
+		 jpJob.setEndDt(CommonUtil.convtStringToSQLDate(dto.getScheduleExpiryDt()));
 		 jpJob.setPositionType(dto.getEmploymentType());
 		 if(null != template && template.getTemplateId() !=0 ){
 			 jpJob.setJpTemplate(template);
