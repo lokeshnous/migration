@@ -1,19 +1,7 @@
 package com.advanceweb.afc.jb.webservice;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.ws.rs.core.Response;
-
-import org.apache.cxf.helpers.IOUtils;
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-
-public class CustomerDetailsWSTest{
+public class CustomerDetailsWSTest{/*
 	private static final Logger LOGGER = Logger
 			.getLogger(CustomerDetailsWSTest.class);
 
@@ -44,11 +32,11 @@ public class CustomerDetailsWSTest{
 	}
 
 
-	/**
+	*//**
 	 * This method is used to authorize an user from netsuite.
 	 * 
 	 * @return
-	 */
+	 *//*
 	
 	public String authorizeUser(String recdType, String entId){
 		
@@ -72,11 +60,11 @@ public class CustomerDetailsWSTest{
 		LOGGER.info("Json Response String for Authorize User="+ jsonResponseString);
 		return jsonResponseString;
 	}
-	/**
+	*//**
 	 * This method is used to create a WebClient Object by taking the 
 	 * web services URL. 
 	 * @return WebClient obj
-	 */
+	 *//*
 	 private WebClient createWebClient(String wsUrl) {
         String authorization = getAuthString();
 		WebClient client = WebClient.create(wsUrl);
@@ -103,13 +91,13 @@ public class CustomerDetailsWSTest{
 	     //WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype="+recordType+"&id="+cutomerId);
 	     
 		 WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=152&deploy=1&recordtype=customer&id=469773");//465670
-	     /*client.header("Authorization", authorization);
-	     client.header("Content-Type", "application/json");*/
+	     client.header("Authorization", authorization);
+	     client.header("Content-Type", "application/json");
 		 Response response = client.get();
 		 
-		 /*
+		 
 		   {"phone":"000-999-7777","contactroles":[{"contact":{"name":"NS63744","internalid":"462667"},"contactname":"NS63744 ss d sdgsdgsd","email":"sd@gmail.com","giveaccess":false,"role":{"name":"Customer Center","internalid":"14"},"sendemail":false}],"globalsubscriptionstatus":{"name":"Soft Opt-In","internalid":"1"},"giveaccess":false,"isperson":true,"lastname":"sdgsdgsd","datecreated":"9/7/2012 8:48 am","custentity_ccrequired":false,"custentity_ahafacility":false,"lastmodifieddate":"9/7/2012 8:48 am","id":"462667","custentity_invindividually":false,"balance":0,"emailtransactions":false,"custentity_porequired":false,"custentity_holdsecnotice":false,"custentityfeaturedemployee":false,"entitystatus":{"name":"CUSTOMER-- New Pending Approval","internalid":"17"},"isbudgetapproved":false,"faxtransactions":false,"recordtype":"customer","emailpreference":{"name":"Default","internalid":"DEFAULT"},"sendemail":false,"unbilledorders":0,"middlename":"dgsdg","subscriptions":[{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":false,"subscription":{"name":"Advance for NPs & PAs","internalid":"6"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Billing Communication","internalid":"2"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Marketing","internalid":"1"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Newsletters","internalid":"4"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Product Updates","internalid":"5"}},{"lastmodifieddate":"9/7/2012 8:48 am","subscribed":true,"subscription":{"name":"Surveys","internalid":"3"}}],"taxable":true,"custentity_autopickup":false,"entityid":"NS63744 ss d sdgsdgsd","isinactive":false,"depositbalance":0,"printtransactions":false,"firstname":"ss","companyname":"asffas","custentityinvoiceenabled":false,"email":"sd@gmail.com","weblead":"No","receivablesaccount":{"name":"Use System Preference","internalid":"-10"},"overduebalance":0,"custentitycustxmlfeed":false,"creditholdoverride":{"name":"Auto","internalid":"AUTO"},"custentitycreditappstatus":{"name":"Pending","internalid":"3"}}
-		  */
+		  
 		 
 		 
 		String jsonResult = null;
@@ -118,7 +106,7 @@ public class CustomerDetailsWSTest{
 			
 			
 			try {
-				/*org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
 				//jsonObject.has("contactroles");
 				System.out.println(jsonObject.has("contactroles"));
 				JSONArray jsonArray = new JSONArray();
@@ -129,19 +117,19 @@ public class CustomerDetailsWSTest{
 				for(int index = 0; index < jsonArray.length(); index++ ){
 					JSONObject innerJsonObj = jsonArray.getJSONObject(index);
 				System.out.println("contacts=>"+innerJsonObj.getString("email"));
-				}*/
-				/*org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
+				}
+				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
 				//jsonObject.has("contactroles");
 				System.out.println(jsonObject.has("custentitypackagetype"));
 				org.codehaus.jettison.json.JSONObject jsonObj  = (JSONObject) jsonObject.get("custentitypackagetype");
 				if(jsonObj.has("name")){
 					System.out.println(jsonObj.get("name"));
 				}
-				*/
+				
 				//Iterator<String> myIter = jsonObject.keys();
-				/*if(jsonObject.has("contactroles")){
+				if(jsonObject.has("contactroles")){
 					
-				}*/
+				}
 				
 				org.codehaus.jettison.json.JSONObject jsonObject  = new org.codehaus.jettison.json.JSONObject(jsonResult);
 				//System.out.println(jsonObject);
@@ -165,10 +153,10 @@ public class CustomerDetailsWSTest{
 			}
 			
 			
-			/*if(jsonObject.has(FEATURED_START_DATE_STRING)){
+			if(jsonObject.has(FEATURED_START_DATE_STRING)){
 				userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(FEATURED_START_DATE_STRING).toString()));
 				LOGGER.info("FEATURED START DATE IS=>"+jsonObject.get(FEATURED_START_DATE_STRING));
-			}*/
+			}
 			
 			
 		} catch (IOException e) {
@@ -180,12 +168,12 @@ public class CustomerDetailsWSTest{
 		return jsonResult;
 	 }
 	 
-	 /**
+	 *//**
 	  * This method is used to get the item services from NetSuite
 	  * @return
-	  */
+	  *//*
 	 
-	 /*private String getItemServices(){
+	 private String getItemServices(){
 		//String authorization = getAuthString();
 		WebClient client = createWebClient("https://rest.sandbox.netsuite.com/app/site/hosting/restlet.nl?script=149&deploy=1");
 		client.header("Authorization", authorization);
@@ -204,7 +192,7 @@ public class CustomerDetailsWSTest{
 //        System.out.println("Json Response String for GET ItemServices details="+jsonResponseString);
         return jsonResponseString;
 		 
-	 }*/
+	 }
 	 
 	 
 	 public String createSalesOrder(String itemIntrnlId, int custId, int locId, int discId){
@@ -341,4 +329,4 @@ public class CustomerDetailsWSTest{
 	 }
 	
 	
-}
+*/}
