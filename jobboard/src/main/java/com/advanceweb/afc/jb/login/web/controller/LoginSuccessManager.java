@@ -181,14 +181,9 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param HttpSession session
 	 */
 	private void redirectFacility(UserDTO user,EmployerInfoDTO infoDTO,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
-		 // job owners does not have data in mer user profile table but if
-		 // they have role as 5 or 6 then they should directly redirect to
-		 // the dash board once they login
-		//TODO: This condition need to be change to support old data 
+		 
 		if ((profileRegistration
-				.validateProfileAttributes(user.getUserId()))
-				|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
-						.getRoleId() != 6)))) {
+				.validateProfileAttributes(user.getUserId()))) {
 			sendRedirect(request, response,
 					"/employer/employerDashBoard.html");
 
@@ -213,14 +208,9 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	private void redirectFacilitySystem(UserDTO user,EmployerInfoDTO infoDTO,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
 		
 		
-		// job owners does not have data in mer user profile table but if
-		// they have role as 5 or 6 then they should directly redirect to
-		// the dash board once they login
-		//TODO: This condition need to be change to support old data 
+		
 					if ((profileRegistration
-							.validateProfileAttributes(user.getUserId()))
-							|| ((infoDTO.getRoleId() > 0 && (infoDTO.getRoleId() != 5 || infoDTO
-									.getRoleId() != 6)))) {
+							.validateProfileAttributes(user.getUserId()))) {
 
 						sendRedirect(request, response, "/agency/agencyDashboard.html");
 
