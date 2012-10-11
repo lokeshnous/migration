@@ -403,6 +403,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean repostJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
+		Date startDt = new Date(job.getStartDt().getTime());
+		Date endtDt = new Date(job.getEndDt().getTime());
+		long endtDateAsTimestamp = endtDt.getTime();
+		long starttDateAsTimestamp = startDt.getTime();
+		long currentTimestamp = new Date().getTime();
+		
 		boolean bRepost = false;
 		try {
 			// Check credit detail for the specified job- starts
@@ -415,9 +421,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 					return false;
 				}
 				// Check credit detail for the specified job- Ends
-				int compareEndDate = job.getEndDt().compareTo(new Date());
-				if ((job.getActive() == 1 && compareEndDate < 0)
-						|| (job.getActive() == MMJBCommonConstants.INACTIVE)) {
+				if ((job.getActive() == 1 && endtDateAsTimestamp < currentTimestamp)
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)){
 					// Repost the inactive and expired job and extend the end
 					// date
 					// to one month
