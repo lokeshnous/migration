@@ -1,7 +1,10 @@
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,10 +122,14 @@
 				</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
-					<a id="purchaseJobPostings"
-						href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html?page=inventoryPage"
-						class="nyroModal btn_sm orange">BUY MORE</a> <a href="#"
-						class="nyroModalClose btn_sm orange">Cancel</a>
+					<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
+						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
+							<a id="purchaseJobPostings"
+								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html?page=inventoryPage"
+								class="nyroModal btn_sm orange">BUY MORE</a> 
+					</security:authorize>
+					</c:if>
+						<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 			</form:form>
 		</div>
