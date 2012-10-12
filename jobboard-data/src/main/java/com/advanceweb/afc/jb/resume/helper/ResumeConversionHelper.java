@@ -465,9 +465,9 @@ public class ResumeConversionHelper {
 				ResBuilderCertification certEntity = new ResBuilderCertification();
 				certEntity.setBuilderCertificationId(certDTO.getBuilderCertId());
 				certEntity.setDescription(certDTO.getSummary());
-				certEntity.setEarnedDt(CommonUtil.convertStringToSQLDate(certDTO.getDateOfReceipt()));
+				certEntity.setEarnedDt(CommonUtil.convtStringToSQLDate(certDTO.getDateOfReceipt()));
 				certEntity.setExpireDt((null != certDTO.getDateOfReceipt() && certDTO.getDateOfReceipt().length() != 0) 
-						? CommonUtil.convertStringToSQLDate(certDTO.getDateOfReceipt()):null);
+						? CommonUtil.convtStringToSQLDate(certDTO.getDateOfReceipt()):null);
 				certEntity.setCertificationName(certDTO.getCertificationName());
 				certEntity.setCertifyingAuthority(certDTO.getCertifyingAuthority());
 				certEntity.setResBuilderResume(builderResume);
@@ -524,8 +524,8 @@ public class ResumeConversionHelper {
 				eduEntitiy.setInstitutionName(eduDTO.getInstituteName());
 				eduEntitiy.setDegreeLevel(eduDTO.getDegreeLvl());
 				eduEntitiy.setCourseOfStudy(eduDTO.getFieldOfStudy());
-				eduEntitiy.setStartDt(CommonUtil.convertStringToSQLDate(eduDTO.getStartDate()));
-				eduEntitiy.setCompletionDt(CommonUtil.convertStringToSQLDate(eduDTO.getEndDate()));
+				eduEntitiy.setStartDt(CommonUtil.convtStringToSQLDate(eduDTO.getStartDate()));
+				eduEntitiy.setCompletionDt(CommonUtil.convtStringToSQLDate(eduDTO.getEndDate()));
 				eduEntitiy.setDegrees(eduDTO.getDegrees());
 				eduEntitiy.setCertifications(eduDTO.getCertifications());
 				eduEntitiy.setIsGraduated(eduDTO.isbNotGraduatedYet()?1:0);
@@ -556,14 +556,14 @@ public class ResumeConversionHelper {
 				workExpEntitiy.setState(workExpDTO.getState());
 				workExpEntitiy.setEmployerName(workExpDTO.getEmployerName());
 				workExpEntitiy.setEmploymentType(workExpDTO.getEmploymentType());
-				workExpEntitiy.setEmploymentDt(CommonUtil.convertStringToSQLDate(workExpDTO.getStartDate()));
+				workExpEntitiy.setEmploymentDt(CommonUtil.convtStringToSQLDate(workExpDTO.getStartDate()));
 				workExpEntitiy.setEmploymentYears(workExpDTO.getYrsAtPostion().length() != 0 ? Integer.valueOf(workExpDTO.getYrsAtPostion()) : 0);
 				workExpEntitiy.setCareerLevel(workExpDTO.getCurrentCareerLvl());
 				workExpEntitiy.setIsCurCareerLevel(workExpDTO.isbCurrentCareerLevel()?1:0);
 				workExpEntitiy.setStillEmployed(workExpDTO.isbPresent()?1:0);
 				workExpEntitiy.setJobDescription(workExpDTO.getDescription());
 				workExpEntitiy.setPositionName(workExpDTO.getJobTitle());
-				workExpEntitiy.setSeparationDt(CommonUtil.convertStringToSQLDate(workExpDTO.getEndDate()));
+				workExpEntitiy.setSeparationDt(CommonUtil.convtStringToSQLDate(workExpDTO.getEndDate()));
 				workExpEntitiy.setHourlyRate(workExpDTO.getHrlyPayRate());
 				workExpEntitiy.setResBuilderResume(builderResume);
 				listWorkExpEntity.add(workExpEntitiy);
