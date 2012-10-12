@@ -28,10 +28,10 @@
 		$("#continueToNext").click(function(){
 			
 			if($('#card_type').val() == "6" && $('#security_code').val().length < 4 ){
-				alert("For Visa, MasterCard, and Discover this number is the last 3 digits on back of your card on the signature strip. For American Express this number is the 4 digits above card number at the right on the front of your card.");
+				alert("Please enter valid security code.");
 				return false;
 			}else if(($('#card_type').val() == "3" || $('#card_type').val() == "4" || $('#card_type').val() == "5") && $('#security_code').val().length != 3 ){
-				alert("For Visa, MasterCard, and Discover this number is the last 3 digits on back of your card on the signature strip. For American Express this number is the 4 digits above card number at the right on the front of your card.");
+				alert("Please enter valid security code.");
 				return false;
 			}else{
 				$("#billingForm").attr("action","${pageContext.request.contextPath}/pgiController/confirmOrder.html");
