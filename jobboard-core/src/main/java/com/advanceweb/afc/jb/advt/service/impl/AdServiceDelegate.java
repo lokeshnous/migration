@@ -1,8 +1,8 @@
 package com.advanceweb.afc.jb.advt.service.impl;
 
-import com.advanceweb.afc.jb.advt.service.AdSize;
-import com.advanceweb.afc.jb.advt.service.Banner;
-import com.advanceweb.afc.jb.advt.service.ClientContext;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.ads.Banner;
+import com.advanceweb.common.client.ClientContext;
 
 public interface AdServiceDelegate {
 

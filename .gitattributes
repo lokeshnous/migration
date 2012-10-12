@@ -105,9 +105,6 @@ jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/AdminService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/AdminServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/AdService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/AdSize.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/Banner.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/ClientContext.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/ads/LegacyAdServiceDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/impl/AdServiceDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/impl/AdServiceImpl.java -text
@@ -215,6 +212,9 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/common/ads/AdSize.java -text
+jobboard-core/src/main/java/com/advanceweb/common/ads/Banner.java -text
+jobboard-core/src/main/java/com/advanceweb/common/client/ClientContext.java -text
 jobboard-core/src/main/resources/JbCoreSpringBeans.xml -text
 jobboard-core/src/main/resources/jobboard-scheduler.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.xml -text

@@ -11,10 +11,10 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.advt.service.AdSize;
-import com.advanceweb.afc.jb.advt.service.Banner;
-import com.advanceweb.afc.jb.advt.service.ClientContext;
 import com.advanceweb.afc.jb.advt.service.impl.AdServiceDelegate;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.ads.Banner;
+import com.advanceweb.common.client.ClientContext;
 
 public class LegacyAdServiceDelegate implements AdServiceDelegate {
 	private static final Logger LOGGER = Logger

@@ -3,9 +3,9 @@ package com.advanceweb.afc.jb.advt.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.advt.service.AdService;
-import com.advanceweb.afc.jb.advt.service.AdSize;
-import com.advanceweb.afc.jb.advt.service.Banner;
-import com.advanceweb.afc.jb.advt.service.ClientContext;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.ads.Banner;
+import com.advanceweb.common.client.ClientContext;
 
 public class AdServiceImpl implements AdService{
 	

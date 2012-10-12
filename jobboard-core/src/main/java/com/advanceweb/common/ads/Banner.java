@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.advt.service;
+package com.advanceweb.common.ads;
 
 public class Banner {
 	private AdSize size;

@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.advt.service;
+package com.advanceweb.common.ads;
 
 public class AdSize {
 
@@ -80,4 +80,10 @@ public class AdSize {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s (%s x %s)", name, width, height);
+	}
+
 }
