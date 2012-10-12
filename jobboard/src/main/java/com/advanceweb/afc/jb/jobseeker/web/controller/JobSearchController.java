@@ -47,6 +47,7 @@ import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.NewsDTO;
+import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
@@ -59,6 +60,7 @@ import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.home.web.controller.ClickController;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
+import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
@@ -116,6 +118,9 @@ public class JobSearchController {
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	@Autowired
+	private CoverLetterService coverLetterService;
 
 	@Value("${navigationPath}")
 	private String navigationPath;
@@ -308,6 +313,17 @@ public class JobSearchController {
 
 		return modelAndView;
 	}
+	/**
+	 * Method called to fetch the public Cover Letter by user Id
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	private String fetchPublicCoverLetter(int userId){
+		ResCoverLetterDTO dto = coverLetterService.fetchPublicCoverLetter(userId);
+		String coverLetterText = dto.getCoverletterText();
+		return coverLetterText;
+	}
 
 	/**
 	 * Method called to apply for job
@@ -367,13 +383,15 @@ public class JobSearchController {
 
 			// Fetch the public resume
 			List<String> attachmentpaths = fetchPublicVisibleResume(userId);
+			//Fetch the public Cover Letter
+			String coverLetterText = fetchPublicCoverLetter(userId);
 			if (attachmentpaths == null) {
 				jsonObject.put(ajaxMsg, resumeNotFoundMsg);
 				return jsonObject;
 			}
 			try {
 				sendMailOfAppliedJob(session, request, searchedJobDTO,
-						attachmentpaths);
+						attachmentpaths,coverLetterText);
 			} catch (Exception e) {
 				jsonObject.put(ajaxMsg, commonMailErrMsg);
 				LOGGER.info("Apply job Mail Exception :" + e);
@@ -400,7 +418,7 @@ public class JobSearchController {
 	 */
 	public void sendMailOfAppliedJob(HttpSession session,
 			HttpServletRequest request, SearchedJobDTO searchedJobDTO,
-			List<String> attachmentpaths) throws AddressException {
+			List<String> attachmentpaths,String coverLetterText) throws AddressException {
 		String userName = (String) session
 				.getAttribute(MMJBCommonConstants.USER_NAME);
 		String userEmail = (String) session
@@ -422,7 +440,13 @@ public class JobSearchController {
 		String employerMailBody = employeJobApplicationBody.replace(
 				"?empDashboardLink", employerloginUrl);
 		employerMailBody = employerMailBody.replace("?jobseekername", userName);
-		employerEmailDTO.setBody(employerMailBody);
+		if (coverLetterText != null) {
+			coverLetterText = coverLetterText.replace("\r\n", "<br/>");
+			employerEmailDTO.setBody(coverLetterText + "<br/>"
+					+ employerMailBody);
+		} else {
+			employerEmailDTO.setBody(employerMailBody);
+		}
 		employerEmailDTO.setHtmlFormat(true);
 		employerEmailDTO.setAttachmentPaths(attachmentpaths);
 		emailService.sendEmail(employerEmailDTO);

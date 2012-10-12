@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 			var advJobId = $("#advJobId").val().trim();
 			$("#ErrorMsg").text("");
 			if(advJobId == ''){
-				$("#ErrorMsg").text("Please search with advance jobid");
+				$("#ErrorMsg").text("Please enter an Adv Job Id!");
 				return false;
 			}
 			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearch.html?advJobId="+advJobId,
@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
 		        var txtVal =  $('#endDt').val();
 		        var postedJobListId =  $('#postedJobListId').val();
 		        if(postedJobListId != 'true'){
-					$("#ErrorMsg").text("Please find the job with Adv Job Id!");
+					$("#ErrorMsg").text("Please enter an Adv Job Id!");
 					return false;
 				}
 		        if(isDate(txtVal)){
