@@ -843,6 +843,12 @@ public class JobSearchController {
 		// TODO: Need to use session Map
 		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
 				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.CITY,
+					jobSrchJsonObj.get(MMJBCommonConstants.CITY));
+		session.setAttribute(MMJBCommonConstants.STATE,
+					jobSrchJsonObj.get(MMJBCommonConstants.STATE));
+		session.setAttribute(MMJBCommonConstants.COMPANY,
+					jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
 		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
 				currentSearchList);
 		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
@@ -1349,7 +1355,12 @@ public class JobSearchController {
 		String facetSort = MMJBCommonConstants.COUNT_STR;
 		// set the sort order for search results
 		String sortOrder = setSortOrder(session, request);
-
+		
+		Map<String, String> mapFQParams =getFQParams(request,session);
+		secondFQParam = mapFQParams.get(MMJBCommonConstants.SECOND_FQ_PARAM);
+		thirdFQParam = mapFQParams.get(MMJBCommonConstants.THIRD_FQ_PARAM);
+		fouthFQParam = mapFQParams.get(MMJBCommonConstants.FOURTH_FQ_PARAM);
+		
 		// Putting all the parameters coming from the UI into a Map for further
 		// processing.
 		Map<String, String> fqParamMap = getFQMap(firstFQParam, secondFQParam,
