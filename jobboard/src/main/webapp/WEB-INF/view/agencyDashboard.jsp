@@ -180,10 +180,11 @@
 										</p>
 									</div>
 									<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
+									<input type="hidden" name="pageValue" value="agePermPage" />
 									<div class="lableTextDashBoard">
 										<p>
 											<a id="accessPermissioPopUp"
-												href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage
+												href="<%=request.getContextPath()%>/employer/manageAccessPermission.html?page=agePermPage">Manage
 												Access Permissions</a>
 
 										</p>

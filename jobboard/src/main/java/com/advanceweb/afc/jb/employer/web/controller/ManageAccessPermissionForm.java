@@ -19,6 +19,7 @@ public class ManageAccessPermissionForm {
 	private String postEditAccess;
 	private String setAlertPage;
 	private int totalSize;
+	private String agePermPage;
 	
 	private List<ManageAccessPermissionDTO> manageAccessPermissiondetails; 
 	/**
@@ -120,6 +121,12 @@ public class ManageAccessPermissionForm {
 	 */
 	public void setTotalSize(int totalSize) {
 		this.totalSize = totalSize;
+	}
+	public String getAgePermPage() {
+		return agePermPage;
+	}
+	public void setAgePermPage(String agePermPage) {
+		this.agePermPage = agePermPage;
 	}
 	
 }

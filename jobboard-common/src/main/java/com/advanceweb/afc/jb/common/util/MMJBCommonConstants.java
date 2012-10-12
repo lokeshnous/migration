@@ -355,6 +355,7 @@ public interface MMJBCommonConstants {
 	// Manage access permission
 	String FULL_ACCESS = "5";
 	String MANAGEEDITACCESS = "6";
+	String AGEN_PER_PAGE= "agePermPage";
 
 	String DATABASE_ERROR_CODE = "Database failed to support. Please contact your technical support team to resolve this issue.";
 	String UNIQUEKEY_PRIMARYKEY_VIOLATED = "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";

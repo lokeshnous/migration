@@ -66,19 +66,26 @@ public class ManageAccessPermissionController {
 	private String jobOwnerExist;
 	@Value("${jobOwnerAddSuccess}")
 	private String jobOwnerAddSuccess;
-	
+
 	@Autowired
 	private MMEmailService emailService;
 
 	@Autowired
-	LoginService loginService; 
-	
+	LoginService loginService;
+
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
-			HttpSession session) {
+			HttpSession session,
+			@RequestParam(value = "page", required = false) String page) {
 		LOGGER.info("showJobOwner Method");
 		ModelAndView model = new ModelAndView();
+
+		// Added for agency manage access permission task
+		if (page != null && page.equals(MMJBCommonConstants.AGEN_PER_PAGE)) {
+			manageAccessPermissionForm.setAgePermPage("true");
+			session.setAttribute("agePermPage", "agePermPage");
+		}
 
 		List<ManageAccessPermissionDTO> jbOwnerList = new ArrayList<ManageAccessPermissionDTO>();
 		try {
@@ -90,7 +97,7 @@ public class ManageAccessPermissionController {
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while updating the job owner", jbex);
 		}
-		
+
 		manageAccessPermissionForm.setTotalSize(jbOwnerList.size());
 		model.addObject("jobOwners", jbOwnerList);
 		manageAccessPermissionForm
@@ -107,14 +114,14 @@ public class ManageAccessPermissionController {
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			@RequestParam(value = "page", required = false) String page) {
 		ModelAndView model = new ModelAndView();
-		manageAccessPermissionForm.setFullAccess(MMJBCommonConstants.FULL_ACCESS);
-			if (page.equals(MMJBCommonConstants.SET_ALERT)) {
-				manageAccessPermissionForm.setSetAlertPage("true");
-			}
-			model.addObject("manageAccessPermissionForm",
-					manageAccessPermissionForm);
-			model.setViewName("addNewJobOwner");
-		
+		manageAccessPermissionForm
+				.setFullAccess(MMJBCommonConstants.FULL_ACCESS);
+		if (page != null && page.equals(MMJBCommonConstants.SET_ALERT)) {
+			manageAccessPermissionForm.setSetAlertPage("true");
+		}
+		model.addObject("manageAccessPermissionForm",
+				manageAccessPermissionForm);
+		model.setViewName("addNewJobOwner");
 
 		return model;
 	}
@@ -147,15 +154,15 @@ public class ManageAccessPermissionController {
 		 * @since Sep 4 2012
 		 * 
 		 */
-//		boolean isinvaliduser = OpenAMEUtility
-//				.openAMValidateEmail(manageAccessPermissionForm.getOwnerEmail());
-//		if (isinvaliduser) {
-//			LOGGER.info("OpenAM : user is already exist !");
-//			warningMessage.put("failure", jobOwnerExist);
-//			return warningMessage;
-//		} else {
-//			LOGGER.info("OpenAM : valid user!");
-//		}
+		// boolean isinvaliduser = OpenAMEUtility
+		// .openAMValidateEmail(manageAccessPermissionForm.getOwnerEmail());
+		// if (isinvaliduser) {
+		// LOGGER.info("OpenAM : user is already exist !");
+		// warningMessage.put("failure", jobOwnerExist);
+		// return warningMessage;
+		// } else {
+		// LOGGER.info("OpenAM : valid user!");
+		// }
 
 		// End of openAM code
 
@@ -164,26 +171,27 @@ public class ManageAccessPermissionController {
 			warningMessage.put("failure", jobOwnerExist);
 			return warningMessage;
 		}
-		
+
 		UserDTO userDTO = transformEmpReg
 				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
-		
-		UserDTO userDTOID =loginService.getUser(manageAccessPermissionForm.getOwnerEmail());
-		if(null != userDTOID && userDTOID.getUserId() > 0){
-		userDTO.setUserId(userDTOID.getUserId());
+
+		UserDTO userDTOID = loginService.getUser(manageAccessPermissionForm
+				.getOwnerEmail());
+		if (null != userDTOID && userDTOID.getUserId() > 0) {
+			userDTO.setUserId(userDTOID.getUserId());
 		}
-		
-//		try {
-//			MerUser merUser = manageAccessPermissionService
-//					.getUserListByEmail(manageAccessPermissionForm
-//							.getOwnerEmail());
-//			if (null != merUser && merUser.getUserId() > 0) {
-//				userDTO.setUserId(merUser.getUserId());
-//			}
-//		} catch (JobBoardServiceException ex) {
-//			LOGGER.error(ex);
-//		}
-		
+
+		// try {
+		// MerUser merUser = manageAccessPermissionService
+		// .getUserListByEmail(manageAccessPermissionForm
+		// .getOwnerEmail());
+		// if (null != merUser && merUser.getUserId() > 0) {
+		// userDTO.setUserId(merUser.getUserId());
+		// }
+		// } catch (JobBoardServiceException ex) {
+		// LOGGER.error(ex);
+		// }
+
 		empDTO.setMerUserDTO(userDTO);
 		try {
 			manageAccessPermissionService.createJobOwner(empDTO,
@@ -192,12 +200,11 @@ public class ManageAccessPermissionController {
 			LOGGER.error("Error occured while creating the new job owner", jbex);
 		}
 
-		sendEmail(manageAccessPermissionForm, userDTO, request);
+		sendEmail(manageAccessPermissionForm, userDTO, request, session);
 		LOGGER.info("Email : sent Email!");
 		warningMessage.put("success", jobOwnerAddSuccess);
 		return warningMessage;
 	}
-
 
 	@RequestMapping(value = "/deleteJobOwner", method = RequestMethod.POST)
 	public @ResponseBody
@@ -221,7 +228,7 @@ public class ManageAccessPermissionController {
 	@RequestMapping(value = "/updateJobOwner", method = RequestMethod.POST)
 	public ModelAndView updateJobOwner(
 			ManageAccessPermissionForm manageAccessPermissionForm) {
-		ModelAndView model = new ModelAndView();		
+		ModelAndView model = new ModelAndView();
 
 		try {
 			LOGGER.info("Request For - update user Id ");
@@ -237,10 +244,10 @@ public class ManageAccessPermissionController {
 			LOGGER.error("Error occured while updating the job owner", jbex);
 		}
 
-			model.addObject("manageAccessPermissionForm",
-					manageAccessPermissionForm);
-			model.setViewName("forward:/employer/manageAccessPermission.html");
-		
+		model.addObject("manageAccessPermissionForm",
+				manageAccessPermissionForm);
+		model.setViewName("forward:/employer/manageAccessPermission.html");
+
 		return model;
 	}
 
@@ -252,31 +259,48 @@ public class ManageAccessPermissionController {
 	 * @param request
 	 * @return
 	 */
-	public void sendEmail(ManageAccessPermissionForm manageAccessPermissionForm, UserDTO userDTO,
-			HttpServletRequest request) {
+	public void sendEmail(
+			ManageAccessPermissionForm manageAccessPermissionForm,
+			UserDTO userDTO, HttpServletRequest request, HttpSession session) {
 		EmailDTO emailDTO = new EmailDTO();
 		InternetAddress[] employerToAddress = new InternetAddress[1];
 		String loginPath = navigationPath.substring(2);
-		String employerloginUrl = request.getRequestURL().toString()
-				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + "?page=employer";
+		String employerloginUrl;
+
+		// Below condition differs for agency and employer.If owner is creating
+		// from agency dash board then, in email login link should be agency
+		// login and same applies to employer
+		if (session.getAttribute(MMJBCommonConstants.AGEN_PER_PAGE) != null) {
+			employerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + "?page=agency";
+		} else {
+			employerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + "?page=employer";
+		}
+
 		try {
-			employerToAddress[0] = new InternetAddress(manageAccessPermissionForm.getOwnerEmail());
+			employerToAddress[0] = new InternetAddress(
+					manageAccessPermissionForm.getOwnerEmail());
 			emailDTO.setToAddress(employerToAddress);
 			emailDTO.setFromAddress(advanceWebAddress);
 			emailDTO.setCcAddress(null);
 			emailDTO.setBccAddress(null);
-			String emailSubject=jobOwnerMailSubject.replace("?EmployersName", userDTO.getLastName());
+			String emailSubject = jobOwnerMailSubject.replace("?EmployersName",
+					userDTO.getLastName());
 			emailDTO.setSubject(emailSubject);
 			String forgotPwdMailBody = jobOwnerPwdBody.replace(
 					"?temporarypassword", userDTO.getPassword());
 			forgotPwdMailBody = forgotPwdMailBody.replace("?employerLoginLink",
 					employerloginUrl);
-			String permissionType="Post/Edit Access";
-			if(manageAccessPermissionForm.getFullAccess().equals(MMJBCommonConstants.FULL_ACCESS)){
+			String permissionType = "Post/Edit Access";
+			if (manageAccessPermissionForm.getFullAccess().equals(
+					MMJBCommonConstants.FULL_ACCESS)) {
 				permissionType = "Full Access";
-			}			
-			forgotPwdMailBody=forgotPwdMailBody.replace("?permission", permissionType);
+			}
+			forgotPwdMailBody = forgotPwdMailBody.replace("?permission",
+					permissionType);
 			emailDTO.setBody(forgotPwdMailBody);
 			emailDTO.setHtmlFormat(true);
 			emailService.sendEmail(emailDTO);
