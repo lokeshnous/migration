@@ -25,6 +25,7 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
@@ -75,12 +76,25 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 						hibernateTemplateTracker.saveOrUpdate(merUser);
 					}
 					// saving the employer profile
-					List<MerUserProfile> merUserProfiles = empHelper
-							.transformMerUserDTOToMerUserProfiles(empDTO,
-									merUser);
-					if (merUserProfiles != null) {
-						hibernateTemplateTracker
-								.saveOrUpdateAll(merUserProfiles);
+					List<MerUserProfile> merUserProfilesList = hibernateTemplateTracker
+							.find(" from MerUserProfile prof where prof.profilePK.userId=?",
+									userIdp);
+					List<MerUserProfile> merUserProfileList =new ArrayList<MerUserProfile>();
+					if (null != merUserProfilesList && merUserProfilesList.size() > 0) {
+						for (MerUserProfile merUserProfiles : merUserProfilesList) {
+							MerUserProfile userProfile = new MerUserProfile();
+
+							MerUserProfilePK merUserProfilePK = new MerUserProfilePK();
+							merUserProfilePK.setUserId(merUser.getUserId());
+							merUserProfilePK
+									.setProfileAttribId(merUserProfiles.getProfilePK()
+											.getProfileAttribId());
+							userProfile.setProfilePK(merUserProfilePK);
+							userProfile.setAttribValue(merUserProfiles.getAttribValue());
+							merUserProfileList.add(userProfile);
+							
+						}
+						hibernateTemplateTracker.saveOrUpdateAll(merUserProfileList);
 					}
 					// saving the data in Adm_User_Role
 					saveAdmUserRole(empDTO, userIdp, merUser);
