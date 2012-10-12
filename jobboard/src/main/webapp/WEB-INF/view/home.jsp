@@ -88,32 +88,7 @@ type="text/css">
 								Featured Employers<span>More</span>
 							</h2>
 						</a>
-						<div class="featured_emp_slider">
-							<div id="slider1PrevBtn"></div>
-							<div id="slider1">
-							<c:forEach var="companyProfileDTO"
-									items="${companyProfileDTOList}" varStatus="status" step="2">
-									<div class="slider1Frames">
-										<a
-											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index].facilityid }">
-											<div class="slider1FrameA1">
-												<img src="${companyProfileDTOList[status.index].logoPath}"
-													alt="${companyProfileDTOList[status.index].companyName }"
-													width="125" height="37">
-											</div>
-										</a> <a
-											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index+1].facilityid }">
-											<div class="slider1FrameA2">
-												<img src="${companyProfileDTOList[status.index+1].logoPath}"
-													alt="${companyProfileDTOList[status.index+1].companyName }"
-													width="125" height="37">
-											</div>
-										</a>
-									</div>
-								</c:forEach>
-									</div>
-							<div id="slider1NextBtn"></div>
-						</div> 
+						<div class="featured_emp_slider" id="slider1FramesId"></div> 
 								<!-- 	<ul id="scroller">
 									<c:forEach var="companyProfileDTO"
 									items="${companyProfileDTOList}" varStatus="status" step="1">

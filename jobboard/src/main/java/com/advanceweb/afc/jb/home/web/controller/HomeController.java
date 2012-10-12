@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -91,7 +92,8 @@ public class HomeController {
 	private JobSearchService jobSearchService;
 
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
-	public String gethtmlContents(HttpServletRequest request, Model model) {
+	public String gethtmlContents(HttpServletRequest request, Model model,
+			HttpSession session) {
 		model.addAttribute("viewhtml", true);
 		try {
 
@@ -113,10 +115,19 @@ public class HomeController {
 								+ careertoolfilename);
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
-
+			session.removeAttribute("next");
+			session.removeAttribute("prev");
+			session.removeAttribute("count");
+			
+			int firstIndex = 0, lastIndex = 2;
+			session.setAttribute("prev",firstIndex);
+			session.setAttribute("next",lastIndex);
+			
 			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
 					.getEmployerList();
-			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+			session.setAttribute("count",companyProfileDTOList.size());
+//			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
+			session.setAttribute("companyProfileDTOList", companyProfileDTOList.subList(firstIndex, lastIndex));
 			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
 			model.addAttribute("followuplinkyoutube", followuplinkyoutube);
@@ -413,6 +424,61 @@ public class HomeController {
 		jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
 				MMJBCommonConstants.BASIC_SEARCH_TYPE);
 		return jsonObject;
+	}
+	
+	/**
+	 * get the Next/Prev feature employer list
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/getFeatureEmplist", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject getlist(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+		
+		JSONObject jsonObject = new JSONObject();
+		String moveBy = request.getParameter("moveBy");
+		int firstIndex = 0, lastIndex = 2;
+		if(moveBy.equalsIgnoreCase("next")){
+			int oldNext = (Integer) session.getAttribute("next");
+			int oldPrev = (Integer) session.getAttribute("prev");
+			lastIndex = oldNext+2;
+			firstIndex= oldPrev+2;
+		}
+		if(moveBy.equalsIgnoreCase("prev")){
+			int oldNext = (Integer) session.getAttribute("next");
+			int oldPrev = (Integer) session.getAttribute("prev");
+			lastIndex = oldNext-2;
+			firstIndex= oldPrev-2;
+		}
+		session.setAttribute("next",lastIndex);
+		session.setAttribute("prev",firstIndex);
+		
+		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
+				.getEmployerList();
+		session.setAttribute("count",companyProfileDTOList.size());
+		session.setAttribute("companyProfileDTOList", companyProfileDTOList.subList(firstIndex, lastIndex));
+		return jsonObject;
+	}
+	
+	/**
+	 * Get the homeFeatureEmps page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/homeFeatureEmps")
+	public ModelAndView getjobboardsearchresultsBody(
+			HttpServletResponse response, HttpServletRequest request,
+			Model model) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("homeFeatureEmps");
+		return modelAndView;
 	}
 
 }

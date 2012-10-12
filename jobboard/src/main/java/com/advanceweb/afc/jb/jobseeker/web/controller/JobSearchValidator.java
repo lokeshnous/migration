@@ -114,12 +114,14 @@ public class JobSearchValidator {
 			JSONObject jsonObject) {
 		boolean status = true;
 		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
+			jsonObject = new JSONObject();
 			jsonObject.put(ajaxMsg, jbSearchValKeyword);
 			status = false;
 		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(
 				MMJBCommonConstants.ZERO))
 				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
 						.trim())) {
+			jsonObject = new JSONObject();
 			jsonObject.put(ajaxMsg, jbSearchValCity);
 			status = false;
 		}

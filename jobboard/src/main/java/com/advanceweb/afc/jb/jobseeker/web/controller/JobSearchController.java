@@ -84,8 +84,6 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
 @RequestMapping("/jobsearch")
 public class JobSearchController {
 
-	private static final String CURRENT_URL = "currentUrl";
-
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchController.class);
 
@@ -112,7 +110,7 @@ public class JobSearchController {
 
 	@Autowired
 	private EmployerNewsFeedService employerNewsFeedService;
-	
+
 	@Autowired
 	private JobSearchValidator jobSearchValidator;
 
@@ -211,7 +209,7 @@ public class JobSearchController {
 
 	private @Value("${WEB_MAIL_SERVER}")
 	String webMailServer;
-	
+
 	private @Value("${EMAIL_MESSAGE_BLANK}")
 	String emailMsgBlank;
 
@@ -219,6 +217,8 @@ public class JobSearchController {
 	private ClickController clickController;
 
 	private static final String PLATINUM_LIST = "PlatinumNewsList";
+	private static final String IS_SORTING = "isSorting";
+	private static final String CURRENT_URL = "currentUrl";
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -339,19 +339,22 @@ public class JobSearchController {
 			// Get the Job details
 			SearchedJobDTO searchedJobDTO = jobSearchService
 					.viewJobDetails(jobId);
-			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService.applyJobDetails(jobId);
-			if (!jobSearchValidator.validateApplyType(jobId, jsonObject, jobApplyTypeDTO)) {
+			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
+					.applyJobDetails(jobId);
+			if (!jobSearchValidator.validateApplyType(jobId, jsonObject,
+					jobApplyTypeDTO)) {
 				return jsonObject;
 			}
 			if (searchedJobDTO.getEmployerEmailAddress() == null) {
 				searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO
 						.getApplyLink());
 			}
-			if (!jobSearchValidator.isLoggedIn(map, jobId, currentUrl, session, jsonObject)) {
+			if (!jobSearchValidator.isLoggedIn(map, jobId, currentUrl, session,
+					jsonObject)) {
 				return jsonObject;
 			}
 			int userId = (Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID);
+					.getAttribute(MMJBCommonConstants.USER_ID);
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(searchedJobDTO, userId);
@@ -396,9 +399,8 @@ public class JobSearchController {
 	 * @throws AddressException
 	 */
 	public void sendMailOfAppliedJob(HttpSession session,
-			HttpServletRequest request, 
-			SearchedJobDTO searchedJobDTO, List<String> attachmentpaths)
-			throws AddressException {
+			HttpServletRequest request, SearchedJobDTO searchedJobDTO,
+			List<String> attachmentpaths) throws AddressException {
 		String userName = (String) session
 				.getAttribute(MMJBCommonConstants.USER_NAME);
 		String userEmail = (String) session
@@ -419,8 +421,7 @@ public class JobSearchController {
 				+ dothtmlExtention + employerPageExtention;
 		String employerMailBody = employeJobApplicationBody.replace(
 				"?empDashboardLink", employerloginUrl);
-		employerMailBody = employerMailBody.replace("?jobseekername",
-				userName);
+		employerMailBody = employerMailBody.replace("?jobseekername", userName);
 		employerEmailDTO.setBody(employerMailBody);
 		employerEmailDTO.setHtmlFormat(true);
 		employerEmailDTO.setAttachmentPaths(attachmentpaths);
@@ -449,7 +450,6 @@ public class JobSearchController {
 		emailService.sendEmail(jobSeekerEmailDTO);
 		LOGGER.info("Mail sent to jobseeker");
 	}
-
 
 	/**
 	 * Save or Update the applied job
@@ -602,68 +602,23 @@ public class JobSearchController {
 	JSONObject searchJob(HttpSession session,
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap, HttpServletRequest request) {
-		JSONObject jsonObject = new JSONObject();
-		
-		boolean refined = Boolean.valueOf(request.getParameter(MMJBCommonConstants.REFINED));
+		JSONObject jobSrchJsonObj = null;
+		boolean refined = Boolean.valueOf(request
+				.getParameter(MMJBCommonConstants.REFINED));
 		session.setAttribute(MMJBCommonConstants.REFINED, refined);
 		// set the sort order for search results
-		String sortOrder = setSortOrder(session, request);
 		removeSession(session);
-		
 		JobSearchResultDTO jobSearchResultDTO = null;
-		Map<String, String> sessionMap = checkSessionMap
-				.getSearchSessionMap(session);
-		String searchName = MMJBCommonConstants.EMPTY;
-		// IMP:::This value should be taken from the UI while sorting
-		String sortByParam = MMJBCommonConstants.POSTED_DT;
-		String firstFQParam = MMJBCommonConstants.EMPTY;
-		String secondFQParam = MMJBCommonConstants.EMPTY;
-		String thirdFQParam = MMJBCommonConstants.EMPTY;
-		String fouthFQParam = MMJBCommonConstants.EMPTY;
-		String fifthFQParam = MMJBCommonConstants.EMPTY;
-		String facetSort = MMJBCommonConstants.COUNT_STR;
-		
-		if (!jobSearchValidator.validateJobSearch(jobSearchResultForm, jsonObject)) {
-			return jsonObject;
+
+		if (!jobSearchValidator.validateJobSearch(jobSearchResultForm,
+				jobSrchJsonObj)) {
+			return jobSrchJsonObj;
 		}
 
-		// Check if city state and radius field is not empty to check for
-		// LOCATION search
-		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
-			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
-				searchName = MMJBCommonConstants.KEYWORD_SEARCH;
-			}
-		} else if (jobSearchResultForm.isBrowseBy()) {
-			searchName = MMJBCommonConstants.BROWSE_SEARCH;
-
-		} else if (!StringUtils.isEmpty(jobSearchResultForm.getCityState()
-				.trim())) {
-			searchName = MMJBCommonConstants.LOCATION_SEARCH;
-			session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
-		}
-		int searchSeq = MMJBCommonConstants.ZERO_INT;
-		String sessionId = null;
-		if (session != null) {
-			sessionId = session.getId();
-			// Setting the values into sessionMap
-			sessionMap = setValuesToSessionMap(sessionMap, searchSeq,
-					jobSearchResultForm);
-			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
-
-		}
-		Map<String, String> mapFQParams =getFQParams(request,session);
-		secondFQParam = mapFQParams.get(MMJBCommonConstants.SECOND_FQ_PARAM);
-		thirdFQParam = mapFQParams.get(MMJBCommonConstants.THIRD_FQ_PARAM);
-		fouthFQParam = mapFQParams.get(MMJBCommonConstants.FOURTH_FQ_PARAM);
-		
-		// Putting all the parameters coming from the UI into a Map for further
-		// processing.
-
-		Map<String, String> fqParamMap = getFQMap(firstFQParam, secondFQParam,
-				thirdFQParam, fouthFQParam, fifthFQParam, sortOrder, facetSort);
+		String searchName = getSearchName(jobSearchResultForm, session);
 
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
-				sessionId, searchName, sessionMap, sortByParam, fqParamMap);
+				searchName, MMJBCommonConstants.POSTED_DT, session, request);
 
 		int page = 1;
 		int displayRecordsPerPage = 0;
@@ -713,15 +668,43 @@ public class JobSearchController {
 			beginVal = Integer.parseInt(next);
 			page = Integer.parseInt(next);
 		}
-		JSONObject jobSrchJsonObj = null;
 		if (jobSearchResultDTO != null) {
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
 			jobSrchJsonObj = jsonConverterService
 					.convertToJSON(jobSearchResultDTO);
 		}
-		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj);
+		List<HashMap<String, Object>> currentSearchList = getCurrentSearchResultsList(session);
+		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj,
+				currentSearchList);
 		return jobSrchJsonObj;
+	}
+
+	/**
+	 * Get the search name by search Parameter
+	 * 
+	 * @param jobSearchResultForm
+	 * @param session
+	 * @return
+	 */
+	public String getSearchName(JobSearchResultForm jobSearchResultForm,
+			HttpSession session) {
+		// Check if city state and radius field is not empty to check for
+		// LOCATION search
+		String searchName = MMJBCommonConstants.EMPTY;
+		if (StringUtils.isEmpty(jobSearchResultForm.getCityState().trim())) {
+			if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
+				searchName = MMJBCommonConstants.KEYWORD_SEARCH;
+			}
+		} else if (jobSearchResultForm.isBrowseBy()) {
+			searchName = MMJBCommonConstants.BROWSE_SEARCH;
+
+		} else if (!StringUtils.isEmpty(jobSearchResultForm.getCityState()
+				.trim())) {
+			searchName = MMJBCommonConstants.LOCATION_SEARCH;
+			session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
+		}
+		return searchName;
 	}
 
 	/**
@@ -730,7 +713,8 @@ public class JobSearchController {
 	 * @param request
 	 * @return mapFQ
 	 */
-	public Map<String, String> getFQParams(HttpServletRequest request, HttpSession session) {
+	public Map<String, String> getFQParams(HttpServletRequest request,
+			HttpSession session) {
 		String secondFQParam = "";
 		String thirdFQParam = "";
 		String fouthFQParam = "";
@@ -743,7 +727,8 @@ public class JobSearchController {
 			secondFQParam = MMJBCommonConstants.FQ_COMPANY
 					+ request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
 					+ '"';
-			session.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM, request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM));
+			session.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM,
+					request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM));
 		}
 
 		if (null != request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
@@ -752,7 +737,8 @@ public class JobSearchController {
 			thirdFQParam = MMJBCommonConstants.FQ_STATE
 					+ request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
 					+ '"';
-			session.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
+			session.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM,
+					request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
 		}
 
 		if (null != request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
@@ -761,21 +747,22 @@ public class JobSearchController {
 			fouthFQParam = MMJBCommonConstants.FQ_CITY
 					+ request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
 					+ '"';
-			session.setAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM, request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM));
+			session.setAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM,
+					request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM));
 		}
 		if (null != request.getParameter(MMJBCommonConstants.RADIUS)
-				&& !request.getParameter(MMJBCommonConstants.RADIUS)
-						.isEmpty()) {
-			session.setAttribute(MMJBCommonConstants.REFINERADIUS, request.getParameter(MMJBCommonConstants.RADIUS));
+				&& !request.getParameter(MMJBCommonConstants.RADIUS).isEmpty()) {
+			session.setAttribute(MMJBCommonConstants.REFINERADIUS,
+					request.getParameter(MMJBCommonConstants.RADIUS));
 		}
-		
+
 		mapFQ.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
 		mapFQ.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
 		mapFQ.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
-		
+
 		return mapFQ;
 	}
-	
+
 	/**
 	 * Method helps to set the sort order in session
 	 * 
@@ -786,7 +773,7 @@ public class JobSearchController {
 	public String setSortOrder(HttpSession session, HttpServletRequest request) {
 		String sortOrder = MMJBCommonConstants.DESC_STR;
 		boolean isSorting = Boolean.parseBoolean(request
-				.getParameter("isSorting"));
+				.getParameter(IS_SORTING));
 		if (session.getAttribute(MMJBCommonConstants.SORT_ORDER) == null) {
 			session.setAttribute(MMJBCommonConstants.SORT_ORDER,
 					MMJBCommonConstants.DESC_STR);
@@ -794,9 +781,7 @@ public class JobSearchController {
 		if (isSorting) {
 			String prevOrder = (String) session
 					.getAttribute(MMJBCommonConstants.SORT_ORDER);
-			if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
-				sortOrder = prevOrder;
-			} else {
+			if (request.getParameter(MMJBCommonConstants.PAGE) == null) {
 				if (prevOrder.equalsIgnoreCase(MMJBCommonConstants.DESC_STR)) {
 					session.setAttribute(MMJBCommonConstants.SORT_ORDER,
 							MMJBCommonConstants.ASC_STR);
@@ -806,8 +791,13 @@ public class JobSearchController {
 							MMJBCommonConstants.DESC_STR);
 					sortOrder = MMJBCommonConstants.DESC_STR;
 				}
+			} else {
+				sortOrder = prevOrder;
 			}
 
+		} else {
+			session.setAttribute(MMJBCommonConstants.SORT_ORDER,
+					MMJBCommonConstants.DESC_STR);
 		}
 		return sortOrder;
 	}
@@ -821,9 +811,35 @@ public class JobSearchController {
 	 * @param noOfPages
 	 * @param beginVal
 	 * @param jobSrchJsonObj
+	 * @param currentSearchList
 	 */
 	private void setSessionForGrid(HttpSession session, int page,
-			int noOfPages, int beginVal, JSONObject jobSrchJsonObj) {
+			int noOfPages, int beginVal, JSONObject jobSrchJsonObj,
+			List<HashMap<String, Object>> currentSearchList) {
+		// TODO: Need to use session Map
+		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
+				currentSearchList);
+		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
+		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
+		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
+		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
+				: beginVal));
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+	}
+
+	/**
+	 * Load the current search results list
+	 * 
+	 * @param session
+	 * @return
+	 */
+	public List<HashMap<String, Object>> getCurrentSearchResultsList(
+			HttpSession session) {
 		// Load the current search results list
 		List<HashMap<String, Object>> currentSearchList = new ArrayList<HashMap<String, Object>>();
 		@SuppressWarnings("unchecked")
@@ -857,26 +873,7 @@ public class JobSearchController {
 					+ MMJBCommonConstants.MILES);
 			currentSearchList.add(map);
 		}
-		// TODO: Need to use session Map
-		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
-		session.setAttribute(MMJBCommonConstants.CITY,
-					jobSrchJsonObj.get(MMJBCommonConstants.CITY));
-		session.setAttribute(MMJBCommonConstants.STATE,
-					jobSrchJsonObj.get(MMJBCommonConstants.STATE));
-		session.setAttribute(MMJBCommonConstants.COMPANY,
-					jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				currentSearchList);
-		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
-		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
-		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
-		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
-				: beginVal));
-		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		return currentSearchList;
 	}
 
 	/**
@@ -905,10 +902,13 @@ public class JobSearchController {
 		session.removeAttribute(MMJBCommonConstants.BEGIN_VAL);
 		session.removeAttribute(MMJBCommonConstants.BEGIN);
 		session.removeAttribute(MMJBCommonConstants.DISPLAY_RADIUS);
-		
-//		Remove FQ params for non Refine Search
-		if(null == session.getAttribute(MMJBCommonConstants.REFINED) || session.getAttribute(MMJBCommonConstants.REFINED).toString().isEmpty() || !Boolean.valueOf(session.getAttribute(MMJBCommonConstants.REFINED).toString()))
-		{
+
+		// Remove FQ params for non Refine Search
+		if (null == session.getAttribute(MMJBCommonConstants.REFINED)
+				|| session.getAttribute(MMJBCommonConstants.REFINED).toString()
+						.isEmpty()
+				|| !Boolean.valueOf(session.getAttribute(
+						MMJBCommonConstants.REFINED).toString())) {
 			session.removeAttribute(MMJBCommonConstants.SECOND_FQ_PARAM);
 			session.removeAttribute(MMJBCommonConstants.THIRD_FQ_PARAM);
 			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
@@ -988,12 +988,10 @@ public class JobSearchController {
 	/**
 	 * The method is called to close the SaveThisJob popup
 	 * 
-	 * @param JobSearchViewDetailForm
 	 * @return
 	 */
 	@RequestMapping(value = "/jobseekersaveThisJobPopUp")
-	public ModelAndView callSaveThisJobPopUp(
-			Map<String, JobSearchResultForm> model) {
+	public ModelAndView callSaveThisJobPopUp() {
 		return new ModelAndView("jobseekersaveThisJobPopUp");
 	}
 
@@ -1253,13 +1251,8 @@ public class JobSearchController {
 			status = Boolean.FALSE;
 			throw new MailParseException(e);
 		}
-		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			modelData.setViewName(urlRedirectMail);
-			return "";
-		} else {
-			modelData.setViewName(urlRedirectMail);
-			return "";
-		}
+		modelData.setViewName(urlRedirectMail);
+		return "";
 
 	}
 
@@ -1301,13 +1294,42 @@ public class JobSearchController {
 	 * @param jobSearchResultForm
 	 * @param sessionId
 	 * @param searchName
+	 * @param session
+	 * @param request
 	 * @param sessionMap
 	 * @return Map<String, String>
 	 */
 	private Map<String, String> getParameterMap(
-			JobSearchResultForm jobSearchResultForm, String sessionId,
-			String searchName, Map<String, String> sessionMap,
-			String sortByParam, Map<String, String> fqParamMap) {
+			JobSearchResultForm jobSearchResultForm, String searchName,
+			String sortByParam, HttpSession session, HttpServletRequest request) {
+
+		int searchSeq = MMJBCommonConstants.ZERO_INT;
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+		String sessionId = null;
+		if (session != null) {
+			sessionId = session.getId();
+			// Setting the values into sessionMap
+			sessionMap = setValuesToSessionMap(sessionMap, searchSeq,
+					jobSearchResultForm);
+			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
+
+		}
+
+		// IMP:::This value should be taken from the UI while sorting
+		String firstFQParam = MMJBCommonConstants.EMPTY;
+		String secondFQParam = MMJBCommonConstants.EMPTY;
+		String thirdFQParam = MMJBCommonConstants.EMPTY;
+		String fouthFQParam = MMJBCommonConstants.EMPTY;
+		String fifthFQParam = MMJBCommonConstants.EMPTY;
+		String facetSort = MMJBCommonConstants.COUNT_STR;
+		// set the sort order for search results
+		String sortOrder = setSortOrder(session, request);
+
+		// Putting all the parameters coming from the UI into a Map for further
+		// processing.
+		Map<String, String> fqParamMap = getFQMap(firstFQParam, secondFQParam,
+				thirdFQParam, fouthFQParam, fifthFQParam, sortOrder, facetSort);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 
@@ -1318,12 +1340,12 @@ public class JobSearchController {
 				.getCityState().trim());
 		paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm.getRadius()
 				.trim());
-		paramMap.put(SearchParamDTO.REFINED, String.valueOf(jobSearchResultForm.isRefined()));
+		paramMap.put(SearchParamDTO.REFINED,
+				String.valueOf(jobSearchResultForm.isRefined()));
 		paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
 		paramMap.put(SearchParamDTO.SEARCH_SEQ,
 				sessionMap.get(SearchParamDTO.SEARCH_SEQ));
 		paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
-		
 
 		// For testing. Remove it while committing
 		paramMap.put(MMJBCommonConstants.SORT_PARAM, sortByParam);
@@ -1379,6 +1401,14 @@ public class JobSearchController {
 
 	}
 
+	/**
+	 * Get the jobboardsearchresultsBody page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/jobboardsearchresultsBody")
 	public ModelAndView getjobboardsearchresultsBody(
 			HttpServletResponse response, HttpServletRequest request,
@@ -1481,7 +1511,9 @@ public class JobSearchController {
 		UserDTO userDTO = brandingTemplateService
 				.getBrandingInformation(nsCustomerID);
 
-		if (null != userDTO.getPackageName()) {
+		if (null == userDTO.getPackageName()) {
+			searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
+		} else {
 			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {
 				searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_GOLD;
@@ -1491,8 +1523,6 @@ public class JobSearchController {
 			} else {
 				searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
 			}
-		} else {
-			searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
 		}
 
 		searchedJobDTO.setPackageId(packageId);
