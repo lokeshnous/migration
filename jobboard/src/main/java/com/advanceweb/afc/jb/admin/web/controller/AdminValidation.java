@@ -38,7 +38,7 @@ public class AdminValidation {
 		if (StringUtils.isEmpty(form.getEmpOrAgencyEmail())
 				|| StringUtils.isEmpty(form.getPassword())
 				|| StringUtils.isEmpty(form.getUserEmail())) {
-			errors.rejectValue("empOrAgencyEmail", "NotEmpty", loginErrMsg);
+			errors.rejectValue("empOrAgencyEmail", "NotEmpty", "Please enter all the fields");
 		}
 		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())
 				&& !validateEmailPattern(form.getEmpOrAgencyEmail())) {

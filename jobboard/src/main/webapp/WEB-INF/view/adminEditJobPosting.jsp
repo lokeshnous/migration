@@ -12,7 +12,12 @@
 <script type="text/javascript">
 jQuery(document).ready(function() {
 		$("#SearchJob").click(function(event){		
-			var advJobId = $("#advJobId").val();
+			var advJobId = $("#advJobId").val().trim();
+			$("#ErrorMsg").text("");
+			if(advJobId == ''){
+				$("#ErrorMsg").text("Please search with advance jobid");
+				return false;
+			}
 			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearch.html?advJobId="+advJobId,
 				success: function(data){ 
 				 	loadTable();
@@ -32,6 +37,11 @@ jQuery(document).ready(function() {
 				var startDate=$("#startDate").val();
 				var endDate=$("#endDt").val();
 		        var txtVal =  $('#endDt').val();
+		        var postedJobListId =  $('#postedJobListId').val();
+		        if(postedJobListId != 'true'){
+					$("#ErrorMsg").text("Please find the job with Adv Job Id!");
+					return false;
+				}
 		        if(isDate(txtVal)){
 		           // alert('Valid Date');
 		        //	return true;
@@ -137,6 +147,9 @@ function loadTable(){
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT JOB POSTING</h2>
 			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/>
+		</div>
+		<div class="row">
+		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
 		</div>
 		<div class="popUpContainerWrapper">
 		

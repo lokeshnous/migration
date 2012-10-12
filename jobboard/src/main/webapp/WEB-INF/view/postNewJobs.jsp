@@ -20,7 +20,20 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+<script type="text/javascript">
+function validateNumber(event) {
+    var keyval = window.event ? event.keyCode : event.which;
 
+    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 46
+     || event.keyCode == 37 || event.keyCode == 39) {
+        return true;
+    }
+    else if ( keyval < 48 || keyval > 57 ) {
+        return false;
+    }
+    else return true;
+};
+</script>
 <script type="text/javascript">
 	function populateTemplates() {
 
@@ -109,7 +122,7 @@
 	jQuery(document)
 			.ready(
 					function() {
-
+						$('[id^=zipCodeITId]').keypress(validateNumber);
 						$(".postingInventory").displaypopup(
 								".postingInventory", "790", "360");
 
@@ -301,7 +314,16 @@
 														});
 											},
 										});
-
+						
+						
+						//Auto complete on selecting state
+									$("#stateDpId").change( function(){
+										$("#stateDpId").change( function(){
+											$('#cityAutoPopulation').val('');
+											$('#zipCodeITId').val('');
+											$('#countryDpId').val('');
+											});
+										});
 						//Auto complete on selecting zipcode			
 						$("#zipCodeITId")
 								.autocomplete(
@@ -376,7 +398,41 @@
 
 						}
 						
-						$("#applyToEMailId").click(function() {
+						
+						$("#applyToEMailTSId").click(function() {
+							$('#applyToURLId').attr("checked", false);
+							$('#applyToATSId').attr("checked", false);
+							$('#applyToEMailTSId').removeAttr('readonly');
+							$('#applyToURLTSId').val('');
+							$('#applyToATSIPId').val('');
+							$('#applyToATSIPId').attr('readonly', true);
+							$('#applyToURLTSId').attr('readonly', true);
+							$('#applyToEMailId').attr("checked","checked");
+						});
+						
+						$("#applyToURLTSId").click(function() {
+							$('#applyToEMailId').attr("checked", false);
+							$('#applyToATSId').attr("checked", false);
+							$('#applyToURLTSId').removeAttr('readonly');
+							$('#applyToEMailTSId').attr('readonly', true);
+							$('#applyToATSIPId').attr('readonly', true);
+							$('#applyToEMailTSId').val('');
+							$('#applyToATSIPId').val('');
+							$('#applyToURLId').attr("checked","checked");
+						});
+						
+						$("#applyToATSIPId").click(function() {
+							$('#applyToEMailId').attr("checked", false);
+							$('#applyToURLId').attr("checked", false);
+							$('#applyToATSIPId').removeAttr('readonly');
+							$('#applyToURLTSId').attr('readonly', true);
+							$('#applyToEMailTSId').attr('readonly', true);
+							$('#applyToURLTSId').val('');
+							$('#applyToEMailTSId').val('');
+							$('#applyToATSId').attr("checked","checked");
+						});
+
+				 		$("#applyToEMailId").click(function() {
 							if ($("#applyToEMailId").val() == 'ApplyToEMail') {
 								$('#applyToEMailTSId').removeAttr('readonly');
 								$('#applyToATSIPId').attr('readonly', true);
@@ -385,7 +441,6 @@
 								$('#applyToATSIPId').val('');
 							}
 						});
-
 						$("#applyToURLId").click(function() {
 							if ($("#applyToURLId").val() == 'ApplyToURL') {
 								$('#applyToURLTSId').removeAttr('readonly');
@@ -405,7 +460,7 @@
 								$('#applyToEMailTSId').val('');
 							}
 						});
-
+ 
 						jQuery(".megamenu").megamenu();
 						$('#jobOwner').focus();
 					});
@@ -683,7 +738,7 @@
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Job Zip Code:</span>
 									<form:input path="jobZipCode"
-										class="job_seeker_password textBox350" id="zipCodeITId" />
+										class="job_seeker_password textBox350" id="zipCodeITId" maxlength="5" />
 									<div class="floatLeft width210">
 										<span class="required marginRight10"> <form:checkbox
 												path="bHideZipCode" />

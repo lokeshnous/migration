@@ -58,6 +58,7 @@
 									</td>
 									<td align="center" valign="middle"><div class="toolTip01 colorPkrArea"><span class="classic">Example: 12/30/2010(mm/dd/yyyy)</span></div>	</td>
 								 </tr>
+								<input type="hidden" name="postedJobListId" id="postedJobListId" value="${postedJobList != null && postedJobList.size() >0}"/>
 								<input type="hidden" name="startDate" id="startDate" value='<c:out value="${job.startDt}"></c:out>'/>
 								 <input type="hidden" name="endDate" id="endDate" value='<c:out value="${job.endDt}"></c:out>'/>
 								  <input type="hidden"name="startDate" id="startDate"/> 
