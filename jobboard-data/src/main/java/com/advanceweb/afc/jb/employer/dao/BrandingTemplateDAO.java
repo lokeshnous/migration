@@ -84,8 +84,16 @@ public interface BrandingTemplateDAO {
 	/**
 	 * This method is used the get the Branding Template Purchase information
 	 * @param facilityId
-	 * @return
+	 * @return boolean
 	 */
 	boolean getBrandPurchaseInfo(int facilityId);
+	
+	/**
+	 * This method is used the get the Branding Template Package information
+	 * @param facilityId
+	 * @return boolean
+	 */
+	boolean getBrandPackage(int productId);
+	
 
 }

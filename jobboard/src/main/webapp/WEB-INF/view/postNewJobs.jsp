@@ -31,9 +31,10 @@
 					url : '${pageContext.request.contextPath}/employer/getFacilityTemplate.html?isChecked='
 							+ isChecked
 							+ '&company='
-							+ $("#companyAutoPopulation").val(),
+							+ $("#companyAutoPopulation").val()+'&product='+$("#postTypeId").val(),
+							
 					success : function(data) {
-						$('#templateId option').remove()
+						$('#templateId option').remove();
 
 						$('#templateId').append(
 								'<option value="0">None</option>');
@@ -66,7 +67,7 @@
 		$
 				.ajax({
 					url : '${pageContext.request.contextPath}/employer/getTemplate.html?company='
-							+ $("#companyAutoPopulation").val(),
+							+ $("#companyAutoPopulation").val()+'&product='+ $("#postTypeId").val(),
 					success : function(data) {
 						$('#templateId option').remove();
 
@@ -540,7 +541,7 @@
 										Type:</span>
 
 									<form:select path="jobPostingType"
-										class="jb_input3 jb_input_width3">
+										class="jb_input3 jb_input_width3" id="postTypeId" onchange="populateTemplates()">
 										<form:option value="0" label="Select" />
 										<form:options items="${jbPostingTypeList}"
 											itemValue="optionId" itemLabel="optionName" />

@@ -251,10 +251,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	/**
 	 * This method is used the get the Branding Template Purchase information
 	 * @param facilityId
-	 * @return
+	 * @return boolean
 	 */
 	public boolean getBrandPurchaseInfo(int facilityId) {
-		boolean isBTEnabled = false;
 		int productId = 0;
 		Query getInventoryData = hibernateTemplateCareer.getSessionFactory()
 				.getCurrentSession()
@@ -265,15 +264,50 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		while (iterator.hasNext()) {
 			Object[] row = (Object[]) iterator.next();
 			productId = ((Integer) row[0]);
-			if (productId == 1) {
-				// If the value is 1 implies the customer has purchased Branding
-				// Template
-				isBTEnabled = true;
-				return isBTEnabled;
+			
+			if(checkPostSlots(productId))
+			{
+				return true;
 			}
 		}
-		return isBTEnabled;
+		return false;
 	}
 
+	/**
+	 * This method is used the get the Branding Template Package information
+	 * @param facilityId
+	 * @return boolean
+	 */
+	public boolean getBrandPackage(int packageId) {
+		int productId = 0;
+
+		List<Object> productList = hibernateTemplateCareer
+				.find("select inv.productId from AdmInventoryDetail inv where inv.productType='JOB_TYPE_COMBO' and inv.invDetailId=?",
+						packageId);
+
+		if (null != productList && !productList.isEmpty()) {
+			productId = Integer.parseInt(productList.get(0).toString());
+		}
+
+		if (checkPostSlots(productId)) {
+			return true;
+		}
+
+		return false;
+	}
 	
+	
+	/**
+	 * This method checks if the user has purchased Branding Template
+	 * 
+	 * @param productId
+	 * @return boolean
+	 */
+	public boolean checkPostSlots(int productId) {
+		
+		return (productId == 1 || productId == 4 || productId == 6
+				|| productId == 7 || productId == 8 || productId == 11
+				|| productId == 13 || productId == 14);
+
+	}
 }

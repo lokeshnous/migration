@@ -104,15 +104,9 @@ public class JobPostController {
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 
-		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
-				.getFacilityId())) {
-			templateList = populateDropdownsService
-					.populateBrandingTemplateDropdown(
-							employerInfoDTO.getFacilityId(),
-							employerInfoDTO.getUserId());
-		} else {
-			templateList = new ArrayList<DropDownDTO>();
-		}
+		// Template List will be populated later based on facility and job
+		// posting package type is selected
+		templateList = new ArrayList<DropDownDTO>();
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(employerInfoDTO
 						.getFacilityId());
@@ -603,29 +597,39 @@ public class JobPostController {
 
 	@RequestMapping(value = "/getTemplate")
 	@ResponseBody
-	public List<DropDownDTO> getTemplate(@RequestParam("company") String company) {
+	public List<DropDownDTO> getTemplate(
+			@RequestParam("company") String company,
+			@RequestParam("product") String product) {
+		int productId = Integer.parseInt(product);
 
-		return populateDropdownsService.populateTemplateAutoComplete(company);
+		if (brandingTemplateService.getBrandPackage(productId)) {
+			return populateDropdownsService
+					.populateTemplateAutoComplete(company);
+		} else {
+			return new ArrayList<DropDownDTO>();
+		}
+
 	}
 
 	@RequestMapping(value = "/getFacilityTemplate")
 	@ResponseBody
 	public List<DropDownDTO> getFacilityTemplate(
 			@RequestParam("isChecked") boolean isChecked,
-			@RequestParam("company") String company, HttpSession session) {
+			@RequestParam("company") String company,
+			@RequestParam("product") String product, HttpSession session) {
 
 		List<DropDownDTO> templateList;
+		int productId = Integer.parseInt(product);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 
-		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
-				.getFacilityId()) && isChecked) {
+		if (brandingTemplateService.getBrandPackage(productId) && isChecked) {
 			templateList = populateDropdownsService
 					.populateBrandingTemplateDropdown(
 							employerInfoDTO.getFacilityId(),
 							employerInfoDTO.getUserId());
 		} else {
-			templateList = getTemplate(company);
+			templateList = getTemplate(company, product);
 		}
 
 		return templateList;

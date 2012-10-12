@@ -106,7 +106,7 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	/**
 	 * This method is used the get the Branding Template Purchase information
 	 * @param facilityId
-	 * @return
+	 * @return boolean
 	 */
 	@Override
 	public	boolean getBrandPurchaseInfo(int facilityId){
@@ -114,4 +114,15 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 		return brandingTemplateDAO.getBrandPurchaseInfo(facilityId);
 	}
 	
+	/**
+	 * This method is used the get the Branding Template Package information
+	 * 
+	 * @param productId
+	 * @return boolean
+	 */
+	@Override
+	public boolean getBrandPackage(int productId) {
+		return brandingTemplateDAO.getBrandPackage(productId);
+	}
+
 }
