@@ -312,7 +312,7 @@
 
 							</div>
 
-							<div class="job_Advancedsearch_devider">
+							<!-- <div class="job_Advancedsearch_devider">
 								<h3>Employment Type</h3>
 								<div class="row">
 									<select name="employmentType" class="jb_input3"
@@ -325,11 +325,8 @@
 										<option>Work From Home</option>
 										<option>Locum Tenens</option>
 									</select>
-
-
 								</div>
-
-							</div>
+							</div> -->
 							<div class="job_Advancedsearch_devider">
 								<h3>Search Results View Options</h3>
 								<div class="row">
@@ -368,9 +365,7 @@
 									<div class="lableText2">Results Displayed:</div>
 									<div class="floatLeft">
 										<select name="days" id="days" class="jb_input4">
-											<option>30</option>
-											<option>10</option>
-											<option>20</option>
+											<option selected="selected">20</option>
 											<option>30</option>
 											<option>40</option>
 											<option>50</option>
