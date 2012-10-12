@@ -81,7 +81,17 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 		return brandingTemplateDAO.deleteBrandingTemplate(templateId, deleteUserId);
 	}
 	
-	
+	/**
+	 * This method checks if any active job is using the template
+	 * 
+	 * @param templateId
+	 * @return boolean
+	 */
+	@Override
+	public boolean checkTemplateUsage(int templateId) {
+		return brandingTemplateDAO.checkTemplateUsage(templateId);
+	}
+
 	/**
 	 * This method is used to get the net suite customer id based on
 	 * adm facility id.

@@ -87,6 +87,9 @@ public class BrandingTemplateController {
 
 	private @Value("${defaultColor}")
 	String defaultColor;
+	
+	private @Value("${empBrandTemplateDelete}")
+	String empBrandTemplateDelete;
 
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
@@ -97,6 +100,7 @@ public class BrandingTemplateController {
 	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
 	private static final String STR_UNDERSCORE = "_";
 	private static final String STR_ERRORMESSAGE = "errorMessage";
+	private static final String STR_TEMPLATEID = "templateId";
 
 	/**
 	 * The method is called to create the job posting Branding Template.
@@ -307,7 +311,7 @@ public class BrandingTemplateController {
 
 	@RequestMapping(value = "/previewExisting", method = RequestMethod.GET)
 	public ModelAndView previewExisting(BrandingTemplateForm form,
-			@RequestParam("templateId") int templateId, HttpSession session) {
+			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session) {
 
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
@@ -791,7 +795,7 @@ public class BrandingTemplateController {
 	 */
 	@RequestMapping(value = "/editTemplate", method = RequestMethod.GET)
 	public ModelAndView editEmpBrandTemp(BrandingTemplateForm form,
-			@RequestParam("templateId") int templateId, HttpSession session) {
+			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session) {
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
 		int facility_id = (Integer) session
@@ -904,7 +908,7 @@ public class BrandingTemplateController {
 	public @ResponseBody
 	JSONObject deleteEmpBrandTemp(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
-			@RequestParam("templateId") int templateId) {
+			@RequestParam(STR_TEMPLATEID) int templateId) {
 		int deleteUserId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 
@@ -919,6 +923,30 @@ public class BrandingTemplateController {
 			return statusJson;
 		}
 	}
+	
+	/**
+	 * This method checks if any active job is using the template.
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/employer/checkJobUsage", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject checkJobUsage(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			@RequestParam(STR_TEMPLATEID) int templateId) {
+
+		boolean status = brandingTemplateService.checkTemplateUsage(templateId);
+		JSONObject statusJson = new JSONObject();
+		if (status) {
+			statusJson.put("present", empBrandTemplateDelete);
+			return statusJson;
+		} else {
+			statusJson.put("absent", "template not used in active job");
+			return statusJson;
+		}
+	}
+	
 
 	/**
 	 * This method retrieves the original name of file present in file server.

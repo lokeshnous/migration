@@ -20,6 +20,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityPackage;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 
@@ -177,6 +178,36 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			LOGGER.info("ERROR5");
 		}
 		return status;
+	}
+	
+	/**
+	 * This method checks if any active job is using the template
+	 * 
+	 * @param templateId
+	 * @return boolean
+	 */
+	@Override
+	public boolean checkTemplateUsage(int templateId) {
+		try {
+			if (templateId != 0) {
+				JpTemplate template = hibernateTemplateCareer.get(
+						JpTemplate.class, templateId);
+
+				List<JpJob> jpJobList = template.getJpJobs();
+
+				for (JpJob job : jpJobList) {
+					if (job.getActive() == 1) {
+						return true;
+					}
+				}
+
+			}
+		} catch (HibernateException e) {
+			// logger call
+			LOGGER.error(e);
+			return false;
+		}
+		return false;
 	}
 
 	/**

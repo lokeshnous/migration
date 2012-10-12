@@ -65,6 +65,14 @@ public interface BrandingTemplateDAO {
 	boolean deleteBrandingTemplate(int templateId, int deleteUserId);
 	
 	/**
+	 * This method checks if any active job is using the template
+	 * 
+	 * @param templateId
+	 * @return boolean
+	 */
+	boolean checkTemplateUsage(int templateId);
+	
+	/**
 	 * Delete the job posting Branding Template.
 	 * 
 	 * @param facilityId

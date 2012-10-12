@@ -16,29 +16,60 @@
 			var templateId = rowObj.attr("id");
 			
 			switch (action) {
-			
 			case "delete":{
-				if (confirm("Are you sure you want to delete?")) {
-						$.ajax({url: "${pageContext.request.contextPath}/brandingTemplates/employer/deleteBrandingTemplate.html?templateId="+templateId,
-							type: "GET",
-							success: function(data){ 
-							    if(data.success != null){
-							    	rowObj.remove();
-							    }
-							    if(data.failure != null){
-							    	alert(data.failure);
-							    }
-							},
-							error: function(response) {
-								alert("Server Error : "+response.status);
-							}
-						});
-					return true;
-				 } else {
-					return false;
-				 }
-   			   }
+				
+				$.ajax({url: "${pageContext.request.contextPath}/brandingTemplates/employer/checkJobUsage.html?templateId="+templateId,
+					type: "GET",
+					success: function(data){ 
+					    if(data.present != null){
+					    	if (confirm(data.present)) {
+								$.ajax({url: "${pageContext.request.contextPath}/brandingTemplates/employer/deleteBrandingTemplate.html?templateId="+templateId,
+									type: "GET",
+									success: function(data){ 
+									    if(data.success != null){
+									    	rowObj.remove();
+									    }
+									    if(data.failure != null){
+									    	alert(data.failure);
+									    }
+									},
+								});
+							return true;
+						 } else {
+							return false;
+						 }
+		   			   }
+					    
+					    if(data.absent != null){
+					    	if (confirm("Are you sure you want to delete?")) {
+								$.ajax({url: "${pageContext.request.contextPath}/brandingTemplates/employer/deleteBrandingTemplate.html?templateId="+templateId,
+									type: "GET",
+									success: function(data){ 
+									    if(data.success != null){
+									    	rowObj.remove();
+									    }
+									    if(data.failure != null){
+									    	alert(data.failure);
+									    }
+									},
+									error: function(response) {
+										alert("Server Error : "+response.status);
+									}
+								});
+							return true;
+						 } else {
+							return false;
+						 }
+		   			   }
+					    
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					}
+				});
+				
 				break;
+			}
 			}
 
 		});

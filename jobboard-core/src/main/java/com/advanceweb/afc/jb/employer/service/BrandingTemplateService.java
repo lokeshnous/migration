@@ -66,6 +66,14 @@ public interface BrandingTemplateService {
 	boolean deleteBrandingTemplate(int templateId, int deleteUserId);
 	
 	/**
+	 * This method checks if any active job is using the template
+	 * 
+	 * @param templateId
+	 * @return boolean
+	 */
+	boolean checkTemplateUsage(int templateId);
+	
+	/**
 	 * Fetch the employer Branding information
 	 * 
 	 * @param facilityId

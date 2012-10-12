@@ -631,29 +631,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		List<DropDownDTO> companyNames = new ArrayList<DropDownDTO>();
 		try {
 			if (MMJBCommonConstants.ZERO_INT == facilityParentId) {
-				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
-						"from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
-						facilityId );
-
-				if (null == listAdmFacility || listAdmFacility.isEmpty()) {
-					listAdmFacility = hibernateTemplate.find(
-							"from  AdmFacility fac WHERE fac.facilityId=? and fac.deleteDt is null",
-							facilityId);
-
-				}
-				for (AdmFacility facility : listAdmFacility) {
-					// Do not display job owners
-					Object[] inputs = { facility.getFacilityId(), 5, 6 };
-					List<AdmUserFacility> admUsersList = hibernateTemplate
-							.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
-									inputs);
-					if (null == admUsersList || admUsersList.isEmpty()) {
-						DropDownDTO dto = new DropDownDTO();
-						dto.setOptionId(String.valueOf(facility.getFacilityId()));
-						dto.setOptionName(facility.getName());
-						companyNames.add(dto);
-					}
-				}
+				populateGroupCompany(facilityId, companyNames);
 			} else {
 				List<AdmFacility> listAdmFacility = hibernateTemplate.find(
 						"from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
@@ -677,6 +655,39 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		}
 		return companyNames;
 	}
+
+	/**
+	 * This method populates the Company Group name
+	 * 
+	 * @param facilityId
+	 * @param companyNames
+	 */
+	private void populateGroupCompany(int facilityId,
+			List<DropDownDTO> companyNames) {
+		List<AdmFacility> listAdmFacility = hibernateTemplate.find(
+				"from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
+				facilityId );
+
+		if (null == listAdmFacility || listAdmFacility.isEmpty()) {
+			listAdmFacility = hibernateTemplate.find(
+					"from  AdmFacility fac WHERE fac.facilityId=? and fac.deleteDt is null",
+					facilityId);
+
+		}
+		for (AdmFacility facility : listAdmFacility) {
+			// Do not display job owners
+			Object[] inputs = { facility.getFacilityId(), 5, 6 };
+			List<AdmUserFacility> admUsersList = hibernateTemplate
+					.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
+							inputs);
+			if (null == admUsersList || admUsersList.isEmpty()) {
+				DropDownDTO dto = new DropDownDTO();
+				dto.setOptionId(String.valueOf(facility.getFacilityId()));
+				dto.setOptionName(facility.getName());
+				companyNames.add(dto);
+			}
+		}
+	}
 	
 	@Override
 	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
@@ -696,7 +707,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			}
 			
 			List<Object> jpTemplateList = hibernateTemplate
-					.find("select distinct jtem.templateName from  JpTemplate jtem WHERE jtem.templateId=?",
+					.find("select distinct jtem.templateName from  JpTemplate jtem WHERE jtem.deleteDt is null and jtem.templateId=?",
 							templateId);
 
 			if (jpTemplateList != null && !jpTemplateList.isEmpty()) {
