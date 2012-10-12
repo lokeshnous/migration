@@ -226,7 +226,7 @@
 
 							<!--Added Class "marginTop5"-->
 							<span>Results viewable:</span> <span class="Padding0"> <form:select
-									path="noOfPage" name="results" class="jb_input4 margin0">
+									path="noOfPage" name="noOfPage" class="jb_input4 margin0">
 									<form:option value="20">20</form:option>
 									<form:option value="30">30</form:option>
 									<form:option value="40">40</form:option>
@@ -424,7 +424,7 @@
 
 							<!--Added Class "marginTop5"-->
 							<span>Results viewable:</span> <span class="Padding0"><form:select
-									path="noOfPageLower" name="results" class="jb_input4 margin0">
+									path="noOfPageLower" name="noOfPageLower" class="jb_input4 margin0">
 									<form:option value="20">20</form:option>
 									<form:option value="30">30</form:option>
 									<form:option value="40">40</form:option>
