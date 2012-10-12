@@ -13,6 +13,7 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.advanceweb.afc.jb.common.QueryDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -24,6 +25,7 @@ import com.advanceweb.afc.jb.search.SearchResultDTO;
 import com.advanceweb.afc.jb.search.dao.SearchDAO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
+@Component
 public abstract class AbstractSolrSearchDelegate {
 
 	private static final Logger LOGGER = Logger
@@ -32,7 +34,7 @@ public abstract class AbstractSolrSearchDelegate {
 	private static final String URL_SEPARATOR = "/";
 
 	@Autowired
-	private SOLRSearchHelper solrSrchHelper;
+	private SOLRSearchHelper solrSearchHelper;
 
 	@Autowired
 	private SearchDAO searchDAO;
@@ -92,7 +94,7 @@ public abstract class AbstractSolrSearchDelegate {
 		// Create the solr url and check if it is accessible
 		String solrServerURL = createSolrBaseURL(queryDTO);
 
-		boolean serverAccessible = solrSrchHelper
+		boolean serverAccessible = solrSearchHelper
 				.isServerAccessible(solrServerURL);
 
 		if (serverAccessible) {
@@ -156,7 +158,7 @@ public abstract class AbstractSolrSearchDelegate {
 		 * Get the instance of the HttpSolrServer by passing the QueryDTO and
 		 * values read from the properties file.
 		 */
-		HttpSolrServer server = solrSrchHelper
+		HttpSolrServer server = solrSearchHelper
 				.getSolrServerInstance(solrServerURL);
 
 		/*

@@ -22,24 +22,35 @@ import java.util.Map;
  * 
  */
 public class ClientContext {
+
 	/**
 	 * The user agent setting for the application that is accessing the advance
 	 * application. This is automatically set by the browser.
 	 */
 	public static final String CLIENT_USER_AGENT = "client.useragent";
+
 	/**
 	 * Hostname of the client from which the advance application is accessed.
 	 */
 	public static final String CLIENT_HOSTNAME = "client.hostname";
+
 	/**
 	 * The IP address of the client. Will help to identify the location
 	 */
 	public static final String CLIENT_IP = "client.ip";
+
 	/**
 	 * An application identifier. this would typically be one of the Merion
 	 * applications
 	 */
 	public static final String CLIENT_APPLICATION = "client.application";
+
+	/**
+	 * The request URL. (The URL used to reach the page from where the context
+	 * is passed)
+	 */
+	public static final String CLIENT_REQUEST_URL = "client.request.url";
+	
 	/**
 	 * The referral url. (The url from where the page is reached)
 	 */
@@ -51,43 +62,62 @@ public class ClientContext {
 	 * names, like KOP, PA, etc
 	 */
 	public static final String CLIENT_LOCATION = "client.location";
+
 	/**
 	 * A page identifier from where the call is made. This is application
 	 * specific.
 	 */
 	public static final String CLIENT_PAGE = "client.page";
+
+	/**
+	 * The session id for the client session. This is used by various
+	 * applications to track the user activities. This is defined as a client
+	 * level parameter, as the user may not have logged in
+	 */
+	public static final String CLIENT_SESSIONID = "client.sessionid";
+
 	/**
 	 * The current search performed by the user. This is useful to place the
 	 * context for targeted contents and advertisements.
 	 */
 	public static final String USER_CURRENT_SEARCH = "user.currentsearch";
+
 	/**
 	 * The previous search performed by the client. This also is used for place
-	 * the context properly. The previous search need not be exactly the previous
-	 * search, an application can browse the history of the search and select an
-	 * appropriate phrase
+	 * the context properly. The previous search need not be exactly the
+	 * previous search, an application can browse the history of the search and
+	 * select an appropriate phrase
 	 */
 	public static final String USER_PREVIOUS_SEARCH = "user.previoussearch";
+
 	/**
 	 * The location of the user. This is mostly the location of the user
 	 * provided in the profile. This could also be an application specific input
 	 * like Preferred Location received from the user
 	 */
 	public static final String USER_LOCATION = "user.location";
+
 	/**
 	 * The procession of the user. This should be one of the selection made from
 	 * the organizational taxonomy
 	 */
 	public static final String USER_PROFESSION = "user.profession";
+
 	/**
 	 * The sex of the user. This is useful in providing targeted contents.
 	 */
 	public static final String USER_SEX = "user.sex";
+
 	/**
 	 * The role of the user within the application. Used for providing any
 	 * targeted ads and contents
 	 */
 	public static final String USER_ROLE = "user.role";
+
+	/**
+	 * The id of the user within the application
+	 */
+	public static final String USER_ID = "user.id";
 
 	private Map<String, String> params;
 

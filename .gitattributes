@@ -214,10 +214,12 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/common/ads/AdPosition.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/AdSize.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/Banner.java -text
 jobboard-core/src/main/java/com/advanceweb/common/client/ClientContext.java -text
 jobboard-core/src/main/resources/JbCoreSpringBeans.xml -text
+jobboard-core/src/main/resources/ads.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.xml -text
 jobboard-core/src/main/resources/mailServer.properties -text
@@ -240,6 +242,8 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayServ
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
+jobboard-core/src/test/resources/JbCoreSpringBeans.xml -text
+jobboard-core/src/test/resources/log4j.properties -text
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAOImpl.java -text

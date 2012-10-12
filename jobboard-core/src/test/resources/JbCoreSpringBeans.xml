@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 			http://www.springframework.org/schema/beans/spring-beans.xsd 
 			http://www.springframework.org/schema/util 
-			http://www.springframework.org/schema/util/spring-util.xsd">
+			http://www.springframework.org/schema/util/spring-util.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:annotation-config />
+	<context:component-scan base-package="com.advanceweb" />
 
 	<!-- For SOLR search -->
-	<util:properties id="solrConfiguration" location="classpath:solr.properties" />	
+	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 
 	<!-- Search parameter builder. Initialized with search name and the order 
 		of the place-holder -->
@@ -26,7 +30,7 @@
 			</map>
 		</constructor-arg>
 	</bean>
-	
+
 	<!-- Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 		<property name="name" value="jobPost" />
@@ -78,6 +82,6 @@
 	</bean>
 
 	<!-- For Legacy ad server -->
-	<util:properties id="adsConfiguration" location="classpath:ads.properties" />	
+	<util:properties id="adsConfiguration" location="classpath:ads.properties" />
 
 </beans>

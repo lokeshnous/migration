@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 /**
  * This class has been created as a helper class for the Solr related Job search
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
  * @since 10 July 2012
  */
 
-@Repository("solrSrchHelper")
+@Component("solrSearchHelper")
 public class SOLRSearchHelper {
 
 	private static final Logger LOGGER = Logger
