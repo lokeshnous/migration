@@ -156,6 +156,47 @@ public class PurchaseJobPostingController {
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
 	}
+	
+	/**
+	 * This method is added to update the cart if quantity value is changed in the cart 
+	 * @param purchaseJobPostForm
+	 * @param cartItemIndex
+	 * @param quantity
+	 * @return model
+	 */
+	@RequestMapping(value = "/updateQuantity", method = RequestMethod.POST)
+	public ModelAndView updateQuantity(PurchaseJobPostForm purchaseJobPostForm,
+			@RequestParam("cartItemIndex") int cartItemIndex, @RequestParam("quantity") int quantity) {
+
+		ModelAndView model = new ModelAndView();
+		int packageSubTotal = 0, planCreditAmt = 0, addOnCreditAmtTotal = 0;
+		
+		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart()
+				.get(cartItemIndex);
+		
+		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal()
+				- cartItem.getPackageSubTotal());
+		
+		planCreditAmt = Integer.parseInt(cartItem
+				.getJobPostPlanCretitAmt());
+
+		for (AddOnForm addOnForm : cartItem.getAddOnForm()) {
+			addOnCreditAmtTotal = addOnCreditAmtTotal
+					+ Integer.parseInt(addOnForm.getAddOnCreditAmt());
+		}
+		
+		packageSubTotal = (planCreditAmt + addOnCreditAmtTotal)
+				* quantity;
+		cartItem.setQuantity(quantity);
+		cartItem.setPackageSubTotal(packageSubTotal);
+
+		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm
+				.getGrandTotal() + packageSubTotal);
+
+		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
+		model.setViewName(PURCHASE_JOB_POSTINGS);
+		return model;
+	}
 
 	/**
 	 * This method is added to proceed to payment gateway screen  

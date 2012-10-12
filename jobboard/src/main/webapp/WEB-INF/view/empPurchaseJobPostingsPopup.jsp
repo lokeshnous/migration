@@ -66,6 +66,21 @@
 			
 		});
 		
+		$("#jobPostingsCart input").change(function(){
+			$.ajax({url: "${pageContext.request.contextPath}/purchaseJobPosting/updateQuantity.html",
+					type: "POST",
+			        data: {"cartItemIndex" : parseInt($(this).next().attr("id")),"quantity" : parseInt($(this).val())},
+					success: function(data){ 
+						if(null != data){
+						    $("#showPurchaseJobPostCart").click();
+						}	
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					}
+			});
+		});
+		
 		$("#addToCart").click(function() {
 			var count = 0; 
 			$("#purchaseJobPostingId input[type='radio']").each(function(){
@@ -252,7 +267,7 @@
 								<td width="7%" align="Left"><span
 									class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
 								<td width="19%"><input name="healthCareSubSplty2"
-									type="text" readonly="readonly" class="jb_input75 marginTop0 mar" value="${cartItem.quantity}" /><a
+									type="text" class="jb_input75 marginTop0 mar" value="${cartItem.quantity}" /><a
 									href="#" class="marginLeft20" id="<%=i++%>" >Remove</a></td>
 							</tr>
 						</table>
