@@ -44,10 +44,14 @@
 			switch (action) {
 			case "view":
 					$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
+					$("form").attr("method","POST");
 					$("form").submit();
 					break;
 			case "download":
-				alert("download");
+				$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
+				$("form").attr("method","GET");
+				$("form").attr("target","_blank");
+				$("form").submit();
 				break;
 			case "print":
 				alert("print");

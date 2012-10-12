@@ -46,10 +46,17 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.document.PDFGenerator;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * This class has been created to perform resume activity such as create, delete, edit, download  
@@ -78,7 +85,10 @@ public class ResumeController {
 
 	@Autowired
 	private ResumeValidator resumeValidator;
-
+	
+	@Autowired
+	private PDFGenerator pdfGenerator;
+	
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
 
@@ -94,8 +104,8 @@ public class ResumeController {
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 
-	
 
+	
 	/**
 	 * This method is called to display resume list belonging to a logged in
 	 * jobSeeker
@@ -107,7 +117,6 @@ public class ResumeController {
 	@RequestMapping(value = "/manageResume", method = RequestMethod.GET)
 	public String manageResume(HttpServletRequest request, HttpSession session,
 			Model model, Map<String, Object> map) {
-
 		List<ResumeDTO> resumeDTOList = resumeService
 				.retrieveAllResumes((Integer) session
 						.getAttribute(MMJBCommonConstants.USER_ID));
@@ -1252,13 +1261,68 @@ public class ResumeController {
 			ResumeDTO resumeDTO = resumeService.editResume(Integer.parseInt(createResume
 					.getUploadResumeId()));
 			
+			// if the resume Type is Upload then we download the Resume as is
+			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
+					.getResumeType())) {
 			model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
 					+ resumeDTO.getFilePath());
+			} else {
+				
+				// if the Resume had been generated through Resume Builder or CopyPaste
+				// The resulting resume download will produce a PDF format
+				generateAndExportResumeAsPdf(request, response, resumeDTO);
+			}
 		} catch (Exception e) {
 			LOGGER.info("Error in download resume", e);
 		}
 		return model;
 
+	}
+
+	/**
+	 * Produce the Resume in PDF format and display to the user to view or
+	 * download
+	 * 
+	 * @param resumeDTO
+	 *            the retrieved Resume from the data store
+	 */
+	private void generateAndExportResumeAsPdf(HttpServletRequest request,
+			HttpServletResponse response, ResumeDTO resumeDTO) {
+		
+		response.setContentType("application/pdf");
+		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		try{
+			
+			
+			PdfWriter pdfWriter = PdfWriter.getInstance(document, response.getOutputStream());
+			document.open();
+			
+			/*PdfContentByte contentByte = pdfWriter.getDirectContent();
+			contentByte.setLineWidth(2.0f);	
+			contentByte.setColorFill(BaseColor.BLACK);
+			float x = 72f; 
+	        float y = 72f; 
+	        contentByte.moveTo(x, y); 
+	        contentByte.lineTo(new Float((x + PageSize.A4.getWidth() - 72.0)).floatValue(), y); 
+	        contentByte.stroke(); */
+	        
+			pdfGenerator.generatePDFResume(document, resumeDTO);
+			document.close();
+		} catch(DocumentException documentException) {
+			logException(documentException, "Uable to create PDF document");
+		} catch (IOException ioException) {
+			logException(ioException, "Uable to create PDF document");
+		}
+	}
+
+	/**
+	 * to log the exception to the logger and return appropriate messsage to the user
+	 * @param ioException
+	 * @param string
+	 */
+	private void logException(Exception exception, String errorMessage) {
+		LOGGER.info(errorMessage, exception);
+		
 	}
 
 	/**
