@@ -17,7 +17,7 @@
 	<context:component-scan base-package="com.advanceweb.afc.jb" />
 	
 	<!-- Database properties -->
-	<context:property-placeholder location="classpath:database.properties,classpath:mailServer.properties" />
+	<!-- <context:property-placeholder location="classpath:database.properties,classpath:mailServer.properties" /> -->
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
