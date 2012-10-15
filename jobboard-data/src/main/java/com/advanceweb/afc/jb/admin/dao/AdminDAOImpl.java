@@ -376,8 +376,11 @@ public class AdminDAOImpl implements AdminDAO {
 						List<AdmFacilityContact> facilityContacts = hibernateTemplateCareers
 								.find(GET_FACILITY_CONTACT_BY_FAC_ID,
 										admFacility.getFacilityId());
-						AdmFacilityContact facilityContact = facilityContacts
+						AdmFacilityContact facilityContact = null;
+						if(facilityContacts!=null && !facilityContacts.isEmpty()){
+						facilityContact = facilityContacts
 								.get(0);
+						}
 						hibernateTemplateCareers.delete(facilityContact);
 						hibernateTemplateCareers.delete(admFacility);
 
