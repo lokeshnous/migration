@@ -535,31 +535,57 @@ jQuery(document).ready(function() {
 
 				
 				function refineByRadius(selectedRadius){
-					$("#selectedRadius").val(selectedRadius);
-					validateRadius();
+					if(selectedRadius == $("#selectedRadius").val())
+					{
+						$("#selectedRadius").val(0);
+					}
+					else
+					{
+						$("#selectedRadius").val(selectedRadius);
+					}
 					refineSearch();
 				}
 				
 				function refineByCompany(selectedComp){
 					var company = selectedComp.split(" (");
-					$("#selectedCompany").val(company[0]);
+					if(company[0] == $("#selectedCompany").val())
+					{
+						$("#selectedCompany").val('');
+					}
+					else
+					{
+						$("#selectedCompany").val(company[0]);
+					}
 					refineSearch();
 				}
 				
 				function refineByState(selectedState){
 					var state = selectedState.split(" (");
-					$("#selectedState").val(state[0]);
+					if(state[0] == $("#selectedState").val())
+					{
+						$("#selectedState").val('');
+					}
+					else
+					{
+						$("#selectedState").val(state[0]);
+					}
 					refineSearch();
 				}
 				
 				function refineByCity(selectedCity){
 					var city = selectedCity.split(" (");
-					$("#selectedCity").val(city[0]);
+					if(city[0] == $("#selectedCity").val())
+					{
+						$("#selectedCity").val('');
+					}
+					else
+					{
+						$("#selectedCity").val(city[0]);
+					}
 					refineSearch();
 				}
 				
 				function refineSearch() {
-				
 					$("#autoload").val(false);
 					$("#rows").val(25000);
 					$("#start").val("0");

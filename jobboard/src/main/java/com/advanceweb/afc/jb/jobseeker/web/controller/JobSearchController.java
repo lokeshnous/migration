@@ -224,6 +224,7 @@ public class JobSearchController {
 	private static final String PLATINUM_LIST = "PlatinumNewsList";
 	private static final String IS_SORTING = "isSorting";
 	private static final String CURRENT_URL = "currentUrl";
+	private static final String END_TAGS = "</TD></TR>\n";
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -321,8 +322,7 @@ public class JobSearchController {
 	 */
 	private String fetchPublicCoverLetter(int userId){
 		ResCoverLetterDTO dto = coverLetterService.fetchPublicCoverLetter(userId);
-		String coverLetterText = dto.getCoverletterText();
-		return coverLetterText;
+		return dto.getCoverletterText();
 	}
 
 	/**
@@ -419,6 +419,7 @@ public class JobSearchController {
 	public void sendMailOfAppliedJob(HttpSession session,
 			HttpServletRequest request, SearchedJobDTO searchedJobDTO,
 			List<String> attachmentpaths,String coverLetterText) throws AddressException {
+		String coverLetterTxt = coverLetterText;
 		String userName = (String) session
 				.getAttribute(MMJBCommonConstants.USER_NAME);
 		String userEmail = (String) session
@@ -440,9 +441,9 @@ public class JobSearchController {
 		String employerMailBody = employeJobApplicationBody.replace(
 				"?empDashboardLink", employerloginUrl);
 		employerMailBody = employerMailBody.replace("?jobseekername", userName);
-		if (coverLetterText != null) {
-			coverLetterText = coverLetterText.replace("\r\n", "<br/>");
-			employerEmailDTO.setBody(coverLetterText + "<br/>"
+		if (coverLetterTxt != null) {
+			coverLetterTxt = coverLetterTxt.replace("\r\n", "<br/>");
+			employerEmailDTO.setBody(coverLetterTxt + "<br/>"
 					+ employerMailBody);
 		} else {
 			employerEmailDTO.setBody(employerMailBody);
@@ -754,6 +755,9 @@ public class JobSearchController {
 			session.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM,
 					request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM));
 		}
+		else{
+			session.removeAttribute(MMJBCommonConstants.SECOND_FQ_PARAM);
+		}
 
 		if (null != request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
 				&& !request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
@@ -763,6 +767,9 @@ public class JobSearchController {
 					+ '"';
 			session.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM,
 					request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
+		}
+		else{
+			session.removeAttribute(MMJBCommonConstants.THIRD_FQ_PARAM);
 		}
 
 		if (null != request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
@@ -774,6 +781,10 @@ public class JobSearchController {
 			session.setAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM,
 					request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM));
 		}
+		else{
+			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
+		}
+		
 		if (null != request.getParameter(MMJBCommonConstants.RADIUS)
 				&& !request.getParameter(MMJBCommonConstants.RADIUS).isEmpty()) {
 			session.setAttribute(MMJBCommonConstants.REFINERADIUS,
@@ -1260,13 +1271,13 @@ public class JobSearchController {
 				String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY
 						+ jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
 				mesg = mesg
-						.append("<TABLE><TR><TD>" + Subject + "</TD></TR>\n");
+						.append("<TABLE><TR><TD>" + Subject + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
-						+ "</TD></TR>\n");
+						+ END_TAGS);
 				mesg = mesg.append("<TR><TD><B>[" + jobTitle + "]</B>"
-						+ searchedJobDTO.getJobTitle() + "</TD></TR>\n");
+						+ searchedJobDTO.getJobTitle() + END_TAGS);
 				mesg = mesg.append("<TR><TD><B>[" + companyName + "]</B>"
-						+ searchedJobDTO.getCompanyName() + "</TD></TR>\n");
+						+ searchedJobDTO.getCompanyName() + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + joburl + "</TD></TR>\n\n\n");
 				mesg = mesg.append("<TR><TD>" + jobUrl + "</TD></TR></TABLE>");
 				bodyMesg = mesg.toString();

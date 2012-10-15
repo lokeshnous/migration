@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
+                                                  prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 		<head>		
@@ -64,51 +66,107 @@
 								<div class="refineResults">
 
 									<c:if test="${displayRadius}">
-									<span class="refineResultsItem plus">Radius</span>
+									<span class="refineResultsItem plus" id="radiusPlus">Radius</span>
+									<c:if test="${refineRadius != 0}">
+									<script>$("#radiusPlus").click();</script>
+									</c:if>
 									<div class="refineResultsSubContent">
 										<ul>
+											<c:if test="${refineRadius==5}">
+											<strong>
+											</c:if>
 											<li><a onclick="refineByRadius('5')" >5 Miles</a></li>
+											<c:if test="${refineRadius==5}">
+											</strong>
+											</c:if>
+											
+											<c:if test="${refineRadius==10}">
+											<strong>
+											</c:if>
 											<li><a onclick="refineByRadius('10')" >10 Miles</a></li>
+											<c:if test="${refineRadius==10}">
+											</strong>
+											</c:if>
+											
+											<c:if test="${refineRadius==25}">
+											<strong>
+											</c:if>
 											<li><a onclick="refineByRadius('25')" >25 Miles</a></li>
+											<c:if test="${refineRadius==25}">
+											</strong>
+											</c:if>
+											
+											<c:if test="${refineRadius==50}">
+											<strong>
+											</c:if>
 											<li><a onclick="refineByRadius('50')" >50 Miles</a></li>
+											<c:if test="${refineRadius==50}">
+											</strong>
+											</c:if>
+											
+											<c:if test="${refineRadius==100}">
+											<strong>
+											</c:if>
 											<li><a onclick="refineByRadius('100')" >100 Miles</a></li>
+											<c:if test="${refineRadius==100}">
+											</strong>
+											</c:if>
+											
 										</ul>
 									</div>
 									</c:if>
-									<span class="refineResultsItem plus">Employer</span>
+									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
+									<c:if test="${secondFQParam != null}">
+									<script>$("#companyPlus").click();</script>
+									</c:if>
 									<div class="refineResultsSubContent">
 										<ul>
-											<%-- <c:if test="refined!=true"> --%>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
+											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
+											<strong> 
+											</c:if>
 												<li><a onclick="refineByCompany('${company[status.index]}');">${company[status.index]}</a></li>
+											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
+											</strong> 
+											</c:if>
 											</c:forEach>
-											<%-- </c:if> --%>
 										</ul>
 									</div>
 									
 									<input type="hidden" name="refined" id="refined" />
 									
-									<span class="refineResultsItem plus">State</span>
+									<span class="refineResultsItem plus" id="statePlus">State</span>
+									<c:if test="${thirdFQParam != null}">
+									<script>$("#statePlus").click();</script>
+									</c:if>
 									<div class="refineResultsSubContent">
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
-												<%-- <li><a href="#" >${state[status.index]}</a></li> --%>
+												<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
+												<strong> 
+												</c:if>
 												<li><a onclick="refineByState('${state[status.index]}');">${state[status.index]}</a></li>
+													<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
+												</strong> 
+												</c:if>
 											</c:forEach>
 										</ul>
 									</div>
 
-									<span class="refineResultsItem plus">City</span>
+									<span class="refineResultsItem plus" id="cityPlus">City</span>
+									<c:if test="${fouthFQParam != null}">
+									<script>$("#cityPlus").click();</script>
+									</c:if>
 									<div class="refineResultsSubContent">
 										<ul>
 										<c:forEach items="${city}" var="displayCity" varStatus="status">
-											<%-- <c:if test="${fouthFQParam == city[status.index] }">
-											<b>
-											</c:if> --%>
+											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
+											<strong style="color: #FE9400 !important">  
+											</c:if>
 											<li><a onclick="refineByCity('${city[status.index]}');">${city[status.index]}</a></li>
-											<%-- <c:if test="${fouthFQParam == city[status.index] }">
-											</b>
-											</c:if> --%>
+											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
+											</strong>
+											</c:if>
 										</c:forEach>
 										</ul>
 									</div>
