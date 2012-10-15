@@ -112,8 +112,8 @@ public class AgencyDashBoardController {
 
 	@Value("${requiredField}")
 	private String requiredField;
-	@Value("${requiredAllFields}")
-	private String requiredAllFields;
+//	@Value("${requiredAllFields}")
+//	private String requiredAllFields;
 	@Value("${employerLinked}")
 	private String employerLinked;
 	@Value("${employerAddValidation}")
@@ -579,7 +579,7 @@ public class AgencyDashBoardController {
 				return requiredField;
 			}
 			if (StringUtils.isEmpty(dto.getStreet())) {
-				return requiredAllFields;
+				//return requiredAllFields;
 			}
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
