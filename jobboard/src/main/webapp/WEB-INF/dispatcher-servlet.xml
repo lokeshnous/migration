@@ -32,7 +32,7 @@
 	
 	<bean id="msg" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
     <property name="locations">
-        <list><value>classpath:messages_en.properties</value></list>
+        <list><value>/WEB-INF/properties/messages_en.properties</value></list>
     </property>
 </bean>
 

@@ -16,7 +16,11 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	
 	<mvc:annotation-driven />
-	<context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, classpath:jobboard-scheduler.properties, classpath:messages_en.properties, classpath:pdfGenerator.properties, classpath:ads.properties" />
+
+	<context:property-placeholder location="/WEB-INF/properties/jobboard-scheduler.properties,/WEB-INF/properties/mailServer.properties,/WEB-INF/properties/common.properties,/WEB-INF/properties/log4j.properties,/WEB-INF/properties/database.properties,/WEB-INF/properties/messages_en.properties" /> 
+
+	<!-- <context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, classpath:jobboard-scheduler.properties, classpath:messages_en.properties, classpath:pdfGenerator.properties, classpath:ads.properties" /> -->
+
 	
 	<import resource="classpath:HibernateSessionFactory.xml"/>
 	<import resource="classpath:JbCoreSpringBeans.xml"/>
