@@ -36,7 +36,7 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		}
 		try {
 			String tag;
-			if (position == AdPosition.TOP) {
+			if (position == AdPosition.TOP || position == AdPosition.TOP_RIGHT) {
 				URL adUrl = getAdURL(context, size, position);
 				tag = getResponse(adUrl);
 			} else {
@@ -44,8 +44,13 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 			}
 			banner.setTag(tag);
 		} catch (MalformedURLException ex) {
+			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");
 			LOGGER.error(ex.getMessage(), ex);
 		} catch (IOException ex) {
+			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");
+			LOGGER.error(ex.getMessage(), ex);
+		}catch (Exception ex) {
+			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");
 			LOGGER.error(ex.getMessage(), ex);
 		}
 		return banner;

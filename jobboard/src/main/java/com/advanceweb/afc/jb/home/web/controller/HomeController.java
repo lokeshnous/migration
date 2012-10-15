@@ -34,16 +34,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.advt.service.ads.LegacyAdServiceDelegate;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
+import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping(value = "/healthcarejobs")
@@ -57,6 +69,9 @@ public class HomeController {
 
 	@Value("${directory}")
 	private String directory;
+
+	@Value("${client.application}")
+	private String clientApplication;
 
 	@Value("${healthcarenewsfilename}")
 	private String healthcarenewsfilename;
@@ -84,7 +99,16 @@ public class HomeController {
 
 	@Autowired
 	private CheckSessionMap checkSessionMap;
-
+	
+	@Autowired
+	private LoginService loginService;
+	
+	@Autowired
+	private ProfileRegistration profileRegistration;
+	
+	@Autowired
+	private TransformJobSeekerRegistration transformJobSeekerRegistration;
+	
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
@@ -134,6 +158,25 @@ public class HomeController {
 			model.addAttribute("followuplinklinkedin", followuplinklinkedin);
 			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
+			
+			// Add the Ads for the Home page
+			String bannerString = null;
+			try {
+				LegacyAdServiceDelegate delegate = new LegacyAdServiceDelegate();
+				ClientContext clientContext = getClientContextDetails(request,
+						session);
+				AdSize size = AdSize.IAB_LEADERBOARD;
+				AdPosition position = AdPosition.TOP_RIGHT;
+				bannerString = delegate
+						.getBanner(clientContext, size, position).getTag();
+			} catch (Exception e) {
+				LOGGER.info("Error occurred while getting the html content for Ads"
+						+ e);
+			}
+			model.addAttribute("addPagetop", bannerString);
+			//TODO: Add banner for other positions
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			model.addAttribute("healthcarenew",
@@ -144,6 +187,109 @@ public class HomeController {
 		}
 		return "home";
 	}
+
+	/**
+	 * Get the client context details
+	 * 
+	 * @param request
+	 * @param session
+	 * @return
+	 */
+	@SuppressWarnings("static-access")
+	public ClientContext getClientContextDetails(HttpServletRequest request,
+			HttpSession session) {
+		ClientContext clientContext = new ClientContext();
+		clientContext.setProperty(clientContext.CLIENT_APPLICATION,
+				clientApplication);
+		clientContext.setProperty(clientContext.CLIENT_USER_AGENT,
+				request.getHeader(MMJBCommonConstants.USER_AGENT));
+		clientContext.setProperty(clientContext.CLIENT_SESSIONID,
+				session.getId());
+		clientContext.setProperty(clientContext.CLIENT_IP,
+				request.getLocalAddr());
+		clientContext.setProperty(clientContext.CLIENT_PAGE, "home");
+		clientContext.setProperty(clientContext.CLIENT_REFERRER,
+				request.getHeader(MMJBCommonConstants.REFERER));
+		clientContext.setProperty(clientContext.CLIENT_HOSTNAME,
+				request.getHeader(MMJBCommonConstants.HOST));
+		clientContext.setProperty(clientContext.CLIENT_LOCATION, null);
+		clientContext.setProperty(clientContext.CLIENT_REQUEST_URL, request
+				.getRequestURL().toString());
+
+		clientContext.setProperty(clientContext.USER_CURRENT_SEARCH, null);
+		clientContext.setProperty(clientContext.USER_PREVIOUS_SEARCH, null);
+		// Check for login User details
+		String userId = null;
+		String userLocation = null;
+		String userProfession = null;
+		String userRole = null;
+		String userGender = null;
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
+			userId = session.getAttribute(MMJBCommonConstants.USER_ID).toString();
+			List<UserRoleDTO> userRoleDTOs = loginService.getUserRole(Integer
+					.parseInt(userId));
+			userRole = userRoleDTOs.get(0).getRoleName();
+			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
+					.viewProfile((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
+					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
+			for (JobSeekerProfileAttribForm profileForm : listProfAttribForms) {
+
+				if (profileForm.getStrLabelValue() != null
+						&& profileForm.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.MYPROFESSION)) {
+					if (!isInteger(profileForm.getStrLabelValue())) {
+						userProfession = profileForm.getStrLabelValue();
+					} else {
+						for (DropDownDTO dropDown : profileForm.getDropdown()) {
+							if (MMJBCommonConstants.PROFESSION_OTHERS
+									.equals(dropDown.getOptionName())) {
+								userProfession = dropDown.getOptionName();
+							}
+						}
+					}
+				}
+				if (profileForm.getStrLabelValue() != null
+						&& profileForm.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.CAP_CITY)
+						&& !isInteger(profileForm.getStrLabelValue())) {
+					userLocation = profileForm.getStrLabelValue();
+				}
+			}
+
+			form.setListProfAttribForms(listProfAttribForms);
+
+			// TODO:gender not storing
+			userGender = null;
+		}
+		clientContext.setProperty(clientContext.USER_ID, userId);
+		clientContext.setProperty(clientContext.USER_LOCATION, userLocation);
+		clientContext
+				.setProperty(clientContext.USER_PROFESSION, userProfession);
+		clientContext.setProperty(clientContext.USER_SEX, userGender);
+		clientContext.setProperty(clientContext.USER_ROLE, userRole);
+		return clientContext;
+	}
+	
+	/**
+	 * Check for integer to get the other profession value 
+	 * 
+	 * @param input
+	 * @return
+	 */
+	 public boolean isInteger( String input )  
+	    {  
+	       try  
+	       {  
+	          Integer.parseInt( input );  
+	          return true;  
+	       }  
+	       catch( Exception e)  
+	       {  
+	          return false;  
+	       }  
+	    }  
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,
