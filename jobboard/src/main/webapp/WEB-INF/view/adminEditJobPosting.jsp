@@ -48,7 +48,7 @@ jQuery(document).ready(function() {
 		        	$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
 						 success: function(data){ 
 							 if(data == ''){
-									//alert("Data save successfully !");	
+									alert(advJobId+" successfully changed!");	
 									//loadTable();
 									parent.$.nmTop().close();
 								}else{
@@ -161,7 +161,7 @@ function loadTable(){
 					<span class="lableText3">
 						Adv Job Id
 					</span>
-					<input name="advJobId" id="advJobId" class="job_seeker_email" type="text"/>
+					<input name="advJobId" id="advJobId" class="job_seeker_email" type="text"/>&nbsp;&nbsp;&nbsp;
 					<input type="button" value="Search" name="SearchJob" id="SearchJob" class="btn_sm orange"  />
 					<!-- <div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div> -->
 			</div>

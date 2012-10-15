@@ -177,7 +177,7 @@ function validateFacility() {
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
 					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange" onclick="return validateFacility();">
-					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
+					<input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
 				</div>
 			</form:form>
 		</div>

@@ -43,6 +43,13 @@ function validateNumber(event) {
 		jQuery(".megamenu").megamenu();
 		$('.focus').focus();
 		
+		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
+		$("#stateDpId").change( function(){
+				$('#cityAutoPopulation').val('');
+				$('#zipCode').val('');
+				$('#countryDpId').val('');
+			});
+		
 		//Auto complete on selecting city
 		$("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',

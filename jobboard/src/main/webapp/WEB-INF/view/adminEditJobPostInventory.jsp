@@ -91,6 +91,7 @@ function closePopup() {
 		
 		
 		$("#save").click(function(event){
+			var nsId = $.trim($("#nsId").val());
 			$("#ErrorMsg").text("");
 			if(!validateTable()){
 				$("#ErrorMsg").text("Please enter the value!");
@@ -116,8 +117,12 @@ function closePopup() {
 			    stringObjNew = stringObj +";" + stringObjNew ;
 			 });
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
-				success: function(data){ 
-				    if(data.success != null){
+				data:$('#adminInventoryId').serialize(),
+				type:"POST",
+				success: function(data){
+					alert(data+"ddddddddddd");
+				    if(data != ''){
+				    	alert("Inventory details saved scuccessfully");
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){
@@ -178,11 +183,11 @@ function closePopup() {
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="GET" action="../admininventory/save.html"
+			<form:form method="GET" action="../admininventory/save.html" id="adminInventoryId"
 				commandName="inventoryForm">
 
 			<div class="row">
-				<span class="lableText8">Employee List: &nbsp;&nbsp; </span>
+				<span class="splLableText">Company Name: &nbsp;&nbsp; </span>
 				<input type="text" id="empList" name="empList"
 					class="job_seeker_Resume" value="${empList}"/>
 				<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR&nbsp;</span>
