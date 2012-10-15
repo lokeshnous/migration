@@ -25,7 +25,7 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 			.getLogger(LegacyAdServiceDelegate.class);
 	@Autowired
 	@Resource(name = "adsConfiguration")
-	private Properties config;
+	private Properties adsConfiguration;
 
 	@Override
 	public Banner getBanner(ClientContext context, AdSize size,
@@ -36,7 +36,7 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		}
 		try {
 			String tag;
-			if (position == AdPosition.TOP || position == AdPosition.TOP_RIGHT) {
+			if (position == AdPosition.TOP) {
 				URL adUrl = getAdURL(context, size, position);
 				tag = getResponse(adUrl);
 			} else {
@@ -59,7 +59,7 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 	private URL getAdURL(ClientContext context, AdSize size, AdPosition position)
 			throws MalformedURLException {
 		StringBuffer sbUrl = new StringBuffer();
-		sbUrl.append(config.getProperty("ads.server.url"));
+		sbUrl.append(adsConfiguration.getProperty("ads.server.url"));
 
 		// Create the TAG
 		String tag = "AD_FREQUENCY_GROUP:ADFREQUENCYGROUP_AFC_LEADERBOARD;WEB_AD_TYPE_GROUP:WEBADTYPEGROUP_LEADERBOARD;PUBLICATION:PUB_AC";
