@@ -26,7 +26,7 @@
 	        var hasError = true;
 			 if($('#textfield4').val()!=''){
 					var ext = $('#textfield4').val().split('.').pop().toLowerCase();
-					if($.inArray(ext, ['Mp4','wmv']) == -1) {
+					if($.inArray(ext, ['mp4','wmv']) == -1) {
 					hasError = false;
 		            $("#promoMediaErrMsg").text('Please select an appropriate video file');
 				}
