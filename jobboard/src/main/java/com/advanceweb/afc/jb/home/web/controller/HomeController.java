@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.common.controller.AbstractController;
-import com.advanceweb.afc.jb.advt.service.ads.LegacyAdServiceDelegate;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
@@ -94,6 +94,9 @@ public class HomeController extends AbstractController{
 
 	@Autowired
 	private JobSearchService jobSearchService;
+	
+	@Autowired
+	private AdService adService;
 
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
@@ -144,33 +147,32 @@ public class HomeController extends AbstractController{
 			// Add the Ads for the Home page
 			String bannerString = null;
 			try {
-				LegacyAdServiceDelegate delegate = new LegacyAdServiceDelegate();
 				ClientContext clientContext = getClientContextDetails(request,
 						session, "home");
 				AdSize size = AdSize.IAB_LEADERBOARD;
 				AdPosition position = AdPosition.TOP;
-				bannerString = delegate
+				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
 				model.addAttribute("addPageTop", bannerString);
 				LOGGER.info("Added the "+size.toString()+" Ad");
 				
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.TOP_RIGHT;
-				bannerString = delegate
+				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
 				model.addAttribute("addPageTopRight", bannerString);
 				LOGGER.info("Added the "+size.toString()+" Ad");
 				
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.BOTTOM_RIGHT;
-				bannerString = delegate
+				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
 				model.addAttribute("addPageBtmRight", bannerString);
 				LOGGER.info("Added the "+size.toString()+" Ad");
 
 				size = AdSize.IAB_LEADERBOARD;
 				position = AdPosition.BOTTOM;
-				bannerString = delegate
+				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
 				model.addAttribute("addPageBtm", bannerString);
 				LOGGER.info("Added the "+size.toString()+" Ad");
