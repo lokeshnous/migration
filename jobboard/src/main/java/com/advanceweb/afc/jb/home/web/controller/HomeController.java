@@ -59,11 +59,10 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping(value = "/healthcarejobs")
-public class HomeController {
+public class HomeController  {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(HomeController.class);
-	
+	private static final Logger LOGGER = Logger.getLogger(HomeController.class);
+
 	@Value("${basedirectorypath}")
 	private String basedirectorypath;
 
@@ -99,16 +98,16 @@ public class HomeController {
 
 	@Autowired
 	private CheckSessionMap checkSessionMap;
-	
+
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private ProfileRegistration profileRegistration;
-	
+
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
-	
+
 	@Autowired
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
@@ -142,23 +141,25 @@ public class HomeController {
 			session.removeAttribute("next");
 			session.removeAttribute("prev");
 			session.removeAttribute("count");
-			
+
 			int firstIndex = 0, lastIndex = 2;
-			session.setAttribute("prev",firstIndex);
-			session.setAttribute("next",lastIndex);
-			
+			session.setAttribute("prev", firstIndex);
+			session.setAttribute("next", lastIndex);
+
 			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
 					.getEmployerList();
-			session.setAttribute("count",companyProfileDTOList.size());
-//			model.addAttribute("companyProfileDTOList", companyProfileDTOList);
-			session.setAttribute("companyProfileDTOList", companyProfileDTOList.subList(firstIndex, lastIndex));
+			session.setAttribute("count", companyProfileDTOList.size());
+			// model.addAttribute("companyProfileDTOList",
+			// companyProfileDTOList);
+			session.setAttribute("companyProfileDTOList",
+					companyProfileDTOList.subList(firstIndex, lastIndex));
 			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
 			model.addAttribute("followuplinkyoutube", followuplinkyoutube);
 			model.addAttribute("followuplinklinkedin", followuplinklinkedin);
 			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
-			
+
 			// Add the Ads for the Home page
 			String bannerString = null;
 			try {
@@ -174,9 +175,8 @@ public class HomeController {
 						+ e);
 			}
 			model.addAttribute("addPagetop", bannerString);
-			//TODO: Add banner for other positions
-			
-			
+			// TODO: Add banner for other positions
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			model.addAttribute("healthcarenew",
@@ -195,29 +195,29 @@ public class HomeController {
 	 * @param session
 	 * @return
 	 */
-	@SuppressWarnings("static-access")
+
 	public ClientContext getClientContextDetails(HttpServletRequest request,
 			HttpSession session) {
 		ClientContext clientContext = new ClientContext();
-		clientContext.setProperty(clientContext.CLIENT_APPLICATION,
+		clientContext.setProperty(ClientContext.CLIENT_APPLICATION,
 				clientApplication);
-		clientContext.setProperty(clientContext.CLIENT_USER_AGENT,
+		clientContext.setProperty(ClientContext.CLIENT_USER_AGENT,
 				request.getHeader(MMJBCommonConstants.USER_AGENT));
-		clientContext.setProperty(clientContext.CLIENT_SESSIONID,
+		clientContext.setProperty(ClientContext.CLIENT_SESSIONID,
 				session.getId());
-		clientContext.setProperty(clientContext.CLIENT_IP,
+		clientContext.setProperty(ClientContext.CLIENT_IP,
 				request.getLocalAddr());
-		clientContext.setProperty(clientContext.CLIENT_PAGE, "home");
-		clientContext.setProperty(clientContext.CLIENT_REFERRER,
+		clientContext.setProperty(ClientContext.CLIENT_PAGE, "home");
+		clientContext.setProperty(ClientContext.CLIENT_REFERRER,
 				request.getHeader(MMJBCommonConstants.REFERER));
-		clientContext.setProperty(clientContext.CLIENT_HOSTNAME,
+		clientContext.setProperty(ClientContext.CLIENT_HOSTNAME,
 				request.getHeader(MMJBCommonConstants.HOST));
-		clientContext.setProperty(clientContext.CLIENT_LOCATION, null);
-		clientContext.setProperty(clientContext.CLIENT_REQUEST_URL, request
+		clientContext.setProperty(ClientContext.CLIENT_LOCATION, null);
+		clientContext.setProperty(ClientContext.CLIENT_REQUEST_URL, request
 				.getRequestURL().toString());
 
-		clientContext.setProperty(clientContext.USER_CURRENT_SEARCH, null);
-		clientContext.setProperty(clientContext.USER_PREVIOUS_SEARCH, null);
+		clientContext.setProperty(ClientContext.USER_CURRENT_SEARCH, null);
+		clientContext.setProperty(ClientContext.USER_PREVIOUS_SEARCH, null);
 		// Check for login User details
 		String userId = null;
 		String userLocation = null;
@@ -226,12 +226,14 @@ public class HomeController {
 		String userGender = null;
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
-			userId = session.getAttribute(MMJBCommonConstants.USER_ID).toString();
+			userId = session.getAttribute(MMJBCommonConstants.USER_ID)
+					.toString();
 			List<UserRoleDTO> userRoleDTOs = loginService.getUserRole(Integer
 					.parseInt(userId));
 			userRole = userRoleDTOs.get(0).getRoleName();
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
-					.viewProfile((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+					.viewProfile((Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
 			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
 					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
 			for (JobSeekerProfileAttribForm profileForm : listProfAttribForms) {
@@ -263,33 +265,29 @@ public class HomeController {
 			// TODO:gender not storing
 			userGender = null;
 		}
-		clientContext.setProperty(clientContext.USER_ID, userId);
-		clientContext.setProperty(clientContext.USER_LOCATION, userLocation);
+		clientContext.setProperty(ClientContext.USER_ID, userId);
+		clientContext.setProperty(ClientContext.USER_LOCATION, userLocation);
 		clientContext
-				.setProperty(clientContext.USER_PROFESSION, userProfession);
-		clientContext.setProperty(clientContext.USER_SEX, userGender);
-		clientContext.setProperty(clientContext.USER_ROLE, userRole);
+				.setProperty(ClientContext.USER_PROFESSION, userProfession);
+		clientContext.setProperty(ClientContext.USER_SEX, userGender);
+		clientContext.setProperty(ClientContext.USER_ROLE, userRole);
 		return clientContext;
 	}
-	
+
 	/**
-	 * Check for integer to get the other profession value 
+	 * Check for integer to get the other profession value
 	 * 
 	 * @param input
 	 * @return
 	 */
-	 public boolean isInteger( String input )  
-	    {  
-	       try  
-	       {  
-	          Integer.parseInt( input );  
-	          return true;  
-	       }  
-	       catch( Exception e)  
-	       {  
-	          return false;  
-	       }  
-	    }  
+	public boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,
@@ -334,13 +332,13 @@ public class HomeController {
 			employerProfileManagementForm.setPrimaryColor(companyProfileDTO
 					.getPrimaryColor().replace("HEX #", "#"));
 		}
-		// TODO: Remove the hard codes used to check video : file server is not fully mentained
-		String path =request.getRequestURL().toString()
+		// TODO: Remove the hard codes used to check video : file server is not
+		// fully mentained
+		String path = request.getRequestURL().toString()
 				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY);
-		
+
 		path = path + mediaPath + companyProfileDTO.getPositionalMedia();
-		model.addAttribute("windowmediaplayerfilepath",
-				path);
+		model.addAttribute("windowmediaplayerfilepath", path);
 		model.addAttribute("employerProfileManagementForm",
 				employerProfileManagementForm);
 		return "featuredemployerdetails";
@@ -571,7 +569,7 @@ public class HomeController {
 				MMJBCommonConstants.BASIC_SEARCH_TYPE);
 		return jsonObject;
 	}
-	
+
 	/**
 	 * get the Next/Prev feature employer list
 	 * 
@@ -584,32 +582,33 @@ public class HomeController {
 	public @ResponseBody
 	JSONObject getlist(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
-		
+
 		JSONObject jsonObject = new JSONObject();
 		String moveBy = request.getParameter("moveBy");
 		int firstIndex = 0, lastIndex = 2;
-		if(moveBy.equalsIgnoreCase("next")){
+		if (moveBy.equalsIgnoreCase("next")) {
 			int oldNext = (Integer) session.getAttribute("next");
 			int oldPrev = (Integer) session.getAttribute("prev");
-			lastIndex = oldNext+2;
-			firstIndex= oldPrev+2;
+			lastIndex = oldNext + 2;
+			firstIndex = oldPrev + 2;
 		}
-		if(moveBy.equalsIgnoreCase("prev")){
+		if (moveBy.equalsIgnoreCase("prev")) {
 			int oldNext = (Integer) session.getAttribute("next");
 			int oldPrev = (Integer) session.getAttribute("prev");
-			lastIndex = oldNext-2;
-			firstIndex= oldPrev-2;
+			lastIndex = oldNext - 2;
+			firstIndex = oldPrev - 2;
 		}
-		session.setAttribute("next",lastIndex);
-		session.setAttribute("prev",firstIndex);
-		
+		session.setAttribute("next", lastIndex);
+		session.setAttribute("prev", firstIndex);
+
 		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
 				.getEmployerList();
-		session.setAttribute("count",companyProfileDTOList.size());
-		session.setAttribute("companyProfileDTOList", companyProfileDTOList.subList(firstIndex, lastIndex));
+		session.setAttribute("count", companyProfileDTOList.size());
+		session.setAttribute("companyProfileDTOList",
+				companyProfileDTOList.subList(firstIndex, lastIndex));
 		return jsonObject;
 	}
-	
+
 	/**
 	 * Get the homeFeatureEmps page
 	 * 
