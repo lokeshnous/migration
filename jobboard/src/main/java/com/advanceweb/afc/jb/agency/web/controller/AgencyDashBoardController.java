@@ -112,6 +112,8 @@ public class AgencyDashBoardController {
 
 	@Value("${requiredField}")
 	private String requiredField;
+	@Value("${requiredAllFields}")
+	private String requiredAllFields;
 	@Value("${employerLinked}")
 	private String employerLinked;
 	@Value("${employerAddValidation}")
@@ -575,6 +577,9 @@ public class AgencyDashBoardController {
 					.transformEmployerFormToDto(employerRegistrationForm);
 			if (StringUtils.isEmpty(dto.getFirstName())) {
 				return requiredField;
+			}
+			if (StringUtils.isEmpty(dto.getStreet())) {
+				return requiredAllFields;
 			}
 			int facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
