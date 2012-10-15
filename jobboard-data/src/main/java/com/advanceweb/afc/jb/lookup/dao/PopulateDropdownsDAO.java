@@ -186,6 +186,9 @@ public interface PopulateDropdownsDAO {
 			int userId);
 
 	List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId);
+	
+	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
+			int jobPostType);
 
 	List<String> populateCityAutoComplete(String city);
 

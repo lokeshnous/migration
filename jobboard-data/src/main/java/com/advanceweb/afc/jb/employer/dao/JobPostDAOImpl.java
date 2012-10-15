@@ -284,6 +284,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return dto;
 	}
 
+	/**
+	 * This method is called fetch all the job type & respective addons 
+	 * @param 
+	 * @return JobPostingPlanDTO list
+	 */
 	@Override
 	public List<JobPostingPlanDTO> getJobPostingPlans() {
 		List<JpJobType> jobTypeList = hibernateTemplate.find("from JpJobType");

@@ -64,6 +64,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
 	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productType,dtl.productId";
+	private static final String FIND_JOB_TYPE_COMBO="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.invDetailId = ? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
@@ -508,59 +509,78 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	
+	@Override
+	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,	int jobPostType) {
+		try {
+			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
+			List<AdmInventoryDetail> invList = hibernateTemplate.find(FIND_JOB_TYPE_COMBO, jobPostType, facilityId);
+			getJobPostingComboList(jbPostings, invList);
+			return jbPostings;
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		return null;
+	}
+	
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
 
 		try {
 			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
 			List<AdmInventoryDetail> invList = hibernateTemplate.find(FIND_INVENTORY_DETAILS, facilityId);
-			if (!invList.isEmpty()) {
-				for (AdmInventoryDetail inv : invList) {					
-					DropDownDTO dto = new DropDownDTO();
-					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
-					if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
-						List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
-						if(!comboList.isEmpty()){
-							
-							JpJobTypeCombo combo = comboList.get(0);
-							if(combo.getJobType().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
-								dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + "+"
-										+ combo.getAddons().trim());
-							}
-							else if(combo.getJobType().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
-								dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + "+"
-										+ combo.getAddons().trim());
-							}
-							if(combo.getAddons().contains("Job Posting")){
-								combo.setAddons(combo.getAddons().replace("Job Posting",""));
-								if(combo.getAddons().contains("Upgrade".trim())){
-									combo.setAddons(combo.getAddons().replace("Upgrade",""));
-								}
-							}
-							jbPostings.add(dto);
-						}
-					}else{
-						List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
-						if(!jpTypleList.isEmpty()){
-							JpJobType type = jpTypleList.get(0);
-							
-							if(type.getName().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
-								dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
-							}
-							else if(type.getName().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
-								dto.setOptionName(MMJBCommonConstants.SLOT_POSTING);
-							}
-							//dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
-							jbPostings.add(dto);
-						}
-					}
-				}
-			}
+			getJobPostingComboList(jbPostings, invList);
 			return jbPostings;
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
 		return null;
+	}
+
+	private void getJobPostingComboList(List<DropDownDTO> jbPostings,
+		List<AdmInventoryDetail> invList) {
+		if (!invList.isEmpty()) {
+			for (AdmInventoryDetail inv : invList) {					
+				DropDownDTO dto = new DropDownDTO();
+				dto.setOptionId(String.valueOf(inv.getInvDetailId()));
+				if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
+					List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
+					if(!comboList.isEmpty()){
+						
+						JpJobTypeCombo combo = comboList.get(0);
+						if(combo.getJobType().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
+							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + "+"
+									+ combo.getAddons().trim());
+						}
+						else if(combo.getJobType().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
+							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + "+"
+									+ combo.getAddons().trim());
+						}
+						if(combo.getAddons().contains("Job Posting")){
+							combo.setAddons(combo.getAddons().replace("Job Posting",""));
+							if(combo.getAddons().contains("Upgrade".trim())){
+								combo.setAddons(combo.getAddons().replace("Upgrade",""));
+							}
+						}
+						jbPostings.add(dto);
+					}
+				}else{
+					List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
+					if(!jpTypleList.isEmpty()){
+						JpJobType type = jpTypleList.get(0);
+						
+						if(type.getName().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
+							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
+						}
+						else if(type.getName().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
+							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING);
+						}
+						//dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
+						jbPostings.add(dto);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

@@ -179,6 +179,7 @@ public interface PopulateDropdowns {
 			int userId);
 
 	List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId);
+	List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId, int jobPostType);
 
 	List<String> populateCityAutoComplete(String city);
 

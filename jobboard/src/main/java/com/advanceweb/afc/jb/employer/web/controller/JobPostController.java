@@ -245,6 +245,8 @@ public class JobPostController {
 		}
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		dto.setUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName(FORWORD_MANAGE_JOBPOST);
 		return model;
@@ -276,6 +278,8 @@ public class JobPostController {
 		}
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		dto.setUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
 		employerJobPost.savePostJob(dto);
 		model.setViewName(FORWORD_MANAGE_JOBPOST);
 		return model;
@@ -436,7 +440,7 @@ public class JobPostController {
 			} else if (readOnly.equalsIgnoreCase("false")) {
 
 				setReadOnlyFlag(jobPostForm, model, jobStatus, jobPostType,
-						jbPostingTypeList);
+						jbPostingTypeList,facilityId);
 			}
 		}
 		model.addObject(JOB_POST_FORM, jobPostForm);
@@ -452,20 +456,41 @@ public class JobPostController {
 	 */
 	private void setReadOnlyFlag(JobPostForm jobPostForm, ModelAndView model,
 			String jobStatus, int jobPostType,
-			List<DropDownDTO> jbPostingTypeList) {
+			List<DropDownDTO> jbPostingTypeList,int facilityId) {
 		if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
 				|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus)) {
 			jobPostForm.setReadOnly(true);
 			jobPostForm.setEnableJobTitle(false);
 			jobPostForm.setActiveInactive(true);
-			for (DropDownDTO DropDownDto : jbPostingTypeList) {
-				if (jobPostType == Integer.parseInt(DropDownDto.getOptionId())
-						&& DropDownDto.getOptionName().contains(
-								MMJBCommonConstants.SLOT_POSTING)) {
-
-					jobPostForm.setEnableJobTitle(true);
-
+			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService.populateJobPostingTypeDropdown(facilityId, jobPostType);
+			boolean flag = false;
+			//Need to add the comments here on each conditions
+			for (DropDownDTO dropDownDto : jbPostingTypeList) {
+				if (jobPostType == Integer.parseInt(dropDownDto.getOptionId()) ||
+						jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())){
+					if(jobPostTypeCombo.get(0).getOptionName().contains(MMJBCommonConstants.SLOT_POSTING)) {
+						jobPostForm.setEnableJobTitle(true);
+					}
 				}
+				if(!(jobPostType == Integer.parseInt(dropDownDto.getOptionId()))){
+					if(jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())){
+						if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
+								|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus) || 
+								MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)) {
+							dropDownDto.setOptionId(jobPostTypeCombo.get(0).getOptionId());	
+						}else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
+								|| MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus)) {
+							jobPostForm.setJobPostingType(dropDownDto.getOptionId());
+						}
+					}
+					else{
+						flag = true;
+					}
+				}
+				
+			}
+			if(flag){
+				jbPostingTypeList.add(jobPostTypeCombo.get(0));
 			}
 			model.setViewName(POST_NEW_JOBS);
 		} else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)

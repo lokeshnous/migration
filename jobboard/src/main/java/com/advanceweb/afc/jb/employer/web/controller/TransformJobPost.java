@@ -123,15 +123,16 @@ public class TransformJobPost {
 	public List<JobPostingsForm> transformToJobPostingsFormList(List<JobPostingPlanDTO> jobPostingPlanDTOList)
 	{
 		List<JobPostingsForm> jobPostingsFormList = new ArrayList<JobPostingsForm>();
-		
+		JobPostingsForm jobPostingsForm = null;
+		List<AddOnForm> addOnFormList = null;
 		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
-			JobPostingsForm jobPostingsForm = new JobPostingsForm();
+			jobPostingsForm = new JobPostingsForm();
 			jobPostingsForm.setJobPostPlanId(jobPostingPlanDTO.getJobPostPlanId());
 			jobPostingsForm.setJobPostPlanName(jobPostingPlanDTO.getJobPostPlanName());
 			jobPostingsForm.setJobPostPlanDescr(jobPostingPlanDTO.getJobPostPlanDescr());
 			jobPostingsForm.setJobPostPlanCretitAmt(jobPostingPlanDTO.getJobPostPlanCretitAmt());
 			jobPostingsForm.setJobPostNetSuiteId(jobPostingPlanDTO.getJobPostNetSuiteId());
-			List<AddOnForm> addOnFormList = new ArrayList<AddOnForm>();
+			addOnFormList = new ArrayList<AddOnForm>();
 			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
 				addOnFormList.add(transformAddOnDTOToAddOnForm(addOnDTO));
 			}

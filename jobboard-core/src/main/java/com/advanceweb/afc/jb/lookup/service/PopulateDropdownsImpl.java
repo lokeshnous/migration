@@ -284,4 +284,10 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	public Map<String, String> getJobStatusList() {
 		return populateDropdownsDAO.getJobStatusList();
 	}
+
+	@Override
+	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
+			int jobPostType) {
+		return populateDropdownsDAO.populateJobPostingTypeDropdown(facilityId, jobPostType);
+	}
 }
