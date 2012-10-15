@@ -46,16 +46,13 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.document.PDFGenerator;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
@@ -86,8 +83,8 @@ public class ResumeController {
 	@Autowired
 	private ResumeValidator resumeValidator;
 	
-	@Autowired
-	private PDFGenerator pdfGenerator;
+	//@Autowired
+	//private PDFGenerator pdfGenerator;
 	
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
@@ -1306,7 +1303,7 @@ public class ResumeController {
 	        contentByte.lineTo(new Float((x + PageSize.A4.getWidth() - 72.0)).floatValue(), y); 
 	        contentByte.stroke(); */
 	        
-			pdfGenerator.generatePDFResume(document, resumeDTO);
+			//pdfGenerator.generatePDFResume(document, resumeDTO);
 			document.close();
 		} catch(DocumentException documentException) {
 			logException(documentException, "Uable to create PDF document");
