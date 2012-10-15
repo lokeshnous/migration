@@ -15,7 +15,7 @@ public class AdServiceImpl implements AdService{
 	@Autowired 
 	private AdServiceDelegate delegate;
 	@Override
-	public Banner getBannner(ClientContext context, AdSize size, AdPosition position) {
+	public Banner getBanner(ClientContext context, AdSize size, AdPosition position) {
 		return delegate.getBanner(context, size, position);
 	}
 

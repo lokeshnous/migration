@@ -50,7 +50,7 @@ public class ClientContext {
 	 * is passed)
 	 */
 	public static final String CLIENT_REQUEST_URL = "client.request.url";
-	
+
 	/**
 	 * The referral url. (The url from where the page is reached)
 	 */
@@ -132,8 +132,20 @@ public class ClientContext {
 		this.params.putAll(params);
 	}
 
+	/**
+	 * Default constructor for ClientContext. initializes the map
+	 */
 	public ClientContext() {
 		params = new LinkedHashMap<String, String>();
+	}
+
+	/**
+	 * Copy constructor, avoid the trouble of using more code to duplicate the
+	 * context information.
+	 */
+	public ClientContext(ClientContext source){
+		this();
+		params.putAll(source.params);
 	}
 
 	/**

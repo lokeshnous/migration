@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.advanceweb.afc.jb.advt.service.impl.AdServiceDelegate;
 import com.advanceweb.common.ads.AdPosition;
@@ -20,6 +21,7 @@ import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.ads.Banner;
 import com.advanceweb.common.client.ClientContext;
 
+@Component
 public class LegacyAdServiceDelegate implements AdServiceDelegate {
 	private static final Logger LOGGER = Logger
 			.getLogger(LegacyAdServiceDelegate.class);
@@ -42,6 +44,7 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 			} else {
 				tag = "<p>Ad Not Available for " + size.toString() +"</p>";
 			}
+			LOGGER.debug("Recieved ad-tag" + tag);
 			banner.setTag(tag);
 		} catch (MalformedURLException ex) {
 			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");

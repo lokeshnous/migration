@@ -7,5 +7,5 @@ import com.advanceweb.common.client.ClientContext;
 
 public interface AdService {
 
-	Banner getBannner(ClientContext context, AdSize size, AdPosition position);
+	Banner getBanner(ClientContext context, AdSize size, AdPosition position);
 }
