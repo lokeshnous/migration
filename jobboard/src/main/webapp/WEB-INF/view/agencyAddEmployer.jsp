@@ -22,16 +22,6 @@
  <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
 </head>
 <body>
-	<!-- JAVASCRIPT FILES -->
-	<!--<script type="text/javascript"
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="javascripts/jquery.cycle.all.min.js"></script>
-	<script type="text/javascript" src="javascripts/slider.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
-	
-	 <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="jquery.autocomplete.min.js"></script> -->
 	<script type="text/javascript">
 		jQuery(document)
 				.ready(
@@ -41,10 +31,6 @@
 				        	var NameData = new Array();
 				        	
 							var empName = $("#emplyrNameAutoComplte").val();
-							/* if (empName == '') {
-								empName = '';									
-							} */
-							
 							$.ajax({
 						        type: "GET",
 						        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
@@ -107,6 +93,17 @@
 									 },
 								});
 							}); 
+							
+							$("#emplyrNameAutoComplte").change(function(){
+								$('#emplyrNameAutoComplte').val("");
+								$('#city').val("");
+								$('#street').val("");
+								$('#zipCode').val("");
+								$('#state').val("");
+								$('#country').val("");
+								$('#phone').val("");
+								$('#facilityId').val("");
+							});
 						});
 
 		function MM_jumpMenu(targ, selObj, restore) { //v3.0
