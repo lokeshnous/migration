@@ -35,18 +35,20 @@ public class TransformPaymentMethod {
 	public AccountAddressForm transformAccountAddrDtoToForm(
 			AccountAddressDTO accountAddressDTO) {
 		AccountAddressForm accountAddressForm = new AccountAddressForm();
-		accountAddressForm.setFirstName(accountAddressDTO.getFirstName());
-		accountAddressForm.setLastName(accountAddressDTO.getLastName());
-		accountAddressForm.setCompany(accountAddressDTO.getCompany());
-		accountAddressForm.setCountry(accountAddressDTO.getCountry());
-		accountAddressForm.setEmail(accountAddressDTO.getEmail());
-		accountAddressForm.setPhone(accountAddressDTO.getPhone());
-		accountAddressForm.setState(accountAddressDTO.getState());
-		accountAddressForm.setStreetAddress(accountAddressDTO
-				.getStreetAddress());
-		accountAddressForm.setMiddleName(accountAddressDTO.getMiddleName());
-		accountAddressForm.setZipCode(accountAddressDTO.getZipCode());
-		accountAddressForm.setCityOrTown(accountAddressDTO.getCityOrTown());
+		if(null != accountAddressDTO){
+			accountAddressForm.setFirstName(accountAddressDTO.getFirstName());
+			accountAddressForm.setLastName(accountAddressDTO.getLastName());
+			accountAddressForm.setCompany(accountAddressDTO.getCompany());
+			accountAddressForm.setCountry(accountAddressDTO.getCountry());
+			accountAddressForm.setEmail(accountAddressDTO.getEmail());
+			accountAddressForm.setPhone(accountAddressDTO.getPhone());
+			accountAddressForm.setState(accountAddressDTO.getState());
+			accountAddressForm.setStreetAddress(accountAddressDTO
+					.getStreetAddress());
+			accountAddressForm.setMiddleName(accountAddressDTO.getMiddleName());
+			accountAddressForm.setZipCode(accountAddressDTO.getZipCode());
+			accountAddressForm.setCityOrTown(accountAddressDTO.getCityOrTown());
+		}
 		return accountAddressForm;
 	}
 
@@ -58,25 +60,25 @@ public class TransformPaymentMethod {
 	public BillingAddressForm transformBillingAddressDtoToForm(
 			AccountAddressDTO billingAddressDTO) {
 		BillingAddressForm billingAddressForm = new BillingAddressForm();
-
-		billingAddressForm.setFnameForBillingAddr(billingAddressDTO
-				.getFirstName());
-		billingAddressForm.setLnameForBillingAddr(billingAddressDTO
-				.getLastName());
-		billingAddressForm.setCountryForBillingAddr(billingAddressDTO
-				.getCountry());
-		billingAddressForm.setStateBillingAddress(billingAddressDTO
-				.getState());
-		billingAddressForm.setCityOrTownForBillingAddr(billingAddressDTO
-				.getCityOrTown());
-		billingAddressForm.setZipCodeForBillingAddr(billingAddressDTO
-				.getZipCode());
-		billingAddressForm.setStreetForBillingAddr(billingAddressDTO
-				.getStreetAddress());
-		billingAddressForm.setFacilityContactId(billingAddressDTO
-				.getFacilityContactId());
-		billingAddressForm.setCreateDate(billingAddressDTO.getCreateDate());
-
+		if(null != billingAddressDTO){
+			billingAddressForm.setFnameForBillingAddr(billingAddressDTO
+					.getFirstName());
+			billingAddressForm.setLnameForBillingAddr(billingAddressDTO
+					.getLastName());
+			billingAddressForm.setCountryForBillingAddr(billingAddressDTO
+					.getCountry());
+			billingAddressForm.setStateBillingAddress(billingAddressDTO
+					.getState());
+			billingAddressForm.setCityOrTownForBillingAddr(billingAddressDTO
+					.getCityOrTown());
+			billingAddressForm.setZipCodeForBillingAddr(billingAddressDTO
+					.getZipCode());
+			billingAddressForm.setStreetForBillingAddr(billingAddressDTO
+					.getStreetAddress());
+			billingAddressForm.setFacilityContactId(billingAddressDTO
+					.getFacilityContactId());
+			billingAddressForm.setCreateDate(billingAddressDTO.getCreateDate());
+		}
 		return billingAddressForm;
 
 	}

@@ -159,7 +159,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			facility.setColorPalette(facilityP.getColorPalette());
 			facility.setCompanyNews(facilityP.getCompanyNews());
 			facility.setCompanyOverview(facilityP.getCompanyOverview());
-
+			hibernateTemplateCareers.save(facility);
 		}
 
 		List<AdmFacilityContact> admFacilityContactP = facilityP
@@ -200,12 +200,13 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				admFacilityContact.setCreateDt(currentDate);
 				admFacilityContact.setAdmFacility(facility);
 				admFacilityContactList.add(admFacilityContact);
-
+				admFacilityContact.setAdmFacility(facility);
+				hibernateTemplateCareers.save(admFacilityContact);
 			}
 		}
 
-		facility.setAdmFacilityContacts(admFacilityContactList);
-		hibernateTemplateCareers.save(facility);
+		//facility.setAdmFacilityContacts(admFacilityContactList);
+		
 		return facility;
 	}
 
