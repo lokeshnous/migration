@@ -13,6 +13,7 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO;
 import com.advanceweb.afc.jb.search.ResumeSearchDelegate;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchIndex;
@@ -31,7 +32,10 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 	
 	@Autowired
 	private LocationDAO locationDAO;
-
+	
+	@Autowired
+	private ResumeSearchDAO resumeSearchDAO;
+	
 	public SolrResumeSearchDelegate(SearchIndex searchIndex) {
 		super(searchIndex);
 	}
@@ -244,5 +248,19 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 		return (locations.isEmpty()) ? new LocationDTO() : locations.get(0);
 
 	}
+
+
+	/**
+	 * This method is temporarily beig used to retrieving the 
+	 * resume search result from DB.
+	 * @param String searchString
+	 * @return List<ResumeDTO>
+	 */
+	
+	public List<ResumeDTO> resumeSearchFromDB(String searchString)
+			throws JobBoardServiceException {
+		return  resumeSearchDAO.getResumeSearchDetails(searchString);
+	}
+
 
 }

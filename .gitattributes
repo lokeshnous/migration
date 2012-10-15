@@ -419,6 +419,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/dao/PaymentGatewayDaoImpl.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/pgi/helper/PaymentGatewayHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeDaoImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeSearchDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/dao/ResumeSearchDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/resume/helper/ResumeConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/LocationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/search/dao/LocationDAOImpl.java -text

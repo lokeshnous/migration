@@ -409,6 +409,12 @@ public interface MMJBCommonConstants {
 	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";
 	String RESUME_KEYWORD_SEARCH = "CANDIDATE-KEYWORD";
 	String RESUME_SEARCH_SESSION_MAP = "resumeSessionMap";
+
+	String RESUME_DESIRED_POSTION = "DesiredJobTitle";
+	String APPLICANT_NAME = "ApplicantName";
+	String LOCATION = "Location";
+	String EXPERIENCE = "Experience";
+
 	
 	// Constants for Ad server
 	String HOST = "host";

@@ -1,6 +1,7 @@
 // This function will be called for Employer resume search
 function searchResume() {
 	
+	
 		keywords = $("#keywords").val();
 		cityState = $("#cityState").val();
 		radius = $("#radius").val();
@@ -8,13 +9,13 @@ function searchResume() {
 		start = $("#start").val();
 		searchtype = $("#searchtype").val();
 		phrase = $("#phrase").val();
-		var navUrl = "../employerSearchResume/searchResume.html?keywords=" + keywords
+		var navUrl = "../employerSearchResume/searchResumeFromDB.html?keywords=" + keywords
 				+ "&cityState=" + cityState + "&radius=" + radius + "&rows="
 				+ rows + "&start=" + start + "&searchtype=" + searchtype + "&phrase=pp";
 		
 		// Calling the Search resume controller for getting the result
 		$.getJSON(navUrl, function(data) {
-			//processPaginationReq("20");
+			processResumePaginationReq("20");
 			 //$("#TotalNoRecords").text(data["TotalNoRecords"]);
 			//$("#TotalRecord").text(data["TotalNoRecords"]);
 		})
@@ -27,6 +28,27 @@ function searchResume() {
 		$(".otherContent").attr("style", "display: none");
 		$(".searchContent").attr("style", "display: block");
 
+}
+
+function processResumePaginationReq(pageSize){
+	$.ajaxSetup({ cache: false });
+	$.ajax({
+		url : '../employerSearchResume/jobboardsearchresumeresultbody.html',
+		data : ({}),
+		
+		success : function(data) {
+		$("#resumeTableContent").html(data);
+		$("#noOfPage").val(pageSize);
+		$("#noOfPageLower").val(pageSize);
+		},
+		error : function(data) {
+			alert('Unable to process');
+		},
+		complete : function(data) {
+			// do nothing for now.
+		}
+	}
+	);
 }
 $(document).ready(function() {
 	

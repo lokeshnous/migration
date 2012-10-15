@@ -124,7 +124,7 @@ public class ResBuilderResume implements Serializable {
 	private List<ResBuilderEdu> resBuilderEdus;
 
 	//bi-directional many-to-one association to ResBuilderEmployment
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private List<ResBuilderEmployment> resBuilderEmployments;
 
 	//bi-directional many-to-one association to ResBuilderLanguage

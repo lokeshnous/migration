@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
@@ -211,5 +212,53 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 		}
 		return displayFacetList;
 	}
+	
+	
+	
+	/**
+	 * This method is  used to convert the ResumeDTOList 
+	 * coming from DB to JSON object.
+	 * @param List<ResumeDTO>
+	 * @return JSONObject
+	 */
+	public JSONObject convertToJSONForResumeFromDB(List<ResumeDTO> resumeDTOList){
+		
+		final JSONObject jobSrchJsonObj = new JSONObject();
+		final JSONArray jsonRows = new JSONArray();
+
+		for (ResumeDTO resumeDTO : resumeDTOList) {
+			
+			final JSONObject jobSrchJson = new JSONObject();
+			
+			jobSrchJson.put(MMJBCommonConstants.RESUME_DESIRED_POSTION,
+					MMUtils.isNull(resumeDTO.getResumeName()));
+			jobSrchJson.put(MMJBCommonConstants.APPLICANT_NAME,
+					resumeDTO.getFullName());
+			
+			/*String location = null;
+			if (resumeDTO.getCity() != null && resumeDTO.getState() != null) {
+				location = resumeDTO.getCity() + MMJBCommonConstants.COMMA
+						+ resumeDTO.getState();
+			} else if (resumeDTO.getCity() != null && resumeDTO.getState() == null) {
+				location = resumeDTO.getCity();
+			}*/
+			jobSrchJson.put(MMJBCommonConstants.LOCATION, MMUtils.isNull(resumeDTO.getState()));
+			jobSrchJson.put(MMJBCommonConstants.EXPERIENCE,resumeDTO.getExperience());
+			jobSrchJson.put(MMJBCommonConstants.EMPLOYMENT_TYPE, resumeDTO.getEmploymentType());
+			jobSrchJson.put(MMJBCommonConstants.RELOCATE, "Yes");
+			jobSrchJson.put(MMJBCommonConstants.POSTED_DT,convertToReqdDateString(resumeDTO.getPostDt()));
+			
+			jsonRows.add(jobSrchJson);
+
+		}
+
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				resumeDTOList.size());
+		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
+
+		return jobSrchJsonObj;
+	}
+	
+	
 	
 }

@@ -42,7 +42,7 @@
 
 						<jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include>
 
-						<div class="searchContent" style="display: none;">
+						<div class="searchContent" style="display: none;" id="resumeTableContent">
 							<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
 						</div>
 
@@ -57,7 +57,7 @@
 
 				<!-- Add include for employee dashboard content -->
 
-				<div class="mainTwo" style="display: block">
+				<div class="mainTwo otherContent" style="display: block">
 					<jsp:include page="jobboardemployerdashboardcontent.jsp"></jsp:include>
 				</div>
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -13,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.LocationDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
@@ -353,4 +356,64 @@ public class SearchResumeController {
 
 	}
 
+	/**
+	 * This method is used to search resumes directly from the DB.
+	 * This is a temporary implementation since SOLR is not yet configured.
+	 * @param session
+	 * @param searchResumeForm
+	 * @param result
+	 * @param request
+	 * @return JSONObject
+	 */
+	
+	@RequestMapping(value = "/searchResumeFromDB", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject searchResumeFromDB(HttpSession session,
+			SearchResumeForm searchResumeForm, BindingResult result,
+			HttpServletRequest request) {
+		
+		LOGGER.info("Calling Search Resume Controller!!!");
+		//session.removeAttribute("resumeDTOList");
+		session.removeAttribute("jobSrchJsonObj");
+		List<ResumeDTO> resumeDTOList = null;
+		JSONObject jobSrchJsonObj = null;
+		// Calling the jobSearch() of Service layer for getting the resume list
+		try {
+			resumeDTOList = resumeSearchService.resumeSearchFromDB(searchResumeForm.getKeywords());
+			//session.setAttribute("resumeDTOList", resumeDTOList);
+			if (resumeDTOList != null) {
+			// Calling the service layer for converting the JobSearchResultDTO
+			// object into JSON Object
+				jobSrchJsonObj = jsonConverterService.convertToJSONForResumeFromDB(resumeDTOList);
+			}
+		
+			jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS, resumeDTOList.size());
+
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while getting the Resume Search Result from DB...");
+		}
+		// add values in session
+		session.setAttribute("resSrchJsonList", jobSrchJsonObj);
+		return jobSrchJsonObj;
+		
+	}
+	
+	/**
+	 * Get the jobboardsearchresumeresultbody page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/jobboardsearchresumeresultbody")
+	public ModelAndView getjobboardsearchresultsBody(
+			HttpServletResponse response, HttpServletRequest request,
+			Model model) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("jobboardsearchresumeresultbody");
+		return modelAndView;
+	}
+	
+	
 }

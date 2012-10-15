@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -46,6 +47,82 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private List<ProfileAttribDTO> resumeAttribList;
 	private List<PhoneDetailDTO> listPhoneDtl;
 	private ContactInformationDTO contactInfoDTO;
+	
+	//Added new fields
+	
+	private String city;
+	
+	private String fullName;
+	
+	private String htmlResumeText;
+	
+	private Date postDt;
+	
+	private String state;
+	
+	private int experience;
+	
+	
+
+	public int getExperience() {
+		return experience;
+	}
+
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+	public String getFullName() {
+		return fullName;
+	}
+
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+
+	public String getHtmlResumeText() {
+		return htmlResumeText;
+	}
+
+
+	public void setHtmlResumeText(String htmlResumeText) {
+		this.htmlResumeText = htmlResumeText;
+	}
+
+
+	public Date getPostDt() {
+		return postDt;
+	}
+
+
+	public void setPostDt(Date postDt) {
+		this.postDt = postDt;
+	}
+
 
 	public int getUploadResumeId() {
 		return uploadResumeId;
