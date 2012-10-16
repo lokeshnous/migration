@@ -682,24 +682,19 @@ jQuery(document).ready(function() {
 				}
 				
 				function searchByTitle(jobTitle){
-				$.ajax({url: "../jobsearch/searchByTitle.html?keywords="+jobTitle,
-						success: function(data){ 
-								if(data.keywords != null){
-									$("#keywords").val(data.keywords);
-								}else if(data.cityState != null){
-									$("#cityState").val(data.cityState);
-								}else if(data.radius != null){
-									$("#radius").val(data.radius);
+					$..ajax({url: "../jobsearch/browseJobs.html?firstFQParam="+jobTitle+"&browseByTitle="+browseByTitle,
+								success: function(data){ 
+									$("#autoload").val(true);									
+									processPaginationReq("20");
+									$(".otherContent").attr("style","display: none");
+									$(".searchContent").attr("style","display: block");
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+					
 								}
-								$("#autoload").val(true);
-								findJobs();							
-						},
-						error: function(response) {
-							alert("Server Error : "+response.status);
-						},
-						complete: function() {
-							
-						}
 					});
 			    }
 				
