@@ -38,10 +38,14 @@
 		<security:intercept-url pattern="/jobSeekerResume/**"
 			access="hasRole('ROLE_JOB_SEEKER')" />
 		<security:intercept-url pattern="/savedSearches/**"
-			access="permitAll"/>
+			access="permitAll" />
+
+		<security:intercept-url pattern="/pgiController/**"
+			access="permitAll" requires-channel="https" />
+
 
 		<security:logout success-handler-ref="customLogoutSuccessHandler"
-			invalidate-session="true" logout-url="/logout.html"/>
+			invalidate-session="true" logout-url="/logout.html" />
 
 		<security:custom-filter ref="authenticationFilter"
 			position="FORM_LOGIN_FILTER" />
