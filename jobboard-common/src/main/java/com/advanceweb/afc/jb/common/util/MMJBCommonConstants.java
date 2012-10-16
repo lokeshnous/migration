@@ -113,10 +113,10 @@ public interface MMJBCommonConstants {
 	String LOCATION_SEARCH = "LOCATION-FILTER-JB2";
 	String KEYWORD_SEARCH = "KEYWORD-FILTER-JB2";
 	String BROWSE_SEARCH = "BROWSE-JB2";
-	
+
 	// Solr param
 	String SORT_PARAM = "sortParam";
-	String FIRST_FQ_PARAM  = "firstFQParam";
+	String FIRST_FQ_PARAM = "firstFQParam";
 	String SECOND_FQ_PARAM = "secondFQParam";
 	String THIRD_FQ_PARAM = "thirdFQParam";
 	String FOURTH_FQ_PARAM = "fouthFQParam";
@@ -127,7 +127,6 @@ public interface MMJBCommonConstants {
 	String ASC_STR = "asc";
 	String COUNT_STR = "count";
 	String FACET_SORT = "facetSort";
-	
 
 	// Solr Date pattern
 	String JSON_DATE_FORMAT = "MMM-dd-yyyy";
@@ -305,11 +304,11 @@ public interface MMJBCommonConstants {
 	String BEGIN_VAL = "beginVal";
 	String BEGIN = "begin";
 	String PAGE = "page";
-	String CURRENT_SEARCH_LIST = "currentSearchList";	
-	String MILES = " Miles";	
-	String HASHMAP_KEY = "key";	
-	String HASHMAP_VALUE = "value";	
-	
+	String CURRENT_SEARCH_LIST = "currentSearchList";
+	String MILES = " Miles";
+	String HASHMAP_KEY = "key";
+	String HASHMAP_VALUE = "value";
+
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
 	String EMAIL_MESSAGE = "Please enter correct Email address.";
@@ -355,7 +354,7 @@ public interface MMJBCommonConstants {
 	// Manage access permission
 	String FULL_ACCESS = "5";
 	String MANAGEEDITACCESS = "6";
-	String AGEN_PER_PAGE= "agePermPage";
+	String AGEN_PER_PAGE = "agePermPage";
 
 	String DATABASE_ERROR_CODE = "Database failed to support. Please contact your technical support team to resolve this issue.";
 	String UNIQUEKEY_PRIMARYKEY_VIOLATED = "Unique Key/Primary Key violated in database.Please contact your Database Administrator.";
@@ -393,8 +392,8 @@ public interface MMJBCommonConstants {
 	String URL_LINK_SECOND = "><b>View this job now</b></a> to learn more and submit your application.";
 	String URL_REDIRECT_MAIL = "redirect:/healthcarejobs/advanceweb.html";
 	String ERROR_SENDING_MAIL = "ERROR For sending mail option of SendToFriend method";
-	
-//	For Refine Search
+
+	// For Refine Search
 	String SPACE_OPN_BRCKT = " (";
 	String CLSG_BRCKT = ")";
 	String DISPLAY_RADIUS = "displayRadius";
@@ -404,7 +403,7 @@ public interface MMJBCommonConstants {
 	String REFINED = "refined";
 	String REFINERADIUS = "refineRadius";
 	String RADIUS = "radius";
-	
+
 	// Added for Resume search
 	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";
 	String RESUME_KEYWORD_SEARCH = "CANDIDATE-KEYWORD";
@@ -415,10 +414,13 @@ public interface MMJBCommonConstants {
 	String LOCATION = "Location";
 	String EXPERIENCE = "Experience";
 
-	
 	// Constants for Ad server
 	String HOST = "host";
 	String REFERER = "referer";
-	String USER_AGENT = "user-agent";	
+	String USER_AGENT = "user-agent";
+
+	// for browseByJobs
+	String BROWSE_BY_TITLE = "browseByTitle";
+	String FIRST_PARAMETER = "firstFQParam";
 
 }
