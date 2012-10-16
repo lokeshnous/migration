@@ -7,8 +7,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 		<head>		
-<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-		</head>
+<script type="text/javascript" src="../resources/js/expandCollapse.js">
+</script>
+<script type="text/javascript"  src="https://platform.twitter.com/widgets.js">
+</script>
+<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript">
+</script>
+<script src="http://platform.linkedin.com/in.js" type="text/javascript">
+</script>
+
+</head>
 
 		<body>
 		<c:choose>
@@ -43,7 +51,7 @@
 						<div class="column1">
 							<div class="section">
 							<c:if test="${currentSearchList != null}">
-								<h2>Current Search</h2>
+								<h3>Current Search</h3>
 								<c:forEach items="${currentSearchList}" var="item">
 									<div class="buttonRow">
 										${item.value}
@@ -55,13 +63,13 @@
 								</c:forEach>
 								<div class="section">
 									<div class="SaveSearchButton">
-										<a href="#" class="btn_sm orange nyroModal" id="saveThisSearchId" onclick="saveThisSearch();">Save This Search</a>
+										<a  rel="nofollow" href="#" class="btn_sm orange nyroModal" id="saveThisSearchId" onclick="saveThisSearch();">Save This Search</a>
 									</div>
 								</div>
 								</c:if>
 							</div>
 							<div class="section">
-								<h2>Refine Results</h2>
+								<h3>Refine Results</h3>
 
 								<div class="refineResults">
 
@@ -70,6 +78,7 @@
 									<c:if test="${refineRadius != 0}">
 									<script>$("#radiusPlus").click();</script>
 									</c:if>
+
 									<div class="refineResultsSubContent">
 										<ul>
 											<c:if test="${refineRadius==5}">
@@ -111,7 +120,6 @@
 											<c:if test="${refineRadius==100}">
 											</strong>
 											</c:if>
-											
 										</ul>
 									</div>
 									</c:if>
@@ -119,6 +127,7 @@
 									<c:if test="${secondFQParam != null}">
 									<script>$("#companyPlus").click();</script>
 									</c:if>
+
 									<div class="refineResultsSubContent">
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
@@ -139,6 +148,7 @@
 									<c:if test="${thirdFQParam != null}">
 									<script>$("#statePlus").click();</script>
 									</c:if>
+
 									<div class="refineResultsSubContent">
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
@@ -250,7 +260,6 @@
 						</li>
 					</ul>
 				</div>
-
 				<div class="searchResultsListing">
 
 					<div class="searchResultsItem">
@@ -327,11 +336,19 @@
 											src="../resources/images/email.png"></a></span>
 								</div> -->
 
-								<div class="ShareSearch">
+								<div class="ShareSearch" >
 								<span class="ShareText">Share:&nbsp;</span> 
-								<span class="fbook"><!-- <a href=""> --><!-- </a> --></span>
-								<span class="linkedIn"><!-- <a href=""> --><!-- </a> --></span> 
-								<span class="twitter"><!-- <a href=""> --><!-- </a> --></span>
+								<span >
+								<a name="fb_share" href="http://www.facebook.com/sharer.php">Share</a>
+								</span>
+								<span ><script type="IN/Share"></script>
+
+								</span> 
+								<span >
+								<a href="https://twitter.com/share" class="twitter-share-button" 
+								data-counturl="<%=request.getContextPath()%>/jobsearch/viewJobDetails.html?id=${job.JobId}&currentUrl=/jobboard/healthcarejobs/advanceweb.html"
+								data-text="<%=request.getContextPath()%>/jobsearch/viewJobDetails.html?id=${job.JobId}&currentUrl=/jobboard/healthcarejobs/advanceweb.html">Tweet</a>
+								</span>
 							</div>
 							
 							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
