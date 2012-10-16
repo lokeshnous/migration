@@ -257,6 +257,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Job.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/JobSeeker.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/domain/Resume.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmAlert.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmApplicationStatus.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacility.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityAlert.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityContact.java -text
@@ -270,6 +271,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySubsc
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySubscriptionPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySystem.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityTmp.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFolder.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFolderResume.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFolderResumePK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmInventoryDetail.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderAddress.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderHeader.java -text

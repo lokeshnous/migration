@@ -168,6 +168,10 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmOrderItem</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmOrderPayment</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFacilityPackage</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmApplicationStatus</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFolder</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFolderResume</value>
+					<value>com.advanceweb.afc.jb.data.entities.AdmFolderResumePK</value>
 			</list>
 		</property>
 	</bean>
