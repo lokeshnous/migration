@@ -413,6 +413,7 @@ public interface MMJBCommonConstants {
 	String APPLICANT_NAME = "ApplicantName";
 	String LOCATION = "Location";
 	String EXPERIENCE = "Experience";
+	String UPLOAD_RESUME_ID = "UploadResumeId";
 
 	// Constants for Ad server
 	String HOST = "host";
