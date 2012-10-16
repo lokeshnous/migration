@@ -166,7 +166,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			audit.setCreateDt(new Date());
 			audit.setId(pKey);
 			
-			AdmFacilityJpAudit auditObj = DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
+			AdmFacilityJpAudit auditObj =(AdmFacilityJpAudit) DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
 					audit.getId().getFacilityId(),audit.getId().getUserId(),audit.getId().getJobId()));
 			
 			if(null != auditObj){
