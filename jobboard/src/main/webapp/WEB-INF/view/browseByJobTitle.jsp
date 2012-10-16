@@ -4,7 +4,7 @@
 <div class="clearfix"></div>
       <div class="row marginBottom20">
         <div class="row marginTop5 paddingBottom05"><h1 class="FontSize24">Browse Jobs by Job Title</h1></div>
-       
+         <input type="hidden" name="browseByTitle" id="browseByTitle" value="browseByTitle"/>
              <div class="browsByColumns browsByColumnsNoBorder">
              <ul>
 	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="1" end="${jbsByTitleList.size()}" step="4">

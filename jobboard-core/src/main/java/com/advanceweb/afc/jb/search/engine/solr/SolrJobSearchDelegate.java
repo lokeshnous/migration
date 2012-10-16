@@ -67,7 +67,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 		/*
 		 * Check whether all the parameters coming from the UI is blank or not.
 		 */
-		if (validateInputParams(inputParams)) {
+		if (!searchName.equals(MMJBCommonConstants.BROWSE_SEARCH) && validateInputParams(inputParams)) {
 			LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
 			return null;
 		}

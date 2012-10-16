@@ -15,7 +15,9 @@ public class JobSearchResultForm {
 	private String employerPage;
 	private String locationPage;
 	private boolean browseBy;
-	
+	// Added for Browse JObs
+	private String jobPosition;
+
 	public boolean isBrowseBy() {
 		return browseBy;
 	}
@@ -91,11 +93,11 @@ public class JobSearchResultForm {
 	public boolean isRefined() {
 		return refined;
 	}
-	
+
 	public void setRefined(boolean refined) {
 		this.refined = refined;
 	}
-	
+
 	public String getJobTitlePage() {
 		return jobTitlePage;
 	}
@@ -118,6 +120,14 @@ public class JobSearchResultForm {
 
 	public void setLocationPage(String locationPage) {
 		this.locationPage = locationPage;
+	}
+
+	public String getJobPosition() {
+		return jobPosition;
+	}
+
+	public void setJobPosition(String jobPosition) {
+		this.jobPosition = jobPosition;
 	}
 
 }
