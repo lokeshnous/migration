@@ -14,6 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -164,8 +165,19 @@ public class JobPostDAOImpl implements JobPostDAO {
 			pKey.setInventoryDetailId(Integer.valueOf(dto.getJobPostingType()));
 			audit.setCreateDt(new Date());
 			audit.setId(pKey);
-			hibernateTemplate.saveOrUpdate(audit);
 			
+			AdmFacilityJpAudit auditObj = DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
+					audit.getId().getFacilityId(),audit.getId().getUserId(),audit.getId().getJobId()));
+			
+			if(null != auditObj){
+				audit.setCreateDt(auditObj.getCreateDt());
+				hibernateTemplate.delete(auditObj);
+				hibernateTemplate.save(audit);
+				LOGGER.info("Job post updated successfully");
+			}
+			else{
+				hibernateTemplate.save(audit);
+			}
 			List<JpJobApply> applyJobList = jobPostConversionHelper
 					.transformJobPostDTOToJpJobApply(dto, jpJob);
 			hibernateTemplate.saveOrUpdateAll(applyJobList);
@@ -307,13 +319,13 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean deleteJob(int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		boolean bDelete = false;
-		Date startDt = new Date(job.getStartDt().getTime());
-		Date endtDt = new Date(job.getEndDt().getTime());
-		long endtDateAsTimestamp = endtDt.getTime();
-		long starttDateAsTimestamp = startDt.getTime();
-		long currentTimestamp = new Date().getTime();
 		try {
 			if (null != job.getEndDt() && null != job.getStartDt()) {
+				Date startDt = new Date(job.getStartDt().getTime());
+				Date endtDt = new Date(job.getEndDt().getTime());
+				long endtDateAsTimestamp = endtDt.getTime();
+				long starttDateAsTimestamp = startDt.getTime();
+				long currentTimestamp = new Date().getTime();
 				if ((job.getActive() == 1 && endtDateAsTimestamp < currentTimestamp)
 						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)) {
 					// System deletes the job postings which are in "inactive"
