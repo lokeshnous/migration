@@ -273,7 +273,6 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilitySyste
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFacilityTmp.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFolder.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFolderResume.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmFolderResumePK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmInventoryDetail.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderAddress.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderHeader.java -text

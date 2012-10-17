@@ -171,7 +171,6 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmApplicationStatus</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFolder</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFolderResume</value>
-					<value>com.advanceweb.afc.jb.data.entities.AdmFolderResumePK</value>
 			</list>
 		</property>
 	</bean>

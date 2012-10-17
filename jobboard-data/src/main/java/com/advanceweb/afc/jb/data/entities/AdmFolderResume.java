@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -14,8 +15,13 @@ import java.util.Date;
 public class AdmFolderResume implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private AdmFolderResumePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="folder_resume_id")
+	private int folderResumeId;
+
+	@Column(name="application_status_id")
+	private int applicationStatusId;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="create_dt")
@@ -24,6 +30,12 @@ public class AdmFolderResume implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
+
+	@Column(name="folder_id")
+	private int folderId;
+
+	@Column(name="publish_resume_id")
+	private int publishResumeId;
 
 	private int rating;
 
@@ -34,14 +46,22 @@ public class AdmFolderResume implements Serializable {
     public AdmFolderResume() {
     }
 
-	public AdmFolderResumePK getId() {
-		return this.id;
+	public int getFolderResumeId() {
+		return this.folderResumeId;
 	}
 
-	public void setId(AdmFolderResumePK id) {
-		this.id = id;
+	public void setFolderResumeId(int folderResumeId) {
+		this.folderResumeId = folderResumeId;
 	}
-	
+
+	public int getApplicationStatusId() {
+		return this.applicationStatusId;
+	}
+
+	public void setApplicationStatusId(int applicationStatusId) {
+		this.applicationStatusId = applicationStatusId;
+	}
+
 	public Date getCreateDt() {
 		return this.createDt;
 	}
@@ -56,6 +76,22 @@ public class AdmFolderResume implements Serializable {
 
 	public void setDeleteDt(Date deleteDt) {
 		this.deleteDt = deleteDt;
+	}
+
+	public int getFolderId() {
+		return this.folderId;
+	}
+
+	public void setFolderId(int folderId) {
+		this.folderId = folderId;
+	}
+
+	public int getPublishResumeId() {
+		return this.publishResumeId;
+	}
+
+	public void setPublishResumeId(int publishResumeId) {
+		this.publishResumeId = publishResumeId;
 	}
 
 	public int getRating() {
