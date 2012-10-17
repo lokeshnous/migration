@@ -649,8 +649,8 @@ public class JobSearchController {
 			session.setAttribute(MMJBCommonConstants.BROWSE_BY_SEARCH, true);
 		}
 		if (!jobSearchResultForm.isBrowseBy()) {
-			if (!jobSearchValidator.validateJobSearch(jobSearchResultForm,
-					jobSrchJsonObj)) {
+			jobSrchJsonObj =jobSearchValidator.validateJobSearch(jobSearchResultForm) ;
+			if (jobSrchJsonObj != null) {
 				return jobSrchJsonObj;
 			}
 		}
