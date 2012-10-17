@@ -198,8 +198,8 @@ public class BrandingTemplateValidation {
 				fileExtension = video.getMediaPath().substring(videoLength - 4,
 						videoLength);
 				if (!(fileExtension
-						.contains(MMJBCommonConstants.VIDEO_TYPE_MOV) || fileExtension
-						.contains(MMJBCommonConstants.VIDEO_TYPE_MPG))) {
+						.contains(MMJBCommonConstants.MEDIA_TYPE_WMV) || fileExtension
+						.contains(MMJBCommonConstants.MEDIA_TYPE_MPEG_4))) {
 					return empBrandVideo;
 				}
 			}

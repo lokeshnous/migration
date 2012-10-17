@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,12 @@ public class BrandingTemplateController {
 
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
+	
+	private @Value("${appMediaPath}")
+	String appMediaPath;
+	
+	private @Value("${mediaPath}")
+	String mediaPath;
 
 	private @Value("${imageSizeLimit}")
 	String imageSizeLimit;
@@ -266,11 +273,45 @@ public class BrandingTemplateController {
 				|| brandingTemplateForm.getColor().isEmpty()) {
 			brandingTemplateForm.setColor(defaultColor);
 		}
+		
+		setVideoURL(brandingTemplateForm, request);
 		model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 
 		return model;
 	}
 
+	/**
+	 * This method converts the video file path to playable video URL
+	 * 
+	 * @param brandingTemplateForm
+	 * @param request
+	 */
+	public void setVideoURL(BrandingTemplateForm brandingTemplateForm,
+			HttpServletRequest request) {
+		List<VideoForm> listVideoForm = brandingTemplateForm.getListVideos();
+		List<VideoForm> modListVideoForm = new ArrayList<VideoForm>();
+		StringBuffer videoURL = new StringBuffer();
+
+		videoURL.append(request.getRequestURL().toString()
+				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY));
+		videoURL.append(mediaPath);
+
+		if (null != listVideoForm && !listVideoForm.isEmpty()) {
+			for (VideoForm videoForm : listVideoForm) {
+				int index = 0;
+				String path = videoForm.getMediaPath();
+				index = videoForm.getMediaPath().lastIndexOf('/');
+				if (index == -1) {
+					index = videoForm.getMediaPath().lastIndexOf('\\');
+				}
+				videoForm.setMediaPath(videoURL.append(
+						path.substring(index + 1)).toString());
+				modListVideoForm.add(videoForm);
+			}
+			brandingTemplateForm.setListVideos(modListVideoForm);
+		}
+	}
+	
 	/**
 	 * The method is called to read the branding information from database.
 	 * 
@@ -311,7 +352,7 @@ public class BrandingTemplateController {
 
 	@RequestMapping(value = "/previewExisting", method = RequestMethod.GET)
 	public ModelAndView previewExisting(BrandingTemplateForm form,
-			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session) {
+			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session, HttpServletRequest request) {
 
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
@@ -335,6 +376,7 @@ public class BrandingTemplateController {
 			brandingTemplateForm.setColor(defaultColor);
 		}
 
+		setVideoURL(brandingTemplateForm, request);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 		return model;
@@ -489,8 +531,7 @@ public class BrandingTemplateController {
 
 		for (VideoForm video : listVideos) {
 			if (video.getVideoFileData().getSize() > 0) {
-				video.setMediaPath(baseDirectoryPathImageAndMedia
-						+ STR_TEMPLATE_ + random.nextInt(10000)
+				video.setMediaPath(STR_TEMPLATE_ + random.nextInt(10000)
 						+ STR_UNDERSCORE
 						+ video.getVideoFileData().getOriginalFilename());
 
@@ -540,20 +581,7 @@ public class BrandingTemplateController {
 
 			if (!brandingTemplateForm.getIsSilverCustomer()) {
 
-				for (AddImageForm addImageForm : brandingTemplateForm
-						.getListAddImages()) {
-					if (addImageForm.getAddImageFileData().getSize() > 0) {
-						addImageForm.getAddImageFileData().transferTo(
-								new File(addImageForm.getMediaPath()));
-					}
-				}
-
-				for (VideoForm videoForm : brandingTemplateForm.getListVideos()) {
-					if (videoForm.getVideoFileData().getSize() > 0) {
-						videoForm.getVideoFileData().transferTo(
-								new File(videoForm.getMediaPath()));
-					}
-				}
+				uploadMultiMedia(brandingTemplateForm);
 			}
 			status = Boolean.TRUE;
 
@@ -564,6 +592,36 @@ public class BrandingTemplateController {
 
 		return status;
 
+	}
+
+	/**
+	 * @param brandingTemplateForm
+	 * @throws IOException
+	 */
+	private void uploadMultiMedia(BrandingTemplateForm brandingTemplateForm)
+			throws IOException {
+		for (AddImageForm addImageForm : brandingTemplateForm
+				.getListAddImages()) {
+			if (addImageForm.getAddImageFileData().getSize() > 0) {
+				addImageForm.getAddImageFileData().transferTo(
+						new File(addImageForm.getMediaPath()));
+			}
+		}
+
+		for (VideoForm videoForm : brandingTemplateForm.getListVideos()) {
+			if (videoForm.getVideoFileData().getSize() > 0) {
+				if (null != System.getProperty("catalina.home")) {
+					videoForm.getVideoFileData().transferTo(
+							new File(System
+									.getProperty("catalina.home")
+									+ appMediaPath
+									+ videoForm.getMediaPath()));
+				}
+				else{
+					LOGGER.error("Could not upload the video file, as catalina home was not set.");
+				}
+			}
+		}
 	}
 
 	/**
@@ -652,12 +710,11 @@ public class BrandingTemplateController {
 					.setChosenLogo(getOriginalName(brandingTemplateForm
 							.getLogoPath()));
 		}
-
-		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		if (brandingTemplateForm.getBrowsePath().equalsIgnoreCase("manage")) {
 			model.setViewName(STR_EMPDASHBOARD);
 
 		} else {
+			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		}
 
@@ -1042,6 +1099,13 @@ public class BrandingTemplateController {
 			List<VideoForm> updatedVideoList = new ArrayList<VideoForm>();
 			for (VideoForm video : brandingTemplateForm.getListVideos()) {
 				if (null != video.getMediaPath()) {
+					int index = 0;
+					String path = video.getMediaPath();
+					index = video.getMediaPath().lastIndexOf('/');
+					if (index == -1) {
+						index = video.getMediaPath().lastIndexOf('\\');
+					}
+					video.setMediaPath( path.substring(index + 1));
 					video.setChosenVideo(getOriginalName(video.getMediaPath()));
 				}
 				updatedVideoList.add(video);

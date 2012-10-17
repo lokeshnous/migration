@@ -230,39 +230,30 @@
 							<!-- Photo -->
 							<div id="slider1">
 							<c:forEach var="companyProfileDTO"
-									items="${jobDetail.listAddImages}" varStatus="status" step="4">
+									items="${videoList}" varStatus="status" step="3">
 									
 									<div class="slider1Frames">
-										<a id="${jobDetail.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index].mediaPath}"
-													
-													>
-											</div>
-										</a> <a
-											id="${jobDetail.listAddImages[status.index+1].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index+1].mediaPath}"
-													
-													>
-											</div>
-										</a>
-										<a
-											id="${jobDetail.listAddImages[status.index+2].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index+2].mediaPath}"
-													
-													>
-											</div>
-										</a>
-										<a
-											id="${jobDetail.listAddImages[status.index+3].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index+3].mediaPath}"
-													
-													>
-											</div>
-										</a>
+									
+										<div>
+										&nbsp;
+										<div id="mediaspacePath" style="display: none;">${videoList[status.index]}</div> 
+										<div name="mediaspace" id="mediaspace"></div> 
+										<script type='text/javascript' src="../resources/js/silverlight.js"></script>
+										<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+										<script type="text/javascript">
+											var cnt = document.getElementById("mediaspace");
+											var src = '../resources/MediaFiles/wmvplayer.xaml';
+											var filePath = $("#mediaspacePath").text();
+											var cfg = {
+												file: filePath,
+												height:'165',
+												width:'260',
+												autostart:'false'
+											};
+											var ply = new jeroenwijering.Player(cnt,src,cfg);
+										</script> 
+										</div>
+										
 									</div>
 								</c:forEach>
 								</div>

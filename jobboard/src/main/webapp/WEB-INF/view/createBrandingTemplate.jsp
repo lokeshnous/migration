@@ -325,7 +325,12 @@
 									<span class="floatLeft marginRight10">
 									 
 										<form:input path="listVideos[${status.index}].videoFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType" size="20" />
-									</span>	
+									</span>
+									<label class="MultimediaLabel">
+									<c:if test="${brandingTemplateForm.listVideos[status.index].chosenVideo != null}">
+										You uploaded <Strong>${brandingTemplateForm.listVideos[status.index].chosenVideo}</Strong> as your Video, you can upload a different Video.
+									</c:if>
+									</label>	
 									</div>
 								</c:forEach>
 							</div>	
@@ -338,7 +343,7 @@
 								<span class="classic">These videos will appear as
 									thumbnails in your interactive gallery. They will expand to
 									full size and play upon being clicked. The file size limit is
-									${brandingTemplateForm.videoSizeLimit} MB. Accepted file types include .mov and .mpg.</span>
+									${brandingTemplateForm.videoSizeLimit} MB. Accepted file types include .wmv and .mp4.</span>
 							</div>
 						</div>
 						

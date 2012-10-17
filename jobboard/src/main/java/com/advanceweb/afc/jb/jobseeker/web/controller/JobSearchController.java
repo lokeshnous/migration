@@ -52,6 +52,7 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.VideoDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
@@ -217,6 +218,9 @@ public class JobSearchController {
 
 	private @Value("${EMAIL_MESSAGE_BLANK}")
 	String emailMsgBlank;
+	
+	private @Value("${mediaPath}")
+	String mediaPath;
 
 	@Autowired
 	private ClickController clickController;
@@ -288,8 +292,10 @@ public class JobSearchController {
 						.getNewsFromXML();
 				List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
 
+				List<String> videoList = setVideoURL(jobDTO, request);
 				model.put("newsDTOList", newsDTOList);
 				model.put("jobDTOList", jobPostDTOList);
+				model.put("videoList", videoList);
 				modelView.setViewName("jobseekerJobDetailsTemplate");
 			}
 
@@ -1787,4 +1793,35 @@ public class JobSearchController {
 
 		return fqMap;
 	}
+	/**
+	 * This method converts the video file path to playable video URL
+	 * 
+	 * @param jobDTO
+	 * @param request
+	 * @return listVideoURL
+	 */
+	public List<String> setVideoURL(SearchedJobDTO jobDTO,
+			HttpServletRequest request) {
+		List<VideoDTO> listVideoDTO = jobDTO.getListVideos();
+		List<String> listVideoURL = new ArrayList<String>();
+		StringBuffer videoURL = new StringBuffer();
+		
+		videoURL.append(request.getRequestURL().toString()
+				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY));
+		videoURL.append(mediaPath);
+
+		if (null != listVideoDTO && !listVideoDTO.isEmpty()) {
+			for (VideoDTO dto : listVideoDTO) {
+				int index = 0;
+				String path = dto.getMediaPath();
+				index = dto.getMediaPath().lastIndexOf('/');
+				if (index == -1) {
+					index = dto.getMediaPath().lastIndexOf('\\');
+				}
+				listVideoURL.add(videoURL.append(path.substring(index + 1)).toString());
+			}
+		}
+		return listVideoURL;
+	}
+	
 }

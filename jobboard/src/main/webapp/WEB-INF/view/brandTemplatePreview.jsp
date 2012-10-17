@@ -209,38 +209,69 @@
 							<!-- Photo -->
 							<div id="slider2">
 							<c:forEach var="companyProfileDTO"
-									items="${brandingTemplateForm.listAddImages}" varStatus="status" step="4">
+									items="${brandingTemplateForm.listVideos}" varStatus="status" step="4">
 									<div class="slider1Frames">
-										<a id="${brandingTemplateForm.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.listAddImages[status.index].mediaPath}"
-													
-													>
-											</div>
-										</a> <a
-											id="${brandingTemplateForm.listAddImages[status.index+1].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.listAddImages[status.index+1].mediaPath}"
-													
-													>
-											</div>
-										</a>
-										<a
-											id="${brandingTemplateForm.listAddImages[status.index+2].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.listAddImages[status.index+2].mediaPath}"
-													
-													>
-											</div>
-										</a>
-										<a
-											id="${brandingTemplateForm.listAddImages[status.index+3].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.listAddImages[status.index+3].mediaPath}"
-													
-													>
-											</div>
-										</a>
+									
+									<div>
+									&nbsp;
+									<div id="mediaspacePath" style="display: none;">${brandingTemplateForm.listVideos[status.index].mediaPath}</div> 
+									<div id="mediaspace"></div> 
+									<script type='text/javascript' src="../resources/js/silverlight.js"></script>
+									<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+									<script type="text/javascript">
+										var cnt = document.getElementById("mediaspace");
+										var src = '../resources/MediaFiles/wmvplayer.xaml';
+										var filePath = $("#mediaspacePath").text();
+										var cfg = {
+											file: filePath,
+											height:'165',
+											width:'260',
+											autostart:'false'
+										};
+										var ply = new jeroenwijering.Player(cnt,src,cfg);
+									</script> 
+									</div>
+									
+									<%-- <div>
+									&nbsp;
+									<div id="mediaspacePath2" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
+									<div id="mediaspace2"></div> 
+									<script type='text/javascript' src="../resources/js/silverlight.js"></script>
+									<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+									<script type="text/javascript">
+										var cnt2 = document.getElementById("mediaspace2");
+										var src2 = '../resources/MediaFiles/wmvplayer.xaml';
+										var filePath2 = $("#mediaspacePath2").text();
+										var cfg2 = {
+											file: filePath2,
+											height:'165',
+											width:'260',
+											autostart:'false'
+										};
+										var ply2 = new jeroenwijering.Player(cnt2,src2,cfg2);
+									</script> 
+									</div>
+									
+									<div>
+									&nbsp;
+									<div id="mediaspacePath3" style="display: none;">${brandingTemplateForm.listVideos[status.index+2].mediaPath}</div> 
+									<div id="mediaspace3"></div> 
+									<script type='text/javascript' src="../resources/js/silverlight.js"></script>
+									<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+									<script type="text/javascript">
+										var cnt = document.getElementById("mediaspace3");
+										var src = '../resources/MediaFiles/wmvplayer.xaml';
+										var filePath = $("#mediaspacePath3").text();
+										var cfg = {
+											file: filePath,
+											height:'165',
+											width:'260',
+											autostart:'false'
+										};
+										var ply = new jeroenwijering.Player(cnt,src,cfg);
+									</script> 
+									</div> --%>
+									
 									</div>
 								</c:forEach>
 								</div>
