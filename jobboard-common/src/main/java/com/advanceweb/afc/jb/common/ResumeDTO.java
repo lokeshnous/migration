@@ -51,18 +51,23 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	//Added new fields
 	
 	private String city;
-	
 	private String fullName;
-	
 	private String htmlResumeText;
-	
 	private Date postDt;
-	
 	private String state;
-	
 	private int experience;
+	private int publishResumeId;
 	
-	
+
+	public int getPublishResumeId() {
+		return publishResumeId;
+	}
+
+
+	public void setPublishResumeId(int publishResumeId) {
+		this.publishResumeId = publishResumeId;
+	}
+
 
 	public int getExperience() {
 		return experience;

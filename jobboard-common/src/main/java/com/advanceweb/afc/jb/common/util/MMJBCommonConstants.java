@@ -414,6 +414,7 @@ public interface MMJBCommonConstants {
 	String LOCATION = "Location";
 	String EXPERIENCE = "Experience";
 	String UPLOAD_RESUME_ID = "UploadResumeId";
+	String PUBLISH_RESUME_ID = "PublishResumeId";
 
 	// Constants for Ad server
 	String HOST = "host";

@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.resume.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
+import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
@@ -62,6 +64,9 @@ public class SearchResumeController {
 
 	@Autowired
 	private LookupService lookupService;
+	
+	@Autowired
+	private ResumeService resumeService;
 
 	/**
 	 * This method will be used for doing resume search and Return a JSON Object
@@ -414,6 +419,67 @@ public class SearchResumeController {
 		modelAndView.setViewName("jobboardsearchresumeresultbody");
 		return modelAndView;
 	}
+	
+	
+	/**
+	 * Get the jobboardsearchresumeresultbody page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/moveToFolder")
+	public ModelAndView moveToFolder(HttpServletResponse response, 
+			HttpServletRequest request, HttpSession session,
+			@RequestParam("resumeIdAndDateArr") String resumeIdAndDateArr) {
+		ModelAndView modelAndView = new ModelAndView();
+		LOGGER.info("Publish Resume ID and Created date list :"+resumeIdAndDateArr);
+		String[] resumeIdAndDateArray = resumeIdAndDateArr.split(",");
+		//String[] createdDateArray = createdDateArr.split(",");
+		
+		List<String> publishResumeIdArrList = getPublishResumeArrayList(resumeIdAndDateArray);
+		//List<Date> createdDateList = getCreatedDateArrayList(createdDateArray);
+		
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		LOGGER.info("User Id is :"+userId);
+		boolean status = resumeService.moveResumesToFolder(publishResumeIdArrList, userId);
+		if(status){
+			LOGGER.info("Successfully Moved the Resumes to the Common Folder.");
+		}else{
+			LOGGER.info("Error occurred while moving the Resumes to the specified Folder.");
+		}
+		
+		modelAndView.setViewName("jobboardsearchresumeresultbody");
+		return modelAndView;
+	}
+
+	/**
+	 * 
+	 * @param publishResumeIdArr
+	 */
+	private List<String> getPublishResumeArrayList(String[] publishResumeIdArr) {
+		List<String> publishResumeIDList = new ArrayList<String>(); 
+		for(String publishId : publishResumeIdArr){
+			publishResumeIDList.add(publishId);
+		}
+		
+		return publishResumeIDList;
+	}
+	
+	/**
+	 * 
+	 * @param createdDateArr
+	 * @return
+	 *//*
+	private List<Date> getCreatedDateArrayList(String[] createdDateArr) {
+		List<Date> createdDateList = new ArrayList<Date>(); 
+		for(String createdDate : createdDateArr){
+			createdDateList.add(CommonUtil.stringDateToSQLDate(createdDate));
+		}
+		return createdDateList;
+	}*/
+	
 	
 	
 }

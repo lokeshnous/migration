@@ -40,5 +40,14 @@ public interface ResumeService {
 	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
 	int findResumeCount(int userId);
 	boolean checkDuplicateResumeName(String resumeId, String resumeName,int userId);
+	
+
+	/**
+	 * This method is used to move the resumes into adm_folder_resume table.
+	 * @param List<String>, int userId
+	 * @return boolean
+	 */
+	boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId);
+	
 }
 

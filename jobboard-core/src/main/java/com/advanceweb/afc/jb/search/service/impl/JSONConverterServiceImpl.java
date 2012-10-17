@@ -231,6 +231,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 			final JSONObject jobSrchJson = new JSONObject();
 			
 			jobSrchJson.put(MMJBCommonConstants.UPLOAD_RESUME_ID,resumeDTO.getUploadResumeId());
+			jobSrchJson.put(MMJBCommonConstants.PUBLISH_RESUME_ID,resumeDTO.getPublishResumeId());
 			jobSrchJson.put(MMJBCommonConstants.RESUME_DESIRED_POSTION,
 					MMUtils.isNull(resumeDTO.getResumeName()));
 			jobSrchJson.put(MMJBCommonConstants.APPLICANT_NAME,

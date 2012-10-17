@@ -16,12 +16,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.AdmFolder;
+import com.advanceweb.afc.jb.data.entities.AdmFolderResume;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
@@ -379,4 +382,59 @@ public class ResumeDaoImpl implements ResumeDao {
 		resumePresence = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and resumeName = '"+resumeName+"'"+" and deleteDt is NULL"));
 		return resumePresence > 0;
 	}
+	
+	/**
+	 * This method is used to move the resumes into adm_folder_resume table.
+	 * @param List<String>, int userId
+	 * @return boolean
+	 */
+	
+	public boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId){
+		boolean status = true;
+		
+		try{
+			List<AdmFolderResume> admFolderResumeList = new ArrayList<AdmFolderResume>();
+			int folderId = 0;
+			//Check if common folder is present in adm_folder. If not insert one row with
+			// user id.
+			
+			List<AdmFolder> admFolderList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+			if(admFolderList.size() == 0){
+				List<AdmFolder> admFolderSearchList = new ArrayList<AdmFolder>();
+				AdmFolder admFolder = new AdmFolder();
+				admFolder.setFolderName("default");
+				admFolder.setParentFolderId(0);
+				admFolder.setUserId(userId);
+				admFolderSearchList.add(admFolder);
+				hibernateTemplate.saveOrUpdateAll(admFolderSearchList);
+				
+				List<AdmFolder> admFolderListforFolderID = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+				folderId = admFolderListforFolderID.get(0).getFolderId();
+			}else{
+				List<AdmFolder> admFolderListforFolderID = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+				folderId = admFolderListforFolderID.get(0).getFolderId();
+			}
+			
+			
+				
+			for(int i=0; i < publishResumeIdArrList.size(); i++){
+				AdmFolderResume admFolderResume = new AdmFolderResume();
+				admFolderResume.setPublishResumeId(Integer.parseInt(publishResumeIdArrList.get(i)));
+				admFolderResume.setFolderId(folderId);
+				admFolderResume.setCreateDt(CommonUtil.stringDateToSQLDate(publishResumeIdArrList.get(++i)));
+				admFolderResumeList.add(admFolderResume);
+			}
+			
+			hibernateTemplate.saveOrUpdateAll(admFolderResumeList);
+		
+		}catch (HibernateException e) {
+			LOGGER.info("Error occurred while saving the resume details into Adm_folder_resume table.");
+			status = false;
+		}
+		
+		return status;
+	}
+	
+	
+	
 }

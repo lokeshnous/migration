@@ -140,7 +140,7 @@ public class ResBuilderResume implements Serializable {
 	private List<ResBuilderReference> resBuilderReferences;
 
 	//bi-directional many-to-one association to ResPublishResume
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="publish_resume_id")
 	private ResPublishResume resPublishResume;
 		

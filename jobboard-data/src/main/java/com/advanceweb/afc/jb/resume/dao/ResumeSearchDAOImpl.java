@@ -49,6 +49,7 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 		
 		for(ResBuilderResume obj: resBuilderResumeList){
 			ResumeDTO resumeDTO = new ResumeDTO();
+			resumeDTO.setPublishResumeId(obj.getResPublishResume().getPublishResumeId());
 			resumeDTO.setUploadResumeId(obj.getResUploadResumeId());
 			resumeDTO.setResumeName(obj.getResumeName());
 			resumeDTO.setFullName(obj.getFirstName()+" "+ obj.getLastName());

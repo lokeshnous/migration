@@ -143,20 +143,20 @@
 								</div>
 							</div>
 							<div class=" floatLeft marginBottom15 marginTop10">
-								<a href="" class="btn_sm orange">Move Checked Candidates To
+								<a href="#" class="btn_sm orange" id="MoveToFolder" onclick="moveToFolder();">Move Checked Candidates To
 									Folder </a>
 							</div>
 
 
 
 							<div class="row marginTop0">
-								<table width="100%" border="0" cellspacing="0" cellpadding="0"
+								<table id="resumeTable" width="100%" border="0" cellspacing="0" cellpadding="0"
 									class="grid4">
 									<tr class=" borderBottomNone LightGrayBG ">
 										<th width="1%" align="left" valign="top" scope="col">&nbsp;</th>
 										<th width="22%" align="left" valign="top" scope="col"><input
 											type="checkbox" name="checkbox" id="checkbox"
-											class="marginRight5"> <label for="checkbox">Desired
+											class="marginRight5" disabled="disabled"> <label for="checkbox">Desired
 												Position</label></th>
 										<th width="15%" align="left" valign="top" scope="col">Applicant
 											Name</th>
@@ -172,7 +172,7 @@
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
 										<td align="left" valign="bottom"><input type="checkbox"
-											name="checkbox2" id="checkbox2" class="marginRight5">
+											name="checkbox2"  value="${job['PublishResumeId']}" class="marginRight5">
 											<label for="checkbox2"><a href="#">${job["DesiredJobTitle"]}</a></label></td>
 										<td align="left" valign="bottom">${job["ApplicantName"]}</td>
 										<td align="left" valign="bottom">${job["Location"]}</td>

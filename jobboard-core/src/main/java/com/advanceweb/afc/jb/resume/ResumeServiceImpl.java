@@ -158,5 +158,17 @@ public class ResumeServiceImpl implements ResumeService {
 	public boolean updateResumeCopyPaste(ResumeDTO resumeDTO) {
 		return resumeDao.updateResumeCopyPaste(resumeDTO);
 	}
+	
+
+
+	/**
+	 * This method is used to move the resumes into adm_folder_resume table.
+	 * @param List<String>, int userId
+	 * @return boolean
+	 */
+	public boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId){
+		return resumeDao.moveResumesToFolder(publishResumeIdArrList, userId);
+	}
+	
 
 }

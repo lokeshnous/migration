@@ -158,5 +158,33 @@ public class CommonUtil {
 		return sqltDate;
 	}
 	
+	/**
+	 * This method will convert String date to Date object.
+	 * @param strDate
+	 * @return Date
+	 */
+	
+	public static Date stringDateToSQLDate(String strDate) {
+
+		Date sqltDate = null;
+
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(strDate)) {
+
+				sqltDate = new java.sql.Date(new SimpleDateFormat(
+						MMJBCommonConstants.SQL_DATE_PATTERN, Locale.ENGLISH)
+						.parse(new SimpleDateFormat(
+								MMJBCommonConstants.SQL_DATE_PATTERN,
+								Locale.ENGLISH).format(new SimpleDateFormat(
+								MMJBCommonConstants.JSON_DATE_FORMAT,
+								Locale.ENGLISH).parse(strDate))).getTime());
+
+			}
+		} catch (ParseException e) {
+			LOGGER.info("convertDateStringToSQLDate Exception");
+		}
+		return sqltDate;
+	}
+	
 	
 }
