@@ -682,7 +682,8 @@ jQuery(document).ready(function() {
 				}
 				
 				function searchByTitle(jobTitle){
-					$..ajax({url: "../jobsearch/browseJobs.html?firstFQParam="+jobTitle+"&browseByTitle="+browseByTitle,
+					var browseByTitle = $("#browseByTitle").val();
+					$.ajax({url: "../jobsearch/searchJob.html?firstFQParam="+jobTitle+"&browseByTitle="+browseByTitle,
 								success: function(data){ 
 									$("#autoload").val(true);									
 									processPaginationReq("20");
@@ -697,5 +698,25 @@ jQuery(document).ready(function() {
 								}
 					});
 			    }
+				
+				function searchByLocation(stateFullName){
+					alert('stateFullName'+stateFullName);
+					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,
+								success: function(data){ 
+									$("#autoload").val(true);									
+									processPaginationReq("20");
+									$(".otherContent").attr("style","display: none");
+									$(".searchContent").attr("style","display: block");
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+					
+								}
+					});
+			    }
+				
+				
 				
 				

@@ -421,7 +421,10 @@ public interface MMJBCommonConstants {
 	String USER_AGENT = "user-agent";
 
 	// for browseByJobs
+	String BROWSE_BY_SEARCH = "browseBySearch";
 	String BROWSE_BY_TITLE = "browseByTitle";
+	String BROWSE_BY_LOCATION = "browseByLocation";
+	String BROWSE_BY_EMPLOYER = "browseByEmployer";
 	String FIRST_PARAMETER = "firstFQParam";
 
 }
