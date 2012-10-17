@@ -110,22 +110,20 @@ public class JobSearchValidator {
 	 * @param jobSearchResultForm
 	 * @param jsonObject
 	 */
-	public boolean validateJobSearch(JobSearchResultForm jobSearchResultForm,
-			JSONObject jsonObject) {
-		boolean status = true;
+	public JSONObject validateJobSearch(JobSearchResultForm jobSearchResultForm
+			) {
+		JSONObject jsonObject = null;
 		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
 			jsonObject = new JSONObject();
 			jsonObject.put(ajaxMsg, jbSearchValKeyword);
-			status = false;
 		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(
 				MMJBCommonConstants.ZERO))
 				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
 						.trim())) {
 			jsonObject = new JSONObject();
 			jsonObject.put(ajaxMsg, jbSearchValCity);
-			status = false;
 		}
-		return status;
+		return jsonObject;
 	}
 	
 	
