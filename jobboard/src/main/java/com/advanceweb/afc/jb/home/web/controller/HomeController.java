@@ -28,6 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,7 +101,7 @@ public class HomeController extends AbstractController{
 
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
-			HttpSession session) {
+			HttpSession session, @ModelAttribute JobSearchResultForm jobSearchResultForm) {
 		model.addAttribute("viewhtml", true);
 		try {
 
@@ -141,7 +142,7 @@ public class HomeController extends AbstractController{
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
 			model.addAttribute("followuplinkyoutube", followuplinkyoutube);
 			model.addAttribute("followuplinklinkedin", followuplinklinkedin);
-			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+//			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 
 			// Add the Ads for the Home page
