@@ -104,9 +104,9 @@ public class ClientContext {
 	public static final String USER_PROFESSION = "user.profession";
 
 	/**
-	 * The sex of the user. This is useful in providing targeted contents.
+	 * The gender of the user. This is useful in providing targeted contents.
 	 */
-	public static final String USER_SEX = "user.sex";
+	public static final String USER_GENDER = "user.gender";
 
 	/**
 	 * The role of the user within the application. Used for providing any
@@ -127,7 +127,7 @@ public class ClientContext {
 	 * 
 	 * @param parms
 	 */
-	public ClientContext(Map<String, String> parms) {
+	public ClientContext(Map<String, String> params) {
 		this();
 		this.params.putAll(params);
 	}

@@ -102,7 +102,7 @@ public abstract class AbstractController {
 		clientContext.setProperty(ClientContext.USER_LOCATION, userLocation);
 		clientContext
 				.setProperty(ClientContext.USER_PROFESSION, userProfession);
-		clientContext.setProperty(ClientContext.USER_SEX, userGender);
+		clientContext.setProperty(ClientContext.USER_GENDER, userGender);
 		clientContext.setProperty(ClientContext.USER_ROLE, userRole);
 		return clientContext;
 	}
