@@ -38,15 +38,15 @@
 						<div class="row">
 						<div id="errorMsg" class="FormErrorDisplayText"></div>
 						</div>
-							<div class="floatLeft">
-								<h1 >
+							<div class="floatLeft width100P">
+								<h1>
 									<span>${totalNoOfRecords}</span> jobs match your search criteria.
 								</h1>
 							</div>
 						</div>
 					</div>
 
-					<div class="clearfix"></div>
+					
 					<div class="content_columns_search_results">
 						<div class="column1">
 							<div class="section">
@@ -420,6 +420,7 @@
        					</c:if>   
 					</div>
 				</div>
+			<div class="clearfix"></div>
 			</div>
 		
 		</div>
@@ -429,5 +430,6 @@
 					</form:form>
 					</c:otherwise>
 		</c:choose>
+		<div class="clearfix"></div>
 </body>
 </html>

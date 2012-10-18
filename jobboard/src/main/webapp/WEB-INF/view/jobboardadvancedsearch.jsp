@@ -75,6 +75,7 @@
 									</div>
 								</div>
 								<br />
+								<div class="row">
 								<div class="input_grp1 marginTop10">
 								<form:input path="cityState" id="cityState" cssClass="jb_input2" />
 									<!-- <input type="text" name="cityState" id="cityState"
@@ -104,8 +105,9 @@
 								</div>
 								<div class="input_grp3New">
 								<div class="FormErrorDisplayText" id="findSearchInfo"></div>
-								<input type="button" id="submitval" value="Find Jobs" class="orange jb_search_submit" />
+								<input type="button" id="submitval" value="Find Jobs" class="orange jb_search_submit marginTop15" />
 									<!-- <a href="" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
+								</div>
 								</div>
 							</div>
 
@@ -376,10 +378,13 @@
 
 
 							</div>
+							<div class="row">
 							<input type="button" id="submitvalAdv" value="Find Jobs" class="orange jb_search_submit" />
+							<a class="floatleft marginLeft10" href="">Clear Selection</a>
+							</div>
 					</form:form>
 							<!-- <a href="" class="btn_sm orange jb_search_submit">Find Jobs</a>  -->
-							<a href="">Clear Selection</a>
+							
 
 
 
@@ -427,6 +432,7 @@
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
 					<BR class="clearfix">
 				</div>
+				<BR class="clearfix">
 			</div>
 			<!-- main -->
 
@@ -434,6 +440,7 @@
 		<!-- end main_wrapper_inside -->
 	</div>
 	<!-- end main_wrapper_outside -->
+	<BR class="clearfix">
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 </body>
 </html>
