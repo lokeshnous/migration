@@ -230,11 +230,11 @@
 							<!-- Photo -->
 							<div id="slider1">
 							<c:forEach var="companyProfileDTO"
-									items="${videoList}" varStatus="status" step="3">
+									items="${videoList}" varStatus="status" step="1">
 									
 									<div class="slider1Frames">
 									
-										<div>
+										<div class="floatLeft width285 marginLeft10 marginRight10">
 										&nbsp;
 										<div id="mediaspacePath" style="display: none;">${videoList[status.index]}</div> 
 										<div name="mediaspace" id="mediaspace"></div> 
