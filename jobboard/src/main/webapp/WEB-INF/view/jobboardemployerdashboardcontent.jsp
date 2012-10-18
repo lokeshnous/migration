@@ -223,7 +223,7 @@
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon" href="">Manage Job-Seekers</a>
+								<a title="Coming Soon" href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage Job-Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
