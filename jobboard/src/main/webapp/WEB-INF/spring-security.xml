@@ -40,8 +40,32 @@
 		<security:intercept-url pattern="/savedSearches/**"
 			access="permitAll" />
 
+		<!-- Added for SSL Implementation -start -->
 		<security:intercept-url pattern="/pgiController/**"
 			access="permitAll" requires-channel="https" />
+		<security:intercept-url pattern="/employer/employerDashBoard.html"
+			access="permitAll" requires-channel="http" />
+		<security:intercept-url pattern="/logout.html"
+			access="permitAll" requires-channel="http" />
+		<!-- Added for SSL Implementation -end -->
+
+		<!-- Added for SSL Implementation :  
+			Server.xml : Connector port and Security: port must be same.
+			for example
+			
+			server.xml
+				 <Connector port="2815" protocol="HTTP/1.1"
+               				connectionTimeout="20000"
+               				redirectPort="8443" />
+				
+			spring-security.xml
+					
+				<security:port-mapping http="2815" https="8443" />
+		-start -->
+		<security:port-mappings>
+			<security:port-mapping http="2815" https="8443" />
+		</security:port-mappings>
+		<!-- Added for SSL Implementation -end -->
 
 
 		<security:logout success-handler-ref="customLogoutSuccessHandler"
