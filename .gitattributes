@@ -550,7 +550,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
-jobboard/src/main/java/messages_en.properties -text
 jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/properties/common.properties -text

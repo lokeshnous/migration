@@ -93,6 +93,17 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	}
 
 	/**
+	 * This method checks if the template limit has exceeded the limit
+	 * 
+	 * @param facilityId
+	 * @return boolean
+	 */
+	@Override
+	public boolean checkTemplateLimit(int facilityId){
+		return brandingTemplateDAO.checkTemplateLimit(facilityId);
+	}
+	
+	/**
 	 * This method is used to get the net suite customer id based on
 	 * adm facility id.
 	 * @param int admFacilityID

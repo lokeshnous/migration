@@ -95,8 +95,11 @@ public class BrandingTemplateController {
 	private @Value("${defaultColor}")
 	String defaultColor;
 	
-//	private @Value("${empBrandTemplateDelete}")
-//	String empBrandTemplateDelete;
+	private @Value("${empBrandTemplateDelete}")
+	String empBrandTemplateDelete;
+
+	private @Value("${empBrandTemplateExceed}")
+	String empBrandTemplateExceed;
 
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
@@ -136,6 +139,16 @@ public class BrandingTemplateController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		brandingTemplate.setEmployerId(user_id);
 
+		//Check if the user has exceeded the branding template limit
+		status = brandingTemplateService.checkTemplateLimit(facility_id);
+		if (!status) {
+			result.rejectValue("templateName", STR_NOTEMPTY,
+					empBrandTemplateExceed);
+			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
+			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
+			return model;
+		}
+		
 		// Read the Silver/Gold customer details from database
 		brandingTemplate = checkBrand(brandingTemplate, facility_id);
 
@@ -993,17 +1006,15 @@ public class BrandingTemplateController {
 			HttpServletResponse response, HttpSession session,
 			@RequestParam(STR_TEMPLATEID) int templateId) {
 
-		//boolean status = brandingTemplateService.checkTemplateUsage(templateId);
+		boolean status = brandingTemplateService.checkTemplateUsage(templateId);
 		JSONObject statusJson = new JSONObject();
-//		if (status) {
-//			statusJson.put("present", empBrandTemplateDelete);
-//			return statusJson;
-//		} else {
-//			statusJson.put("absent", "template not used in active job");
-//			return statusJson;
-//		}
-		
-		return statusJson;
+		if (status) {
+			statusJson.put("present", empBrandTemplateDelete);
+			return statusJson;
+		} else {
+			statusJson.put("absent", "template not used in active job");
+			return statusJson;
+		}
 	}
 	
 

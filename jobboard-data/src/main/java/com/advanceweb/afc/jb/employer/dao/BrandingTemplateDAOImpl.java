@@ -11,6 +11,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -42,6 +43,10 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			.getLogger(BrandingTemplateDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplateCareer;
+	
+	private @Value("${templateLimit}")
+	int templateLimit;
+
 
 	@Autowired
 	public void setHibernateTemplate(
@@ -210,6 +215,32 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return false;
 	}
 
+	/**
+	 * This method checks if the template limit has exceeded the limit
+	 * 
+	 * @param facilityId
+	 * @return boolean
+	 */
+	@Override
+	public boolean checkTemplateLimit(int facilityId) {
+		try {
+			if (facilityId != 0) {
+				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
+						.find("from  JpTemplate where admFacility.facilityId=? and deleteDt is null",
+								facilityId);
+				if(brandingTemplateList.size() < templateLimit)
+				{
+					return true;
+				}
+			}
+		} catch (HibernateException e) {
+			// logger call
+			LOGGER.error(e);
+			return false;
+		}
+		return false;
+	}
+	
 	/**
 	 * update the job posting Branding Template.
 	 */

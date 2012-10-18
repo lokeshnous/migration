@@ -73,6 +73,14 @@ public interface BrandingTemplateDAO {
 	boolean checkTemplateUsage(int templateId);
 	
 	/**
+	 * This method checks if the template limit has exceeded the limit
+	 * 
+	 * @param facilityId
+	 * @return boolean
+	 */
+	 boolean checkTemplateLimit(int facilityId);
+	
+	/**
 	 * Delete the job posting Branding Template.
 	 * 
 	 * @param facilityId
