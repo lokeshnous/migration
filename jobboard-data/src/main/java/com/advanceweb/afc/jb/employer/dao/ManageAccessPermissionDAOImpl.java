@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -45,6 +46,9 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	private HibernateTemplate hibernateTemplateCareers;
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
+	
+	@Autowired
+	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
 
 	private static final String VERIFY_EMAIL = "from MerUser where email = ? and deleteDt is NOT NULL";
 
@@ -134,6 +138,12 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			MerUser merUser) {
 		AdmFacility facilityP = (AdmFacility) hibernateTemplateCareers.find(
 				FIND_ADM_FACILITY, facilityIdP).get(0);
+
+		int nsCustomerId = 0;
+		List<FacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
+				.getNSCustomerIDFromAdmFacility(facilityIdP);
+		nsCustomerId = admFacilityDTOList.get(0).getNsCustomerID();
+		
 		AdmFacility facility = new AdmFacility();
 		if (facilityP.getFacilityType().equals(
 				MMJBCommonConstants.FACILITY_SYSTEM)) {
@@ -159,6 +169,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			facility.setColorPalette(facilityP.getColorPalette());
 			facility.setCompanyNews(facilityP.getCompanyNews());
 			facility.setCompanyOverview(facilityP.getCompanyOverview());
+			facility.setNsCustomerID(nsCustomerId);
 			hibernateTemplateCareers.save(facility);
 		}
 
