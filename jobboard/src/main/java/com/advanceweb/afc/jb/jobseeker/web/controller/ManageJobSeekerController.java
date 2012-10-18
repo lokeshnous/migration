@@ -199,7 +199,7 @@ public class ManageJobSeekerController {
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 				}
-				model.setViewName("manageJobSeekerContent");
+				model.setViewName("manageJobSeekers");
 			} else {
 				model.setViewName("manageJobSeekerFolderView");
 			}
