@@ -2601,12 +2601,13 @@ GradientType
 }
 
 .LocationNameArea {
-	width: 175px;
-	height: 100px;
+	width: 172px;
+	height:auto;
+	min-height:100px; 
 	float: left;
 	margin-top: 10px;
 }
-
+.browsByColumnsNoBorder ul li,.browsByColumnsWithBorder ul li, .LocationNameArea ul li {padding: 5px 0;}
 .LocationBorderRight {
 	border-right-width: 1px;
 	border-right-style: solid;
@@ -2620,7 +2621,7 @@ GradientType
 .LocationNameArea ul,.browsByColumnsNoBorder ul,.browsByColumnsWithBorder ul,.LocationNameArea ul li,.browsByColumnsNoBorder ul li,.browsByColumnsWithBorder ul li,.NameSelected
 	{
 	color: #fe9400 !important;
-	text-decoration: underline !important;
+	/*text-decoration: underline !important;*/
 }
 
 .NameOrderNormal,.NameOrderSelected {
