@@ -429,11 +429,15 @@ public class SearchResumeController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/moveToFolder")
-	public ModelAndView moveToFolder(HttpServletResponse response, 
+	@RequestMapping(value = "/moveResumeToFolder")
+	public @ResponseBody List<String> moveResumeToFolder(HttpServletResponse response, 
 			HttpServletRequest request, HttpSession session,
 			@RequestParam("resumeIdAndDateArr") String resumeIdAndDateArr) {
-		ModelAndView modelAndView = new ModelAndView();
+		List<String> idList = new ArrayList<String>();
+		idList.add("Selected Resumes moved successfully to Default Folder.");
+		//idList.add("20");
+		
+		//ModelAndView modelAndView = new ModelAndView();
 		LOGGER.info("Publish Resume ID and Created date list :"+resumeIdAndDateArr);
 		String[] resumeIdAndDateArray = resumeIdAndDateArr.split(",");
 		//String[] createdDateArray = createdDateArr.split(",");
@@ -450,8 +454,10 @@ public class SearchResumeController {
 			LOGGER.info("Error occurred while moving the Resumes to the specified Folder.");
 		}
 		
-		modelAndView.setViewName("jobboardsearchresumeresultbody");
-		return modelAndView;
+		//modelAndView.setViewName("jobboardsearchresumeresultbody");
+		//return modelAndView;
+		
+		return idList;
 	}
 
 	/**

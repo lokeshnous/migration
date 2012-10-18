@@ -216,15 +216,11 @@
 								</div>
 							</div>
 							<div class=" floatLeft marginBottom15 marginTop5">
-								<a href="" class="btn_sm orange">Move Checked Candidates To
+								<a href="#" class="btn_sm orange" onclick="moveToFolder();">Move Checked Candidates To
 									Folder </a>
 							</div>
 
 						</div>
-
-
-
-
 
 					</div>
 					<!-- column2-->

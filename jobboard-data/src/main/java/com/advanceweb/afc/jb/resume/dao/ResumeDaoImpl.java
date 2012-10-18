@@ -395,6 +395,11 @@ public class ResumeDaoImpl implements ResumeDao {
 		try{
 			List<AdmFolderResume> admFolderResumeList = new ArrayList<AdmFolderResume>();
 			int folderId = 0;
+			
+			//check if resumes are already moved to folder. If duplicate then return the duplicate resumes ids.
+			//List<AdmFolder> existingResumeList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+			
+			
 			//Check if common folder is present in adm_folder. If not insert one row with
 			// user id.
 			

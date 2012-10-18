@@ -80,26 +80,24 @@ function moveToFolder() {
         createddateArr[i] = $row.find('td:eq(7)').html();
         resumeIdAndDateArr[i] = publishResumeIdArr[i] +","+ createddateArr[i];
 	});
-	//alert("Ids:"+publishResumeIdArr+":Date:"+createddateArr+":");
-	
 	
 	//alert(resumeIdAndDateArr);
-	
 	
 	$.ajaxSetup({
 		cache : false
 	});
-	$.ajax({url : '../employerSearchResume/moveToFolder.html?resumeIdAndDateArr='+ resumeIdAndDateArr,
+	$.ajax({url : '../employerSearchResume/moveResumeToFolder.html?resumeIdAndDateArr='+ resumeIdAndDateArr,
 				success : function(data) {
-					$("#resumeTableContent").html(data);
-					$("#noOfPage").val(pageSize);
-					$("#noOfPageLower").val(pageSize);
+					//$("#resumeTableContent").html(data);
+					//$("#noOfPage").val(pageSize);
+					//$("#noOfPageLower").val(pageSize);
+					alert(data);
 				},
 				error : function(data) {
 					alert('Error');
 				},
 				complete : function(data) {
-					// do nothing for now.
+					
 				}
 			});
 
