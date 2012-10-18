@@ -69,16 +69,16 @@ jQuery(document).ready(function() {
 						class="grid">
 						<tr class="borderTopNone">
 							<th width="79%" align="left" scope="col">Employer Name</th>
-							<th width="21%" align="center" scope="col">Actions</th>
+							<th width="21%" align="left" scope="col">Actions</th>
 						</tr>
 						<c:forEach items="${assocEmplyrsNames}" var="assocEmplyrsName"
 							varStatus="status">
 							<tr id="${assocEmplyrsName.facilityId}">
 								<td>${assocEmplyrsName.name}</td>
-								<td align="center">
+								<td >
 									<a  
-									href="<%=request.getContextPath()%>/agency/viewFacilityDetails.html?facilityId=${assocEmplyrsName.facilityId}" class="nyroModal">
-									<img src="../resources/images/Edit.png" width="20" height="20"
+									href="<%=request.getContextPath()%>/agency/viewFacilityDetails.html?facilityId=${assocEmplyrsName.facilityId}" class="nyroModal view">
+									<img src="../resources/images/tranBg.png" width="20" height="20"
 									alt="">
 								</a>&nbsp;
 								    <a href="#"><img src="../resources/images/Delete.png" width="20" height="20" alt="delete"></a>
