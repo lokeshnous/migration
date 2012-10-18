@@ -334,6 +334,20 @@ jQuery(document).ready(function() {
 				}
 
 				window.onload = function() {
+					$.ajax({
+						url : '../healthcarejobs/homeFeatureEmps.html',
+						data : ({}),
+						
+						success : function(data) {
+						$("#slider1FramesId").html(data);
+						},
+						error : function(data) {
+							alert('Unable to process pp');
+						},
+						complete : function(data) {
+							// do nothing for now.
+						}
+					});
 					processPaginationReq("20");
 					$.ajaxSetup({ cache: false });
 					$.ajax({
@@ -700,10 +714,10 @@ jQuery(document).ready(function() {
 			    }
 				
 				function searchByLocation(stateFullName){
-					alert('stateFullName'+stateFullName);
+					var browseByLocation = $("#browseByLocation").val();
 					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,
 								success: function(data){ 
-									$("#autoload").val(true);									
+									//$("#autoload").val(true);									
 									processPaginationReq("20");
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");
