@@ -863,8 +863,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 					.getCurrentSession()
 					.createQuery(
 							"SELECT a from JpJob a where a.jobId='"
-									+ advSearchId + "'");
-
+									+ advSearchId + "' and (a.startDt is not NULL and a.endDt is not null) ");
 			jobs = query.list();
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -923,7 +922,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 			Date todayDate = null;
 			String enddateValue = apd.getEndDt() + " 00:00:00";
 			// String startdateValue=apd.getStartDt()+" 00:00:00";
-
 			endDateValue = dateConveter(enddateValue);
 			// startDateValue=dateConveter(startdateValue);
 			Calendar currentDate = Calendar.getInstance();
@@ -935,7 +933,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 			} catch (Exception e) {
 				LOGGER.info("Info data error date conversion");
 			}
-
 			int numberOfDays = twoDateDifferentValue(todayDate, endDateValue);
 			// int
 			// numberOfStartDate=twoDateDifferentValue(todayDate,startDateValue);
@@ -943,8 +940,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
 				mer.setActive((byte) 1);
 			} else if (numberOfDays < 0) {
-				mer.setJobStatus(MMJBCommonConstants.STATUS_INACTIVE);
-				mer.setActive((byte) 0);
+				mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
 			}
 			mer.setEndDt(endDateValue);
 			hibernateTemplate.update(mer);

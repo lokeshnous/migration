@@ -369,6 +369,7 @@ public interface MMJBCommonConstants {
 	String DO_NOT_HAVE_CREDITS_REPOST = "You do not have sufficient credits to repost the job.";
 	String STATUS_ACTIVE = "Active";
 	String STATUS_INACTIVE = "Inactive";
+	String STATUS_EXPIRED = "Expired";
 
 	// Added for inventory
 	String DAYS = "days";

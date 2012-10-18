@@ -22,7 +22,7 @@ public class PaymentGatewayValidation {
 			errors.rejectValue("creditCardInfoForm.creditCardNo", "NotEmpty",
 					"Credit card number should not be blank.");
 		} else if (!(form.getCreditCardNo().length() == 13)
-				&& !(form.getCreditCardNo().length() == 16)) {
+				&& !(form.getCreditCardNo().length() == 16) &&  !(form.getCreditCardNo().length() == 15)) {
 			errors.rejectValue("creditCardInfoForm.creditCardNo", "NotEmpty",
 					"Please enter valid credit card number.");
 		}

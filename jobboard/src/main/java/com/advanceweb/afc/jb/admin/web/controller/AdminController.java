@@ -183,7 +183,9 @@ public class AdminController {
 			int advSearchId = Integer.parseInt(advJobId);
 			postedJobList = employerJobPost
 					.retrieveAllJobPostByADvSearch(advSearchId);
+			if(postedJobList.get(0).getEndDt() !=null){
 			session.setAttribute("postedJobList", postedJobList);
+			}
 
 		} catch (Exception e) {
 			LOGGER.info("Manager Edit Job Posting Search Option");

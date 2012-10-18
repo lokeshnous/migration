@@ -164,6 +164,9 @@ public class JobPostConversionHelper<JobPostForm> {
 					Date startDt=new Date(job.getStartDt().getTime());
 					long startDateAsTimestamp = startDt.getTime();
 					long currentTimestamp = new Date().getTime();
+					
+					currentTimestamp=(long) Math.round(currentTimestamp);
+					startDateAsTimestamp=(long) Math.round(startDateAsTimestamp);
 					if (job.getActive() == 0
 							&& startDateAsTimestamp > currentTimestamp) {
 						jobPostDTO
