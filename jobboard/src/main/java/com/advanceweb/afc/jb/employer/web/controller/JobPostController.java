@@ -627,14 +627,12 @@ public class JobPostController {
 			@RequestParam("product") String product) {
 		int productId = Integer.parseInt(product);
 
-//		if (brandingTemplateService.getBrandPackage(productId)) {
-//			return populateDropdownsService
-//					.populateTemplateAutoComplete(company);
-//		} else {
-//			return new ArrayList<DropDownDTO>();
-//		}
-
-		return new ArrayList<DropDownDTO>();
+		if (brandingTemplateService.getBrandPackage(productId)) {
+			return populateDropdownsService
+					.populateTemplateAutoComplete(company);
+		} else {
+			return new ArrayList<DropDownDTO>();
+		}
 	}
 
 	@RequestMapping(value = "/getFacilityTemplate")
@@ -644,19 +642,19 @@ public class JobPostController {
 			@RequestParam("company") String company,
 			@RequestParam("product") String product, HttpSession session) {
 
-		List<DropDownDTO> templateList = null;
+		List<DropDownDTO> templateList;
 		int productId = Integer.parseInt(product);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 
-//		if (brandingTemplateService.getBrandPackage(productId) && isChecked) {
-//			templateList = populateDropdownsService
-//					.populateBrandingTemplateDropdown(
-//							employerInfoDTO.getFacilityId(),
-//							employerInfoDTO.getUserId());
-//		} else {
-//			templateList = getTemplate(company, product);
-//		}
+		if (brandingTemplateService.getBrandPackage(productId) && isChecked) {
+			templateList = populateDropdownsService
+					.populateBrandingTemplateDropdown(
+							employerInfoDTO.getFacilityId(),
+							employerInfoDTO.getUserId());
+		} else {
+			templateList = getTemplate(company, product);
+		}
 
 		return templateList;
 	}
