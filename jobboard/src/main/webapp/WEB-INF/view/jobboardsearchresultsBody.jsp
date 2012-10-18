@@ -82,43 +82,43 @@
 									<div class="refineResultsSubContent">
 										<ul>
 											<c:if test="${refineRadius==5}">
-											<strong>
+											<span style="font-weight:bold;"> 
 											</c:if>
 											<li><a onclick="refineByRadius('5')" >5 Miles</a></li>
 											<c:if test="${refineRadius==5}">
-											</strong>
+											</span>
 											</c:if>
 											
 											<c:if test="${refineRadius==10}">
-											<strong>
+											<span style="font-weight:bold;"> 
 											</c:if>
 											<li><a onclick="refineByRadius('10')" >10 Miles</a></li>
 											<c:if test="${refineRadius==10}">
-											</strong>
+											</span>
 											</c:if>
 											
 											<c:if test="${refineRadius==25}">
-											<strong>
+											<span style="font-weight:bold;"> 
 											</c:if>
 											<li><a onclick="refineByRadius('25')" >25 Miles</a></li>
 											<c:if test="${refineRadius==25}">
-											</strong>
+											</span>
 											</c:if>
 											
 											<c:if test="${refineRadius==50}">
-											<strong>
+											<span style="font-weight:bold;"> 
 											</c:if>
 											<li><a onclick="refineByRadius('50')" >50 Miles</a></li>
 											<c:if test="${refineRadius==50}">
-											</strong>
+											</span>
 											</c:if>
 											
 											<c:if test="${refineRadius==100}">
-											<strong>
+											<span style="font-weight:bold;"> 
 											</c:if>
 											<li><a onclick="refineByRadius('100')" >100 Miles</a></li>
 											<c:if test="${refineRadius==100}">
-											</strong>
+											</span>
 											</c:if>
 										</ul>
 									</div>
@@ -132,11 +132,11 @@
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
 											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
-											<strong> 
+											<span style="font-weight:bold;"> 
 											</c:if>
 												<li><a onclick="refineByCompany('${company[status.index]}');">${company[status.index]}</a></li>
 											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
-											</strong> 
+											</span> 
 											</c:if>
 											</c:forEach>
 										</ul>
@@ -153,11 +153,11 @@
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
 												<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
-												<strong> 
+												<span style="font-weight:bold;"> 
 												</c:if>
 												<li><a onclick="refineByState('${state[status.index]}');">${state[status.index]}</a></li>
 													<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
-												</strong> 
+												</span> 
 												</c:if>
 											</c:forEach>
 										</ul>
@@ -171,11 +171,11 @@
 										<ul>
 										<c:forEach items="${city}" var="displayCity" varStatus="status">
 											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
-											<strong style="color: #FE9400 !important">  
+											<span style="font-weight:bold;">  
 											</c:if>
 											<li><a onclick="refineByCity('${city[status.index]}');">${city[status.index]}</a></li>
 											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
-											</strong>
+											</span>
 											</c:if>
 										</c:forEach>
 										</ul>

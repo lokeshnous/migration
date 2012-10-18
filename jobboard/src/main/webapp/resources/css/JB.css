@@ -1210,6 +1210,10 @@ h3.jobSummaryTitle {
 	color: #FE9400;
 }
 
+.refineResultsSubContent ul span li a {
+	color: #FE9400 !important;
+}
+
 .content_columns_search_results .column1 ul.communities li {
 	font-size: 12px;
 	padding: 10px 0px 0px 0px;

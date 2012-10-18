@@ -212,7 +212,7 @@
 									items="${brandingTemplateForm.listVideos}" varStatus="status" step="4">
 									<div class="slider1Frames">
 									
-									<div>
+									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath" style="display: none;">${brandingTemplateForm.listVideos[status.index].mediaPath}</div> 
 									<div id="mediaspace"></div> 
@@ -232,7 +232,7 @@
 									</script> 
 									</div>
 									
-									<%-- <div>
+									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath2" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
 									<div id="mediaspace2"></div> 
@@ -252,7 +252,7 @@
 									</script> 
 									</div>
 									
-									<div>
+									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath3" style="display: none;">${brandingTemplateForm.listVideos[status.index+2].mediaPath}</div> 
 									<div id="mediaspace3"></div> 
@@ -270,7 +270,7 @@
 										};
 										var ply = new jeroenwijering.Player(cnt,src,cfg);
 									</script> 
-									</div> --%>
+									</div>
 									
 									</div>
 								</c:forEach>
