@@ -118,9 +118,7 @@ function closePopup() {
 			 });
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
 				data:$('#adminInventoryId').serialize(),
-				type:"POST",
 				success: function(data){
-					alert(data+"ddddddddddd");
 				    if(data != ''){
 				    	alert("Inventory details saved scuccessfully");
 				    	parent.$.nmTop().close();
