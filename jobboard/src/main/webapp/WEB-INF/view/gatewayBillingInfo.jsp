@@ -282,7 +282,7 @@
 						</div>
 
 						<div class="rowEvenNewSpacing reuse_address">
-							<form:checkbox onchange="copyAccToBillingAddr(this)"
+							<form:checkbox onclick="copyAccToBillingAddr(this)"
 								value="false" path="billingAddressForm.useMyAccountAddr"
 								name="useAcctAddress" />
 							<span>Use my account address</span>
