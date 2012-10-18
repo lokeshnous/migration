@@ -232,7 +232,7 @@
 									</script> 
 									</div>
 									
-									<div class="floatLeft width285 marginLeft10 marginRight10">
+									<%-- <div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath2" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
 									<div id="mediaspace2"></div> 
@@ -270,7 +270,7 @@
 										};
 										var ply = new jeroenwijering.Player(cnt,src,cfg);
 									</script> 
-									</div>
+									</div> --%>
 									
 									</div>
 								</c:forEach>
