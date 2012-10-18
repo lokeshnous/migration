@@ -38,6 +38,12 @@ jQuery(document).ready(function() {
 				var endDate=$("#endDt").val();
 		        var txtVal =  $('#endDt').val();
 		        var postedJobListId =  $('#postedJobListId').val();
+		        var convStartDate = new Date(startDate);
+		        var convEndDate = new Date(endDate);
+		        if(convEndDate < convStartDate){
+		        	$("#ErrorMsg").text("Please enter end date greater than start date!");
+					return false;
+		        }
 		        if(postedJobListId != 'true'){
 					$("#ErrorMsg").text("Please enter an Adv Job Id!");
 					return false;
@@ -145,7 +151,7 @@ function loadTable(){
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
-			<h2>MANAGE/EDIT JOB POSTING</h2>
+			<h2>MANAGE/EDIT JOB POSTING EXPIRE DATE</h2>
 			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/>
 		</div>
 		<div class="row">

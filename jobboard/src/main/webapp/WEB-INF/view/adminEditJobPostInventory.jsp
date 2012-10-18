@@ -187,10 +187,10 @@ function closePopup() {
 				commandName="inventoryForm">
 
 			<div class="row">
-				<span class="splLableText">Company Name: &nbsp;&nbsp; </span>
+				<span class="splLableText">Company Name: &nbsp;</span>
 				<input type="text" id="empList" name="empList"
 					class="job_seeker_Resume" value="${empList}"/>
-				<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR&nbsp;</span>
+				<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR</span>
 				<span class="lableText7">Net Suite ID Number:</span>
 				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
