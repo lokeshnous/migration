@@ -85,9 +85,9 @@ function cancelProcess(){
 
 				</div>
 				<div class="popUpButtonRow">
-					<input type="button" id="save" value="Save" class="orange" />
+					<input type="button" id="save" value="Save" class="orange cursor" />
 					<!-- <a href="" class="btn_sm orange">Save</a> -->
-					<input type="button" value="Cancel" class="nyroModalClose btn_sm orange" name="Cancel" />
+					<input type="button" value="Cancel" class="nyroModalClose orange cursor" name="Cancel" />
 				</div>
 			</form:form>
 		</div>

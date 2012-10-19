@@ -319,9 +319,9 @@ function validateNumber(event) {
 				<div class="popUpButtonRow">
 					<!--<a href="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
-					<input type="button" value="Save" class="orange" id="save"/>
+					<input type="button" value="Save" class="orange cursor" id="save"/>
 					<input type="button" value="Cancel" onclick="cancelProcess()"
-									class="orange" name="Cancel" />
+									class="orange cursor" name="Cancel" />
 					<a href="#jobSeekerRegister1" id="BackToTopId" style="display: none;">Back To Top</a>
 					<!-- <a href="#" class="btn_sm orange"
 						onclick="parent.$.nmTop().close();">Cancel</a> -->

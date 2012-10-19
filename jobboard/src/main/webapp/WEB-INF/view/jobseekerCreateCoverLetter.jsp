@@ -126,8 +126,8 @@
 					 </div>						
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
-								<input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" />
-								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel" title="Cancel"/>	
+								<input type="button" value="Save" name="save" id="save" class="btn_sm orange cursor" title="Save" />
+								<input type="button" name="Cancel" id="Cancel" class="orange cursor" value="Cancel" title="Cancel"/>	
 							</span>
 						</div>			
 					

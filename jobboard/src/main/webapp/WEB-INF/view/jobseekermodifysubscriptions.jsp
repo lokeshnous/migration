@@ -102,10 +102,10 @@
 				</div>
 				<div class="popUpButtonRow">
 					
-					<input type="button" id="save" class="orange" value="Save" />
+					<input type="button" id="save" class="orange cursor" value="Save" />
 					<%--<a href="" id="save" class="btn_sm orange">Save</a>  --%>
 					<input type="button" value="Cancel" 
-									class="nyroModalClose orange" name="Cancel" />
+									class="nyroModalClose orange cursor" name="Cancel" />
 					
 					<!-- <a href="" class="nyroModalClose btn_sm orange">Cancel</a> -->
 				</div>

@@ -97,7 +97,7 @@
 					</table>
 				</div>
 				<div class="row marginTop20 paddingBottom10">
-					<input type="button"  class="nyroModalClose btn_sm orange"
+					<input type="button"  class="nyroModalClose orange cursor"
 						value="Cancel" />
 					<!-- <a href="" class="btn_sm orange">Cancel</a> -->
 				</div>
