@@ -1776,7 +1776,7 @@ input.textBox2 {
 
 .paddingBottom05 {
 	padding-bottom: 5px;
-
+	border-bottom: 1px dotted #666;
 }
 
 .paddingBottom0 {
@@ -3774,6 +3774,7 @@ orange:hover {
 	Height: 29px;
 	float: left;
 	margin-bottom: 10px;
+	border-radius: 5px;
 }
 
 .faceBooklogin {
