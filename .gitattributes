@@ -532,6 +532,11 @@ jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormContr
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialConnectionManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginAdapter.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginUtils.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/AccountAddressForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/BillingAddressForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/CreditCardInfoForm.java -text
