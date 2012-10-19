@@ -2,7 +2,7 @@
 							<script type="text/javascript" src="../resources/js/slider.js"></script>
 							<!-- <div id="slider1PrevBtn"></div> -->
 							<c:if test="${prev != 0 }">
-							<div id="slider1PrevBtn"></div></c:if>
+							<div id="slider4PrevBtn"></div></c:if>
 							<div id="sliderVal">
 							<c:forEach var="companyProfileDTO"
 									items="${companyProfileDTOList}" varStatus="status" step="2">
@@ -26,5 +26,5 @@
 								</c:forEach>
 									</div>
 									<c:if test="${next != count }">
-							<div id="slider1NextBtn"></div></c:if>
+							<div id="slider4NextBtn"></div></c:if>
 						

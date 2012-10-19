@@ -41,9 +41,9 @@ $(function() {
 
 $(document).ready(function(){
 	
-    $("#slider1PrevBtn").click(function() {
+    $("#slider4PrevBtn").click(function() {
 		$.ajax({
-			url : '../healthcarejobs/getlist.html?moveBy=prev',
+			url : '../healthcarejobs/featureEmplist.html?moveBy=prev',
 			data : ({}),						
 			success : function(data) {
 				$.ajax({
@@ -70,9 +70,9 @@ $(document).ready(function(){
 			}
 	});
     });
-    $("#slider1NextBtn").click(function() {
+    $("#slider4NextBtn").click(function() {
 		$.ajax({
-			url : '../healthcarejobs/getlist.html?moveBy=next',
+			url : '../healthcarejobs/featureEmplist.html?moveBy=next',
 			data : ({}),						
 			success : function(data) {
 				$.ajax({
@@ -91,8 +91,7 @@ $(document).ready(function(){
 				});
 			},
 			error : function(data) {
-				alert('Unable to process'+
-						data);
+				alert('Unable to process');
 			},
 			complete : function(data) {
 				// do nothing for now.
