@@ -575,6 +575,7 @@ jobboard/src/main/webapp/WEB-INF/properties/log4j.properties -text
 jobboard/src/main/webapp/WEB-INF/properties/mailServer.properties -text
 jobboard/src/main/webapp/WEB-INF/properties/messages_en.properties -text
 jobboard/src/main/webapp/WEB-INF/properties/pdfGenerator.properties -text
+jobboard/src/main/webapp/WEB-INF/properties/springSocial.properties -text
 jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text
