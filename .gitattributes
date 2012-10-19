@@ -531,8 +531,8 @@ jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFailureMa
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValidator.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginSuccessManager.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutSuccessManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/AccountAddressForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/BillingAddressForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/pgi/web/controller/CreditCardInfoForm.java -text

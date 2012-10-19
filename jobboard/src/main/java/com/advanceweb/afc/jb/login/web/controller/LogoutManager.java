@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
-public class LogoutSuccessManager extends SimpleUrlLogoutSuccessHandler {
+public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request,

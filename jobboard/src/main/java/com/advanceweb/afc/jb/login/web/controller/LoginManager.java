@@ -19,7 +19,7 @@ import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
-public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
+public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
 	private LoginService loginService;
 
@@ -34,6 +34,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 			throws IOException, ServletException {
 
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
+		String socialSignUp =(String)request.getAttribute("socialSignUp");
 		response.reset();
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
@@ -62,7 +63,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
-			redirectFacility(user,infoDTO,request,response,session);
+			redirectFacility(user,request,response,session);
 		} else if (isFacilitySystem(authentication, pageValue)) {
 
 			/**
@@ -72,12 +73,13 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
-			redirectFacilitySystem(user,infoDTO,request,response,session);
+			redirectFacilitySystem(user,request,response,session);
 		} else {
-
+			boolean socalLogin=false;
+			if(socialSignUp!=null){socalLogin=true;}
 			session.invalidate();
 			sendRedirect(request, response,
-					"/commonLogin/login.html?error=true&page=" + pageValue);
+					"/commonLogin/login.html?error=true&page=" + pageValue+"&socalLogin="+socalLogin);
 
 		}
 	}
@@ -122,7 +124,7 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	private boolean isFacility(Authentication authentication, String pageValue) {
 		return authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
-				| authentication.getAuthorities().contains(
+				|| authentication.getAuthorities().contains(
 						new SimpleGrantedAuthority(
 								MMJBCommonConstants.ROLE_FACILITY_GROUP))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER);
@@ -180,10 +182,10 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param HttpServletResponse response
 	 * @param HttpSession session
 	 */
-	private void redirectFacility(UserDTO user,EmployerInfoDTO infoDTO,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
+	private void redirectFacility(UserDTO user,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
 		 
-		if ((profileRegistration
-				.validateProfileAttributes(user.getUserId()))) {
+		if (profileRegistration
+				.validateProfileAttributes(user.getUserId())) {
 			sendRedirect(request, response,
 					"/employer/employerDashBoard.html");
 
@@ -205,11 +207,11 @@ public class LoginSuccessManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param HttpServletResponse response
 	 * @param HttpSession session
 	 */
-	private void redirectFacilitySystem(UserDTO user, EmployerInfoDTO infoDTO,
+	private void redirectFacilitySystem(UserDTO user,
 			HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) throws IOException, ServletException {
 
-		if ((profileRegistration.validateProfileAttributes(user.getUserId()))) {
+		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 
 			sendRedirect(request, response, "/agency/agencyDashboard.html");
 
