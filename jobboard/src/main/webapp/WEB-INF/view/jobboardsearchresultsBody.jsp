@@ -47,7 +47,9 @@
 						</div>
 							<div class="floatLeft width100P">
 								<h1>
+								<c:if test="${totalNoOfRecords != null}">
 									<span>${totalNoOfRecords}</span> jobs match your search criteria.
+								</c:if>
 								</h1>
 							</div>
 						</div>
@@ -270,6 +272,10 @@
 				<div class="searchResultsListing">
 
 					<div class="searchResultsItem">
+					<c:if test="${searchResultsList == null || searchResultsList.size() == 0}">
+					No results found
+					</c:if>
+					
 					<c:forEach items="${searchResultsList}" var="job" varStatus="status">
 					<%-- <form:hidden path="jobDTOs[${status.index}].jobId"/> --%>
 								<ul
