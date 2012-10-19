@@ -9,7 +9,7 @@
 	float: left;
 }
 
-.featured_emp_slider #slider1PrevBtn, #slider2PrevBtn, #slider3PrevBtn
+.featured_emp_slider #slider1PrevBtn, #slider2PrevBtn, #slider3PrevBtn, #slider4PrevBtn
 {
 	float: left;
 	width: 20px;
@@ -22,7 +22,7 @@
 	margin: 10px 0;
 }
 
-.featured_emp_slider #slider1NextBtn, #slider2NextBtn, #slider3NextBtn
+.featured_emp_slider #slider1NextBtn, #slider2NextBtn, #slider3NextBtn, #slider4NextBtn
 {
 	float: left;
 	width: 20px;
