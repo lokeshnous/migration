@@ -716,8 +716,28 @@ jQuery(document).ready(function() {
 				function searchByLocation(stateFullName){
 					var browseByLocation = $("#browseByLocation").val();
 					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,
-								success: function(data){ 
-									//$("#autoload").val(true);									
+						success: function(data){ 
+									//$("#autoload").val(true);	
+									processPaginationReq("20");
+									$(".otherContent").attr("style","display: none");
+									$(".searchContent").attr("style","display: block");
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+					
+								}
+					});
+			    }
+				
+				function searchByLocationRegion(stateFullName){
+					
+					alert('stateFullName'+stateFullName);
+					var browseByLocation = $("#browseByLocation").val();
+					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,		
+						success: function(data){ 
+									$("#autoload").val(true);	
 									processPaginationReq("20");
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");
