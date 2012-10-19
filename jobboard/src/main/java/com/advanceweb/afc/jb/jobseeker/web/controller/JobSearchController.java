@@ -496,7 +496,8 @@ public class JobSearchController {
 	public void saveAppliedJob(int jobId, int userId,
 			SearchedJobDTO searchedJobDTO, AppliedJobDTO appliedJobDTO) {
 		// save the applied job in DB
-		Date currentDate = new Date();
+		Date currentDate = MMUtils.getCurrentDateAndTime();
+
 		AppliedJobDTO applyJobDTO = null;
 		if (appliedJobDTO == null || appliedJobDTO.getAppliedDt() != null) {
 			applyJobDTO = new AppliedJobDTO();
