@@ -69,7 +69,7 @@
 
 
 		<security:logout success-handler-ref="customLogoutSuccessHandler"
-			invalidate-session="true" logout-url="/logout.html" />
+			invalidate-session="true" logout-url="/logout.html"/>
 
 		<security:custom-filter ref="authenticationFilter"
 			position="FORM_LOGIN_FILTER" />
@@ -88,11 +88,11 @@
 		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager" />
 
 	<bean id="customAuthenticationSuccessHandler"
-		class="com.advanceweb.afc.jb.login.web.controller.LoginSuccessManager" />
+		class="com.advanceweb.afc.jb.login.web.controller.LoginManager" />
 
 
 	<bean id="customLogoutSuccessHandler"
-		class="com.advanceweb.afc.jb.login.web.controller.LogoutSuccessManager" />
+		class="com.advanceweb.afc.jb.login.web.controller.LogoutManager" />
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
