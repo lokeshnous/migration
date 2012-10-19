@@ -97,12 +97,12 @@ public class JobApplicationController {
 	 */
 	
 	@RequestMapping(value = "/saveAnonymousUserJobapply", method = RequestMethod.POST)
-	public ModelAndView appylJob(
+	public ModelAndView applyJob(
 			@ModelAttribute("jobApplicationForm") JobApplicationForm form,
 			BindingResult result,
 			HttpServletRequest request, HttpSession session) {
 		ModelAndView model=new ModelAndView();
-		try {
+		//try {
 			// send mail to employer email id which is given while posting the
 			 // job and attach the anonymous job seeker resume as
 			 // attachment,subject will be job title, body will contain short
@@ -129,6 +129,7 @@ public class JobApplicationController {
 
 			EmailDTO toEmployer = new EmailDTO();
 			InternetAddress[] employerToAddress = new InternetAddress[1];
+			 try {
 			employerToAddress[0] = new InternetAddress(
 					searchedJobDTO.getEmployerEmailAddress());
 			toEmployer.setFromAddress(advanceWebAddress);
@@ -146,13 +147,14 @@ public class JobApplicationController {
 			List<String> attachmentpaths = new ArrayList<String>();
 			
                 MultipartFile file = form.getFileContent();
+             
                 File upLoadedfile = new File(file.getOriginalFilename());
                 upLoadedfile.createNewFile();
                 FileOutputStream fos = new FileOutputStream(upLoadedfile);
                 fos.write(file.getBytes());
                 fos.close(); 
                 upLoadedfile.deleteOnExit();
-			try {
+			
 				attachmentpaths.add(upLoadedfile.getAbsolutePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
@@ -167,6 +169,7 @@ public class JobApplicationController {
 			 // short description
 			EmailDTO toJobSeeker = new EmailDTO();
 			InternetAddress[] jsToAddress = new InternetAddress[1];
+			try{
 			jsToAddress[0] = new InternetAddress(form.getUserEmail());
 			toJobSeeker.setToAddress(jsToAddress);
 			toJobSeeker.setFromAddress(advanceWebAddress);
