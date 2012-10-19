@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.agency.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,7 +53,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 public class AgencyRegistrationController {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("AgencyRegistrationController.class");
+			.getLogger(AgencyRegistrationController.class);
 	private static final String AGENCY_REG_FORM = "agencyRegForm";
 	private static final String MESSAGE = "message";
 	
@@ -77,6 +77,8 @@ public class AgencyRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	@Value("${socialSignupMsg}")
+	private  String socialSignupMsg;
 
 	@Value("${age.all.req.fields}")
 	private String reqFields;
@@ -95,13 +97,15 @@ public class AgencyRegistrationController {
 	private final static String AGENCYREG = "addAjecncyRegistration";
 
 	/**
-	 * This method is called to display job seeker registration page
+	 * This method is called to display  agency registration page
 	 * 
-	 * @param model
-	 * @return
+	 * @param HttpSession session
+	 * @param String profileId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
+	 * @param String serviceProviderId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
+	 * @return ModelAndView 
 	 */
 	@RequestMapping(value = "/agencyregistration", method = RequestMethod.GET)
-	public ModelAndView agencyRegistration(HttpSession session) {
+	public ModelAndView showAgencyRegistrationForm(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
 		ModelAndView model = new ModelAndView();
 
 		AgencyRegistrationForm agencyRegForm = new AgencyRegistrationForm();
@@ -119,6 +123,14 @@ public class AgencyRegistrationController {
 			agencyRegForm.setUserId(userDTO.getUserId());
 			agencyRegForm.setbReadOnly(true);
 		}
+		
+			if(profileId!=null){
+				agencyRegForm.setServiceProviderName(serviceProviderId);
+				agencyRegForm.setSocialProfileId(profileId);
+				agencyRegForm.setSocialSignUp(true);
+				model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+						"?serviceProviderId", serviceProviderId));
+			}
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 		agencyRegForm.setListProfAttribForms(listProfAttribForms);
@@ -133,15 +145,18 @@ public class AgencyRegistrationController {
 	}
 
 	/**
-	 * This method is called to display job seeker registration page
+	 * This method is called to save the agency registration information
 	 * 
-	 * @param model
-	 * @return
+	 * @param AgencyRegistrationForm agencyRegistrationForm
+	 * @param HttpSession session 
+	 * @param HttpServletRequest req
+	 * @param BindingResult result
+	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/saveAgencyRegistraion", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(AGENCY_REG_FORM) AgencyRegistrationForm agencyRegistrationForm,
-			HttpServletRequest request, Map<?, ?> map, HttpSession session,HttpServletRequest req,
+			HttpSession session,HttpServletRequest req,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
@@ -180,8 +195,7 @@ public class AgencyRegistrationController {
 		UserDTO userDTO = transformAgencyRegistration
 				.createUserDTO(agencyRegistrationForm);
 		List<ProfileAttribDTO> attribLists = transformAgencyRegistration
-				.transformProfileAttribFormToDTO(agencyRegistrationForm
-						.getListProfAttribForms());
+				.transformProfileAttribFormToDTO(agencyRegistrationForm);
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createUser(empDTO);
@@ -203,7 +217,7 @@ public class AgencyRegistrationController {
 					infoDTO.getFacilityId());
 			model.setViewName("redirect:/agency/agencyDashboard.html");
 		}
-		authenticateUserAndSetSession(userDTO, request);
+		authenticateUserAndSetSession(userDTO, req);
 		LOGGER.info("Registration is completed.");
 		return model;
 	}

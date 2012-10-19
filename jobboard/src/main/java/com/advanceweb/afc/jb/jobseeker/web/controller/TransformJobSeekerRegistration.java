@@ -220,8 +220,18 @@ public class TransformJobSeekerRegistration {
 				dto.setStrProfileAttribId(form.getStrProfileAttribId());
 				dtoList.add(dto);
 			}
+			
 		}
-
+		if(regForm.isSocialSignUp()){
+			ProfileAttribDTO newDTO = new ProfileAttribDTO();
+			newDTO.setStrLabelValue(regForm.getSocialProfileId());
+			newDTO.setStrProfileAttribId(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
+			if(regForm.getServiceProviderName().equals(MMJBCommonConstants.FACEBOOK)){
+				newDTO.setStrProfileAttribId(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID);
+			}
+			
+			dtoList.add(newDTO);
+		}
 		return dtoList;
 	}
 }

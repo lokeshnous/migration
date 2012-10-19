@@ -32,6 +32,10 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String[] currentsubs;
 	private String userId;	
 	private boolean bReadOnly;
+	// used for social media sign up
+	private boolean socialSignUp;
+	private String serviceProviderName;
+	private String socialProfileId;
 	private List<JobSeekerProfileAttribForm> listProfAttribForms;
 	private String otherProfession;
 	private boolean clickBack;
@@ -240,6 +244,30 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	public void setClickBack(boolean clickBack) {
 		this.clickBack = clickBack;
+	}
+
+	public boolean isSocialSignUp() {
+		return socialSignUp;
+	}
+
+	public void setSocialSignUp(boolean socialSignUp) {
+		this.socialSignUp = socialSignUp;
+	}
+
+	public String getServiceProviderName() {
+		return serviceProviderName;
+	}
+
+	public void setServiceProviderName(String serviceProviderName) {
+		this.serviceProviderName = serviceProviderName;
+	}
+
+	public String getSocialProfileId() {
+		return socialProfileId;
+	}
+
+	public void setSocialProfileId(String socialProfileId) {
+		this.socialProfileId = socialProfileId;
 	}	
 	
 }

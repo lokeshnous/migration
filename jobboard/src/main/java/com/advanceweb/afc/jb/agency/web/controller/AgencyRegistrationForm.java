@@ -59,6 +59,10 @@ public class AgencyRegistrationForm {
 	private String country;
 	
 	private boolean bReadOnly;
+	// for social media sign up
+    private boolean socialSignUp;
+	private String serviceProviderName;
+	private String socialProfileId;
 
 	private List<AgencyProfileAttribForm> listProfAttribForms;
 
@@ -331,6 +335,30 @@ public class AgencyRegistrationForm {
 
 	public void setbReadOnly(boolean bReadOnly) {
 		this.bReadOnly = bReadOnly;
+	}
+
+	public boolean isSocialSignUp() {
+		return socialSignUp;
+	}
+
+	public void setSocialSignUp(boolean socialSignUp) {
+		this.socialSignUp = socialSignUp;
+	}
+
+	public String getServiceProviderName() {
+		return serviceProviderName;
+	}
+
+	public void setServiceProviderName(String serviceProviderName) {
+		this.serviceProviderName = serviceProviderName;
+	}
+
+	public String getSocialProfileId() {
+		return socialProfileId;
+	}
+
+	public void setSocialProfileId(String socialProfileId) {
+		this.socialProfileId = socialProfileId;
 	}
 
 

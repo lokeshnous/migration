@@ -132,12 +132,14 @@ public class TransformAgencyRegistration {
 	 * @param attributeList
 	 * @return
 	 */
-	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(List<AgencyProfileAttribForm> attributeList){
+	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(AgencyRegistrationForm agencyRegForm){
 		
 		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
 		
-		if(null != attributeList){
-			for(AgencyProfileAttribForm form : attributeList){
+		if(null != agencyRegForm
+				.getListProfAttribForms()){
+			for(AgencyProfileAttribForm form : agencyRegForm
+					.getListProfAttribForms()){
 				ProfileAttribDTO dto = new ProfileAttribDTO();
 				if(MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form.getStrLabelName())){					
 					dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));					
@@ -150,7 +152,17 @@ public class TransformAgencyRegistration {
 				dtoList.add(dto);
 			}
 		}
-		
+		if(agencyRegForm.isSocialSignUp()){
+			ProfileAttribDTO newDTO = new ProfileAttribDTO();
+			newDTO.setStrLabelName(agencyRegForm.getServiceProviderName());
+			newDTO.setStrLabelValue(agencyRegForm.getSocialProfileId());
+			newDTO.setStrProfileAttribId(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
+			if(agencyRegForm.getServiceProviderName().equals(MMJBCommonConstants.FACEBOOK)){
+				newDTO.setStrProfileAttribId(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID);
+			}
+			
+			dtoList.add(newDTO);
+		}
 		return dtoList;		
 	}
 	

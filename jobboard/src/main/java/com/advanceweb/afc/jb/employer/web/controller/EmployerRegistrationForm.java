@@ -65,6 +65,10 @@ public class EmployerRegistrationForm {
 	private List<EmployerProfileAttribForm> listProfAttribForms;
 
 	private boolean bReadOnly;
+	// used for social media sign up
+	private boolean socialSignUp;
+	private String serviceProviderName;
+	private String socialProfileId;
 
 	private boolean helthSystem;
 	
@@ -354,4 +358,29 @@ public class EmployerRegistrationForm {
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
+
+	public boolean isSocialSignUp() {
+		return socialSignUp;
+	}
+
+	public void setSocialSignUp(boolean socialSignUp) {
+		this.socialSignUp = socialSignUp;
+	}
+
+	public String getServiceProviderName() {
+		return serviceProviderName;
+	}
+
+	public void setServiceProviderName(String serviceProviderName) {
+		this.serviceProviderName = serviceProviderName;
+	}
+
+	public String getSocialProfileId() {
+		return socialProfileId;
+	}
+
+	public void setSocialProfileId(String socialProfileId) {
+		this.socialProfileId = socialProfileId;
+	}
+	
 }

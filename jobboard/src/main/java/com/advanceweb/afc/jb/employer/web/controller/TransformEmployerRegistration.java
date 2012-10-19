@@ -108,6 +108,11 @@ public class TransformEmployerRegistration {
 							MMJBCommonConstants.MIDDLE_NAME)) {
 						form.setStrLabelValue(userDTO.getMiddleName());
 					}
+					/*if (form.getStrLabelName().equals(
+							MMJBCommonConstants.EMAIL_ADDRESS)) {
+						form.setStrLabelValue(userDTO.getEmailId());
+					}
+*/
 				}
 				listForms.add(form);
 			}
@@ -140,13 +145,14 @@ public class TransformEmployerRegistration {
 	 * @param attributeList
 	 * @return
 	 */
-	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(
-			List<EmployerProfileAttribForm> attributeList) {
+	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(EmployerRegistrationForm empRegForm) {
 
 		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
 
-		if (null != attributeList) {
-			for (EmployerProfileAttribForm form : attributeList) {
+		if (null != empRegForm
+				.getListProfAttribForms()) {
+			for (EmployerProfileAttribForm form : empRegForm
+					.getListProfAttribForms()) {
 				ProfileAttribDTO dto = new ProfileAttribDTO();
 				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
 						.getStrLabelName())) {
@@ -161,7 +167,17 @@ public class TransformEmployerRegistration {
 				dtoList.add(dto);
 			}
 		}
-
+		if(empRegForm.isSocialSignUp()){
+			ProfileAttribDTO newDTO = new ProfileAttribDTO();
+			newDTO.setStrLabelName(empRegForm.getServiceProviderName());
+			newDTO.setStrLabelValue(empRegForm.getSocialProfileId());
+			newDTO.setStrProfileAttribId(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
+			if(empRegForm.getServiceProviderName().equals(MMJBCommonConstants.FACEBOOK)){
+				newDTO.setStrProfileAttribId(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID);
+			}
+			
+			dtoList.add(newDTO);
+		}
 		return dtoList;
 	}
 

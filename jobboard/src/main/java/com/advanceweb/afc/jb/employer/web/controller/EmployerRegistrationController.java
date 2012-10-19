@@ -31,6 +31,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -104,7 +105,8 @@ public class EmployerRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-
+	@Value("${socialSignupMsg}")
+	private  String socialSignupMsg;
 	@Value("${emp.all.req.fields}")
 	private String reqFields;
 
@@ -146,13 +148,15 @@ public class EmployerRegistrationController {
 	private final static String MESSAGE = "message";
 
 	/**
-	 * This method is called to display job seeker registration page
+	 * This method is called to display  employer registration page
 	 * 
-	 * @param model
-	 * @return
+	 * @param HttpSession session
+	 * @param String profileId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
+	 * @param String serviceProviderId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
+	 * @return ModelAndView 
 	 */
 	@RequestMapping(value = "/employerregistration", method = RequestMethod.GET)
-	public ModelAndView employerregistration(HttpSession session) {
+	public ModelAndView showEmployerRegistrationForm(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
 		ModelAndView model = new ModelAndView();
 
 		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
@@ -170,6 +174,14 @@ public class EmployerRegistrationController {
 			empRegisterForm.setUserId(userDTO.getUserId());
 			empRegisterForm.setbReadOnly(true);
 		}
+		if(profileId!=null){
+			empRegisterForm.setServiceProviderName(serviceProviderId);
+			empRegisterForm.setSocialProfileId(profileId);
+			empRegisterForm.setSocialSignUp(true);
+			model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+					"?serviceProviderId", serviceProviderId));
+			
+		}
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 
@@ -186,17 +198,20 @@ public class EmployerRegistrationController {
 	}
 
 	/**
+	 * This method is called to save the employer registration information
 	 * 
-	 * This method is called to display job seeker registration page
-	 * 
-	 * @param model
-	 * @return
+	 * @param EmployerRegistrationForm empRegForm
+	 * @param Map map
+	 * @param HttpSession session 
+	 * @param HttpServletRequest req
+	 * @param BindingResult result
+	 * @return ModelAndView
 	 */
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/saveEmployerProfile", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(EMPREGFORM) EmployerRegistrationForm empRegForm,
-			HttpServletRequest request, Map map, HttpSession session,HttpServletRequest req,
+			Map map, HttpSession session,HttpServletRequest req,
 			BindingResult result) {
 		
 		ModelAndView model = new ModelAndView();
@@ -236,8 +251,7 @@ public class EmployerRegistrationController {
 		EmployerProfileDTO empDTO = new EmployerProfileDTO();
 		UserDTO userDTO = transformEmpReg.createUserDTO(empRegForm);
 		List<ProfileAttribDTO> attribLists = transformEmpReg
-				.transformProfileAttribFormToDTO(empRegForm
-						.getListProfAttribForms());
+				.transformProfileAttribFormToDTO(empRegForm);
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
@@ -263,17 +277,13 @@ public class EmployerRegistrationController {
 			if (empRegForm.isHelthSystem()) {
 				role = MMJBCommonConstants.ROLE_FACILITY_GROUP;
 			}
-			authenticateUserAndSetSession(userDTO, request, role);
+			authenticateUserAndSetSession(userDTO, req, role);
 
 			return model;
 		}
 
 	}
 	
-	public void validateMobileNo(){
-		
-	}
-
 	/**
 	 * validation for EmployerRegistration Form
 	 * 
@@ -436,10 +446,7 @@ public class EmployerRegistrationController {
 				} else if ((null == employeeAccountForm.getStreetAddress())
 						|| ("".equals(employeeAccountForm.getStreetAddress()))) {
 					return accountStreet;
-				} else if (employerRegistration
-						.validateEmail(employeeAccountForm.getEmail())) {
-					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				}
+				} 
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 				// By passing netsuite call
@@ -547,11 +554,6 @@ public class EmployerRegistrationController {
 				}
 
 			} else {
-				// if
-				// (listProfAttribForms.getEmail().toString().equals(employeeBillingForm.getEmail()))
-				// {
-				// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
-				// }
 				BillingAddressForm billingAddressForm = employeeBillingForm.billingAddressForm;
 				AccountBillingDTO billingAddressDTO = transformPaymentMethod
 						.transformDataBillingAddreFormToDto(billingAddressForm);
@@ -612,18 +614,11 @@ public class EmployerRegistrationController {
 			employeeAccountForm.setZipCode(listProfAttribForms.getZipCode());
 			employeeAccountForm.setPhone(listProfAttribForms.getPhone());
 
-			/**
-			 * this is for billing pages
-			 */
-			// int count = 0;
+			
 			AdmFacilityContactDTO listBillingForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
 			if ((listBillingForms.getCount() > 0)) {
-				/*
-				 * count = listBillingForms.getCount();
-				 * 
-				 * } else {
-				 */
+				
 				employeeBillingForm
 						.getBillingAddressForm()
 						.setFnameForBillingAddr(listBillingForms.getFirstName());

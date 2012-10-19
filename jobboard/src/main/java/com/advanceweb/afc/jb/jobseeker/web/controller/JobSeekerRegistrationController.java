@@ -35,6 +35,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,6 +68,9 @@ public class JobSeekerRegistrationController {
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	@Value("${socialSignupMsg}")
+	private  String socialSignupMsg;
 
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
@@ -117,7 +121,7 @@ public class JobSeekerRegistrationController {
 	 * @return
 	 */
 	@RequestMapping(value = "/createJobSeekerCreateYrAcct", method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistrationStep1(HttpSession session) {
+	public ModelAndView createJobSeekerRegistrationStep1(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
 
 		ModelAndView model = new ModelAndView();
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
@@ -138,7 +142,13 @@ public class JobSeekerRegistrationController {
 			session.setAttribute("userId", userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
 		}
-
+if(profileId!=null){
+	registerForm.setServiceProviderName(serviceProviderId);
+	registerForm.setSocialProfileId(profileId);
+	registerForm.setSocialSignUp(true);
+	model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+			"?serviceProviderId", serviceProviderId));
+}
 		model.setViewName("jobSeekerCreateAccount");
 		model.addObject("registerForm", registerForm);
 		return model;
