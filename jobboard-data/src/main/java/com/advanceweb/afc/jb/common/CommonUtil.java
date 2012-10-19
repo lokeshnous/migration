@@ -187,4 +187,28 @@ public class CommonUtil {
 	}
 	
 	
+	public static Date strDateToSQLDate(String strDate) {
+
+		Date sqltDate = null;
+
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(strDate)) {
+
+				sqltDate = new java.sql.Date(new SimpleDateFormat(
+						MMJBCommonConstants.SQL_DATE_PATTERN, Locale.ENGLISH)
+						.parse(new SimpleDateFormat(
+								MMJBCommonConstants.SQL_DATE_PATTERN,
+								Locale.ENGLISH).format(new SimpleDateFormat(
+								MMJBCommonConstants.NEWDATE_PATTERN,
+								Locale.ENGLISH).parse(strDate))).getTime());
+
+			}
+		} catch (ParseException e) {
+			LOGGER.info("convertDateStringToSQLDate Exception");
+		}
+		return sqltDate;
+	}
+	
+	
+	
 }

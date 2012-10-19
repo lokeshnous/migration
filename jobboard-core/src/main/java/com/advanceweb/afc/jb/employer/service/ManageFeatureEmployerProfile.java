@@ -31,6 +31,8 @@ public interface ManageFeatureEmployerProfile {
 	List<EmployerProfileDTO> getEmployerAccountDetails(long employerId);
 
 	List<CompanyProfileDTO> getEmployerList();
+	List<CompanyProfileDTO> getEmployerList(int startRow, int endRow);
+	Long getEmployerListCount();
 	
 	/**
 	 * This method is used to get the net suite customer id based on

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,6 +217,68 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 			LOGGER.debug(e);
 		}
 		return admFacilityDTOList;
+	}
+
+	@Override
+	public List<CompanyProfileDTO> getEmployerList(int startRow, int endRow) {
+		List<CompanyProfileDTO> companyProfileDTOList = new ArrayList<CompanyProfileDTO>();
+
+		Session session = sessionFactory.openSession();
+		Query query = null;
+		try {
+
+			// modified to bring all facility groups in futured employer list.
+			query = session.createQuery(
+					"from AdmFacility where facilityParentId = 0");
+			query.setFirstResult(startRow);
+			query.setMaxResults(endRow);
+			List<?> admFacilityList = query.list();
+			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
+					.hasNext();) {
+
+				CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
+				AdmFacility admFacility = (AdmFacility) iterator.next();
+				companyProfileDTO.setFacilityid(String.valueOf(admFacility
+						.getFacilityId()));
+				companyProfileDTO.setCompanyName(admFacility.getName());
+				companyProfileDTO.setCompanyNews(admFacility.getCompanyNews());
+				companyProfileDTO.setCompanyOverview(admFacility
+						.getCompanyOverview());
+
+				// companyProfileDTO.setCompanyOverview("Please Modify me as soon as possible, im in ManageFeatureEmployerProfileDAOImpl");
+				companyProfileDTO.setCompanyWebsite(admFacility.getUrl());
+				companyProfileDTO.setCompanyEmail(admFacility.getEmail());
+
+				// companyProfileDTO.setPositionTitle(facility.get);
+				companyProfileDTO.setLogoPath(admFacility.getLogoPath());
+				companyProfileDTOList.add(companyProfileDTO);
+
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
+
+		return companyProfileDTOList;
+	}
+
+	@Override
+	public Long getEmployerListCount() {
+		Long employerListCount = 0L;
+		try {
+
+			// modified to bring all facility groups in futured employer list.
+			employerListCount =(Long) hibernateTemplateCareers
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) AdmFacility a where a.facilityParentId = 0")
+					.uniqueResult(); 
+					
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
+
+		return employerListCount;
 	}
 
 }

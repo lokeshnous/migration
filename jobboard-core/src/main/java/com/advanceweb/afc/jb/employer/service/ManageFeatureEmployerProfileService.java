@@ -80,6 +80,24 @@ public class ManageFeatureEmployerProfileService implements
 	public UserDTO getNSCustomerDetails(int nsCustomerID){
 		return  manageFeatureEmployerDelegate.getNSCustomerDetails(nsCustomerID);
 	}
+
+	/**
+	 * Get the employer List by start row and end row
+	 * 
+	 */
+	@Override
+	public List<CompanyProfileDTO> getEmployerList(int startRow, int endRow) {
+		return manageFeatureEmployerProfileDAO.getEmployerList(startRow, endRow);
+	}
+
+	/**
+	 * Get the Employer List count
+	 */
+	@Override
+	public Long getEmployerListCount() {
+		Long count = manageFeatureEmployerProfileDAO.getEmployerListCount();
+		return count;
+	}
 	
 
 }

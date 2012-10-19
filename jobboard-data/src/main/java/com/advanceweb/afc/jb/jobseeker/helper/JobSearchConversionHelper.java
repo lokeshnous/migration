@@ -160,21 +160,24 @@ public class JobSearchConversionHelper {
 			String strCreatedDate = jobDTO.getCreateDt();
 			java.sql.Date createdDate = null;
 			if (strCreatedDate != null) {
-				createdDate = (Date) CommonUtil.convertDateStringToSQLDate(strCreatedDate);
+				createdDate = (Date) CommonUtil.strDateToSQLDate(strCreatedDate);
 			}
 			admSaveJob.setCreateDt(createdDate);
 			String strAppliedDate = jobDTO.getAppliedDt();
 			java.sql.Date appliedDate = null;
 			if (strAppliedDate != null) {
 				appliedDate = (Date) CommonUtil
-						.convertDateStringToSQLDate(strAppliedDate);
+						.strDateToSQLDate(strAppliedDate);
 			}
 			admSaveJob.setAppliedDt(appliedDate);
 			String strDeleteDt = jobDTO.getDeleteDt();
+			
+			System.out.println("strDeleteDt==="+strDeleteDt);
+			
 			java.sql.Date deleteDtDate = null;
 			if (strDeleteDt != null) {
 				deleteDtDate = (Date) CommonUtil
-						.convertDateStringToSQLDate(strDeleteDt);
+						.strDateToSQLDate(strDeleteDt);
 			}
 			// admSaveJob.setAppliedDt(appliedDate);
 			admSaveJob.setDeleteDt(deleteDtDate);
