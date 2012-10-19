@@ -868,16 +868,16 @@ function validateNumber(event) {
 								</div>
 
 								<div class="rowEvenNewSpacing MarginBottom10">
-									<span class="lableText3">Auto Renew:</span> <span>
+									<span class="lableText3">Auto Renew:</span> 
 										<div class="required">
 											<form:radiobutton path="autoRenew" value="Yes" />
-											<label class="greyLabel">Yes</label>
+											<label class="greyLabel17">Yes</label>
 										</div>
 										<div class="required">
 											<form:radiobutton path="autoRenew" value="No" />
-											<label class="greyLabel">No</label>
+											<label class="greyLabel17">No</label>
 										</div>
-									</span> <span class="required"> <%-- <form:radiobutton path="autoRenew" value="No"/><label class="greyLabel">No</label> --%>
+									 <span class="required"> <%-- <form:radiobutton path="autoRenew" value="No"/><label class="greyLabel">No</label> --%>
 									</span>
 									<div class="toolTip colorPkrAreaToolTip">
 										<span class="classic">Select 'Yes' if you would like
