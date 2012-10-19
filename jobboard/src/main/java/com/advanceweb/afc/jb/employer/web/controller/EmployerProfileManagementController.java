@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -257,6 +258,7 @@ public class EmployerProfileManagementController {
 		if (imageLength > 0) {
 			String fileExtension = fileName.substring(imageLength - 4,
 					imageLength);
+			fileExtension = fileExtension.toLowerCase(Locale.ENGLISH);
 			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG)
 					|| fileExtension
 							.contains(MMJBCommonConstants.IMAGE_TYPE_GIF)
@@ -291,13 +293,10 @@ public class EmployerProfileManagementController {
 	 * @param endDate
 	 * @return boolean
 	 */
-	public boolean isInDateRange(Date startDate, Date endDate){
+	public boolean isInDateRange(Date startDate, Date endDate) {
 		Date currentDate = new Date();
-		if(currentDate.getTime() > startDate.getTime() && currentDate.getTime() < endDate.getTime()){
-			return true;
-		}else{
-			return false;
-		}
+		return (currentDate.getTime() > startDate.getTime() && currentDate
+				.getTime() < endDate.getTime());
 	}
 	
 	

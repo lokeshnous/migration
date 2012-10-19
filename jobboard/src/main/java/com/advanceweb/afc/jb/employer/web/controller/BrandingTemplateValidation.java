@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.util.Locale;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -69,6 +71,7 @@ public class BrandingTemplateValidation {
 			int imageLength = brandingTemplateForm.getMainImagePath().length();
 			String fileExtension = brandingTemplateForm.getMainImagePath()
 					.substring(imageLength - 4, imageLength);
+			fileExtension = fileExtension.toLowerCase(Locale.ENGLISH);
 			long imageSize = brandingTemplateForm.getMainImageFileData()
 					.getSize();
 
@@ -103,6 +106,7 @@ public class BrandingTemplateValidation {
 			int imageLength = brandingTemplateForm.getLogoPath().length();
 			String fileExtension = brandingTemplateForm.getLogoPath()
 					.substring(imageLength - 4, imageLength);
+			fileExtension = fileExtension.toLowerCase(Locale.ENGLISH);
 			long imageSize = brandingTemplateForm.getLogoFileData().getSize();
 
 			if (imageSize == 0
@@ -140,6 +144,7 @@ public class BrandingTemplateValidation {
 				imageLength = image.getMediaPath().length();
 				fileExtension = image.getMediaPath().substring(imageLength - 4,
 						imageLength);
+				fileExtension = fileExtension.toLowerCase(Locale.ENGLISH);
 				if (!(fileExtension
 						.contains(MMJBCommonConstants.IMAGE_TYPE_JPG)
 						|| fileExtension
@@ -197,6 +202,7 @@ public class BrandingTemplateValidation {
 				videoLength = video.getMediaPath().length();
 				fileExtension = video.getMediaPath().substring(videoLength - 4,
 						videoLength);
+				fileExtension = fileExtension.toLowerCase(Locale.ENGLISH);
 				if (!(fileExtension
 						.contains(MMJBCommonConstants.MEDIA_TYPE_WMV) || fileExtension
 						.contains(MMJBCommonConstants.MEDIA_TYPE_MPEG_4))) {
