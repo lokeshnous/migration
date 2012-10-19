@@ -218,7 +218,7 @@ public class JobSearchController {
 
 	private @Value("${EMAIL_MESSAGE_BLANK}")
 	String emailMsgBlank;
-	
+
 	private @Value("${mediaPath}")
 	String mediaPath;
 
@@ -655,7 +655,8 @@ public class JobSearchController {
 			session.setAttribute(MMJBCommonConstants.BROWSE_BY_SEARCH, true);
 		}
 		if (!jobSearchResultForm.isBrowseBy()) {
-			jobSrchJsonObj =jobSearchValidator.validateJobSearch(jobSearchResultForm) ;
+			jobSrchJsonObj = jobSearchValidator
+					.validateJobSearch(jobSearchResultForm);
 			if (jobSrchJsonObj != null) {
 				return jobSrchJsonObj;
 			}
@@ -722,6 +723,14 @@ public class JobSearchController {
 		List<HashMap<String, Object>> currentSearchList = getCurrentSearchResultsList(session);
 		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj,
 				currentSearchList);
+		if ((request.getParameter(MMJBCommonConstants.BROWSE_BY_LOCATION) != null)) {
+			session.setAttribute("locationPage", true);
+			session.setAttribute("areaPage", true);
+			@SuppressWarnings("unchecked")
+			List<String> areaList = (List<String>) jobSrchJsonObj
+					.get(MMJBCommonConstants.AREA);
+			session.setAttribute("areaList", areaList);
+		}
 		return jobSrchJsonObj;
 	}
 
@@ -976,6 +985,9 @@ public class JobSearchController {
 		session.removeAttribute("employerPage");
 		session.removeAttribute("locationPage");
 		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_TITLE);
+		session.removeAttribute("list");
+		// session.removeAttribute("locationPage");
+		session.removeAttribute("areaPage");
 
 		// Remove FQ params for non Refine Search
 		if (null == session.getAttribute(MMJBCommonConstants.REFINED)
@@ -1393,19 +1405,25 @@ public class JobSearchController {
 		// Based on the browse by search setting the value for parameters
 		// jobposition:"asdfasdf".
 		String firstFQParam = MMJBCommonConstants.EMPTY;
-		if (request.getParameter(MMJBCommonConstants.FIRST_FQ_PARAM) != null) {
-			firstFQParam = "jobposition:"
-					+ request.getParameter(MMJBCommonConstants.FIRST_FQ_PARAM);
+		if ((jobSearchResultForm.isBrowseBy())
+				&& request.getParameter(MMJBCommonConstants.FIRST_FQ_PARAM) != null) {
+			firstFQParam = MMJBCommonConstants.BROWSE_JOB_POSITION
+					+ request.getParameter(MMJBCommonConstants.FIRST_FQ_PARAM)
+					+ '"';
 		}
 		String secondFQParam = MMJBCommonConstants.EMPTY;
-		if (request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM) != null) {
-			secondFQParam = request
-					.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM);
+		if ((jobSearchResultForm.isBrowseBy())
+				&& request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM) != null) {
+			secondFQParam = MMJBCommonConstants.BROWSE_COMPANY
+					+ request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
+					+ '"';
 		}
 		String thirdFQParam = MMJBCommonConstants.EMPTY;
-		if (request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM) != null) {
-			thirdFQParam = request
-					.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM);
+		if ((jobSearchResultForm.isBrowseBy())
+				&& request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM) != null) {
+			thirdFQParam = MMJBCommonConstants.BROWSE_LOCATION
+					+ request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
+					+ '"';
 		}
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
 		String fifthFQParam = MMJBCommonConstants.EMPTY;
@@ -1413,10 +1431,14 @@ public class JobSearchController {
 		// set the sort order for search results
 		String sortOrder = setSortOrder(session, request);
 
-		Map<String, String> mapFQParams = getFQParams(request, session);
-		secondFQParam = mapFQParams.get(MMJBCommonConstants.SECOND_FQ_PARAM);
-		thirdFQParam = mapFQParams.get(MMJBCommonConstants.THIRD_FQ_PARAM);
-		fouthFQParam = mapFQParams.get(MMJBCommonConstants.FOURTH_FQ_PARAM);
+		// Parameter value setting if its refined search
+		if (session.getAttribute(MMJBCommonConstants.REFINED).equals(true)) {
+			Map<String, String> mapFQParams = getFQParams(request, session);
+			secondFQParam = mapFQParams
+					.get(MMJBCommonConstants.SECOND_FQ_PARAM);
+			thirdFQParam = mapFQParams.get(MMJBCommonConstants.THIRD_FQ_PARAM);
+			fouthFQParam = mapFQParams.get(MMJBCommonConstants.FOURTH_FQ_PARAM);
+		}
 
 		// Putting all the parameters coming from the UI into a Map for further
 		// processing.
@@ -1793,6 +1815,7 @@ public class JobSearchController {
 
 		return fqMap;
 	}
+
 	/**
 	 * This method converts the video file path to playable video URL
 	 * 
@@ -1805,7 +1828,7 @@ public class JobSearchController {
 		List<VideoDTO> listVideoDTO = jobDTO.getListVideos();
 		List<String> listVideoURL = new ArrayList<String>();
 		StringBuffer videoURL = new StringBuffer();
-		
+
 		videoURL.append(request.getRequestURL().toString()
 				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY));
 		videoURL.append(mediaPath);
@@ -1818,10 +1841,11 @@ public class JobSearchController {
 				if (index == -1) {
 					index = dto.getMediaPath().lastIndexOf('\\');
 				}
-				listVideoURL.add(videoURL.append(path.substring(index + 1)).toString());
+				listVideoURL.add(videoURL.append(path.substring(index + 1))
+						.toString());
 			}
 		}
 		return listVideoURL;
 	}
-	
+
 }
