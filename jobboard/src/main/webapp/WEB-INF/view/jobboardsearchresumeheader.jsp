@@ -30,8 +30,16 @@
 						</div>
 						<div class="row marginTop10 marginBottom10">
 							<div class=" floatLeft  width255">
-								<form:input path="keywords" maxlength="60" id="keywords"
-									class="jb_input2" />
+							
+							<c:if test="<%=session.getAttribute(\"keywords\") != null %>">
+								<input type="text"  maxlength="60" id="keywords"
+									class="jb_input2" value="<%=session.getAttribute("keywords")%>" />
+							</c:if>		
+							<c:if test="<%=session.getAttribute(\"keywords\") == null %>">
+								<input type="text" maxlength="60" id="keywords"
+									class="jb_input2"/>
+							</c:if>	
+									
 								<div class="floatLeft">
 									<div class="toolTipBefore">
 										<label for="keywords">Keywords </label>
@@ -105,6 +113,8 @@
 
 					<div class="clearfix"></div>
 				</div>
+				
+				
 			 </form:form>    
 		</div>
 

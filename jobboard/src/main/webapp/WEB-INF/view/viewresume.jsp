@@ -34,7 +34,15 @@
               <div class="MidContent_Wrapper ">
               <div class="popupHeader Padding0  OrangeBG">
                   <h2>VIEW YOUR RESUME</h2>
-          <span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">Back to Dashboard</a></span></div>
+          <span class="floatRight marginRight10">
+          
+          <c:if test="<%=session.getAttribute(\"module\") == \"employer\" %>">
+          	<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">
+          </c:if>
+          <c:if test="<%=session.getAttribute(\"module\") ==null %>">
+          	<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">
+           </c:if>
+          Back to Dashboard</a></span></div>
 
         
         <div class="clearfix"></div>

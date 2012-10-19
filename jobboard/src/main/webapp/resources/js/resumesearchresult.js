@@ -1,7 +1,6 @@
 // This function will be called for Employer resume search
 function searchResume() {
-	
-	
+
 	keywords = $("#keywords").val();
 	cityState = $("#cityState").val();
 	radius = $("#radius").val();
@@ -31,7 +30,7 @@ function searchResume() {
 
 }
 
-function processResumePaginationReq(pageSize){
+function processResumePaginationReq(pageSize) {
 	$.ajaxSetup({
 		cache : false
 	});
@@ -52,55 +51,85 @@ function processResumePaginationReq(pageSize){
 		}
 	});
 }
-/*$(document).ready(function() {
-	
-	var cityState = $("#cityState").val();
-	var url = "../jobsearch/findLocation.html?cityState=" + cityState;
-	if (typeof (cityState) != "undefined") {
-		$("#cityState").autocomplete({
-			source : url
-		});
-	}
-	
-});*/ 
+
+ $(document).ready(function() {
+ 
+ var keywords = $("#keywords").val(); 
+ 
+ /*if(keywords != null){
+	 searchResume();
+ }*/
+ 
+ 
+ });
+ 
 
 function moveToFolder() {
-	
-	
+
 	var publishResumeIdArr = [];
 	var createddateArr = [];
 	var resumeIdAndDateArr = [];
-	//$(':checkbox:checked').each(function(i) {
-	//val[i] = $(this).val();
-	
-	
-	$('#resumeTable input[type="checkbox"]:checked').each(function(i){
-		publishResumeIdArr[i] = $(this).val();
-		var $row = $(this).parents('tr'); 
-        createddateArr[i] = $row.find('td:eq(7)').html();
-        resumeIdAndDateArr[i] = publishResumeIdArr[i] +","+ createddateArr[i];
-	});
-	
-	//alert(resumeIdAndDateArr);
-	
+
+	$('#resumeTable input[type="checkbox"]:checked').each(
+			function(i) {
+				publishResumeIdArr[i] = $(this).val();
+				var $row = $(this).parents('tr');
+				createddateArr[i] = $row.find('td:eq(7)').html();
+				resumeIdAndDateArr[i] = publishResumeIdArr[i] + ","
+						+ createddateArr[i];
+			});
+
 	$.ajaxSetup({
 		cache : false
 	});
-	$.ajax({url : '../employerSearchResume/moveResumeToFolder.html?resumeIdAndDateArr='+ resumeIdAndDateArr,
-				success : function(data) {
-					//$("#resumeTableContent").html(data);
-					//$("#noOfPage").val(pageSize);
-					//$("#noOfPageLower").val(pageSize);
-					alert(data);
-				},
-				error : function(data) {
-					alert('Error');
-				},
-				complete : function(data) {
-					
-				}
-			});
+	
+	
+	
+	$.ajax({
+		url : '../employerSearchResume/moveResumeToFolder.html?resumeIdAndDateArr='
+				+ resumeIdAndDateArr,
+		success : function(data) {
+			// $("#resumeTableContent").html(data);
+			// $("#noOfPage").val(pageSize);
+			// $("#noOfPageLower").val(pageSize);
+			alert(data);
+		},
+		error : function(data) {
+			alert('Error');
+		},
+		complete : function(data) {
+
+		}
+	});
+	
 
 }
+
+
+/*function viewResume(id){
+	alert(id);
+	//$.nmManual("../employerSearchResume/viewResume.html?resumeId="+id);
+	
+	$("form").attr("action", "../employerSearchResume/viewResume.html?resumeId="+id);
+	$("form").attr("method","POST");
+	$("form").submit();
+	
+	$.ajax({
+		url : '../employerSearchResume/viewResume.html?resumeId='+id,
+		success : function(data) {
+			// $("#resumeTableContent").html(data);
+			// $("#noOfPage").val(pageSize);
+			// $("#noOfPageLower").val(pageSize);
+			alert(data);
+		},
+		error : function(data) {
+			alert('Error');
+		},
+		complete : function(data) {
+
+		}
+	});
+	
+}*/
 
 

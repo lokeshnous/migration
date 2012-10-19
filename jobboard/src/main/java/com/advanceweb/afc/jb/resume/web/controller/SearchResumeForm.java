@@ -10,7 +10,7 @@ public class SearchResumeForm {
 	private String searchtype;
 	private String phrase;
 	//private String saveSearchName;
-	//private boolean autoload;
+	/*private boolean autoload;*/
 
 	public String getPhrase() {
 		return phrase;

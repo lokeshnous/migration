@@ -148,7 +148,7 @@
 							</div>
 
 
-
+<form:form method="GET" action="">
 							<div class="row marginTop0">
 								<table id="resumeTable" width="100%" border="0" cellspacing="0" cellpadding="0"
 									class="grid4">
@@ -173,7 +173,7 @@
 										<td align="left" valign="bottom">&nbsp;</td>
 										<td align="left" valign="bottom"><input type="checkbox"
 											name="checkbox2"  value="${job['PublishResumeId']}" class="marginRight5">
-											<label for="checkbox2"><a href="#">${job["DesiredJobTitle"]}</a></label></td>
+											<label for="checkbox2" ><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}" >${job["DesiredJobTitle"]}</a></label></td>
 										<td align="left" valign="bottom">${job["ApplicantName"]}</td>
 										<td align="left" valign="bottom">${job["Location"]}</td>
 										<td align="center">${job["Experience"]}</td>
@@ -186,6 +186,7 @@
 									
 								</table>
 							</div>
+</form:form>
 							<div class="searchResultsHeader"></div>
 
 							<div

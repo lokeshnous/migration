@@ -29,6 +29,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
+import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
@@ -68,6 +69,8 @@ public class SearchResumeController {
 	@Autowired
 	private ResumeService resumeService;
 
+	@Autowired
+	private TransformCreateResume transCreateResume;
 	/**
 	 * This method will be used for doing resume search and Return a JSON Object
 	 * which will later be parsed at the UI end and all the results will be
@@ -380,6 +383,8 @@ public class SearchResumeController {
 		LOGGER.info("Calling Search Resume Controller!!!");
 		//session.removeAttribute("resumeDTOList");
 		session.removeAttribute("jobSrchJsonObj");
+		session.removeAttribute(MMJBCommonConstants.KEYWORD_STRING);
+		//session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
 		List<ResumeDTO> resumeDTOList = null;
 		JSONObject jobSrchJsonObj = null;
 		// Calling the jobSearch() of Service layer for getting the resume list
@@ -399,6 +404,8 @@ public class SearchResumeController {
 		}
 		// add values in session
 		session.setAttribute("resSrchJsonList", jobSrchJsonObj);
+		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING, searchResumeForm.getKeywords());
+		//session.setAttribute(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
 		return jobSrchJsonObj;
 		
 	}
@@ -474,17 +481,73 @@ public class SearchResumeController {
 	}
 	
 	/**
+	 * Called to create resume it Contains 1.Contact information 2.Objective
+	 * 3.Work Experience 4.Education 5.Certifiation 6.Skills 7.Awards
+	 * 8.Memberships 9.Other Details 10.References
 	 * 
-	 * @param createdDateArr
+	 * @param createResume
+	 * @param result
+	 * @param
 	 * @return
-	 *//*
-	private List<Date> getCreatedDateArrayList(String[] createdDateArr) {
-		List<Date> createdDateList = new ArrayList<Date>(); 
-		for(String createdDate : createdDateArr){
-			createdDateList.add(CommonUtil.stringDateToSQLDate(createdDate));
+	 */
+	@RequestMapping(value = "/viewResume", method = RequestMethod.GET)
+	public ModelAndView viewResume(CreateResume createResumed,
+			BindingResult result, @RequestParam("resumeId") int resumeId,
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		/**
+		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 */
+		CreateResume createResume =createResumed; 
+		ModelAndView model = new ModelAndView();
+		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
+		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
+		List<CertificationsForm> listCertForm = transCreateResume
+				.transformCertForm(resumeDTO.getListCertDTO());
+		List<ReferenceForm> listRefForm = transCreateResume
+				.transformReferenceForm(resumeDTO.getListRefDTO());
+		List<EducationForm> listEduForm = transCreateResume
+				.transformEducationForm(resumeDTO.getListEduDTO());
+		List<WorkExpForm> listWorkExpForm = transCreateResume
+				.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+		List<LanguageForm> listLangForm = transCreateResume
+				.transformLanguageForm(resumeDTO.getListLangDTO());
+		ContactInfoForm contactForm = transCreateResume
+				.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+		List<PhoneDetailForm> listPhoneDtl = transCreateResume
+				.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
+		createResume.setbHideBackButton(true);
+		createResume.setListCertForm(listCertForm);
+		createResume.setListEduForm(listEduForm);
+		createResume.setListLangForm(listLangForm);
+		createResume.setListRefForm(listRefForm);
+		createResume.setListWorkExpForm(listWorkExpForm);
+		createResume.setContactInfoForm(contactForm);
+		createResume.setListPhoneDtlForm(listPhoneDtl);
+		resumeDTO.getContactInfoDTO();
+		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.EMPLOYER);
+		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
+				.getResumeType())) {
+			model.addObject("createResume", createResume);
+			model.setViewName("viewresume");
+		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
+				.getResumeType())) {
+			try {
+				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+						+ resumeDTO.getFilePath());
+				return model;
+			} catch (Exception e) {
+				LOGGER.info("Error in view resume builder",e);
+			}
+		} else {
+			model.addObject("createResume", createResume);
+			model.setViewName("viewCopyPasteResume");
 		}
-		return createdDateList;
-	}*/
+		return model;
+
+	}
+	
+	
+	
 	
 	
 	
