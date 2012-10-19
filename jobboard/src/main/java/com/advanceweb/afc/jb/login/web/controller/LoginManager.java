@@ -122,11 +122,11 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @return
 	 */
 	private boolean isFacility(Authentication authentication, String pageValue) {
-		return authentication.getAuthorities().contains(
+		return (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
 				|| authentication.getAuthorities().contains(
 						new SimpleGrantedAuthority(
-								MMJBCommonConstants.ROLE_FACILITY_GROUP))
+								MMJBCommonConstants.ROLE_FACILITY_GROUP)))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER);
 	}
 
