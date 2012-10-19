@@ -18,8 +18,6 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
-</head>
-<body>
 	<!-- JAVASCRIPT FILES -->
 	<!--  <script type="text/javascript"
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
@@ -43,7 +41,9 @@ function validateNumber(event) {
     }
     else return true;
 };
-
+function cancelProcess() {
+	parent.$.nmTop().close();
+}
 function closePopup() {
 	parent.window.location.reload();
 }
@@ -55,9 +55,7 @@ function closePopup() {
 		$(".onlyNum").keypress(validateNumber);
 			var empList = $.trim($("#empList").val());
 			var nsId = $.trim($("#nsId").val());
-		function cancelProcess() {
-			parent.$.nmTop().close();
-		}
+		
 		function validateTable() {
 			var count = $("#tb_save_search_total").val();
 			var valid = false;
@@ -91,7 +89,6 @@ function closePopup() {
 		
 		
 		$("#save").click(function(event){
-			var nsId = $.trim($("#nsId").val());
 			$("#ErrorMsg").text("");
 			if(!validateTable()){
 				$("#ErrorMsg").text("Please enter the value!");
@@ -116,21 +113,24 @@ function closePopup() {
 			    stringObj = inveId +"="+ availQty;
 			    stringObjNew = stringObj +";" + stringObjNew ;
 			 });
-			
-			
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
 				data:$('#adminInventoryId').serialize(),
+				type:"GET",
 				success: function(data){
-				    if(data != ''){
+				    if(data == true){
+				    	alert("Inventory details saved scuccessfully");
+				    	parent.$.nmTop().close();
+				    }else{
+				    	alert("Error occured while saving the data");
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){
-				    }
+				    };
 				},
 				error: function(response) {
+					alert("Server Error : "+response.status);
 				},
 				complete: function() {
-					alert("Inventory details saved successfully");
 				}
 			}); 
 		}); 
@@ -182,7 +182,7 @@ function closePopup() {
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="GET" action="../admininventory/save.html" id="adminInventoryId"
+			<form:form  id="adminInventoryId"
 				commandName="inventoryForm">
 
 			<div class="row">
@@ -259,7 +259,7 @@ function closePopup() {
 				</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
-					<a id="save" href="" class="purchaseJobPostings btn_sm orange">SAVE</a>
+					<a id="save" class="purchaseJobPostings btn_sm orange">SAVE</a>
 					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
 				</div>
 			</form:form>

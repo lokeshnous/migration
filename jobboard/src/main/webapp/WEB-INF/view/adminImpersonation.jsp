@@ -18,11 +18,13 @@
 				data:$('#adminLoginFormId').serialize(),
 				type:"POST",
 				success: function(data) {
-					if(data == ''){
+					if(data == 'true'){
 						alert("Impersonation Completed successfully !");
 						parent.$.nmTop().close();
 						window.location.reload();
 					}else{
+						alert("Error occured while Impersonation!");
+						parent.$.nmTop().close();
 						$("#errmsg").html(data);
 					}
 				 },

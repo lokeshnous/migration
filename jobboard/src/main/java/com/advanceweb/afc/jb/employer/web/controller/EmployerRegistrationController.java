@@ -200,16 +200,19 @@ public class EmployerRegistrationController {
 			BindingResult result) {
 		
 		ModelAndView model = new ModelAndView();
-		
+		if (null != empRegForm.getListProfAttribForms()) {
+			model.setViewName(EMPLOYERREG);
+			if (!validateEmpRegForm(empRegForm, model, result)) {
+				return model;
+			}
+		}
 		// Spring Recaptcha Starts here
-
 		if (StringUtils.isEmpty(req
 				.getParameter("recaptcha_response_field"))) {
 			model.setViewName(EMPLOYERREG);
 			model.addObject("errorMessage", "Captcha should not be blank");
 			return model;
 		}
-
 		if (req.getParameter("recaptcha_response_field") != null) {
 			recaptchaResponse = req
 					.getParameter("recaptcha_response_field");
@@ -217,27 +220,19 @@ public class EmployerRegistrationController {
 					.getParameter("recaptcha_challenge_field");
 			remoteAddr = req.getRemoteAddr();
 		}
-
 		ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
 		reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
 
 		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
 				remoteAddr, recaptchaChallenge, recaptchaResponse);
 		// Send HTTP request to validate user's Captcha
-
 		if (!reCaptchaResponse.isValid()) { 
 			// Check if valid
 			model.setViewName(EMPLOYERREG);
 			model.addObject("errorMessage", "Captcha is invalid!");
 			return model;
 		}
-
-		if (null != empRegForm.getListProfAttribForms()) {
-			model.setViewName(EMPLOYERREG);
-			if (!validateEmpRegForm(empRegForm, model, result)) {
-				return model;
-			}
-		}
+		//Recaptcha code end here
 		EmployerProfileDTO empDTO = new EmployerProfileDTO();
 		UserDTO userDTO = transformEmpReg.createUserDTO(empRegForm);
 		List<ProfileAttribDTO> attribLists = transformEmpReg

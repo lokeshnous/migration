@@ -165,8 +165,8 @@ public class JobPostConversionHelper<JobPostForm> {
 					long startDateAsTimestamp = startDt.getTime();
 					long currentTimestamp = new Date().getTime();
 					
-					currentTimestamp=(long) Math.round(currentTimestamp);
-					startDateAsTimestamp=(long) Math.round(startDateAsTimestamp);
+					//currentTimestamp=Long.valueOf(String.valueOf(currentTimestamp).substring(0,4));
+					//startDateAsTimestamp=Long.valueOf(String.valueOf(startDateAsTimestamp).substring(0,4));
 					if (job.getActive() == 0
 							&& startDateAsTimestamp > currentTimestamp) {
 						jobPostDTO
@@ -176,6 +176,7 @@ public class JobPostConversionHelper<JobPostForm> {
 
 						Date endtDt=new Date(job.getEndDt().getTime());
 						long endtDateAsTimestamp = endtDt.getTime();
+						//endtDateAsTimestamp=Long.valueOf(String.valueOf(endtDateAsTimestamp).substring(0,4));
 						//long endDate = endtDateAsTimestamp / getRidOfTime;
 
 						if (job.getActive() == 1
@@ -199,6 +200,7 @@ public class JobPostConversionHelper<JobPostForm> {
 						jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 						long endtDateAsTimestamp = job.getEndDt().getTime();
 						//long endDate = endtDateAsTimestamp / getRidOfTime;
+						//endtDateAsTimestamp=Long.valueOf(String.valueOf(endtDateAsTimestamp).substring(0,4));
 
 						if (job.getActive() == 1
 						&& endtDateAsTimestamp > currentTimestamp) {

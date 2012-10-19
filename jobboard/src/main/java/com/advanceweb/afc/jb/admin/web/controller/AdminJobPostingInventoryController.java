@@ -220,10 +220,10 @@ public class AdminJobPostingInventoryController {
 
 	@RequestMapping(value = "/saveAvailJobQty", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject saveAvailJobQty(HttpServletRequest request,
+	boolean saveAvailJobQty(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			@RequestParam("stringObjNew") String stringObjNew) {
-
+		boolean saveStatusJson = false;
 		// Splitting the string
 		StringTokenizer stringNew = new StringTokenizer(stringObjNew, ";");
 		List<JobPostingInventoryDTO> jobPostDTOs = new ArrayList<JobPostingInventoryDTO>();
@@ -241,11 +241,9 @@ public class AdminJobPostingInventoryController {
 		}
 		// update the data in DB
 		boolean saveData = adminService.saveModifiedData(jobPostDTOs);
-		JSONObject saveStatusJson = new JSONObject();
+//		JSONObject saveStatusJson = new JSONObject();
 		if (saveData) {
-			saveStatusJson.put(SUCCESS, "Data Updated Successfully");
-		} else {
-			saveStatusJson.put("failed", "Failed to update the data");
+			saveStatusJson = true;
 		}
 		return saveStatusJson;
 	}

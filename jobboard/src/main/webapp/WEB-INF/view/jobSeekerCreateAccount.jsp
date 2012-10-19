@@ -15,9 +15,9 @@
 
 
 		<!-- JAVASCRIPT FILES -->
+		<jsp:include page="common/include.jsp" />
 		<script src="../resources/js/recaptcha_ajax.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    jQuery(".megamenu").megamenu();
@@ -29,9 +29,9 @@
 		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
 		    }	
 		    
-		    var RecaptchaOptions = {
+		    /*var RecaptchaOptions = {
 		    	    theme : 'clean'
-		   	};
+		   	};*/
 		</script>
 		</head>
 		

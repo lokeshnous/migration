@@ -112,7 +112,10 @@ public class AdminController {
 		AdminDTO adminDTO = transformAdminImpersonation
 				.transformAdminFormToDTO(form);
 		boolean adminuserDto = service.impersonateUser(adminDTO);
-		return "";
+		if(adminuserDto == true){
+			return "true";
+		}
+		return "false";
 	}
 
 	/**

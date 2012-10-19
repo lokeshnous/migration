@@ -144,47 +144,38 @@ public class AgencyRegistrationController {
 			HttpServletRequest request, Map<?, ?> map, HttpSession session,HttpServletRequest req,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
-		
-		// Spring Recaptcha Starts here
-
-				if (StringUtils.isEmpty(req
-						.getParameter("recaptcha_response_field"))) {
-					model.setViewName(AGENCYREG);
-					model.addObject("errorMessage", "Captcha should not be blank");
-					return model;
-				}
-
-				if (req.getParameter("recaptcha_response_field") != null) {
-					recaptchaResponse = req
-							.getParameter("recaptcha_response_field");
-					recaptchaChallenge = req
-							.getParameter("recaptcha_challenge_field");
-					remoteAddr = req.getRemoteAddr();
-				}
-
-				ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-				reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
-
-				ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
-						remoteAddr, recaptchaChallenge, recaptchaResponse);
-				// Send HTTP request to validate user's Captcha
-
-				if (!reCaptchaResponse.isValid()) { 
-					// Check if valid
-					model.setViewName(AGENCYREG);
-					model.addObject("errorMessage", "Captcha is invalid!");
-					return model;
-				}
-				
-				
-
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
 			if (!validateEmpRegForm(agencyRegistrationForm, model, result)) {
 				return model;
 			}
 		}
-
+		// Spring Recaptcha Starts here
+		if (StringUtils.isEmpty(req
+				.getParameter("recaptcha_response_field"))) {
+			model.setViewName(AGENCYREG);
+			model.addObject("errorMessage", "Captcha should not be blank");
+			return model;
+		}
+		if (req.getParameter("recaptcha_response_field") != null) {
+			recaptchaResponse = req
+					.getParameter("recaptcha_response_field");
+			recaptchaChallenge = req
+					.getParameter("recaptcha_challenge_field");
+			remoteAddr = req.getRemoteAddr();
+		}
+		ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+		reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
+		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
+				remoteAddr, recaptchaChallenge, recaptchaResponse);
+		// Send HTTP request to validate user's Captcha
+		if (!reCaptchaResponse.isValid()) { 
+			// Check if valid
+			model.setViewName(AGENCYREG);
+			model.addObject("errorMessage", "Captcha is invalid!");
+			return model;
+		}
+		//Recaptcha ends here
 		AgencyProfileDTO empDTO = new AgencyProfileDTO();
 		UserDTO userDTO = transformAgencyRegistration
 				.createUserDTO(agencyRegistrationForm);
