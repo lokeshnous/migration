@@ -86,9 +86,14 @@ public class LoginFormController {
 	public String login(
 			@RequestParam(value = "error", required = false) boolean error,
 			@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "socalLogin", required = false) boolean socalLogin,
 			ModelMap model) {
 		if (error) {
+			if(socalLogin){
+				model.put("socialLoginError", "As per your role you are not allowed to login from this page");
+			}else{
 			model.put("error", loginErrMsg);
+			}
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
 		}
