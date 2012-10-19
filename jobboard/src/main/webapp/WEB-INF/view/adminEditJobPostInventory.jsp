@@ -116,20 +116,21 @@ function closePopup() {
 			    stringObj = inveId +"="+ availQty;
 			    stringObjNew = stringObj +";" + stringObjNew ;
 			 });
+			
+			
 			$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
 				data:$('#adminInventoryId').serialize(),
 				success: function(data){
 				    if(data != ''){
-				    	alert("Inventory details saved scuccessfully");
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){
 				    }
 				},
 				error: function(response) {
-					//alert("Server Error : "+response.status);
 				},
 				complete: function() {
+					alert("Inventory details saved scuccessfully");
 				}
 			}); 
 		}); 
