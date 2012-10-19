@@ -36,22 +36,23 @@
      	});
 		
 		$("#tb_manage_resume img").click(function(event) {
-
+			
 			var action = $(this).attr("alt");
 			var rowObj = $(this).parent().parent().parent();
 			var resumeId = rowObj.attr("id");
 			
+			
 			switch (action) {
 			case "view":
-					$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
-					$("form").attr("method","POST");
-					$("form").submit();
-					break;
+				$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/viewResumeBuilder.html?resumeId="+resumeId);
+				$("#manageResumeForm").attr("method","POST");
+				$("#manageResumeForm").submit();
+				break;
 			case "download":
-				$("form").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
-				$("form").attr("method","GET");
-				$("form").attr("target","_blank");
-				$("form").submit();
+				$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
+				$("#manageResumeForm").attr("method","POST");
+				$("#manageResumeForm").attr("target","_new"); 
+				$("#manageResumeForm").submit();
 				break;
 			case "print":
 				alert("print");
@@ -95,7 +96,7 @@
 				height="19" alt="Close">
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="POST" action="">
+			<form:form method="POST" action="" id="manageResumeForm">
 				<div class="rowEvenSpacingMargin0">
 				<div id="manageResumeErrorMsg" class="FormErrorDisplayText">
 					
