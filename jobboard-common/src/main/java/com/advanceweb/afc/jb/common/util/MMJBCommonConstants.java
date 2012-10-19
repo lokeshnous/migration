@@ -409,7 +409,14 @@ public interface MMJBCommonConstants {
 	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";
 	String RESUME_KEYWORD_SEARCH = "CANDIDATE-KEYWORD";
 	String RESUME_SEARCH_SESSION_MAP = "resumeSessionMap";
-
+		
+// For Social Media sign up
+	String FACEBOOK="Facebook";
+	String LINKEDIN="LinkedIn";
+	String FACEBOOK_PROFILE_ATTR_ID="27";
+	String LINKEDIN_PROFILE_ATTR_ID="28";
+	
+	
 	String RESUME_DESIRED_POSTION = "DesiredJobTitle";
 	String APPLICANT_NAME = "ApplicantName";
 	String LOCATION = "Location";
