@@ -123,9 +123,12 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 
 		}
 
-//		Get the refine results along with the job count
+		// Get the refine results along with the job count
 		fetchRefineResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
-		
+
+		// Get the location region list
+		getLocationRegionResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
+
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jSResultDTO.getResultCount());
 		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
@@ -135,19 +138,21 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 
 	/**
 	 * This method will convert the ResumeSearchResultDTO to JSON object
+	 * 
 	 * @param ResumeSearchResultDTO
 	 * @return JSONObject
 	 */
-	public JSONObject convertToJSONForResume(final ResumeSearchResultDTO resumeSearchResultDTO){
-		
+	public JSONObject convertToJSONForResume(
+			final ResumeSearchResultDTO resumeSearchResultDTO) {
+
 		final JSONObject jobSrchJsonObj = new JSONObject();
-		//final JSONArray jsonRows = new JSONArray();
-		//final List<ResumeDTO> jobDTOList = resumeSearchResultDTO.getResultList();
-		
+		// final JSONArray jsonRows = new JSONArray();
+		// final List<ResumeDTO> jobDTOList =
+		// resumeSearchResultDTO.getResultList();
+
 		return jobSrchJsonObj;
 	}
-	
-	
+
 	/**
 	 * This method converts the date in string format to required format for
 	 * displaying it in the job search result page.
@@ -161,95 +166,107 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 				MMJBCommonConstants.JSON_DATE_FORMAT, Locale.US);
 		return formatter.format(date);
 	}
-	
+
 	/**
 	 * This method retrieves the Refine Results data and updates the JSONObject
 	 * 
 	 * @param searchFacetMap
 	 * @param jobSrchJsonObj
 	 */
-	private void fetchRefineResults(Map<String, List<SearchFacetDTO>> searchFacetMap, JSONObject jobSrchJsonObj)
-	{
+	private void fetchRefineResults(
+			Map<String, List<SearchFacetDTO>> searchFacetMap,
+			JSONObject jobSrchJsonObj) {
 		final Map<String, List<SearchFacetDTO>> searchFacetDTOMap = searchFacetMap;
 
-//		Get the list of cities along with the job count		
-		List<String> cityDisplayList = generateRefineResults(searchFacetDTOMap.get(SearchFacetDTO.FACET_CITY));
-		
-//		Get the list of states along with the job count
-		List<String> stateDisplayList = generateRefineResults(searchFacetDTOMap.get(SearchFacetDTO.FACET_STATE));
+		// Get the list of cities along with the job count
+		List<String> cityDisplayList = generateRefineResults(searchFacetDTOMap
+				.get(SearchFacetDTO.FACET_CITY));
 
-//		Get the list of Employers along with the job count
-		List<String> employerDisplayList = generateRefineResults(searchFacetDTOMap.get(SearchFacetDTO.FACET_COMPANY));
-		
+		// Get the list of states along with the job count
+		List<String> stateDisplayList = generateRefineResults(searchFacetDTOMap
+				.get(SearchFacetDTO.FACET_STATE));
+
+		// Get the list of Employers along with the job count
+		List<String> employerDisplayList = generateRefineResults(searchFacetDTOMap
+				.get(SearchFacetDTO.FACET_COMPANY));
+
 		jobSrchJsonObj.put(MMJBCommonConstants.CITY, cityDisplayList);
 		jobSrchJsonObj.put(MMJBCommonConstants.STATE, stateDisplayList);
 		jobSrchJsonObj.put(MMJBCommonConstants.COMPANY, employerDisplayList);
-		
+
 	}
 
 	/**
-	 * This method provides the facetList along with the count of jobs in each facet
+	 * This method provides the facetList along with the count of jobs in each
+	 * facet
 	 * 
 	 * @param facetList
 	 * @return displayFacetList
 	 */
 	private List<String> generateRefineResults(List<SearchFacetDTO> facetList) {
 		List<String> displayFacetList = new ArrayList<String>();
-		String displayFacet=MMJBCommonConstants.EMPTY;
-		if(null != facetList)
-		{
-			for(SearchFacetDTO dto : facetList)
-			{
-				if(null != dto && MMJBCommonConstants.ZERO_INT != dto.getCount())
-				{
+		String displayFacet = MMJBCommonConstants.EMPTY;
+		if (null != facetList) {
+			for (SearchFacetDTO dto : facetList) {
+				if (null != dto
+						&& MMJBCommonConstants.ZERO_INT != dto.getCount()) {
 					displayFacet = dto.getFacetValue();
-					displayFacet=displayFacet.concat(MMJBCommonConstants.SPACE_OPN_BRCKT);
-					displayFacet=displayFacet.concat(String.valueOf(dto.getCount()));
-					displayFacet=displayFacet.concat(MMJBCommonConstants.CLSG_BRCKT);
+					displayFacet = displayFacet
+							.concat(MMJBCommonConstants.SPACE_OPN_BRCKT);
+					displayFacet = displayFacet.concat(String.valueOf(dto
+							.getCount()));
+					displayFacet = displayFacet
+							.concat(MMJBCommonConstants.CLSG_BRCKT);
 					displayFacetList.add(displayFacet);
 				}
 			}
 		}
 		return displayFacetList;
 	}
-	
-	
-	
+
 	/**
-	 * This method is  used to convert the ResumeDTOList 
-	 * coming from DB to JSON object.
-	 * @param List<ResumeDTO>
+	 * This method is used to convert the ResumeDTOList coming from DB to JSON
+	 * object.
+	 * 
+	 * @param List
+	 *            <ResumeDTO>
 	 * @return JSONObject
 	 */
-	public JSONObject convertToJSONForResumeFromDB(List<ResumeDTO> resumeDTOList){
-		
+	public JSONObject convertToJSONForResumeFromDB(List<ResumeDTO> resumeDTOList) {
+
 		final JSONObject jobSrchJsonObj = new JSONObject();
 		final JSONArray jsonRows = new JSONArray();
 
 		for (ResumeDTO resumeDTO : resumeDTOList) {
-			
+
 			final JSONObject jobSrchJson = new JSONObject();
-			
-			jobSrchJson.put(MMJBCommonConstants.UPLOAD_RESUME_ID,resumeDTO.getUploadResumeId());
-			jobSrchJson.put(MMJBCommonConstants.PUBLISH_RESUME_ID,resumeDTO.getPublishResumeId());
+
+			jobSrchJson.put(MMJBCommonConstants.UPLOAD_RESUME_ID,
+					resumeDTO.getUploadResumeId());
+			jobSrchJson.put(MMJBCommonConstants.PUBLISH_RESUME_ID,
+					resumeDTO.getPublishResumeId());
 			jobSrchJson.put(MMJBCommonConstants.RESUME_DESIRED_POSTION,
 					MMUtils.isNull(resumeDTO.getResumeName()));
 			jobSrchJson.put(MMJBCommonConstants.APPLICANT_NAME,
 					resumeDTO.getFullName());
-			
-			/*String location = null;
-			if (resumeDTO.getCity() != null && resumeDTO.getState() != null) {
-				location = resumeDTO.getCity() + MMJBCommonConstants.COMMA
-						+ resumeDTO.getState();
-			} else if (resumeDTO.getCity() != null && resumeDTO.getState() == null) {
-				location = resumeDTO.getCity();
-			}*/
-			jobSrchJson.put(MMJBCommonConstants.LOCATION, MMUtils.isNull(resumeDTO.getState()));
-			jobSrchJson.put(MMJBCommonConstants.EXPERIENCE,resumeDTO.getExperience());
-			jobSrchJson.put(MMJBCommonConstants.EMPLOYMENT_TYPE, resumeDTO.getEmploymentType());
+
+			/*
+			 * String location = null; if (resumeDTO.getCity() != null &&
+			 * resumeDTO.getState() != null) { location = resumeDTO.getCity() +
+			 * MMJBCommonConstants.COMMA + resumeDTO.getState(); } else if
+			 * (resumeDTO.getCity() != null && resumeDTO.getState() == null) {
+			 * location = resumeDTO.getCity(); }
+			 */
+			jobSrchJson.put(MMJBCommonConstants.LOCATION,
+					MMUtils.isNull(resumeDTO.getState()));
+			jobSrchJson.put(MMJBCommonConstants.EXPERIENCE,
+					resumeDTO.getExperience());
+			jobSrchJson.put(MMJBCommonConstants.EMPLOYMENT_TYPE,
+					resumeDTO.getEmploymentType());
 			jobSrchJson.put(MMJBCommonConstants.RELOCATE, "Yes");
-			jobSrchJson.put(MMJBCommonConstants.POSTED_DT,convertToReqdDateString(resumeDTO.getPostDt()));
-			
+			jobSrchJson.put(MMJBCommonConstants.POSTED_DT,
+					convertToReqdDateString(resumeDTO.getPostDt()));
+
 			jsonRows.add(jobSrchJson);
 
 		}
@@ -260,7 +277,37 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 
 		return jobSrchJsonObj;
 	}
-	
-	
-	
+
+	// Data to get location region results
+	private void getLocationRegionResults(
+			Map<String, List<SearchFacetDTO>> searchFacetMap,
+			JSONObject jobSrchJsonObj) {
+
+		final Map<String, List<SearchFacetDTO>> searchFacetDTOMap = searchFacetMap;
+
+		// Get the list of cities along with the job count
+		List<String> areaList = generateRegionResults(searchFacetDTOMap
+				.get(SearchFacetDTO.FACET_AREA));
+
+		jobSrchJsonObj.put(MMJBCommonConstants.AREA, areaList);
+	}
+
+	private List<String> generateRegionResults(List<SearchFacetDTO> facetList) {
+		List<String> displayFacetList = new ArrayList<String>();
+		String displayFacet = MMJBCommonConstants.EMPTY;
+		if (null != facetList) {
+			for (SearchFacetDTO dto : facetList) {
+				if (null != dto
+						&& MMJBCommonConstants.ZERO_INT != dto.getCount()) {
+					displayFacet = dto.getFacetValue();
+					displayFacet = displayFacet.concat(" ");
+					displayFacet = displayFacet
+							.concat(MMJBCommonConstants.METRO_AREA);
+					displayFacetList.add(displayFacet);
+				}
+			}
+		}
+		return displayFacetList;
+	}
+
 }

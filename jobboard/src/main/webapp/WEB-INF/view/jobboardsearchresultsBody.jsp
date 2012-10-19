@@ -27,7 +27,14 @@
 			<jsp:include page="browseByEmployer.jsp"></jsp:include>
 		</c:when> 
 		<c:when test="${locationPage}">
-			<jsp:include page="browseByLocation.jsp"></jsp:include>
+		    <c:choose>
+		       <c:when test="${areaPage}">
+		       		<jsp:include page="browseByLocationRegions.jsp"></jsp:include>
+		       </c:when>
+		       <c:otherwise>
+		         <jsp:include page="browseByLocation.jsp"></jsp:include>
+		       </c:otherwise>
+		    </c:choose>			
 		</c:when> 		
 		<c:otherwise>
 			<form:form method="POST" action="" commandName="jobSearchResultForm">
