@@ -31,7 +31,6 @@ import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
-import com.mysql.jdbc.StringUtils;
 
 /**
  * @author rajeshkb

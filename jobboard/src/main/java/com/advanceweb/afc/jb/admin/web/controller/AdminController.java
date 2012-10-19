@@ -81,7 +81,6 @@ public class AdminController {
 
 	}
 
-	@SuppressWarnings("unused")
 	@ResponseBody
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public String impersonateTheUser(
@@ -112,7 +111,7 @@ public class AdminController {
 		AdminDTO adminDTO = transformAdminImpersonation
 				.transformAdminFormToDTO(form);
 		boolean adminuserDto = service.impersonateUser(adminDTO);
-		if(adminuserDto == true){
+		if(adminuserDto){
 			return "true";
 		}
 		return "false";

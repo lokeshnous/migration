@@ -25,7 +25,6 @@ import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
-import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
 
 /**

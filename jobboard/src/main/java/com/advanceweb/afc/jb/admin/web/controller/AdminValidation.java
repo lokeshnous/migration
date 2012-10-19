@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -20,8 +19,6 @@ public class AdminValidation {
 	public Pattern pattern;
 	public Matcher matcher;
 
-	@Value("${loginErrMsg}")
-	private String loginErrMsg;
 
 	public boolean supports(Class<?> form) {
 		return AdminLoginForm.class.isAssignableFrom(form);
