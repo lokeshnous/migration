@@ -22,10 +22,12 @@
 						alert("Impersonation Completed successfully !");
 						parent.$.nmTop().close();
 						window.location.reload();
-					}else{
+					}else if(data == 'false'){
 						alert("Error occured while Impersonation!");
 						parent.$.nmTop().close();
+					}else{
 						$("#errmsg").html(data);
+						
 					}
 				 },
 					error : function(data) {
