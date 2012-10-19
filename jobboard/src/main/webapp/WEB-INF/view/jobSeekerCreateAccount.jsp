@@ -6,7 +6,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <html lang="en">
 		<head>
 
@@ -81,10 +81,8 @@
 
  	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span>
 								<%
-									ResourceBundle resource = ResourceBundle
-												.getBundle("messages_en");
-										String pubKey = resource.getString("public_key");
-										String privKey = resource.getString("private_key");
+										String pubKey = MMJBCommonConstants.PUBLIC_KEY;
+										String privKey = MMJBCommonConstants.PRIVATE_KEY;
 										/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
 										ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
 												false);
