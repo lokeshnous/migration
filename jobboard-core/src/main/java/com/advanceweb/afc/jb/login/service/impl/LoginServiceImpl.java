@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
@@ -79,6 +80,29 @@ public class LoginServiceImpl implements LoginService {
 			LOGGER.info("Error occurred while saving the generated password"
 					+ e);
 		}
+	}
+
+	@Override
+	public void updateSocialProfileId(int userId, String profileId,int profileAttrId)throws JobBoardServiceException{
+		try {
+		userDAO.updateSocialProfileId(userId, profileId,profileAttrId);
+		} catch (JobBoardDataException e) {
+			LOGGER.info("Error occurred while updating the social profile id"
+					+ e);
+			throw new JobBoardServiceException("Error occurred while updating the social profile id"+ e);
+			
+		}	}
+
+	@Override
+	public UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardServiceException{
+		try {
+		return	userDAO.getUserBySocialProfileId(socialProfileId);
+	} catch (JobBoardDataException e) {
+		LOGGER.info("Error occurred while fetching the user based on the social profile id"
+				+ e);
+		throw new JobBoardServiceException("Error occurred while fetching the user based on the social profile id"+ e);
+		
+	}	
 	}
 
 }

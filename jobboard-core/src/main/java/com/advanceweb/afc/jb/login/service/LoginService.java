@@ -47,5 +47,7 @@ public interface LoginService {
 	 */
 	void saveNewPWD(String emailAddress, String tempassword)
 			throws JobBoardServiceException;
+void updateSocialProfileId(int userId,String profileId,int profileAttrId)throws JobBoardServiceException;
+UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardServiceException;
 
 }

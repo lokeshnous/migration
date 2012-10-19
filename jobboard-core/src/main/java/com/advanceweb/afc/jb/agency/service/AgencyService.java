@@ -29,16 +29,14 @@ public interface AgencyService {
 	List<FacilityDTO> getFacilityNames(String employerName)
 			throws JobBoardServiceException;
 
-	int getfacility(int facilityId);
-
 	UserDTO getUserByUserId(int userId);
 
 	/**
 	 * This method is used to get the net suite customer details based on
 	 * nsCustomerId.
 	 * 
-	 * @param int admFacilityID
-	 * @return Object of UserDTO
+	 * @param int nsCustomerID
+	 * @return UserDTO
 	 */
 
 	UserDTO getNSCustomerDetails(int nsCustomerID);

@@ -29,10 +29,6 @@ public class AgencyServiceImpl implements AgencyService {
 	@Autowired
 	private AgencyDAO agencyDAO;
 
-	@Override
-	public int getfacility(int facilityId) {
-		return userDAO.getfacility(facilityId);
-	}
 
 	@Override
 	public UserDTO getUserByUserId(int userId) {
@@ -43,8 +39,8 @@ public class AgencyServiceImpl implements AgencyService {
 	 * This method is used to get the net suite customer details based on
 	 * customer id.
 	 * 
-	 * @param int admFacilityID
-	 * @return int nsCustomerID
+	 * @param int nsCustomerID
+	 * @return  UserDTO
 	 */
 
 	public UserDTO getNSCustomerDetails(int nsCustomerID) {

@@ -61,4 +61,5 @@ public interface FacilityService {
 	 */
 	int getFacilityParent(int facilityId)
 			throws JobBoardServiceException;
+	int getfacilityUserId(int facilityId);
 }

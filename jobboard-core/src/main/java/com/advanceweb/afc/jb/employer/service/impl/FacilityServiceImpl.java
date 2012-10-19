@@ -104,4 +104,8 @@ public class FacilityServiceImpl implements FacilityService {
 		}
 		return returnVal;
 	}
+	@Override
+	public int getfacilityUserId(int facilityId) {
+		return facilityDAO.getfacilityUserId(facilityId);
+	}
 }
