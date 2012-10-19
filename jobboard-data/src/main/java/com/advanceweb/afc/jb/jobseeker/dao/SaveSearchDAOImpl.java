@@ -51,7 +51,7 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
 		List<AdmSaveSearch> searchResults = hibernateTemplate
-				.find("from AdmSaveSearch e where e.userId=? and e.createDt is not NULL and e.deleteDt is NULL",
+				.find("from AdmSaveSearch e where e.userId=? and e.createDt is not NULL and e.deleteDt is NULL and e.searchName is not NULL",
 						userId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
