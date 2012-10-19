@@ -134,20 +134,11 @@ public class AgencyDashBoardController {
 	private String accountCountry;
 	@Value("${account_city}")
 	private String accountCity;
-
-	/*
-	 * @Autowired EmployerRegistrationValidation registerValidation;
-	 */
-
 	@Value("${js.email.blank}")
 	private String accountEmail;
 	@Value("${account_Street}")
 	private String accountStreet;
-
-	/*
-	 * @Autowired EmployerRegistrationValidation registerValidation;
-	 */
-
+	
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session) {
 		ModelAndView model = new ModelAndView();
@@ -511,10 +502,8 @@ public class AgencyDashBoardController {
 				empRegisterForm.setFirstName(facilityDTO.getName());
 				empRegisterForm.setStreet(facilityDTO.getStreet());
 				empRegisterForm.setPrimaryPhone(facilityDTO.getPhone());
-
 				empRegisterForm.setZipCode(facilityDTO.getPostcode());
 				empRegisterForm.setState(facilityDTO.getState());
-
 				empRegisterForm.setCountry(facilityDTO.getCountry());
 				empRegisterForm.setCity(facilityDTO.getCity());
 				empRegisterForm.setFacilityId(facilityDTO.getFacilityId());
@@ -673,7 +662,7 @@ public class AgencyDashBoardController {
 					MMJBCommonConstants.FACILITY_POST_EDIT);
 			session.removeAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS);
 		}
-		int userId = agencyService.getfacility(facilityId);
+		int userId = facilityService.getfacilityUserId(facilityId);
 		UserDTO userDTO = agencyService.getUserByUserId(userId);
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
