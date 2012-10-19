@@ -226,6 +226,7 @@ jobboard-core/src/main/resources/jobboard-scheduler.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.xml -text
 jobboard-core/src/main/resources/mailServer.properties -text
 jobboard-core/src/main/resources/solr.properties -text
+jobboard-core/src/main/resources/spring-social.xml -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/advt/service/ads/LegacyAdServiceDelegateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTest.java -text

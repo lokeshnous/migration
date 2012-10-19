@@ -1,0 +1,47 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- For Spring Social -->
+	<bean id="connectionFactoryLocator" 
+      class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+    <property name="connectionFactories">
+        <list>
+        	<bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+                <constructor-arg value="${facebook.clientId}" />
+                <constructor-arg value="${facebook.clientSecret}" />	
+            </bean>
+            <bean class="org.springframework.social.linkedin.connect.LinkedInConnectionFactory">
+                <constructor-arg value="${linkedin.consumerKey}" />
+                <constructor-arg value="${linkedin.consumerSecret}" />				
+            </bean>
+        </list>
+    </property>
+</bean>
+
+<bean class="org.springframework.social.connect.web.ConnectController">
+    <property name="applicationUrl" value="${application.url}"/>
+</bean>
+
+<bean id="usersConnectionRepository" 
+      class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+    <constructor-arg ref="dataSourceMerionTracker" />
+    <constructor-arg ref="connectionFactoryLocator" />
+    <constructor-arg ref="textEncryptor" />
+</bean>	
+<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
+            factory-method="noOpText" />
+
+<bean id="connectionRepository" factory-method="createConnectionRepository" 
+      factory-bean="usersConnectionRepository" scope="request">
+    <constructor-arg value="#{request.userPrincipal.name}" />
+    <aop:scoped-proxy proxy-target-class="false" />
+</bean>
+	
+	<bean id="signInAdapter" class="com.advanceweb.afc.jb.login.web.controller.SocialLoginAdapter"/>
+	
+</beans>
