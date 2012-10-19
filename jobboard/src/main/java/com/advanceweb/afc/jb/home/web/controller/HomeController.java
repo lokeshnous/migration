@@ -132,12 +132,11 @@ public class HomeController extends AbstractController{
 			session.setAttribute("next", lastIndex);
 
 			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
-					.getEmployerList();
-			session.setAttribute("count", companyProfileDTOList.size());
-			// model.addAttribute("companyProfileDTOList",
-			// companyProfileDTOList);
-			session.setAttribute("companyProfileDTOList",
-					companyProfileDTOList.subList(firstIndex, lastIndex));
+					.getEmployerList(firstIndex, 2);
+			Long companyProfileDTOListCount = manageFeatureEmployerProfile
+					.getEmployerListCount();
+			session.setAttribute("count", companyProfileDTOListCount);			
+			session.setAttribute("companyProfileDTOList",companyProfileDTOList);
 			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
 			model.addAttribute("followuplinkyoutube", followuplinkyoutube);
@@ -483,9 +482,9 @@ public class HomeController extends AbstractController{
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "/getFeatureEmplist", method = RequestMethod.GET)
+	@RequestMapping(value = "/featureEmplist", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject getlist(HttpServletRequest request,
+	JSONObject getFeatureEmplist(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -507,10 +506,12 @@ public class HomeController extends AbstractController{
 		session.setAttribute("prev", firstIndex);
 
 		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
-				.getEmployerList();
-		session.setAttribute("count", companyProfileDTOList.size());
+				.getEmployerList(firstIndex, 2);
+		Long companyProfileDTOListCount = manageFeatureEmployerProfile
+				.getEmployerListCount();
+		session.setAttribute("count", companyProfileDTOListCount);
 		session.setAttribute("companyProfileDTOList",
-				companyProfileDTOList.subList(firstIndex, lastIndex));
+				companyProfileDTOList);
 		return jsonObject;
 	}
 

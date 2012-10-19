@@ -72,11 +72,6 @@ public class JobSearchValidator {
 			jsonObject.put("applyMethod", jobApplyTypeDTO.getApplyMethod());
 			jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
 		}
-		if (jobApplyTypeDTO != null
-				&& jobApplyTypeDTO.getApplyMethod().equalsIgnoreCase(
-						MMJBCommonConstants.APPLY_TO_EMAIL)) {
-			jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
-		}
 		return status;
 	}
 
