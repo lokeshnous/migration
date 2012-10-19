@@ -130,7 +130,7 @@ function closePopup() {
 				error: function(response) {
 				},
 				complete: function() {
-					alert("Inventory details saved scuccessfully");
+					alert("Inventory details saved successfully");
 				}
 			}); 
 		}); 
