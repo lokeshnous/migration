@@ -621,10 +621,10 @@ public class PDFGenerator {
 	         workExpTable.addCell((workExpDTO.getStillEmployed()==0?Boolean.FALSE:Boolean.TRUE).toString());
 	        
 	     	 workExpTable.addCell(new Paragraph("Is this my current career level",getLabelFontFactory()));
-	         workExpTable.addCell(new Boolean(workExpDTO.isbCurrentCareerLevel()).toString());
+	         workExpTable.addCell((workExpDTO.isbCurrentCareerLevel()?Boolean.TRUE:Boolean.FALSE).toString());
 	        
 	     	 workExpTable.addCell(new Paragraph("Present",getLabelFontFactory()));
-	         workExpTable.addCell(new Boolean(workExpDTO.isbPresent()).toString());
+	         workExpTable.addCell((workExpDTO.isbPresent()?Boolean.TRUE:Boolean.FALSE).toString());
 	         
 			}
 	
