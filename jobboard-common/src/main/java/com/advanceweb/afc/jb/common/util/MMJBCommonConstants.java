@@ -428,6 +428,10 @@ public interface MMJBCommonConstants {
 	String BROWSE_BY_LOCATION = "browseByLocation";
 	String BROWSE_BY_EMPLOYER = "browseByEmployer";
 	String FIRST_PARAMETER = "firstFQParam";
+	
+	//for reCapcha
+	String PUBLIC_KEY= "6Lel19USAAAAAPRKVOy7gFpRBpn6iSPONG1o9ouZ";
+	String PRIVATE_KEY= "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
 
 	
 	String MODULE_STRING = "module";

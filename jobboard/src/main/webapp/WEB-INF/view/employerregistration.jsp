@@ -5,6 +5,7 @@
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -20,6 +21,7 @@
 <script type="text/javascript" language="javascript"
 	src="/media/js/jquery.js"></script>
 	<script src="../resources/js/recaptcha_ajax.js"></script>
+	
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
@@ -326,11 +328,9 @@ function validateNumber(event) {
 							</c:forEach>
 							<div class="row marginTop15">
 								<span class="lableText3">&nbsp;</span>
-							<%
-									ResourceBundle resource = ResourceBundle
-												.getBundle("messages_en");
-										String pubKey = resource.getString("public_key");
-										String privKey = resource.getString("private_key");
+								<%
+										String pubKey = MMJBCommonConstants.PUBLIC_KEY;
+										String privKey = MMJBCommonConstants.PRIVATE_KEY;
 										/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
 										ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
 												false);

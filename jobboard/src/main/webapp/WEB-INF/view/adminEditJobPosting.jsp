@@ -1,15 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="10">
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
-<script type="text/javascript">
+<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
+	type="text/css" />
+<link href="../resources/css/SliderStyles.css" rel="stylesheet"
+	type="text/css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
+	<!-- JAVASCRIPT FILES -->
+	<!--  <script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
+	<script type="text/javascript"
+		src="javascripts/jquery.cycle.all.min.js"></script>
+	<script type="text/javascript" src="javascripts/slider.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+
+	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
+	<script type="text/javascript">
 jQuery(document).ready(function() {
 		$("#SearchJob").click(function(event){		
 			var advJobId = $("#advJobId").val().trim();
@@ -116,6 +135,9 @@ window.onload = function() {
 	loadTable();
 }
 
+function closePopup() {
+	parent.window.location.reload();
+}
 function loadTable(){
 	$.ajaxSetup({ cache: false });
 	
@@ -152,7 +174,9 @@ function loadTable(){
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT JOB POSTING EXPIRE DATE</h2>
-			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/>
+			<a href="#"><img src="../resources/images/Close.png"
+				title="Close" width="19" height="19" onclick="closePopup();"
+				alt=""></a>
 		</div>
 		<div class="row">
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>

@@ -5,6 +5,7 @@
 <%@ page language="java" import="java.util.*" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -309,14 +310,12 @@
 							<div class="row marginTop15">
 								<span class="lableText3">&nbsp;</span>
 								<%
-									ResourceBundle resource = ResourceBundle
-												.getBundle("messages_en");
-										String pubKey = resource.getString("public_key");
-										String privKey = resource.getString("private_key");
-										/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
-										ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
-												false);
-										out.print(c.createRecaptchaHtml(null, null));
+								String pubKey = MMJBCommonConstants.PUBLIC_KEY;
+								String privKey = MMJBCommonConstants.PRIVATE_KEY;
+								/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
+								ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
+										false);
+								out.print(c.createRecaptchaHtml(null, null));
 								%>
 							</div>
 							<div>
