@@ -783,6 +783,7 @@ jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal.custom.j
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/popup.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/styles/nyroModal.css -text
+jobboard/src/main/webapp/resources/js/FB.Share -text
 jobboard/src/main/webapp/resources/js/PIE.htc -text
 jobboard/src/main/webapp/resources/js/arrow.gif -text
 jobboard/src/main/webapp/resources/js/arrow.png -text
@@ -790,6 +791,7 @@ jobboard/src/main/webapp/resources/js/colorPicker.css -text
 jobboard/src/main/webapp/resources/js/common/common.js -text
 jobboard/src/main/webapp/resources/js/expandCollapse.js -text
 jobboard/src/main/webapp/resources/js/html5.js -text
+jobboard/src/main/webapp/resources/js/in.js -text svneol=unset#text/plain
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.js -text
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.min.js -text
 jobboard/src/main/webapp/resources/js/jquery-ui.js -text
@@ -818,5 +820,6 @@ jobboard/src/main/webapp/resources/js/screenshot.png -text
 jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text
 jobboard/src/main/webapp/resources/js/silverlight.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
+jobboard/src/main/webapp/resources/js/widgets.js -text svneol=unset#text/plain
 jobboard/src/main/webapp/resources/js/wmvplayer.js -text
 /pom.xml -text
