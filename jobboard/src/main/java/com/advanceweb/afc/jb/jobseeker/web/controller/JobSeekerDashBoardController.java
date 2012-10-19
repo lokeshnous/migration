@@ -18,6 +18,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
@@ -95,6 +96,7 @@ public class JobSeekerDashBoardController {
 				.viewMySavedSearches(nUserId);
 		savedSearchCount = saveSearchedJobsDTOList.size();
 		form.setSavedSearchCount(savedSearchCount);
+		try{
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerService
 				.getSavedJobs(nUserId);
 		savedJobsCount = savedJobDTOList.size();
@@ -102,6 +104,9 @@ public class JobSeekerDashBoardController {
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerService
 				.getAppliedJobs(nUserId);
 		appliedJobsCount = appliedJobDTOList.size();
+		}catch(JobBoardException e){
+			LOGGER.debug("Error occured while fetching the saved or applied job details"+e);
+		}
 		form.setAppliedJobsCount(appliedJobsCount);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
