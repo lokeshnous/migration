@@ -428,5 +428,11 @@ public interface MMJBCommonConstants {
 	String BROWSE_BY_LOCATION = "browseByLocation";
 	String BROWSE_BY_EMPLOYER = "browseByEmployer";
 	String FIRST_PARAMETER = "firstFQParam";
+	String BROWSE_JOB_POSITION = "jobposition:\"";
+	String BROWSE_COMPANY = "company:\"";
+	String BROWSE_LOCATION = "state:\"";
+	String AREA = "area";
+	String METRO_AREA = "Metro Area";
+	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";
 
 }
