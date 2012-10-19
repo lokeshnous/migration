@@ -27,6 +27,7 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
@@ -217,5 +218,14 @@ public class FacilityDAOImpl implements FacilityDAO {
 		}
 
 		return facilityParentId;
+	}
+	public int getfacilityUserId(int facilityId) {
+		AdmRole role = (AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate
+				.find("from AdmRole role where role.name=?", MMJBCommonConstants.FACILITY_ADMIN));
+		AdmUserFacility facility = (AdmUserFacility) DataAccessUtils
+				.uniqueResult(hibernateTemplate
+						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
+								role.getRoleId(), facilityId));
+		return facility.getFacilityPK().getUserId();
 	}
 }

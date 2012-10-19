@@ -18,6 +18,8 @@ import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 @Transactional
@@ -124,17 +126,6 @@ public class UserDaoImpl implements UserDao {
 
 		return userRoleDTOList;
 	}
-
-	public int getfacility(int facilityId) {
-		AdmRole role = (AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate
-				.find("from AdmRole role where role.name=?", "facility_admin"));
-		AdmUserFacility facility = (AdmUserFacility) DataAccessUtils
-				.uniqueResult(hibernateTemplate
-						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
-								role.getRoleId(), facilityId));
-		return facility.getFacilityPK().getUserId();
-	}
-
 	@Override
 	public UserDTO getUserByUserId(int userId) {
 		UserDTO userDTO = null;
@@ -175,5 +166,46 @@ public class UserDaoImpl implements UserDao {
 							+ e);
 		}
 
+	}
+
+	@Override
+	public void updateSocialProfileId(int userId, String profileId,int profileAttrId)throws JobBoardDataException{
+		MerUserProfile userProfile=new MerUserProfile();
+		try {
+		MerUser merUser =hibernateTemplateTracker.get(MerUser.class,userId);
+		MerUserProfilePK profilePK=new MerUserProfilePK();
+		profilePK.setUserId(userId);
+		profilePK.setProfileAttribId(profileAttrId);
+		userProfile.setMerUser(merUser);
+		userProfile.setAttribValue(profileId);
+		userProfile.setProfilePK(profilePK);
+		hibernateTemplateTracker.saveOrUpdate(userProfile);
+		} catch (HibernateException e) {
+			throw new JobBoardDataException(
+					"Error occured while updating social profile id in MerUserProfile"
+							+ e);
+		}
+	}
+
+	@Override
+	public UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardDataException{
+		UserDTO userDTO=null;
+		try {
+		MerUserProfile merUserProfile=DataAccessUtils.uniqueResult(hibernateTemplateTracker.find("from MerUserProfile profile where profile.attribValue=?",socialProfileId));
+		if(merUserProfile!=null){
+		MerUser merUser=merUserProfile.getMerUser();
+		userDTO=new UserDTO();
+		userDTO.setEmailId(merUser.getEmail());
+		userDTO.setFirstName(merUser.getFirstName());
+		userDTO.setLastName(merUser.getLastName());
+		userDTO.setUserId(merUser.getUserId());
+		userDTO.setPassword(merUser.getPassword());
+		}
+	} catch (HibernateException e) {
+		throw new JobBoardDataException(
+				"Error occured while updating social profile id in MerUserProfile"
+						+ e);
+	}
+		return userDTO;
 	}
 }

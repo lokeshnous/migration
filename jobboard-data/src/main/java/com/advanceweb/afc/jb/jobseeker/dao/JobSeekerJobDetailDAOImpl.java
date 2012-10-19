@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper;
 
 /**
@@ -37,32 +38,34 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 
 
 	/**
-	 * @Author :Prince Mathew
-	 * @Purpose:This method is used to delete the job applied by the Job Seeker
+	 * @Purpose:This method is used to update the delete data of the applied or saved depending on the appliedJobId , which is the PK of the AdmSaveJob table
 	 * @Created:Jul 26, 2012
 	 * @Param :appliedJobId
-	 * @Return :boolean value depends on the result
+	 * @Return :true or false
 	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerJobDetailDAO#updateAppliedSavedJobs(int)
 	 */
 	@Override
-	public boolean updateAppliedSavedJobs(int jobId) {
+	public boolean updateAppliedSavedJobs(int appliedJobId)throws JobBoardDataException  {
+		boolean result=false;
 		try {
 
-			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class, jobId);
+			AdmSaveJob job = hibernateTemplate.load(AdmSaveJob.class, appliedJobId);
 			job.setDeleteDt(new Date());
 			hibernateTemplate.saveOrUpdate(job);
-			return true;
+			result= true;
 		} catch (Exception e) {
 			// TODO: handle exception
-			LOGGER.error(e);
+			LOGGER.debug("Error while updating the delete date of the corresponding applied or saved job");
+			throw new JobBoardDataException(
+					"Error while updating the delete date of the corresponding applied or saved job"
+							+ e);
 		}
-		return false;
+		return result;
 	}
 
 	/**
-	 * @Author :Prince Mathew
-	 * @Purpose:This method is used to get the list of the all job applied by
-	 *               the job seeker
+	 * @Purpose:This method is used to get the list of all job applied by
+	 *               the corresponding job seeker
 	 * @Created:Jul 26, 2012
 	 * @Param :jobSeekerId
 	 * @Return :List of the AppliedJobDTO
@@ -71,7 +74,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<AppliedJobDTO> getAppliedJobs(int jobSeekerId) {
+	public List<AppliedJobDTO> getAppliedJobs(int jobSeekerId)throws JobBoardDataException   {
 		List<AppliedJobDTO> appliedJobDTOList = null;
 
 		try {
@@ -83,9 +86,11 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 				appliedJobDTOList = jobSeekerJobDetailConversionHelper
 						.transformToApplidJobDTO(jobList);
 			}
-		} catch (HibernateException e) {
-			// TODO: handle exception
-			LOGGER.error(e);
+		} catch (Exception e) {
+			LOGGER.debug("Error while fetching the applied jobs of the corresponding job seeker");
+			throw new JobBoardDataException(
+					"Error while fetching the applied jobs of the corresponding job seeker"
+							+ e);
 		}
 
 		return appliedJobDTOList;
@@ -93,12 +98,17 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 	}
 
 	/**
-	 * implementation of get saved jobs
+	 * @Purpose:This method is used to get the list of all job saved by
+	 *               the corresponding job seeker
+	 * @Created:Jul 26, 2012
+	 * @Param :jobSeekerId
+	 * @Return :List of the AppliedJobDTO
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerJobDetailDAO#getAppliedJobs(int)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId) {
+	public List<AppliedJobDTO> getSavedJobs(int jobSeekerId)throws JobBoardDataException {
 		List<AppliedJobDTO> appliedJobDTOList = null;
 
 		try {
@@ -112,8 +122,10 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 
 			}
 		} catch (HibernateException e) {
-			// TODO: handle exception
-			LOGGER.error(e);
+			LOGGER.debug("Error while fetching the saved jobs of the corresponding job seeker");
+			throw new JobBoardDataException(
+					"Error while fetching the applied jobs of the corresponding job seeker"
+							+ e);
 		}
 
 		return appliedJobDTOList;

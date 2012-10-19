@@ -3,31 +3,30 @@ package com.advanceweb.afc.jb.jobseeker.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 /**
- * Created JobSeekerJobDetailDAO
  * @author sharadk
- *
  */
 public interface JobSeekerJobDetailDAO {
 	/**
-	 * delete appliedJob
-	 * @param appliedJobId
+	 * This method is used to update the delete data of the applied or saved depending on the appliedJobId , which is the PK of the AdmSaveJob table
+	  * @param appliedJobId , which is the PK of the AdmSaveJobs table
+	 * @return true or false 
 	 */
-	boolean updateAppliedSavedJobs(int jobId);
+	boolean updateAppliedSavedJobs(int jobId)throws JobBoardDataException;
 
 	/**
-	 * get appliedjob
+	 * This method is used to get the list of the all job applied by the corresponding job seeker
 	 * @param jobSeekerId
-	 * @return
+	 * @return List<AppliedJobDTO>
 	 */
-	List<AppliedJobDTO> getAppliedJobs(int jobSeekerId);
+	List<AppliedJobDTO> getAppliedJobs(int jobSeekerId)throws JobBoardDataException;
 
 	/**
-	 * get savedjob
+	 * This method is used to get the list of the all job saved by the corresponding job seeker
 	 * @param jobSeekerId
-	 * @return
+	 * @return List<AppliedJobDTO>
 	 */
-
-	List<AppliedJobDTO> getSavedJobs(int jobSeekerId);
+	List<AppliedJobDTO> getSavedJobs(int jobSeekerId)throws JobBoardDataException;
 
 }

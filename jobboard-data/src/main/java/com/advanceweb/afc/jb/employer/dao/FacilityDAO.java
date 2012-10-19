@@ -64,4 +64,12 @@ public interface FacilityDAO {
 	 * @throws JobBoardServiceException
 	 */
 	int getFacilityParent(int facilityId) throws JobBoardDataException;
+	
+	/**
+	 * This method is used to get the user id of the corresponding facility based on th facility id
+	 * @param int userId
+	 * @return UserDTO
+	 * @throws JobBoardDataException
+	 */
+	int getfacilityUserId(int facilityId);
 }

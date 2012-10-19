@@ -13,8 +13,6 @@ public interface UserDao {
 
 	UserDTO getUserByUserId(int userId);
 
-	int getfacility(int facilityId);
-
 	/**
 	 * This method to update the automatic generated password to DB
 	 * 
@@ -24,5 +22,18 @@ public interface UserDao {
 	 */
 	void saveNewPWD(String emailAddress, String tempassword)
 			throws JobBoardDataException;
-
+	/**
+	 * This method is used to link the user's social media(e.g Facebook,LinkedIn)profile id with the corresponding user's profile
+	 * @param int userId
+	 * @param String profileId
+	 * @param int profileAttrId
+	 * @throws JobBoardDataException
+	 */
+	void updateSocialProfileId(int userId,String profileId,int profileAttrId)throws JobBoardDataException;
+	/**
+	 * This method is used to fetch user information based on user's social media(e.g Facebook,LinkedIn)profile id 
+	 * @param String socialProfileId
+	 * @throws JobBoardDataException
+	 */
+	UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardDataException;
 }
