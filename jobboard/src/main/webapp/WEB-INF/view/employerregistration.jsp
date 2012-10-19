@@ -44,7 +44,6 @@ function validateNumber(event) {
 		$('[id^=zipCode]').keypress(validateNumber);
 		jQuery(".megamenu").megamenu();
 		$('.focus').focus();
-		
 		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
 		$("#stateDpId").change( function(){
 				$('#cityAutoPopulation').val('');
@@ -120,6 +119,7 @@ function validateNumber(event) {
 		<div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
 		</div>
+		<form:hidden path="socialSignUp"/>
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
 				<div class="main">
@@ -135,8 +135,15 @@ function validateNumber(event) {
 									${message}
 								</div>
 							</c:if>
-
-
+							<div>
+								<span class="lableText3"></span> <FONT color="red"> <c:if
+										test="${not empty socialSignUpMsg}">
+										<div id="errmsg" style="color: red" align="left">
+											<c:out value="${socialSignUpMsg}"></c:out>
+										</div>
+									</c:if>
+								</FONT>
+							</div>
 							<c:forEach items="${empRegisterForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'First Name'}">

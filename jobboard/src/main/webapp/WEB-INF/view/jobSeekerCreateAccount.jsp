@@ -47,6 +47,15 @@
 
         <div id="jobSeekerRegister1" class="job_seeker_login leftFormHolder" style="display:block">
            <h2 class="sectionSubHeader">Step 1: Create Your Account</h2>
+           <div>
+								<span class="lableText3"></span> <FONT color="red"> <c:if
+										test="${not empty socialSignUpMsg}">
+										<div id="errmsg" style="color: red" align="left">
+											<c:out value="${socialSignUpMsg}"></c:out>
+										</div>
+									</c:if>
+								</FONT>
+							</div>
            <form:form method="POST" action="createJobSeekerYourInfo.html" commandName="registerForm" enctype="multipart/form-data">
            
            	
@@ -109,8 +118,6 @@
 		               <input type="button" value="Cancel" onclick="cancelProcess()" 
 										class="orange" name="Cancel" />
 	               </c:if>
-	               <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="orange">Cancel</a> --%>
-	               <!-- <input type="submit" value="Cancel" class="orange"  name="Cancel"/> -->  
 	            </div>
 	            <div class="clearfix"></div>
           </form:form>

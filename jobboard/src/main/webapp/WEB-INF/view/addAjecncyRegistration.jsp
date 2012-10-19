@@ -36,6 +36,12 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 		$('.focus').focus();
+		//for social media sign up
+		if ($("#socialSignUp").val() == 'true') {
+				
+					/* $("#emailId").attr("readonly", true);
+					$("#confirmEmailId").attr("readonly", true);  */
+		}
 		//Auto complete on selecting city
 		$("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
@@ -103,7 +109,8 @@
 		commandName="agencyRegForm" enctype="multipart/form-data">
 		<div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
-		</div>
+		</div>	
+		<form:hidden path="socialSignUp"/>
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
 				<div class="main">
@@ -117,7 +124,15 @@
 							<c:if test="${not empty message}">
 								<div class="validationMsg">${message}</div>
 							</c:if>
-
+							<div>
+								<span class="lableText3"></span> <FONT color="red"> <c:if
+										test="${not empty socialSignUpMsg}">
+										<div id="errmsg" style="color: red" align="left">
+											<c:out value="${socialSignUpMsg}"></c:out>
+										</div>
+									</c:if>
+								</FONT>
+							</div>
 
 							<c:forEach items="${agencyRegForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">

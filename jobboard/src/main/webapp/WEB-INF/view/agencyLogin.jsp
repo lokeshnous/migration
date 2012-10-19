@@ -72,12 +72,22 @@
 			    </div>
 			</form>
 		    </div>
-            <div class="job_seeker_social_login">
-			<p class="bold lableLetterSpacer">Login with your social networking account</p>
-			<a href=""><div class="faceBooklogin"></div></a>
-			<a href=""><div class="linkedInLogin"></div></a>
-		    </div>
-		    
+		     <div class="job_seeker_social_login">
+		     <p class="bold lableLetterSpacer">Login with your social networking account</p>
+		    <form action="<c:url value="/signin/facebook.html"/>" method="POST">
+		    <input type="hidden" name="pageValue" value="agency"/>
+		    <input type="hidden" name="scope" value="email">
+		     <button type="submit" class="faceBooklogin"></button>
+		    </form>
+		     <form action="<c:url value="/signin/linkedin.html"/>" method="POST">
+		    <input type="hidden" name="pageValue" value="agency"/>
+		    <input type="hidden" name="scope" value="email">
+		   <button type="submit" class="linkedInLogin"></button>
+		    </form>
+		    <div style="color: red" align="left" class="row">
+			${socialLoginError}
+			</div>
+		     </div>
 		    <br class="clearfix"/>
 
                 </div><!-- content_wrapper -->
