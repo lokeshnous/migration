@@ -103,7 +103,6 @@ jobboard-common/src/main/resources/employerProfile.properties -text
 jobboard-common/src/main/resources/entries.properties -text
 jobboard-common/src/main/resources/jobSeekerProfile.properties -text
 jobboard-common/src/main/resources/netSuite.properties -text
-jobboard-common/src/main/resources/pdfGenerator.properties -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/AdminService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/AdminServiceImpl.java -text
