@@ -47,11 +47,22 @@ public class JobPostingInventoryController {
 		String status = null;
 		ModelAndView model = new ModelAndView();
 
-		if (page != null && page.equals(MMJBCommonConstants.POST_JOB_PAGE)) {
+		// If Inventory page is from dashboard then we need to provide action
+		// column
+		if (page != null && page.equals("inventoryPage")) {
+			session.removeAttribute(" MMJBCommonConstants.POST_JOB_PAGE");
+		}
+
+		// If Inventory page is from post new job page then we action column has
+		// to remove
+		if ((page != null && page.equals(MMJBCommonConstants.POST_JOB_PAGE))
+				|| (null != session.getAttribute("page") && session
+						.getAttribute("page").equals(
+								MMJBCommonConstants.POST_JOB_PAGE))) {
 			inventoryForm.setPostJobPage("true");
+			session.setAttribute("page", MMJBCommonConstants.POST_JOB_PAGE);
 		} else {
 			status = "true";
-
 		}
 
 		int userId = (Integer) session

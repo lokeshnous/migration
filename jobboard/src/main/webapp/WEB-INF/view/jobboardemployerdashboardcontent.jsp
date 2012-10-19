@@ -197,7 +197,7 @@
 						<div class="lableTextDashBoard">
 							<p>
 								<a
-									href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html"
+									href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html?page=inventoryPage"
 									id="postingInventory">Job Posting Inventory</a>
 							</p>
 						</div>
