@@ -242,6 +242,30 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	}
 	
 	/**
+	 * This method checks if the template Name already exists
+	 * 
+	 * @param facilityId
+	 * @param templateName
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	public boolean checkTemplateName(int facilityId, String templateName) {
+		List<JpTemplate> listTemplate = hibernateTemplateCareer.find(
+				"from JpTemplate jpt where jpt.admFacility.facilityId=?",
+				facilityId);
+
+		if (null != listTemplate && !listTemplate.isEmpty()) {
+			for (JpTemplate template : listTemplate) {
+				if (template.getTemplateName().equalsIgnoreCase(templateName)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * update the job posting Branding Template.
 	 */
 	@Override

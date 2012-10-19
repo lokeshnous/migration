@@ -3,11 +3,13 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
 /**
  * 
@@ -52,6 +54,12 @@ public class BrandingTemplateValidation {
 	private @Value("${empBrandTemplateName}")
 	String empBrandTemplateName;
 
+	private @Value("${empBrandTemplateExists}")
+	String empBrandTemplateExists;
+	
+	@Autowired
+	private BrandingTemplateService brandingTemplateService;
+	
 	private static final String STR_NOTEMPTY = "NotEmpty";
 
 	public boolean supports(Class<?> form) {
@@ -249,6 +257,11 @@ public class BrandingTemplateValidation {
 
 		BrandingTemplateForm brandingTemplateForm = (BrandingTemplateForm) target;
 
+		if (checkTempNameExists(brandingTemplateForm)) {
+			errors.rejectValue("templateName", STR_NOTEMPTY,
+					empBrandTemplateExists);
+		}
+
 		if (null == brandingTemplateForm.getTemplateName()
 				|| brandingTemplateForm.getTemplateName().isEmpty()) {
 			errors.rejectValue("templateName", STR_NOTEMPTY,
@@ -259,6 +272,7 @@ public class BrandingTemplateValidation {
 				|| brandingTemplateForm.getLogoPath().isEmpty()) {
 			errors.rejectValue("logoFileData", STR_NOTEMPTY, empBrandLogo);
 		}
+
 		if (null == brandingTemplateForm.getMainImagePath()
 				|| brandingTemplateForm.getMainImagePath().isEmpty()) {
 			errors.rejectValue("mainImageFileData", STR_NOTEMPTY,
@@ -269,6 +283,18 @@ public class BrandingTemplateValidation {
 
 	}
 
+	/**
+	 * This method checks if the template name already exists
+	 * 
+	 * @param brandingTemplateForm
+	 * @return boolean
+	 */
+	private boolean checkTempNameExists(BrandingTemplateForm form){
+		
+		return brandingTemplateService.checkTemplateName(form.getFacilityId(), form.getTemplateName());
+		
+	}
+		
 	/**
 	 * This method is used the validate the non empty MultiPart data
 	 * 

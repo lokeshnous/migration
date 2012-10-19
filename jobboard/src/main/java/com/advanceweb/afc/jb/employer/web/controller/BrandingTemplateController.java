@@ -132,15 +132,15 @@ public class BrandingTemplateController {
 		ModelAndView model = new ModelAndView();
 
 		// Retrieve facilityId and userId from session.
-		int facility_id = (Integer) session
+		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		brandingTemplate.setFacilityId(facility_id);
+		brandingTemplate.setFacilityId(facilityId);
 		int user_id = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		brandingTemplate.setEmployerId(user_id);
 
 		//Check if the user has exceeded the branding template limit
-		status = brandingTemplateService.checkTemplateLimit(facility_id);
+		status = brandingTemplateService.checkTemplateLimit(facilityId);
 		if (!status) {
 			result.rejectValue("templateName", STR_NOTEMPTY,
 					empBrandTemplateExceed);
@@ -150,7 +150,7 @@ public class BrandingTemplateController {
 		}
 		
 		// Read the Silver/Gold customer details from database
-		brandingTemplate = checkBrand(brandingTemplate, facility_id);
+		brandingTemplate = checkBrand(brandingTemplate, facilityId);
 
 		// Modify the names of media files to save on File server
 		brandingTemplate = modifyMediaName(brandingTemplate);
@@ -245,10 +245,13 @@ public class BrandingTemplateController {
 		ModelAndView model = new ModelAndView();
 
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session
+		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		
+		brandingTemplateForm.setFacilityId(facilityId);
+		
 		// Read the Silver/Gold customer details from database
-		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
+		brandingTemplateForm = checkBrand(brandingTemplateForm, facilityId);
 
 		brandingTemplateForm.setBrowsePath("create");
 
@@ -369,10 +372,13 @@ public class BrandingTemplateController {
 
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
-		int facility_id = (Integer) session
+		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		
+		brandingTemplateForm.setFacilityId(facilityId);
+		
 		// Read the Silver/Gold customer details from database
-		brandingTemplateForm = checkBrand(brandingTemplateForm, facility_id);
+		brandingTemplateForm = checkBrand(brandingTemplateForm, facilityId);
 
 		BrandingTemplateDTO templateDTO = brandingTemplateService
 				.editBrandingTemplate(templateId);

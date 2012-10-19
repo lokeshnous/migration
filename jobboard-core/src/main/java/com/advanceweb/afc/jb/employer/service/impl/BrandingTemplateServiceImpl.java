@@ -104,6 +104,19 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	}
 	
 	/**
+	 * This method checks if the template Name already exists
+	 * 
+	 * @param facilityId
+	 * @param templateName
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	public boolean checkTemplateName(int facilityId, String templateName){
+		return brandingTemplateDAO.checkTemplateName(facilityId, templateName);
+	}
+	
+	/**
 	 * This method is used to get the net suite customer id based on
 	 * adm facility id.
 	 * @param int admFacilityID

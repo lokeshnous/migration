@@ -82,6 +82,16 @@ public interface BrandingTemplateService {
 	boolean checkTemplateLimit(int facilityId);
 	
 	/**
+	 * This method checks if the template Name already exists
+	 * 
+	 * @param facilityId
+	 * @param templateName
+	 * 
+	 * @return boolean
+	 */
+	boolean checkTemplateName(int facilityId, String templateName);
+	
+	/**
 	 * Fetch the employer Branding information
 	 * 
 	 * @param facilityId
