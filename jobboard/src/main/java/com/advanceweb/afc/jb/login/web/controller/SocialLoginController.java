@@ -353,7 +353,7 @@ public class SocialLoginController {
 			if(socialLoginForm.getServiceProviderId().equals(MMJBCommonConstants.FACEBOOK)){
 				profileAttrId=Integer.parseInt(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID);
 				}
-				if(socialLoginForm.equals(MMJBCommonConstants.LINKEDIN)){
+				if(socialLoginForm.getServiceProviderId().equals(MMJBCommonConstants.LINKEDIN)){
 					profileAttrId=Integer.parseInt(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
 				}
 			try {
