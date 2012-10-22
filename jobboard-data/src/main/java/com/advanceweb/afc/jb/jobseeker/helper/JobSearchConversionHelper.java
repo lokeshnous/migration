@@ -171,9 +171,6 @@ public class JobSearchConversionHelper {
 			}
 			admSaveJob.setAppliedDt(appliedDate);
 			String strDeleteDt = jobDTO.getDeleteDt();
-			
-			System.out.println("strDeleteDt==="+strDeleteDt);
-			
 			java.sql.Date deleteDtDate = null;
 			if (strDeleteDt != null) {
 				deleteDtDate = (Date) CommonUtil

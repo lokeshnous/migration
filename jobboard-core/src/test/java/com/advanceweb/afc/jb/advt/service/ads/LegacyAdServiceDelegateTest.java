@@ -1,5 +1,8 @@
 package com.advanceweb.afc.jb.advt.service.ads;
 
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,15 @@ import com.advanceweb.common.client.ClientContext;
 @Transactional
 public class LegacyAdServiceDelegateTest {
 	@Autowired
-	LegacyAdServiceDelegate delegate;
+	private LegacyAdServiceDelegate delegate;
+	
+	@Ignore("Not ready for test")
 	@Test
 	public void testGetBanner() {
 		String bannerString = delegate.getBanner(new ClientContext(), AdSize.IAB_MEDIUM_RECTANGLE,
 				AdPosition.TOP).getTag();
-		System.out.println(bannerString);
+		assertNotNull("Banner String for Ad", bannerString);
+		//System.out.println(bannerString);
 		// fail("Not yet implemented");
 	}
 
