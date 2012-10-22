@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -126,17 +127,34 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		try {
 			JpLocation location = null;
-			// Retrieving location Id based on the data selection while posting
-			// the new job		
 			
-			if(!(dto.getJobId()>0) &&(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
-					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId()))){
+
+			if (!(dto.getJobId() > 0)
+					&& (MMJBCommonConstants.POST_NEW_JOB.equals(dto
+							.getJobStatus())
+							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
+								Integer.valueOf(dto.getJobPostingType()),
+								dto.getFacilityId()))) {
 				return false;
-			}				
-			if((dto.getJobId()>0) &&(MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
-					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId()))){
+			}
+			if ((dto.getJobId() > 0)
+					&& (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto
+							.getJobStatus())
+							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
+								Integer.valueOf(dto.getJobPostingType()),
+								dto.getFacilityId()))) {
 				return false;
-			}	
+			}
+			if ((dto.getJobId() > 0)
+					&& (MMJBCommonConstants.POST_JOB_DRAFT.equals(dto
+							.getJobStatus())
+							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
+								Integer.valueOf(dto.getJobPostingType()),
+								dto.getFacilityId()))) {
+				return false;
+			}
+			// Retrieving location Id based on the data selection while posting
+						// the new job
 			Object[] inputs = { dto.getJobCountry(), dto.getJobState(),
 					dto.getJobCity(), dto.getJobZip() };
 			List<JpLocation> locationList = hibernateTemplate
@@ -150,16 +168,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// selected by the user
 			JpTemplate template = hibernateTemplate.get(JpTemplate.class,
 					Integer.valueOf(dto.getBrandTemplate()));
-			
+
 			JpJobType jobType = getJobTypeDetails(dto);
 			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
-			
+
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
 					template, admFacility);
 			jpJob.setJpJobType(jobType);
 			hibernateTemplate.saveOrUpdate(jpJob);
-			
+
 			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
 			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
 			pKey.setFacilityId(dto.getFacilityId());
@@ -645,8 +663,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		//Schedule Jobs			
 		try {
 			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
-			List<JobPostDTO> scheduledJobDTOs = jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
-			return scheduledJobDTOs;
+			return jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}			
@@ -661,8 +678,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		//Schedule Jobs			
 		try {
 			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
-			List<JobPostDTO> scheduledJobDTOs = jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
-			return scheduledJobDTOs;
+			return jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}			
@@ -836,7 +852,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private String getOneDayBeforeDate(){
 		
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
 		cal.add(Calendar.DATE, -1);	
 		return dateFormat.format(cal.getTime());
 	}
@@ -930,7 +946,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// startDateValue=dateConveter(startdateValue);
 			Calendar currentDate = Calendar.getInstance();
 			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MM/dd/yyyy HH:mm:ss");
+					"MM/dd/yyyy HH:mm:ss",Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
@@ -1042,7 +1058,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			List<AdmFacilityJpAudit> admFacilityJpAuditList = (List<AdmFacilityJpAudit>) query
 					.list();
 			if (null != admFacilityJpAuditList
-					&& admFacilityJpAuditList.size() > 0) {
+					&& !admFacilityJpAuditList.isEmpty()) {
 				invDetailId = admFacilityJpAuditList.get(0).getId()
 						.getInventoryDetailId();
 			}
