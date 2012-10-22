@@ -1,11 +1,13 @@
 package com.advanceweb.afc.jb.common;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class UserDTO {
+public class UserDTO implements Serializable{
 	
+	private static final long serialVersionUID = -7570981110575694112L;
 	private int userId;
 	private String emailId;
 	private String firstName;
