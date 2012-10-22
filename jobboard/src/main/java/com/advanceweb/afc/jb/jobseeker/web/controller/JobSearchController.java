@@ -731,6 +731,10 @@ public class JobSearchController {
 			List<String> areaList = (List<String>) jobSrchJsonObj
 					.get(MMJBCommonConstants.AREA);
 			session.setAttribute("areaList", areaList);
+			session.setAttribute("location",
+					request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
+			jobSrchJsonObj.put("location",
+					request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
 		}
 		return jobSrchJsonObj;
 	}
@@ -1026,16 +1030,17 @@ public class JobSearchController {
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		int savedJobsCount = 0;
-		try{
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
-				.getSavedJobs(userId);
-		savedJobsCount = savedJobDTOList.size();
-		if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
-			int oldJobId = savedJobDTOList.get(0).getSaveJobId();
-			jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
-		}}
-		catch(JobBoardException e){
-			LOGGER.debug("Error occured while getting the saved job of curresponding  user or while updating the particular job details"+e);
+		try {
+			List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
+					.getSavedJobs(userId);
+			savedJobsCount = savedJobDTOList.size();
+			if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
+				int oldJobId = savedJobDTOList.get(0).getSaveJobId();
+				jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
+			}
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while getting the saved job of curresponding  user or while updating the particular job details"
+					+ e);
 		}
 
 		// Get the Job details
