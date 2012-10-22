@@ -12,6 +12,14 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		$.nmFilters({
+			custom: {
+			afterShowCont: function(nm) {
+				$('#email').focus();
+				}
+			}
+		 });
+					
 		$("#waitmsg").hide();
 		
 		$('#emailbutton').click(function(){	
