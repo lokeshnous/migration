@@ -11,7 +11,7 @@
     <name>Job Board Root (Module Aggregator)</name>
 
     <modules>
-        <module>jobboard-parent</module>
+        <module>advanceweb-parent</module>
         <module>jobboard-common</module>
         <module>jobboard-data</module>
         <module>jobboard-core</module>
