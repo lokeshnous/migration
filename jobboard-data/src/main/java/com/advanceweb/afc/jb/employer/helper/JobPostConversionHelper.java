@@ -78,10 +78,19 @@ public class JobPostConversionHelper<JobPostForm> {
 		 //Auto Renew
 		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);				
 		 
-		 if(MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())){
-			   jpJob.setStartDt(new Date());
-		 }
-		 
+		if (MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())) {
+			jpJob.setStartDt(new Date());
+		}
+		if (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus())
+				|| MMJBCommonConstants.POST_JOB_DRAFT
+						.equals(dto.getJobStatus())) {
+			Calendar now = Calendar.getInstance();
+			jpJob.setStartDt(now.getTime());
+			now.add(Calendar.DAY_OF_MONTH, 30);
+			jpJob.setActive(MMJBCommonConstants.ACTIVE);
+			jpJob.setEndDt(now.getTime());
+		}
+			
 		 jpJob.setAdmFacility(admFacility);
 		 jpJob.setActive((byte)(dto.isbActive()?1:0));
 		 jpJob.setTemplateOverride(dto.isbTemplateOverride()?1:0);
