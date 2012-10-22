@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.jobseeker.web.controller;
+package com.advanceweb.afc.jb.user.web.controller;
 
 /**
  * 
@@ -8,7 +8,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
  * @Since 2nd July, 2012
  */
 
-public class JobSeekerSubscriptionForm {
+public class UserSubscriptionForm {
 
 	private String[] currentsubs;
 	private String[] currentmagazines;

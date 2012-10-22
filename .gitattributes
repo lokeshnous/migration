@@ -43,7 +43,6 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostingInventoryDT
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostingPlanDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
-jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerSubscriptionsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LanguageDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LocationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginDTO.java -text
@@ -83,6 +82,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/TestimonyDTO.java -te
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/UserAlertDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/UserDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/UserRoleDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/UserSubscriptionsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VeteranStatusDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VideoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/WorkExpDTO.java -text
@@ -162,8 +162,6 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/impl/ManageJobSeek
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/CoverLetterService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerJobDetailService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistration.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/impl/JobSeekerSubscriptionServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/jobseeker/service/impl/SaveSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/LoginService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/login/service/impl/LoginServiceImpl.java -text
@@ -216,6 +214,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserSubscriptionService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserSubscriptionServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/AdPosition.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/AdSize.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/Banner.java -text
@@ -238,12 +238,12 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchServiceTe
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerJobDetailServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerRegistrationTest.java -text
-jobboard-core/src/test/java/com/advanceweb/afc/jb/jobseeker/service/JobSeekerSubscriptionsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/login/service/LoginServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/lookup/service/PopulateDropdownsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/pgi/service/PaymentGatewayServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/user/UserSubscriptionsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
 jobboard-core/src/test/resources/applicationContext-test.xml -text
 jobboard-core/src/test/resources/common.properties -text
@@ -412,14 +412,12 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerJobDeta
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerJobDetailDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerRegistrationDAOImpl.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerSubscriptionsDAO.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/JobSeekerSubscriptionsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/SaveSearchDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/dao/SaveSearchDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/JobSearchConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/JobSeekerJobDetailConversionHelper.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/JobSeekerSubscriptionsConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/SaveSearchConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/jobseeker/helper/UserSubscriptionsConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/login/dao/LoginFormDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/login/dao/LoginFormDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/lookup/dao/PopulateDropdownsDAO.java -text
@@ -441,6 +439,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserAlertDAO.java -te
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserAlertDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserDao.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserDaoImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserSubscriptionsDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserSubscriptionsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
 jobboard-data/src/main/resources/HibernateSessionFactory.xml -text
 jobboard-data/src/main/resources/openam.properties -text
@@ -513,8 +513,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerP
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerRegistrationValidation.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerSubscriptionForm.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobSeekerSubscriptionsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerAdvanceSearchForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerCoverLetterController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ManageJobSeekerController.java -text
@@ -525,7 +523,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearch
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SendToFriend.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobApplication.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobSeekerRegistration.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJobSeekerSubscription.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/ChangePasswordForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFailureManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginForm.java -text
@@ -560,7 +557,10 @@ jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/SearchResumeF
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/TransformCreateResume.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/resume/web/controller/WorkExpForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/TransferUserAlert.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/TransformUserubscription.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserAlertController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserSubscriptionForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserSubscriptionsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/exception/JobBoardUIException.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text

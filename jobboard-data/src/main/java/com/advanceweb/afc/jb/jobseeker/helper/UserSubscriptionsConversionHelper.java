@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscriptionPK;
@@ -20,8 +20,8 @@ import com.advanceweb.afc.jb.data.entities.ResCoverletter;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-@Repository("jsSubscriptionHelper")
-public class JobSeekerSubscriptionsConversionHelper {
+@Repository("subscriptionHelper")
+public class UserSubscriptionsConversionHelper {
 
 	/**
 	 * Converting into Job seeker Subscriptions DTO
@@ -29,14 +29,14 @@ public class JobSeekerSubscriptionsConversionHelper {
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	public List<JobSeekerSubscriptionsDTO> transformMerUserAlertsTojsSubsDTO(
+	public List<UserSubscriptionsDTO> transformMerUserAlertsTojsSubsDTO(
 			List<AdmUserSubscription> listSubs) {
 
-		List<JobSeekerSubscriptionsDTO> subsList = new ArrayList<JobSeekerSubscriptionsDTO>();
+		List<UserSubscriptionsDTO> subsList = new ArrayList<UserSubscriptionsDTO>();
 
 		if (null != listSubs) {
 			for (AdmUserSubscription alert : listSubs) {
-				JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
 				dto.setSubscriptionId(alert.getSubscriptionPK()
 						.getSubscriptionId());
 				dto.setUserId(alert.getSubscriptionPK().getUserId());
@@ -53,13 +53,13 @@ public class JobSeekerSubscriptionsConversionHelper {
 	 * @return
 	 */
 	public List<AdmUserSubscription> transformjsSubsDTOToAdmUserSubs(
-			List<JobSeekerSubscriptionsDTO> listSubsDTO,
+			List<UserSubscriptionsDTO> listSubsDTO,
 			List<AdmUserSubscription> listSubsAlerts) {
 
 		List<AdmUserSubscription> subsEntityList = new ArrayList<AdmUserSubscription>();
 
 		if (null != listSubsDTO) {
-			for (JobSeekerSubscriptionsDTO dto : listSubsDTO) {
+			for (UserSubscriptionsDTO dto : listSubsDTO) {
 				if (!validateAdmUserSubscriptions(dto, listSubsAlerts)) {
 					AdmUserSubscription entity = new AdmUserSubscription();
 					AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
@@ -80,8 +80,7 @@ public class JobSeekerSubscriptionsConversionHelper {
 	 * @param listSubsAlerts
 	 * @return
 	 */
-	private boolean validateAdmUserSubscriptions(
-			JobSeekerSubscriptionsDTO subDTO,
+	private boolean validateAdmUserSubscriptions(UserSubscriptionsDTO subDTO,
 			List<AdmUserSubscription> listSubsAlerts) {
 
 		if (null != subDTO && null != listSubsAlerts) {

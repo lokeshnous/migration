@@ -15,16 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
-import com.advanceweb.afc.jb.jobseeker.service.JobSeekerSubscriptionService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
+import com.advanceweb.afc.jb.user.UserSubscriptionService;
+import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 
 /**
  * 
@@ -42,10 +43,10 @@ public class JobSeekerDashBoardController {
 			.getLogger("JobSeekerDashBoardController.class");
 
 	@Autowired
-	private JobSeekerSubscriptionService jobSeekerSubscriptionsService;
+	private UserSubscriptionService userSubService;
 
 	@Autowired
-	private TransformJobSeekerSubscription transformJobSeekerSubscription;
+	private TransformUserubscription userubscription;
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
@@ -80,10 +81,10 @@ public class JobSeekerDashBoardController {
 		int nUserId = (Integer) session.getAttribute("userId");
 		List<DropDownDTO> listSubscriptions = populateDropdownsService
 				.getSubscriptionsList();
-		List<JobSeekerSubscriptionsDTO> currentSubsList = jobSeekerSubscriptionsService
+		List<UserSubscriptionsDTO> currentSubsList = userSubService
 				.getCurrentSubscriptions(nUserId);
 
-		List<DropDownDTO> currentSubs = transformJobSeekerSubscription
+		List<DropDownDTO> currentSubs = userubscription
 				.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,
 						listSubscriptions);
 		form.setUserName((String) session.getAttribute("UserName"));
@@ -96,16 +97,17 @@ public class JobSeekerDashBoardController {
 				.viewMySavedSearches(nUserId);
 		savedSearchCount = saveSearchedJobsDTOList.size();
 		form.setSavedSearchCount(savedSearchCount);
-		try{
-		List<AppliedJobDTO> savedJobDTOList = jobSeekerService
-				.getSavedJobs(nUserId);
-		savedJobsCount = savedJobDTOList.size();
-		form.setSavedJobsCount(savedJobsCount);
-		List<AppliedJobDTO> appliedJobDTOList = jobSeekerService
-				.getAppliedJobs(nUserId);
-		appliedJobsCount = appliedJobDTOList.size();
-		}catch(JobBoardException e){
-			LOGGER.debug("Error occured while fetching the saved or applied job details"+e);
+		try {
+			List<AppliedJobDTO> savedJobDTOList = jobSeekerService
+					.getSavedJobs(nUserId);
+			savedJobsCount = savedJobDTOList.size();
+			form.setSavedJobsCount(savedJobsCount);
+			List<AppliedJobDTO> appliedJobDTOList = jobSeekerService
+					.getAppliedJobs(nUserId);
+			appliedJobsCount = appliedJobDTOList.size();
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while fetching the saved or applied job details"
+					+ e);
 		}
 		form.setAppliedJobsCount(appliedJobsCount);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();

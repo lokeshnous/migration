@@ -12,7 +12,7 @@ package com.advanceweb.afc.jb.common;
  * 
  * 
  */
-public class JobSeekerSubscriptionsDTO {
+public class UserSubscriptionsDTO {
 	
 	private int userId;
 	private int subscriptionId;

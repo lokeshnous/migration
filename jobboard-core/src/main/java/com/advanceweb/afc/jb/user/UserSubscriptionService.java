@@ -1,8 +1,8 @@
-package com.advanceweb.afc.jb.jobseeker.service;
+package com.advanceweb.afc.jb.user;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 
 /**
  * <code> JobSeekerSubscriptionService </code> is a Service class.
@@ -14,21 +14,23 @@ import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
  * 
  * 
  */
-public interface JobSeekerSubscriptionService {
-	
+public interface UserSubscriptionService {
+
 	/**
 	 * 
 	 * @param jobSeekerSubscriptionsDTO
 	 * @return
 	 */
 
-	boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId);
-	
+	boolean saveJobSeekerSubscription(List<UserSubscriptionsDTO> listSubsDTO,
+			int userId);
+
 	/**
 	 * To get current subscriptions of the user
+	 * 
 	 * @param userId
 	 * @return
 	 */
-	List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId);
+	List<UserSubscriptionsDTO> getCurrentSubscriptions(int userId);
 
 }

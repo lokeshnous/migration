@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.jobseeker.service;
+package com.advanceweb.afc.jb.user;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.ServiceTest;
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 
 /**
  * 
@@ -18,10 +18,10 @@ import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-public class JobSeekerSubscriptionsTest extends ServiceTest {
+public class UserSubscriptionsTest extends ServiceTest {
 
 	@Autowired
-	public JobSeekerSubscriptionService jobSeekerSubscriptionsService;
+	public UserSubscriptionService subscriptionService;
 
 	/**
 	 * Test method for
@@ -35,7 +35,7 @@ public class JobSeekerSubscriptionsTest extends ServiceTest {
 	 */
 	@Test
 	public void getSaveSubscriptionsList() {
-		List<JobSeekerSubscriptionsDTO> subsList = new ArrayList<JobSeekerSubscriptionsDTO>();
+		List<UserSubscriptionsDTO> subsList = new ArrayList<UserSubscriptionsDTO>();
 		// JobSeekerSubscriptionsDTO dto = new JobSeekerSubscriptionsDTO();
 		// dto.setLookUpId("23");
 		// JobSeekerSubscriptionsDTO dto1 = new JobSeekerSubscriptionsDTO();
@@ -52,7 +52,7 @@ public class JobSeekerSubscriptionsTest extends ServiceTest {
 
 		// boolean bSaved =
 		// jobSeekerSubscriptionsService.saveJobSeekerSubscription(subsList, 1);
-		jobSeekerSubscriptionsService.saveJobSeekerSubscription(subsList, 1);
+		subscriptionService.saveJobSeekerSubscription(subsList, 1);
 		assertNotNull("Subscriptions List", subsList);
 		// assertTrue("Subscriptions List", subsList.size()>=0);
 	}
@@ -69,7 +69,7 @@ public class JobSeekerSubscriptionsTest extends ServiceTest {
 	 */
 	@Test
 	public void getCurrentSubscriptionsList() {
-		List<JobSeekerSubscriptionsDTO> subsList = jobSeekerSubscriptionsService
+		List<UserSubscriptionsDTO> subsList = subscriptionService
 				.getCurrentSubscriptions(1);
 		assertNotNull("Subscriptions List", subsList);
 		// assertTrue("Subscriptions List", subsList.size()>=0);

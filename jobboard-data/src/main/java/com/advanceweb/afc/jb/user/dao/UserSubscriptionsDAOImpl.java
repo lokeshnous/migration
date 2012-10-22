@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.jobseeker.dao;
+package com.advanceweb.afc.jb.user.dao;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,14 +18,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
-import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHelper;
+import com.advanceweb.afc.jb.jobseeker.helper.UserSubscriptionsConversionHelper;
 
 /**
  * @version 1.0
@@ -33,12 +33,12 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerSubscriptionsConversionHe
  * 
  */
 @SuppressWarnings("unchecked")
-@Repository("jobSeekerSubscriptionsDAO")
-public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO {
+@Repository("subscriptionsDAO")
+public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
 	private static final Logger LOGGER = Logger
-			.getLogger(JobSeekerSubscriptionsDAOImpl.class);
+			.getLogger(UserSubscriptionsDAOImpl.class);
 
 	private static final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
 	private static final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -49,7 +49,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	private HibernateTemplate hibernateTemplateCareers;
 
 	@Autowired
-	private JobSeekerSubscriptionsConversionHelper jsSubscriptionHelper;
+	private UserSubscriptionsConversionHelper subscriptionHelper;
 
 	@Autowired
 	public void setHibernateTemplate(
@@ -66,13 +66,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveJobSeekerSubscription(
-			List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId) {
+			List<UserSubscriptionsDTO> listSubsDTO, int userId) {
 		try {
 
 			if (userId != 0) {
 				List<AdmUserSubscription> listSubsAlerts = hibernateTemplateCareers
 						.find(SELECTED_CURRENT_SUBS, userId);
-				List<AdmUserSubscription> userAlerts = jsSubscriptionHelper
+				List<AdmUserSubscription> userAlerts = subscriptionHelper
 						.transformjsSubsDTOToAdmUserSubs(listSubsDTO,
 								listSubsAlerts);
 				hibernateTemplateCareers.deleteAll(listSubsAlerts);
@@ -92,13 +92,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 * @return
 	 */
 	@Override
-	public List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId) {
+	public List<UserSubscriptionsDTO> getCurrentSubscriptions(int userId) {
 
-		List<JobSeekerSubscriptionsDTO> listSubscriptiosns = null;
+		List<UserSubscriptionsDTO> listSubscriptiosns = null;
 		try {
 			List<AdmUserSubscription> listSubs = hibernateTemplateCareers.find(
 					SELECTED_CURRENT_SUBS, userId);
-			listSubscriptiosns = jsSubscriptionHelper
+			listSubscriptiosns = subscriptionHelper
 					.transformMerUserAlertsTojsSubsDTO(listSubs);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -124,8 +124,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		try {
 			Date todayDate = null;
 			Calendar currentDate = Calendar.getInstance();
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					OLD_FORMAT, Locale.US);
+			SimpleDateFormat formatter = new SimpleDateFormat(OLD_FORMAT,
+					Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
@@ -185,12 +185,13 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	public Date dateConveter(String date) {
 		Date dateValue = null;
 		String newDateString;
-		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT,Locale.US);
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, Locale.US);
 		try {
 			Date dateConv = sdf.parse(date);
 			sdf.applyPattern(NEW_FORMAT);
 			newDateString = sdf.format(dateConv);
-			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT,Locale.US);
+			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT,
+					Locale.US);
 			dateValue = sdfSource.parse(newDateString);
 		} catch (ParseException e) {
 			LOGGER.info("Date parsing in Job save by admin wrong");
@@ -247,7 +248,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 							userId);
 			if (null == res || res.isEmpty()) {
 				isUpdate = true;
-				
+
 			} else {
 				isUpdate = false;
 			}
@@ -332,8 +333,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		try {
 			Date todayDate = null;
 			Calendar currentDate = Calendar.getInstance();
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					OLD_FORMAT,Locale.US);
+			SimpleDateFormat formatter = new SimpleDateFormat(OLD_FORMAT,
+					Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
@@ -400,24 +401,28 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 	 */
 	@Override
 	public List<ResCoverLetterDTO> getJobOwnerList(int userId) {
-		//List<ResCoverLetterDTO> resCov = new ArrayList<ResCoverLetterDTO>();
+		// List<ResCoverLetterDTO> resCov = new ArrayList<ResCoverLetterDTO>();
 		List<ResCoverletter> resCov = new ArrayList<ResCoverletter>();
 		try {
 			Query query = hibernateTemplateCareers
 					.getSessionFactory()
 					.getCurrentSession()
-					.createQuery("Select rs from ResCoverletter rs where rs.userId="+userId+ "and deleteDt is null");
-			
-			resCov=query.list();
-			/*resCov = hibernateTemplateCareers
-					.find("from ResCoverletter rs where rs.userId=? and deleteDt is null",
-							userId);*/
+					.createQuery(
+							"Select rs from ResCoverletter rs where rs.userId="
+									+ userId + "and deleteDt is null");
+
+			resCov = query.list();
+			/*
+			 * resCov = hibernateTemplateCareers
+			 * .find("from ResCoverletter rs where rs.userId=? and deleteDt is null"
+			 * , userId);
+			 */
 
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
-		
-		return jsSubscriptionHelper.transformCoverLeterlistToDTO(resCov);
+
+		return subscriptionHelper.transformCoverLeterlistToDTO(resCov);
 
 	}
 
@@ -436,7 +441,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		boolean isUpdate = false;
 		Date todayDate = null;
 		Calendar currentDate = Calendar.getInstance();
-		SimpleDateFormat formatter = new SimpleDateFormat(OLD_FORMAT,Locale.US);
+		SimpleDateFormat formatter = new SimpleDateFormat(OLD_FORMAT, Locale.US);
 		try {
 			String dateNow = formatter.format(currentDate.getTime());
 			todayDate = dateConveter(dateNow);
@@ -507,7 +512,7 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 						.find("from ResCoverletter rs where rs.coverletterId=? and deleteDt is null",
 								coverletterId);
 			}
-			resCovDTO = jsSubscriptionHelper.toTransFormListToDTO(resList);
+			resCovDTO = subscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
 			LOGGER.info("Error for update of employee data");
 		}
@@ -531,8 +536,8 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 		try {
 			Date todayDate = null;
 			Calendar currentDate = Calendar.getInstance();
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					OLD_FORMAT,Locale.US);
+			SimpleDateFormat formatter = new SimpleDateFormat(OLD_FORMAT,
+					Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
@@ -574,16 +579,18 @@ public class JobSeekerSubscriptionsDAOImpl implements JobSeekerSubscriptionsDAO 
 
 	@Override
 	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId) {
-		
+
 		ResCoverLetterDTO resCovDTO = new ResCoverLetterDTO();
 		try {
 			List<ResCoverletter> resList = new ArrayList<ResCoverletter>();
 			if (jobSeekerId > 0) {
 				resList = hibernateTemplateCareers
-						.find("from ResCoverletter where userId = " + jobSeekerId
-								+ " AND active = " + MMJBCommonConstants.VISIBILITY_PUBLIC+ "and deleteDt is null");
+						.find("from ResCoverletter where userId = "
+								+ jobSeekerId + " AND active = "
+								+ MMJBCommonConstants.VISIBILITY_PUBLIC
+								+ "and deleteDt is null");
 			}
-			resCovDTO = jsSubscriptionHelper.toTransFormListToDTO(resList);
+			resCovDTO = subscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
 			LOGGER.info("Error for update of employee data");
 		}

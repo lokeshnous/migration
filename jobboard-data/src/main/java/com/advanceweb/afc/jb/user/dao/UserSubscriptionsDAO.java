@@ -1,8 +1,8 @@
-package com.advanceweb.afc.jb.jobseeker.dao;
+package com.advanceweb.afc.jb.user.dao;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.JobSeekerSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
@@ -13,20 +13,20 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
  * @author sharadk
  * 
  */
-public interface JobSeekerSubscriptionsDAO {
+public interface UserSubscriptionsDAO {
 	/**
 	 * 
 	 * @param jobSeekerSubscriptionsDTO
 	 * @return
 	 */
-	boolean saveJobSeekerSubscription(List<JobSeekerSubscriptionsDTO> listSubsDTO, int userId);
+	boolean saveJobSeekerSubscription(List<UserSubscriptionsDTO> listSubsDTO, int userId);
 	
 	/**
 	 * To get current subscriptions of the user
 	 * @param userId
 	 * @return
 	 */
-	List<JobSeekerSubscriptionsDTO> getCurrentSubscriptions(int userId);
+	List<UserSubscriptionsDTO> getCurrentSubscriptions(int userId);
 	/**
 	 * 
 	 * @param rclDTO.
