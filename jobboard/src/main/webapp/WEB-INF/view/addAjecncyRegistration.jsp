@@ -332,11 +332,8 @@
 										false);
 								out.print(c.createRecaptchaHtml(null, null));
 								%>
-							</div>
-							<div>
-								<c:out value=""></c:out>
-							</div>
-							<div>
+								
+									<div>
 								<span class="lableText3"></span> <FONT color="red"> <c:if
 										test="${not empty errorMessage}">
 										<div id="errmsg" style="color: red" align="left">
@@ -345,6 +342,11 @@
 									</c:if>
 								</FONT>
 							</div>
+							</div>
+							<div>
+								<c:out value=""></c:out>
+							</div>
+						
 
 							<%-- <div class="rowEvenNewSpacing"></div>
 							<div class="row">

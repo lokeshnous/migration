@@ -88,7 +88,9 @@
 					<form:errors path="retypepassword" /> 
 				</div>
 
- 	            <div class="row marginTop15"> <span class="lableText3">&nbsp;</span>
+ 	            <div class="row marginTop5"> 
+ 	            
+ 	            <span class="lableText3">&nbsp;</span>
 								<%
 										String pubKey = MMJBCommonConstants.PUBLIC_KEY;
 										String privKey = MMJBCommonConstants.PRIVATE_KEY;
@@ -97,11 +99,8 @@
 												false);
 										out.print(c.createRecaptchaHtml(null, null));
 								%>
-							</div>
-				 <div>
-				 	<c:out value=""></c:out>
-				 </div>
-				<div>
+								
+								<div>
 					<span class="lableText3"></span>
 					<FONT color="red">
 						<c:if test="${not empty errorMessage}">
@@ -111,6 +110,11 @@
 						</c:if>
 					</FONT> 
 				</div>
+							</div>
+				 <div>
+				 	<c:out value=""></c:out>
+				 </div>
+				
 				<div class="popUpButtonRow">
 				
 	               <input type="submit" value="Next" class="orange"  name="Next"/>
