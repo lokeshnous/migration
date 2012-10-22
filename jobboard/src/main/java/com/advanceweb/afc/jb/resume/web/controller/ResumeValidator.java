@@ -1,12 +1,15 @@
 package com.advanceweb.afc.jb.resume.web.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 
@@ -21,7 +24,13 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 public class ResumeValidator {
 	private Pattern pattern;
 	private Matcher matcher;
+	
+	private @Value("${jsWorkExpDateCompare}")
+	String jsWorkExpDateCompare;
 
+	private @Value("${jsEducateDateCompare}")
+	String jsEducateDateCompare;
+	
 	/**
 	 * Validating resume builder
 	 * 
@@ -159,15 +168,32 @@ public class ResumeValidator {
 					return "Hourly Pay Rate should contain only numeric values";
 				}
 
-				if ((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form
-						.getStartDate()))
-						|| (!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form
-								.getEndDate()))) {
-					return "Please enter valid date format";
+				String errorMsg = validateWorkExpDt(form);
+				if(!errorMsg.isEmpty())
+				{
+					return errorMsg;
 				}
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * This method validates the date in Work Experience section
+	 * @param form
+	 */
+	private String validateWorkExpDt(WorkExpForm form) {
+		String errorMsg = MMJBCommonConstants.EMPTY;
+		if (compareDates(form.getStartDate(), form.getEndDate())) {
+			errorMsg = jsWorkExpDateCompare;
+		}
+		if ((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form
+				.getStartDate()))
+				|| (!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form
+						.getEndDate()))) {
+			errorMsg = "Please enter valid date format";
+		}
+		return errorMsg;
 	}
 
 	/**
@@ -189,6 +215,9 @@ public class ResumeValidator {
 						|| (!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form
 								.getEndDate()))) {
 					return "Please enter valid date format";
+				}
+				if (compareDates(form.getStartDate(), form.getEndDate())) {
+					return jsEducateDateCompare;
 				}
 			}
 
@@ -262,5 +291,23 @@ public class ResumeValidator {
 		pattern = Pattern.compile(MMJBCommonConstants.MMDDYYYY_PATTERN);
 		matcher = pattern.matcher(strDate);
 		return matcher.matches();
+	}
+	
+	/**
+	 * This method compares if start Date is greater than End date
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return booelan
+	 */
+	private boolean compareDates(String startDate, String endDate) {
+
+		Date convStartDt = CommonUtil.convertToDate(startDate);
+		Date convEndDt = CommonUtil.convertToDate(endDate);
+		if (null != convStartDt && null != convEndDt) {
+			return convStartDt.after(convEndDt);
+		} else {
+			return false;
+		}
 	}
 }
