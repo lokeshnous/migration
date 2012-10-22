@@ -47,6 +47,8 @@ public class LoginFormController {
 
 	@Value("${loginErrMsg}")
 	private String loginErrMsg;
+	@Value("${socialLoginErrorMsg}")
+	private String socialLoginErrorMsg;
 
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
@@ -76,10 +78,17 @@ public class LoginFormController {
 	private LoginFormValidator loginValidator;
 
 	/**
-	 * This method to login
+	 * This controller called to redirect to particular page from where login
+	 * attempt happened, displayed error message depending on the login attempt
+	 * type(e.g Through social media(facebook,linkedin) or normal application
+	 * login)
 	 * 
-	 * @param model
-	 * @return
+	 * @param boolean error,shows that the login is not successful
+	 * @param String
+	 *            page,indicates that from which page login attempt happened
+	 * @param boolean socalLogin,shows that login happened through social
+	 *        media(e.g Facebook ,LinkedIn)
+	 * @return String pageValue, indicates that output page
 	 */
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -89,10 +98,10 @@ public class LoginFormController {
 			@RequestParam(value = "socalLogin", required = false) boolean socalLogin,
 			ModelMap model) {
 		if (error) {
-			if(socalLogin){
-				model.put("socialLoginError", "As per your role you are not allowed to login from this page");
-			}else{
-			model.put("error", loginErrMsg);
+			if (socalLogin) {
+				model.put("socialLoginError", socialLoginErrorMsg);
+			} else {
+				model.put("error", loginErrMsg);
 			}
 		} else {
 			model.put("error", MMJBCommonConstants.EMPTY);
@@ -186,30 +195,33 @@ public class LoginFormController {
 				jobSeekerEmailDTO.setSubject(jobseekerForgotPwdSub);
 
 				// Automatic generated password from OpenAM
-				//String tempassword = OpenAMEUtility.newPassword();
+				// String tempassword = OpenAMEUtility.newPassword();
 
-				//if (tempassword != null) {
-					// Updating the generated password to OpenAm
+				// if (tempassword != null) {
+				// Updating the generated password to OpenAm
 
-//					boolean updatepassword = OpenAMEUtility
-//							.openAMUpdatePassword(emailAddress, tempassword);
+				// boolean updatepassword = OpenAMEUtility
+				// .openAMUpdatePassword(emailAddress, tempassword);
 
-					// Updating the generated password to merUser table.
-//					try {
-//						loginService.saveNewPWD(emailAddress, tempassword);
-//					} catch (JobBoardException e) {
-//						LOGGER.info("Temporary password could not be generated");
-//					}
+				// Updating the generated password to merUser table.
+				// try {
+				// loginService.saveNewPWD(emailAddress, tempassword);
+				// } catch (JobBoardException e) {
+				// LOGGER.info("Temporary password could not be generated");
+				// }
 
-					//String forgotPwdMailBody = jobseekerForgotPwdBody.replace("?temporarypassword", tempassword);
-					String forgotPwdMailBody = jobseekerForgotPwdBody.replace("?temporarypassword", formDTO.getPassword());
+				// String forgotPwdMailBody =
+				// jobseekerForgotPwdBody.replace("?temporarypassword",
+				// tempassword);
+				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
+						"?temporarypassword", formDTO.getPassword());
 
-					forgotPwdMailBody = forgotPwdMailBody.replace(
-							"?jsLoginLink", jonseekerloginUrl);
-					jobSeekerEmailDTO.setBody(forgotPwdMailBody);
-					jobSeekerEmailDTO.setHtmlFormat(true);
-					emailService.sendEmail(jobSeekerEmailDTO);
-				//}
+				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
+						jonseekerloginUrl);
+				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
+				jobSeekerEmailDTO.setHtmlFormat(true);
+				emailService.sendEmail(jobSeekerEmailDTO);
+				// }
 
 			} catch (Exception e) {
 				// loggers call
