@@ -205,14 +205,10 @@ public class UserAlertController {
 			LOGGER.info("error in viewalerts" + e);
 		}
 
-		if (jbOwnerList != null
-				&& !jbOwnerList.isEmpty()
-				&& (roleList.getRoleId() == Integer
-						.valueOf(MMJBCommonConstants.EMPLOYER_ROLE_ID))) {
-			// If logged in user role is 5 then we get all job owners of
-			// employer But we are going to disable the add new job owner link
-			// in pop up
-		} else if (roleList.getRoleId() == Integer
+		// If logged in user role is 5 then we get all job owners of
+		// employer But we are going to disable the add new job owner link
+		// in pop up
+		if (roleList.getRoleId() == Integer
 				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
 			try {
 				jbOwnerList = alertService.getJobOwner(facilityId, userId);
@@ -257,11 +253,10 @@ public class UserAlertController {
 
 		if (deleteStatus) {
 			deleteStatusJson.put("success", dataDeleteSuccess);
-			return deleteStatusJson;
 		} else {
 			deleteStatusJson.put("failed", dataDeleteFailure);
-			return deleteStatusJson;
 		}
+		return deleteStatusJson;
 	}
 
 }
