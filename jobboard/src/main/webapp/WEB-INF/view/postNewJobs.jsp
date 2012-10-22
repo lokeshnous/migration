@@ -511,6 +511,7 @@ function validateNumber(event) {
 				<form:hidden path="jobId" />
 				<form:hidden path="activeInactive"/>
 				<form:hidden path="enableJobTitle"/>
+				<form:hidden path="jobStatus"/>
 				<div class="main">
 					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 					<div class="clearfix"></div>

@@ -201,8 +201,9 @@ public class JobPostController {
 			}
 		}
 		// Should be used while posting the job
-
-		form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
+		if (null == form.getJobStatus() || form.getJobStatus().isEmpty()) {
+			form.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
+		}
 		JobPostDTO dto = transformJobPost.jobPostFormToJobPostDTO(form);
 		if (form.getJobId() > 0) {
 			dto.setJobId(form.getJobId());

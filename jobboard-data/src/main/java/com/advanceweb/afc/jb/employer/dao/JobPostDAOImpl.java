@@ -133,7 +133,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId()))){
 				return false;
 			}				
-			
+			if((dto.getJobId()>0) &&(MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus()) && (!dto.isXmlStartEndDateEnabled())
+					&& !validateAndDecreaseAvailableCredits(Integer.valueOf(dto.getJobPostingType()) ,dto.getFacilityId()))){
+				return false;
+			}	
 			Object[] inputs = { dto.getJobCountry(), dto.getJobState(),
 					dto.getJobCity(), dto.getJobZip() };
 			List<JpLocation> locationList = hibernateTemplate
