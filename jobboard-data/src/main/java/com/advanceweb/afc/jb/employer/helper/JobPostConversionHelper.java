@@ -268,9 +268,7 @@ public class JobPostConversionHelper<JobPostForm> {
 
 			if (jpJob.getJpJobApplies().get(0).getApplyMethod()
 					.equalsIgnoreCase(MMJBCommonConstants.APPLY_TO_ATS)) {
-				
-				 //jobPostDTO.setApp(jpJob.getJpJobApplies().get(0).getApplyLink());
-				 
+				 jobPostDTO.setAtsUrl(jpJob.getJpJobApplies().get(0).getApplyLink());
 			} else if (jpJob.getJpJobApplies().get(0).getApplyMethod()
 					.equalsIgnoreCase(MMJBCommonConstants.APPLY_TO_EMAIL)) {
 				jobPostDTO.setApplyEmail(jpJob.getJpJobApplies().get(0)

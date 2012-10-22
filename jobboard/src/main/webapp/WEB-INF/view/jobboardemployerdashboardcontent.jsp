@@ -35,6 +35,8 @@
 						"360");
 				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp", "790",
 				"360"); 
+				$("#mySavedResumeSearches").displaypopup("#mySavedResumeSearches", "790",
+				"360"); 
 
 			});
 	window.onload = function() {
@@ -228,7 +230,10 @@
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon" href="">My Saved Resume Searches</a>
+								<a  href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html" 
+								id="mySavedResumeSearches">
+								My Saved Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
+								value="${jobSeekerDashBoardForm.savedSearchCount}" />${msg.commonCloseBrace}</a>
 							</p>
 						</div>
 					</div>

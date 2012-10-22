@@ -96,6 +96,7 @@ public class TransformJobPost {
 		jobPostform.setApplMethod(jobPostDTO.getApplicationMethod());
 		jobPostform.setApplyEmail(jobPostDTO.getApplyEmail());
 		jobPostform.setApplyUrl(jobPostDTO.getApplyUrl());
+		jobPostform.setAtsUrl(jobPostDTO.getAtsUrl());
 		jobPostform.setJobCity(jobPostDTO.getJobCity());
 		jobPostform.setJobState(jobPostDTO.getJobState());
 		jobPostform.setJobZipCode(jobPostDTO.getJobZip());

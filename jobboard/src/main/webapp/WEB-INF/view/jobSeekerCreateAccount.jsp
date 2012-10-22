@@ -88,30 +88,29 @@
 					<form:errors path="retypepassword" /> 
 				</div>
 
- 	            <div class="row marginTop5"> 
- 	            
- 	            <span class="lableText3">&nbsp;</span>
+							<div class="row marginTop5">
+
+								<span class="lableText3">&nbsp;</span>
 								<%
-										String pubKey = MMJBCommonConstants.PUBLIC_KEY;
+									String pubKey = MMJBCommonConstants.PUBLIC_KEY;
 										String privKey = MMJBCommonConstants.PRIVATE_KEY;
 										/* ReCaptcha c = ReCaptchaFactory.newReCaptcha("ADD-YOUR-PUBLIC-KEY-HERE", "ADD-YOUR-PRIVATE-KEY-HERE", false); */
 										ReCaptcha c = ReCaptchaFactory.newReCaptcha(pubKey, privKey,
 												false);
 										out.print(c.createRecaptchaHtml(null, null));
 								%>
-								
+
 								<div>
-					<span class="lableText3"></span>
-					<FONT color="red">
-						<c:if test="${not empty errorMessage}">
-					    	<div id="errmsg" style="color: red" align="left" >
-				    			<c:out value="${errorMessage}"></c:out>
+									<span class="lableText3"></span> <FONT color="red"> <c:if
+											test="${not empty errorMessage}">
+											<div id="errmsg" style="color: red" align="left">
+												<c:out value="${errorMessage}"></c:out>
+											</div>
+										</c:if>
+									</FONT>
+								</div>
 							</div>
-						</c:if>
-					</FONT> 
-				</div>
-							</div>
-				 <div>
+							<div>
 				 	<c:out value=""></c:out>
 				 </div>
 				

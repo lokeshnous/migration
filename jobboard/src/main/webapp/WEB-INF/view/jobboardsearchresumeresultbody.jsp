@@ -12,6 +12,7 @@
 		<title>ADVANCE Heathcare Jobs</title>
 
         <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
+        <script src="../resources/js/searchResultsdatatable.js"></script>
 		</head>
 		
 			<body class="job_board">
@@ -54,7 +55,7 @@
 							</div>
 							<div class="section">
 								<div class="SaveSearchButton">
-									<a href="" class="btn_sm orange">Save This Search</a>
+									<a id="saveThisResumeId" href="#" class="btn_sm orange nyroModal" onclick="saveThisResume();">Save This Search</a>
 								</div>
 							</div>
 						</div>

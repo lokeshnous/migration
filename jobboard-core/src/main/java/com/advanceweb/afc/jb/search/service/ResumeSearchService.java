@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
@@ -40,4 +41,61 @@ public interface ResumeSearchService {
 	public List<ResumeDTO> resumeSearchFromDB(String searchString)
 			throws JobBoardServiceException;
 	
+	/**
+	 * This method is called to fetch Saved Job Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<SaveSearchedJobsDTO> mySavedResumeSearches(int userId);
+
+	/**
+	 * This method is called to edit the Saved Searches
+	 * 
+	 * @param searchId
+	 * @return
+	 */
+	List<SaveSearchedJobsDTO> editSavedResumeSearch(int searchId);
+
+	/**
+	 * @param saveSearchId
+	 * @return
+	 */
+	boolean deleteSavedResume(int saveSearchId);
+
+	/**
+	 * @param searchedJobsDTOs
+	 * @return
+	 */
+	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
+
+	/**
+	 * @param searchName
+	 * @param userId
+	 * @return
+	 */
+	boolean validateSearchName(String searchName, int userId);
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
+
+	/**
+	 * @param userId
+	 * @return 
+	 */
+	boolean deleteFirstSearch(int userId);
+
+	/**
+	 * @param searchedJobsDTO
+	 */
+	void saveSearchedResumes(SaveSearchedJobsDTO searchedJobsDTO);
+
+	/**
+	 * @param searchedJobsDTO
+	 * @return
+	 */
+	boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO);
 }

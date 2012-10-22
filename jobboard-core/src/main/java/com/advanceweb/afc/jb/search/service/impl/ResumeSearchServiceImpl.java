@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO;
 import com.advanceweb.afc.jb.search.ResumeSearchDelegate;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
@@ -17,6 +19,9 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 
 	@Autowired
 	private ResumeSearchDelegate resumeSearchDelegate;
+	
+	@Autowired
+	private ResumeSearchDAO resumeSearchDAO;
 	
 	/**
 	 * 
@@ -42,5 +47,67 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 		return resumeSearchDelegate.resumeSearchFromDB(searchString);
 	}
 	
+	
+	/**
+	 * This method is called to fetch Saved Job Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<SaveSearchedJobsDTO> mySavedResumeSearches(int userId) {
+		return resumeSearchDAO.mySavedResumeSearches(userId);
+	}
 
+
+	@Override
+	public List<SaveSearchedJobsDTO> editSavedResumeSearch(int searchId) {
+		return resumeSearchDAO.editSavedResumeSearch(searchId);
+	}
+
+	/**
+	 * This method is called to delete a Saved Job Search
+	 * 
+	 * @param saveSearchId
+	 * @return
+	 */
+	@Override
+	public boolean deleteSavedResume(int saveSearchId) {
+		return resumeSearchDAO.deleteSavedResume(saveSearchId);
+	}
+
+	
+
+	@Override
+	public boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs) {
+		return resumeSearchDAO.saveModifiedData(searchedJobsDTOs);
+	}
+
+
+	@Override
+	public boolean validateSearchName(String searchName, int userId) {
+		return resumeSearchDAO.validateSearchName(searchName, userId);
+	}
+
+
+	@Override
+	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
+		return resumeSearchDAO.viewMySavedSearches(userId);
+	}
+
+	@Override
+	public boolean deleteFirstSearch(int userId) {
+		return resumeSearchDAO.deleteFirstSearch(userId);
+	}
+
+	@Override
+	public void saveSearchedResumes(SaveSearchedJobsDTO searchedJobsDTO) {
+		resumeSearchDAO.saveSearchedResumes(searchedJobsDTO);
+	}
+
+
+	@Override
+	public boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO) {
+		return resumeSearchDAO.updateSearchDetails(searchedJobsDTO);
+	}
 }

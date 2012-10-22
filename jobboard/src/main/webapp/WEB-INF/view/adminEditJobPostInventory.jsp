@@ -220,7 +220,7 @@ function closePopup() {
 									<td align="center">
 									
 									<input id="tb_save_search_${rowCount.index+1}" class="job_seeker_Resume onlyNum"
-										type="text" value="${jbPostList.getAvailableQty()}" /></td>
+									maxlength="12"	type="text" value="${jbPostList.getAvailableQty()}" /></td>
 								</tr>
 							</c:forEach>							
 						</tbody>						
@@ -248,7 +248,7 @@ function closePopup() {
 									<td align="center">${jbSlotList.getQuantity()}</td>
 									<td align="center">
 									<input id="jp_slot_save_${rowCount.index+1}"
-									 class="job_seeker_Resume onlyNum"
+									 class="job_seeker_Resume onlyNum" maxlength="12"
 										type="text" value="${jbSlotList.getAvailableQty()}" /></td>
 								</tr>
 							</c:forEach>

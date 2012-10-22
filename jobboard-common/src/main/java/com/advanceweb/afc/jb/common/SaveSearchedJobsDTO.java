@@ -19,6 +19,20 @@ public class SaveSearchedJobsDTO {
 	private Date createdDate;
 	private String modifyDate;
 	private Date deletedDate;
+	private String keywords;
+	/**
+	 * @return the keyword
+	 */
+	public String getKeywords() {
+		return keywords;
+	}
+
+	/**
+	 * @param keyword the keyword to set
+	 */
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
 
 	/**
 	 * @return the saveSearchID

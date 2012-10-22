@@ -100,7 +100,7 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 				"from AdmSaveSearch where saveSearchId=? ", saveSearchId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
-	}
+	}			 
 
 	/**
 	 * This Method saves modified notify me data to the adm_save_search table

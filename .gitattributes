@@ -397,6 +397,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegist
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/FacilityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobPostConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobSeekerConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/ResumeSearchConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/job/dao/JobApplicationDAO.java -text
@@ -624,6 +625,8 @@ jobboard/src/main/webapp/WEB-INF/view/editCopyPasteResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editUploadResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empPurchaseJobPostingsPopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/empSaveThisSearchPopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/empSavedResumeSearchPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
