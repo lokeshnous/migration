@@ -39,6 +39,7 @@ public class BrandingTemplateForm {
 	private int packageId;
 	private String chosenLogo;
 	private String chosenMainImage;
+	private boolean editMode;
 	
 	public int getFacilityId() {
 		return facilityId;
@@ -155,6 +156,14 @@ public class BrandingTemplateForm {
 
 	public List<VideoForm> getListVideos() {
 		return listVideos;
+	}
+
+	public boolean isEditMode() {
+		return editMode;
+	}
+
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
 	}
 
 	public String getChosenLogo() {

@@ -257,7 +257,7 @@ public class BrandingTemplateValidation {
 
 		BrandingTemplateForm brandingTemplateForm = (BrandingTemplateForm) target;
 
-		if (checkTempNameExists(brandingTemplateForm)) {
+		if (!brandingTemplateForm.isEditMode() && checkTempNameExists(brandingTemplateForm)) {
 			errors.rejectValue("templateName", STR_NOTEMPTY,
 					empBrandTemplateExists);
 		}

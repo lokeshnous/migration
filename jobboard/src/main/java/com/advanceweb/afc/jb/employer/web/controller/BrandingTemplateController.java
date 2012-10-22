@@ -289,8 +289,9 @@ public class BrandingTemplateController {
 				|| brandingTemplateForm.getColor().isEmpty()) {
 			brandingTemplateForm.setColor(defaultColor);
 		}
-		
-		setVideoURL(brandingTemplateForm, request);
+		if (!brandingTemplateForm.getIsSilverCustomer()) {
+			setVideoURL(brandingTemplateForm, request);
+		}
 		model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 
 		return model;
@@ -395,7 +396,9 @@ public class BrandingTemplateController {
 			brandingTemplateForm.setColor(defaultColor);
 		}
 
-		setVideoURL(brandingTemplateForm, request);
+		if (!brandingTemplateForm.getIsSilverCustomer()) {
+			setVideoURL(brandingTemplateForm, request);
+		}
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_BRANDTEMPLATEPREVIEW);
 		return model;
@@ -906,9 +909,9 @@ public class BrandingTemplateController {
 
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
-
+		brandingTemplateForm.setEditMode(true);
+		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
-		// model.setViewName("editBrandingTemplate");
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		return model;
 	}
