@@ -67,6 +67,12 @@
 		});
 		
 		$("#jobPostingsCart input").change(function(){
+			var quantity = $(this).val();
+			if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+				alert("Please enter quantity in numerics( > 0)");
+				return;
+			}
+			
 			$.ajax({url: "${pageContext.request.contextPath}/purchaseJobPosting/updateQuantity.html",
 					type: "POST",
 			        data: {"cartItemIndex" : parseInt($(this).next().attr("id")),"quantity" : parseInt($(this).val())},
@@ -88,8 +94,8 @@
 					count++;
 					var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
 					
-					if("" == quantity || null == quantity || isNaN(quantity)){
-						alert("Please enter quantity in numerics");
+					if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+						alert("Please enter quantity in numerics( > 0)");
 						return;
 					}
 					else{
