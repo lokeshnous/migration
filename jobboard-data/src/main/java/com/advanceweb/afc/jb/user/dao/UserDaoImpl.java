@@ -190,7 +190,7 @@ public class UserDaoImpl implements UserDao {
 	public UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardDataException{
 		UserDTO userDTO=null;
 		try {
-		MerUserProfile merUserProfile=DataAccessUtils.uniqueResult(hibernateTemplateTracker.find("from MerUserProfile profile where profile.attribValue=?",socialProfileId));
+		MerUserProfile merUserProfile=(MerUserProfile)DataAccessUtils.uniqueResult(hibernateTemplateTracker.find("from MerUserProfile profile where profile.attribValue=?",socialProfileId));
 		if(merUserProfile!=null){
 		MerUser merUser=merUserProfile.getMerUser();
 		userDTO=new UserDTO();
