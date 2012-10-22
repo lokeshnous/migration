@@ -65,7 +65,10 @@ public class EditFacilityGroupContorller {
 			@ModelAttribute("adminForm") AdminForm adminForm,
 			HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		boolean isHealthSys =(Boolean) session.getAttribute("isHealthSys");
+		boolean isHealthSys = false;
+		if(session.getAttribute("isHealthSys")!=null){
+			isHealthSys =(Boolean) session.getAttribute("isHealthSys");
+		}
 		if(isHealthSys == adminForm.isHealthSystem()){
 			model.setViewName("adminLogin");
 			return model;

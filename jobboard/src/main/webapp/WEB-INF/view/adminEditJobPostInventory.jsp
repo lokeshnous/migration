@@ -58,7 +58,7 @@ function closePopup() {
 		
 		function validateTable() {
 			var count = $("#tb_save_search_total").val();
-			var valid = false;
+			var valid = true;
 			for(var i=1;i<=count;i++){
 				//alert($("#tb_save_search_"+i).val());
 				var val = $.trim($("#tb_save_search_"+i).val());
@@ -66,14 +66,13 @@ function closePopup() {
 					valid = false;
 					break;
 				}
-				valid = true;
+				//valid = true;
 			}			
-		
 			return valid;
 		}
 		function validateTable1() {
 			var count = $("#jp_slot_save_total").val();
-			var valid = false;
+			var valid = true;
 			for(var i=1;i<=count;i++){
 				//alert($("#tb_save_search_"+i).val());
 				var val = $.trim($("#jp_slot_save_"+i).val());
@@ -81,7 +80,7 @@ function closePopup() {
 					valid = false;
 					break;
 				}
-				valid = true;
+				//valid = true;
 			}			
 		
 			return valid;

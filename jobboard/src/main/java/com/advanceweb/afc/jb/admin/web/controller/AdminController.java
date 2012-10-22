@@ -92,7 +92,7 @@ public class AdminController {
 			return result.getFieldError().getDefaultMessage();
 		}
 		if (!adminService.validateEmail(form.getEmpOrAgencyEmail())) {
-			return "Not a register Employer/Agency!";
+			return "Not a registered Employer/Agency!";
 		}
 		// This is used to check if user authenticated with Open AM.
 		// boolean isAuthenticated =

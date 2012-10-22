@@ -174,9 +174,7 @@ function loadTable(){
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT JOB POSTING EXPIRE DATE</h2>
-			<a href="#"><img src="../resources/images/Close.png"
-				title="Close" width="19" height="19" onclick="closePopup();"
-				alt=""></a>
+			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/>
 		</div>
 		<div class="row">
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>

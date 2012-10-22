@@ -241,7 +241,7 @@ function copyAccToBillingAddr(obj) {
 				</div>
 				<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Use my account address </span>
-						<form:checkbox onchange="copyAccToBillingAddr(this)" path="" value="false" name="useAcctAddress" id="useAcctAddress"/>
+						<form:checkbox onclick="copyAccToBillingAddr(this)" path="" value="false" name="useAcctAddress" id="useAcctAddress"/>
 					</div>
 				
 				<c:if test="${count == '1'}">

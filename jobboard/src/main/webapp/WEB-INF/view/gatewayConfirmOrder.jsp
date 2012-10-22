@@ -195,7 +195,7 @@
 							<br>
 							<div class="buttonContainer indent10">
 								<span class="floatLeft"> 
-									<a id="continueToNext" href="#" class="btn_sm orange">Continue to Next Step</a> 
+									<a id="continueToNext" href="#" class="btn_sm orange">Place Order</a> 
 									<a href="<%=request.getContextPath()%>/pgiController/cancelPayment.html" class="btn_sm orange">Cancel</a>
 									<a href="<%=request.getContextPath()%>/pgiController/paymentBillingInfoBack.html" class="btn_sm orange">Back</a>
 								</span>

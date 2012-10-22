@@ -2578,6 +2578,7 @@ GradientType
 	height: 180px;
 	float: left;
 	background: #000;
+	//z-index: -1000;
 }
 
 .browsByColumns {
