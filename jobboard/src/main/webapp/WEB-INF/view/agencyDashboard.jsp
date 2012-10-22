@@ -55,7 +55,7 @@
 							<div class="floatRight">
 								<span class="floatLeft"> <a
 									href="<%=request.getContextPath()%>/logout.html">Log Out</a> |
-									<a href="/jobboard/agency/agencyDashboard.html">My Dashboard</a></span>
+									<a href="../agency/agencyDashboard.html">My Dashboard</a></span>
 							</div>
 						</div>
 						<!-- loginHeader -->
