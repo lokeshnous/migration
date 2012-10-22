@@ -84,8 +84,8 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 	
 	@Override
-	public JobPostDTO editJob(int jobId,int jobPostType) {
-		return employerJobPostDAO.editJob(jobId,jobPostType);
+	public JobPostDTO retrieveJobById(int jobId) {
+		return employerJobPostDAO.retrieveJobById(jobId);
 	}
 
 	@Override

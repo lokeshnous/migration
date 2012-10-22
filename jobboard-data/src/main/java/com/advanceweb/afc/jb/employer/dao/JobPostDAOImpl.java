@@ -64,7 +64,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private HibernateTemplate hibernateTemplate;
 	private int numberOfJobRecordsByStatus;
 	@Autowired
-	private JobPostConversionHelper jobPostConversionHelper;
+	private JobPostConversionHelper<?> jobPostConversionHelper;
 	
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
@@ -269,14 +269,15 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	/**
 	 * @Author :devi mishra
-	 * @Purpose:This method is called to retrieve job as per the selected job id
+	 * @Purpose:This method is called when user click the edit job to retrieve
+	 *               the detail as per the selected job id
 	 * @Created:Aug 29, 2012
 	 * @Param :jobid
 	 * @Return :JobPostDTO
 	 * 
 	 */
 	@Override
-	public JobPostDTO editJob(int jobId, int jobPostType) {
+	public JobPostDTO retrieveJobById(int jobId) {
 		JobPostDTO dto = new JobPostDTO();
 		try {
 			JpJob job = hibernateTemplate.get(JpJob.class, jobId);

@@ -422,7 +422,7 @@ public class JobPostController {
 						.getAttribute(MMJBCommonConstants.FACILITY_ID),
 						(Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
-		JobPostDTO jobPostDTO = employerJobPost.editJob(jobId, jobPostType);
+		JobPostDTO jobPostDTO = employerJobPost.retrieveJobById(jobId);
 
 		jobPostDTO.setJobPostingType(String.valueOf(jobPostType));
 		jobPostForm = transformJobPost.transformJobPostDTOToForm(jobPostForm,
@@ -910,10 +910,9 @@ public class JobPostController {
 						userDTO.getFeaturedEndDate()));
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
-			List<JobPostDTO> jobPostDTOs = employerJobPost
-					.retrieveAllJobPostByADvSearch(jobId);
-			if (null != jobPostDTOs && jobPostDTOs.size() > 0) {
-				JobPostDTO jobPostDTO = jobPostDTOs.get(0);
+			JobPostDTO jobPostDTO = employerJobPost
+					.retrieveJobById(jobId);
+			if (null != jobPostDTO) {
 				if (jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_EXPIRED
 						&& jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_INACTIVE) {
 					model = populateDropdowns(model, session);
