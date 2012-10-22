@@ -549,11 +549,11 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 						
 						JpJobTypeCombo combo = comboList.get(0);
 						if(combo.getJobType().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
-							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + "+"
+							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + " + "
 									+ combo.getAddons().trim());
 						}
 						else if(combo.getJobType().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
-							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + "+"
+							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + " + "
 									+ combo.getAddons().trim());
 						}
 						if(combo.getAddons().contains("Job Posting")){

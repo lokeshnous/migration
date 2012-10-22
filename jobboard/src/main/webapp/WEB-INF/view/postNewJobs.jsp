@@ -153,7 +153,7 @@ function validateNumber(event) {
 							if (!validateData()) {
 								return false;
 							}
-							if ($("#activeInactive").val() == 'true') {
+							if ($("#activeOrInactive").val() == 'true') {
 									$('#postNewJobFormId select').each(function(){
 										$(this).attr("disabled", false);
 						    		});
@@ -161,6 +161,7 @@ function validateNumber(event) {
 									$('#postNewJobFormId input').each(function(){
 										$(this).attr("disabled", false);
 						    		});
+									
 							}
 							$("#postNewJobButHideId").click();
 						});
@@ -377,12 +378,12 @@ function validateNumber(event) {
 												"disabled", true);
 										$("#postNewJobFormId :button").attr(
 												"hidden", true);
-										//$("#cancel").attr("hidden", true);
+										$("#cancel").attr("hidden", false);
 									});
 
 						}
 						
-						if ($("#activeInactive").val() == 'true') {
+						if ($("#activeOrInactive").val() == 'true') {
 							if ($("#enableJobTitle").val() == 'true') {
 								$("#jobTitleId").attr("disabled", false);
 							}
@@ -391,9 +392,10 @@ function validateNumber(event) {
 							}
 							
 							$("#jobDesc").attr("disabled", false);
-
+							
 							$("#saveJobPostId").attr("hidden", false);
 							$('#saveJobPostId').attr("disabled", false);
+							$('#cancel').attr("hidden",false);
 							$('#postNewJobButHideId').attr("disabled", false);							
 
 						}
@@ -509,7 +511,7 @@ function validateNumber(event) {
 			<div class="main_wrapper_inside">
 				<form:hidden path="readOnly" />
 				<form:hidden path="jobId" />
-				<form:hidden path="activeInactive"/>
+				<form:hidden path="activeOrInactive"/>
 				<form:hidden path="enableJobTitle"/>
 				<form:hidden path="jobStatus"/>
 				<div class="main">
@@ -934,7 +936,7 @@ function validateNumber(event) {
 					<input type="button" value="Save as draft" class="btn_sm white"	name="SaveAsDraft" id="saveAsDraftJobButId"> 
 					<!-- <input type="submit" value="Cancel" class="btn_sm white" name="Cancel" id="cancel"> -->
 					
-					<c:if test="${jobPostForm.activeInactive == true}">
+					<c:if test="${jobPostForm.activeOrInactive == true}">
 							<input type="button" value="Save" class="btn_sm white" id="saveJobPostId"/>
 					</c:if>
 					<input type="button" value="Cancel" class="btn_sm white" name="Cancel" id="cancel" onclick="cancelProcess()">

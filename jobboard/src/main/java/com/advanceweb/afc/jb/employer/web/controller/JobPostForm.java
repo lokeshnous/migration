@@ -61,7 +61,7 @@ public class JobPostForm {
     private String noOfPage;
     private String noOfPageLower;
     private int beginVal=1;
-    private boolean activeInactive;
+    private boolean activeOrInactive;
     private boolean enableJobTitle;
     /*
     private String brandTemplateValue;
@@ -433,15 +433,14 @@ public class JobPostForm {
 		this.autoRenewVal = autoRenewVal;
 	}*/
 
-	public boolean isActiveInactive() {
-		return activeInactive;
+	public boolean isActiveOrInactive() {
+		return activeOrInactive;
 	}
 
-	public void setActiveInactive(boolean activeInactive) {
-		this.activeInactive = activeInactive;
+	public void setActiveOrInactive(boolean activeOrInactive) {
+		this.activeOrInactive = activeOrInactive;
 	}
-
-
+	
 	public boolean isEnableJobTitle() {
 		return enableJobTitle;
 	}

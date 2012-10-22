@@ -429,18 +429,20 @@ public class JobPostController {
 		jobPostForm = transformJobPost.transformJobPostDTOToForm(jobPostForm,
 				jobPostDTO);
 
-		// Populating Dropdowns
+		// Populating Job Post Type Drop down
 		List<DropDownDTO> jbPostingTypeList = populateDropDowns(session, jobId,
 				jobPostForm, model, companyList);
-
-		jobPostForm.setActiveInactive(false);
+		//Depending on the job status, enable or disable either whole 
+		//form or particular fields in the form 
 		if (null != readOnly) {
+			//if the readOnly flag is true(it is view action) then make whole form readOnly
+			//if readOnly is false then its edit screen. Depending on the 
+			//job status(Active, Inactive, Scheduled, Draft, Expired) enable & disable the form fields   
 			if (readOnly.equalsIgnoreCase("true")) {
 				jobPostForm.setReadOnly(true);
 				model.setViewName(POST_NEW_JOBS);
 			} else if (readOnly.equalsIgnoreCase("false")) {
-
-				setReadOnlyFlag(jobPostForm, model, jobStatus, jobPostType,
+				enableJobPostFormFieldsByJobStatus(jobPostForm, model, jobStatus, jobPostType,
 						jbPostingTypeList,facilityId);
 			}
 		}
@@ -449,48 +451,37 @@ public class JobPostController {
 	}
 
 	/**
+	 * This method will set the flags readOnly, activeOrInactive, enableJobTitle depending 
+	 * on the status of the jobs & job posting type with which job has been posted 
 	 * @param jobPostForm
 	 * @param model
 	 * @param jobStatus
 	 * @param jobPostType
 	 * @param jbPostingTypeList
 	 */
-	private void setReadOnlyFlag(JobPostForm jobPostForm, ModelAndView model,
+	private void enableJobPostFormFieldsByJobStatus(JobPostForm jobPostForm, ModelAndView model,
 			String jobStatus, int jobPostType,
 			List<DropDownDTO> jbPostingTypeList,int facilityId) {
+		//If the job status is Active or Inactive then set readOnly to true(disable whole form)
+		//Also set activeOrInactive to true to enable Job title & Job description for Active & Inactive jobs
+		//check if job is posted with slot posting type then set enableJobTitle to true. Job title is enabled for only slot posting
 		if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
 				|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus)) {
 			jobPostForm.setReadOnly(true);
-			jobPostForm.setEnableJobTitle(false);
-			jobPostForm.setActiveInactive(true);
+			//If job status is either Active or Inactive then setting activeOrInactive to true
+			jobPostForm.setActiveOrInactive(true);
 			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService.populateJobPostingTypeDropdown(facilityId, jobPostType);
 			boolean flag = false;
-			//Need to add the comments here on each conditions
+			//By default select the job post type with which job has been posted in the job post type drop down 
 			for (DropDownDTO dropDownDto : jbPostingTypeList) {
-				if (jobPostType == Integer.parseInt(dropDownDto.getOptionId()) ||
-						jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())){
-					if(jobPostTypeCombo.get(0).getOptionName().contains(MMJBCommonConstants.SLOT_POSTING)) {
-						jobPostForm.setEnableJobTitle(true);
-					}
-				}
-				if(!(jobPostType == Integer.parseInt(dropDownDto.getOptionId()))){
-					if(jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())){
-						if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
-								|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus) || 
-								MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)) {
-							dropDownDto.setOptionId(jobPostTypeCombo.get(0).getOptionId());	
-						}else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
-								|| MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus)) {
-							jobPostForm.setJobPostingType(dropDownDto.getOptionId());
-						}
-					}
-					else{
-						flag = true;
-					}
-				}
-				
+				flag = enableJobTitleAndDefaultJobPostType(jobPostForm, jobStatus,
+						jobPostType, jobPostTypeCombo,dropDownDto);
 			}
 			if(flag){
+				if(jobPostTypeCombo.get(0).getOptionName().contains(MMJBCommonConstants.SLOT_POSTING))
+				{
+					jobPostForm.setEnableJobTitle(true);
+				}
 				jbPostingTypeList.add(jobPostTypeCombo.get(0));
 			}
 			model.setViewName(POST_NEW_JOBS);
@@ -502,6 +493,69 @@ public class JobPostController {
 			jobPostForm.setReadOnly(true);
 			model.setViewName(POST_NEW_JOBS);
 		}
+	}
+
+	/**
+	 * This method will check if job post is of type slot posting then enable job title
+	 * Also sets the default value for job post type drop down
+	 * @param jobPostForm
+	 * @param jobStatus
+	 * @param jobPostType
+	 * @param jobPostTypeCombo
+	 * @param dropDownDto
+	 * @return flag
+	 */
+	private boolean enableJobTitleAndDefaultJobPostType(JobPostForm jobPostForm,
+			String jobStatus, int jobPostType,
+			List<DropDownDTO> jobPostTypeCombo,
+			DropDownDTO dropDownDto) {
+		 boolean flag = false;
+		//if the job post is slot posting then enable job title 
+		if ((jobPostType == Integer.parseInt(dropDownDto.getOptionId()) ||
+				jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())) &&
+				jobPostTypeCombo.get(0).getOptionName().contains(MMJBCommonConstants.SLOT_POSTING)){
+				
+			jobPostForm.setEnableJobTitle(true);
+		}
+		flag = setJobPostTypeDropDownDefaultVal(jobPostForm, jobStatus,
+				jobPostType, jobPostTypeCombo, dropDownDto);
+		return flag;
+	}
+
+	/**
+	 * This method sets the default value for job post type drop down
+	 * @param jobPostForm
+	 * @param jobStatus
+	 * @param jobPostType
+	 * @param jobPostTypeCombo
+	 * @param dropDownDto
+	 * @return flag
+	 */
+	private boolean setJobPostTypeDropDownDefaultVal(JobPostForm jobPostForm,
+			String jobStatus, int jobPostType,
+			List<DropDownDTO> jobPostTypeCombo, DropDownDTO dropDownDto
+			) {
+		boolean flag = false;
+		//if job post type id(inventory detail id) is not there in the drop down then 
+		//check if job post type name with the drop down option name
+		if(!(jobPostType == Integer.parseInt(dropDownDto.getOptionId()))){
+			if(jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())){
+				if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
+						|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus) || 
+						MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)) {
+					dropDownDto.setOptionId(jobPostTypeCombo.get(0).getOptionId());	
+				}else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
+						|| MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus)) {
+					jobPostForm.setJobPostingType(dropDownDto.getOptionId());
+				}
+			}
+			else{
+				//if job post type name is not there in drop down then add this 
+				//job post type to drop down
+				flag = true;
+			}
+		}
+		return flag;
 	}
 
 	/**
