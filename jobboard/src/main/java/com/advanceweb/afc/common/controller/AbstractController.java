@@ -114,12 +114,14 @@ public abstract class AbstractController {
 	 * @return
 	 */
 	private boolean isInteger(String input) {
+		boolean status = false;
 		try {
 			Integer.parseInt(input);
-			return true;
+			status = true;
 		} catch (Exception e) {
-			return false;
+			status = false;
 		}
+		return status;
 	}
 
 }

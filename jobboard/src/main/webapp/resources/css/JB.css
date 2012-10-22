@@ -1420,7 +1420,7 @@ h3.jobSummaryTitle {
 	font-weight: normal;
 	margin-bottom: 0px;
 	padding: 0px 0px;
-	cursor: pointer;
+
 }
 /* FOR OPEN JOB LISTING CONTENT */
 .content_columns_search_results .column2 .searchResults .searchResultsListing .searchResultsItem ul.open
@@ -1434,7 +1434,6 @@ h3.jobSummaryTitle {
 	font-weight: normal;
 	margin-bottom: 0px;
 	padding: 0px 0px;
-	cursor: pointer;
 	border-radius: 4px 4px 0px 0px;
 }
 
@@ -1500,6 +1499,14 @@ div.searchResultsSubContent .btn_sm {
 	height: auto;
 	margin-top: 5px;
 }
+
+ a.clickableLink {color: #6B7B84;
+ text-decoration:none;
+ cursor: pointer; }
+ 
+ a.clickableLink:hover {color: #6B7B84;
+ text-decoration:underline; }
+ 
 /*---by Vitthal---*/
 .headerLoginSection {
 	width: auto;

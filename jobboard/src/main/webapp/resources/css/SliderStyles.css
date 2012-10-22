@@ -2,6 +2,7 @@
 .featured_emp_slider
 {
 	overflow: auto;
+
 }
 
 .featured_emp_slider #slider1, #slider2, #slider3
@@ -24,7 +25,7 @@
 
 .featured_emp_slider #slider1NextBtn, #slider2NextBtn, #slider3NextBtn, #slider4NextBtn
 {
-	float: left;
+	float: right;
 	width: 20px;
 	height: 80px;
 	background-color: #fff;
@@ -33,6 +34,8 @@
 	cursor: pointer;
 	border-left: 1px solid #CCCCCC;
 	margin: 10px 0;
+	background-repeat: no-repeat;
+    padding: 0 5px;
 }
 
 
@@ -52,13 +55,16 @@
 {
 	float: left;
 	padding-top: 33px;
-	overflow: auto;
+	overflow:hidden;
+	width: 125px;
+	line-height: 16px;
 }
 
 .slider1FrameA1, .slider1FrameB1, .slider1FrameC1
 {
 	float: left;
 	margin: 0 30px;
+	
 }
 
 .slider1FrameA2, .slider1FrameB2, .slider1FrameC2

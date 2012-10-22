@@ -285,9 +285,9 @@
 									</c:choose>
 									id="searchResultsJobInfo${job.JobId}"
 									onclick="trackClick(${job.JobId});">
-									<li class="searchResultsColumn1">${job.JobTitle}</li>
+									<li class="searchResultsColumn1"><a class="clickableLink">${job.JobTitle}</a></li>
 
-									<li class="searchResultsColumn2">${job.Company}</li>
+									<li class="searchResultsColumn2"><a class="clickableLink">${job.Company}</a></li>
 
 									<li class="searchResultsColumn3"><c:if
 											test="${!(job.HideCity == 1 || job.HideState == 1 || job.HideCountry == 1)}">

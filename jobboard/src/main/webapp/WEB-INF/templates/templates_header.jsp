@@ -43,10 +43,10 @@ html.busy, html.busy * {
 
 								${msg.commonVerticalBar} <c:choose>
 									<c:when test="${jobSeekerDashBoardForm != null}">
-										<a href="../healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
+										<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
 									</c:when>
 									<c:otherwise>
-										<a href="../jobSeeker/jobSeekerDashBoard.html">${msg.commonDashboard}</a>
+										<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html">${msg.commonDashboard}</a>
 									</c:otherwise>
 								</c:choose>
 							</span>
@@ -220,11 +220,11 @@ html.busy, html.busy * {
 			
 			<security:authorize
 				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP')">
-				<a href="../healthcarejobs/advanceweb.html">Job Search</a>
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">Job Search</a>
 				</security:authorize>
 			<security:authorize
 				access="hasRole('ROLE_JOB_SEEKER')">
-				<a href="../healthcarejobs/advanceweb.html">Job Search</a>
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">Job Search</a>
 				</security:authorize>
 			<security:authorize
 				access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP')">
