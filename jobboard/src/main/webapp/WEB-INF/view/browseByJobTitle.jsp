@@ -7,28 +7,28 @@
          <input type="hidden" name="browseByTitle" id="browseByTitle" value="browseByTitle"/>
              <div class="browsByColumns browsByColumnsNoBorder">
              <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="1" end="${jbsByTitleList.size()}" step="4">
+	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="0" end="${jbsByTitleList.size()}" step="4">
 	             	 <li><a class="link_color2_basic cursor" onclick="searchByTitle('${titleList.jobTitle}');">${titleList.jobTitle} ( ${titleList.count} )</a></li>
 	             </c:forEach>
 	         </ul>
      		 </div>
      		 <div class="browsByColumns browsByColumnsWithBorder">
      		 <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="2" end="${jbsByTitleList.size()}" step="4">
+	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="1" end="${jbsByTitleList.size()}" step="4">
 	             	<li><a class="link_color2_basic cursor" onclick="searchByTitle('${titleList.jobTitle}');">${titleList.jobTitle} ( ${titleList.count} )</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
      		 <div class="browsByColumns browsByColumnsWithBorder">
      		 <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="3" end="${jbsByTitleList.size()}" step="4">
+	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="2" end="${jbsByTitleList.size()}" step="4">
 	             <li><a class="link_color2_basic cursor" onclick="searchByTitle('${titleList.jobTitle}');">${titleList.jobTitle} ( ${titleList.count} )</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
      		 <div class="browsByColumns browsByColumnsWithBorder">
      		 <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="4" end="${jbsByTitleList.size()}" step="4">
+	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="3" end="${jbsByTitleList.size()}" step="4">
 	             	<li><a class="link_color2_basic cursor" onclick="searchByTitle('${titleList.jobTitle}');">${titleList.jobTitle} ( ${titleList.count} )</a></li>
 	             </c:forEach>
 	             </ul>

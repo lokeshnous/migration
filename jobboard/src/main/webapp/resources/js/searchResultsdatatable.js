@@ -732,10 +732,9 @@ jQuery(document).ready(function() {
 			    }
 				
 				function searchByLocationRegion(stateFullName){
-					
-					alert('stateFullName'+stateFullName);
 					var browseByLocation = $("#browseByLocation").val();
-					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,		
+					var browseByLocationReg = $("#browseByLocationReg").val();
+					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation+"&browseByLocationReg="+browseByLocationReg,		
 						success: function(data){ 
 									$("#autoload").val(true);	
 									processPaginationReq("20");
@@ -751,6 +750,23 @@ jQuery(document).ready(function() {
 					});
 			    }
 				
+				function searchByLocReg(stateFullName){
+					var browseByLocation = $("#browseByLocation").val();
+					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,
+						success: function(data){ 
+									$("#autoload").val(true);	
+									processPaginationReq("20");
+									$(".otherContent").attr("style","display: none");
+									$(".searchContent").attr("style","display: block");
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+					
+								}
+					});
+			    }
 				
 				
 				

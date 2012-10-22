@@ -14,6 +14,8 @@ public class SearchResultDTO<T> {
 	private long start;
 
 	private long rows;
+	
+	private String location;
 
 	public long getStart() {
 		return start;
@@ -53,5 +55,13 @@ public class SearchResultDTO<T> {
 
 	public void setFacetMap(Map<String, List<SearchFacetDTO>> facetMap) {
 		this.facetMap = facetMap;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }
