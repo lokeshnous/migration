@@ -533,6 +533,7 @@ ul.news {
 .main {
 	width: 960px;
 	margin: 0 auto;
+	min-height: 620px;
 }
 
 .content_wrapper {
@@ -4181,4 +4182,7 @@ orange:hover {
     background-position: right center;
     background-repeat: no-repeat;
 }
+.alignCenter{margin:20px auto; width:500px;
+Border:1px solid #ccc;padding: 25px;}
+.socialLoginLogo {margin:0 0 0 275px; }
 #recaptcha_area {margin-left:172px;}
