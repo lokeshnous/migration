@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -52,7 +53,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
 									+ userId + "and a.deleteDt is NULL ");
 
 			folderDetailList = query.list();
@@ -93,26 +94,14 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean updateJobSeeker(int appStatusId, int resumeId, int rating)
 			throws JobBoardDataException {
-		List<AdmFolderResume> folderList = new ArrayList<AdmFolderResume>();
-		try {
-			folderList = hibernateTemplate
-					.find("from AdmFolderResume a where a.folderResumeId="
-							+ resumeId);
-			if (null != folderList && folderList.size() > 0) {
-				String hqlUpdate = "UPDATE AdmFolderResume a set a.applicationStatusId = :applicationStatusId "
-						+ "WHERE a.folderResumeId = :folderResumeId";
-				Query query = hibernateTemplate.getSessionFactory()
-						.getCurrentSession().createQuery(hqlUpdate);
-				query.setParameter("applicationStatusId", appStatusId);
-				query.setParameter("folderResumeId", folderList.get(0)
-						.getFolderResumeId());
+		AdmFolderResume admFolderResume = new AdmFolderResume();
 
-				int result = query.executeUpdate();
-				LOGGER.info("Rows affected: " + result);
-			}
-		} catch (DataAccessException e) {
-			LOGGER.error(e);
-		}
+		admFolderResume = hibernateTemplate
+				.get(AdmFolderResume.class, resumeId);
+		admFolderResume.setApplicationStatusId(appStatusId);
+		admFolderResume.setUpdateDt(new Date());
+		hibernateTemplate.saveOrUpdate(admFolderResume);
+		
 		return true;
 	}
 
@@ -125,7 +114,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
 									+ userId
 									+ "and a.folderId="
 									+ folderId
@@ -142,26 +131,27 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 	@Override
 	public boolean updateResumeFolder(int folderId, int folderResumeId)
 			throws JobBoardDataException {
-		List<AdmFolderResume> folderList = new ArrayList<AdmFolderResume>();
-		try {
-			folderList = hibernateTemplate
-					.find("from AdmFolderResume a where a.folderResumeId="
-							+ folderResumeId);
-			if (null != folderList && folderList.size() > 0) {
-				String hqlUpdate = "UPDATE AdmFolderResume a set a.folderId = :folderId "
-						+ "WHERE a.id.folderResumeId = :folderResumeId";
-				Query query = hibernateTemplate.getSessionFactory()
-						.getCurrentSession().createQuery(hqlUpdate);
-				query.setParameter("folderId", folderId);
-				query.setParameter("folderResumeId", folderList.get(0)
-						.getFolderResumeId());
+		AdmFolderResume admFolderResume = new AdmFolderResume();
 
-				int result = query.executeUpdate();
-				LOGGER.info("Rows affected: " + result);
-			}
-		} catch (DataAccessException e) {
-			LOGGER.error(e);
-		}
+		admFolderResume = hibernateTemplate.get(AdmFolderResume.class,
+				folderResumeId);
+		admFolderResume.setFolderId(folderId);
+		admFolderResume.setUpdateDt(new Date());
+		hibernateTemplate.saveOrUpdate(admFolderResume);
+
 		return true;
+	}
+
+	@Override
+	public void deleteJobSeeker(int folderResumeId)
+			throws JobBoardDataException {
+		AdmFolderResume admFolderResume = new AdmFolderResume();
+
+		admFolderResume = hibernateTemplate.get(AdmFolderResume.class,
+				folderResumeId);
+		admFolderResume.setUpdateDt(new Date());
+		admFolderResume.setDeleteDt(new Date());
+		hibernateTemplate.saveOrUpdate(admFolderResume);
+
 	}
 }

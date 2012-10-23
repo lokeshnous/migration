@@ -27,18 +27,24 @@
 					var="resume" varStatus="status">
 
 					<form:hidden
-						path="manageJobSeekerDTOList[${status.index}].resumeId" />
-					<tr class="Height35">
-						<td align="center" valign="middle"><input type="checkbox"
+						path="manageJobSeekerDTOList[${status.index}].folderResumeId" />
+						<form:hidden
+						path="manageJobSeekerDTOList[${status.index}].orgResumeId" />
+					<tr class="Height35" id=${resume.folderResumeId}>
+						<td align="center" valign="middle" ><input type="checkbox"
 							name="checkbox" id=${resume.folderResumeId}
 							value="${resume.folderResumeId}"></td>
-						<td align="left" valign="middle"><a href="#">${resume.resumeName}</a></td>
-						<td align="center" valign="middle"><input type="radio"
-							name="rating" value="1" class="star"> <input type="radio"
-							name="rating" value="2" class="star"> <input type="radio"
-							name="rating" value="3" class="star"> <input type="radio"
-							name="rating" value="4" class="star"> <input type="radio"
-							name="rating" value="5" class="star"></td>
+						<td align="left" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.orgResumeId }">${resume.resumeName}</a></td>
+						<!-- <td align="center" valign="middle"><input type="radio"
+							name="rating" value="1" class="starOn"> <input type="radio"
+							name="rating" value="2" class="starOn"> <input type="radio"
+							name="rating" value="3" class="starOff"> <input type="radio"
+							name="rating" value="4" class="starOff"> <input type="radio"
+							name="rating" value="5" class="starOff"></td> -->						
+						
+						 <td align="center" valign="middle"><span class="starOn"></span><span
+					class="starOn"></span><span class="starOn"></span><span
+					class="starOff"></span><span class="starOff"></span></td> 
 						<td align="center" valign="middle"><form:select
 								id="appStatus"
 								path="manageJobSeekerDTOList[${status.index}].applicationStatus"
@@ -46,7 +52,7 @@
 								items="${appStatusList}" itemLabel="optionName"
 								itemValue="optionId">
 							</form:select></td>
-						<td align="center" valign="middle">12/12/2011</td>
+						<td align="center" valign="middle">${resume.savedDate}</td>
 						<td align="center" valign="middle"><a href="#"><img
 								src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<a
 							href="#"><img src="../resources/images/Download.png"
@@ -56,7 +62,7 @@
 								src="../resources/images/EmailOrange.png" width="20" height="20"
 								alt="E-mail"></a>&nbsp;<a href="#"><img
 								src="../resources/images/Delete.png" width="20" height="20"
-								alt="Delete"></a></td>
+								alt="delete"></a></td>
 					</tr>
 				</c:forEach>
 

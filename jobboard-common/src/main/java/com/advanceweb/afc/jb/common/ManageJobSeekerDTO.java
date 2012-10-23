@@ -20,6 +20,7 @@ public class ManageJobSeekerDTO implements Serializable {
 	private int folderId;
 	private String folderName;
 	private int folderResumeId;
+	private int orgResumeId;
 	/**
 	 * @return the resumeId
 	 */
@@ -121,6 +122,18 @@ public class ManageJobSeekerDTO implements Serializable {
 	 */
 	public void setFolderResumeId(int folderResumeId) {
 		this.folderResumeId = folderResumeId;
+	}
+	/**
+	 * @return the orgResumeId
+	 */
+	public int getOrgResumeId() {
+		return orgResumeId;
+	}
+	/**
+	 * @param orgResumeId the orgResumeId to set
+	 */
+	public void setOrgResumeId(int orgResumeId) {
+		this.orgResumeId = orgResumeId;
 	}
    
 

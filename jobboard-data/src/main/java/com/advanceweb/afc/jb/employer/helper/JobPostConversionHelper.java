@@ -81,13 +81,12 @@ public class JobPostConversionHelper<JobPostForm> {
 		if (MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())) {
 			jpJob.setStartDt(new Date());
 		}
-		if (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus())
+		if ((dto.getJobId() > 0 && dto.isbActive() == true) && (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus())
 				|| MMJBCommonConstants.POST_JOB_DRAFT
-						.equals(dto.getJobStatus())) {
+						.equals(dto.getJobStatus()))) {
 			Calendar now = Calendar.getInstance();
 			jpJob.setStartDt(now.getTime());
 			now.add(Calendar.DAY_OF_MONTH, 30);
-			jpJob.setActive(MMJBCommonConstants.ACTIVE);
 			jpJob.setEndDt(now.getTime());
 		}
 			

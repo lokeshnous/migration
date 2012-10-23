@@ -141,4 +141,19 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#deleteJobSeeker(int)
+	 */
+	@Override
+	public void deleteJobSeeker(int folderResumeId) throws JobBoardServiceException {
+		
+		try {
+			manageJobSeekerDAO.deleteJobSeeker(folderResumeId);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while updating the folder details..." + jdex);
+		}
+	}
+
 }

@@ -1,12 +1,14 @@
 package com.advanceweb.afc.jb.employer.helper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AdmFolderDTO;
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
 import com.advanceweb.afc.jb.data.entities.AdmApplicationStatus;
@@ -41,6 +43,18 @@ public class JobSeekerConversionHelper {
 				jobSeekerDTO.setApplicationStatus((Integer) row[2]);
 				jobSeekerDTO.setResumeId((Integer) row[3]);
 				jobSeekerDTO.setFolderResumeId((Integer) row[4]);
+				Date update = null;
+				String savedDate=null;
+				if(null!=row[6]){
+					update=(Date)row[6];
+					savedDate=CommonUtil.convertToReqdDateString(update);
+				} else {
+					if (null != row[5]) {
+						update = (Date) row[5];
+						savedDate = CommonUtil.convertToReqdDateString(update);
+					}
+				}
+				jobSeekerDTO.setSavedDate(savedDate);
 				manageJobSeekerDTOs.add(jobSeekerDTO);
 			}
 				

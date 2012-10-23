@@ -22,5 +22,6 @@ public interface ManageJobSeekerDAO {
 	boolean updateJobSeeker(int appStatusId,int resumeId,int rating) throws JobBoardDataException;
 	List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId, int folderId) throws JobBoardDataException;
 	boolean updateResumeFolder(int folderId, int folderResumeId)throws JobBoardDataException;
+	void deleteJobSeeker(int folderResumeId)throws JobBoardDataException;
 	
 }

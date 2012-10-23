@@ -28,7 +28,7 @@ public class ManageJobSeekerForm {
 	private List<ManageJobSeekerDTO> manageJobSeekerDTOList;
 	private int folderId;
 	private String folderName;
-	private List<AdmFolderDTO> admFolderDTOList;
+	private List<AdmFolderDTO> admFolderDTOList; 
 	
 	/**
 	 * @return the statusValue

@@ -71,7 +71,7 @@ public class ManageAccessPermissionController {
 	private MMEmailService emailService;
 
 	@Autowired
-	LoginService loginService;
+	private LoginService loginService;
 
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(

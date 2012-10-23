@@ -15,7 +15,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$("#moveToFolderPopup").displaypopup("#moveToFolderPopup","20","20");
-		
+		 // $("#tb_manage_job_seeker").tablesorter(); 
 		$('#appStatus').change(
 				function() {
 					val = $(this).val();
@@ -72,6 +72,7 @@
 							});
 				});
 				$('#moveToFolder').click(function() {
+					//alert("hi");
 					var val = [];
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
@@ -79,7 +80,7 @@
 					if (val != "") {
 						$('#selectedRow').val(val);
 						$('#moveToFolderPopup').attr("href","../employer/moveToFolder.html?folderId=0&selectedVal="+val);
-						moveToFolderPopup.click();
+						$("#moveToFolderPopup").click();
 					} else {
 						alert("Please select a resume");
 					}
@@ -93,12 +94,45 @@
 					if (val != "") {
 						$('#selectedRow').val(val);
 						$('#moveToFolderPopup').attr("href","../employer/moveToFolder.html?folderId=0&selectedVal="+val);
-						moveToFolderPopup.click();
+						$("#moveToFolderPopup").click();
 					} else {
 						alert("Please select a resume");
 					}
 
 				});
+				$("#tb_manage_job_seeker img")
+				.click(
+						function(event) {
+							var action = $(this).attr("alt");
+							var rowObj = $(this).parent().parent().parent();
+							var resumeId =  $(rowObj).attr("id");
+							switch (action) {
+							case "delete": {
+
+								if (confirm("Are you sure you want to delete?")) {
+										$.ajax({url: "${pageContext.request.contextPath}/employer/deleteJobSeekerDetails.html?resumeId="+resumeId,
+											type: "POST",
+											success: function(data){ 
+											    if(data.success != null){
+											    	rowObj.remove();
+											    }
+											    if(data.failure != null){
+											    	alert(data.failed);
+											    }
+											},
+											error: function(response) {
+												alert("Server Error : "+response.status);
+											}
+										});
+									return true;
+								 } else {
+									return false;
+								 }
+							}
+								break;
+							}
+
+						});
 		jQuery(".megamenu").megamenu();
 	});
 </script>

@@ -137,22 +137,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 								dto.getFacilityId()))) {
 				return false;
 			}
-			if ((dto.getJobId() > 0)
-					&& (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto
-							.getJobStatus())
+			if ((dto.getJobId() > 0 && dto.isbActive() == true)
+					&& ((MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto
+							.getJobStatus()) || (MMJBCommonConstants.POST_JOB_DRAFT
+							.equals(dto.getJobStatus())))
 							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
 								Integer.valueOf(dto.getJobPostingType()),
 								dto.getFacilityId()))) {
 				return false;
 			}
-			if ((dto.getJobId() > 0)
-					&& (MMJBCommonConstants.POST_JOB_DRAFT.equals(dto
-							.getJobStatus())
-							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
-								Integer.valueOf(dto.getJobPostingType()),
-								dto.getFacilityId()))) {
-				return false;
-			}
+			
 			// Retrieving location Id based on the data selection while posting
 						// the new job
 			Object[] inputs = { dto.getJobCountry(), dto.getJobState(),
