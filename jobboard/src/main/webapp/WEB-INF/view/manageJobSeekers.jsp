@@ -134,6 +134,64 @@
 
 						});
 		jQuery(".megamenu").megamenu();
+		
+		$("#candidatesDiv").jstree({ 
+			"json_data" : {
+
+	            "ajax" : {
+       	                "url" : "../employer/getAllCandidates.html?resumeId=0",
+           	             "type" : "GET",
+                         "dataType" : "text json",
+                         "contentType" : "application/json charset=utf-8",
+       	                "data" : function (n) {
+       	                    return { id : n.attr ? n.attr("id") : -1 };
+       	                }
+       	            }
+
+			},
+			"themes": {
+	            "theme": "default",
+	            "dots": true,
+	            "icons": true
+	        },
+			"plugins" : [ "themes", "json_data" ]
+		});
+		
+
+		$("#folderDiv").jstree({ 
+			"json_data" : {
+					 "ajax" : {
+       	                "url" : "../employer/getAllFolders.html?folderId=0",
+           	             "type" : "GET",
+                         "dataType" : "text json",
+                         "contentType" : "application/json charset=utf-8",
+       	                "data" : function (n) {
+       	                    return { id : n.attr ? n.attr("id") : -1 };
+       	                }
+       	            }
+
+			},
+			"themes": {
+	            "theme": "default",
+	            "dots": true,
+	            "icons": true
+	        },
+			"plugins" : [ "themes", "json_data" ]
+		});
+		
+		
+		$("#folderMenu input").click(function () {
+			switch(this.id) {
+				case "add_folder":
+					$("#folderDiv").jstree("create", null, "last", { "attr" : { "rel" : this.id.toString().replace("add_", "") } });
+					break;
+				
+				default:
+					$("#demo").jstree(this.id);
+					break;
+			}
+		});
+
 	});
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
@@ -142,6 +200,9 @@
 <script src="../resources/js/searchResultsdatatable.js"></script>
 
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+
+<!-- JQUERY JSTREE PLUGIN -->
+<script src="<%= request.getContextPath() %>/resources/js/jquery.jstree.js"></script>
 
 </head>
 <body class="job_board">
@@ -172,13 +233,21 @@
 						<div class="clearfix"></div>
 						<div class="content_columns_search_results">
 							<div class="column1">
-							<%--<div id="folderDiv">								
-								 <jsp:include page="manageJobSeekerFolderView.jsp"></jsp:include> 
-								</div>--%>
 
 								 <div class="section">
 									<h2>Folders</h2>
-
+								<div id="candidatesDiv">								
+								</div>
+								
+								<div id="folderMenu">
+								<input type="button" id="add_folder" value="+"/>
+								<input type="button" id="remove_folder" value="-"/>
+								 
+								</div>	
+								<div id="folderDiv">								
+								</div>
+									
+									<!-- 
 									<div class="refineResults">
 										<span class="refineResultsItem plus">All Candidates</span>
 										<div class="refineResultsSubContent"></div>
@@ -200,7 +269,7 @@
 										</div>
 
 
-
+ 									-->
 
 									</div>
 
