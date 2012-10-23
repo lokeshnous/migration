@@ -190,7 +190,7 @@
 								<td width="7%" align="Left" id="${jobPosting.jobPostPlanCretitAmt}"><span
 									class="link_color2_selected"><span>$</span><span>${jobPosting.jobPostPlanCretitAmt}</span></span></td>
 								<td width="19%"><input type="text"
-									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" maxlength="9"/></td>
+									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" maxlength="3"/></td>
 								<input type="hidden" id="${jobPosting.jobPostNetSuiteId}"></input>	
 							</tr>
 							</thead>
@@ -272,7 +272,7 @@
 										Subtotal</label></td>
 								<td width="7%" align="Left"><span
 									class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
-								<td width="19%"><input name="healthCareSubSplty2"
+								<td width="19%"><input name="healthCareSubSplty2" maxlength="3"
 									type="text" class="jb_input75 marginTop0 mar" value="${cartItem.quantity}" /><a
 									href="#" class="marginLeft20" id="<%=i++%>" >Remove</a></td>
 							</tr>
