@@ -150,6 +150,8 @@ public class SocialLoginController {
 			return new RedirectView(webSupport.buildOAuthUrl(connectionFactory,
 					request));
 		} catch (Exception e) {
+			LOGGER.info("Exception while process a sign-in form submission ("
+					+ e.getMessage() + "). Redirecting to " + signInUrl);
 			return redirect(URIBuilder.fromUri(signInUrl)
 					.queryParam("error", "provider").build().toString());
 		}
@@ -175,7 +177,7 @@ public class SocialLoginController {
 					connectionFactory, request);
 			return handleSignIn(connection, request);
 		} catch (Exception e) {
-			LOGGER.debug("Exception while handling OAuth1 callback ("
+			LOGGER.info("Exception while handling OAuth1 callback ("
 					+ e.getMessage() + "). Redirecting to " + signInUrl);
 			return redirect(URIBuilder.fromUri(signInUrl)
 					.queryParam("error", "provider").build().toString());
@@ -201,7 +203,7 @@ public class SocialLoginController {
 					connectionFactory, request);
 			return handleSignIn(connection, request);
 		} catch (Exception e) {
-			LOGGER.debug("Exception while handling OAuth2 callback ("
+			LOGGER.info("Exception while handling OAuth2 callback ("
 					+ e.getMessage() + "). Redirecting to " + signInUrl);
 			return redirect(URIBuilder.fromUri(signInUrl)
 					.queryParam("error", "provider").build().toString());
@@ -241,7 +243,7 @@ public class SocialLoginController {
 		try {
 			userDTO = loginService.getUserBySocialProfileId(profileId);
 		} catch (JobBoardException e) {
-			LOGGER.debug("Error occurred while fetching the user based on the social profile id");
+			LOGGER.info("Error occurred while fetching the user based on the social profile id"+e.getMessage());
 		}
 		if (userDTO == null) {
 			SocialConnectionManager signInAttempt = new SocialConnectionManager(
@@ -288,7 +290,7 @@ public class SocialLoginController {
 			loginSuccessManager.onAuthenticationSuccess(request, response,
 					authentication);
 		} catch (Exception e) {
-			LOGGER.debug("Exception while processing the callback when a user is registered in the application ("
+			LOGGER.info("Exception while processing the callback when a user is registered in the application ("
 					+ e.getMessage() + ")");
 		}
 	}
@@ -363,10 +365,10 @@ public class SocialLoginController {
 				loginSuccessManager.onAuthenticationSuccess(request, response,
 						authenticatedUser);
 			}catch (JobBoardException e) {
-				LOGGER.debug("Exception while updating the social profile id)"+e);
+				LOGGER.info("Exception while updating the social profile id)"+e.getMessage());
 			}
 			catch (Exception e) {
-				LOGGER.debug("Exception while processing the callback when a user is registered in the application and first time login with his social media account("
+				LOGGER.info("Exception while processing the callback when a user is registered in the application and first time login with his social media account("
 						+ e.getMessage() + ")");
 			}
 		}
