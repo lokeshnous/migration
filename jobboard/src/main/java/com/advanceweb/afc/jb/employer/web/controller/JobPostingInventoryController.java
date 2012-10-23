@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,11 @@ import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 @Controller
 @RequestMapping("/inventory")
 public class JobPostingInventoryController {
-
+	
+	private static final Logger LOGGER = Logger
+			.getLogger(JobPostingInventoryController.class);
+	
+	
 	@Autowired
 	private JobPostInventoryService inventoryService;
 
@@ -46,7 +51,7 @@ public class JobPostingInventoryController {
 			HttpSession session) {
 		String status = null;
 		ModelAndView model = new ModelAndView();
-
+		try{
 		// If Inventory page is from dashboard then we need to provide action
 		// column
 		if (page != null && page.equals("inventoryPage")) {
@@ -90,6 +95,7 @@ public class JobPostingInventoryController {
 				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
 				jbPostList.add(dto);
 			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
 					MMJBCommonConstants.STANDARD_JOB_POSTING)
@@ -99,6 +105,7 @@ public class JobPostingInventoryController {
 				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
 				jbPostList.add(dto);
 			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
 					MMJBCommonConstants.JOB_POSTING_SLOT)
@@ -109,6 +116,7 @@ public class JobPostingInventoryController {
 				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
 				jbSlotList.add(dto);
 			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
 					MMJBCommonConstants.JOB_POSTING_SLOT)
@@ -118,6 +126,7 @@ public class JobPostingInventoryController {
 				dto.setDuration(Duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
 				jbSlotList.add(dto);
 			}
 		}
@@ -125,7 +134,9 @@ public class JobPostingInventoryController {
 		model.addObject("jbSlotList", jbSlotList);
 		model.addObject("isAction", status);
 		model.setViewName("jobPostingInventoryPopup");
-
+		}catch(Exception e){
+			LOGGER.error(e);
+		}
 		return model;
 	}
 }

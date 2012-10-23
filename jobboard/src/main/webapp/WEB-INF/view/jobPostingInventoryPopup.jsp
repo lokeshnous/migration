@@ -62,10 +62,13 @@
 										<td align="center">${jbPostList.getAvailableQty()}</td>
 										<c:choose>
 											<c:when test="${isAction != null}">
-												<td align="center"><a
-													href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
+												<td align="center">
+												<c:if test="${jbPostList.availableQty != 0}">
+												<a href="<%=request.getContextPath()%>/employer/postNewJobs.html?jobPostType=${jbPostList.invDetailId}"><img
 														src="../resources/images/Addbutton.png" width="20"
-														height="20" alt="Post New Job" title="Post New Job"></a></td>
+														height="20" alt="Post New Job" title="Post New Job"></a>
+												</c:if>		
+												</td>
 											</c:when>
 											<c:otherwise>
 											</c:otherwise>
@@ -106,10 +109,13 @@
 										<td align="center">${jbSlotList.getAvailableQty()}</td>
 										<c:choose>
 											<c:when test="${isAction != null}">
-												<td align="center"><a
-													href="<%=request.getContextPath()%>/employer/postNewJobs.html"><img
+												<td align="center">
+												<c:if test="${jbSlotList.availableQty != 0}">
+												<a href="<%=request.getContextPath()%>/employer/postNewJobs.html?jobPostType=${jbSlotList.invDetailId}"><img
 														src="../resources/images/Addbutton.png" width="20"
-														height="20" alt="Post New Job" title="Post New Job"></a></td>
+														height="20" alt="Post New Job" title="Post New Job"></a>
+												</c:if>
+												</td>
 											</c:when>
 											<c:otherwise>
 											</c:otherwise>

@@ -92,7 +92,7 @@ public class JobPostController {
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
-	public ModelAndView showPostJob(HttpSession session) {
+	public ModelAndView showPostJob(@RequestParam(value = "jobPostType", required = false) String jobPostType, HttpSession session) {
 		int facilityId = 0;
 		ModelAndView model = new ModelAndView();
 		JobPostForm jobPostForm = new JobPostForm();
@@ -101,6 +101,7 @@ public class JobPostController {
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
+		
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 
@@ -110,6 +111,20 @@ public class JobPostController {
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(employerInfoDTO
 						.getFacilityId());
+		
+		//redirecting from job post inventory to post new job screen
+		if(!StringUtils.isEmpty(jobPostType)){
+			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService.populateJobPostingTypeDropdown(facilityId, Integer.parseInt(jobPostType));
+			if(null != jobPostTypeCombo && jobPostTypeCombo.size() > 0){
+				for(DropDownDTO dropDown : jbPostingTypeList){
+					if(dropDown.getOptionName().equals(jobPostTypeCombo.get(0).getOptionName())){
+						//set the default value of job post type drop down
+						jobPostForm.setJobPostingType(dropDown.getOptionId());
+					}	
+				}
+			}	
+		}
+		
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
 				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId(),
