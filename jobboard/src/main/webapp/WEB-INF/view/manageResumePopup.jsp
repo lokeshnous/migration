@@ -49,10 +49,12 @@
 				$("#manageResumeForm").submit();
 				break;
 			case "download":
-				$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
+				alert("download");
+				break;
+				/* $("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
 				$("#manageResumeForm").attr("method","POST");
 				$("#manageResumeForm").attr("target","_new"); 
-				$("#manageResumeForm").submit();
+				$("#manageResumeForm").submit(); */
 				break;
 			case "print":
 				alert("print");

@@ -379,6 +379,7 @@ function validateNumber(event) {
 										$("#postNewJobFormId :button").attr(
 												"hidden", true);
 										$("#cancel").attr("hidden", false);
+										$("#cancel").attr("disabled", false);
 									});
 
 						}
