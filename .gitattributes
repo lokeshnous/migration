@@ -809,7 +809,6 @@ jobboard/src/main/webapp/resources/js/jquery-1.7.1.min.js -text
 jobboard/src/main/webapp/resources/js/jquery-ui.js -text
 jobboard/src/main/webapp/resources/js/jquery-ui.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.colorPicker.js -text
-jobboard/src/main/webapp/resources/js/jquery.cookie.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.all.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.js -text
 jobboard/src/main/webapp/resources/js/jquery.cycle.lite.min.js -text
@@ -817,12 +816,10 @@ jobboard/src/main/webapp/resources/js/jquery.cycle.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.dataTables.js -text
 jobboard/src/main/webapp/resources/js/jquery.dataTables.nightly.js -text
 jobboard/src/main/webapp/resources/js/jquery.displaytagdetail.js -text
-jobboard/src/main/webapp/resources/js/jquery.hotkeys.js -text
 jobboard/src/main/webapp/resources/js/jquery.js -text
 jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text
 jobboard/src/main/webapp/resources/js/jquery.simplemodal.js -text
 jobboard/src/main/webapp/resources/js/jquery.tablesorter.js -text
-jobboard/src/main/webapp/resources/js/jquery_1.4.2.js -text
 jobboard/src/main/webapp/resources/js/lpb.gif -text
 jobboard/src/main/webapp/resources/js/lpg.gif -text
 jobboard/src/main/webapp/resources/js/lpr.gif -text
@@ -835,25 +832,6 @@ jobboard/src/main/webapp/resources/js/screenshot.png -text
 jobboard/src/main/webapp/resources/js/searchResultsdatatable.js -text
 jobboard/src/main/webapp/resources/js/silverlight.js -text
 jobboard/src/main/webapp/resources/js/slider.js -text
-jobboard/src/main/webapp/resources/js/themes/apple/bg.jpg -text
-jobboard/src/main/webapp/resources/js/themes/apple/d.png -text
-jobboard/src/main/webapp/resources/js/themes/apple/dot_for_ie.gif -text
-jobboard/src/main/webapp/resources/js/themes/apple/style.css -text
-jobboard/src/main/webapp/resources/js/themes/apple/throbber.gif -text
-jobboard/src/main/webapp/resources/js/themes/classic/d.gif -text
-jobboard/src/main/webapp/resources/js/themes/classic/d.png -text
-jobboard/src/main/webapp/resources/js/themes/classic/dot_for_ie.gif -text
-jobboard/src/main/webapp/resources/js/themes/classic/style.css -text
-jobboard/src/main/webapp/resources/js/themes/classic/throbber.gif -text
-jobboard/src/main/webapp/resources/js/themes/default-rtl/d.gif -text
-jobboard/src/main/webapp/resources/js/themes/default-rtl/d.png -text
-jobboard/src/main/webapp/resources/js/themes/default-rtl/dots.gif -text
-jobboard/src/main/webapp/resources/js/themes/default-rtl/style.css -text
-jobboard/src/main/webapp/resources/js/themes/default-rtl/throbber.gif -text
-jobboard/src/main/webapp/resources/js/themes/default/d.gif -text
-jobboard/src/main/webapp/resources/js/themes/default/d.png -text
-jobboard/src/main/webapp/resources/js/themes/default/style.css -text
-jobboard/src/main/webapp/resources/js/themes/default/throbber.gif -text
 jobboard/src/main/webapp/resources/js/widgets.js -text svneol=unset#text/plain
 jobboard/src/main/webapp/resources/js/wmvplayer.js -text
 jobboard/src/main/webapp/resources/themes/apple/bg.jpg -text
