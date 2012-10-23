@@ -562,7 +562,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserAlertContro
 jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserSubscriptionForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/user/web/controller/UserSubscriptionsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/exception/JobBoardUIException.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/Constants.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/PDFGenerator.java -text svneol=unset#text/plain
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
