@@ -95,7 +95,7 @@
             <span ><input type="button" value="Sign in to connect" id="signInButton" class="btn_sm white"/></span><br>
 
             <h4 class="noTopBottomBorder marginTop10">or</h4>
-            <h2 class="noTopBottomBorder"><a id="signUpLink" href="#">Click here to Continue </a> </h2> 
+            <h2 class="noTopBottomBorder"><a id="signUpLink" href="#">Click here to sign up.... </a> </h2> 
             </div>
 		    <div id="loginPage" class="job_seeker_login width400 ">
 		    <div id="errorDiv">
