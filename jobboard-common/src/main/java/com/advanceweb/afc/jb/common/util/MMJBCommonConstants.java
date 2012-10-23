@@ -456,6 +456,7 @@ public interface MMJBCommonConstants {
 	String HOME_PAGE = "homePage";
 	String FEATURE_EMPS_PAGE = "featureEmpsPage";
 	String FEATURE_EMP_DETAIL_PAGE = "featureEmpDetailPage";
+	String JOB_VIEW_PAGE = "jobViewPage";
 	String JS_LOGIN_PAGE = "jsLoginPage";
 	String JS_REG_FIRST_STEP_PAGE = "jsRegFirstStepPage";
 	String JS_REG_SEC_STEP_PAGE = "jsRegSecStepPage";
