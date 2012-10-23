@@ -19,7 +19,8 @@
 <title>ADVANCE Heathcare Jobs</title>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
+		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
+		$("#phone2").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		jQuery(".megamenu").megamenu();
 		
 		$('[id^=card_number]').keypress(validateNumber);

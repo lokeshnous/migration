@@ -16,7 +16,8 @@
 	src="../resources/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
-
+<script src="../resources/js/jquery.inputmask.js"></script>
+<script src="../resources/js/jquery.inputmask.extensions.js "></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript" language="javascript"
@@ -39,6 +40,7 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		    	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 
@@ -243,7 +245,7 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'Phone Number'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Phone Number:</span>
-										<form:input path="listProfAttribForms[${status.index}].strLabelValue"
+										<form:input path="listProfAttribForms[${status.index}].strLabelValue" id="phone"
 											class="job_seeker_password textBox350" />
 											<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Valid format for Phone number is (xxx)xxx-xxxx</span>

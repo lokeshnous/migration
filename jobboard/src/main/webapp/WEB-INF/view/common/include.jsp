@@ -16,7 +16,8 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery.cycle.all.min.js"></script>
 <%-- <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/slider.js"></script> --%>
 <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery.megamenu.js"></script>
-
+<script src="../resources/js/jquery.inputmask.js"></script>	
+	<script src="../resources/js/jquery.inputmask.extensions.js"></script>
 <!-- js files for modalpopup------------------------------------------------- -->
 <script	src="<%= request.getContextPath() %>/resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
 <script	src="<%= request.getContextPath() %>/resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>

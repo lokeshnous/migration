@@ -24,6 +24,9 @@
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 <script src="../resources/js/recaptcha_ajax.js"></script>
+<script src="../resources/js/jquery.inputmask.js"></script>
+<script src="../resources/js/jquery.inputmask.extensions.js "></script>
+	
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
@@ -35,6 +38,8 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
+		$("#primaryPhoneId").inputmask("mask", {"mask": "(999) 999-9999"}); 
+		$("#secondaryPhoneId").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		$('.focus').focus();
 		//for social media sign up
 		if ($("#socialSignUp").val() == 'true') {
@@ -303,7 +308,7 @@
 								<c:if test="${profAttrib.strLabelName == 'Primary Phone'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Primary Phone:</span>
-										<form:input
+										<form:input id="primaryPhoneId"
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
 											class="job_seeker_password textBox350 
@@ -314,7 +319,7 @@
 								<c:if test="${profAttrib.strLabelName == 'Secondary Phone'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Secondary Phone:</span>
-										<form:input
+										<form:input id="secondaryPhoneId"
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
 											class="job_seeker_password textBox350 

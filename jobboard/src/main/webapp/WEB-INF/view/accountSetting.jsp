@@ -7,6 +7,8 @@
 <title>Advance Health care job</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <jsp:include page="common/include.jsp" />
+<link href="../resources/css/jquery-ui.css" rel="stylesheet"
+	type="text/css">
 <script type="text/javascript">
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
@@ -66,6 +68,8 @@ function copyAccToBillingAddr(obj) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
+		$("#phone2").inputmask("mask", {"mask": "(999) 999-9999"});
 		$.nmFilters({
     	    custom: {
     	        afterShowCont: function(nm) {

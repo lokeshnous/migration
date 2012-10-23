@@ -8,16 +8,22 @@
 <title>ADVANCE Heathcare Jobs</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- STYLESHEETS -->
+<jsp:include page="common/include.jsp" />
 <link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>		
+ <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
+	type="text/css"> 
+	<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
 	type="text/css" />
 <link href="../resources/css/SliderStyles.css" rel="stylesheet"
 	type="text/css">
-<!-- <link rel="stylesheet" type="text/css" media="screen"
+
+	
+ <link rel="stylesheet" type="text/css" media="screen"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
- -->
- <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
-	type="text/css">
+
 
 <script type="text/javascript">
 function validateNumber(event) {
@@ -35,6 +41,8 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		
+		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		
 		if($("#MyProfession :selected").text() == "Others"){
 	         $("#otherProfession").show();
@@ -248,7 +256,7 @@ function validateNumber(event) {
 						<c:if test="${profAttrib.strLabelName == 'Phone Number'}">
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Phone Number:</span> 
-								<form:input path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
+								<form:input id="phone" path="listProfAttribForms[${status.index}].strLabelValue" class="job_seeker_password textBox350" />
 							</div>
 						</c:if>
 						<c:if test="${profAttrib.strLabelName == 'My Industry'}">

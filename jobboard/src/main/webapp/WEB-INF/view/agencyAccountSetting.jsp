@@ -66,6 +66,8 @@ function copyAccToBillingAddr(obj) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
+		$("#phone2").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		$.nmFilters({
     	    custom: {
     	        afterShowCont: function(nm) {
@@ -302,7 +304,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Phone: </span>
-						<form:input path="phone" name="phone2" id="phone2" class="job_seeker_password"
+						<form:input id="phone2" path="phone" name="phone2" id="phone2" class="job_seeker_password"
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">

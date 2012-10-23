@@ -33,6 +33,7 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		    	$("#cancelAddFacility").displaypopup("#cancelAddFacility","770","360");
 		    	$("#saveNewFacility").click(function() {
 	    			$("#facilityErrorMsg").html("<span> </span>");
@@ -140,7 +141,7 @@ function validateNumber(event) {
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Phone:</span>
-						<form:input path="phoneNumber"
+						<form:input path="phoneNumber" id="phone"
 							class="job_seeker_password textBox2" />
 						<span class="required">(Required)</span>
 					</div>

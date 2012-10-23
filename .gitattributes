@@ -815,6 +815,8 @@ jobboard/src/main/webapp/resources/js/jquery.cycle.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.dataTables.js -text
 jobboard/src/main/webapp/resources/js/jquery.dataTables.nightly.js -text
 jobboard/src/main/webapp/resources/js/jquery.displaytagdetail.js -text
+jobboard/src/main/webapp/resources/js/jquery.inputmask.extensions.js -text
+jobboard/src/main/webapp/resources/js/jquery.inputmask.js -text
 jobboard/src/main/webapp/resources/js/jquery.js -text
 jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text
 jobboard/src/main/webapp/resources/js/jquery.simplemodal.js -text
