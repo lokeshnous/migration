@@ -452,5 +452,31 @@ public interface MMJBCommonConstants {
 	String METRO_AREA = "Metro Area";
 	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";
 
-
+	// Page names for jobboard
+	String HOME_PAGE = "homePage";
+	String FEATURE_EMPS_PAGE = "featureEmpsPage";
+	String FEATURE_EMP_DETAIL_PAGE = "featureEmpDetailPage";
+	String JS_LOGIN_PAGE = "jsLoginPage";
+	String JS_REG_FIRST_STEP_PAGE = "jsRegFirstStepPage";
+	String JS_REG_SEC_STEP_PAGE = "jsRegSecStepPage";
+	String JS_DASHBOARD_PAGE = "jsDashboardPage";
+	String JS_BASIC_JOB_SEARCH_PAGE = "jsBasicJobSearchPage";
+	String JS_ADV_JOB_SEARCH_PAGE = "jsAdvJobSearchPage";
+	String JS_RESUME_PAGE = "jsResumePage";
+	String EMP_LOGIN_PAGE = "empLoginPage";
+	String EMP_REG_PAGE = "empRegPage";
+	String EMP_DASHBOARD_PAGE = "empDashboardPage";
+	String EMP_BASIC_RES_SEARCH_PAGE = "empBasicResSearchPage";
+	String EMP_ADV_RES_SEARCH_PAGE = "empAdvResSearchPage";
+	String EMP_JOBPOST_PACKAGE_PAGE = "empJobPostPackagePage";
+	String EMP_MANAGE_FEATURE_PAGE = "empManageFeaturePge";
+	String EMP_POST_JOB_PAGE = "empPostJobPage";
+	String EMP_MANAGE_POST_JOB_PAGE = "empManagePostJobPage";
+	String EMP_PG_METHOD_PAGE = "empPGMethodPage";
+	String EMP_PG_BILLING_INFO_PAGE = "empPGBillingInfoPage";
+	String EMP_PG_CONFIRM_ORDER_PAGE = "empPGConfirmOrderPage";
+	String EMP_PG_GREETING_PAGE = "empPGGreetingPage";
+	String AGENCY_LOGIN_PAGE = "agencyLoginPage";
+	String AGENCY_REG_PAGE = "agencyRegPage";
+	String AGENCY_DASHBOARD_PAGE = "agencyDashboardPage";
 }
