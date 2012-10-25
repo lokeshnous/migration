@@ -79,9 +79,12 @@ type="text/css">
 				<div class="content_columns">
 					<div title="Coming Soon" class="column1">
 						<a href="">
-							<h3 class="more_link">
+							<!-- <h3 class="more_link">
 								Career Tools<span>More</span>
-							</h3>
+							</h3> -->
+							<h2 class="more_link">
+								Career Tools<span>More</span>
+							</h2>
 						</a> ${careerstoolresource}
 					</div>
 					<!-- column1 -->
