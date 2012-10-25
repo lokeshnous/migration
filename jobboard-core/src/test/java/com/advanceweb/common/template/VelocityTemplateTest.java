@@ -8,19 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.jb.test.BaseTest;
 
-public class VelocityTemplateTest extends BaseTest{
+public class VelocityTemplateTest extends BaseTest {
 	@Autowired
 	AdvanceTemplate velocityTestTemplate = new VelocityTemplate(
 			"/templates/openx_ad_tag.vtl");
 
 	@Test
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void test() {
-		
-		Map params = new HashMap();
+
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("auid", 297453);
 		params.put("url", "http://ox-d.advanceweb.com");
-		Map vars = new HashMap();
+		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("topic", "nurse");
 		params.put("vars", vars);
 		System.out.println(velocityTestTemplate.process(params));
