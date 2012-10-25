@@ -396,6 +396,13 @@ function validateNumber(event) {
 							
 							$("#saveJobPostId").attr("hidden", false);
 							$('#saveJobPostId').attr("disabled", false);
+							
+							/* IE-8 - hide the buttons*/
+							$("#postNewJobButId").hide();
+							$("#scheduleNewJobButId").hide();
+							$("#saveAsDraftJobButId").hide();
+							
+							
 							$('#cancel').attr("hidden",false);
 							$('#postNewJobButHideId').attr("disabled", false);							
 
