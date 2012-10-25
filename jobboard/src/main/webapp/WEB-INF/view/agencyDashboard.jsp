@@ -209,7 +209,7 @@
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a href="">Modify Subscriptions</a>
+											<a title="Coming Soon" href="">Modify Subscriptions</a>
 										</p>
 									</div>
 								</div>

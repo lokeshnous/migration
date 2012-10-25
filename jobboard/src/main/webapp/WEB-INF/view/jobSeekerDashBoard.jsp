@@ -171,7 +171,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												 <a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewResumeCount.html"
+												 <a title="Coming Soon" href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewResumeCount.html"
 													id="profileViewCount">${msg.jsEmployersViewedProfile} </a> 
 											</p>
 										</div>
@@ -221,14 +221,14 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/manageExistProfile.html?resumeType=manageCover" id="manageCoverLett">${msg.jsManageExistingCoverLetters}</a> 
+												<a title="Coming Soon" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/manageExistProfile.html?resumeType=manageCover" id="manageCoverLett">${msg.jsManageExistingCoverLetters}</a> 
 												
 											</p>
 											
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-											<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
+											<a title="Coming Soon" shref="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
 											</p>
 										</div>
 										<div class="lableTextDashBoard">

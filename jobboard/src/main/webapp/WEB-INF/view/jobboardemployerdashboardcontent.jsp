@@ -52,7 +52,7 @@
 			$("#metricsDetails").html(data);
 			},
 			error : function(data) {
-				alert('Unable to process');
+				// alert('Unable to process');
 			},
 			complete : function(data) {
 				// do nothing for now.
@@ -69,7 +69,7 @@
 		loadMetricsDetails();
 			 },
 				error : function(data) {
-					alert('Unable to process');
+					// alert('Unable to process');
 				}
 		});
 	}
@@ -324,7 +324,7 @@
 									<strong>SHOW</strong>
 								</div>
 								<div class="floatLeft marginTop5 marginLeft15">
-									<a href="#">Export</a>
+									<a title="Coming Soon" href="#">Export</a>
 								</div>
 							</div>
 							<!--T-->

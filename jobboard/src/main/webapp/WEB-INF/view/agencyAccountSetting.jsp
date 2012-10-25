@@ -304,7 +304,7 @@ function copyAccToBillingAddr(obj) {
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Phone: </span>
-						<form:input id="phone2" path="phone" name="phone2" id="phone2" class="job_seeker_password"
+						<form:input path="phone" name="phone2" id="phone2" class="job_seeker_password"
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">

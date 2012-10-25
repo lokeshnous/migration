@@ -30,7 +30,6 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		if (${keywords} != null){
-			alert(keywords);
 			$("#keywords").click(function(event){
 				searchResume();
 			}

@@ -103,7 +103,7 @@ function geteditSavedSearch(searchJobId){
     }
 function performSavedSearch(searchJobId){
 	var id = searchJobId.replace("performSavedSearch", "");
-	alert(id);
+	// alert(id);
 	$.ajax({url: "${pageContext.request.contextPath}/employerSearchResume/editSavedResumeSearch.html?searchId="+id+"&performSearch=performSearch",
 		success: function(data){ 
 			$.each(data, function(key, val) {

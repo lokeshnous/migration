@@ -124,7 +124,7 @@ type="text/css">
 										</ul>
 						<!-- featured_emp_slider -->
 
-						<a href="">
+						<a href="" target="_blank">
 							<h2 class="more_link Bgnone">Healthcare News</h2>
 						</a> ${healthcarenew}
 
