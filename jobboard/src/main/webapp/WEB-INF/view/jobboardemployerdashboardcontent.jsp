@@ -81,7 +81,7 @@
 
 	<form:form commandName="employerDashBoardForm" id="empDashBoard">
 		<div class="EmployerDashboardHeader">
-			<h1><%=(String) session.getAttribute("userName")%>
+			<h1><%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%>
 				Dashboard
 			</h1>
 		</div>
