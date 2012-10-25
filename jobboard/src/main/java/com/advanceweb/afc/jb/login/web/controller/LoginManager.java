@@ -63,6 +63,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
+			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+					infoDTO.getCustomerName());
 			redirectFacility(user,request,response,session);
 		} else if (isFacilitySystem(authentication, pageValue)) {
 
