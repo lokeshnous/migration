@@ -193,7 +193,7 @@ function validateNumber(event) {
 		    }		
 		</script>
 
-<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+<!-- <script type="text/javascript" src="../resources/js/expandCollapse.js"></script> -->
 <script type="text/javascript" src="../resources/js/lprogress.min.js"></script>
 <script type="text/javascript" src="../resources/js/lprogress.js"></script>
 </head>
