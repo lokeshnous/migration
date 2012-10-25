@@ -33,29 +33,33 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 	public Banner getBanner(ClientContext context, AdSize size,
 			AdPosition position) {
 		Banner banner = new Banner();
+		boolean status = true;
+		String tag = null;
 		if (size != null) {
 			banner.setSize(new AdSize(size));
 		}
 		try {
-			String tag;
 			if (position == AdPosition.TOP) {
 				URL adUrl = getAdURL(context, size, position);
 				tag = getResponse(adUrl);
 			} else {
-				tag = "<p>Ad Not Available for " + size.toString() +"</p>";
+				status = false;
 			}
 			LOGGER.debug("Recieved ad-tag" + tag);
-			banner.setTag(tag);
 		} catch (MalformedURLException ex) {
-			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");
+			status = false;
 			LOGGER.error(ex.getMessage(), ex);
 		} catch (IOException ex) {
-			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");
+			status = false;
 			LOGGER.error(ex.getMessage(), ex);
 		}catch (Exception ex) {
-			banner.setTag("<p>Ad Not Available for " + size.toString() +"</p>");
+			status = false;
 			LOGGER.error(ex.getMessage(), ex);
 		}
+		if(!status){
+			tag = "<p>Ad Not Available for " + size.toString() +"</p>";
+		}
+		banner.setTag(tag);
 		return banner;
 	}
 
@@ -84,6 +88,8 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		URL url = new URL(sbUrl.toString());
 
 		LOGGER.info("Advertisement URL = " + url.toExternalForm());
+		LOGGER.info("Advertisement size = " + size);
+		LOGGER.info("Advertisement Position = " + position);
 		return url;
 	}
 

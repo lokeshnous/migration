@@ -43,11 +43,11 @@ $(document).ready(function(){
 	
     $("#slider4PrevBtn").click(function() {
 		$.ajax({
-			url : '../healthcarejobs/featureEmplist.html?moveBy=prev',
+			url : '../healthcarejobs/featuredEmplist.html?moveBy=prev',
 			data : ({}),						
 			success : function(data) {
 				$.ajax({
-					url : '../healthcarejobs/homeFeatureEmps.html',
+					url : '../healthcarejobs/homeFeaturedEmps.html',
 					data : ({}),
 					
 					success : function(data) {
@@ -72,11 +72,11 @@ $(document).ready(function(){
     });
     $("#slider4NextBtn").click(function() {
 		$.ajax({
-			url : '../healthcarejobs/featureEmplist.html?moveBy=next',
+			url : '../healthcarejobs/featuredEmplist.html?moveBy=next',
 			data : ({}),						
 			success : function(data) {
 				$.ajax({
-					url : '../healthcarejobs/homeFeatureEmps.html',
+					url : '../healthcarejobs/homeFeaturedEmps.html',
 					data : ({}),
 					
 					success : function(data) {

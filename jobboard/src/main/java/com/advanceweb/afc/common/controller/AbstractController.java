@@ -76,15 +76,10 @@ public abstract class AbstractController {
 				if (profileAttribDTO.getStrLabelValue() != null
 						&& profileAttribDTO.getStrLabelName().equalsIgnoreCase(
 								MMJBCommonConstants.MYPROFESSION)) {
-					if (!isInteger(profileAttribDTO.getStrLabelValue())) {
-						userProfession = profileAttribDTO.getStrLabelValue();
+					if (isInteger(profileAttribDTO.getStrLabelValue())) {
+						userProfession = getProfessionByList(profileAttribDTO);
 					} else {
-						for (DropDownDTO dropDown : profileAttribDTO.getDropdown()) {
-							if (MMJBCommonConstants.PROFESSION_OTHERS
-									.equals(dropDown.getOptionName())) {
-								userProfession = dropDown.getOptionName();
-							}
-						}
+						userProfession = profileAttribDTO.getStrLabelValue();
 					}
 				}
 				if (profileAttribDTO.getStrLabelValue() != null
@@ -96,7 +91,7 @@ public abstract class AbstractController {
 			}
 
 			// TODO:gender not storing
-			userGender = null;
+			//userGender = null;
 		}
 		clientContext.setProperty(ClientContext.USER_ID, String.valueOf(userId));
 		clientContext.setProperty(ClientContext.USER_LOCATION, userLocation);
@@ -105,6 +100,25 @@ public abstract class AbstractController {
 		clientContext.setProperty(ClientContext.USER_GENDER, userGender);
 		clientContext.setProperty(ClientContext.USER_ROLE, userRole);
 		return clientContext;
+	}
+
+	/**
+	 * Get the Profession name by dropdown list
+	 * 
+	 * @param userProfession
+	 * @param profileAttribDTO
+	 * @return
+	 */
+	private String getProfessionByList(
+			ProfileAttribDTO profileAttribDTO) {
+		String userProfession = null;
+		for (DropDownDTO dropDown : profileAttribDTO.getDropdown()) {
+			if (profileAttribDTO.getStrLabelValue().equals(
+					dropDown.getOptionId())) {
+				userProfession = dropDown.getOptionName();
+			}
+		}
+		return userProfession;
 	}
 	
 	/**

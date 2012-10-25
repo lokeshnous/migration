@@ -55,6 +55,10 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping(value = "/healthcarejobs")
 public class HomeController extends AbstractController{
 
+	private static final String FEATURED_EMPS_COUNT = "count";
+	private static final String PREV_FEATURED_EMP = "prev";
+	private static final String NEXT_FEATURED_EMP = "next";
+
 	private static final Logger LOGGER = Logger.getLogger(HomeController.class);
 
 	@Value("${basedirectorypath}")
@@ -98,6 +102,10 @@ public class HomeController extends AbstractController{
 	
 	@Autowired
 	private AdService adService;
+	
+//	@Autowired
+//	@Resource(name = "seoConfiguration")
+//	private Properties seoConfiguration;
 
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
@@ -123,19 +131,19 @@ public class HomeController extends AbstractController{
 								+ careertoolfilename);
 				model.addAttribute("careerstoolresource", htmlcareercontent);
 			}
-			session.removeAttribute("next");
-			session.removeAttribute("prev");
-			session.removeAttribute("count");
+			session.removeAttribute(NEXT_FEATURED_EMP);
+			session.removeAttribute(PREV_FEATURED_EMP);
+			session.removeAttribute(FEATURED_EMPS_COUNT);
 
 			int firstIndex = 0, lastIndex = 2;
-			session.setAttribute("prev", firstIndex);
-			session.setAttribute("next", lastIndex);
+			session.setAttribute(PREV_FEATURED_EMP, firstIndex);
+			session.setAttribute(NEXT_FEATURED_EMP, lastIndex);
 
 			List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
 					.getEmployerList(firstIndex, 2);
 			Long companyProfileDTOListCount = manageFeatureEmployerProfile
 					.getEmployerListCount();
-			session.setAttribute("count", companyProfileDTOListCount);			
+			session.setAttribute(FEATURED_EMPS_COUNT, companyProfileDTOListCount);			
 			session.setAttribute("companyProfileDTOList",companyProfileDTOList);
 			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
@@ -153,29 +161,25 @@ public class HomeController extends AbstractController{
 				AdPosition position = AdPosition.TOP;
 				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("addPageTop", bannerString);
-				LOGGER.info("Added the "+size.toString()+" Ad");
+				model.addAttribute("adPageTop", bannerString);
 				
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.TOP_RIGHT;
 				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("addPageTopRight", bannerString);
-				LOGGER.info("Added the "+size.toString()+" Ad");
+				model.addAttribute("adPageTopRight", bannerString);
 				
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.BOTTOM_RIGHT;
 				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("addPageBtmRight", bannerString);
-				LOGGER.info("Added the "+size.toString()+" Ad");
+				model.addAttribute("adPageBtmRight", bannerString);
 
 				size = AdSize.IAB_LEADERBOARD;
 				position = AdPosition.BOTTOM;
 				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("addPageBtm", bannerString);
-				LOGGER.info("Added the "+size.toString()+" Ad");
+				model.addAttribute("adPageBtm", bannerString);
 			} catch (Exception e) {
 				LOGGER.error("Error occurred while getting the html content for Ads"
 						+ e);
@@ -190,8 +194,28 @@ public class HomeController extends AbstractController{
 			LOGGER.info("Error occurred while getting the html content for home page"
 					+ e);
 		}
+		// Get the SEO Details
+		//getSEODetails(model,request);
 		return "home";
 	}
+	
+	/**
+	 * Get the SEO details.
+	 * 
+	 * @param model
+	 * @param request 
+	 * @param jobDTO 
+	 */
+//	private void getSEODetails(Model model,
+//			HttpServletRequest request) {		
+//		String metaDesc = seoConfiguration
+//				.getProperty("homepage.meta.description");
+//		String metaTitle = seoConfiguration
+//				.getProperty("homepage.meta.title");
+//		model.addAttribute("metaDesc", metaDesc);
+//		model.addAttribute("metaTitle", metaTitle);
+//		model.addAttribute("canonicalUrl", request.getRequestURL());
+//	}
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,
@@ -205,7 +229,7 @@ public class HomeController extends AbstractController{
 	}
 
 	/**
-	 * Method called to get the feature employer details by facility Id
+	 * Method called to get the featured employer details by facility Id
 	 * 
 	 * @param employerProfileManagementForm
 	 * @param request
@@ -441,7 +465,7 @@ public class HomeController extends AbstractController{
 
 	/**
 	 * This method is called to get the search results by company name for
-	 * feature employer
+	 * featured employer
 	 * 
 	 * @param request
 	 * @param response
@@ -475,60 +499,60 @@ public class HomeController extends AbstractController{
 	}
 
 	/**
-	 * get the Next/Prev feature employer list
+	 * get the Next/Prev featured employer list
 	 * 
 	 * @param request
 	 * @param response
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "/featureEmplist", method = RequestMethod.GET)
+	@RequestMapping(value = "/featuredEmplist", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject getFeatureEmplist(HttpServletRequest request,
+	JSONObject getFeaturedEmplist(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 
 		JSONObject jsonObject = new JSONObject();
 		String moveBy = request.getParameter("moveBy");
 		int firstIndex = 0, lastIndex = 2;
-		if (moveBy.equalsIgnoreCase("next")) {
-			int oldNext = (Integer) session.getAttribute("next");
-			int oldPrev = (Integer) session.getAttribute("prev");
+		if (moveBy.equalsIgnoreCase(NEXT_FEATURED_EMP)) {
+			int oldNext = (Integer) session.getAttribute(NEXT_FEATURED_EMP);
+			int oldPrev = (Integer) session.getAttribute(PREV_FEATURED_EMP);
 			lastIndex = oldNext + 2;
 			firstIndex = oldPrev + 2;
 		}
-		if (moveBy.equalsIgnoreCase("prev")) {
-			int oldNext = (Integer) session.getAttribute("next");
-			int oldPrev = (Integer) session.getAttribute("prev");
+		if (moveBy.equalsIgnoreCase(PREV_FEATURED_EMP)) {
+			int oldNext = (Integer) session.getAttribute(NEXT_FEATURED_EMP);
+			int oldPrev = (Integer) session.getAttribute(PREV_FEATURED_EMP);
 			lastIndex = oldNext - 2;
 			firstIndex = oldPrev - 2;
 		}
-		session.setAttribute("next", lastIndex);
-		session.setAttribute("prev", firstIndex);
+		session.setAttribute(NEXT_FEATURED_EMP, lastIndex);
+		session.setAttribute(PREV_FEATURED_EMP, firstIndex);
 
 		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
 				.getEmployerList(firstIndex, 2);
 		Long companyProfileDTOListCount = manageFeatureEmployerProfile
 				.getEmployerListCount();
-		session.setAttribute("count", companyProfileDTOListCount);
+		session.setAttribute(FEATURED_EMPS_COUNT, companyProfileDTOListCount);
 		session.setAttribute("companyProfileDTOList",
 				companyProfileDTOList);
 		return jsonObject;
 	}
 
 	/**
-	 * Get the homeFeatureEmps page
+	 * Get the homeFeaturedEmps page
 	 * 
 	 * @param response
 	 * @param request
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/homeFeatureEmps")
+	@RequestMapping(value = "/homeFeaturedEmps")
 	public ModelAndView getjobboardsearchresultsBody(
 			HttpServletResponse response, HttpServletRequest request,
 			Model model) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("homeFeatureEmps");
+		modelAndView.setViewName("homeFeaturedEmps");
 		return modelAndView;
 	}
 

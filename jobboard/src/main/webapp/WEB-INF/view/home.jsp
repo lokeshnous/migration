@@ -8,7 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
-
+<%-- <title>Jobs in Healthcare - Advance Healthcare Jobs</title>
+<meta name="description" content="${metaDesc}"> 
+		<link href="${canonicalUrl}" rel="canonical" /></head> --%>
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
@@ -40,7 +42,7 @@ type="text/css">
 
 <body class="job_board">
 	<div class="ad_page_top">
-		${addPagetop}
+		${adPageTop}
 	</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
@@ -55,8 +57,10 @@ type="text/css">
 				<div class="otherContent ">
 				<div class="ad_col_right">
 					<img class="marginTop10"
-						src="../resources/images/ads/300x250ad2.png" />
+						src="../resources/images/ads/300x250ad2.png" /> 
+						<%-- ${adPageTopRight} --%>
 					<div class="follow_us">
+						<!-- <h3>Follow Us</h3> -->
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
 						<a href="${followuplinkfacebook}" target="_blank">
@@ -75,15 +79,18 @@ type="text/css">
 				<div class="content_columns">
 					<div title="Coming Soon" class="column1">
 						<a href="">
-							<h2 class="more_link">
+							<h3 class="more_link">
 								Career Tools<span>More</span>
-							</h2>
+							</h3>
 						</a> ${careerstoolresource}
 					</div>
 					<!-- column1 -->
 
 					<div class="column2">
 						<a href="featuredemployers.html">
+							<!-- <h3 class="more_link">
+								Featured Employers<span>More</span>
+							</h3> -->
 							<h2 class="more_link">
 								Featured Employers<span>More</span>
 							</h2>
@@ -126,7 +133,8 @@ type="text/css">
 				<br class="clearfix" />
 				
 				<div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
+					<img src="../resources/images/ads/banner_ad_fpo.png" /> 
+					<%-- ${adPageBtm } --%>
 				</div>
 			
 				

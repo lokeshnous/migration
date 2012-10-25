@@ -636,7 +636,7 @@ jobboard/src/main/webapp/WEB-INF/view/gatewayConfirmOrder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/gatewayPaymentMethod.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/gatewayThankYou.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/home.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/homeFeatureEmps.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/homeFeaturedEmps.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobBoardEmployerPostJobs01.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobPostingInventoryPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerCreateAccount.jsp -text
