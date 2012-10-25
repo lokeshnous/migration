@@ -10,8 +10,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.jb.test.ServiceTest;
 
 public class SaveSearchServiceTest extends ServiceTest {
 	

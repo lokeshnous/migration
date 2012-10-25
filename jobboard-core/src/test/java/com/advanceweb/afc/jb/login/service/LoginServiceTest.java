@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
+import com.advanceweb.jb.test.ServiceTest;
 
 import static org.junit.Assert.assertNotNull;
 

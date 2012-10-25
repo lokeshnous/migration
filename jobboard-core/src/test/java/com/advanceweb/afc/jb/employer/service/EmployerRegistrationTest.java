@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.jb.test.ServiceTest;
 
 public class EmployerRegistrationTest extends ServiceTest {
 

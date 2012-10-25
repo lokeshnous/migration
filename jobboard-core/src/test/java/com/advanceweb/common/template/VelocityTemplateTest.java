@@ -6,9 +6,9 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.jb.test.BaseTest;
+import com.advanceweb.jb.test.ServiceTest;
 
-public class VelocityTemplateTest extends BaseTest {
+public class VelocityTemplateTest extends ServiceTest {
 	@Autowired
 	AdvanceTemplate velocityTestTemplate = new VelocityTemplate(
 			"/templates/openx_ad_tag.vtl");

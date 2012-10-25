@@ -6,9 +6,9 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.jb.test.BaseTest;
+import com.advanceweb.jb.test.ServiceTest;
 
-public class MvelTemplateTest extends BaseTest {
+public class MvelTemplateTest extends ServiceTest {
 	@Autowired
 	AdvanceTemplate mvelTestTemplate;
 

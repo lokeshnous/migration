@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailParseException;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.jb.test.ServiceTest;
 
 /**
  * <code>MMEmailServiceTest</code> is a test class for email service

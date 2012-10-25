@@ -7,10 +7,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
+import com.advanceweb.jb.test.ServiceTest;
 
 /**
  * 

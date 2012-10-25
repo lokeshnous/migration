@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.ads.Banner;
-import com.advanceweb.jb.test.BaseTest;
+import com.advanceweb.jb.test.ServiceTest;
 
-public class OpenxAdServiceDelegateTest extends BaseTest {
+public class OpenxAdServiceDelegateTest extends ServiceTest {
 
 	@Autowired
 	OpenxAdServiceDelegate openxAdServiceDelegate;

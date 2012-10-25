@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
+import com.advanceweb.jb.test.ServiceTest;
 
 /**
  * 

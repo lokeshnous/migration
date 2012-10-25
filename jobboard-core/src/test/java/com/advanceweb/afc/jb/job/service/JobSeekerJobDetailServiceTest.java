@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.job.service;
 
-import com.advanceweb.afc.jb.ServiceTest;
+import com.advanceweb.jb.test.ServiceTest;
 
 public class JobSeekerJobDetailServiceTest extends ServiceTest {
 

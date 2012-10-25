@@ -10,7 +10,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmploymentInfoDTO;
 import com.advanceweb.afc.jb.common.EmploymentTypeDTO;
@@ -26,6 +25,7 @@ import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
+import com.advanceweb.jb.test.ServiceTest;
 
 /**
  * @Author : Prince Mathew

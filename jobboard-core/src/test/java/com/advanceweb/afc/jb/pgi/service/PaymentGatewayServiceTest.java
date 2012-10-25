@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
@@ -17,6 +16,7 @@ import com.advanceweb.afc.jb.common.SalesOrderDTO;
 import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
+import com.advanceweb.jb.test.ServiceTest;
 
 public class PaymentGatewayServiceTest extends ServiceTest{
 

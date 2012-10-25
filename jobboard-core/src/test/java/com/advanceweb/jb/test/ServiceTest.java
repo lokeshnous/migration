@@ -6,8 +6,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext-test.xml"})
+@ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
 @Transactional
-public class BaseTest {
+public class ServiceTest {
 
 }

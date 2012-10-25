@@ -14,7 +14,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
@@ -23,6 +22,7 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.jb.test.ServiceTest;
 
 public class ResumeServiceTest extends ServiceTest {
 

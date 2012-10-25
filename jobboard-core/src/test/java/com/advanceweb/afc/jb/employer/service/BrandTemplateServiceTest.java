@@ -10,9 +10,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.ServiceTest;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
+import com.advanceweb.jb.test.ServiceTest;
 
 /**
  * <code>BrandTemplateServiceTest</code> is a Test class for EmpBrandTemp
