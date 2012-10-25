@@ -90,6 +90,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java 
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/JsonUtil.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConstants.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/constants/PageNames.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/exception/JobBoardException.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/logging/LoggingAspect.java -text
@@ -106,6 +107,7 @@ jobboard-common/src/main/resources/netSuite.properties -text
 jobboard-core/pom.xml -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/AdminService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/admin/service/impl/AdminServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/openx/OpenxAdServiceDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/AdService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/ads/LegacyAdServiceDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/advt/service/impl/AdServiceDelegate.java -text
@@ -220,6 +222,9 @@ jobboard-core/src/main/java/com/advanceweb/common/ads/AdPosition.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/AdSize.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/Banner.java -text
 jobboard-core/src/main/java/com/advanceweb/common/client/ClientContext.java -text
+jobboard-core/src/main/java/com/advanceweb/common/template/AdvanceTemplate.java -text
+jobboard-core/src/main/java/com/advanceweb/common/template/MvelTemplate.java -text
+jobboard-core/src/main/java/com/advanceweb/common/template/VelocityTemplate.java -text
 jobboard-core/src/main/resources/JbCoreSpringBeans.xml -text
 jobboard-core/src/main/resources/ads.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.properties -text
@@ -228,6 +233,7 @@ jobboard-core/src/main/resources/mailServer.properties -text
 jobboard-core/src/main/resources/solr.properties -text
 jobboard-core/src/main/resources/spring-social.xml -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/ServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/advt/openx/OpenxAdServiceDelegateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/advt/service/ads/LegacyAdServiceDelegateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/postjobs/JobPostServiceTest.java -text
@@ -245,10 +251,18 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java 
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/user/UserSubscriptionsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
+jobboard-core/src/test/java/com/advanceweb/common/template/MvelTemplateTest.java -text
+jobboard-core/src/test/java/com/advanceweb/common/template/VelocityTemplateTest.java -text
+jobboard-core/src/test/java/com/advanceweb/jb/test/BaseTest.java -text
 jobboard-core/src/test/resources/applicationContext-test.xml -text
 jobboard-core/src/test/resources/common.properties -text
+jobboard-core/src/test/resources/database.properties -text
 jobboard-core/src/test/resources/log4j.properties -text
 jobboard-core/src/test/resources/messages_en.properties -text
+jobboard-core/src/test/resources/openx.properties -text
+jobboard-core/src/test/resources/pdfGenerator.properties -text
+jobboard-core/src/test/resources/templates/openx/ad_tag.tpl -text
+jobboard-core/src/test/resources/templates/openx/ad_tag.vtl -text
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAOImpl.java -text
@@ -566,6 +580,9 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/PDFGenerator.java -text svneol=unset#text/plain
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
+jobboard/src/main/resources/openx.properties -text
+jobboard/src/main/resources/templates/openx/ad_tag.vtl -text
+jobboard/src/main/resources/templates/openx/default_ad_tag.vtl -text
 jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
 jobboard/src/main/webapp/WEB-INF/properties/common.properties -text

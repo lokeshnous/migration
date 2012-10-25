@@ -13,10 +13,10 @@ import com.advanceweb.common.client.ClientContext;
 public class AdServiceImpl implements AdService{
 	
 	@Autowired 
-	private AdServiceDelegate delegate;
+	private AdServiceDelegate adServiceDelegate;
 	@Override
 	public Banner getBanner(ClientContext context, AdSize size, AdPosition position) {
-		return delegate.getBanner(context, size, position);
+		return adServiceDelegate.getBanner(context, size, position);
 	}
 
 }

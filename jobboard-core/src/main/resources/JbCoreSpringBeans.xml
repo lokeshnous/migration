@@ -8,12 +8,12 @@
 			http://www.springframework.org/schema/util 
 			http://www.springframework.org/schema/util/spring-util.xsd">
 
-<!-- 	<context:property-placeholder location="classpath:mailServer.properties" />
- -->
+	<!-- <context:property-placeholder location="classpath:mailServer.properties" 
+		/> -->
 	<!-- For Legacy ad server -->
-	<util:properties id="adsConfiguration" location="classpath:ads.properties" />	
+	<util:properties id="adsConfiguration" location="classpath:ads.properties" />
 	<!-- For SOLR search -->
-	<util:properties id="solrConfiguration" location="classpath:solr.properties" />	
+	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 
 	<!-- Search parameter builder. Initialized with search name and the order 
 		of the place-holder -->
@@ -31,7 +31,7 @@
 			</map>
 		</constructor-arg>
 	</bean>
-	
+
 	<!-- Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 		<property name="name" value="jobPost" />
@@ -74,6 +74,7 @@
 			</props>
 		</property>
 	</bean>
+	
 	<!-- NetSuite services -->
 	<bean id="netSuiteCredential" class="com.advanceweb.afc.jb.netsuite.NetSuiteCredential">
 		<property name="account" value="1338577" />
@@ -82,5 +83,27 @@
 		<property name="role" value="3" />
 	</bean>
 
+	<!-- Velocity Engine settings -->
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">
+					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<util:properties id="openxConfiguration" location="classpath:openx.properties"/>
+	
+	<bean id="adTagTemplate" class="com.advanceweb.common.template.VelocityTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl"/>		
+	</bean>
 
+	<bean id="defaultAdTemplate" class="com.advanceweb.common.template.VelocityTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/default_ad_tag.vtl"/>		
+	</bean>
+
+	<bean id="adServiceDelegate" class="com.advanceweb.afc.jb.advt.openx.OpenxAdServiceDelegate"/>
 </beans>

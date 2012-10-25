@@ -1,7 +1,6 @@
 <?xml  version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util"
@@ -12,13 +11,20 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, classpath:jobboard-scheduler.properties, classpath:messages_en.properties, classpath:ads.properties, pdfGenerator.properties" />
-	
-	<import resource="classpath:HibernateSessionFactory.xml"/>
-	<import resource="classpath:JbCoreSpringBeans.xml"/>
-	
+	<context:property-placeholder
+		location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, classpath:jobboard-scheduler.properties, classpath:messages_en.properties, classpath:ads.properties, pdfGenerator.properties" />
+
+	<import resource="classpath:HibernateSessionFactory.xml" />
+	<import resource="classpath:JbCoreSpringBeans.xml" />
+
 	<!-- Spring Quartz framework for schedulers -->
 	<context:annotation-config />
-	<import resource="classpath:jobboard-scheduler.xml" />	
-	
+	<import resource="classpath:jobboard-scheduler.xml" />
+
+	<bean id="mvelTestTemplate" class="com.advanceweb.common.template.MvelTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.tpl" />
+	</bean>
+	<bean id="velocityTestTemplate" class="com.advanceweb.common.template.VelocityTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl" />
+	</bean>
 </beans>

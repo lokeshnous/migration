@@ -143,7 +143,7 @@ public class ClientContext {
 	 * Copy constructor, avoid the trouble of using more code to duplicate the
 	 * context information.
 	 */
-	public ClientContext(ClientContext source){
+	public ClientContext(ClientContext source) {
 		this();
 		params.putAll(source.params);
 	}
@@ -169,5 +169,23 @@ public class ClientContext {
 	 */
 	public void setProperty(String key, String value) {
 		params.put(key, value);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ClientContext [params=");
+		if (params == null) {
+			builder.append("<NULL>");
+		} else {
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				builder.append(entry.getKey());
+				builder.append(':');
+				builder.append(entry.getValue());
+				builder.append("; ");
+			}
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 }

@@ -1,0 +1,11 @@
+<script type="text/javascript">
+	if (!window.OX_ads) { OX_ads = []; }
+#if($vars)
+	OX_ads.push({ "auid" : "$auid" ,"vars":{"topic" : "$vars.get("topic")"}});
+#else
+	OX_ads.push({ "auid" : "$auid"});	
+#end
+</script>
+<script type="text/javascript">
+	document.write('<scr'+'ipt src="$url/w/1.0/jstag"><\/scr'+'ipt>');
+</script>
