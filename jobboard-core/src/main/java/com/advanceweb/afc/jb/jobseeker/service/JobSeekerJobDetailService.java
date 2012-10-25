@@ -38,5 +38,14 @@ public interface JobSeekerJobDetailService {
 	 * @return List<AppliedJobDTO>
 	 */
 	List<AppliedJobDTO> getSavedJobs(int jobSeekerId)throws JobBoardServiceException ;
+	
+	/**
+	 * This method gets the number of times the resume was viewed by an
+	 * Employer and also the number of time the resume appeared in Search
+	 * 
+	 * @param jobSeekerId
+	 * @return List<Integer>
+	 */
+	List<Integer> getEmployerViews(int jobSeekerId);
 
 }

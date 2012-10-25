@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
+import com.advanceweb.afc.jb.data.entities.ResPublishResumeStat;
+import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper;
 
@@ -131,4 +133,43 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		return appliedJobDTOList;
 	}
 
+	/**
+	 * This method gets the number of times the resume was viewed by an
+	 * Employer and also the number of time the resume appeared in Search
+	 * 
+	 * @param jobSeekerId
+	 * @return List<Integer>
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getEmployerViews(int jobSeekerId) {
+		List<Integer> empViews = new ArrayList<Integer>();
+		empViews.add(0);
+		empViews.add(0);
+		int publishResumeId = 0;
+		try {
+			List<ResUploadResume> uploadResumeList = (List<ResUploadResume>) hibernateTemplate
+					.find("from ResUploadResume where isPublished=1 and userId=?",
+							jobSeekerId);
+			if (null != uploadResumeList && !uploadResumeList.isEmpty()
+					&& null != uploadResumeList.get(0).getResPublishResume()) {
+				publishResumeId = uploadResumeList.get(0).getResPublishResume()
+						.getPublishResumeId();
+			}
+
+			ResPublishResumeStat resumeStat = hibernateTemplate.get(
+					ResPublishResumeStat.class, publishResumeId);
+			if (null != resumeStat) {
+				empViews.set(0, resumeStat.getEmployerViews());
+				empViews.set(1, resumeStat.getEmployerImpressions());
+			} 
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return empViews;
+		}
+
+		return empViews;
+
+	}
+	
 }

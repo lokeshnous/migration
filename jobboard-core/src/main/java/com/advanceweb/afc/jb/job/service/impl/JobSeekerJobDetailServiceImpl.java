@@ -68,4 +68,17 @@ public class JobSeekerJobDetailServiceImpl implements JobSeekerJobDetailService 
 
 	}
 
+	/**
+	 * This method gets the number of times the resume was viewed by an
+	 * Employer and also the number of time the resume appeared in Search
+	 * 
+	 * @param jobSeekerId
+	 * @return List<Integer>
+	 */
+	@Override
+	public List<Integer> getEmployerViews(int jobSeekerId){
+		
+		return jobSeekerJobDetailDAO.getEmployerViews(jobSeekerId);
+	}
+
 }

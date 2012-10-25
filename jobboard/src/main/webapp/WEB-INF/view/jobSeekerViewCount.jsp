@@ -37,7 +37,7 @@
 									Companies that have viewed your profile:
 								</td>
 								<td width="50%" align="left">
-								190
+									<div>${empResumeViews[0]}</div>
 								</td>
 							</tr>								
 							<tr>
@@ -45,7 +45,7 @@
 								Profile appearances in employer search results:
 								</td>
 								<td width="50%" align="left">
-								122
+									<div>${empResumeViews[1]}</div>
 								</td>
 							</tr>
 						</tbody>

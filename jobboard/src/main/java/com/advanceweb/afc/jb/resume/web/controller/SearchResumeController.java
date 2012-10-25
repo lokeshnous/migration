@@ -34,6 +34,7 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
+import com.advanceweb.afc.jb.event.service.ClickService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
@@ -88,9 +89,14 @@ public class SearchResumeController {
 	
 	@Autowired
 	private ResumeService resumeService;
+	
+	@Autowired
+	private ClickService clickService;
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
+	
+	private static final String STR_SRCH_RES_FORM = "searchResumeForm";
 	/**
 	 * This method will be used for doing resume search and Return a JSON Object
 	 * which will later be parsed at the UI end and all the results will be
@@ -378,7 +384,7 @@ public class SearchResumeController {
 			Map<String, SearchResumeForm> model) {
 		
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
-		model.put("searchResumeForm", searchResumeForm);
+		model.put(STR_SRCH_RES_FORM, searchResumeForm);
 		//removeSession(session);
 		return new ModelAndView("advanceresumesearch");
 
@@ -386,7 +392,7 @@ public class SearchResumeController {
 	
 	@RequestMapping(value = "/mySavedResumeSearches", method = RequestMethod.GET)
 	public ModelAndView mySavedResumeSearches(
-			@ModelAttribute("searchResumeForm") SearchResumeForm searchResumeForm,
+			@ModelAttribute(STR_SRCH_RES_FORM) SearchResumeForm searchResumeForm,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session
@@ -434,6 +440,10 @@ public class SearchResumeController {
 			resumeDTOList = resumeSearchService.resumeSearchFromDB(searchResumeForm.getKeywords());
 			//session.setAttribute("resumeDTOList", resumeDTOList);
 			if (resumeDTOList != null) {
+
+			//Save the list of resumes which appeared in the search	
+			clickService.saveResAppearance(resumeDTOList);
+			
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
 				jobSrchJsonObj = jsonConverterService.convertToJSONForResumeFromDB(resumeDTOList);
@@ -502,7 +512,7 @@ public class SearchResumeController {
 		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = resumeSearchService
 				.editSavedResumeSearch(searchId);
 
-		if (saveSrchJobsDTOList.size() > 0) {
+		if (!saveSrchJobsDTOList.isEmpty()) {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();
 			String saveSearchName = saveSrchJobsDTOList.get(0).getSearchName();
 			Map<String, String> urlMap = MMUtils.getUrlMap(urlString);
@@ -583,7 +593,7 @@ public class SearchResumeController {
 			session.removeAttribute(sessionMap
 					.remove(MMJBCommonConstants.AUTOLOAD));
 		}
-		modelAndView.addObject("searchResumeForm", searchResumeForm);
+		modelAndView.addObject(STR_SRCH_RES_FORM, searchResumeForm);
 		modelAndView.addObject("employerDashBoardForm", employerDashBoardForm);
 		modelAndView.setViewName("employerDashboard");
 		return modelAndView;
@@ -738,7 +748,7 @@ public class SearchResumeController {
 	@RequestMapping(value = "/empSaveThisSearchPopup", method = RequestMethod.GET)
 	public ModelAndView displaySaveThisSearchPopup(
 			Map<String, SearchResumeForm> model) {
-		model.put("searchResumeForm", new SearchResumeForm());
+		model.put(STR_SRCH_RES_FORM, new SearchResumeForm());
 		return new ModelAndView("empSaveThisSearchPopup");
 	}
 	
@@ -807,7 +817,7 @@ public class SearchResumeController {
 
 			} else {
 				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
-					model.put("searchResumeForm", new SearchResumeForm());
+					model.put(STR_SRCH_RES_FORM, new SearchResumeForm());
 					jsonObject.put("LoggedInNavigationPath",
 							"../employerSearchResume/empSaveThisSearchPopup");
 				} else {
@@ -919,6 +929,10 @@ public class SearchResumeController {
 		createResume.setListPhoneDtlForm(listPhoneDtl);
 		resumeDTO.getContactInfoDTO();
 		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.EMPLOYER);
+		
+		//Save the resume which was viewed by employer
+		clickService.saveResumeEmpViews(resumeId);
+		
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
 				.getResumeType())) {
 			model.addObject("createResume", createResume);
@@ -939,7 +953,4 @@ public class SearchResumeController {
 		return model;
 
 	}
-	
-	
-	
 }

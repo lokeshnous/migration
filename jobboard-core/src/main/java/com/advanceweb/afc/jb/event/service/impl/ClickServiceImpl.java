@@ -1,11 +1,14 @@
 package com.advanceweb.afc.jb.event.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ClickEventDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.event.dao.ClickDAO;
 import com.advanceweb.afc.jb.event.service.ClickService;
 
@@ -30,4 +33,26 @@ public class ClickServiceImpl implements ClickService {
 		return clickDAO.retrieveAllClicks(jobId);
 	}
 
+	/**
+	 * This method updates the number of times the resume was viewed by an
+	 * Employer
+	 * 
+	 * @param resumeId
+	 */
+	@Override
+	public void saveResumeEmpViews(int resumeId){
+		clickDAO.saveResumeEmpViews(resumeId);
+	}
+	
+	/**
+	 * This method updates the number of times the resume appeared in resume
+	 * search
+	 * 
+	 * @param resumeDTOList
+	 */
+	@Override
+	public void saveResAppearance(List<ResumeDTO> resumeDTOList){
+		clickDAO.saveResAppearance(resumeDTOList);
+	}
+	
 }

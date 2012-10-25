@@ -13,8 +13,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ClickEventDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
+import com.advanceweb.afc.jb.data.entities.ResPublishResumeStat;
+import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 
 @SuppressWarnings("unchecked")
 @Transactional
@@ -23,7 +26,7 @@ public class ClickDAOImpl implements ClickDAO {
 
 	private HibernateTemplate hibernateTemplate;
 
-	private static final Logger LOGGER = Logger.getLogger("ClickDAOImpl.class");
+	private static final Logger LOGGER = Logger.getLogger(ClickDAOImpl.class);
 
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
@@ -84,6 +87,79 @@ public class ClickDAOImpl implements ClickDAO {
 		return clickEventDTO;
 	}
 
+	/**
+	 * This method updates the number of times the resume was viewed by an
+	 * Employer
+	 * 
+	 * @param resumeId
+	 */
+	@Override
+	public void saveResumeEmpViews(int resumeId) {
+		ResPublishResumeStat resumeStat;
+		int publishResumeId = 0;
+		try {
+			ResUploadResume resume = hibernateTemplate.get(
+					ResUploadResume.class, resumeId);
 
+			if (null != resume.getResPublishResume()) {
+				publishResumeId = resume.getResPublishResume()
+						.getPublishResumeId();
+			}
+			resumeStat = hibernateTemplate.get(ResPublishResumeStat.class,
+					publishResumeId);
+
+			if (null == resumeStat) {
+				resumeStat = new ResPublishResumeStat();
+			}
+
+			if (publishResumeId != 0) {
+				resumeStat.setPublishResumeId(publishResumeId);
+				resumeStat.setEmployerViews(resumeStat.getEmployerViews() + 1);
+				resumeStat.setEmployerImpressions(resumeStat
+						.getEmployerImpressions());
+				resumeStat.setStatsDt(new Date());
+				hibernateTemplate.saveOrUpdate(resumeStat);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+	}
+	
+	/**
+	 * This method updates the number of times the resume appeared in resume
+	 * search
+	 * 
+	 * @param resumeDTOList
+	 */
+	@Override
+	public void saveResAppearance(final List<ResumeDTO> resumeDTOList) {
+
+		for (ResumeDTO dto : resumeDTOList) {
+			ResPublishResumeStat resumeStat;
+			int publishResumeId = 0;
+			publishResumeId = dto.getPublishResumeId();
+
+			try {
+				resumeStat = hibernateTemplate.get(ResPublishResumeStat.class,
+						publishResumeId);
+
+				if (null == resumeStat) {
+					resumeStat = new ResPublishResumeStat();
+				}
+
+				if (publishResumeId != 0) {
+					resumeStat.setPublishResumeId(publishResumeId);
+					resumeStat.setEmployerViews(resumeStat.getEmployerViews());
+					resumeStat.setEmployerImpressions(resumeStat
+							.getEmployerImpressions() + 1);
+					resumeStat.setStatsDt(new Date());
+					hibernateTemplate.saveOrUpdate(resumeStat);
+				}
+
+			} catch (Exception e) {
+				LOGGER.error(e);
+			}
+		}
+	}
 
 }

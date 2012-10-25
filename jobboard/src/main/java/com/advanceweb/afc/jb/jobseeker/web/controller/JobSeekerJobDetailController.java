@@ -134,10 +134,12 @@ public class JobSeekerJobDetailController {
 	
 	@RequestMapping(value = "/viewResumeCount")
 	public ModelAndView viewResumeCount(HttpSession session, Map model) {
-		/*List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
-				.getSavedJobs((Integer) session
+		List<Integer> empResumeViews = jobSeekerJobDetailService
+				.getEmployerViews((Integer) session
 						.getAttribute(MMJBCommonConstants.USER_ID));
-		model.put("savedJobDTOList", savedJobDTOList);*/
+		
+		
+		model.put("empResumeViews", empResumeViews);
 		return new ModelAndView("jobSeekerViewCount");
 	}
 	
