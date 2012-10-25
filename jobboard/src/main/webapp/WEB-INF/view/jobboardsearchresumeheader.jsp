@@ -60,7 +60,6 @@
 						</div>
 						<div class="row marginTop10 marginBottom10">
 							<div class=" floatLeft  width255">
-							
 							<form:input type="text"  maxlength="60" id="keywords"
 									class="jb_input2" path="keywords" />
 									

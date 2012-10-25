@@ -553,7 +553,12 @@ public class SearchResumeController {
 		MetricsForm employerDashBoardForm = new MetricsForm();
 		Map<String, String> sessionMap = checkSessionMap
 				.getResumeSearchSessionMap(session);
-		if (!sessionMap.isEmpty()) {
+		if(session.getAttribute(MMJBCommonConstants.KEYWORD_STRING) != null){
+			String keyword = (String) session.getAttribute(MMJBCommonConstants.KEYWORD_STRING);
+			searchResumeForm.setKeywords(keyword);
+			searchResumeForm.setAutoload(true);
+		}
+		else if (!sessionMap.isEmpty()) {
 			String searchType = sessionMap.get(MMJBCommonConstants.SEARCH_TYPE);
 			String radius = MMJBCommonConstants.EMPTY;
 			String cityState = MMJBCommonConstants.EMPTY;

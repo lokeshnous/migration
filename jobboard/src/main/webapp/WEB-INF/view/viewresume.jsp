@@ -37,12 +37,14 @@
           <span class="floatRight marginRight10">
           
           <c:if test="<%=session.getAttribute(\"module\") == \"employer\" %>">
-          	<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">
+          	<a href="<%=request.getContextPath()%>/employerSearchResume/findResumePage.html" class="link_color3_emphasized FontSize12 FontWeight">
+          	 Return to Resume Search Results</a>
           </c:if>
           <c:if test="<%=session.getAttribute(\"module\") ==null %>">
           	<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">
+          	 Back to Dashboard</a>
            </c:if>
-          Back to Dashboard</a></span></div>
+         </span></div>
 
         
         <div class="clearfix"></div>
