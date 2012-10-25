@@ -335,14 +335,14 @@ jQuery(document).ready(function() {
 
 				window.onload = function() {
 					$.ajax({
-						url : '../healthcarejobs/homeFeatureEmps.html',
+						url : '../healthcarejobs/homeFeaturedEmps.html',
 						data : ({}),
 						
 						success : function(data) {
 						$("#slider1FramesId").html(data);
 						},
 						error : function(data) {
-							alert('Unable to process pp');
+							alert('Unable to process');
 						},
 						complete : function(data) {
 							// do nothing for now.
