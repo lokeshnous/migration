@@ -72,7 +72,7 @@ public class FacilityDAOImpl implements FacilityDAO {
 			employerInfoDTO
 					.setFacilityId(user.getAdmFacility().getFacilityId());
 			employerInfoDTO.setRoleId(user.getAdmRole().getRoleId());
-
+			employerInfoDTO.setCustomerNamel(user.getAdmFacility().getName());
 		}
 		return employerInfoDTO;
 	}
