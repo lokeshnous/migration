@@ -233,7 +233,7 @@
 								<a  href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html" title="Coming Soon"
 								id="mySavedResumeSearches">
 								My Saved Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
-								value="${jobSeekerDashBoardForm.savedSearchCount}" />${msg.commonCloseBrace}</a>
+								value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}</a>
 							</p>
 						</div>
 					</div>

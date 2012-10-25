@@ -53,7 +53,11 @@ function processResumePaginationReq(pageSize) {
 }
 
  $(document).ready(function() {
- 
+	 var autoLoad = $("#autoload").val();
+		if(autoLoad == true || autoLoad == "true"){	
+			searchResume();				
+			$("#autoload").val("false");
+		}
  var keywords = $("#keywords").val(); 
  
  /*if(keywords != null){
@@ -92,7 +96,6 @@ function moveToFolder() {
 			// $("#resumeTableContent").html(data);
 			// $("#noOfPage").val(pageSize);
 			// $("#noOfPageLower").val(pageSize);
-			alert(data);
 		},
 		error : function(data) {
 			alert('Error');
@@ -104,6 +107,33 @@ function moveToFolder() {
 	
 
 }
+function saveThisResume() {
+	var keywords = $.trim($("#keywords").val());
+	$.ajax({url : "../employerSearchResume/saveThisResumeSearch.html?keywords="+keywords,
+		success: function(data){ 
+			$.each(data, function(key, val) {
+				if (key == "NavigationPath") {
+					window.location.href = val+ '.html';
+				}
+				if (key == "LoggedInNavigationPath") {
+					$.nmManual(val + '.html');
+				}
+			}); 
+		    if(data.success != null){
+		    }
+		    if(data.failure != null){
+		    	$("#errorMsg").html("Please enter the required parameters.");
+		    }
+		},
+		error: function(response) {
+			alert("Server Error : "+response.status);
+		},
+		complete: function() {
+			
+		}
+	});
+} 
+
 
 
 /*function viewResume(id){

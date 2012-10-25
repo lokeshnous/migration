@@ -117,7 +117,7 @@ function closePopup() {
 				type:"GET",
 				success: function(data){
 				    if(data == true){
-				    	alert("Inventory details saved scuccessfully");
+				    	alert("Inventory details saved successfully");
 				    	parent.$.nmTop().close();
 				    }else{
 				    	alert("Error occured while saving the data");

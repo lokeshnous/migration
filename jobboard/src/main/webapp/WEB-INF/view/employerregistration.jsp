@@ -20,8 +20,8 @@
 	type="text/css">
 <script type="text/javascript" language="javascript"
 	src="/media/js/jquery.js"></script>
-	<script src="../resources/js/recaptcha_ajax.js"></script>
 	
+	<script src="../resources/js/recaptcha_ajax.js"></script>
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
@@ -42,6 +42,8 @@ function validateNumber(event) {
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('[id^=zipCode]').keypress(validateNumber);
+		$("#primaryPhoneId").inputmask("mask", {"mask": "(999) 999-9999"}); 
+		$("#secondaryPhoneId").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		jQuery(".megamenu").megamenu();
 		$('.focus').focus();
 		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
@@ -314,7 +316,7 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'Primary Phone'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Primary Phone:</span>
-										<form:input
+										<form:input id="primaryPhoneId"
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
 											class="job_seeker_password textBox350 
@@ -325,7 +327,7 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'Secondary Phone'}">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Secondary Phone:</span>
-										<form:input
+										<form:input id="secondaryPhoneId"
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
 											class="job_seeker_password textBox350 

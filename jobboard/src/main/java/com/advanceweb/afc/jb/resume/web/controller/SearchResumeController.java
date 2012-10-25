@@ -33,6 +33,7 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
@@ -421,7 +422,6 @@ public class SearchResumeController {
 	JSONObject searchResumeFromDB(HttpSession session,
 			SearchResumeForm searchResumeForm, BindingResult result,
 			HttpServletRequest request) {
-		
 		LOGGER.info("Calling Search Resume Controller!!!");
 		//session.removeAttribute("resumeDTOList");
 		session.removeAttribute("jobSrchJsonObj");
@@ -438,32 +438,18 @@ public class SearchResumeController {
 			// object into JSON Object
 				jobSrchJsonObj = jsonConverterService.convertToJSONForResumeFromDB(resumeDTOList);
 			}
-		
-			Map<String, String> sessionMap = checkSessionMap
-					.getResumeSearchSessionMap(session);
 			jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS, resumeDTOList.size());
-			String sessionId = null;
-			if (session != null) {
-				sessionId = session.getId();
-				// Setting the values into sessionMap
-				sessionMap = setValuesToSessionMap(sessionMap, searchResumeForm);
-			}
-			if (session != null) {
-				// Setting the sessionMap into the session
-				session.setAttribute(MMJBCommonConstants.RESUME_SEARCH_SESSION_MAP,
-						sessionMap);
-			}
-
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while getting the Resume Search Result from DB...");
 		}
 		// add values in session
+		jobSrchJsonObj.put("keywords", searchResumeForm.getKeywords());
 		session.setAttribute("resSrchJsonList", jobSrchJsonObj);
 		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING, searchResumeForm.getKeywords());
 		//session.setAttribute(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
 		return jobSrchJsonObj;
-		
 	}
+	
 	
 	/**
 	 * Get the jobboardsearchresumeresultbody page
@@ -564,6 +550,7 @@ public class SearchResumeController {
 			HttpSession session) {
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
 		ModelAndView modelAndView = new ModelAndView();
+		MetricsForm employerDashBoardForm = new MetricsForm();
 		Map<String, String> sessionMap = checkSessionMap
 				.getResumeSearchSessionMap(session);
 		if (!sessionMap.isEmpty()) {
@@ -591,12 +578,13 @@ public class SearchResumeController {
 			session.removeAttribute(sessionMap
 					.remove(MMJBCommonConstants.AUTOLOAD));
 		}
-		model.put("searchResumeForm", searchResumeForm);
-		modelAndView.setViewName("redirect:/employer/employerDashBoard.html");
+		modelAndView.addObject("searchResumeForm", searchResumeForm);
+		modelAndView.addObject("employerDashBoardForm", employerDashBoardForm);
+		modelAndView.setViewName("employerDashboard");
 		return modelAndView;
 	}
 	
-	/**
+	/**`
 	 * This method is called to delete a Saved Job Search
 	 * 
 	 * @param form
@@ -775,7 +763,7 @@ public class SearchResumeController {
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
 							&& sessionMap
 									.get(MMJBCommonConstants.SEARCH_TYPE)
-									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE) && sessionMap
+									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE_RESUME) && sessionMap
 							.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)) {
 
 				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();

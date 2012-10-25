@@ -182,6 +182,7 @@ public interface MMJBCommonConstants {
 	String LANGUAGE_ENGLISH = "English";
 	String REFERENCE_TYPE_PERSONAL = "Personal";
 	String BASIC_SEARCH_TYPE = "basic";
+	String BASIC_SEARCH_TYPE_RESUME = "resume";
 	String SAVE_SEARCH_NAME = "saveSearchName";
 
 	// For User Roles

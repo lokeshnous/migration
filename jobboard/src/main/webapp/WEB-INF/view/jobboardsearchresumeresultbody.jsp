@@ -12,7 +12,7 @@
 		<title>ADVANCE Heathcare Jobs</title>
 
         <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
-        <script src="../resources/js/searchResultsdatatable.js"></script>
+        <script src="../resources/js/resumesearchresult.js"></script>
 		</head>
 		
 			<body class="job_board">

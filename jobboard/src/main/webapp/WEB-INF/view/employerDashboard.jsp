@@ -35,24 +35,13 @@
 				<div class="clearfix"></div>
 				<!--Start:MidContant-->
 				<div class="row">
-					<form method="">
-
-
 						<!-- Include the resume header page -->
-
 						<jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include>
-
 						<div class="searchContent" style="display: none;" id="resumeTableContent">
 							<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
 						</div>
-
-
 						<!-- search_info_box2 -->
 						<!-- browse_bar -->
-
-
-
-					</form>
 				</div>
 
 				<!-- Add include for employee dashboard content -->

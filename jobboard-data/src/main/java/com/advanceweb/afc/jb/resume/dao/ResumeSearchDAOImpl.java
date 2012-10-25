@@ -167,8 +167,10 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 
 	@Override
 	public boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO) {
-		AdmSaveSearch search = hibernateTemplate.load(AdmSaveSearch.class,
+		@SuppressWarnings("unchecked")
+		List<AdmSaveSearch> searchList = hibernateTemplate.find("from AdmSaveSearch where saveSearchId = ?",
 				searchedJobsDTO.getSaveSearchID());
+		AdmSaveSearch search = searchList.get(0);
 		search.setUrl(searchedJobsDTO.getUrl());
 		search.setModifyDt(new Date());
 		search.setSearchName(searchedJobsDTO.getSearchName());

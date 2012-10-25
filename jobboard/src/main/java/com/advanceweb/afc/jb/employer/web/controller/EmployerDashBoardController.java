@@ -22,11 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
+import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 
 /**
  * @author Prince
@@ -43,6 +45,9 @@ public class EmployerDashBoardController {
 
 	@Autowired
 	private FacilityService facilityService;
+	
+	@Autowired
+	private ResumeSearchService resumeSearchService;
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
@@ -70,6 +75,13 @@ public class EmployerDashBoardController {
 			enablePostEditAccess = "false";
 			model.addObject("enablePostEditAccess", enablePostEditAccess);
 		}
+		
+		int resumeSearchCount = 0;
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
+				.viewMySavedSearches(userId);
+		resumeSearchCount = saveSearchedJobsDTOList.size();
+		employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
+		
 		model.addObject("enableAccess", enableAccess);
 		model.addObject("enablePostEditAccess", enablePostEditAccess);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();

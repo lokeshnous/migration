@@ -418,34 +418,6 @@ jQuery(document).ready(function() {
 					
 					});
 				} 
-				
-				function saveThisResume() {
-					var keywords = $.trim($("#keywords").val());
-					$.ajax({url : "../employerSearchResume/saveThisResumeSearch.html?keywords="+keywords,
-						success: function(data){ 
-							$.each(data, function(key, val) {
-								if (key == "NavigationPath") {
-									window.location.href = val+ '.html';
-								}
-								if (key == "LoggedInNavigationPath") {
-									$.nmManual(val + '.html');
-								}
-							}); 
-						    if(data.success != null){
-						    }
-						    if(data.failure != null){
-						    	$("#errorMsg").html("Please enter the required parameters.");
-						    }
-						},
-						error: function(response) {
-							alert("Server Error : "+response.status);
-						},
-						complete: function() {
-							
-						}
-					});
-				} 
-				
 				function btsaveThisJob(jobId) {
 					$.ajax({
 						url : '../jobsearch/saveThisJob.html?id='+jobId,

@@ -84,15 +84,14 @@ $(document).keyup(function(event) {
 </script>
 <script type="text/javascript">
 function geteditSavedSearch(searchJobId){
-	
 		var id = searchJobId.replace("editSavedSearch", "");
 		$.ajax({url: "${pageContext.request.contextPath}/employerSearchResume/editSavedResumeSearch.html?searchId="+id+"&performSearch=",
 			success: function(data){ 
-				alert(data);
 				$.each(data, function(key, val) {
-					alert(data);
+					if (key == "searchtype" && val == "resume") {
 						parent.window.location.href = '${pageContext.request.contextPath}/employerSearchResume/findResumePage.html';
 						parent.$.nmTop().close();
+					}
 				}); 
 			},
 			error: function(response) {
@@ -108,8 +107,10 @@ function performSavedSearch(searchJobId){
 	$.ajax({url: "${pageContext.request.contextPath}/employerSearchResume/editSavedResumeSearch.html?searchId="+id+"&performSearch=performSearch",
 		success: function(data){ 
 			$.each(data, function(key, val) {
+				if (key == "searchtype" && val == "resume") {
 					parent.window.location.href = '${pageContext.request.contextPath}/employerSearchResume/findResumePage.html';
 					parent.$.nmTop().close();
+				}
 			}); 
 		},
 		error: function(response) {

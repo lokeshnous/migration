@@ -7,6 +7,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
+<jsp:include page="common/include.jsp" />
+<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
+	type="text/css" />
+<link href="../resources/css/SliderStyles.css" rel="stylesheet"
+	type="text/css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
+	<!-- JAVASCRIPT FILES -->
+	<!--  <script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
+	<script type="text/javascript"
+		src="javascripts/jquery.cycle.all.min.js"></script>
+	<script type="text/javascript" src="javascripts/slider.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+
+	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		if (${keywords} != null){
+			alert(keywords);
+			$("#keywords").click(function(event){
+				searchResume();
+			}
+	   }
+	});
+	</script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 
@@ -19,27 +49,31 @@
 		<!--nav-->
 		<!--Start:MidContant-->
 		<div class="row">
-			<form:form method="" action="" commandName="searchResumeForm">
+			<form:form action="" commandName="searchResumeForm">
 				<div class="job_search_Resume">
 
 					<div class="row ">
 						<div class="row marginTop10">
 							<h2 class="sectionSubHeader">
 								Search Resumes
-								</h3>
+								</h2>
 						</div>
 						<div class="row marginTop10 marginBottom10">
 							<div class=" floatLeft  width255">
 							
-							<c:if test="<%=session.getAttribute(\"keywords\") != null %>">
+							<form:input type="text"  maxlength="60" id="keywords"
+									class="jb_input2" path="keywords" />
+									
+							<%-- <c:if test="<%=session.getAttribute(\"keywords\") != null %>">
 								<input type="text"  maxlength="60" id="keywords"
 									class="jb_input2" value="<%=session.getAttribute("keywords")%>" />
 							</c:if>		
 							<c:if test="<%=session.getAttribute(\"keywords\") == null %>">
 								<input type="text" maxlength="60" id="keywords"
 									class="jb_input2"/>
-							</c:if>	
-									
+							</c:if>	 --%>
+								<form:hidden path="keywords" maxlength="60"
+									class="jb_input2" />
 								<div class="floatLeft">
 									<div class="toolTipBefore">
 										<label for="keywords">Keywords </label>
@@ -53,6 +87,7 @@
 									</div>
 								</div>
 							</div>
+							<form:hidden path="autoload" id="autoload" />
 							<div class="floatLeft marginLeft10">
 
 								<form:select path="phrase" id="phrase" class="jb_input3 margin0">

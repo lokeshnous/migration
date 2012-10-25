@@ -11,6 +11,22 @@ package com.advanceweb.afc.jb.employer.web.controller;
 public class MetricsForm {
 
 	private String selEmployer;
+	private int resumeSearchCount;
+
+
+	/**
+	 * @return the resumeSearchCount
+	 */
+	public int getResumeSearchCount() {
+		return resumeSearchCount;
+	}
+
+	/**
+	 * @param resumeSearchCount the resumeSearchCount to set
+	 */
+	public void setResumeSearchCount(int resumeSearchCount) {
+		this.resumeSearchCount = resumeSearchCount;
+	}
 
 	/**
 	 * @return the selEmployer
