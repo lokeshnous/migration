@@ -411,14 +411,13 @@ public interface MMJBCommonConstants {
 	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";
 	String RESUME_KEYWORD_SEARCH = "CANDIDATE-KEYWORD";
 	String RESUME_SEARCH_SESSION_MAP = "resumeSessionMap";
-		
-// For Social Media sign up
-	String FACEBOOK="Facebook";
-	String LINKEDIN="LinkedIn";
-	String FACEBOOK_PROFILE_ATTR_ID="27";
-	String LINKEDIN_PROFILE_ATTR_ID="28";
-	
-	
+
+	// For Social Media sign up
+	String FACEBOOK = "Facebook";
+	String LINKEDIN = "LinkedIn";
+	String FACEBOOK_PROFILE_ATTR_ID = "27";
+	String LINKEDIN_PROFILE_ATTR_ID = "28";
+
 	String RESUME_DESIRED_POSTION = "DesiredJobTitle";
 	String APPLICANT_NAME = "ApplicantName";
 	String LOCATION = "Location";
@@ -437,12 +436,11 @@ public interface MMJBCommonConstants {
 	String BROWSE_BY_LOCATION = "browseByLocation";
 	String BROWSE_BY_EMPLOYER = "browseByEmployer";
 	String FIRST_PARAMETER = "firstFQParam";
-	
-	//for reCapcha
-	String PUBLIC_KEY= "6Lel19USAAAAAPRKVOy7gFpRBpn6iSPONG1o9ouZ";
-	String PRIVATE_KEY= "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
 
-	
+	// for reCapcha
+	String PUBLIC_KEY = "6Lel19USAAAAAPRKVOy7gFpRBpn6iSPONG1o9ouZ";
+	String PRIVATE_KEY = "6Lel19USAAAAAHC7mqzT-Q0WpThoqiKr0DnhYtpN";
+
 	String MODULE_STRING = "module";
 	String KEYWORD_STRING = "keywords";
 
@@ -453,5 +451,7 @@ public interface MMJBCommonConstants {
 	String METRO_AREA = "Metro Area";
 	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";
 
+	int DIGITAL_SUBSCRIPTION = 5;
+	int ENEWS_LETTER_SUBSCRIPTION = 6;
 
 }
