@@ -579,19 +579,19 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/PDFGenerator.java -text svneol=unset#text/plain
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
+jobboard/src/main/resources/common.properties -text
+jobboard/src/main/resources/database.properties -text
+jobboard/src/main/resources/jobboard-scheduler.properties -text
+jobboard/src/main/resources/log4j.properties -text
+jobboard/src/main/resources/mailServer.properties -text
+jobboard/src/main/resources/messages_en.properties -text
 jobboard/src/main/resources/openx.properties -text
+jobboard/src/main/resources/pdfGenerator.properties -text
+jobboard/src/main/resources/springSocial.properties -text
 jobboard/src/main/resources/templates/openx/ad_tag.vtl -text
 jobboard/src/main/resources/templates/openx/default_ad_tag.vtl -text
 jobboard/src/main/webapp/WEB-INF/applicationContext.xml -text
 jobboard/src/main/webapp/WEB-INF/dispatcher-servlet.xml -text
-jobboard/src/main/webapp/WEB-INF/properties/common.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/database.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/jobboard-scheduler.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/log4j.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/mailServer.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/messages_en.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/pdfGenerator.properties -text
-jobboard/src/main/webapp/WEB-INF/properties/springSocial.properties -text
 jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text

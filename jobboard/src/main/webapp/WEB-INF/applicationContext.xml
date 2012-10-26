@@ -2,10 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -14,21 +13,23 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-	
+
 	<mvc:annotation-driven />
-	<context:property-placeholder location="/WEB-INF/properties/jobboard-scheduler.properties,/WEB-INF/properties/mailServer.properties,/WEB-INF/properties/common.properties,/WEB-INF/properties/log4j.properties,/WEB-INF/properties/database.properties,/WEB-INF/properties/messages_en.properties,/WEB-INF/properties/springSocial.properties,/WEB-INF/properties/pdfGenerator.properties" /> 
+	<context:property-placeholder
+		location="classpath:jobboard-scheduler.properties,classpath:mailServer.properties,classpath:common.properties,classpath:log4j.properties,classpath:database.properties,classpath:messages_en.properties,classpath:springSocial.properties,classpath:pdfGenerator.properties" />
 
-	<!-- <context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, classpath:jobboard-scheduler.properties, classpath:messages_en.properties, classpath:pdfGenerator.properties, classpath:ads.properties" /> -->
+	<!-- <context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, 
+		classpath:jobboard-scheduler.properties, classpath:messages_en.properties, 
+		classpath:pdfGenerator.properties, classpath:ads.properties" /> -->
 
-	
-	<import resource="classpath:HibernateSessionFactory.xml"/>
-	<import resource="classpath:JbCoreSpringBeans.xml"/>
-	<import resource="classpath:spring-social.xml"/>
+
+	<import resource="classpath:HibernateSessionFactory.xml" />
+	<import resource="classpath:JbCoreSpringBeans.xml" />
+	<import resource="classpath:spring-social.xml" />
 	<!-- Spring Quartz framework for schedulers -->
 	<context:annotation-config />
-	<import resource="classpath:jobboard-scheduler.xml" />	
-	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
-	Logging Aspect
-	<bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" /> -->
-	
+	<import resource="classpath:jobboard-scheduler.xml" />
+	<!-- <aop:aspectj-autoproxy></aop:aspectj-autoproxy> Logging Aspect <bean 
+		id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" /> -->
+
 </beans>
