@@ -17,6 +17,9 @@ public class UserSubscriptionsDTO {
 	private int userId;
 	private int subscriptionId;
 	private int active;
+	private int publicationId;
+	private String publicationName;
+	private int facilityId;
 	
 	public int getSubscriptionId() {
 		return subscriptionId;
@@ -35,5 +38,23 @@ public class UserSubscriptionsDTO {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public int getPublicationId() {
+		return publicationId;
+	}
+	public void setPublicationId(int publicationId) {
+		this.publicationId = publicationId;
+	}
+	public String getPublicationName() {
+		return publicationName;
+	}
+	public void setPublicationName(String publicationName) {
+		this.publicationName = publicationName;
+	}
+	public int getFacilityId() {
+		return facilityId;
+	}
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 }

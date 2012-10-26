@@ -51,6 +51,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.MerLocation</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttrib</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttribList</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerPublication</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerUser</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.MerUserAlerts</value> -->
 					 <!-- <value>com.advanceweb.afc.jb.data.entities.MerUserAlert</value>  -->

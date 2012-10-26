@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 
@@ -55,7 +57,7 @@ public class UserSubscriptionsController {
 				.getSubscriptionsList();
 		List<UserSubscriptionsDTO> currentSubsList = userSubService
 				.getCurrentSubscriptions(Integer.valueOf(String.valueOf(session
-						.getAttribute("userId"))));
+						.getAttribute(MMJBCommonConstants.USER_ID))));
 		userubscription.jsSubscriptionDTOToJobSeekerSubscriptions(
 				currentSubsList, subscriptform, listSubscriptions);
 		model.addObject("jobSubscriptionsList", listSubscriptions);
@@ -79,7 +81,7 @@ public class UserSubscriptionsController {
 		try {
 
 			subscriptform.setUserId(Integer.valueOf(String.valueOf(session
-					.getAttribute("userId"))));
+					.getAttribute(MMJBCommonConstants.USER_ID))));
 			List<UserSubscriptionsDTO> listSubsDTO = userubscription
 					.jsSubscriptionFormToJobSeekerSubsDTO(subscriptform);
 			userSubService.saveJobSeekerSubscription(listSubsDTO,
@@ -90,4 +92,69 @@ public class UserSubscriptionsController {
 		return null;
 	}
 
+	/**
+	 * This method is used to get the current facility subscription list
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/modifyFacilitySubscriptions", method = RequestMethod.GET)
+	public ModelAndView modifyFacilitySubscriptionss(HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		UserSubscriptionForm subscriptform = new UserSubscriptionForm();
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
+		List<DropDownDTO> listSubscriptions = populateDropdownsService
+				.getFacilitySubList();
+
+		List<UserSubscriptionsDTO> currentSubsList = userSubService
+				.getCurrentFacilitySub(facilityId);
+		List<UserSubscriptionsDTO> digitalSubList = userSubService
+				.getDigitalSubList();
+		List<UserSubscriptionsDTO> enewsSubList = userSubService
+				.getEnewsLetterSubList();
+		userubscription.jsSubscriptionDTOToJobSeekerSubscriptions(
+				currentSubsList, subscriptform, listSubscriptions);
+		List<DropDownDTO> digSubscriptionList = userubscription
+				.jsSubDTOToDropDownDTO(digitalSubList, subscriptform);
+		List<DropDownDTO> enewSubList = userubscription.jsSubDTOToDropDownDTO(
+				enewsSubList, subscriptform);
+		model.addObject("facilitySubList", listSubscriptions);
+		model.addObject("digitalSubList", digSubscriptionList);
+		model.addObject("enewSubList", enewSubList);
+		model.addObject("facilitySubsForm", subscriptform);
+		model.setViewName("employerModifySubscriptionsPopup");
+		return model;
+	}
+
+	/**
+	 * This Method to save the facilities subscriptions
+	 * 
+	 * @param subscriptform
+	 * @param result
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/saveFacilitySubscription", method = RequestMethod.GET)
+	public String saveFacilitySubscription(
+			@ModelAttribute("facilitySubsForm") UserSubscriptionForm subscriptform,
+			BindingResult result, HttpSession session) {
+		try {
+
+			subscriptform.setUserId(Integer.valueOf(String.valueOf(session
+					.getAttribute(MMJBCommonConstants.USER_ID))));
+			subscriptform.setFacilityId(Integer.valueOf(String.valueOf(session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID))));
+			List<UserSubscriptionsDTO> listSubsDTO = userubscription
+					.jsSubscriptionFormToUserSubsDTO(subscriptform);
+			userSubService.saveFacilitySubscription(listSubsDTO,
+					subscriptform.getFacilityId());
+		} catch (Exception e) {
+			LOGGER.error("error in saving the subscription for facility" + e);
+			LOGGER.info("error in saving the subscription for facility" + e);
+		}
+		return null;
+	}
 }

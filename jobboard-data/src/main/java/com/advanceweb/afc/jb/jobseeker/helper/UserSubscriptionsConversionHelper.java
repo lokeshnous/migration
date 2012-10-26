@@ -7,10 +7,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscription;
+import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscriptionPK;
+import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscriptionPK;
+import com.advanceweb.afc.jb.data.entities.MerPublication;
 import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 
 /**
@@ -157,6 +163,164 @@ public class UserSubscriptionsConversionHelper {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		String strDate = sdf.format(date);
 		return strDate;
+	}
+
+	/**
+	 * Converting facility subscription list to subscription DTO
+	 * 
+	 * @param listSubsAlerts
+	 * @return
+	 */
+	public List<UserSubscriptionsDTO> transformFacilitySubTojsSubsDTO(
+			List<AdmFacilitySubscription> listSubs) {
+
+		List<UserSubscriptionsDTO> subsList = new ArrayList<UserSubscriptionsDTO>();
+
+		if (null != listSubs) {
+			for (AdmFacilitySubscription alert : listSubs) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(alert.getAdmFacilitySubscriptionPK()
+						.getSubscriptionId());
+				dto.setUserId(alert.getAdmFacilitySubscriptionPK()
+						.getFacilityId());
+				subsList.add(dto);
+			}
+		}
+		return subsList;
+	}
+
+	/**
+	 * This method convert merPublication list to subscription DTO
+	 * 
+	 * @param digSubList
+	 * @return
+	 */
+	public List<UserSubscriptionsDTO> transferDigitalSubToSubDTO(
+			List<MerPublication> digSubList) {
+		List<UserSubscriptionsDTO> listDTOs = new ArrayList<UserSubscriptionsDTO>();
+		if (null != digSubList) {
+			for (MerPublication publication : digSubList) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setPublicationId(publication.getPublicationId());
+				dto.setPublicationName(publication.getPublicationName());
+				listDTOs.add(dto);
+			}
+		}
+		return listDTOs;
+	}
+
+	/**
+	 * Method to convert from subscription DTO to Facility subscription Entity
+	 * 
+	 * @param listSubsDTO
+	 * @param listSubsAlerts
+	 * @return
+	 */
+	public List<AdmFacilitySubscription> transformjsSubsDTOToAdmFacilitySubs(
+			List<UserSubscriptionsDTO> listSubsDTO,
+			List<AdmFacilitySubscription> listSubsAlerts,
+			List<AdmSubscription> subsList, List<MerPublication> digSubList,
+			List<MerPublication> enewList) {
+		List<AdmFacilitySubscription> subscriptions = new ArrayList<AdmFacilitySubscription>();
+		if (null != listSubsDTO) {
+			for (UserSubscriptionsDTO dto : listSubsDTO) {
+				AdmFacility admFacility = new AdmFacility();
+				admFacility.setFacilityId(dto.getFacilityId());
+				AdmSubscription admSubscription = new AdmSubscription();
+				admSubscription.setSubscriptionId(dto.getSubscriptionId());
+				if (!validateAdmFacilitySubscriptions(dto, listSubsAlerts)) {
+					if (dto.getSubscriptionId() == MMJBCommonConstants.ENEWS_LETTER_SUBSCRIPTION) {
+						List<UserSubscriptionsDTO> subDTOs = getSubData(
+								listSubsDTO, enewList);
+						if (!subDTOs.isEmpty() && subDTOs != null) {
+							for (UserSubscriptionsDTO publication : subDTOs) {
+								AdmFacilitySubscription facSubscription = new AdmFacilitySubscription();
+								facSubscription.setActive(publication
+										.getActive());
+								facSubscription.setCreateDt(new Date());
+								facSubscription.setPublicationId(publication
+										.getPublicationId());
+								facSubscription.setAdmFacility(admFacility);
+								facSubscription
+										.setAdmSubscription(admSubscription);
+								subscriptions.add(facSubscription);
+							}
+						}
+					} else if (dto.getSubscriptionId() == MMJBCommonConstants.DIGITAL_SUBSCRIPTION) {
+						List<UserSubscriptionsDTO> subDTOs = getSubDigData(
+								listSubsDTO, digSubList);
+						if (!subDTOs.isEmpty() && subDTOs != null) {
+							for (UserSubscriptionsDTO publication : subDTOs) {
+								AdmFacilitySubscription facDigSub = new AdmFacilitySubscription();
+								facDigSub.setActive(publication.getActive());
+								facDigSub.setCreateDt(new Date());
+								facDigSub.setPublicationId(publication
+										.getPublicationId());
+								facDigSub.setAdmFacility(admFacility);
+								facDigSub.setAdmSubscription(admSubscription);
+								subscriptions.add(facDigSub);
+							}
+						}
+					}
+				}
+			}
+		}
+		return subscriptions;
+	}
+
+	public boolean validateAdmFacilitySubscriptions(
+			UserSubscriptionsDTO subsDTO,
+			List<AdmFacilitySubscription> listSubsAlerts) {
+
+		if (null != subsDTO && null != listSubsAlerts) {
+			for (AdmFacilitySubscription entity : listSubsAlerts) {
+				if (subsDTO.getSubscriptionId() == entity.getAdmSubscription()
+						.getSubscriptionId()
+						&& subsDTO.getFacilityId() == entity.getAdmFacility()
+								.getFacilityId()) {
+					listSubsAlerts.remove(entity);
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private List<UserSubscriptionsDTO> getSubData(
+			List<UserSubscriptionsDTO> listSubsDTO,
+			List<MerPublication> enewList) {
+		List<UserSubscriptionsDTO> list = new ArrayList<UserSubscriptionsDTO>();
+		for (UserSubscriptionsDTO dto : listSubsDTO) {
+			for (MerPublication publication : enewList) {
+				UserSubscriptionsDTO merPublication = new UserSubscriptionsDTO();
+				if (dto.getPublicationId() == publication.getPublicationId()) {
+					merPublication.setPublicationId(publication
+							.getPublicationId());
+					merPublication.setActive(publication.getActive());
+					list.add(merPublication);
+				}
+			}
+		}
+		return list;
+	}
+
+	private List<UserSubscriptionsDTO> getSubDigData(
+			List<UserSubscriptionsDTO> listSubsDTO,
+			List<MerPublication> digSubList) {
+		List<UserSubscriptionsDTO> list = new ArrayList<UserSubscriptionsDTO>();
+		for (UserSubscriptionsDTO dto : listSubsDTO) {
+			for (MerPublication publication : digSubList) {
+				UserSubscriptionsDTO merPublication = new UserSubscriptionsDTO();
+				if (dto.getPublicationId() == publication.getPublicationId()) {
+					merPublication.setPublicationId(publication
+							.getPublicationId());
+					merPublication.setActive(publication.getActive());
+					list.add(merPublication);
+				}
+			}
+		}
+		return list;
 	}
 
 }

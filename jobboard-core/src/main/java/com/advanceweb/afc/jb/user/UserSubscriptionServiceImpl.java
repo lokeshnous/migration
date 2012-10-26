@@ -172,4 +172,46 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		return subscriptionsDAO.fetchPublicCoverLetter(jobSeekerId);
 	}
 
+	/**
+	 * To get current subscription List for Facility
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public List<UserSubscriptionsDTO> getCurrentFacilitySub(int facilityId) {
+
+		return subscriptionsDAO.getCurrentFacilitySub(facilityId);
+	}
+
+	/**
+	 * Method to get digital subscription list
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getDigitalSubList() {
+		return subscriptionsDAO.getDigitalSubList();
+	}
+
+	/**
+	 * Method to get e-newsLetter subscription list
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getEnewsLetterSubList() {
+		return subscriptionsDAO.getEnewsLetterSubList();
+	}
+
+	/**
+	 * Method to save the selected facility subscriptions to the DB
+	 * 
+	 * @param listSubsDTO
+	 * @param facilityId
+	 * @return
+	 */
+	@Override
+	public boolean saveFacilitySubscription(
+			List<UserSubscriptionsDTO> listSubsDTO, int facilityId) {
+		return subscriptionsDAO.saveFacilitySubscription(listSubsDTO,
+				facilityId);
+	}
 }

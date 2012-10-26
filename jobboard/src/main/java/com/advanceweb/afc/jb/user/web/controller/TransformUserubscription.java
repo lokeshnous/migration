@@ -159,7 +159,6 @@ public class TransformUserubscription {
 				selectedSubsList.add(dto);
 			}
 		}
-
 		return selectedSubsList;
 	}
 
@@ -186,7 +185,61 @@ public class TransformUserubscription {
 			}
 		}
 		return currentSubs;
-
 	}
 
+	public List<DropDownDTO> jsSubDTOToDropDownDTO(
+			List<UserSubscriptionsDTO> digitalSubList,
+			UserSubscriptionForm subscriptform) {
+		List<DropDownDTO> facsub = new ArrayList<DropDownDTO>();
+		if (null != digitalSubList) {
+			for (UserSubscriptionsDTO subscriptionsDTO : digitalSubList) {
+				DropDownDTO downDTO = new DropDownDTO();
+				downDTO.setOptionId(Integer.toString(subscriptionsDTO
+						.getPublicationId()));
+				downDTO.setOptionName(subscriptionsDTO.getPublicationName());
+				facsub.add(downDTO);
+			}
+		}
+		return facsub;
+	}
+
+	/**
+	 * This method is called to save selected subscriptions
+	 * 
+	 * @param currentSubsList
+	 * @param form
+	 * @param listSubscriptions
+	 * @return
+	 */
+	public List<UserSubscriptionsDTO> jsSubscriptionFormToUserSubsDTO(
+			UserSubscriptionForm form) {
+		List<UserSubscriptionsDTO> selSubsList = new ArrayList<UserSubscriptionsDTO>();
+		List<UserSubscriptionsDTO> selFacSubsList = new ArrayList<UserSubscriptionsDTO>();
+		List<UserSubscriptionsDTO> selectedSubsList = new ArrayList<UserSubscriptionsDTO>();
+		if (null != form.getCurrentsubs()) {
+			for (String selSubscription : form.getCurrentsubs()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(Integer.valueOf(selSubscription));
+				dto.setFacilityId(form.getFacilityId());
+				dto.setActive(1);
+				selSubsList.add(dto);
+			}
+		}
+		if (!selSubsList.isEmpty() && null != selSubsList) {
+			selectedSubsList.addAll(0, selSubsList);
+		}
+		if (null != form.getFacsub()) {
+			for (String selFacSub : form.getFacsub()) {
+				UserSubscriptionsDTO facDto = new UserSubscriptionsDTO();
+				facDto.setPublicationId(Integer.valueOf(selFacSub));
+				facDto.setFacilityId(form.getFacilityId());
+				facDto.setActive(1);
+				selFacSubsList.add(facDto);
+			}
+		}
+		if (!selFacSubsList.isEmpty() && null != selFacSubsList) {
+			selectedSubsList.addAll(1, selFacSubsList);
+		}
+		return selectedSubsList;
+	}
 }

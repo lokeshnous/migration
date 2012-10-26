@@ -252,18 +252,19 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
-	public List<DropDownDTO> populateCompanyNames(int facilityid, int facilityParentId) {
+	public List<DropDownDTO> populateCompanyNames(int facilityid,
+			int facilityParentId) {
 
-		return populateDropdownsDAO.populateCompanyNames(facilityid, facilityParentId);
+		return populateDropdownsDAO.populateCompanyNames(facilityid,
+				facilityParentId);
 	}
-	
-	
+
 	@Override
 	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
 
 		return populateDropdownsDAO.populateTemplateAutoComplete(company);
 	}
-	
+
 	@Override
 	public String getPostalCode(String city, String state) {
 		return populateDropdownsDAO.getPostalCode(city, state);
@@ -288,6 +289,18 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
 			int jobPostType) {
-		return populateDropdownsDAO.populateJobPostingTypeDropdown(facilityId, jobPostType);
+		return populateDropdownsDAO.populateJobPostingTypeDropdown(facilityId,
+				jobPostType);
+	}
+
+	/**
+	 * Method to get the subscription list for facility
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<DropDownDTO> getFacilitySubList() {
+
+		return populateDropdownsDAO.getFacilitySubList();
 	}
 }

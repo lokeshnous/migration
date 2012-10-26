@@ -186,7 +186,7 @@ public interface PopulateDropdownsDAO {
 			int userId);
 
 	List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId);
-	
+
 	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
 			int jobPostType);
 
@@ -195,11 +195,11 @@ public interface PopulateDropdownsDAO {
 	String populateStateAutoComplete(String city);
 
 	List<String> populatePostalCodeAutoComplete(String postalCode);
-	
+
 	List<DropDownDTO> populateCompanyNames(int facilityid, int facilityParentId);
-	
+
 	List<DropDownDTO> populateTemplateAutoComplete(String company);
-	
+
 	String getPostalCode(String city, String state);
 
 	String getCountry(String city, String state, String postalCode);
@@ -207,5 +207,12 @@ public interface PopulateDropdownsDAO {
 	LocationDTO populateLocation(String postalCode);
 
 	Map<String, String> getJobStatusList();
+
+	/**
+	 * Method to get the subscription list for facility
+	 * 
+	 * @return
+	 */
+	List<DropDownDTO> getFacilitySubList();
 
 }

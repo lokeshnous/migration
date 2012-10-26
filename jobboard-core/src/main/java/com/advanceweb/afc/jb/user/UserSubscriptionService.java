@@ -33,4 +33,35 @@ public interface UserSubscriptionService {
 	 */
 	List<UserSubscriptionsDTO> getCurrentSubscriptions(int userId);
 
+	/**
+	 * To get current subscription List for Facility
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<UserSubscriptionsDTO> getCurrentFacilitySub(int facilityId);
+
+	/**
+	 * Method to get digital subscription list
+	 * 
+	 * @return
+	 */
+	List<UserSubscriptionsDTO> getDigitalSubList();
+
+	/**
+	 * Method to get e-newsLetter subscription list
+	 * 
+	 * @return
+	 */
+	List<UserSubscriptionsDTO> getEnewsLetterSubList();
+
+	/**
+	 * Method to save the selected facility subscriptions to the DB
+	 * 
+	 * @param listSubsDTO
+	 * @param facilityId
+	 * @return
+	 */
+	boolean saveFacilitySubscription(List<UserSubscriptionsDTO> listSubsDTO,
+			int facilityId);
 }

@@ -644,6 +644,7 @@ jobboard/src/main/webapp/WEB-INF/view/empSaveThisSearchPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empSavedResumeSearchPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerDashboard.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerLogin.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/employerModifySubscriptionsPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerregistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employersMetricsPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/featuredemployerdetails.jsp -text

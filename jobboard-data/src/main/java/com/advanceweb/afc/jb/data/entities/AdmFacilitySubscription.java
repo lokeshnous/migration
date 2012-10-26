@@ -13,39 +13,42 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the adm_facility_subscription database table.
  * 
  */
 @Entity
-@Table(name="adm_facility_subscription")
+@Table(name = "adm_facility_subscription")
 public class AdmFacilitySubscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private AdmFacilitySubscriptionPK admFacilitySubscriptionPK;
 
+	@Column(name = "active")
 	private int active;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="create_dt")
+	@Column(name = "publication_id")
+	private int publicationId;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_dt")
 	private Date createDt;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	@Column(name="delete_dt")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "delete_dt")
 	private Date deleteDt;
 
-	//bi-directional many-to-one association to AdmSubscription
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="subscription_id", insertable=false, updatable=false)
+	// bi-directional many-to-one association to AdmSubscription
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "subscription_id", insertable = false, updatable = false)
 	private AdmSubscription admSubscription;
 
-	//bi-directional many-to-one association to AdmFacility
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="facility_id", insertable=false, updatable=false)
+	// bi-directional many-to-one association to AdmFacility
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "facility_id", insertable = false, updatable = false)
 	private AdmFacility admFacility;
-	
+
 	public AdmFacilitySubscriptionPK getAdmFacilitySubscriptionPK() {
 		return admFacilitySubscriptionPK;
 	}
@@ -86,7 +89,7 @@ public class AdmFacilitySubscription implements Serializable {
 	public void setAdmSubscription(AdmSubscription admSubscription) {
 		this.admSubscription = admSubscription;
 	}
-	
+
 	public AdmFacility getAdmFacility() {
 		return this.admFacility;
 	}
@@ -94,5 +97,13 @@ public class AdmFacilitySubscription implements Serializable {
 	public void setAdmFacility(AdmFacility admFacility) {
 		this.admFacility = admFacility;
 	}
-	
+
+	public int getPublicationId() {
+		return publicationId;
+	}
+
+	public void setPublicationId(int publicationId) {
+		this.publicationId = publicationId;
+	}
+
 }

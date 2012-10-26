@@ -60,11 +60,11 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final Logger LOGGER = Logger
 			.getLogger(PopulateDropdownsDAOImpl.class);
 
-	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
+	private static final String FIND_USER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
-	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productType,dtl.productId";
-	private static final String FIND_JOB_TYPE_COMBO="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.invDetailId = ? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
+	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productType,dtl.productId";
+	private static final String FIND_JOB_TYPE_COMBO = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.invDetailId = ? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
@@ -73,7 +73,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	private HibernateTemplate hibernateTemplate;
 	private HibernateTemplate hibernateTemplateTracker;
-	
+
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -124,7 +124,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 		try {
 			List<AdmSubscription> subsList = hibernateTemplate.find(
-					FIND_JOBSEEKER_SUBSCRIPTIONS, "jobseeker");
+					FIND_USER_SUBSCRIPTIONS, "USER");
 			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -474,9 +474,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 								inputs);
 				if (null != admUsersList && !admUsersList.isEmpty()) {
 					AdmUserFacility admUserFacility = admUsersList.get(0);
-					List<MerUser> merUserList = hibernateTemplateTracker.find(
-							"from MerUser user where user.userId=? and user.deleteDt is null",
-							admUserFacility.getFacilityPK().getUserId());
+					List<MerUser> merUserList = hibernateTemplateTracker
+							.find("from MerUser user where user.userId=? and user.deleteDt is null",
+									admUserFacility.getFacilityPK().getUserId());
 					merUsers.addAll(merUserList);
 				}
 
@@ -488,7 +488,6 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		}
 		return null;
 	}
-
 
 	@Override
 	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
@@ -509,12 +508,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
-	
 	@Override
-	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,	int jobPostType) {
+	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
+			int jobPostType) {
 		try {
 			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
-			List<AdmInventoryDetail> invList = hibernateTemplate.find(FIND_JOB_TYPE_COMBO, jobPostType, facilityId);
+			List<AdmInventoryDetail> invList = hibernateTemplate.find(
+					FIND_JOB_TYPE_COMBO, jobPostType, facilityId);
 			getJobPostingComboList(jbPostings, invList);
 			return jbPostings;
 		} catch (Exception e) {
@@ -522,13 +522,14 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
 
 		try {
 			List<DropDownDTO> jbPostings = new ArrayList<DropDownDTO>();
-			List<AdmInventoryDetail> invList = hibernateTemplate.find(FIND_INVENTORY_DETAILS, facilityId);
+			List<AdmInventoryDetail> invList = hibernateTemplate.find(
+					FIND_INVENTORY_DETAILS, facilityId);
 			getJobPostingComboList(jbPostings, invList);
 			return jbPostings;
 		} catch (Exception e) {
@@ -538,44 +539,53 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	private void getJobPostingComboList(List<DropDownDTO> jbPostings,
-		List<AdmInventoryDetail> invList) {
+			List<AdmInventoryDetail> invList) {
 		if (!invList.isEmpty()) {
-			for (AdmInventoryDetail inv : invList) {					
+			for (AdmInventoryDetail inv : invList) {
 				DropDownDTO dto = new DropDownDTO();
 				dto.setOptionId(String.valueOf(inv.getInvDetailId()));
-				if(MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv.getProductType())){
-					List<JpJobTypeCombo> comboList = hibernateTemplate.find("from JpJobTypeCombo combo where combo.comboId=?", inv.getProductId());
-					if(!comboList.isEmpty()){
-						
+				if (MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv
+						.getProductType())) {
+					List<JpJobTypeCombo> comboList = hibernateTemplate.find(
+							"from JpJobTypeCombo combo where combo.comboId=?",
+							inv.getProductId());
+					if (!comboList.isEmpty()) {
+
 						JpJobTypeCombo combo = comboList.get(0);
-						if(combo.getJobType().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
-							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING + " + "
-									+ combo.getAddons().trim());
+						if (combo.getJobType().contains(
+								MMJBCommonConstants.STANDARD_JOB_POSTING)) {
+							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING
+									+ " + " + combo.getAddons().trim());
+						} else if (combo.getJobType().contains(
+								MMJBCommonConstants.JOB_POSTING_SLOT)) {
+							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING
+									+ " + " + combo.getAddons().trim());
 						}
-						else if(combo.getJobType().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
-							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING + " + "
-									+ combo.getAddons().trim());
-						}
-						if(combo.getAddons().contains("Job Posting")){
-							combo.setAddons(combo.getAddons().replace("Job Posting",""));
-							if(combo.getAddons().contains("Upgrade".trim())){
-								combo.setAddons(combo.getAddons().replace("Upgrade",""));
+						if (combo.getAddons().contains("Job Posting")) {
+							combo.setAddons(combo.getAddons().replace(
+									"Job Posting", ""));
+							if (combo.getAddons().contains("Upgrade".trim())) {
+								combo.setAddons(combo.getAddons().replace(
+										"Upgrade", ""));
 							}
 						}
 						jbPostings.add(dto);
 					}
-				}else{
-					List<JpJobType> jpTypleList = hibernateTemplate.find("from JpJobType type where type.jobTypeId=?", inv.getProductId());
-					if(!jpTypleList.isEmpty()){
+				} else {
+					List<JpJobType> jpTypleList = hibernateTemplate.find(
+							"from JpJobType type where type.jobTypeId=?",
+							inv.getProductId());
+					if (!jpTypleList.isEmpty()) {
 						JpJobType type = jpTypleList.get(0);
-						
-						if(type.getName().contains(MMJBCommonConstants.STANDARD_JOB_POSTING)){
+
+						if (type.getName().contains(
+								MMJBCommonConstants.STANDARD_JOB_POSTING)) {
 							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
-						}
-						else if(type.getName().contains(MMJBCommonConstants.JOB_POSTING_SLOT)){
+						} else if (type.getName().contains(
+								MMJBCommonConstants.JOB_POSTING_SLOT)) {
 							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING);
 						}
-						//dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
+						// dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
 						jbPostings.add(dto);
 					}
 				}
@@ -707,14 +717,14 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	 */
 	private void populateGroupCompany(int facilityId,
 			List<DropDownDTO> companyNames) {
-		List<AdmFacility> listAdmFacility = hibernateTemplate.find(
-				"from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
-				facilityId );
+		List<AdmFacility> listAdmFacility = hibernateTemplate
+				.find("from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
+						facilityId);
 
 		if (null == listAdmFacility || listAdmFacility.isEmpty()) {
-			listAdmFacility = hibernateTemplate.find(
-					"from  AdmFacility fac WHERE fac.facilityId=? and fac.deleteDt is null",
-					facilityId);
+			listAdmFacility = hibernateTemplate
+					.find("from  AdmFacility fac WHERE fac.facilityId=? and fac.deleteDt is null",
+							facilityId);
 
 		}
 		for (AdmFacility facility : listAdmFacility) {
@@ -731,24 +741,24 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			}
 		}
 	}
-	
+
 	@Override
 	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
-		int facilityId=0;
-		int templateId=0;
+		int facilityId = 0;
+		int templateId = 0;
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		try {
-			
+
 			facilityId = Integer.parseInt(company);
-			
+
 			List<Object> admFacilityList = hibernateTemplate
 					.find("select fac.templateId from  AdmFacility fac WHERE fac.facilityId=?",
 							facilityId);
-			
+
 			if (admFacilityList != null && !admFacilityList.isEmpty()) {
-				templateId = (Integer)admFacilityList.get(0);
+				templateId = (Integer) admFacilityList.get(0);
 			}
-			
+
 			List<Object> jpTemplateList = hibernateTemplate
 					.find("select distinct jtem.templateName from  JpTemplate jtem WHERE jtem.deleteDt is null and jtem.templateId=?",
 							templateId);
@@ -768,7 +778,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 		return templateList;
 	}
-	
+
 	@Override
 	public String getPostalCode(String city, String state) {
 
@@ -864,5 +874,26 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 
 	}
-	
+
+	/**
+	 * Method to get the subscription list for facility
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<DropDownDTO> getFacilitySubList() {
+
+		try {
+			List<AdmSubscription> subsList = hibernateTemplate.find(
+					FIND_USER_SUBSCRIPTIONS, "FACILITY");
+			Map<String, String> facilityMap = new HashMap<String, String>();
+			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
+		} catch (DataAccessException e) {
+			LOGGER.error("Error occurred while getting data for subscriptions"
+					+ e);
+		}
+
+		return null;
+	}
+
 }

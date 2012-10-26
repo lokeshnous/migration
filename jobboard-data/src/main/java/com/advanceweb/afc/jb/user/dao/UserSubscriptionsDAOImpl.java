@@ -21,7 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscription;
+import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
+import com.advanceweb.afc.jb.data.entities.MerPublication;
 import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
@@ -37,6 +40,8 @@ import com.advanceweb.afc.jb.jobseeker.helper.UserSubscriptionsConversionHelper;
 public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
+	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacilitySubscriptionPK.facilityId=?";
+	private static final String FIND_USER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final Logger LOGGER = Logger
 			.getLogger(UserSubscriptionsDAOImpl.class);
 
@@ -48,6 +53,8 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	private HibernateTemplate hibernateTemplateCareers;
 
+	private HibernateTemplate hibernateTemplateTracker;
+
 	@Autowired
 	private UserSubscriptionsConversionHelper subscriptionHelper;
 
@@ -55,6 +62,8 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
 
 	}
@@ -592,9 +601,116 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			}
 			resCovDTO = subscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
+			LOGGER.error("Error for update of employee data" + e);
 			LOGGER.info("Error for update of employee data");
 		}
 		return resCovDTO;
 	}
 
+	/**
+	 * To get current subscription List for Facility
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getCurrentFacilitySub(int facilityId) {
+
+		List<UserSubscriptionsDTO> listSubscriptiosns = null;
+		try {
+			List<AdmFacilitySubscription> listSubs = hibernateTemplateCareers
+					.find("from AdmFacilitySubscription sub where sub.admFacility.facilityId=?",
+							facilityId);
+			listSubscriptiosns = subscriptionHelper
+					.transformFacilitySubTojsSubsDTO(listSubs);
+		} catch (DataAccessException e) {
+			LOGGER.error("Error while getting current subscription list from DB"
+					+ e);
+			LOGGER.info("Error while getting current subscription list from DB"
+					+ e);
+		}
+
+		return listSubscriptiosns;
+	}
+
+	/**
+	 * This Method to get the digital subscription list
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getDigitalSubList() {
+		List<UserSubscriptionsDTO> listDTOs = new ArrayList<UserSubscriptionsDTO>();
+
+		try {
+			List<MerPublication> digSubList = hibernateTemplateTracker
+					.find("from MerPublication p where p.isDigital = 1 and p.active = 1");
+			listDTOs = subscriptionHelper
+					.transferDigitalSubToSubDTO(digSubList);
+		} catch (DataAccessException e) {
+			LOGGER.error("Error while getting data for digital magazine subscriptions"
+					+ e);
+			LOGGER.info("Error while getting data for digital magazine subscriptions"
+					+ e);
+
+		}
+		return listDTOs;
+	}
+
+	/**
+	 * Method to get the e-news letter subscription details
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getEnewsLetterSubList() {
+		List<UserSubscriptionsDTO> listDTOs = new ArrayList<UserSubscriptionsDTO>();
+
+		try {
+			List<MerPublication> digSubList = hibernateTemplateTracker
+					.find("from MerPublication p where p.isEnewsletter = 1 and p.active = 1");
+			listDTOs = subscriptionHelper
+					.transferDigitalSubToSubDTO(digSubList);
+		} catch (DataAccessException e) {
+			LOGGER.error("Error while getting data for digital magazine subscriptions"
+					+ e);
+			LOGGER.info("Error while getting data for digital magazine subscriptions"
+					+ e);
+
+		}
+		return listDTOs;
+	}
+
+	/**
+	 * Method to save the selected facility subscriptions to the DB
+	 * 
+	 * @param listSubsDTO
+	 * @param facilityId
+	 *            return boolean value
+	 */
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public boolean saveFacilitySubscription(
+			List<UserSubscriptionsDTO> listSubsDTO, int facilityId) {
+		try {
+
+			if (facilityId != 0) {
+				List<AdmFacilitySubscription> listSubsAlerts = hibernateTemplateCareers
+						.find(SELECTED_FACILITY_SUBS, facilityId);
+				List<AdmSubscription> subsList = hibernateTemplateCareers.find(
+						FIND_USER_SUBSCRIPTIONS, "FACILITY");
+				List<MerPublication> digSubList = hibernateTemplateTracker
+						.find("from MerPublication p where p.isDigital = 1 and p.active = 1");
+				List<MerPublication> enewList = hibernateTemplateTracker
+						.find("from MerPublication p where p.isEnewsletter = 1 and p.active = 1");
+				List<AdmFacilitySubscription> facSubscriptions = subscriptionHelper
+						.transformjsSubsDTOToAdmFacilitySubs(listSubsDTO,
+								listSubsAlerts, subsList, digSubList, enewList);
+				hibernateTemplateCareers.deleteAll(listSubsAlerts);
+				hibernateTemplateCareers.saveOrUpdateAll(facSubscriptions);
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error("Error while saveing the selected facility subscriptions dta to DB"
+					+ e);
+			LOGGER.info("Error while saveing the selected facility subscriptions dta to DB"
+					+ e);
+		}
+		return true;
+	}
 }

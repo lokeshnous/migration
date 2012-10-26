@@ -271,7 +271,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private List<DropDownDTO> getSubscriptions(){
 		
 		try {
-			List<AdmSubscription> subsList = hibernateTemplateCareers.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"jobseeker");
+			List<AdmSubscription> subsList = hibernateTemplateCareers.find(FIND_JOBSEEKER_SUBSCRIPTIONS,"USER");
 			return registrationConversionHelper.transformAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);

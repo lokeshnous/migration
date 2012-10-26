@@ -58,6 +58,7 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -73,6 +74,8 @@ import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.UserSubscriptionService;
+import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 
 /**
  * 
@@ -95,6 +98,12 @@ public class AgencyDashBoardController {
 	protected AuthenticationManager customAuthenticationManager;
 	@Autowired
 	private FacilityService facilityService;
+
+	@Autowired
+	private UserSubscriptionService userSubService;
+
+	@Autowired
+	private TransformUserubscription userubscription;
 
 	@Autowired
 	private AgencyService agencyService;
@@ -138,7 +147,7 @@ public class AgencyDashBoardController {
 	private String accountEmail;
 	@Value("${account_Street}")
 	private String accountStreet;
-	
+
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session) {
 		ModelAndView model = new ModelAndView();
@@ -164,6 +173,10 @@ public class AgencyDashBoardController {
 			LOGGER.debug("Error while getting the linked facilities related to the corresponding agency");
 		}
 
+		// Retrieve Current subscriptions of the user
+		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
+
+		model.addObject("currentSubs", currentSubs);
 		model.addObject("emplyrsByState", emplyrsByState);
 		model.setViewName("agencyDashboard");
 		return model;
@@ -264,7 +277,7 @@ public class AgencyDashBoardController {
 	@RequestMapping(value = "/employeeBillingSetting", method = RequestMethod.POST)
 	public String editBillingSetting(EmployeeAccountForm employeeBillingForm,
 			BindingResult result, HttpSession session) {
-		
+
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			int facilityId = (Integer) session
@@ -913,5 +926,26 @@ public class AgencyDashBoardController {
 
 		return new ResponseEntity<byte[]>(byteData, responseHeaders,
 				HttpStatus.OK);
+	}
+
+	/**
+	 * Retrieve Current subscriptions of the user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	private List<DropDownDTO> getCurrentSubscriptions(int facilityId) {
+
+		List<DropDownDTO> listSubscriptions = populateDropdownsService
+				.getFacilitySubList();
+
+		List<UserSubscriptionsDTO> currentSubsList = userSubService
+				.getCurrentFacilitySub(facilityId);
+
+		List<DropDownDTO> currentSubs = userubscription
+				.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,
+						listSubscriptions);
+		return currentSubs;
+
 	}
 }
