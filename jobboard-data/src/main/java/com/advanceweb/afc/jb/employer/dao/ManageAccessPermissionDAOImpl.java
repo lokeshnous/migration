@@ -84,7 +84,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 							.find(" from MerUserProfile prof where prof.profilePK.userId=?",
 									userIdp);
 					List<MerUserProfile> merUserProfileList =new ArrayList<MerUserProfile>();
-					if (null != merUserProfilesList && merUserProfilesList.size() > 0) {
+					if (null != merUserProfilesList && !merUserProfilesList.isEmpty()) {
 						for (MerUserProfile merUserProfiles : merUserProfilesList) {
 							MerUserProfile userProfile = new MerUserProfile();
 
@@ -145,32 +145,13 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		nsCustomerId = admFacilityDTOList.get(0).getNsCustomerID();
 		
 		AdmFacility facility = new AdmFacility();
-		if (facilityP.getFacilityType().equals(
-				MMJBCommonConstants.FACILITY_SYSTEM)) {
-			facility.setFacilityType(MMJBCommonConstants.FACILITY_SYSTEM);
-		} else {
-			facility.setFacilityType(MMJBCommonConstants.FACILITY);
-		}
+
 		facility.setFacilityParentId(facilityIdP);
 		facility.setCreateDt(new Date());
 		facility.setCreateUserId(userIdp);
+		// saving the data in adm_facility as per the logged in User
 		if (facilityP != null) {
-			facility.setEmail(facilityP.getEmail());
-			facility.setName(facilityP.getName());
-			facility.setAccountNumber(facilityP.getAccountNumber());
-			facility.setNameDisplay(facilityP.getNameDisplay());
-			facility.setUrl(facilityP.getUrl());
-			facility.setUrlDisplay(facilityP.getUrlDisplay());
-			facility.setEmailDisplay(facilityP.getEmailDisplay());
-			facility.setLogoPath(facilityP.getLogoPath());
-			facility.setAdminUserId(facilityP.getAdminUserId());
-			facility.setCreateUserId(facilityP.getCreateUserId());
-			facility.setPromoMediaPath(facilityP.getPromoMediaPath());
-			facility.setColorPalette(facilityP.getColorPalette());
-			facility.setCompanyNews(facilityP.getCompanyNews());
-			facility.setCompanyOverview(facilityP.getCompanyOverview());
-			facility.setNsCustomerID(nsCustomerId);
-			hibernateTemplateCareers.save(facility);
+			setFacilityDetails(facilityP, nsCustomerId, facility);
 		}
 
 		List<AdmFacilityContact> admFacilityContactP = facilityP
@@ -182,43 +163,89 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			Date currentDate = new Date();
 			for (AdmFacilityContact contact : admFacilityContactP) {
 
-				/**
-				 * creating add Job owner Users in OpenAM
-				 */
+				setFacilityContactDetails(facility, admFacilityContactList,
+						currentDate, contact);
+			}
+		}
+
+		// facility.setAdmFacilityContacts(admFacilityContactList);
+
+		return facility;
+	}
+
+	/**
+	 *  Method to save the data in adm_facility_contact as per the logged in User
+	 * @param facility
+	 * @param admFacilityContactList
+	 * @param currentDate
+	 * @param contact
+	 */
+	private void setFacilityContactDetails(AdmFacility facility,
+			List<AdmFacilityContact> admFacilityContactList, Date currentDate,
+			AdmFacilityContact contact) {
+		/**
+		 * creating add Job owner Users in OpenAM
+		 */
 //				boolean isCreated = OpenAMEUtility.openAMCreateEmp(merUser,
 //						contact);
 //				LOGGER.info("Open AM :Employee add owner User is created!"
 //						+ isCreated);
-				// Ends OpenAM code
+		// Ends OpenAM code
 
-				AdmFacilityContact admFacilityContact = new AdmFacilityContact();
-				admFacilityContact.setCity(contact.getCity());
-				admFacilityContact.setCompany(contact.getCompany());
-				admFacilityContact.setCountry(contact.getCountry());
-				admFacilityContact.setFirstName(contact.getFirstName());
-				admFacilityContact.setStreet(contact.getStreet());
-				admFacilityContact.setState(contact.getState());
-				admFacilityContact.setPostcode(contact.getPostcode());
-				admFacilityContact.setLastName(contact.getLastName());
-				admFacilityContact.setMiddleName(contact.getMiddleName());
-				admFacilityContact.setJobTitle(contact.getJobTitle());
-				admFacilityContact.setPhone(contact.getPhone());
-				admFacilityContact.setPhone2(contact.getPhone2());
-				admFacilityContact.setContactType(contact.getContactType());
-				admFacilityContact.setCreateDt(currentDate);
-				admFacilityContact.setEmail(contact.getEmail());
-				admFacilityContact.setActive(contact.getActive());
-				admFacilityContact.setCreateDt(currentDate);
-				admFacilityContact.setAdmFacility(facility);
-				admFacilityContactList.add(admFacilityContact);
-				admFacilityContact.setAdmFacility(facility);
-				hibernateTemplateCareers.save(admFacilityContact);
-			}
+		AdmFacilityContact admFacilityContact = new AdmFacilityContact();
+		admFacilityContact.setCity(contact.getCity());
+		admFacilityContact.setCompany(contact.getCompany());
+		admFacilityContact.setCountry(contact.getCountry());
+		admFacilityContact.setFirstName(contact.getFirstName());
+		admFacilityContact.setStreet(contact.getStreet());
+		admFacilityContact.setState(contact.getState());
+		admFacilityContact.setPostcode(contact.getPostcode());
+		admFacilityContact.setLastName(contact.getLastName());
+		admFacilityContact.setMiddleName(contact.getMiddleName());
+		admFacilityContact.setJobTitle(contact.getJobTitle());
+		admFacilityContact.setPhone(contact.getPhone());
+		admFacilityContact.setPhone2(contact.getPhone2());
+		admFacilityContact.setContactType(contact.getContactType());
+		admFacilityContact.setCreateDt(currentDate);
+		admFacilityContact.setEmail(contact.getEmail());
+		admFacilityContact.setActive(contact.getActive());
+		admFacilityContact.setCreateDt(currentDate);
+		admFacilityContact.setAdmFacility(facility);
+		admFacilityContactList.add(admFacilityContact);
+		admFacilityContact.setAdmFacility(facility);
+		hibernateTemplateCareers.save(admFacilityContact);
+	}
+
+	/**
+	 * Method to save the data in adm_facility as per the logged in User
+	 * @param facilityP
+	 * @param nsCustomerId
+	 * @param facility
+	 */
+	private void setFacilityDetails(AdmFacility facilityP, int nsCustomerId,
+			AdmFacility facility) {
+		if (facilityP.getFacilityType().equals(
+				MMJBCommonConstants.FACILITY_SYSTEM)) {
+			facility.setFacilityType(MMJBCommonConstants.FACILITY_SYSTEM);
+		} else {
+			facility.setFacilityType(MMJBCommonConstants.FACILITY);
 		}
-
-		//facility.setAdmFacilityContacts(admFacilityContactList);
-		
-		return facility;
+		facility.setEmail(facilityP.getEmail());
+		facility.setName(facilityP.getName());
+		facility.setAccountNumber(facilityP.getAccountNumber());
+		facility.setNameDisplay(facilityP.getNameDisplay());
+		facility.setUrl(facilityP.getUrl());
+		facility.setUrlDisplay(facilityP.getUrlDisplay());
+		facility.setEmailDisplay(facilityP.getEmailDisplay());
+		facility.setLogoPath(facilityP.getLogoPath());
+		facility.setAdminUserId(facilityP.getAdminUserId());
+		facility.setCreateUserId(facilityP.getCreateUserId());
+		facility.setPromoMediaPath(facilityP.getPromoMediaPath());
+		facility.setColorPalette(facilityP.getColorPalette());
+		facility.setCompanyNews(facilityP.getCompanyNews());
+		facility.setCompanyOverview(facilityP.getCompanyOverview());
+		facility.setNsCustomerID(nsCustomerId);
+		hibernateTemplateCareers.save(facility);
 	}
 
 	/**
@@ -299,65 +326,8 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 					admUserRole = admUserRoleList.get(0);
 				}
 				if (null != admUserFacility && null != admUserRole) {
-					// update the role in AdmUserFacility
-					AdmUserFacility admUserFacilityNew = (AdmUserFacility) hibernateTemplateCareers
-							.load(AdmUserFacility.class,
-									admUserFacility.getFacilityPK());
-
-					if (null != admUserRole.getRolePK()
-							&& admUserRole.getRolePK().getUserId() > 0) {
-						AdmUserRole admUserRoleNew = (AdmUserRole) hibernateTemplateCareers
-								.load(AdmUserRole.class,
-										admUserRole.getRolePK());
-						if (admUserRole.getRolePK().getRoleId() != accessPermissionDTO
-								.getTypeOfAccess()) {
-							// update the role in AdmUserRole
-							Query updateAdmUserRole = hibernateTemplateCareers
-									.getSessionFactory()
-									.getCurrentSession()
-									.createSQLQuery(
-											" { call UpdateAdmUserRole(?,?,?) }");
-							updateAdmUserRole.setInteger(0,
-									accessPermissionDTO.getTypeOfAccess()); // first
-																			// parameter,
-																			// index
-																			// starts
-																			// with
-																			// 0
-							updateAdmUserRole.setInteger(1, admUserRoleNew
-									.getRolePK().getRoleId()); // secon
-																// parameter
-							updateAdmUserRole.setInteger(2, admUserRoleNew
-									.getRolePK().getUserId());
-							// update the role in AdmUserFacility
-							Query updateAdmFacilityUserRole = hibernateTemplateCareers
-									.getSessionFactory()
-									.getCurrentSession()
-									.createSQLQuery(
-											" { call UpdateAdmUserFacility(?,?,?,?) }");
-							updateAdmFacilityUserRole.setInteger(0,
-									accessPermissionDTO.getTypeOfAccess()); // first
-																			// parameter,
-																			// index
-																			// starts
-																			// with
-																			// 0
-							updateAdmFacilityUserRole.setInteger(1,
-									admUserFacilityNew.getFacilityPK()
-											.getRoleId()); // secon parameter
-							updateAdmFacilityUserRole.setInteger(2,
-									admUserFacilityNew.getFacilityPK()
-											.getUserId());
-							updateAdmFacilityUserRole.setInteger(3,
-									admUserFacilityNew.getFacilityPK()
-											.getFacilityId());
-
-							updateAdmFacilityUserRole.executeUpdate();
-							updateAdmUserRole.executeUpdate();
-						}
-						LOGGER.info("Updated Job Owners Role To:"
-								+ accessPermissionDTO.getTypeOfAccess());
-					}
+					 updateRole(
+							accessPermissionDTO, admUserRole, admUserFacility);
 				}
 			}
 
@@ -366,6 +336,67 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		}
 
 		return true;
+	}
+
+	/**
+	 * Method to update the role in AdmUserFacility
+	 * @param accessPermissionDTO
+	 * @param admUserRole
+	 * @param admUserFacility
+	 * @return
+	 */
+	private AdmUserFacility updateRole(
+			ManageAccessPermissionDTO accessPermissionDTO,
+			AdmUserRole admUserRole, AdmUserFacility admUserFacility) {
+	
+		AdmUserFacility admUserFacilityNew = (AdmUserFacility) hibernateTemplateCareers
+				.load(AdmUserFacility.class,
+						admUserFacility.getFacilityPK());
+
+		if (null != admUserRole.getRolePK()
+				&& admUserRole.getRolePK().getUserId() > 0) {
+			AdmUserRole admUserRoleNew = (AdmUserRole) hibernateTemplateCareers
+					.load(AdmUserRole.class,
+							admUserRole.getRolePK());
+			if (admUserRole.getRolePK().getRoleId() != accessPermissionDTO
+					.getTypeOfAccess()) {
+				// update the role in AdmUserRole
+				Query updateAdmUserRole = hibernateTemplateCareers
+						.getSessionFactory()
+						.getCurrentSession()
+						.createSQLQuery(
+								" { call UpdateAdmUserRole(?,?,?) }");
+				updateAdmUserRole.setInteger(0,
+						accessPermissionDTO.getTypeOfAccess()); 
+				updateAdmUserRole.setInteger(1, admUserRoleNew
+						.getRolePK().getRoleId()); 
+				updateAdmUserRole.setInteger(2, admUserRoleNew
+						.getRolePK().getUserId());
+				// update the role in AdmUserFacility
+				Query updateAdmFacilityUserRole = hibernateTemplateCareers
+						.getSessionFactory()
+						.getCurrentSession()
+						.createSQLQuery(
+								" { call UpdateAdmUserFacility(?,?,?,?) }");
+				updateAdmFacilityUserRole.setInteger(0,
+						accessPermissionDTO.getTypeOfAccess()); 
+				updateAdmFacilityUserRole.setInteger(1,
+						admUserFacilityNew.getFacilityPK()
+								.getRoleId()); 
+				updateAdmFacilityUserRole.setInteger(2,
+						admUserFacilityNew.getFacilityPK()
+								.getUserId());
+				updateAdmFacilityUserRole.setInteger(3,
+						admUserFacilityNew.getFacilityPK()
+								.getFacilityId());
+
+				updateAdmFacilityUserRole.executeUpdate();
+				updateAdmUserRole.executeUpdate();
+			}
+			LOGGER.info("Updated Job Owners Role To:"
+					+ accessPermissionDTO.getTypeOfAccess());
+		}
+		return admUserFacilityNew;
 	}
 
 	@Override
