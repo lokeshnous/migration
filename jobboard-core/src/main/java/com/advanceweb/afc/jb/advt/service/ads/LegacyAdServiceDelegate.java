@@ -52,12 +52,12 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		} catch (IOException ex) {
 			status = false;
 			LOGGER.error(ex.getMessage(), ex);
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			status = false;
 			LOGGER.error(ex.getMessage(), ex);
 		}
-		if(!status){
-			tag = "<p>Ad Not Available for " + size.toString() +"</p>";
+		if (!status) {
+			tag = "<p>Ad Not Available for " + size.toString() + "</p>";
 		}
 		banner.setTag(tag);
 		return banner;

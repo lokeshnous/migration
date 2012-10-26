@@ -73,10 +73,9 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	@Override
 	public Banner getBanner(ClientContext context, AdSize size,
 			AdPosition position) {
+
 		Banner banner = new Banner();
-		if (size != null) {
-			banner.setSize(new AdSize(size));
-		}
+		banner.setSize(new AdSize(size));
 
 		LOGGER.debug(("Received request from context " + context.toString()
 				+ " for banner size " + size.toString()));

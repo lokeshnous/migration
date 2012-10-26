@@ -1,8 +1,7 @@
 package com.advanceweb.afc.jb.service.exception;
 
-import com.advanceweb.afc.jb.exception.JobBoardException;
 
-public class JobBoardNetSuiteServiceException extends JobBoardException{
+public class JobBoardNetSuiteServiceException extends JobBoardServiceException{
 
 	
 	private static final long serialVersionUID = 1L;
@@ -24,7 +23,7 @@ public class JobBoardNetSuiteServiceException extends JobBoardException{
 	 * object.
 	 * 
 	 * @param exce
-	 *            The exception from which the new exceptio object is created.
+	 *            The exception from which the new exception object is created.
 	 */
 
 	public JobBoardNetSuiteServiceException(Exception exce) {

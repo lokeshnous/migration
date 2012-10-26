@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.ads.Banner;
+import com.advanceweb.common.client.ClientContext;
 import com.advanceweb.jb.test.ServiceTest;
 
 public class OpenxAdServiceDelegateTest extends ServiceTest {
@@ -13,8 +14,8 @@ public class OpenxAdServiceDelegateTest extends ServiceTest {
 	OpenxAdServiceDelegate openxAdServiceDelegate;
 
 	@Test
-	public void test() {
-		Banner banner = openxAdServiceDelegate.getBanner(null,
+	public void testGetBanner() {
+		Banner banner = openxAdServiceDelegate.getBanner(new ClientContext(),
 				AdSize.IAB_LEADERBOARD, null);
 		System.out.println(banner.getTag());
 	}

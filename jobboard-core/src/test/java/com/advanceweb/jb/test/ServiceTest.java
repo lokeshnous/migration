@@ -8,6 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
 @Transactional
-public class ServiceTest {
+public abstract class ServiceTest {
 
 }
