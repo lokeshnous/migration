@@ -102,7 +102,7 @@ public class ResumeDaoImpl implements ResumeDao {
 				return dto;
 			}
 		}
-		if(MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resume.getResumeType())){
+		if(null != resume && MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resume.getResumeType())){
 			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume, resumeProfile);
 			return dto;
 		}
