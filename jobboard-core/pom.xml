@@ -16,6 +16,17 @@
 
 	<name>Job Board Core Services</name>
 
+	<build>
+		<testResources>
+			<testResource>
+				<directory>${basedir}/../jobboard/src/main/resources</directory>
+			</testResource>
+			<testResource>
+				<directory>${basedir}/src/test/resources</directory>
+			</testResource>
+		</testResources>
+	</build>
+
 	<dependencies>
 
 		<dependency>
