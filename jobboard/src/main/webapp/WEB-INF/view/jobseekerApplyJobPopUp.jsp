@@ -50,7 +50,7 @@
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
-			<h2>SAVE THIS JOB</h2>
+			<h2>APPLY JOB</h2>
 			<img src="<%= request.getContextPath() %>/resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
 				height="19" alt="Close">
 		</div>
@@ -59,7 +59,7 @@
 			<form action="" method="">
 				<div class="MidContent_Wrapper">
 					<span class="floatleft">You need to be
-						logged in to save jobs. <a href="<%= request.getContextPath() %>/commonLogin/login.html?page=jobSeeker" id="id">Click here to log
+						logged in to Apply jobs. <a href="<%= request.getContextPath() %>/commonLogin/login.html?page=jobSeeker" id="id">Click here to log
 							in now.</a>
 					</span>
 				</div>

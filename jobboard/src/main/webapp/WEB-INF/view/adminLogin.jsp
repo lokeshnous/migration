@@ -11,6 +11,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="noindex, follow"> 
 <!-- <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" /> -->
 
 <script type="text/javascript"

@@ -12,6 +12,8 @@
 		/> -->
 	<!-- For Legacy ad server -->
 	<util:properties id="adsConfiguration" location="classpath:ads.properties" />
+	<!-- For SEO server -->
+	<util:properties id="seoConfiguration" location="classpath:SEO.properties" />	
 	<!-- For SOLR search -->
 	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 

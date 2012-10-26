@@ -4,16 +4,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <jsp:include page="common/include.jsp" />
-        <title>ADVANCE Heathcare Jobs</title>
-
+        <title>${jobDetail.jobTitle} on ADVANCE Heathcare Jobs.com</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="description" content="${metaDesc}"> 
+		<link href="${canonicalUrl}" rel="canonical" /></head>
 	
         <!-- JAVASCRIPT FILES -->
-		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
-		<script type="text/javascript" src="../resources/js/slider.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script> -->
-		<script type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
+		<!-- <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery.cycle.all.min.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/slider.js"></script>
+		<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery.megamenu.js"></script> -->
+		<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/searchResultsdatatable.js"></script>
 		
   
   <jsp:include page="common/include.jsp" />
@@ -21,6 +22,8 @@
 		    jQuery(document).ready(function(){
 		    	jQuery(".megamenu").megamenu();
 		    	popUpIds();
+		    	window.onload = function() {
+				};
 		});
 		    
 		    function popUpIds()
@@ -77,12 +80,12 @@
 		<script type="text/javascript">
 		function popImage(path) {
 			
-			$.nmManual('../jobsearch/viewImage.html?id='+path ,  {sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+			$.nmManual('<%= request.getContextPath() %>/jobsearch/viewImage.html?id='+path ,  {sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
 		}
 		
 		function popTestimony(path) {
 			
-			$.nmManual('../jobsearch/viewTestimonial.html?id='+path,  {sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+			$.nmManual('<%= request.getContextPath() %>/jobsearch/viewTestimonial.html?id='+path,  {sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
 		}
 		</script>
   
@@ -90,13 +93,13 @@
     
     <body class="job_board">    
         <div class="ad_page_top">
-			<img src="../resources/images/ads/banner_ad_fpo.png" />
+			<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png" />
         </div>
         
 <div class="main_wrapper_outside">
  <div class="main_wrapper_inside">
  <div class="main">
-            <jsp:include page="../templates/templates_header.jsp"></jsp:include>
+            <jsp:include page="<%= request.getContextPath() %>/templates/templates_header.jsp"></jsp:include>
 				
 
                 <!-- <div class="content_wrapper"> -->
@@ -106,7 +109,7 @@
 			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> 
 			<div class="floatRight">
 				<c:choose><c:when test="${returnResults != 'null'}">
-                   <a href='${pageContext.request.contextPath}/jobsearch/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
+                   <a href='<%= request.getContextPath() %>/jobsearch/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
                 </c:when>
                 <c:otherwise></c:otherwise>
                 </c:choose>
@@ -238,11 +241,11 @@
 										&nbsp;
 										<div id="mediaspacePath" style="display: none;">${videoList[status.index]}</div> 
 										<div name="mediaspace" id="mediaspace"></div> 
-										<script type='text/javascript' src="../resources/js/silverlight.js"></script>
-										<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+										<script type='text/javascript' src="<%= request.getContextPath() %>/resources/js/silverlight.js"></script>
+										<script type='text/javascript' src="<%= request.getContextPath() %>/resources/js/wmvplayer.js"></script>
 										<script type="text/javascript">
 											var cnt = document.getElementById("mediaspace");
-											var src = '../resources/MediaFiles/wmvplayer.xaml';
+											var src = '<%= request.getContextPath() %>/resources/MediaFiles/wmvplayer.xaml';
 											var filePath = $("#mediaspacePath").text();
 											var cfg = {
 												file: filePath,
@@ -333,21 +336,21 @@
                   	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID});">
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, ${jobDetail.JobTitle},'<%= request.getContextPath() %>');">
                     </span>
                     </div>
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-                    <img class="fbook" src="../resources/images/tranBg.png" >
-                     <img class="linkedIn" src="../resources/images/tranBg.png" >
-                     <img class="twitter" src="../resources/images/tranBg.png">
+                    <img class="fbook" src="<%= request.getContextPath() %>/resources/images/tranBg.png" >
+                     <img class="linkedIn" src="<%= request.getContextPath() %>/resources/images/tranBg.png" >
+                     <img class="twitter" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
                       </span>
                     </div>
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-                     <img class="printJBdetail" src="../resources/images/tranBg.png">
+                     <img class="printJBdetail" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
                     </span>
                     </div>
                   </div>
@@ -392,7 +395,7 @@
                         From This Employer </h1>
                             </div>
                     <c:forEach items="${jobDTOList}" var="jobDTO">   
-	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId})">
+	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},${jobDTO.jobTitle})">
 	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
 	                      </a></div>
                     </c:forEach> 
@@ -424,7 +427,7 @@
 		                <br />
 		                <div class="JobDetailHeaderRightView">
 				            <c:if test="${isFeatureEmployer}">
-				            <img src="../resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
+				            <img src="<%= request.getContextPath() %>/resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
 			            </c:if> 
 			            </div>
 		                <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">JOB  SUMMARY:</h3>
@@ -449,21 +452,21 @@
 	                  	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID});">
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, ${jobDetail.JobTitle},'<%= request.getContextPath() %>');">
                     </span>
                     </div>
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-                    <img class="fbook" src="../resources/images/tranBg.png" >
-                     <img class="linkedIn" src="../resources/images/tranBg.png" >
-                     <img class="twitter" src="../resources/images/tranBg.png">
+                    <img class="fbook" src="<%= request.getContextPath() %>/resources/images/tranBg.png" >
+                     <img class="linkedIn" src="<%= request.getContextPath() %>/resources/images/tranBg.png" >
+                     <img class="twitter" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
                       </span>
                     </div>
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-                     <img class="printJBdetail" src="../resources/images/tranBg.png">
+                     <img class="printJBdetail" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
                     </span>
                     </div>
 	                  </div>
@@ -486,13 +489,13 @@
                 <!-- content_wrapper -->
 
                 <div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
+					<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png" />
                 </div><!-- ad_wrapper -->
 
  </div><!-- main -->
  </div> <!-- end main_wrapper_inside -->   
 </div> <!-- end main_wrapper_outside -->
 
-<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
+<jsp:include page="<%= request.getContextPath() %>/templates/templates_footer.jsp"></jsp:include>
     </body>
 </html>

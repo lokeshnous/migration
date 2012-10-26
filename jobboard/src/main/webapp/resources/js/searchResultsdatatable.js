@@ -12,9 +12,9 @@ jQuery(document).ready(function() {
 			});
 
 
-			function sendToFrd(jobId) {	
+			function sendToFrd(jobId,jobtitle,context) {	
 				var currentUrl = window.location.pathname;
-				$.nmManual('../jobsearch/sendtofriend.html?id='+jobId+'&currentUrl='+currentUrl);
+				$.nmManual(context+'/jobsearch/sendtofriend.html?id='+jobId+'&jobtitle='+jobtitle+'&currentUrl='+currentUrl);
 			}
 
 		function validateRadius() {
@@ -30,12 +30,10 @@ jQuery(document).ready(function() {
 		}
 
 		
-		function saveThisJob(jobId) {
-			
+		function saveThisJob(jobId,context) {
 			$.ajax({
-				url : '../jobsearch/saveThisJob.html?id='+jobId,
+				url : context+'/jobsearch/saveThisJob.html?id='+jobId,
 				data : ({
-					userID : "userID"
 				}),
 				success : function(data) {
 					$.each(data, function(key, val) {
@@ -60,11 +58,11 @@ jQuery(document).ready(function() {
 				}
 			});
 		}
-		function applyThisJob(jobId) {
+		function applyThisJob(jobId,context) {
 			$('#topjobActionInfo'+jobId).html("Processing...");
 			$('#topjobActionInfo').html("Processing...");
 			$.ajax({
-				url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
+				url : context+'/jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 				data : ({
 					userID : "userID"
 				}),
@@ -88,7 +86,7 @@ jQuery(document).ready(function() {
 						if (key == "NavigationPath") {
 							$('#topjobActionInfo'+jobId).html("");
 							$('#topjobActionInfo').html("");
-							window.location.href = val;
+							$.nmManual(val);
 						}
 					});
 				},
@@ -268,13 +266,21 @@ jQuery(document).ready(function() {
 					});
 				}
 
-				function viewJobDetails(jobId) {
-					window.location.href = "../jobsearch/viewJobDetails.html?id="
-							+ jobId
-							+ "&currentUrl="
-							+ window.location.pathname
-							+ "&clickType=view";
+				function viewJobDetails(jobId, jobTitle) {
+					jobTitle = jobTitle.toLowerCase();
+					jobTitle = ReplaceAll(jobTitle," ","-");
+					window.location.href = "../jobsearch/viewJobDetails/" + jobId + "/" +jobTitle+ ".html";
 				}
+				
+				function ReplaceAll(Source,stringToFind,stringToReplace){
+					  var temp = Source;
+					    var index = temp.indexOf(stringToFind);
+					        while(index != -1){
+					            temp = temp.replace(stringToFind,stringToReplace);
+					            index = temp.indexOf(stringToFind);
+					        }
+					        return temp;
+					}
 				
 				function getNextPage(page) {
 					var pageSize = $("#noOfPage").val();
@@ -418,9 +424,9 @@ jQuery(document).ready(function() {
 					
 					});
 				} 
-				function btsaveThisJob(jobId) {
+				function btsaveThisJob(jobId,context) {
 					$.ajax({
-						url : '../jobsearch/saveThisJob.html?id='+jobId,
+						url : context+'/jobsearch/saveThisJob.html?id='+jobId,
 						data : ({
 							userID : "userID"
 						}),
@@ -445,10 +451,10 @@ jQuery(document).ready(function() {
 					});
 				}
 
-				function btapplyThisJob(jobId) {
+				function btapplyThisJob(jobId,context) {
 					$('#bottomjobActionInfo').html("Processing...");
 					$.ajax({
-						url : '../jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
+						url : context+'/jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
 						data : ({
 							userID : "userID"
 						}),
@@ -469,7 +475,8 @@ jQuery(document).ready(function() {
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
 									$('#bottomjobActionInfo').html("");
-									window.location.href = val;
+									//window.location.href = val;
+									$.nmManual(val);
 								}
 							});
 						},
@@ -715,8 +722,8 @@ jQuery(document).ready(function() {
 				function searchByLocation(stateFullName){
 					var browseByLocation = $("#browseByLocation").val();
 					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,
-						success: function(data){ 
-									//$("#autoload").val(true);	
+								success: function(data){ 
+									//$("#autoload").val(true);									
 									processPaginationReq("20");
 									$(".otherContent").attr("style","display: none");
 									$(".searchContent").attr("style","display: block");

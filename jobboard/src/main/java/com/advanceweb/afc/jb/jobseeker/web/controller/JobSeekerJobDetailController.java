@@ -26,22 +26,21 @@ import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 
 @Controller
 @RequestMapping(value = "/jobSeekerJobDetail")
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class JobSeekerJobDetailController {
-
-	@Autowired
-	private JobSeekerJobDetailService jobSeekerJobDetailService;
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerJobDetailController.class);
 
+	@Autowired
+	private JobSeekerJobDetailService jobSeekerJobDetailService;
+
 	/**
-	 * this method is used to get the pop up to display all the jobs applied by the corresponding job seeker
+	 * This method is used to get the pop up to display all the jobs applied by the corresponding job seeker
 	 * @param Map model
-	 *  @param HttpSession session
+	 * @param HttpSession session
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/viewAppliedJob")
-	public ModelAndView getAppliedJob(HttpSession session, Map model) {
+	public ModelAndView getAppliedJob(HttpSession session, Map<String, Object> model) {
 		try{
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerJobDetailService
 				.getAppliedJobs((Integer) session
@@ -55,7 +54,7 @@ public class JobSeekerJobDetailController {
 	}
 
 	/**
-	 * this method is used to delete the applied job of the corresponding job seeker and display the remaining jobs in the pop up
+	 * This method is used to delete the applied job of the corresponding job seeker and display the remaining jobs in the pop up
 	 *  @param HttpSession session
 	 *  @param int appliedJobId
 	 *  @param Map model
@@ -64,7 +63,7 @@ public class JobSeekerJobDetailController {
 	@SuppressWarnings({ "unused" })
 	@RequestMapping(value = "/deleteAppliedJob")
 	public ModelAndView deleteAppliedJob(HttpSession session,
-			@RequestParam("appliedJobId") int appliedJobId, Map model) {
+			@RequestParam("appliedJobId") int appliedJobId, Map<String, Object> model) {
 		try{
 		boolean result = jobSeekerJobDetailService.updateAppliedSavedJobs(appliedJobId);
 		List<AppliedJobDTO> appliedJobDTOList = jobSeekerJobDetailService
@@ -79,16 +78,16 @@ public class JobSeekerJobDetailController {
 	}
 
 	/**
-	 * this method is used to delete the saved job of the corresponding job seeker and display the remaining jobs in the pop up
+	 * This method is used to delete the saved job of the corresponding job seeker and display the remaining jobs in the pop up
 	 *  @param HttpSession session
 	 *  @param int jobId
-	 *   * @param Map model
+	 *  @param Map model
 	 * @return ModelAndView
 	 */
 	@SuppressWarnings({ "unused" })
 	@RequestMapping(value = "/deleteSavedJob")
 	public ModelAndView deleteSavedJob(HttpSession session,
-			@RequestParam("appliedJobId") int jobId, Map model) {
+			@RequestParam("appliedJobId") int jobId, Map<String, Object> model) {
 		try{
 		boolean result = jobSeekerJobDetailService.updateAppliedSavedJobs(jobId);
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
@@ -104,13 +103,13 @@ public class JobSeekerJobDetailController {
 	}
 
 	/**
-	 * this method is used to get the pop up to display all the jobs saved by the corresponding job seeker
+	 * This method is used to get the pop up to display all the jobs saved by the corresponding job seeker
 	 * @param Map model
-	 *  @param HttpSession session
+	 * @param HttpSession session
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/viewSavedJob")
-	public ModelAndView getSavedJob(HttpSession session, Map model) {
+	public ModelAndView getSavedJob(HttpSession session, Map<String, Object> model) {
 		try{
 		List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
 				.getSavedJobs((Integer) session
@@ -133,7 +132,7 @@ public class JobSeekerJobDetailController {
 	 */
 	
 	@RequestMapping(value = "/viewResumeCount")
-	public ModelAndView viewResumeCount(HttpSession session, Map model) {
+	public ModelAndView viewResumeCount(HttpSession session, Map<String, Object> model) {
 		List<Integer> empResumeViews = jobSeekerJobDetailService
 				.getEmployerViews((Integer) session
 						.getAttribute(MMJBCommonConstants.USER_ID));

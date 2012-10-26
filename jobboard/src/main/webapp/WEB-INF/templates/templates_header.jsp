@@ -27,8 +27,24 @@ html.busy, html.busy * {
 
 <body class="job_board">
 	<div class="header_wrapper">
+	<c:choose>
+	<c:when test="${homePage}">
+		<h1 class="logo">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/advanceweb.html" title="Advance Healthcare Jobs">
+		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
+		</a>
+		</h1> 
+	</c:when>
+	<c:otherwise>
+		<h3 class="logo">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/advanceweb.html" title="Advance Healthcare Jobs">
+		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
+		</a>
+		</h3> 
+	</c:otherwise>
+	</c:choose>
 		
-			<div class="logo"></div>
+			<%-- <div class="logo"><img src="<%=request.getContextPath() %>/resources/images/tranBg.png" width="397px" height="70px" alt="advanceweb.com"></img></div> --%>
 		
 		<div class="headerLoginSection">
 			<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
@@ -128,7 +144,7 @@ html.busy, html.busy * {
 				<div class="headerLoginSectionColumns width205">
 					<span class="boldText">Job Seeker:</span><br>
 					<div class="PopUpToolTip">
-						<a href="#">Why <strong>advance</strong>?
+						<a href="#" rel="nofollow,noindex">Why <strong>advance</strong>?
 						</a> <span class="classic01">
 							<p class="FontWeight marginBottom10">When you sign up,
 								ADVANCE gives you:</p>

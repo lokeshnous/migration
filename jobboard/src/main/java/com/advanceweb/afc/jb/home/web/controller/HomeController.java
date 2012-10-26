@@ -10,7 +10,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -103,9 +105,9 @@ public class HomeController extends AbstractController{
 	@Autowired
 	private AdService adService;
 	
-//	@Autowired
-//	@Resource(name = "seoConfiguration")
-//	private Properties seoConfiguration;
+	@Autowired
+	@Resource(name = "seoConfiguration")
+	private Properties seoConfiguration;
 
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
@@ -195,7 +197,7 @@ public class HomeController extends AbstractController{
 					+ e);
 		}
 		// Get the SEO Details
-		//getSEODetails(model,request);
+		getSEODetails(model,request);
 		return "home";
 	}
 	
@@ -206,16 +208,16 @@ public class HomeController extends AbstractController{
 	 * @param request 
 	 * @param jobDTO 
 	 */
-//	private void getSEODetails(Model model,
-//			HttpServletRequest request) {		
-//		String metaDesc = seoConfiguration
-//				.getProperty("homepage.meta.description");
-//		String metaTitle = seoConfiguration
-//				.getProperty("homepage.meta.title");
-//		model.addAttribute("metaDesc", metaDesc);
-//		model.addAttribute("metaTitle", metaTitle);
-//		model.addAttribute("canonicalUrl", request.getRequestURL());
-//	}
+	private void getSEODetails(Model model,
+			HttpServletRequest request) {		
+		String metaDesc = seoConfiguration
+				.getProperty("homepage.meta.description");
+		String metaTitle = seoConfiguration
+				.getProperty("homepage.meta.title");
+		model.addAttribute("metaDesc", metaDesc);
+		model.addAttribute("metaTitle", metaTitle);
+		model.addAttribute("canonicalUrl", request.getRequestURL());
+	}
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,

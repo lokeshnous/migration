@@ -1,15 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-</head>
-		<body class="job_board">
-
               <div class="mainTwo" >
               <div class="row">
                             <div class="job_search_main job_search_main_height" style="margin-right: 10px;">
@@ -74,7 +65,7 @@
 						<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
 							<a title="Coming Soon" href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-								onclick="postYourResume();" class="cursor">Post Your Resume</a>
+							 rel="nofollow,noindex"	onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
 					</div>
 					<!-- search_form -->
@@ -146,13 +137,12 @@
             </form:form>    
                 <%-- </form> --%>
                 </div>
-              <div class="ad_col_right"> <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
-        
+              <div class="ad_col_right">
+              <!--  <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" /> -->
+              ${adPageTopRight}        
               </div>
               </div>
             
 
     </div>
     <!-- main --> 
-</body>
-</html>

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Component;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
-import com.advanceweb.afc.jb.login.web.controller.LoginForm;
 
 /**
  * 
@@ -29,9 +29,6 @@ public class JobSearchValidator {
 
 	private static final String CURRENT_URL = "currentUrl";
 
-	@Value("${navigationPath}")
-	private String navigationPath;
-
 	@Value("${ajaxMsg}")
 	private String ajaxMsg;
 
@@ -40,9 +37,6 @@ public class JobSearchValidator {
 
 	@Value("${ajaxNavigationPath}")
 	private String ajaxNavigationPath;
-
-	@Value("${jobseekerPageExtention}")
-	private String jobseekerPageExtention;
 
 	@Value("${jobSearchValidateKeyword}")
 	private String jbSearchValKeyword;
@@ -83,15 +77,17 @@ public class JobSearchValidator {
 	 * @param currentUrl
 	 * @param session
 	 * @param jsonObject
+	 * @param request 
 	 */
 	public boolean isLoggedIn(Map<String, Object> map, int jobId,
-			String currentUrl, HttpSession session, JSONObject jsonObject) {
+			String currentUrl, HttpSession session, JSONObject jsonObject,
+			HttpServletRequest request) {
 		boolean status = true;
 		// Check for job seeker login
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-			map.put("loginForm", new LoginForm());
-			jsonObject.put(ajaxNavigationPath, navigationPath
-					+ dothtmlExtention + jobseekerPageExtention);
+			//map.put("loginForm", new LoginForm());
+			jsonObject.put(ajaxNavigationPath, request.getContextPath()
+					+ "/jobsearch/jobseekerApplyJobPopUp"+dothtmlExtention);
 			session.setAttribute("jobId", jobId);
 			session.setAttribute(CURRENT_URL, currentUrl);
 			status = false;

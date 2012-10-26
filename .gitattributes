@@ -592,6 +592,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/CopyUtil.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/PDFGenerator.java -text svneol=unset#text/plain
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadDocFile.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
+jobboard/src/main/resources/SEO.properties -text
 jobboard/src/main/resources/common.properties -text
 jobboard/src/main/resources/database.properties -text
 jobboard/src/main/resources/jobboard-scheduler.properties -text
@@ -686,6 +687,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsHeader.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresultsresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresumeheader.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresumeresultbody.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobseekerApplyJobPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerCreateCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerEditProfileSettings.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobseekerJobDetails.jsp -text

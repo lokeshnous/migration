@@ -1,20 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
                                                   prefix="fn" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-		<head>		
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-<script type="text/javascript"  src="../resources/js/widgets.js"></script>
-<script src="../resources/js/FB.Share" type="text/javascript"></script>
-<script src="../resources/js/in.js" type="text/javascript"></script>
+<script type="text/javascript"  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
 
-</head>
-
-		<body>
 		<c:choose>
 		<c:when test="${jobTitlePage}">
 			<jsp:include page="browseByJobTitle.jsp"></jsp:include>
@@ -44,7 +36,7 @@
 							<div class="floatLeft width100P">
 								<h1>
 								<c:if test="${totalNoOfRecords != null}">
-									<span>${totalNoOfRecords}</span> jobs match your search criteria.
+									<span>${totalNoOfRecords}</span> ${jobSearchResultForm.keywords} jobs match your search criteria.
 								</c:if>
 								</h1>
 							</div>
@@ -61,7 +53,7 @@
 									<div class="buttonRow">
 										${item.value}
 										<div class="floatRight">
-											<a onclick="deleteCurrentSearch('${item.key}','${item.value}')" class="cursor"><img src="../resources/images/Close.png"
+											<a onclick="deleteCurrentSearch('${item.key}','${item.value}')" class="cursor"><img src="<%=request.getContextPath()%>/resources/images/Close.png"
 												alt="close" width="15" height="15"> </a>
 										</div>
 									</div>
@@ -228,7 +220,7 @@
 						<c:if test="${currentPage > 9 && noOfPages gt 10}">
 							<td><a class="cursor"
 								onclick="getPrevPages(${begin - 10}, ${begin-10});">
-									<img src="../resources/images/ArrowLeft.png"> Previous
+									<img src="<%=request.getContextPath()%>/resources/images/ArrowLeft.png"> Previous
 							</a></td>
 						</c:if>
 
@@ -245,7 +237,7 @@
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
            				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});" class="cursor"
-							>Next<img src="../resources/images/ArrowRight.png">
+							>Next<img src="<%=request.getContextPath()%>/resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
        					</c:if>     		 
@@ -307,15 +299,17 @@
 
 								<div class="searchResultsSubContentButtonArea">
 									<div class="searchResultsSubContentButtons">
-										<a onclick="applyThisJob(${job.JobId});" class="btn_sm white"
+										<a onclick="applyThisJob(${job.JobId},'<%= request.getContextPath() %>');" class="btn_sm white"
 											id="applyJobid${job.JobId}">Apply</a>
 									</div>
 									<div class="searchResultsSubContentButtons">
-										<a onclick="viewJobDetails(${job.JobId})" class="btn_sm white">View
+										<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/viewJobDetails/
+										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+                                					' ', '-'))}.html" class="btn_sm white">View
 											Details</a>
 									</div>
 									<div class="searchResultsSubContentButtons">
-										<a onclick="saveThisJob(${job.JobId})"
+										<a onclick="saveThisJob(${job.JobId},'<%= request.getContextPath() %>')"
 											id="saveThisJobId${job.JobId}"
 											class="btn_sm white">Save This Job</a>
 									</div>
@@ -323,11 +317,11 @@
 								<div class="featured_empButton">
 									<c:choose>
 										<c:when test="${job.IsFeatured}">
-											<!-- <a href=""> --><img src="../resources/images/FeaturedEmp.png"
+											<!-- <a href=""> --><img src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
 												alt="featured emp Button" width="164" height="23"><!-- </a> -->
 										</c:when>
 										<c:otherwise>
-											<img src="../resources/images/tranBg.png"
+											<img src="<%=request.getContextPath()%>/resources/images/tranBg.png"
 												alt="featured emp Button" width="164" height="23">
 										</c:otherwise>
 									</c:choose>
@@ -335,7 +329,7 @@
 
 								<div class="ShareSearch">
 									<span class="ShareText"> Send to
-										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId});"><span
+										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId},, ${job.JobTitle},'<%= request.getContextPath() %>');"><span
 												class="email"></span></a></span>
 								</div>
 
@@ -373,7 +367,7 @@
 						</div>
 				<c:if test="${(status.index + 1) % 10 == 0}">
 					<div class="ad_wrapper">
-						<img src="../resources/images/ads/banner_ad_fpo.png">
+						<img src="<%=request.getContextPath()%>/resources/images/ads/banner_ad_fpo.png">
 					</div>
 				</c:if>
 			</c:forEach>
@@ -414,7 +408,7 @@
 						<c:if test="${currentPage > 9 && noOfPages gt 10}">
 							<td><a class="cursor"
 								onclick="getPrevPages(${begin - 10}, ${begin-10});">
-									<img src="../resources/images/ArrowLeft.png"> Previous
+									<img src="<%=request.getContextPath()%>/resources/images/ArrowLeft.png"> Previous
 							</a></td>
 						</c:if>
 
@@ -431,7 +425,7 @@
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
            				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});"
-							class="cursor">Next<img src="../resources/images/ArrowRight.png">
+							class="cursor">Next<img src="<%=request.getContextPath()%>/resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
        					</c:if>   
@@ -448,5 +442,3 @@
 					</c:otherwise>
 		</c:choose>
 		<div class="clearfix"></div>
-</body>
-</html>

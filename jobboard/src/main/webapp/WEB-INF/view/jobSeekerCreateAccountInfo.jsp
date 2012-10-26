@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="noindex, follow"> 
 <title>ADVANCE Heathcare Jobs</title>
 <!-- JAVASCRIPT FILES -->
 <jsp:include page="common/include.jsp" />

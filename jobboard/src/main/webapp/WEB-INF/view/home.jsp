@@ -7,10 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
-<title>ADVANCE Heathcare Jobs</title>
-<%-- <title>Jobs in Healthcare - Advance Healthcare Jobs</title>
+
+<!-- <title>ADVANCE Heathcare Jobs</title> -->
+<title>${metaTitle}</title>
 <meta name="description" content="${metaDesc}"> 
-		<link href="${canonicalUrl}" rel="canonical" /></head> --%>
+		<link href="${canonicalUrl}" rel="canonical" /></head>
+
+
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
@@ -60,8 +63,7 @@ type="text/css">
 						src="../resources/images/ads/300x250ad2.png" /> 
 						<%-- ${adPageTopRight} --%>
 					<div class="follow_us">
-						<!-- <h3>Follow Us</h3> -->
-						<h2>Follow Us</h2>
+						<h2>Follow Us</h2> 
 						<p>Stay connected to the latest jobs.</p>
 						<a href="${followuplinkfacebook}" target="_blank">
 							<div class="social facebook_link">Facebook</div>
@@ -79,21 +81,15 @@ type="text/css">
 				<div class="content_columns">
 					<div title="Coming Soon" class="column1">
 						<a href="">
-							<!-- <h3 class="more_link">
-								Career Tools<span>More</span>
-							</h3> -->
 							<h2 class="more_link">
 								Career Tools<span>More</span>
-							</h2>
+							</h2> 
 						</a> ${careerstoolresource}
 					</div>
 					<!-- column1 -->
 
 					<div class="column2">
 						<a href="featuredemployers.html">
-							<!-- <h3 class="more_link">
-								Featured Employers<span>More</span>
-							</h3> -->
 							<h2 class="more_link">
 								Featured Employers<span>More</span>
 							</h2>

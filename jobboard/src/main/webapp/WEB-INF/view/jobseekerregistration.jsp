@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>JobSeekerRegistration</title>
+<meta name="robots" content="noindex, follow"> 
 	<link rel="stylesheet" href="../tabs.css" type="text/css" media="screen, projection"/>
 	<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" ></script>
