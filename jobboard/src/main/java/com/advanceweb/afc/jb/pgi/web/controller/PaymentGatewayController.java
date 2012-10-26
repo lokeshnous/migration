@@ -24,6 +24,8 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
+import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
+import com.advanceweb.afc.jb.employer.web.controller.ResumeSearchPackageForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
@@ -39,6 +41,7 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 @SessionAttributes("paymentGatewayForm")
 public class PaymentGatewayController {
 
+	
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayController.class);
 	
@@ -69,7 +72,7 @@ public class PaymentGatewayController {
 	
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
-			HttpSession session) {
+			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType) {
 		ModelAndView model = new ModelAndView();
 		
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
@@ -81,9 +84,18 @@ public class PaymentGatewayController {
 		
 		invoiceForm.setInvoiceEnabled(userDTO.isInvoiceEnabled());
 		paymentGatewayForm.setInvoiceForm(invoiceForm);
+		
+		paymentGatewayForm.setPurchaseType(purchaseType);
+		
 		model.addObject(PAYMENT_GATEWAY_FORM,paymentGatewayForm);
 		
-		paymentGatewayForm.setPurchaseJobPostForm((PurchaseJobPostForm)session.getAttribute("purchaseJobPostForm"));
+		if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(paymentGatewayForm.getPurchaseType())){
+			paymentGatewayForm.setPurchaseResumeSearchForm(
+					(PurchaseResumeSearchForm)session.getAttribute(MMJBCommonConstants.PURCHASE_RESUME_SEARCH_FORM));
+		}else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(paymentGatewayForm.getPurchaseType())){
+			paymentGatewayForm.setPurchaseJobPostForm(
+					(PurchaseJobPostForm)session.getAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM));
+		}
 		model.setViewName(GATEWAY_PAYMENT_FORM);
 		return model;
 	}
@@ -248,15 +260,14 @@ public class PaymentGatewayController {
 			HttpSession session) {
 		PaymentGatewayForm paymentGatewayForm=paymentGatewayFormP;
 		ModelAndView model = new ModelAndView();
+		paymentGatewayForm = clearSessionFormData(session, paymentGatewayForm);
 		
-		session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
-		paymentGatewayForm = new PaymentGatewayForm();
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return 	model;
 	}
-	
+
 	/**
 	 * This method will be called to remove the item from job posting cart
 	 * @param cartItemIndex
@@ -266,11 +277,20 @@ public class PaymentGatewayController {
 	@RequestMapping(value="/removeJobPost",method = RequestMethod.GET)
 	public ModelAndView removeJobPost(PaymentGatewayForm paymentGatewayForm,
 			@RequestParam("cartItemIndex") int cartItemIndex, HttpSession session) {
-		PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();		
-		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
-		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
-		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		ModelAndView model = new ModelAndView();
+		if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(paymentGatewayForm.getPurchaseType())){
+			PurchaseResumeSearchForm purchaseResumeSearchForm = paymentGatewayForm.getPurchaseResumeSearchForm(); 
+			ResumeSearchPackageForm cartItem = purchaseResumeSearchForm.getResumeSearchPackageCart().get(cartItemIndex);
+			purchaseResumeSearchForm.setGrandTotal(purchaseResumeSearchForm.getGrandTotal()- cartItem.getPackageTotal());
+			purchaseResumeSearchForm.getResumeSearchPackageCart().remove(cartItemIndex);
+		}
+		else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(paymentGatewayForm.getPurchaseType())){
+			PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();		
+			JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
+			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
+			purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
+		}
+		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName("redirect:/pgiController/backToConfirmOrder.html");
 		return 	model;
@@ -279,7 +299,8 @@ public class PaymentGatewayController {
 	@RequestMapping(value="/placeOrder",method = RequestMethod.POST)
 	public ModelAndView placeOrder(PaymentGatewayForm paymentGatewayFormP, HttpSession session) {
 		PaymentGatewayForm paymentGatewayForm = paymentGatewayFormP;
-		//call web service here. If order success save order details in db & move to Thank you page else move to error page
+		//call web service here. If order success save order details in db & 
+		//move to Thank you page else move to error page
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
 		
 		orderDetailsDTO = transformPaymentMethod.transformToOrderDetailsDTO(paymentGatewayForm);
@@ -301,11 +322,7 @@ public class PaymentGatewayController {
 		if(netSuiteStatus == MMJBCommonConstants.STATUS_CODE_200){
 			LOGGER.info(statusCode.get(netSuiteStatus));
 			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);	
-			//once the payment is success clear out the form data & related session data
-			session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
-			//clear out all the form data
-			paymentGatewayForm = new PaymentGatewayForm();
-						
+			paymentGatewayForm = clearSessionFormData(session, paymentGatewayForm);
 		}
 		else
 		{   
@@ -354,22 +371,36 @@ public class PaymentGatewayController {
 				default:
 						LOGGER.info(statusCode.get(netSuiteStatus));
 						model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);	
-						//once the payment is success clear out the form data & related session data
-						session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
-						//clear out all the form data
-						paymentGatewayForm = new PaymentGatewayForm();
+						paymentGatewayForm = clearSessionFormData(session,paymentGatewayForm);
 			}
 			
 			if(netSuiteStatus != MMJBCommonConstants.STATUS_CODE_400){
-				//once the payment is success clear out the form data & related session data
-				session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
-					paymentGatewayForm = new PaymentGatewayForm();
+				paymentGatewayForm = clearSessionFormData(session,
+						paymentGatewayForm);
 			}		
 		}
 		model.addObject("errorMessage", errorMessage);		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(THANK_YOU_FORM);
 		return model;
+	}
+	
+	/**
+	 * @param session
+	 * @param paymentGatewayForm
+	 * @return
+	 */
+	private PaymentGatewayForm clearSessionFormData(HttpSession session, PaymentGatewayForm paymentGatewayFormP) {
+		PaymentGatewayForm paymentGatewayForm = paymentGatewayFormP;
+		//once the payment is success clear out the form data & related session data
+		if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(paymentGatewayForm.getPurchaseType())){
+			session.removeAttribute(MMJBCommonConstants.PURCHASE_RESUME_SEARCH_FORM);
+		}else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(paymentGatewayForm.getPurchaseType())){
+			session.removeAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM);
+		}
+		//clear out all the form data		
+		paymentGatewayForm = new PaymentGatewayForm();
+		return paymentGatewayForm;
 	}
 
 }

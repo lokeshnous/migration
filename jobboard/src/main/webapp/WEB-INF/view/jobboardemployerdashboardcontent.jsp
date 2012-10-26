@@ -27,6 +27,8 @@
 						"370");
 				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings",
 						"790", "360");
+				$("#purchaseResumeSearch").displaypopup("#purchaseResumeSearch",
+						"790", "360");
 				$("#accessPermissioPopUp").displaypopup(
 						"#accessPermissioPopUp", "770", "360");
 				$("#setAlertPopUp")
@@ -229,7 +231,7 @@
 								<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 								<div class="lableTextDashBoard">
 									<p>
-										<a title="Coming Soon" href="">Purchase Resume Search
+										<a href="<%=request.getContextPath()%>/purchaseResumeSearch/showResumeSearchPachages.html" id="purchaseResumeSearch" >Purchase Resume Search
 											Packages</a>
 									</p>
 								</div>

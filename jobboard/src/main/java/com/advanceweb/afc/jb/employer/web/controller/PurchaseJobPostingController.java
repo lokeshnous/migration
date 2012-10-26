@@ -210,7 +210,7 @@ public class PurchaseJobPostingController {
 		ModelAndView model = new ModelAndView();
 		session.setAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 
-		model.setViewName("redirect:/pgiController/callPaymentMethod.html");
+		model.setViewName("redirect:/pgiController/callPaymentMethod.html?purchaseType=jobPost");
 		return model;
 	}
 }

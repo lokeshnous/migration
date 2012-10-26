@@ -67,6 +67,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ReferenceDTO.java -te
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResCoverLetterDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeAttribListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumePackageDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeVisibilityDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SalesItemDTO.java -text
@@ -132,6 +133,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/FacilityServi
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ResumePackageService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateServiceImpl.java -text
@@ -139,6 +141,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/Employer
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerNewsFeedServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/FacilityServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeatureEmployerDelegateImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ResumePackageServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/job/service/Job.java -text
@@ -239,6 +242,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/postjobs/JobPostServi
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/BrandTemplateServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/EmployerRegistrationTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ResumeSearchPackageTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerJobDetailServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/SaveSearchServiceTest.java -text
@@ -297,6 +301,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderAddress.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderHeader.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderItem.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmOrderPayment.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmPackage.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmPermission.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmPurchaseHistory.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/AdmRole.java -text
@@ -405,12 +410,15 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmpl
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageJobSeekerDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageJobSeekerDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ResumePackageDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ResumePackageDAOimpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/BrandTemplateConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmpConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/EmployerRegistrationConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/FacilityConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobPostConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/JobSeekerConversionHelper.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/ResumePackageConvertionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/helper/ResumeSearchConversionHelper.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/event/dao/ClickDAOImpl.java -text
@@ -502,10 +510,14 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ManageFacil
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/MetricsForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseJobPostingController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseResumeSearchController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/PurchaseResumeSearchForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/ResumeSearchPackageForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TestimonyForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerBrandTemplate.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformEmployerRegistration.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformJobPost.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/TransformResumePackage.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/UserAlertForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/VideoForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/home/web/controller/ClickController.java -text
@@ -640,6 +652,7 @@ jobboard/src/main/webapp/WEB-INF/view/editCopyPasteResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editUploadResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empPurchaseJobPostingsPopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/empPurchaseResumeSearchPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empSaveThisSearchPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/empSavedResumeSearchPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/employerDashboard.jsp -text

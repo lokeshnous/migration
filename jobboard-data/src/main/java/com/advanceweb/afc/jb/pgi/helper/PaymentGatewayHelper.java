@@ -9,6 +9,7 @@ import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderPaymentDTO;
+import com.advanceweb.afc.jb.common.ResumePackageDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -175,6 +176,33 @@ public class PaymentGatewayHelper {
 				admOrderItem.setItemNumber(itemNumber);
 				admOrderItemList.add(admOrderItem);
 			}
+		}
+		return admOrderItemList;
+	}
+	
+	/**
+	 * @param admOrderHeader
+	 * @param resSearchPackageDTOList
+	 * @return
+	 */
+	public List<AdmOrderItem> transformToAdmOrderItemList(AdmOrderHeader admOrderHeader,String orderStatusStr, List<ResumePackageDTO> resSearchPackageDTOList){
+		
+		List<AdmOrderItem> admOrderItemList = new ArrayList<AdmOrderItem>();
+		AdmOrderItem admOrderItem = null;
+		int itemNumber = 0;
+		
+		for(ResumePackageDTO resSearchPackageDTO : resSearchPackageDTOList){
+			admOrderItem = new AdmOrderItem();
+			
+			admOrderItem.setAdmOrderHeader(admOrderHeader);
+			admOrderItem.setPrice(resSearchPackageDTO.getPriceAmt());
+			admOrderItem.setProductId(resSearchPackageDTO.getPackageId());
+			admOrderItem.setProductType(resSearchPackageDTO.getPackageType());
+			admOrderItem.setProductName(resSearchPackageDTO.getPackageName());
+			admOrderItem.setQtyOrdered(resSearchPackageDTO.getQuantity());
+			admOrderItem.setOrderStatus(orderStatusStr);
+			admOrderItem.setItemNumber(++itemNumber);
+			admOrderItemList.add(admOrderItem);
 		}
 		return admOrderItemList;
 	}

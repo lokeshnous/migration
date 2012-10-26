@@ -18,6 +18,7 @@ import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
+import com.advanceweb.afc.jb.common.ResumePackageDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -201,9 +202,19 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 				orderStatusStr = ORDER_STATUS_FAILURE;
 			}
 			
-			List<AdmOrderItem> admOrderItemList = paymentGatewayHelper
-					.transformToAdmOrderItemList(admOrderHeader,
+			List<AdmOrderItem> admOrderItemList = null; 
+			
+			if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(orderDetailsDTO.getPurchaseType())){
+				admOrderItemList = paymentGatewayHelper
+						.transformToAdmOrderItemList(admOrderHeader,orderStatusStr,
+							orderDetailsDTO.getResSearchPackageDTOList());
+			}
+			else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(orderDetailsDTO.getPurchaseType())){
+				admOrderItemList = paymentGatewayHelper
+						.transformToAdmOrderItemList(admOrderHeader,
 							orderDetailsDTO.getJobPostingPlanDTOList(),orderStatusStr);
+			}
+			
 			admOrderHeader.setAdmOrderItem(admOrderItemList);
 
 			AdmOrderAddress admOrderAddress = paymentGatewayHelper
@@ -219,7 +230,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			}
 
 			admOrderHeader.setOrderDate(new Date());
-			admOrderHeader.setOrderTotal(orderDetailsDTO.getOrderTotal());
+			admOrderHeader.setOrderTotal(orderDetailsDTO.getOrderTotal()); 
 			
 			admOrderHeader.setStatus(orderStatusStr);
 
@@ -255,18 +266,34 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 				AdmFacility admFacility = new AdmFacility();
 				admFacility.setFacilityId(orderDetailsDTO.getFacilityId());
 				int orderId = orderDetailsDTO.getOrderId();
-				
-				for(JobPostingPlanDTO jobPostingPlanDTO : orderDetailsDTO.getJobPostingPlanDTOList()){
+				if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(orderDetailsDTO.getPurchaseType())){
 					
-					admFacilityInventory = new AdmFacilityInventory();
-					admFacilityInventory.setOrderId(orderId);
-					admFacilityInventory.setAdmFacility(admFacility);
-					admFacilityInventory.setCreateDt(new Date());
-					
-					AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,jobPostingPlanDTO);
-					admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
-					admFacilityInventoryList.add(admFacilityInventory);
+					for(ResumePackageDTO resSearchPackageDTO : orderDetailsDTO.getResSearchPackageDTOList()){
+						
+						admFacilityInventory = new AdmFacilityInventory();
+						admFacilityInventory.setOrderId(orderId);
+						admFacilityInventory.setAdmFacility(admFacility);
+						admFacilityInventory.setCreateDt(new Date());
+						
+						AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,resSearchPackageDTO);
+						admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
+						admFacilityInventoryList.add(admFacilityInventory);
+					}
 				}
+				else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(orderDetailsDTO.getPurchaseType())){
+						
+					for(JobPostingPlanDTO jobPostingPlanDTO : orderDetailsDTO.getJobPostingPlanDTOList()){
+						
+						admFacilityInventory = new AdmFacilityInventory();
+						admFacilityInventory.setOrderId(orderId);
+						admFacilityInventory.setAdmFacility(admFacility);
+						admFacilityInventory.setCreateDt(new Date());
+						
+						AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,jobPostingPlanDTO);
+						admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
+						admFacilityInventoryList.add(admFacilityInventory);
+					}
+				}	
 				hibernateTemplate.saveOrUpdateAll(admFacilityInventoryList);
 		} catch (Exception e) {
 			LOGGER.error("ERROR : " + e);
@@ -315,6 +342,23 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			}
 			admInventoryDetail.setOrderQty(jobPostingPlanDTO.getQuanity());
 			admInventoryDetail.setAvailableqty(jobPostingPlanDTO.getQuanity());
+		return admInventoryDetail;
+	}
+	
+	/**
+	 * @param admFacilityInventory
+	 * @param resSearchPackageDTO
+	 * @return admInventoryDetail
+	 */
+	private AdmInventoryDetail transformToAdmInventoryDetail(AdmFacilityInventory admFacilityInventory, ResumePackageDTO resSearchPackageDTO){
+		 AdmInventoryDetail admInventoryDetail = new AdmInventoryDetail();
+			
+		admInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
+		admInventoryDetail.setProductId(resSearchPackageDTO.getPackageId());
+		admInventoryDetail.setProductType(MMJBCommonConstants.RESUME_SEARCH_PACKAGE);
+		admInventoryDetail.setOrderQty(resSearchPackageDTO.getQuantity());
+		admInventoryDetail.setAvailableqty(resSearchPackageDTO.getQuantity());
+		
 		return admInventoryDetail;
 	}
 }

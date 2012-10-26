@@ -380,6 +380,13 @@ public interface MMJBCommonConstants {
 	String BASIC_JOB_TYPE = "Basic";
 	String INVENTORY = "inventoryPage";
 	String PURCHASE_JOB_POST_FORM = "purchaseJobPostForm";
+	String PURCHASE_RESUME_SEARCH_FORM = "purchaseResumeSearchForm";
+	//Purchase types 
+	String PURCHASE_JOB_POST = "jobPost";
+	String PURCHASE_RESUME_SEARCH = "resumeSearch";
+	//Product type
+	String RESUME_SEARCH_PACKAGE = "RESUME_SEARCH";
+
 	int PLAN_DAYS = 30;
 	String TOTAL_ACTIVE_JOB_STRING = "TotalNoOfActiveJobs";
 	String POST_JOB_PAGE = "postJobPage";

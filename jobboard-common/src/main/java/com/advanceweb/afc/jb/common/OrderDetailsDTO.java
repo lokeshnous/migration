@@ -17,12 +17,14 @@ public class OrderDetailsDTO {
 	private int facilityId;
 	private int nsCustomeId;
 	private List<JobPostingPlanDTO> jobPostingPlanDTOList;
+	private List<ResumePackageDTO> resSearchPackageDTOList;
 	private AccountAddressDTO orderAddressDTO;
 	private OrderPaymentDTO orderPaymentDTO;
 	private SalesOrderDTO salesOrderDTO;
 	private int orderId;
-	private int orderTotal;
+	private float orderTotal;
 	private int orderStatus;
+	private String purchaseType;
 	
 	public int getUserId() {
 		return userId;
@@ -67,10 +69,10 @@ public class OrderDetailsDTO {
 	public void setSalesOrderDTO(SalesOrderDTO salesOrderDTO) {
 		this.salesOrderDTO = salesOrderDTO;
 	}
-	public int getOrderTotal() {
+	public float getOrderTotal() {
 		return orderTotal;
 	}
-	public void setOrderTotal(int orderTotal) {
+	public void setOrderTotal(float orderTotal) {
 		this.orderTotal = orderTotal;
 	}
 	public int getOrderStatus() {
@@ -84,5 +86,18 @@ public class OrderDetailsDTO {
 	}
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
+	}
+	public List<ResumePackageDTO> getResSearchPackageDTOList() {
+		return resSearchPackageDTOList;
+	}
+	public void setResSearchPackageDTOList(
+			List<ResumePackageDTO> resSearchPackageDTOList) {
+		this.resSearchPackageDTOList = resSearchPackageDTOList;
+	}
+	public String getPurchaseType() {
+		return purchaseType;
+	}
+	public void setPurchaseType(String purchaseType) {
+		this.purchaseType = purchaseType;
 	}
 }

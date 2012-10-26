@@ -10,12 +10,15 @@ import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.OrderPaymentDTO;
+import com.advanceweb.afc.jb.common.ResumePackageDTO;
 import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.common.SalesOrderDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.AddOnForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
+import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
+import com.advanceweb.afc.jb.employer.web.controller.ResumeSearchPackageForm;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 
 /**
@@ -133,7 +136,7 @@ public class TransformPaymentMethod {
 	}
 	
 	/**
-	 * This method will transform paymentGatewayForm OrderDetailsDTO
+	 * This method will transform paymentGatewayForm to OrderDetailsDTO
 	 * @param paymentGatewayForm
 	 * @return orderDetailsDTO
 	 */
@@ -141,35 +144,57 @@ public class TransformPaymentMethod {
 		
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
 		
-		PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();
+		List<SalesItemDTO> salesItemDTOList = new ArrayList<SalesItemDTO>();
 		
-		List<JobPostingPlanDTO> jobPostingPlanDTOList = transformTojobPostingPlanDTOList(purchaseJobPostForm.getJobPostingsCart());
-		orderDetailsDTO.setJobPostingPlanDTOList(jobPostingPlanDTOList);
+		OrderPaymentDTO orderPaymentDTO = new OrderPaymentDTO();
+		
+		if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(paymentGatewayForm.getPurchaseType())){
+			PurchaseResumeSearchForm purchaseResumeSearchForm = paymentGatewayForm.getPurchaseResumeSearchForm();
+			
+			List<ResumePackageDTO> resSearchPackageDTOList = transformToResSearchPackageDTOList(purchaseResumeSearchForm.getResumeSearchPackageCart());
+			orderDetailsDTO.setResSearchPackageDTOList(resSearchPackageDTOList);
+			
+			salesItemDTOList = transformToSaleItemDTO(purchaseResumeSearchForm.getResumeSearchPackageCart());
+			
+			orderPaymentDTO.setPaidAmount(String.valueOf(purchaseResumeSearchForm.getGrandTotal()));
+			
+			orderDetailsDTO.setOrderTotal(purchaseResumeSearchForm.getGrandTotal());
+		}
+		else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(paymentGatewayForm.getPurchaseType())){
+			
+			PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();
+			
+			List<JobPostingPlanDTO> jobPostingPlanDTOList = transformTojobPostingPlanDTOList(purchaseJobPostForm.getJobPostingsCart());
+			orderDetailsDTO.setJobPostingPlanDTOList(jobPostingPlanDTOList);
+			
+			salesItemDTOList = transformToSalesItemDTO(purchaseJobPostForm.getJobPostingsCart());
+			
+			orderPaymentDTO.setPaidAmount(String.valueOf(purchaseJobPostForm.getGrandTotal()));
+			
+			orderDetailsDTO.setOrderTotal(purchaseJobPostForm.getGrandTotal());
+		}
 		
 		AccountAddressDTO accountAddressDTO = transformToAccountAddressDTO(paymentGatewayForm.getBillingAddressForm());
 		orderDetailsDTO.setOrderAddressDTO(accountAddressDTO);
 		
 		//payment detail will come from netsuite  
-		OrderPaymentDTO orderPaymentDTO = new OrderPaymentDTO();
 		orderPaymentDTO.setMethod(paymentGatewayForm.getPaymentMethod());
 		
 		if(MMJBCommonConstants.INVOICE.equals(orderPaymentDTO.getMethod())){
 			orderPaymentDTO.setPaymentNumber(paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo());
 		}	
-		orderPaymentDTO.setPaidAmount(String.valueOf(purchaseJobPostForm.getGrandTotal()));
+		
 		orderDetailsDTO.setOrderPaymentDTO(orderPaymentDTO);
 		
-		SalesOrderDTO salesOrderDTO = transformTopaymentGatewayForm(paymentGatewayForm);
+		SalesOrderDTO salesOrderDTO = transformToSalesOrderDTO(paymentGatewayForm);
 		salesOrderDTO.setCcStreet(accountAddressDTO.getStreetAddress());
 		salesOrderDTO.setCcZipcode(accountAddressDTO.getZipCode());
 		orderDetailsDTO.setSalesOrderDTO(salesOrderDTO);
 		
-		
-		List<SalesItemDTO> salesItemDTOList = transformToSalesItemDTO(purchaseJobPostForm.getJobPostingsCart());
 		salesOrderDTO.setSalesItemDTOList(salesItemDTOList);
 		orderDetailsDTO.setSalesOrderDTO(salesOrderDTO);
 		
-		orderDetailsDTO.setOrderTotal(purchaseJobPostForm.getGrandTotal());
+		orderDetailsDTO.setPurchaseType(paymentGatewayForm.getPurchaseType());
 		
 		return orderDetailsDTO;
 		
@@ -201,7 +226,7 @@ public class TransformPaymentMethod {
 	 * @param paymentGatewayForm
 	 * @return salesOrderDTO
 	 */
-	private SalesOrderDTO transformTopaymentGatewayForm(PaymentGatewayForm paymentGatewayForm){
+	private SalesOrderDTO transformToSalesOrderDTO(PaymentGatewayForm paymentGatewayForm){
 		SalesOrderDTO salesOrderDTO  = new SalesOrderDTO();
 		
 		if(null != paymentGatewayForm.getCreditCardInfoForm()){
@@ -243,6 +268,24 @@ public class TransformPaymentMethod {
 		return salesItemDTOList;
 	}
 	
+	/**
+	 * This method will transform ResumeSearchPackageForm list to SalesItemDTO
+	 * @param resSearchPackageCart
+	 * @return salesItemDTOList
+	 */
+	private List<SalesItemDTO> transformToSaleItemDTO(List<ResumeSearchPackageForm> resSearchPackageCart){
+		List<SalesItemDTO> salesItemDTOList = new ArrayList<SalesItemDTO>();
+		SalesItemDTO salesItemDTO = null;
+		for(ResumeSearchPackageForm resSearchPackageForm : resSearchPackageCart){
+			salesItemDTO = new SalesItemDTO();
+			salesItemDTO.setItem(String.valueOf(resSearchPackageForm.getNetsuiteId()));
+			salesItemDTO.setQuantity(String.valueOf(resSearchPackageForm.getQuantity()));
+			salesItemDTOList.add(salesItemDTO);
+			
+		}
+		return salesItemDTOList;
+	}
+	
 	
 	/**
 	 * This method will transform JobPostingsForm list to jobPostingPlanDTO list
@@ -277,6 +320,29 @@ public class TransformPaymentMethod {
 			jobPostingPlanDTOList.add(jobPostingPlanDTO);
 		}
 		return jobPostingPlanDTOList;
+	}
+	
+	/**
+	 * This method will transform ResumeSearchPackageForm list to ResumeSearchPackageDTO list
+	 * @param resumeSearchPackageCart
+	 * @return resSearchPackageDTOList
+	 */
+	private List<ResumePackageDTO> transformToResSearchPackageDTOList(List<ResumeSearchPackageForm> resumeSearchPackageCart){
+		List<ResumePackageDTO> resSearchPackageDTOList = new ArrayList<ResumePackageDTO>();
+		
+		ResumePackageDTO resSearchPackageDTO= null;
+		for(ResumeSearchPackageForm resSearchPackageForm : resumeSearchPackageCart){
+			resSearchPackageDTO = new ResumePackageDTO();
+			
+			resSearchPackageDTO.setPackageId(resSearchPackageForm.getPackageId());
+			resSearchPackageDTO.setPackageName(resSearchPackageForm.getPackageName());
+			resSearchPackageDTO.setPackageType(resSearchPackageForm.getPackageType());
+			resSearchPackageDTO.setQuantity(resSearchPackageForm.getQuantity());
+			resSearchPackageDTO.setPriceAmt(resSearchPackageForm.getPriceAmt());
+			resSearchPackageDTOList.add(resSearchPackageDTO);
+			
+		}
+		return resSearchPackageDTOList;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
+import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
 
 /**
  * This class has been created to hold the values of customer id, Account address, Billing address, Invoice info
@@ -23,8 +24,12 @@ public class PaymentGatewayForm {
 	//For Credit Card
 	public CreditCardInfoForm creditCardInfoForm;
 	
+	private String purchaseType;
+	
 	private PurchaseJobPostForm purchaseJobPostForm;
 
+	private PurchaseResumeSearchForm purchaseResumeSearchForm;
+	
 	public int getNsCustomerId() {
 		return nsCustomerId;
 	}
@@ -121,4 +126,20 @@ public class PaymentGatewayForm {
 		this.purchaseJobPostForm = purchaseJobPostForm;
 	}
 
+	public PurchaseResumeSearchForm getPurchaseResumeSearchForm() {
+		return purchaseResumeSearchForm;
+	}
+
+	public void setPurchaseResumeSearchForm(
+			PurchaseResumeSearchForm purchaseResumeSearchForm) {
+		this.purchaseResumeSearchForm = purchaseResumeSearchForm;
+	}
+
+	public String getPurchaseType() {
+		return purchaseType;
+	}
+
+	public void setPurchaseType(String purchaseType) {
+		this.purchaseType = purchaseType;
+	}
 }
