@@ -339,6 +339,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerJpBrandingTem
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerLocation.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerProfileAttrib.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerProfileAttribList.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerPublication.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUser.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserAlerts.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplication.java -text
