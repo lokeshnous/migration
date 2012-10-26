@@ -156,14 +156,27 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param HttpServletResponse response
 	 * @param HttpSession session
 	 */
-	private void redirectJobSeeker(UserDTO user,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
+	private void redirectJobSeeker(UserDTO user, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session)
+			throws IOException, ServletException {
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 
 			/**
 			 * if the user already registered
 			 */
-			sendRedirect(request, response,
-					"/jobSeeker/jobSeekerDashBoard.html");
+			if (session.getAttribute("jobId") == null) {
+				sendRedirect(request, response,
+						"/jobSeeker/jobSeekerDashBoard.html");
+			} else {
+				sendRedirect(
+						request,
+						response,
+						"/jobsearch/viewJobDetails.html?id="
+								+ session.getAttribute("jobId")
+								+ "&currentUrl=" + request.getContextPath()
+								+ "/jobsearch/findJobPage.html"
+								+ "&clickType=view");
+			}
 
 		} else {
 			/**

@@ -112,6 +112,10 @@ public class JobSeekerRegistrationController {
 	private String remoteAddr;
 
 	private Long placeKey;
+	
+	private static final String JS_CREATE_ACCOUNT = "jobSeekerCreateAccount";
+	
+	private static final String REGISTER_FORM = "registerForm";
 
 	/**
 	 * This method is called to display job seeker registration page Step1
@@ -139,7 +143,7 @@ public class JobSeekerRegistrationController {
 			registerForm.setbReadOnly(true);
 			session.setAttribute("userName", userDTO.getFirstName() + " "
 					+ userDTO.getLastName());
-			session.setAttribute("userId", userDTO.getUserId());
+			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
 		}
 if(profileId!=null){
@@ -149,8 +153,8 @@ if(profileId!=null){
 	model.addObject("socialSignUpMsg", socialSignupMsg.replace(
 			"?serviceProviderId", serviceProviderId));
 }
-		model.setViewName("jobSeekerCreateAccount");
-		model.addObject("registerForm", registerForm);
+		model.setViewName(JS_CREATE_ACCOUNT);
+		model.addObject(REGISTER_FORM, registerForm);
 		return model;
 
 	}
@@ -164,10 +168,10 @@ if(profileId!=null){
 	 */
 	@RequestMapping(value = "/createJobSeekerYourInfo", method = RequestMethod.POST, params = "Next")
 	public ModelAndView createJobSeekerRegistration(
-			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+			@ModelAttribute(REGISTER_FORM) JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpServletRequest req, HttpSession session) {
 
-		placeKey = (new Random()).nextLong();
+		placeKey = new Random().nextLong();
 		ModelAndView model = new ModelAndView();
 
 		try {
@@ -177,7 +181,7 @@ if(profileId!=null){
 				registerValidation.validate(registerForm, result);
 
 				if (result.hasErrors()) {
-					model.setViewName("jobSeekerCreateAccount");
+					model.setViewName(JS_CREATE_ACCOUNT);
 					return model;
 				}
 				/**
@@ -191,7 +195,7 @@ if(profileId!=null){
 //						.openAMValidateEmail(registerForm.getEmailId());
 //				if (isinvaliduser) {
 //					LOGGER.info("OpenAM : user is already exist !");
-//					model.setViewName("jobSeekerCreateAccount");
+//					model.setViewName(JS_CREATE_ACCOUNT);
 //					result.rejectValue("emailId", "NotEmpty", emailExists);
 //					return model;
 //				} else {
@@ -202,7 +206,7 @@ if(profileId!=null){
 
 				if (profileRegistration
 						.validateEmail(registerForm.getEmailId())) {
-					model.setViewName("jobSeekerCreateAccount");
+					model.setViewName(JS_CREATE_ACCOUNT);
 					result.rejectValue("emailId", "NotEmpty", emailExists);
 					return model;
 				}
@@ -222,12 +226,12 @@ if(profileId!=null){
 			// Send HTTP request to validate user's Captcha
 			if (StringUtils.isEmpty(req
 					.getParameter("recaptcha_response_field"))) {
-				model.setViewName("jobSeekerCreateAccount");
+				model.setViewName(JS_CREATE_ACCOUNT);
 				model.addObject("errorMessage", "Captcha should not be blank");
 				return model;
 			}
 			if (!reCaptchaResponse.isValid()) { // Check if valid
-				model.setViewName("jobSeekerCreateAccount");
+				model.setViewName(JS_CREATE_ACCOUNT);
 				model.addObject("errorMessage", "Captcha is invalid!");
 				return model;
 			}
@@ -245,7 +249,7 @@ if(profileId!=null){
 				registerForm.setListProfAttribForms(listProfAttribForms);
 			}
 			model.setViewName("jobSeekerCreateAccountInfo");
-			model.addObject("registerForm", registerForm);
+			model.addObject(REGISTER_FORM, registerForm);
 			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
 					followuplinkfacebook);
 			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_TWITTER,
@@ -272,7 +276,7 @@ if(profileId!=null){
 	 */
 	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Finish")
 	public ModelAndView saveJobSeekerRegistration(
-			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+			@ModelAttribute(REGISTER_FORM) JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session,
 			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
@@ -365,11 +369,17 @@ if(profileId!=null){
 
 			session.setAttribute("userName", userDTO.getFirstName() + " "
 					+ userDTO.getLastName());
-			session.setAttribute("userId", userDTO.getUserId());
+			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
 			session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
 
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			if (session.getAttribute("jobId") != null) {
+				model.setViewName("redirect:/jobsearch/viewJobDetails.html?id="
+						+ session.getAttribute("jobId") + "&currentUrl="
+						+ request.getContextPath()
+						+ "/jobsearch/findJobPage.html" + "&clickType=view");
+			}
 			authenticateUserAndSetSession(userDTO, request);
 
 		} catch (Exception e) {
@@ -402,12 +412,12 @@ if(profileId!=null){
 	 */
 	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Back")
 	public ModelAndView backToCreateJobSeekerCreateYrAcct(
-			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+			@ModelAttribute(REGISTER_FORM) JobSeekerRegistrationForm registerForm,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		registerForm.setClickBack(true);
-		model.addObject("registerForm",registerForm);
-		model.setViewName("jobSeekerCreateAccount");
+		model.addObject(REGISTER_FORM,registerForm);
+		model.setViewName(JS_CREATE_ACCOUNT);
 		return model;
 	}
 
@@ -441,7 +451,7 @@ if(profileId!=null){
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
 			// Call to service layer
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
-					.viewProfile((Integer) session.getAttribute("userId"));
+					.viewProfile((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
 					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
 
@@ -461,7 +471,7 @@ if(profileId!=null){
 
 			form.setListProfAttribForms(listProfAttribForms);
 			form.setEmailId(jsRegistrationDTO.getEmailId());
-			model.addObject("registerForm", form);
+			model.addObject(REGISTER_FORM, form);
 			model.setViewName("jobseekerEditProfileSettings");
 
 		} catch (Exception e) {
@@ -482,7 +492,7 @@ if(profileId!=null){
 	@ResponseBody
 	@RequestMapping(value = "/updateJobSeekerProfile", method = RequestMethod.POST)
 	public String updateJobSeekerProfileSettings(
-			@ModelAttribute("registerForm") JobSeekerRegistrationForm registerForm,
+			@ModelAttribute(REGISTER_FORM) JobSeekerRegistrationForm registerForm,
 			BindingResult result, HttpSession session) {
 		String firstName = "";
 		String lastName = "";
@@ -550,7 +560,7 @@ if(profileId!=null){
 							.getListProfAttribForms(), registerForm);
 			UserDTO userDTO = transformJobSeekerRegistration
 					.createUserDTO(registerForm);
-			userDTO.setUserId((Integer) session.getAttribute("userId"));
+			userDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
@@ -609,7 +619,7 @@ if(profileId!=null){
 
 			UserDTO userDTO = transformJobSeekerRegistration
 					.transformChangePasswordFormToMerUserDTO(form);
-			userDTO.setUserId((Integer) session.getAttribute("userId"));
+			userDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
 			// Call to service layer
