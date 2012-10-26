@@ -59,6 +59,10 @@ function closePopup() {
 		function validateTable() {
 			var count = $("#tb_save_search_total").val();
 			var valid = true;
+			if(count == null || count == ""){
+				valid = false;
+				return valid;
+			}
 			for(var i=1;i<=count;i++){
 				//alert($("#tb_save_search_"+i).val());
 				var val = $.trim($("#tb_save_search_"+i).val());
@@ -73,6 +77,10 @@ function closePopup() {
 		function validateTable1() {
 			var count = $("#jp_slot_save_total").val();
 			var valid = true;
+			if(count == null || count == ""){
+				valid = false;
+				return valid;
+			}
 			for(var i=1;i<=count;i++){
 				//alert($("#tb_save_search_"+i).val());
 				var val = $.trim($("#jp_slot_save_"+i).val());
@@ -90,11 +98,11 @@ function closePopup() {
 		$("#save").click(function(event){
 			$("#ErrorMsg").text("");
 			if(!validateTable()){
-				$("#ErrorMsg").text("Please enter the value!");
+				$("#ErrorMsg").text("Please enter the data!");
 				return false;
 			}
 			if(!validateTable1()){
-				$("#ErrorMsg").text("Please enter the value!");
+				$("#ErrorMsg").text("Please enter the data!");
 				return false;
 			}
 			var stringObj;
@@ -117,10 +125,10 @@ function closePopup() {
 				type:"GET",
 				success: function(data){
 				    if(data == true){
-				    	alert("Inventory details saved successfully");
+				    	alert("Inventory details saved successfully!");
 				    	parent.$.nmTop().close();
 				    }else{
-				    	alert("Error occured while saving the data");
+				    	alert("Error occured while saving the data!");
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){

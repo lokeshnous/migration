@@ -6,19 +6,25 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
 <!-- JAVASCRIPT FILES -->
-<script type="text/javascript" src="../resources/js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
- <link href="../resources/js/lprogress.css" type='text/css' rel='stylesheet'>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+<jsp:include page="common/include.jsp" />
+<jsp:include page="common/include.jsp" />
+<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>		
+ <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
+	type="text/css"> 
+	<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
+	type="text/css" />
+<link href="../resources/css/SliderStyles.css" rel="stylesheet"
+	type="text/css">
+
+	
+ <link rel="stylesheet" type="text/css" media="screen"
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
 function validateNumber(event) {
@@ -55,6 +61,7 @@ function validateNumber(event) {
 
 	jQuery(document).ready(function() {	
 				
+		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		//Date picker
     	$(function() {
     		$( ".datepicker" ).datepicker();
@@ -378,7 +385,7 @@ function validateNumber(event) {
 												<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75">
 													<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 												</form:select>
-												<form:input path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password" />
+												<form:input id="phone" path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password" />
 												<span class="required ">(Required)</span>
 											</div>
 										</c:forEach>

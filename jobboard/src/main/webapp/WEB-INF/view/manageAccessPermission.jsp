@@ -45,8 +45,9 @@
 					success : function(dataFound) {	
 						var listSize=$('#totalSize').val();
 						if(listSize>0){
-						alert("Permissions changed successfully.");
-						 $("#manageAccessPerm").click();
+						alert("Permissions changed successfully!");
+						 //$("#manageAccessPerm").click();
+						parent.$.nmTop().close();
 						};
 					  },
 					error: function(response) {

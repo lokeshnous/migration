@@ -19,7 +19,7 @@
 				type:"POST",
 				success: function(data) {
 					if(data == 'true'){
-						alert("Impersonation Completed successfully !");
+						alert("Impersonation Completed successfully!");
 						parent.$.nmTop().close();
 						window.location.reload();
 					}else if(data == 'false'){

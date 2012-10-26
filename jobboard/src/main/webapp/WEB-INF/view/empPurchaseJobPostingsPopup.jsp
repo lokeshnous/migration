@@ -42,7 +42,7 @@
 		
 		$("#proceedToCheckout").click(function(){
 			if($("#grandTotalId").text() == "$0"){
-				alert("Please select any one of the package to proceed to checkout");
+				alert("Please select any one of the package to proceed to checkout!");
 				return false;
 			}
 			return true;

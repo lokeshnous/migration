@@ -50,7 +50,7 @@
 								$('#selectedRow').val(val);
 								$("#deactivateHidden").click();
 							} else {
-								alert("Please select a job");
+								alert("Please select a job!");
 							}
 
 						});
@@ -63,7 +63,7 @@
 								$('#selectedRow').val(val);
 								$("#repostHidden").click();
 							} else {
-								alert("Please select a job");
+								alert("Please select a job!");
 							}
 						});
 						$('#delete')
@@ -75,7 +75,7 @@
 														val[i] = $(this).val();
 													});
 											if (val == "") {
-												alert("Please select a job");
+												alert("Please select a job!");
 											}
 
 											$('#selectedRow').val(val);
@@ -99,7 +99,7 @@
 								$('#selectedRow').val(val);
 								$("#repostHidden").click();
 							} else {
-								alert("Please select a job");
+								alert("Please select a job!");
 							}
 						});
 						$('#delete_lower')
@@ -111,7 +111,7 @@
 														val[i] = $(this).val();
 													});
 											if (val == "") {
-												alert("Please select a job");
+												alert("Please select a job!");
 											}
 
 											$('#selectedRow').val(val);
@@ -135,7 +135,7 @@
 								$('#selectedRow').val(val);
 								$("#deactivateHidden").click();
 							} else {
-								alert("Please select a job");
+								alert("Please select a job!");
 							}
 						});
 						$("#tb_manage_job img")

@@ -211,6 +211,10 @@
 									id="textfield5" size="20" 
 									class="job_seeker_login_email fileType" />
 							</div>
+							<div class="toolTip colorPkrAreaToolTip">&nbsp;
+								<span class="classic">Upload a Logo. Accepted file types include .gif , .png, .jpg , .tif
+									</span>
+							</div>
 							<div class="colorPkrArea">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			
 							</div>
 							<div class="FormErrorDisplayText">

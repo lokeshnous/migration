@@ -28,7 +28,7 @@
 						type:"POST",
 						success: function(data) {
 							if(data == ''){
-								alert("Password changed successfully !");
+								alert("Password changed successfully!");
 								parent.$.nmTop().close();
 							}else{
 								$("#errmsg").html(data);

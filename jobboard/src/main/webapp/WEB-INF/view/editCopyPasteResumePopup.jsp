@@ -37,8 +37,27 @@
 									} else if (data.duplicateResume != null) {
 										$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 									} else {
+										/* 
 										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateCopyPasteResume.html");
-										$("#copyPastResumeForm").submit();
+										$("#copyPastResumeForm").submit(); */
+										$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/updateCopyPasteResume.html",
+											data : $("#copyPastResumeForm").serialize(),
+											type: "POST",
+											success : function(data) {
+												alert('Resume updated successfully');
+												parent.$.nmTop().close();
+												window.location.reload();
+												},
+											error : function(response) {
+												alert("Server Error : "+ response.status);
+												parent.$.nmTop().close();
+												window.location.reload();
+												},
+											complete : function() {
+												
+											}
+										});
+												
 									}
 								},
 							error : function(response) {

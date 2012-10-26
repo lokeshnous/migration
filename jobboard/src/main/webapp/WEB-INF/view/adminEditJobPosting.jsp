@@ -89,7 +89,7 @@ jQuery(document).ready(function() {
 					});  
 		            }
 		        else{
-		            alert('Invalid Date');
+		            alert('Invalid Date!');
 		        	return false;
 		       		}
 		    });

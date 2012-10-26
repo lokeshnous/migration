@@ -66,6 +66,7 @@ $(document).keyup(function(event) {
 							$.ajax({url: "${pageContext.request.contextPath}/employerSearchResume/saveSearchedResumeNames.html?stringObjNew="+stringObjNew,
 								success: function(data){ 
 								    if(data.success != null){
+								    	alert("Data saved successfully");
 								    	parent.$.nmTop().close();
 								    }
 								    if(data.failure != null){

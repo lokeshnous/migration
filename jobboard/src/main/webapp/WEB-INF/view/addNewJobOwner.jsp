@@ -46,8 +46,9 @@
 									if(data.failure!=null){
 										$("#jobOwnerErrorMsg").html("<span>"+data.failure+"</span>");	
 									}else{
-										$("#jobOwnerErrorMsg").html("<span>"+data.success+"</span>");	
-									  $("#manageAccPerm").click();
+										$("#jobOwnerErrorMsg").html("<span>"+data.success+"</span>");
+										alert("New Job Owner Added successfully!")
+									  	$("#manageAccPerm").click();
 									}
 								}					
 									

@@ -89,7 +89,7 @@ function validateFacility() {
 			$.ajax({url: "${pageContext.request.contextPath}/impersonationForFacility/saveEditedFacilty.html",
 				success: function(data){ 
 				    if(data.success != null){
-				    	alert("Data saved successfully");
+				    	alert("Data saved successfully!");
 				    	parent.$.nmTop().close();
 				    }
 				    if(data.failure != null){

@@ -55,9 +55,26 @@
 								} else if (data.duplicateResume != null) {
 									$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 								} else {
-									$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/saveCreateResume.html");
+									/* $("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/saveCreateResume.html");
 									$("form").attr("method", "GET");
-									$("#createResumeForm").submit();
+									$("#createResumeForm").submit(); */
+									$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/saveCreateResume.html",
+										data : $("#createResumeForm").serialize(),
+										type: "GET",
+										success : function(data) {
+											alert('Resume created successfully!');
+											parent.$.nmTop().close();
+											window.location.reload();
+											},
+										error : function(response) {
+											alert("Server Error : "+ response.status);
+											parent.$.nmTop().close();
+											window.location.reload();
+											},
+										complete : function() {
+											
+										}
+									});
 								}
 							},
 						error : function(response) {

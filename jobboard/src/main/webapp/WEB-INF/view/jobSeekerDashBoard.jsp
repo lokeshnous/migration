@@ -228,7 +228,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-											<a title="Coming Soon" shref="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
+											<a title="Coming Soon" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
 											</p>
 										</div>
 										<div class="lableTextDashBoard">

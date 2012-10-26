@@ -62,7 +62,7 @@
 						$('#moveToFolderPopup').attr("href","../employer/moveToFolder.html?folderId=0&selectedVal="+val);
 						$("#moveToFolderPopup").click();
 					} else {
-						alert("Please select a resume");
+						alert("Please select a resume!");
 					}
 
 				});
@@ -76,7 +76,7 @@
 						$('#moveToFolderPopup').attr("href","../employer/moveToFolder.html?folderId=0&selectedVal="+val);
 						$("#moveToFolderPopup").click();
 					} else {
-						alert("Please select a resume");
+						alert("Please select a resume!");
 					}
 
 				});

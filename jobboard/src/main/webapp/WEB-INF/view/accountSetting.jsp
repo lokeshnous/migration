@@ -85,7 +85,7 @@ function copyAccToBillingAddr(obj) {
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
-						//alert("Data save successfully !");
+						alert("Data saved successfully !");
 						parent.$.nmTop().close();
 						window.location.reload();
 					}else{
@@ -113,7 +113,7 @@ function copyAccToBillingAddr(obj) {
 				type:"POST",
 				success: function(data) {
 					if(data == ''){
-						//alert("Data save successfully !");	
+						alert("Data saved successfully !");	
 						parent.$.nmTop().close();
 					}else{
 						var href = $('#BackToMdlId').attr('href');

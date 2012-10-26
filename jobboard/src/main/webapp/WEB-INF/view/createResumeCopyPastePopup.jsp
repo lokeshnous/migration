@@ -50,8 +50,25 @@
 									} else if (data.duplicateResume != null) {
 										$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 									} else {
-										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html");
-										$("#copyPastResume").submit();
+										//$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html");
+										//$("#copyPastResume").submit();
+										$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html",
+											data : $("#copyPastResume").serialize(),
+											type: "POST",
+											success : function(data) {
+												alert('Copy Past Resume created successfully!');
+												parent.$.nmTop().close();
+												window.location.reload();
+												},
+											error : function(response) {
+												alert("Server Error : "+ response.status);
+												parent.$.nmTop().close();
+												window.location.reload();
+												},
+											complete : function() {
+												
+											}
+										});
 									}
 								},
 							error : function(response) {
@@ -78,7 +95,7 @@
 		</div>
 
 		<div class="popUpContainerWrapper">
-			<form:form method="post" action="copyPasteResume.html" commandName="createResume" id="copyPastResume" enctype="multipart/form-data">
+			<form:form commandName="createResume" id="copyPastResume" enctype="multipart/form-data">
 				<div class="rowEvenNewSpacing">
 					<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
 					<div class="clearfix"></div>

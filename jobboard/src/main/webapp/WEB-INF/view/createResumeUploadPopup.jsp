@@ -67,7 +67,7 @@
 											} else if (data.duplicateResume != null) {
 												$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 											} else {
-												$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
+											 	$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
 												$("#resumeUploadForm").submit();
 											}
 										},
@@ -93,7 +93,7 @@
 			 if(fileName!=''){
 				  var filename = fileName.toLowerCase();
 				  if (!filename.match(/(\.doc|\.pdf|\.docx)$/)){
-					  alert("Please upload resume with Doc,Docx or Pdf format only");
+					  alert("Please upload resume with Doc,Docx or Pdf format only!");
 					  return false;
 				    }
 				 }
@@ -133,6 +133,9 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Upload Resume:</span>
 					<form:input path="fileData" class="floatLeft" type="file" />
+					<div class="toolTip marginTop8">
+						<span class="classic">Select the resume you want to upload. Accepted file types are .doc, .docx and PDF only</span>
+					</div>
 					<span class="required paddingTop0 marginTop5">(Required)</span>
             	</div>
             	
