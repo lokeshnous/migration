@@ -23,12 +23,15 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
+import com.advanceweb.afc.jb.user.UserSubscriptionService;
+import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 
 /**
  * @author Prince
@@ -45,12 +48,18 @@ public class EmployerDashBoardController {
 
 	@Autowired
 	private FacilityService facilityService;
-	
+
 	@Autowired
 	private ResumeSearchService resumeSearchService;
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+
+	@Autowired
+	private UserSubscriptionService userSubService;
+
+	@Autowired
+	private TransformUserubscription userubscription;
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
@@ -75,13 +84,13 @@ public class EmployerDashBoardController {
 			enablePostEditAccess = "false";
 			model.addObject("enablePostEditAccess", enablePostEditAccess);
 		}
-		
+
 		int resumeSearchCount = 0;
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
 				.viewMySavedSearches(userId);
 		resumeSearchCount = saveSearchedJobsDTOList.size();
 		employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
-		
+
 		model.addObject("enableAccess", enableAccess);
 		model.addObject("enablePostEditAccess", enablePostEditAccess);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
@@ -94,12 +103,16 @@ public class EmployerDashBoardController {
 			LOGGER.info("Error occurred while getting data for metrics" + e);
 		}
 
+		// Retrieve Current subscriptions of the user
+		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
+
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 
 		model.addObject("downDTOs", downDTOs);
 		model.addObject("jbPostTotalList", jbPostTotalList);
 		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		model.addObject("currentSubs", currentSubs);
 		model.addObject("searchResumeForm", searchResumeForm);
 		model.addObject("employerDashBoardForm", employerDashBoardForm);
 		model.setViewName("employerDashboard");
@@ -220,5 +233,26 @@ public class EmployerDashBoardController {
 		jbPostTotalList.add(2, metricsDTO);
 
 		return jbPostTotalList;
+	}
+
+	/**
+	 * Retrieve Current subscriptions of the user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	private List<DropDownDTO> getCurrentSubscriptions(int facilityId) {
+
+		List<DropDownDTO> listSubscriptions = populateDropdownsService
+				.getFacilitySubList();
+
+		List<UserSubscriptionsDTO> currentSubsList = userSubService
+				.getCurrentFacilitySub(facilityId);
+
+		List<DropDownDTO> currentSubs = userubscription
+				.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,
+						listSubscriptions);
+		return currentSubs;
+
 	}
 }
