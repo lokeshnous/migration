@@ -89,7 +89,7 @@ public class EmployerDashBoardController {
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
 				.viewMySavedSearches(userId);
 		resumeSearchCount = saveSearchedJobsDTOList.size();
-		employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
+		//employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
 
 		model.addObject("enableAccess", enableAccess);
 		model.addObject("enablePostEditAccess", enablePostEditAccess);

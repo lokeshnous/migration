@@ -40,7 +40,7 @@ import com.advanceweb.afc.jb.jobseeker.helper.UserSubscriptionsConversionHelper;
 public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
-	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacilitySubscriptionPK.facilityId=?";
+	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacility.facilityId=?";
 	private static final String FIND_USER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final Logger LOGGER = Logger
 			.getLogger(UserSubscriptionsDAOImpl.class);
@@ -619,7 +619,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		List<UserSubscriptionsDTO> listSubscriptiosns = null;
 		try {
 			List<AdmFacilitySubscription> listSubs = hibernateTemplateCareers
-					.find("from AdmFacilitySubscription sub where sub.admFacility.facilityId=?",
+					.find("from AdmFacilitySubscription sub where sub.admFacilitySubscriptionPK.facilityId=?",
 							facilityId);
 			listSubscriptiosns = subscriptionHelper
 					.transformFacilitySubTojsSubsDTO(listSubs);

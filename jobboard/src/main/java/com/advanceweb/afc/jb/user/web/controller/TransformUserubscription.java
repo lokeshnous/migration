@@ -242,4 +242,52 @@ public class TransformUserubscription {
 		}
 		return selectedSubsList;
 	}
+
+	/**
+	 * This method is called to select current subscriptions
+	 * 
+	 * @param currentSubsList
+	 * @param form
+	 * @param listSubscriptions
+	 * @return
+	 */
+	public List<DropDownDTO> jsSubscriptionDTOToFacilitySubscriptions(
+			List<UserSubscriptionsDTO> currentSubsList,
+			UserSubscriptionForm form, List<DropDownDTO> listSubscriptions,
+			List<DropDownDTO> digSubscriptionList, List<DropDownDTO> enewSubList) {
+		List<String> currSubList = new ArrayList<String>();
+		List<String> facSubList = new ArrayList<String>();
+		List<DropDownDTO> selSubList = new ArrayList<DropDownDTO>();
+		if (null != currentSubsList) {
+			for (UserSubscriptionsDTO dto : currentSubsList) {
+				for (DropDownDTO subdto : listSubscriptions) {
+					if (subdto.getOptionId().equals(
+							String.valueOf(dto.getSubscriptionId()))) {
+						currSubList.add(subdto.getOptionId());
+						selSubList.add(subdto);
+					}
+				}
+				for (DropDownDTO downDTO : digSubscriptionList) {
+					if (downDTO.getOptionId().equals(
+							String.valueOf(dto.getPublicationId()))) {
+						facSubList.add(downDTO.getOptionId());
+						selSubList.add(downDTO);
+					}
+				}
+				for (DropDownDTO downDTO : enewSubList) {
+					if (downDTO.getOptionId().equals(
+							String.valueOf(dto.getPublicationId()))) {
+						facSubList.add(downDTO.getOptionId());
+						selSubList.add(downDTO);
+					}
+				}
+			}
+			if (null != form) {
+				form.setCurrentsubs(currSubList.toArray(new String[currSubList
+						.size()]));
+				form.setFacsub(facSubList.toArray(new String[facSubList.size()]));
+			}
+		}
+		return selSubList;
+	}
 }

@@ -114,12 +114,13 @@ public class UserSubscriptionsController {
 				.getDigitalSubList();
 		List<UserSubscriptionsDTO> enewsSubList = userSubService
 				.getEnewsLetterSubList();
-		userubscription.jsSubscriptionDTOToJobSeekerSubscriptions(
-				currentSubsList, subscriptform, listSubscriptions);
 		List<DropDownDTO> digSubscriptionList = userubscription
 				.jsSubDTOToDropDownDTO(digitalSubList, subscriptform);
 		List<DropDownDTO> enewSubList = userubscription.jsSubDTOToDropDownDTO(
 				enewsSubList, subscriptform);
+		userubscription.jsSubscriptionDTOToFacilitySubscriptions(
+				currentSubsList, subscriptform, listSubscriptions,
+				digSubscriptionList, enewSubList);
 		model.addObject("facilitySubList", listSubscriptions);
 		model.addObject("digitalSubList", digSubscriptionList);
 		model.addObject("enewSubList", enewSubList);

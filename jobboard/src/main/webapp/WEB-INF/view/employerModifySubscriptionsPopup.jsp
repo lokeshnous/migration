@@ -12,12 +12,11 @@
 	jQuery(document).ready(function() {
 		
 		 $('#save').click(function(){
-			 alert('hiiii');
 			$.ajax({url:"${pageContext.request.contextPath}/subscriptions/saveFacilitySubscription.html",
 				data:$('#subscriptionsId').serialize(),
 				type:"GET",
 				success: function(data) {			
-						parent.$.nmTop().close();
+					location.reload();
 				 },
 				 error : function (response) {
 					 alert("Unable to process");

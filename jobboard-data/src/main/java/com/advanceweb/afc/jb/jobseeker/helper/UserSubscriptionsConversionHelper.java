@@ -181,8 +181,9 @@ public class UserSubscriptionsConversionHelper {
 				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
 				dto.setSubscriptionId(alert.getAdmFacilitySubscriptionPK()
 						.getSubscriptionId());
-				dto.setUserId(alert.getAdmFacilitySubscriptionPK()
+				dto.setFacilityId(alert.getAdmFacilitySubscriptionPK()
 						.getFacilityId());
+				dto.setPublicationId(alert.getPublicationId());
 				subsList.add(dto);
 			}
 		}
@@ -226,6 +227,9 @@ public class UserSubscriptionsConversionHelper {
 			for (UserSubscriptionsDTO dto : listSubsDTO) {
 				AdmFacility admFacility = new AdmFacility();
 				admFacility.setFacilityId(dto.getFacilityId());
+				AdmFacilitySubscriptionPK subscriptionPK = new AdmFacilitySubscriptionPK();
+				subscriptionPK.setFacilityId(dto.getFacilityId());
+				subscriptionPK.setSubscriptionId(dto.getSubscriptionId());
 				AdmSubscription admSubscription = new AdmSubscription();
 				admSubscription.setSubscriptionId(dto.getSubscriptionId());
 				if (!validateAdmFacilitySubscriptions(dto, listSubsAlerts)) {
@@ -240,7 +244,8 @@ public class UserSubscriptionsConversionHelper {
 								facSubscription.setCreateDt(new Date());
 								facSubscription.setPublicationId(publication
 										.getPublicationId());
-								facSubscription.setAdmFacility(admFacility);
+								facSubscription
+										.setAdmFacilitySubscriptionPK(subscriptionPK);
 								facSubscription
 										.setAdmSubscription(admSubscription);
 								subscriptions.add(facSubscription);
@@ -256,11 +261,20 @@ public class UserSubscriptionsConversionHelper {
 								facDigSub.setCreateDt(new Date());
 								facDigSub.setPublicationId(publication
 										.getPublicationId());
-								facDigSub.setAdmFacility(admFacility);
+								facDigSub
+										.setAdmFacilitySubscriptionPK(subscriptionPK);
 								facDigSub.setAdmSubscription(admSubscription);
 								subscriptions.add(facDigSub);
 							}
 						}
+					} else if (dto.getSubscriptionId() == MMJBCommonConstants.EMAIL_SUBSCRIPTION) {
+						AdmFacilitySubscription facSub = new AdmFacilitySubscription();
+						facSub.setActive(dto.getActive());
+						facSub.setCreateDt(new Date());
+						facSub.setPublicationId(dto.getPublicationId());
+						facSub.setAdmFacilitySubscriptionPK(subscriptionPK);
+						facSub.setAdmSubscription(admSubscription);
+						subscriptions.add(facSub);
 					}
 				}
 			}
