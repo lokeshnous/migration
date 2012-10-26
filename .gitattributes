@@ -693,6 +693,7 @@ jobboard/src/main/webapp/WEB-INF/view/manageFacilityGroup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageFeatureEmpPro.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobSeekerContent.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/manageJobSeekerFolder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobSeekerFolderView.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobSeekers.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text

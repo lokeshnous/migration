@@ -30,37 +30,42 @@
 						path="manageJobSeekerDTOList[${status.index}].folderResumeId" />
 						<form:hidden
 						path="manageJobSeekerDTOList[${status.index}].orgResumeId" />
-					<tr class="Height35" id=${resume.folderResumeId}>
+						<tr class="Height35" id=${resume.folderResumeId}>
 						<td align="center" valign="middle" ><input type="checkbox"
 							name="checkbox" id=${resume.folderResumeId}
 							value="${resume.folderResumeId}"></td>
 						<td align="left" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.orgResumeId }">${resume.resumeName}</a></td>
-						<!-- <td align="center" valign="middle"><input type="radio"
-							name="rating" value="1" class="starOn"> <input type="radio"
-							name="rating" value="2" class="starOn"> <input type="radio"
-							name="rating" value="3" class="starOff"> <input type="radio"
-							name="rating" value="4" class="starOff"> <input type="radio"
-							name="rating" value="5" class="starOff"></td> -->						
+										
+						 <td align="center" valign="middle">
+						 <c:forEach var="i" begin="1" end="${resume.rating}">
+						   <c:if test="${i>1}">
+						   </span>
+						   </c:if>
+						<span class="starOn" id="${i}" onclick="onChangeRatining(this);"/>
+						 </c:forEach>
+						 <c:forEach var="j" begin="${resume.rating+1}" end="${resume.rating + (5-resume.rating)}">
+						 <c:if test="${j>resume.rating}">
+						   </span>
+						   </c:if>
+						<span class="starOff" id="${j}" onclick="onChangeRatining(this);" />
 						
-						 <td align="center" valign="middle"><span class="starOn"></span><span
-					class="starOn"></span><span class="starOn"></span><span
-					class="starOff"></span><span class="starOff"></span></td> 
-						<td align="center" valign="middle"><form:select
-								id="appStatus"
+						 </c:forEach>
+						 </td> 
+						<td align="center" valign="middle"><form:select onchange="onChangeAppStatus(this);"
 								path="manageJobSeekerDTOList[${status.index}].applicationStatus"
-								class="jb_input3 marginLeft10 marginTopBottom0 " name="select"
+								class="jb_input3 marginLeft10 marginTopBottom0" name="select"
 								items="${appStatusList}" itemLabel="optionName"
 								itemValue="optionId">
 							</form:select></td>
 						<td align="center" valign="middle">${resume.savedDate}</td>
-						<td align="center" valign="middle"><a href="#"><img
-								src="../resources/images/View.png" width="20" height="20" alt=""></a>&nbsp;<a
-							href="#"><img src="../resources/images/Download.png"
-								width="20" height="20" alt="Download"></a>&nbsp;<a href="#"><img
+						<td align="center" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.orgResumeId }"><img
+								src="../resources/images/View.png" width="20" height="20" alt="view"></a>&nbsp;<a
+							href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${resume.orgResumeId }"><img src="../resources/images/Download.png"
+								width="20" height="20" alt="download"></a>&nbsp;<a href="#"><img
 								src="../resources/images/Print2.png" width="20" height="20"
-								alt="Print"></a>&nbsp;<a href=""><img
+								alt="print"></a>&nbsp;<a href=""><img
 								src="../resources/images/EmailOrange.png" width="20" height="20"
-								alt="E-mail"></a>&nbsp;<a href="#"><img
+								alt="email"></a>&nbsp;<a href="#"><img
 								src="../resources/images/Delete.png" width="20" height="20"
 								alt="delete"></a></td>
 					</tr>

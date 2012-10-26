@@ -54,6 +54,9 @@ public class JobSeekerConversionHelper {
 						savedDate = CommonUtil.convertToReqdDateString(update);
 					}
 				}
+				if(null!=row[7]){
+					jobSeekerDTO.setOrgResumeId((Integer) row[7]);
+				}
 				jobSeekerDTO.setSavedDate(savedDate);
 				manageJobSeekerDTOs.add(jobSeekerDTO);
 			}

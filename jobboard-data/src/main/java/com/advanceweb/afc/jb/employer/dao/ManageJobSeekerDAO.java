@@ -19,9 +19,12 @@ public interface ManageJobSeekerDAO {
 	List<ManageJobSeekerDTO> retrieveAllResume(int userId) throws JobBoardDataException;
 	List<DropDownDTO> applicationStatusList() throws JobBoardDataException;
 	List<AdmFolderDTO> folderDetailList(int userId) throws JobBoardDataException;
-	boolean updateJobSeeker(int appStatusId,int resumeId,int rating) throws JobBoardDataException;
+	boolean updateAppStatus(int appStatusId,int resumeId) throws JobBoardDataException;
+	boolean updateRating(int rating,int resumeId) throws JobBoardDataException;
 	List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId, int folderId) throws JobBoardDataException;
 	boolean updateResumeFolder(int folderId, int folderResumeId)throws JobBoardDataException;
 	void deleteJobSeeker(int folderResumeId)throws JobBoardDataException;
+	void addFolder(int userId,String folderName)throws JobBoardDataException;
+	void removeFolder(int userId,String folderName)throws JobBoardDataException;
 	
 }

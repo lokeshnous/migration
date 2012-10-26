@@ -16,31 +16,11 @@
 	jQuery(document).ready(function() {
 		$("#moveToFolderPopup").displaypopup("#moveToFolderPopup","20","20");
 		 // $("#tb_manage_job_seeker").tablesorter(); 
-		$('#appStatus').change(
-				function() {
-					val = $(this).val();
-					$.ajax({url : "${pageContext.request.contextPath}/employer/updateJobSeeker.html?appStatus="
-						+ val,
-		    			data:$('#manageJobSeeker').serialize(),
-						type: "POST",
-						success : function(data) {
-							if(data.failure!=null){
-								//alert("Fail");
-								//$("#jobOwnerErrorMsg").html("<span>"+data.failure+"</span>");	
-							}else{
-								//$("#jobOwnerErrorMsg").html("<span>"+data.success+"</span>");
-								//alert("success");
-							 // $("#manageAccPerm").click();
-							}
-						}					
-							
-						
-					});
-										
-				});
+		
 		$(".folderdetail").click(
 						function() {
 							val = $(this).attr("id");
+							$("#folderId").val(val);
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
 								+ val,
 				    			data:$('#manageJobSeeker').serialize(),
@@ -57,6 +37,7 @@
 				});
 				$(".refineResultsItem").click(
 						function() {
+							$("#folderId").val(0);
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
 								+ 0,
 				    			data:$('#manageJobSeeker').serialize(),
@@ -72,7 +53,6 @@
 							});
 				});
 				$('#moveToFolder').click(function() {
-					//alert("hi");
 					var val = [];
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
@@ -130,11 +110,109 @@
 								 }
 							}
 								break;
+							case "download":
+								$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
+								$("#manageResumeForm").attr("method","POST");
+								$("#manageResumeForm").attr("target","_new"); 
+								$("#manageResumeForm").submit();
+								break;
+							
 							}
 
 						});
-		jQuery(".megamenu").megamenu();
-	});
+				
+				$("#div_manage_job_seeker img")
+								.click(
+										function(event) {
+											var action = $(this).attr("alt");
+											var rowObj = $(this).parent().parent().parent();
+											var folderNm = $(this).attr("id");
+											//alert(folderNm);
+											switch (action) {
+											case "Add": {
+
+												$("#subContent").append("<div class='buttonRow' >" +
+														" <input type ='text' id='newFolder' class='buttonRow' value='New Folder' onClick='resetVal();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
+														+"</div>");
+												document.getElementById('newFolder').select();
+												document.getElementById('newFolder').style.borderColor="red";
+												document.getElementById('newFolder').style.borderStyle="solid";
+											}
+											break;
+											case "remove": {
+												if (confirm("Are you sure you want to delete?")) {
+													 $.ajax({url: "${pageContext.request.contextPath}/employer/removeFolder.html?folderName="+folderNm,
+														type: "POST" ,
+														success : function(data) {
+															if(data.failure!=null){
+															}else{
+																rowObj.remove();
+															}
+														}
+													});
+												}
+												else{
+													return false;
+												}
+											}
+											break;
+											}
+
+										});
+						jQuery(".megamenu").megamenu();
+					});
+						function checkevent(){
+						var folderName=	document.getElementById('newFolder').value;
+							$.ajax({url: "${pageContext.request.contextPath}/employer/addFolder.html?folderName="+folderName,
+								type: "POST" ,
+								success : function(data) {
+									if(data.failure!=null){
+									}else{
+										$("#folderDiv").html(data);
+									}
+								}	 ,
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								}
+							});
+						}
+						function resetVal(){
+							document.getElementById('newFolder').style.borderColor="gray";
+							document.getElementById('newFolder').style.border="1px solid #e0e0e0";
+							document.getElementById('newFolder').value="";
+							
+							}
+
+						function onChangeAppStatus(eleObj) {
+							var rowObj = $(eleObj).parent().parent();
+							var resumeId =  $(rowObj).attr("id");
+							val = eleObj.value;
+							$.ajax({url : "${pageContext.request.contextPath}/employer/updateJobSeeker.html?appStatus="
+								+ val+"&resumeId="+resumeId,
+								data:$('#manageJobSeeker').serialize(),
+								type: "POST"						
+								
+							});						
+						}
+						function onChangeRatining(eleObj) {
+
+							var rowObj = $(eleObj).parent().parent();
+							var resumeId =  $(rowObj).attr("id");
+							val = eleObj.id;
+							$.ajax({url : "${pageContext.request.contextPath}/employer/updateRating.html?rating="
+								+ val+"&resumeId="+resumeId,
+				    			data:$('#manageJobSeeker').serialize(),
+								type: "POST",
+								success: function(data){ 
+									if(data.failure!=null){
+									}else{
+										$("#contentDiv").html(data);
+									}
+								}
+								
+							});
+						}
+						
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 
@@ -146,12 +224,12 @@
 </head>
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
-	<form:hidden path="selectedRow" id="selectedRow" />
-	<form:hidden path="folderId"/>
+		<form:hidden path="selectedRow" id="selectedRow" />
+		<form:hidden path="folderId" />
+		<form:hidden path="rating" id="ratingId"/>
 		<div class="ad_page_top">
 			<img src="../resources/images/ads/banner_ad_fpo.png" />
 		</div>
-
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
 
@@ -165,50 +243,17 @@
 						<div class="popupHeader Padding0  OrangeBG marginBottom5">
 							<h2>MANAGE JOB-SEEKERS</h2>
 							<span class="floatRight marginRight10"><a
-							href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
-							class="link_color3_emphasized FontSize12 FontWeight">Back to
-								Dashboard</a></span></span>
+								href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
+								class="link_color3_emphasized FontSize12 FontWeight">Back to
+									Dashboard</a></span></span>
 						</div>
 						<div class="clearfix"></div>
 						<div class="content_columns_search_results">
-							<div class="column1">
-							<%--<div id="folderDiv">								
-								 <jsp:include page="manageJobSeekerFolderView.jsp"></jsp:include> 
-								</div>--%>
 
-								 <div class="section">
-									<h2>Folders</h2>
-
-									<div class="refineResults">
-										<span class="refineResultsItem plus">All Candidates</span>
-										<div class="refineResultsSubContent"></div>
-
-										<span class="refineResultsItem plus">My Folders</span>
-										<div class="refineResultsSubContent">
-										<c:forEach items="${manageJobSeekerForm.admFolderDTOList}" var="folder"
-											varStatus="folderStatus">
-												<div class="buttonRow" >
-													<a href="#" id="${folder.folderId}" title="folderdetail" class="folderdetail"> ${folder.folderName} </a>
-													<div class="floatRight">
-														<a href=""><img
-															src="../resources/images/CloseGray.jpg" alt="close"
-															width="15" height="15"> </a>
-													</div>
-
-												</div>
-											</c:forEach>
-										</div>
-
-
-
-
-									</div>
-
-
-								</div>
-
-
+							<div id="folderDiv">
+								<jsp:include page="manageJobSeekerFolder.jsp"></jsp:include>
 							</div>
+							
 							<!-- column1 -->
 							<div class="column2">
 
@@ -242,20 +287,20 @@
 								<!--button-->
 								<div class="row marginTop10 paddingBottom5">
 									<span><a href="#" class="btn_sm orange">Compare
-											Selected</a><a href="#" id="moveToFolder" class="btn_sm orange">Move To Folder</a></span>											
+											Selected</a><a href="#" id="moveToFolder" class="btn_sm orange">Move
+											To Folder</a></span>
 								</div>
-								
+
 								<div class="clearfix"></div>
-								<div id="contentDiv">								
-								<jsp:include page="manageJobSeekerContent.jsp"></jsp:include>
+								<div id="contentDiv">
+									<jsp:include page="manageJobSeekerContent.jsp"></jsp:include>
 								</div>
 								<div class="row marginTop15 paddingBottom5">
 									<span><a href="#" class="btn_sm orange">Compare
-											Selected</a><a href="#" id="moveToFolderlower" class="btn_sm orange">Move To Folder</a></span>
+											Selected</a><a href="#" id="moveToFolderlower"
+										class="btn_sm orange">Move To Folder</a></span>
 								</div>
-								<a
-									href=""
-									id="moveToFolderPopup"  />
+								<a href="" id="moveToFolderPopup" />
 								<div class="clearfix"></div>
 								<div
 									class="searchResultsNavigation width98P FloatLeft marginTop20">

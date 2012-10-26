@@ -42,11 +42,6 @@
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 
-<script src="../resources/js/jquery.dataTables.nightly.js"></script>
-<script src="../resources/js/searchResultsdatatable.js"></script>
-
-<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
-
 </head>
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
@@ -59,11 +54,24 @@
 					height="19" class="nyroModalClose" alt="close">
 			</div>
 
-			<div class="popUpContainerWrapper">
-				<div class="column1">
+			<div class="content_columns_search_results width100P">
+				<h3>Folders</h3>
+			<div class="column1 width100P marginTop10">
 					<div class="section">
 						<div class="refineResults">
-							<span class="refineResultsItem plus">All Candidates</span>
+						<span class="refineResultsItem ">Manage Job Seekers</span>
+						<!--  <span class="refineResultsItem plus">Manage Job Seekers</span>
+                               		<div class="refineResultsSubContent">
+                                    	<ul>
+                                        	<li><a href="">My Job Folder </a></li>
+                                            <li><a href="">Applied Jobs</a></li>
+                                           
+                                        </ul>
+                                    </div> -->
+							<span class="refineResultsItem plus"><%-- <a
+											href="${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal=${manageJobSeekerForm.selectedRow }"
+											id="0" title="folderdetailList"
+											class="folderdetailList"> --%>All Candidates<!-- </a> --></span>
 							<div class="refineResultsSubContent"></div>
 
 							<span class="refineResultsItem plus">My Folders</span>
@@ -75,11 +83,6 @@
 											href="${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=${folder.folderId}&selectedVal=${manageJobSeekerForm.selectedRow }"
 											id="${folder.folderId}" title="folderdetailList"
 											class="folderdetailList"> ${folder.folderName} </a>
-										<div class="floatRight">
-											<a href=""><img src="../resources/images/CloseGray.jpg"
-												alt="close" width="15" height="15"> </a>
-										</div>
-
 									</div>
 								</c:forEach>
 							</div>
@@ -93,36 +96,6 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-		<%-- <div class="section">
-									<h2>Folders</h2>
-
-									<div class="refineResults">
-										<span class="refineResultsItem plus">All Candidates</span>
-										<div class="refineResultsSubContent"></div>
-
-										<span class="refineResultsItem plus">My Folders</span>
-										<div class="refineResultsSubContent">
-										<c:forEach items="${manageJobSeekerForm.admFolderDTOList}" var="folder"
-											varStatus="folderStatus">
-												<div class="buttonRow" >
-													<a href="#" id="${folder.folderId}" title="folderdetail" class="folderdetail"> ${folder.folderName} </a>
-													<div class="floatRight">
-														<a href=""><img
-															src="../resources/images/CloseGray.jpg" alt="close"
-															width="15" height="15"> </a>
-													</div>
-
-												</div>
-											</c:forEach>
-										</div>
-
-
-
-
-									</div>
-
-
-								</div> --%>
 	</form:form>
 </body>
 </html>

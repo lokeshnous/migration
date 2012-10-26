@@ -93,14 +93,14 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
 	 * Method to update application status and rating
 	 */
 	@Override
-	public boolean updateJobSeeker(int appStatusId, int resumeId, int rating) throws JobBoardServiceException  {
+	public boolean updateAppStatus(int appStatusId, int resumeId) throws JobBoardServiceException  {
 		boolean result=false;
 		try {
-			result= manageJobSeekerDAO.updateJobSeeker(appStatusId, resumeId, rating);
+			result= manageJobSeekerDAO.updateAppStatus(appStatusId, resumeId);
 		} catch (JobBoardDataException jdex) {
 			LOGGER.debug(jdex);
 			throw new JobBoardServiceException(
-					"Error while retriving the folder details..." + jdex);
+					"Error while updating details..." + jdex);
 		}
 		return result;
 	}
@@ -118,7 +118,7 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
 		} catch (JobBoardDataException jdex) {
 			LOGGER.debug(jdex);
 			throw new JobBoardServiceException(
-					"Error while retriving resume..." + jdex);
+					"Error while retriving resume by folder..." + jdex);
 		}
 
 		return manageJobSeekerDTOs;
@@ -152,8 +152,56 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
 		} catch (JobBoardDataException jdex) {
 			LOGGER.debug(jdex);
 			throw new JobBoardServiceException(
-					"Error while updating the folder details..." + jdex);
+					"Error while deleting the folder details..." + jdex);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#addFolder(java.lang.String)
+	 */
+	@Override
+	public void addFolder(int userId,String folderName) throws JobBoardServiceException {
+		try {
+			manageJobSeekerDAO.addFolder(userId,folderName);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while ading new folder..." + jdex);
+		}
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#removeFolder(int, java.lang.String)
+	 */
+	@Override
+	public void removeFolder(int userId, String folderName)
+			throws JobBoardServiceException {
+		try {
+			manageJobSeekerDAO.removeFolder(userId,folderName);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while remove the folder details..." + jdex);
+		}
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#updateRatings(int, int)
+	 */
+	@Override
+	public boolean updateRatings(int rating, int resumeId)
+			throws JobBoardServiceException {
+		boolean result=false;
+		try {
+			result= manageJobSeekerDAO.updateRating(rating, resumeId);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while updating details..." + jdex);
+		}
+		return result;
 	}
 
 }

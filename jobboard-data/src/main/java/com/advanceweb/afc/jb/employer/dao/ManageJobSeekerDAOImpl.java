@@ -53,7 +53,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
 									+ userId + "and a.deleteDt is NULL ");
 
 			folderDetailList = query.list();
@@ -92,7 +92,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public boolean updateJobSeeker(int appStatusId, int resumeId, int rating)
+	public boolean updateAppStatus(int appStatusId, int resumeId)
 			throws JobBoardDataException {
 		AdmFolderResume admFolderResume = new AdmFolderResume();
 
@@ -114,7 +114,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
 									+ userId
 									+ "and a.folderId="
 									+ folderId
@@ -154,4 +154,78 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		hibernateTemplate.saveOrUpdate(admFolderResume);
 
 	}
+
+	@Override
+	public void addFolder(int userId,String folderName) throws JobBoardDataException {
+		AdmFolder admFolder = new AdmFolder();
+		List<AdmFolder> admFolderList = new ArrayList<AdmFolder>();
+		// check if the folder with the given name is present for the user or not 
+		 admFolderList=getFolderDetails(userId, folderName);
+		 int count=1;
+		if (null != admFolderList) {
+			while (admFolderList.size() != 0) {
+				folderName = folderName + count;
+				admFolderList = getFolderDetails(userId, folderName);
+			}
+		}
+		admFolder.setFolderName(folderName);
+		admFolder.setUserId(userId);
+		hibernateTemplate.saveOrUpdate(admFolder);
+		
+	}
+	/**
+	 * Get the folder detail by userid and folder name
+	 * @param userId
+	 * @param folderName
+	 */
+	public List<AdmFolder> getFolderDetails(int userId, String folderName) {
+
+		List<AdmFolder> admFolderList = hibernateTemplate
+				.find("from AdmFolder a where a.userId=" + userId
+						+ " and folderName= '" + folderName + "'");
+		return admFolderList;
+	}
+	/**
+	 * Get the folder resume detail by folder id
+	 * @param folderId
+	 */
+	public List<AdmFolderResume> getFolderredumeDetails(int folderId) {
+
+		List<AdmFolderResume> admFolderResList = hibernateTemplate
+				.find("from AdmFolderResume a where a.folderId=" + folderId);
+		return admFolderResList;
+	}
+	@Override
+	public void removeFolder(int userId, String folderName)
+			throws JobBoardDataException {
+		List<AdmFolder> admFolderList = new ArrayList<AdmFolder>();
+		// check if the folder with the given name is present for the user or
+		// not
+		admFolderList = getFolderDetails(userId, folderName);
+		if (null != admFolderList && !admFolderList.isEmpty()) {
+			for (AdmFolder admFolder : admFolderList) {
+				List<AdmFolderResume> admFolderResList = getFolderredumeDetails(admFolder
+						.getFolderId());
+				if (null != admFolderResList && !admFolderResList.isEmpty())
+					hibernateTemplate.deleteAll(admFolderResList);
+				hibernateTemplate.delete(admFolder);
+			}
+		}
+
+	}
+
+	@Override
+	public boolean updateRating(int rating, int resumeId)
+			throws JobBoardDataException {
+		AdmFolderResume admFolderResume = new AdmFolderResume();
+
+		admFolderResume = hibernateTemplate
+				.get(AdmFolderResume.class, resumeId);
+		admFolderResume.setRating(rating);
+		admFolderResume.setUpdateDt(new Date());
+		hibernateTemplate.saveOrUpdate(admFolderResume);
+		
+		return true;
+	}
+	
 }

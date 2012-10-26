@@ -44,14 +44,21 @@ public interface ManageJobSeekerService {
 	 */
 	List<AdmFolderDTO> folderDetailList(int userId) throws JobBoardServiceException;
 	/**
-	 * Method to update Job seeker details
+	 * Method to update Application Status
 	 * @param appStatusId
+	 * @param resumeId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	boolean updateAppStatus(int appStatusId,int resumeId) throws JobBoardServiceException;
+	/**
+	 * Method to update Resume Rating
 	 * @param resumeId
 	 * @param rating
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	boolean updateJobSeeker(int appStatusId,int resumeId,int rating) throws JobBoardServiceException;
+	boolean updateRatings(int rating,int resumeId) throws JobBoardServiceException;
 	/**
 	 * Method to update folder details 
 	 * @param folderId
@@ -62,5 +69,17 @@ public interface ManageJobSeekerService {
 	 * @param resumeId
 	 */
 	void deleteJobSeeker(int resumeId) throws JobBoardServiceException;
+	/**Method to Add New Folder folder 
+	 * @param userId
+	 * @param folderName
+	 */
+	void addFolder(int userId,String folderName) throws JobBoardServiceException;
+	/**
+	 * Method to remove folder 
+	 * @param userId
+	 * @param folderName
+	 * @throws JobBoardServiceException
+	 */
+	void removeFolder(int userId,String folderName) throws JobBoardServiceException;
 
 	}
