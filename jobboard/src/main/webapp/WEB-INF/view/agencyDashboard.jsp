@@ -12,14 +12,14 @@
 <jsp:include page="common/include.jsp" />
 <!-- <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script> -->
-	<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <!-- <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script> -->
-	<script type="text/javascript" src="../resources/js/jquery-ui.js"></script>
+<script type="text/javascript" src="../resources/js/jquery-ui.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(
 			function() {
-				 $("#changePassword").displaypopup("#changePassword", "790",
+				$("#changePassword").displaypopup("#changePassword", "790",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
 						"790", "360");
@@ -31,6 +31,7 @@
 						"350");
 				$("#accessPermissioPopUp").displaypopup(
 						"#accessPermissioPopUp", "770", "360");
+				$("#modifySubs").displaypopup("#modifySubs", "770", "360");
 				jQuery(".megamenu").megamenu();
 			});
 </script>
@@ -179,16 +180,17 @@
 												id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
-									<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
-									<input type="hidden" name="pageValue" value="agePermPage" />
-									<div class="lableTextDashBoard">
-										<p>
-											<a id="accessPermissioPopUp"
-												href="<%=request.getContextPath()%>/employer/manageAccessPermission.html?page=agePermPage">Manage
-												Access Permissions</a>
+									<security:authorize
+										access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
+										<input type="hidden" name="pageValue" value="agePermPage" />
+										<div class="lableTextDashBoard">
+											<p>
+												<a id="accessPermissioPopUp"
+													href="<%=request.getContextPath()%>/employer/manageAccessPermission.html?page=agePermPage">Manage
+													Access Permissions</a>
 
-										</p>
-									</div>
+											</p>
+										</div>
 									</security:authorize>
 								</div>
 							</div>
@@ -201,15 +203,20 @@
 
 								<div class="dashboardPanalAGCcontent ">
 									<h2 class="noTopBorder">Current Subscriptions</h2>
-									<div class="lableTextDashBoard">
-										<p>E-newsletters</p>
-									</div>
-									<div class="lableTextDashBoard">
-										<p>E-mailer</p>
+									<div>
+										<c:forEach items="${currentSubs}" var="subscription"
+											varStatus="index">
+											<tr>
+												<td><c:out value="${subscription.optionName}" /></td>
+											</tr>
+											<br />
+										</c:forEach>
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Soon" href="">Modify Subscriptions</a>
+											<a title="Coming Soon" id="modifySubs"
+												href="<%=request.getContextPath()%>/subscriptions/modifyFacilitySubscriptions.html">Modify
+												Subscriptions</a>
 										</p>
 									</div>
 								</div>
@@ -227,8 +234,8 @@
 
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Sooon" href=""><em>ADVANCE</em> Recruitment Solutions Media
-												Kit</a>
+											<a title="Coming Sooon" href=""><em>ADVANCE</em>
+												Recruitment Solutions Media Kit</a>
 										</p>
 									</div>
 								</div>
@@ -244,22 +251,25 @@
 
 								<div class="dashboardPanalAGCcontent">
 									<h2 class="noTopBorder">Employers</h2>
-									
+
 									<c:forEach items="${emplyrsByState}" var="assocEmplyrsName"
-							varStatus="status">
-									<div class="lableTextDashBoard">
-										<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
-									</div>
-									<div class="lableTextDashBoard">
-									<c:forEach items="${assocEmplyrsName.value}" var="emplyrsName"
-							          varStatus="emplyrsStatus">
-										<p>
-											<a class="employerMetrics" href="<%=request.getContextPath()%>/agency/showFacilityMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a> 
-										</p>
-										 </c:forEach>
-									</div>
-									<br><br><br>
-									</c:forEach> 
+										varStatus="status">
+										<div class="lableTextDashBoard">
+											<h3 class="TextColor01">${assocEmplyrsName.key}</h3>
+										</div>
+										<div class="lableTextDashBoard">
+											<c:forEach items="${assocEmplyrsName.value}"
+												var="emplyrsName" varStatus="emplyrsStatus">
+												<p>
+													<a class="employerMetrics"
+														href="<%=request.getContextPath()%>/agency/showFacilityMetrics.html?facilityId=${emplyrsName.facilityId}">${emplyrsName.name}</a>
+												</p>
+											</c:forEach>
+										</div>
+										<br>
+										<br>
+										<br>
+									</c:forEach>
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="row">

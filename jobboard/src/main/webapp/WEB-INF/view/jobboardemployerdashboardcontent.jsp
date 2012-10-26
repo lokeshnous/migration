@@ -33,23 +33,26 @@
 						.displaypopup("#setAlertPopUp", "770", "360");
 				$("#viewAlertPopUp").displaypopup("#viewAlertPopUp", "770",
 						"360");
-				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp", "790",
-				"360"); 
-				$("#mySavedResumeSearches").displaypopup("#mySavedResumeSearches", "790",
-				"360"); 
+				$("#manageFacilityPopUp").displaypopup("#manageFacilityPopUp",
+						"790", "360");
+				$("#mySavedResumeSearches").displaypopup(
+						"#mySavedResumeSearches", "790", "360");
+				$("#modifySubs").displaypopup("#modifySubs", "770", "360");
 
 			});
 	window.onload = function() {
 		loadMetricsDetails();
 	};
-	function loadMetricsDetails(){
-		$.ajaxSetup({ cache: false });
+	function loadMetricsDetails() {
+		$.ajaxSetup({
+			cache : false
+		});
 		$.ajax({
 			url : '../employer/metricsDetails.html',
 			data : ({}),
-			
+
 			success : function(data) {
-			$("#metricsDetails").html(data);
+				$("#metricsDetails").html(data);
 			},
 			error : function(data) {
 				// alert('Unable to process');
@@ -57,21 +60,23 @@
 			complete : function(data) {
 				// do nothing for now.
 			}
-		}
-		);
-	}
-	function changeMetrics(){
-		var selEmployerId = $("#selEmployer").val();
-		$.ajax({url:"${pageContext.request.contextPath}/employer/viewEmployerMetrics.html?selEmployerId="+selEmployerId,
-			data:$('#selEmployerId').serialize(),
-			type:"GET",
-			success: function(data) {			
-		loadMetricsDetails();
-			 },
-				error : function(data) {
-					// alert('Unable to process');
-				}
 		});
+	}
+	function changeMetrics() {
+		var selEmployerId = $("#selEmployer").val();
+		$
+				.ajax({
+					url : "${pageContext.request.contextPath}/employer/viewEmployerMetrics.html?selEmployerId="
+							+ selEmployerId,
+					data : $('#selEmployerId').serialize(),
+					type : "GET",
+					success : function(data) {
+						loadMetricsDetails();
+					},
+					error : function(data) {
+						// alert('Unable to process');
+					}
+				});
 	}
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
@@ -95,38 +100,41 @@
 
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Profile Management</h2>
-						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null )%>">
-						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS)!=null )%>">
-						<div class="lableTextDashBoard">
-							<p>
-								<a
-									href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
-									id="changePassword">${msg.jsChangePwd}</a>
+						<c:if
+							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null )%>">
+							<c:if
+								test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS)!=null )%>">
+								<div class="lableTextDashBoard">
+									<p>
+										<a
+											href="<%=request.getContextPath()%>/jobseekerregistration/jobSeekerChangePassword.html"
+											id="changePassword">${msg.jsChangePwd}</a>
 
-							</p>
-						</div>
-						<div class="lableTextDashBoard">
-							<p>
-								<a
-									href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
-									id="accountSettingpopUp">Account Settings</a>
-							</p>
-						</div>
-						<%-- <c:if
+									</p>
+								</div>
+								<div class="lableTextDashBoard">
+									<p>
+										<a
+											href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
+											id="accountSettingpopUp">Account Settings</a>
+									</p>
+								</div>
+								<%-- <c:if
 							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}"> --%>
-							<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
-							
-							<div class="lableTextDashBoard">
-								<p>
-									<a id="accessPermissioPopUp"
-										href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage
-										Access Permissions</a>
-								</p>
-							</div>
-							
-							</security:authorize>
+								<security:authorize
+									access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
+
+									<div class="lableTextDashBoard">
+										<p>
+											<a id="accessPermissioPopUp"
+												href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage
+												Access Permissions</a>
+										</p>
+									</div>
+
+								</security:authorize>
 							</c:if>
-							</c:if>
+						</c:if>
 						<%-- </c:if> --%>
 						<div class="lableTextDashBoard">
 							<p>
@@ -136,12 +144,13 @@
 							</p>
 						</div>
 						<security:authorize access="hasRole('ROLE_FACILITY_GROUP')">
-						<div class="lableTextDashBoard">
-							<p>
-								<a id="manageFacilityPopUp"
-									href="<%=request.getContextPath()%>/facility/updateFacilityDetail.html">Manage Facility List</a>
-							</p>
-						</div>
+							<div class="lableTextDashBoard">
+								<p>
+									<a id="manageFacilityPopUp"
+										href="<%=request.getContextPath()%>/facility/updateFacilityDetail.html">Manage
+										Facility List</a>
+								</p>
+							</div>
 						</security:authorize>
 						<div class="FormErrorDisplayText">
 							${error}<br /> <br />
@@ -157,15 +166,16 @@
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Job Posting</h2>
 						<%-- <c:if test="${ enablePostEditAccess eq 'true'}"> --%>
-						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
-						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
-							<div class="lableTextDashBoard">
-								<p>
-									<a id="purchaseJobPostings"
-										href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html">Purchase
-										Job Postings</a>
-								</p>
-							</div>
+						<c:if
+							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
+							<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
+								<div class="lableTextDashBoard">
+									<p>
+										<a id="purchaseJobPostings"
+											href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html">Purchase
+											Job Postings</a>
+									</p>
+								</div>
 							</security:authorize>
 						</c:if>
 						<div class="lableTextDashBoard">
@@ -213,27 +223,33 @@
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Manage Applicants</h2>
-						<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
-						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
-					<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
-							<div class="lableTextDashBoard">
-								<p>
-									<a title="Coming Soon" href="">Purchase Resume Search Packages</a>
-								</p>
-							</div>
+						<c:if
+							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
+							<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
+								<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
+								<div class="lableTextDashBoard">
+									<p>
+										<a title="Coming Soon" href="">Purchase Resume Search
+											Packages</a>
+									</p>
+								</div>
 							</security:authorize>
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon" href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage Job-Seekers</a>
+								<a title="Coming Soon"
+									href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage
+									Job-Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a  href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html" title="Coming Soon"
-								id="mySavedResumeSearches">
-								My Saved Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
-								value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}</a>
+								<a
+									href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html"
+									title="Coming Soon" id="mySavedResumeSearches"> My Saved
+									Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
+										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}
+								</a>
 							</p>
 						</div>
 					</div>
@@ -246,15 +262,20 @@
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Current Subscriptions</h2>
-						<div class="lableTextDashBoard">
-							<p>E-newsletters</p>
-						</div>
-						<div class="lableTextDashBoard">
-							<p>E-mailer</p>
+						<div>
+							<c:forEach items="${currentSubs}" var="subscription"
+								varStatus="index">
+								<tr>
+									<td><c:out value="${subscription.optionName}" /></td>
+								</tr>
+								<br />
+							</c:forEach>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon" href="">Modify Subscriptions</a>
+								<a title="Coming Soon" id="modifySubs"
+									href="<%=request.getContextPath()%>/subscriptions/modifyFacilitySubscriptions.html">Modify
+									Subscriptions</a>
 							</p>
 						</div>
 					</div>
@@ -277,12 +298,11 @@
 									<thead>
 										<tr class="borderTopNone">
 											<th width="46%" align="left" scope="col"><h2
-													class="HeadTopBottomBorder">Metrics</h2> 
-												<form:select
+													class="HeadTopBottomBorder">Metrics</h2> <form:select
 													class="jb_input3" path="selEmployer" items="${downDTOs}"
-													itemValue="optionId" itemLabel="optionName" onchange="changeMetrics();">
-												</form:select>
-											</th>
+													itemValue="optionId" itemLabel="optionName"
+													onchange="changeMetrics();">
+												</form:select></th>
 											<th width="18%" align="center" scope="col"
 												class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
 											<th width="18%" align="center" scope="col"
@@ -291,9 +311,9 @@
 												class="BorderLeftWhite"><div class="EDPriceB">APPLIES</div></th>
 										</tr>
 									</thead>
-									</table>
-									<br/>
-									<div id="metricsDetails" ></div>								
+								</table>
+								<br />
+								<div id="metricsDetails"></div>
 							</div>
 							<!--T-->
 							<div class="rowBox EDPricec">
@@ -392,8 +412,8 @@
 									<h2 class="noTopBorder">Solutions</h2>
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Soon" href=""><em>ADVANCE </em>Recruitment Solutions Media
-												Kit</a>
+											<a title="Coming Soon" href=""><em>ADVANCE </em>Recruitment
+												Solutions Media Kit</a>
 										</p>
 									</div>
 								</div>
