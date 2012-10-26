@@ -381,10 +381,10 @@ public interface MMJBCommonConstants {
 	String INVENTORY = "inventoryPage";
 	String PURCHASE_JOB_POST_FORM = "purchaseJobPostForm";
 	String PURCHASE_RESUME_SEARCH_FORM = "purchaseResumeSearchForm";
-	//Purchase types 
+	// Purchase types
 	String PURCHASE_JOB_POST = "jobPost";
 	String PURCHASE_RESUME_SEARCH = "resumeSearch";
-	//Product type
+	// Product type
 	String RESUME_SEARCH_PACKAGE = "RESUME_SEARCH";
 
 	int PLAN_DAYS = 30;
@@ -460,5 +460,5 @@ public interface MMJBCommonConstants {
 
 	int DIGITAL_SUBSCRIPTION = 5;
 	int ENEWS_LETTER_SUBSCRIPTION = 6;
-
+	int EMAIL_SUBSCRIPTION = 7;
 }
