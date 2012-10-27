@@ -7,10 +7,8 @@
 			http://www.springframework.org/schema/security 
 			http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-
 	<security:http auto-config="false" use-expressions="true"
 		access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">
-
 
 		<security:intercept-url pattern="/healthcarejobs/advanceweb.html"
 			access="permitAll" />
@@ -49,54 +47,70 @@
 			access="permitAll" requires-channel="http" />
 		<!-- Added for SSL Implementation -end -->
 
-		<!-- Added for SSL Implementation :  
-			Server.xml : Connector port and Security: port must be same.
-			for example
-			
-			server.xml
-				 <Connector port="2815" protocol="HTTP/1.1"
-               				connectionTimeout="20000"
-               				redirectPort="8443" />
-				
-			spring-security.xml
-					
-				<security:port-mapping http="2815" https="8443" />
-		-start -->
+		<!-- Added for SSL Implementation : Server.xml : Connector port and Security: 
+			port must be same. for example server.xml <Connector port="2815" protocol="HTTP/1.1" 
+			connectionTimeout="20000" redirectPort="8443" /> spring-security.xml <security:port-mapping 
+			http="2815" https="8443" /> -start -->
 		<security:port-mappings>
 			<security:port-mapping http="2815" https="8443" />
 		</security:port-mappings>
 		<!-- Added for SSL Implementation -end -->
 
-
 		<security:logout success-handler-ref="customLogoutSuccessHandler"
-			invalidate-session="true" logout-url="/logout.html"/>
-
+			invalidate-session="true" logout-url="/logout.html" />
 		<security:custom-filter ref="authenticationFilter"
 			position="FORM_LOGIN_FILTER" />
+		<security:custom-filter ref="rememberMeProcessingFilter"
+			position="REMEMBER_ME_FILTER" />
 	</security:http>
 
 	<bean id="authenticationFilter"
 		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
-		p:authenticationManager-ref="customAuthenticationManager"
+		p:authenticationManager-ref="theauthenticationManager"
+		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler"
 		p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
-		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
+		p:rememberMeServices-ref="rememberMeServices" />
 
+	<bean id="rememberMeProcessingFilter"
+		class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter"
+		p:rememberMeServices-ref="rememberMeServices"
+		p:authenticationManager-ref="theauthenticationManager"
+		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
+	
 	<bean id="customAuthenticationManager"
-		class="com.advanceweb.afc.jb.security.DatabaseAuthenticationManager " />
+		class="com.advanceweb.afc.jb.security.DatabaseAuthenticationManager"/>
 
 	<bean id="customAuthenticationFailureHandler"
-		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager" />
+		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager"/>
 
-	<bean id="customAuthenticationSuccessHandler"
-		class="com.advanceweb.afc.jb.login.web.controller.LoginManager" />
-
+	<bean id="customAuthenticationSuccessHandler" class="com.advanceweb.afc.jb.login.web.controller.LoginManager"/>
 
 	<bean id="customLogoutSuccessHandler"
-		class="com.advanceweb.afc.jb.login.web.controller.LogoutManager" />
+		class="com.advanceweb.afc.jb.login.web.controller.LogoutManager"/>
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
 		p:loginFormUrl="/healthcarejobs/advanceweb.html" />
 
-	<security:authentication-manager />
+	<bean id="rememberMeServices"
+		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+		<property name="userDetailsService" ref="customAuthenticationManager" />
+		<property name="key" value="mmjbRememberMeKey" />
+	</bean>
+
+	<bean id="rememberMeAuthenticationProvider"
+		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+		<property name="key" value="mmjbRememberMeKey" />
+	</bean>
+	<bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="customAuthenticationManager" />
+	</bean>
+	<security:authentication-manager alias="theauthenticationManager">
+		<security:authentication-provider
+			ref="rememberMeAuthenticationProvider" />
+		<security:authentication-provider
+			ref="daoAuthenticationProvider" />
+	</security:authentication-manager>
+
 </beans>
