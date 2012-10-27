@@ -56,8 +56,8 @@
                 <input type="hidden" name="pageValue" value="agency"/>
 			    <div class="loginOptions">
 				<div class="rowEvenNewSpacing">
-				    <input type="checkbox" name='_spring_security_remember_me'
-										id="_spring_security_remember_me"  value="stayLoggedIn" /> Stay Logged In<br />
+				    <input type="checkbox" name="_spring_security_remember_me"
+										id="_spring_security_remember_me"/> Stay Logged In<br />
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
