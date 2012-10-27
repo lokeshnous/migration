@@ -271,6 +271,8 @@ public class EmployerRegistrationController {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
+			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+					infoDTO.getCustomerName());
 			model.addObject("viewMediaUrl", viewMediaUrl);
 			model.setViewName("jobBoardEmployerPostJobs01");
 			String role = MMJBCommonConstants.ROLE_FACILITY;
