@@ -281,6 +281,10 @@ public class DatabaseAuthenticationManager implements AuthenticationManager,
 		}
 		Collection<SimpleGrantedAuthority> userRoles = getAuthorities(userDTO
 				.getUserId());
+		if(userDTO.isAdmin()){
+			userRoles.add(new SimpleGrantedAuthority(
+					MMJBCommonConstants.ROLE_MERION_ADMIN));
+		}
 		return new User(userDTO.getEmailId(), userDTO.getPassword(), userRoles);
 	}
 }
