@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -32,17 +34,14 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
 		String socialSignUp =(String)request.getAttribute("socialSignUp");
-		response.reset();
-		response.setHeader("Cache-Control", "no-cache");
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Cache-Control", "no-store");
-		response.setHeader("Cache-Control", "must-revalidate");
-		response.setDateHeader("Expires", 0);
 		UserDTO user = loginService.getUser(authentication.getName());
-		HttpSession session = request.getSession(false);
+		HttpSession session;
+		if(authentication instanceof UsernamePasswordAuthenticationToken)
+		{ session = request.getSession(false);}
+		else{session = request.getSession();}
+		
 		if(user.isAdmin()){
 			session.setAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS,MMJBCommonConstants.FACILITY_FULL_ACCESS);
 		}
@@ -52,7 +51,6 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
 
 		if (isJobSeeker(authentication, pageValue)) {
-
 			redirectJobSeeker(user,request,response,session);
 		} else if (isFacility(authentication, pageValue)) {
 
@@ -109,10 +107,17 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 */
 	private boolean isFacilitySystem(Authentication authentication,
 			String pageValue) {
+		if(authentication instanceof RememberMeAuthenticationToken){
+			return authentication.getAuthorities().contains(
+					new SimpleGrantedAuthority(
+							MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
+		}
+		else{
 		return authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(
 						MMJBCommonConstants.ROLE_FACILITY_SYSTEM))
 				&& pageValue.equals(MMJBCommonConstants.AGENCY);
+		}
 	}
 
 	/**
@@ -124,12 +129,21 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @return
 	 */
 	private boolean isFacility(Authentication authentication, String pageValue) {
+		if(authentication instanceof RememberMeAuthenticationToken){
+			return authentication.getAuthorities().contains(
+					new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
+					|| authentication.getAuthorities().contains(
+							new SimpleGrantedAuthority(
+									MMJBCommonConstants.ROLE_FACILITY_GROUP));
+		}
+		else{
 		return (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(MMJBCommonConstants.ROLE_FACILITY))
 				|| authentication.getAuthorities().contains(
 						new SimpleGrantedAuthority(
 								MMJBCommonConstants.ROLE_FACILITY_GROUP)))
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER);
+		}
 	}
 
 	/**
@@ -140,12 +154,18 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @return
 	 */
 	private boolean isJobSeeker(Authentication authentication, String pageValue) {
-
+		if(authentication instanceof RememberMeAuthenticationToken){
+	return authentication.getAuthorities()
+	.contains(
+			new SimpleGrantedAuthority(
+					MMJBCommonConstants.ROLE_JOB_SEEKER));
+		}
+		else{
 		return authentication.getAuthorities()
 				.contains(
 						new SimpleGrantedAuthority(
 								MMJBCommonConstants.ROLE_JOB_SEEKER))
-				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER);
+				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER);}
 	}
 	
 	/**
@@ -156,9 +176,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param HttpServletResponse response
 	 * @param HttpSession session
 	 */
-	private void redirectJobSeeker(UserDTO user, HttpServletRequest request,
-			HttpServletResponse response, HttpSession session)
-			throws IOException, ServletException {
+	private void redirectJobSeeker(UserDTO user,HttpServletRequest request,HttpServletResponse response,HttpSession session)throws IOException, ServletException {
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 
 			/**
