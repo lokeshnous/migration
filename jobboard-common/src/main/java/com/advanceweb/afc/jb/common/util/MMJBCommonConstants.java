@@ -208,15 +208,8 @@ public interface MMJBCommonConstants {
 	String ROLE_FACILITY_FULL_ACCESS = "ROLE_FACILITY_FULL_ACCESS";
 	String ROLE_FACILITY_POST_EDIT = "ROLE_FACILITY_POST_EDIT";
 
-	// For Login Failure URL
-	String JOBSEEKER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=jobSeeker";
-	String EMPLOYER_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=employer";
-	String AGENCY_LOGIN_FAILURE_URL = "/commonLogin/login.html?error=true&page=agency";
-
-	// For Logout URL
-	String JOBSEEKER_LOGOUT_URL = "/commonLogin/login.html?page=jobSeeker";
-	String EMPLOYER_LOGOUT_URL = "/commonLogin/login.html?page=employer";
-	String AGENCY_LOGOUT_URL = "/commonLogin/login.html?page=agency";
+	//For Spring Security Remember Me Login(Cookie Name)
+	String SPRING_SECURITY_REMEMBER_ME_COOKIE="SPRING_SECURITY_REMEMBER_ME_COOKIE";
 
 	// Payment Gateway
 	String CREDIT_CARD = "ccp";
