@@ -47,6 +47,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.agency.service.AgencyService;
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
@@ -60,6 +62,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.web.controller.EmployeeAccountForm;
@@ -76,6 +79,9 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * 
@@ -87,11 +93,14 @@ import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 
 @Controller
 @RequestMapping("/agency")
-public class AgencyDashBoardController {
+public class AgencyDashBoardController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyDashBoardController.class);
 	private static final String FACILITY_ID = "facilityId";
+	
+	private static final String JB_POST_TOTAL_LIST = "jbPostTotalList";
+	
 	@Autowired
 	private EmloyerRegistartionService empRegService;
 	@Autowired
@@ -119,6 +128,9 @@ public class AgencyDashBoardController {
 	@Autowired
 	private ProfileRegistration employerRegistration;
 
+	@Autowired
+	private AdService adService;
+	
 	@Value("${requiredField}")
 	private String requiredField;
 	@Value("${requiredAllFields}")
@@ -149,10 +161,11 @@ public class AgencyDashBoardController {
 	private String accountStreet;
 
 	@RequestMapping("/agencyDashboard")
-	public ModelAndView displayDashBoard(HttpSession session) {
+	public ModelAndView displayDashBoard(HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
 		Set<String> stateList = new HashSet<String>();
+		getAds(session, request, model);
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<FacilityDTO> assocEmplyrsNames;
@@ -741,7 +754,7 @@ public class AgencyDashBoardController {
 			BindingResult result, HttpSession session,
 			@RequestParam(FACILITY_ID) int facilityId) {
 		ModelAndView model = new ModelAndView();
-		session.removeAttribute("jbPostTotalList");
+		session.removeAttribute(JB_POST_TOTAL_LIST);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
 		FacilityDTO employerDetails = facilityService
@@ -754,7 +767,7 @@ public class AgencyDashBoardController {
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 		model.addObject("downDTOs", downDTOs);
-		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		session.setAttribute(JB_POST_TOTAL_LIST, jbPostTotalList);
 		model.addObject("employerDetails", employerDetails);
 		model.setViewName("employersMetricsPopup");
 		return model;
@@ -765,11 +778,11 @@ public class AgencyDashBoardController {
 	void showMetrics(@ModelAttribute("metricsForm") MetricsForm metricsForm,
 			BindingResult result, HttpSession session,
 			@RequestParam(FACILITY_ID) int facilityId) {
-		session.removeAttribute("jbPostTotalList");
+		session.removeAttribute(JB_POST_TOTAL_LIST);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
-		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		session.setAttribute(JB_POST_TOTAL_LIST, jbPostTotalList);
 		// return;
 	}
 
@@ -947,5 +960,48 @@ public class AgencyDashBoardController {
 						listSubscriptions);
 		return currentSubs;
 
+	}
+	
+	/**
+	 * This method displays the ads 
+	 * 
+	 * @param session
+	 * @param request
+	 * @param model
+	 */
+	private void getAds(HttpSession session, HttpServletRequest request,
+			ModelAndView model) {
+		// Add the Ads 
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.AGENCY_DASHBOARD);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageTopRight", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageBottomRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageBottom", bannerString);
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while getting the html content for Ads"
+					, e);
+		}
 	}
 }

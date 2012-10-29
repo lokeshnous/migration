@@ -24,7 +24,7 @@
     
     <body class="job_board_home">
         <div class="ad_page_top">
-			<img src="../resources/images/ads/banner_ad_fpo.png" />
+			${adPageTop}
         </div>
         <div class="main_wrapper_outside">
         <div class="main_wrapper_inside">
@@ -33,7 +33,7 @@
             <div class="main">
 <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
-                    <img src="../resources/images/ads/300x250ad1.png" class="paddingBottom0" />
+                    ${adPageTopRight}
 
 		    <br class="clearfix" />
 
@@ -94,7 +94,7 @@
                 </div><!-- content_wrapper -->
 
                 <div class="ad_wrapper marginTop0">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
+					${adPageBottom}
                 </div><!-- ad_wrapper -->
 
             </div><!-- main -->

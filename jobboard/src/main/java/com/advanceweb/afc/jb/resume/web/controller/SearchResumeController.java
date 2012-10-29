@@ -27,12 +27,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.event.service.ClickService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
@@ -46,6 +49,9 @@ import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * This controller belongs to the functionalities related to searching of
@@ -59,7 +65,7 @@ import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 
 @Controller
 @RequestMapping("/employerSearchResume")
-public class SearchResumeController {
+public class SearchResumeController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(SearchResumeController.class);
@@ -95,6 +101,9 @@ public class SearchResumeController {
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
+	
+	@Autowired
+	private AdService adService;
 	
 	private static final String STR_SRCH_RES_FORM = "searchResumeForm";
 	/**
@@ -384,10 +393,58 @@ public class SearchResumeController {
 			Map<String, SearchResumeForm> model) {
 		
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
+		ModelAndView modelView = new ModelAndView();
 		model.put(STR_SRCH_RES_FORM, searchResumeForm);
 		//removeSession(session);
-		return new ModelAndView("advanceresumesearch");
+		
+		getAds(session, request, modelView);
+		
+		modelView.setViewName("advanceresumesearch");
+		return modelView;
 
+	}
+
+	/**
+	 * This method displays the ads 
+	 * 
+	 * @param session
+	 * @param request
+	 * @param model
+	 */
+	private void getAds(HttpSession session, HttpServletRequest request,
+			ModelAndView modelView) {
+		// Add the Ads 
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.ADV_RESUME_SEARCH);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			modelView.addObject("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			modelView.addObject("adPageTopRight", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			modelView.addObject("adPageBottomRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			modelView.addObject("adPageBottom", bannerString);
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while getting the html content for Ads"
+					, e);
+		}
 	}
 	
 	@RequestMapping(value = "/mySavedResumeSearches", method = RequestMethod.GET)

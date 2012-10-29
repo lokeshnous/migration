@@ -36,10 +36,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * <code>EmpBrandTempController</code>This controller belongs to manage job
@@ -54,7 +60,7 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 @RequestMapping("/brandingTemplates")
 @SessionAttributes("brandingTemplateForm")
 @SuppressWarnings("rawtypes")
-public class BrandingTemplateController {
+public class BrandingTemplateController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(BrandingTemplateController.class);
@@ -68,6 +74,9 @@ public class BrandingTemplateController {
 	@Autowired
 	private BrandingTemplateValidation brandingTemplateValidation;
 
+	@Autowired
+	private AdService adService;
+	
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 	
@@ -122,7 +131,7 @@ public class BrandingTemplateController {
 	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params = "Save")
 	public ModelAndView createEmpBrandTemp(
 			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm brandingTemplateForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session, HttpServletRequest request) {
 
 		// Introduced a new variable "templateForm" to resolve PMD issue.
 		BrandingTemplateForm brandingTemplate = brandingTemplateForm;
@@ -139,6 +148,8 @@ public class BrandingTemplateController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		brandingTemplate.setEmployerId(user_id);
 
+		getAds(session, request, model);
+				
 		//Check if the user has exceeded the branding template limit
 		status = brandingTemplateService.checkTemplateLimit(facilityId);
 		if (!status) {
@@ -267,6 +278,7 @@ public class BrandingTemplateController {
 			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 			model.addObject(STR_ERRORMESSAGE, null);
+			getAds(session, request, model);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 		}
@@ -281,6 +293,7 @@ public class BrandingTemplateController {
 		if (!status) {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					"An error occured while saving the file");
+			getAds(session, request, model);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 		}
@@ -653,7 +666,6 @@ public class BrandingTemplateController {
 	 * @return
 	 */
 
-	// @RequestMapping(value = "/cancelBrandTemp", method = RequestMethod.GET)
 	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params = "Cancel")
 	public ModelAndView cancelBrandTemp(Map model) {
 		return new ModelAndView(STR_EMPDASHBOARD);
@@ -666,7 +678,7 @@ public class BrandingTemplateController {
 	 * @return
 	 */
 	@RequestMapping(value = "/newBrandingTemplate", method = RequestMethod.GET)
-	public ModelAndView newBrandTemp(Map modelMap, HttpSession session) {
+	public ModelAndView newBrandTemp(Map modelMap, HttpSession session, HttpServletRequest request) {
 		BrandingTemplateForm brandingTemplateForm = new BrandingTemplateForm();
 		ModelAndView model = new ModelAndView();
 
@@ -693,7 +705,8 @@ public class BrandingTemplateController {
 
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
-
+		
+		getAds(session, request, model);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		// Dummy list created to have a non zero List
@@ -711,7 +724,7 @@ public class BrandingTemplateController {
 	public ModelAndView displayTemplate(
 			Map modelMap,
 			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm form,
-			BindingResult result, HttpSession session,
+			BindingResult result, HttpSession session, HttpServletRequest request,
 			@RequestParam("id") String browsePath) {
 		BrandingTemplateForm brandingTemplateForm = form;
 
@@ -736,6 +749,7 @@ public class BrandingTemplateController {
 			model.setViewName(STR_EMPDASHBOARD);
 
 		} else {
+			getAds(session, request, model);
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		}
@@ -874,7 +888,7 @@ public class BrandingTemplateController {
 	 */
 	@RequestMapping(value = "/editTemplate", method = RequestMethod.GET)
 	public ModelAndView editEmpBrandTemp(BrandingTemplateForm form,
-			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session) {
+			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session, HttpServletRequest request) {
 		BrandingTemplateForm brandingTemplateForm = form;
 		// Retrieve facilityId from session.
 		int facility_id = (Integer) session
@@ -911,6 +925,7 @@ public class BrandingTemplateController {
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
 		brandingTemplateForm.setEditMode(true);
 		
+		getAds(session, request, model);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		return model;
@@ -1132,6 +1147,49 @@ public class BrandingTemplateController {
 			}
 
 			brandingTemplateForm.setListVideos(updatedVideoList);
+		}
+	}
+	
+	/**
+	 * This method displays the ads 
+	 * 
+	 * @param session
+	 * @param request
+	 * @param model
+	 */
+	private void getAds(HttpSession session, HttpServletRequest request,
+			ModelAndView model) {
+		// Add the Ads 
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_BTEMPLATE);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageTopRight", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageBottomRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addObject("adPageBottom", bannerString);
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while getting the html content for Ads"
+					, e);
 		}
 	}
 }

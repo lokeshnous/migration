@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
@@ -37,9 +39,13 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * @author muralikc
@@ -50,7 +56,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @RequestMapping("/agencyRegistration")
 @SessionAttributes("agencyRegForm")
 @Scope("session")
-public class AgencyRegistrationController {
+public class AgencyRegistrationController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistrationController.class);
@@ -75,6 +81,9 @@ public class AgencyRegistrationController {
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 
+	@Autowired
+	private AdService adService;
+	
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	@Value("${socialSignupMsg}")
@@ -105,7 +114,11 @@ public class AgencyRegistrationController {
 	 * @return ModelAndView 
 	 */
 	@RequestMapping(value = "/agencyregistration", method = RequestMethod.GET)
-	public ModelAndView showAgencyRegistrationForm(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
+	public ModelAndView showAgencyRegistrationForm(
+			HttpServletRequest request,
+			HttpSession session,
+			@RequestParam(value = "profileId", required = false) String profileId,
+			@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
 		ModelAndView model = new ModelAndView();
 
 		AgencyRegistrationForm agencyRegForm = new AgencyRegistrationForm();
@@ -140,8 +153,46 @@ public class AgencyRegistrationController {
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
+
+		getAds(request, session, model);
 		model.setViewName(AGENCYREG);
 		return model;
+	}
+
+	private void getAds(HttpServletRequest request, HttpSession session,
+			ModelAndView model) {
+		// Add the Ads
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.AGENCY_REGISTRATION);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBottomRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBottom", bannerString);
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while getting the html content for Ads"
+					+ e);
+		}
 	}
 
 	/**
@@ -159,6 +210,9 @@ public class AgencyRegistrationController {
 			HttpSession session,HttpServletRequest req,
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
+		
+		getAds(req, session, model);
+		
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
 			if (!validateEmpRegForm(agencyRegistrationForm, model, result)) {
@@ -228,7 +282,7 @@ public class AgencyRegistrationController {
 		boolean status = true;
 
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
-			model.setViewName("addAjecncyRegistration");
+			model.setViewName(AGENCYREG);
 			for (AgencyProfileAttribForm form : agencyRegistrationForm
 					.getListProfAttribForms()) {
 

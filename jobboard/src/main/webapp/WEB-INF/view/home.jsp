@@ -59,9 +59,7 @@ type="text/css">
 					</div>
 				<div class="otherContent ">
 				<div class="ad_col_right">
-					<img class="marginTop10"
-						src="../resources/images/ads/300x250ad2.png" /> 
-						<%-- ${adPageTopRight} --%>
+						 ${adPageBtmRight}
 					<div class="follow_us">
 						<h2>Follow Us</h2> 
 						<p>Stay connected to the latest jobs.</p>
@@ -132,8 +130,7 @@ type="text/css">
 				<br class="clearfix" />
 				
 				<div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" /> 
-					<%-- ${adPageBtm } --%>
+					${adPageBtm}
 				</div>
 			
 				
