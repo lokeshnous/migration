@@ -82,7 +82,7 @@
 			    <div class="jobDetailsIntroOptions">
 			    <div class="rowEvenTB10Spacing">
 				<div class="ShareText">Send to friend: &nbsp;</div>
-				<a rel="nofollow,noindex" onclick="sendToFrd(${jobDetail.jobID}, ${jobDetail.JobTitle},'<%= request.getContextPath() %>');"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="fbook"></div></a><a rel="nofollow,noindex" href=""><div class="linkedIn"></div></a><a rel="nofollow,noindex" href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="printJBdetail"></div></a></div>
+				<a onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="fbook"></div></a><a rel="nofollow,noindex" href=""><div class="linkedIn"></div></a><a rel="nofollow,noindex" href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
 				<a onclick="applyThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>');" class="btn_sm orange" >Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
 				<a onclick="saveThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>')" id="saveThisJobId" class="btn_sm orange">SAVE THIS JOB</a></div>
@@ -95,7 +95,7 @@
 				<div class="jobDetailsIntroOptions">
 				<div class="rowEvenTB10Spacing">
 				<div class="ShareText">Send to friend:&nbsp;</div>
-				<a onclick="sendToFrd(${jobDetail.jobID}, ${jobDetail.JobTitle}, ${jobDetail.JobTitle},'<%= request.getContextPath() %>');"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<a onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
 				<a onclick="btapplyThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>');" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				<a onclick="btsaveThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>');" id="btsaveThisJobId" class="btn_sm orange" >SAVE THIS JOB</a></div>

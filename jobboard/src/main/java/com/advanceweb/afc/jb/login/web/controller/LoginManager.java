@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +33,9 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 
 	@Autowired
 	private ProfileRegistration profileRegistration;
+	
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
 
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -206,14 +210,14 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 				sendRedirect(request, response,
 						"/jobSeeker/jobSeekerDashBoard.html");
 			} else {
+				String jobTitle = (String) session.getAttribute("jobTitle");
+				jobTitle = jobTitle.replace(" ", "-").toLowerCase();
 				sendRedirect(
 						request,
 						response,
-						"/jobsearch/viewJobDetails.html?id="
-								+ session.getAttribute("jobId")
-								+ "&currentUrl=" + request.getContextPath()
-								+ "/jobsearch/findJobPage.html"
-								+ "&clickType=view");
+						"/jobsearch/viewJobDetails/"
+								+ session.getAttribute("jobId")+
+								"/"+jobTitle+dothtmlExtention);
 			}
 
 		} else {

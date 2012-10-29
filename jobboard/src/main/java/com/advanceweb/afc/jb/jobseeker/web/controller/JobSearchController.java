@@ -474,7 +474,8 @@ public class JobSearchController {
 				searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO
 						.getApplyLink());
 			}
-			if (!jobSearchValidator.isLoggedIn(map, jobId, currentUrl, session,
+			if (!jobSearchValidator.isLoggedIn(map, jobId,
+					searchedJobDTO.getJobTitle(), currentUrl, session,
 					jsonObject, request)) {
 				return jsonObject;
 			}

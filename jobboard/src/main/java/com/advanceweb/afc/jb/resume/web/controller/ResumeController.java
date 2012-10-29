@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
@@ -46,10 +48,14 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * This class has been created to perform resume activity such as create, delete, edit, download  
@@ -61,7 +67,7 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 @Controller
 @RequestMapping(value = "/jobSeekerResume")
 @SessionAttributes("createResume")
-public class ResumeController {
+public class ResumeController extends AbstractController{
 	
 	private static final Logger LOGGER = Logger
 			.getLogger(ResumeController.class);
@@ -70,6 +76,10 @@ public class ResumeController {
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
+	
+	@Autowired
+	private AdService adService;
+
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
@@ -952,13 +962,14 @@ public class ResumeController {
 	 * 
 	 * @param createResume
 	 * @param result
+	 * @param session 
 	 * @param
 	 * @return
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
 	public ModelAndView viewResumeBuilder(CreateResume createResumed,
 			BindingResult result, @RequestParam("resumeId") int resumeId,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		/**
 		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
 		 */
@@ -1006,8 +1017,39 @@ public class ResumeController {
 			model.addObject("createResume", createResume);
 			model.setViewName("viewCopyPasteResume");
 		}
+		// Ads for resume page
+		getAdsForResumePage(request, session, model);
 		return model;
 
+	}
+
+	/**
+	 * Get Ads for Resume view page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForResumePage(HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_RESUME_VIEW);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 
 	/**

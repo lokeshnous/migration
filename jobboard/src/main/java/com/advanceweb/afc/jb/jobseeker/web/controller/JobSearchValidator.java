@@ -79,7 +79,7 @@ public class JobSearchValidator {
 	 * @param jsonObject
 	 * @param request 
 	 */
-	public boolean isLoggedIn(Map<String, Object> map, int jobId,
+	public boolean isLoggedIn(Map<String, Object> map, int jobId,String jobTitle,
 			String currentUrl, HttpSession session, JSONObject jsonObject,
 			HttpServletRequest request) {
 		boolean status = true;
@@ -89,6 +89,7 @@ public class JobSearchValidator {
 			jsonObject.put(ajaxNavigationPath, request.getContextPath()
 					+ "/jobsearch/jobseekerApplyJobPopUp"+dothtmlExtention);
 			session.setAttribute("jobId", jobId);
+			session.setAttribute("jobTitle", jobTitle);
 			session.setAttribute(CURRENT_URL, currentUrl);
 			status = false;
 		}

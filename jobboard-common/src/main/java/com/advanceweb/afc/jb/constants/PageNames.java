@@ -40,6 +40,11 @@ public interface PageNames {
 	String JOBSEEKER_DASHBOARD = "dashboard_jobseeker";
 
 	/**
+	 * The Job seeker resume view page
+	 */
+	String JOBSEEKER_RESUME_VIEW = "jobseeker_resume_view";
+
+	/**
 	 * The Login page for Employer
 	 */
 	String EMPLOYER_LOGIN = "login_employer";
@@ -53,6 +58,11 @@ public interface PageNames {
 	 * The Employer dashboard
 	 */
 	String EMPLOYER_DASHBOARD = "dashboard_employer";
+	
+	/**
+	 * The Employer Job post
+	 */
+	String EMPLOYER_JOBPOST = "employer_jobpost";
 
 	/**
 	 * The Login page for Agency

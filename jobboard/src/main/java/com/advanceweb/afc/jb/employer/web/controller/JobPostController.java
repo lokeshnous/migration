@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
@@ -33,12 +35,16 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * @Author : Prince Mathew
@@ -49,7 +55,7 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 @Controller
 @RequestMapping("/employer")
-public class JobPostController {
+public class JobPostController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostController.class);
@@ -65,6 +71,9 @@ public class JobPostController {
 
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
+	
+	@Autowired
+	private AdService adService;
 
 	@Autowired
 	private FacilityService facilityService;
@@ -92,7 +101,9 @@ public class JobPostController {
 	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
 
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
-	public ModelAndView showPostJob(@RequestParam(value = "jobPostType", required = false) String jobPostType, HttpSession session) {
+	public ModelAndView showPostJob(
+			@RequestParam(value = "jobPostType", required = false) String jobPostType,
+			HttpSession session, HttpServletRequest request) {
 		int facilityId = 0;
 		ModelAndView model = new ModelAndView();
 		JobPostForm jobPostForm = new JobPostForm();
@@ -101,7 +112,7 @@ public class JobPostController {
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
-		
+
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 
@@ -111,20 +122,23 @@ public class JobPostController {
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(employerInfoDTO
 						.getFacilityId());
-		
-		//redirecting from job post inventory to post new job screen
-		if(!StringUtils.isEmpty(jobPostType)){
-			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService.populateJobPostingTypeDropdown(facilityId, Integer.parseInt(jobPostType));
-			if(null != jobPostTypeCombo && jobPostTypeCombo.size() > 0){
-				for(DropDownDTO dropDown : jbPostingTypeList){
-					if(dropDown.getOptionName().equals(jobPostTypeCombo.get(0).getOptionName())){
-						//set the default value of job post type drop down
+
+		// redirecting from job post inventory to post new job screen
+		if (!StringUtils.isEmpty(jobPostType)) {
+			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
+					.populateJobPostingTypeDropdown(facilityId,
+							Integer.parseInt(jobPostType));
+			if (null != jobPostTypeCombo && jobPostTypeCombo.size() > 0) {
+				for (DropDownDTO dropDown : jbPostingTypeList) {
+					if (dropDown.getOptionName().equals(
+							jobPostTypeCombo.get(0).getOptionName())) {
+						// set the default value of job post type drop down
 						jobPostForm.setJobPostingType(dropDown.getOptionId());
-					}	
+					}
 				}
-			}	
+			}
 		}
-		
+
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
 				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
 						employerInfoDTO.getUserId(),
@@ -163,9 +177,51 @@ public class JobPostController {
 
 		model.addObject(JOB_POST_FORM, jobPostForm);
 		model.setViewName(POST_NEW_JOBS);
-
+		// Ads for job Post page
+		getAdsForJobPost(request, session, model);
 		return model;
 	}
+	
+	/**
+	 * Get Ads for job Post page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForJobPost(HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_JOBPOST);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtmRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * This method is called to save the job details
