@@ -38,6 +38,7 @@
 					var substr = data.split(',');
 					if(substr[0] == '${MMJBCommonConstantsok}'){
 						$('body').css('cursor','default');  
+						alert('Temporary password has been sent to your email address successfully.');
 				        parent.$.nmTop().close();
 					}
 					if(substr[0] == '${MMJBCommonConstantserror}'){
