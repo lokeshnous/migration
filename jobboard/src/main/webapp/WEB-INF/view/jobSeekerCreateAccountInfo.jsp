@@ -129,6 +129,33 @@ function validateNumber(event) {
 		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
 		    }		
 		</script>
+		
+		<script type="text/javascript">
+           
+            
+            function modify(selectedVal){
+        
+            	alert(selectedVal);
+            	
+            	 if (selectedVal == "US") {
+            		
+            		 var checks = ["2","3","4"];
+            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+            		 
+            		 
+                	
+            	}else{
+            		var checks = ["1","2","3","4"];
+           		 $(":checkbox").val(checks).filter(":checked").attr("disabled",false);
+           		 
+            		
+            	}
+            	 
+
+                
+                }
+            
+        </script>
 </head>
 
 <body class="job_board">
@@ -235,7 +262,7 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'Country'}">
 									<div class="row">
 										<span class="lableTextSelect ">Country:</span>
-												<form:select path="listProfAttribForms[${status.index}].strLabelValue" id="countryDpId" class="jb_input3 jb_input_width3">
+												<form:select path="listProfAttribForms[${status.index}].strLabelValue" id="countryDpId" class="jb_input3 jb_input_width3" onchange="modify(this.value);">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />
