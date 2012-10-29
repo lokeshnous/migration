@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 
@@ -23,13 +24,13 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 public class ResumeValidator {
 	private Pattern pattern;
 	private Matcher matcher;
-
+	
 	private @Value("${jsWorkExpDateCompare}")
 	String jsWorkExpDateCompare;
 
 	private @Value("${jsEducateDateCompare}")
 	String jsEducateDateCompare;
-
+	
 	/**
 	 * Validating resume builder
 	 * 
@@ -41,27 +42,22 @@ public class ResumeValidator {
 		String validationMessage = "";
 		validationMessage = validateContactInfo(createResume
 				.getContactInfoForm());
-		if (!StringUtils.isEmpty(validationMessage)) {
-			return validationMessage;
-		}
+		if (!StringUtils.isEmpty(validationMessage))
+			{return validationMessage;}
 		validationMessage = validatePhoneNumbers(createResume);
-		if (!StringUtils.isEmpty(validationMessage)) {
-			return validationMessage;
-		}
+		if (!StringUtils.isEmpty(validationMessage))
+			{return validationMessage;}
 		validationMessage = validateCertifications(createResume
 				.getListCertForm());
-		if (!StringUtils.isEmpty(validationMessage)) {
-			return validationMessage;
-		}
+		if (!StringUtils.isEmpty(validationMessage))
+			{return validationMessage;}
 		validationMessage = validateEducation(createResume.getListEduForm());
-		if (!StringUtils.isEmpty(validationMessage)) {
-			return validationMessage;
-		}
+		if (!StringUtils.isEmpty(validationMessage))
+			{return validationMessage;}
 		validationMessage = validateWorkExperience(createResume
 				.getListWorkExpForm());
-		if (!StringUtils.isEmpty(validationMessage)) {
-			return validationMessage;
-		}
+		if (!StringUtils.isEmpty(validationMessage))
+			{return validationMessage;}
 		validationMessage = validateReferences(createResume.getListRefForm());
 
 		return validationMessage;
@@ -173,7 +169,8 @@ public class ResumeValidator {
 				}
 
 				String errorMsg = validateWorkExpDt(form);
-				if (!errorMsg.isEmpty()) {
+				if(!errorMsg.isEmpty())
+				{
 					return errorMsg;
 				}
 			}
@@ -183,7 +180,6 @@ public class ResumeValidator {
 
 	/**
 	 * This method validates the date in Work Experience section
-	 * 
 	 * @param form
 	 */
 	private String validateWorkExpDt(WorkExpForm form) {
@@ -296,7 +292,7 @@ public class ResumeValidator {
 		matcher = pattern.matcher(strDate);
 		return matcher.matches();
 	}
-
+	
 	/**
 	 * This method compares if start Date is greater than End date
 	 * 
@@ -306,8 +302,8 @@ public class ResumeValidator {
 	 */
 	private boolean compareDates(String startDate, String endDate) {
 
-		Date convStartDt = CommonUtil.convertToDate(startDate);
-		Date convEndDt = CommonUtil.convertToDate(endDate);
+		Date convStartDt = DateUtils.convertToDate(startDate);
+		Date convEndDt = DateUtils.convertToDate(endDate);
 		if (null != convStartDt && null != convEndDt) {
 			return convStartDt.after(convEndDt);
 		} else {
