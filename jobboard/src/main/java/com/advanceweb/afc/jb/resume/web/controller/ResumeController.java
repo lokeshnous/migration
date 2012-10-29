@@ -71,6 +71,33 @@ public class ResumeController extends AbstractController{
 	
 	private static final Logger LOGGER = Logger
 			.getLogger(ResumeController.class);
+	
+	private static final String CREATE_RESUME = "createResume";
+	
+	private static final String RESUME_ID = "resumeId";
+	
+	private static final String EMP_TYPE_LIST = "empTypeList";
+	
+	private static final String PHONE_TYPE_LIST = "phoneTypeList";
+	
+	private static final String CAREER_LVL_LIST = "careerLvlList";
+	
+	private static final String AN_SALARY_LIST = "annualSalarylList";
+	
+	private static final String LANGUAGE_LIST = "languagelList";
+	
+	private static final String PROFIENCY_LIST = "langProficiencylList";
+	
+	private static final String EDU_DEGREE_LIST = "eduDegreeList";
+	
+	private static final String COUNTRY_LIST = "countryList";
+	
+	private static final String STATE_LIST = "stateList";
+	
+	private static final String CREATE_RES_BUILDER = "createResumeBuilder";
+	
+	private static final String JS_REDIRECT_URL = "redirect:/jobSeeker/jobSeekerDashBoard.html";
+	
 	@Autowired
 	private ResumeService resumeService;
 
@@ -181,7 +208,7 @@ public class ResumeController extends AbstractController{
 	public @ResponseBody
 	JSONObject validateCreateResumePopUp(
 			@RequestParam("resumeName") String resumeName,
-			@RequestParam("resumeId") String resumeId, HttpSession session) {
+			@RequestParam(RESUME_ID) String resumeId, HttpSession session) {
 		
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
@@ -211,13 +238,13 @@ public class ResumeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
 	public ModelAndView editResume(CreateResume createResume,
-			@RequestParam("resumeId") int resumeId) {
+			@RequestParam(RESUME_ID) int resumeId) {
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 
 		transCreateResume.transformResumeDTOToCreateResume(createResume,
 				resumeDTO);
 		ModelAndView model = populateResumeDropDowns();		
-		model.addObject("createResume", createResume);
+		model.addObject(CREATE_RESUME, createResume);
 		
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO
 				.getResumeType())) {
@@ -252,7 +279,7 @@ public class ResumeController extends AbstractController{
 	public @ResponseBody
 	JSONObject deleteResume(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
-			@RequestParam("resumeId") int resumeId) {
+			@RequestParam(RESUME_ID) int resumeId) {
 
 		boolean deleteStatus = resumeService.deleteResume(resumeId,
 				(Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
@@ -276,7 +303,7 @@ public class ResumeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.POST)
 	public ModelAndView updateResumePopup(CreateResume createResumed,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		/**
 		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
 		 */
@@ -337,31 +364,33 @@ public class ResumeController extends AbstractController{
 			createResume.setListPhoneDtlForm(listPhoneDtl);
 			getTotalNotNullField(createResume);
 			// DropDowns
-			model.addObject("empTypeList", empTypeList);
-			model.addObject("phoneTypeList", phoneTypeList);
-			model.addObject("careerLvlList", careerLvlList);
-			model.addObject("annualSalarylList", annualSalarylList);
-			model.addObject("languagelList", languagelList);
-			model.addObject("langProficiencylList", langProficiencylList);
-			model.addObject("eduDegreeList", eduDegreeList);
-			model.addObject("countryList", countryList);
-			model.addObject("stateList", stateList);
+			model.addObject(EMP_TYPE_LIST, empTypeList);
+			model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+			model.addObject(CAREER_LVL_LIST, careerLvlList);
+			model.addObject(AN_SALARY_LIST, annualSalarylList);
+			model.addObject(LANGUAGE_LIST, languagelList);
+			model.addObject(PROFIENCY_LIST, langProficiencylList);
+			model.addObject(EDU_DEGREE_LIST, eduDegreeList);
+			model.addObject(COUNTRY_LIST, countryList);
+			model.addObject(STATE_LIST, stateList);
 
-			session.setAttribute("empTypeList", empTypeList);
-			session.setAttribute("phoneTypeList", phoneTypeList);
-			session.setAttribute("careerLvlList", careerLvlList);
-			session.setAttribute("annualSalarylList", annualSalarylList);
-			session.setAttribute("languagelList", languagelList);
-			session.setAttribute("langProficiencylList", langProficiencylList);
-			session.setAttribute("eduDegreeList", eduDegreeList);
-			session.setAttribute("countryList", countryList);
-			session.setAttribute("stateList", stateList);
+			session.setAttribute(EMP_TYPE_LIST, empTypeList);
+			session.setAttribute(PHONE_TYPE_LIST, phoneTypeList);
+			session.setAttribute(CAREER_LVL_LIST, careerLvlList);
+			session.setAttribute(AN_SALARY_LIST, annualSalarylList);
+			session.setAttribute(LANGUAGE_LIST, languagelList);
+			session.setAttribute(PROFIENCY_LIST, langProficiencylList);
+			session.setAttribute(EDU_DEGREE_LIST, eduDegreeList);
+			session.setAttribute(COUNTRY_LIST, countryList);
+			session.setAttribute(STATE_LIST, stateList);
 
 			// DropDowns end
 			getTotalNotNullField(createResume);
 			resumeDTO.getContactInfoDTO();
-			model.addObject("createResume", createResume);
-			model.setViewName("createResumeBuilder");
+			model.addObject(CREATE_RESUME, createResume);
+			// Ads for resume page
+			getAdsForResumePage(request, session, model);
+			model.setViewName(CREATE_RES_BUILDER);
 		}
 
 		return model;
@@ -385,7 +414,7 @@ public class ResumeController extends AbstractController{
 		createResume.setResumeType(resumeType);
 
 		ModelAndView model = populateResumeDropDowns();
-		model.addObject("createResume", createResume);
+		model.addObject(CREATE_RESUME, createResume);
 
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeType)) {
 			model.setViewName("createresumepopup");
@@ -420,7 +449,7 @@ public class ResumeController extends AbstractController{
 			resumeDTO.setUserId((Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID));
 			resumeService.createResumeCopyPaste(resumeDTO);
-			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			model.setViewName(JS_REDIRECT_URL);
 		}
 		return model;
 	}
@@ -439,7 +468,7 @@ public class ResumeController extends AbstractController{
 		resumeDTO.setUserId((Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID));
 		resumeService.updateResumeCopyPaste(resumeDTO);
-		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+		model.setViewName(JS_REDIRECT_URL);
 		return model;
 	}
 
@@ -479,7 +508,7 @@ public class ResumeController extends AbstractController{
 				LOGGER.error(e);
 			}
 
-			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			model.setViewName(JS_REDIRECT_URL);
 		}
 		return model;
 	}
@@ -525,7 +554,7 @@ public class ResumeController extends AbstractController{
 			resumeDTO.setUserId((Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID));
 			resumeService.updateResumeUpload(resumeDTO);
-			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			model.setViewName(JS_REDIRECT_URL);
 		}
 		return model;
 	}
@@ -549,7 +578,7 @@ public class ResumeController extends AbstractController{
 		
 		transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
 				
-		model.addObject("createResume", createResume);
+		model.addObject(CREATE_RESUME, createResume);
 		model.setViewName("redirect:/jobSeekerResume/createResumeBuilder.html");
 		
 		return model;
@@ -562,7 +591,7 @@ public class ResumeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/createResumeBuilder", method = RequestMethod.GET)
 	public ModelAndView createResumebuilder(CreateResume createResume,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		
@@ -614,18 +643,20 @@ public class ResumeController extends AbstractController{
 		createResume.setListWorkExpForm(listWorkExpForm);
 		createResume.setListPhoneDtlForm(listPhoneDtlForm);
 		// DropDowns
-		model.addObject("empTypeList", empTypeList);
-		model.addObject("phoneTypeList", phoneTypeList);
-		model.addObject("careerLvlList", careerLvlList);
-		model.addObject("annualSalarylList", annualSalarylList);
-		model.addObject("languagelList", languagelList);
-		model.addObject("langProficiencylList", langProficiencylList);
-		model.addObject("eduDegreeList", eduDegreeList);
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
+		model.addObject(EMP_TYPE_LIST, empTypeList);
+		model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+		model.addObject(CAREER_LVL_LIST, careerLvlList);
+		model.addObject(AN_SALARY_LIST, annualSalarylList);
+		model.addObject(LANGUAGE_LIST, languagelList);
+		model.addObject(PROFIENCY_LIST, langProficiencylList);
+		model.addObject(EDU_DEGREE_LIST, eduDegreeList);
+		model.addObject(COUNTRY_LIST, countryList);
+		model.addObject(STATE_LIST, stateList);
 		// DropDowns end
-		model.addObject("createResume", createResume);
-		model.setViewName("createResumeBuilder");
+		model.addObject(CREATE_RESUME, createResume);
+		// Ads for resume page
+		getAdsForResumePage(request, session, model);
+		model.setViewName(CREATE_RES_BUILDER);
 		return model;
 	}
 
@@ -641,7 +672,7 @@ public class ResumeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Save")
 	public ModelAndView saveResumeBuilder(CreateResume createResumed,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		/**
 		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
 		 */
@@ -657,9 +688,11 @@ public class ResumeController extends AbstractController{
 
 			model = populateDropdowns(model);
 
-			model.addObject("createResume", createResume);
+			model.addObject(CREATE_RESUME, createResume);
 			model.addObject("errorMessage", errorMessage);
-			model.setViewName("createResumeBuilder");
+			// Ads for resume page
+			getAdsForResumePage(request, session, model);
+			model.setViewName(CREATE_RES_BUILDER);
 			return model;
 		}
 
@@ -691,7 +724,7 @@ public class ResumeController extends AbstractController{
 		resumeDTO.setListPhoneDtl(listPhoneDTO);
 		resumeService.createResumeBuilder(resumeDTO);
 		getTotalNotNullField(createResume);
-		model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+		model.setViewName(JS_REDIRECT_URL);
 		//createResume is a session variable & we have make it null once the resume is saved, 
 		//otherwise if we go to create new resume screen we will get the session data displayed in the 
 		//create resume screen . So have to reassign the new object to session variable 
@@ -703,18 +736,20 @@ public class ResumeController extends AbstractController{
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Preview")
 	public ModelAndView previewResumeBuilder(CreateResume createResume) {
 		ModelAndView model = new ModelAndView();
-		model.addObject("createResume", createResume);
+		model.addObject(CREATE_RESUME, createResume);
 		model.setViewName("viewresume");
 		return model;
 
 	}
 	
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Back")
-	public ModelAndView backToResumeBuilder(CreateResume createResume) {
+	public ModelAndView backToResumeBuilder(CreateResume createResume, HttpServletRequest request, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		model.addObject("createResume", createResume);
+		model.addObject(CREATE_RESUME, createResume);
 		model = populateDropdowns(model);
-		model.setViewName("createResumeBuilder");
+		// Ads for resume page
+		getAdsForResumePage(request, session, model);
+		model.setViewName(CREATE_RES_BUILDER);
 		return model;
 
 	}
@@ -734,9 +769,9 @@ public class ResumeController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addWorkExp");
 		
-		List<DropDownDTO> empTypeList = (List<DropDownDTO>) session.getAttribute("empTypeList");
-		List<DropDownDTO> careerLvlList = (List<DropDownDTO>) session.getAttribute("careerLvlList");
-		List<DropDownDTO> annualSalarylList = (List<DropDownDTO>) session.getAttribute("annualSalarylList");
+		List<DropDownDTO> empTypeList = (List<DropDownDTO>) session.getAttribute(EMP_TYPE_LIST);
+		List<DropDownDTO> careerLvlList = (List<DropDownDTO>) session.getAttribute(CAREER_LVL_LIST);
+		List<DropDownDTO> annualSalarylList = (List<DropDownDTO>) session.getAttribute(AN_SALARY_LIST);
 		if(null == empTypeList){
 			empTypeList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		}
@@ -749,9 +784,9 @@ public class ResumeController extends AbstractController{
 			annualSalarylList = populateDropdownsService.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
 		}
 		
-		model.addObject("careerLvlList", careerLvlList);
-		model.addObject("empTypeList", empTypeList);
-		model.addObject("annualSalarylList",annualSalarylList);
+		model.addObject(CAREER_LVL_LIST, careerLvlList);
+		model.addObject(EMP_TYPE_LIST, empTypeList);
+		model.addObject(AN_SALARY_LIST,annualSalarylList);
 		model.addObject("workExpPositionId", createResume.getListWorkExpForm()
 				.size());
 		if (null == createResume.getListCertForm()) {
@@ -805,12 +840,12 @@ public class ResumeController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addEducation");
 		
-		List<DropDownDTO> eduDegreeList = (List<DropDownDTO>) session.getAttribute("eduDegreeList");
+		List<DropDownDTO> eduDegreeList = (List<DropDownDTO>) session.getAttribute(EDU_DEGREE_LIST);
 		
 		if(null == eduDegreeList){
 			eduDegreeList = populateDropdownsService.populateEducationDegreesDropdowns();
 		}
-		model.addObject("eduDegreeList",eduDegreeList);
+		model.addObject(EDU_DEGREE_LIST,eduDegreeList);
 		model.addObject("eduPositionId", createResume.getListEduForm().size());
 		if (null != createResume.getListEduForm()) {
 			createResume.getListEduForm().add(form);
@@ -838,8 +873,8 @@ public class ResumeController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addLanguage");
 
-		List<DropDownDTO> langProficiencylList = (List<DropDownDTO>) session.getAttribute("langProficiencylList");				
-		List<DropDownDTO> languagelList =(List<DropDownDTO>) session.getAttribute("languagelList");
+		List<DropDownDTO> langProficiencylList = (List<DropDownDTO>) session.getAttribute(PROFIENCY_LIST);				
+		List<DropDownDTO> languagelList =(List<DropDownDTO>) session.getAttribute(LANGUAGE_LIST);
 		
 		if(null == languagelList){
 			languagelList = populateDropdownsService
@@ -851,8 +886,8 @@ public class ResumeController extends AbstractController{
 					.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
 		}
 		
-		model.addObject("languagelList", languagelList);	
-		model.addObject("langProficiencylList",langProficiencylList);
+		model.addObject(LANGUAGE_LIST, languagelList);	
+		model.addObject(PROFIENCY_LIST,langProficiencylList);
 		model.addObject("langPositionId", createResume.getListLangForm().size());
 		
 		if (null != createResume.getListLangForm()) {
@@ -905,12 +940,12 @@ public class ResumeController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addPhoneNos");		
 		
-		List<DropDownDTO> phoneTypeList = (List<DropDownDTO>) session.getAttribute("phoneTypeList");
+		List<DropDownDTO> phoneTypeList = (List<DropDownDTO>) session.getAttribute(PHONE_TYPE_LIST);
 		if(null == phoneTypeList){
 			phoneTypeList = populateDropdownsService
 					.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
 		}
-		model.addObject("phoneTypeList", phoneTypeList);
+		model.addObject(PHONE_TYPE_LIST, phoneTypeList);
 		model.addObject("phNoPositionId", createResume.getListPhoneDtlForm().size());
 		if (null != createResume.getListPhoneDtlForm()) {
 			createResume.getListPhoneDtlForm().add(form);
@@ -942,15 +977,15 @@ public class ResumeController extends AbstractController{
 				.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
 
-		model.addObject("empTypeList", empTypeList);
-		model.addObject("phoneTypeList", phoneTypeList);
-		model.addObject("careerLvlList", careerLvlList);
-		model.addObject("annualSalarylList", annualSalarylList);
-		model.addObject("languagelList", languagelList);
-		model.addObject("langProficiencylList", langProficiencylList);
-		model.addObject("eduDegreeList", eduDegreeList);
-		model.addObject("countryList", countryList);
-		model.addObject("stateList", stateList);
+		model.addObject(EMP_TYPE_LIST, empTypeList);
+		model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+		model.addObject(CAREER_LVL_LIST, careerLvlList);
+		model.addObject(AN_SALARY_LIST, annualSalarylList);
+		model.addObject(LANGUAGE_LIST, languagelList);
+		model.addObject(PROFIENCY_LIST, langProficiencylList);
+		model.addObject(EDU_DEGREE_LIST, eduDegreeList);
+		model.addObject(COUNTRY_LIST, countryList);
+		model.addObject(STATE_LIST, stateList);
 
 		return model;
 	}
@@ -968,7 +1003,7 @@ public class ResumeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
 	public ModelAndView viewResumeBuilder(CreateResume createResumed,
-			BindingResult result, @RequestParam("resumeId") int resumeId,
+			BindingResult result, @RequestParam(RESUME_ID) int resumeId,
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		/**
 		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
@@ -1002,7 +1037,7 @@ public class ResumeController extends AbstractController{
 		resumeDTO.getContactInfoDTO();
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
 				.getResumeType())) {
-			model.addObject("createResume", createResume);
+			model.addObject(CREATE_RESUME, createResume);
 			model.setViewName("viewresume");
 		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
 				.getResumeType())) {
@@ -1014,7 +1049,7 @@ public class ResumeController extends AbstractController{
 				LOGGER.info("Error in view resume builder",e);
 			}
 		} else {
-			model.addObject("createResume", createResume);
+			model.addObject(CREATE_RESUME, createResume);
 			model.setViewName("viewCopyPasteResume");
 		}
 		// Ads for resume page

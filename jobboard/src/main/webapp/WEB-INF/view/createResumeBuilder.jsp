@@ -209,7 +209,7 @@ function validateNumber(event) {
 	<form:form method="Post" action="saveResumeBuilder.html"
 		commandName="createResume" id="createResumeBuilderId">
 		<div class="ad_page_top">
-			<img src="../resources/images/ads/banner_ad_fpo.png" />
+			${adPageTop}
 		</div>
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
@@ -1009,8 +1009,7 @@ function validateNumber(event) {
 				<div class="clearfix"></div>
 				<!-- content_wrapper -->
 				<div class="ad_wrapper">
-					<span class="input_grp5 "> </span><img
-						src="../resources/images/ads/banner_ad_fpo.png" />
+					${adPageBottom}
 				</div>
 				<!-- ad_wrapper -->
 	</div><!--Start:MidContant-->
