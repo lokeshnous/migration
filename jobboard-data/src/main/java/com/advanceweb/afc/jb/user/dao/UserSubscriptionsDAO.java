@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.user.dao;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -154,4 +155,9 @@ public interface UserSubscriptionsDAO {
 	 */
 	boolean saveFacilitySubscription(List<UserSubscriptionsDTO> listSubsDTO,
 			int facilityId);
+	
+	List<DropDownDTO> getSubscriptionscheck(int userId);
+	List<DropDownDTO> getSubscriptionsdigital(int userId);
+	
+	List<DropDownDTO> getSubscriptionsletter(int userId);
 }
