@@ -341,20 +341,24 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 */
 	public boolean getBrandPurchaseInfo(int facilityId) {
 		int productId = 0;
-		Query getInventoryData = hibernateTemplateCareer.getSessionFactory()
-				.getCurrentSession()
-				.createSQLQuery(" { call GetInventoryDetails(?) }");
-		getInventoryData.setInteger(0, facilityId);
-		List<?> invetoryDeatil = getInventoryData.list();
-		Iterator<?> iterator = invetoryDeatil.iterator();
-		while (iterator.hasNext()) {
-			Object[] row = (Object[]) iterator.next();
-			productId = ((Integer) row[0]);
-			
-			if(checkPostSlots(productId))
-			{
-				return true;
+		try {
+			Query getInventoryData = hibernateTemplateCareer
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call GetInventoryDetails(?) }");
+			getInventoryData.setInteger(0, facilityId);
+			List<?> invetoryDeatil = getInventoryData.list();
+			Iterator<?> iterator = invetoryDeatil.iterator();
+			while (iterator.hasNext()) {
+				Object[] row = (Object[]) iterator.next();
+				productId = ((Integer) row[0]);
+
+				if (checkPostSlots(productId)) {
+					return true;
+				}
 			}
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return false;
 		}
 		return false;
 	}

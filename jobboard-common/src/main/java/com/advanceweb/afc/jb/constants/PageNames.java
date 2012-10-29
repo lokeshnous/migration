@@ -27,7 +27,7 @@ public interface PageNames {
 	/**
 	 * The login page for job seeker
 	 */
-	String JOBSEEKER_lOGIN = "login_jobseeker";
+	String JOBSEEKER_LOGIN = "login_jobseeker";
 
 	/**
 	 * The Registration page for job seeker
@@ -65,6 +65,11 @@ public interface PageNames {
 	String EMPLOYER_JOBPOST = "employer_jobpost";
 
 	/**
+	 * The Branding Template page for employer
+	 */
+	String EMPLOYER_BTEMPLATE = "employer_brand_template";
+	
+	/**
 	 * The Login page for Agency
 	 */
 	String AGENCY_LOGIN = "login_agency";
@@ -78,5 +83,15 @@ public interface PageNames {
 	 * The Agency dashboard
 	 */
 	String AGENCY_DASHBOARD = "dashboard_agency";
+	
+	/**
+	 * The login page for admin
+	 */
+	String ADMIN_LOGIN = "login_admin";
 
+	/**
+	 * The advance resume search page
+	 */
+	String ADV_RESUME_SEARCH = "advance_resume_search";
+	
 }
