@@ -330,7 +330,7 @@
 								<div class="ShareSearch">
 									<span class="ShareText"> Send to
 										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId}, '${job.jobTitle}','<%= request.getContextPath() %>');"><span
-												class="email"></span></a></span>
+												class="email cursor"></span></a></span>
 								</div>
 
 								<!-- <div class="searchResultsSubContentShare">

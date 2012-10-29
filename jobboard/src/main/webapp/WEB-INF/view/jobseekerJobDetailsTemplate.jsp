@@ -93,13 +93,13 @@
     
     <body class="job_board">    
         <div class="ad_page_top">
-			<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png" />
+			${adPageTop}
         </div>
         
 <div class="main_wrapper_outside">
  <div class="main_wrapper_inside">
  <div class="main">
-            <jsp:include page="<%= request.getContextPath() %>/templates/templates_header.jsp"></jsp:include>
+            <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				
 
                 <!-- <div class="content_wrapper"> -->
@@ -327,8 +327,8 @@
                 <div class="ContantMiddleLeftLink">
                           <div class="row">
                     <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
-                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobID});" >Apply now</a> 
-                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobID});" id="btsaveThisJobId" >save this job</a></span> </div>
+                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" >Apply now</a> 
+                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" id="btsaveThisJobId" >save this job</a></span> </div>
                  <br/><br/>
 			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
                   </div>
@@ -336,7 +336,7 @@
                   	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
+                    <img class = "email cursor" onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
                     </span>
                     </div>
                     <div class="ShareArea">
@@ -367,10 +367,10 @@
                   </div>
                   </c:if>     
                          
-                  <c:if test="${not empty jobDetail.stateFullName}" >        
+                  <c:if test="${not empty jobDetail.state}" >        
                   <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>STATE :</strong></h1>
-                    <p>${jobDetail.stateFullName}</p>
+                    <p>${jobDetail.state}</p>
                   </div>
                   </c:if>
                   
@@ -383,7 +383,7 @@
                   
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>JOB ID NUMBER :</strong></h1>
-                    <p>${jobDetail.jobID}</p>
+                    <p>${jobDetail.jobId}</p>
                   </div>
                  </div>
                  
@@ -434,7 +434,7 @@
 		                <br />
 		                <div class="lineHeight16">
 		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
-		                <p class="article">${jobDetail.jobDesc}</p>
+		                <p class="article">${jobDetail.adText}</p>
 		                <br />
 	               		</div>
                 	</div>
@@ -442,8 +442,8 @@
 	                <div class="ContantMiddleLeftLink marginBottom20">
 	                          <div class="row">
 	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
-	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="btapplyThisJob(${jobDetail.jobID});" >Apply now</a> 
-	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobID});" id="btsaveThisJobId">save this job</a>
+	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="btapplyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" >Apply now</a> 
+	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" id="btsaveThisJobId">save this job</a>
 	                    </span> </div>
 	                     <br/><br/>
 			     <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
@@ -452,7 +452,7 @@
 	                  	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
+                    <img class = "email cursor" onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
                     </span>
                     </div>
                     <div class="ShareArea">
@@ -489,13 +489,13 @@
                 <!-- content_wrapper -->
 
                 <div class="ad_wrapper">
-					<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png" />
+					${adPageBtm}
                 </div><!-- ad_wrapper -->
 
  </div><!-- main -->
  </div> <!-- end main_wrapper_inside -->   
 </div> <!-- end main_wrapper_outside -->
 
-<jsp:include page="<%= request.getContextPath() %>/templates/templates_footer.jsp"></jsp:include>
+<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
     </body>
 </html>

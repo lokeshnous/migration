@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -20,11 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * This Class validates the login form
@@ -37,16 +44,20 @@ import com.advanceweb.afc.jb.mail.service.MMEmailService;
 @Controller
 @RequestMapping(value = "/commonLogin")
 @SessionAttributes("loginForm")
-public class LoginFormController {
+public class LoginFormController extends AbstractController{
 
 	@Value("${jobseekerForgotPwdSub}")
 	private String jobseekerForgotPwdSub;
 
 	@Value("${jobseekerForgotPwdBody}")
 	private String jobseekerForgotPwdBody;
+	
+	@Autowired
+	private AdService adService;
 
 	@Value("${loginErrMsg}")
 	private String loginErrMsg;
+	
 	@Value("${socialLoginErrorMsg}")
 	private String socialLoginErrorMsg;
 
@@ -82,6 +93,8 @@ public class LoginFormController {
 	 * attempt happened, displayed error message depending on the login attempt
 	 * type(e.g Through social media(facebook,linkedin) or normal application
 	 * login)
+	 * @param request 
+	 * @param session 
 	 * 
 	 * @param boolean error,shows that the login is not successful
 	 * @param String
@@ -96,7 +109,7 @@ public class LoginFormController {
 			@RequestParam(value = "error", required = false) boolean error,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "socalLogin", required = false) boolean socalLogin,
-			ModelMap model) {
+			ModelMap model, HttpServletRequest request, HttpSession session) {
 		if (error) {
 			if (socalLogin) {
 				model.put("socialLoginError", socialLoginErrorMsg);
@@ -109,13 +122,120 @@ public class LoginFormController {
 		String pageValue = "";
 		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
 			pageValue = "jobSeekerLogin";
+			// get the Ads
+			getAdsForJobseekerLogin(request, session, model);
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
 			pageValue = "employerLogin";
+			// get the Ads
+			getAdsForEmployerLogin(request, session, model);
 		} else {
 			pageValue = "agencyLogin";
+			// get the Ads
+			getAdsForAgencyLogin(request, session, model);
 		}
 		return pageValue;
 	}
+	
+	/**
+	 * Get Ads for job seeker login page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForJobseekerLogin (HttpServletRequest request,
+			HttpSession session, ModelMap model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_LOGIN);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTopRight", bannerString);
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+	/**
+	 * Get Ads for employer login page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForEmployerLogin (HttpServletRequest request,
+			HttpSession session, ModelMap model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_LOGIN);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTopRight", bannerString);
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+	/**
+	 * Get Ads for agency login page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForAgencyLogin (HttpServletRequest request,
+			HttpSession session, ModelMap model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.AGENCY_LOGIN);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTopRight", bannerString);
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * This method to login in to the forgot your password page

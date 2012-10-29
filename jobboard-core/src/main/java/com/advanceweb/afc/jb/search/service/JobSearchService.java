@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
@@ -45,16 +45,16 @@ public interface JobSearchService {
 	 * @param jobId
 	 * @return
 	 */
-	SearchedJobDTO viewJobDetails(long jobId);
+	JobDTO viewJobDetails(long jobId);
 
 	/**
 	 * validating job for save/apply.
 	 * 
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 * @param userId
 	 * @return <true> if job is saved/Applied <false> not saved/Applied
 	 */
-	AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
+	AppliedJobDTO fetchSavedOrAppliedJob(JobDTO jobDTO,
 			int userId);
 
 	/**
@@ -76,9 +76,9 @@ public interface JobSearchService {
 	/**
 	 * saves the job for logged in user
 	 * 
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 */
-	void saveJob(SearchedJobDTO searchedJobDTO);
+	void saveJob(JobDTO jobDTO);
 
 	/**
 	 * Fetch the apply type of job
@@ -108,21 +108,21 @@ public interface JobSearchService {
 	/**
 	 * This method is used to get the browse jobs by title
 	 * 
-	 * @return List<SearchedJobDTO> object
+	 * @return List<JobDTO> object
 	 */
-	List<SearchedJobDTO> getJobsByTitle();
+	List<JobDTO> getJobsByTitle();
 
 	/**
 	 * This method is used to get the browse jobs list by Employer
 	 * 
 	 * @return
 	 */
-	List<SearchedJobDTO> getJobsByEmployer();
+	List<JobDTO> getJobsByEmployer();
 
 	/**
 	 * This method is used to get the browse jobs list by location
 	 * 
 	 * @return
 	 */
-	List<SearchedJobDTO> getJobsByLocation();
+	List<JobDTO> getJobsByLocation();
 }

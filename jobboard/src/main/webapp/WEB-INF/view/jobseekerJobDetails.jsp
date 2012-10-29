@@ -22,7 +22,7 @@
     
     <body class="job_board_home">    
         <div class="ad_page_top">
-			<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png" />
+			${adPageTop}
         </div>
         <div class="main_wrapper_outside">
         <div class="main_wrapper_inside">
@@ -31,8 +31,8 @@
             <div class="main">
             <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
-                    <img src="<%= request.getContextPath() %>/resources/images/ads/300x250ad1.png" />
-                    <img src="<%= request.getContextPath() %>/resources/images/ads/300x250ad2.png" />
+                    ${adPageTopRight}
+                    ${adPageBtmRight }
 
 		    <br class="clearfix" />
 
@@ -71,34 +71,34 @@
 					<c:if test="${not empty jobDetail.city}" >
 						<span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
-					<c:if test="${not empty jobDetail.stateFullName}" >
-						<span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.stateFullName}&nbsp;&nbsp;|&nbsp;&nbsp;
+					<c:if test="${not empty jobDetail.state}" >
+						<span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.state}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
 					<c:if test="${not empty jobDetail.country}" >
 						<span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
-					<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobID}</p>
+					<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobId}</p>
 			    </div>
 			    <div class="jobDetailsIntroOptions">
 			    <div class="rowEvenTB10Spacing">
 				<div class="ShareText">Send to friend: &nbsp;</div>
-				<a onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="fbook"></div></a><a rel="nofollow,noindex" href=""><div class="linkedIn"></div></a><a rel="nofollow,noindex" href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="printJBdetail"></div></a></div>
+				<a onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div class="email cursor"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="fbook"></div></a><a rel="nofollow,noindex" href=""><div class="linkedIn"></div></a><a rel="nofollow,noindex" href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a rel="nofollow,noindex" href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
-				<a onclick="applyThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>');" class="btn_sm orange" >Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
-				<a onclick="saveThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>')" id="saveThisJobId" class="btn_sm orange">SAVE THIS JOB</a></div>
+				<a onclick="applyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" class="btn_sm orange" >Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;				
+				<a onclick="saveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>')" id="saveThisJobId" class="btn_sm orange">SAVE THIS JOB</a></div>
 			    
 			    <br/><br/><br/>
 			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
 			    <h3 class="jobSummaryTitle"><span>Job Summary:</span></h3>
-			    <p class="article">${jobDetail.jobDesc}</p>     
+			    <p class="article">${jobDetail.adText}</p>     
 			    <div class="jobDetailsIntroOptionsTborder">
 				<div class="jobDetailsIntroOptions">
 				<div class="rowEvenTB10Spacing">
 				<div class="ShareText">Send to friend:&nbsp;</div>
-				<a onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div class="email"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
+				<a onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div class="email cursor"></div></a><div class="ShareText"> |&nbsp;&nbsp;Share:&nbsp;</div> <a href=""><div class="fbook"></div></a><a href=""><div class="linkedIn"></div></a><a href=""><div class="twitter"></div></a><div class="ShareText"> |&nbsp;&nbsp;Print:&nbsp;</div> <a href=""><div class="printJBdetail"></div></a></div>
 				<div class="rowEvenTB10Spacing">
-				<a onclick="btapplyThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>');" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a onclick="btsaveThisJob(${jobDetail.jobID},'<%= request.getContextPath() %>');" id="btsaveThisJobId" class="btn_sm orange" >SAVE THIS JOB</a></div>
+				<a onclick="btapplyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a onclick="btsaveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" id="btsaveThisJobId" class="btn_sm orange" >SAVE THIS JOB</a></div>
 			    <br/><br/>
 			    <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
 			    </div>
@@ -112,7 +112,7 @@
                 </div><!-- content_wrapper -->
 
                 <div class="ad_wrapper">
-					<img src="<%= request.getContextPath() %>/resources/images/ads/banner_ad_fpo.png" />
+					${adPageBtm }
                 </div><!-- ad_wrapper -->
 
             </div><!-- main -->

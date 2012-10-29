@@ -44,19 +44,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.NewsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.VideoDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
@@ -75,6 +78,9 @@ import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * <code>JobSearchController</code>This controller belongs to all searched jobs.
@@ -87,7 +93,7 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
 
 @Controller
 @RequestMapping("/jobsearch")
-public class JobSearchController {
+public class JobSearchController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchController.class);
@@ -103,6 +109,9 @@ public class JobSearchController {
 
 	@Autowired
 	private JobSearchService jobSearchService;
+
+	@Autowired
+	private AdService adService;
 
 	@Autowired
 	private LookupService lookupService;
@@ -223,7 +232,7 @@ public class JobSearchController {
 
 	private @Value("${mediaPath}")
 	String mediaPath;
-	
+
 	@Autowired
 	@Resource(name = "seoConfiguration")
 	private Properties seoConfiguration;
@@ -245,29 +254,27 @@ public class JobSearchController {
 	 * @return : modelandview for respected Jobid
 	 */
 	@RequestMapping(value = "/viewJobDetails/{jobId}/{jobTitle}")
-	public ModelAndView viewJobDetails(
-			@PathVariable("jobId") int jobId,
+	public ModelAndView viewJobDetails(@PathVariable("jobId") int jobId,
 			@PathVariable("jobTitle") String jobTitle,
-			Map<String, Object> model,
-			HttpServletRequest request,
-			HttpSession session,
-			HttpServletResponse response) {
+			Map<String, Object> model, HttpServletRequest request,
+			HttpSession session, HttpServletResponse response) {
 		ModelAndView modelView = new ModelAndView();
 
 		try {
-			clickController.getclickevent(jobId, MMJBCommonConstants.CLICKTYPE_VIEW, request,
-						response);
+			clickController.getclickevent(jobId,
+					MMJBCommonConstants.CLICKTYPE_VIEW, request, response);
 			boolean isReturnResults = true;
-			getJobDetails(model, request, session, modelView, jobId, isReturnResults);
+			getJobDetails(model, request, session, modelView, jobId,
+					isReturnResults);
 
 		} catch (Exception e) {
 			// loggers call
-			LOGGER.error("ERROR viewJobDetails:" , e);
+			LOGGER.error("ERROR viewJobDetails:", e);
 		}
 
 		return modelView;
 	}
-	
+
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -277,24 +284,23 @@ public class JobSearchController {
 	 * @return : modelandview for respected Jobid
 	 */
 	@RequestMapping(value = "/viewMyJobDetails")
-	public ModelAndView viewMyJobDetails(
-			Map<String, Object> model,
-			HttpServletRequest request,
-			HttpSession session,
+	public ModelAndView viewMyJobDetails(Map<String, Object> model,
+			HttpServletRequest request, HttpSession session,
 			HttpServletResponse response) {
 		ModelAndView modelView = new ModelAndView();
 
 		try {
 			int jobId = 0;
-			if(request.getParameter("id") != null){
+			if (request.getParameter("id") != null) {
 				jobId = Integer.parseInt(request.getParameter("id"));
 			}
 			boolean isReturnResults = false;
-			getJobDetails(model, request, session, modelView, jobId, isReturnResults);
+			getJobDetails(model, request, session, modelView, jobId,
+					isReturnResults);
 
 		} catch (Exception e) {
 			// loggers call
-			LOGGER.error("ERROR viewMyJobDetails:" , e);
+			LOGGER.error("ERROR viewMyJobDetails:", e);
 		}
 
 		return modelView;
@@ -308,7 +314,7 @@ public class JobSearchController {
 	 * @param session
 	 * @param modelView
 	 * @param jobId
-	 * @param isReturnResults 
+	 * @param isReturnResults
 	 */
 	private void getJobDetails(Map<String, Object> model,
 			HttpServletRequest request, HttpSession session,
@@ -319,28 +325,28 @@ public class JobSearchController {
 					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
 		}
 		// View the job with template
-		SearchedJobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 		if (MMJBCommonConstants.ZERO_INT != jobDTO.getTemplateId()) {
 			jobDTO = checkBrand(jobDTO);
 		}
 		model.put("jobDetail", jobDTO);
-		model.put("isFeatureEmployer", jobDTO.isFeatureEmployer());
+		model.put("isFeatureEmployer", jobDTO.isFeatured());
 		model.put("isReturnResults", isReturnResults);
 		// Get the SEO Details
-		getSEODetails(model,request, jobDTO);
+		getSEODetails(model, request, jobDTO);
 		if (sessionMap != null) {
-			sessionMap.put(MMJBCommonConstants.AUTOLOAD,
-					String.valueOf(true));
-			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP,
-					sessionMap);
+			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 		}
 
 		if (MMJBCommonConstants.ZERO_INT == jobDTO.getTemplateId()) {
 			modelView.setViewName("jobseekerJobDetails");
+			// get the Ads
+			getAdsForJobView(request, session, model);
 		} else {
 			List<JobPostDTO> jobPostDTOList = jobSearchService
 					.getRecentJobsPostedByEmployer(jobDTO.getFacilityId(),
-							jobDTO.getJobID());
+							jobDTO.getJobId());
 
 			// For getting the News feed from XML file
 			Map<String, List<NewsDTO>> newsMap = employerNewsFeedService
@@ -352,54 +358,124 @@ public class JobSearchController {
 			model.put("jobDTOList", jobPostDTOList);
 			model.put("videoList", videoList);
 			modelView.setViewName("jobseekerJobDetailsTemplate");
+			// get the Ads
+			getAdsForPremiumJobView(request, session, model);
 		}
 	}
 
 	/**
-	 * Get the SEO detils.
+	 * Get Ads for page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForJobView(HttpServletRequest request,
+			HttpSession session, Map<String, Object> model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOB_VIEW);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.put("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.put("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.put("adPageBtmRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.put("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * Get Ads for page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForPremiumJobView(HttpServletRequest request,
+			HttpSession session, Map<String, Object> model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.PREMIUM_JOB_VIEW);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.put("adPageTop", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.put("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * Get the SEO details.
 	 * 
 	 * @param model
-	 * @param request 
-	 * @param jobDTO 
+	 * @param request
+	 * @param jobDTO
 	 */
 	private void getSEODetails(Map<String, Object> model,
-			HttpServletRequest request, SearchedJobDTO jobDTO) {
-		
+			HttpServletRequest request, JobDTO jobDTO) {
+
 		String metaDesc = seoConfiguration
 				.getProperty("jobviewpage.meta.description");
 		String metaTitle = seoConfiguration
 				.getProperty("jobviewpage.meta.title");
 		metaDesc = metaDesc.replace("?jobtitle", jobDTO.getJobTitle());
 		metaTitle = metaTitle.replace("?jobtitle", jobDTO.getJobTitle());
-		if(jobDTO.getCompanyNameDisp() != null){
-			metaDesc = metaDesc
-					.replace("?companyName", jobDTO.getCompanyNameDisp());
+		if (jobDTO.getCompanyNameDisp() != null) {
+			metaDesc = metaDesc.replace("?companyName",
+					jobDTO.getCompanyNameDisp());
 			metaTitle = metaTitle.replace("?companyName",
 					jobDTO.getCompanyNameDisp());
-		}else{
-			metaDesc = metaDesc
-					.replace("?companyName", "");
-			metaTitle = metaTitle.replace("?companyName",
-					"");
+		} else {
+			metaDesc = metaDesc.replace("?companyName", "");
+			metaTitle = metaTitle.replace("?companyName", "");
 		}
-		if(jobDTO.getCity() != null){
+		if (jobDTO.getCity() != null) {
 			metaDesc = metaDesc.replace("?city", "");
 			metaTitle = metaTitle.replace("?city", "");
-		}else{
+		} else {
 			metaDesc = metaDesc.replace("?city", "");
 			metaTitle = metaTitle.replace("?city", "");
 		}
-		if(jobDTO.getStateFullName() != null){
-			metaDesc = metaDesc.replace("?state", jobDTO.getStateFullName());
-			metaTitle = metaTitle.replace("?state", jobDTO.getStateFullName());
-		}else{
+		if (jobDTO.getState() != null) {
+			metaDesc = metaDesc.replace("?state", jobDTO.getState());
+			metaTitle = metaTitle.replace("?state", jobDTO.getState());
+		} else {
 			metaDesc = metaDesc.replace("?state", "");
 			metaTitle = metaTitle.replace("?state", "");
 		}
-		if(jobDTO.getCountry() != null){
+		if (jobDTO.getCountry() != null) {
 			metaDesc = metaDesc.replace("?country", jobDTO.getCountry());
 			metaTitle = metaTitle.replace("?country", jobDTO.getCountry());
-		}else{
+		} else {
 			metaDesc = metaDesc.replace("?country", "");
 			metaTitle = metaTitle.replace("?country", "");
 		}
@@ -451,8 +527,8 @@ public class JobSearchController {
 	 */
 	@RequestMapping(value = "/applyJob", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject applyJob(Map<String, Object> map,
-			@RequestParam String userID, @RequestParam("id") int jobId,
+	JSONObject applyJob(Map<String, Object> map, @RequestParam String userID,
+			@RequestParam("id") int jobId,
 			@RequestParam(CURRENT_URL) String currentUrl,
 			HttpServletResponse response, HttpSession session,
 			HttpServletRequest request) {
@@ -462,28 +538,26 @@ public class JobSearchController {
 				MMJBCommonConstants.CLICKTYPE_APPLY, request, response);
 		try {
 			// Get the Job details
-			SearchedJobDTO searchedJobDTO = jobSearchService
-					.viewJobDetails(jobId);
+			JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
 					.applyJobDetails(jobId);
 			if (!jobSearchValidator.validateApplyType(jobId, jsonObject,
 					jobApplyTypeDTO)) {
 				return jsonObject;
 			}
-			if (searchedJobDTO.getEmployerEmailAddress() == null) {
-				searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO
-						.getApplyLink());
+			if (jobDTO.getEmail() == null) {
+				jobDTO.setEmail(jobApplyTypeDTO.getApplyLink());
 			}
 			if (!jobSearchValidator.isLoggedIn(map, jobId,
-					searchedJobDTO.getJobTitle(), currentUrl, session,
-					jsonObject, request)) {
+					jobDTO.getJobTitle(), currentUrl, session, jsonObject,
+					request)) {
 				return jsonObject;
 			}
 			int userId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
-					.fetchSavedOrAppliedJob(searchedJobDTO, userId);
+					.fetchSavedOrAppliedJob(jobDTO, userId);
 			if (appliedJobDTO != null && appliedJobDTO.getAppliedDt() != null) {
 				applyJobErrMsg = applyJobErrMsg.replace("?",
 						appliedJobDTO.getAppliedDt());
@@ -500,18 +574,18 @@ public class JobSearchController {
 				return jsonObject;
 			}
 			try {
-				sendMailOfAppliedJob(session, request, searchedJobDTO,
-						attachmentpaths, coverLetterText);
+				sendMailOfAppliedJob(session, request, jobDTO, attachmentpaths,
+						coverLetterText);
 			} catch (Exception e) {
 				jsonObject.put(ajaxMsg, commonMailErrMsg);
-				LOGGER.info("Apply job Mail Exception :" + e);
+				LOGGER.error(e.getMessage(), e);
 				return jsonObject;
 			}
 
-			saveAppliedJob(jobId, userId, searchedJobDTO, appliedJobDTO);
+			saveAppliedJob(jobId, userId, jobDTO, appliedJobDTO);
 			jsonObject.put(ajaxMsg, applyJobSuccessMsg);
 		} catch (Exception e) {
-			LOGGER.info("applyJob ERROR" + e);
+			LOGGER.error(e.getMessage(), e);
 		}
 		return jsonObject;
 	}
@@ -522,12 +596,12 @@ public class JobSearchController {
 	 * @param form
 	 * @param request
 	 * @param userName
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 * @param attachmentpaths
 	 * @throws AddressException
 	 */
 	public void sendMailOfAppliedJob(HttpSession session,
-			HttpServletRequest request, SearchedJobDTO searchedJobDTO,
+			HttpServletRequest request, JobDTO jobDTO,
 			List<String> attachmentpaths, String coverLetterText)
 			throws AddressException {
 		String coverLetterTxt = coverLetterText;
@@ -541,7 +615,7 @@ public class JobSearchController {
 		employerEmailDTO.setFromAddress(advanceWebAddress);
 		InternetAddress[] employerToAddress = new InternetAddress[1];
 		employerToAddress[0] = new InternetAddress(
-				searchedJobDTO.getEmployerEmailAddress());
+				jobDTO.getEmail());
 		employerEmailDTO.setToAddress(employerToAddress);
 		String employerMailSub = employeJobApplicationSub.replace(
 				"?jobseekername", userName);
@@ -571,16 +645,22 @@ public class JobSearchController {
 		InternetAddress[] jobSeekerToAddress = new InternetAddress[1];
 		jobSeekerToAddress[0] = new InternetAddress(userEmail);
 		jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-		String jobseekerMailSub = jobseekerJobApplicationSub.replace(
-				"?companyname", searchedJobDTO.getCompanyName());
-		jobSeekerEmailDTO.setSubject(jobseekerMailSub);
+		String jobseekerMailSub = "";
 		String jonseekerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + jobseekerPageExtention;
 		String jobseekerMailBody = jobseekerJobApplicationBody.replace(
 				"?jsdashboardLink", jonseekerloginUrl);
-		jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-				searchedJobDTO.getCompanyName());
+		if(jobDTO.getCompanyNameDisp() == null){
+			jobseekerMailSub = jobseekerJobApplicationSub.replace("to ?companyname", "");
+			jobseekerMailBody = jobseekerMailBody.replace("to ?companyname", "");
+		}else{
+			jobseekerMailSub = jobseekerJobApplicationSub.replace(
+					"?companyname", jobDTO.getCompanyNameDisp());
+			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
+					jobDTO.getCompanyNameDisp());
+		}
+		jobSeekerEmailDTO.setSubject(jobseekerMailSub);
 		jobSeekerEmailDTO.setBody(jobseekerMailBody);
 		jobSeekerEmailDTO.setHtmlFormat(true);
 		emailService.sendEmail(jobSeekerEmailDTO);
@@ -592,14 +672,13 @@ public class JobSearchController {
 	 * 
 	 * @param form
 	 * @param userId
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 * @param appliedJobDTO
 	 */
 	public void saveAppliedJob(int jobId, int userId,
-			SearchedJobDTO searchedJobDTO, AppliedJobDTO appliedJobDTO) {
+			JobDTO jobDTO, AppliedJobDTO appliedJobDTO) {
 		// save the applied job in DB
-		Date currentDate = MMUtils
-				.getCurrentDateAndTime();
+		Date currentDate = MMUtils.getCurrentDateAndTime();
 		AppliedJobDTO applyJobDTO = null;
 		if (appliedJobDTO == null || appliedJobDTO.getAppliedDt() != null) {
 			applyJobDTO = new AppliedJobDTO();
@@ -607,8 +686,8 @@ public class JobSearchController {
 			jpJob.setJobId(jobId);
 			applyJobDTO.setJpJob(jpJob);
 			applyJobDTO.setUserId(userId);
-			applyJobDTO.setJobTitle(searchedJobDTO.getJobTitle());
-			applyJobDTO.setFacilityName(searchedJobDTO.getCompanyName());
+			applyJobDTO.setJobTitle(jobDTO.getJobTitle());
+			applyJobDTO.setFacilityName(jobDTO.getCompanyNameDisp());
 			applyJobDTO.setCreateDt(currentDate.toString());
 			applyJobDTO.setAppliedDt(currentDate.toString());
 			applyJobDTO.setDeleteDt(null);
@@ -670,6 +749,7 @@ public class JobSearchController {
 				attachmentpaths.add(resumeDTO.getFilePath());
 			}
 		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
 			LOGGER.info("Resume not found");
 		}
 		return attachmentpaths;
@@ -679,13 +759,14 @@ public class JobSearchController {
 	 * This method is called to forward to job search page
 	 * 
 	 * @param model
+	 * @param request
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
 	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-
+		ModelAndView modelAndView = new ModelAndView();
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
 
@@ -720,7 +801,45 @@ public class JobSearchController {
 		}
 
 		model.put("jobSearchResultForm", jobSearchResultForm);
-		return new ModelAndView("jobboardsearchresults");
+		// get the Ads
+		getAdsForJobseekerSearch(request, session, modelAndView);
+		modelAndView.setViewName("jobboardsearchresults");
+		return modelAndView;
+	}
+
+	/**
+	 * Get Ads for page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForJobseekerSearch(HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_JOB_SEARCH);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 
 	/**
@@ -839,7 +958,7 @@ public class JobSearchController {
 					request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
 		}
 		// get SEO details for search Page
-		//getSEODetails(model, request, jobDTO);
+		// getSEODetails(model, request, jobDTO);
 		session.setAttribute("jobSearchResultForm", jobSearchResultForm);
 		return jobSrchJsonObj;
 	}
@@ -1030,8 +1149,8 @@ public class JobSearchController {
 
 		// if search is not browse by then check for the current search list
 		if ((sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null)
-				&& (!sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
-						.equals(MMJBCommonConstants.BROWSE_SEARCH))) {
+				&& (!sessionMap.get(MMJBCommonConstants.SEARCH_TYPE).equals(
+						MMJBCommonConstants.BROWSE_SEARCH))) {
 			String keyWords = sessionMap.get(SearchParamDTO.KEYWORDS).trim();
 			if (!keyWords.isEmpty()) {
 				String[] keyWordslist = keyWords.split(" ");
@@ -1121,14 +1240,14 @@ public class JobSearchController {
 	 */
 	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject saveThisJob(Map<String, Object> map,HttpServletRequest request,
+	JSONObject saveThisJob(Map<String, Object> map, HttpServletRequest request,
 			@RequestParam("id") int jobId, HttpSession session) {
 		JSONObject jsonObject = new JSONObject();
 
 		// Check for job seeker login ,open popup if not logged in.
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-			jsonObject.put(ajaxNavigationPath,
-					request.getContextPath()+"/jobsearch/jobseekersaveThisJobPopUp");
+			jsonObject.put(ajaxNavigationPath, request.getContextPath()
+					+ "/jobsearch/jobseekersaveThisJobPopUp");
 			return jsonObject;
 		}
 		int userId = (Integer) session
@@ -1148,11 +1267,11 @@ public class JobSearchController {
 		}
 
 		// Get the Job details
-		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(jobId);
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 
 		// Validate if job is already applied
 		AppliedJobDTO appliedJobDTO = jobSearchService.fetchSavedOrAppliedJob(
-				searchedJobDTO, userId);
+				jobDTO, userId);
 		if (appliedJobDTO != null) {
 			if (appliedJobDTO.getAppliedDt() == null) {
 				saveThisJobErrMsg = saveThisJobErrMsg.replace("?",
@@ -1174,8 +1293,8 @@ public class JobSearchController {
 		jpJob.setJobId(jobId);
 		saveJobDTO.setJpJob(jpJob);
 		saveJobDTO.setUserId(userId);
-		saveJobDTO.setJobTitle(searchedJobDTO.getJobTitle());
-		saveJobDTO.setFacilityName(searchedJobDTO.getCompanyName());
+		saveJobDTO.setJobTitle(jobDTO.getJobTitle());
+		saveJobDTO.setFacilityName(jobDTO.getCompanyNameDisp());
 		saveJobDTO.setCreateDt(currentDate.toString());
 		saveJobDTO.setAppliedDt(null);
 		saveJobDTO.setDeleteDt(null);
@@ -1248,12 +1367,15 @@ public class JobSearchController {
 	/**
 	 * This method is called to forward to Advance job search page
 	 * 
+	 * @param request
+	 * 
 	 * @param model
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
 	public ModelAndView advanceSearch(HttpSession session,
-			JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm) {
+			JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 
 		// JobseekerAdvanceSearchForm jobseekerAdvanceSearchForm = new
@@ -1279,9 +1401,51 @@ public class JobSearchController {
 				jobseekerAdvanceSearchForm);
 
 		model.setViewName("jobboardadvancedsearch");
-
+		// get the Ads
+		getAdsForAdvcSearch(request, session, model);
 		removeSession(session);
 		return model;
+	}
+
+	/**
+	 * Get Ads for advance search results page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForAdvcSearch(HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_ADVC_JOB_SEARCH);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtmRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 
 	/**
@@ -1304,7 +1468,7 @@ public class JobSearchController {
 		try {
 
 			int jobId = Integer.parseInt(request.getParameter("id"));
-			String jobTitle= request.getParameter("jobtitle");
+			String jobTitle = request.getParameter("jobtitle");
 			jobTitle = jobTitle.replace(" ", "-").toLowerCase();
 
 			/*
@@ -1427,7 +1591,7 @@ public class JobSearchController {
 				}
 
 				jobSeekerEmailDTO.setSubject(msgSubject);
-				SearchedJobDTO searchedJobDTO = jobSearchService
+				JobDTO jobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
 				String Subject = subOfmail + " " + jobseekerName;
@@ -1443,9 +1607,11 @@ public class JobSearchController {
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
 						+ END_TAGS);
 				mesg = mesg.append("<TR><TD><B>[" + jobTitle + "]</B>"
-						+ searchedJobDTO.getJobTitle() + END_TAGS);
-				mesg = mesg.append("<TR><TD><B>[" + companyName + "]</B>"
-						+ searchedJobDTO.getCompanyName() + END_TAGS);
+						+ jobDTO.getJobTitle() + END_TAGS);
+				if(jobDTO.getCompanyNameDisp() != null){
+					mesg = mesg.append("<TR><TD><B>[" + companyName + "]</B>"
+							+ jobDTO.getCompanyNameDisp()+ END_TAGS);
+				}
 				mesg = mesg.append("<TR><TD>" + joburl + "</TD></TR>\n\n\n");
 				mesg = mesg.append("<TR><TD>" + jobUrl + "</TD></TR></TABLE>");
 				bodyMesg = mesg.toString();
@@ -1745,33 +1911,33 @@ public class JobSearchController {
 	 * @param facility_id
 	 * @return brandingTemplate
 	 */
-	public SearchedJobDTO checkBrand(SearchedJobDTO dto) {
+	public JobDTO checkBrand(JobDTO dto) {
 		int packageId = 1;
-		SearchedJobDTO searchedJobDTO = dto;
+		JobDTO jobDTO = dto;
 
 		// Getting the customer ID from Adm Facility table.
 		int nsCustomerID = brandingTemplateService
-				.getNSCustomerIDFromAdmFacility(searchedJobDTO.getFacilityId());
+				.getNSCustomerIDFromAdmFacility(jobDTO.getFacilityId());
 
 		UserDTO userDTO = brandingTemplateService
 				.getBrandingInformation(nsCustomerID);
 
 		if (null == userDTO.getPackageName()) {
-			searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
+			jobDTO.setIsSilverCustomer(Boolean.TRUE);
 		} else {
 			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {
-				searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
+				jobDTO.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_GOLD;
 			} else if (userDTO.getPackageName().equalsIgnoreCase("Platinum")) {
-				searchedJobDTO.setIsSilverCustomer(Boolean.FALSE);
+				jobDTO.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_PLATINUM;
 			} else {
-				searchedJobDTO.setIsSilverCustomer(Boolean.TRUE);
+				jobDTO.setIsSilverCustomer(Boolean.TRUE);
 			}
 		}
 
-		searchedJobDTO.setPackageId(packageId);
-		return searchedJobDTO;
+		jobDTO.setPackageId(packageId);
+		return jobDTO;
 	}
 
 	/**
@@ -1847,7 +2013,7 @@ public class JobSearchController {
 		removeSession(session);
 		try {
 			jobSearchResultForm.setJobTitlePage("true");
-			List<SearchedJobDTO> jbsByTitleList = jobSearchService
+			List<JobDTO> jbsByTitleList = jobSearchService
 					.getJobsByTitle();
 			session.setAttribute("jbsByTitleList", jbsByTitleList);
 			session.setAttribute("jobTitlePage", true);
@@ -1873,7 +2039,7 @@ public class JobSearchController {
 		removeSession(session);
 		try {
 			jobSearchResultForm.setEmployerPage("true");
-			List<SearchedJobDTO> jbsByEmployerList = jobSearchService
+			List<JobDTO> jbsByEmployerList = jobSearchService
 					.getJobsByEmployer();
 			session.setAttribute("jbsByEmployerList", jbsByEmployerList);
 			session.setAttribute("employerPage", true);
@@ -1899,7 +2065,7 @@ public class JobSearchController {
 		removeSession(session);
 		try {
 			jobSearchResultForm.setLocationPage("true");
-			List<SearchedJobDTO> jbsByLocationList = jobSearchService
+			List<JobDTO> jbsByLocationList = jobSearchService
 					.getJobsByLocation();
 			session.setAttribute("jbsByLocationList", jbsByLocationList);
 			session.setAttribute("locationPage", true);
@@ -1947,7 +2113,7 @@ public class JobSearchController {
 	 * @param request
 	 * @return listVideoURL
 	 */
-	public List<String> setVideoURL(SearchedJobDTO jobDTO,
+	public List<String> setVideoURL(JobDTO jobDTO,
 			HttpServletRequest request) {
 		List<VideoDTO> listVideoDTO = jobDTO.getListVideos();
 		List<String> listVideoURL = new ArrayList<String>();

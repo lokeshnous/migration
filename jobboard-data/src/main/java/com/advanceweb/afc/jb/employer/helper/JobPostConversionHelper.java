@@ -313,7 +313,7 @@ public class JobPostConversionHelper<JobPostForm> {
 				hideCountry = jobJobLocation.getHideCountry();
 				hidePostcode = jobJobLocation.getHidePostcode();
 			}catch (Exception e) {
-				//LOGGER.info("Locations not found for Job Id :"+searchedJobDTO.getJobID());
+				//LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobID());
 			}
 
 				jobPostDTO.setbHideCity(hideCity == 1?true:false);

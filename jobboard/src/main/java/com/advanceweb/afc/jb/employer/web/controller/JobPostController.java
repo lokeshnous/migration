@@ -201,18 +201,34 @@ public class JobPostController extends AbstractController{
 					.getTag();
 			model.addObject("adPageTop", bannerString);
 
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.TOP_RIGHT;
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTopRight", bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.BOTTOM_RIGHT;
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+	
+	/**
+	 * Get Ads for manage job Post page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForManageJobPost(HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_MANAGE_JOBPOST);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtmRight", bannerString);
-
+			model.addObject("adPageTop", bannerString);
+			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
@@ -895,7 +911,8 @@ public class JobPostController extends AbstractController{
 
 		model.addObject(COMPANY_LIST, companyList);
 		model.setViewName("manageJobPosting");
-
+		// get the Ads
+		getAdsForManageJobPost(request, session, model);
 		return model;
 	}
 

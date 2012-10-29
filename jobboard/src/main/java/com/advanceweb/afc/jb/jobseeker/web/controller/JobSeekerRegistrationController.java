@@ -40,18 +40,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 @Controller
 @RequestMapping("/jobseekerregistration")
 @SessionAttributes("registerForm")
 @Scope("session")
-public class JobSeekerRegistrationController {
+public class JobSeekerRegistrationController extends AbstractController{
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerRegistrationController.class);
 	@Autowired
@@ -89,6 +95,9 @@ public class JobSeekerRegistrationController {
 
 	@Value("${js.email.exists}")
 	private String emailExists;
+	
+	@Autowired
+	private AdService adService;
 
 	@Value("${js.password.empty}")
 	private String pwdEmpty;
@@ -120,12 +129,16 @@ public class JobSeekerRegistrationController {
 	/**
 	 * This method is called to display job seeker registration page Step1
 	 * Create Your Account
+	 * @param request 
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/createJobSeekerCreateYrAcct", method = RequestMethod.GET)
-	public ModelAndView createJobSeekerRegistrationStep1(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
+	public ModelAndView createJobSeekerRegistrationStep1(
+			HttpSession session,
+			@RequestParam(value = "profileId", required = false) String profileId,
+			@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId, HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
@@ -143,25 +156,63 @@ public class JobSeekerRegistrationController {
 			registerForm.setbReadOnly(true);
 			session.setAttribute("userName", userDTO.getFirstName() + " "
 					+ userDTO.getLastName());
-			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
+			session.setAttribute(MMJBCommonConstants.USER_ID,
+					userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
 		}
-if(profileId!=null){
-	registerForm.setServiceProviderName(serviceProviderId);
-	registerForm.setSocialProfileId(profileId);
-	registerForm.setSocialSignUp(true);
-	model.addObject("socialSignUpMsg", socialSignupMsg.replace(
-			"?serviceProviderId", serviceProviderId));
-}
+		if (profileId != null) {
+			registerForm.setServiceProviderName(serviceProviderId);
+			registerForm.setSocialProfileId(profileId);
+			registerForm.setSocialSignUp(true);
+			model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+					"?serviceProviderId", serviceProviderId));
+		}
 		model.setViewName(JS_CREATE_ACCOUNT);
 		model.addObject(REGISTER_FORM, registerForm);
+		// get the Ads
+		getAdsForjobSeekerCreateAcc(request, session, model);
 		return model;
 
+	}
+	
+	/**
+	 * Get Ads for job seeker create account page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForjobSeekerCreateAcc (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_REGISTRATION);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
 	}
 
 	/**
 	 * This method is called to display job seeker registration page Create Your
 	 * information
+	 * @param request 
 	 * 
 	 * @param model
 	 * @return
@@ -169,7 +220,7 @@ if(profileId!=null){
 	@RequestMapping(value = "/createJobSeekerYourInfo", method = RequestMethod.POST, params = "Next")
 	public ModelAndView createJobSeekerRegistration(
 			@ModelAttribute(REGISTER_FORM) JobSeekerRegistrationForm registerForm,
-			BindingResult result, HttpServletRequest req, HttpSession session) {
+			BindingResult result, HttpServletRequest req, HttpSession session, HttpServletRequest request) {
 
 		placeKey = new Random().nextLong();
 		ModelAndView model = new ModelAndView();
@@ -249,6 +300,8 @@ if(profileId!=null){
 				registerForm.setListProfAttribForms(listProfAttribForms);
 			}
 			model.setViewName("jobSeekerCreateAccountInfo");
+			// get the Ads
+			getAdsForjobSeekerCreateAccInfo(request, session, model);
 			model.addObject(REGISTER_FORM, registerForm);
 			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
 					followuplinkfacebook);
@@ -265,6 +318,47 @@ if(profileId!=null){
 		return model;
 
 	}
+	
+	/**
+	 * Get Ads for job seeker create account info page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForjobSeekerCreateAccInfo (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_REGISTRATION_INFO);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtmRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * This method is called to save employee registration
@@ -292,6 +386,8 @@ if(profileId!=null){
 
 			if (null != registerForm.getListProfAttribForms()) {
 				model.setViewName("jobSeekerCreateAccountInfo");
+				// get the Ads
+				getAdsForjobSeekerCreateAccInfo(request, session, model);
 				for (JobSeekerProfileAttribForm form : registerForm
 						.getListProfAttribForms()) {
 

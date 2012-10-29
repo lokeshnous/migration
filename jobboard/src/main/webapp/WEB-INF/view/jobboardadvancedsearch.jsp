@@ -26,7 +26,7 @@
 
 <body class="job_board">
 	<div class="ad_page_top">
-		<img src="../resources/images/ads/banner_ad_fpo.png" />
+		${adPageTop }
 	</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
@@ -35,9 +35,8 @@
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
-					<img src="../resources/images/ads/300x250ad1.png" /> <img
-						src="../resources/images/ads/300x250ad2.png" />
-
+					${adPageTopRight }
+					${adPageBtmRight }
 					<div class="follow_us">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
@@ -433,6 +432,9 @@
 					<BR class="clearfix">
 				</div>
 				<BR class="clearfix">
+				<div class="ad_wrapper">
+					${adPageBtm }
+                </div><!-- ad_wrapper -->
 			</div>
 			<!-- main -->
 

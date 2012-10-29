@@ -50,7 +50,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
 					MMUtils.isNull(jobDTO.getAdText()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
-					jobDTO.getCompany());
+					MMUtils.isNull(jobDTO.getCompanyNameDisp()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
 					MMUtils.isNull(jobDTO.getJobTitle()));
 			String location = null;
@@ -82,7 +82,7 @@ public class JSONConverterServiceImpl implements JSONConverterService {
 			jobSrchJson
 					.put(MMJBCommonConstants.JOB_COUNT, jobDTO.getJobCount());
 			jobSrchJson.put(MMJBCommonConstants.JOB_ID,
-					MMUtils.isNull(jobDTO.getJobId()));
+					MMUtils.isNull(String.valueOf(jobDTO.getJobId())));
 			jobSrchJson.put(MMJBCommonConstants.JOB_NUMBER,
 					MMUtils.isNull(jobDTO.getJobNumber()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_GEO,

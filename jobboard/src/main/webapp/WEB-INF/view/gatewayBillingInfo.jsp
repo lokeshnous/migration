@@ -147,7 +147,7 @@
 
 <body class="job_board">
 	<div class="ad_page_top">
-		<img src="../resources/images/ads/banner_ad_fpo.png" />
+		${adPageTop }
 	</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
@@ -513,7 +513,7 @@
 				</div>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
+					${adPageBtm }
 				</div>
 			</div>
 			<!-- main -->

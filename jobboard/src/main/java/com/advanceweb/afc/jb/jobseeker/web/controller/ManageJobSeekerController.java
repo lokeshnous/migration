@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AdmFolderDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.job.service.ManageJobSeekerService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.resume.web.controller.CertificationsForm;
@@ -37,6 +40,9 @@ import com.advanceweb.afc.jb.resume.web.controller.TransformCreateResume;
 import com.advanceweb.afc.jb.resume.web.controller.WorkExpForm;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.web.utils.PDFGenerator;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * @Author :Devi Mishra
@@ -47,7 +53,7 @@ import com.advanceweb.afc.jb.web.utils.PDFGenerator;
 
 @Controller
 @RequestMapping("/employer")
-public class ManageJobSeekerController {
+public class ManageJobSeekerController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageJobSeekerController.class);
@@ -57,6 +63,9 @@ public class ManageJobSeekerController {
 
 	@Autowired
 	private ResumeService resumeService;
+	
+	@Autowired
+	private AdService adService;
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
@@ -118,10 +127,40 @@ public class ManageJobSeekerController {
 		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
 		model.addObject("appStatusList", appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
-		
-
+		// get the Ads
+		getAdsForManageJobseeker (request, session, model);
 		return model;
 	}
+	
+	/**
+	 * Get Ads for employer manage jobseeker page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForManageJobseeker (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_MANAGE_JOBSEEKER);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
+	
 	/**
 	 * Method is called to update the job details
 	 * 

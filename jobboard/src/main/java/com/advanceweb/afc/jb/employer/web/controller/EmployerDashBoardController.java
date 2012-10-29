@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -32,6 +35,9 @@ import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * @author Prince
@@ -41,7 +47,7 @@ import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 
 @Controller
 @RequestMapping("/employer")
-public class EmployerDashBoardController {
+public class EmployerDashBoardController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerDashBoardController.class);
@@ -57,6 +63,9 @@ public class EmployerDashBoardController {
 
 	@Autowired
 	private UserSubscriptionService userSubService;
+	
+	@Autowired
+	private AdService adService;
 
 	@Autowired
 	private TransformUserubscription userubscription;
@@ -64,7 +73,7 @@ public class EmployerDashBoardController {
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
 			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
 		session.removeAttribute("jbPostTotalList");
 		String enableAccess = "true";
@@ -116,8 +125,40 @@ public class EmployerDashBoardController {
 		model.addObject("searchResumeForm", searchResumeForm);
 		model.addObject("employerDashBoardForm", employerDashBoardForm);
 		model.setViewName("employerDashboard");
+		// get the Ads
+		getAdsForEmployerDashboard (request, session, model);
 		return model;
 	}
+	
+	/**
+	 * Get Ads for employer dashboard page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForEmployerDashboard (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_DASHBOARD);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * This method is used to display the metrics details for selected employer

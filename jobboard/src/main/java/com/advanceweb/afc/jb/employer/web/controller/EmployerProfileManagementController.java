@@ -23,10 +23,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * <code> EmployerProfileManagementController <code>
@@ -39,7 +45,7 @@ import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 @Controller
 @RequestMapping("/empProfile")
 @SessionAttributes("employerProfileManagementForm")
-public class EmployerProfileManagementController {
+public class EmployerProfileManagementController extends AbstractController{
 	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
 	private static final String STR_NOTEMPTY = "NotEmpty";
 	private static final String STR_UNDERSCORE = "_";
@@ -59,10 +65,13 @@ public class EmployerProfileManagementController {
 	private @Value("${isFeaturedEmployerErrorMsg}")
 	String isFeaturedEmployerErrorMsg;
 	
+	@Autowired
+	private AdService adService;
+	
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
 
 	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm employerProfileManagementForm,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		boolean isDateRange = false;
@@ -105,18 +114,46 @@ public class EmployerProfileManagementController {
 				employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
 			}
 			model.addObject("employerProfileManagementForm", employerProfileManagementForm);
-			model.setViewName("manageFeatureEmpPro");
 		}else{
 			LOGGER.info("Not a Featured Employer.");
-			model.setViewName("manageFeatureEmpPro");
 			model.addObject("error",isFeaturedEmployerErrorMsg);
 		}
-		
-
-		
+		model.setViewName("manageFeatureEmpPro");
+		// get the Ads
+		getAdsForManagedFeaturedEmp(request, session, model);
 
 		return model;
 	}
+	
+	/**
+	 * Get Ads for manage featured employers page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForManagedFeaturedEmp (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_MANAGE_FEATURED_EMP);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * Saving Manage Featured Employer Profile

@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchDAO;
 import com.advanceweb.afc.jb.search.JobSearchDelegate;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
@@ -60,10 +60,10 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
+	public AppliedJobDTO fetchSavedOrAppliedJob(JobDTO jobDTO,
 			int userId) {
 
-		return jobSearchDAO.fetchSavedOrAppliedJob(searchedJobDTO, userId);
+		return jobSearchDAO.fetchSavedOrAppliedJob(jobDTO, userId);
 
 	}
 
@@ -72,7 +72,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
-	public SearchedJobDTO viewJobDetails(long jobId) {
+	public JobDTO viewJobDetails(long jobId) {
 
 		return jobSearchDAO.viewJobDetails(jobId);
 
@@ -103,11 +103,11 @@ public class JobSearchServiceImpl implements JobSearchService {
 	/**
 	 * It saves the job with the details of company name,jobTitle, CreatedDate
 	 * 
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 */
 	@Override
-	public void saveJob(SearchedJobDTO searchedJobDTO) {
-		jobSearchDAO.saveTheJob(searchedJobDTO);
+	public void saveJob(JobDTO jobDTO) {
+		jobSearchDAO.saveTheJob(jobDTO);
 	}
 
 	/**
@@ -146,9 +146,9 @@ public class JobSearchServiceImpl implements JobSearchService {
 	/**
 	 * This method is used to get the browse jobs by title
 	 * 
-	 * @return List<SearchedJobDTO> object
+	 * @return List<JobDTO> object
 	 */
-	public List<SearchedJobDTO> getJobsByTitle() {
+	public List<JobDTO> getJobsByTitle() {
 		return jobSearchDAO.getJobsByTitle();
 	}
 
@@ -157,7 +157,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 * 
 	 * @return
 	 */
-	public List<SearchedJobDTO> getJobsByEmployer() {
+	public List<JobDTO> getJobsByEmployer() {
 		return jobSearchDAO.getJobsByEmployer();
 	}
 
@@ -166,7 +166,7 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 * 
 	 * @return
 	 */
-	public List<SearchedJobDTO> getJobsByLocation() {
+	public List<JobDTO> getJobsByLocation() {
 		return jobSearchDAO.getJobsByLocation();
 	}
 

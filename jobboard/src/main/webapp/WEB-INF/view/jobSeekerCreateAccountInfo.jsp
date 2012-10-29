@@ -160,7 +160,7 @@ function validateNumber(event) {
 
 <body class="job_board">
 	<div class="ad_page_top">
-		<img src="../resources/images/ads/banner_ad_fpo.png" />
+		${adPageTop }
 	</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
@@ -410,8 +410,8 @@ function validateNumber(event) {
 					<!-- Step 2 -->
 
 					<div class="ad_col_right">
-						<img src="../resources/images/ads/300x250ad1.png" /> <img
-							src="../resources/images/ads/300x250ad2.png" />
+						${adPageTopRight } 
+						${adPageBtmRight }
 
 						<div class="follow_us">
 							<h2>Follow Us</h2>
@@ -432,7 +432,7 @@ function validateNumber(event) {
 				</div>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
-					<img src="../resources/images/ads/banner_ad_fpo.png" />
+					${adPageBtm }
 				</div>
 			</div>
 			<!-- main -->

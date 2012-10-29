@@ -36,6 +36,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
@@ -46,6 +48,7 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
@@ -53,6 +56,9 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * 
@@ -67,7 +73,7 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @RequestMapping("/employerRegistration")
 @SessionAttributes("empRegisterForm")
 @Scope("session")
-public class EmployerRegistrationController {
+public class EmployerRegistrationController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerRegistrationController.class);
@@ -87,6 +93,9 @@ public class EmployerRegistrationController {
 
 	@Autowired
 	private FacilityService facilityService;
+	
+	@Autowired
+	private AdService adService;
 
 	@Autowired
 	private EmployerRegistrationValidation registerValidation;
@@ -149,6 +158,7 @@ public class EmployerRegistrationController {
 
 	/**
 	 * This method is called to display  employer registration page
+	 * @param request 
 	 * 
 	 * @param HttpSession session
 	 * @param String profileId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
@@ -156,7 +166,7 @@ public class EmployerRegistrationController {
 	 * @return ModelAndView 
 	 */
 	@RequestMapping(value = "/employerregistration", method = RequestMethod.GET)
-	public ModelAndView showEmployerRegistrationForm(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId) {
+	public ModelAndView showEmployerRegistrationForm(HttpSession session,@RequestParam(value = "profileId", required = false) String profileId,@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 
 		EmployerRegistrationForm empRegisterForm = new EmployerRegistrationForm();
@@ -194,11 +204,44 @@ public class EmployerRegistrationController {
 		model.addObject("stateList", stateList);
 		// map.put("empRegisterForm", empRegisterForm);
 		model.setViewName(EMPLOYERREG);
+		// get the Ads
+		getAdsForEmpRegistration (request, session, model);
 		return model;
 	}
+	
+	/**
+	 * Get Ads for employer registration page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForEmpRegistration (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_REGISTRATION);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * This method is called to save the employer registration information
+	 * @param request 
 	 * 
 	 * @param EmployerRegistrationForm empRegForm
 	 * @param Map map
@@ -212,11 +255,13 @@ public class EmployerRegistrationController {
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(EMPREGFORM) EmployerRegistrationForm empRegForm,
 			Map map, HttpSession session,HttpServletRequest req,
-			BindingResult result) {
+			BindingResult result, HttpServletRequest request) {
 		
 		ModelAndView model = new ModelAndView();
 		if (null != empRegForm.getListProfAttribForms()) {
 			model.setViewName(EMPLOYERREG);
+			// get the Ads
+			getAdsForEmpRegistration (request, session, model);
 			if (!validateEmpRegForm(empRegForm, model, result)) {
 				return model;
 			}
@@ -225,6 +270,8 @@ public class EmployerRegistrationController {
 		if (StringUtils.isEmpty(req
 				.getParameter("recaptcha_response_field"))) {
 			model.setViewName(EMPLOYERREG);
+			// get the Ads
+			getAdsForEmpRegistration (request, session, model);
 			model.addObject("errorMessage", "Captcha should not be blank");
 			return model;
 		}
@@ -244,6 +291,8 @@ public class EmployerRegistrationController {
 		if (!reCaptchaResponse.isValid()) { 
 			// Check if valid
 			model.setViewName(EMPLOYERREG);
+			// get the Ads
+			getAdsForEmpRegistration (request, session, model);
 			model.addObject("errorMessage", "Captcha is invalid!");
 			return model;
 		}
@@ -280,11 +329,42 @@ public class EmployerRegistrationController {
 				role = MMJBCommonConstants.ROLE_FACILITY_GROUP;
 			}
 			authenticateUserAndSetSession(userDTO, req, role);
-
+			// get the Ads
+			getAdsForEmpPostJob (request, session, model);
 			return model;
 		}
 
 	}
+	
+	/**
+	 * Get Ads for Employer Post Job page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForEmpPostJob (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_POSTJOB_REG);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 	
 	/**
 	 * validation for EmployerRegistration Form

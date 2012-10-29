@@ -19,15 +19,36 @@ public interface PageNames {
 	 * The jobboard application home page.
 	 */
 	String HOME = "home";
+
 	/**
 	 * Page for displaying the job details
 	 */
 	String JOB_VIEW = "jobview";
 
 	/**
+	 * Page for displaying the premium job details
+	 */
+	String PREMIUM_JOB_VIEW = "premium_jobview";
+
+	/**
+	 * Page for displaying the featured employers
+	 */
+	String FEATURED_EMPS = "featured_employers";
+
+	/**
+	 * Page for displaying the featured employer detail
+	 */
+	String FEATURED_EMP = "featured_employer";
+
+	/**
 	 * The login page for job seeker
 	 */
 	String JOBSEEKER_LOGIN = "login_jobseeker";
+
+	/**
+	 * The second Registration page for job seeker 
+	 */
+	String JOBSEEKER_REGISTRATION_INFO = "registration_info_jobseeker";
 
 	/**
 	 * The Registration page for job seeker
@@ -42,7 +63,17 @@ public interface PageNames {
 	/**
 	 * The Job seeker resume view page
 	 */
-	String JOBSEEKER_RESUME_VIEW = "jobseeker_resume_view";
+	String JOBSEEKER_RESUME_VIEW = "resume_view_jobseeker";
+
+	/**
+	 * The Job seeker basic job search page
+	 */
+	String JOBSEEKER_JOB_SEARCH = "job_search_jobseeker";
+
+	/**
+	 * The Job seeker advance job search page
+	 */
+	String JOBSEEKER_ADVC_JOB_SEARCH = "advance_job_search_jobseeker";
 
 	/**
 	 * The Login page for Employer
@@ -60,14 +91,59 @@ public interface PageNames {
 	String EMPLOYER_DASHBOARD = "dashboard_employer";
 	
 	/**
-	 * The Employer Job post
+	 * The Employer Job post page
 	 */
-	String EMPLOYER_JOBPOST = "employer_jobpost";
+	String EMPLOYER_JOBPOST = "jobpost_employer";
+	
+	/**
+	 * The Employer manage Job post page
+	 */
+	String EMPLOYER_MANAGE_JOBPOST = "manage_jobpost_employer";
+	
+	/**
+	 * The Employer manage featured employer page
+	 */
+	String EMPLOYER_MANAGE_FEATURED_EMP = "manage_featured_employer";
+	
+	/**
+	 * The Employer manage Job seeker page
+	 */
+	String EMPLOYER_MANAGE_JOBSEEKER = "manage_jobseeker_employer";
+	
+	/**
+	 * The Employer registration post job page
+	 */
+	String EMPLOYER_POSTJOB_REG = "registration_postjob_employer";
+
+	/**
+	 * The Payment Gateway conclusion page
+	 */
+	String EMPLOYER_PG_CONCLUSION = "paymentgateway_conclusion_employer";
+
+	/**
+	 * The Payment Gateway method page
+	 */
+	String EMPLOYER_PG_METHOD = "paymentgateway_method_employer";
+	
+	/**
+	 * The Payment Gateway confirmation order page
+	 */
+	String EMPLOYER_PG_CONFIRMORDER = "paymentgateway_confirmorder_employer";
+	
+	/**
+	 * The Payment Gateway billing page
+	 */
+	String EMPLOYER_PG_BILLING = "paymentgateway_billing_employer";
 
 	/**
 	 * The Branding Template page for employer
 	 */
-	String EMPLOYER_BTEMPLATE = "employer_brand_template";
+	String EMPLOYER_BTEMPLATE = "branding_template_employer";
+	
+	/**
+	 * The advance resume search page
+	 */
+	String EMP_ADV_RESUME_SEARCH = "advance_resume_search_employer";
 	
 	/**
 	 * The Login page for Agency
@@ -88,10 +164,5 @@ public interface PageNames {
 	 * The login page for admin
 	 */
 	String ADMIN_LOGIN = "login_admin";
-
-	/**
-	 * The advance resume search page
-	 */
-	String ADV_RESUME_SEARCH = "advance_resume_search";
 	
 }

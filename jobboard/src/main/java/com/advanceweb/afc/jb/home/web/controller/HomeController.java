@@ -41,6 +41,7 @@ import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
@@ -221,14 +222,51 @@ public class HomeController extends AbstractController{
 
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,
-			Model model) {
+			Model model, HttpSession session) {
 		List<CompanyProfileDTO> companyProfileDTOList = manageFeatureEmployerProfile
 				.getEmployerList();
 		model.addAttribute("companyProfileDTOList", companyProfileDTOList);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.addAttribute("jobSearchResultForm", jobSearchResultForm);
+		// get the Ads
+		getAdsForFeaturedEmps (request, session, model);
 		return "featuredemployers";
 	}
+	
+	/**
+	 * Get Ads for featured employers page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForFeaturedEmps (HttpServletRequest request,
+			HttpSession session, Model model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.FEATURED_EMPS);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	/**
 	 * Method called to get the featured employer details by facility Id
@@ -236,12 +274,13 @@ public class HomeController extends AbstractController{
 	 * @param employerProfileManagementForm
 	 * @param request
 	 * @param model
+	 * @param session 
 	 * @return
 	 */
 	@RequestMapping(value = "/featuredemployerdetails", method = RequestMethod.GET)
 	public String getfeaturedemployerbyid(
 			EmployerProfileManagementForm employerProfileManagementForm,
-			HttpServletRequest request, Model model) {
+			HttpServletRequest request, Model model, HttpSession session) {
 		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
 				.getEmployerDetails(Integer.parseInt(request.getParameter("id")));
 		employerProfileManagementForm.setCompanyName(companyProfileDTO
@@ -271,8 +310,40 @@ public class HomeController extends AbstractController{
 		model.addAttribute("windowmediaplayerfilepath", path);
 		model.addAttribute("employerProfileManagementForm",
 				employerProfileManagementForm);
+		// get the Ads
+		getAdsForFeaturedEmp (request, session, model);
 		return "featuredemployerdetails";
 	}
+	
+	/**
+	 * Get Ads for featured employer page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForFeaturedEmp (HttpServletRequest request,
+			HttpSession session, Model model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.FEATURED_EMP);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addAttribute("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 
 	@RequestMapping("/logo")
 	public void getPhoto(@RequestParam("id") Long id,

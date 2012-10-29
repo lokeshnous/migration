@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 
 /**
  * <code> JobSearchDAO </code> is a DAO.
@@ -23,15 +23,15 @@ public interface JobSearchDAO {
 	 * @param jobId
 	 * @return
 	 */
-	SearchedJobDTO viewJobDetails(long jobId);
+	JobDTO viewJobDetails(long jobId);
 
 	/**
-	 * get job details by job ID
+	 * Fetch the saved or applied job of jobseeker
 	 * 
 	 * @param jobId
 	 * @return
 	 */
-	AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
+	AppliedJobDTO fetchSavedOrAppliedJob(JobDTO jobDTO,
 			int userId);
 
 	/**
@@ -53,9 +53,9 @@ public interface JobSearchDAO {
 	/**
 	 * To Save the save job details to DB
 	 * 
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 */
-	void saveTheJob(SearchedJobDTO searchedJobDTO);
+	void saveTheJob(JobDTO jobDTO);
 
 	/**
 	 * Fetch the apply type of job
@@ -85,23 +85,23 @@ public interface JobSearchDAO {
 	/**
 	 * This method is used to get the browse jobs by title
 	 * 
-	 * @return List<SearchedJobDTO> object
+	 * @return List<JobDTO> object
 	 */
-	List<SearchedJobDTO> getJobsByTitle();
+	List<JobDTO> getJobsByTitle();
 
 	/**
 	 * This method is used to get the browse jobs list by Employer
 	 * 
 	 * @return
 	 */
-	List<SearchedJobDTO> getJobsByEmployer();
+	List<JobDTO> getJobsByEmployer();
 
 	/**
 	 * This method is used to get the browse jobs list by location
 	 * 
 	 * @return
 	 */
-	List<SearchedJobDTO> getJobsByLocation();
+	List<JobDTO> getJobsByLocation();
 	
 	
 

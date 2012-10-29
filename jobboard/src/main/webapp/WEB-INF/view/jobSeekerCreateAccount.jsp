@@ -36,7 +36,9 @@
 		</head>
 		
 	<body class="job_board">
-	<div class="ad_page_top"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
+	<div class="ad_page_top"> 
+	${adPageTop }
+	</div>
 	<div class="main_wrapper_outside">
     <div class="main_wrapper_inside">
     <div class="main">
@@ -128,12 +130,16 @@
           </div>
         <!-- Step 2 -->
         
-        <div class="ad_col_right"> <img src="../resources/images/ads/300x250ad1.png" /> <br class="clearfix" />
+        <div class="ad_col_right"> 
+        ${adPageTopRight}
+        <br class="clearfix" />
                 </div>
       </div>
 
               <div class="clearfix"></div>
-              <div class="ad_wrapper"> <img src="../resources/images/ads/banner_ad_fpo.png" /> </div>
+              <div class="ad_wrapper">
+               ${adPageBtm } 
+               </div>
             </div>
     <!-- main --> 
     

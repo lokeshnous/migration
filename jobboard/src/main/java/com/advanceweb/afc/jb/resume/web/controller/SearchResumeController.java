@@ -417,7 +417,7 @@ public class SearchResumeController extends AbstractController{
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.ADV_RESUME_SEARCH);
+					session, PageNames.EMP_ADV_RESUME_SEARCH);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
@@ -610,11 +610,12 @@ public class SearchResumeController extends AbstractController{
 	 * This method is called to forward to job search page
 	 * 
 	 * @param model
+	 * @param request 
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/findResumePage", method = RequestMethod.GET)
 	public ModelAndView findResumePage(Map<String, SearchResumeForm> model,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
 		ModelAndView modelAndView = new ModelAndView();
 		MetricsForm employerDashBoardForm = new MetricsForm();
@@ -653,9 +654,41 @@ public class SearchResumeController extends AbstractController{
 		modelAndView.addObject(STR_SRCH_RES_FORM, searchResumeForm);
 		modelAndView.addObject("employerDashBoardForm", employerDashBoardForm);
 		modelAndView.setViewName("employerDashboard");
+		// get the Ads
+		getAdsForEmployerDashboard (request, session, modelAndView);
 		return modelAndView;
 	}
 	
+	/**
+	 * Get Ads for employer dashboard page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForEmployerDashboard (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_DASHBOARD);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
+
 	/**`
 	 * This method is called to delete a Saved Job Search
 	 * 

@@ -167,7 +167,7 @@ public class EmployerPostJobsController {
 				.replace("?Packagetype",
 						MMJBCommonConstants.PACKAGE_PLATINUM);
 		// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-		// searchedJobDTO.getCompanyName());
+		// jobDTO.getCompanyName());
 		employerEmailDTO.setBody(jobseekerMailBody);
 		employerEmailDTO.setHtmlFormat(true);
 		emailService.sendEmail(employerEmailDTO);

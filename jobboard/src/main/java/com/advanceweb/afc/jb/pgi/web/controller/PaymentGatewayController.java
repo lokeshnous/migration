@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
@@ -29,6 +33,9 @@ import com.advanceweb.afc.jb.employer.web.controller.ResumeSearchPackageForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * This class has been added to handle the Purchase Job Posting activities such as 
@@ -39,7 +46,7 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 @Controller
 @RequestMapping("/pgiController")
 @SessionAttributes("paymentGatewayForm")
-public class PaymentGatewayController {
+public class PaymentGatewayController extends AbstractController{
 
 	
 	private static final Logger LOGGER = Logger
@@ -70,9 +77,12 @@ public class PaymentGatewayController {
 	@Autowired
 	private PaymentGatewayValidation paymentGatewayValidation;
 	
+	@Autowired
+	private AdService adService;
+	
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
-			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType) {
+			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
@@ -97,24 +107,58 @@ public class PaymentGatewayController {
 					(PurchaseJobPostForm)session.getAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM));
 		}
 		model.setViewName(GATEWAY_PAYMENT_FORM);
+		// get the Ads
+		getAdsForPaymentMethod (request, session, model);
 		return model;
 	}
 	
+	/**
+	 * Get Ads for payment method page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForPaymentMethod (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_PG_METHOD);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
+	
 	@RequestMapping(value = "/paymentMethodForBack", method = RequestMethod.GET)
 	public ModelAndView gatewayPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		//add country & state list to model
 		addCountryStateList(model);
 		
 		model.setViewName(GATEWAY_PAYMENT_FORM);
+		// get the Ads
+		getAdsForPaymentMethod (request, session, model);
 		return model;
 	}
 
 	
 	@RequestMapping(value = "/paymentBillingInfo", method = RequestMethod.POST)
 	public ModelAndView paymentBillingInfo(@Valid PaymentGatewayForm paymentGatewayForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		// Getting the facility id from the session
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
@@ -158,12 +202,44 @@ public class PaymentGatewayController {
 		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(BILLING_INFO_FORM);
+		// get the Ads
+		getAdsForBillingInfo (request, session, model);
 		return model;
 	}
 	
+	/**
+	 * Get Ads for payment method billing page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForBillingInfo (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_PG_BILLING);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
+	
 	@RequestMapping(value = "/paymentBillingInfoBack", method = RequestMethod.GET)
 	public ModelAndView paymentBillingInfoBack(@Valid PaymentGatewayForm paymentGatewayForm,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		//add country & state list to model
 		
@@ -181,22 +257,56 @@ public class PaymentGatewayController {
 		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(BILLING_INFO_FORM);
+		// get the Ads
+		getAdsForBillingInfo (request, session, model);
 		return model;
 	}
 	
 	@RequestMapping(value = "/backToConfirmOrder", method = RequestMethod.GET)
 	public ModelAndView backToConfirmOrder(PaymentGatewayForm paymentGatewayForm,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(CONFIRM_ORDER_FORM);
+		// get the Ads
+		getAdsForConfirmOrder (request, session, model);
 		return model;
 	}
 	
+	/**
+	 * Get Ads for payment method confirmation order page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForConfirmOrder (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_PG_CONFIRMORDER);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
+	
 	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
 	public ModelAndView confirmOrder(@Valid PaymentGatewayForm paymentGatewayForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		
 		validateBillingForm(paymentGatewayForm, result);
@@ -206,6 +316,8 @@ public class PaymentGatewayController {
 			addCountryStateList(model);
 			
 			model.setViewName(BILLING_INFO_FORM);
+			// get the Ads
+			getAdsForBillingInfo (request, session, model);
 			return model;
 		}
 		
@@ -296,94 +408,133 @@ public class PaymentGatewayController {
 		return 	model;
 	}
 	
-	@RequestMapping(value="/placeOrder",method = RequestMethod.POST)
-	public ModelAndView placeOrder(PaymentGatewayForm paymentGatewayFormP, HttpSession session) {
+	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
+	public ModelAndView placeOrder(PaymentGatewayForm paymentGatewayFormP,
+			HttpSession session, HttpServletRequest request) {
 		PaymentGatewayForm paymentGatewayForm = paymentGatewayFormP;
-		//call web service here. If order success save order details in db & 
-		//move to Thank you page else move to error page
+		// call web service here. If order success save order details in db &
+		// move to Thank you page else move to error page
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
-		
-		orderDetailsDTO = transformPaymentMethod.transformToOrderDetailsDTO(paymentGatewayForm);
-		
-		orderDetailsDTO.setFacilityId((Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		orderDetailsDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+
+		orderDetailsDTO = transformPaymentMethod
+				.transformToOrderDetailsDTO(paymentGatewayForm);
+
+		orderDetailsDTO.setFacilityId((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		orderDetailsDTO.setUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
 		orderDetailsDTO.setNsCustomeId(paymentGatewayForm.getNsCustomerId());
-		
-		UserDTO userDTO = paymentGatewayService.createOrder(orderDetailsDTO);		
-		
+
+		UserDTO userDTO = paymentGatewayService.createOrder(orderDetailsDTO);
+
 		int netSuiteStatus = Integer.parseInt(userDTO.getNsStatus());
-		
-		Map<Integer,String> statusCode = userDTO.getNsStatusCode();
-		
+
+		Map<Integer, String> statusCode = userDTO.getNsStatusCode();
+
 		ModelAndView model = new ModelAndView();
-		
-		String errorMessage ="";
-		
-		if(netSuiteStatus == MMJBCommonConstants.STATUS_CODE_200){
+
+		String errorMessage = "";
+
+		if (netSuiteStatus == MMJBCommonConstants.STATUS_CODE_200) {
 			LOGGER.info(statusCode.get(netSuiteStatus));
-			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);	
-			paymentGatewayForm = clearSessionFormData(session, paymentGatewayForm);
-		}
-		else
-		{   
-			switch(netSuiteStatus){
-				case MMJBCommonConstants.STATUS_CODE_400 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.BAD_REQUEST_400);
-						errorMessage = MMJBCommonConstants.BAD_REQUEST_400;
-						model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_400);
-						break;
-				case MMJBCommonConstants.STATUS_CODE_401 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.UNAUTHORIZED_401);
-						errorMessage = MMJBCommonConstants.UNAUTHORIZED_401;
-						break;
-				case MMJBCommonConstants.STATUS_CODE_403 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.FORBIDDEN_403);
-						errorMessage = MMJBCommonConstants.FORBIDDEN_403;
-						break;
-				case MMJBCommonConstants.STATUS_CODE_404 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.NOT_FOUND_404);
-						errorMessage = MMJBCommonConstants.NOT_FOUND_404;
-						break;	
-				case MMJBCommonConstants.STATUS_CODE_405 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.METHOD_NOT_ALLOWED_405);
-						errorMessage = MMJBCommonConstants.METHOD_NOT_ALLOWED_405;
-						break;	
-				case MMJBCommonConstants.STATUS_CODE_415 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.UNSUPPORTED_MEDIA_TYPE_415);
-						errorMessage = MMJBCommonConstants.UNSUPPORTED_MEDIA_TYPE_415;
-						break;
-				case MMJBCommonConstants.STATUS_CODE_500 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.INTERNAL_SERVER_ERROR_500);
-						errorMessage = MMJBCommonConstants.INTERNAL_SERVER_ERROR_500;
-						break;
-				case MMJBCommonConstants.STATUS_CODE_503 :
-						LOGGER.error(statusCode.get(netSuiteStatus)+"\n"+
-										MMJBCommonConstants.SERVICE_UNAVAILABLE_503);
-						errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
-						break;
-				default:
-						LOGGER.info(statusCode.get(netSuiteStatus));
-						model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);	
-						paymentGatewayForm = clearSessionFormData(session,paymentGatewayForm);
-			}
-			
-			if(netSuiteStatus != MMJBCommonConstants.STATUS_CODE_400){
+			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);
+			paymentGatewayForm = clearSessionFormData(session,
+					paymentGatewayForm);
+		} else {
+			switch (netSuiteStatus) {
+			case MMJBCommonConstants.STATUS_CODE_400:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.BAD_REQUEST_400);
+				errorMessage = MMJBCommonConstants.BAD_REQUEST_400;
+				model.addObject(STATUS_CODE,
+						MMJBCommonConstants.STATUS_CODE_400);
+				break;
+			case MMJBCommonConstants.STATUS_CODE_401:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.UNAUTHORIZED_401);
+				errorMessage = MMJBCommonConstants.UNAUTHORIZED_401;
+				break;
+			case MMJBCommonConstants.STATUS_CODE_403:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.FORBIDDEN_403);
+				errorMessage = MMJBCommonConstants.FORBIDDEN_403;
+				break;
+			case MMJBCommonConstants.STATUS_CODE_404:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.NOT_FOUND_404);
+				errorMessage = MMJBCommonConstants.NOT_FOUND_404;
+				break;
+			case MMJBCommonConstants.STATUS_CODE_405:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.METHOD_NOT_ALLOWED_405);
+				errorMessage = MMJBCommonConstants.METHOD_NOT_ALLOWED_405;
+				break;
+			case MMJBCommonConstants.STATUS_CODE_415:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.UNSUPPORTED_MEDIA_TYPE_415);
+				errorMessage = MMJBCommonConstants.UNSUPPORTED_MEDIA_TYPE_415;
+				break;
+			case MMJBCommonConstants.STATUS_CODE_500:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.INTERNAL_SERVER_ERROR_500);
+				errorMessage = MMJBCommonConstants.INTERNAL_SERVER_ERROR_500;
+				break;
+			case MMJBCommonConstants.STATUS_CODE_503:
+				LOGGER.error(statusCode.get(netSuiteStatus) + "\n"
+						+ MMJBCommonConstants.SERVICE_UNAVAILABLE_503);
+				errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
+				break;
+			default:
+				LOGGER.info(statusCode.get(netSuiteStatus));
+				model.addObject(STATUS_CODE,
+						MMJBCommonConstants.STATUS_CODE_200);
 				paymentGatewayForm = clearSessionFormData(session,
 						paymentGatewayForm);
-			}		
+			}
+
+			if (netSuiteStatus != MMJBCommonConstants.STATUS_CODE_400) {
+				paymentGatewayForm = clearSessionFormData(session,
+						paymentGatewayForm);
+			}
 		}
-		model.addObject("errorMessage", errorMessage);		
+		model.addObject("errorMessage", errorMessage);
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(THANK_YOU_FORM);
+		// get the Ads
+		getAdsForPGConclusion(request, session, model);
+
 		return model;
 	}
+	
+	/**
+	 * Get Ads for payment method conclusion page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForPGConclusion (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.EMPLOYER_PG_CONCLUSION);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 	
 	/**
 	 * @param session

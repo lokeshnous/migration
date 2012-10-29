@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.jb.test.ServiceTest;
 
@@ -38,8 +38,8 @@ public class JobSearchServiceTest extends ServiceTest {
 	public void fetchSavedOrAppliedJob() {
 		int userId = 5;
 		int jobId = 13100;
-		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(jobId);
-		jobSearchService.fetchSavedOrAppliedJob(searchedJobDTO, userId);
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
+		jobSearchService.fetchSavedOrAppliedJob(jobDTO, userId);
 
 	}
 
@@ -51,8 +51,8 @@ public class JobSearchServiceTest extends ServiceTest {
 	@Test
 	public void testViewJobDetails() {
 		int jobId = 13100;
-		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(jobId);
-		assertNotNull("View SearchedJob", searchedJobDTO);
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
+		assertNotNull("View SearchedJob", jobDTO);
 	}
 
 	/**
@@ -63,18 +63,18 @@ public class JobSearchServiceTest extends ServiceTest {
 	public void saveOrApplyJob() {
 		int jobId = 13100;
 		Date currentDate = new Date();
-		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(jobId);
-		AppliedJobDTO jobDTO = new AppliedJobDTO();
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
+		AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
 		JobPostDTO jpJob = new JobPostDTO();
 		jpJob.setJobId(jobId);
-		jobDTO.setJpJob(jpJob);
-		jobDTO.setUserId(5);
-		jobDTO.setJobTitle(searchedJobDTO.getJobTitle());
-		jobDTO.setFacilityName(searchedJobDTO.getCompanyName());
-		jobDTO.setCreateDt(currentDate.toString());
-		jobDTO.setAppliedDt(currentDate.toString());
-		jobDTO.setDeleteDt(null);
-		assertTrue("saveOrApplyJob :", jobSearchService.saveOrApplyJob(jobDTO));
+		appliedJobDTO.setJpJob(jpJob);
+		appliedJobDTO.setUserId(5);
+		appliedJobDTO.setJobTitle(jobDTO.getJobTitle());
+		appliedJobDTO.setFacilityName(jobDTO.getCompanyNameDisp());
+		appliedJobDTO.setCreateDt(currentDate.toString());
+		appliedJobDTO.setAppliedDt(currentDate.toString());
+		appliedJobDTO.setDeleteDt(null);
+		assertTrue("saveOrApplyJob :", jobSearchService.saveOrApplyJob(appliedJobDTO));
 	}
 
 	/**
@@ -86,14 +86,14 @@ public class JobSearchServiceTest extends ServiceTest {
 		int jobId = 13100;
 		int userId = 5;
 		Date currentDate = new Date();
-		AppliedJobDTO jobDTO = new AppliedJobDTO();
-		SearchedJobDTO searchedJobDTO = jobSearchService.viewJobDetails(jobId);
-		AppliedJobDTO appliedJobDTO = jobSearchService.fetchSavedOrAppliedJob(
-				searchedJobDTO, userId);
-		jobDTO = appliedJobDTO;
-		jobDTO.setAppliedDt(currentDate.toString());
+		AppliedJobDTO appliedJobDTO = new AppliedJobDTO();
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
+		AppliedJobDTO jobDTO2 = jobSearchService.fetchSavedOrAppliedJob(
+				jobDTO, userId);
+		appliedJobDTO = jobDTO2;
+		appliedJobDTO.setAppliedDt(currentDate.toString());
 		assertTrue("updateSaveOrApplyJob :",
-				jobSearchService.updateSaveOrApplyJob(jobDTO));
+				jobSearchService.updateSaveOrApplyJob(appliedJobDTO));
 	}
 
 	/**
@@ -106,9 +106,9 @@ public class JobSearchServiceTest extends ServiceTest {
 		int jobId = 13100;
 		boolean status = true;
 		try {
-			SearchedJobDTO searchedJobDTO = jobSearchService
+			JobDTO jobDTO = jobSearchService
 					.viewJobDetails(jobId);
-			jobSearchService.saveJob(searchedJobDTO);
+			jobSearchService.saveJob(jobDTO);
 		} catch (Exception e) {
 			status = false;
 		}

@@ -182,7 +182,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 		jobDTO.setJobGeo(jobSearchDTO.getJobGeo());
 		jobDTO.setJobGeo0LatLon(jobSearchDTO.getJobGeo0LatLon());
 		jobDTO.setJobGeo1LatLon(jobSearchDTO.getJobGeo1LatLon());
-		jobDTO.setJobId(jobSearchDTO.getJobId());
+		jobDTO.setJobId(Integer.parseInt(jobSearchDTO.getJobId()));
 		jobDTO.setJobNumber(jobSearchDTO.getJobNumber());
 		jobDTO.setJobPosition(jobSearchDTO.getJobPosition());
 		jobDTO.setJobTitle(jobSearchDTO.getJobTitle());

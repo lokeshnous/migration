@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -109,15 +109,15 @@ public class JobApplicationController {
 			 // description
 			 
 			int jobId = (Integer) session.getAttribute("jobId");
-			SearchedJobDTO searchedJobDTO = jobSearchService
+			JobDTO jobDTO = jobSearchService
 					.viewJobDetails(jobId);
 			
 			
 			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
 					.applyJobDetails(jobId);
 
-			if (searchedJobDTO.getEmployerEmailAddress() == null) {
-				searchedJobDTO.setEmployerEmailAddress(jobApplyTypeDTO
+			if (jobDTO.getEmail() == null) {
+				jobDTO.setEmail(jobApplyTypeDTO
 						.getApplyLink());
 			}
 							
@@ -131,7 +131,7 @@ public class JobApplicationController {
 			InternetAddress[] employerToAddress = new InternetAddress[1];
 			 try {
 			employerToAddress[0] = new InternetAddress(
-					searchedJobDTO.getEmployerEmailAddress());
+					jobDTO.getEmail());
 			toEmployer.setFromAddress(advanceWebAddress);
 			toEmployer.setToAddress(employerToAddress);
 			String employerMailSub = empJobAppSub.replace(
@@ -173,12 +173,23 @@ public class JobApplicationController {
 			jsToAddress[0] = new InternetAddress(form.getUserEmail());
 			toJobSeeker.setToAddress(jsToAddress);
 			toJobSeeker.setFromAddress(advanceWebAddress);
-			String jobseekerMailSub = jobAppSub.replace(
-					"?companyname", searchedJobDTO.getCompanyName());
+			String jobseekerMailSub = "";
+			if(jobDTO.getCompanyNameDisp() == null){
+				jobseekerMailSub = jobAppSub.replace(
+						"to ?companyname", "");
+			}else{
+				jobseekerMailSub = jobAppSub.replace(
+						"?companyname", jobDTO.getCompanyNameDisp());
+			}
 			toJobSeeker.setSubject(jobseekerMailSub);
 			String jobseekerMailBody = jobAppBody;
-			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
-					searchedJobDTO.getCompanyName());
+			if(jobDTO.getCompanyNameDisp() == null){
+				jobseekerMailBody = jobseekerMailBody.replace("to ?companyname",
+						"");
+			}else{
+				jobseekerMailSub = jobAppSub.replace(
+						"?companyname", jobDTO.getCompanyNameDisp());
+			}
 			toJobSeeker.setBody(jobseekerMailBody);
 			toJobSeeker.setHtmlFormat(true);
 			emailService.sendEmail(toJobSeeker);

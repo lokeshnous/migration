@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -49,71 +49,71 @@ public class JobSearchConversionHelper {
 	 * @param entity
 	 * @return
 	 */
-	public SearchedJobDTO transformJpJobToSearchedJobDTO(JpJob entity) {
-		SearchedJobDTO searchedJobDTO = new SearchedJobDTO();
+	public JobDTO transformJpJobToJobDTO(JpJob entity) {
+		JobDTO jobDTO = new JobDTO();
 		if (entity != null) {
 			// get detail from JpJob entity
-			searchedJobDTO.setJobTitle(entity.getJobtitle());
-			searchedJobDTO.setJobDesc(entity.getAdtext());
-			searchedJobDTO.setJobID(entity.getJobId());
-			searchedJobDTO.setFeatureEmployer(entity.getFeatured() == 1 ? true
+			jobDTO.setJobTitle(entity.getJobtitle());
+			jobDTO.setAdText(entity.getAdtext());
+			jobDTO.setJobId(entity.getJobId());
+			jobDTO.setFeatured(entity.getFeatured() == 1 ? true
 					: false);
 
 			// get detail from admFacility entity
 			AdmFacility admFacility = entity.getAdmFacility();
-			searchedJobDTO.setCompanyName(admFacility.getName());
-			searchedJobDTO.setFacilityId(admFacility.getFacilityId());
+			jobDTO.setCompany(admFacility.getName());
+			jobDTO.setFacilityId(admFacility.getFacilityId());
 			int blindAd = entity.getBlindAd();
 			if (blindAd == 1) {
-				searchedJobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
+				jobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
 			}
 
-			transformJpLocationtosearchedJobDTO(entity, searchedJobDTO);
+			transformJpLocationtojobDTO(entity, jobDTO);
 
 			// get the template details
-//			searchedJobDTO.setCompanyOverview(entity.getKeywords());
-//			searchedJobDTO.setImagePath(entity.getImagePath());
-//			searchedJobDTO.setLogo(entity.getLogo());
+//			jobDTO.setCompanyOverview(entity.getKeywords());
+//			jobDTO.setImagePath(entity.getImagePath());
+//			jobDTO.setLogo(entity.getLogo());
 			
 			JpTemplate jpTemplate = entity.getJpTemplate();
 			if(null != jpTemplate)
 			{
-				searchedJobDTO.setTemplateId(jpTemplate.getTemplateId());
-				searchedJobDTO.setCompanyOverview(jpTemplate.getCompanyOverview());
-				searchedJobDTO.setImagePath(jpTemplate.getMainImagePath());
-				searchedJobDTO.setLogo(jpTemplate.getLogoPath());
+				jobDTO.setTemplateId(jpTemplate.getTemplateId());
+				jobDTO.setCompanyOverview(jpTemplate.getCompanyOverview());
+				jobDTO.setImagePath(jpTemplate.getMainImagePath());
+				jobDTO.setLogo(jpTemplate.getLogoPath());
 				
 				if(null==jpTemplate.getColorPalette() || jpTemplate.getColorPalette().isEmpty())
 				{
-					searchedJobDTO.setColor(defaultColor);
+					jobDTO.setColor(defaultColor);
 				}
 				else
 				{
-					searchedJobDTO.setColor(jpTemplate.getColorPalette());
+					jobDTO.setColor(jpTemplate.getColorPalette());
 				}
 				
 //				Multimedia section
-				searchedJobDTO.setListTestimony(brandTemplateConversionHelper.transformTemplateTestimonyToDTO(jpTemplate));
-				searchedJobDTO.setListAddImages(brandTemplateConversionHelper.transformAddImageToDTO(jpTemplate));
-				searchedJobDTO.setListVideos(brandTemplateConversionHelper.transformVideoToDTO(jpTemplate));
+				jobDTO.setListTestimony(brandTemplateConversionHelper.transformTemplateTestimonyToDTO(jpTemplate));
+				jobDTO.setListAddImages(brandTemplateConversionHelper.transformAddImageToDTO(jpTemplate));
+				jobDTO.setListVideos(brandTemplateConversionHelper.transformVideoToDTO(jpTemplate));
 				
 			}
 			
-			searchedJobDTO.setEmployerEmailAddress(entity.getEmail());
+			jobDTO.setEmail(entity.getEmail());
 			
 
 		}
-		return searchedJobDTO;
+		return jobDTO;
 	}
 
 	/**
 	 * Transform the 
 	 * 
 	 * @param entity
-	 * @param searchedJobDTO
+	 * @param jobDTO
 	 */
-	public void transformJpLocationtosearchedJobDTO(JpJob entity,
-			SearchedJobDTO searchedJobDTO) {
+	public void transformJpLocationtojobDTO(JpJob entity,
+			JobDTO jobDTO) {
 		// get detail from JpLocation entity
 		int hideCity = 1;
 		int hideState = 1;
@@ -127,17 +127,17 @@ public class JobSearchConversionHelper {
 			hideState = jobJobLocation.getHideState();
 			hideCountry = jobJobLocation.getHideCountry();
 		}catch (Exception e) {
-			LOGGER.info("Locations not found for Job Id :"+searchedJobDTO.getJobID());
+			LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobId());
 		}
 
 		if (hideCity != 1) {
-			searchedJobDTO.setCity(jpLocation.getCity());
+			jobDTO.setCity(jpLocation.getCity());
 		}
 		if (hideState != 1) {
-			searchedJobDTO.setStateFullName(jpLocation.getStateFullname());
+			jobDTO.setState(jpLocation.getStateFullname());
 		}
 		if (hideCountry != 1) {
-			searchedJobDTO.setCountry(jpLocation.getCountry());
+			jobDTO.setCountry(jpLocation.getCountry());
 		}
 	}
 
@@ -189,14 +189,14 @@ public class JobSearchConversionHelper {
 	 * @param saveSearchedJobsDTO
 	 * @return JpSaveSearch
 	 */
-	public AdmSaveJob transformSearchedJobDTOtoJpSaveJob(
-			SearchedJobDTO searchedJobDTO) {
+	public AdmSaveJob transformJobDTOtoJpSaveJob(
+			JobDTO jobDTO) {
 		AdmSaveJob jpSaveJob = new AdmSaveJob();
-		jpSaveJob.setUserId(searchedJobDTO.getUserID());
-		jpSaveJob.setSaveJobId(searchedJobDTO.getJobID());
-		// jpSaveJob.setJobTitle(searchedJobDTO.getJobTitle());
-		// jpSaveJob.setCompanyName(searchedJobDTO.getCompanyName());
-		jpSaveJob.setCreateDt(searchedJobDTO.getCreatedDate());
+		jpSaveJob.setUserId(jobDTO.getUserID());
+		jpSaveJob.setSaveJobId(jobDTO.getJobId());
+		// jpSaveJob.setJobTitle(jobDTO.getJobTitle());
+		// jpSaveJob.setCompanyName(jobDTO.getCompanyName());
+		jpSaveJob.setCreateDt(jobDTO.getCreatedDate());
 		return jpSaveJob;
 	}
 

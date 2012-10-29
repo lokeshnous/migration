@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
-import com.advanceweb.afc.jb.common.SearchedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
@@ -58,16 +58,16 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public SearchedJobDTO viewJobDetails(long jobId) {
-		SearchedJobDTO jobDetail = null;
+	public JobDTO viewJobDetails(long jobId) {
+		JobDTO jobDetail = null;
 
 		try {
 			if (jobId != 0) {
 				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
 						(int) jobId);
-				SearchedJobDTO searchedJobDTO = jobSearchConversionHelper
-						.transformJpJobToSearchedJobDTO(jpJob);
-				jobDetail = searchedJobDTO;
+				JobDTO jobDTO = jobSearchConversionHelper
+						.transformJpJobToJobDTO(jpJob);
+				jobDetail = jobDTO;
 			}
 		} catch (HibernateException e) {
 			// logger call
@@ -84,7 +84,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 * the selected employer.
 	 * 
 	 * @param jobId
-	 * @return List<SearchedJobDTO> object
+	 * @return List<jobDTO> object
 	 */
 
 	public List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID,
@@ -129,10 +129,10 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public AppliedJobDTO fetchSavedOrAppliedJob(SearchedJobDTO searchedJobDTO,
+	public AppliedJobDTO fetchSavedOrAppliedJob(JobDTO jobDTO,
 			int userId) {
 		List<AppliedJobDTO> jobDetail = null;
-		int jobId = searchedJobDTO.getJobID();
+		int jobId = jobDTO.getJobId();
 		try {
 			if (userId != 0) {
 				List<AdmSaveJob> admSaveJobs = hibernateTemplate
@@ -201,10 +201,10 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 
 	// To Save the save searched job details to DB
 	@Override
-	public void saveTheJob(SearchedJobDTO searchedJobDTO) {
+	public void saveTheJob(JobDTO jobDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
 		AdmSaveJob jpSaveJob = jobSearchConversionHelper
-				.transformSearchedJobDTOtoJpSaveJob(searchedJobDTO);
+				.transformJobDTOtoJpSaveJob(jobDTO);
 		hibernateTemplate.saveOrUpdate(jpSaveJob);
 	}
 
@@ -255,18 +255,18 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	/**
 	 * This method is used to get the browse jobs by title
 	 * 
-	 * @return List<SearchedJobDTO> object
+	 * @return List<jobDTO> object
 	 */
 	@Override
-	public List<SearchedJobDTO> getJobsByTitle() {
-		List<SearchedJobDTO> jobDTOs = new ArrayList<SearchedJobDTO>();
+	public List<JobDTO> getJobsByTitle() {
+		List<JobDTO> jobDTOs = new ArrayList<JobDTO>();
 		List<JpJob> jpJbList = new ArrayList<JpJob>();
 		try {
 			jpJbList = hibernateTemplate
 					.find("SELECT distinct j.jobtitle,count(j.jobtitle)  from JpJob j where j.active=1 group by j.jobtitle");
 			Iterator<?> iterator = jpJbList.iterator();
 			while (iterator.hasNext()) {
-				SearchedJobDTO dto = new SearchedJobDTO();
+				JobDTO dto = new JobDTO();
 				Object[] row = (Object[]) iterator.next();
 				Long count = (Long) row[1];
 				dto.setJobTitle((String) row[0]);
@@ -285,18 +285,18 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 * 
 	 * @return List of employerDTOs
 	 */
-	public List<SearchedJobDTO> getJobsByEmployer() {
-		List<SearchedJobDTO> employerDTOs = new ArrayList<SearchedJobDTO>();
+	public List<JobDTO> getJobsByEmployer() {
+		List<JobDTO> employerDTOs = new ArrayList<JobDTO>();
 		List<JpJob> jpJbList = new ArrayList<JpJob>();
 		try {
 			jpJbList = hibernateTemplate
 					.find("SELECT distinct j.facility,count(j.facility)  from JpJob j where j.active=1 group by j.facility");
 			Iterator<?> iterator = jpJbList.iterator();
 			while (iterator.hasNext()) {
-				SearchedJobDTO dto = new SearchedJobDTO();
+				JobDTO dto = new JobDTO();
 				Object[] row = (Object[]) iterator.next();
 				Long count = (Long) row[1];
-				dto.setCompanyName((String) row[0]);
+				dto.setCompany((String) row[0]);
 				dto.setCount(count.intValue());
 				employerDTOs.add(dto);
 			}
@@ -313,18 +313,18 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public List<SearchedJobDTO> getJobsByLocation() {
+	public List<JobDTO> getJobsByLocation() {
 		Query getLocationData = hibernateTemplate.getSessionFactory()
 				.getCurrentSession()
 				.createSQLQuery(" { call GetLocationData() }");
 		List<?> locationDeatils = getLocationData.list();
 		Iterator<?> iterator = locationDeatils.iterator();
-		List<SearchedJobDTO> locationDTOs = new ArrayList<SearchedJobDTO>();
+		List<JobDTO> locationDTOs = new ArrayList<JobDTO>();
 		while (iterator.hasNext()) {
-			SearchedJobDTO dto = new SearchedJobDTO();
+			JobDTO dto = new JobDTO();
 			Object[] row = (Object[]) iterator.next();
 			BigInteger count = (BigInteger) row[1];
-			dto.setStateFullName((String) row[0]);
+			dto.setState((String) row[0]);
 			dto.setCount(count.intValue());
 			locationDTOs.add(dto);
 		}

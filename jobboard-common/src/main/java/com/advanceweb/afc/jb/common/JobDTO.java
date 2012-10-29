@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ReeteshRN
@@ -24,12 +25,16 @@ public class JobDTO implements Serializable{
 	
 	private String company;
 	
+	private String companyNameDisp;
+	
 	private String email;
 	
 	private String emailDisplay;
 	
 	private String facilityName;
 	
+	private int facilityId;
+
 	private boolean featured;
 	
 	private boolean internationalJob;
@@ -38,7 +43,7 @@ public class JobDTO implements Serializable{
 	
 	private int jobCount;
 	
-	private String jobId;
+	private int jobId;
 	
 	private String jobNumber;
 	
@@ -82,7 +87,19 @@ public class JobDTO implements Serializable{
 	
 	private String country;
 	
-
+	private String color;
+	private Boolean isSilverCustomer;
+	private int packageId;
+	private List<TestimonyDTO> listTestimony;
+	private List<AddImageDTO> listAddImages;
+	private List<VideoDTO> listVideos;
+	private String companyOverview;
+	private String logo;
+	private String imagePath;
+	private Date createdDate;
+	private int userID;
+	private int count;
+	
 	public int getTemplateId() {
 		return templateId;
 	}
@@ -251,14 +268,6 @@ public class JobDTO implements Serializable{
 		this.jobCount = jobCount;
 	}
 
-	public String getJobId() {
-		return jobId;
-	}
-
-	public void setJobId(String jobId) {
-		this.jobId = jobId;
-	}
-
 	public String getJobNumber() {
 		return jobNumber;
 	}
@@ -347,5 +356,124 @@ public class JobDTO implements Serializable{
 		this.jobGeo1LatLon = jobGeo1LatLon;
 	}
 
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
+
+	public String getCompanyNameDisp() {
+		return companyNameDisp;
+	}
+
+	public void setCompanyNameDisp(String companyNameDisp) {
+		this.companyNameDisp = companyNameDisp;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public Boolean getIsSilverCustomer() {
+		return isSilverCustomer;
+	}
+
+	public void setIsSilverCustomer(Boolean isSilverCustomer) {
+		this.isSilverCustomer = isSilverCustomer;
+	}
+
+	public int getPackageId() {
+		return packageId;
+	}
+
+	public void setPackageId(int packageId) {
+		this.packageId = packageId;
+	}
+
+	public List<TestimonyDTO> getListTestimony() {
+		return listTestimony;
+	}
+
+	public void setListTestimony(List<TestimonyDTO> listTestimony) {
+		this.listTestimony = listTestimony;
+	}
+
+	public List<AddImageDTO> getListAddImages() {
+		return listAddImages;
+	}
+
+	public void setListAddImages(List<AddImageDTO> listAddImages) {
+		this.listAddImages = listAddImages;
+	}
+
+	public List<VideoDTO> getListVideos() {
+		return listVideos;
+	}
+
+	public void setListVideos(List<VideoDTO> listVideos) {
+		this.listVideos = listVideos;
+	}
+
+	public String getCompanyOverview() {
+		return companyOverview;
+	}
+
+	public void setCompanyOverview(String companyOverview) {
+		this.companyOverview = companyOverview;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public int getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 }

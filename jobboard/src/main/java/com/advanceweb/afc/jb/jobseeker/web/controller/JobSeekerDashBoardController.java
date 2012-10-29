@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -13,11 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.common.controller.AbstractController;
+import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
@@ -26,6 +30,9 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
+import com.advanceweb.common.ads.AdPosition;
+import com.advanceweb.common.ads.AdSize;
+import com.advanceweb.common.client.ClientContext;
 
 /**
  * 
@@ -37,7 +44,7 @@ import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 @Controller
 @RequestMapping("/jobSeeker")
 @Scope("session")
-public class JobSeekerDashBoardController {
+public class JobSeekerDashBoardController extends AbstractController{
 
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSeekerDashBoardController.class");
@@ -56,6 +63,9 @@ public class JobSeekerDashBoardController {
 
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerService;
+	
+	@Autowired
+	private AdService adService;
 
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
@@ -73,7 +83,7 @@ public class JobSeekerDashBoardController {
 	private CheckSessionMap checkSessionMap;
 
 	@RequestMapping("/jobSeekerDashBoard")
-	public ModelAndView displayDashBoard(HttpSession session) {
+	public ModelAndView displayDashBoard(HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
 
@@ -122,6 +132,8 @@ public class JobSeekerDashBoardController {
 		model.addObject("jobSearchResultForm", jobSearchResultForm);
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");
+		// get the Ads
+		getAdsForJobseekerDashboard(request, session, model);
 
 		/** Getting the value from the session **/
 
@@ -166,4 +178,45 @@ public class JobSeekerDashBoardController {
 
 		return model;
 	}
+	
+	/**
+	 * Get Ads for job seeker dashboard page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void getAdsForJobseekerDashboard (HttpServletRequest request,
+			HttpSession session, ModelAndView model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, PageNames.JOBSEEKER_DASHBOARD);
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTop", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.TOP_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageTopRight", bannerString);
+
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.BOTTOM_RIGHT;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtmRight", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			model.addObject("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);		}
+	}
+
 }

@@ -83,8 +83,8 @@
 				</div>
 				<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Send" name="send" id="send" class="btn_sm orange" />
-							<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel"/>
+							<input type="button" value="Send" name="send" id="send" class="btn_sm orange cursor" />
+							<input type="button" name="Cancel" id="Cancel" class="orange cursor" value="Cancel"/>
 								
 						</span>
 					</div>
