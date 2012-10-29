@@ -381,11 +381,15 @@ function validateNumber(event) {
 										$("#cancel").attr("hidden", false);
 										$("#cancel").attr("disabled", false);
 										
-										/* IE-8 - hide the buttons*/
-							            $("#postNewJobButId").hide();
-							            $("#scheduleNewJobButId").hide();
-							            $("#saveAsDraftJobButId").hide();
 									});
+							
+							/* IE-8 - hide the buttons*/
+				            $("#postNewJobButId").hide();
+				            $("#scheduleNewJobButId").hide();
+				            $("#saveAsDraftJobButId").hide();
+				            
+				            /* showing job post type tooltip */
+							$("#postTypeToolTip").attr("title",$("#postTypeId :selected").text());
 
 						}
 						
@@ -468,7 +472,12 @@ function validateNumber(event) {
 								$('#applyToEMailTSId').val('');
 							}
 						});
- 
+						
+						$("#postTypeToolTip").hover(function() {
+							$("#postTypeToolTip").attr("title",$("#postTypeId :selected").text());
+						});
+							
+							
 						jQuery(".megamenu").megamenu();
 						$('#jobOwner').focus();
 					});
@@ -607,13 +616,14 @@ function validateNumber(event) {
 								<div class="row">
 									<span class="lableTextSelect marginTop13 ">Job Posting
 										Type:</span>
-
-									<form:select path="jobPostingType"
-										class="jb_input3 jb_input_width3" id="postTypeId" onchange="populateTemplates()">
-										<form:option value="0" label="Select" />
-										<form:options items="${jbPostingTypeList}"
-											itemValue="optionId" itemLabel="optionName" />
-									</form:select>
+									<div id="postTypeToolTip" title="">
+										<form:select path="jobPostingType"
+											class="jb_input3 jb_input_width3" id="postTypeId" onchange="populateTemplates()">
+											<form:option value="0" label="Select" />
+											<form:options items="${jbPostingTypeList}"
+												itemValue="optionId" itemLabel="optionName" />
+										</form:select>
+									</div>
 									<span class="required colorPkrAreaToolTip">(Required)</span>
 								</div>
 
