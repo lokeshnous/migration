@@ -506,7 +506,7 @@
 							<span class="floatLeft">
 								<a id="continueToNext" href="#" class="btn_sm orange" >Continue to Next Step</a>
 								<a href="<%=request.getContextPath()%>/pgiController/cancelPayment.html" class="btn_sm orange">Cancel</a>
-								<a href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html" class="btn_sm orange">Back</a>	
+								<a href="<%=request.getContextPath()%>/pgiController/callPaymentMethod.html?purchaseType=${paymentGatewayForm.purchaseType}" class="btn_sm orange">Back</a>	
 						</div>
 
 					</form:form>
