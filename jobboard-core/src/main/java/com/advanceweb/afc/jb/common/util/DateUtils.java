@@ -148,5 +148,26 @@ public class DateUtils {
 		}
 		return sqltDate;
 	}
+	
+	/**
+	 * This method is used to convert a String date to Date object into the
+	 * required format.
+	 * 
+	 * @param date
+	 * @return Date object
+	 */
+
+	public static Date convertToDate(String date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH);
+		Date convertedDate = null;
+		try {
+			convertedDate = (Date) dateFormat.parse(date);
+		} catch (ParseException e) {
+			LOGGER.info(e);
+		}
+		return convertedDate;
+	}
+
 
 }
