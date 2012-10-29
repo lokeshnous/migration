@@ -271,7 +271,7 @@ public class ManageFeatureEmployerProfileDAOImpl implements
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT count(a) AdmFacility a where a.facilityParentId = 0")
+							"SELECT count(a) from AdmFacility a where a.facilityParentId = 0")
 					.uniqueResult(); 
 					
 		} catch (HibernateException e) {
