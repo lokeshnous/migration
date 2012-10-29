@@ -45,26 +45,107 @@
 			<div class="popUpContainerWrapper">
 
 
-				<div class="rowEvenSpacingMargin0">
+					<div class="rowEvenSpacingMargin0">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
 						class="grid2">
 						<tr>
 							<td valign="top">
 								<table>
 									<tr class="borderTopNone">
-										<th class="borderTopNone" width="46%" align="left" scope="col">
-											Subscriptions</th>
-									</tr>
-									<c:forEach items="${jobSubscriptionsList}" var="subscriptions"
-										varStatus="index">
-										<tr>
-											<td><form:checkbox path="currentsubs" 
-													label="${subscriptions.optionName}"
-													value="${subscriptions.optionId}"
-													cssStyle="width:20px" /></td>
-										</tr>
-									</c:forEach>
+                                          <th align="left" scope="col">Subscriptions</th>
+                                    </tr><tr><td  valign="top">
+
+							
+									  <ul>
+										<c:forEach items="${jobSubscriptionsList}" var="subscriptions"  begin="0" end="${jobSubscriptionsList.size()}" step="4">
+											
+												<form:checkbox path="currentsubs"
+														label="${subscriptions.optionName}"
+														value="${subscriptions.optionId}" cssStyle="width:20px"/>
+														<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														
+													 <c:if test="${!listpublicationprint.isEmpty()}">	
+														<c:forEach items="${listpublicationprint}" var="subscriptionsprint" varStatus="index">
+														
+															<form:checkbox path="currentsubscheck"
+													label="${subscriptionsprint.optionName}" value="${subscriptionsprint.optionId}"
+													cssStyle="width:20px" /><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														
+														
+														
+										  </c:forEach>
+                                                </c:if>
+                                          </c:forEach>
+                                    </ul>&nbsp;&nbsp;
+								
+							 </td><td valign="top">
+							 
+							  <ul>
+							 <c:forEach items="${jobSubscriptionsList}" var="subscriptions"  begin="1" end="${jobSubscriptionsList.size()}" step="4">
+							 
+							 <form:checkbox path="currentsubs"
+														label="${subscriptions.optionName}"
+														value="${subscriptions.optionId}" cssStyle="width:20px"/>
+														<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							 
+							  <c:if test="${!listpublicationdigital.isEmpty()}">
+							  
+							  <c:forEach items="${listpublicationdigital}"
+											var="subscriptionsdigital" varStatus="index">
+											
+												<form:checkbox path="currentsubscheck"
+													label="${subscriptionsdigital.optionName}" value="${subscriptionsdigital.optionId}"
+													cssStyle="width:20px" /><br>
+
+										</c:forEach>
+										
+										   </c:if>
+                                          </c:forEach>
+                                    </ul>
+                                    
+                                    
+                                     </td><td valign="top">
+                                      <ul>
+                                 <c:forEach items="${jobSubscriptionsList}" var="subscriptions"  begin="2" end="${jobSubscriptionsList.size()}" step="4">
+							 
+							 <form:checkbox path="currentsubs"
+														label="${subscriptions.optionName}"
+														value="${subscriptions.optionId}" cssStyle="width:20px"/>
+														<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     <c:if test="${!listnewsletter.isEmpty()}">
+                                       
+                                      <c:forEach items="${listnewsletter}"
+											var="subscriptionsletter" varStatus="index">
+											
+												<form:checkbox path="currentsubscheck"
+													label="${subscriptionsletter.optionName}" value="${subscriptionsletter.optionId}"
+													cssStyle="width:20px" /><br>
+
+										</c:forEach>
+                                      
+                                        </c:if> 
+                          </c:forEach>
+                                      
+                                     
+                             </ul>
+                                    
+								 </td><td valign="top">
+							  <c:forEach items="${jobSubscriptionsList}" var="subscriptions"  begin="3" end="${jobSubscriptionsList.size()}" step="4">
+							   <form:checkbox path="currentsubs"
+														label="${subscriptions.optionName}"
+														value="${subscriptions.optionId}" cssStyle="width:20px"/>
+														<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      
+							  
+							    </c:forEach>
+							  
+							  
+							   </td>
+                                </tr>
+							  
+						
 								</table>
+								
 							</td>
 							<%-- <td valign="top">
 								<table>
@@ -99,15 +180,6 @@
 							</td> --%>
 						</tr>
 					</table>
-				</div>
-				<div class="popUpButtonRow">
-					
-					<input type="button" id="save" class="orange cursor" value="Save" />
-					<%--<a href="" id="save" class="btn_sm orange">Save</a>  --%>
-					<input type="button" value="Cancel" 
-									class="nyroModalClose orange cursor" name="Cancel" />
-					
-					<!-- <a href="" class="nyroModalClose btn_sm orange">Cancel</a> -->
 				</div>
 
 
