@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -213,5 +214,23 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 			List<UserSubscriptionsDTO> listSubsDTO, int facilityId) {
 		return subscriptionsDAO.saveFacilitySubscription(listSubsDTO,
 				facilityId);
+	}
+	
+	@Override
+	public List<DropDownDTO> getSubscriptionscheck(int userId) {
+		// TODO Auto-generated method stub
+		return subscriptionsDAO.getSubscriptionscheck(userId);
+	}
+
+	@Override
+	public List<DropDownDTO> getSubscriptionsdigital(int userId) {
+		// TODO Auto-generated method stub
+		return subscriptionsDAO.getSubscriptionsdigital(userId);
+	}
+
+	@Override
+	public List<DropDownDTO> getSubscriptionsletter(int userId) {
+		// TODO Auto-generated method stub
+		return subscriptionsDAO.getSubscriptionsletter(userId);
 	}
 }
