@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.user;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 
 /**
@@ -64,4 +65,10 @@ public interface UserSubscriptionService {
 	 */
 	boolean saveFacilitySubscription(List<UserSubscriptionsDTO> listSubsDTO,
 			int facilityId);
+	
+	
+	List<DropDownDTO> getSubscriptionscheck(int userId);
+	List<DropDownDTO> getSubscriptionsdigital(int userId);
+	
+	List<DropDownDTO> getSubscriptionsletter(int userId);
 }
