@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -29,6 +31,7 @@ import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.jobseeker.helper.UserSubscriptionsConversionHelper;
+import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
 /**
  * @version 1.0
@@ -57,6 +60,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	@Autowired
 	private UserSubscriptionsConversionHelper subscriptionHelper;
+	
+	@Autowired
+	private PopulateDropdownConversionHelper dropdownHelper;
 
 	@Autowired
 	public void setHibernateTemplate(
@@ -712,5 +718,109 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					+ e);
 		}
 		return true;
+	}
+	
+	
+	@Override
+	public List<DropDownDTO> getSubscriptionscheck(int userId) {
+		// TODO Auto-generated method stub
+		List<MerPublication> listSubscriptiosnscheck = null;
+		try {
+			
+			Query getSubscriptionData = hibernateTemplateTracker.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getSubscriptionData(?) }");
+			
+			getSubscriptionData.setInteger(0, userId);
+			List<MerPublication> ListSubCheck = getSubscriptionData.list();
+			
+			
+			
+			Iterator<?> iterator = ListSubCheck.iterator();
+			listSubscriptiosnscheck=new ArrayList<MerPublication>();
+			while (iterator.hasNext()) {
+				MerPublication dto = new MerPublication();
+				Object[] row = (Object[]) iterator.next();
+				dto.setPublicationName((String) row[0]);
+				dto.setPublicationId((Integer) row[1]);
+				listSubscriptiosnscheck.add(dto);
+				
+			}
+			
+			return dropdownHelper.convertMerPublicationToDropDownDTO(listSubscriptiosnscheck);
+			
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+
+		return null;
+		
+	}
+
+	@Override
+	public List<DropDownDTO> getSubscriptionsdigital(int userId) {
+		// TODO Auto-generated method stub
+		List<MerPublication> listSubscriptiosnsDigital = null;
+		try {
+			
+			Query getSubscriptionDigital = hibernateTemplateTracker.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getSubscriptionDigital(?) }");
+			
+			getSubscriptionDigital.setInteger(0, userId);
+			List<MerPublication> ListSubDigital = getSubscriptionDigital.list();
+			
+			
+			
+			Iterator<?> iterator = ListSubDigital.iterator();
+			listSubscriptiosnsDigital=new ArrayList<MerPublication>();
+			while (iterator.hasNext()) {
+				MerPublication dto = new MerPublication();
+				Object[] row = (Object[]) iterator.next();
+				dto.setPublicationName((String) row[0]);
+				dto.setPublicationId((Integer) row[1]);
+				listSubscriptiosnsDigital.add(dto);
+				
+			}
+			System.out.println("listSubscriptiosnscheck::"+listSubscriptiosnsDigital.size());
+			return dropdownHelper.convertMerPublicationToDropDownDTO(listSubscriptiosnsDigital);
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+
+		
+		return null;
+	}
+
+	@Override
+	public List<DropDownDTO> getSubscriptionsletter(int userId) {
+		// TODO Auto-generated method stub
+		//List<MerPublication> listSubscriptiosnsLetter = null;
+		List<MerPublication> listSubscriptiosnsLetter = new ArrayList<MerPublication>();
+		try {
+			
+			Query getSubscriptionLetter = hibernateTemplateTracker.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getSubscriptionLetter(?) }");
+			
+			getSubscriptionLetter.setInteger(0, userId);
+			List<MerPublication> ListSubLetter = getSubscriptionLetter.list();
+			
+			
+			
+			Iterator<?> iterator = ListSubLetter.iterator();
+			listSubscriptiosnsLetter=new ArrayList<MerPublication>();
+			while (iterator.hasNext()) {
+				MerPublication dto = new MerPublication();
+				Object[] row = (Object[]) iterator.next();
+				dto.setPublicationName((String) row[0]);
+				dto.setPublicationId((Integer) row[1]);
+				listSubscriptiosnsLetter.add(dto);
+				
+			}
+			System.out.println("listSubscriptiosnscheck::"+listSubscriptiosnsLetter.size());
+			return dropdownHelper.convertMerPublicationToDropDownDTO(listSubscriptiosnsLetter);
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+
+		return null;
 	}
 }
