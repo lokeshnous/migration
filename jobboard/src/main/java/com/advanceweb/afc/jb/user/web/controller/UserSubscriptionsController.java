@@ -60,6 +60,16 @@ public class UserSubscriptionsController {
 						.getAttribute(MMJBCommonConstants.USER_ID))));
 		userubscription.jsSubscriptionDTOToJobSeekerSubscriptions(
 				currentSubsList, subscriptform, listSubscriptions);
+		
+		
+		List<DropDownDTO> listpublicationprint =userSubService.getSubscriptionscheck(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+		List<DropDownDTO> listpublicationdigital =userSubService.getSubscriptionsdigital(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+	    List<DropDownDTO> listnewsletter =userSubService.getSubscriptionsletter(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+	    
+	    
+		model.addObject("jobSubscriptionsList", listSubscriptions);
+		model.addObject("listpublicationdigital", listpublicationdigital);
+		model.addObject("listnewsletter", listnewsletter);
 		model.addObject("jobSubscriptionsList", listSubscriptions);
 		model.addObject("jobSeekerSubscriptionForm", subscriptform);
 		model.setViewName("jobseekermodifysubscriptions");

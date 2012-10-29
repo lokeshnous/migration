@@ -155,6 +155,18 @@ public class TransformUserubscription {
 				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
 				dto.setSubscriptionId(Integer.valueOf(selSubscription));
 				dto.setUserId(form.getUserId());
+				dto.setPublicationId(form.getPublicationId());
+				dto.setActive(1);
+				selectedSubsList.add(dto);
+			}
+		}
+
+		if (null != form.getCurrentsubscheck()) {
+			for (String selSubscription : form.getCurrentsubscheck()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(Integer.valueOf(selSubscription));
+				dto.setUserId(form.getUserId());
+				dto.setPublicationId(form.getPublicationId());
 				dto.setActive(1);
 				selectedSubsList.add(dto);
 			}

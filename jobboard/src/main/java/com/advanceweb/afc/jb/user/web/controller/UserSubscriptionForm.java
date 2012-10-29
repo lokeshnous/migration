@@ -14,10 +14,11 @@ public class UserSubscriptionForm {
 	private String[] currentmagazines;
 	private String[] currentJobAlerts;
 	private String[] facsub;
+	private String[] currentsubscheck;
 	
 	private int userId;
 	private int facilityId;
-	
+	private int publicationId;
 	
 	public String[] getCurrentsubs() {
 		return currentsubs;
@@ -54,6 +55,18 @@ public class UserSubscriptionForm {
 	}
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+	public String[] getCurrentsubscheck() {
+		return currentsubscheck;
+	}
+	public void setCurrentsubscheck(String[] currentsubscheck) {
+		this.currentsubscheck = currentsubscheck;
+	}
+	public int getPublicationId() {
+		return publicationId;
+	}
+	public void setPublicationId(int publicationId) {
+		this.publicationId = publicationId;
 	}
 				
 }
