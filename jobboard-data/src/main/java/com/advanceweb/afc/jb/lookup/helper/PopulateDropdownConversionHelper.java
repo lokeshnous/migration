@@ -28,6 +28,7 @@ import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.data.entities.MerPublication;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
@@ -435,6 +436,19 @@ public class PopulateDropdownConversionHelper {
 		return list;		
 	}	
 	
+	public List<DropDownDTO> convertMerPublicationToDropDownDTO(List<MerPublication> subsList){
+
+		DropDownDTO dropDownDTO = null;
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
+
+		for(MerPublication subs : subsList){
+			dropDownDTO = new DropDownDTO();
+			dropDownDTO.setOptionId(String.valueOf(subs.getPublicationId()));
+			dropDownDTO.setOptionName(subs.getPublicationName());
+			list.add(dropDownDTO);
+		}		
+		return list;		
+	}	
 	
 	public List<DropDownDTO> transformResumeAttribListToDropDownDTO(List<ResResumeAttribList> resResumeAttribList){
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
