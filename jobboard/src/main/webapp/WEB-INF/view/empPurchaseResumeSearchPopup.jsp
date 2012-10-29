@@ -83,8 +83,8 @@
 						count++;
 						var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
 						
-						if("" == quantity || null == quantity || isNaN(quantity)){
-							alert("Please enter quantity in numerics");
+						if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+							alert("Please enter quantity in numerics ( > 0)");
 							return;
 						}
 						else{
@@ -165,7 +165,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  
+                  	<c:if test="${empty purchaseResumeSearchForm.resumeSearchPackageCart}">
+						<tr><td>
+							<br><p align="left" class="FormErrorDisplayText">Please select the packages</p><br><br><br>
+						</td></tr>
+					</c:if>	
                   <% int j= 0; %>
                   	<c:forEach items="${purchaseResumeSearchForm.resumeSearchPackageCart}" var="resSearchCartItem" varStatus="status">
 		               <tr>
