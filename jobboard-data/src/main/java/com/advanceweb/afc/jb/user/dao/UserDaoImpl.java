@@ -207,4 +207,23 @@ public class UserDaoImpl implements UserDao {
 	}
 		return userDTO;
 	}
+	
+	/**
+	 * This method is used to get the total count of employer
+	 * 
+	 * @return
+	 * @throws JobBoardDataException
+	 */
+	public long getEmployerCount() throws JobBoardDataException {
+		long count = 0;
+		try {
+			count = hibernateTemplate.find("from AdmFacility").size();
+		} catch (HibernateException he) {
+			throw new JobBoardDataException(
+					"Error occured while getting the Result from Database" + he);
+		}
+		return count;
+	}
+	
+	
 }
