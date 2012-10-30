@@ -36,4 +36,6 @@ public interface UserDao {
 	 * @throws JobBoardDataException
 	 */
 	UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardDataException;
+	
+	long getEmployerCount() throws JobBoardDataException;
 }
