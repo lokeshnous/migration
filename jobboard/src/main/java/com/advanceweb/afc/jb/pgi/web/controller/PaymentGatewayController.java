@@ -26,6 +26,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.web.controller.AddOnForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
@@ -379,14 +380,66 @@ public class PaymentGatewayController extends AbstractController{
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return 	model;
 	}
+	
+	/**
+	 * This method is added to update the cart if quantity value is changed in the cart 
+	 * @param paymentGatewayForm
+	 * @param cartItemIndex
+	 * @param quantity
+	 * @return model
+	 */
+	@RequestMapping(value = "/updateQuantity", method = RequestMethod.POST)
+	public ModelAndView updateQuantity(PaymentGatewayForm paymentGatewayForm,
+			@RequestParam("cartItemIndex") int cartItemIndex, @RequestParam("quantity") int quantity) {
+		
+		ModelAndView model = new ModelAndView();
+		
+		if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(paymentGatewayForm.getPurchaseType())){
+			PurchaseResumeSearchForm purchaseResumeSearchForm = paymentGatewayForm.getPurchaseResumeSearchForm(); 
+			ResumeSearchPackageForm cartItem = purchaseResumeSearchForm.getResumeSearchPackageCart().get(cartItemIndex);
+			
+			//Deduct PackageTotal from the GrandTotal
+			purchaseResumeSearchForm.setGrandTotal(purchaseResumeSearchForm.getGrandTotal()
+					- cartItem.getPackageTotal());
+			//Update the new quantity & PackageTotal
+			cartItem.setQuantity(quantity);
+			cartItem.setPackageTotal(cartItem.getPriceAmt() * cartItem.getQuantity());
+			//Change the GrandTotal
+			purchaseResumeSearchForm.setGrandTotal(purchaseResumeSearchForm
+					.getGrandTotal() + cartItem.getPackageTotal());
+			
+		}
+		else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(paymentGatewayForm.getPurchaseType())){
+			int packageSubTotal = 0, planCreditAmt = 0, addOnCreditAmtTotal = 0;
+			PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();		
+			JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
+			
+			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
+			
+			planCreditAmt = Integer.parseInt(cartItem.getJobPostPlanCretitAmt());
 
+			for (AddOnForm addOnForm : cartItem.getAddOnForm()) {
+				addOnCreditAmtTotal = addOnCreditAmtTotal + Integer.parseInt(addOnForm.getAddOnCreditAmt());
+			}
+			
+			packageSubTotal = (planCreditAmt + addOnCreditAmtTotal) * quantity;
+			cartItem.setQuantity(quantity);
+			cartItem.setPackageSubTotal(packageSubTotal);
+			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() + packageSubTotal);
+		}
+		
+		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
+		model.setViewName("redirect:/pgiController/backToConfirmOrder.html");
+		return 	model;
+	}
+	
 	/**
 	 * This method will be called to remove the item from job posting cart
 	 * @param cartItemIndex
 	 * @param session
 	 * @return String
 	 */
-	@RequestMapping(value="/removeJobPost",method = RequestMethod.GET)
+	@RequestMapping(value="/removeCartItem",method = RequestMethod.GET)
 	public ModelAndView removeJobPost(PaymentGatewayForm paymentGatewayForm,
 			@RequestParam("cartItemIndex") int cartItemIndex, HttpSession session) {
 		ModelAndView model = new ModelAndView();

@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.pgi.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,17 +36,17 @@ import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
  * @author muralikc
  * 
  */
-
 @Repository("paymentGatewayDao")
 public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
+	private static final Logger LOGGER = Logger
+			.getLogger(PaymentGatewayDaoImpl.class);
 
 	private static final String ORDER_STATUS_FAILURE = "FAILURE";
 
 	private static final String ORDER_STATUS_APPROVED = "APPROVED";
-
-	private static final Logger LOGGER = Logger
-			.getLogger(PaymentGatewayDaoImpl.class);
-
+	
+	private static final String FIND_LAST_RESUME_PACKAGE_PURCHASED = "from AdmFacilityInventory admInv where admInv.expireDt in (select max(inv.expireDt) from AdmFacilityInventory inv, AdmInventoryDetail admInvDetail where admInvDetail.productType = ? and inv.admFacility = ?) group by order_id";
+	
 	private HibernateTemplate hibernateTemplate;
 
 	private static final String BLANK = "BLANK";
@@ -256,6 +257,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 	 * @param orderDetailsDTO
 	 * @return boolean
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = false)
 	public boolean saveInventoryDetails(OrderDetailsDTO orderDetailsDTO) {
@@ -267,6 +269,17 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 				admFacility.setFacilityId(orderDetailsDTO.getFacilityId());
 				int orderId = orderDetailsDTO.getOrderId();
 				if(MMJBCommonConstants.PURCHASE_RESUME_SEARCH.equals(orderDetailsDTO.getPurchaseType())){
+					int numberOfDays = 0;
+					
+					List<AdmFacilityInventory> admInvObj = hibernateTemplate.find(FIND_LAST_RESUME_PACKAGE_PURCHASED,MMJBCommonConstants.RESUME_SEARCH_PACKAGE,admFacility);
+					
+					//If its first time purchase then today's date + numberOfDays otherwise find the last purchase expire date + numberOfDays 
+					Date expireDate = new Date();
+					if(!admInvObj.isEmpty()){
+						expireDate = admInvObj.get(0).getExpireDt();
+					}
+					Calendar calendar = Calendar.getInstance(); 
+					
 					
 					for(ResumePackageDTO resSearchPackageDTO : orderDetailsDTO.getResSearchPackageDTOList()){
 						
@@ -277,7 +290,15 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 						
 						AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,resSearchPackageDTO);
 						admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
+						//find the number of days of expire & add this to expire date of latest inventory of that facility 
+						numberOfDays = resSearchPackageDTO.getDuration() * resSearchPackageDTO.getQuantity();
+						
+						calendar.setTime(expireDate);
+						calendar.add(Calendar.DATE, numberOfDays);
+						expireDate = calendar.getTime(); 
+						admFacilityInventory.setExpireDt(expireDate);
 						admFacilityInventoryList.add(admFacilityInventory);
+						
 					}
 				}
 				else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(orderDetailsDTO.getPurchaseType())){

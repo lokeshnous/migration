@@ -13,21 +13,50 @@
 <link href="../resources/css/Gateway.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript">
-	jQuery(document)
-			.ready(
-					function() {
+	jQuery(document).ready(function() {
 
-						jQuery(".megamenu").megamenu();
+		jQuery(".megamenu").megamenu();
 
-						$("#continueToNext")
-								.click(
-										function() {
-											$("#creditConfirmForm")
-													.attr("action",
-															"${pageContext.request.contextPath}/pgiController/placeOrder.html");
-											$("#creditConfirmForm").submit();
-										});
-					});
+		$("#continueToNext").click(function() {
+			if($("#grandTotalId").text() == "0" || $("#grandTotalId").text() == "0.0"){
+				alert("Please select any one of the package to proceed to place order");
+				return false;
+			}
+			$("#creditConfirmForm").attr("action","${pageContext.request.contextPath}/pgiController/placeOrder.html");
+			$("#creditConfirmForm").submit();
+		});
+		
+		$("#purchaseCart input").change(function(){
+			var quantity = $(this).val();
+			if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+				alert("Please enter quantity in numerics( > 0)");
+				return;
+			}
+			
+			var parchaseType = '${paymentGatewayForm.purchaseType}';
+			var cartItemIndex = 0;
+			
+			if(parchaseType =='jobPost'){
+				cartItemIndex = parseInt($(this).parent().parent().parent().children(0).attr("id"));
+			}
+			else if(parchaseType =='resumeSearch'){
+				cartItemIndex = parseInt($(this).parent().parent().attr("id"));
+			}
+			
+			$.ajax({url: "${pageContext.request.contextPath}/pgiController/updateQuantity.html",
+					type: "POST",
+			        data: {"cartItemIndex" : cartItemIndex,"quantity" : parseInt($(this).val())},
+					success: function(data){ 
+						if(null != data){
+							location.replace("${pageContext.request.contextPath}/pgiController/backToConfirmOrder.html");
+						}	
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					}
+			});
+		});
+	});
 </script>
 </head>
 
@@ -47,7 +76,7 @@
 					<br />
 					<form:form action="../pgiController/placeOrder.html"
 						id="creditConfirmForm" method="POST" class="firstForm"
-						modelAttribute="form">
+						modelAttribute="paymentGatewayForm">
 						<div class="row">
 							<!-- <h3 class="gatewayBreadcrumbs main_section">Review Order</h3> -->
 							<p class="form_notes review_order">Please review your order
@@ -61,14 +90,12 @@
 
 							<!-- cart details start-->
 							<div id="purchaseCart">
-
+							<%-- <form:hidden path="${paymentGatewayForm.purchaseType}"/> --%>
 								
 								
 								<div class="rowEvenNewSpacing marginTop20">
 									
 									
-									
-
 									<%
 										int i = 0;
 									%>
@@ -94,7 +121,7 @@
 										<div class="row">
 											<table width="100%" border="0" cellpadding="0"
 												cellspacing="0" class="marginTop5">
-												<tr>
+												<tr id="<%=i%>">
 													<td width="32%" height="30px;" align="Left"><label
 														for="radio" class="link_color2_selected">${cartItem.jobPostPlanName}</label></td>
 													<td width="7%" align="Left"><span>$</span>${cartItem.jobPostPlanCretitAmt}</td>
@@ -119,10 +146,10 @@
 													<td width="7%" align="Left"><span
 														class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
 													<td width="19%"><input name="healthCareSubSplty2"
-														readonly="readonly" type="text"
+														type="text"
 														class="jb_input75 marginTop0 mar"
 														value="${cartItem.quantity}" /><a
-														href="<%=request.getContextPath()%>/pgiController/removeJobPost.html?cartItemIndex=<%=i++%>"
+														href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
 														class="marginLeft20">Remove</a></td>
 												</tr>
 											</table>
@@ -151,19 +178,19 @@
 										<div class="row">
 											<table width="100%" border="0" cellpadding="0"
 												cellspacing="0" class="marginTop5">
-												<tr>
+												<tr id="<%=i%>">
 													<td width="18%" height="30px;" align="Left">
 													${cartItem.packageName}</td>
 													<td width="7%" align="Left"><span>$</span>${cartItem.priceAmt}</td>
-													<td width="19%">${cartItem.quantity}</td>
+													<td width="15%"><input name="healthCareSubSplty2"
+														type="text"
+														class="jb_input75 marginTop0 mar"
+														value="${cartItem.quantity}" /></td>
 													<td width="7%" align="Left"><span
 														class="link_color2_selected">$</span>${cartItem.packageTotal}</td>
-													<%-- <td width="19%"><input name="healthCareSubSplty2"
-														readonly="readonly" type="text"
-														class="jb_input75 marginTop0 mar"
-														value="${cartItem.quantity}" /><a
-														href="<%=request.getContextPath()%>/pgiController/removeJobPost.html?cartItemIndex=<%=i++%>"
-														class="marginLeft20">Remove</a></td> --%>
+													<td width="7%"><a
+														href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
+														class="marginLeft20">Remove</a></td>
 												</tr>
 											</table>
 										</div>
@@ -180,16 +207,15 @@
 													<td width="32%" align="Left"><h3 class="TextColorA01">Grand
 															Total:</h3>
 														<br></td>
-													<td width="7%" align="Left"><h3 class="TextColorA01">
-													
+													<td width="7%" align="Left">
+													<h3 class="TextColorA01">
 													<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
 														<span>$</span>${paymentGatewayForm.purchaseJobPostForm.grandTotal}
 													</c:if> 
 													<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">
 														<span>$</span>${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}
 													</c:if>
-															
-														</h3></td>
+													</h3></td>
 													<td width="19%"><h3 class="TextColorA01">&nbsp;</h3></td>
 												</tr>
 												<tr>
@@ -205,6 +231,7 @@
 									
 									
 							</div>
+							<br><br><br><br><br><br><br><br><br>
 							<div>	
 								<p class="marginBottom15">&nbsp;</p>
 								<h3 class="gatewayBreadcrumbs main_section">Payment
@@ -246,10 +273,10 @@
 										<td align="right" valign="top"><span
 											class="paymentLineHeight">$</span> 
 											<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
-												<span class="paymentLineHeight">${paymentGatewayForm.purchaseJobPostForm.grandTotal}</span>
+												<span class="paymentLineHeight" id="grandTotalId">${paymentGatewayForm.purchaseJobPostForm.grandTotal}</span>
 											</c:if> 
 											<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">
-												<span class="paymentLineHeight">${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}</span>
+												<span class="paymentLineHeight" id="grandTotalId">${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}</span>
 											</c:if></td>
 									</tr>
 								</table>

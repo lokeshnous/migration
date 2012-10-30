@@ -337,6 +337,7 @@ public class TransformPaymentMethod {
 			resSearchPackageDTO.setPackageId(resSearchPackageForm.getPackageId());
 			resSearchPackageDTO.setPackageName(resSearchPackageForm.getPackageName());
 			resSearchPackageDTO.setPackageType(resSearchPackageForm.getPackageType());
+			resSearchPackageDTO.setDuration(resSearchPackageForm.getDuration());
 			resSearchPackageDTO.setQuantity(resSearchPackageForm.getQuantity());
 			resSearchPackageDTO.setPriceAmt(resSearchPackageForm.getPriceAmt());
 			resSearchPackageDTOList.add(resSearchPackageDTO);
