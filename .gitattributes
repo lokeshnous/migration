@@ -827,6 +827,9 @@ jobboard/src/main/webapp/resources/js/arrow.png -text
 jobboard/src/main/webapp/resources/js/colorPicker.css -text
 jobboard/src/main/webapp/resources/js/common/common.js -text
 jobboard/src/main/webapp/resources/js/expandCollapse.js -text
+jobboard/src/main/webapp/resources/js/exporting.src.js -text
+jobboard/src/main/webapp/resources/js/funnel.src.js -text
+jobboard/src/main/webapp/resources/js/highcharts.js -text
 jobboard/src/main/webapp/resources/js/html5.js -text
 jobboard/src/main/webapp/resources/js/in.js -text svneol=unset#text/plain
 jobboard/src/main/webapp/resources/js/jquery-1.7.1.js -text
