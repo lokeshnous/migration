@@ -2202,7 +2202,11 @@ h2.noTopBorder {
 	float: left;
 	padding-top: 5px;
 }
-
+.addButtonRow {
+	width: 70%;
+	height: 20px;
+	float: left;
+}
 h2.White {
 	color: #fff;
 	font-size: 18px;

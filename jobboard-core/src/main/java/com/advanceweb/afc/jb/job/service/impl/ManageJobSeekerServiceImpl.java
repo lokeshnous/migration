@@ -204,4 +204,20 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#renameFolder(int, int, java.lang.String)
+	 */
+	@Override
+	public void renameFolder(int userId, int folderId, String folderName)
+			throws JobBoardServiceException {
+		try {
+			manageJobSeekerDAO.renameFolder(userId,folderId,folderName);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while renaming  folder..." + jdex);
+		}
+		
+	}
+
 }

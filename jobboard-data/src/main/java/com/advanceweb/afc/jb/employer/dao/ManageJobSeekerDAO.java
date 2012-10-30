@@ -26,5 +26,6 @@ public interface ManageJobSeekerDAO {
 	void deleteJobSeeker(int folderResumeId)throws JobBoardDataException;
 	void addFolder(int userId,String folderName)throws JobBoardDataException;
 	void removeFolder(int userId,String folderName)throws JobBoardDataException;
+	void renameFolder(int userId,int folderId,String folderName) throws JobBoardDataException;
 	
 }

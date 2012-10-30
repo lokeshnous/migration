@@ -81,5 +81,12 @@ public interface ManageJobSeekerService {
 	 * @throws JobBoardServiceException
 	 */
 	void removeFolder(int userId,String folderName) throws JobBoardServiceException;
+	/**
+	 * Method to Rename Folder
+	 * @param userId
+	 * @param folderName
+	 * @throws JobBoardServiceException
+	 */
+	void renameFolder(int userId,int folderId,String folderName) throws JobBoardServiceException;
 
 	}

@@ -14,13 +14,18 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		$("#moveToFolderPopup").displaypopup("#moveToFolderPopup","20","20");
 		 // $("#tb_manage_job_seeker").tablesorter(); 
-		
+		 
+		 $("#myFolder").click(function(){
+			 $("#all").toggleClass('refineResultsItem plus refineResultsItem minus');
+			//attr('class', 'refineResultsItem plus');
+		 });
 		$(".folderdetail").click(
 						function() {
 							val = $(this).attr("id");
+						 //   document.getElementById(val).style.color="blue";
 							$("#folderId").val(val);
+							$("#folderName").val($(this).attr("title"));
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
 								+ val,
 				    			data:$('#manageJobSeeker').serialize(),
@@ -52,15 +57,15 @@
 								
 							});
 				});
-				$('#moveToFolder').click(function() {
+				$('#moveToFolder').live("click", function() {
 					var val = [];
-					$(':checkbox:checked').each(function(i) {
+					$(':checkbox:checked').each(function(i) {						
 						val[i] = $(this).val();
 					});
-					if (val != "") {
+					if (val != "") {						
 						$('#selectedRow').val(val);
-						$('#moveToFolderPopup').attr("href","../employer/moveToFolder.html?folderId=0&selectedVal="+val);
-						$("#moveToFolderPopup").click();
+						$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);	
+						$.nmManual($('#moveToFolderPopup').attr("href"));
 					} else {
 						alert("Please select a resume!");
 					}
@@ -73,10 +78,41 @@
 					});
 					if (val != "") {
 						$('#selectedRow').val(val);
-						$('#moveToFolderPopup').attr("href","../employer/moveToFolder.html?folderId=0&selectedVal="+val);
-						$("#moveToFolderPopup").click();
+						$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);
+						$.nmManual($('#moveToFolderPopup').attr("href"));
 					} else {
 						alert("Please select a resume!");
+					}
+
+				});
+				
+				$('#compareSelected').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					if (val != "" && val.length > 1) {
+						$('#selectedRow').val(val);
+						$("#manageJobSeeker").attr("action", "${pageContext.request.contextPath}/employer/compareResume.html?selectedVal="+val);
+						$("#manageJobSeeker").attr("method","POST");
+						$("#manageJobSeeker").submit();
+					} else {
+						alert("Please select more than one resume");
+					}
+
+				});
+				$('#compareSelectedLower').click(function() {
+					var val = [];
+					$(':checkbox:checked').each(function(i) {
+						val[i] = $(this).val();
+					});
+					if (val != "" && val.length > 1) {
+						$('#selectedRow').val(val);
+						$("#manageJobSeeker").attr("action", "${pageContext.request.contextPath}/employer/compareResume.html?selectedVal="+val);
+						$("#manageJobSeeker").attr("method","POST");
+						$("#manageJobSeeker").submit();
+					} else {
+						alert("Please select more than one resume");
 					}
 
 				});
@@ -110,11 +146,12 @@
 								 }
 							}
 								break;
-							case "download":
+							case "download":{
 								$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
 								$("#manageResumeForm").attr("method","POST");
 								$("#manageResumeForm").attr("target","_new"); 
 								$("#manageResumeForm").submit();
+							}
 								break;
 							
 							}
@@ -131,9 +168,9 @@
 											switch (action) {
 											case "Add": {
 
-												$("#subContent").append("<div class='buttonRow' >" +
-														" <input type ='text' id='newFolder' class='buttonRow' value='New Folder' onClick='resetVal();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
-														+"</div>");
+												$("#addBtn").replaceWith("<div class='buttonRow' >" +
+														" <input type ='text' id='newFolder' class='addButtonRow' value='New Folder' onClick='resetVal();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
+														+"<a href='#' class='white link_color1_emphasized' onClick='Javascript: checkevent();' id='newFolderLink' value='Add'>Add</a></div>");
 												document.getElementById('newFolder').select();
 												document.getElementById('newFolder').style.borderColor="red";
 												document.getElementById('newFolder').style.borderStyle="solid";
@@ -164,25 +201,42 @@
 						function checkevent(){
 						var folderName=	document.getElementById('newFolder').value;
 							$.ajax({url: "${pageContext.request.contextPath}/employer/addFolder.html?folderName="+folderName,
+								data:$('#manageJobSeeker').serialize(),
 								type: "POST" ,
 								success : function(data) {
-									if(data.failure!=null){
-									}else{
 										$("#folderDiv").html(data);
-									}
-								}	 ,
-								error: function(response) {
-									alert("Server Error : "+response.status);
-								}
+								}	 
 							});
-						}
+						}/* 
+						function saveNewFolder(){
+							var folderName=	document.getElementById('newFolder').value;
+								$.ajax({url: "${pageContext.request.contextPath}/employer/addFolder.html?folderName="+folderName,
+									type: "POST"
+								});
+							} */
 						function resetVal(){
 							document.getElementById('newFolder').style.borderColor="gray";
 							document.getElementById('newFolder').style.border="1px solid #e0e0e0";
 							document.getElementById('newFolder').value="";
 							
 							}
-
+						function resetValRename(val){
+							document.getElementById(val).style.borderColor="gray";
+							document.getElementById(val).style.border="1px solid #e0e0e0";
+							document.getElementById(val).select();
+							
+							}
+						function checkEventRename(val){
+							var folderName=	document.getElementById(val).value;
+							var folderId=val;
+								$.ajax({url: "${pageContext.request.contextPath}/employer/renameFolder.html?folderName="+folderName+"&folderId=" + folderId,
+									data:$('#manageJobSeeker').serialize(),
+									type: "POST" ,
+									success : function(data) {
+										$("#folderDiv").html(data);
+									}	 
+								});
+							}
 						function onChangeAppStatus(eleObj) {
 							var rowObj = $(eleObj).parent().parent();
 							var resumeId =  $(rowObj).attr("id");
@@ -212,7 +266,16 @@
 								
 							});
 						}
-						
+						function renameCall(folderId,folderName){
+							$("#addBtn").attr('hidden','true');
+							$("#"+folderId).replaceWith("<div class='addButtonRow' >" +
+									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onKeydown='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
+									+"</div>");
+							document.getElementById(folderId).select();
+							document.getElementById(folderId).style.borderColor="red";
+							document.getElementById(folderId).style.borderStyle="solid";
+							
+						}
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 
@@ -225,7 +288,6 @@
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
 		<form:hidden path="selectedRow" id="selectedRow" />
-		<form:hidden path="folderId" />
 		<form:hidden path="rating" id="ratingId"/>
 		<div class="ad_page_top">
 			${adPageTop }
@@ -247,6 +309,12 @@
 								class="link_color3_emphasized FontSize12 FontWeight">Back to
 									Dashboard</a></span></span>
 						</div>
+						<div id="errorMsg" class="validationMsg">
+						<c:if test="${errorMsg != null}">
+						${errorMsg}
+						</c:if>
+						
+						</div>
 						<div class="clearfix"></div>
 						<div class="content_columns_search_results">
 
@@ -261,14 +329,14 @@
 									<div class="searchResultsNavigationColumn1">
 
 										<!--Added Class "marginTop5"-->
-										<span class="marginTop5">Results viewable:</span> <span>
-											<select name="results" class="jb_input4">
-												<option value="20">20</option>
-												<option value="30">30</option>
-												<option value="40">40</option>
-												<option value="50">50</option>
-												<option value="All">All</option>
-										</select>
+										<span>Results viewable:</span> <span class="Padding0">
+											<form:select path="noOfPage" name="noOfPage"
+												class="jb_input4 margin0">
+												<form:option value="20">20</form:option>
+												<form:option value="30">30</form:option>
+												<form:option value="40">40</form:option>
+												<form:option value="50">50</form:option>
+											</form:select>
 										</span>
 										<!--Added Class "marginTop5"-->
 										<span class="marginTop5">per page</span>
@@ -276,17 +344,51 @@
 									<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 									</div>
 									<div class="searchResultsNavigationColumn2 floatRight">
-										<span>Page:</span> <span class="active">1</span> <span><a
-											href="">2</a></span> <span><a href="">3</a></span> <span><a
-											href="">4</a></span> <span><a href="">5</a></span> <span><a
-											href="">6</a></span> <span><a href="">7</a></span> <span><a
-											href="">8</a></span> <span><a href="">9</a></span> <span><a
-											href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
+										<!-- <span>Page:</span> -->
+										<%--For displaying Previous link except for the 1st page --%>
+										<c:if test="${currentPage != 1 && noOfPages gt 1}">
+											<td><a
+												href="#<%-- <%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&next=${begin-10} --%>">
+													<img src="../resources/images/ArrowLeft.png">
+													Previous
+											</a></td>
+										</c:if>
+
+
+
+										<c:forEach begin="${begin}" end="${noOfPages}" var="i">
+											<c:choose>
+												<c:when test="${currentPage eq i}">
+
+													<span class="active">${i}</span>
+
+												</c:when>
+												<c:otherwise>
+													<span class="active"> <c:if test="${i lt begin+10}">
+															<a
+																href="#<%-- <%=request.getContextPath()%>/employer/manageJobPost.html?page=${i} --%>">${i}</a>
+														</c:if></span>
+
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+
+										<span> <c:if
+												test="${noOfPages gt 1 && noOfPages != currentPage}">
+												<a
+													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next
+													<img src="../resources/images/ArrowRight.png">
+												</a>
+											</c:if></span>
+
+
+
+
 									</div>
 								</div>
 								<!--button-->
 								<div class="row marginTop10 paddingBottom5">
-									<span><a href="#" class="btn_sm orange">Compare
+									<span><a href="#" class="btn_sm orange" id="compareSelected">Compare
 											Selected</a><a href="#" id="moveToFolder" class="btn_sm orange">Move
 											To Folder</a></span>
 								</div>
@@ -296,38 +398,68 @@
 									<jsp:include page="manageJobSeekerContent.jsp"></jsp:include>
 								</div>
 								<div class="row marginTop15 paddingBottom5">
-									<span><a href="#" class="btn_sm orange">Compare
+									<span><a href="#" class="btn_sm orange" id="compareSelectedLower">Compare
 											Selected</a><a href="#" id="moveToFolderlower"
 										class="btn_sm orange">Move To Folder</a></span>
 								</div>
-								<a href="" id="moveToFolderPopup" />
+								<a href="" id="moveToFolderPopup" style="display:none;">Move</a>
 								<div class="clearfix"></div>
 								<div
 									class="searchResultsNavigation width98P FloatLeft marginTop20">
 									<div class="searchResultsNavigationColumn1">
 
 										<!--Added Class "marginTop5"-->
-										<span class="marginTop5">Results viewable:</span> <span>
-											<select name="results" class="jb_input4">
-												<option value="20">20</option>
-												<option value="30">30</option>
-												<option value="40">40</option>
-												<option value="50">50</option>
-												<option value="All">All</option>
-										</select>
-										</span>
+										<span>Results viewable:</span> <span class="Padding0"><form:select
+												path="noOfPageLower" name="noOfPageLower"
+												class="jb_input4 margin0">
+												<form:option value="20">20</form:option>
+												<form:option value="30">30</form:option>
+												<form:option value="40">40</form:option>
+												<form:option value="50">50</form:option>
+											</form:select> </span>
 										<!--Added Class "marginTop5"-->
 										<span class="marginTop5">per page</span>
 									</div>
 									<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 									</div>
 									<div class="searchResultsNavigationColumn2 floatRight">
-										<span>Page:</span> <span class="active">1</span> <span><a
-											href="">2</a></span> <span><a href="">3</a></span> <span><a
-											href="">4</a></span> <span><a href="">5</a></span> <span><a
-											href="">6</a></span> <span><a href="">7</a></span> <span><a
-											href="">8</a></span> <span><a href="">9</a></span> <span><a
-											href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
+										<!-- <span>Page: </span> -->
+
+										<%--For displaying Previous link except for the 1st page --%>
+										<c:if test="${currentPage != 1 && noOfPages gt 1}">
+											<td><a
+												href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}">
+													<img src="../resources/images/ArrowLeft.png">
+													Previous
+											</a></td>
+										</c:if>
+
+
+
+										<c:forEach begin="${begin}" end="${noOfPages}" var="i">
+											<c:choose>
+												<c:when test="${currentPage eq i}">
+
+													<span class="active">${i}</span>
+
+												</c:when>
+												<c:otherwise>
+													<span class="active"> <c:if test="${i lt begin+10}">
+															<a
+																href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
+														</c:if></span>
+
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+
+										<span> <c:if
+												test="${noOfPages gt 1 && noOfPages != currentPage }">
+												<a
+													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next
+													<img src="../resources/images/ArrowRight.png">
+												</a>
+											</c:if></span>
 									</div>
 								</div>
 							</div>

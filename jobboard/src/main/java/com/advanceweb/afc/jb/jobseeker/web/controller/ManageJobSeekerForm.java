@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.AdmFolderDTO;
 import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
+import com.advanceweb.afc.jb.common.ResumeDTO;
 
 
 /**
@@ -15,7 +16,6 @@ import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
 public class ManageJobSeekerForm {
 
 	
-    private String statusValue;
     private String noOfPage;
     private String noOfPageLower;
     private int beginVal=1;  
@@ -29,20 +29,8 @@ public class ManageJobSeekerForm {
 	private int folderId;
 	private String folderName;
 	private List<AdmFolderDTO> admFolderDTOList; 
-	
-	/**
-	 * @return the statusValue
-	 */
-	public String getStatusValue() {
-		return statusValue;
-	}
-
-	/**
-	 * @param statusValue the statusValue to set
-	 */
-	public void setStatusValue(String statusValue) {
-		this.statusValue = statusValue;
-	}
+	private List<ResumeDTO> resumeDTOList;
+	private int totalRecordForComp;
 
 	/**
 	 * @return the noOfPage
@@ -219,6 +207,34 @@ public class ManageJobSeekerForm {
 	 */
 	public void setAdmFolderDTOList(List<AdmFolderDTO> admFolderDTOList) {
 		this.admFolderDTOList = admFolderDTOList;
+	}
+
+	/**
+	 * @return the resumeDTOList
+	 */
+	public List<ResumeDTO> getResumeDTOList() {
+		return resumeDTOList;
+	}
+
+	/**
+	 * @return the totalRecordForComp
+	 */
+	public int getTotalRecordForComp() {
+		return totalRecordForComp;
+	}
+
+	/**
+	 * @param totalRecordForComp the totalRecordForComp to set
+	 */
+	public void setTotalRecordForComp(int totalRecordForComp) {
+		this.totalRecordForComp = totalRecordForComp;
+	}
+
+	/**
+	 * @param resumeDTOList the resumeDTOList to set
+	 */
+	public void setResumeDTOList(List<ResumeDTO> resumeDTOList) {
+		this.resumeDTOList = resumeDTOList;
 	}
 
 	

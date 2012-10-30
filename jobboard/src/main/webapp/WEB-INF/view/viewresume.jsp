@@ -46,6 +46,10 @@
           	<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html" class="link_color3_emphasized FontSize12 FontWeight">
           	 Back to Dashboard</a>
            </c:if>
+           <c:if test="<%=session.getAttribute(\"module\") == \"manageJobSeeker\" %>">
+          	<a href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1" class="link_color3_emphasized FontSize12 FontWeight">
+          	 Back to Manage Job-Seeker</a>
+          </c:if>
          </span></div>
 
         

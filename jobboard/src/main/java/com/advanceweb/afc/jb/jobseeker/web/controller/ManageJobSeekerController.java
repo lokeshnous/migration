@@ -20,14 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.advanceweb.afc.common.controller.AbstractController;
-import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AdmFolderDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.job.service.ManageJobSeekerService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.resume.web.controller.CertificationsForm;
@@ -40,9 +37,6 @@ import com.advanceweb.afc.jb.resume.web.controller.TransformCreateResume;
 import com.advanceweb.afc.jb.resume.web.controller.WorkExpForm;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.web.utils.PDFGenerator;
-import com.advanceweb.common.ads.AdPosition;
-import com.advanceweb.common.ads.AdSize;
-import com.advanceweb.common.client.ClientContext;
 
 /**
  * @Author :Devi Mishra
@@ -53,7 +47,7 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping("/employer")
-public class ManageJobSeekerController extends AbstractController{
+public class ManageJobSeekerController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageJobSeekerController.class);
@@ -63,14 +57,12 @@ public class ManageJobSeekerController extends AbstractController{
 
 	@Autowired
 	private ResumeService resumeService;
-	
-	@Autowired
-	private AdService adService;
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
 	@Autowired
 	private PDFGenerator pdfGenerator;
+
 	/**
 	 * This method is called to display jobs list belonging to a logged in
 	 * employer
@@ -78,32 +70,34 @@ public class ManageJobSeekerController extends AbstractController{
 	 * @param request
 	 * @param session
 	 * @param manageJobSeekerForm
-	 *  @param folderId
+	 * @param folderId
 	 * @return
 	 */
 	@RequestMapping(value = "/manageJobSeeker")
 	public ModelAndView getJobSeekerDetails(HttpServletRequest request,
-			HttpSession session, ManageJobSeekerForm manageJobSeekerForm, @RequestParam("folderId") int folderId) {
+			HttpSession session, ManageJobSeekerForm manageJobSeekerForm,
+			@RequestParam("folderId") int folderId) {
 		ModelAndView model = new ModelAndView();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
-		LOGGER.info("Folder Id:"+folderId);
+		LOGGER.info("Folder Id:" + folderId);
+		// String next = request.getParameter("next");
 		manageJobSeekerForm.setFolderId(folderId);
 		try {
 			if (folderId > 0) {
-				manageJobSeekerDTOList =manageJobSeekerService.retrieveAllResumeByFolder(
-						(Integer) session
+				manageJobSeekerDTOList = manageJobSeekerService
+						.retrieveAllResumeByFolder((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID),
-						folderId);
+								folderId);
 				model.setViewName("manageJobSeekerContent");
-			} else if (folderId==0) {
+			} else if (folderId == 0) {
 				manageJobSeekerDTOList = manageJobSeekerService
 						.retrieveAllResume((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 				model.setViewName("manageJobSeekerContent");
-				
-			}else{
+
+			} else {
 				manageJobSeekerDTOList = manageJobSeekerService
 						.retrieveAllResume((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
@@ -127,40 +121,10 @@ public class ManageJobSeekerController extends AbstractController{
 		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
 		model.addObject("appStatusList", appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
-		// get the Ads
-		getAdsForManageJobseeker (request, session, model);
+
 		return model;
 	}
-	
-	/**
-	 * Get Ads for employer manage jobseeker page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForManageJobseeker (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_MANAGE_JOBSEEKER);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageTop", bannerString);
 
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
-	
 	/**
 	 * Method is called to update the job details
 	 * 
@@ -171,7 +135,7 @@ public class ManageJobSeekerController extends AbstractController{
 	 * @param appStatus
 	 * @return
 	 */
-	@RequestMapping(value ="/updateJobSeeker", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateJobSeeker", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject updateAppStatus(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -191,6 +155,7 @@ public class ManageJobSeekerController extends AbstractController{
 		warningMessage.put("success", "updated succesfully");
 		return warningMessage;
 	}
+
 	/**
 	 * Method is called to update the rating of the resume
 	 * 
@@ -201,7 +166,7 @@ public class ManageJobSeekerController extends AbstractController{
 	 * @param appStatus
 	 * @return
 	 */
-	@RequestMapping(value ="/updateRating", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateRating", method = RequestMethod.POST)
 	public @ResponseBody
 	ModelAndView updateRating(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -242,6 +207,7 @@ public class ManageJobSeekerController extends AbstractController{
 		model.setViewName("manageJobSeekerContent");
 		return model;
 	}
+
 	/**
 	 * Method is called Implement the Move to folder functionality
 	 * 
@@ -281,7 +247,8 @@ public class ManageJobSeekerController extends AbstractController{
 				manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
 			}
 			if (null != selectedRows && folderId > 0) {
-				StringTokenizer tokenize = new StringTokenizer(selectedRows,",");
+				StringTokenizer tokenize = new StringTokenizer(selectedRows,
+						",");
 				int folderResumeId = 0;
 				while (tokenize.hasMoreTokens()) {
 					folderResumeId = Integer.valueOf(tokenize.nextToken());
@@ -308,8 +275,9 @@ public class ManageJobSeekerController extends AbstractController{
 
 		return model;
 	}
+
 	/**
-	 * Called to view resume 
+	 * Called to view resume
 	 * 
 	 * @param createResume
 	 * @param result
@@ -321,9 +289,9 @@ public class ManageJobSeekerController extends AbstractController{
 			BindingResult result, @RequestParam("resumeId") int resumeId,
 			HttpServletRequest request, HttpServletResponse response) {
 		/**
-		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 * Introduced a new variable "createResumed" to resolve PMD issue.
 		 */
-		CreateResume createResume =createResumed; 
+		CreateResume createResume = createResumed;
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
@@ -361,7 +329,7 @@ public class ManageJobSeekerController extends AbstractController{
 						+ resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
-				LOGGER.info("Error in view resume builder",e);
+				LOGGER.info("Error in view resume builder", e);
 			}
 		} else {
 			model.addObject("createResume", createResume);
@@ -370,7 +338,7 @@ public class ManageJobSeekerController extends AbstractController{
 		return model;
 
 	}
-	
+
 	/**
 	 * Method is called to delete the job details
 	 * 
@@ -381,7 +349,7 @@ public class ManageJobSeekerController extends AbstractController{
 	 * @param appStatus
 	 * @return
 	 */
-	@RequestMapping(value ="/deleteJobSeekerDetails", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteJobSeekerDetails", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject deleteJobSeekerDetails(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -400,6 +368,7 @@ public class ManageJobSeekerController extends AbstractController{
 		warningMessage.put("success", "updated succesfully");
 		return warningMessage;
 	}
+
 	/**
 	 * Method is called to add a new folder
 	 * 
@@ -410,7 +379,7 @@ public class ManageJobSeekerController extends AbstractController{
 	 * @param appStatus
 	 * @return
 	 */
-	@RequestMapping(value ="/addFolder", method = RequestMethod.POST)
+	@RequestMapping(value = "/addFolder", method = RequestMethod.POST)
 	public @ResponseBody
 	ModelAndView addFolder(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -423,33 +392,77 @@ public class ManageJobSeekerController extends AbstractController{
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
 		ModelAndView model = new ModelAndView();
-		if (null !=folderName) {
-			if(folderName.length()<=0){
-				folderName="New Folder";
+		if (null != folderName) {
+			if (folderName.length() <= 0) {
+				folderName = "New Folder";
 			}
 			try {
 				manageJobSeekerService.addFolder((Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID),folderName);
+						.getAttribute(MMJBCommonConstants.USER_ID), folderName);
 				admFolderDTOList = manageJobSeekerService
 						.folderDetailList((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 				appStatusList = manageJobSeekerService.applicationStatusList();
-				manageJobSeekerDTOList =manageJobSeekerService.retrieveAllResume(
-						(Integer) session
+				manageJobSeekerDTOList = manageJobSeekerService
+						.retrieveAllResume((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 			} catch (JobBoardServiceException jbex) {
 				LOGGER.error("Error occured while Updating Data", jbex);
 			}
 		}
-			if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
-				manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
-			}
+		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
+			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
+		}
 		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
 		model.addObject("appStatusList", appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
 		model.setViewName("manageJobSeekerFolder");
 		return model;
 	}
+
+	/**
+	 * Method is called to rename a folder
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param manageJobSeekerForm
+	 * @param folderName
+	 * @param folderId
+	 * @return
+	 */
+	@RequestMapping(value = "/renameFolder", method = RequestMethod.POST)
+	public @ResponseBody
+	ModelAndView renameFolder(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			ManageJobSeekerForm manageJobSeekerForm,
+			@RequestParam("folderName") String folderName,
+			@RequestParam("folderId") int folderId) {
+
+		LOGGER.info("Rename Folder : Process to Rename Folder !");
+		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
+		ModelAndView model = new ModelAndView();
+		if (null != folderName) {
+
+			try {
+				manageJobSeekerService.renameFolder((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID), folderId,
+						folderName);
+				admFolderDTOList = manageJobSeekerService
+						.folderDetailList((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+			} catch (JobBoardServiceException jbex) {
+				LOGGER.error("Error occured while Updating Data", jbex);
+			}
+		}
+		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
+			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
+		}
+		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.setViewName("manageJobSeekerFolder");
+		return model;
+	}
+
 	/**
 	 * Method is called to add a new folder
 	 * 
@@ -460,7 +473,7 @@ public class ManageJobSeekerController extends AbstractController{
 	 * @param appStatus
 	 * @return
 	 */
-	@RequestMapping(value ="/removeFolder", method = RequestMethod.POST)
+	@RequestMapping(value = "/removeFolder", method = RequestMethod.POST)
 	public @ResponseBody
 	ModelAndView removeFolder(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
@@ -471,28 +484,29 @@ public class ManageJobSeekerController extends AbstractController{
 
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
 		ModelAndView model = new ModelAndView();
-		if (null !=folderName) {
-			if(folderName.length()<=0){
-				folderName="New Folder";
+		if (null != folderName) {
+			if (folderName.length() <= 0) {
+				folderName = "New Folder";
 			}
 			try {
 				manageJobSeekerService.removeFolder((Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID),folderName);
+						.getAttribute(MMJBCommonConstants.USER_ID), folderName);
 				admFolderDTOList = manageJobSeekerService
 						.folderDetailList((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
-				
+
 			} catch (JobBoardServiceException jbex) {
 				LOGGER.error("Error occured while Updating Data", jbex);
 			}
 		}
-			if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
-				manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
-			}
+		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
+			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
+		}
 		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
 		model.setViewName("manageJobSeekerFolder");
 		return model;
 	}
+
 	/**
 	 * This method is called to download an uploaded resume.
 	 * 
@@ -517,13 +531,175 @@ public class ManageJobSeekerController extends AbstractController{
 				// if the Resume had been generated through Resume Builder or
 				// CopyPaste
 				// The resulting resume download will produce a PDF format
-				pdfGenerator.generateAndExportResumeAsPdf(request, response, resumeDTO);
+				pdfGenerator.generateAndExportResumeAsPdf(request, response,
+						resumeDTO);
 			}
 		} catch (Exception e) {
 			LOGGER.info("Error in download resume", e);
 		}
 		return model;
 
+	}
+
+	/**
+	 * Method is called implement the compare job seeker functionality
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param manageJobSeekerForm
+	 * @return
+	 */
+	@RequestMapping(value = "/compareResume")
+	public ModelAndView compareResume(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			ManageJobSeekerForm manageJobSeekerForm,
+			@RequestParam("selectedVal") String selectedVal) {
+
+		LOGGER.info("Move To Folder : Process to Implement compare job seeker Functionality !");
+		ModelAndView model = new ModelAndView();
+		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
+		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
+		String selectedRows = null;
+		if (null != selectedVal && !selectedVal.isEmpty()) {
+			selectedRows = selectedVal;
+			manageJobSeekerForm.setSelectedRow(selectedVal);
+		}
+
+		try {
+			if (null != selectedRows) {
+
+				StringTokenizer tokenize = new StringTokenizer(selectedRows,
+						",");
+				int folderResumeId = 0;
+
+				manageJobSeekerDTOList = manageJobSeekerService
+						.retrieveAllResume((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+				if (null != manageJobSeekerDTOList
+						&& !manageJobSeekerDTOList.isEmpty()) {
+					manageJobSeekerForm
+							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
+
+					while (tokenize.hasMoreTokens()) {
+						ResumeDTO resumeDTO = new ResumeDTO();
+						folderResumeId = Integer.valueOf(tokenize.nextToken());
+						for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+
+							if (folderResumeId == manageJobSeekerDTO
+									.getFolderResumeId()) {
+								resumeDTO = resumeService
+										.editResume(manageJobSeekerDTO
+												.getOrgResumeId());
+								if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
+										.equals(resumeDTO.getResumeType())) {
+
+									resumeDTOList.add(resumeDTO);
+								} else {
+									List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
+									appStatusList = manageJobSeekerService
+											.applicationStatusList();
+									model.addObject("errorMsg",
+											"One of the selected job seeker is not created by ADVANCE Resume Builder");
+
+									model.addObject("appStatusList",
+											appStatusList);
+									model.setViewName("manageJobSeekers");
+									model.addObject("manageJobSeekerForm",
+											manageJobSeekerForm);
+
+									return model;
+								}
+							}
+						}
+
+					}
+				}
+				manageJobSeekerForm.setTotalRecordForComp(resumeDTOList.size());
+				manageJobSeekerForm.setResumeDTOList(resumeDTOList);
+				model.setViewName("compareJobSeeker");
+			}
+		} catch (JobBoardServiceException jbex) {
+			LOGGER.error("Error occured while Retriving resume detail", jbex);
+		}
+
+		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+
+		return model;
+	}
+
+	/**
+	 * Method to remove the selected job seeker details from the comparision
+	 * list
+	 * 
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param manageJobSeekerForm
+	 * @return
+	 */
+	@RequestMapping(value = "/removeCompareResume")
+	public ModelAndView removeCompareResume(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			ManageJobSeekerForm manageJobSeekerForm,
+			@RequestParam("resumeId") int resumeId) {
+
+		LOGGER.info("Move To Folder : Process to Implement compare job seeker Functionality !");
+		ModelAndView model = new ModelAndView();
+		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
+		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
+		String selectedRows = null;
+		if (null != manageJobSeekerForm.getSelectedRow()
+				&& !manageJobSeekerForm.getSelectedRow().isEmpty()) {
+			selectedRows = manageJobSeekerForm.getSelectedRow();
+			manageJobSeekerForm.setSelectedRow(manageJobSeekerForm
+					.getSelectedRow());
+		}
+
+		try {
+			if (null != selectedRows) {
+
+				StringTokenizer tokenize = new StringTokenizer(selectedRows,
+						",");
+				int folderResumeId = 0;
+
+				manageJobSeekerDTOList = manageJobSeekerService
+						.retrieveAllResume((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+				if (null != manageJobSeekerDTOList
+						&& !manageJobSeekerDTOList.isEmpty()) {
+					manageJobSeekerForm
+							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
+
+					while (tokenize.hasMoreTokens()) {
+						ResumeDTO resumeDTO = new ResumeDTO();
+						folderResumeId = Integer.valueOf(tokenize.nextToken());
+						for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+
+							if (folderResumeId == manageJobSeekerDTO
+									.getFolderResumeId()) {
+								resumeDTO = resumeService
+										.editResume(manageJobSeekerDTO
+												.getOrgResumeId());
+								if (resumeId != resumeDTO.getUploadResumeId()) {
+									resumeDTOList.add(resumeDTO);
+								}
+							}
+						}
+
+					}
+				}
+				manageJobSeekerForm.setTotalRecordForComp(resumeDTOList.size());
+				manageJobSeekerForm.setResumeDTOList(resumeDTOList);
+				model.setViewName("compareJobSeeker");
+			}
+		} catch (JobBoardServiceException jbex) {
+			LOGGER.error("Error occured while Retriving resume detail", jbex);
+		}
+
+		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+
+		return model;
 	}
 
 }

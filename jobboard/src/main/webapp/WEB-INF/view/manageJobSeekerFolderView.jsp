@@ -27,13 +27,7 @@
 														data : $(
 																'#manageJobSeeker')
 																.serialize(),
-														type : "POST",
-														success : function(data) {
-															if (data.failure != null) {
-															} else {
-																//alert(data);
-															}
-														}
+														type : "POST"
 
 													});
 										});
@@ -75,7 +69,7 @@
 							<div class="refineResultsSubContent"></div>
 
 							<span class="refineResultsItem plus">My Folders</span>
-							<div class="refineResultsSubContent">
+							<div class="refineResultsSubContent" id="subContent">
 								<c:forEach items="${manageJobSeekerForm.admFolderDTOList}"
 									var="folder" varStatus="folderStatus">
 									<div class="buttonRow">

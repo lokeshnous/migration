@@ -190,6 +190,7 @@ public interface MMJBCommonConstants {
 	String JOBSEEKER = "jobseeker";
 	String JOB_SEEKER = "jobSeeker";
 	String EMPLOYER = "employer";
+	String MANAGEJOBSEEKER = "manageJobSeeker";
 	String AGENCY = "agency";
 	String FACILITY_ADMIN = "facility_admin";
 	String FACILITY_USER = "facility_user";

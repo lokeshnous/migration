@@ -10,7 +10,9 @@
 </head>
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
-
+		<form:hidden path="folderId" />
+		<form:hidden path="folderName" />
+		
 		<div class="row marginTop10 FontSize11">
 			<table width="100%" border="0" cellpadding="0" cellspacing="0"
 				class="grid" id="tb_manage_job_seeker">
@@ -29,12 +31,12 @@
 					<form:hidden
 						path="manageJobSeekerDTOList[${status.index}].folderResumeId" />
 						<form:hidden
-						path="manageJobSeekerDTOList[${status.index}].orgResumeId" />
+						path="manageJobSeekerDTOList[${status.index}].orgResumeId" id="orgResumeId"/>
 						<tr class="Height35" id=${resume.folderResumeId}>
 						<td align="center" valign="middle" ><input type="checkbox"
 							name="checkbox" id=${resume.folderResumeId}
 							value="${resume.folderResumeId}"></td>
-						<td align="left" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.orgResumeId }">${resume.resumeName}</a></td>
+						<td align="left" valign="middle"><a href="#">${resume.resumeName}</a></td>
 										
 						 <td align="center" valign="middle">
 						 <c:forEach var="i" begin="1" end="${resume.rating}">

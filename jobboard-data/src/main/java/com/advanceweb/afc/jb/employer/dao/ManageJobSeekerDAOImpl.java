@@ -101,7 +101,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		admFolderResume.setApplicationStatusId(appStatusId);
 		admFolderResume.setUpdateDt(new Date());
 		hibernateTemplate.saveOrUpdate(admFolderResume);
-		
+
 		return true;
 	}
 
@@ -156,12 +156,14 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 	}
 
 	@Override
-	public void addFolder(int userId,String folderName) throws JobBoardDataException {
+	public void addFolder(int userId, String folderName)
+			throws JobBoardDataException {
 		AdmFolder admFolder = new AdmFolder();
 		List<AdmFolder> admFolderList = new ArrayList<AdmFolder>();
-		// check if the folder with the given name is present for the user or not 
-		 admFolderList=getFolderDetails(userId, folderName);
-		 int count=1;
+		// check if the folder with the given name is present for the user or
+		// not
+		admFolderList = getFolderDetails(userId, folderName);
+		int count = 1;
 		if (null != admFolderList) {
 			while (admFolderList.size() != 0) {
 				folderName = folderName + count;
@@ -171,10 +173,12 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		admFolder.setFolderName(folderName);
 		admFolder.setUserId(userId);
 		hibernateTemplate.saveOrUpdate(admFolder);
-		
+
 	}
+
 	/**
 	 * Get the folder detail by userid and folder name
+	 * 
 	 * @param userId
 	 * @param folderName
 	 */
@@ -185,8 +189,10 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 						+ " and folderName= '" + folderName + "'");
 		return admFolderList;
 	}
+
 	/**
 	 * Get the folder resume detail by folder id
+	 * 
 	 * @param folderId
 	 */
 	public List<AdmFolderResume> getFolderredumeDetails(int folderId) {
@@ -195,6 +201,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 				.find("from AdmFolderResume a where a.folderId=" + folderId);
 		return admFolderResList;
 	}
+
 	@Override
 	public void removeFolder(int userId, String folderName)
 			throws JobBoardDataException {
@@ -224,8 +231,21 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		admFolderResume.setRating(rating);
 		admFolderResume.setUpdateDt(new Date());
 		hibernateTemplate.saveOrUpdate(admFolderResume);
-		
+
 		return true;
 	}
-	
+
+	@Override
+	public void renameFolder(int userId, int folderId, String folderName)
+			throws JobBoardDataException {
+		AdmFolder admFolder = new AdmFolder();
+		admFolder = hibernateTemplate.get(AdmFolder.class, folderId);
+		if (null != admFolder) {
+			admFolder.setFolderName(folderName);
+			hibernateTemplate.saveOrUpdate(admFolder);
+
+		}
+
+	}
+
 }

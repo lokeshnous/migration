@@ -636,6 +636,7 @@ jobboard/src/main/webapp/WEB-INF/view/browseByLocation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/browseByLocationRegions.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/commonSocialLogin.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/compareJobSeeker.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createBrandingTemplate.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResumeBuilder.jsp -text
