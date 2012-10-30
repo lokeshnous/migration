@@ -125,7 +125,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param pageValue
 	 * @return
 	 */
-	private boolean isFacilitySystem(Authentication authentication,
+	public boolean isFacilitySystem(Authentication authentication,
 			String pageValue) {
 		if (authentication instanceof RememberMeAuthenticationToken) {
 			return authentication.getAuthorities().contains(
@@ -147,7 +147,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param pageValue
 	 * @return
 	 */
-	private boolean isFacility(Authentication authentication, String pageValue) {
+	public boolean isFacility(Authentication authentication, String pageValue) {
 		if (authentication instanceof RememberMeAuthenticationToken) {
 			return authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
@@ -173,7 +173,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param pageValue
 	 * @return
 	 */
-	private boolean isJobSeeker(Authentication authentication, String pageValue) {
+	public boolean isJobSeeker(Authentication authentication, String pageValue) {
 		if (authentication instanceof RememberMeAuthenticationToken) {
 			return authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
