@@ -15,17 +15,52 @@
 		    	 $("#commonPage").hide();
 		    	 $("#loginPage").show();
 		    	 $("#errorDiv").hide();
+		    	 if ($("#pageValue").val() == 'employer') {
+		    		 $("#jsLogin").hide();
+		    		 $("#employerLogin").show();
+		    		 $("#agencyLogin").hide();
+		    	 }
+		    	 if ($("#pageValue").val() == 'jobSeeker') {
+		    		 $("#jsLogin").show();
+		    		 $("#employerLogin").hide();
+		    		 $("#agencyLogin").hide();
+		    	 }
+		    	 if ($("#pageValue").val() == 'agency') {
+		    		 $("#jsLogin").hide();
+		    		 $("#employerLogin").hide();
+		    		 $("#agencyLogin").show();
+		    	 }
 		    });
 		    $("#back").click(function() {
 		    	$("#loginPage").hide();
 				$("#commonPage").show();
+				$("#jsLogin").hide();
+	    		 $("#employerLogin").hide();
+	    		 $("#agencyLogin").hide();
 		    });
 		   
 				$("#loginPage").hide();
-	
+				$("#jsLogin").hide();
+	    		 $("#employerLogin").hide();
+	    		 $("#agencyLogin").hide();
 								if ($("#error").val() == 'true') {
 									$("#loginPage").show();
 									$("#commonPage").hide();
+									if ($("#pageValue").val() == 'employer') {
+							    		 $("#jsLogin").hide();
+							    		 $("#employerLogin").show();
+							    		 $("#agencyLogin").hide();
+							    	 }
+							    	 if ($("#pageValue").val() == 'jobSeeker') {
+							    		 $("#jsLogin").show();
+							    		 $("#employerLogin").hide();
+							    		 $("#agencyLogin").hide();
+							    	 }
+							    	 if ($("#pageValue").val() == 'agency') {
+							    		 $("#jsLogin").hide();
+							    		 $("#employerLogin").hide();
+							    		 $("#agencyLogin").show();
+							    	 }
 								}
 
 								if ($("#pageValue").val() == 'employer') {
@@ -85,7 +120,9 @@
 
 		<form:form commandName="socialLoginForm" action="verifyUserAccount.html">
                 <div class="alignCenter">
-               
+              <h2 class="noTopBottomBorder" id="jsLogin" align="center">Job Seeker Login</h2>
+			<h2 class="noTopBottomBorder" id="employerLogin" align="center">Employer Login</h2>
+			<h2 class="noTopBottomBorder" id="agencyLogin" align="center">Ad Agency Login</h2>
 			<div  id="commonPage" class="job_seeker_login">
             <h2 class="noTopBottomBorder">Already have a Job Board ID? </h2> 
 	                      <form:hidden path="profileId"/>
@@ -98,6 +135,7 @@
             <h2 class="noTopBottomBorder"><a id="signUpLink" href="#">Click here to sign up.... </a> </h2> 
             </div>
 		    <div id="loginPage" class="job_seeker_login width400 ">
+		    
 		    <div id="errorDiv">
 								<FONT color="red" > <c:if
 										test="${not empty errorMessage}">
