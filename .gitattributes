@@ -484,6 +484,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/BrandingTem
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployeeAccountForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerAccountProfileForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerDashBoardForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerPostJobsController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileAttribForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/employer/web/controller/EmployerProfileManagementController.java -text
