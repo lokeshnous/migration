@@ -138,7 +138,7 @@
                 <%-- </form> --%>
                 </div>
               <div class="ad_col_right">
-				${adPageTopRight }       
+				${adPageRightTop }       
               </div>
               </div>
             

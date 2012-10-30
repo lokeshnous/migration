@@ -425,16 +425,16 @@ public class SearchResumeController extends AbstractController{
 			modelView.addObject("adPageTop", bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.TOP_RIGHT;
+			position = AdPosition.RIGHT_TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			modelView.addObject("adPageTopRight", bannerString);
+			modelView.addObject("adPageRightTop", bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.BOTTOM_RIGHT;
+			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			modelView.addObject("adPageBottomRight", bannerString);
+			modelView.addObject("adPageRightMiddle", bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;

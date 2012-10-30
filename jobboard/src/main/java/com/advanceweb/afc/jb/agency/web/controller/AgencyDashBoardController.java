@@ -983,16 +983,16 @@ public class AgencyDashBoardController extends AbstractController{
 			model.addObject("adPageTop", bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.TOP_RIGHT;
+			position = AdPosition.RIGHT_TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageTopRight", bannerString);
+			model.addObject("adPageRightTop", bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.BOTTOM_RIGHT;
+			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageBottomRight", bannerString);
+			model.addObject("adPageRightMiddle", bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;

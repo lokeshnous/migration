@@ -35,8 +35,8 @@
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
-					${adPageTopRight }
-					${adPageBtmRight }
+					${adPageRightTop }
+					${adPageRightMiddle }
 					<div class="follow_us">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
