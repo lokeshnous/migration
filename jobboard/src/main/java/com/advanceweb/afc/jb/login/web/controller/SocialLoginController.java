@@ -337,18 +337,21 @@ public class SocialLoginController {
 		model.setViewName("commonSocialLogin");
 		UserDTO user = loginService.getUser(socialLoginForm.getEmailId());
 		if (user == null) {
-			model.addObject("errorMessage", loginErrMsg);
-			socialLoginForm.setError(true);
-			return model;
+			return addErrorMessage(model,socialLoginForm);
 		} else if (!(socialLoginForm.getPassword().equals(user.getPassword()))) {
-			model.addObject("errorMessage", loginErrMsg);
-			socialLoginForm.setError(true);
-			return model;
+			return addErrorMessage(model,socialLoginForm);
 		}
+		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
+		
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				user.getEmailId(), user.getPassword(), null);
 		Authentication authenticatedUser = customAuthenticationManager
 				.authenticate(token);
+		
+		if(checkUserRoute(pageValue,authenticatedUser)){
+			return addErrorMessage(model,socialLoginForm);
+		}
+		
 		if (authenticatedUser != null) {
 			SecurityContextHolder.getContext().setAuthentication(
 					authenticatedUser);
@@ -374,5 +377,33 @@ public class SocialLoginController {
 		}
 		return null;
 	}
+	
+/**
+* Internal method used to add the validation message
+*/	
+private ModelAndView addErrorMessage(ModelAndView model,SocialLoginForm socialLoginForm){
+	model.addObject("errorMessage", loginErrMsg);
+	socialLoginForm.setError(true);
+	return model;
+}
 
+/**
+ * Internal method used to check the route from where the user started the login process
+ * @param String pageValue, from where the user is started the login process
+ * @param Authentication authenticatedUser, contains all the authentication details 
+ * @return boolean value, return true if user role is not matching with the page value from where user started the login process,otherwise false.
+ */
+private boolean checkUserRoute(String pageValue,Authentication authenticatedUser){
+	boolean result=false;
+	if(pageValue.equals(MMJBCommonConstants.JOB_SEEKER)&&!loginSuccessManager.isJobSeeker(authenticatedUser, pageValue)){
+		result=true;
+	}
+	else if(pageValue.equals(MMJBCommonConstants.EMPLOYER)&&!loginSuccessManager.isFacility(authenticatedUser, pageValue)){
+		result=true;
+	}
+	else if(pageValue.equals(MMJBCommonConstants.AGENCY)&& !loginSuccessManager.isFacilitySystem(authenticatedUser, pageValue)){
+		result=true;
+	}
+	return result;
+}
 }
