@@ -1,7 +1,11 @@
 package com.advanceweb.afc.jb.login.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -12,6 +16,7 @@ import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
 /**
@@ -109,4 +114,61 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		}
 		return userDetailsDTO;
 	}
+
+	/**
+	 * Get the Date range specific data
+	 * 
+	 * @param startFrom
+	 * @param endFrom
+	 * @param selEmployerId
+	 * 
+	 * @return
+	 */
+
+	public List<JpJobStat> employerMetrics(Date startFrom, Date endFrom,
+			int selEmployerId) {
+		// TODO Auto-generated method stub
+
+		Query getMetricsDateData = hibernateTemplate.getSessionFactory()
+				.getCurrentSession()
+				.createSQLQuery(" { call GetMetricsDateData(?,?,?) }");
+
+		getMetricsDateData.setDate(0, startFrom);
+		getMetricsDateData.setDate(1, endFrom);
+
+		getMetricsDateData.setInteger(2, selEmployerId);
+
+		List<?> metricsDeatil = getMetricsDateData.list();
+		Iterator<?> iterator = metricsDeatil.iterator();
+		List<JpJobStat> listmetricsTotal = new ArrayList<JpJobStat>();
+
+		while (iterator.hasNext()) {
+			JpJobStat dto = new JpJobStat();
+			Object[] row = (Object[]) iterator.next();
+			dto.setViews((Integer) row[0]);
+			dto.setClicks((Integer) row[1]);
+			dto.setApplies((Integer) row[2]);
+			listmetricsTotal.add(dto);
+		}
+
+		return listmetricsTotal;
+	}
+
+	/**
+	 * Get the data to be active job posting
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	@Override
+	public int getactivejobposting(int facilityId) {
+
+		int count = 0;
+		count = hibernateTemplate
+				.find("from JpJob jj where jj.admFacility.facilityId=? and active = 1",
+						facilityId).size();
+
+		return count;
+	}
+
 }
