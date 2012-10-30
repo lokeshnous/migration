@@ -1,10 +1,12 @@
 package com.advanceweb.afc.jb.login.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -49,5 +51,37 @@ public interface LoginService {
 			throws JobBoardServiceException;
 void updateSocialProfileId(int userId,String profileId,int profileAttrId)throws JobBoardServiceException;
 UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardServiceException;
+
+/**
+ * This method is used to get the total count of employer
+ * 
+ * @return
+ * @throws JobBoardServiceException
+ */
+long getEmployerCount() throws JobBoardServiceException;
+
+/**
+ * This method is to get all list of Dates
+ * 
+ * @param startFrom,endFrom,facilityId
+ * @return
+ * @throws JobBoardServiceException
+ */
+List<JpJobStat> employerMetrics(Date startFrom, Date endFrom,int selEmployerId )throws JobBoardServiceException;
+
+
+
+
+/**
+ * This method is to get active job Posting
+ * 
+ * @param facilityId
+ * @return
+ * @throws JobBoardServiceException
+ */
+ int getactivejobposting(int facilityId)throws JobBoardServiceException;
+
+
+
 
 }
