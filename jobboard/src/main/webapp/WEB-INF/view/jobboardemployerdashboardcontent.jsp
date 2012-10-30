@@ -12,8 +12,71 @@
 <title>ADVANCE Heathcare Jobs</title>
 
 <jsp:include page="common/include.jsp" />
+<script type="text/javascript" src="../resources/js/highcharts.js"></script>
+<script type="text/javascript" src="../resources/js/funnel.src.js"></script>
+<script type="text/javascript" src="../resources/js/exporting.src.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+
+<!-- JAVASCRIPT FILES -->
+		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<script type="text/javascript" src="../resources/js/slider.js"></script>
+		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 
 <script type="text/javascript">
+var chart;
+var options = {
+    chart: {
+        renderTo: 'container',
+        defaultSeriesType: 'funnel',
+        /*margin: [50, 10, 60, 170],*/
+        borderWidth: 1
+    },
+    title: {
+        text: ''
+    },
+    plotArea: {
+        shadow: null,
+        borderWidth: null,
+        backgroundColor: null
+    },
+    tooltip: {
+        formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.y, 0);
+        }
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {            	
+                //align: 'center',
+                //x: -50,
+                enabled: true, 
+                connectorWidth: 0,
+        		connectorColor: '#FFFFFF',
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b> ('+ Highcharts.numberFormat(this.point.y, 0) +')';
+                },
+                color: 'black'
+            }/*,
+            
+            neckWidth: '30%',
+            neckHeight: '25%'*/
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    series: [{
+        name: 'Browser share',
+         data: [
+                  ['Views',   10],
+                  ['Clicks',   20],
+                  ['Applies', 30]
+              ]       
+    }]
+};
 	jQuery(document).ready(
 			function() {
 				$("#changePassword").displaypopup("#changePassword", "790",
@@ -40,8 +103,155 @@
 				$("#mySavedResumeSearches").displaypopup(
 						"#mySavedResumeSearches", "790", "360");
 				$("#modifySubs").displaypopup("#modifySubs", "770", "360");
+				
+				
+				
+				$("#metricsExcel")
+				.click(
+						function() {
+						alert("metricsExcel iis calling......");
+						
+						
+						$("#exportButton").trigger("onclick");
+						
+						$.ajax({
+									url : "${pageContext.request.contextPath}/employer/getExcelSheet.html",
+								    
+
+									success : function(data) {
+									
+										
+										
+										defaultOptions.exporting = {
+												
+												type: 'image/png',
+												
+												width: 800,
+												buttons: {
+													exportButton: {
+														//enabled: true,
+														symbol: 'exportIcon',
+														x: -10,
+														symbolFill: '#A8BF77',
+														hoverSymbolFill: '#768F3E',
+														_id: 'exportButton',
+														_titleKey: 'exportButtonTitle',
+														menuItems: [{
+															textKey: 'downloadPNG',
+															onclick: function () {
+																this.exportChart();
+															}
+														}, {
+															textKey: 'downloadJPEG',
+															onclick: function () {
+																this.exportChart({
+																	type: 'image/jpeg'
+																});
+															}
+														}, 
+														
+														]
+
+													},
+													printButton: {
+														//enabled: true,
+														symbol: 'printIcon',
+														x: -36,
+														symbolFill: '#B5C9DF',
+														hoverSymbolFill: '#779ABF',
+														_id: 'printButton',
+														_titleKey: 'printButtonTitle',
+														onclick: function () {
+															this.print();
+														}
+													}
+												}
+											};
+										
+									}
+									
+								});
+					}); 
+				
+				
+				
+				$("#showMertics")
+				.click(
+						function() {
+							
+							var startDate = $("#startDate")
+									.val();
+							
+							var endDate = $("#endDate").val();
+							
+							var selEmployerId = $(
+									"#selEmployer").val();
+							
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/employer/showMertics.html?startDate="
+												+ startDate
+												+ "&endDate="
+												+ endDate
+												+ "&selEmployerId="
+												+ selEmployerId,
+										success : function(data) {
+											//alert("Data is :::"+data);
+											
+										
+											loadMetricsDetails();
+											
+										},
+									});
+						});
+				
+				
+
+				
+				 chart = new Highcharts.Chart(options);
+				 
+
+									
 
 			});
+	
+	
+
+	function getData(obj) {
+
+		id = $(obj).attr("id");
+
+		var metrices = id.split("-");
+
+		views = parseInt(metrices[0]);
+
+		clicks = parseInt(metrices[1]);
+
+		applies = parseInt(metrices[2]);
+
+		if ((views == 0) && (clicks == 0) && (applies == 0)) {
+
+			
+			$("#container").html("No data available.");
+			$("#container").css("width", "550px");
+			$("#container").css("text-align", "center");
+			$("#container").css("color", "#FF0000");
+			//alert("No data available");
+
+		} else {
+			
+			$("#container").html('');
+			$("#container").css("width", "290px");
+			
+			chart = new Highcharts.Chart(options);
+
+			chart.series[0].setData([ [ 'Views', views ], [ 'Clicks', clicks ],
+					[ 'Applies', applies ] ], false);
+
+			chart.redraw(true);
+		}
+
+	}
 	window.onload = function() {
 		loadMetricsDetails();
 	};
@@ -80,6 +290,41 @@
 					}
 				});
 	}
+	
+	function getActiveAndAvailJbPosting(selEmployerId) {
+		//var selEmployerId = $("#selEmployer").val();
+		alert("getActiveAndAvailJbPosting::" + selEmployerId);
+		$
+				.ajax({
+					url : "${pageContext.request.contextPath}/employer/availableJobPostings.html?selEmployerId="
+							+ selEmployerId,
+					data : $('#selEmployerId').serialize(),
+					type : "GET",
+					success : function(data) {
+						$("#avaQuantity").text(data.avaQuantity);
+						$("#count").text(data.count);
+					},
+					error : function(data) {
+						alert('Unable to process');
+
+					}
+				});
+	}
+
+	
+	$(function() {
+		$("#startDate").datepicker({
+			dateFormat : "dd/mm/yy"
+		}).val();
+	});
+
+	$(function() {
+		$("#endDate").datepicker({
+			dateFormat : "dd/mm/yy"
+		}).val();
+	});
+	
+	
 </script>
 <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
 </head>
@@ -318,60 +563,81 @@
 								<div id="metricsDetails"></div>
 							</div>
 							<!--T-->
-							<div class="rowBox EDPricec">
-								<div class="floatLeft marginTop3">
-									<strong>&nbsp;&nbsp;&nbsp;Date range</strong>
-								</div>
-								<div class="floatLeft marginTop3">&nbsp;&nbsp;&nbsp;From:</div>
-								<div class="floatLeft">
+							<form:form method="GET" action="" commandName="epform"
+								id="empMetricsForm">
+								<div class="rowBox EDPricec">
+									<div class="floatLeft marginTop3">
+										<strong>&nbsp;&nbsp;&nbsp;Date range</strong>
+									</div>
+									<div class="floatLeft marginTop3">&nbsp;&nbsp;&nbsp;From:</div>
 									<div class="floatLeft">
-										<input type="text" name="firstName" class="EDTextBox" />
+
+										<div class="floatLeft">
+											<!--  <input type="text" name="startDate" class="EDTextBox" id="startDate"/> -->
+											
+											<input type="text" name="startDate" class="EDTextBox" id="startDate" size="14"/> 
+										</div>
+
+
+										<div class="calender">
+											<a href="#"><img src="../resources/images/tranBg.png"
+												width="14" height="14" alt="Datepick"></a>
+										</div>
 									</div>
-									<div class="calender">
-										<a href="#"><img src="../resources/images/tranBg.png"
-											width="14" height="14" alt="Datepick"></a>
-									</div>
-								</div>
-								<div class="floatLeft marginTop3 marginLeft25">To:</div>
-								<div class="floatLeft">
+									<div class="floatLeft marginTop3 marginLeft25">To:</div>
 									<div class="floatLeft">
-										<input type="text" name="firstName" class="EDTextBox" />
+										<div class="floatLeft">
+											<!--  <input type="text" name="endDate" class="EDTextBox" id="endDate"/>  -->
+											<input type="text" name="endDate" class="EDTextBox" id="endDate" size="14"/> 
+											
+										</div>
+										<div class="calender">
+											<a href="#"><img src="../resources/images/tranBg.png"
+												width="14" height="14" alt="Datepick"></a>
+										</div>
 									</div>
-									<div class="calender">
-										<a href="#"><img src="../resources/images/tranBg.png"
-											width="14" height="14" alt="Datepick"></a>
+									<div class="">
+										<input type="button" name="SHOW" id="showMertics"
+											class="orange" value="SHOW" />
+										<!-- <button type="button" class="orange" onclick="myFunction()">SHOW</button> -->
+
+
 									</div>
+
+									<div class="floatLeft marginTop5 marginLeft15">
+										<a href="../employer/getExcelSheet.html" id="metricsExcel">Export</a>
+										
+									</div>
+
 								</div>
-								<div class="EDBox01 marginLeft25">
-									<strong>SHOW</strong>
-								</div>
-								<div class="floatLeft marginTop5 marginLeft15">
-									<a title="Coming Soon" href="#">Export</a>
-								</div>
-							</div>
+							</form:form>
 							<!--T-->
 							<div class="rowBox">
 								<div class="rowBox Padding0 AutoWidth AutoHeight">
 									<div class="EDBoxMinW">
 										<div class="EDBox02">
 											<div class="row borderBottomDotted Height25">
+											
 												<p class="floatLeft">Available Job Postings</p>
-												<p class="floatRight TextAlignR">3</p>
+												
+												<p class="floatRight TextAlignR" id="avaQuantity">${avaQuantity}</p>
+										
 											</div>
 											<div class="row marginTop10">
 												<p class="floatLeft">Active Job Postings</p>
-												<p class="floatRight TextAlignR">3</p>
+											
+											<p class="floatRight TextAlignR" id="count">${count}</p> 
+												
 											</div>
 										</div>
 									</div>
 									<div class=" clearfix"></div>
-									<span class="FloatLeft"><a href="">View Individual
+									<span class="FloatLeft"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html">View Individual
 											Job Posting Stats</a></span>
+											
+											
 								</div>
-								<div class="rowBox marginLeft25 Padding0 AutoWidth AutoHeight">
-									<img src="../resources/images/EmpDimg.png" width="250"
-										height="208" alt="img">
-								</div>
+								 <div id="container" style="height: 250px; width: 290px"></div>
 							</div>
 
 						</div>
@@ -414,7 +680,7 @@
 									<h2 class="noTopBorder">Solutions</h2>
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Soon" href=""><em>ADVANCE </em>Recruitment
+											<a title="Coming Soon" href="https://www.google.co.in/"><em>ADVANCE </em>Recruitment
 												Solutions Media Kit</a>
 										</p>
 									</div>
