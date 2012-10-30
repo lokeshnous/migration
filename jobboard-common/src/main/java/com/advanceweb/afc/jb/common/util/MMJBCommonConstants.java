@@ -140,7 +140,7 @@ public interface MMJBCommonConstants {
 	String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
 	String SQL_DATE_PATTERN = "yyyy-MM-dd hh:mm:ss";
 	String APP_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
-
+	String DISP_DATE_RANGE="dd/MM/yyyy";
 	String ERROR_STRING = "error";
 	String OK_STRING = "ok";
 
