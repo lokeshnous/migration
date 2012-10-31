@@ -780,7 +780,6 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				listSubscriptiosnsDigital.add(dto);
 				
 			}
-			System.out.println("listSubscriptiosnscheck::"+listSubscriptiosnsDigital.size());
 			return dropdownHelper.convertMerPublicationToDropDownDTO(listSubscriptiosnsDigital);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -815,7 +814,6 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				listSubscriptiosnsLetter.add(dto);
 				
 			}
-			System.out.println("listSubscriptiosnscheck::"+listSubscriptiosnsLetter.size());
 			return dropdownHelper.convertMerPublicationToDropDownDTO(listSubscriptiosnsLetter);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
