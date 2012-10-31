@@ -1,6 +1,7 @@
 package com.advanceweb.afc.common.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,9 @@ import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
 import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.common.client.ClientContext;
 
@@ -27,6 +30,9 @@ public abstract class AbstractController {
 
 	@Value("${client.application}")
 	private String clientApplication;
+	
+	@Autowired
+	private CheckSessionMap checkSessionMap;
 
 	/**
 	 * Get the client context details
@@ -38,6 +44,12 @@ public abstract class AbstractController {
 	 */
 	protected ClientContext getClientContextDetails(HttpServletRequest request,
 			HttpSession session, String pageName) {
+		String currentSearch = null;
+		String previousSearch = null;
+		String clientLocation = null;
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+
 		ClientContext clientContext = new ClientContext();
 		clientContext.setProperty(ClientContext.CLIENT_APPLICATION,
 				clientApplication);
@@ -52,12 +64,24 @@ public abstract class AbstractController {
 				request.getHeader(MMJBCommonConstants.REFERER));
 		clientContext.setProperty(ClientContext.CLIENT_HOSTNAME,
 				request.getHeader(MMJBCommonConstants.HOST));
-		clientContext.setProperty(ClientContext.CLIENT_LOCATION, null);
 		clientContext.setProperty(ClientContext.CLIENT_REQUEST_URL, request
 				.getRequestURL().toString());
-
-		clientContext.setProperty(ClientContext.USER_CURRENT_SEARCH, null);
-		clientContext.setProperty(ClientContext.USER_PREVIOUS_SEARCH, null);
+		if (sessionMap.get(SearchParamDTO.KEYWORDS) != null) {
+			currentSearch = sessionMap.get(SearchParamDTO.KEYWORDS);
+		}
+		if (session.getAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORD) != null) {
+			previousSearch = (String) session
+					.getAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORD);
+		}
+		if (sessionMap.get(SearchParamDTO.CITY_STATE) != null
+				&& !sessionMap.get(SearchParamDTO.CITY_STATE).isEmpty()) {
+			clientLocation = sessionMap.get(SearchParamDTO.CITY_STATE);
+		}
+		clientContext.setProperty(ClientContext.USER_CURRENT_SEARCH,
+				currentSearch);
+		clientContext.setProperty(ClientContext.USER_PREVIOUS_SEARCH,
+				previousSearch);
+		clientContext.setProperty(ClientContext.CLIENT_LOCATION, clientLocation);
 		// Check for login User details
 		int userId = 0;
 		String userLocation = null;
@@ -65,13 +89,15 @@ public abstract class AbstractController {
 		String userRole = null;
 		String userGender = null;
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+			userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
 			List<UserRoleDTO> userRoleDTOs = loginService.getUserRole(userId);
 			userRole = userRoleDTOs.get(0).getRoleName();
 			// TODO: Currently jobseeker is considering
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
 					.viewProfile(userId);
-			for (ProfileAttribDTO profileAttribDTO : jsRegistrationDTO.getAttribList()) {
+			for (ProfileAttribDTO profileAttribDTO : jsRegistrationDTO
+					.getAttribList()) {
 
 				if (profileAttribDTO.getStrLabelValue() != null
 						&& profileAttribDTO.getStrLabelName().equalsIgnoreCase(
@@ -91,9 +117,10 @@ public abstract class AbstractController {
 			}
 
 			// TODO:gender not storing
-			//userGender = null;
+			// userGender = null;
 		}
-		clientContext.setProperty(ClientContext.USER_ID, String.valueOf(userId));
+		clientContext
+				.setProperty(ClientContext.USER_ID, String.valueOf(userId));
 		clientContext.setProperty(ClientContext.USER_LOCATION, userLocation);
 		clientContext
 				.setProperty(ClientContext.USER_PROFESSION, userProfession);

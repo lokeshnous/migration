@@ -304,6 +304,8 @@ public interface MMJBCommonConstants {
 	String MILES = " Miles";
 	String HASHMAP_KEY = "key";
 	String HASHMAP_VALUE = "value";
+	String PREV_JOB_SEARCH_KEYWORD = "prevJobSearchKeyword";
+	
 
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
@@ -455,4 +457,5 @@ public interface MMJBCommonConstants {
 	int DIGITAL_SUBSCRIPTION = 5;
 	int ENEWS_LETTER_SUBSCRIPTION = 6;
 	int EMAIL_SUBSCRIPTION = 7;
+	
 }

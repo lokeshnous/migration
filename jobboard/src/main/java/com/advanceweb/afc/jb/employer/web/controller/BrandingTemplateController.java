@@ -933,6 +933,7 @@ public class BrandingTemplateController extends AbstractController{
 
 	/**
 	 * The method is called to update the job posting Branding Template.
+	 * @param request 
 	 * 
 	 * @param BrandingTemplateForm
 	 * @param HttpSession
@@ -941,7 +942,7 @@ public class BrandingTemplateController extends AbstractController{
 	@RequestMapping(value = "/employer/updateBrandingTemplate", method = RequestMethod.POST)
 	public ModelAndView updateBrandingTemplate(
 			@ModelAttribute(STR_BRANDINGTEMPLATEFORM) BrandingTemplateForm form,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session, HttpServletRequest request) {
 
 		/**
 		 * Introduced a new variable "templateForm" to resolve PMD issue.
@@ -967,6 +968,7 @@ public class BrandingTemplateController extends AbstractController{
 
 		if (result.hasErrors()) {
 			model.setViewName("editBrandingTemplate");
+			getAds(session, request, model);
 			return model;
 		}
 
@@ -976,6 +978,7 @@ public class BrandingTemplateController extends AbstractController{
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					"An error occured while saving the file");
 			model.setViewName("editBrandingTemplate");
+			getAds(session, request, model);
 			return model;
 		}
 

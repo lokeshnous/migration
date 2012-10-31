@@ -155,39 +155,8 @@ public class HomeController extends AbstractController{
 //			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 
-			// Add the Ads for the Home page
-			String bannerString = null;
-			try {
-				ClientContext clientContext = getClientContextDetails(request,
-						session, "home");
-				AdSize size = AdSize.IAB_LEADERBOARD;
-				AdPosition position = AdPosition.TOP;
-				bannerString = adService
-						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("adPageTop", bannerString);
-				
-				size = AdSize.IAB_MEDIUM_RECTANGLE;
-				position = AdPosition.RIGHT_TOP;
-				bannerString = adService
-						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("adPageRightTop", bannerString);
-				
-				size = AdSize.IAB_MEDIUM_RECTANGLE;
-				position = AdPosition.RIGHT_MIDDLE;
-				bannerString = adService
-						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("adPageRightMiddle", bannerString);
-
-				size = AdSize.IAB_LEADERBOARD;
-				position = AdPosition.BOTTOM;
-				bannerString = adService
-						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("adPageBtm", bannerString);
-			} catch (Exception e) {
-				LOGGER.error("Error occurred while getting the html content for Ads"
-						+ e);
-			}
-			// TODO: Add banner for other positions
+			// get the Ads
+			getAdsForHomePage(request, session, model);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -200,6 +169,48 @@ public class HomeController extends AbstractController{
 		// Get the SEO Details
 		getSEODetails(model,request);
 		return "home";
+	}
+
+	/**
+	 * Get the ads for home page
+	 * 
+	 * @param request
+	 * @param model
+	 * @param session
+	 */
+	private void getAdsForHomePage(HttpServletRequest request, HttpSession session,
+			Model model) {
+		String bannerString = null;
+		try {
+			ClientContext clientContext = getClientContextDetails(request,
+					session, "home");
+			AdSize size = AdSize.IAB_LEADERBOARD;
+			AdPosition position = AdPosition.TOP;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addAttribute("adPageTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.RIGHT_TOP;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addAttribute("adPageRightTop", bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.RIGHT_MIDDLE;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addAttribute("adPageRightMiddle", bannerString);
+
+			size = AdSize.IAB_LEADERBOARD;
+			position = AdPosition.BOTTOM;
+			bannerString = adService
+					.getBanner(clientContext, size, position).getTag();
+			model.addAttribute("adPageBtm", bannerString);
+		} catch (Exception e) {
+			LOGGER.error("Error occurred while getting the html content for Ads"
+					+ e);
+		}
 	}
 	
 	/**
