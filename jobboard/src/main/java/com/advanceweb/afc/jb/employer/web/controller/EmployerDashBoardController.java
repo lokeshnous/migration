@@ -51,7 +51,6 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
-import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
