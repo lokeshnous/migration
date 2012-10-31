@@ -188,8 +188,12 @@ public class AgencyDashBoardController extends AbstractController{
 
 		// Retrieve Current subscriptions of the user
 		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
+		Set<DropDownDTO> set=new HashSet<DropDownDTO>();
+		for(DropDownDTO dto:currentSubs){
+			set.add(dto);
+		}
 
-		model.addObject("currentSubs", currentSubs);
+		model.addObject("currentSubs", set);
 		model.addObject("emplyrsByState", emplyrsByState);
 		model.setViewName("agencyDashboard");
 		return model;
