@@ -140,7 +140,7 @@ public interface MMJBCommonConstants {
 	String NEWDATE_PATTERN = "EEE MMM d HH:mm:ss z yyyy";
 	String SQL_DATE_PATTERN = "yyyy-MM-dd hh:mm:ss";
 	String APP_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
-	String DISP_DATE_RANGE="dd/MM/yyyy";
+	String DISP_DATE_RANGE = "dd/MM/yyyy";
 	String ERROR_STRING = "error";
 	String OK_STRING = "ok";
 
@@ -209,8 +209,8 @@ public interface MMJBCommonConstants {
 	String ROLE_FACILITY_FULL_ACCESS = "ROLE_FACILITY_FULL_ACCESS";
 	String ROLE_FACILITY_POST_EDIT = "ROLE_FACILITY_POST_EDIT";
 
-	//For Spring Security Remember Me Login(Cookie Name)
-	String SPRING_SECURITY_REMEMBER_ME_COOKIE="SPRING_SECURITY_REMEMBER_ME_COOKIE";
+	// For Spring Security Remember Me Login(Cookie Name)
+	String SPRING_SECURITY_REMEMBER_ME_COOKIE = "SPRING_SECURITY_REMEMBER_ME_COOKIE";
 
 	// Payment Gateway
 	String CREDIT_CARD = "ccp";
@@ -305,7 +305,6 @@ public interface MMJBCommonConstants {
 	String HASHMAP_KEY = "key";
 	String HASHMAP_VALUE = "value";
 	String PREV_JOB_SEARCH_KEYWORDS = "prevJobSearchKeywords";
-	
 
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
@@ -454,8 +453,11 @@ public interface MMJBCommonConstants {
 	String METRO_AREA = "Metro Area";
 	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";
 
+	int PRINT_JS_SUBSCRIPTION = 1;
+	int DIGITAL_JS_SUBSCRIPTION = 2;
+	int ENEWS_JS_SUBSCRIPTION = 3;
+	int EMAIL_JS_SUBSCRIPTION = 4;
 	int DIGITAL_SUBSCRIPTION = 5;
 	int ENEWS_LETTER_SUBSCRIPTION = 6;
 	int EMAIL_SUBSCRIPTION = 7;
-	
 }
