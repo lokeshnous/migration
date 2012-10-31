@@ -1,7 +1,9 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -97,8 +99,12 @@ public class JobSeekerDashBoardController extends AbstractController{
 		List<DropDownDTO> currentSubs = userubscription
 				.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,
 						listSubscriptions);
+		Set<DropDownDTO> set=new HashSet<DropDownDTO>();
+		for(DropDownDTO dto:currentSubs){
+			set.add(dto);
+		}
 		form.setUserName((String) session.getAttribute("UserName"));
-		model.addObject("currentSubs", currentSubs);
+		model.addObject("currentSubs", set);
 
 		int savedSearchCount = 0;
 		int savedJobsCount = 0;
