@@ -290,7 +290,11 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 						VERIFY_EMAIL, email);
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
-					return (null != user ? true : false);
+					boolean isUser = false;
+					if (user != null) {
+					isUser = true;
+					}
+					return isUser;
 				}
 //			}
 		} catch (HibernateException e) {
