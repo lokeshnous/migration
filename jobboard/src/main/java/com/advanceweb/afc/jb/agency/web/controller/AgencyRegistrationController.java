@@ -103,7 +103,7 @@ public class AgencyRegistrationController extends AbstractController{
 	private String recaptchaChallenge;
 	private String remoteAddr;
 
-	private final static String AGENCYREG = "addAjecncyRegistration";
+	private final static String AGENCYREG = "addAgencyRegistration";
 
 	/**
 	 * This method is called to display  agency registration page

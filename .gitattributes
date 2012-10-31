@@ -604,7 +604,7 @@ jobboard/src/main/webapp/WEB-INF/spring-security.xml -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_footer.jsp -text
 jobboard/src/main/webapp/WEB-INF/templates/templates_header.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/accountSetting.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/addAjecncyRegistration.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/addAgencyRegistration.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addCerts.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addEducation.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addImages.jsp -text
