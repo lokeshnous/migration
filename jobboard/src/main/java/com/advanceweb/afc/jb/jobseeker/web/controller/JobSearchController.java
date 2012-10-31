@@ -1229,6 +1229,12 @@ public class JobSearchController extends AbstractController {
 			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
 			session.removeAttribute(MMJBCommonConstants.REFINERADIUS);
 		}
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+		if (sessionMap.get(SearchParamDTO.KEYWORDS) != null) {
+			session.setAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORDS,
+					sessionMap.get(SearchParamDTO.KEYWORDS));
+		}
 	}
 
 	/**

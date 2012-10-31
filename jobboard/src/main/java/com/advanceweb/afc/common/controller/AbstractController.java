@@ -69,9 +69,9 @@ public abstract class AbstractController {
 		if (sessionMap.get(SearchParamDTO.KEYWORDS) != null) {
 			currentSearch = sessionMap.get(SearchParamDTO.KEYWORDS);
 		}
-		if (session.getAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORD) != null) {
+		if (session.getAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORDS) != null) {
 			previousSearch = (String) session
-					.getAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORD);
+					.getAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORDS);
 		}
 		if (sessionMap.get(SearchParamDTO.CITY_STATE) != null
 				&& !sessionMap.get(SearchParamDTO.CITY_STATE).isEmpty()) {
