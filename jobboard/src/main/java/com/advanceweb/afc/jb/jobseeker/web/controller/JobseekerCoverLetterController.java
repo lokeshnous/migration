@@ -48,6 +48,9 @@ import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 public class JobseekerCoverLetterController {
 	private static final Logger LOGGER = Logger
 			.getLogger("JobseekerCoverLetterController.class");
+	
+	private static final String COVER_LETTER_ID = "coverletterId";
+	
 	@Autowired
 	private CoverLetterService coverLetterService;
 
@@ -56,6 +59,9 @@ public class JobseekerCoverLetterController {
 
 	@Value("${resumeDeleteFailure}")
 	private String resumeDeleteFailure;
+	
+	private @Value("${jsCoverLetterName}")
+	String jsCoverLetterName;
 
 	@RequestMapping(value = "/createCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobSeekerCoverPage(ModelMap map) {
@@ -84,6 +90,10 @@ public class JobseekerCoverLetterController {
 			BindingResult result) {
 
 		try {
+			if(resCoverLetterForm.getName().isEmpty())
+			{
+				return jsCoverLetterName;
+			}
 			int userId = (Integer) session.getAttribute("userId");
 			ResCoverLetterDTO dto = new ResCoverLetterDTO();
 			dto.setName(resCoverLetterForm.getName());
@@ -170,7 +180,7 @@ public class JobseekerCoverLetterController {
 	public @ResponseBody
 	JSONObject deleteManageExistCoverLetter(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
-			@RequestParam("coverletterId") int coverletterId) {
+			@RequestParam(COVER_LETTER_ID) int coverletterId) {
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		boolean isdelete = coverLetterService.isDelete(userId, coverletterId);
@@ -205,7 +215,7 @@ public class JobseekerCoverLetterController {
 		try {
 			// int userId = (Integer) session
 			// .getAttribute(MMJBCommonConstants.USER_ID);
-			String covId = request.getParameter("coverletterId");
+			String covId = request.getParameter(COVER_LETTER_ID);
 			String covType = request.getParameter("type");
 			int coverletterId = Integer.parseInt(covId);
 			ResCoverLetterDTO listOfCoverLetter = coverLetterService
@@ -253,7 +263,7 @@ public class JobseekerCoverLetterController {
 		// String file = null;
 		try {
 
-			String covId = request.getParameter("coverletterId");
+			String covId = request.getParameter(COVER_LETTER_ID);
 
 			int coverletterId = Integer.parseInt(covId);
 			ResCoverLetterDTO listOfCoverLetter = coverLetterService
@@ -372,15 +382,11 @@ public class JobseekerCoverLetterController {
 			dto.setCoverletterId(resCoverLetterForm.getCoverletterId());
 			dto.setUserId(userId);
 			dto.setCoverletterId(resCoverLetterForm.getCoverletterId());
-			boolean findName = coverLetterService.findNameActiveStatus(userId,
-					resCoverLetterForm.getName());
 			boolean findDuplicate = coverLetterService
 					.findDuplicateActiveStatus(userId,
 							resCoverLetterForm.getActive());
 
-			if (findName) {
-				return "Cover Letter Name already exists, Please try again";
-			} else if (resCoverLetterForm.getActive() == 1) {
+			if (resCoverLetterForm.getActive() == 1) {
 				if (findDuplicate) {
 					coverLetterService.coverLetterUpdateByjobSeeker(dto);
 					coverLetterService.coverLetterEditByjobSeeker(dto);
@@ -417,7 +423,7 @@ public class JobseekerCoverLetterController {
 		ModelAndView model = new ModelAndView();
 
 		try {
-			String covId = request.getParameter("coverletterId");
+			String covId = request.getParameter(COVER_LETTER_ID);
 			String covType = request.getParameter("type");
 			int coverletterId = Integer.parseInt(covId);
 			ResCoverLetterDTO listOfCoverLetter = coverLetterService
