@@ -158,19 +158,20 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 	@Override
 	public void addFolder(int userId, String folderName)
 			throws JobBoardDataException {
+		StringBuffer fldrName = new StringBuffer(folderName);
 		AdmFolder admFolder = new AdmFolder();
 		List<AdmFolder> admFolderList = new ArrayList<AdmFolder>();
 		// check if the folder with the given name is present for the user or
 		// not
-		admFolderList = getFolderDetails(userId, folderName);
+		admFolderList = getFolderDetails(userId, fldrName.toString());
 		int count = 1;
 		if (null != admFolderList) {
-			while (admFolderList.size() != 0) {
-				folderName = folderName + count;
-				admFolderList = getFolderDetails(userId, folderName);
+			while (!admFolderList.isEmpty()) {
+				fldrName.append(count);
+				admFolderList = getFolderDetails(userId, fldrName.toString());
 			}
 		}
-		admFolder.setFolderName(folderName);
+		admFolder.setFolderName(fldrName.toString());
 		admFolder.setUserId(userId);
 		hibernateTemplate.saveOrUpdate(admFolder);
 
@@ -213,8 +214,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 			for (AdmFolder admFolder : admFolderList) {
 				List<AdmFolderResume> admFolderResList = getFolderredumeDetails(admFolder
 						.getFolderId());
-				if (null != admFolderResList && !admFolderResList.isEmpty())
+				if (null != admFolderResList && !admFolderResList.isEmpty()){
 					hibernateTemplate.deleteAll(admFolderResList);
+				}
 				hibernateTemplate.delete(admFolder);
 			}
 		}
