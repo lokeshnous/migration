@@ -304,7 +304,7 @@ public interface MMJBCommonConstants {
 	String MILES = " Miles";
 	String HASHMAP_KEY = "key";
 	String HASHMAP_VALUE = "value";
-	String PREV_JOB_SEARCH_KEYWORD = "prevJobSearchKeyword";
+	String PREV_JOB_SEARCH_KEYWORDS = "prevJobSearchKeywords";
 	
 
 	// Kartik Add many Variable for account setting and Mail send
