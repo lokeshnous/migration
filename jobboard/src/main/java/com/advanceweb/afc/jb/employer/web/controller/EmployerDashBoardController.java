@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import jxl.write.WriteException;
-import jxl.write.biff.RowsExceededException;
+
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
@@ -105,8 +104,7 @@ public class EmployerDashBoardController extends AbstractController{
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
-			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,
-			HttpSession session, HttpServletRequest request)
+			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,BindingResult result,HttpSession session, HttpServletRequest request)
 			throws JobBoardServiceException {
 			SearchResumeForm searchResumeForm = new SearchResumeForm();
 			session.removeAttribute("jbPostTotalList");
@@ -342,9 +340,9 @@ public class EmployerDashBoardController extends AbstractController{
 			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
 			BindingResult result) throws JobBoardException {
 	   	session.removeAttribute("jbPostTotalList");
-       java.util.Date startFrom = null;
+        java.util.Date startFrom = null;
 		java.util.Date endFrom = null;
-      String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
+        String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
 		DateFormat formater = new SimpleDateFormat(pattern, Locale.US);
 
 		try {
@@ -359,7 +357,7 @@ public class EmployerDashBoardController extends AbstractController{
 		MetricsDTO metricsDTO = new MetricsDTO();
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 
-		List<JpJobStat> jobstatDTOs = loginService.employerMetrics(startFrom,
+		List<MetricsDTO> jobstatDTOs = loginService.employerMetrics(startFrom,
 				endFrom, selEmployerId);
 
 		// Getting metrics values from look up table
@@ -371,10 +369,10 @@ public class EmployerDashBoardController extends AbstractController{
 		int clicks = 0;
 		int applies = 0;
         int size = jobstatDTOs.size();
-        JpJobStat dto = new JpJobStat();
+        MetricsDTO dto = new MetricsDTO();
 		for (int i = 0; i < jobstatDTOs.size(); i++) {
 
-			dto = (JpJobStat) jobstatDTOs.get(i);
+			dto = (MetricsDTO) jobstatDTOs.get(i);
 			views = views + dto.getViews();
 			clicks = clicks + dto.getClicks();
 			applies = applies + dto.getApplies();
@@ -470,8 +468,7 @@ public class EmployerDashBoardController extends AbstractController{
 	public ModelAndView getXLS(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			HSSFWorkbook workbook) throws ClassNotFoundException,
-			ServletRequestBindingException, JobBoardServiceException,
-			RowsExceededException, WriteException, IOException {
+			ServletRequestBindingException, JobBoardServiceException, IOException {
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition",
 				"attachment;filename=mmreport.xls");
@@ -532,6 +529,8 @@ public class EmployerDashBoardController extends AbstractController{
 		int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
 		// close the input stream
 		inputStream.close();
+	
+		@SuppressWarnings("unused")
 		Drawing drawing = sheet.createDrawingPatriarch();
 		@SuppressWarnings("unused")
 		CreationHelper helper = workbook.getCreationHelper();

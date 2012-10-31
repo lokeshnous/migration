@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.data.entities.JpJobStat;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 
 /**
  * 
@@ -40,7 +40,7 @@ public interface LoginFormDAO {
 	 * @throws JobBoardServiceException
 	 */
 
-	List<JpJobStat> employerMetrics(Date startFrom, Date endFrom,
+	List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
 			int selEmployerId);
 
 	/**

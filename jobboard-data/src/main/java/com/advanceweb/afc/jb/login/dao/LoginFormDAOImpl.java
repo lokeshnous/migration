@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -125,7 +126,7 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 	 * @return
 	 */
 
-	public List<JpJobStat> employerMetrics(Date startFrom, Date endFrom,
+	public List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
 			int selEmployerId) {
 		// TODO Auto-generated method stub
 
@@ -140,10 +141,10 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 
 		List<?> metricsDeatil = getMetricsDateData.list();
 		Iterator<?> iterator = metricsDeatil.iterator();
-		List<JpJobStat> listmetricsTotal = new ArrayList<JpJobStat>();
+		List<MetricsDTO> listmetricsTotal = new ArrayList<MetricsDTO>();
 
 		while (iterator.hasNext()) {
-			JpJobStat dto = new JpJobStat();
+			MetricsDTO dto = new MetricsDTO();
 			Object[] row = (Object[]) iterator.next();
 			dto.setViews((Integer) row[0]);
 			dto.setClicks((Integer) row[1]);

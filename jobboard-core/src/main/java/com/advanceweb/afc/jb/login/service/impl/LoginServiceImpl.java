@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
@@ -92,7 +93,7 @@ public class LoginServiceImpl implements LoginService {
 	 */
 
 	@Override
-	public List<JpJobStat> employerMetrics(Date startFrom, Date endFrom,
+	public List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
 			int selEmployerId) {
 		// TODO Auto-generated method stub
 		return loginFormDAO.employerMetrics(startFrom, endFrom, selEmployerId);

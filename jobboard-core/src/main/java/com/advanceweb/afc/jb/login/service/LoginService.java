@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
+import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
-import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -67,7 +67,7 @@ long getEmployerCount() throws JobBoardServiceException;
  * @return
  * @throws JobBoardServiceException
  */
-List<JpJobStat> employerMetrics(Date startFrom, Date endFrom,int selEmployerId )throws JobBoardServiceException;
+List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,int selEmployerId )throws JobBoardServiceException;
 
 
 
