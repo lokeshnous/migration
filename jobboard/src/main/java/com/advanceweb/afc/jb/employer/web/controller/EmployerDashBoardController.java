@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -163,13 +164,15 @@ public class EmployerDashBoardController extends AbstractController{
 				LOGGER.info("Error occurred while getting data for metrics" + e);
 			}
 
-			// Retrieve Current subscriptions of the user
-			List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
-
-			// getting the metrics details
-			jbPostTotalList = getMetricsDetails(facilityId);
-			model.addObject(COUNT, count);
-			model.addObject(AVAQUANTITY, avaQuantity);
+		// Retrieve Current subscriptions of the user
+		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
+		Set<DropDownDTO> set=new HashSet<DropDownDTO>();
+		for(DropDownDTO dto:currentSubs){
+			set.add(dto);
+		}
+		
+		// getting the metrics details
+		jbPostTotalList = getMetricsDetails(facilityId);
 
 			model.addObject("downDTOs", downDTOs);
 			model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
@@ -177,7 +180,7 @@ public class EmployerDashBoardController extends AbstractController{
 			session.setAttribute(COUNT, count);
 			session.setAttribute(AVAQUANTITY, avaQuantity);
 
-			model.addObject("currentSubs", currentSubs);
+			model.addObject("currentSubs", set);
 			model.addObject("searchResumeForm", searchResumeForm);
 			model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
 			model.setViewName("employerDashboard");
