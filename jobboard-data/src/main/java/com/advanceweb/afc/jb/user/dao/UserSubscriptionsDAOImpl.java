@@ -44,7 +44,8 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
 	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacility.facilityId=?";
-	private static final String FIND_USER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
+	// private static final String FIND_USER_SUBSCRIPTIONS =
+	// "from AdmSubscription sub where sub.subscriptionType=?";
 	private static final Logger LOGGER = Logger
 			.getLogger(UserSubscriptionsDAOImpl.class);
 
@@ -91,7 +92,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 						.transformjsSubsDTOToAdmUserSubs(listSubsDTO,
 								listSubsAlerts);
 				hibernateTemplateCareers.deleteAll(listSubsAlerts);
-				hibernateTemplateCareers.saveOrUpdateAll(userAlerts);
+				for (AdmUserSubscription sub : userAlerts) {
+					hibernateTemplateCareers.merge(sub);
+				}
 			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -630,10 +633,8 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			listSubscriptiosns = subscriptionHelper
 					.transformFacilitySubTojsSubsDTO(listSubs);
 		} catch (DataAccessException e) {
-			LOGGER.error("Error while getting current subscription list from DB"
-					+ e);
-			LOGGER.info("Error while getting current subscription list from DB"
-					+ e);
+			LOGGER.error(
+					"Error while getting current subscription list from DB", e);
 		}
 
 		return listSubscriptiosns;
@@ -652,17 +653,17 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			listDTOs = subscriptionHelper
 					.transferDigitalSubToSubDTO(digSubList);
 		} catch (DataAccessException e) {
-			LOGGER.error("Error while getting data for digital magazine subscriptions"
-					+ e);
-			LOGGER.info("Error while getting data for digital magazine subscriptions"
-					+ e);
-
+			LOGGER.error(
+					"Error while getting data for digital magazine subscriptions",
+					e);
 		}
 		return listDTOs;
 	}
 
 	/**
 	 * Method to get the e-news letter subscription details
+	 * 
+	 * @return subscriptionDTO
 	 */
 	@Override
 	public List<UserSubscriptionsDTO> getEnewsLetterSubList() {
@@ -674,11 +675,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			listDTOs = subscriptionHelper
 					.transferDigitalSubToSubDTO(digSubList);
 		} catch (DataAccessException e) {
-			LOGGER.error("Error while getting data for digital magazine subscriptions"
-					+ e);
-			LOGGER.info("Error while getting data for digital magazine subscriptions"
-					+ e);
-
+			LOGGER.error(
+					"Error while getting data for digital magazine subscriptions",
+					e);
 		}
 		return listDTOs;
 	}
@@ -694,22 +693,20 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveFacilitySubscription(
 			List<UserSubscriptionsDTO> listSubsDTO, int facilityId) {
+		List<AdmFacilitySubscription> facSubscriptions = new ArrayList<AdmFacilitySubscription>();
 		try {
 
 			if (facilityId != 0) {
 				List<AdmFacilitySubscription> listSubsAlerts = hibernateTemplateCareers
 						.find(SELECTED_FACILITY_SUBS, facilityId);
-				List<AdmSubscription> subsList = hibernateTemplateCareers.find(
-						FIND_USER_SUBSCRIPTIONS, "FACILITY");
-				List<MerPublication> digSubList = hibernateTemplateTracker
-						.find("from MerPublication p where p.isDigital = 1 and p.active = 1");
-				List<MerPublication> enewList = hibernateTemplateTracker
-						.find("from MerPublication p where p.isEnewsletter = 1 and p.active = 1");
-				List<AdmFacilitySubscription> facSubscriptions = subscriptionHelper
+
+				facSubscriptions = subscriptionHelper
 						.transformjsSubsDTOToAdmFacilitySubs(listSubsDTO,
 								listSubsAlerts, subsList, digSubList, enewList);
 				hibernateTemplateCareers.deleteAll(listSubsAlerts);
-				hibernateTemplateCareers.saveOrUpdateAll(facSubscriptions);
+				for (AdmFacilitySubscription sub : facSubscriptions) {
+					hibernateTemplateCareers.merge(sub);
+				}
 			}
 		} catch (DataAccessException e) {
 			LOGGER.error("Error while saveing the selected facility subscriptions dta to DB"
@@ -719,8 +716,14 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		}
 		return true;
 	}
-	
-	
+
+	/**
+	 * This method is to get the available print magazines for job seeker
+	 * through the procedure getSubscriptionData()
+	 * 
+	 * @param userId
+	 * @return DropDownDTo
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionscheck(int userId) {
 		// TODO Auto-generated method stub
@@ -756,6 +759,13 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		
 	}
 
+	/**
+	 * This method is to get the available Digital magazines for job seeker
+	 * through the procedure getSubscriptionDigital()
+	 * 
+	 * @param userId
+	 * @return DropDownDTo
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsdigital(int userId) {
 		// TODO Auto-generated method stub
@@ -789,6 +799,13 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		return null;
 	}
 
+	/**
+	 * This method is to get the available enews_letter magazines for job seeker
+	 * through the procedure getSubscriptionLetter()
+	 * 
+	 * @param userId
+	 * @return DropDownDTo
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsletter(int userId) {
 		// TODO Auto-generated method stub
