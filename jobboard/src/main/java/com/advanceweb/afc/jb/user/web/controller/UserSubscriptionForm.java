@@ -15,6 +15,13 @@ public class UserSubscriptionForm {
 	private String[] currentJobAlerts;
 	private String[] facsub;
 	private String[] currentsubscheck;
+	private String[]  printSub;
+	private String[]  digSub;
+	private String[]  newsSub;
+	private boolean printCheckbox;
+	private boolean digCheckbox;
+	private boolean enewsCheckbox;
+	private boolean mailCheckbox;
 	
 	private int userId;
 	private int facilityId;
@@ -68,5 +75,48 @@ public class UserSubscriptionForm {
 	public void setPublicationId(int publicationId) {
 		this.publicationId = publicationId;
 	}
+	public String[] getPrintSub() {
+		return printSub;
+	}
+	public void setPrintSub(String[] printSub) {
+		this.printSub = printSub;
+	}
+	public String[] getDigSub() {
+		return digSub;
+	}
+	public void setDigSub(String[] digSub) {
+		this.digSub = digSub;
+	}
+	public String[] getNewsSub() {
+		return newsSub;
+	}
+	public void setNewsSub(String[] newsSub) {
+		this.newsSub = newsSub;
+	}
+	public boolean isPrintCheckbox() {
+		return printCheckbox;
+	}
+	public void setPrintCheckbox(boolean printCheckbox) {
+		this.printCheckbox = printCheckbox;
+	}
+	public boolean isDigCheckbox() {
+		return digCheckbox;
+	}
+	public void setDigCheckbox(boolean digCheckbox) {
+		this.digCheckbox = digCheckbox;
+	}
+	public boolean isMailCheckbox() {
+		return mailCheckbox;
+	}
+	public void setMailCheckbox(boolean mailCheckbox) {
+		this.mailCheckbox = mailCheckbox;
+	}
+	public boolean isEnewsCheckbox() {
+		return enewsCheckbox;
+	}
+	public void setEnewsCheckbox(boolean enewsCheckbox) {
+		this.enewsCheckbox = enewsCheckbox;
+	}
+	
 				
 }

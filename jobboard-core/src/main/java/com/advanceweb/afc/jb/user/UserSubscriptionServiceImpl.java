@@ -23,7 +23,7 @@ import com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO;
  * @since 10 July 2012
  */
 @Service("userSubService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		CoverLetterService {
 	private static final Logger LOGGER = Logger

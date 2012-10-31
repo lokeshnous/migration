@@ -37,6 +37,7 @@ public class AdmUserSubscription implements Serializable {
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
+    
 	private String info;
 
 	//bi-directional many-to-one association to AdmSubscription
@@ -97,6 +98,7 @@ public class AdmUserSubscription implements Serializable {
 	public void setSubscriptionPK(AdmUserSubscriptionPK subscriptionPK) {
 		this.subscriptionPK = subscriptionPK;
 	}
+
 	
 	
 }

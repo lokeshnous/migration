@@ -66,7 +66,6 @@ public interface UserSubscriptionService {
 	boolean saveFacilitySubscription(List<UserSubscriptionsDTO> listSubsDTO,
 			int facilityId);
 	
-	
 	List<DropDownDTO> getSubscriptionscheck(int userId);
 	List<DropDownDTO> getSubscriptionsdigital(int userId);
 	

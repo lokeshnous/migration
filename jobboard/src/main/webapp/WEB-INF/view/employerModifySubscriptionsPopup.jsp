@@ -10,9 +10,14 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
-		 $('#save').click(function(){
-			$.ajax({url:"${pageContext.request.contextPath}/subscriptions/saveFacilitySubscription.html",
+
+		$('#save').click(function(){
+			 var digCheckbox = $('#digCheckbox').is(':checked');
+			 var enewsCheckbox = $('#enewsCheckbox').is(':checked');
+			 var mailCheckbox = $('#mailCheckbox').is(':checked');
+				
+			$.ajax({url:"${pageContext.request.contextPath}/subscriptions/saveFacilitySubscription.html?digCheckbox="+digCheckbox+
+				"&enewsCheckbox="+enewsCheckbox+"&mailCheckbox="+mailCheckbox,
 				data:$('#subscriptionsId').serialize(),
 				type:"GET",
 				success: function(data) {			
@@ -24,8 +29,44 @@
 			});
 			
 	     }); 
-		jQuery(".megamenu").megamenu();
+		
+		modifyDig('${digitalSubList.size()}');
+		modifyNews('${enewSubList.size()}');
+		
+		jQuery(".megamenu").megamenu();		
 	});
+	
+	function modifyDig(size){
+		var digCheckbox = $('#digCheckbox').is(':checked');
+		if(!digCheckbox){	
+			for(var i=0;i<size;i++)
+			{
+				document.getElementById('dig'+i).disabled = true;
+			}
+		}
+		else{
+			for(var i=0;i<size;i++)
+			{
+				document.getElementById('dig'+i).disabled = false;
+			}
+		}
+	} 
+	
+	function modifyNews(size){
+		var enewsCheckbox = $('#enewsCheckbox').is(':checked');
+		if(!enewsCheckbox){	
+			for(var i=0;i<size;i++)
+			{
+				document.getElementById('news'+i).disabled = true;
+			}
+		}
+		else{
+			for(var i=0;i<size;i++)
+			{
+				document.getElementById('news'+i).disabled = false;
+			}
+		}
+	}
 </script>
 </head>
 
@@ -44,62 +85,49 @@
 					<table>
 						<tr class="borderTopNone">
 							<th align="left" scope="col">Subscriptions</th>
-						</tr><tr><td  valign="top">
-						<ul>
-							<c:forEach items="${facilitySubList}" var="subscriptions"
-								begin="0" end="${facilitySubList.size()}" step="3">
-								<form:checkbox path="currentsubs"
-										label="${subscriptions.optionName}"
-										value="${subscriptions.optionId}" cssStyle="width:20px" />
-										<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</tr>
+						<tr>
+							<td valign="top"><form:checkbox path="digCheckbox"
+									id="digCheckbox" onchange="modifyDig('${digitalSubList.size()}')" /><label for="checkbox">Digital-Magazine</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<c:if test="${!digitalSubList.isEmpty()}">
-										<c:forEach items="${digitalSubList}" var="digital"
-											varStatus="index">
-											<form:checkbox path="facsub"
-													label="${digital.optionName}" value="${digital.optionId}"
-													cssStyle="width:20px" />
-													<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										</c:forEach>
-								</c:if>
-							</c:forEach>
-						</ul>&nbsp;&nbsp;
-						</td><td valign="top">
-						<ul>
-							<c:forEach items="${facilitySubList}" var="subscriptions"
-								begin="1" end="${facilitySubList.size()}" step="3">
-								<form:checkbox path="currentsubs"
-										label="${subscriptions.optionName}"
-										value="${subscriptions.optionId}" cssStyle="width:20px" />
-										<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<c:if test="${!enewSubList.isEmpty()}">
-										<c:forEach items="${enewSubList}" var="enews"
-											varStatus="index">
-											<form:checkbox path="facsub"
-													label="${enews.optionName}" value="${enews.optionId}"
-													cssStyle="width:20px" />
-													<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										</c:forEach>
-								</c:if>
-							</c:forEach>
-						</ul>
-						</td><td valign="top">
-						<ul>
-							<c:forEach items="${facilitySubList}" var="subscriptions"
-								begin="2" end="${facilitySubList.size()}" step="3">
-								<form:checkbox path="currentsubs"
-										label="${subscriptions.optionName}"
-										value="${subscriptions.optionId}" cssStyle="width:20px" />
-										<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</c:forEach>
-						</ul>
-						</td>
+									<c:forEach items="${digitalSubList}" var="subscriptionsprint"
+										varStatus="status">
+
+										<form:checkbox path="digSub"
+											label="${subscriptionsprint.optionName}"
+											value="${subscriptionsprint.optionId}" cssStyle="width:20px"
+											id="dig${status.index}" />
+										<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+										       </c:forEach>
+								</c:if></td>
+
+							<td valign="top"><form:checkbox path="enewsCheckbox"
+									id="enewsCheckbox" onchange="modifyNews('${enewSubList.size()}')" /><label
+								for="checkbox">E-newsletters</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<c:if test="${!enewSubList.isEmpty()}">
+									<c:forEach items="${enewSubList}" var="subscriptionsprint"
+										varStatus="status">
+
+										<form:checkbox path="newsSub"
+											label="${subscriptionsprint.optionName}"
+											value="${subscriptionsprint.optionId}" cssStyle="width:20px"
+											id="news${status.index}" />
+										<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+										       </c:forEach>
+								</c:if></td>
+
+							<td valign="top"><form:checkbox path="mailCheckbox"
+									id="mailCheckbox" /><label for="checkbox">E-mailer</label><br />
+							</td>
+
 						</tr>
 					</table>
 				</div>
 				<div class="row marginTop10 paddingBottom10">
-					<span class="floatLeft marginTop10"> 
-						<input type="button" id="save" class="orange cursor" value="Save"/> 
-						<input type="button" value="Cancel" class="nyroModalClose orange cursor" name="Cancel" /> 
+					<span class="floatLeft marginTop10"> <input type="button"
+						id="save" class="orange cursor" value="Save" /> <input
+						type="button" value="Cancel" class="nyroModalClose orange cursor"
+						name="Cancel" />
 					</span>
 				</div>
 			</form:form>

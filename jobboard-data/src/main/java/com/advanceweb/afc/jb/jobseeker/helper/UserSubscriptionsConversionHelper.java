@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscription;
 import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscriptionPK;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
@@ -45,6 +43,8 @@ public class UserSubscriptionsConversionHelper {
 				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
 				dto.setSubscriptionId(alert.getSubscriptionPK()
 						.getSubscriptionId());
+				dto.setPublicationId(alert.getSubscriptionPK()
+						.getPublicationId());
 				dto.setUserId(alert.getSubscriptionPK().getUserId());
 				subsList.add(dto);
 			}
@@ -61,46 +61,24 @@ public class UserSubscriptionsConversionHelper {
 	public List<AdmUserSubscription> transformjsSubsDTOToAdmUserSubs(
 			List<UserSubscriptionsDTO> listSubsDTO,
 			List<AdmUserSubscription> listSubsAlerts) {
-
 		List<AdmUserSubscription> subsEntityList = new ArrayList<AdmUserSubscription>();
 
 		if (null != listSubsDTO) {
 			for (UserSubscriptionsDTO dto : listSubsDTO) {
-				if (!validateAdmUserSubscriptions(dto, listSubsAlerts)) {
-					AdmUserSubscription entity = new AdmUserSubscription();
-					AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
-					subscription.setSubscriptionId(dto.getSubscriptionId());
-					subscription.setUserId(dto.getUserId());
-					entity.setSubscriptionPK(subscription);
-					entity.setActive(dto.getActive());
-					subsEntityList.add(entity);
-				}
+				// if (!validateAdmUserSubscriptions(dto, listSubsAlerts)) {
+				AdmUserSubscription entity = new AdmUserSubscription();
+				AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
+				subscription.setSubscriptionId(dto.getSubscriptionId());
+				subscription.setUserId(dto.getUserId());
+				subscription.setPublicationId(dto.getPublicationId());
+				entity.setSubscriptionPK(subscription);
+				// entity.setPublicationId(dto.getPublicationId());
+				entity.setActive(dto.getActive());
+				subsEntityList.add(entity);
+				// }
 			}
 		}
 		return subsEntityList;
-	}
-
-	/**
-	 * Converting into MerUserAlerts entity
-	 * 
-	 * @param listSubsAlerts
-	 * @return
-	 */
-	private boolean validateAdmUserSubscriptions(UserSubscriptionsDTO subDTO,
-			List<AdmUserSubscription> listSubsAlerts) {
-
-		if (null != subDTO && null != listSubsAlerts) {
-			for (AdmUserSubscription entity : listSubsAlerts) {
-				if (subDTO.getSubscriptionId() == entity.getSubscriptionPK()
-						.getSubscriptionId()
-						&& subDTO.getUserId() == entity.getSubscriptionPK()
-								.getUserId()) {
-					listSubsAlerts.remove(entity);
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -183,7 +161,8 @@ public class UserSubscriptionsConversionHelper {
 						.getSubscriptionId());
 				dto.setFacilityId(alert.getAdmFacilitySubscriptionPK()
 						.getFacilityId());
-				dto.setPublicationId(alert.getPublicationId());
+				dto.setPublicationId(alert.getAdmFacilitySubscriptionPK()
+						.getPublicationId());
 				subsList.add(dto);
 			}
 		}
@@ -219,69 +198,35 @@ public class UserSubscriptionsConversionHelper {
 	 */
 	public List<AdmFacilitySubscription> transformjsSubsDTOToAdmFacilitySubs(
 			List<UserSubscriptionsDTO> listSubsDTO,
-			List<AdmFacilitySubscription> listSubsAlerts,
-			List<AdmSubscription> subsList, List<MerPublication> digSubList,
-			List<MerPublication> enewList) {
+			List<AdmFacilitySubscription> listSubsAlerts) {
 		List<AdmFacilitySubscription> subscriptions = new ArrayList<AdmFacilitySubscription>();
 		if (null != listSubsDTO) {
 			for (UserSubscriptionsDTO dto : listSubsDTO) {
-				AdmFacility admFacility = new AdmFacility();
-				admFacility.setFacilityId(dto.getFacilityId());
 				AdmFacilitySubscriptionPK subscriptionPK = new AdmFacilitySubscriptionPK();
 				subscriptionPK.setFacilityId(dto.getFacilityId());
 				subscriptionPK.setSubscriptionId(dto.getSubscriptionId());
+				subscriptionPK.setPublicationId(dto.getPublicationId());
 				AdmSubscription admSubscription = new AdmSubscription();
 				admSubscription.setSubscriptionId(dto.getSubscriptionId());
-				if (!validateAdmFacilitySubscriptions(dto, listSubsAlerts)) {
-					if (dto.getSubscriptionId() == MMJBCommonConstants.ENEWS_LETTER_SUBSCRIPTION) {
-						List<UserSubscriptionsDTO> subDTOs = getSubData(
-								listSubsDTO, enewList);
-						if (!subDTOs.isEmpty() && subDTOs != null) {
-							for (UserSubscriptionsDTO publication : subDTOs) {
-								AdmFacilitySubscription facSubscription = new AdmFacilitySubscription();
-								facSubscription.setActive(publication
-										.getActive());
-								facSubscription.setCreateDt(new Date());
-								facSubscription.setPublicationId(publication
-										.getPublicationId());
-								facSubscription
-										.setAdmFacilitySubscriptionPK(subscriptionPK);
-								facSubscription
-										.setAdmSubscription(admSubscription);
-								subscriptions.add(facSubscription);
-							}
-						}
-					} else if (dto.getSubscriptionId() == MMJBCommonConstants.DIGITAL_SUBSCRIPTION) {
-						List<UserSubscriptionsDTO> subDTOs = getSubDigData(
-								listSubsDTO, digSubList);
-						if (!subDTOs.isEmpty() && subDTOs != null) {
-							for (UserSubscriptionsDTO publication : subDTOs) {
-								AdmFacilitySubscription facDigSub = new AdmFacilitySubscription();
-								facDigSub.setActive(publication.getActive());
-								facDigSub.setCreateDt(new Date());
-								facDigSub.setPublicationId(publication
-										.getPublicationId());
-								facDigSub
-										.setAdmFacilitySubscriptionPK(subscriptionPK);
-								facDigSub.setAdmSubscription(admSubscription);
-								subscriptions.add(facDigSub);
-							}
-						}
-					} else if (dto.getSubscriptionId() == MMJBCommonConstants.EMAIL_SUBSCRIPTION) {
-						AdmFacilitySubscription facSub = new AdmFacilitySubscription();
-						facSub.setActive(dto.getActive());
-						facSub.setCreateDt(new Date());
-						facSub.setPublicationId(dto.getPublicationId());
-						facSub.setAdmFacilitySubscriptionPK(subscriptionPK);
-						facSub.setAdmSubscription(admSubscription);
-						subscriptions.add(facSub);
-					}
-				}
+				AdmFacilitySubscription facSubscription = new AdmFacilitySubscription();
+				facSubscription.setActive(dto.getActive());
+				facSubscription.setCreateDt(new Date());
+				facSubscription.setAdmFacilitySubscriptionPK(subscriptionPK);
+				facSubscription.setAdmSubscription(admSubscription);
+				subscriptions.add(facSubscription);
 			}
 		}
 		return subscriptions;
 	}
 
+	/**
+	 * Validating the selected facility subscriptions with existing to remove
+	 * and to save newly selected subscriptions
+	 * 
+	 * @param subsDTO
+	 * @param listSubsAlerts
+	 * @return
+	 */
 	public boolean validateAdmFacilitySubscriptions(
 			UserSubscriptionsDTO subsDTO,
 			List<AdmFacilitySubscription> listSubsAlerts) {
@@ -300,41 +245,4 @@ public class UserSubscriptionsConversionHelper {
 
 		return false;
 	}
-
-	private List<UserSubscriptionsDTO> getSubData(
-			List<UserSubscriptionsDTO> listSubsDTO,
-			List<MerPublication> enewList) {
-		List<UserSubscriptionsDTO> list = new ArrayList<UserSubscriptionsDTO>();
-		for (UserSubscriptionsDTO dto : listSubsDTO) {
-			for (MerPublication publication : enewList) {
-				UserSubscriptionsDTO merPublication = new UserSubscriptionsDTO();
-				if (dto.getPublicationId() == publication.getPublicationId()) {
-					merPublication.setPublicationId(publication
-							.getPublicationId());
-					merPublication.setActive(publication.getActive());
-					list.add(merPublication);
-				}
-			}
-		}
-		return list;
-	}
-
-	private List<UserSubscriptionsDTO> getSubDigData(
-			List<UserSubscriptionsDTO> listSubsDTO,
-			List<MerPublication> digSubList) {
-		List<UserSubscriptionsDTO> list = new ArrayList<UserSubscriptionsDTO>();
-		for (UserSubscriptionsDTO dto : listSubsDTO) {
-			for (MerPublication publication : digSubList) {
-				UserSubscriptionsDTO merPublication = new UserSubscriptionsDTO();
-				if (dto.getPublicationId() == publication.getPublicationId()) {
-					merPublication.setPublicationId(publication
-							.getPublicationId());
-					merPublication.setActive(publication.getActive());
-					list.add(merPublication);
-				}
-			}
-		}
-		return list;
-	}
-
 }

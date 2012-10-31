@@ -3,12 +3,15 @@ package com.advanceweb.afc.jb.user.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobAlertsDTO;
 import com.advanceweb.afc.jb.common.MagazinesDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 @Repository("userubscription")
 public class TransformUserubscription {
@@ -48,9 +51,13 @@ public class TransformUserubscription {
 	 */
 	public List<DropDownDTO> jsSubscriptionDTOToJobSeekerSubscriptions(
 			List<UserSubscriptionsDTO> currentSubsList,
-			UserSubscriptionForm form, List<DropDownDTO> listSubscriptions) {
+			UserSubscriptionForm form, List<DropDownDTO> listSubscriptions,
+			HttpSession session) {
 
 		List<String> currSubList = new ArrayList<String>();
+		List<String> currPrintList = new ArrayList<String>();
+		List<String> currDigList = new ArrayList<String>();
+		List<String> currNewsList = new ArrayList<String>();
 		List<DropDownDTO> selSubList = new ArrayList<DropDownDTO>();
 		if (null != currentSubsList) {
 			for (UserSubscriptionsDTO dto : currentSubsList) {
@@ -59,12 +66,54 @@ public class TransformUserubscription {
 							String.valueOf(dto.getSubscriptionId()))) {
 						currSubList.add(subdto.getOptionId());
 						selSubList.add(subdto);
+						if (subdto
+								.getOptionId()
+								.equalsIgnoreCase(
+										Integer.toString(MMJBCommonConstants.PRINT_JS_SUBSCRIPTION))) {
+							currPrintList.add(Integer.toString(dto
+									.getPublicationId()));
+						}
+						if (subdto
+								.getOptionId()
+								.equalsIgnoreCase(
+										Integer.toString(MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION))) {
+							currDigList.add(Integer.toString(dto
+									.getPublicationId()));
+						}
+						if (subdto
+								.getOptionId()
+								.equalsIgnoreCase(
+										Integer.toString(MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION))) {
+							currNewsList.add(Integer.toString(dto
+									.getPublicationId()));
+						}
 					}
 				}
 			}
-			if (null != form) {
-				form.setCurrentsubs(currSubList.toArray(new String[currSubList
-						.size()]));
+			if (selSubList != null && !selSubList.isEmpty()) {
+				for (DropDownDTO downDTO : selSubList) {
+					if (downDTO.getOptionName().equalsIgnoreCase(
+							"Print-Magazine ")) {
+						form.setPrintCheckbox(true);
+						form.setPrintSub(currPrintList
+								.toArray(new String[currPrintList.size()]));
+					}
+					if (downDTO.getOptionName().equalsIgnoreCase(
+							"Digital-Magazine ")) {
+						form.setDigCheckbox(true);
+						form.setDigSub(currDigList
+								.toArray(new String[currDigList.size()]));
+					}
+					if (downDTO.getOptionName().equalsIgnoreCase(
+							"E-newsletters")) {
+						form.setEnewsCheckbox(true);
+						form.setNewsSub(currNewsList
+								.toArray(new String[currNewsList.size()]));
+					}
+					if (downDTO.getOptionName().equalsIgnoreCase("E-mailer")) {
+						form.setMailCheckbox(true);
+					}
+				}
 			}
 		}
 		return selSubList;
@@ -148,30 +197,72 @@ public class TransformUserubscription {
 	 * @return
 	 */
 	public List<UserSubscriptionsDTO> jsSubscriptionFormToJobSeekerSubsDTO(
-			UserSubscriptionForm form) {
-		List<UserSubscriptionsDTO> selectedSubsList = new ArrayList<UserSubscriptionsDTO>();
-		if (null != form.getCurrentsubs()) {
-			for (String selSubscription : form.getCurrentsubs()) {
+			UserSubscriptionForm form, boolean printCheckbox,
+			boolean digCheckbox, boolean enewsCheckbox, boolean mailCheckbox) {
+		List<UserSubscriptionsDTO> selSubsList = new ArrayList<UserSubscriptionsDTO>();
+		if ((form.getPrintSub().length != 0) && printCheckbox
+				&& (null != form.getPrintSub())) {
+			for (String selSubscription : form.getPrintSub()) {
 				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
-				dto.setSubscriptionId(Integer.valueOf(selSubscription));
+				dto.setSubscriptionId(MMJBCommonConstants.PRINT_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
 				dto.setUserId(form.getUserId());
-				dto.setPublicationId(form.getPublicationId());
 				dto.setActive(1);
-				selectedSubsList.add(dto);
+				selSubsList.add(dto);
 			}
+		} else {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.PRINT_JS_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setUserId(form.getUserId());
+			dto.setActive(1);
+			selSubsList.add(dto);
 		}
-
-		if (null != form.getCurrentsubscheck()) {
-			for (String selSubscription : form.getCurrentsubscheck()) {
+		if ((form.getDigSub().length != 0) && (null != form.getDigSub())
+				&& digCheckbox) {
+			for (String selSubscription : form.getDigSub()) {
 				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
-				dto.setSubscriptionId(Integer.valueOf(selSubscription));
+				dto.setSubscriptionId(MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
 				dto.setUserId(form.getUserId());
-				dto.setPublicationId(form.getPublicationId());
 				dto.setActive(1);
-				selectedSubsList.add(dto);
+				selSubsList.add(dto);
 			}
+		} else if (digCheckbox) {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setUserId(form.getUserId());
+			dto.setActive(1);
+			selSubsList.add(dto);
 		}
-		return selectedSubsList;
+		if ((form.getNewsSub().length != 0) && (null != form.getNewsSub())
+				&& enewsCheckbox) {
+			for (String selSubscription : form.getNewsSub()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
+				dto.setUserId(form.getUserId());
+				dto.setActive(1);
+				selSubsList.add(dto);
+			}
+		} else if (enewsCheckbox) {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setUserId(form.getUserId());
+			dto.setActive(1);
+			selSubsList.add(dto);
+		}
+		if (mailCheckbox) {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.EMAIL_JS_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setUserId(form.getUserId());
+			dto.setActive(1);
+			selSubsList.add(dto);
+		}
+		return selSubsList;
 	}
 
 	/**
@@ -224,35 +315,54 @@ public class TransformUserubscription {
 	 * @return
 	 */
 	public List<UserSubscriptionsDTO> jsSubscriptionFormToUserSubsDTO(
-			UserSubscriptionForm form) {
+			UserSubscriptionForm form, boolean digCheckbox,
+			boolean enewsCheckbox, boolean mailCheckbox) {
 		List<UserSubscriptionsDTO> selSubsList = new ArrayList<UserSubscriptionsDTO>();
-		List<UserSubscriptionsDTO> selFacSubsList = new ArrayList<UserSubscriptionsDTO>();
-		List<UserSubscriptionsDTO> selectedSubsList = new ArrayList<UserSubscriptionsDTO>();
-		if (null != form.getCurrentsubs()) {
-			for (String selSubscription : form.getCurrentsubs()) {
+		if ((form.getDigSub().length != 0) && (null != form.getDigSub())
+				&& digCheckbox) {
+			for (String selSubscription : form.getDigSub()) {
 				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
-				dto.setSubscriptionId(Integer.valueOf(selSubscription));
+				dto.setSubscriptionId(MMJBCommonConstants.DIGITAL_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
 				dto.setFacilityId(form.getFacilityId());
 				dto.setActive(1);
 				selSubsList.add(dto);
 			}
+		} else if (digCheckbox) {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.DIGITAL_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setFacilityId(form.getFacilityId());
+			dto.setActive(1);
+			selSubsList.add(dto);
 		}
-		if (!selSubsList.isEmpty() && null != selSubsList) {
-			selectedSubsList.addAll(0, selSubsList);
-		}
-		if (null != form.getFacsub()) {
-			for (String selFacSub : form.getFacsub()) {
-				UserSubscriptionsDTO facDto = new UserSubscriptionsDTO();
-				facDto.setPublicationId(Integer.valueOf(selFacSub));
-				facDto.setFacilityId(form.getFacilityId());
-				facDto.setActive(1);
-				selFacSubsList.add(facDto);
+		if ((form.getNewsSub().length != 0) && (null != form.getNewsSub())
+				&& enewsCheckbox) {
+			for (String selSubscription : form.getNewsSub()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(MMJBCommonConstants.ENEWS_LETTER_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
+				dto.setFacilityId(form.getFacilityId());
+				dto.setActive(1);
+				selSubsList.add(dto);
 			}
+		} else if (enewsCheckbox) {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.ENEWS_LETTER_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setFacilityId(form.getFacilityId());
+			dto.setActive(1);
+			selSubsList.add(dto);
 		}
-		if (!selFacSubsList.isEmpty() && null != selFacSubsList) {
-			selectedSubsList.addAll(1, selFacSubsList);
+		if (mailCheckbox) {
+			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+			dto.setSubscriptionId(MMJBCommonConstants.EMAIL_SUBSCRIPTION);
+			dto.setPublicationId(0);
+			dto.setFacilityId(form.getFacilityId());
+			dto.setActive(1);
+			selSubsList.add(dto);
 		}
-		return selectedSubsList;
+		return selSubsList;
 	}
 
 	/**
@@ -265,10 +375,10 @@ public class TransformUserubscription {
 	 */
 	public List<DropDownDTO> jsSubscriptionDTOToFacilitySubscriptions(
 			List<UserSubscriptionsDTO> currentSubsList,
-			UserSubscriptionForm form, List<DropDownDTO> listSubscriptions,
-			List<DropDownDTO> digSubscriptionList, List<DropDownDTO> enewSubList) {
+			UserSubscriptionForm form, List<DropDownDTO> listSubscriptions) {
 		List<String> currSubList = new ArrayList<String>();
-		List<String> facSubList = new ArrayList<String>();
+		List<String> currDigList = new ArrayList<String>();
+		List<String> currNewsList = new ArrayList<String>();
 		List<DropDownDTO> selSubList = new ArrayList<DropDownDTO>();
 		if (null != currentSubsList) {
 			for (UserSubscriptionsDTO dto : currentSubsList) {
@@ -277,27 +387,41 @@ public class TransformUserubscription {
 							String.valueOf(dto.getSubscriptionId()))) {
 						currSubList.add(subdto.getOptionId());
 						selSubList.add(subdto);
-					}
-				}
-				for (DropDownDTO downDTO : digSubscriptionList) {
-					if (downDTO.getOptionId().equals(
-							String.valueOf(dto.getPublicationId()))) {
-						facSubList.add(downDTO.getOptionId());
-						selSubList.add(downDTO);
-					}
-				}
-				for (DropDownDTO downDTO : enewSubList) {
-					if (downDTO.getOptionId().equals(
-							String.valueOf(dto.getPublicationId()))) {
-						facSubList.add(downDTO.getOptionId());
-						selSubList.add(downDTO);
+						if (subdto
+								.getOptionId()
+								.equalsIgnoreCase(
+										Integer.toString(MMJBCommonConstants.DIGITAL_SUBSCRIPTION))) {
+							currDigList.add(Integer.toString(dto
+									.getPublicationId()));
+						}
+						if (subdto
+								.getOptionId()
+								.equalsIgnoreCase(
+										Integer.toString(MMJBCommonConstants.ENEWS_LETTER_SUBSCRIPTION))) {
+							currNewsList.add(Integer.toString(dto
+									.getPublicationId()));
+						}
 					}
 				}
 			}
-			if (null != form) {
-				form.setCurrentsubs(currSubList.toArray(new String[currSubList
-						.size()]));
-				form.setFacsub(facSubList.toArray(new String[facSubList.size()]));
+			if (selSubList != null && !selSubList.isEmpty()) {
+				for (DropDownDTO downDTO : selSubList) {
+					if (downDTO.getOptionName().equalsIgnoreCase(
+							"Digital-Magazine ")) {
+						form.setDigCheckbox(true);
+						form.setDigSub(currDigList
+								.toArray(new String[currDigList.size()]));
+					}
+					if (downDTO.getOptionName().equalsIgnoreCase(
+							"E-newsletters")) {
+						form.setEnewsCheckbox(true);
+						form.setNewsSub(currNewsList
+								.toArray(new String[currNewsList.size()]));
+					}
+					if (downDTO.getOptionName().equalsIgnoreCase("E-mailer")) {
+						form.setMailCheckbox(true);
+					}
+				}
 			}
 		}
 		return selSubList;

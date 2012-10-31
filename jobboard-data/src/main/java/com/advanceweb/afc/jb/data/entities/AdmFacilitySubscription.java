@@ -27,9 +27,6 @@ public class AdmFacilitySubscription implements Serializable {
 
 	@Column(name = "active")
 	private int active;
-
-	@Column(name = "publication_id")
-	private int publicationId;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_dt")
@@ -97,13 +94,4 @@ public class AdmFacilitySubscription implements Serializable {
 	public void setAdmFacility(AdmFacility admFacility) {
 		this.admFacility = admFacility;
 	}
-
-	public int getPublicationId() {
-		return publicationId;
-	}
-
-	public void setPublicationId(int publicationId) {
-		this.publicationId = publicationId;
-	}
-
 }

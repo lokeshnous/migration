@@ -20,6 +20,17 @@ public class AdmUserSubscriptionPK implements Serializable {
 	@Column(name="subscription_id")
 	private int subscriptionId;
 
+	@Column(name="publication_id")
+    private int publicationId;
+	
+	public int getPublicationId() {
+		return publicationId;
+	}
+
+	public void setPublicationId(int publicationId) {
+		this.publicationId = publicationId;
+	}
+
 	public int getUserId() {
 		return this.userId;
 	}
@@ -33,6 +44,7 @@ public class AdmUserSubscriptionPK implements Serializable {
 		this.subscriptionId = subscriptionId;
 	}
 
+	
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
@@ -43,7 +55,7 @@ public class AdmUserSubscriptionPK implements Serializable {
 		AdmUserSubscriptionPK castOther = (AdmUserSubscriptionPK)other;
 		return 
 			(this.userId == castOther.userId)
-			&& (this.subscriptionId == castOther.subscriptionId);
+			&& (this.subscriptionId == castOther.subscriptionId)&& (this.publicationId == castOther.publicationId);
 
     }
     
