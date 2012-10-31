@@ -246,8 +246,11 @@ public class JobSearchController extends AbstractController {
 	private static final String END_TAGS = "</TD></TR>\n";
 	private static final String ADPAGETOP = "adPageTop";
 	private static final String ADPAGEBTM = "adPageBtm";
+	private static final String COMPANY_NAME = "?companyName";
+	private static final String CITY = "?city";
+	private static final String COUNTRY = "?country";
+	private static final String STATE = "?state";
 	
-
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -453,34 +456,34 @@ public class JobSearchController extends AbstractController {
 		metaDesc = metaDesc.replace("?jobtitle", jobDTO.getJobTitle());
 		metaTitle = metaTitle.replace("?jobtitle", jobDTO.getJobTitle());
 		if (jobDTO.getCompanyNameDisp() != null) {
-			metaDesc = metaDesc.replace("?companyName",
+			metaDesc = metaDesc.replace(COMPANY_NAME,
 					jobDTO.getCompanyNameDisp());
-			metaTitle = metaTitle.replace("?companyName",
+			metaTitle = metaTitle.replace(COMPANY_NAME,
 					jobDTO.getCompanyNameDisp());
 		} else {
-			metaDesc = metaDesc.replace("?companyName", "");
-			metaTitle = metaTitle.replace("?companyName", "");
+			metaDesc = metaDesc.replace(COMPANY_NAME, "");
+			metaTitle = metaTitle.replace(COMPANY_NAME, "");
 		}
 		if (jobDTO.getCity() != null) {
-			metaDesc = metaDesc.replace("?city", "");
-			metaTitle = metaTitle.replace("?city", "");
+			metaDesc = metaDesc.replace(CITY, "");
+			metaTitle = metaTitle.replace(CITY, "");
 		} else {
-			metaDesc = metaDesc.replace("?city", "");
-			metaTitle = metaTitle.replace("?city", "");
+			metaDesc = metaDesc.replace(CITY, "");
+			metaTitle = metaTitle.replace(CITY, "");
 		}
 		if (jobDTO.getState() != null) {
-			metaDesc = metaDesc.replace("?state", jobDTO.getState());
-			metaTitle = metaTitle.replace("?state", jobDTO.getState());
+			metaDesc = metaDesc.replace(STATE, jobDTO.getState());
+			metaTitle = metaTitle.replace(STATE, jobDTO.getState());
 		} else {
-			metaDesc = metaDesc.replace("?state", "");
-			metaTitle = metaTitle.replace("?state", "");
+			metaDesc = metaDesc.replace(STATE, "");
+			metaTitle = metaTitle.replace(STATE, "");
 		}
 		if (jobDTO.getCountry() != null) {
-			metaDesc = metaDesc.replace("?country", jobDTO.getCountry());
-			metaTitle = metaTitle.replace("?country", jobDTO.getCountry());
+			metaDesc = metaDesc.replace(COUNTRY, jobDTO.getCountry());
+			metaTitle = metaTitle.replace(COUNTRY, jobDTO.getCountry());
 		} else {
-			metaDesc = metaDesc.replace("?country", "");
-			metaTitle = metaTitle.replace("?country", "");
+			metaDesc = metaDesc.replace(COUNTRY, "");
+			metaTitle = metaTitle.replace(COUNTRY, "");
 		}
 		model.put("metaDesc", metaDesc);
 		model.put("metaTitle", metaTitle);

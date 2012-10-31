@@ -158,24 +158,33 @@ public class TransformJobSeekerRegistration {
 				form.setbRequired(dto.getbRequired());
 				form.setbRequired(dto.getbRequired());
 				if (null != userDTO) {
-					if (form.getStrLabelName().equals(
-							MMJBCommonConstants.FIRST_NAME)) {
-						form.setStrLabelValue(userDTO.getFirstName());
-					}
-					if (form.getStrLabelName().equals(
-							MMJBCommonConstants.LAST_NAME)) {
-						form.setStrLabelValue(userDTO.getLastName());
-					}
-					if (form.getStrLabelName().equals(
-							MMJBCommonConstants.MIDDLE_NAME)) {
-						form.setStrLabelValue(userDTO.getMiddleName());
-					}
+					setValuesToForm(userDTO, form);
 				}
 				listForms.add(form);
 			}
 		}
 
 		return listForms;
+	}
+
+	/**
+	 * @param userDTO
+	 * @param form
+	 */
+	private void setValuesToForm(UserDTO userDTO,
+			JobSeekerProfileAttribForm form) {
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.FIRST_NAME)) {
+			form.setStrLabelValue(userDTO.getFirstName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.LAST_NAME)) {
+			form.setStrLabelValue(userDTO.getLastName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.MIDDLE_NAME)) {
+			form.setStrLabelValue(userDTO.getMiddleName());
+		}
 	}
 
 	/**
@@ -189,38 +198,7 @@ public class TransformJobSeekerRegistration {
 		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
 
 		if (null != attributeList) {
-			for (JobSeekerProfileAttribForm form : attributeList) {
-				ProfileAttribDTO dto = new ProfileAttribDTO();
-				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
-						.getStrLabelName())) {
-
-					dto.setStrLabelValue(StringUtils
-							.arrayToCommaDelimitedString(form.getSubs()));
-				} else {
-					if (form.getStrLabelName().equals(MMJBCommonConstants.MYINDUSTRY)) {
-						dto.setStrLabelValue(MMJBCommonConstants.HEALTHCARE);
-					} else {
-						dto.setStrLabelValue(form.getStrLabelValue());
-					}
-					
-					if(regForm != null && 
-							regForm.getOtherProfession() != null && 
-							form.getStrLabelName().equals(MMJBCommonConstants.MYPROFESSION)){
-						for(DropDownDTO dropDown:form.getDropdown()){
-							if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName())&& 
-									form.getStrLabelValue().equals(dropDown.getOptionId())){
-								dto.setStrLabelValue(regForm.getOtherProfession());
-							}
-						}
-						
-					}
-				}
-				dto.setStrAttribType(form.getStrAttribType());
-				dto.setStrLabelName(form.getStrLabelName());
-				dto.setStrProfileAttribId(form.getStrProfileAttribId());
-				dtoList.add(dto);
-			}
-			
+			setFormAttribToDTOAttributes(attributeList, regForm, dtoList);
 		}
 		if(regForm.isSocialSignUp()){
 			ProfileAttribDTO newDTO = new ProfileAttribDTO();
@@ -233,5 +211,56 @@ public class TransformJobSeekerRegistration {
 			dtoList.add(newDTO);
 		}
 		return dtoList;
+	}
+
+	/**
+	 * @param attributeList
+	 * @param regForm
+	 * @param dtoList
+	 */
+	private void setFormAttribToDTOAttributes(
+			List<JobSeekerProfileAttribForm> attributeList,
+			JobSeekerRegistrationForm regForm, List<ProfileAttribDTO> dtoList) {
+		for (JobSeekerProfileAttribForm form : attributeList) {
+			ProfileAttribDTO dto = new ProfileAttribDTO();
+			if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
+					.getStrLabelName())) {
+
+				dto.setStrLabelValue(StringUtils
+						.arrayToCommaDelimitedString(form.getSubs()));
+			} else {
+				if (form.getStrLabelName().equals(MMJBCommonConstants.MYINDUSTRY)) {
+					dto.setStrLabelValue(MMJBCommonConstants.HEALTHCARE);
+				} else {
+					dto.setStrLabelValue(form.getStrLabelValue());
+				}
+				
+				if(regForm != null && 
+						regForm.getOtherProfession() != null && 
+						form.getStrLabelName().equals(MMJBCommonConstants.MYPROFESSION)){
+					setValuesToDropDownDTO(regForm, form, dto);
+					
+				}
+			}
+			dto.setStrAttribType(form.getStrAttribType());
+			dto.setStrLabelName(form.getStrLabelName());
+			dto.setStrProfileAttribId(form.getStrProfileAttribId());
+			dtoList.add(dto);
+		}
+	}
+
+	/**
+	 * @param regForm
+	 * @param form
+	 * @param dto
+	 */
+	private void setValuesToDropDownDTO(JobSeekerRegistrationForm regForm,
+			JobSeekerProfileAttribForm form, ProfileAttribDTO dto) {
+		for(DropDownDTO dropDown:form.getDropdown()){
+			if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName())&& 
+					form.getStrLabelValue().equals(dropDown.getOptionId())){
+				dto.setStrLabelValue(regForm.getOtherProfession());
+			}
+		}
 	}
 }

@@ -90,7 +90,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private static final String PACKAGE_TYPE_STRING = "custentitypackagetype";
 	private static final String NAME_STRING = "name";
-	
+
 	private static final String CONTACT_ROLES_STRING = "contactroles";
 	private static final String EMAIL_STRING = "email";
 
@@ -133,11 +133,11 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		NSCustomer nsCustomer = getNSCustomerForUpdateUser(userDTO);
 		String jsonCustomer = JsonUtil.toJson(nsCustomer);
-		
+
 		JSONObject json = getIsPerson(jsonCustomer);
 
 		Map<String, String> queryparamMap = updateCustomerQueryMap();
-		LOGGER.info("Json Data sent to NS is "+json);
+		LOGGER.info("Json Data sent to NS is " + json);
 		Response response = netSuiteMethod.netSuitePost(queryparamMap,
 				json.toString());
 
@@ -454,14 +454,15 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					+ jsonObject.get(XMLFEED_END_DATE_STRING));
 		}
 
-		try{
+		try {
 			setPackageTypeInUserDTO(userDTO, jsonObject);
 			List<String> emailList = setContactEmailList(jsonObject);
 			userDTO.setEmailList(emailList);
-		}catch(Exception e){
-			LOGGER.error("Exception occurred while getting package type and email from Netsuite customer object "+e);
+		} catch (Exception e) {
+			LOGGER.error("Exception occurred while getting package type and email from Netsuite customer object "
+					+ e);
 		}
-		
+
 		LOGGER.info("IS_FEATURED===>" + jsonObject.get(IS_FEATURED));
 		LOGGER.info("IS_INVOICE_ENABLED===>"
 				+ jsonObject.get(IS_INVOICE_ENABLED));
@@ -472,38 +473,41 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	}
 
 	/**
-	 * This method is used to get the Email address from the netsuite customer object and
-	 * returning a list of emails.
+	 * This method is used to get the Email address from the netsuite customer
+	 * object and returning a list of emails.
+	 * 
 	 * @param jsonObject
 	 * @return List<String> emailList
 	 * @throws JSONException
 	 */
-	
+
 	private List<String> setContactEmailList(
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		List<String> emailList = new ArrayList<String>();
-		if(jsonObject.has(CONTACT_ROLES_STRING)){
+		if (jsonObject.has(CONTACT_ROLES_STRING)) {
 			jsonArray = (JSONArray) jsonObject.get(CONTACT_ROLES_STRING);
 		}
-		for(int index = 0; index < jsonArray.length(); index++ ){
-			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray.getJSONObject(index);
-			if(innerJsonObj.has(EMAIL_STRING)){
+		for (int index = 0; index < jsonArray.length(); index++) {
+			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray
+					.getJSONObject(index);
+			if (innerJsonObj.has(EMAIL_STRING)) {
 				emailList.add(innerJsonObj.getString(EMAIL_STRING));
 			}
 		}
-		LOGGER.info("Email List is "+emailList);
+		LOGGER.info("Email List is " + emailList);
 		return emailList;
 	}
 
 	/**
 	 * This method is used for setting the package type into the UserDTO.
+	 * 
 	 * @param userDTO
 	 * @param jsonObject
 	 * @throws JSONException
 	 */
-	
+
 	private void setPackageTypeInUserDTO(UserDTO userDTO,
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
@@ -551,14 +555,14 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	}
 
-	
 	/**
-	 * This method is used to convert a String date to Date object
-	 * into the required format.
+	 * This method is used to convert a String date to Date object into the
+	 * required format.
+	 * 
 	 * @param date
 	 * @return Date object
 	 */
-	
+
 	public Date convertToDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				MMJBCommonConstants.DISP_DATE_PATTERN);

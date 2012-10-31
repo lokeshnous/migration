@@ -3,8 +3,8 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 /**

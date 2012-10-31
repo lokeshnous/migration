@@ -10,10 +10,11 @@ import junit.framework.Assert;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.advanceweb.jb.test.ServiceTest;
+
 import com.advanceweb.afc.jb.common.ResumePackageDTO;
 import com.advanceweb.afc.jb.employer.service.impl.ResumePackageServiceImpl;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
+import com.advanceweb.jb.test.ServiceTest;
 
 /**
  * This class has been created to unit test the Resume Search Packages
