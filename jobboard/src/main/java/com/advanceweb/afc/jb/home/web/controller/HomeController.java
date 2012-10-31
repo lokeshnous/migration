@@ -183,7 +183,7 @@ public class HomeController extends AbstractController{
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, "home");
+					session, PageNames.HOME);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
