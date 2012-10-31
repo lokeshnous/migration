@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,21 +54,31 @@ public class UserSubscriptionsController {
 		ModelAndView model = new ModelAndView();
 		UserSubscriptionForm subscriptform = new UserSubscriptionForm();
 
+		// get List of subscriptions which are assigned to job seeker
 		List<DropDownDTO> listSubscriptions = populateDropdownsService
 				.getSubscriptionsList();
+
+		// Get current subscription and publication list
 		List<UserSubscriptionsDTO> currentSubsList = userSubService
 				.getCurrentSubscriptions(Integer.valueOf(String.valueOf(session
 						.getAttribute(MMJBCommonConstants.USER_ID))));
 		userubscription.jsSubscriptionDTOToJobSeekerSubscriptions(
-				currentSubsList, subscriptform, listSubscriptions);
-		
-		
-		//List<DropDownDTO> listpublicationprint =userSubService.getSubscriptionscheck(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
-		List<DropDownDTO> listpublicationdigital =userSubService.getSubscriptionsdigital(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
-	    List<DropDownDTO> listnewsletter =userSubService.getSubscriptionsletter(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
-	    
-	    
+				currentSubsList, subscriptform, listSubscriptions, session);
+
+		// Getting list of print magazine,digital magazine and e-news letter
+		// publications which are applicable for each subscription
+		List<DropDownDTO> listpublicationprint = userSubService
+				.getSubscriptionscheck(Integer.valueOf(String.valueOf(session
+						.getAttribute("userId"))));
+		List<DropDownDTO> listpublicationdigital = userSubService
+				.getSubscriptionsdigital(Integer.valueOf(String.valueOf(session
+						.getAttribute("userId"))));
+		List<DropDownDTO> listnewsletter = userSubService
+				.getSubscriptionsletter(Integer.valueOf(String.valueOf(session
+						.getAttribute("userId"))));
+
 		model.addObject("jobSubscriptionsList", listSubscriptions);
+		model.addObject("listpublicationprint", listpublicationprint);
 		model.addObject("listpublicationdigital", listpublicationdigital);
 		model.addObject("listnewsletter", listnewsletter);
 		model.addObject("jobSubscriptionsList", listSubscriptions);
@@ -87,17 +98,23 @@ public class UserSubscriptionsController {
 	@ResponseBody
 	@RequestMapping(value = "/saveJobSeekerSubscription", method = RequestMethod.POST)
 	public String saveJobSeekerSubscription(UserSubscriptionForm subscriptform,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session,
+			@RequestParam("printCheckbox") boolean printCheckbox,
+			@RequestParam("digCheckbox") boolean digCheckbox,
+			@RequestParam("enewsCheckbox") boolean enewsCheckbox,
+			@RequestParam("mailCheckbox") boolean mailCheckbox) {
 		try {
 
 			subscriptform.setUserId(Integer.valueOf(String.valueOf(session
 					.getAttribute(MMJBCommonConstants.USER_ID))));
 			List<UserSubscriptionsDTO> listSubsDTO = userubscription
-					.jsSubscriptionFormToJobSeekerSubsDTO(subscriptform);
+					.jsSubscriptionFormToJobSeekerSubsDTO(subscriptform,
+							printCheckbox, digCheckbox, enewsCheckbox,
+							mailCheckbox);
 			userSubService.saveJobSeekerSubscription(listSubsDTO,
 					subscriptform.getUserId());
 		} catch (Exception e) {
-			LOGGER.info("error in saving the subscription for job seeker");
+			LOGGER.error("error in saving the subscription for job seeker", e);
 		}
 		return null;
 	}
@@ -115,22 +132,30 @@ public class UserSubscriptionsController {
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 
+		// get List of subscriptions which are assigned to facility( for agecny
+		// and employer)
 		List<DropDownDTO> listSubscriptions = populateDropdownsService
 				.getFacilitySubList();
 
+		// Get current subscription and publication list
 		List<UserSubscriptionsDTO> currentSubsList = userSubService
 				.getCurrentFacilitySub(facilityId);
+
+		// Getting list of digital magazine and e-news letter
+		// publications which are applicable for each subscription
 		List<UserSubscriptionsDTO> digitalSubList = userSubService
 				.getDigitalSubList();
 		List<UserSubscriptionsDTO> enewsSubList = userSubService
 				.getEnewsLetterSubList();
+
 		List<DropDownDTO> digSubscriptionList = userubscription
 				.jsSubDTOToDropDownDTO(digitalSubList, subscriptform);
 		List<DropDownDTO> enewSubList = userubscription.jsSubDTOToDropDownDTO(
 				enewsSubList, subscriptform);
+
 		userubscription.jsSubscriptionDTOToFacilitySubscriptions(
-				currentSubsList, subscriptform, listSubscriptions,
-				digSubscriptionList, enewSubList);
+				currentSubsList, subscriptform, listSubscriptions);
+
 		model.addObject("facilitySubList", listSubscriptions);
 		model.addObject("digitalSubList", digSubscriptionList);
 		model.addObject("enewSubList", enewSubList);
@@ -151,20 +176,24 @@ public class UserSubscriptionsController {
 	@RequestMapping(value = "/saveFacilitySubscription", method = RequestMethod.GET)
 	public String saveFacilitySubscription(
 			@ModelAttribute("facilitySubsForm") UserSubscriptionForm subscriptform,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session,
+			@RequestParam("digCheckbox") boolean digCheckbox,
+			@RequestParam("enewsCheckbox") boolean enewsCheckbox,
+			@RequestParam("mailCheckbox") boolean mailCheckbox) {
 		try {
 
 			subscriptform.setUserId(Integer.valueOf(String.valueOf(session
 					.getAttribute(MMJBCommonConstants.USER_ID))));
 			subscriptform.setFacilityId(Integer.valueOf(String.valueOf(session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID))));
+
 			List<UserSubscriptionsDTO> listSubsDTO = userubscription
-					.jsSubscriptionFormToUserSubsDTO(subscriptform);
+					.jsSubscriptionFormToUserSubsDTO(subscriptform,
+							digCheckbox, enewsCheckbox, mailCheckbox);
 			userSubService.saveFacilitySubscription(listSubsDTO,
 					subscriptform.getFacilityId());
 		} catch (Exception e) {
-			LOGGER.error("error in saving the subscription for facility" + e);
-			LOGGER.info("error in saving the subscription for facility" + e);
+			LOGGER.error("error in saving the subscription for facility", e);
 		}
 		return null;
 	}
