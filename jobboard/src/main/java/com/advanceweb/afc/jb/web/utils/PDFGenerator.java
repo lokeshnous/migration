@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.web.utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -67,13 +69,16 @@ public class PDFGenerator {
 	
 	private @Value("${resume.sectionHeadingFontName}")
 	String sectionHeadingFontName;
+
+	private @Value("${basedirectorypathUpload}")
+	String basedirectorypathUpload;
 	
 	 
 	
 	
 	
 	/**
-	 * Produce the Resume in PDF format and display to the user to view or
+	 * Produce the Resume in PDF format and display to the user to 
 	 * download
 	 * 
 	 * @param resumeDTO
@@ -82,22 +87,17 @@ public class PDFGenerator {
 	public void generateAndExportResumeAsPdf(HttpServletRequest request,
 			HttpServletResponse response, ResumeDTO resumeDTO) {
 
+		String fileName = (null != resumeDTO.getResumeName() ? resumeDTO
+				.getResumeName() : "Profile");
+
+		response.setHeader("Content-disposition", "attachment; filename=\""
+				+ fileName + ".pdf\"");
 		response.setContentType("application/pdf");
 		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
 		try {
 
 			PdfWriter.getInstance(document, response.getOutputStream());
 			document.open();
-
-			/*
-			 * PdfContentByte contentByte = pdfWriter.getDirectContent();
-			 * contentByte.setLineWidth(2.0f);
-			 * contentByte.setColorFill(BaseColor.BLACK); float x = 72f; float y
-			 * = 72f; contentByte.moveTo(x, y); contentByte.lineTo(new Float((x
-			 * + PageSize.A4.getWidth() - 72.0)).floatValue(), y);
-			 * contentByte.stroke();
-			 */
-
 			generatePDFResume(document, resumeDTO);
 			document.close();
 		} catch (DocumentException documentException) {
@@ -108,6 +108,66 @@ public class PDFGenerator {
 	}
 	
 	
+	
+	/**
+	 * Produce the Resume in PDF format and display to the user to 
+	 * print
+	 * 
+	 * @param resumeDTO
+	 *            the retrieved Resume from the data store
+	 */
+	public void generateAndExportResumeAsPdfForPrint(HttpServletRequest request,
+			HttpServletResponse response, ResumeDTO resumeDTO) {
+
+		String fileName = (null != resumeDTO.getResumeName() ? resumeDTO
+				.getResumeName() : "Profile");
+
+		response.setHeader("Content-disposition", "inline; filename=\""
+				+ fileName + ".pdf\"");
+		response.setContentType("application/pdf");
+		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		try {
+
+			PdfWriter.getInstance(document, response.getOutputStream());
+			document.open();
+			generatePDFResume(document, resumeDTO);
+			document.close();
+		} catch (DocumentException documentException) {
+			logException(documentException, "Uable to create PDF document");
+		} catch (IOException ioException) {
+			logException(ioException, "Uable to create PDF document");
+		}
+	}
+	/**
+	 * Produce the Resume in PDF format and display to the user to 
+	 * print
+	 * 
+	 * @param resumeDTO
+	 *            the retrieved Resume from the data store
+	 */
+	public void generateAndExportResumeAsPdfForAttachment(HttpServletRequest request,
+			HttpServletResponse response, ResumeDTO resumeDTO) {
+
+		String fileName = (null != resumeDTO.getResumeName() ? resumeDTO
+				.getResumeName() : "Profile");
+		 File upLoadedfile = new File(basedirectorypathUpload+fileName+".pdf");
+		 upLoadedfile.deleteOnExit();
+		response.setHeader("Content-disposition", "inline; filename=\""
+				+ fileName + ".pdf\"");
+		response.setContentType("application/pdf");
+		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		try {
+
+			PdfWriter.getInstance(document, new FileOutputStream(upLoadedfile));
+			document.open();
+			generatePDFResume(document, resumeDTO);
+			document.close();
+		} catch (DocumentException documentException) {
+			logException(documentException, "Uable to create PDF document");
+		} catch (IOException ioException) {
+			logException(ioException, "Uable to create PDF document");
+		}
+	}
 	
 	
 	/**
@@ -121,9 +181,11 @@ public class PDFGenerator {
 		
 		//TODO change the Creator / Author to the logged-in User / Candidate Name
 		document.addAuthor("User Name");
+		if(null !=resumeDTO.getResumeName()){
 		document.addCreator(resumeDTO.getResumeName());
-		document.addCreationDate();
 		document.addTitle(resumeDTO.getResumeName());
+		}
+		document.addCreationDate();
 		
 		ContactInformationDTO contactInfoDTO = resumeDTO.getContactInfoDTO();
 

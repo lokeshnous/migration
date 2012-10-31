@@ -673,6 +673,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotPWDPopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerForgotYourPasswordPagePopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerManageExitWright.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobSeekerSendResumePopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerViewCount.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardemployerdashboardcontent.jsp -text

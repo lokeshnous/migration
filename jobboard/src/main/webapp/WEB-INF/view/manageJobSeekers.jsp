@@ -276,6 +276,10 @@
 							document.getElementById(folderId).style.borderStyle="solid";
 							
 						}
+						function sendResumeToFrd(resumeId,resumeName,context) {	
+							var currentUrl = window.location.pathname;
+							$.nmManual(context+'/employer/sendtofriend.html?id='+resumeId+'&resumeName='+resumeName+'&currentUrl='+currentUrl);
+						}
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 

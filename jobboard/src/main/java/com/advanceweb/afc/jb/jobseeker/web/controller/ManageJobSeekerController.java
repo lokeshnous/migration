@@ -1,9 +1,12 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,12 +15,17 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.AdmFolderDTO;
@@ -26,6 +34,8 @@ import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.ManageJobSeekerService;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.resume.web.controller.CertificationsForm;
 import com.advanceweb.afc.jb.resume.web.controller.CreateResume;
@@ -55,14 +65,53 @@ public class ManageJobSeekerController {
 	@Autowired
 	private ManageJobSeekerService manageJobSeekerService;
 
-	@Autowired
-	private ResumeService resumeService;
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
 	@Autowired
 	private PDFGenerator pdfGenerator;
+	@Autowired
+	private MMEmailService emailService;
 
+
+	@Autowired
+	private ResumeService resumeService;
+
+
+	@Autowired
+	private JobSearchValidator jobSearchValidator;
+
+	
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
+
+	
+
+	private @Value("${SUBJECT_OF_SEND_RESUME_MAIL}")
+	String subOfmail;
+
+	private @Value("${BODY_OF_SEND_RESUME_MAIL}")
+	String bodyOfMailFirst;
+
+	private @Value("${URL_REDIRECT_MAIL}")
+	String urlRedirectMail;
+
+	private @Value("${ERROR_SENDING_MAIL}")
+	String errSendingMail;
+
+	private @Value("${EMAIL_MESSAGE}")
+	String emailMsg;
+
+	private @Value("${WEB_MAIL_SERVER}")
+	String webMailServer;
+
+	private @Value("${EMAIL_MESSAGE_BLANK}")
+	String emailMsgBlank;
+	private @Value("${basedirectorypathUpload}")
+	String basedirectorypathUpload;
+	
+	private static final String CURRENT_URL = "currentUrl";
+	private static final String END_TAGS = "</TD></TR>\n";
 	/**
 	 * This method is called to display jobs list belonging to a logged in
 	 * employer
@@ -118,6 +167,7 @@ public class ManageJobSeekerController {
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 		}
+		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.MANAGEJOBSEEKER);
 		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
 		model.addObject("appStatusList", appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
@@ -508,7 +558,7 @@ public class ManageJobSeekerController {
 	}
 
 	/**
-	 * This method is called to download an uploaded resume.
+	 * This method is called to download  resume.
 	 * 
 	 * @param createResume
 	 * @return model
@@ -532,6 +582,39 @@ public class ManageJobSeekerController {
 				// CopyPaste
 				// The resulting resume download will produce a PDF format
 				pdfGenerator.generateAndExportResumeAsPdf(request, response,
+						resumeDTO);
+			}
+		} catch (Exception e) {
+			LOGGER.info("Error in download resume", e);
+		}
+		return model;
+
+	}
+	/**
+	 * This method is called to print resume.
+	 * 
+	 * @param createResume
+	 * @return model
+	 */
+	@RequestMapping(value = "/printResume", method = RequestMethod.GET)
+	public ModelAndView printResume(CreateResume createResumed,
+			@RequestParam("resumeId") int resumeId, BindingResult result,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = new ModelAndView();
+		try {
+			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
+
+			// if the resume Type is Upload then we download the Resume as is
+			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
+					.getResumeType())) {
+				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+						+ resumeDTO.getFilePath());
+			} else {
+
+				// if the Resume had been generated through Resume Builder or
+				// CopyPaste
+				// The resulting resume download will produce a PDF format
+				pdfGenerator.generateAndExportResumeAsPdfForPrint(request, response,
 						resumeDTO);
 			}
 		} catch (Exception e) {
@@ -701,5 +784,191 @@ public class ManageJobSeekerController {
 
 		return model;
 	}
+	/**
+	 * This method is called to send job to a friend for call the Mail page open
+	 * and here hold URl userid and job id etc.
+	 * 
+	 * @author devi prasad
+	 * @version V.0.1
+	 * @param sendtofriendmail
+	 *            -
+	 * @param result
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
+	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
+			BindingResult result, ManageJobSeekerForm manageJobSeekerForm,HttpServletRequest request, Model model) {
 
+		try {
+
+			int resumeId = Integer.parseInt(request.getParameter("id"));
+			String resumeName = request.getParameter("resumeName");
+			resumeName = resumeName.replace(" ", "-").toLowerCase();
+
+
+			String fullPath = request
+					.getRequestURL()
+					.toString()
+					.replace(
+							request.getServletPath(),
+							"/jobsearch/viewJobDetails/" + resumeId + "/"
+									+ resumeName + dothtmlExtention);
+			sendtofriendmail.setResumeId(resumeId);
+			sendtofriendmail.setJoburl(fullPath);
+			model.addAttribute("joburl", fullPath);
+			model.addAttribute("jobId", request.getParameter("id"));
+			model.addAttribute(CURRENT_URL, request.getParameter(CURRENT_URL));
+			model.addAttribute("sendtofriendmail", sendtofriendmail);
+		} catch (Exception e) {
+			LOGGER.info("ERROR");
+		}
+
+		return new ModelAndView("jobSeekerSendResumePopUp");
+	}
+
+	/**
+	 * Mail Sending method sendTofriendPost take Bean file Binding result and
+	 * Http servlet request and Session for Many place it is hold User id and
+	 * facilityid
+	 * 
+	 * @author devi prasad
+	 * @version V.0.1
+	 * @param sendtofriendmail
+	 * @param result
+	 * @param request
+	 * @param session
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	@ResponseBody
+	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
+	public String sendToFriendPost(
+			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
+			BindingResult result, HttpServletRequest request, HttpServletResponse response,
+			HttpSession session,ManageJobSeekerForm manageJobSeekerForm) {
+		ModelAndView modelData = new ModelAndView();
+		Boolean status = Boolean.TRUE;
+		String finalmailbody;
+		StringBuffer mesg = new StringBuffer();
+		StringBuffer dataString = new StringBuffer();
+		String bodyMesg = MMJBCommonConstants.EMPTY;
+		try {
+			String data = sendtofriendmail.getEmail().toString();
+			if ((null == data.trim())
+					|| (MMJBCommonConstants.EMPTY.equals(data.trim()))) {
+				return emailMsgBlank;
+			}
+			data = data.replace(',', ';');
+			int len = data.length();
+			if (data.charAt(len - 1) == ';') {
+				data = data.substring(0, len - 1);
+			}
+			String str[] = data.split(";");
+			int countString = str.length;
+
+			try {
+				int userId = 0;
+				String userName = null;
+				String userEmail = null;
+				String jobseekerName = null;
+				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+					userId = (Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID);
+					userName = (String) session
+							.getAttribute(MMJBCommonConstants.USER_NAME);
+					userEmail = (String) session
+							.getAttribute(MMJBCommonConstants.USER_EMAIL);
+				}
+				EmailDTO jobSeekerEmailDTO = new EmailDTO();
+				jobSeekerEmailDTO.setFromAddress(webMailServer);
+
+				int iterationCount = 0;
+				InternetAddress[] jobSeekerToAddress = new InternetAddress[str.length];
+				for (String string : str) {
+
+					if (!jobSearchValidator.validateEmailPattern(string.trim())) {
+						return emailMsg;
+					}
+
+					jobSeekerToAddress[iterationCount] = new InternetAddress(
+							string.trim());
+					iterationCount++;
+
+				}
+				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
+				String msgSubject = MMJBCommonConstants.EMPTY;
+				if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+
+					jobseekerName = "XXXX-XXX";
+					msgSubject = subOfmail + " " + jobseekerName;
+				} else {
+					jobseekerName = (String) session
+							.getAttribute(MMJBCommonConstants.USER_NAME);
+					msgSubject = subOfmail + " " + jobseekerName;
+				}
+
+				jobSeekerEmailDTO.setSubject(msgSubject);
+				ResumeDTO resumeDTO = resumeService
+						.editResume(sendtofriendmail.getResumeId());
+				List<String> attachmentpaths = new ArrayList<String>();
+				
+				if(null !=resumeDTO.getFilePath() && ! resumeDTO.getFilePath().isEmpty()){
+					// Resume Type Upload
+                MultipartFile file = resumeDTO.getFileData();
+                
+                File upLoadedfile = new File(file.getOriginalFilename());
+                upLoadedfile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(upLoadedfile);
+                fos.write(file.getBytes());
+                fos.close(); 
+                upLoadedfile.deleteOnExit();
+			
+				attachmentpaths.add(upLoadedfile.getAbsolutePath());
+				}else if(null !=resumeDTO.getResumeText() && !resumeDTO.getResumeText().isEmpty()){
+					// Resume Type copy paste
+					 File upLoadedfile = new File(resumeDTO.getResumeName());
+		                upLoadedfile.createNewFile();
+		                FileOutputStream fos = new FileOutputStream(upLoadedfile);
+		                fos.write(resumeDTO.getResumeText().getBytes());
+		                fos.close(); 
+		                upLoadedfile.deleteOnExit();					
+						attachmentpaths.add(upLoadedfile.getAbsolutePath());
+				}else{
+					String fileName = (null != resumeDTO.getResumeName() ? resumeDTO
+							.getResumeName() : "Profile");
+					pdfGenerator.generateAndExportResumeAsPdfForAttachment(request, response, resumeDTO);
+					 File upLoadedfile = new File(basedirectorypathUpload+fileName+".pdf");
+					 attachmentpaths.add(upLoadedfile.getAbsolutePath());
+				}
+				jobSeekerEmailDTO.setAttachmentPaths(attachmentpaths);
+				String Subject = subOfmail + " " + jobseekerName+".";
+				
+				String bodyHead2 = sendtofriendmail.getMessage();
+				String jobUrl = sendtofriendmail.getJoburl();
+				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
+				mesg = mesg.append("<TR><TD>" + "With the following message :" + "\n"
+						+ END_TAGS);
+				mesg = mesg.append("<TR><TD>" + "<br>" + bodyHead2
+						+ END_TAGS);
+				mesg = mesg.append("<TR><TD>" + bodyOfMailFirst + "." 
+						+ END_TAGS);
+				
+				bodyMesg = mesg.toString();
+				jobSeekerEmailDTO.setBody(bodyMesg);
+				jobSeekerEmailDTO.setHtmlFormat(true);
+				emailService.sendEmail(jobSeekerEmailDTO);
+			} catch (Exception e) {
+				LOGGER.info(errSendingMail);
+			}
+
+		} catch (Exception e) {
+			status = Boolean.FALSE;
+			throw new MailParseException(e);
+		}
+		modelData.setViewName(urlRedirectMail);
+		return "";
+
+	}
 }

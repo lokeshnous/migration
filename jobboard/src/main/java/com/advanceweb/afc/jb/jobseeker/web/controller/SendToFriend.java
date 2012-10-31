@@ -10,7 +10,8 @@ public class SendToFriend {
 	private String joburl;
 	
 	private int jobId;
-
+	
+	private int resumeId;
 	
 	public String getJoburl() {
 		return joburl;
@@ -35,5 +36,17 @@ public class SendToFriend {
 	}
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
+	}
+	/**
+	 * @return the resumeId
+	 */
+	public int getResumeId() {
+		return resumeId;
+	}
+	/**
+	 * @param resumeId the resumeId to set
+	 */
+	public void setResumeId(int resumeId) {
+		this.resumeId = resumeId;
 	}
 }

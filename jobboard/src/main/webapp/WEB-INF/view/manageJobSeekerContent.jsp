@@ -61,14 +61,14 @@
 							</form:select></td>
 						<td align="center" valign="middle">${resume.savedDate}</td>
 						<td align="center" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.orgResumeId }"><img
-								src="../resources/images/View.png" width="20" height="20" alt="view"></a>&nbsp;<a
+								src="../resources/images/View.png" title="View resume" width="20" height="20" alt="view"></a>&nbsp;<a
 							href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${resume.orgResumeId }"><img src="../resources/images/Download.png"
-								width="20" height="20" alt="download"></a>&nbsp;<a href="#"><img
-								src="../resources/images/Print2.png" width="20" height="20"
-								alt="print"></a>&nbsp;<a href=""><img
-								src="../resources/images/EmailOrange.png" width="20" height="20"
+								width="20" height="20" alt="download" title="Download resume"></a>&nbsp;<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${resume.orgResumeId }"><img
+								src="../resources/images/Print2.png" title="Print Resume" width="20" height="20"
+								alt="print"></a>&nbsp;<a  onclick="sendResumeToFrd(${resume.orgResumeId}, '${resume.resumeName}','<%= request.getContextPath() %>')"><img
+								src="../resources/images/EmailOrange.png" title="Send resume" width="20" height="20"
 								alt="email"></a>&nbsp;<a href="#"><img
-								src="../resources/images/Delete.png" width="20" height="20"
+								src="../resources/images/Delete.png"  title="Delete Resume" width="20" height="20"
 								alt="delete"></a></td>
 					</tr>
 				</c:forEach>

@@ -11,7 +11,7 @@
 		
  		$('#send').click(function(){			
  			$("#mailSending").html("<span>Processing...</span>");
-			$.ajax({url:"${pageContext.request.contextPath}/jobsearch/sendtofriendpost.html",
+			$.ajax({url:"${pageContext.request.contextPath}/employer/sendtofriendpost.html",
 				data:$('#formid').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -77,8 +77,8 @@
       
 		<div class="popUpContainerWrapper">
 			<form:form method="post" action="../jobsearch/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
-				<form:input type="hidden" name="jobId" id="jobId" path="jobId"/>
-			    <form:input type="hidden" name="joburl" id="joburl" path="joburl"/>
+			<form:hidden path="resumeId" />
+			    <form:hidden  path="joburl"/>
    				<div id="mailSending" class="validationMsg"></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
