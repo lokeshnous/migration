@@ -22,7 +22,7 @@ public class VelocityTemplateTest extends ServiceTest {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("topic", "nurse");
 		params.put("vars", vars);
-		System.out.println(velocityTestTemplate.process(params));
+	//	System.out.println(velocityTestTemplate.process(params));
 	}
 
 }

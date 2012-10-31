@@ -17,7 +17,7 @@ public class OpenxAdServiceDelegateTest extends ServiceTest {
 	public void testGetBanner() {
 		Banner banner = openxAdServiceDelegate.getBanner(new ClientContext(),
 				AdSize.IAB_LEADERBOARD, null);
-		System.out.println(banner.getTag());
+	//	System.out.println(banner.getTag());
 	}
 
 }

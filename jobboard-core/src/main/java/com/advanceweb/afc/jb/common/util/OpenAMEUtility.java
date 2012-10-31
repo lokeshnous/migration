@@ -97,13 +97,14 @@ public class OpenAMEUtility {
 	public static boolean openUrl(String openurl) {
 
 		boolean isAuthenticated = false;
+		String opnurl = openurl;
 		try {
 			
-			openurl = openurl.replaceAll(" ", "%20");
-			openurl = openurl.replaceAll("#", "%23");
-			openurl = openurl.replaceAll(",", "%2C");
+			opnurl = opnurl.replaceAll(" ", "%20");
+			opnurl = opnurl.replaceAll("#", "%23");
+			opnurl = opnurl.replaceAll(",", "%2C");
 			
-			URL url = new URL(openurl);
+			URL url = new URL(opnurl);
 			URLConnection uc = url.openConnection();
 			uc.getInputStream();
 			isAuthenticated = true;
@@ -134,7 +135,7 @@ public class OpenAMEUtility {
 	 * @param attributes
 	 * @throws Exception
 	 */
-	public static boolean UpdateUser(String attributes) {
+	public static boolean updateUser(String attributes) {
 		return openUrl(_UPDATE_URL + getToken() + attributes);
 		
 	}
@@ -145,7 +146,7 @@ public class OpenAMEUtility {
 	 * @param attributes
 	 * @throws Exception
 	 */
-	public static boolean DeleteUser(String attributes) {
+	public static boolean deleteUser(String attributes) {
 		return openUrl(_DELETE_URL + getToken() + attributes);
 		
 	}
@@ -270,7 +271,7 @@ public class OpenAMEUtility {
 		attributes.append("&identity_attribute_names=postaladdress&identity_attribute_values_postaladdress="+ address);
 		attributes.append("&identity_attribute_names=telephonenumber&identity_attribute_values_telephonenumber="+ telephone);
 		attributes.append("&identity_realm=%2F&identity_type=user");
-		return OpenAMEUtility.UpdateUser(attributes.toString());
+		return OpenAMEUtility.updateUser(attributes.toString());
 
 	}
 	
@@ -288,7 +289,7 @@ public class OpenAMEUtility {
 		updateattributes.append("&identity_attribute_names=userpassword&identity_attribute_values_userpassword="+ password);
 		updateattributes.append("&identity_realm=%2F&identity_type=user");
 
-		return OpenAMEUtility.UpdateUser(updateattributes.toString());
+		return OpenAMEUtility.updateUser(updateattributes.toString());
 
 	}
 	/**
@@ -304,7 +305,7 @@ public class OpenAMEUtility {
 		updateattributes.append("&identity_name="+ email);
 		updateattributes.append("&identity_realm=%2F&identity_type=user");
 
-		return OpenAMEUtility.DeleteUser(updateattributes.toString());
+		return OpenAMEUtility.deleteUser(updateattributes.toString());
 
 	}
 
@@ -388,7 +389,7 @@ public class OpenAMEUtility {
 		attributes.append("&identity_attribute_names=postaladdress&identity_attribute_values_postaladdress="+ apd.getStreet()+" "+apd.getCity()+" "+apd.getState()+" "+apd.getCountry());
 		attributes.append("&identity_attribute_names=telephonenumber&identity_attribute_values_telephonenumber="+apd.getPhone());
 		attributes.append("&identity_realm=%2F&identity_type=user");
-		return OpenAMEUtility.UpdateUser(attributes.toString());
+		return OpenAMEUtility.updateUser(attributes.toString());
 
 	}
 
