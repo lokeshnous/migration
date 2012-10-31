@@ -62,7 +62,7 @@ public class UserSubscriptionsController {
 				currentSubsList, subscriptform, listSubscriptions);
 		
 		
-		List<DropDownDTO> listpublicationprint =userSubService.getSubscriptionscheck(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
+		//List<DropDownDTO> listpublicationprint =userSubService.getSubscriptionscheck(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
 		List<DropDownDTO> listpublicationdigital =userSubService.getSubscriptionsdigital(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
 	    List<DropDownDTO> listnewsletter =userSubService.getSubscriptionsletter(Integer.valueOf(String.valueOf(session.getAttribute("userId"))));
 	    

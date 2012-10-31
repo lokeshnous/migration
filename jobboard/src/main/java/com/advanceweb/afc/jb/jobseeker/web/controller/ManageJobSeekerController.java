@@ -70,6 +70,12 @@ public class ManageJobSeekerController {
 	private TransformCreateResume transCreateResume;
 	@Autowired
 	private PDFGenerator pdfGenerator;
+	private static final String MANAGEJOBSEEKERFORM = "manageJobSeekerForm";
+	private static final String ERRORMSG = "Error occured while Updating Data";
+	private static final String APP_STATUS_LIST = "appStatusList";
+	private static final String RESUMEID = "resumeId";
+	
+	
 	@Autowired
 	private MMEmailService emailService;
 
@@ -167,6 +173,8 @@ public class ManageJobSeekerController {
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 		}
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
+		model.addObject(APP_STATUS_LIST, appStatusList);
 		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.MANAGEJOBSEEKER);
 		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
 		model.addObject("appStatusList", appStatusList);
@@ -191,7 +199,7 @@ public class ManageJobSeekerController {
 			HttpServletResponse response, HttpSession session,
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam("appStatus") int appStatus,
-			@RequestParam("resumeId") int resumeId) {
+			@RequestParam(RESUMEID) int resumeId) {
 		LOGGER.info("Update Application Status : Process to update the Application Status !");
 		JSONObject warningMessage = new JSONObject();
 		if (appStatus > 0 && resumeId > 0) {
@@ -222,7 +230,7 @@ public class ManageJobSeekerController {
 			HttpServletResponse response, HttpSession session,
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam("rating") int rating,
-			@RequestParam("resumeId") int resumeId) {
+			@RequestParam(RESUMEID) int resumeId) {
 
 		LOGGER.info("Update rating : Process to update the rating !");
 		ModelAndView model = new ModelAndView();
@@ -244,7 +252,7 @@ public class ManageJobSeekerController {
 									.getAttribute(MMJBCommonConstants.USER_ID));
 				}
 				appStatusList = manageJobSeekerService.applicationStatusList();
-				model.addObject("appStatusList", appStatusList);
+				model.addObject(APP_STATUS_LIST, appStatusList);
 			} catch (JobBoardServiceException jbex) {
 				LOGGER.error("Error occured while Updating The Rating", jbex);
 			}
@@ -253,7 +261,7 @@ public class ManageJobSeekerController {
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 		}
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 		model.setViewName("manageJobSeekerContent");
 		return model;
 	}
@@ -292,7 +300,7 @@ public class ManageJobSeekerController {
 					.folderDetailList((Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));
 			appStatusList = manageJobSeekerService.applicationStatusList();
-			model.addObject("appStatusList", appStatusList);
+			model.addObject(APP_STATUS_LIST, appStatusList);
 			if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
 				manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
 			}
@@ -321,7 +329,7 @@ public class ManageJobSeekerController {
 			LOGGER.error("Error occured while Retriving folder detail", jbex);
 		}
 
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 
 		return model;
 	}
@@ -336,7 +344,7 @@ public class ManageJobSeekerController {
 	 */
 	@RequestMapping(value = "/viewResume", method = RequestMethod.GET)
 	public ModelAndView viewResume(CreateResume createResumed,
-			BindingResult result, @RequestParam("resumeId") int resumeId,
+			BindingResult result, @RequestParam(RESUMEID) int resumeId,
 			HttpServletRequest request, HttpServletResponse response) {
 		/**
 		 * Introduced a new variable "createResumed" to resolve PMD issue.
@@ -404,7 +412,7 @@ public class ManageJobSeekerController {
 	JSONObject deleteJobSeekerDetails(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			ManageJobSeekerForm manageJobSeekerForm,
-			@RequestParam("resumeId") int resumeId) {
+			@RequestParam(RESUMEID) int resumeId) {
 
 		LOGGER.info("Delete Job Seeker : Process to delete the job seeker !");
 		JSONObject warningMessage = new JSONObject();
@@ -412,7 +420,7 @@ public class ManageJobSeekerController {
 			try {
 				manageJobSeekerService.deleteJobSeeker(resumeId);
 			} catch (JobBoardServiceException jbex) {
-				LOGGER.error("Error occured while Updating Data", jbex);
+				LOGGER.error(ERRORMSG, jbex);
 			}
 		}
 		warningMessage.put("success", "updated succesfully");
@@ -434,8 +442,8 @@ public class ManageJobSeekerController {
 	ModelAndView addFolder(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			ManageJobSeekerForm manageJobSeekerForm,
-			@RequestParam("folderName") String folderName) {
-
+			@RequestParam("folderName") String folderName1) {
+		String folderName = folderName1;
 		LOGGER.info("Add New Folder : Process to Add New Folder !");
 
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
@@ -457,14 +465,14 @@ public class ManageJobSeekerController {
 						.retrieveAllResume((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 			} catch (JobBoardServiceException jbex) {
-				LOGGER.error("Error occured while Updating Data", jbex);
+				LOGGER.error(ERRORMSG, jbex);
 			}
 		}
 		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
 			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
 		}
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
-		model.addObject("appStatusList", appStatusList);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
+		model.addObject(APP_STATUS_LIST, appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
 		model.setViewName("manageJobSeekerFolder");
 		return model;
@@ -502,13 +510,13 @@ public class ManageJobSeekerController {
 						.folderDetailList((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 			} catch (JobBoardServiceException jbex) {
-				LOGGER.error("Error occured while Updating Data", jbex);
+				LOGGER.error(ERRORMSG, jbex);
 			}
 		}
 		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
 			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
 		}
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 		model.setViewName("manageJobSeekerFolder");
 		return model;
 	}
@@ -528,8 +536,8 @@ public class ManageJobSeekerController {
 	ModelAndView removeFolder(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			ManageJobSeekerForm manageJobSeekerForm,
-			@RequestParam("folderName") String folderName) {
-
+			@RequestParam("folderName") String folderName1) {
+		String folderName = folderName1;
 		LOGGER.info("Delete Folder : Process to Delete Folder !");
 
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
@@ -546,13 +554,13 @@ public class ManageJobSeekerController {
 								.getAttribute(MMJBCommonConstants.USER_ID));
 
 			} catch (JobBoardServiceException jbex) {
-				LOGGER.error("Error occured while Updating Data", jbex);
+				LOGGER.error(ERRORMSG, jbex);
 			}
 		}
 		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
 			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
 		}
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 		model.setViewName("manageJobSeekerFolder");
 		return model;
 	}
@@ -565,7 +573,7 @@ public class ManageJobSeekerController {
 	 */
 	@RequestMapping(value = "/downloadResume", method = RequestMethod.GET)
 	public ModelAndView downloadResume(CreateResume createResumed,
-			@RequestParam("resumeId") int resumeId, BindingResult result,
+			@RequestParam(RESUMEID) int resumeId, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView();
 		try {
@@ -598,7 +606,7 @@ public class ManageJobSeekerController {
 	 */
 	@RequestMapping(value = "/printResume", method = RequestMethod.GET)
 	public ModelAndView printResume(CreateResume createResumed,
-			@RequestParam("resumeId") int resumeId, BindingResult result,
+			@RequestParam(RESUMEID) int resumeId, BindingResult result,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView();
 		try {
@@ -685,10 +693,10 @@ public class ManageJobSeekerController {
 									model.addObject("errorMsg",
 											"One of the selected job seeker is not created by ADVANCE Resume Builder");
 
-									model.addObject("appStatusList",
+									model.addObject(APP_STATUS_LIST,
 											appStatusList);
 									model.setViewName("manageJobSeekers");
-									model.addObject("manageJobSeekerForm",
+									model.addObject(MANAGEJOBSEEKERFORM,
 											manageJobSeekerForm);
 
 									return model;
@@ -706,7 +714,7 @@ public class ManageJobSeekerController {
 			LOGGER.error("Error occured while Retriving resume detail", jbex);
 		}
 
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 
 		return model;
 	}
@@ -725,7 +733,7 @@ public class ManageJobSeekerController {
 	public ModelAndView removeCompareResume(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			ManageJobSeekerForm manageJobSeekerForm,
-			@RequestParam("resumeId") int resumeId) {
+			@RequestParam(RESUMEID) int resumeId) {
 
 		LOGGER.info("Move To Folder : Process to Implement compare job seeker Functionality !");
 		ModelAndView model = new ModelAndView();
@@ -738,39 +746,18 @@ public class ManageJobSeekerController {
 			manageJobSeekerForm.setSelectedRow(manageJobSeekerForm
 					.getSelectedRow());
 		}
-
 		try {
 			if (null != selectedRows) {
 
 				StringTokenizer tokenize = new StringTokenizer(selectedRows,
 						",");
-				int folderResumeId = 0;
-
 				manageJobSeekerDTOList = manageJobSeekerService
 						.retrieveAllResume((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
 				if (null != manageJobSeekerDTOList
 						&& !manageJobSeekerDTOList.isEmpty()) {
-					manageJobSeekerForm
-							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
-
-					while (tokenize.hasMoreTokens()) {
-						ResumeDTO resumeDTO = new ResumeDTO();
-						folderResumeId = Integer.valueOf(tokenize.nextToken());
-						for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
-
-							if (folderResumeId == manageJobSeekerDTO
-									.getFolderResumeId()) {
-								resumeDTO = resumeService
-										.editResume(manageJobSeekerDTO
-												.getOrgResumeId());
-								if (resumeId != resumeDTO.getUploadResumeId()) {
-									resumeDTOList.add(resumeDTO);
-								}
-							}
-						}
-
-					}
+					addResumeDTOtoResumeDTOList(manageJobSeekerForm, resumeId,
+							manageJobSeekerDTOList, resumeDTOList, tokenize);
 				}
 				manageJobSeekerForm.setTotalRecordForComp(resumeDTOList.size());
 				manageJobSeekerForm.setResumeDTOList(resumeDTOList);
@@ -780,10 +767,44 @@ public class ManageJobSeekerController {
 			LOGGER.error("Error occured while Retriving resume detail", jbex);
 		}
 
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
+		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 
 		return model;
 	}
+	/**
+	 * @param manageJobSeekerForm
+	 * @param resumeId
+	 * @param manageJobSeekerDTOList
+	 * @param resumeDTOList
+	 * @param tokenize
+	 */
+	private void addResumeDTOtoResumeDTOList(
+			ManageJobSeekerForm manageJobSeekerForm, int resumeId,
+			List<ManageJobSeekerDTO> manageJobSeekerDTOList,
+			List<ResumeDTO> resumeDTOList, StringTokenizer tokenize) {
+		int folderResumeId;
+		manageJobSeekerForm
+				.setManageJobSeekerDTOList(manageJobSeekerDTOList);
+
+		while (tokenize.hasMoreTokens()) {
+			ResumeDTO resumeDTO = new ResumeDTO();
+			folderResumeId = Integer.valueOf(tokenize.nextToken());
+			for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+
+				if (folderResumeId == manageJobSeekerDTO
+						.getFolderResumeId()) {
+					resumeDTO = resumeService
+							.editResume(manageJobSeekerDTO
+									.getOrgResumeId());
+					if (resumeId != resumeDTO.getUploadResumeId()) {
+						resumeDTOList.add(resumeDTO);
+					}
+				}
+			}
+
+		}
+	}
+
 	/**
 	 * This method is called to send job to a friend for call the Mail page open
 	 * and here hold URl userid and job id etc.
@@ -800,7 +821,6 @@ public class ManageJobSeekerController {
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
 			BindingResult result, ManageJobSeekerForm manageJobSeekerForm,HttpServletRequest request, Model model) {
-
 		try {
 
 			int resumeId = Integer.parseInt(request.getParameter("id"));

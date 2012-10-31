@@ -96,18 +96,7 @@ public class TransformEmployerRegistration {
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
 				form.setbRequired(dto.getbRequired());
 				if (null != userDTO) {
-					if (form.getStrLabelName().equals(
-							MMJBCommonConstants.FIRST_NAME)) {
-						form.setStrLabelValue(userDTO.getFirstName());
-					}
-					if (form.getStrLabelName().equals(
-							MMJBCommonConstants.LAST_NAME)) {
-						form.setStrLabelValue(userDTO.getLastName());
-					}
-					if (form.getStrLabelName().equals(
-							MMJBCommonConstants.MIDDLE_NAME)) {
-						form.setStrLabelValue(userDTO.getMiddleName());
-					}
+					setValuesToForm(userDTO, form);
 					/*if (form.getStrLabelName().equals(
 							MMJBCommonConstants.EMAIL_ADDRESS)) {
 						form.setStrLabelValue(userDTO.getEmailId());
@@ -119,6 +108,21 @@ public class TransformEmployerRegistration {
 		}
 
 		return listForms;
+	}
+
+	private void setValuesToForm(UserDTO userDTO, EmployerProfileAttribForm form) {
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.FIRST_NAME)) {
+			form.setStrLabelValue(userDTO.getFirstName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.LAST_NAME)) {
+			form.setStrLabelValue(userDTO.getLastName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.MIDDLE_NAME)) {
+			form.setStrLabelValue(userDTO.getMiddleName());
+		}
 	}
 
 	/**

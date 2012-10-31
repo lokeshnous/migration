@@ -25,7 +25,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,15 +99,22 @@ public class EmployerDashBoardController extends AbstractController{
 	
 	@Autowired
 	private LoginService loginService;
+	private static final String EMPLOYERDASHBOARDFORM = "employerDashBoardForm";
+	private static final String JBPOSTTOTALLIST = "jbPostTotalList";
+	private static final String COUNT = "count";
+	private static final String AVAQUANTITY = "avaQuantity";
+	
+	
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
-			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,BindingResult result,HttpSession session, HttpServletRequest request)
+			@ModelAttribute(EMPLOYERDASHBOARDFORM) MetricsForm employerDashBoardForm,
+			HttpSession session, HttpServletRequest request)
 			throws JobBoardServiceException {
 			SearchResumeForm searchResumeForm = new SearchResumeForm();
-			session.removeAttribute("jbPostTotalList");
-			session.removeAttribute("count");
-			session.removeAttribute("avaQuantity");
+			session.removeAttribute(JBPOSTTOTALLIST);
+			session.removeAttribute(COUNT);
+			session.removeAttribute(AVAQUANTITY);
 			String enableAccess = "true";
 			String enablePostEditAccess = "true";
 			ModelAndView model = new ModelAndView();
@@ -163,18 +169,18 @@ public class EmployerDashBoardController extends AbstractController{
 
 			// getting the metrics details
 			jbPostTotalList = getMetricsDetails(facilityId);
-			model.addObject("count", count);
-			model.addObject("avaQuantity", avaQuantity);
+			model.addObject(COUNT, count);
+			model.addObject(AVAQUANTITY, avaQuantity);
 
 			model.addObject("downDTOs", downDTOs);
-			model.addObject("jbPostTotalList", jbPostTotalList);
-			session.setAttribute("jbPostTotalList", jbPostTotalList);
-			session.setAttribute("count", count);
-			session.setAttribute("avaQuantity", avaQuantity);
+			model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
+			session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
+			session.setAttribute(COUNT, count);
+			session.setAttribute(AVAQUANTITY, avaQuantity);
 
 			model.addObject("currentSubs", currentSubs);
 			model.addObject("searchResumeForm", searchResumeForm);
-			model.addObject("employerDashBoardForm", employerDashBoardForm);
+			model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
 			model.setViewName("employerDashboard");
 			// get the Ads
 			getAdsForEmployerDashboard(request, session, model);
@@ -225,14 +231,14 @@ public class EmployerDashBoardController extends AbstractController{
 	@RequestMapping(value = "/viewEmployerMetrics", method = RequestMethod.GET)
 	public @ResponseBody
 	void viewEmployerMetrics(
-			@ModelAttribute("employerDashBoardForm") MetricsForm employerDashBoardForm,
+			@ModelAttribute(EMPLOYERDASHBOARDFORM) MetricsForm employerDashBoardForm,
 			BindingResult result, HttpSession session,
 			@RequestParam("selEmployerId") int selEmployerId) {
-		session.removeAttribute("jbPostTotalList");
+		session.removeAttribute(JBPOSTTOTALLIST);
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(selEmployerId);
-		session.setAttribute("jbPostTotalList", jbPostTotalList);
+		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
 
 	}
 
@@ -336,9 +342,9 @@ public class EmployerDashBoardController extends AbstractController{
 			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate,
 			@RequestParam("selEmployerId") int selEmployerId,
-			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
+			@ModelAttribute(EMPLOYERDASHBOARDFORM) EmployerDashBoardForm employerDashBoardForm,
 			BindingResult result) throws JobBoardException {
-	   	session.removeAttribute("jbPostTotalList");
+	   	session.removeAttribute(JBPOSTTOTALLIST);
         java.util.Date startFrom = null;
 		java.util.Date endFrom = null;
         String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
@@ -417,9 +423,9 @@ public class EmployerDashBoardController extends AbstractController{
 		metricsDTO.setClicks(swAvgClicks);
 		metricsDTO.setApplies(swAvgApplies);
 		jbPostTotalList.add(2, metricsDTO);
-        model.addObject("jbPostTotalList", jbPostTotalList);
-		session.setAttribute("jbPostTotalList", jbPostTotalList);
-		model.addObject("employerDashBoardForm", employerDashBoardForm);
+        model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
+		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
+		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
 		model.setViewName("employerDashboard");
 		return model;
 	}
@@ -441,8 +447,8 @@ public class EmployerDashBoardController extends AbstractController{
 			BindingResult result) throws JobBoardException {
 		   JSONObject jsonObject = new JSONObject();
 
-		session.removeAttribute("avaQuantity");
-		session.removeAttribute("count");
+		session.removeAttribute(AVAQUANTITY);
+		session.removeAttribute(COUNT);
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
@@ -455,10 +461,10 @@ public class EmployerDashBoardController extends AbstractController{
 
 		int count = loginService.getactivejobposting(facilityId);
 
-		jsonObject.put("avaQuantity", avaQuantity);
-		jsonObject.put("count", count);
-		session.setAttribute("count", count);
-		session.setAttribute("avaQuantity", avaQuantity);
+		jsonObject.put(AVAQUANTITY, avaQuantity);
+		jsonObject.put(COUNT, count);
+		session.setAttribute(COUNT, count);
+		session.setAttribute(AVAQUANTITY, avaQuantity);
 		return jsonObject;
 
 	}
@@ -477,12 +483,12 @@ public class EmployerDashBoardController extends AbstractController{
 
 		@SuppressWarnings("unchecked")
 		List<MetricsDTO> dtos = (List<MetricsDTO>) session
-				.getAttribute("jbPostTotalList");
+				.getAttribute(JBPOSTTOTALLIST);
 
 		String output = ServletRequestUtils.getStringParameter(request,
 				"output");
-		int avaQuantity = (Integer) session.getAttribute("avaQuantity");
-		int count = (Integer) session.getAttribute("count");
+		int avaQuantity = (Integer) session.getAttribute(AVAQUANTITY);
+		int count = (Integer) session.getAttribute(COUNT);
 
 		HSSFSheet sheet = workbook.createSheet("MM Job Board");
 
@@ -528,9 +534,7 @@ public class EmployerDashBoardController extends AbstractController{
 		int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
 		// close the input stream
 		inputStream.close();
-	
-		@SuppressWarnings("unused")
-		Drawing drawing = sheet.createDrawingPatriarch();
+		//Drawing drawing = sheet.createDrawingPatriarch();
 		@SuppressWarnings("unused")
 		CreationHelper helper = workbook.getCreationHelper();
 		// ClientAnchor anchor = helper.createClientAnchor();

@@ -36,6 +36,7 @@ public class JobPostingInventoryController {
 	
 	@Autowired
 	private JobPostInventoryService inventoryService;
+	private static final String PAGE = "page";
 
 	/**
 	 * This method to get job posting inventory details
@@ -47,7 +48,7 @@ public class JobPostingInventoryController {
 	public ModelAndView jobInventory(
 			@ModelAttribute("alertForm") InventoryForm inventoryForm,
 			BindingResult result,
-			@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = PAGE, required = false) String page,
 			HttpSession session) {
 		String status = null;
 		ModelAndView model = new ModelAndView();
@@ -61,11 +62,11 @@ public class JobPostingInventoryController {
 		// If Inventory page is from post new job page then we action column has
 		// to remove
 		if ((page != null && page.equals(MMJBCommonConstants.POST_JOB_PAGE))
-				|| (null != session.getAttribute("page") && session
-						.getAttribute("page").equals(
+				|| (null != session.getAttribute(PAGE) && session
+						.getAttribute(PAGE).equals(
 								MMJBCommonConstants.POST_JOB_PAGE))) {
 			inventoryForm.setPostJobPage("true");
-			session.setAttribute("page", MMJBCommonConstants.POST_JOB_PAGE);
+			session.setAttribute(PAGE, MMJBCommonConstants.POST_JOB_PAGE);
 		} else {
 			status = "true";
 		}

@@ -47,6 +47,8 @@ public class JobSeekerRegistrationValidation {
 	private Pattern pattern;
 	private Matcher matcher;
 	
+	private static final String NOTEMPTY = "NotEmpty";
+	
 	
 	  public boolean supports(Class<?> form) {
 		    return JobSeekerRegistrationForm.class.isAssignableFrom(form);
@@ -62,26 +64,26 @@ public class JobSeekerRegistrationValidation {
 	public void validateEmail(JobSeekerRegistrationForm registerForm, Errors errors){
 		
 		 if(StringUtils.isEmpty(registerForm.getEmailId())){
-			 errors.rejectValue("emailId", "NotEmpty", emailBlank);
+			 errors.rejectValue("emailId", NOTEMPTY, emailBlank);
 		 }
 		 
 		 if(StringUtils.isEmpty(registerForm.getConfirmEmailId())){
-			 errors.rejectValue("confirmEmailId", "NotEmpty", conformEmailBlank);
+			 errors.rejectValue("confirmEmailId", NOTEMPTY, conformEmailBlank);
 		 }
 		 
 		 if(!StringUtils.isEmpty(registerForm.getEmailId()) 
 				 && !StringUtils.isEmpty(registerForm.getConfirmEmailId())){
 			 
 			 if(!validateEmailPattern(registerForm.getEmailId())){
-				 errors.rejectValue("emailId", "NotEmpty", invalidEmail); 
+				 errors.rejectValue("emailId", NOTEMPTY, invalidEmail); 
 			 }
 			 
 			 if(!validateEmailPattern(registerForm.getConfirmEmailId())){
-				 errors.rejectValue("confirmEmailId", "NotEmpty", invalidEmail); 
+				 errors.rejectValue("confirmEmailId", NOTEMPTY, invalidEmail); 
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", "NotEmpty", emailMatch);
+				errors.rejectValue("confirmEmailId", NOTEMPTY, emailMatch);
 			 }
 		 }
 	}
@@ -131,26 +133,26 @@ public class JobSeekerRegistrationValidation {
 	public void validatePassoword(String password, String retypePassword, Errors errors){
 		
 		 if(StringUtils.isEmpty(password)){
-			 errors.rejectValue("password", "NotEmpty", pwdEmpty);
+			 errors.rejectValue("password", NOTEMPTY, pwdEmpty);
 		 }
 		 
 		 if(StringUtils.isEmpty(retypePassword)){
-			 errors.rejectValue("retypepassword", "NotEmpty", conformPassEmpty);
+			 errors.rejectValue("retypepassword", NOTEMPTY, conformPassEmpty);
 		 }
 		 
 		 if(!StringUtils.isEmpty(password) 
 				 && !StringUtils.isEmpty(retypePassword)){
 			 
 			 if(!validatePasswordPattern(password)){
-				 errors.rejectValue("password", "NotEmpty", pwdHint); 
+				 errors.rejectValue("password", NOTEMPTY, pwdHint); 
 			 }
 			 
 			 if(!validatePasswordPattern(retypePassword)){
-				 errors.rejectValue("retypepassword", "NotEmpty", pwdHint); 
+				 errors.rejectValue("retypepassword", NOTEMPTY, pwdHint); 
 			 }
 			 
 			 if(!password.equals(retypePassword)){
-				errors.rejectValue("retypepassword", "NotEmpty",pwdNotEqual);
+				errors.rejectValue("retypepassword", NOTEMPTY,pwdNotEqual);
 			 }
 		 }
 	}

@@ -151,34 +151,27 @@ public class LoginFormValidator {
 	 */
 	public boolean validateEmailValues(String email, LoginDTO userDetailsDTO,
 			String page) {
-
-		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
-			if (email != null
-					&& userDetailsDTO != null
-					&& email.equals(userDetailsDTO.getEmailAddress())
-					&& userDetailsDTO.getRoleId() == MMJBCommonConstants.JOBSEEKER_ROLE_ID) {
-
-				return true;
-
-			}
-		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
-			if (email != null
-					&& userDetailsDTO != null
-					&& email.equals(userDetailsDTO.getEmailAddress())
-					&& ((userDetailsDTO.getFacilityType()
-							.equals(MMJBCommonConstants.FACILITY_GROUP)) || (userDetailsDTO
-							.getFacilityType()
-							.equals(MMJBCommonConstants.FACILITY)))) {
-				return true;
-			}
-		} else if (page.equals(MMJBCommonConstants.AGENCY)) {
-			if (email != null
-					&& userDetailsDTO != null
-					&& email.equals(userDetailsDTO.getEmailAddress())
-					&& (userDetailsDTO.getFacilityType()
-							.equals(MMJBCommonConstants.FACILITY_SYSTEM))) {
-				return true;
-			}
+		if (page.equals(MMJBCommonConstants.JOB_SEEKER)
+				&& email != null
+				&& userDetailsDTO != null
+				&& email.equals(userDetailsDTO.getEmailAddress())
+				&& userDetailsDTO.getRoleId() == MMJBCommonConstants.JOBSEEKER_ROLE_ID) {
+			return true;
+		} else if (page.equals(MMJBCommonConstants.EMPLOYER)
+				&& email != null
+				&& userDetailsDTO != null
+				&& email.equals(userDetailsDTO.getEmailAddress())
+				&& ((userDetailsDTO.getFacilityType()
+						.equals(MMJBCommonConstants.FACILITY_GROUP)) || (userDetailsDTO
+						.getFacilityType().equals(MMJBCommonConstants.FACILITY)))) {
+			return true;
+		} else if (page.equals(MMJBCommonConstants.AGENCY)
+				&& email != null
+				&& userDetailsDTO != null
+				&& email.equals(userDetailsDTO.getEmailAddress())
+				&& (userDetailsDTO.getFacilityType()
+						.equals(MMJBCommonConstants.FACILITY_SYSTEM))) {
+			return true;
 		}
 		return false;
 	}

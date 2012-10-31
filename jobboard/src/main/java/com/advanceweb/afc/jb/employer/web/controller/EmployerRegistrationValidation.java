@@ -43,6 +43,9 @@ public class EmployerRegistrationValidation {
 	
 	private Pattern pattern;
 	private Matcher matcher;
+	
+	private static final String NOTEMPTY = "NotEmpty";
+	private static final String EMAILID = "emailId";
 
 	public boolean supports(Class<?> form) {
 		return EmployerRegistrationForm.class.isAssignableFrom(form);
@@ -62,26 +65,26 @@ public class EmployerRegistrationValidation {
 			Errors errors) {
 		
 		 if(StringUtils.isEmpty(registerForm.getEmailId())){
-			 errors.rejectValue("emailId", "NotEmpty", emailBlank);
+			 errors.rejectValue(EMAILID, NOTEMPTY, emailBlank);
 		 }
 		 
 		 if(StringUtils.isEmpty(registerForm.getConfirmEmailId())){
-			 errors.rejectValue("confirmEmailId", "NotEmpty", conformEmailBlank);
+			 errors.rejectValue("confirmEmailId", NOTEMPTY, conformEmailBlank);
 		 }
 		 
 		 if(!StringUtils.isEmpty(registerForm.getEmailId()) 
 				 && !StringUtils.isEmpty(registerForm.getConfirmEmailId())){
 			 
 			 if(!validateEmailPattern(registerForm.getEmailId())){
-				 errors.rejectValue("emailId", "NotEmpty", ""); 
+				 errors.rejectValue(EMAILID, NOTEMPTY, ""); 
 			 }
 			 
 			 if(!validateEmailPattern(registerForm.getConfirmEmailId())){
-				 errors.rejectValue("confirmEmailId", "NotEmpty", invalidEmail); 
+				 errors.rejectValue("confirmEmailId", NOTEMPTY, invalidEmail); 
 			 }
 			 
 			 if(!registerForm.getEmailId().equals(registerForm.getConfirmEmailId())){
-				errors.rejectValue("confirmEmailId", "NotEmpty", emailMatch);
+				errors.rejectValue("confirmEmailId", NOTEMPTY, emailMatch);
 			 }
 		 }
 	}
@@ -134,12 +137,12 @@ public class EmployerRegistrationValidation {
 			Errors errors) {
 
 		if (StringUtils.isEmpty(password)) {
-			errors.rejectValue("password", "NotEmpty",
+			errors.rejectValue("password", NOTEMPTY,
 					pwdEmpty);
 		}
 
 		if (StringUtils.isEmpty(confirmPassword)) {
-			errors.rejectValue("confirmPassword", "NotEmpty",
+			errors.rejectValue("confirmPassword", NOTEMPTY,
 					conformPassEmpty);
 		}
 
@@ -147,17 +150,17 @@ public class EmployerRegistrationValidation {
 				&& !StringUtils.isEmpty(confirmPassword)) {
 
 			if (!validatePasswordPattern(password)) {
-				errors.rejectValue("password", "NotEmpty",
+				errors.rejectValue("password", NOTEMPTY,
 						pwdHint);
 			}
 
 			if (!validatePasswordPattern(confirmPassword)) {
-				errors.rejectValue("confirmPassword", "NotEmpty",
+				errors.rejectValue("confirmPassword", NOTEMPTY,
 						pwdHint);
 			}
 
 			if (!password.equals(confirmPassword)) {
-				errors.rejectValue("confirmPassword", "NotEmpty",
+				errors.rejectValue("confirmPassword", NOTEMPTY,
 						pwdNotEqual);
 			}
 		}
@@ -190,13 +193,12 @@ public class EmployerRegistrationValidation {
 			Errors errors) {
 		
 		 if(StringUtils.isEmpty(registerForm.getEmail())){
-			 errors.rejectValue("emailId", "NotEmpty", emailBlank);
+			 errors.rejectValue(EMAILID, NOTEMPTY, emailBlank);
 		 }
 			 
-		 if(!StringUtils.isEmpty(registerForm.getEmail()))
-				 {
+		 if(!StringUtils.isEmpty(registerForm.getEmail())){
 			 if(!validateEmailPattern(registerForm.getEmail())){
-				 errors.rejectValue("emailId", "NotEmpty", invalidEmail); 
+				 errors.rejectValue(EMAILID, NOTEMPTY, invalidEmail); 
 			 }
 			 
 		 }

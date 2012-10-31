@@ -761,6 +761,7 @@ public class ResumeController extends AbstractController{
 	 * @param createResume
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/addWorkExp", method = RequestMethod.POST)
 	public ModelAndView addWorkExp(HttpSession session,
 			CreateResume createResume) {

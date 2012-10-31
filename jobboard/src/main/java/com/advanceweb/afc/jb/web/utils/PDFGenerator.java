@@ -287,8 +287,7 @@ public class PDFGenerator {
 	private Paragraph generateReferencesPara(List<ReferenceDTO> listRefDTO) {
 		Paragraph referencesParagraph = null;
 		//Font font = new Font(labelFontName, size)
-		if ((null != listRefDTO) && (listRefDTO.size() > 0)) {
-
+		if(!listRefDTO.isEmpty() && null != listRefDTO){
 		
 			 PdfPTable referencesTable = new PdfPTable(2);
 			 referencesTable.getDefaultCell().setBorder(0);
@@ -439,7 +438,7 @@ public class PDFGenerator {
 	private Paragraph generateLanguagesPara(List<LanguageDTO> listLangDTO) {
 
 		Paragraph languageParagraph = new Paragraph();
-		if ((null != listLangDTO) && (listLangDTO.size() > 0)) {
+		if(!listLangDTO.isEmpty() && null != listLangDTO){
 			PdfPTable languagePTable = new PdfPTable(2);
 			languagePTable.getDefaultCell().setBorder(0);
 			for (LanguageDTO langDTO: listLangDTO) {
@@ -489,9 +488,7 @@ public class PDFGenerator {
 	 */
 	private Paragraph generateCertificationParagraph(List<CertificationDTO> listCertDTO) {
 		Paragraph certificationParagraph = null;
-		if ((null != listCertDTO) && (listCertDTO.size() > 0)) {
-
-		
+		if(!listCertDTO.isEmpty() && null != listCertDTO){
 			 PdfPTable certificationTable = new PdfPTable(2);
 			 certificationTable.getDefaultCell().setBorder(0);
 	         for (CertificationDTO certificationDTO: listCertDTO) {
@@ -555,9 +552,7 @@ public class PDFGenerator {
 	 */
 	private Paragraph generateEducationParagraph(List<EducationDTO> listEduDTO) {
 		Paragraph educationParagraph = null;
-		if ((null != listEduDTO) && (listEduDTO.size() > 0)) {
-
-		
+		if(!listEduDTO.isEmpty() && listEduDTO!=null){
 			 PdfPTable educationTable;
 			 
 	         for (EducationDTO educationDTO: listEduDTO) {
@@ -633,8 +628,7 @@ public class PDFGenerator {
 	 */
 	private Paragraph generateWorkExpParagraph(List<WorkExpDTO> workExpDTOLst) {
 		Paragraph workExpParagraph = null;
-		if ((null != workExpDTOLst) && (workExpDTOLst.size() > 0)) {
-
+		if (!workExpDTOLst.isEmpty() && null != workExpDTOLst){
 			 PdfPTable workExpTable = new PdfPTable(2);
 			 workExpTable.getDefaultCell().setBorder(0);
 

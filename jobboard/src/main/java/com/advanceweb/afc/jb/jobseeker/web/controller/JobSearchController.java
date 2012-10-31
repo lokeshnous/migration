@@ -90,7 +90,7 @@ import com.advanceweb.common.client.ClientContext;
  * @since 10 July 2012
  * 
  */
-
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping("/jobsearch")
 public class JobSearchController extends AbstractController {
@@ -244,6 +244,9 @@ public class JobSearchController extends AbstractController {
 	private static final String IS_SORTING = "isSorting";
 	private static final String CURRENT_URL = "currentUrl";
 	private static final String END_TAGS = "</TD></TR>\n";
+	private static final String ADPAGETOP = "adPageTop";
+	private static final String ADPAGEBTM = "adPageBtm";
+	
 
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
@@ -380,7 +383,7 @@ public class JobSearchController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.put("adPageTop", bannerString);
+			model.put(ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
@@ -398,7 +401,7 @@ public class JobSearchController extends AbstractController {
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.put("adPageBtm", bannerString);
+			model.put(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -421,13 +424,13 @@ public class JobSearchController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.put("adPageTop", bannerString);
+			model.put(ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.put("adPageBtm", bannerString);
+			model.put(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -824,7 +827,7 @@ public class JobSearchController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
@@ -836,7 +839,7 @@ public class JobSearchController extends AbstractController {
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -948,7 +951,6 @@ public class JobSearchController extends AbstractController {
 		if ((request.getParameter(MMJBCommonConstants.BROWSE_BY_LOCATION) != null)) {
 			session.setAttribute("locationPage", true);
 			session.setAttribute("areaPage", true);
-			@SuppressWarnings("unchecked")
 			List<String> areaList = (List<String>) jobSrchJsonObj
 					.get(MMJBCommonConstants.AREA);
 			session.setAttribute("areaList", areaList);
@@ -1143,7 +1145,6 @@ public class JobSearchController extends AbstractController {
 			HttpSession session) {
 		// Load the current search results list
 		List<HashMap<String, Object>> currentSearchList = new ArrayList<HashMap<String, Object>>();
-		@SuppressWarnings("unchecked")
 		HashMap<String, String> sessionMap = (HashMap<String, String>) session
 				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
 
@@ -1430,7 +1431,7 @@ public class JobSearchController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
@@ -1448,7 +1449,7 @@ public class JobSearchController extends AbstractController {
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -1782,7 +1783,6 @@ public class JobSearchController extends AbstractController {
 		return paramMap;
 
 	}
-
 	/**
 	 * This method is used to set values into the session map.
 	 * 
@@ -1973,7 +1973,6 @@ public class JobSearchController extends AbstractController {
 			LOGGER.info("Deleting the current search : "
 					+ map.get(MMJBCommonConstants.HASHMAP_KEY) + "-"
 					+ map.get(MMJBCommonConstants.HASHMAP_VALUE));
-			@SuppressWarnings("unchecked")
 			List<HashMap<String, Object>> currentSearchList = (List<HashMap<String, Object>>) session
 					.getAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
 			currentSearchList.remove(map);

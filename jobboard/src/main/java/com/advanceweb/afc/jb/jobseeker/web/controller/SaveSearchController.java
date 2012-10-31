@@ -338,7 +338,7 @@ public class SaveSearchController {
 		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService
 				.editSavedSearch(searchId);
 
-		if (saveSrchJobsDTOList.size() > 0) {
+		if (!saveSrchJobsDTOList.isEmpty()) {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();
 			String saveSearchName = saveSrchJobsDTOList.get(0).getSearchName();
 			Map<String, String> urlMap = MMUtils.getUrlMap(urlString);

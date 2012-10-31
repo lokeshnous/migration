@@ -11,8 +11,8 @@ import java.util.List;
  *
  */
 public class PurchaseResumeSearchForm {
-	List<ResumeSearchPackageForm> resumeSearchPackageList;
-	List<ResumeSearchPackageForm> resumeSearchPackageCart = new ArrayList<ResumeSearchPackageForm>();
+	public List<ResumeSearchPackageForm> resumeSearchPackageList;
+	public List<ResumeSearchPackageForm> resumeSearchPackageCart = new ArrayList<ResumeSearchPackageForm>();
 	private float grandTotal;
 	private String promotionCode;
 	

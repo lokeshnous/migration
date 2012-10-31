@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
  */
 @Component("paymentGatewayValidation")
 public class PaymentGatewayValidation {
+	private static final String NOTEMPTY = "NotEmpty";
 
 	/**
 	 * @param form
@@ -19,32 +20,32 @@ public class PaymentGatewayValidation {
 	 */
 	public void validateCreditCardInfo(CreditCardInfoForm form, Errors errors) {
 		if (StringUtils.isEmpty(form.getCreditCardNo())) {
-			errors.rejectValue("creditCardInfoForm.creditCardNo", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.creditCardNo", NOTEMPTY,
 					"Credit card number should not be blank.");
 		} else if (!(form.getCreditCardNo().length() == 13)
 				&& !(form.getCreditCardNo().length() == 16) &&  !(form.getCreditCardNo().length() == 15)) {
-			errors.rejectValue("creditCardInfoForm.creditCardNo", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.creditCardNo", NOTEMPTY,
 					"Please enter valid credit card number.");
 		}
 		if (StringUtils.isEmpty(form.getName())) {
-			errors.rejectValue("creditCardInfoForm.name", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.name", NOTEMPTY,
 					"Name should not be blank.");
 		}
 		if (StringUtils.isEmpty(form.getExpMonth())
 				|| StringUtils.isEmpty(form.getExpYear())) {
-			errors.rejectValue("creditCardInfoForm.expMonth", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.expMonth", NOTEMPTY,
 					"Please select a Expiry Month and Year.");
 		}
 		if (StringUtils.isEmpty(form.getSecuriyCode())) {
-			errors.rejectValue("creditCardInfoForm.securiyCode", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.securiyCode", NOTEMPTY,
 					"Security code should not be blank.");
 		} else if (!(form.getSecuriyCode().length() == 3)
 				&& !(form.getSecuriyCode().length() == 4)) {
-			errors.rejectValue("creditCardInfoForm.securiyCode", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.securiyCode", NOTEMPTY,
 					"Please enter valid security code.");
 		}
 		if (StringUtils.isEmpty(form.getCardType())) {
-			errors.rejectValue("creditCardInfoForm.cardType", "NotEmpty",
+			errors.rejectValue("creditCardInfoForm.cardType", NOTEMPTY,
 					"Please select a Card type.");
 		}
 	}
@@ -54,39 +55,38 @@ public class PaymentGatewayValidation {
 	 * @param errors
 	 */
 	public void validateBillAddrInfo(BillingAddressForm form, Errors errors) {
-
 		if (StringUtils.isEmpty(form.getFnameForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.fnameForBillingAddr",
-					"NotEmpty", "First name should not be blank.");
+					NOTEMPTY, "First name should not be blank.");
 		}
 		if (StringUtils.isEmpty(form.getLnameForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.lnameForBillingAddr",
-					"NotEmpty", "Last name should not be blank.");
+					NOTEMPTY, "Last name should not be blank.");
 		}
 		if (StringUtils.isEmpty(form.getStreetForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.streetForBillingAddr",
-					"NotEmpty", "Street should not be blank.");
+					NOTEMPTY, "Street should not be blank.");
 		}
 		if (StringUtils.isEmpty(form.getCityOrTownForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.cityOrTownForBillingAddr",
-					"NotEmpty", "City should not be blank.");
+					NOTEMPTY, "City should not be blank.");
 		}
 
 		if (StringUtils.isEmpty(form.getStateBillingAddress())
 				|| MMJBCommonConstants.ZERO.equals(form
 						.getStateBillingAddress())) {
 			errors.rejectValue("billingAddressForm.stateBillingAddress",
-					"NotEmpty", "Please select a State.");
+					NOTEMPTY, "Please select a State.");
 		}
 		if (StringUtils.isEmpty(form.getCountryForBillingAddr())
 				|| MMJBCommonConstants.ZERO.equals(form
 						.getCountryForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.countryForBillingAddr",
-					"NotEmpty", "Please select a Country.");
+					NOTEMPTY, "Please select a Country.");
 		}
 		if (StringUtils.isEmpty(form.getZipCodeForBillingAddr())) {
 			errors.rejectValue("billingAddressForm.zipCodeForBillingAddr",
-					"NotEmpty", "Zipcode should not be blank.");
+					NOTEMPTY, "Zipcode should not be blank.");
 		}
 	}
 
@@ -96,7 +96,7 @@ public class PaymentGatewayValidation {
 	 */
 	private void validatePurchaseOrderNO(InvoiceForm form, Errors errors) {
 		if (StringUtils.isEmpty(form.getPurchaseOrderNo())) {
-			errors.rejectValue("invoiceForm.purchaseOrderNo", "NotEmpty",
+			errors.rejectValue("invoiceForm.purchaseOrderNo", NOTEMPTY,
 					"Invoice Number should not be blank.");
 		}
 

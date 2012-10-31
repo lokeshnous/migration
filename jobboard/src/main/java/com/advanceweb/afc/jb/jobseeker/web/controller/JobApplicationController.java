@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -111,22 +112,17 @@ public class JobApplicationController {
 			int jobId = (Integer) session.getAttribute("jobId");
 			JobDTO jobDTO = jobSearchService
 					.viewJobDetails(jobId);
-			
-			
 			JobApplyTypeDTO jobApplyTypeDTO = jobSearchService
 					.applyJobDetails(jobId);
-
 			if (jobDTO.getEmail() == null) {
 				jobDTO.setEmail(jobApplyTypeDTO
 						.getApplyLink());
 			}
-							
 			// Adding path for
 			String loginPath = navigationPath.substring(2);
 			String employerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
 					+ dothtmlExtention + employerPageExtention;
-
 			EmailDTO toEmployer = new EmailDTO();
 			InternetAddress[] employerToAddress = new InternetAddress[1];
 			 try {
@@ -137,7 +133,6 @@ public class JobApplicationController {
 			String employerMailSub = empJobAppSub.replace(
 					"?jobseekername", form.getUserName());
 			toEmployer.setSubject(employerMailSub);
-
 			String employerMailBody = empJobAppBody.replace(
 					"?empDashboardLink", employerloginUrl);
 			employerMailBody = employerMailBody.replace("?jobseekername",
@@ -145,16 +140,13 @@ public class JobApplicationController {
 			toEmployer.setBody(employerMailBody);
 			toEmployer.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
-			
                 MultipartFile file = form.getFileContent();
-             
                 File upLoadedfile = new File(file.getOriginalFilename());
                 upLoadedfile.createNewFile();
                 FileOutputStream fos = new FileOutputStream(upLoadedfile);
                 fos.write(file.getBytes());
                 fos.close(); 
                 upLoadedfile.deleteOnExit();
-			
 				attachmentpaths.add(upLoadedfile.getAbsolutePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
@@ -170,32 +162,8 @@ public class JobApplicationController {
 			EmailDTO toJobSeeker = new EmailDTO();
 			InternetAddress[] jsToAddress = new InternetAddress[1];
 			try{
-			jsToAddress[0] = new InternetAddress(form.getUserEmail());
-			toJobSeeker.setToAddress(jsToAddress);
-			toJobSeeker.setFromAddress(advanceWebAddress);
-			String jobseekerMailSub = "";
-			if(jobDTO.getCompanyNameDisp() == null){
-				jobseekerMailSub = jobAppSub.replace(
-						"to ?companyname", "");
-			}else{
-				jobseekerMailSub = jobAppSub.replace(
-						"?companyname", jobDTO.getCompanyNameDisp());
-			}
-			toJobSeeker.setSubject(jobseekerMailSub);
-			String jobseekerMailBody = jobAppBody;
-			if(jobDTO.getCompanyNameDisp() == null){
-				jobseekerMailBody = jobseekerMailBody.replace("to ?companyname",
-						"");
-			}else{
-				jobseekerMailSub = jobAppSub.replace(
-						"?companyname", jobDTO.getCompanyNameDisp());
-			}
-			toJobSeeker.setBody(jobseekerMailBody);
-			toJobSeeker.setHtmlFormat(true);
-			emailService.sendEmail(toJobSeeker);
-			session.removeAttribute("jobId");
-			model.setViewName("redirect:/jobsearch/findJobPage.html");
-			// LOGGER.info("Mail has sent to Anonymous User");
+			sendMailForAnonmousJobSeeker(form, session, model, jobDTO,
+					toJobSeeker, jsToAddress);
 		} catch (Exception e) {
 			session.removeAttribute("jobId");
 			model.setViewName("redirect:/jobsearch/findJobPage.html");
@@ -203,6 +171,47 @@ public class JobApplicationController {
 			// TODO:Exception Handling
 		}
 		return model;
+	}
+
+	/**
+	 * @param form
+	 * @param session
+	 * @param model
+	 * @param jobDTO
+	 * @param toJobSeeker
+	 * @param jsToAddress
+	 * @throws AddressException
+	 */
+	private void sendMailForAnonmousJobSeeker(JobApplicationForm form,
+			HttpSession session, ModelAndView model, JobDTO jobDTO,
+			EmailDTO toJobSeeker, InternetAddress[] jsToAddress)
+			throws AddressException {
+		jsToAddress[0] = new InternetAddress(form.getUserEmail());
+		toJobSeeker.setToAddress(jsToAddress);
+		toJobSeeker.setFromAddress(advanceWebAddress);
+		String jobseekerMailSub = "";
+		if(jobDTO.getCompanyNameDisp() == null){
+			jobseekerMailSub = jobAppSub.replace(
+					"to ?companyname", "");
+		}else{
+			jobseekerMailSub = jobAppSub.replace(
+					"?companyname", jobDTO.getCompanyNameDisp());
+		}
+		toJobSeeker.setSubject(jobseekerMailSub);
+		String jobseekerMailBody = jobAppBody;
+		if(jobDTO.getCompanyNameDisp() == null){
+			jobseekerMailBody = jobseekerMailBody.replace("to ?companyname",
+					"");
+		}else{
+			jobseekerMailSub = jobAppSub.replace(
+					"?companyname", jobDTO.getCompanyNameDisp());
+		}
+		toJobSeeker.setBody(jobseekerMailBody);
+		toJobSeeker.setHtmlFormat(true);
+		emailService.sendEmail(toJobSeeker);
+		session.removeAttribute("jobId");
+		model.setViewName("redirect:/jobsearch/findJobPage.html");
+		// LOGGER.info("Mail has sent to Anonymous User");
 	}
 
 }

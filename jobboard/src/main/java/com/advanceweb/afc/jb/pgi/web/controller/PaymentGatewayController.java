@@ -62,6 +62,8 @@ public class PaymentGatewayController extends AbstractController{
 	private static final String BILLING_INFO_FORM = "gatewayBillingInfo";
 	private static final String GATEWAY_PAYMENT_FORM = "gatewayPaymentMethod";
 	private static final String PAYMENT_GATEWAY_FORM = "paymentGatewayForm";
+	private static final String ADPAGETOP = "adPageTop";
+	private static final String ADPAGEBTM = "adPageBtm";
 	
 	@Autowired
 	private PaymentGatewayService paymentGatewayService;
@@ -130,14 +132,14 @@ public class PaymentGatewayController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(ADPAGETOP, bannerString);
 
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}
@@ -225,14 +227,14 @@ public class PaymentGatewayController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(ADPAGETOP, bannerString);
 
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}
@@ -292,14 +294,14 @@ public class PaymentGatewayController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(ADPAGETOP, bannerString);
 
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}
@@ -576,14 +578,14 @@ public class PaymentGatewayController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(ADPAGETOP, bannerString);
 
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(ADPAGEBTM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}

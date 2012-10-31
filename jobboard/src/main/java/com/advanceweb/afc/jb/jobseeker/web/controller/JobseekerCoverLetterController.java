@@ -151,7 +151,7 @@ public class JobseekerCoverLetterController {
 			model.setViewName("jobSeekerManageExitWright");
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error");
+			LOGGER.info("This is Account Addresss edit option error");
 		}
 		return model;
 	}
