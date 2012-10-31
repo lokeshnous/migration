@@ -101,7 +101,7 @@
 												false);
 										out.print(c.createRecaptchaHtml(null, null));
 								%>
-
+									<span class="required">(Required)</span>
 								<div>
 									<span class="lableText3"></span> <FONT color="red"> <c:if
 											test="${not empty errorMessage}">
