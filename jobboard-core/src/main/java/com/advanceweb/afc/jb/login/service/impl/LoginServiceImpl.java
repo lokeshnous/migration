@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.login.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @Service("loginService")
 public class LoginServiceImpl implements LoginService {
 
+	private static final Logger LOGGER = Logger
+			.getLogger(LoginServiceImpl.class);
 	@Autowired
 	private LoginFormDAO loginFormDAO;
 
@@ -130,14 +133,29 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public void updateSocialProfileId(int userId, String profileId,
 			int profileAttrId) throws JobBoardServiceException {
-		// TODO Auto-generated method stub
-		
+		try {
+			userDAO.updateSocialProfileId(userId, profileId, profileAttrId);
+		} catch (JobBoardDataException e) {
+			LOGGER.info("Error occurred while updating the social profile id"
+					+ e);
+			throw new JobBoardServiceException(
+					"Error occurred while updating the social profile id" + e);
+
+		}
 	}
 
 	@Override
 	public UserDTO getUserBySocialProfileId(String socialProfileId)
 			throws JobBoardServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return userDAO.getUserBySocialProfileId(socialProfileId);
+		} catch (JobBoardDataException e) {
+			LOGGER.info("Error occurred while fetching the user based on the social profile id"
+					+ e);
+			throw new JobBoardServiceException(
+					"Error occurred while fetching the user based on the social profile id"
+							+ e);
+
+		}
 	}
 }
