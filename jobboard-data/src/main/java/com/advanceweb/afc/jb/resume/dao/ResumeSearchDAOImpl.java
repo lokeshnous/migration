@@ -46,7 +46,7 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	 * @return List<ResumeDTO>
 	 */
 	public List<ResumeDTO> getResumeSearchDetails(String searchString){
-		
+			
 		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
 		@SuppressWarnings("unchecked")
 		List<ResBuilderResume> resBuilderResumeList = hibernateTemplate.find("select rbr from ResBuilderResume rbr, ResBuilderEmployment rbe where " +
@@ -56,7 +56,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 		
 		for(ResBuilderResume obj: resBuilderResumeList){
 			ResumeDTO resumeDTO = new ResumeDTO();
-			resumeDTO.setPublishResumeId(obj.getResPublishResume().getPublishResumeId());
+			if(obj.getResPublishResume() != null){
+				resumeDTO.setPublishResumeId(obj.getResPublishResume().getPublishResumeId());
+			}
 			resumeDTO.setUploadResumeId(obj.getResUploadResumeId());
 			resumeDTO.setResumeName(obj.getResumeName());
 			resumeDTO.setFullName(obj.getFirstName()+" "+ obj.getLastName());
