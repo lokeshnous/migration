@@ -65,17 +65,14 @@ public class UserSubscriptionsConversionHelper {
 
 		if (null != listSubsDTO) {
 			for (UserSubscriptionsDTO dto : listSubsDTO) {
-				// if (!validateAdmUserSubscriptions(dto, listSubsAlerts)) {
 				AdmUserSubscription entity = new AdmUserSubscription();
 				AdmUserSubscriptionPK subscription = new AdmUserSubscriptionPK();
 				subscription.setSubscriptionId(dto.getSubscriptionId());
 				subscription.setUserId(dto.getUserId());
 				subscription.setPublicationId(dto.getPublicationId());
 				entity.setSubscriptionPK(subscription);
-				// entity.setPublicationId(dto.getPublicationId());
 				entity.setActive(dto.getActive());
 				subsEntityList.add(entity);
-				// }
 			}
 		}
 		return subsEntityList;

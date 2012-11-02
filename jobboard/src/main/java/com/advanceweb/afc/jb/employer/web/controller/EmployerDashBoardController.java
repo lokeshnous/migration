@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -63,6 +64,7 @@ import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
+
 /**
  * @author Prince
  * @version 1.0
@@ -71,7 +73,7 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping("/employer")
-public class EmployerDashBoardController extends AbstractController{
+public class EmployerDashBoardController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerDashBoardController.class);
@@ -87,110 +89,108 @@ public class EmployerDashBoardController extends AbstractController{
 
 	@Autowired
 	private UserSubscriptionService userSubService;
-	
+
 	@Autowired
 	private AdService adService;
 
 	@Autowired
 	private TransformUserubscription userubscription;
-	
+
 	@Autowired
 	private JobPostInventoryService inventoryService;
-	
+
 	@Autowired
 	private LoginService loginService;
 	private static final String EMPLOYERDASHBOARDFORM = "employerDashBoardForm";
 	private static final String JBPOSTTOTALLIST = "jbPostTotalList";
 	private static final String COUNT = "count";
 	private static final String AVAQUANTITY = "avaQuantity";
-	
-	
 
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
 			@ModelAttribute(EMPLOYERDASHBOARDFORM) MetricsForm employerDashBoardForm,
 			HttpSession session, HttpServletRequest request)
 			throws JobBoardServiceException {
-			SearchResumeForm searchResumeForm = new SearchResumeForm();
-			session.removeAttribute(JBPOSTTOTALLIST);
-			session.removeAttribute(COUNT);
-			session.removeAttribute(AVAQUANTITY);
-			String enableAccess = "true";
-			String enablePostEditAccess = "true";
-			ModelAndView model = new ModelAndView();
-			int facilityId = (Integer) session
-					.getAttribute(MMJBCommonConstants.FACILITY_ID);
-			int userId = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
-			EmployerInfoDTO roleList = facilityService.facilityDetails(userId);
-			if (roleList.getRoleId() == Integer
-					.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
-				enableAccess = "false";
-				model.addObject("enableAccess", enableAccess);
-			} else if (roleList.getRoleId() == Integer
-					.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
-				enablePostEditAccess = "false";
-				model.addObject("enablePostEditAccess", enablePostEditAccess);
-			}
-
-			int resumeSearchCount = 0;
-			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
-					.viewMySavedSearches(userId);
-			resumeSearchCount = saveSearchedJobsDTOList.size();
-			employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
-
+		SearchResumeForm searchResumeForm = new SearchResumeForm();
+		session.removeAttribute(JBPOSTTOTALLIST);
+		session.removeAttribute(COUNT);
+		session.removeAttribute(AVAQUANTITY);
+		String enableAccess = "true";
+		String enablePostEditAccess = "true";
+		ModelAndView model = new ModelAndView();
+		int facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		EmployerInfoDTO roleList = facilityService.facilityDetails(userId);
+		if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.FULL_ACCESS)) {
+			enableAccess = "false";
 			model.addObject("enableAccess", enableAccess);
+		} else if (roleList.getRoleId() == Integer
+				.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)) {
+			enablePostEditAccess = "false";
 			model.addObject("enablePostEditAccess", enablePostEditAccess);
-			List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
+		}
 
-			// Available Job Postings
+		int resumeSearchCount = 0;
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
+				.viewMySavedSearches(userId);
+		resumeSearchCount = saveSearchedJobsDTOList.size();
+		employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
 
-			List<JobPostingInventoryDTO> inventiryDTO = inventoryService
-					.getInventoryDetails(userId, facilityId);
-			int avaQuantity = 0;
-			for (JobPostingInventoryDTO dto : inventiryDTO) {
-				avaQuantity = avaQuantity + dto.getAvailableQty();
+		model.addObject("enableAccess", enableAccess);
+		model.addObject("enablePostEditAccess", enablePostEditAccess);
+		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 
-			}
+		// Available Job Postings
 
-			// active job posting
-			int count = loginService.getactivejobposting(facilityId);
+		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
+				.getInventoryDetails(userId, facilityId);
+		int avaQuantity = 0;
+		for (JobPostingInventoryDTO dto : inventiryDTO) {
+			avaQuantity = avaQuantity + dto.getAvailableQty();
 
-			// Get All facilities
-			List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
-			try {
-				downDTOs = facilityService.getFacilityGroup(facilityId);
-			} catch (JobBoardException e) {
-				LOGGER.info("Error occurred while getting data for metrics" + e);
-			}
+		}
+
+		// active job posting
+		int count = loginService.getactivejobposting(facilityId);
+
+		// Get All facilities
+		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
+		try {
+			downDTOs = facilityService.getFacilityGroup(facilityId);
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occurred while getting data for metrics" + e);
+		}
 
 		// Retrieve Current subscriptions of the user
 		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
-		Set<DropDownDTO> set=new HashSet<DropDownDTO>();
-		for(DropDownDTO dto:currentSubs){
+		Set<DropDownDTO> set = new HashSet<DropDownDTO>();
+		for (DropDownDTO dto : currentSubs) {
 			set.add(dto);
 		}
-		
+
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 
-			model.addObject("downDTOs", downDTOs);
-			model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
-			session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
-			session.setAttribute(COUNT, count);
-			session.setAttribute(AVAQUANTITY, avaQuantity);
+		model.addObject("downDTOs", downDTOs);
+		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
+		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
+		session.setAttribute(COUNT, count);
+		session.setAttribute(AVAQUANTITY, avaQuantity);
 
-			model.addObject("currentSubs", set);
-			model.addObject("searchResumeForm", searchResumeForm);
-			model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
-			model.setViewName("employerDashboard");
-			// get the Ads
-			getAdsForEmployerDashboard(request, session, model);
+		model.addObject("currentSubs", set);
+		model.addObject("searchResumeForm", searchResumeForm);
+		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
+		model.setViewName("employerDashboard");
+		// get the Ads
+		getAdsForEmployerDashboard(request, session, model);
 
-			return model;
+		return model;
 
-		}
-	
+	}
+
 	/**
 	 * Get Ads for employer dashboard page
 	 * 
@@ -198,7 +198,7 @@ public class EmployerDashBoardController extends AbstractController{
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForEmployerDashboard (HttpServletRequest request,
+	private void getAdsForEmployerDashboard(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -210,16 +210,15 @@ public class EmployerDashBoardController extends AbstractController{
 					.getTag();
 			model.addObject("adPageTop", bannerString);
 
-			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
-
 
 	/**
 	 * This method is used to display the metrics details for selected employer
@@ -337,7 +336,6 @@ public class EmployerDashBoardController extends AbstractController{
 		return jbPostTotalList;
 	}
 
-	
 	@RequestMapping(value = "/showMertics", method = RequestMethod.GET)
 	public ModelAndView employerMetrics(
 			HttpSession session,
@@ -346,10 +344,10 @@ public class EmployerDashBoardController extends AbstractController{
 			@RequestParam("selEmployerId") int selEmployerId,
 			@ModelAttribute(EMPLOYERDASHBOARDFORM) EmployerDashBoardForm employerDashBoardForm,
 			BindingResult result) throws JobBoardException {
-	   	session.removeAttribute(JBPOSTTOTALLIST);
-        java.util.Date startFrom = null;
+		session.removeAttribute(JBPOSTTOTALLIST);
+		java.util.Date startFrom = null;
 		java.util.Date endFrom = null;
-        String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
+		String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
 		DateFormat formater = new SimpleDateFormat(pattern, Locale.US);
 
 		try {
@@ -375,8 +373,8 @@ public class EmployerDashBoardController extends AbstractController{
 		int views = 0;
 		int clicks = 0;
 		int applies = 0;
-        int size = jobstatDTOs.size();
-        MetricsDTO dto = new MetricsDTO();
+		int size = jobstatDTOs.size();
+		MetricsDTO dto = new MetricsDTO();
 		for (int i = 0; i < jobstatDTOs.size(); i++) {
 
 			dto = (MetricsDTO) jobstatDTOs.get(i);
@@ -390,7 +388,7 @@ public class EmployerDashBoardController extends AbstractController{
 		metricsDTO.setApplies(applies);
 		jbPostTotalList.add(0, metricsDTO);
 		metricsDTO = new MetricsDTO();
-// Calculating average per job posting
+		// Calculating average per job posting
 		int avgViews = 0;
 		int avgClicks = 0;
 		int avgApplies = 0;
@@ -405,7 +403,7 @@ public class EmployerDashBoardController extends AbstractController{
 		metricsDTO.setApplies(avgApplies);
 		jbPostTotalList.add(1, metricsDTO);
 		metricsDTO = new MetricsDTO();
-// Calculating site - wide average per job posting
+		// Calculating site - wide average per job posting
 		int swAvgViews = 0;
 		int swAvgClicks = 0;
 		int swAvgApplies = 0;
@@ -425,7 +423,7 @@ public class EmployerDashBoardController extends AbstractController{
 		metricsDTO.setClicks(swAvgClicks);
 		metricsDTO.setApplies(swAvgApplies);
 		jbPostTotalList.add(2, metricsDTO);
-        model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
+		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
 		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
 		model.setViewName("employerDashboard");
@@ -442,12 +440,13 @@ public class EmployerDashBoardController extends AbstractController{
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/availableJobPostings", method = RequestMethod.GET)
-	public @ResponseBody JSONObject availableJobPostings(
+	public @ResponseBody
+	JSONObject availableJobPostings(
 			HttpSession session,
 			@RequestParam("selEmployerId") int facilityId,
 			@ModelAttribute("employerDashBoardForm") EmployerDashBoardForm employerDashBoardForm,
 			BindingResult result) throws JobBoardException {
-		   JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 
 		session.removeAttribute(AVAQUANTITY);
 		session.removeAttribute(COUNT);
@@ -475,7 +474,8 @@ public class EmployerDashBoardController extends AbstractController{
 	public ModelAndView getXLS(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			HSSFWorkbook workbook) throws ClassNotFoundException,
-			ServletRequestBindingException, JobBoardServiceException, IOException {
+			ServletRequestBindingException, JobBoardServiceException,
+			IOException {
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition",
 				"attachment;filename=mmreport.xls");
@@ -526,7 +526,7 @@ public class EmployerDashBoardController extends AbstractController{
 
 		row2.createCell(8).setCellValue(avaQuantity);
 
-		//FileInputStream obtains input bytes from the image file
+		// FileInputStream obtains input bytes from the image file
 		InputStream inputStream = new FileInputStream(
 				"D:\\funnelchart\\chart.JPEG");
 
@@ -536,7 +536,7 @@ public class EmployerDashBoardController extends AbstractController{
 		int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
 		// close the input stream
 		inputStream.close();
-		//Drawing drawing = sheet.createDrawingPatriarch();
+		// Drawing drawing = sheet.createDrawingPatriarch();
 		@SuppressWarnings("unused")
 		CreationHelper helper = workbook.getCreationHelper();
 		// ClientAnchor anchor = helper.createClientAnchor();
@@ -562,8 +562,7 @@ public class EmployerDashBoardController extends AbstractController{
 
 		return new ModelAndView();
 	}
-	
-	
+
 	/**
 	 * Retrieve Current subscriptions of the user
 	 * 
