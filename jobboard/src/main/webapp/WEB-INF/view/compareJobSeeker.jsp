@@ -55,10 +55,7 @@
 							var rowObj = $(this).parent().parent();
 							var resumeId = $(rowObj).attr("id");
 							var val = [];
-												
 								val[0] = resumeId;
-								alert(resumeId);
-							
 							if (val != "") {						
 								$('#selectedRow').val(val);
 								$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);	
