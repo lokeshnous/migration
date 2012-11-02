@@ -62,13 +62,13 @@
                                            
                                         </ul>
                                     </div> -->
-							<span class="refineResultsItem plus"><%-- <a
+							<%-- <span class="refineResultsItem plus"><a
 											href="${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal=${manageJobSeekerForm.selectedRow }"
 											id="0" title="folderdetailList"
-											class="folderdetailList"> --%>All Candidates<!-- </a> --></span>
+											class="folderdetailList">All Candidates<!-- </a> --></span> --%>
 							<div class="refineResultsSubContent"></div>
 
-							<span class="refineResultsItem plus">My Folders</span>
+							<span class="refineResultsItem minus">My Folders</span>
 							<div class="refineResultsSubContent" id="subContent">
 								<c:forEach items="${manageJobSeekerForm.admFolderDTOList}"
 									var="folder" varStatus="folderStatus">

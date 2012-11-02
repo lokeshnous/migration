@@ -219,5 +219,63 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
 		}
 		
 	}
+	/**
+	 * Method to retrieve all Resume by the Employer
+	 * 
+	 * @param : userId
+	 */
+	@Override
+	public List<ManageJobSeekerDTO> retrieveAllResume(int userId, int offset, int noOfRecords)
+			throws JobBoardServiceException {
+		List<ManageJobSeekerDTO> manageJobSeekerDTOs = new ArrayList<ManageJobSeekerDTO>();
 
+		try {
+			manageJobSeekerDTOs = manageJobSeekerDAO.retrieveAllResume(userId,offset, noOfRecords);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while retriving resume..." + jdex);
+		}
+
+		return manageJobSeekerDTOs;
+	}
+
+
+/**
+	 * Method to retrieve all resume by folder
+	 */
+	@Override
+	public List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId,
+			int folderId, int offset, int noOfRecords) throws JobBoardServiceException {
+		List<ManageJobSeekerDTO> manageJobSeekerDTOs = new ArrayList<ManageJobSeekerDTO>();
+
+		try {
+			manageJobSeekerDTOs = manageJobSeekerDAO.retrieveAllResumeByFolder(userId,folderId,offset,noOfRecords);
+		} catch (JobBoardDataException jdex) {
+			LOGGER.debug(jdex);
+			throw new JobBoardServiceException(
+					"Error while retriving resume by folder..." + jdex);
+		}
+
+		return manageJobSeekerDTOs;
+	}
+
+/* (non-Javadoc)
+ * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#getTotalNumberOfJobRecords(int)
+ */
+@Override
+public int getTotalNumberOfRecords(int userId)
+		throws JobBoardServiceException {
+	int count;
+
+	try {
+		count = manageJobSeekerDAO.getTotalNumberOfJobRecords(userId);
+	} catch (JobBoardDataException jdex) {
+		LOGGER.debug(jdex);
+		throw new JobBoardServiceException(
+				"Error while retriving resume by folder..." + jdex);
+	}
+
+	return count;
+}
 }

@@ -16,8 +16,8 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 public class ManageJobSeekerForm {
 
 	
-    private String noOfPage;
-    private String noOfPageLower;
+    private int noOfPage;
+    private int noOfPageLower;
     private int beginVal=1;  
     private int resumeId;
 	private String resumeName;
@@ -35,28 +35,28 @@ public class ManageJobSeekerForm {
 	/**
 	 * @return the noOfPage
 	 */
-	public String getNoOfPage() {
+	public int getNoOfPage() {
 		return noOfPage;
 	}
 
 	/**
 	 * @param noOfPage the noOfPage to set
 	 */
-	public void setNoOfPage(String noOfPage) {
+	public void setNoOfPage(int noOfPage) {
 		this.noOfPage = noOfPage;
 	}
 
 	/**
 	 * @return the noOfPageLower
 	 */
-	public String getNoOfPageLower() {
+	public int getNoOfPageLower() {
 		return noOfPageLower;
 	}
 
 	/**
 	 * @param noOfPageLower the noOfPageLower to set
 	 */
-	public void setNoOfPageLower(String noOfPageLower) {
+	public void setNoOfPageLower(int noOfPageLower) {
 		this.noOfPageLower = noOfPageLower;
 	}
 

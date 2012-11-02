@@ -13,13 +13,14 @@
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		 // $("#tb_manage_job_seeker").tablesorter(); 
-		 
-		 $("#myFolder").click(function(){
+	jQuery(document).ready(function() {		
+		 noOfPageValue=$("#noOfPage").val();
+		 $("#noOfPageId").val(noOfPageValue);
+		 $("#noOfPageLowerId").val(noOfPageValue);
+		 /* $("#myFolder").click(function(){
 			 $("#all").toggleClass('refineResultsItem plus refineResultsItem minus');
 			//attr('class', 'refineResultsItem plus');
-		 });
+		 }); */
 		$(".folderdetail").click(
 						function() {
 							val = $(this).attr("id");
@@ -40,7 +41,7 @@
 								
 							});
 				});
-				$(".refineResultsItem").click(
+				$(".refineResult").click(
 						function() {
 							$("#folderId").val(0);
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
@@ -87,21 +88,27 @@
 				});
 				
 				$('#compareSelected').click(function() {
+					$("#errorMsg").html("");
 					var val = [];
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
 					});
+					if(val != "" &&  val.length > 4){
+						alert("Total selection of resume must be less than four");
+					}
 					if (val != "" && val.length > 1) {
 						$('#selectedRow').val(val);
 						$("#manageJobSeeker").attr("action", "${pageContext.request.contextPath}/employer/compareResume.html?selectedVal="+val);
 						$("#manageJobSeeker").attr("method","POST");
 						$("#manageJobSeeker").submit();
 					} else {
+					
 						alert("Please select more than one resume");
 					}
 
 				});
 				$('#compareSelectedLower').click(function() {
+					$("#errorMsg").html("");
 					var val = [];
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
@@ -169,8 +176,8 @@
 											case "Add": {
 
 												$("#addBtn").replaceWith("<div class='buttonRow' >" +
-														" <input type ='text' id='newFolder' class='addButtonRow' value='New Folder' onClick='resetVal();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
-														+"<a href='#' class='white link_color1_emphasized' onClick='Javascript: checkevent();' id='newFolderLink' value='Add'>Add</a></div>");
+														" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
+														+"</div>");
 												document.getElementById('newFolder').select();
 												document.getElementById('newFolder').style.borderColor="red";
 												document.getElementById('newFolder').style.borderStyle="solid";
@@ -196,6 +203,24 @@
 											}
 
 										});
+				$('#noOfPageId').change(
+						function() {
+							val = $(this).val();
+							$('#noOfPageLowerId').val(val);
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId=-1&noOfPage="+val);
+							$("form").submit();
+						});
+				$('#noOfPageLowerId').change(
+						function() {
+							val = $(this).val();
+							$('#noOfPageId').val(val);
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId=-1&noOfPage="+val);
+							$("form").submit();
+						});
 						jQuery(".megamenu").megamenu();
 					});
 						function checkevent(){
@@ -203,7 +228,8 @@
 							$.ajax({url: "${pageContext.request.contextPath}/employer/addFolder.html?folderName="+folderName,
 								data:$('#manageJobSeeker').serialize(),
 								type: "POST" ,
-								success : function(data) {
+								success : function(data) {/* 
+									$(".refineResultsItem").attr('class', 'refineResultsItem minus'); */
 										$("#folderDiv").html(data);
 								}	 
 							});
@@ -269,7 +295,7 @@
 						function renameCall(folderId,folderName){
 							$("#addBtn").attr('hidden','true');
 							$("#"+folderId).replaceWith("<div class='addButtonRow' >" +
-									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onKeydown='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
+									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
 									+"</div>");
 							document.getElementById(folderId).select();
 							document.getElementById(folderId).style.borderColor="red";
@@ -292,6 +318,8 @@
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
 		<form:hidden path="selectedRow" id="selectedRow" />
+		<form:hidden path="rating" id="ratingId"/>
+		<form:hidden path="noOfPage" />
 		<form:hidden path="rating" id="ratingId"/>
 		<div class="ad_page_top">
 			${adPageTop }
@@ -334,13 +362,14 @@
 
 										<!--Added Class "marginTop5"-->
 										<span>Results viewable:</span> <span class="Padding0">
-											<form:select path="noOfPage" name="noOfPage"
+											<select id="noOfPageId" 
 												class="jb_input4 margin0">
-												<form:option value="20">20</form:option>
-												<form:option value="30">30</form:option>
-												<form:option value="40">40</form:option>
-												<form:option value="50">50</form:option>
-											</form:select>
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+											</select>
 										</span>
 										<!--Added Class "marginTop5"-->
 										<span class="marginTop5">per page</span>
@@ -352,7 +381,7 @@
 										<%--For displaying Previous link except for the 1st page --%>
 										<c:if test="${currentPage != 1 && noOfPages gt 1}">
 											<td><a
-												href="#<%-- <%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&next=${begin-10} --%>">
+												href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage - 1}&next=${begin-10}">
 													<img src="../resources/images/ArrowLeft.png">
 													Previous
 											</a></td>
@@ -370,7 +399,8 @@
 												<c:otherwise>
 													<span class="active"> <c:if test="${i lt begin+10}">
 															<a
-																href="#<%-- <%=request.getContextPath()%>/employer/manageJobPost.html?page=${i} --%>">${i}</a>
+													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${i}
+													">${i}</a>
 														</c:if></span>
 
 												</c:otherwise>
@@ -380,7 +410,7 @@
 										<span> <c:if
 												test="${noOfPages gt 1 && noOfPages != currentPage}">
 												<a
-													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next
+													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1&page=${currentPage - 1}&next=${begin-10}">Next
 													<img src="../resources/images/ArrowRight.png">
 												</a>
 											</c:if></span>
@@ -413,14 +443,16 @@
 									<div class="searchResultsNavigationColumn1">
 
 										<!--Added Class "marginTop5"-->
-										<span>Results viewable:</span> <span class="Padding0"><form:select
-												path="noOfPageLower" name="noOfPageLower"
+										<span>Results viewable:</span> <span class="Padding0"><select
+												id="noOfPageLowerId"
 												class="jb_input4 margin0">
-												<form:option value="20">20</form:option>
-												<form:option value="30">30</form:option>
-												<form:option value="40">40</form:option>
-												<form:option value="50">50</form:option>
-											</form:select> </span>
+												
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+											<select> </span>
 										<!--Added Class "marginTop5"-->
 										<span class="marginTop5">per page</span>
 									</div>
@@ -432,7 +464,7 @@
 										<%--For displaying Previous link except for the 1st page --%>
 										<c:if test="${currentPage != 1 && noOfPages gt 1}">
 											<td><a
-												href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}">
+												href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1&page=${currentPage - 1}&next=${begin-10}">
 													<img src="../resources/images/ArrowLeft.png">
 													Previous
 											</a></td>
@@ -450,7 +482,7 @@
 												<c:otherwise>
 													<span class="active"> <c:if test="${i lt begin+10}">
 															<a
-																href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
+													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1&page=${i}>${i}</a>
 														</c:if></span>
 
 												</c:otherwise>
@@ -460,7 +492,7 @@
 										<span> <c:if
 												test="${noOfPages gt 1 && noOfPages != currentPage }">
 												<a
-													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next
+													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1&page=${currentPage - 1}&next=${begin-10}">Next
 													<img src="../resources/images/ArrowRight.png">
 												</a>
 											</c:if></span>

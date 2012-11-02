@@ -1186,7 +1186,7 @@ h3.jobSummaryTitle {
 }
 
 .content_columns_search_results .column1 .refineResults .minus {
-	background-position: -259px -302px;
+	background-position: -259px -304px;
 	background-repeat: no-repeat;
 	padding: 5px 0 5px 28px;
 }
@@ -1220,6 +1220,8 @@ h3.jobSummaryTitle {
 	padding: 10px 0px 0px 0px;
 	margin-bottom: 5px;
 }
+
+
 /* COLUMN 2 */
 .content_columns_search_results .column2 {
 	border-left: 1px solid #CCCCCC;
@@ -3216,11 +3218,11 @@ input.job_seeker_Resume {
 }
 
 .starOn {
-    background-position:-394px -304px;
+    background-position:-394px 0;
 }
 
 .starOff {
-	background-position:-373px -304px;
+	background-position:-373px 0;
 }
 
 .Com td {
@@ -4190,3 +4192,4 @@ orange:hover {
 Border:1px solid #ccc;padding: 25px;}
 .socialLoginLogo {margin:0 0 0 275px; }
 #recaptcha_area {margin-left:172px;}
+.width98P {width:97.5%;}

@@ -88,5 +88,29 @@ public interface ManageJobSeekerService {
 	 * @throws JobBoardServiceException
 	 */
 	void renameFolder(int userId,int folderId,String folderName) throws JobBoardServiceException;
-
+	/**
+	 * 
+	 * @param userId
+	 * @param offset
+	 * @param noOfRecords
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	List<ManageJobSeekerDTO> retrieveAllResume(int userId, int offset, int noOfRecords) throws JobBoardServiceException;
+	/**
+	 * 
+	 * @param userId
+	 * @param folderId
+	 * @param offset
+	 * @param noOfRecords
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId, int folderId, int offset, int noOfRecords) throws JobBoardServiceException;
+	/**
+	 * Get total number of records
+	 * @param employerId
+	 * @return
+	 */
+	int getTotalNumberOfRecords(int employerId) throws JobBoardServiceException;
 	}

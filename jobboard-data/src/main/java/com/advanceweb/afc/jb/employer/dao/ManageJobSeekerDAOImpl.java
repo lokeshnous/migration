@@ -250,4 +250,68 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 
 	}
 
+	@Override
+	public List<ManageJobSeekerDTO> retrieveAllResume(int userId, int offset,
+			int noOfRecords) throws JobBoardDataException {
+		List<?> folderDetailList = new ArrayList<AdmFolderResume>();
+		try {
+			Query query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+									+ userId + "and a.deleteDt is NULL ");
+			query.setFirstResult(offset);
+			query.setMaxResults(noOfRecords);
+			folderDetailList = query.list();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return conversionHelper
+				.transformFolderResumeToManageJobSeekerDTO(folderDetailList);
+	}
+
+	@Override
+	public List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId,
+			int folderId, int offset, int noOfRecords)
+			throws JobBoardDataException {
+		List<?> folderDetailList = new ArrayList<AdmFolderResume>();
+		try {
+			Query query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+									+ userId
+									+ "and a.folderId="
+									+ folderId
+									+ "and a.deleteDt is NULL ");
+			query.setFirstResult(offset);
+			query.setMaxResults(noOfRecords);
+			folderDetailList = query.list();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return conversionHelper
+				.transformFolderResumeToManageJobSeekerDTO(folderDetailList);
+	}
+
+	@Override
+	public int getTotalNumberOfJobRecords(int userId)
+			throws JobBoardDataException {
+		try {
+			Long jobCount = (Long) hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT count(a) from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+									+ userId + "and a.deleteDt is NULL ")
+					.uniqueResult();
+			return jobCount.intValue();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+			return 0;
+		}
+	}
+
 }

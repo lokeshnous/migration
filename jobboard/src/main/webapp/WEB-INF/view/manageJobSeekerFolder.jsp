@@ -14,15 +14,12 @@
 			<div class="section" id="div_manage_job_seeker">
 				<h2>Folders</h2>
 				<div class="refineResults">
-					<span class="refineResultsItem minus" id="all">All Candidates</span>
+					<span class="refineResult" id="all">All Candidates</span>
 					<div class="refineResultsSubContent"></div>
-					<span class="refineResultsItem plus" id="myFolder">My Folders</span>
+					<span class="refineResultsItem plus marginTop5" id="myFolder">My Folders</span>
 					<div class="refineResultsSubContent" id="subContent">
-						<div class="floatRight">
-						<a href="#"><img src="../resources/images/Addbutton.png" id="addBtn" 
-							width="15" height="15" alt="Add" title="Add Folder"></a>
-							</div>
-							
+						
+						
 						<c:forEach items="${manageJobSeekerForm.admFolderDTOList}"
 							var="folder" varStatus="folderStatus">
 							<div class="buttonRow" >
@@ -38,11 +35,11 @@
 							</div>
 						</c:forEach>
 						
+						<div class="DotBorderBottom">&nbsp; </div>
+						<img src="../resources/images/Addbutton.png" align="center" id="addBtn" 
+							width="15" height="15" alt="Add" title="Add New Folder">							
+							
 					</div>
-
-
-
-
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,12 @@
+
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -137,34 +142,59 @@ public class ManageJobSeekerController {
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
 		LOGGER.info("Folder Id:" + folderId);
-		// String next = request.getParameter("next");
-		manageJobSeekerForm.setFolderId(folderId);
-		try {
-			if (folderId > 0) {
-				manageJobSeekerDTOList = manageJobSeekerService
-						.retrieveAllResumeByFolder((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID),
-								folderId);
-				model.setViewName("manageJobSeekerContent");
-			} else if (folderId == 0) {
-				manageJobSeekerDTOList = manageJobSeekerService
-						.retrieveAllResume((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
-				model.setViewName("manageJobSeekerContent");
-
-			} else {
-				manageJobSeekerDTOList = manageJobSeekerService
-						.retrieveAllResume((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
-				model.setViewName("manageJobSeekers");
+		 String next = request.getParameter("next");
+		 int page = 1;
+		 int displayRecordsPerPage=10;
+		 if(null!=request.getParameter("noOfPage")){
+			 displayRecordsPerPage =Integer.parseInt(request.getParameter("noOfPage"));
+			 manageJobSeekerForm.setNoOfPage(displayRecordsPerPage);
+			 manageJobSeekerForm.setNoOfPageLower(displayRecordsPerPage);
+		 }
+			if (request.getParameter("page") != null) {
+				page = Integer.parseInt(request.getParameter("page"));
 			}
-			appStatusList = manageJobSeekerService.applicationStatusList();
-			admFolderDTOList = manageJobSeekerService
-					.folderDetailList((Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));
-		} catch (JobBoardServiceException jbex) {
+			int recordsPerPage = 0;
 
-			LOGGER.error("Error occured while Retriving Data", jbex);
+			int noOfRecords = 0;
+		manageJobSeekerForm.setFolderId(folderId);
+		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			recordsPerPage =displayRecordsPerPage;
+			try {
+				if (folderId > 0) {
+					manageJobSeekerDTOList = manageJobSeekerService
+							.retrieveAllResumeByFolder((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID),
+									folderId,(page - 1) * recordsPerPage, recordsPerPage);
+					noOfRecords = manageJobSeekerService
+							.getTotalNumberOfRecords((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID));
+					model.setViewName("manageJobSeekerContent");
+				} else if (folderId == 0) {
+					manageJobSeekerDTOList = manageJobSeekerService
+							.retrieveAllResume((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID),(page - 1) * recordsPerPage, recordsPerPage);
+					model.setViewName("manageJobSeekerContent");
+					noOfRecords = manageJobSeekerService
+							.getTotalNumberOfRecords((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID));
+
+				} else {
+					manageJobSeekerDTOList = manageJobSeekerService
+							.retrieveAllResume((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID),(page - 1) * recordsPerPage, recordsPerPage);
+					model.setViewName("manageJobSeekers");
+					noOfRecords = manageJobSeekerService
+							.getTotalNumberOfRecords((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID));
+				}
+				appStatusList = manageJobSeekerService.applicationStatusList();
+				admFolderDTOList = manageJobSeekerService
+						.folderDetailList((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+			} catch (JobBoardServiceException jbex) {
+
+				LOGGER.error("Error occured while Retriving Data", jbex);
+			}
 		}
 		if (null != admFolderDTOList && !admFolderDTOList.isEmpty()) {
 			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
@@ -173,11 +203,21 @@ public class ManageJobSeekerController {
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 		}
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+		if (null == next || !next.isEmpty()) {
+			manageJobSeekerForm.setBeginVal((page / 10) * 10);
+		} else {
+			manageJobSeekerForm.setBeginVal(Integer.parseInt(next));
+			page = Integer.parseInt(next);
+		}
+
+		model.addObject("noOfPages", noOfPages);
+		model.addObject("currentPage", page);
+		model.addObject("begin", (manageJobSeekerForm.getBeginVal() <= 0 ? 1
+				: manageJobSeekerForm.getBeginVal()));
+		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.MANAGEJOBSEEKER);
 		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 		model.addObject(APP_STATUS_LIST, appStatusList);
-		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.MANAGEJOBSEEKER);
-		model.addObject("manageJobSeekerForm", manageJobSeekerForm);
-		model.addObject("appStatusList", appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
 
 		return model;
@@ -321,7 +361,7 @@ public class ManageJobSeekerController {
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 				}
-				model.setViewName("manageJobSeekers");
+				model.setViewName("redirect:/employer/manageJobSeeker.html?folderId=-1");
 			} else {
 				model.setViewName("manageJobSeekerFolderView");
 			}
@@ -383,7 +423,7 @@ public class ManageJobSeekerController {
 		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
 				.getResumeType())) {
 			try {
-				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+				model.setViewName("redirect:/employer/exportResume.html?fileName="
 						+ resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
@@ -582,7 +622,7 @@ public class ManageJobSeekerController {
 			// if the resume Type is Upload then we download the Resume as is
 			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
 					.getResumeType())) {
-				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+				model.setViewName("redirect:/employer/exportResume.html?fileName="
 						+ resumeDTO.getFilePath());
 			} else {
 
@@ -615,7 +655,7 @@ public class ManageJobSeekerController {
 			// if the resume Type is Upload then we download the Resume as is
 			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
 					.getResumeType())) {
-				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
+				model.setViewName("redirect:/employer/exportResume.html?fileName="
 						+ resumeDTO.getFilePath());
 			} else {
 
@@ -695,7 +735,7 @@ public class ManageJobSeekerController {
 
 									model.addObject(APP_STATUS_LIST,
 											appStatusList);
-									model.setViewName("manageJobSeekers");
+									model.setViewName("forward:/employer/manageJobSeeker.html?folderId=-1");
 									model.addObject(MANAGEJOBSEEKERFORM,
 											manageJobSeekerForm);
 
@@ -821,6 +861,7 @@ public class ManageJobSeekerController {
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
 			BindingResult result, ManageJobSeekerForm manageJobSeekerForm,HttpServletRequest request, Model model) {
+
 		try {
 
 			int resumeId = Integer.parseInt(request.getParameter("id"));
@@ -970,7 +1011,7 @@ public class ManageJobSeekerController {
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + "With the following message :" + "\n"
 						+ END_TAGS);
-				mesg = mesg.append("<TR><TD>" + "<br>" + bodyHead2
+				mesg = mesg.append("<TR><TD>" +  bodyHead2
 						+ END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyOfMailFirst + "." 
 						+ END_TAGS);
@@ -989,6 +1030,69 @@ public class ManageJobSeekerController {
 		}
 		modelData.setViewName(urlRedirectMail);
 		return "";
+
+	}
+	/**
+	 * This method is called to export an uploaded resume. 
+	 * @param createResume
+	 * @return model
+	 */
+	@RequestMapping(value = "/exportResume", method = RequestMethod.GET)
+	public void exporting(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("fileName") String fileName) {
+
+		File file = new File(fileName);
+
+		String fname = file.getName();
+		int index = fname.indexOf('_');
+		fname = fname.substring(index + 1);
+		index = fname.lastIndexOf('.');
+		String fileExtn = fname.substring(index + 1);
+
+		if (MMJBCommonConstants.FILE_TYPE_DOC.equalsIgnoreCase(fileExtn)) {
+			response.setContentType("application/vnd.ms-word");
+		} else if (MMJBCommonConstants.FILE_TYPE_DOCX
+				.equalsIgnoreCase(fileExtn)) {
+			response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+		} else if (MMJBCommonConstants.FILE_TYPE_PDF.equalsIgnoreCase(fileExtn)) {
+			response.setContentType("application/pdf");
+		}
+
+		response.setHeader("Content-Disposition", "attachment; filename="
+				+ fname);
+
+		BufferedInputStream input = null;
+		BufferedOutputStream output = null;
+
+		try {
+			input = new BufferedInputStream(new FileInputStream(file));
+			output = new BufferedOutputStream(response.getOutputStream());
+
+			byte[] buffer = new byte[8192];
+			for (int length = 0; (length = input.read(buffer)) > 0;) {
+				output.write(buffer, 0, length);
+			}
+		} 
+		 catch (Exception e) {
+			LOGGER.info("Error while exporting",e);
+		}
+		finally {
+			if (output != null){
+				try {
+						output.close();
+					} catch (IOException ignore) {
+						LOGGER.info("Error while exporting",ignore);
+					}
+			}	
+			if (input != null){
+				try {
+						input.close();
+					}catch (IOException ignore) {
+						LOGGER.info("Error while exporting",ignore);
+					}
+			}	
+		}
 
 	}
 }

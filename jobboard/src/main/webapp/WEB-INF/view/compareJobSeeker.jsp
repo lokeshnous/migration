@@ -51,8 +51,29 @@
 											}
 
 										});
+						$('#moveToFolder').live("click", function() {
+							var rowObj = $(this).parent().parent();
+							var resumeId = $(rowObj).attr("id");
+							var val = [];
+												
+								val[0] = resumeId;
+								alert(resumeId);
+							
+							if (val != "") {						
+								$('#selectedRow').val(val);
+								$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);	
+								$.nmManual($('#moveToFolderPopup').attr("href"));
+							} else {
+								alert("Please select a resume!");
+							}
+
+						});
 						jQuery(".megamenu").megamenu();
 					});
+	function sendResumeToFrd(resumeId,resumeName,context) {	
+		var currentUrl = window.location.pathname;
+		$.nmManual(context+'/employer/sendtofriend.html?id='+resumeId+'&resumeName='+resumeName+'&currentUrl='+currentUrl);
+	}
 </script>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 </head>
@@ -82,6 +103,7 @@
 							class="link_color3_emphasized FontSize12 FontWeight">Back to
 								Manage Job-Seeker</a></span>
 					</div>
+					
 					<div class="row marginTop20 marginBottom15">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
 							class="grid marginTop3" id="tb_compare_job_seeker">
@@ -92,16 +114,16 @@
 									var="jobSeeker" varStatus="status">
 									<td width="20%" height="55" align="center"
 										class="BorderLeftWhite" id="${jobSeeker.uploadResumeId}"><div
-											class="EDPrice Height45 bold FontSize14">
+											class="EDPrice bold FontSize14" style="height:45px;">
 											${jobSeeker.contactInfoDTO.firstName} &nbsp;
 											${jobSeeker.contactInfoDTO.lastName}<br /> <a
 												href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${jobSeeker.uploadResumeId}"><img
 												src="../resources/images/View.png" width="20" height="20"
-												alt="view"></a>&nbsp;<a href="#"><img
-												src="../resources/images/folder.png" width="20" height="20"
-												alt="folder"></a>&nbsp;<a href="#"><img
+												alt="view"></a>&nbsp;<a href="#" id="moveToFolder"><img
+												src="../resources/images/Folder.png" width="20" height="20"
+												alt="folder"></a>&nbsp;<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${jobSeeker.uploadResumeId }"><img
 												src="../resources/images/Print2.png" width="20" height="20"
-												alt="print"></a>&nbsp;<a href="#"><img
+												alt="print"></a>&nbsp;<a onclick="sendResumeToFrd(${jobSeeker.uploadResumeId}, '${jobSeeker.resumeName}','<%= request.getContextPath() %>')"><img
 												src="../resources/images/EmailOrange.png" width="20"
 												height="20" alt="email"></a>&nbsp;<a href="#"><img
 												src="../resources/images/Delete.png" width="20" height="20"
@@ -179,6 +201,7 @@
 							</tr>
 						</table>
 					</div>
+					<a href="" id="moveToFolderPopup" style="display:none;">Move</a>
 					<!--Start:MidContant-->
 					<div class="clearfix"></div>
 					<!-- content_wrapper -->
