@@ -60,10 +60,7 @@
 								$('#selectedRow').val(val);
 								$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);	
 								$.nmManual($('#moveToFolderPopup').attr("href"));
-							} else {
-								alert("Please select a resume!");
-							}
-
+							} 
 						});
 						jQuery(".megamenu").megamenu();
 					});

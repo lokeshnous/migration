@@ -276,7 +276,10 @@ public class ManageJobSeekerController {
 		ModelAndView model = new ModelAndView();
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
-		int folderId = manageJobSeekerForm.getFolderId();
+		int folderId =0;
+		if(null!=request.getParameter("folderId")){
+			folderId =  Integer.parseInt(request.getParameter("folderId"));
+		}
 		if (rating > 0 && resumeId > 0) {
 			try {
 				manageJobSeekerService.updateRatings(rating, resumeId);

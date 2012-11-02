@@ -275,12 +275,12 @@
 							});						
 						}
 						function onChangeRatining(eleObj) {
-
+								folderId=$("#folderId").val();
 							var rowObj = $(eleObj).parent().parent();
 							var resumeId =  $(rowObj).attr("id");
 							val = eleObj.id;
 							$.ajax({url : "${pageContext.request.contextPath}/employer/updateRating.html?rating="
-								+ val+"&resumeId="+resumeId,
+								+ val+"&resumeId="+resumeId+"&folderId="+folderId,
 				    			data:$('#manageJobSeeker').serialize(),
 								type: "POST",
 								success: function(data){ 
