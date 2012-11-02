@@ -164,4 +164,18 @@ public class MMUtils {
 		return false;
 	}
 	
+	/**
+	 * This method converts the date in string format to required format for
+	 * displaying it in the job search result page.
+	 * 
+	 * @param dateString
+	 * @return String
+	 */
+
+	public static String convertToReqdDateString(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				MMJBCommonConstants.JSON_DATE_FORMAT, Locale.US);
+		return formatter.format(date);
+	}
+	
 }

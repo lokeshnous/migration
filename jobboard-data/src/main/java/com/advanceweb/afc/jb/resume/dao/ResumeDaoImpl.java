@@ -53,6 +53,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			.getLogger("ResumeDaoImpl.class");
 	
 	private static final String FIND_RES_BUILD_RESUME="from ResBuilderResume res where res.resUploadResumeId=?";
+	private static final String ALL_CANDIDATES_FOLDER_NAME = "All Candidates";
 	
 	@Autowired
 	private ResumeConversionHelper resumeConversionHelper;
@@ -399,15 +400,13 @@ public class ResumeDaoImpl implements ResumeDao {
 			//check if resumes are already moved to folder. If duplicate then return the duplicate resumes ids.
 			//List<AdmFolder> existingResumeList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
 			
-			
-			//Check if common folder is present in adm_folder. If not insert one row with
-			// user id.
+			//Check if common folder is present in adm_folder. If not insert one row with user id.
 			
 			List<AdmFolder> admFolderList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
 			if(admFolderList.size() == 0){
 				List<AdmFolder> admFolderSearchList = new ArrayList<AdmFolder>();
 				AdmFolder admFolder = new AdmFolder();
-				admFolder.setFolderName("default");
+				admFolder.setFolderName(ALL_CANDIDATES_FOLDER_NAME);
 				admFolder.setParentFolderId(0);
 				admFolder.setUserId(userId);
 				admFolderSearchList.add(admFolder);

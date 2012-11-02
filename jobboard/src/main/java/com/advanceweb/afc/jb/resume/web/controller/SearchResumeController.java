@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +48,6 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
-import com.advanceweb.afc.jb.search.service.JSONConverterService;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -65,7 +65,7 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping("/employerSearchResume")
-public class SearchResumeController extends AbstractController{
+public class SearchResumeController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(SearchResumeController.class);
@@ -74,38 +74,36 @@ public class SearchResumeController extends AbstractController{
 	private CheckSessionMap checkSessionMap;
 
 	@Autowired
-	private JSONConverterService jsonConverterService;
-
-	@Autowired
 	private ResumeSearchService resumeSearchService;
 
 	@Autowired
 	private LookupService lookupService;
-	
+
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
-	
+
 	@Value("${savedSearchsLimit}")
 	private String savedSearchsLimit;
-	
+
 	private String navigationPath;
-	
+
 	@Value("${saveThisSearchErrMsg}")
 	private String saveThisSearchErrMsg;
-	
+
 	@Autowired
 	private ResumeService resumeService;
-	
+
 	@Autowired
 	private ClickService clickService;
 
 	@Autowired
 	private TransformCreateResume transCreateResume;
-	
+
 	@Autowired
 	private AdService adService;
-	
+
 	private static final String STR_SRCH_RES_FORM = "searchResumeForm";
+
 	/**
 	 * This method will be used for doing resume search and Return a JSON Object
 	 * which will later be parsed at the UI end and all the results will be
@@ -216,8 +214,7 @@ public class SearchResumeController extends AbstractController{
 		if (resumeSearchResultDTO != null) {
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
-			jobSrchJsonObj = jsonConverterService
-					.convertToJSONForResume(resumeSearchResultDTO);
+			jobSrchJsonObj = searchResumeToJSON(resumeSearchResultDTO);
 		}
 		sessionMap = setSessionForGrid(sessionMap, page, noOfPages, beginVal,
 				jobSrchJsonObj);
@@ -389,23 +386,23 @@ public class SearchResumeController extends AbstractController{
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/advanceresumesearch", method = RequestMethod.GET)
-	public ModelAndView advanceResumeSearch(HttpSession session, HttpServletRequest request,
-			Map<String, SearchResumeForm> model) {
-		
+	public ModelAndView advanceResumeSearch(HttpSession session,
+			HttpServletRequest request, Map<String, SearchResumeForm> model) {
+
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
 		ModelAndView modelView = new ModelAndView();
 		model.put(STR_SRCH_RES_FORM, searchResumeForm);
-		//removeSession(session);
-		
+		// removeSession(session);
+
 		getAds(session, request, modelView);
-		
+
 		modelView.setViewName("advanceresumesearch");
 		return modelView;
 
 	}
 
 	/**
-	 * This method displays the ads 
+	 * This method displays the ads
 	 * 
 	 * @param session
 	 * @param request
@@ -413,40 +410,40 @@ public class SearchResumeController extends AbstractController{
 	 */
 	private void getAds(HttpSession session, HttpServletRequest request,
 			ModelAndView modelView) {
-		// Add the Ads 
+		// Add the Ads
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
 					session, PageNames.EMP_ADV_RESUME_SEARCH);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			modelView.addObject("adPageTop", bannerString);
-			
+
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			modelView.addObject("adPageRightTop", bannerString);
-			
+
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			modelView.addObject("adPageRightMiddle", bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			modelView.addObject("adPageBottom", bannerString);
 		} catch (Exception e) {
-			LOGGER.error("Error occurred while getting the html content for Ads"
-					, e);
+			LOGGER.error(
+					"Error occurred while getting the html content for Ads", e);
 		}
 	}
-	
+
 	@RequestMapping(value = "/mySavedResumeSearches", method = RequestMethod.GET)
 	public ModelAndView mySavedResumeSearches(
 			@ModelAttribute(STR_SRCH_RES_FORM) SearchResumeForm searchResumeForm,
@@ -458,10 +455,11 @@ public class SearchResumeController extends AbstractController{
 		if (searchResumeForm.getUserID() != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
 					.mySavedResumeSearches(searchResumeForm.getUserID());
-			
+
 			List<DropDownDTO> notifyMeList = populateDropdownsService
 					.populateDropdown("NotifyMe");
-			searchResumeForm.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
+			searchResumeForm
+					.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
 			model.addObject("notifyMeList", notifyMeList);
 			model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
 		}
@@ -471,53 +469,58 @@ public class SearchResumeController extends AbstractController{
 	}
 
 	/**
-	 * This method is used to search resumes directly from the DB.
-	 * This is a temporary implementation since SOLR is not yet configured.
+	 * This method is used to search resumes directly from the DB. This is a
+	 * temporary implementation since SOLR is not yet configured.
+	 * 
 	 * @param session
 	 * @param searchResumeForm
 	 * @param result
 	 * @param request
 	 * @return JSONObject
 	 */
-	
+
 	@RequestMapping(value = "/searchResumeFromDB", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject searchResumeFromDB(HttpSession session,
 			SearchResumeForm searchResumeForm, BindingResult result,
 			HttpServletRequest request) {
 		LOGGER.info("Calling Search Resume Controller!!!");
-		//session.removeAttribute("resumeDTOList");
+		// session.removeAttribute("resumeDTOList");
 		session.removeAttribute("jobSrchJsonObj");
 		session.removeAttribute(MMJBCommonConstants.KEYWORD_STRING);
-		//session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
+		// session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
 		List<ResumeDTO> resumeDTOList = null;
 		JSONObject jobSrchJsonObj = null;
 		// Calling the jobSearch() of Service layer for getting the resume list
 		try {
-			resumeDTOList = resumeSearchService.resumeSearchFromDB(searchResumeForm.getKeywords());
-			//session.setAttribute("resumeDTOList", resumeDTOList);
+			resumeDTOList = resumeSearchService
+					.resumeSearchFromDB(searchResumeForm.getKeywords());
+			// session.setAttribute("resumeDTOList", resumeDTOList);
 			if (resumeDTOList != null) {
 
-			//Save the list of resumes which appeared in the search	
-			clickService.saveResAppearance(resumeDTOList);
-			
-			// Calling the service layer for converting the JobSearchResultDTO
-			// object into JSON Object
-				jobSrchJsonObj = jsonConverterService.convertToJSONForResumeFromDB(resumeDTOList);
+				// Save the list of resumes which appeared in the search
+				clickService.saveResAppearance(resumeDTOList);
+
+				// Calling the service layer for converting the
+				// JobSearchResultDTO
+				// object into JSON Object
+				jobSrchJsonObj = searchResumeToJSONFromDB(resumeDTOList);
 			}
-			jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS, resumeDTOList.size());
+			jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+					resumeDTOList.size());
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while getting the Resume Search Result from DB...");
 		}
 		// add values in session
 		jobSrchJsonObj.put("keywords", searchResumeForm.getKeywords());
 		session.setAttribute("resSrchJsonList", jobSrchJsonObj);
-		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING, searchResumeForm.getKeywords());
-		//session.setAttribute(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING,
+				searchResumeForm.getKeywords());
+		// session.setAttribute(MMJBCommonConstants.AUTOLOAD,
+		// String.valueOf(true));
 		return jobSrchJsonObj;
 	}
-	
-	
+
 	/**
 	 * Get the jobboardsearchresumeresultbody page
 	 * 
@@ -534,7 +537,7 @@ public class SearchResumeController extends AbstractController{
 		modelAndView.setViewName("jobboardsearchresumeresultbody");
 		return modelAndView;
 	}
-	
+
 	/**
 	 * This method is called to edit a Saved Job Search
 	 * 
@@ -588,7 +591,8 @@ public class SearchResumeController extends AbstractController{
 			sessionMap.put(MMJBCommonConstants.SAVE_SEARCH_ID,
 					String.valueOf(searchId));
 
-			session.setAttribute(SearchParamDTO.RESUME_SEARCH_SESSION_MAP, sessionMap);
+			session.setAttribute(SearchParamDTO.RESUME_SEARCH_SESSION_MAP,
+					sessionMap);
 
 			jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
 					urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
@@ -605,12 +609,12 @@ public class SearchResumeController extends AbstractController{
 			return jsonObject;
 		}
 	}
-	
+
 	/**
 	 * This method is called to forward to job search page
 	 * 
 	 * @param model
-	 * @param request 
+	 * @param request
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/findResumePage", method = RequestMethod.GET)
@@ -621,12 +625,12 @@ public class SearchResumeController extends AbstractController{
 		MetricsForm employerDashBoardForm = new MetricsForm();
 		Map<String, String> sessionMap = checkSessionMap
 				.getResumeSearchSessionMap(session);
-		if(session.getAttribute(MMJBCommonConstants.KEYWORD_STRING) != null){
-			String keyword = (String) session.getAttribute(MMJBCommonConstants.KEYWORD_STRING);
+		if (session.getAttribute(MMJBCommonConstants.KEYWORD_STRING) != null) {
+			String keyword = (String) session
+					.getAttribute(MMJBCommonConstants.KEYWORD_STRING);
 			searchResumeForm.setKeywords(keyword);
 			searchResumeForm.setAutoload(true);
-		}
-		else if (!sessionMap.isEmpty()) {
+		} else if (!sessionMap.isEmpty()) {
 			String searchType = sessionMap.get(MMJBCommonConstants.SEARCH_TYPE);
 			String radius = MMJBCommonConstants.EMPTY;
 			String cityState = MMJBCommonConstants.EMPTY;
@@ -655,10 +659,10 @@ public class SearchResumeController extends AbstractController{
 		modelAndView.addObject("employerDashBoardForm", employerDashBoardForm);
 		modelAndView.setViewName("employerDashboard");
 		// get the Ads
-		getAdsForEmployerDashboard (request, session, modelAndView);
+		getAdsForEmployerDashboard(request, session, modelAndView);
 		return modelAndView;
 	}
-	
+
 	/**
 	 * Get Ads for employer dashboard page
 	 * 
@@ -666,7 +670,7 @@ public class SearchResumeController extends AbstractController{
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForEmployerDashboard (HttpServletRequest request,
+	private void getAdsForEmployerDashboard(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -678,19 +682,18 @@ public class SearchResumeController extends AbstractController{
 					.getTag();
 			model.addObject("adPageTop", bannerString);
 
-			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 
-
-	/**`
-	 * This method is called to delete a Saved Job Search
+	/**
+	 * ` This method is called to delete a Saved Job Search
 	 * 
 	 * @param form
 	 * @param result
@@ -713,7 +716,7 @@ public class SearchResumeController extends AbstractController{
 			return deleteStatusJson;
 		}
 	}
-	
+
 	/**
 	 * This method is used to update the modified notify me value in the table
 	 * adm_save_search
@@ -745,7 +748,8 @@ public class SearchResumeController extends AbstractController{
 			searchedJobsDTOs.add(searchedJobsDTO);
 		}
 		// update the data in DB
-		boolean saveData = resumeSearchService.saveModifiedData(searchedJobsDTOs);
+		boolean saveData = resumeSearchService
+				.saveModifiedData(searchedJobsDTOs);
 		JSONObject saveStatusJson = new JSONObject();
 		if (saveData) {
 			saveStatusJson.put("success", "Data Updated Successfully");
@@ -754,7 +758,7 @@ public class SearchResumeController extends AbstractController{
 		}
 		return saveStatusJson;
 	}
-	
+
 	/**
 	 * This method is used to save the searches in adm_save_search table
 	 * 
@@ -767,11 +771,12 @@ public class SearchResumeController extends AbstractController{
 	JSONObject saveSearchedResumes(@Valid SearchResumeForm searchResumeForm,
 			BindingResult result, Map<String, JobSearchResultForm> model,
 			@RequestParam("searchName") String searchName, HttpSession session) {
-		
+
 		// Before user saves his search need to check save search
 		// records are more than 5 searches.
 		// if yes then delete the first saved search
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
 				.viewMySavedSearches(userId);
 		int savedSearchCount = saveSearchedJobsDTOList.size();
@@ -786,16 +791,16 @@ public class SearchResumeController extends AbstractController{
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put("NavigationPath", navigationPath);
 		} else {
-//			int userId = (Integer) session
-//					.getAttribute(MMJBCommonConstants.USER_ID);
+			// int userId = (Integer) session
+			// .getAttribute(MMJBCommonConstants.USER_ID);
 			SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
 			if (StringUtils.isEmpty(searchName)) {
 				jsonObject.put("EmptySearchName", "EmptySearchName");
 			} else {
 
-				boolean isSrchNameExist = resumeSearchService.validateSearchName(
-						searchName, userId);
+				boolean isSrchNameExist = resumeSearchService
+						.validateSearchName(searchName, userId);
 
 				if (isSrchNameExist) {
 					jsonObject
@@ -829,6 +834,7 @@ public class SearchResumeController extends AbstractController{
 		}
 		return jsonObject;
 	}
+
 	/**
 	 * This method is used to display the Save Search pop up.
 	 * 
@@ -841,7 +847,7 @@ public class SearchResumeController extends AbstractController{
 		model.put(STR_SRCH_RES_FORM, new SearchResumeForm());
 		return new ModelAndView("empSaveThisSearchPopup");
 	}
-	
+
 	/**
 	 * This method is used to navigate the save this search pages to Login page
 	 * or pop up page depending upon whether the user is a ananymous user or
@@ -863,8 +869,7 @@ public class SearchResumeController extends AbstractController{
 
 			Map<String, String> sessionMap = checkSessionMap
 					.getResumeSearchSessionMap(session);
-		 if ((sessionMap
-					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
+			if ((sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
 							&& sessionMap
 									.get(MMJBCommonConstants.SEARCH_TYPE)
@@ -931,33 +936,33 @@ public class SearchResumeController extends AbstractController{
 	 * @return
 	 */
 	@RequestMapping(value = "/moveResumeToFolder")
-	public @ResponseBody List<String> moveResumeToFolder(HttpServletResponse response, 
+	public @ResponseBody
+	List<String> moveResumeToFolder(HttpServletResponse response,
 			HttpServletRequest request, HttpSession session,
 			@RequestParam("resumeIdAndDateArr") String resumeIdAndDateArr) {
 		List<String> idList = new ArrayList<String>();
 		idList.add("Selected Resumes moved successfully to Default Folder.");
-		//idList.add("20");
-		
-		//ModelAndView modelAndView = new ModelAndView();
-		LOGGER.info("Publish Resume ID and Created date list :"+resumeIdAndDateArr);
+
+		LOGGER.info("Publish Resume ID and Created date list :"
+				+ resumeIdAndDateArr);
 		String[] resumeIdAndDateArray = resumeIdAndDateArr.split(",");
-		//String[] createdDateArray = createdDateArr.split(",");
-		
+
 		List<String> publishResumeIdArrList = getPublishResumeArrayList(resumeIdAndDateArray);
-		//List<Date> createdDateList = getCreatedDateArrayList(createdDateArray);
-		
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
-		LOGGER.info("User Id is :"+userId);
-		boolean status = resumeService.moveResumesToFolder(publishResumeIdArrList, userId);
-		if(status){
+
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		LOGGER.info("User Id is :" + userId);
+		boolean status = resumeService.moveResumesToFolder(
+				publishResumeIdArrList, userId);
+		if (status) {
 			LOGGER.info("Successfully Moved the Resumes to the Common Folder.");
-		}else{
+		} else {
 			LOGGER.info("Error occurred while moving the Resumes to the specified Folder.");
 		}
-		
-		//modelAndView.setViewName("jobboardsearchresumeresultbody");
-		//return modelAndView;
-		
+
+		// modelAndView.setViewName("jobboardsearchresumeresultbody");
+		// return modelAndView;
+
 		return idList;
 	}
 
@@ -966,14 +971,14 @@ public class SearchResumeController extends AbstractController{
 	 * @param publishResumeIdArr
 	 */
 	private List<String> getPublishResumeArrayList(String[] publishResumeIdArr) {
-		List<String> publishResumeIDList = new ArrayList<String>(); 
-		for(String publishId : publishResumeIdArr){
+		List<String> publishResumeIDList = new ArrayList<String>();
+		for (String publishId : publishResumeIdArr) {
 			publishResumeIDList.add(publishId);
 		}
-		
+
 		return publishResumeIDList;
 	}
-	
+
 	/**
 	 * Called to create resume it Contains 1.Contact information 2.Objective
 	 * 3.Work Experience 4.Education 5.Certifiation 6.Skills 7.Awards
@@ -987,11 +992,12 @@ public class SearchResumeController extends AbstractController{
 	@RequestMapping(value = "/viewResume", method = RequestMethod.GET)
 	public ModelAndView viewResume(CreateResume createResumed,
 			BindingResult result, @RequestParam("resumeId") int resumeId,
-			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) {
 		/**
-		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 * Introduced a new variable "createResumed" to resolve PMD issue.
 		 */
-		CreateResume createResume =createResumed; 
+		CreateResume createResume = createResumed;
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
@@ -1018,11 +1024,12 @@ public class SearchResumeController extends AbstractController{
 		createResume.setContactInfoForm(contactForm);
 		createResume.setListPhoneDtlForm(listPhoneDtl);
 		resumeDTO.getContactInfoDTO();
-		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.EMPLOYER);
-		
-		//Save the resume which was viewed by employer
+		session.setAttribute(MMJBCommonConstants.MODULE_STRING,
+				MMJBCommonConstants.EMPLOYER);
+
+		// Save the resume which was viewed by employer
 		clickService.saveResumeEmpViews(resumeId);
-		
+
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
 				.getResumeType())) {
 			model.addObject("createResume", createResume);
@@ -1034,7 +1041,7 @@ public class SearchResumeController extends AbstractController{
 						+ resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
-				LOGGER.info("Error in view resume builder",e);
+				LOGGER.info("Error in view resume builder", e);
 			}
 		} else {
 			model.addObject("createResume", createResume);
@@ -1043,4 +1050,76 @@ public class SearchResumeController extends AbstractController{
 		return model;
 
 	}
+
+	/**
+	 * This method is used to convert the ResumeDTOList coming from DB to JSON
+	 * object.
+	 * 
+	 * @param List
+	 *            <ResumeDTO>
+	 * @return JSONObject
+	 */
+	public JSONObject searchResumeToJSONFromDB(List<ResumeDTO> resumeDTOList) {
+
+		final JSONObject jobSrchJsonObj = new JSONObject();
+		final JSONArray jsonRows = new JSONArray();
+
+		for (ResumeDTO resumeDTO : resumeDTOList) {
+
+			final JSONObject jobSrchJson = new JSONObject();
+
+			jobSrchJson.put(MMJBCommonConstants.UPLOAD_RESUME_ID,
+					resumeDTO.getUploadResumeId());
+			jobSrchJson.put(MMJBCommonConstants.PUBLISH_RESUME_ID,
+					resumeDTO.getPublishResumeId());
+			jobSrchJson.put(MMJBCommonConstants.RESUME_DESIRED_POSTION,
+					MMUtils.isNull(resumeDTO.getResumeName()));
+			jobSrchJson.put(MMJBCommonConstants.APPLICANT_NAME,
+					resumeDTO.getFullName());
+
+			/*
+			 * String location = null; if (resumeDTO.getCity() != null &&
+			 * resumeDTO.getState() != null) { location = resumeDTO.getCity() +
+			 * MMJBCommonConstants.COMMA + resumeDTO.getState(); } else if
+			 * (resumeDTO.getCity() != null && resumeDTO.getState() == null) {
+			 * location = resumeDTO.getCity(); }
+			 */
+			jobSrchJson.put(MMJBCommonConstants.LOCATION,
+					MMUtils.isNull(resumeDTO.getState()));
+			jobSrchJson.put(MMJBCommonConstants.EXPERIENCE,
+					resumeDTO.getExperience());
+			jobSrchJson.put(MMJBCommonConstants.EMPLOYMENT_TYPE,
+					resumeDTO.getEmploymentType());
+			jobSrchJson.put(MMJBCommonConstants.RELOCATE, "Yes");
+			jobSrchJson.put(MMJBCommonConstants.POSTED_DT,
+					MMUtils.convertToReqdDateString(resumeDTO.getPostDt()));
+
+			jsonRows.add(jobSrchJson);
+
+		}
+
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				resumeDTOList.size());
+		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);
+
+		return jobSrchJsonObj;
+	}
+
+	/**
+	 * This method will convert the ResumeSearchResultDTO to JSON object
+	 * 
+	 * @param ResumeSearchResultDTO
+	 * @return JSONObject
+	 */
+	private JSONObject searchResumeToJSON(
+			final ResumeSearchResultDTO resumeSearchResultDTO) {
+
+		final JSONObject jobSrchJsonObj = new JSONObject();
+		// final JSONArray jsonRows = new JSONArray();
+		// final List<ResumeDTO> jobDTOList =
+		// resumeSearchResultDTO.getResultList();
+
+		return jobSrchJsonObj;
+	}
+
 }

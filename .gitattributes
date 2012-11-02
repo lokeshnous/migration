@@ -206,10 +206,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobDTO.
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrJobSearchDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrResumeDTO.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/engine/solr/SolrResumeSearchDelegate.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JSONConverterService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JobSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/ResumeSearchService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/JSONConverterServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/JobSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/ResumeSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/security/DatabaseAuthenticationManager.java -text
