@@ -342,7 +342,7 @@ public class EmployerDashBoardController extends AbstractController {
 			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate,
 			@RequestParam("selEmployerId") int selEmployerId,
-			@ModelAttribute(EMPLOYERDASHBOARDFORM) EmployerDashBoardForm employerDashBoardForm,
+			@ModelAttribute(EMPLOYERDASHBOARDFORM) MetricsForm employerDashBoardForm,
 			BindingResult result) throws JobBoardException {
 		session.removeAttribute(JBPOSTTOTALLIST);
 		java.util.Date startFrom = null;
@@ -426,6 +426,7 @@ public class EmployerDashBoardController extends AbstractController {
 		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
 		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
+		model.addObject("searchResumeForm", new SearchResumeForm());
 		model.setViewName("employerDashboard");
 		return model;
 	}
