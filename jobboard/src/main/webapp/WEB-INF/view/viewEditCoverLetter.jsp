@@ -116,7 +116,7 @@
 					 <div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
 								<!-- <input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" /> -->
-								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel" title="Cancel"/>	
+								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel"/>	
 							</span>
 						</div>
 						</c:if>
@@ -184,8 +184,8 @@
 					 </div>						
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
-								<input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" />
-								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel" title="Cancel"/>	
+								<input type="button" value="Save" name="save" id="save" class="btn_sm orange"/>
+								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel"/>	
 							</span>
 						</div>
 					   </c:if>
