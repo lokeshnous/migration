@@ -66,7 +66,7 @@
 								width="20" height="20" alt="download" title="Download resume"></a>&nbsp;<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${resume.orgResumeId }"><img
 								src="../resources/images/Print2.png" title="Print Resume" width="20" height="20"
 								alt="print"></a>&nbsp;<a  onclick="sendResumeToFrd(${resume.orgResumeId}, '${resume.resumeName}','<%= request.getContextPath() %>')"><img
-								src="../resources/images/EmailOrange.png" title="Send resume" width="20" height="20"
+								src="../resources/images/EmailOrange.png" title="Forward resume" width="20" height="20"
 								alt="email"></a>&nbsp;<a href="#"><img
 								src="../resources/images/Delete.png"  title="Delete Resume" width="20" height="20"
 								alt="delete"></a></td>

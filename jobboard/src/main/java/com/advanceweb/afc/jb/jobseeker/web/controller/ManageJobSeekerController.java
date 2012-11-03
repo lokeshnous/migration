@@ -168,7 +168,11 @@ public class ManageJobSeekerController {
 					noOfRecords = manageJobSeekerService
 							.getTotalNumberOfRecords((Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID));
-					model.setViewName("manageJobSeekerContent");
+					if (null != request.getParameter("compare") && request.getParameter("compare").equals("true") ) {
+						model.setViewName("manageJobSeekers");
+					}else{
+								model.setViewName("manageJobSeekerContent");
+					}
 				} else if (folderId == 0) {
 					manageJobSeekerDTOList = manageJobSeekerService
 							.retrieveAllResume((Integer) session
@@ -364,7 +368,7 @@ public class ManageJobSeekerController {
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 				}
-				model.setViewName("redirect:/employer/manageJobSeeker.html?folderId=-1");
+				model.setViewName("forward:/employer/manageJobSeeker.html?folderId=-1");
 			} else {
 				model.setViewName("manageJobSeekerFolderView");
 			}
@@ -707,9 +711,23 @@ public class ManageJobSeekerController {
 						",");
 				int folderResumeId = 0;
 
-				manageJobSeekerDTOList = manageJobSeekerService
-						.retrieveAllResume((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
+				int folderId = 0;
+				if (null != request.getParameter("folderId")) {
+					folderId = Integer.parseInt(request
+							.getParameter("folderId"));
+					manageJobSeekerForm.setFolderId(folderId);
+				}
+
+				if (folderId > 0) {
+					manageJobSeekerDTOList = manageJobSeekerService
+							.retrieveAllResumeByFolder((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID),
+									folderId);
+				} else {
+					manageJobSeekerDTOList = manageJobSeekerService
+							.retrieveAllResume((Integer) session
+									.getAttribute(MMJBCommonConstants.USER_ID));
+				}
 				if (null != manageJobSeekerDTOList
 						&& !manageJobSeekerDTOList.isEmpty()) {
 					manageJobSeekerForm
@@ -725,7 +743,8 @@ public class ManageJobSeekerController {
 								resumeDTO = resumeService
 										.editResume(manageJobSeekerDTO
 												.getOrgResumeId());
-								resumeDTO.setFolderResumeId(manageJobSeekerDTO.getFolderResumeId());
+								resumeDTO.setFolderResumeId(manageJobSeekerDTO
+										.getFolderResumeId());
 								if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
 										.equals(resumeDTO.getResumeType())) {
 
@@ -739,7 +758,7 @@ public class ManageJobSeekerController {
 
 									model.addObject(APP_STATUS_LIST,
 											appStatusList);
-									model.setViewName("forward:/employer/manageJobSeeker.html?folderId=-1");
+									model.setViewName("forward:/employer/manageJobSeeker.html?folderId="+folderId+"&compare=true");
 									model.addObject(MANAGEJOBSEEKERFORM,
 											manageJobSeekerForm);
 

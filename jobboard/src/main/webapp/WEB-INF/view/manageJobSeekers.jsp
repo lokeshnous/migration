@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {		
+	jQuery(document).ready(function() {	
 		 noOfPageValue=$("#noOfPage").val();
 		 $("#noOfPageId").val(noOfPageValue);
 		 $("#noOfPageLowerId").val(noOfPageValue);
@@ -21,43 +21,7 @@
 			 $("#all").toggleClass('refineResultsItem plus refineResultsItem minus');
 			//attr('class', 'refineResultsItem plus');
 		 }); */
-		$(".folderdetail").click(
-						function() {
-							val = $(this).attr("id");
-						 //   document.getElementById(val).style.color="blue";
-							$("#folderId").val(val);
-							$("#folderName").val($(this).attr("title"));
-							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
-								+ val,
-				    			data:$('#manageJobSeeker').serialize(),
-								type: "POST",
-								success : function(data) {
-									if(data.failure!=null){
-									}else{
-										$("#contentDiv").html(data);
-									}
-								}					
-									
-								
-							});
-				});
-				$(".refineResult").click(
-						function() {
-							$("#folderId").val(0);
-							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
-								+ 0,
-				    			data:$('#manageJobSeeker').serialize(),
-								type: "POST",
-								success : function(data) {
-									if(data.failure!=null){
-									}else{
-										$("#contentDiv").html(data);
-									}
-								}					
-									
-								
-							});
-				});
+		
 				$('#moveToFolder').live("click", function() {
 					var val = [];
 					$(':checkbox:checked').each(function(i) {						
@@ -89,6 +53,7 @@
 				
 				$('#compareSelected').click(function() {
 					$("#errorMsg").html("");
+					folderId=$("#folderId").val();
 					var val = [];
 					$(':checkbox:checked').each(function(i) {
 						val[i] = $(this).val();
@@ -98,12 +63,11 @@
 					}
 					if (val != "" && val.length > 1) {
 						$('#selectedRow').val(val);
-						$("#manageJobSeeker").attr("action", "${pageContext.request.contextPath}/employer/compareResume.html?selectedVal="+val);
+						 $("#manageJobSeeker").attr("action", "${pageContext.request.contextPath}/employer/compareResume.html?selectedVal="+val+"&folderId="+folderId);
 						$("#manageJobSeeker").attr("method","POST");
-						$("#manageJobSeeker").submit();
+						$("#manageJobSeeker").submit(); 
 					} else {
-					
-						alert("Please select more than one resume");
+						alert("Please select atleast two resume to continue");
 					}
 
 				});
@@ -175,9 +139,9 @@
 											switch (action) {
 											case "Add": {
 
-												$("#addBtn").replaceWith("<div class='buttonRow' >" +
-														" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
-														+"</div>");
+												$(".AddNewBtn").replaceWith("<div class='buttonRow' >" +
+														" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onblur='Javascript: checkevent();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
+														+"<img src='../resources/images/CloseGray.jpg' width='15' height='15'></div>");
 												document.getElementById('newFolder').select();
 												document.getElementById('newFolder').style.borderColor="red";
 												document.getElementById('newFolder').style.borderStyle="solid";
@@ -200,6 +164,9 @@
 												}
 											}
 											break;
+											default:
+												$(".DotBorderBottom").replaceWith("<img src='../resources/images/Addbutton.png' align='center' id='addBtn' "+
+													+"	width='15' height='15' alt='Add' title='Add New Folder'>");
 											}
 
 										});
@@ -228,9 +195,9 @@
 							$.ajax({url: "${pageContext.request.contextPath}/employer/addFolder.html?folderName="+folderName,
 								data:$('#manageJobSeeker').serialize(),
 								type: "POST" ,
-								success : function(data) {/* 
-									$(".refineResultsItem").attr('class', 'refineResultsItem minus'); */
+								success : function(data) {
 										$("#folderDiv").html(data);
+									
 								}	 
 							});
 						}/* 
@@ -295,7 +262,7 @@
 						function renameCall(folderId,folderName){
 							$("#addBtn").attr('hidden','true');
 							$("#"+folderId).replaceWith("<div class='addButtonRow' >" +
-									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
+									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: checkEventRename("+folderId+");'/> "
 									+"</div>");
 							document.getElementById(folderId).select();
 							document.getElementById(folderId).style.borderColor="red";
@@ -343,7 +310,7 @@
 						</div>
 						<div id="errorMsg" class="validationMsg">
 						<c:if test="${errorMsg != null}">
-						${errorMsg}
+						<c:out value="${errorMsg}"></c:out>
 						</c:if>
 						
 						</div>

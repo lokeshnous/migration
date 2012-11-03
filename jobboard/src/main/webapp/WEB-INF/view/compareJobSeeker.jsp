@@ -92,7 +92,7 @@
 					<!-- content_wrapper -->
 					<div class="popupHeader Padding0  OrangeBG marginBottom5">
 						<h2>COMPARE JOB-SEEKERS</h2>
-						<span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1"
+						<span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true"
 							class="link_color3_emphasized FontSize12 FontWeight">Back to
 								Manage Job-Seeker</a></span>
 					</div>
