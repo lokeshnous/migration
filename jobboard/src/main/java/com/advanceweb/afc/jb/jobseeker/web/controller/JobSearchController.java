@@ -1947,7 +1947,9 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * Delete the Current Search item
+	 * The method delete selected search item from the current search list
+	 *  which is listed on keyword, city/Zip and radius selected and delete the radius if
+	 *  the city is deleted and perform the search on remaining search items. 
 	 * 
 	 * @param session
 	 * @param response
@@ -1987,6 +1989,12 @@ public class JobSearchController extends AbstractController {
 				String city = sessionMap.get(SearchParamDTO.CITY_STATE);
 				city = city.replace(value, MMJBCommonConstants.EMPTY);
 				jsonObject.put(SearchParamDTO.CITY_STATE, city);
+				String radius = sessionMap.get(SearchParamDTO.RADIUS);
+				if(!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)){
+					radius = radius.replace(value, MMJBCommonConstants.ZERO);
+					jsonObject.put(SearchParamDTO.RADIUS, radius
+						+ MMJBCommonConstants.MILES);
+				}
 			} else if (key.equalsIgnoreCase(SearchParamDTO.RADIUS)) {
 				String radius = sessionMap.get(SearchParamDTO.RADIUS);
 				radius = radius.replace(value, MMJBCommonConstants.ZERO);
