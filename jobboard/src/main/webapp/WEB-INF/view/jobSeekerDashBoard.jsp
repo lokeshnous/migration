@@ -220,14 +220,14 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a title="Coming Soon" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/manageExistProfile.html?resumeType=manageCover" id="manageCoverLett">${msg.jsManageExistingCoverLetters}</a> 
+												<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/manageExistProfile.html?resumeType=manageCover" id="manageCoverLett">${msg.jsManageExistingCoverLetters}</a> 
 												
 											</p>
 											
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-											<a title="Coming Soon" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
+											<a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" id="createCoverLett">${msg.jsCreateNewCoverLetter} </a> 											
 											</p>
 										</div>
 										<div class="lableTextDashBoard">
