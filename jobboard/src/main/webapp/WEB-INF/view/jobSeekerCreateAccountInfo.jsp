@@ -114,8 +114,6 @@ function validateNumber(event) {
 							$('#stateDpId').val(data.state);
 							$('#countryDpId').val(data.country);
 							$("#cityAutoPopulation").val(data.city);
-							var country = $('#countryDpId').val(data.country);
-							alert('country'+country);
 						},error : function(data) {
 							// alert('Unable to process');
 						},
