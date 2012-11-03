@@ -484,8 +484,7 @@ var options = {
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon"
-									href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage
+								<a href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage
 									Job-Seekers</a>
 							</p>
 						</div>
@@ -493,7 +492,7 @@ var options = {
 							<p>
 								<a
 									href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html"
-									title="Coming Soon" id="mySavedResumeSearches"> My Saved
+									id="mySavedResumeSearches"> My Saved
 									Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
 										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}
 								</a>
@@ -520,7 +519,7 @@ var options = {
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon" id="modifySubs"
+								<a id="modifySubs"
 									href="<%=request.getContextPath()%>/subscriptions/modifyFacilitySubscriptions.html">Modify
 									Subscriptions</a>
 							</p>
