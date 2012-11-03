@@ -725,6 +725,7 @@ public class ManageJobSeekerController {
 								resumeDTO = resumeService
 										.editResume(manageJobSeekerDTO
 												.getOrgResumeId());
+								resumeDTO.setFolderResumeId(manageJobSeekerDTO.getFolderResumeId());
 								if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
 										.equals(resumeDTO.getResumeType())) {
 

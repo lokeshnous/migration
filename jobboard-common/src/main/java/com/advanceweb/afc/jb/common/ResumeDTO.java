@@ -33,6 +33,7 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private String isPublished;
 	private String updateDt;
 	private int builderSkillsId;
+	private int folderResumeId;
 	//Creating Resume
 	private String objective;
 	private String skills;
@@ -101,6 +102,22 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 
 	public String getFullName() {
 		return fullName;
+	}
+
+
+	/**
+	 * @return the folderResumeId
+	 */
+	public int getFolderResumeId() {
+		return folderResumeId;
+	}
+
+
+	/**
+	 * @param folderResumeId the folderResumeId to set
+	 */
+	public void setFolderResumeId(int folderResumeId) {
+		this.folderResumeId = folderResumeId;
 	}
 
 
