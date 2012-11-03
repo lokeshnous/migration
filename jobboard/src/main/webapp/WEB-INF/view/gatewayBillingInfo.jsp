@@ -28,16 +28,9 @@
 		
 		$("#continueToNext").click(function(){
 			
-			if($('#card_type').val() == "6" && $('#security_code').val().length < 4 ){
-				alert("Please enter valid security code!");
-				return false;
-			}else if(($('#card_type').val() == "3" || $('#card_type').val() == "4" || $('#card_type').val() == "5") && $('#security_code').val().length != 3 ){
-				alert("Please enter valid security code!");
-				return false;
-			}else{
-				$("#billingForm").attr("action","${pageContext.request.contextPath}/pgiController/confirmOrder.html");
-				$("#billingForm").submit();
-			}
+			$("#billingForm").attr("action","${pageContext.request.contextPath}/pgiController/confirmOrder.html");
+			$("#billingForm").submit();
+			
 		});
 		
 		$('#firstname2').focus();
