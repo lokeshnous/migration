@@ -164,7 +164,14 @@
 				alt="" class="nyroModalClose">
 		</div>
 		<div class="popUpContainerWrapper">
-			<form:form method="post" action="html" commandName="purchaseJobPostForm">
+		<form:form method="post" action="html" commandName="purchaseJobPostForm">
+			 <c:if test="${empty purchaseJobPostForm.jobPostingsForm}">
+						<tr><td>
+							<br><p align="left" class="FormErrorDisplayText">No Job Postings Found</p><br><br><br><br><br>
+							<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+						</td></tr>
+			</c:if>
+			 <c:if test="${not empty purchaseJobPostForm.jobPostingsForm}">
 				<div class="rowEvenNewSpacing marginTop5 marginTop0">
 					<div class=" row DotBorderBottom">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
@@ -200,7 +207,7 @@
 								<td width="32%" height="30px;" align="Left"><div
 										class="floatLeft">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="" type="checkbox"
-											value="" class="marginRight5"> <label for="checkbox">${addOn.addOnName}</label> &nbsp;&nbsp;
+											value="" class="marginRight5"> <label for="checkbox">${addOn.addOnDescription}</label> &nbsp;&nbsp;
 									</div>
 									<div class="toolTip">
 										<span class="classic">${addOn.addOnDescription}</span>
@@ -322,6 +329,7 @@
 				
 				</div>
 				<a id="showPurchaseJobPostCart" class="nyroModal" href="<%=request.getContextPath()%>/purchaseJobPosting/showPurchaseJobPostCart.html"></a>
+				</c:if>
 			</form:form>
 		</div>
 		<div class="clearfix"></div>		

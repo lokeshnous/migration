@@ -123,7 +123,14 @@
 				alt="" class="nyroModalClose"></div>
           <div class="popUpContainerWrapper">
             <form:form action="" method="POST" commandName="purchaseResumeSearchForm">
-            
+              
+              <c:if test="${empty purchaseResumeSearchForm.resumeSearchPackageList}">
+						<tr><td>
+							<br><p align="left" class="FormErrorDisplayText">No Resume Search Packages Found</p><br><br><br><br><br>
+							<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+						</td></tr>
+			  </c:if>
+			  <c:if test="${not empty purchaseResumeSearchForm.resumeSearchPackageList}">	
               <div class="rowEvenNewSpacing marginTop5 marginTop0">
                 <table id="resSearchPackageTab" width="100%" border="0" cellspacing="0" cellpadding="0" class="grid">
                   <thead>
@@ -136,6 +143,7 @@
                   </thead>
                   <tbody>
                   	<% int i= 0; %>
+                  	
                   	<c:forEach items="${purchaseResumeSearchForm.resumeSearchPackageList}" var="resSearchPackage" varStatus="status">
 	                  <tr id="<%=i++%>">
 	                    <td><input name="radio" type="radio" id="radio1" value="radio" class="marginRight5"> 
@@ -150,7 +158,7 @@
 	                    <td align="center">&nbsp;</td>
 	                  </tr>
 	                </c:forEach>
-                  </tbody>
+	              </tbody>
                 </table>
               </div>
               <div class="row marginTop20 paddingBottom10"> <div class="AddToCartfloatRight"><a href="#" id="addToCart" class="btn_sm orange">Add To Cart</a></div> </div>
@@ -194,7 +202,9 @@
                       <div class=" row floatLeft marginBottom5">
                 <input type="text" name="firstName" class="job_seeker_email" /> <span class="required">Redeem</span></div>
              </div>
-              <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/purchaseResumeSearch/proceedToCheckOut.html" id="proceedToCheckout" class="btn_sm orange">Proceed to Checkout</a> <a href="#" class="nyroModalClose btn_sm orange">Cancel</a></span> <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
+              <div class="row marginTop20 paddingBottom10"> <span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/purchaseResumeSearch/proceedToCheckOut.html" id="proceedToCheckout" class="btn_sm orange">Proceed to Checkout</a> 
+              <a href="#" class="nyroModalClose btn_sm orange">Cancel</a></span> <span class="floatLeft marginTop10 marginLeft5" ></span> </div>
+               </c:if>
               <a id="showResumeSearchPackageCart" class="nyroModal" href="<%=request.getContextPath()%>/purchaseResumeSearch/showResumeSearchPackageCart.html"></a>
             </form:form>
           </div>
