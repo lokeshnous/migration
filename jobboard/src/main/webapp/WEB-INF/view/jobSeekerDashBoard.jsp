@@ -170,7 +170,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												 <a title="Coming Soon" href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewResumeCount.html"
+												 <a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewResumeCount.html"
 													id="profileViewCount">${msg.jsEmployersViewedProfile} </a> 
 											</p>
 										</div>
