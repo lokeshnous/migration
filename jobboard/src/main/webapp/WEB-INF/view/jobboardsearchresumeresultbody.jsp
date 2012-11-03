@@ -30,8 +30,8 @@
 					<div class="column1">
 
 
-						<div class="section">
-							<h2>Current Search</h2>
+						 <div class="section">
+							<!-- <h2>Current Search</h2>
 							<div class="buttonRow">
 								Nurse
 								<div class="floatRight">
@@ -57,10 +57,10 @@
 								<div class="SaveSearchButton">
 									<a id="saveThisResumeId" href="#" class="btn_sm orange nyroModal" onclick="saveThisResume();">Save This Search</a>
 								</div>
-							</div>
-						</div>
+							</div> -->
+						</div> 
 						<div class="section">
-							<h2>Refine Results</h2>
+							<!-- <h2>Refine Results</h2>
 
 							<div class="refineResults">
 								<span class="refineResultsItem plus">Posted Date</span>
@@ -104,7 +104,7 @@
 										<li><a href="">Manhattan (3)</a></li>
 									</ul>
 								</div>
-							</div>
+							</div> -->
 
 
 						</div>
@@ -129,7 +129,6 @@
 											<option value="All">All</option>
 									</select></span> <span class="marginTop5">per page</span>
 								</div>
-
 
 
 								<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
@@ -183,7 +182,7 @@
 										<td>${job["posted_dt"]}</td>
 										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
 									</tr>
-									</c:forEach>
+							</c:forEach>
 									
 								</table>
 							</div>
