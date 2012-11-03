@@ -539,7 +539,8 @@ jQuery(document).ready(function() {
 							}else if(data.cityState != null){
 								$("#cityState").val(data.cityState);
 								
-							}else if(data.radius != null){
+							}
+							if(data.radius != null){
 								$("#radius").val(data.radius);
 							}
 							findJobs();
