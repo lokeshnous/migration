@@ -739,9 +739,9 @@ jQuery(document).ready(function() {
 			    }
 				
 				function searchByLocationRegion(stateFullName){
-					var browseByLocation = $("#browseByLocation").val();
 					var browseByLocationReg = $("#browseByLocationReg").val();
-					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation+"&browseByLocationReg="+browseByLocationReg,		
+					var area=stateFullName.split(" ",1); 
+					$.ajax({url: "../jobsearch/searchJob.html?fifthFQParam="+area+"&browseByLocationReg="+browseByLocationReg,		
 						success: function(data){ 
 									$("#autoload").val(true);	
 									processPaginationReq("20");
@@ -758,8 +758,8 @@ jQuery(document).ready(function() {
 			    }
 				
 				function searchByLocReg(stateFullName){
-					var browseByLocation = $("#browseByLocation").val();
-					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocation="+browseByLocation,
+					var browseByLocationReg = $("#browseByLocationReg").val();
+					$.ajax({url: "../jobsearch/searchJob.html?thirdFQParam="+stateFullName+"&browseByLocationReg="+browseByLocationReg,
 						success: function(data){ 
 									$("#autoload").val(true);	
 									processPaginationReq("20");

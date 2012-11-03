@@ -880,7 +880,9 @@ public class JobSearchController extends AbstractController {
 				|| (request
 						.getParameter(MMJBCommonConstants.BROWSE_BY_LOCATION) != null)
 				|| (request
-						.getParameter(MMJBCommonConstants.BROWSE_BY_EMPLOYER) != null)) {
+						.getParameter(MMJBCommonConstants.BROWSE_BY_EMPLOYER) != null)
+				|| (request
+						.getParameter(MMJBCommonConstants.BROWSE_BY_LOCAION_REG) != null)) {
 			jobSearchResultForm.setBrowseBy(true);
 			session.setAttribute(MMJBCommonConstants.BROWSE_BY_SEARCH, true);
 		}
@@ -1219,6 +1221,9 @@ public class JobSearchController extends AbstractController {
 		session.removeAttribute("employerPage");
 		session.removeAttribute("locationPage");
 		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_TITLE);
+		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_LOCATION);
+		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_EMPLOYER);
+		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_LOCAION_REG);
 		session.removeAttribute("list");
 		// session.removeAttribute("locationPage");
 		session.removeAttribute("areaPage");
@@ -1727,7 +1732,19 @@ public class JobSearchController extends AbstractController {
 					+ '"';
 		}
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
+		if ((jobSearchResultForm.isBrowseBy())
+				&& request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM) != null) {
+			fouthFQParam = MMJBCommonConstants.BROWSE_LOCATION_CITY
+					+ request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
+					+ '"';
+		}
 		String fifthFQParam = MMJBCommonConstants.EMPTY;
+		if ((jobSearchResultForm.isBrowseBy())
+				&& request.getParameter(MMJBCommonConstants.FIFTH_FQ_PARAM) != null) {
+			fifthFQParam = MMJBCommonConstants.BROWSE_LOCATION_REGION
+					+ request.getParameter(MMJBCommonConstants.FIFTH_FQ_PARAM)
+					+ '"';
+		}
 		String facetSort = MMJBCommonConstants.COUNT_STR;
 		// set the sort order for search results
 		String sortOrder = setSortOrder(session, request);
@@ -2071,29 +2088,6 @@ public class JobSearchController extends AbstractController {
 				}
 			}
 
-			/*List mapKeys = new ArrayList(emplyrsByName.keySet());
-			List mapValues = new ArrayList(emplyrsByName.values());
-
-			emplyrsByName.clear();
-
-			TreeSet sortedSet = new TreeSet(mapValues);
-
-			// Object[] sortedArray = sortedSet.toArray();
-			String[] sortedArray = (String[]) sortedSet.toArray();
-
-			int size = sortedArray.length;
-
-			// a) Ascending sort
-
-			for (int i = 0; i < size; i++) {
-
-				emplyrsByName.put(mapKeys
-						.get(mapValues.indexOf(sortedArray[i])).toString(),
-						(List) sortedArray[i]);
-
-			}
-
-			System.out.println(emplyrsByName);*/
 			session.setAttribute("jbsByEmployerList", emplyrsByName);
 			session.setAttribute("employerPage", true);
 		} catch (Exception e) {

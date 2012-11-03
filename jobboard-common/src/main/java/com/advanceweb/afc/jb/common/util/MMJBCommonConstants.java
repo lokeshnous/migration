@@ -437,6 +437,7 @@ public interface MMJBCommonConstants {
 	String BROWSE_BY_TITLE = "browseByTitle";
 	String BROWSE_BY_LOCATION = "browseByLocation";
 	String BROWSE_BY_EMPLOYER = "browseByEmployer";
+	String BROWSE_BY_LOCAION_REG = "browseByLocationReg";
 	String FIRST_PARAMETER = "firstFQParam";
 
 	// for reCapcha
@@ -449,6 +450,8 @@ public interface MMJBCommonConstants {
 	String BROWSE_JOB_POSITION = "jobposition:\"";
 	String BROWSE_COMPANY = "company:\"";
 	String BROWSE_LOCATION = "state:\"";
+	String BROWSE_LOCATION_CITY = "city:\"";
+	String BROWSE_LOCATION_REGION = "area:\"";
 	String AREA = "area";
 	String METRO_AREA = "Metro Area";
 	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";

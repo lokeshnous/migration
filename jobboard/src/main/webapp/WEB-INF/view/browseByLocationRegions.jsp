@@ -11,8 +11,7 @@
 			area below to browse jobs in a specific part of the state.
 		</p>
 	</div>
-	<input type="hidden" name="browseByLocation" id="browseByLocation"
-		value="browseByLocation" /> <input type="hidden"
+	 <input type="hidden"
 		name="browseByLocationReg" id="browseByLocationReg" value="browseByLocationReg" />
 	<div class="FloatLeft marginTop10">
 
