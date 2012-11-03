@@ -9,9 +9,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -248,7 +251,7 @@ public class JobSearchController extends AbstractController {
 	private static final String CITY = "?city";
 	private static final String COUNTRY = "?country";
 	private static final String STATE = "?state";
-	
+
 	/**
 	 * The view action is called to get the job details by jobId and navigate to
 	 * job view details page.
@@ -618,8 +621,7 @@ public class JobSearchController extends AbstractController {
 		EmailDTO employerEmailDTO = new EmailDTO();
 		employerEmailDTO.setFromAddress(advanceWebAddress);
 		InternetAddress[] employerToAddress = new InternetAddress[1];
-		employerToAddress[0] = new InternetAddress(
-				jobDTO.getEmail());
+		employerToAddress[0] = new InternetAddress(jobDTO.getEmail());
 		employerEmailDTO.setToAddress(employerToAddress);
 		String employerMailSub = employeJobApplicationSub.replace(
 				"?jobseekername", userName);
@@ -655,10 +657,12 @@ public class JobSearchController extends AbstractController {
 				+ dothtmlExtention + jobseekerPageExtention;
 		String jobseekerMailBody = jobseekerJobApplicationBody.replace(
 				"?jsdashboardLink", jonseekerloginUrl);
-		if(jobDTO.getCompanyNameDisp() == null){
-			jobseekerMailSub = jobseekerJobApplicationSub.replace("to ?companyname", "");
-			jobseekerMailBody = jobseekerMailBody.replace("to ?companyname", "");
-		}else{
+		if (jobDTO.getCompanyNameDisp() == null) {
+			jobseekerMailSub = jobseekerJobApplicationSub.replace(
+					"to ?companyname", "");
+			jobseekerMailBody = jobseekerMailBody
+					.replace("to ?companyname", "");
+		} else {
 			jobseekerMailSub = jobseekerJobApplicationSub.replace(
 					"?companyname", jobDTO.getCompanyNameDisp());
 			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
@@ -679,8 +683,8 @@ public class JobSearchController extends AbstractController {
 	 * @param jobDTO
 	 * @param appliedJobDTO
 	 */
-	public void saveAppliedJob(int jobId, int userId,
-			JobDTO jobDTO, AppliedJobDTO appliedJobDTO) {
+	public void saveAppliedJob(int jobId, int userId, JobDTO jobDTO,
+			AppliedJobDTO appliedJobDTO) {
 		// save the applied job in DB
 		Date currentDate = MMUtils.getCurrentDateAndTime();
 		AppliedJobDTO applyJobDTO = null;
@@ -1615,9 +1619,9 @@ public class JobSearchController extends AbstractController {
 						+ END_TAGS);
 				mesg = mesg.append("<TR><TD><B>[" + jobTitle + "]</B>"
 						+ jobDTO.getJobTitle() + END_TAGS);
-				if(jobDTO.getCompanyNameDisp() != null){
+				if (jobDTO.getCompanyNameDisp() != null) {
 					mesg = mesg.append("<TR><TD><B>[" + companyName + "]</B>"
-							+ jobDTO.getCompanyNameDisp()+ END_TAGS);
+							+ jobDTO.getCompanyNameDisp() + END_TAGS);
 				}
 				mesg = mesg.append("<TR><TD>" + joburl + "</TD></TR>\n\n\n");
 				mesg = mesg.append("<TR><TD>" + jobUrl + "</TD></TR></TABLE>");
@@ -1783,6 +1787,7 @@ public class JobSearchController extends AbstractController {
 		return paramMap;
 
 	}
+
 	/**
 	 * This method is used to set values into the session map.
 	 * 
@@ -1947,9 +1952,9 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * The method delete selected search item from the current search list
-	 *  which is listed on keyword, city/Zip and radius selected and delete the radius if
-	 *  the city is deleted and perform the search on remaining search items. 
+	 * The method delete selected search item from the current search list which
+	 * is listed on keyword, city/Zip and radius selected and delete the radius
+	 * if the city is deleted and perform the search on remaining search items.
 	 * 
 	 * @param session
 	 * @param response
@@ -1990,10 +1995,10 @@ public class JobSearchController extends AbstractController {
 				city = city.replace(value, MMJBCommonConstants.EMPTY);
 				jsonObject.put(SearchParamDTO.CITY_STATE, city);
 				String radius = sessionMap.get(SearchParamDTO.RADIUS);
-				if(!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)){
+				if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
 					radius = radius.replace(value, MMJBCommonConstants.ZERO);
 					jsonObject.put(SearchParamDTO.RADIUS, radius
-						+ MMJBCommonConstants.MILES);
+							+ MMJBCommonConstants.MILES);
 				}
 			} else if (key.equalsIgnoreCase(SearchParamDTO.RADIUS)) {
 				String radius = sessionMap.get(SearchParamDTO.RADIUS);
@@ -2026,8 +2031,7 @@ public class JobSearchController extends AbstractController {
 		removeSession(session);
 		try {
 			jobSearchResultForm.setJobTitlePage("true");
-			List<JobDTO> jbsByTitleList = jobSearchService
-					.getJobsByTitle();
+			List<JobDTO> jbsByTitleList = jobSearchService.getJobsByTitle();
 			session.setAttribute("jbsByTitleList", jbsByTitleList);
 			session.setAttribute("jobTitlePage", true);
 		} catch (Exception e) {
@@ -2047,14 +2051,50 @@ public class JobSearchController extends AbstractController {
 	JSONObject searchJbsByEmployer(HttpServletRequest request,
 			HttpSession session, JobSearchResultForm jobSearchResultForm,
 			BindingResult result) {
-
+		Map<String, List<JobDTO>> emplyrsByName = new HashMap<String, List<JobDTO>>();
+		Set<String> nameList = new HashSet<String>();
 		JSONObject jsonObject = new JSONObject();
 		removeSession(session);
 		try {
 			jobSearchResultForm.setEmployerPage("true");
 			List<JobDTO> jbsByEmployerList = jobSearchService
 					.getJobsByEmployer();
-			session.setAttribute("jbsByEmployerList", jbsByEmployerList);
+			for (JobDTO job : jbsByEmployerList) {
+				String nameLetter = job.getCompany().substring(0, 1)
+						.toUpperCase();
+				if (nameList.add(nameLetter)) {
+					List<JobDTO> jobList = new ArrayList<JobDTO>();
+					jobList.add(job);
+					emplyrsByName.put(nameLetter, jobList);
+				} else {
+					emplyrsByName.get(nameLetter).add(job);
+				}
+			}
+
+			/*List mapKeys = new ArrayList(emplyrsByName.keySet());
+			List mapValues = new ArrayList(emplyrsByName.values());
+
+			emplyrsByName.clear();
+
+			TreeSet sortedSet = new TreeSet(mapValues);
+
+			// Object[] sortedArray = sortedSet.toArray();
+			String[] sortedArray = (String[]) sortedSet.toArray();
+
+			int size = sortedArray.length;
+
+			// a) Ascending sort
+
+			for (int i = 0; i < size; i++) {
+
+				emplyrsByName.put(mapKeys
+						.get(mapValues.indexOf(sortedArray[i])).toString(),
+						(List) sortedArray[i]);
+
+			}
+
+			System.out.println(emplyrsByName);*/
+			session.setAttribute("jbsByEmployerList", emplyrsByName);
 			session.setAttribute("employerPage", true);
 		} catch (Exception e) {
 			LOGGER.error("JobSearchController : searchJbsByEmployer Exception"
@@ -2126,8 +2166,7 @@ public class JobSearchController extends AbstractController {
 	 * @param request
 	 * @return listVideoURL
 	 */
-	public List<String> setVideoURL(JobDTO jobDTO,
-			HttpServletRequest request) {
+	public List<String> setVideoURL(JobDTO jobDTO, HttpServletRequest request) {
 		List<VideoDTO> listVideoDTO = jobDTO.getListVideos();
 		List<String> listVideoURL = new ArrayList<String>();
 		StringBuffer videoURL = new StringBuffer();
@@ -2150,8 +2189,7 @@ public class JobSearchController extends AbstractController {
 		}
 		return listVideoURL;
 	}
-	
-	
+
 	/**
 	 * This method will convert the JobSearchResultDTO to JSON object
 	 * 
@@ -2255,7 +2293,6 @@ public class JobSearchController extends AbstractController {
 		return jobSrchJsonObj;
 	}
 
-	
 	/**
 	 * This method retrieves the Refine Results data and updates the JSONObject
 	 * 
@@ -2284,7 +2321,7 @@ public class JobSearchController extends AbstractController {
 		jobSrchJsonObj.put(MMJBCommonConstants.COMPANY, employerDisplayList);
 
 	}
-	
+
 	/**
 	 * This method provides the facetList along with the count of jobs in each
 	 * facet
@@ -2312,14 +2349,15 @@ public class JobSearchController extends AbstractController {
 		}
 		return displayFacetList;
 	}
-	
+
 	/**
-	 * This method is used to get the region based on location for
-	 * Browse by location.
+	 * This method is used to get the region based on location for Browse by
+	 * location.
+	 * 
 	 * @param searchFacetMap
 	 * @param jobSrchJsonObj
 	 */
-	
+
 	private void getLocationRegionResults(
 			Map<String, List<SearchFacetDTO>> searchFacetMap,
 			JSONObject jobSrchJsonObj) {
@@ -2332,13 +2370,14 @@ public class JobSearchController extends AbstractController {
 
 		jobSrchJsonObj.put(MMJBCommonConstants.AREA, areaList);
 	}
-	
+
 	/**
 	 * This is used to get the Region results.
+	 * 
 	 * @param facetList
 	 * @return List<String>
 	 */
-	
+
 	private List<String> generateRegionResults(List<SearchFacetDTO> facetList) {
 		List<String> displayFacetList = new ArrayList<String>();
 		String displayFacet = MMJBCommonConstants.EMPTY;

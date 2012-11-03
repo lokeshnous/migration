@@ -775,5 +775,23 @@ jQuery(document).ready(function() {
 					});
 			    }
 				
+				function searchByEmployer(company){
+					var  browseByEmployer = $("#browseByEmployer").val();
+					$.ajax({url: "../jobsearch/searchJob.html?secondFQParam="+company+"&browseByEmployer="+browseByEmployer,
+						success: function(data){ 
+									$("#autoload").val(true);	
+									processPaginationReq("20");
+									$(".otherContent").attr("style","display: none");
+									$(".searchContent").attr("style","display: block");
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								},
+								complete: function() {
+					
+								}
+					});
+				}
+				
 				
 				

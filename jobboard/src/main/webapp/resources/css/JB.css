@@ -4193,3 +4193,8 @@ Border:1px solid #ccc;padding: 25px;}
 .socialLoginLogo {margin:0 0 0 275px; }
 #recaptcha_area {margin-left:172px;}
 .width98P {width:97.5%;}
+
+.threecolumn { width:305px !important;
+}
+.NameSelectonArea ul {float:right;}
+.NameSelectonArea li a { font-size:14px; color:#6A7B83;padding:0 3px;}
