@@ -24,7 +24,6 @@ import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscription;
-import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.MerPublication;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
@@ -287,15 +286,17 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	 * @return dateValue
 	 */
 	@Override
-	public boolean findNameActiveStatus(int userId, String name) {
+	public boolean findNameActiveStatus(int userId, String name,
+			int coverLetterId) {
 		boolean isUpdate = false;
 		try {
 			List<ResCoverletter> res = hibernateTemplateCareers
 					.find("from ResCoverletter rs where rs.userId=? and name=? and deleteDt is null",
 							userId, name);
 			if (null != res && !res.isEmpty()) {
-
-				isUpdate = true;
+				if (!(res.get(0).getCoverletterId() == coverLetterId)) {
+					isUpdate = true;
+				}
 			}
 
 		} catch (DataAccessException e) {

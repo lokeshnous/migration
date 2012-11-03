@@ -61,7 +61,7 @@ public interface UserSubscriptionsDAO {
 	 * @param status
 	 * @return boolean value.
 	 */
-	boolean findNameActiveStatus(int userId, String name);
+	boolean findNameActiveStatus(int userId, String name, int coverLetterId);
 
 	/**
 	 * 

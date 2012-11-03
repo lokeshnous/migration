@@ -95,8 +95,10 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 	 * To find out the status it is public or private
 	 */
 	@Override
-	public boolean findNameActiveStatus(int userId, String name) {
-		return subscriptionsDAO.findNameActiveStatus(userId, name);
+	public boolean findNameActiveStatus(int userId, String name,
+			int coverLetterId) {
+		return subscriptionsDAO.findNameActiveStatus(userId, name,
+				coverLetterId);
 	}
 
 	/**

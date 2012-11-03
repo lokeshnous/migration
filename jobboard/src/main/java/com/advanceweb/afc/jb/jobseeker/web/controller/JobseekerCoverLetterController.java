@@ -48,9 +48,9 @@ import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 public class JobseekerCoverLetterController {
 	private static final Logger LOGGER = Logger
 			.getLogger("JobseekerCoverLetterController.class");
-	
+
 	private static final String COVER_LETTER_ID = "coverletterId";
-	
+
 	@Autowired
 	private CoverLetterService coverLetterService;
 
@@ -59,7 +59,7 @@ public class JobseekerCoverLetterController {
 
 	@Value("${resumeDeleteFailure}")
 	private String resumeDeleteFailure;
-	
+
 	private @Value("${jsCoverLetterName}")
 	String jsCoverLetterName;
 
@@ -90,14 +90,24 @@ public class JobseekerCoverLetterController {
 			BindingResult result) {
 
 		try {
-			if(resCoverLetterForm.getName().isEmpty())
-			{
-				return jsCoverLetterName;
-			}
 			int userId = (Integer) session.getAttribute("userId");
 			ResCoverLetterDTO dto = new ResCoverLetterDTO();
-			dto.setName(resCoverLetterForm.getName());
-			dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
+			/*
+			 * dto.setName(resCoverLetterForm.getName());
+			 * dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
+			 */
+			if (("".equals(resCoverLetterForm.getName()))
+					|| (null == resCoverLetterForm.getName())) {
+				return "Please enter the required fields";
+			} else {
+				dto.setName(resCoverLetterForm.getName());
+			}
+			if (("".equals(resCoverLetterForm.getCoverletterText()))
+					|| (null == resCoverLetterForm.getCoverletterText())) {
+				return "Please enter the required fields";
+			} else {
+				dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
+			}
 			dto.setActive(resCoverLetterForm.getActive());
 			dto.setUserId(userId);
 			// this for first time
@@ -108,7 +118,8 @@ public class JobseekerCoverLetterController {
 					resCoverLetterForm.getActive());
 			// this is for duplicate name
 			boolean findName = coverLetterService.findNameActiveStatus(userId,
-					resCoverLetterForm.getName());
+					resCoverLetterForm.getName(),
+					resCoverLetterForm.getCoverletterId());
 			// this is for one private to public convert checking it already
 			// present or not
 			boolean findDuplicate = coverLetterService
@@ -368,13 +379,13 @@ public class JobseekerCoverLetterController {
 			ResCoverLetterDTO dto = new ResCoverLetterDTO();
 			if (("".equals(resCoverLetterForm.getName()))
 					|| (null == resCoverLetterForm.getName())) {
-				return "";
+				return "Please enter the required fields";
 			} else {
 				dto.setName(resCoverLetterForm.getName());
 			}
 			if (("".equals(resCoverLetterForm.getCoverletterText()))
 					|| (null == resCoverLetterForm.getCoverletterText())) {
-				return "";
+				return "Please enter the required fields";
 			} else {
 				dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
 			}
@@ -382,11 +393,16 @@ public class JobseekerCoverLetterController {
 			dto.setCoverletterId(resCoverLetterForm.getCoverletterId());
 			dto.setUserId(userId);
 			dto.setCoverletterId(resCoverLetterForm.getCoverletterId());
+			boolean findName = coverLetterService.findNameActiveStatus(userId,
+					resCoverLetterForm.getName(),
+					resCoverLetterForm.getCoverletterId());
 			boolean findDuplicate = coverLetterService
 					.findDuplicateActiveStatus(userId,
 							resCoverLetterForm.getActive());
 
-			if (resCoverLetterForm.getActive() == 1) {
+			if (findName) {
+				return "Cover Letter Name already exists, Please try again";
+			} else if (resCoverLetterForm.getActive() == 1) {
 				if (findDuplicate) {
 					coverLetterService.coverLetterUpdateByjobSeeker(dto);
 					coverLetterService.coverLetterEditByjobSeeker(dto);
