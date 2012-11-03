@@ -13,6 +13,11 @@
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
+	if($("#folderId").val()>0){
+		$(".refineResultsItem").click();
+		val=$("#folderId").val();
+		$("#"+val).attr("style","font-weight:bold;");
+	}
 		$(".folderdetail").click(
 						function() {
 							val = $(this).attr("id");
