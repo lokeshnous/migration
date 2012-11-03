@@ -51,9 +51,8 @@
 											}
 
 										});
-						$('#moveToFolder').live("click", function() {
-							var rowObj = $(this).parent().parent();
-							var resumeId = $(rowObj).attr("id");
+						$('.moveToFolder').live("click", function() {
+							var resumeId = $(this).attr("id");
 							var val = [];
 								val[0] = resumeId;
 							if (val != "") {						
@@ -113,7 +112,7 @@
 											${jobSeeker.contactInfoDTO.lastName}<br /> <a
 												href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${jobSeeker.uploadResumeId}"><img
 												src="../resources/images/View.png" width="20" height="20"
-												alt="view"></a>&nbsp;<a href="#" id="moveToFolder"><img
+												alt="view"></a>&nbsp;<a href="#" class="moveToFolder" id="${jobSeeker.folderResumeId}"><img
 												src="../resources/images/Folder.png" width="20" height="20"
 												alt="folder"></a>&nbsp;<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${jobSeeker.uploadResumeId }"><img
 												src="../resources/images/Print2.png" width="20" height="20"
