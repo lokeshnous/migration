@@ -36,17 +36,27 @@ public class PaymentGatewayValidation {
 			errors.rejectValue("creditCardInfoForm.expMonth", NOTEMPTY,
 					"Please select a Expiry Month and Year.");
 		}
-		if (StringUtils.isEmpty(form.getSecuriyCode())) {
-			errors.rejectValue("creditCardInfoForm.securiyCode", NOTEMPTY,
-					"Security code should not be blank.");
-		} else if (!(form.getSecuriyCode().length() == 3)
-				&& !(form.getSecuriyCode().length() == 4)) {
-			errors.rejectValue("creditCardInfoForm.securiyCode", NOTEMPTY,
-					"Please enter valid security code.");
-		}
+		validateCardTypeSecurityCode(form, errors);
+		
+	}
+
+	private void validateCardTypeSecurityCode(CreditCardInfoForm form,
+			Errors errors) {
+		
 		if (StringUtils.isEmpty(form.getCardType())) {
 			errors.rejectValue("creditCardInfoForm.cardType", NOTEMPTY,
 					"Please select a Card type.");
+		}
+		if (StringUtils.isEmpty(form.getSecuriyCode())) {
+			errors.rejectValue("creditCardInfoForm.securiyCode", NOTEMPTY,
+					"Security code should not be blank.");
+		}else if((!("6").equals(form.getCardType()) 
+				&& form.getSecuriyCode().length() != 3) 
+		|| (("6").equals(form.getCardType()) && form.getSecuriyCode().length() < 4 )){
+			//Discover - 3, Visa - 5, Master card - 4, American Express - 6 
+			//These values are hard coded in jsp
+			errors.rejectValue("creditCardInfoForm.securiyCode", NOTEMPTY,
+					"Please enter valid security code.");
 		}
 	}
 
