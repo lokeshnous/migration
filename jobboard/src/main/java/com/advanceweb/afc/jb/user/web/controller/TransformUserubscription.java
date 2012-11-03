@@ -210,7 +210,7 @@ public class TransformUserubscription {
 				dto.setActive(1);
 				selSubsList.add(dto);
 			}
-		} else {
+		} else if (printCheckbox) {
 			UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
 			dto.setSubscriptionId(MMJBCommonConstants.PRINT_JS_SUBSCRIPTION);
 			dto.setPublicationId(0);
