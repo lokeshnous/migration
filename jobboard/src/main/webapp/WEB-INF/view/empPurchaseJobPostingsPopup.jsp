@@ -207,7 +207,7 @@
 								<td width="32%" height="30px;" align="Left"><div
 										class="floatLeft">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="" type="checkbox"
-											value="" class="marginRight5"> <label for="checkbox">${addOn.addOnDescription}</label> &nbsp;&nbsp;
+											value="" class="marginRight5"> <label for="checkbox">${addOn.addOnName}</label> &nbsp;&nbsp;
 									</div>
 									<div class="toolTip">
 										<span class="classic">${addOn.addOnDescription}</span>
