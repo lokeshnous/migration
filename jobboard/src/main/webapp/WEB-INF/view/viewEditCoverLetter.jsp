@@ -57,9 +57,16 @@
 					
 				<div class="job_seeker_login popUpContainer" id="jobSeekerRegister1" style="display: block;">
 					<div class="popupHeader">
+					<c:if test="${covType=='Edit'}">
 						<h2>
-							CREATE NEW COVER LETTER 
+							Edit Cover Letter
 						</h2>
+						</c:if>
+						<c:if test="${covType=='View'}">
+						<h2>
+							View Cover Letter
+						</h2>
+						</c:if>
 						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
 					</div>
 					<div class="popUpContainerWrapper">
@@ -96,27 +103,22 @@
 								</span>
 								<span class="required">								
 									<label class="greyLabel">
-										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public" readonly="true" /> 
+										 <form:radiobutton name="RadioGroup10" id="RadioGroup10" value="1" path="active"  label="Public" readonly="true" disabled="true"/> 
 									</label>
 							</span>
 							<span class="required">								
 									<label class="greyLabel">
-									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private" readonly="true" />										
+									<form:radiobutton name="RadioGroup10" id="RadioGroup10" value="0" path="active"  label="Private" readonly="true" disabled="true"/>										
 									</label>
 							</span>
 							
-							<!-- <div class="toolTip colorPkrAreaToolTip">
-								<span class="classic">
-									You can only have one Cover Letter Visibility to employers at a time, so select 
-									Private if you already have a public cover letter  saved to your profile. Otherwise, 
-									you may select Public and employers will be able to view your cover letter immediately.
-									
-								</span>
-							</div>
-							<div class="required2">
-								(Required)
-							</div> -->
 					 </div>	
+					 <div class="rowEvenNewSpacing marginTop20 paddingBottom10">
+							<span class="floatLeft marginTop10">
+								<!-- <input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" /> -->
+								<input type="button" name="Cancel" id="Cancel" class="orange" value="Cancel" title="Cancel"/>	
+							</span>
+						</div>
 						</c:if>
 						
 						 <!--This is view option End  -->
