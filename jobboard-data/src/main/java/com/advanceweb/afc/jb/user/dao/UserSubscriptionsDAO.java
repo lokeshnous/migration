@@ -155,9 +155,19 @@ public interface UserSubscriptionsDAO {
 	 */
 	boolean saveFacilitySubscription(List<UserSubscriptionsDTO> listSubsDTO,
 			int facilityId);
-	
+
 	List<DropDownDTO> getSubscriptionscheck(int userId);
+
 	List<DropDownDTO> getSubscriptionsdigital(int userId);
-	
+
 	List<DropDownDTO> getSubscriptionsletter(int userId);
+
+	/**
+	 * Get the subscription list which selected during registration for logged
+	 * in user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<UserSubscriptionsDTO> getSelectedSub(int userId);
 }

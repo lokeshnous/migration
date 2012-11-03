@@ -35,7 +35,7 @@
          </div></div>  
          <div>
          <c:forEach items="${jbsByEmployerList}" var="titleList">
-	             	<li><a class="LocationNameArea LocationBorderRight width305 AutoHeight" href="">${titleList.companyName} ( ${titleList.count} )</a></li>
+	             	<li><a class="LocationNameArea LocationBorderRight width305 AutoHeight" href="">${titleList.company} ( ${titleList.count} )</a></li>
 	             </c:forEach>
 	             </div>
        	  </div>

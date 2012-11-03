@@ -48,7 +48,7 @@ public class MerUserProfile implements Serializable {
 	private MerUser merUser;
 
 	//bi-directional many-to-one association to MerProfileAttrib
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="profile_attrib_id", insertable=false, updatable=false)
 	private MerProfileAttrib merProfileAttrib;
 

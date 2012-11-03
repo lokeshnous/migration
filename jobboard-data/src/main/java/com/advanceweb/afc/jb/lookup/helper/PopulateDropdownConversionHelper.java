@@ -22,6 +22,7 @@ import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.SubscriptionsDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
@@ -30,6 +31,7 @@ import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerPublication;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
@@ -553,6 +555,24 @@ public class PopulateDropdownConversionHelper {
 		}
 		return dropdownList;
 
+	}
+
+	public List<UserSubscriptionsDTO> convertMerUserProfileToUserDTO(
+			List<MerUserProfile> userProfiles) {
+		List<UserSubscriptionsDTO> dtos = new ArrayList<UserSubscriptionsDTO>();
+		if (null != userProfiles) {
+			for (MerUserProfile profile : userProfiles) {
+				UserSubscriptionsDTO subDTO = new UserSubscriptionsDTO();
+				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION
+						.equalsIgnoreCase(profile.getMerProfileAttrib()
+								.getName())) {
+					subDTO.setSubscriptionId(Integer.parseInt(profile
+							.getAttribValue()));
+					dtos.add(subDTO);
+				}
+			}
+		}
+		return dtos;
 	}
 
 }

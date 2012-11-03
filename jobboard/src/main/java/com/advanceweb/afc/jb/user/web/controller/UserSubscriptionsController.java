@@ -77,10 +77,39 @@ public class UserSubscriptionsController {
 				.getSubscriptionsletter(Integer.valueOf(String.valueOf(session
 						.getAttribute("userId"))));
 
+		// Get the subscription list which selected during registration for
+		// logged in user
+		List<UserSubscriptionsDTO> getSelectedSub = userSubService
+				.getSelectedSub(Integer.valueOf(String.valueOf(session
+						.getAttribute("userId"))));
+		boolean printSubscription = false;
+		boolean digSubscription = false;
+		boolean enewsSubscription = false;
+		boolean emailSubscription = false;
+		if (null != getSelectedSub) {
+			for (UserSubscriptionsDTO subscriptionsDTO : getSelectedSub) {
+				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.PRINT_JS_SUBSCRIPTION) {
+					printSubscription = true;
+				}
+				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION) {
+					digSubscription = true;
+				}
+				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION) {
+					enewsSubscription = true;
+				}
+				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.EMAIL_JS_SUBSCRIPTION) {
+					emailSubscription = true;
+				}
+			}
+		}
 		model.addObject("jobSubscriptionsList", listSubscriptions);
 		model.addObject("listpublicationprint", listpublicationprint);
 		model.addObject("listpublicationdigital", listpublicationdigital);
 		model.addObject("listnewsletter", listnewsletter);
+		model.addObject("printSubscription", printSubscription);
+		model.addObject("digSubscription", digSubscription);
+		model.addObject("enewsSubscription", enewsSubscription);
+		model.addObject("emailSubscription", emailSubscription);
 		model.addObject("jobSubscriptionsList", listSubscriptions);
 		model.addObject("jobSeekerSubscriptionForm", subscriptform);
 		model.setViewName("jobseekermodifysubscriptions");

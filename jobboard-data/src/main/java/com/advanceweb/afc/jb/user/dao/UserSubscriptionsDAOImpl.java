@@ -27,6 +27,7 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscription;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.MerPublication;
+import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.ResCoverletter;
 import com.advanceweb.afc.jb.data.entities.ResCoverletterPriv;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
@@ -811,7 +812,6 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		// List<MerPublication> listSubscriptiosnsLetter = null;
 		List<MerPublication> listSubscriptiosnsLetter = new ArrayList<MerPublication>();
 		try {
-
 			Query getSubscriptionLetter = hibernateTemplateTracker
 					.getSessionFactory().getCurrentSession()
 					.createSQLQuery(" { call getSubscriptionLetter(?) }");
@@ -836,5 +836,27 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get the subscription list which selected during registration for logged
+	 * in user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getSelectedSub(int userId) {
+		List<UserSubscriptionsDTO> subscriptionsDTOs = new ArrayList<UserSubscriptionsDTO>();
+		List<MerUserProfile> userProfiles = new ArrayList<MerUserProfile>();
+		try {
+			userProfiles = hibernateTemplateTracker.find(
+					"from MerUserProfile m where m.merUser.userId=?", userId);
+			subscriptionsDTOs = dropdownHelper
+					.convertMerUserProfileToUserDTO(userProfiles);
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return subscriptionsDTOs;
 	}
 }

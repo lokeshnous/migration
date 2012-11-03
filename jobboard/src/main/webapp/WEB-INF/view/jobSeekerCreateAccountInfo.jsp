@@ -80,10 +80,23 @@ function validateNumber(event) {
 							$.ajax({
 							url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
 							success : function(country) {
+								//alert(country);
 								$('#countryDpId').val(country);
+								if (country == "USA") {           		
+				            		 var checks = ["2","3","4"];
+				            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+				            		               	
+				            	}else{
+				            		var checks = ["1","2","3","4"];
+				           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
+				            	} 
 							},
-						}); 						
+						}); 
+					},error : function(data) {
+						// alert('Unable to process');
 					},
+					complete : function(data) {
+					}
 					});
 				}
 			}); 
@@ -101,10 +114,20 @@ function validateNumber(event) {
 							$('#stateDpId').val(data.state);
 							$('#countryDpId').val(data.country);
 							$("#cityAutoPopulation").val(data.city);
+							var country = $('#countryDpId').val(data.country);
+							alert('country'+country);
 						},error : function(data) {
 							// alert('Unable to process');
 						},
 						complete : function(data) {
+							if ($("#countryDpId").val() == "USA") {           		
+			            		 var checks = ["2","3","4"];
+			            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+			            		               	
+			            	}else{
+			            		var checks = ["1","2","3","4"];
+			           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
+			            	} 
 						}
 					});		
 				}				
@@ -133,27 +156,16 @@ function validateNumber(event) {
 		<script type="text/javascript">
            
             
-            function modify(selectedVal){
-        
-            	alert(selectedVal);
-            	
-            	 if (selectedVal == "US") {
-            		
+            function modify(selectedVal){           	
+            	 if (selectedVal == "USA") {           		
             		 var checks = ["2","3","4"];
             		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
-            		 
-            		 
-                	
+            		               	
             	}else{
             		var checks = ["1","2","3","4"];
-           		 $(":checkbox").val(checks).filter(":checked").attr("disabled",false);
-           		 
-            		
-            	}
-            	 
-
-                
-                }
+           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
+            	}               
+            }
             
         </script>
 </head>
@@ -391,12 +403,12 @@ function validateNumber(event) {
 							<div
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
-								<input type="submit" value="Back" class="orange"
+								<input type="submit" value="Back" class="orange cursor"
 									name="Back" /> <input type="submit" id="finishId" value="Finish"
-									class="orange" name="Finish" />
+									class="orange cursor" name="Finish" />
 									<c:if test="${registerForm.bReadOnly == false}"> 
 										<input type="button" value="Cancel" onclick="cancelProcess();"
-										class="orange" name="Cancel"/>
+										class="orange cursor" name="Cancel"/>
 									</c:if>
 									<%-- <a
 									href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html"

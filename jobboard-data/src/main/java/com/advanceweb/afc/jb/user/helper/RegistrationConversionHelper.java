@@ -116,9 +116,10 @@ public class RegistrationConversionHelper {
 
 			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
 
-				if (!MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
+				/*!MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(attribDTO
 						.getStrLabelName())
-						&& !MMJBCommonConstants.FIRST_NAME.equals(attribDTO
+						&& */
+				if (!MMJBCommonConstants.FIRST_NAME.equals(attribDTO
 								.getStrLabelName())
 						&& !MMJBCommonConstants.MIDDLE_NAME.equals(attribDTO
 								.getStrLabelName())

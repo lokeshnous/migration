@@ -215,7 +215,7 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		return subscriptionsDAO.saveFacilitySubscription(listSubsDTO,
 				facilityId);
 	}
-	
+
 	@Override
 	public List<DropDownDTO> getSubscriptionscheck(int userId) {
 		// TODO Auto-generated method stub
@@ -232,5 +232,17 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 	public List<DropDownDTO> getSubscriptionsletter(int userId) {
 		// TODO Auto-generated method stub
 		return subscriptionsDAO.getSubscriptionsletter(userId);
+	}
+
+	/**
+	 * Get the subscription list which selected during registration for logged
+	 * in user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<UserSubscriptionsDTO> getSelectedSub(int userId) {
+		return subscriptionsDAO.getSelectedSub(userId);
 	}
 }
