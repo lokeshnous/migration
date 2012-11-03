@@ -154,7 +154,7 @@
 	                    	<span class="link_color2_selected">(<span>${resSearchPackage.discount}</span>% off)</span>
 	                    </c:if>
 	                    </td>
-	                    <td width="15%" align="left"><input type="text" name="healthCareSubSplty" class="jb_input75 marginTop0" /></td>
+	                    <td width="15%" align="left"><input type="text" name="healthCareSubSplty" class="jb_input75 marginTop0" maxlength="3"/></td>
 	                    <td align="center">&nbsp;</td>
 	                  </tr>
 	                </c:forEach>
@@ -184,7 +184,7 @@
 	                    <td>
 	                    <label>${resSearchCartItem.packageName}</label></td>
 	                    <td align="left"><span>$</span>${resSearchCartItem.packageTotal}0</td>
-	                    <td align="left"><input name="healthCareSubSplty" type="text" class="jb_input75 marginTop0" value="${resSearchCartItem.quantity}" /></td>
+	                    <td align="left"><input name="healthCareSubSplty" type="text" class="jb_input75 marginTop0" value="${resSearchCartItem.quantity}" maxlength="3"/></td>
 	                    <td align="center"><a href="#" id="<%=j++%>">Remove</a></td>
 	                  </tr>
                   </c:forEach>
