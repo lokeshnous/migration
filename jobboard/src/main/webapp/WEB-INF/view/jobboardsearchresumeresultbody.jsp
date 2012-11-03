@@ -52,12 +52,12 @@
 									<a href=""><img src="../resources/images/CloseGray.jpg" alt="close"
 										width="15" height="15"> </a>
 								</div>
-							</div>
+							</div> -->
 							<div class="section">
 								<div class="SaveSearchButton">
 									<a id="saveThisResumeId" href="#" class="btn_sm orange nyroModal" onclick="saveThisResume();">Save This Search</a>
 								</div>
-							</div> -->
+							</div>
 						</div> 
 						<div class="section">
 							<!-- <h2>Refine Results</h2>
