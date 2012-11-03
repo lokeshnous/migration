@@ -68,6 +68,10 @@
 						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
 					</div>
 					<div class="popUpContainerWrapper">
+					<div class="rowEvenNewSpacing">
+								<span class="lableText3"> </span>
+									<div id="errmsg" class="FormErrorDisplayText"></div>
+							</div>	
 					<div class="row ">
 						<div class="rowEvenNewSpacing">
 								<span class="lableText3">
@@ -78,10 +82,7 @@
 									(Required)
 								</div>
 							</div>	
-							<div class="rowEvenNewSpacing">
-								<span class="lableText3"> </span>
-									<div id="errmsg" class="FormErrorDisplayText"></div>
-							</div>					
+											
 						<div class="rowEvenNewSpacing">
 								<span class="lableText3">
 								Body Text:
@@ -94,7 +95,7 @@
 								<span class="lableText3">
 								
 								</span>
-								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.
+								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.<div class="required2" style="float:right">(Required)</div>
 								</p>
 							</div>						
 						<div class="rowEvenNewSpacing">
