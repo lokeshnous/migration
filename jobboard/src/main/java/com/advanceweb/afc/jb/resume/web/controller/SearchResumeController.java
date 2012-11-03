@@ -489,6 +489,14 @@ public class SearchResumeController extends AbstractController {
 		session.removeAttribute("jobSrchJsonObj");
 		session.removeAttribute(MMJBCommonConstants.KEYWORD_STRING);
 		// session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
+		
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+		if (session != null) {
+			// Setting the values into sessionMap
+			sessionMap = setValuesToSessionMap(sessionMap, searchResumeForm);
+		}
+		
 		List<ResumeDTO> resumeDTOList = null;
 		JSONObject jobSrchJsonObj = null;
 		// Calling the jobSearch() of Service layer for getting the resume list
@@ -518,6 +526,13 @@ public class SearchResumeController extends AbstractController {
 				searchResumeForm.getKeywords());
 		// session.setAttribute(MMJBCommonConstants.AUTOLOAD,
 		// String.valueOf(true));
+		
+		if (session != null) {
+			// Setting the sessionMap into the session
+			session.setAttribute(MMJBCommonConstants.RESUME_SEARCH_SESSION_MAP,
+					sessionMap);
+		}
+		
 		return jobSrchJsonObj;
 	}
 
@@ -629,6 +644,9 @@ public class SearchResumeController extends AbstractController {
 			String keyword = (String) session
 					.getAttribute(MMJBCommonConstants.KEYWORD_STRING);
 			searchResumeForm.setKeywords(keyword);
+			String radius = sessionMap.get(MMJBCommonConstants.RADIUS) == null ? MMJBCommonConstants.EMPTY
+					: (String) sessionMap.get(MMJBCommonConstants.RADIUS);
+			searchResumeForm.setRadius(radius);
 			searchResumeForm.setAutoload(true);
 		} else if (!sessionMap.isEmpty()) {
 			String searchType = sessionMap.get(MMJBCommonConstants.SEARCH_TYPE);
