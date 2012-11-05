@@ -234,7 +234,7 @@
 
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Sooon" href=""><em>ADVANCE</em>
+											<a href="${msg.agencyMediaKitURL}"><em>ADVANCE</em>
 												Recruitment Solutions Media Kit</a>
 										</p>
 									</div>
