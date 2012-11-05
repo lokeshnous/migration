@@ -51,7 +51,23 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
 		List<AdmSaveSearch> searchResults = hibernateTemplate
-				.find("from AdmSaveSearch e where e.userId=? and e.createDt is not NULL and e.deleteDt is NULL and e.searchName is not NULL",
+
+				.find("from AdmSaveSearch e where e.userId=? and e.searchName <>' ' and e.searchName is not null and e.createDt is not NULL and e.deleteDt is NULL",
+						userId);
+		return saveSearchConversionHelper
+				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
+	}
+
+	/**
+	 * This method is called to fetch Saved Job Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId) {
+		List<AdmSaveSearch> searchResults = hibernateTemplate
+				.find("from AdmSaveSearch e where e.userId=? and e.searchName =' ' and e.createDt is not NULL and e.deleteDt is NULL order by createDt desc",
 						userId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
@@ -175,6 +191,15 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		search.setSaveSearchId(saveSearchedJobsDTO.getSaveSearchID());
 		hibernateTemplate.saveOrUpdate(search);
 		return true;
+	}
+
+	@Override
+	public void updateSearchName(int id, String searchName) {
+		// TODO Auto-generated method stub
+		AdmSaveSearch search = hibernateTemplate.load(AdmSaveSearch.class, id);
+		search.setSearchName(searchName);
+
+		hibernateTemplate.saveOrUpdate(search);
 	}
 
 }
