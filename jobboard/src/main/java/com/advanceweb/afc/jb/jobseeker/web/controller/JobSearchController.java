@@ -2360,7 +2360,6 @@ public class JobSearchController extends AbstractController {
 		return modelAndView;
 	}
 
-
 	/**
 	 * This method will convert the JobSearchResultDTO to JSON object
 	 * 
