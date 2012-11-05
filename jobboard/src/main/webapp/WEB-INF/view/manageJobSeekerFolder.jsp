@@ -15,15 +15,27 @@
 jQuery(document).ready(function() {
 	if($("#folderId").val()>0){
 		$(".refineResultsItem").click();
+		$("#myFolder").attr("class","refineResultsItem minus");
 		val=$("#folderId").val();
 		$("#"+val).attr("style","font-weight:bold;");
+		$("#"+val).attr("style", "color:#52a4dc");
+		$("#all").attr("style", "color:#6B7B84");
 	}
+	$("#all").attr("style", "color:#52a4dc");
 		$(".folderdetail").click(
 						function() {
 							val = $(this).attr("id");
-							//$(this).attr("style","font-weight:bold;");
-							//$(this).attr("color", "#52a4dc");
-						 //   document.getElementById(val).style.color="blue";
+							$("#all").attr("style","color:#6B7B84");
+							$('#subContent').find('span').each(function() { 
+							    var id = this.id;
+							    if(id==val){
+									$("#"+val).attr("style","font-weight:bold;");
+									$("#"+val).attr("style", "color:#52a4dc");
+								}
+								else{
+									$("#"+id).attr("style", "color:##6B7B84");
+								}
+							});
 							$("#folderId").val(val);
 							$("#folderName").val($(this).attr("title"));
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
@@ -43,6 +55,14 @@ jQuery(document).ready(function() {
 				$(".refineResult").click(
 						function() {
 							$("#folderId").val(0);
+							val = $(this).attr("id");
+							
+							$("#"+val).attr("style","font-weight:bold;");
+							$("#"+val).attr("style", "color:#52a4dc");
+							$('#subContent').find('span').each(function() { 
+								var id = this.id;
+							     $("#"+id).attr("style", "color:##6B7B84");
+								});
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
 								+ 0,
 				    			data:$('#manageJobSeeker').serialize(),
@@ -63,13 +83,13 @@ jQuery(document).ready(function() {
 							var action = $(this).attr("alt");
 							var rowObj = $(this).parent().parent().parent();
 							var folderNm = $(this).attr("id");
-							//alert(folderNm);
 							switch (action) {
 							case "Add": {
 
 								$(".AddNewBtn").replaceWith("<div class='buttonRow' >" +
 										" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onblur='Javascript: checkevent();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
-										+"</div>");
+										+ "<div class='check' name='check'> </div> </div>");
+									
 								document.getElementById('newFolder').select();
 								document.getElementById('newFolder').style.borderColor="red";
 								document.getElementById('newFolder').style.borderStyle="solid";

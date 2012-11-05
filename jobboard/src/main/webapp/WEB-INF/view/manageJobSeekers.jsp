@@ -17,10 +17,6 @@
 		 noOfPageValue=$("#noOfPage").val();
 		 $("#noOfPageId").val(noOfPageValue);
 		 $("#noOfPageLowerId").val(noOfPageValue);
-		 /* $("#myFolder").click(function(){
-			 $("#all").toggleClass('refineResultsItem plus refineResultsItem minus');
-			//attr('class', 'refineResultsItem plus');
-		 }); */
 		
 				$('#moveToFolder').live("click", function() {
 					var val = [];
@@ -87,89 +83,8 @@
 					}
 
 				});
-				$("#tb_manage_job_seeker img")
-				.click(
-						function(event) {
-							var action = $(this).attr("alt");
-							var rowObj = $(this).parent().parent().parent();
-							var resumeId =  $(rowObj).attr("id");
-							switch (action) {
-							case "delete": {
-
-								if (confirm("Are you sure you want to delete?")) {
-										$.ajax({url: "${pageContext.request.contextPath}/employer/deleteJobSeekerDetails.html?resumeId="+resumeId,
-											type: "POST",
-											success: function(data){ 
-											    if(data.success != null){
-											    	rowObj.remove();
-											    }
-											    if(data.failure != null){
-											    	alert(data.failed);
-											    }
-											},
-											error: function(response) {
-												alert("Server Error : "+response.status);
-											}
-										});
-									return true;
-								 } else {
-									return false;
-								 }
-							}
-								break;
-							case "download":{
-								$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
-								$("#manageResumeForm").attr("method","POST");
-								$("#manageResumeForm").attr("target","_new"); 
-								$("#manageResumeForm").submit();
-							}
-								break;
-							
-							}
-
-						});
 				
-				$("#div_manage_job_seeker img")
-								.click(
-										function(event) {
-											var action = $(this).attr("alt");
-											var rowObj = $(this).parent().parent().parent();
-											var folderNm = $(this).attr("id");
-											//alert(folderNm);
-											switch (action) {
-											case "Add": {
-
-												$(".AddNewBtn").replaceWith("<div class='buttonRow' >" +
-														" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onblur='Javascript: checkevent();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
-														+"<img src='../resources/images/CloseGray.jpg' width='15' height='15'></div>");
-												document.getElementById('newFolder').select();
-												document.getElementById('newFolder').style.borderColor="red";
-												document.getElementById('newFolder').style.borderStyle="solid";
-											}
-											break;
-											case "remove": {
-												if (confirm("Are you sure you want to delete?")) {
-													 $.ajax({url: "${pageContext.request.contextPath}/employer/removeFolder.html?folderName="+folderNm,
-														type: "POST" ,
-														success : function(data) {
-															if(data.failure!=null){
-															}else{
-																rowObj.remove();
-															}
-														}
-													});
-												}
-												else{
-													return false;
-												}
-											}
-											break;
-											default:
-												$(".DotBorderBottom").replaceWith("<img src='../resources/images/Addbutton.png' align='center' id='addBtn' "+
-													+"	width='15' height='15' alt='Add' title='Add New Folder'>");
-											}
-
-										});
+				
 				$('#noOfPageId').change(
 						function() {
 							val = $(this).val();
@@ -196,8 +111,8 @@
 								data:$('#manageJobSeeker').serialize(),
 								type: "POST" ,
 								success : function(data) {
-										$("#folderDiv").html(data);
-									
+									$("#folderId").val(9999);
+										$("#folderDiv").html(data);									
 								}	 
 							});
 						}/* 
@@ -308,12 +223,7 @@
 								class="link_color3_emphasized FontSize12 FontWeight">Back to
 									Dashboard</a></span></span>
 						</div>
-						<div id="errorMsg" class="validationMsg">
-						<c:if test="${errorMsg != null}">
-						<c:out value="${errorMsg}"></c:out>
-						</c:if>
 						
-						</div>
 						<div class="clearfix"></div>
 						<div class="content_columns_search_results">
 
@@ -323,7 +233,12 @@
 							
 							<!-- column1 -->
 							<div class="column2">
-
+								<div id="errorMsg" class="FormErrorDisplayText01 marginBottom5">
+														<c:if test="${errorMsg != null}">
+														<c:out value="${errorMsg}"></c:out>
+														</c:if>
+														
+														</div>
 								<div class="searchResultsNavigation width98P">
 									<div class="searchResultsNavigationColumn1">
 
@@ -449,7 +364,8 @@
 												<c:otherwise>
 													<span class="active"> <c:if test="${i lt begin+10}">
 															<a
-													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1&page=${i}>${i}</a>
+													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${i}
+													">${i}</a>
 														</c:if></span>
 
 												</c:otherwise>

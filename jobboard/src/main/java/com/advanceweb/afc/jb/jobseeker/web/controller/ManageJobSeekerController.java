@@ -742,7 +742,7 @@ public class ManageJobSeekerController {
 									.getFolderResumeId()) {
 								resumeDTO = resumeService
 										.editResume(manageJobSeekerDTO
-												.getOrgResumeId());
+												.getResumeId());
 								resumeDTO.setFolderResumeId(manageJobSeekerDTO
 										.getFolderResumeId());
 								if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
@@ -858,7 +858,7 @@ public class ManageJobSeekerController {
 						.getFolderResumeId()) {
 					resumeDTO = resumeService
 							.editResume(manageJobSeekerDTO
-									.getOrgResumeId());
+									.getResumeId());
 					if (resumeId != resumeDTO.getUploadResumeId()) {
 						resumeDTOList.add(resumeDTO);
 					}

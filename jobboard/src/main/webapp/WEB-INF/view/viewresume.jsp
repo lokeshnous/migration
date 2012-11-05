@@ -65,7 +65,8 @@
             <span>
                     <p class="marginTop3">Available 08/01/2012</p>
                     </span> </div>
-                  <div class="IconsArea"><a href="#"><div class="download"></div></a>&nbsp; <a href="#"><div class="printOrange"></div></a></div>
+                  <div class="IconsArea"><a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"><div class="download"></div></a>&nbsp; 
+                  <a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div class="printOrange"></div></a></div>
                 </div>
         <!---->
 

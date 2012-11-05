@@ -53,7 +53,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt from AdmFolderResume a,ResUploadResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.uploadResumeId and c.userId="
 									+ userId + "and a.deleteDt is NULL ");
 
 			folderDetailList = query.list();
@@ -114,7 +114,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt from AdmFolderResume a,ResUploadResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.uploadResumeId and c.userId="
 									+ userId
 									+ "and a.folderId="
 									+ folderId
@@ -196,7 +196,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 	 * 
 	 * @param folderId
 	 */
-	public List<AdmFolderResume> getFolderredumeDetails(int folderId) {
+	public List<AdmFolderResume> getFolderResumeDetails(int folderId) {
 
 		List<AdmFolderResume> admFolderResList = hibernateTemplate
 				.find("from AdmFolderResume a where a.folderId=" + folderId);
@@ -212,7 +212,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		admFolderList = getFolderDetails(userId, folderName);
 		if (null != admFolderList && !admFolderList.isEmpty()) {
 			for (AdmFolder admFolder : admFolderList) {
-				List<AdmFolderResume> admFolderResList = getFolderredumeDetails(admFolder
+				List<AdmFolderResume> admFolderResList = getFolderResumeDetails(admFolder
 						.getFolderId());
 				if (null != admFolderResList && !admFolderResList.isEmpty()){
 					hibernateTemplate.deleteAll(admFolderResList);
@@ -259,7 +259,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt from AdmFolderResume a,ResUploadResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.uploadResumeId and c.userId="
 									+ userId + "and a.deleteDt is NULL ");
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
@@ -281,7 +281,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt,b.origResumeId  from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT b.resumeName,a.rating,a.applicationStatusId,a.publishResumeId,a.folderResumeId,a.createDt,a.updateDt  from AdmFolderResume a,ResUploadResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.uploadResumeId and c.userId="
 									+ userId
 									+ "and a.folderId="
 									+ folderId
@@ -304,7 +304,7 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT count(a) from AdmFolderResume a,ResPublishResume b,AdmFolder c where c.folderId=a.id.folderId and a.id.publishResumeId=b.publishResumeId and c.userId="
+							"SELECT count(a) from AdmFolderResume a,AdmFolder c where c.folderId=a.id.folderId and c.userId="
 									+ userId + "and a.deleteDt is NULL ")
 					.uniqueResult();
 			return jobCount.intValue();

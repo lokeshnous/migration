@@ -7,6 +7,52 @@
 <html lang="en">
 <head>
 
+<script type="text/javascript">
+jQuery(document).ready(function() {
+
+	$("#tb_manage_job_seeker img")
+	.click(
+			function(event) {
+				var action = $(this).attr("alt");
+				var rowObj = $(this).parent().parent().parent();
+				var resumeId =  $(rowObj).attr("id");
+				switch (action) {
+				case "delete": {
+
+					if (confirm("Are you sure you want to delete?")) {
+							$.ajax({url: "${pageContext.request.contextPath}/employer/deleteJobSeekerDetails.html?resumeId="+resumeId,
+								type: "POST",
+								success: function(data){ 
+								    if(data.success != null){
+								    	rowObj.remove();
+								    }
+								    if(data.failure != null){
+								    	alert(data.failed);
+								    }
+								},
+								error: function(response) {
+									alert("Server Error : "+response.status);
+								}
+							});
+						return true;
+					 } else {
+						return false;
+					 }
+				}
+					break;
+				case "download":{
+					$("#manageResumeForm").attr("action", "${pageContext.request.contextPath}/jobSeekerResume/downloadResume.html?resumeId="+resumeId);
+					$("#manageResumeForm").attr("method","POST");
+					$("#manageResumeForm").attr("target","_new"); 
+					$("#manageResumeForm").submit();
+				}
+					break;
+				
+				}
+
+			});
+});
+</script>
 </head>
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
@@ -31,12 +77,12 @@
 					<form:hidden
 						path="manageJobSeekerDTOList[${status.index}].folderResumeId" />
 						<form:hidden
-						path="manageJobSeekerDTOList[${status.index}].orgResumeId" id="orgResumeId"/>
+						path="manageJobSeekerDTOList[${status.index}].resumeId" id="resumeId"/>
 						<tr class="Height35" id=${resume.folderResumeId}>
 						<td align="center" valign="middle" ><input type="checkbox"
 							name="checkbox" id=${resume.folderResumeId}
 							value="${resume.folderResumeId}"></td>
-						<td align="left" valign="middle"><a href="#">${resume.resumeName}</a></td>
+						<td align="left" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.resumeId }">${resume.resumeName}</a></td>
 										
 						 <td align="center" valign="middle">
 						 <c:forEach var="i" begin="1" end="${resume.rating}">
@@ -60,12 +106,12 @@
 								itemValue="optionId">
 							</form:select></td>
 						<td align="center" valign="middle">${resume.savedDate}</td>
-						<td align="center" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.orgResumeId }"><img
+						<td align="center" valign="middle"><a href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.resumeId }"><img
 								src="../resources/images/View.png" title="View resume" width="20" height="20" alt="view"></a>&nbsp;<a
-							href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${resume.orgResumeId }"><img src="../resources/images/Download.png"
-								width="20" height="20" alt="download" title="Download resume"></a>&nbsp;<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${resume.orgResumeId }"><img
+							href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${resume.resumeId }"><img src="../resources/images/Download.png"
+								width="20" height="20" alt="download" title="Download resume"></a>&nbsp;<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${resume.resumeId }"><img
 								src="../resources/images/Print2.png" title="Print Resume" width="20" height="20"
-								alt="print"></a>&nbsp;<a  onclick="sendResumeToFrd(${resume.orgResumeId}, '${resume.resumeName}','<%= request.getContextPath() %>')"><img
+								alt="print"></a>&nbsp;<a  onclick="sendResumeToFrd(${resume.resumeId}, '${resume.resumeName}','<%= request.getContextPath() %>')"><img
 								src="../resources/images/EmailOrange.png" title="Forward resume" width="20" height="20"
 								alt="email"></a>&nbsp;<a href="#"><img
 								src="../resources/images/Delete.png"  title="Delete Resume" width="20" height="20"
