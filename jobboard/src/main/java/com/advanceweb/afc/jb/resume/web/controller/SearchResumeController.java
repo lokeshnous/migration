@@ -85,6 +85,9 @@ public class SearchResumeController extends AbstractController {
 
 	@Value("${savedSearchsLimit}")
 	private String savedSearchsLimit;
+	
+	@Value("${moveResumeToFolderMsg}")
+	private String moveResumeToFolderMsg;
 
 	private String navigationPath;
 
@@ -1100,7 +1103,7 @@ public class SearchResumeController extends AbstractController {
 			HttpServletRequest request, HttpSession session,
 			@RequestParam("resumeIdAndDateArr") String resumeIdAndDateArr) {
 		List<String> idList = new ArrayList<String>();
-		idList.add("Selected Resumes moved successfully to All Candidates Folder.");
+		idList.add(moveResumeToFolderMsg);
 
 		LOGGER.info("Publish Resume ID and Created date list :"
 				+ resumeIdAndDateArr);
@@ -1114,9 +1117,9 @@ public class SearchResumeController extends AbstractController {
 		boolean status = resumeService.moveResumesToFolder(
 				publishResumeIdArrList, userId);
 		if (status) {
-			LOGGER.info("Successfully Moved the Resumes to the Common Folder.");
+			LOGGER.info("Successfully Moved the Resumes to the Default Folder.");
 		} else {
-			LOGGER.info("Error occurred while moving the Resumes to the specified Folder.");
+			LOGGER.info("Error occurred while moving the Resumes to the Default Folder.");
 		}
 
 		// modelAndView.setViewName("jobboardsearchresumeresultbody");
