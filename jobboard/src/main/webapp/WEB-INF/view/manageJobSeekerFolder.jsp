@@ -125,6 +125,16 @@ jQuery(document).ready(function() {
 							}
 
 						});
+				$(".add").click(
+						function() {
+							$(".AddNewBtn").replaceWith("<div class='buttonRow' >" +
+									" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onblur='Javascript: checkevent();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
+									+ "<div class='check' name='check'> </div> </div>");
+								
+							document.getElementById('newFolder').select();
+							document.getElementById('newFolder').style.borderColor="red";
+							document.getElementById('newFolder').style.borderStyle="solid";
+						});
 				jQuery(".megamenu").megamenu();
 					});
 					</script>
@@ -161,11 +171,13 @@ jQuery(document).ready(function() {
 							</div>
 						</c:forEach>
 
-						<div class="DotBorderBottom">&nbsp;</div>
+						<div class="DotBorderBottom">&nbsp;</div> 
 						<div class="AddNewBtn">
-						<img src="../resources/images/Addbutton.png" align="center"
-							id="addBtn" width="15" height="15" alt="Add"
-							title="Add New Folder"> 
+						<br>
+						 <span id="add" class="add"> Create folder</span>
+						 <img src="../resources/images/Addbutton.png" align="center"
+							id="addBtn"  class="marginBottom15" width="15" height="15" alt="Add"
+							title="Add New Folder" class="marginTop0">
 						</div>
 					</div>
 				</div>
