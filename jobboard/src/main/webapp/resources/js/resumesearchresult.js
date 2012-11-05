@@ -90,7 +90,7 @@ function moveToFolder() {
 			});
 
 	if(resumeIdAndDateArr.length == 0){
-		alert("Please select resume to move.");
+		alert("Please select resumes to move.");
 		return false;
 	}
 	$.ajaxSetup({
