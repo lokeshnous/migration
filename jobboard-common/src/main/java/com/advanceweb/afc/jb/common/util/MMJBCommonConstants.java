@@ -427,11 +427,6 @@ public interface MMJBCommonConstants {
 	String UPLOAD_RESUME_ID = "UploadResumeId";
 	String PUBLISH_RESUME_ID = "PublishResumeId";
 
-	// Constants for Ad server
-	String HOST = "host";
-	String REFERER = "referer";
-	String USER_AGENT = "user-agent";
-
 	// for browseByJobs
 	String BROWSE_BY_SEARCH = "browseBySearch";
 	String BROWSE_BY_TITLE = "browseByTitle";

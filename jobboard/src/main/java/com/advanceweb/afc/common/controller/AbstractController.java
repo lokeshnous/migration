@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.constants.RequestHeaderNames;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
@@ -54,16 +55,16 @@ public abstract class AbstractController {
 		clientContext.setProperty(ClientContext.CLIENT_APPLICATION,
 				clientApplication);
 		clientContext.setProperty(ClientContext.CLIENT_USER_AGENT,
-				request.getHeader(MMJBCommonConstants.USER_AGENT));
+				request.getHeader(RequestHeaderNames.USER_AGENT));
 		clientContext.setProperty(ClientContext.CLIENT_SESSIONID,
 				session.getId());
 		clientContext.setProperty(ClientContext.CLIENT_IP,
 				request.getLocalAddr());
 		clientContext.setProperty(ClientContext.CLIENT_PAGE, pageName);
 		clientContext.setProperty(ClientContext.CLIENT_REFERRER,
-				request.getHeader(MMJBCommonConstants.REFERER));
+				request.getHeader(RequestHeaderNames.REFERER));
 		clientContext.setProperty(ClientContext.CLIENT_HOSTNAME,
-				request.getHeader(MMJBCommonConstants.HOST));
+				request.getHeader(RequestHeaderNames.HOST));
 		clientContext.setProperty(ClientContext.CLIENT_REQUEST_URL, request
 				.getRequestURL().toString());
 		if (sessionMap.get(SearchParamDTO.KEYWORDS) != null) {
