@@ -27,8 +27,9 @@ jQuery(document).ready(function() {
 		$("#"+val).attr("style","font-weight:bold;");
 		$("#"+val).attr("style", "color:#52a4dc");
 		$("#all").attr("style", "color:#6B7B84");
-	}
+	}else{
 	$("#all").attr("style", "color:#52a4dc");
+	}
 		$(".folderdetail").click(
 						function() {
 							val = $(this).attr("id");
@@ -103,7 +104,7 @@ jQuery(document).ready(function() {
 							}
 							break;
 							case "remove": {
-								if (confirm("Are you sure you want to delete?")) {
+								if (confirm("This will delete the folder along with its contents, do you like to continue?")) {
 									 $.ajax({url: "${pageContext.request.contextPath}/employer/removeFolder.html?folderName="+folderNm,
 										type: "POST" ,
 										success : function(data) {
