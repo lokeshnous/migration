@@ -105,10 +105,10 @@
 											class="gatewayTable indent10">
 											<thead> 
 											<tr cellpadding="0" cellspacing="0" border="0">
-												<th width="32%" align="Left"><h3 class="TextColorA01">&nbsp;My
+												<th width="31%" align="Left"><h3 class="TextColorA01">&nbsp;My
 														Shopping Cart</h3></th>
 												<th width="7%" align="Left"><h3 class="TextColorA01">Price</h3></th>
-												<th width="19%"><h3 class="TextColorA01">Quantity</h3></th>
+												<th width="19%" align="Left"><h3 class="TextColorA01">Quantity</h3></th>
 											</tr>
 											</thead>
 										</table>
@@ -206,20 +206,31 @@
 											<table width="100%" border="0" cellpadding="0"
 												cellspacing="0">
 												<tr cellpadding="0" cellspacing="0" border="0">
-													<td width="30%" align="Left">&nbsp;
+													
+													<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">	
+														<td width="40%" align="Left">&nbsp;
 														</td>
-													<td width="20%" align="Left">&nbsp;
-													</td>
-													<td width="18%"><h3 class="TextColorA01">Grand
-															Total:</h3></td>
-													<td width="20%"><h3 class="TextColorA01">
-													<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
-														<span>$</span>${paymentGatewayForm.purchaseJobPostForm.grandTotal}
-													</c:if> 
-													<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">
-														<span>$</span>${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}
+														<td width="14%"><h3 class="TextColorA01">Grand
+																Total :</h3>
+														</td>
+														<td width="11%"><h3 class="TextColorA01">
+															<span>$</span>${paymentGatewayForm.purchaseJobPostForm.grandTotal}
+														</h3></td>
+														<td width="40%"></td>
+													</c:if>	
+														
+													<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">	
+														<td width="30%" align="Left">&nbsp;
+														</td>
+														<td width="20%" align="Left">
+														</td>
+														<td width="18%"><h3 class="TextColorA01">Grand
+																Total:</h3></td>
+														<td width="20%"><h3 class="TextColorA01">
+															<span>$</span>${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}
+														</h3></td>
 													</c:if>
-													</h3></td>
+													
 													<td width="12%"><h3 class="TextColorA01">&nbsp;</h3></td>
 												</tr>
 												<tr>
