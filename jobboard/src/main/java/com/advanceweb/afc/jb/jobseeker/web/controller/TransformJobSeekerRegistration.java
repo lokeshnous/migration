@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -225,9 +224,11 @@ public class TransformJobSeekerRegistration {
 			ProfileAttribDTO dto = new ProfileAttribDTO();
 			if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
 					.getStrLabelName())) {
-
-				dto.setStrLabelValue(StringUtils
-						.arrayToCommaDelimitedString(form.getSubs()));
+				
+				//Modified to set the subscription id for modify subscriptions link
+				//dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));
+						
+				dto.setStrLabelValue(form.getStrLabelValue());
 			} else {
 				if (form.getStrLabelName().equals(MMJBCommonConstants.MYINDUSTRY)) {
 					dto.setStrLabelValue(MMJBCommonConstants.HEALTHCARE);
