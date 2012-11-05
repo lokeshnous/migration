@@ -160,7 +160,7 @@ function viewSavedSearch(searchJobId){
 					<thead>
 						<tr>
 							<th width="49%" align="left" scope="col">Saved Search Name</th>
-							<th width="15%" align="center" scope="col">Updated</th>
+							<th width="15%" align="center" scope="col">Last Modified</th>
 							<th width="22%" align="center" scope="col">&nbsp;&nbsp;Notify Me</th>
 							<th width="14%" align="center" scope="col">Actions</th>
 						</tr>
