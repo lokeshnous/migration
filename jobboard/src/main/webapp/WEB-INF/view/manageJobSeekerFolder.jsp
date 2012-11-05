@@ -165,7 +165,7 @@ jQuery(document).ready(function() {
 										width="15" height="15" alt="edit" title="Edit Folder"
 										onclick="renameCall(${folder.folderId},'${folder.folderName}');"></a>
 									<a href="#"><img src="../resources/images/CloseGray.jpg"
-										id="${folder.folderName}" alt="remove" width="15" height="15">
+										id="${folder.folderName}" alt="remove" title="Delete" width="15" height="15">
 									</a>
 								</div>
 
