@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -2210,7 +2211,7 @@ public class JobSearchController extends AbstractController {
 	JSONObject searchJbsByEmployer(HttpServletRequest request,
 			HttpSession session, JobSearchResultForm jobSearchResultForm,
 			BindingResult result) {
-		Map<String, List<JobDTO>> emplyrsByName = new HashMap<String, List<JobDTO>>();
+		Map<String, List<JobDTO>> emplyrsByName = new TreeMap<String, List<JobDTO>>();
 		Set<String> nameList = new HashSet<String>();
 		JSONObject jsonObject = new JSONObject();
 		removeSession(session);
