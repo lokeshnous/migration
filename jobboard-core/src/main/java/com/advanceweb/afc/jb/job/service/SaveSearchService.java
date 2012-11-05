@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
@@ -87,5 +88,24 @@ public interface SaveSearchService {
 	 */
 
 	boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO);
+	
+	
+	
+	/**
+	 * This method is used to fetching info particluar user.
+	 * 
+	 * @param integer userId
+	 * @return 
+	 */
+   public List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId);
+   
+   /**
+	 * This method is used to updated the search name .
+	 * 
+	 * @param integer userId
+	 * @param String searchName
+	 * @return 
+	 */	
+	public void updateSearchName(int id,String searchName);
 
 }

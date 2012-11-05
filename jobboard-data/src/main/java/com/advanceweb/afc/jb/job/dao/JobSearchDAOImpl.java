@@ -1,7 +1,9 @@
 package com.advanceweb.afc.jb.job.dao;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,9 +21,14 @@ import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
+import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
+import com.advanceweb.afc.jb.data.entities.MerApplication;
+import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.VstSessioninfo;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSearchConversionHelper;
 import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper;
 
@@ -38,10 +45,13 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper
 public class JobSearchDAOImpl implements JobSearchDAO {
 
 	private HibernateTemplate hibernateTemplate;
-
+	private HibernateTemplate hibernateTemplateTracker;
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactory) {
+	public void setHibernateTemplate(SessionFactory sessionFactory,
+			SessionFactory sessionFactoryMerionTracker) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 	}
 
 	private static final Logger LOGGER = Logger
@@ -330,4 +340,113 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		}
 		return locationDTOs;
 	}
+	
+	
+	/**
+	 * This method is used to remove the data in database
+	 * 
+	 * @return
+	 */
+	@Override
+	public void removeClearAll(int userId) {
+		// TODO Auto-generated method stub
+
+		List<AdmSaveSearch> admserach = hibernateTemplate.find(" from AdmSaveSearch where userId =? and searchName = ''",userId);
+
+		hibernateTemplate.deleteAll(admserach);
+
+	}
+	
+	/**
+	 * This method is used to check existing session in application
+	 * 
+	 * @return
+	 */
+	@Override
+	public void inserSessinfo(String session_id, int userId) {
+
+		
+
+		VstSessioninfo vssinfo = new VstSessioninfo();
+		vssinfo.setSessionId(session_id);
+		MerApplication merapp = new MerApplication();
+		merapp.setApplicationId(1);
+
+		vssinfo.setMerApplication(merapp);
+		vssinfo.setDeviceId("");
+		MerUser ms = new MerUser();
+		ms.setUserId(userId);
+
+		vssinfo.setMerUser(ms);
+		vssinfo.setStartDt(MMUtils.getCurrentDateAndTime());
+		vssinfo.setIpAddress("");
+		vssinfo.setReferringUrl("");
+		vssinfo.setLastSessionId("");
+		vssinfo.setLatitude(11);
+		vssinfo.setLongitude(11);
+		vssinfo.setUserAgent("");
+
+		vssinfo.setCreateDt(new Timestamp(new Date().getTime()));
+
+		List<VstSessioninfo> vstSessioninfos = hibernateTemplateTracker.find("from VstSessioninfo where user_id =? and session_id =?", userId,session_id);
+
+		StringBuffer buffer = new StringBuffer();
+
+		for (VstSessioninfo sessioninfo : vstSessioninfos) {
+			buffer.append(sessioninfo.getSessionId());
+		}
+
+		boolean isSeesionAvailabe = ((buffer.toString().equals(session_id)) ? true
+				: false);
+
+		if (!isSeesionAvailabe) {
+			hibernateTemplateTracker.saveOrUpdate(vssinfo);
+		}
+
+	}
+
+	
+	//here implementation work after descsion
+	/*@Override
+	public List<VstSessioninfo> getSessionId(String newSession_id) {
+		// TODO Auto-generated method stub
+		List<VstSessioninfo> admHistoryList = hibernateTemplateTracker.find("from VstSessioninfo where session_id =?",newSession_id);
+		
+		return admHistoryList;
+	}
+
+	@Override
+	public void insertSessionId(Integer sessioninfo_id) {
+		// TODO Auto-generated method stub
+		
+		VstSearch vstList = new VstSearch();
+		VstSessioninfo vssessinfo=new VstSessioninfo();
+		vssessinfo.setSessioninfoId(sessioninfo_id);
+		vstList.setVstSessioninfo(vssessinfo);
+		
+		vstList.setSearchDt(MMUtils.getCurrentDateAndTime());
+		
+		
+		List<VstSearch> vstSearchs = hibernateTemplateTracker.find("from VstSearch where sessioninfo_id =?", sessioninfo_id);
+		
+		List<Integer> searchSeq = new ArrayList<Integer>();
+
+		for (VstSearch search : vstSearchs) {
+			searchSeq.add(search.getSearchSeq());
+		}
+		
+		int length = searchSeq.size();
+		int lastSeq = 0;
+		
+		if(length > 0){
+			lastSeq = searchSeq.get(0);
+		}
+		lastSeq=lastSeq+1;
+		vstList.setSearchSeq(lastSeq);
+		
+		hibernateTemplateTracker.saveOrUpdate(vstList);
+	}
+
+	*/
+		
 }

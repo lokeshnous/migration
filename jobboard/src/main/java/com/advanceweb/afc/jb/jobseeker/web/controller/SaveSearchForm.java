@@ -24,6 +24,7 @@ public class SaveSearchForm {
 	private String notifyMe;
 	private List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
 	private String keywords;
+	private String clearAllPage;
 
 	/**
 	 * @return the userID
@@ -167,6 +168,14 @@ public class SaveSearchForm {
 	 */
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
+	}
+
+	public String getClearAllPage() {
+		return clearAllPage;
+	}
+
+	public void setClearAllPage(String clearAllPage) {
+		this.clearAllPage = clearAllPage;
 	}
 
 }

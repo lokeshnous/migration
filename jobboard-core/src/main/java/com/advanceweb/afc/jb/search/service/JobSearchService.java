@@ -125,4 +125,23 @@ public interface JobSearchService {
 	 * @return
 	 */
 	List<JobDTO> getJobsByLocation();
+	
+	/**
+	 * This method is used to remove the data in database
+	 * 
+	 * @return
+	 */
+	 public void removeClearAll(int userId);
+	 /**
+		 * This method is used to check existing session in application
+		 * 
+		 * @return
+		 */
+	 public void inserSessinfo(String session_id,int userId);
+	
+	 //here implementation work after descsion
+	/* public List<VstSessioninfo> getSessionId(String newSession_id);
+	 public void insertSessionId(Integer sessioninfo_id);*/
+	 
+	 
 }

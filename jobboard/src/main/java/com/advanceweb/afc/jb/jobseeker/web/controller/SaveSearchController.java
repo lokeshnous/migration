@@ -77,17 +77,21 @@ public class SaveSearchController {
 	JSONObject saveSearchedJobs(@Valid SaveSearchForm saveSearchForm,
 			BindingResult result, Map<String, JobSearchResultForm> model,
 			@RequestParam("searchName") String searchName, HttpSession session) {
-		
+
 		// Before user saves his search need to check save search
 		// records are more than 5 searches.
 		// if yes then delete the first saved search
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
 		int savedSearchCount = saveSearchedJobsDTOList.size();
 		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
 			saveSearchService.deleteFirstSearch(userId);
 		}
+
+		
 
 		JSONObject jsonObject = new JSONObject();
 		Map<String, String> sessionMap = checkSessionMap
@@ -96,8 +100,8 @@ public class SaveSearchController {
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put("NavigationPath", navigationPath);
 		} else {
-//			int userId = (Integer) session
-//					.getAttribute(MMJBCommonConstants.USER_ID);
+			// int userId = (Integer) session
+			// .getAttribute(MMJBCommonConstants.USER_ID);
 			SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
 			if (StringUtils.isEmpty(searchName)) {
@@ -131,7 +135,13 @@ public class SaveSearchController {
 					searchedJobsDTO.setSearchName(searchName);
 					searchedJobsDTO.setCreatedDate(MMUtils
 							.getCurrentDateAndTime());
+					if (session.getAttribute("clearAllSearchId") != null) {
+						int id = Integer.parseInt((String) session
+								.getAttribute("clearAllSearchId"));
+						saveSearchService.updateSearchName(id, searchName);
+					}else{
 					saveSearchService.saveSearchedJobs(searchedJobsDTO);
+					}
 					jsonObject.put("LoggedInNavigationPath", "");
 				}
 			}
@@ -156,8 +166,17 @@ public class SaveSearchController {
 	public @ResponseBody
 	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
 			Map<String, SaveSearchForm> model, HttpSession session,
-			@RequestParam("keywords") String keywords) {
+			@RequestParam("keywords") String keywords,
+			@RequestParam("savesearchid") String saveSearchID) {
+
 		JSONObject jsonObject = new JSONObject();
+
+		if (!saveSearchID.isEmpty() && saveSearchID != null) {
+			System.out.println("saveSearchID : " + saveSearchID);
+			session.setAttribute("clearAllSearchId", saveSearchID);
+			saveSearchForm.setClearAllPage("true");
+		}
+
 		try {
 
 			Map<String, String> sessionMap = checkSessionMap

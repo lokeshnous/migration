@@ -15,6 +15,7 @@
 function closePopup() {
 	//parent.window.location.reload();
 	parent.$.nmTop().close();
+	
 }
 	jQuery(document).ready(function() {
 		$.nmFilters({

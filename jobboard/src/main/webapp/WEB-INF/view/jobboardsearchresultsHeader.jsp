@@ -1,12 +1,44 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-              <div class="mainTwo" >
-              <div class="row">
-                            <div class="job_search_main job_search_main_height" style="margin-right: 10px;">
-                  <%-- <form method=""> --%>
-                 <%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
-                  <form:form method="" action="" commandName="jobSearchResultForm">
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#submitval').click(function() {
+			parent.right_frame.location.reload();
+		});
+	});
+
+	$("#clearMe")
+			.click(
+					function() {
+
+						$
+								.ajax({
+									url : "${pageContext.request.contextPath}/jobsearch/clearalllist.html",
+									success : function(data) {
+										//alert("Data is :::"+data);
+
+									},
+								});
+
+					});
+</script>
+</head>
+<body class="job_board">
+
+	<div class="mainTwo">
+		<div class="row">
+			<div class="job_search_main job_search_main_height"
+				style="margin-right: 10px;">
+				<%-- <form method=""> --%>
+				<%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
+				<form:form method="" action="" commandName="jobSearchResultForm">
 					<div class="search_form">
 
 						<h1 class="marginBottom5">
@@ -62,10 +94,11 @@
 							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->
 							<%-- </form:form>     --%>
 
-						<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+							<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
-							<a title="Coming Soon" href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-							 rel="nofollow,noindex"	onclick="postYourResume();" class="cursor">Post Your Resume</a>
+							<a title="Coming Soon" href="../jobsearch/advanceSearch.html">Advanced
+								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a rel="nofollow,noindex"
+								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
 					</div>
 					<!-- search_form -->
@@ -85,63 +118,39 @@
 					</security:authorize>
 					<!-- search_info_box1 -->
 					<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
-						<div class="search_info_box1">
-							<div class="rowPadding borderBottomDotted">
-								<span class="rowEvenNewSpacing">MY RECENT SEARCHES:</span><br>
-								<!-- <a href="" ></a> -->Clear All | <!-- <a href="" ></a> -->See All
-							</div>
-							<div class="rowPadding borderBottomDotted">
-								May 16, 2012, 7:00am<br> Search by: <!-- <a href="" ></a> -->Physical
-									Therapist / Philadelphia, PA
-							</div>
-							<div class="rowPadding borderBottomDotted">
-								May 16, 2012, 7:00am<br> Search by: <!-- <a href="" ></a> -->Physical
-									Therapist / Philadelphia, PA
-							</div>
-							<div class="rowPadding">
-								May 16, 2012, 7:00am<br> Search by: <!-- <a href="" ></a> -->Physical
-									Therapist / Philadelphia, PA
-							</div>
-						</div>
+						<div>MY RECENT SEARCHES:</div>
+						<a class="cursor" id="clearMe" onclick="clearAll();">Clear All</a> | <a
+							href="../jobsearch/seeallsearch.html" id="seeallpopup">See
+							All</a>
+						<div id="jobboardSearchResultsHitoryId"></div>
+
 						<!-- search_info_box1 -->
 					</security:authorize>
+					<div class="search_info_box2"></div>
+					<!-- search_info_box2 -->
 
-					<div class="search_info_box2">
-                      <ul>
-                <li><span class="uppercase bold">My Recent Searches:</span><br/>
-                          <!-- <a href="" ></a> -->Clear All&nbsp;&nbsp;|&nbsp;&nbsp;<!-- <a href="" ></a> -->See All</li>
-                <li>May 16, 2012, 7:00 am<br/>
-                          Search by: <span class="jb"><!-- <a href="" ></a> -->Physical Therapist</span></li>
-                <li>May 17, 2012, 8:00 am<br/>
-                          Search by: <span class="jb"><!-- <a href="" ></a> -->Pediatric Nurse</span></li>
-                <li class="last">May 18, 2012, 9:00 am<br/>
-                          Search by: <span class="jb"><!-- <a href="" ></a> -->ER Nurse</span></li>
-              </ul>
-                    </div>
-            <!-- search_info_box2 -->
-            
-            <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;
-            <a title="Coming Soon" onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a title="Coming Soon" onclick="getByEmployer()" class="cursor">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a title="Coming Soon" onclick="getByLocation()" class="cursor">By Location</a>
-            </div>
+					<div class="browse_bar bold">
+						<span>BROWSE JOBS:</span>&nbsp;&nbsp; <a title="Coming Soon"
+							onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a title="Coming Soon" onclick="getByEmployer()" class="cursor">By
+							Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a title="Coming Soon"
+							onclick="getByLocation()" class="cursor">By Location</a>
+					</div>
 
-            <!-- browse_bar -->
-            
-            <form:hidden path="start" id="start"/>
-            <form:hidden path="rows" id="rows"/>
-            
-            <form:hidden path="searchtype" id="searchtype" value= "basic"/>
-            <!-- <input type="hidden" id="searchtype" value="basic"></input>
+					<!-- browse_bar -->
+
+					<form:hidden path="start" id="start" />
+					<form:hidden path="rows" id="rows" />
+
+					<form:hidden path="searchtype" id="searchtype" value="basic" />
+					<!-- <input type="hidden" id="searchtype" value="basic"></input>
             </div> -->
-            </form:form>    
-                <%-- </form> --%>
-                </div>
-              <div class="ad_col_right">
-				${adPageRightTop }       
-              </div>
-              </div>
-            
+				</form:form>
+				<%-- </form> --%>
+			</div>
+			<div class="ad_col_right">${adPageRightTop }</div>
+		</div>
 
-    </div>
-    <!-- main --> 
+
+	</div>
+	<!-- main -->

@@ -117,4 +117,29 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 		return saveSearchDAO.updateSearchDetails(saveSearchedJobsDTO);
 	}
 
+	
+	/**
+	 * This method is used to fetching data form admssavesearch table.
+	 * 
+	 * @param integer userId
+	 * @return 
+	 */
+	@Override
+	public List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId) {
+		return saveSearchDAO.viewMyRecentSearches(userId);
+	}
+	/**
+	 * This method is used to update the search name.
+	 * 
+	 * @param integer userId
+	 * @param String  searchName
+	 * @return 
+	 */
+	
+	@Override
+	public void updateSearchName(int id, String searchName) {
+		// TODO Auto-generated method stub
+		saveSearchDAO.updateSearchName(id, searchName);
+	}
 }
+	

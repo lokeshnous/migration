@@ -169,5 +169,38 @@ public class JobSearchServiceImpl implements JobSearchService {
 	public List<JobDTO> getJobsByLocation() {
 		return jobSearchDAO.getJobsByLocation();
 	}
+	
+	@Override
+	public void removeClearAll(int userId) {
+		// TODO Auto-generated method stub
+		jobSearchDAO.removeClearAll(userId);
+	}
+
+	@Override
+	public void inserSessinfo(String session_id, int userId) {
+		// TODO Auto-generated method stub
+		jobSearchDAO.inserSessinfo(session_id, userId);
+	}
+	
+	
+
+	
+	
+	//here implementation work after descsion
+	/*@Override
+	public List<VstSessioninfo> getSessionId(String newSession_id) {
+		// TODO Auto-generated method stub
+		return jobSearchDAO.getSessionId(newSession_id);
+	}
+
+	@Override
+	public void insertSessionId(Integer sessioninfo_id) {
+		// TODO Auto-generated method stub
+		jobSearchDAO.insertSessionId(sessioninfo_id);
+	}
+*/
+	
+	
+	
 
 }

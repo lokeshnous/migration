@@ -30,6 +30,7 @@ import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 import com.advanceweb.common.ads.AdPosition;
@@ -46,7 +47,7 @@ import com.advanceweb.common.client.ClientContext;
 @Controller
 @RequestMapping("/jobSeeker")
 @Scope("session")
-public class JobSeekerDashBoardController extends AbstractController{
+public class JobSeekerDashBoardController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSeekerDashBoardController.class");
@@ -65,7 +66,7 @@ public class JobSeekerDashBoardController extends AbstractController{
 
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerService;
-	
+
 	@Autowired
 	private AdService adService;
 
@@ -84,8 +85,18 @@ public class JobSeekerDashBoardController extends AbstractController{
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
+	@Autowired
+	private JobSearchService jobSearchService;
+
 	@RequestMapping("/jobSeekerDashBoard")
-	public ModelAndView displayDashBoard(HttpSession session, HttpServletRequest request) {
+	public ModelAndView displayDashBoard(HttpSession session,
+			HttpServletRequest request) {
+
+		String session_id = session.getId();
+		int userId = (Integer) session.getAttribute("userId");
+
+		jobSearchService.inserSessinfo(session_id, userId);
+
 		ModelAndView model = new ModelAndView();
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
 
@@ -99,8 +110,8 @@ public class JobSeekerDashBoardController extends AbstractController{
 		List<DropDownDTO> currentSubs = userubscription
 				.jsSubscriptionDTOToJobSeekerSubscriptionForm(currentSubsList,
 						listSubscriptions);
-		Set<DropDownDTO> set=new HashSet<DropDownDTO>();
-		for(DropDownDTO dto:currentSubs){
+		Set<DropDownDTO> set = new HashSet<DropDownDTO>();
+		for (DropDownDTO dto : currentSubs) {
 			set.add(dto);
 		}
 		form.setUserName((String) session.getAttribute("UserName"));
@@ -184,7 +195,7 @@ public class JobSeekerDashBoardController extends AbstractController{
 
 		return model;
 	}
-	
+
 	/**
 	 * Get Ads for job seeker dashboard page
 	 * 
@@ -192,7 +203,7 @@ public class JobSeekerDashBoardController extends AbstractController{
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForJobseekerDashboard (HttpServletRequest request,
+	private void getAdsForJobseekerDashboard(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -222,7 +233,8 @@ public class JobSeekerDashBoardController extends AbstractController{
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 
 }

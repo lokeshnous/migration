@@ -337,8 +337,28 @@ jQuery(document).ready(function() {
 						}
 					}
 					);
+					getHistory();
 				}
 
+				
+				function getHistory(){
+					
+					$.ajax({
+						url : '../jobsearch/jobboardSearchResultsHitory.html',
+						data : ({}),
+						
+						success : function(data) {
+							$("#jobboardSearchResultsHitoryId").html(data);
+						},
+						error : function(data) {
+							alert('Unable to process');
+						},
+						complete : function(data) {
+							// do nothing for now.
+						}
+					}
+					);
+				}
 				window.onload = function() {
 					$.ajax({
 						url : '../healthcarejobs/homeFeaturedEmps.html',
@@ -396,9 +416,11 @@ jQuery(document).ready(function() {
 					});
 				}
 				
-				function saveThisSearch() {
-					var keywords = $.trim($("#keywords").val());
-					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords,
+				function saveThisSearch(saveSearchID) {
+					alert("savesearchid"+savesearchid);
+					
+					//$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
+					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&saveSearchID"+saveSearchID,
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
@@ -424,6 +446,36 @@ jQuery(document).ready(function() {
 					
 					});
 				} 
+				
+				function saveRecentSearch(savesearchid) {
+				
+					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
+						success: function(data){ 
+							$.each(data, function(key, val) {
+								if (key == "NavigationPath") {
+									window.location.href = val+ '.html';
+								}
+								
+								if (key == "LoggedInNavigationPath") {
+									$.nmManual(val + '.html');
+								}
+							}); 
+						    if(data.success != null){
+						    }
+						    if(data.failure != null){
+						    	$("#errorMsg").html("Please enter the required parameters.");
+						    }
+						},
+						error: function(response) {
+							alert("Server Error : "+response.status);
+						},
+						complete: function() {
+							
+						}
+					
+					});
+				} 
+				
 				function btsaveThisJob(jobId,context) {
 					$.ajax({
 						url : context+'/jobsearch/saveThisJob.html?id='+jobId,
@@ -738,6 +790,22 @@ jQuery(document).ready(function() {
 					});
 			    }
 				
+
+				function clearAll(jobTitle){
+					$.ajax({url: "../jobsearch/clearalllist.html",
+							success: function(data){ 
+								
+								getHistory();
+							},
+							error: function(response) {
+								alert("Server Error : "+response.status);
+							},
+							complete: function() {
+								
+							}
+						});
+				    }
+
 				function searchByLocationRegion(stateFullName){
 					var browseByLocationReg = $("#browseByLocationReg").val();
 					var area=stateFullName.split(" ",1); 
@@ -793,5 +861,4 @@ jQuery(document).ready(function() {
 					});
 				}
 				
-				
-				
+

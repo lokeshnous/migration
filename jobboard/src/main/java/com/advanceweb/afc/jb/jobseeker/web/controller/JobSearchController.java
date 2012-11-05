@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -58,6 +58,7 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.NewsDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.VideoDTO;
@@ -69,6 +70,7 @@ import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.home.web.controller.ClickController;
+import com.advanceweb.afc.jb.job.service.SaveSearchService;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
@@ -119,6 +121,9 @@ public class JobSearchController extends AbstractController {
 
 	@Autowired
 	private CheckSessionMap checkSessionMap;
+
+	@Autowired
+	private SaveSearchService saveSearchService;
 
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
@@ -233,6 +238,9 @@ public class JobSearchController extends AbstractController {
 
 	private @Value("${mediaPath}")
 	String mediaPath;
+
+	@Value("${recentSearchsLimit}")
+	private String recentSearchsLimit;
 
 	@Autowired
 	@Resource(name = "seoConfiguration")
@@ -1116,10 +1124,75 @@ public class JobSearchController extends AbstractController {
 	 * @param jobSrchJsonObj
 	 * @param currentSearchList
 	 */
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	private void setSessionForGrid(HttpSession session, int page,
 			int noOfPages, int beginVal, JSONObject jobSrchJsonObj,
 			List<HashMap<String, Object>> currentSearchList) {
+		HashMap<String, String> sessionMap = (HashMap<String, String>) session
+				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+		String keyWords = sessionMap.get(SearchParamDTO.KEYWORDS).trim();
+		String city = sessionMap.get(SearchParamDTO.CITY_STATE).trim();
+		String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		HashMap<String, Object> recentMap = new HashMap<String, Object>();
+		List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
+				.getAttribute("recentSearchList");
+		if (recentSearchList == null) {
+			recentSearchList = new ArrayList<HashMap<String, Object>>();
+		}
+		if (!keyWords.isEmpty()) {
+			recentMap.put(SearchParamDTO.KEYWORDS,
+					sessionMap.get(SearchParamDTO.KEYWORDS).trim());
+		}
+		if (!city.isEmpty()) {
+			recentMap.put(SearchParamDTO.CITY_STATE, city);
+		}
+		if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
+			recentMap.put(SearchParamDTO.RADIUS, radius);
+		}
+		recentMap.put("recDate", new Date().toLocaleString());
+		recentSearchList.add(recentMap);
+		// Here, saving data in DB searching in JOBBOARD
+		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+
+		searchedJobsDTO.setUserID((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
+		searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
+				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.KEYWORDS
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(SearchParamDTO.KEYWORDS)
+				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.CITY_STATE
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(SearchParamDTO.CITY_STATE)
+				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.RADIUS
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(SearchParamDTO.RADIUS));
+
+		searchedJobsDTO.setSearchName("");
+		searchedJobsDTO.setCreatedDate(MMUtils.getCurrentDateAndTime());
+		saveSearchService.saveSearchedJobs(searchedJobsDTO);
+
+		List<HashMap<String, Object>> latestRecentList = null;
+		if (recentSearchList.size() > 3) {
+			latestRecentList = recentSearchList.subList(0, 3);
+		} else {
+			latestRecentList = recentSearchList;
+		}
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+				.viewMySavedSearches(userId);
+
+		int savedSearchCount = saveSearchedJobsDTOList.size();
+		if (savedSearchCount == Integer.parseInt(recentSearchsLimit)) {
+			saveSearchService.deleteFirstSearch(userId);
+		}
 		// TODO: Need to use session Map
+
+		session.setAttribute("recentSearchList", recentSearchList);
+		session.setAttribute("latestRecentList", latestRecentList);
 		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
 				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
 		session.setAttribute(MMJBCommonConstants.CITY,
@@ -1139,6 +1212,33 @@ public class JobSearchController extends AbstractController {
 				: beginVal));
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+	}
+
+	private String getSplitURL(String urlData) {
+
+		StringBuffer splitURL = new StringBuffer();
+		StringTokenizer stringNew = new StringTokenizer(urlData, ";");
+
+		while (stringNew.hasMoreElements()) {
+
+			String stringObject = (String) stringNew.nextElement();
+			StringTokenizer stringAlter = new StringTokenizer(stringObject, "=");
+			@SuppressWarnings("unused")
+			String key = null, value = "";
+			int count = 0;
+
+			while (stringAlter.hasMoreElements()) {
+				if (count == 0) {
+					key = stringAlter.nextToken();
+					count = 1;
+				} else {
+					value = stringAlter.nextToken().replaceFirst("basic", " ");
+					count = 0;
+				}
+				splitURL.append(value + "     ");
+			}
+		}
+		return splitURL.toString();
 	}
 
 	/**
@@ -2183,6 +2283,83 @@ public class JobSearchController extends AbstractController {
 		}
 		return listVideoURL;
 	}
+
+	@RequestMapping(value = "/seeallsearch", method = RequestMethod.GET)
+	public ModelAndView clearalllist(HttpSession session,
+			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
+
+		ModelAndView modelAndView = new ModelAndView();
+
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		List<SaveSearchedJobsDTO> recentSearch = saveSearchService
+				.viewMyRecentSearches(userId);
+
+		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
+
+		for (SaveSearchedJobsDTO jobsDTO : recentSearch) {
+
+			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
+					jobsDTO.getSaveSearchID(), jobsDTO.getUserID(),
+					jobsDTO.getUrl(), jobsDTO.getSearchName(),
+					jobsDTO.getEmailFrequency(), jobsDTO.getCreatedDate(),
+					jobsDTO.getModifyDate(), jobsDTO.getDeletedDate(),
+					getSplitURL(jobsDTO.getUrl()));
+
+			recentSplit.add(dto);
+		}
+
+		modelAndView.addObject("recentSplit", recentSplit);
+		modelAndView.addObject("myrecentsearchform", myrecentsearchform);
+		modelAndView.setViewName("myrecentsearches");
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/clearalllist", method = RequestMethod.GET)
+	public @ResponseBody
+	String seeallsearchjob(HttpSession session,
+			MyRecentSearchesForm myrecentsearchform, BindingResult result,
+			HttpServletRequest request) {
+
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		jobSearchService.removeClearAll(userId);
+		session.removeAttribute("recentSearchList");
+		session.removeAttribute("latestRecentList");
+
+		return "success";
+	}
+
+	@RequestMapping(value = "/seeallclear", method = RequestMethod.GET)
+	public ModelAndView seeallclear(HttpSession session,
+			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
+
+		ModelAndView modelAndView = new ModelAndView();
+
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		jobSearchService.removeClearAll(userId);
+		session.removeAttribute("recentSearchList");
+		session.removeAttribute("latestRecentList");
+
+		modelAndView.addObject("myrecentsearchform", myrecentsearchform);
+		modelAndView.setViewName("myrecentsearches");
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/jobboardSearchResultsHitory")
+	public ModelAndView getTemplateshrRecentList(HttpServletResponse response,
+			HttpServletRequest request, Model model) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("jobboardSearchResultsHitory");
+		return modelAndView;
+	}
+
 
 	/**
 	 * This method will convert the JobSearchResultDTO to JSON object

@@ -19,7 +19,11 @@ public class SaveSearchedJobsDTO {
 	private Date createdDate;
 	private String modifyDate;
 	private Date deletedDate;
+
+	private String recentURL;
+
 	private String keywords;
+
 	/**
 	 * @return the keyword
 	 */
@@ -27,8 +31,28 @@ public class SaveSearchedJobsDTO {
 		return keywords;
 	}
 
+	public SaveSearchedJobsDTO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public SaveSearchedJobsDTO(int saveSearchID, int userID, String url,
+			String searchName, String emailFrequency, Date createdDate,
+			String modifyDate, Date deletedDate, String recentURL) {
+		super();
+		this.saveSearchID = saveSearchID;
+		this.userID = userID;
+		this.url = url;
+		this.searchName = searchName;
+		this.emailFrequency = emailFrequency;
+		this.createdDate = createdDate;
+		this.modifyDate = modifyDate;
+		this.deletedDate = deletedDate;
+		this.recentURL = recentURL;
+	}
+
 	/**
-	 * @param keyword the keyword to set
+	 * @param keyword
+	 *            the keyword to set
 	 */
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
@@ -124,8 +148,6 @@ public class SaveSearchedJobsDTO {
 		this.createdDate = createdDate;
 	}
 
-	
-
 	/**
 	 * @return the deletedDate
 	 */
@@ -149,10 +171,19 @@ public class SaveSearchedJobsDTO {
 	}
 
 	/**
-	 * @param modifyDate the modifyDate to set
+	 * @param modifyDate
+	 *            the modifyDate to set
 	 */
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public String getRecentURL() {
+		return recentURL;
+	}
+
+	public void setRecentURL(String recentURL) {
+		this.recentURL = recentURL;
 	}
 
 }

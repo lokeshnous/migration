@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
@@ -39,4 +40,9 @@ public interface SaveSearchDAO {
 	 */
 
 	boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO);
+	
+	
+
+	List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId);
+	public void updateSearchName(int id, String searchName);
 }
