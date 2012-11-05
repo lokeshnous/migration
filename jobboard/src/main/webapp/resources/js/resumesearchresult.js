@@ -89,6 +89,10 @@ function moveToFolder() {
 						+ createddateArr[i];
 			});
 
+	if(resumeIdAndDateArr.length == 0){
+		alert("Please select resume to move.");
+		return false;
+	}
 	$.ajaxSetup({
 		cache : false
 	});
