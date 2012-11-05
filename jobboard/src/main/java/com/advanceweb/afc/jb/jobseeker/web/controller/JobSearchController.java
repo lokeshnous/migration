@@ -568,8 +568,7 @@ public class JobSearchController extends AbstractController {
 					request)) {
 				return jsonObject;
 			}
-			int userId = (Integer) session
-					.getAttribute(MMJBCommonConstants.USER_ID);
+			int userId = getUserID(session);
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(jobDTO, userId);
@@ -1128,37 +1127,73 @@ public class JobSearchController extends AbstractController {
 	private void setSessionForGrid(HttpSession session, int page,
 			int noOfPages, int beginVal, JSONObject jobSrchJsonObj,
 			List<HashMap<String, Object>> currentSearchList) {
+
+		recentSearch(session);
+
+		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.CITY,
+				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
+		session.setAttribute(MMJBCommonConstants.STATE,
+				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
+		session.setAttribute(MMJBCommonConstants.COMPANY,
+				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
+		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
+				currentSearchList);
+		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
+		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
+		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
+		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
+				: beginVal));
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+	}
+
+	/**
+	 * 
+	 * @param session
+	 */
+	private void recentSearch(HttpSession session) {
+
 		HashMap<String, String> sessionMap = (HashMap<String, String>) session
 				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+
 		String keyWords = sessionMap.get(SearchParamDTO.KEYWORDS).trim();
 		String city = sessionMap.get(SearchParamDTO.CITY_STATE).trim();
 		String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
+
+		int userId = getUserID(session);
 
 		HashMap<String, Object> recentMap = new HashMap<String, Object>();
 		List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
 				.getAttribute("recentSearchList");
+
 		if (recentSearchList == null) {
 			recentSearchList = new ArrayList<HashMap<String, Object>>();
 		}
+
 		if (!keyWords.isEmpty()) {
 			recentMap.put(SearchParamDTO.KEYWORDS,
 					sessionMap.get(SearchParamDTO.KEYWORDS).trim());
 		}
+
 		if (!city.isEmpty()) {
 			recentMap.put(SearchParamDTO.CITY_STATE, city);
 		}
+
 		if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
 			recentMap.put(SearchParamDTO.RADIUS, radius);
 		}
+
 		recentMap.put("recDate", new Date().toLocaleString());
 		recentSearchList.add(recentMap);
+
 		// Here, saving data in DB searching in JOBBOARD
 		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-		searchedJobsDTO.setUserID((Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID));
+		searchedJobsDTO.setUserID(getUserID(session));
 		searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
 				+ MMJBCommonConstants.EQUAL_TO
 				+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
@@ -1182,38 +1217,45 @@ public class JobSearchController extends AbstractController {
 		} else {
 			latestRecentList = recentSearchList;
 		}
-		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-				.viewMySavedSearches(userId);
 
-		int savedSearchCount = saveSearchedJobsDTOList.size();
-		if (savedSearchCount == Integer.parseInt(recentSearchsLimit)) {
-			saveSearchService.deleteFirstSearch(userId);
+		if (userId > 0) {
+			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+					.viewMySavedSearches(userId);
+
+			int savedSearchCount = saveSearchedJobsDTOList.size();
+			if (savedSearchCount == Integer.parseInt(recentSearchsLimit)) {
+				saveSearchService.deleteFirstSearch(userId);
+			}
 		}
-		// TODO: Need to use session Map
 
+		// TODO: Need to use session Map
 		session.setAttribute("recentSearchList", recentSearchList);
 		session.setAttribute("latestRecentList", latestRecentList);
-		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
-		session.setAttribute(MMJBCommonConstants.CITY,
-				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
-		session.setAttribute(MMJBCommonConstants.STATE,
-				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
-		session.setAttribute(MMJBCommonConstants.COMPANY,
-				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				currentSearchList);
-		session.setAttribute(MMJBCommonConstants.RECORDS_COUNT,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
-		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
-		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
-		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
-				: beginVal));
-		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 	}
 
+	/**
+	 * Method to return User id.
+	 * 
+	 * @param session
+	 * @return
+	 */
+	private Integer getUserID(HttpSession session) {
+
+		int userId = 0;
+		
+		if ((null != session.getAttribute(MMJBCommonConstants.USER_ID))
+				&& StringUtils.isEmpty(""
+						+ session.getAttribute(MMJBCommonConstants.USER_ID))) {
+
+			userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+
+		}
+		
+		return userId;
+	}
+
+	
 	private String getSplitURL(String urlData) {
 
 		StringBuffer splitURL = new StringBuffer();
@@ -1366,8 +1408,7 @@ public class JobSearchController extends AbstractController {
 					+ "/jobsearch/jobseekersaveThisJobPopUp");
 			return jsonObject;
 		}
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = getUserID(session);
 		int savedJobsCount = 0;
 		try {
 			List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
@@ -1671,8 +1712,7 @@ public class JobSearchController extends AbstractController {
 				String userEmail = null;
 				String jobseekerName = null;
 				if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-					userId = (Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID);
+					userId = getUserID(session);
 					userName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
 					userEmail = (String) session
@@ -2290,8 +2330,7 @@ public class JobSearchController extends AbstractController {
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = getUserID(session);
 
 		List<SaveSearchedJobsDTO> recentSearch = saveSearchService
 				.viewMyRecentSearches(userId);
@@ -2323,8 +2362,7 @@ public class JobSearchController extends AbstractController {
 			MyRecentSearchesForm myrecentsearchform, BindingResult result,
 			HttpServletRequest request) {
 
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = getUserID(session);
 
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute("recentSearchList");
@@ -2339,8 +2377,7 @@ public class JobSearchController extends AbstractController {
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = getUserID(session);
 
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute("recentSearchList");
