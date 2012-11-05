@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.lookup.helper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.stereotype.Repository;
 
@@ -566,9 +567,15 @@ public class PopulateDropdownConversionHelper {
 				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION
 						.equalsIgnoreCase(profile.getMerProfileAttrib()
 								.getName())) {
-					subDTO.setSubscriptionId(Integer.parseInt(profile
-							.getAttribValue()));
-					dtos.add(subDTO);
+
+					String sub = profile.getAttribValue();
+					StringTokenizer stringNew = new StringTokenizer(sub, ",");
+
+					while (stringNew.hasMoreElements()) {
+						String stringObject = (String) stringNew.nextElement();
+						subDTO.setSubscriptionId(Integer.parseInt(stringObject));
+						dtos.add(subDTO);
+					}
 				}
 			}
 		}

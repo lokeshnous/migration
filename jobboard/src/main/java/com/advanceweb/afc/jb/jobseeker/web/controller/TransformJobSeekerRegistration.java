@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -172,16 +173,13 @@ public class TransformJobSeekerRegistration {
 	 */
 	private void setValuesToForm(UserDTO userDTO,
 			JobSeekerProfileAttribForm form) {
-		if (form.getStrLabelName().equals(
-				MMJBCommonConstants.FIRST_NAME)) {
+		if (form.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)) {
 			form.setStrLabelValue(userDTO.getFirstName());
 		}
-		if (form.getStrLabelName().equals(
-				MMJBCommonConstants.LAST_NAME)) {
+		if (form.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)) {
 			form.setStrLabelValue(userDTO.getLastName());
 		}
-		if (form.getStrLabelName().equals(
-				MMJBCommonConstants.MIDDLE_NAME)) {
+		if (form.getStrLabelName().equals(MMJBCommonConstants.MIDDLE_NAME)) {
 			form.setStrLabelValue(userDTO.getMiddleName());
 		}
 	}
@@ -192,21 +190,23 @@ public class TransformJobSeekerRegistration {
 	 * @return
 	 */
 	public List<ProfileAttribDTO> transformProfileAttribFormToDTO(
-			List<JobSeekerProfileAttribForm> attributeList, JobSeekerRegistrationForm regForm) {
+			List<JobSeekerProfileAttribForm> attributeList,
+			JobSeekerRegistrationForm regForm) {
 
 		List<ProfileAttribDTO> dtoList = new ArrayList<ProfileAttribDTO>();
 
 		if (null != attributeList) {
 			setFormAttribToDTOAttributes(attributeList, regForm, dtoList);
 		}
-		if(regForm.isSocialSignUp()){
+		if (regForm.isSocialSignUp()) {
 			ProfileAttribDTO newDTO = new ProfileAttribDTO();
 			newDTO.setStrLabelValue(regForm.getSocialProfileId());
 			newDTO.setStrProfileAttribId(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
-			if(regForm.getServiceProviderName().equals(MMJBCommonConstants.FACEBOOK)){
+			if (regForm.getServiceProviderName().equals(
+					MMJBCommonConstants.FACEBOOK)) {
 				newDTO.setStrProfileAttribId(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID);
 			}
-			
+
 			dtoList.add(newDTO);
 		}
 		return dtoList;
@@ -224,23 +224,30 @@ public class TransformJobSeekerRegistration {
 			ProfileAttribDTO dto = new ProfileAttribDTO();
 			if (MMJBCommonConstants.LABEL_SUSBSCRIPTION.equals(form
 					.getStrLabelName())) {
-				
-				//Modified to set the subscription id for modify subscriptions link
-				//dto.setStrLabelValue(StringUtils.arrayToCommaDelimitedString(form.getSubs()));
-						
-				dto.setStrLabelValue(form.getStrLabelValue());
+				// Modified to set the subscription id for modify subscriptions
+				// link
+				if(form.getSubs() != null){
+					dto.setStrLabelValue(StringUtils
+							.arrayToCommaDelimitedString(form.getSubs()));
+				}
+				else{
+					dto.setStrLabelValue(form.getStrLabelValue());
+				}
+
 			} else {
-				if (form.getStrLabelName().equals(MMJBCommonConstants.MYINDUSTRY)) {
+				if (form.getStrLabelName().equals(
+						MMJBCommonConstants.MYINDUSTRY)) {
 					dto.setStrLabelValue(MMJBCommonConstants.HEALTHCARE);
 				} else {
 					dto.setStrLabelValue(form.getStrLabelValue());
 				}
-				
-				if(regForm != null && 
-						regForm.getOtherProfession() != null && 
-						form.getStrLabelName().equals(MMJBCommonConstants.MYPROFESSION)){
+
+				if (regForm != null
+						&& regForm.getOtherProfession() != null
+						&& form.getStrLabelName().equals(
+								MMJBCommonConstants.MYPROFESSION)) {
 					setValuesToDropDownDTO(regForm, form, dto);
-					
+
 				}
 			}
 			dto.setStrAttribType(form.getStrAttribType());
@@ -257,9 +264,10 @@ public class TransformJobSeekerRegistration {
 	 */
 	private void setValuesToDropDownDTO(JobSeekerRegistrationForm regForm,
 			JobSeekerProfileAttribForm form, ProfileAttribDTO dto) {
-		for(DropDownDTO dropDown:form.getDropdown()){
-			if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName())&& 
-					form.getStrLabelValue().equals(dropDown.getOptionId())){
+		for (DropDownDTO dropDown : form.getDropdown()) {
+			if (MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown
+					.getOptionName())
+					&& form.getStrLabelValue().equals(dropDown.getOptionId())) {
 				dto.setStrLabelValue(regForm.getOtherProfession());
 			}
 		}
