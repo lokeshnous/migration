@@ -78,7 +78,7 @@
 						id="creditConfirmForm" method="POST" class="firstForm"
 						modelAttribute="paymentGatewayForm">
 						<div class="row">
-							<!-- <h3 class="gatewayBreadcrumbs main_section">Review Order</h3> -->
+							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
 							<p class="form_notes review_order">Please review your order
 								details and payment information. If you need to make any
 								changes, you can click on the appropriate 'Edit' links below.
@@ -91,34 +91,34 @@
 							<!-- cart details start-->
 							<div id="purchaseCart">
 							<%-- <form:hidden path="${paymentGatewayForm.purchaseType}"/> --%>
+								<div class="row borderBottomDotted paddingBottom10 margin0">
 								
-								
-								<div class="rowEvenNewSpacing marginTop20">
+								<div class="rowEvenNewSpacing marginTop10 ">
 									
 									
 									<%
 										int i = 0;
 									%>
 									<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
-									<div class=" row">
+									<div class="row margin0">
 										<table width="100%" border="0" cellpadding="0" cellspacing="0"
-											class="marginBottom3">
+											class="gatewayTable indent10">
+											<thead> 
 											<tr cellpadding="0" cellspacing="0" border="0">
-												<td width="32%" align="Left"><h3 class="TextColorA01">&nbsp;My
-														Shopping Cart</h3></td>
-												<td width="7%" align="Left"><h3 class="TextColorA01">Price</h3></td>
-												<td width="19%"><h3 class="TextColorA01">Quantity</h3></td>
+												<th width="32%" align="Left"><h3 class="TextColorA01">&nbsp;My
+														Shopping Cart</h3></th>
+												<th width="7%" align="Left"><h3 class="TextColorA01">Price</h3></th>
+												<th width="19%"><h3 class="TextColorA01">Quantity</h3></th>
 											</tr>
-											<tr>
-											</tr>
+											</thead>
 										</table>
 									</div>
 										<!-- cart  start-->
 									<c:forEach
 										items="${paymentGatewayForm.purchaseJobPostForm.jobPostingsCart}"
 										var="cartItem" varStatus="status">
-										<div class=" row DotBorderBottom marginTop5"></div>
-										<div class="row">
+										<div class=" row DotBorderBottom"></div>
+										<div class="row paddingBottom10">
 											<table width="100%" border="0" cellpadding="0"
 												cellspacing="0" class="marginTop5">
 												<tr id="<%=i%>">
@@ -157,38 +157,40 @@
 									</c:forEach>		
 									</c:if> 
 									<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">
-									<div class=" row">
+									<div class="row margin0">
 										<table width="100%" border="0" cellpadding="0" cellspacing="0"
-											class="marginBottom3">
+											class="gatewayTable indent10 marginBottom3" >
+											<thead>
 											<tr cellpadding="0" cellspacing="0" border="0">
-												<td width="25%" align="Left"><h3 class="TextColorA01">&nbsp;Product Name</h3></td>
-												<td width="7%" align="Left"><h3 class="TextColorA01">Price</h3></td>
-												<td width="19%"><h3 class="TextColorA01">Quantity</h3></td>
-												<td width="19%"><h3 class="TextColorA01">Total</h3></td>
+												<th width="32%" align="Left"><h3 class="TextColorA01">&nbsp;Product Name</h3></th>
+												<th width="20%" align="Left"><h3 class="TextColorA01">Price</h3></th>
+												<th width="18%" align="Left"><h3 class="TextColorA01">Quantity</h3></th>
+												<th width="20%" align="Left"><h3 class="TextColorA01">Total</h3></th>
+												<th width="10%" align="Left"></th>
 											</tr>
-											<tr>
-											</tr>
+											</thead>
+											
 										</table>
 									</div>
 										<!-- cart  start-->
 									<c:forEach
 										items="${paymentGatewayForm.purchaseResumeSearchForm.resumeSearchPackageCart}"
 										var="cartItem" varStatus="status">
-										<div class=" row DotBorderBottom marginTop5"></div>
+										<div class=" row DotBorderBottom"></div>
 										<div class="row">
 											<table width="100%" border="0" cellpadding="0"
 												cellspacing="0" class="marginTop5">
 												<tr id="<%=i%>">
-													<td width="18%" height="30px;" align="Left">
+													<td width="32%" height="30px;" align="Left">
 													${cartItem.packageName}</td>
-													<td width="7%" align="Left"><span>$</span>${cartItem.priceAmt}</td>
-													<td width="15%"><input name="healthCareSubSplty2"
+													<td width="20%" align="Left"><span>$</span>${cartItem.priceAmt}</td>
+													<td width="18%"><input name="healthCareSubSplty2"
 														type="text"
 														class="jb_input75 marginTop0 mar"
 														value="${cartItem.quantity}" /></td>
-													<td width="7%" align="Left"><span
+													<td width="20%" align="Left"><span
 														class="link_color2_selected">$</span>${cartItem.packageTotal}</td>
-													<td width="7%"><a
+													<td width="10%"><a
 														href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
 														class="marginLeft20">Remove</a></td>
 												</tr>
@@ -204,11 +206,13 @@
 											<table width="100%" border="0" cellpadding="0"
 												cellspacing="0">
 												<tr cellpadding="0" cellspacing="0" border="0">
-													<td width="32%" align="Left"><h3 class="TextColorA01">Grand
-															Total:</h3>
-														<br></td>
-													<td width="7%" align="Left">
-													<h3 class="TextColorA01">
+													<td width="30%" align="Left">&nbsp;
+														</td>
+													<td width="20%" align="Left">&nbsp;
+													</td>
+													<td width="18%"><h3 class="TextColorA01">Grand
+															Total:</h3></td>
+													<td width="20%"><h3 class="TextColorA01">
 													<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
 														<span>$</span>${paymentGatewayForm.purchaseJobPostForm.grandTotal}
 													</c:if> 
@@ -216,7 +220,7 @@
 														<span>$</span>${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}
 													</c:if>
 													</h3></td>
-													<td width="19%"><h3 class="TextColorA01">&nbsp;</h3></td>
+													<td width="12%"><h3 class="TextColorA01">&nbsp;</h3></td>
 												</tr>
 												<tr>
 												</tr>
@@ -231,9 +235,8 @@
 									
 									
 							</div>
-							<br><br><br><br><br><br><br><br><br>
-							<div>	
-								<p class="marginBottom15">&nbsp;</p>
+							</div>
+							<div class="row ">	
 								<h3 class="gatewayBreadcrumbs main_section">Payment
 									Information</h3>
 								<br>
