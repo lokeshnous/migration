@@ -53,7 +53,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			.getLogger("ResumeDaoImpl.class");
 	
 	private static final String FIND_RES_BUILD_RESUME="from ResBuilderResume res where res.resUploadResumeId=?";
-	private static final String ALL_CANDIDATES_FOLDER_NAME = "All Candidates";
+	private static final String ALL_CANDIDATES_FOLDER_NAME = "Default Folder";
 	
 	@Autowired
 	private ResumeConversionHelper resumeConversionHelper;

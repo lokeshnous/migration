@@ -368,7 +368,7 @@ public class ManageJobSeekerController {
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 				}
-				model.setViewName("forward:/employer/manageJobSeeker.html?folderId=-1");
+				model.setViewName("forward:/employer/manageJobSeeker.html?folderId="+folderId+"&compare=true");
 			} else {
 				model.setViewName("manageJobSeekerFolderView");
 			}
