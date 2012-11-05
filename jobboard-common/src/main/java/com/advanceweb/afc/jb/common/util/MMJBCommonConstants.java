@@ -295,6 +295,7 @@ public interface MMJBCommonConstants {
 	String CURRENT_PAGE = "currentPage";
 	String RECORDS_PER_PAGE = "displayRecordsPerPage";
 	String RECORDS_COUNT = "totalNoOfRecords";
+	String RESUME_RECORDS_COUNT = "totalNumberOfSearchedResume";
 	String START_ROW = "startRow";
 	String END_ROW = "endRow";
 	String BEGIN_VAL = "beginVal";
@@ -426,6 +427,8 @@ public interface MMJBCommonConstants {
 	String EXPERIENCE = "Experience";
 	String UPLOAD_RESUME_ID = "UploadResumeId";
 	String PUBLISH_RESUME_ID = "PublishResumeId";
+	
+	String RESUME_SEARCH_JSON_LIST = "resSrchJsonList";
 
 	// for browseByJobs
 	String BROWSE_BY_SEARCH = "browseBySearch";

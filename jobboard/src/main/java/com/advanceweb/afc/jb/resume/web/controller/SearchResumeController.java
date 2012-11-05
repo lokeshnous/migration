@@ -43,6 +43,7 @@ import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.ResumeSearchValidator;
 import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.ResumeService;
@@ -101,10 +102,13 @@ public class SearchResumeController extends AbstractController {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private ResumeSearchValidator resumeSearchValidator;
 
 	private static final String STR_SRCH_RES_FORM = "searchResumeForm";
 
-	/**
+	/**NOT IN USE
 	 * This method will be used for doing resume search and Return a JSON Object
 	 * which will later be parsed at the UI end and all the results will be
 	 * displayed
@@ -486,9 +490,16 @@ public class SearchResumeController extends AbstractController {
 			HttpServletRequest request) {
 		LOGGER.info("Calling Search Resume Controller!!!");
 		// session.removeAttribute("resumeDTOList");
+		removeSession(session);
 		session.removeAttribute("jobSrchJsonObj");
 		session.removeAttribute(MMJBCommonConstants.KEYWORD_STRING);
 		// session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
+		JSONObject jobSrchJsonObj = null;
+		
+		jobSrchJsonObj = resumeSearchValidator.validateResumeSearch(searchResumeForm);
+		if (jobSrchJsonObj != null) {
+			return jobSrchJsonObj;
+		}
 		
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
@@ -498,30 +509,73 @@ public class SearchResumeController extends AbstractController {
 		}
 		
 		List<ResumeDTO> resumeDTOList = null;
-		JSONObject jobSrchJsonObj = null;
-		// Calling the jobSearch() of Service layer for getting the resume list
+		
+		int page = 1;
+		int displayRecordsPerPage = 0;
+		int recordsPerPage = 0;
+		int noOfRecords = 0;
+		String next = request.getParameter(MMJBCommonConstants.NEXT);
+
 		try {
-			resumeDTOList = resumeSearchService
-					.resumeSearchFromDB(searchResumeForm.getKeywords());
-			// session.setAttribute("resumeDTOList", resumeDTOList);
-			if (resumeDTOList != null) {
-
-				// Save the list of resumes which appeared in the search
-				clickService.saveResAppearance(resumeDTOList);
-
-				// Calling the service layer for converting the
-				// JobSearchResultDTO
-				// object into JSON Object
-				jobSrchJsonObj = searchResumeToJSONFromDB(resumeDTOList);
+			if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
+				page = Integer.parseInt(request
+						.getParameter(MMJBCommonConstants.PAGE));
 			}
-			jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
-					resumeDTOList.size());
+			if (request.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE) != null) {
+				displayRecordsPerPage = Integer.parseInt(request
+						.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE));
+			}
+
+			if (0 == displayRecordsPerPage) {
+				displayRecordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
+			}
+			recordsPerPage = displayRecordsPerPage;
+			int start = (page - 1) * recordsPerPage;
+			int rows = recordsPerPage;
+			// Calling the jobSearch() of Service layer from getting the object
+			// of JobSearchResultDTO
+//			jobSearchResultDTO = jobSearchService.jobSearch(searchName,
+//					paramMap, start, rows);
+			resumeDTOList = resumeSearchService
+					.resumeSearchFromDB(searchResumeForm.getKeywords(), start, rows);
+
+			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
+					* recordsPerPage + 1));
+			session.setAttribute(MMJBCommonConstants.END_ROW,
+					(((page - 1) * recordsPerPage) + resumeDTOList
+							.size()));
+
+			noOfRecords = (int) resumeSearchService.getTotalNumberOfResume();
+
+			// TODO: Advertise part is not done
 		} catch (JobBoardException e) {
-			LOGGER.debug("Error occured while getting the Resume Search Result from DB...");
+			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
 		}
+
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+		int beginVal = 0;
+		if (null == next || next.isEmpty()) {
+			beginVal = (page / 10) * 10;
+		} else {
+			beginVal = Integer.parseInt(next);
+			page = Integer.parseInt(next);
+		}
+		if (resumeDTOList != null) {
+			// Save the list of resumes which appeared in the search
+			clickService.saveResAppearance(resumeDTOList);
+			// Calling the service layer for converting the JobSearchResultDTO
+			// object into JSON Object
+			jobSrchJsonObj = searchResumeToJSONFromDB(resumeDTOList);
+		}
+		List<HashMap<String, Object>> currentSearchList = null;
+		setSessionForGrid(session, page, noOfPages, beginVal, jobSrchJsonObj,
+				currentSearchList);
+		// Calling the jobSearch() of Service layer for getting the resume list
 		// add values in session
 		jobSrchJsonObj.put("keywords", searchResumeForm.getKeywords());
-		session.setAttribute("resSrchJsonList", jobSrchJsonObj);
+		jobSrchJsonObj.put(MMJBCommonConstants.RESUME_RECORDS_COUNT, resumeSearchService.getTotalNumberOfResume());
+		
+		session.setAttribute(MMJBCommonConstants.RESUME_SEARCH_JSON_LIST, jobSrchJsonObj);
 		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING,
 				searchResumeForm.getKeywords());
 		// session.setAttribute(MMJBCommonConstants.AUTOLOAD,
@@ -534,6 +588,94 @@ public class SearchResumeController extends AbstractController {
 		}
 		
 		return jobSrchJsonObj;
+	}
+	
+	/**
+	 * removing session for search results grid
+	 * 
+	 * @param session
+	 */
+	private void removeSession(HttpSession session) {
+		// TODO :Need to Use sessionMap
+		LOGGER.info("Removing from session....");
+		session.removeAttribute(MMJBCommonConstants.RESUME_SEARCH_JSON_LIST);
+		session.removeAttribute(MMJBCommonConstants.CITY);
+		session.removeAttribute(MMJBCommonConstants.STATE);
+		session.removeAttribute(MMJBCommonConstants.COMPANY);
+		session.removeAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST);
+		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
+		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
+		session.removeAttribute(MMJBCommonConstants.RECORDS_PER_PAGE);
+		session.removeAttribute(MMJBCommonConstants.RECORDS_COUNT);
+		session.removeAttribute(MMJBCommonConstants.TOTAL_NO_RECORDS);
+		session.removeAttribute(MMJBCommonConstants.START_ROW);
+		session.removeAttribute(MMJBCommonConstants.END_ROW);
+		session.removeAttribute(MMJBCommonConstants.BEGIN_VAL);
+		session.removeAttribute(MMJBCommonConstants.BEGIN);
+		session.removeAttribute(MMJBCommonConstants.DISPLAY_RADIUS);
+
+		// Added for Browse By job title, By Employer And By Location task
+		session.removeAttribute("jobTitlePage");
+		session.removeAttribute("employerPage");
+		session.removeAttribute("locationPage");
+		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_TITLE);
+		session.removeAttribute("list");
+		// session.removeAttribute("locationPage");
+		session.removeAttribute("areaPage");
+
+		// Remove FQ params for non Refine Search
+		if (null == session.getAttribute(MMJBCommonConstants.REFINED)
+				|| session.getAttribute(MMJBCommonConstants.REFINED).toString()
+						.isEmpty()
+				|| !Boolean.valueOf(session.getAttribute(
+						MMJBCommonConstants.REFINED).toString())) {
+			session.removeAttribute(MMJBCommonConstants.SECOND_FQ_PARAM);
+			session.removeAttribute(MMJBCommonConstants.THIRD_FQ_PARAM);
+			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
+			session.removeAttribute(MMJBCommonConstants.REFINERADIUS);
+		}
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
+		if (sessionMap.get(SearchParamDTO.KEYWORDS) != null) {
+			session.setAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORDS,
+					sessionMap.get(SearchParamDTO.KEYWORDS));
+		}
+	}
+	
+	/**
+	 * This method is used to setting the required values into the session for
+	 * displaying the results in the grid.
+	 * 
+	 * @param session
+	 * @param page
+	 * @param noOfPages
+	 * @param beginVal
+	 * @param jobSrchJsonObj
+	 * @param currentSearchList
+	 */
+	private void setSessionForGrid(HttpSession session, int page,
+			int noOfPages, int beginVal, JSONObject jobSrchJsonObj,
+			List<HashMap<String, Object>> currentSearchList) {
+		// TODO: Need to use session Map
+		session.setAttribute(MMJBCommonConstants.SEARCH_RESULTS_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		session.setAttribute(MMJBCommonConstants.CITY,
+				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
+		session.setAttribute(MMJBCommonConstants.STATE,
+				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
+		session.setAttribute(MMJBCommonConstants.COMPANY,
+				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
+		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
+				currentSearchList);
+		session.setAttribute(MMJBCommonConstants.RESUME_RECORDS_COUNT,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		session.setAttribute(MMJBCommonConstants.BEGIN_VAL, beginVal);
+		session.setAttribute(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
+		session.setAttribute(MMJBCommonConstants.CURRENT_PAGE, page);
+		session.setAttribute(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
+				: beginVal));
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 	}
 
 	/**
@@ -959,7 +1101,7 @@ public class SearchResumeController extends AbstractController {
 			HttpServletRequest request, HttpSession session,
 			@RequestParam("resumeIdAndDateArr") String resumeIdAndDateArr) {
 		List<String> idList = new ArrayList<String>();
-		idList.add("Selected Resumes moved successfully to Default Folder.");
+		idList.add("Selected Resumes moved successfully to All Candidates Folder.");
 
 		LOGGER.info("Publish Resume ID and Created date list :"
 				+ resumeIdAndDateArr);

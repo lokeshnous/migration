@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
@@ -23,14 +25,15 @@ import com.advanceweb.afc.jb.employer.helper.ResumeSearchConversionHelper;
  * @version 1.0
  * @since 15th October 2012
  */
-
+@SuppressWarnings("unchecked")
 @Repository("resumeSearchDAO")
+@Transactional
 public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	
 	private static final Logger LOGGER = Logger.getLogger("ResumeSearchDAOImpl.class");
 	
 	private HibernateTemplate hibernateTemplate;
-	
+	private int totalNumberOfSearchedResume;
 	@Autowired
 	private ResumeSearchConversionHelper resSearchConversionHelper;
 	
@@ -45,7 +48,7 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	 * @param String searchString
 	 * @return List<ResumeDTO>
 	 */
-	public List<ResumeDTO> getResumeSearchDetails(String searchString){
+	/*public List<ResumeDTO> getResumeSearchDetails(String searchString){
 			
 		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
 		@SuppressWarnings("unchecked")
@@ -71,7 +74,79 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 		}
 		LOGGER.info("Size of resume list = "+resumeDTOList.size());
 		return resumeDTOList;
+	}*/
+	
+	public List<ResumeDTO> getResumeSearchDetails(String searchString, int offset, int noOfRecords){
+		
+		Query query = null;
+		Long resumeCount = 0L;
+		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
+		hibernateTemplate.setAlwaysUseNewSession(true);
+		query = hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("select rbr from ResBuilderResume rbr, ResBuilderEmployment rbe where " +
+						" rbr.builderResumeId=rbe.resBuilderResume.builderResumeId and rbr.resUploadResumeId in ( select rur.uploadResumeId from ResUploadResume rur, "+
+						" ResResumeProfile rrp where rur.uploadResumeId=rrp.resumeId and rrp.attribValue like '%"+searchString+"%' and rrp.resResumeAttrib= "+
+						" (select resumeAttribId from ResResumeAttrib where name='JobTitle'))");
+		
+		
+		resumeCount = (Long) hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("select count(rbr) from ResBuilderResume rbr, ResBuilderEmployment rbe where " +
+						" rbr.builderResumeId=rbe.resBuilderResume.builderResumeId and rbr.resUploadResumeId in ( select rur.uploadResumeId from ResUploadResume rur, "+
+						" ResResumeProfile rrp where rur.uploadResumeId=rrp.resumeId and rrp.attribValue like '%"+searchString+"%' and rrp.resResumeAttrib= "+
+						" (select resumeAttribId from ResResumeAttrib where name='JobTitle'))")
+				.uniqueResult();
+		
+		query.setFirstResult(1);
+		
+		// Need to remove 100 and use the dynamic values
+		query.setMaxResults(100);
+		
+		LOGGER.info("Total number of searched resume = "+resumeCount.intValue());
+		setTotalNumberOfResume(resumeCount.intValue());
+		
+		List<ResBuilderResume> resBuilderResumeList = query.list();
+		
+		for(ResBuilderResume obj: resBuilderResumeList){
+			ResumeDTO resumeDTO = new ResumeDTO();
+			if(obj.getResPublishResume() != null){
+				resumeDTO.setPublishResumeId(obj.getResPublishResume().getPublishResumeId());
+			}
+			resumeDTO.setUploadResumeId(obj.getResUploadResumeId());
+			resumeDTO.setResumeName(obj.getResumeName());
+			resumeDTO.setFullName(obj.getFirstName()+" "+ obj.getLastName());
+			resumeDTO.setCity(obj.getCity());
+			resumeDTO.setState(obj.getState());
+			resumeDTO.setExperience(obj.getResBuilderEmployments().get(0).getEmploymentYears());
+			resumeDTO.setEmploymentType(obj.getResBuilderEmployments().get(0).getEmploymentType());
+			resumeDTO.setPostDt(obj.getCreateDt());
+			resumeDTOList.add(resumeDTO);
+		}
+		
+		LOGGER.info("Size of resume list = "+resumeDTOList.size());
+		return resumeDTOList;
 	}
+	
+	
+	/**
+	 * This method is used to set the total number of searched resumes.
+	 * @param int totalNumberOfSearchedResume
+	 */
+	public void setTotalNumberOfResume(int numberOfJobRecordsByStatus) {
+		this.totalNumberOfSearchedResume = numberOfJobRecordsByStatus;
+	}
+
+	/**
+	 * This method is used to get thr total number of searched resume from DB.
+	 * @return int
+	 */
+	public int getTotalNumberOfResume() {
+		return this.totalNumberOfSearchedResume;
+	}
+	
 	
 	@Override
 	public List<SaveSearchedJobsDTO> mySavedResumeSearches(int userId) {

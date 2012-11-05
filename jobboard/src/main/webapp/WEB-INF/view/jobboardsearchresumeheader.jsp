@@ -57,6 +57,7 @@
 								Search Resumes
 								</h2>
 						</div>
+						<div class="FormErrorDisplayText" id="findSearchInfo"></div>
 						<div class="row marginTop10 marginBottom10">
 							<div class=" floatLeft  width255">
 							<form:input type="text"  maxlength="60" id="keywords"
@@ -96,7 +97,7 @@
 							<div class="FloatLeft marginLeft10 width255">
 
 								<form:input path="cityState" id="cityState"
-									class="jb_input2" />
+									class="jb_input2" disabled="true"/>
 
 								<div class="toolTipBefore">
 									<label for="city_state">City and State or ZIP Code</label>
@@ -109,7 +110,7 @@
 							</div>
 							<div class="floatLeft marginLeft10">
 
-								<form:select path="radius" id="radius" class="jb_input3">
+								<form:select path="radius" id="radius" class="jb_input3" disabled="true">
 									<form:option label="--" value="0" />
 									<form:option label="5 Miles" value="5" />
 									<form:option label="10 Miles" value="10" />
@@ -122,7 +123,7 @@
 									<label for="city_state">Radius</label>
 								</div>
 							</div>
-							<div class="floatRight marginTop5 marginLeft10">
+							<div class="floatRight marginLeft10">
 							<!-- Setting the hidden parameters for pagination -->
 							<form:hidden path="start" id="start"/>
             				<form:hidden path="rows" id="rows"/>
@@ -131,8 +132,8 @@
 							<input type="button" id="submitval" onclick="searchResume();"
 								value="SEARCH" class="btn_sm orange margin0" />
 								<!-- <a href="#" class="btn_sm orange margin0"
-									onclick="searchResume();">SEARCH</a><br> -->
-								<div class="floatLeft marginTop10">
+									onclick="searchResume();">SEARCH</a> --><br>
+								<div class="floatRight marginTop5">
 									<a title="Coming Soon" href="../employerSearchResume/advanceresumesearch.html">Advanced Search</a>
 								</div>
 							</div>

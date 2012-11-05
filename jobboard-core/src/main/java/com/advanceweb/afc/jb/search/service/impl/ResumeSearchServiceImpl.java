@@ -42,9 +42,9 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 	 * @return List<ResumeDTO>
 	 * @throws JobBoardServiceException
 	 */
-	public List<ResumeDTO> resumeSearchFromDB(String searchString)
+	public List<ResumeDTO> resumeSearchFromDB(String searchString, int offset, int noOfRecords)
 			throws JobBoardServiceException {
-		return resumeSearchDelegate.resumeSearchFromDB(searchString);
+		return resumeSearchDelegate.resumeSearchFromDB(searchString, offset,noOfRecords);
 	}
 	
 	
@@ -109,5 +109,13 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 	@Override
 	public boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO) {
 		return resumeSearchDAO.updateSearchDetails(searchedJobsDTO);
+	}
+	
+	/**
+	 * This method is used to get thr total number of searched resume from DB.
+	 * @return int
+	 */
+	public int getTotalNumberOfResume() {
+		return resumeSearchDAO.getTotalNumberOfResume();
 	}
 }

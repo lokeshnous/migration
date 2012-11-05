@@ -19,7 +19,7 @@ public interface ResumeSearchDelegate {
 	 * @return List<ResumeDTO>
 	 */
 	
-	List<ResumeDTO> resumeSearchFromDB(String searchString)
+	List<ResumeDTO> resumeSearchFromDB(String searchString, int offset, int noOfRecords)
 			throws JobBoardServiceException;
 
 }

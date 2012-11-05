@@ -38,7 +38,7 @@ public interface ResumeSearchService {
 	 * @throws JobBoardServiceException
 	 */
 
-	public List<ResumeDTO> resumeSearchFromDB(String searchString)
+	public List<ResumeDTO> resumeSearchFromDB(String searchString, int offset, int noOfRecords)
 			throws JobBoardServiceException;
 	
 	/**
@@ -98,4 +98,10 @@ public interface ResumeSearchService {
 	 * @return
 	 */
 	boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO);
+	
+	/**
+	 * This method is used to get thr total number of searched resume from DB.
+	 * @return int
+	 */
+	int getTotalNumberOfResume();
 }

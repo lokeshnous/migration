@@ -21,7 +21,7 @@ public interface ResumeSearchDAO {
 	 * @param String searchString
 	 * @return List<ResumeDTO>
 	 */
-	List<ResumeDTO> getResumeSearchDetails(String searchString);
+	List<ResumeDTO> getResumeSearchDetails(String searchString, int offset, int noOfRecords);
 	
 	/**
 	 * @param userId
@@ -77,4 +77,11 @@ public interface ResumeSearchDAO {
 	 * @return
 	 */
 	boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO);
+	
+	/**
+	 * This method is used to get thr total number of searched resume from DB.
+	 * @return int
+	 */
+	int getTotalNumberOfResume();
+	
 }

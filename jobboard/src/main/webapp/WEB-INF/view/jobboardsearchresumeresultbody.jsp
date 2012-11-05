@@ -170,11 +170,11 @@
 									</tr>
 							<c:forEach items="${resSrchJsonList.jsonRows}" var="job" varStatus="status">
 									<tr>
-										<td align="left" valign="bottom">&nbsp;</td>
+										<td align="left" style="word-wrap: break-word;" valign="bottom">&nbsp;</td>
 										<td align="left" valign="bottom"><input type="checkbox"
 											name="checkbox2"  value="${job['UploadResumeId']}" class="marginRight5">
 											<label for="checkbox2" ><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}" >${job["DesiredJobTitle"]}</a></label></td>
-										<td align="left" valign="bottom">${job["ApplicantName"]}</td>
+										<td align="left" style=" padding-right:2px;text-wrap:none; overflow:hidden;" valign="bottom">${job["ApplicantName"]}</td>
 										<td align="left" valign="bottom">${job["Location"]}</td>
 										<td align="center">${job["Experience"]}</td>
 										<td align="center">${job["EmploymentType"]}</td>

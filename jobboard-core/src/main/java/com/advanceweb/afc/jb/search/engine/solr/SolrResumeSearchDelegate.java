@@ -257,9 +257,9 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 	 * @return List<ResumeDTO>
 	 */
 	
-	public List<ResumeDTO> resumeSearchFromDB(String searchString)
+	public List<ResumeDTO> resumeSearchFromDB(String searchString, int offset, int noOfRecords)
 			throws JobBoardServiceException {
-		return  resumeSearchDAO.getResumeSearchDetails(searchString);
+		return  resumeSearchDAO.getResumeSearchDetails(searchString, offset, noOfRecords);
 	}
 
 
