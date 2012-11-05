@@ -24,7 +24,6 @@ public class ClickController {
 	private static final Logger LOGGER = Logger
 			.getLogger("ClickController.class");
 
-	@SuppressWarnings("static-access")
 	@ResponseBody
 	@RequestMapping(value = "/clickevent", method = RequestMethod.GET)
 	public String getclickevent(@RequestParam("jobid") int jobid,
@@ -35,24 +34,21 @@ public class ClickController {
 		try {
 			if (type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)) {
 				// System.out.println(request.getParameter("type"));
-				update(jobid, clickService,
-						MMJBCommonConstants.CLICKTYPE_CLICK);
+				update(jobid, clickService, MMJBCommonConstants.CLICKTYPE_CLICK);
 			} else if (type
 					.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)) {
 				// System.out.println(request.getParameter("type"));
-				update(jobid, clickService,
-						MMJBCommonConstants.CLICKTYPE_APPLY);
+				update(jobid, clickService, MMJBCommonConstants.CLICKTYPE_APPLY);
 			} else if (type
 					.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)) {
 				// System.out.println(request.getParameter("type"));
-				update(jobid, clickService,
-						MMJBCommonConstants.CLICKTYPE_VIEW);
+				update(jobid, clickService, MMJBCommonConstants.CLICKTYPE_VIEW);
 			}
 			finalresult = MMJBCommonConstants.OK_STRING;
-			response.setStatus(response.SC_OK);
+			response.setStatus(HttpServletResponse.SC_OK);
 		} catch (Exception e) {
 			finalresult = MMJBCommonConstants.ERROR_STRING;
-			response.setStatus(response.SC_NOT_FOUND);
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			LOGGER.info("ERROR");
 		}
 		return finalresult;
