@@ -12,9 +12,9 @@
 <jsp:include page="common/include.jsp" />
 
 <script type="text/javascript">
-	jQuery(document).ready(function() {	
-		
-$('#save').click(function(){			
+	jQuery(document).ready(function() {
+
+		$('#save').click(function(){			
 			var printCheckbox = $('#printCheckbox').is(':checked');
 			var digCheckbox = $('#digCheckbox').is(':checked');
 			var enewsCheckbox = $('#enewsCheckbox').is(':checked');
@@ -25,61 +25,74 @@ $('#save').click(function(){
 				type:"POST",
 				success: function(data) {					
 					//parent.$.nmTop().close();
+					alert("Data saved successfully!");
 					location.reload();
 				 },
 			});
 		}); 
-
+		
+		var printEnable = '${printSubscription}';
+		var digEnable = '${digSubscription}';
+		var newEnable = '${enewsSubscription}';
+		var emailEnable = '${emailSubscription}';
+		enableSub(printEnable,digEnable,newEnable,emailEnable);
+		
 		modifyPrint('${listpublicationprint.size()}');
 		modifyDig('${listpublicationdigital.size()}');
 		modifyNews('${listnewsletter.size()}');
 		jQuery(".megamenu").megamenu();
 	});
 	
-	function modifyPrint(size){
+	function enableSub(printEnable,digEnable,newEnable,emailEnable){
+		if (printEnable == 'false') {
+			document.getElementById('printCheckbox').disabled = true;
+		} 
+		if(digEnable =='false'){
+			document.getElementById('digCheckbox').disabled = true;
+		}
+		if(newEnable == 'false'){
+			document.getElementById('enewsCheckbox').disabled = true;
+		}
+		if(emailEnable == 'false'){
+			document.getElementById('mailCheckbox').disabled = true;
+		}
+	}
+
+	function modifyPrint(size) {
 		var printCheckbox = $('#printCheckbox').is(':checked');
-			if(!printCheckbox){	
-				for(var i=0;i<size;i++)
-				{
-					document.getElementById('print'+i).disabled = true;
-				}
+		if (!printCheckbox) {
+			for ( var i = 0; i < size; i++) {
+				document.getElementById('print' + i).disabled = true;
 			}
-			else{
-				for(var i=0;i<size;i++)
-				{
-					document.getElementById('print'+i).disabled = false;
-				}
+		} else {
+			for ( var i = 0; i < size; i++) {
+				document.getElementById('print' + i).disabled = false;
 			}
 		}
-	
-	function modifyDig(size){
+	}
+
+	function modifyDig(size) {
 		var digCheckbox = $('#digCheckbox').is(':checked');
-		if(!digCheckbox){	
-			for(var i=0;i<size;i++)
-			{
-				document.getElementById('dig'+i).disabled = true;
+		if (!digCheckbox) {
+			for ( var i = 0; i < size; i++) {
+				document.getElementById('dig' + i).disabled = true;
+			}
+		} else {
+			for ( var i = 0; i < size; i++) {
+				document.getElementById('dig' + i).disabled = false;
 			}
 		}
-		else{
-			for(var i=0;i<size;i++)
-			{
-				document.getElementById('dig'+i).disabled = false;
-			}
-		}
-	} 
-	
-	function modifyNews(size){
+	}
+
+	function modifyNews(size) {
 		var enewsCheckbox = $('#enewsCheckbox').is(':checked');
-		if(!enewsCheckbox){	
-			for(var i=0;i<size;i++)
-			{
-				document.getElementById('news'+i).disabled = true;
+		if (!enewsCheckbox) {
+			for ( var i = 0; i < size; i++) {
+				document.getElementById('news' + i).disabled = true;
 			}
-		}
-		else{
-			for(var i=0;i<size;i++)
-			{
-				document.getElementById('news'+i).disabled = false;
+		} else {
+			for ( var i = 0; i < size; i++) {
+				document.getElementById('news' + i).disabled = false;
 			}
 		}
 	}
@@ -111,8 +124,10 @@ $('#save').click(function(){
 										<th align="left" scope="col">Subscriptions</th>
 									</tr>
 									<tr>
-										<td valign="top"><form:checkbox path="printCheckbox" 
-											id="printCheckbox" onchange="modifyPrint('${listpublicationprint.size()}')"/><label for="checkbox">Print-Magazine</label>&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<td valign="top"><form:checkbox path="printCheckbox"
+												id="printCheckbox"
+												onchange="modifyPrint('${listpublicationprint.size()}')" /><label
+											for="checkbox">Print-Magazine</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listpublicationprint.isEmpty()}">
 												<c:forEach items="${listpublicationprint}"
 													var="subscriptionsprint" varStatus="status">
@@ -120,16 +135,17 @@ $('#save').click(function(){
 													<form:checkbox path="printSub"
 														label="${subscriptionsprint.optionName}"
 														value="${subscriptionsprint.optionId}"
-														cssStyle="width:20px" id="print${status.index}"/>
+														cssStyle="width:20px" id="print${status.index}" />
 													<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
 													 												
 										       </c:forEach>
-										      
-											</c:if>
-											</td>
-											
-											<td valign="top"><form:checkbox path="digCheckbox"
-											id="digCheckbox" onchange="modifyDig('${listpublicationdigital.size()}')"/><label for="checkbox">Digital-Magazine</label>&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+											</c:if></td>
+
+										<td valign="top"><form:checkbox path="digCheckbox"
+												id="digCheckbox"
+												onchange="modifyDig('${listpublicationdigital.size()}')" /><label
+											for="checkbox">Digital-Magazine</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listpublicationdigital.isEmpty()}">
 												<c:forEach items="${listpublicationdigital}"
 													var="subscriptionsprint" varStatus="status">
@@ -137,13 +153,15 @@ $('#save').click(function(){
 													<form:checkbox path="digSub"
 														label="${subscriptionsprint.optionName}"
 														value="${subscriptionsprint.optionId}"
-														cssStyle="width:20px" id="dig${status.index}"/>
+														cssStyle="width:20px" id="dig${status.index}" />
 													<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
 										       </c:forEach>
 											</c:if></td>
-											
-											<td valign="top"><form:checkbox path="enewsCheckbox"
-											id="enewsCheckbox" onchange="modifyNews('${listnewsletter.size()}')"/><label for="checkbox">E-newsletters</label>&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+										<td valign="top"><form:checkbox path="enewsCheckbox"
+												id="enewsCheckbox"
+												onchange="modifyNews('${listnewsletter.size()}')" /><label
+											for="checkbox">E-newsletters</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listnewsletter.isEmpty()}">
 												<c:forEach items="${listnewsletter}"
 													var="subscriptionsprint" varStatus="status">
@@ -151,15 +169,14 @@ $('#save').click(function(){
 													<form:checkbox path="newsSub"
 														label="${subscriptionsprint.optionName}"
 														value="${subscriptionsprint.optionId}"
-														cssStyle="width:20px" id="news${status.index}"/>
+														cssStyle="width:20px" id="news${status.index}" />
 													<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
 										       </c:forEach>
 											</c:if></td>
-											
-											<td valign="top">
-											<form:checkbox path="mailCheckbox"
-											id="mailCheckbox"/><label for="checkbox">E-mailer</label><br />
-											</td>
+
+										<td valign="top"><form:checkbox path="mailCheckbox"
+												id="mailCheckbox" /><label for="checkbox">E-mailer</label><br />
+										</td>
 										<%-- <td valign="top">
 
 											<ul>

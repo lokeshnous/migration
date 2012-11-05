@@ -20,7 +20,8 @@
 				"&enewsCheckbox="+enewsCheckbox+"&mailCheckbox="+mailCheckbox,
 				data:$('#subscriptionsId').serialize(),
 				type:"GET",
-				success: function(data) {			
+				success: function(data) {	
+					alert("Data saved successfully!");
 					location.reload();
 				 },
 				 error : function (response) {

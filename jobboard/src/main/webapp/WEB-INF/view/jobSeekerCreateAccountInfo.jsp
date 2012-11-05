@@ -38,7 +38,7 @@ function validateNumber(event) {
     }
     else return true;
 };
-</script>
+</script> 
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
@@ -82,7 +82,7 @@ function validateNumber(event) {
 							success : function(country) {
 								//alert(country);
 								$('#countryDpId').val(country);
-								if (country == "USA") {           		
+								if (country == "USA" || country == "US") {           		
 				            		 var checks = ["2","3","4"];
 				            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
 				            		               	
@@ -124,7 +124,8 @@ function validateNumber(event) {
 			            		               	
 			            	}else{
 			            		var checks = ["1","2","3","4"];
-			           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
+			           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);
+			           		 $("#waitmsg").show();
 			            	} 
 						}
 					});		
@@ -144,6 +145,16 @@ function validateNumber(event) {
 			});
 
 		});
+		    
+		    function modifyMsg(){
+				var checkIt = $('#checkIt').is(':checked');
+				if(checkIt){
+					$("#waitmsg").html("<span>Please choose required publications for selected subscriptions using DASHBOARD -> MODIFY SUBSCRIPTION option.</span>");
+				}else{
+					$("#waitmsg").html("");
+				}
+				}
+		   
 		</script>
 		<script type="text/javascript">
 		    function cancelProcess(){
@@ -158,10 +169,12 @@ function validateNumber(event) {
             	 if (selectedVal == "USA") {           		
             		 var checks = ["2","3","4"];
             		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+            		 $("#waitmsg").html("");
             		               	
             	}else{
             		var checks = ["1","2","3","4"];
-           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
+           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
+           			modifyMsg();
             	}               
             }
             
@@ -382,7 +395,7 @@ function validateNumber(event) {
 										the following sent to me so I can stay up to date with the
 										latest healthcare news and information:</div>
 		
-									<div class="centerAlign ">
+									<div class="centerAlign" onchange="modifyMsg()">
 										<ul>
 											<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
 												<li>
@@ -390,14 +403,15 @@ function validateNumber(event) {
 														<form:checkbox path="listProfAttribForms[${status.index}].subs"
 															label="${dropdown.optionName}"
 															value="${dropdown.optionId}"
-															cssStyle="width:20px" />
+															cssStyle="width:20px" id="checkIt"/>
 													</div>
 												</li>
 											</c:forEach>
 										</ul>
 									</div>
 								</c:if>				
-						</c:forEach>			
+						</c:forEach>		
+						<div id="waitmsg"  class="FormErrorDisplayText"></div>	
 							<div
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->
