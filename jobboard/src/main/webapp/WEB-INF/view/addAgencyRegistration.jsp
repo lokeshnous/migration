@@ -329,7 +329,7 @@
 								</c:if>
 							</c:forEach>
 							<div class="row marginTop15">
-								<span class="lableText3">&nbsp;</span>
+								<div class="width526"> 
 								<%
 								String pubKey = MMJBCommonConstants.PUBLIC_KEY;
 								String privKey = MMJBCommonConstants.PRIVATE_KEY;
@@ -338,6 +338,7 @@
 										false);
 								out.print(c.createRecaptchaHtml(null, null));
 								%>
+								</div>
 								<span class="required">(Required)</span>
 									<div>
 								<span class="lableText3"></span> <FONT color="red"> <c:if
