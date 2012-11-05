@@ -572,14 +572,12 @@ public class SearchResumeController extends AbstractController {
 				currentSearchList);
 		// Calling the jobSearch() of Service layer for getting the resume list
 		// add values in session
-		jobSrchJsonObj.put("keywords", searchResumeForm.getKeywords());
+		jobSrchJsonObj.put(MMJBCommonConstants.KEYWORD_STRING, searchResumeForm.getKeywords());
 		jobSrchJsonObj.put(MMJBCommonConstants.RESUME_RECORDS_COUNT, resumeSearchService.getTotalNumberOfResume());
 		
 		session.setAttribute(MMJBCommonConstants.RESUME_SEARCH_JSON_LIST, jobSrchJsonObj);
 		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING,
 				searchResumeForm.getKeywords());
-		// session.setAttribute(MMJBCommonConstants.AUTOLOAD,
-		// String.valueOf(true));
 		
 		if (session != null) {
 			// Setting the sessionMap into the session
@@ -607,6 +605,7 @@ public class SearchResumeController extends AbstractController {
 		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
 		session.removeAttribute(MMJBCommonConstants.RECORDS_PER_PAGE);
 		session.removeAttribute(MMJBCommonConstants.RECORDS_COUNT);
+		session.removeAttribute(MMJBCommonConstants.RESUME_RECORDS_COUNT);
 		session.removeAttribute(MMJBCommonConstants.TOTAL_NO_RECORDS);
 		session.removeAttribute(MMJBCommonConstants.START_ROW);
 		session.removeAttribute(MMJBCommonConstants.END_ROW);

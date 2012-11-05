@@ -22,7 +22,14 @@
 			<div class="row">
 					<div class="row marginTop5 paddingBottom05">
 						<div class="floatLeft">
-							<h1 class="FontSize24"><%-- <span>${totalNoOfRecords}</span> --%>200 resumes match your results</h1>
+							<h1 class="FontSize24">
+								<c:if test="${totalNumberOfSearchedResume != null}">
+									<span>${totalNumberOfSearchedResume}</span> resumes match your results.
+								</c:if>
+								<c:if test="${totalNumberOfSearchedResume == null}">
+									<span>0</span> resumes match your results.
+								</c:if>
+							</h1>
 						</div>
 					</div>
 
