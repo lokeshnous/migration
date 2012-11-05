@@ -1,14 +1,21 @@
 package com.advanceweb.afc.jb.common;
 
-
+import java.io.Serializable;
 
 /**
  * @author Rajeshkb
  * @version 1.0
  * @created 21-Jun-2012 2:24:27 PM
  */
-public class CompanyProfileDTO {
+public class CompanyProfileDTO implements Serializable {
+
+	/**
+	 * Default Serial version
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String facilityid;
+
 	public String getFacilityid() {
 		return facilityid;
 	}
@@ -26,7 +33,7 @@ public class CompanyProfileDTO {
 	private String logoPath;
 	private String positionalMedia;
 	private String primaryColor;
-	
+
 	/**
 	 * @return the primaryColor
 	 */
@@ -35,7 +42,8 @@ public class CompanyProfileDTO {
 	}
 
 	/**
-	 * @param primaryColor the primaryColor to set
+	 * @param primaryColor
+	 *            the primaryColor to set
 	 */
 	public void setPrimaryColor(String primaryColor) {
 		this.primaryColor = primaryColor;
@@ -57,7 +65,8 @@ public class CompanyProfileDTO {
 	}
 
 	/**
-	 * @param positionalMedia the positionalMedia to set
+	 * @param positionalMedia
+	 *            the positionalMedia to set
 	 */
 	public void setPositionalMedia(String positionalMedia) {
 		this.positionalMedia = positionalMedia;
@@ -111,5 +120,4 @@ public class CompanyProfileDTO {
 		this.positionTitle = positionTitle;
 	}
 
-	
 }
