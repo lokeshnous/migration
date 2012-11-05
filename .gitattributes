@@ -536,7 +536,9 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerA
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerCoverLetterController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ManageJobSeekerController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ManageJobSeekerForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/MyRecentSearchesForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ResCoverLetterForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveRecentSearch.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearchController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearchForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SendToFriend.java -text
