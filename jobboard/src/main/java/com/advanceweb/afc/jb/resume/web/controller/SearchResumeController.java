@@ -68,6 +68,8 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/employerSearchResume")
 public class SearchResumeController extends AbstractController {
 
+	private static final String CREATE_RESUME_SEARCH = "createResumeSearch";
+
 	private static final Logger LOGGER = Logger
 			.getLogger(SearchResumeController.class);
 
@@ -505,7 +507,7 @@ public class SearchResumeController extends AbstractController {
 		}
 		
 		Map<String, String> sessionMap = checkSessionMap
-				.getSearchSessionMap(session);
+				.getResumeSearchSessionMap(session);
 		if (session != null) {
 			// Setting the values into sessionMap
 			sessionMap = setValuesToSessionMap(sessionMap, searchResumeForm);
@@ -579,8 +581,14 @@ public class SearchResumeController extends AbstractController {
 		jobSrchJsonObj.put(MMJBCommonConstants.RESUME_RECORDS_COUNT, resumeSearchService.getTotalNumberOfResume());
 		
 		session.setAttribute(MMJBCommonConstants.RESUME_SEARCH_JSON_LIST, jobSrchJsonObj);
-		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING,
+//		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING,
+//				searchResumeForm.getKeywords());
+		sessionMap.put(SearchParamDTO.KEYWORDS,
 				searchResumeForm.getKeywords());
+		sessionMap.put(SearchParamDTO.RADIUS,
+				searchResumeForm.getRadius());
+		// session.setAttribute(MMJBCommonConstants.AUTOLOAD,
+		// String.valueOf(true));
 		
 		if (session != null) {
 			// Setting the sessionMap into the session
@@ -713,6 +721,7 @@ public class SearchResumeController extends AbstractController {
 		JSONObject jsonObject = new JSONObject();
 		Map<String, String> sessionMap = checkSessionMap
 				.getResumeSearchSessionMap(session);
+		
 		if (sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) != null
 				&& sessionMap.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH)
 						.equalsIgnoreCase(
@@ -778,21 +787,24 @@ public class SearchResumeController extends AbstractController {
 	 */
 	@RequestMapping(value = "/findResumePage", method = RequestMethod.GET)
 	public ModelAndView findResumePage(Map<String, SearchResumeForm> model,
-			HttpSession session, HttpServletRequest request) {
+			HttpSession session, HttpServletRequest request,@RequestParam(value = "link", required = false ) String link) {
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		SearchResumeForm searchResumeForm = new SearchResumeForm();
 		ModelAndView modelAndView = new ModelAndView();
 		MetricsForm employerDashBoardForm = new MetricsForm();
+		int resumeSearchCount = 0;
+		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = resumeSearchService
+				.viewMySavedSearches(userId);
+		resumeSearchCount = saveSearchedJobsDTOList.size();
+		employerDashBoardForm.setResumeSearchCount(resumeSearchCount);
+		if(CREATE_RESUME_SEARCH.equals(link)){
+			session.removeAttribute(MMJBCommonConstants.RESUME_SEARCH_SESSION_MAP);
+		}
 		Map<String, String> sessionMap = checkSessionMap
 				.getResumeSearchSessionMap(session);
-		if (session.getAttribute(MMJBCommonConstants.KEYWORD_STRING) != null) {
-			String keyword = (String) session
-					.getAttribute(MMJBCommonConstants.KEYWORD_STRING);
-			searchResumeForm.setKeywords(keyword);
-			String radius = sessionMap.get(MMJBCommonConstants.RADIUS) == null ? MMJBCommonConstants.EMPTY
-					: (String) sessionMap.get(MMJBCommonConstants.RADIUS);
-			searchResumeForm.setRadius(radius);
-			searchResumeForm.setAutoload(true);
-		} else if (!sessionMap.isEmpty()) {
+		
+		if (!sessionMap.isEmpty()) {
 			String searchType = sessionMap.get(MMJBCommonConstants.SEARCH_TYPE);
 			String radius = MMJBCommonConstants.EMPTY;
 			String cityState = MMJBCommonConstants.EMPTY;

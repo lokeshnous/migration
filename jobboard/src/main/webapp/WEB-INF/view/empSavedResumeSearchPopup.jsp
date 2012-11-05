@@ -194,7 +194,7 @@ function viewSavedSearch(searchJobId){
 					</table>
 				</div>
 				<div class="popUpButtonRow">
-					<a href="<%=request.getContextPath()%>/employerSearchResume/findResumePage.html">
+					<a href="<%=request.getContextPath()%>/employerSearchResume/findResumePage.html?link=createResumeSearch">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			
