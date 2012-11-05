@@ -402,7 +402,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			
 			//Check if common folder is present in adm_folder. If not insert one row with user id.
 			
-			List<AdmFolder> admFolderList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+			List<AdmFolder> admFolderList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId+" and folderName='"+ALL_CANDIDATES_FOLDER_NAME+"'");
 			if(admFolderList.size() == 0){
 				List<AdmFolder> admFolderSearchList = new ArrayList<AdmFolder>();
 				AdmFolder admFolder = new AdmFolder();
