@@ -174,7 +174,7 @@ jQuery(document).ready(function() {
 						<div class="DotBorderBottom">&nbsp;</div> 
 						<div class="AddNewBtn">
 						<br>
-						 <span id="add" class="add"> Create folder</span>
+						 <span id="add" class="add" title="Click to add new folder"> Create folder</span>
 						 <img src="../resources/images/Addbutton.png" align="center"
 							id="addBtn"  class="marginBottom15" width="15" height="15" alt="Add"
 							title="Add New Folder" class="marginTop0">
