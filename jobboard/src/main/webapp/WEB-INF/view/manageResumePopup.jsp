@@ -122,7 +122,7 @@
 									</label></td>
 									<td align="center">${resume.updateDt}</td>
 									<td align="center">
-									&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="view"><img title="View" src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
+									<a href="#" class="view"><img title="View" src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
 									<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal editFile"><img title="Edit" src="../resources/images/tranBg.png" width="20" height="20" alt="edit"></a>
 									<a href="#" title="download"><img title="Download" src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
 									<a href="#" title="print"><img title="Print" src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>

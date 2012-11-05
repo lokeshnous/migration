@@ -107,7 +107,7 @@ function openwin(where) {
 										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=Edit" class="nyroModal" title="Edit"> <img width="20" height="20" alt="" class="editFile"/></a> 
 										 <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDownloadCoverLetter.html?coverletterId=${job.coverletterId}"> <img width="20" height="20" alt="" class="download" /></a>
 										 <%-- <a href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerPrintCoverLetter.html?coverletterId=${job.coverletterId}&type=Print" class="print" class="btnPrint"> <img width="20" height="20" alt="" class="print"/></a> --%>								
-										 <a title="Print" id="print${job.coverletterId}" onclick="printPopup(this.id)"><img width="20" height="20" alt="" class="print"/></a> 
+										 <a title="Print" id="print${job.coverletterId}" onclick="printPopup(this.id)"><img width="20" height="20" alt="" class="printOrange"/></a> 
 										 <a href="#" title="Delete"> <img width="20" height="20" alt="" class="delete"/></a>
 										 
 									 </td>
@@ -118,8 +118,8 @@ function openwin(where) {
 				</div>
 				<div class="row marginTop5 paddingBottom10">
 					<span class="floatLeft marginTop10">
-					   <a class="btn_sm orange nyroModal" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" title="New Cover Letter">New Cover Letter </a> 
-					   <a class="btn_sm orange" href="" title="Cancel"> Cancel </a>
+					   <a class="btn_sm orange nyroModal" href="<%=request.getContextPath()%>/jobSeekerCoverLetter/createCoverLetter.html?resumeType=createCover" >New Cover Letter </a> 
+					   <a class="btn_sm orange" href="" > Cancel </a>
 					</span> <span class="floatLeft marginTop10 marginLeft5"> </span>
 				</div>
 				<!-- <iframe id="printPage" name="printPage" src="../jobSeekerCoverLetter/jobseekerPrintCoverLetter.html" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; border: 0px none; z-index: -1;"></iframe> -->
