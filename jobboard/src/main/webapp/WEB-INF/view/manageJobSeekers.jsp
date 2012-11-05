@@ -189,12 +189,6 @@
 							$.nmManual(context+'/employer/sendtofriend.html?id='+resumeId+'&resumeName='+resumeName+'&currentUrl='+currentUrl);
 						}
 </script>
-<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-
-<script src="../resources/js/jquery.dataTables.nightly.js"></script>
-<script src="../resources/js/searchResultsdatatable.js"></script>
-
-<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 
 </head>
 <body class="job_board">

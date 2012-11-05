@@ -11,11 +11,18 @@
 <title>ADVANCE Healthcare Jobs</title>
 <!-- Common js files  -->
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
+
+<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+
+<script src="../resources/js/jquery.dataTables.nightly.js"></script>
+<script src="../resources/js/searchResultsdatatable.js"></script>
+
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
 	if($("#folderId").val()>0){
 		$(".refineResultsItem").click();
-		$("#myFolder").attr("class","refineResultsItem minus");
+	//	$("#myFolder").attr("class","refineResultsItem minus");
 		val=$("#folderId").val();
 		$("#"+val).attr("style","font-weight:bold;");
 		$("#"+val).attr("style", "color:#52a4dc");
