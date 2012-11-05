@@ -130,11 +130,11 @@
 					<!-- search_info_box2 -->
 
 					<div class="browse_bar bold">
-						<span>BROWSE JOBS:</span>&nbsp;&nbsp; <a title="Coming Soon"
-							onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-						<a title="Coming Soon" onclick="getByEmployer()" class="cursor">By
-							Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a title="Coming Soon"
-							onclick="getByLocation()" class="cursor">By Location</a>
+						<span>BROWSE JOBS:</span>&nbsp;&nbsp;
+							 <a onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a onclick="getByEmployer()" class="cursor">By
+							Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
+							<a onclick="getByLocation()" class="cursor">By Location</a>
 					</div>
 
 					<!-- browse_bar -->
