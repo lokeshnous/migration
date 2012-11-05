@@ -8,25 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Healthcare Jobs</title>
 <jsp:include page="common/include.jsp" />
-	<!-- <script type="text/javascript">
-						jQuery(document).ready(function() {
-					 		$('#save').click(function(){			
-								$.ajax({url:"${pageContext.request.contextPath}/agency/saveEmployerDetails.html",
-									data:$('#editEmployer').serialize(),
-									type:"POST",
-									success: function(data) {
-										if(data == ''){
-											alert("Employer Information saved Successfully");
-											parent.$.nmTop().close();
-											window.location.reload();
-										}else{
-											$("#errmsg").html(data);
-										}
-									 },
-								});
-							}); 
-						});
-	</script> -->
 </head>
 
 <body class="job_board">
@@ -36,7 +17,7 @@
 		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 			style="display: block">
 			<div class="popupHeader">
-				<h2>Edit EMPLOYER</h2>
+				<h2>View EMPLOYER</h2>
 				<a href="#"><img src="../resources/images/Close.png" width="19"
 					height="19" alt="" class="nyroModalClose"></a>
 			</div>
