@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ClickEventDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobStat;
@@ -59,7 +60,7 @@ public class ClickDAOImpl implements ClickDAO {
 			result=true;
 		} catch (HibernateException e) {
 			result=false;
-			LOGGER.info("ERROR");
+			LOGGER.error("Error occured while saving click event",e);
 		}		
 		return result;
 
@@ -81,12 +82,48 @@ public class ClickDAOImpl implements ClickDAO {
 			}
 
 		}catch (Exception e) {
-			// TODO: handle exception
-			LOGGER.info("ERROR");
+			LOGGER.error("Error occured while saving click event",e);
 		}
 		return clickEventDTO;
 	}
 
+	/**
+	 * This method updates the Views whenever the job appears in job search
+	 * 
+	 * @param jobDTOList
+	 */
+	@Override
+	public void saveJobViews(List<JobDTO> jobDTOList) {
+		if (null != jobDTOList) {
+			for (JobDTO dto : jobDTOList) {
+				JpJobStat jobStat;
+				int jobId = 0;
+				jobId = dto.getJobId();
+
+				try {
+					jobStat = hibernateTemplate.get(JpJobStat.class, jobId);
+
+					if (null == jobStat) {
+						jobStat = new JpJobStat();
+					}
+
+					if (jobId != 0) {
+						jobStat.setJobId(jobId);
+						jobStat.setClicks(jobStat.getClicks());
+						jobStat.setApplies(jobStat.getApplies());
+						jobStat.setViews(jobStat.getViews() + 1);
+						jobStat.setStatsDt(new Date());
+						hibernateTemplate.saveOrUpdate(jobStat);
+					}
+
+				} catch (Exception e) {
+					LOGGER.error(
+							"Error occured while saving List of job views", e);
+				}
+			}
+		}
+	}
+	
 	/**
 	 * This method updates the number of times the resume was viewed by an
 	 * Employer

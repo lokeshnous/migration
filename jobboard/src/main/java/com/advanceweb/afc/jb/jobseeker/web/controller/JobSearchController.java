@@ -69,6 +69,7 @@ import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 import com.advanceweb.afc.jb.employer.web.controller.BrandingTemplateForm;
+import com.advanceweb.afc.jb.event.service.ClickService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.home.web.controller.ClickController;
 import com.advanceweb.afc.jb.job.service.SaveSearchService;
@@ -140,6 +141,9 @@ public class JobSearchController extends AbstractController {
 
 	@Autowired
 	private CoverLetterService coverLetterService;
+	
+	@Autowired
+	private ClickService clickService;
 
 	@Value("${navigationPath}")
 	private String navigationPath;
@@ -278,7 +282,7 @@ public class JobSearchController extends AbstractController {
 
 		try {
 			clickController.getclickevent(jobId,
-					MMJBCommonConstants.CLICKTYPE_VIEW, request, response);
+					MMJBCommonConstants.CLICKTYPE_CLICK, request, response);
 			boolean isReturnResults = true;
 			getJobDetails(model, request, session, modelView, jobId,
 					isReturnResults);
@@ -1402,8 +1406,10 @@ public class JobSearchController extends AbstractController {
 	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveThisJob(Map<String, Object> map, HttpServletRequest request,
-			@RequestParam("id") int jobId, HttpSession session) {
+			@RequestParam("id") int jobId, HttpSession session, HttpServletResponse response) {
 		JSONObject jsonObject = new JSONObject();
+		clickController.getclickevent(jobId,
+				MMJBCommonConstants.CLICKTYPE_CLICK, request, response);
 
 		// Check for job seeker login ,open popup if not logged in.
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
@@ -1623,11 +1629,12 @@ public class JobSearchController extends AbstractController {
 	 */
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
-			BindingResult result, HttpServletRequest request, Model model) {
+			BindingResult result, HttpServletRequest request, Model model, HttpServletResponse response) {
 
 		try {
-
 			int jobId = Integer.parseInt(request.getParameter("id"));
+			clickController.getclickevent(jobId,
+					MMJBCommonConstants.CLICKTYPE_CLICK, request, response);
 			String jobTitle = request.getParameter("jobtitle");
 			jobTitle = jobTitle.replace(" ", "-").toLowerCase();
 
@@ -2489,7 +2496,9 @@ public class JobSearchController extends AbstractController {
 			jsonRows.add(jobSrchJson);
 
 		}
-
+		// Update Views for the list of jobs which appeared in the search
+		clickService.saveJobViews(jobDTOList);
+		
 		// Get the refine results along with the job count
 		fetchRefineResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
 

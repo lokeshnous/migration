@@ -541,14 +541,12 @@ jQuery(document).ready(function() {
 				}
 				
 				function trackClick(jobId) {					
-				if($("#searchResultsJobInfo"+jobId).attr('class').match('closed')){
 				$.ajax({
 					url : '../jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
 					data : ({
 						userID : "userID"
 					}),
 				});
-				}
 				}
 	
 				function sortTable() {

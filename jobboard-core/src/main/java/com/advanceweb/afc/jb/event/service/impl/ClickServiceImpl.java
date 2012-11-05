@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.ClickEventDTO;
+import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.event.dao.ClickDAO;
 import com.advanceweb.afc.jb.event.service.ClickService;
@@ -33,6 +34,15 @@ public class ClickServiceImpl implements ClickService {
 		return clickDAO.retrieveAllClicks(jobId);
 	}
 
+	/**
+	 * This method updates the Views whenever the job appears in job search
+	 * 
+	 * @param jobDTOList
+	 */
+	@Override
+	public void saveJobViews(List<JobDTO> jobDTOList){
+		clickDAO.saveJobViews(jobDTOList);
+	}
 	/**
 	 * This method updates the number of times the resume was viewed by an
 	 * Employer
