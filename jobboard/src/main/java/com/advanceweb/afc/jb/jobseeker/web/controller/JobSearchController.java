@@ -1160,9 +1160,12 @@ public class JobSearchController extends AbstractController {
 		HashMap<String, String> sessionMap = (HashMap<String, String>) session
 				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
 
-		String keyWords = sessionMap.get(SearchParamDTO.KEYWORDS).trim();
-		String city = sessionMap.get(SearchParamDTO.CITY_STATE).trim();
-		String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
+		String keyWords = (null != sessionMap.get(SearchParamDTO.KEYWORDS)) ? sessionMap
+				.get(SearchParamDTO.KEYWORDS).trim() : "";
+		String city = (null != sessionMap.get(SearchParamDTO.CITY_STATE)) ? sessionMap
+				.get(SearchParamDTO.CITY_STATE).trim() : "";
+		String radius = (null != sessionMap.get(SearchParamDTO.RADIUS)) ? sessionMap
+				.get(SearchParamDTO.RADIUS).trim() : "";
 
 		int userId = getUserID(session);
 
@@ -1242,7 +1245,7 @@ public class JobSearchController extends AbstractController {
 	private Integer getUserID(HttpSession session) {
 
 		int userId = 0;
-		
+
 		if ((null != session.getAttribute(MMJBCommonConstants.USER_ID))
 				&& StringUtils.isEmpty(""
 						+ session.getAttribute(MMJBCommonConstants.USER_ID))) {
@@ -1251,11 +1254,10 @@ public class JobSearchController extends AbstractController {
 					.getAttribute(MMJBCommonConstants.USER_ID);
 
 		}
-		
+
 		return userId;
 	}
 
-	
 	private String getSplitURL(String urlData) {
 
 		StringBuffer splitURL = new StringBuffer();
