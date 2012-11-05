@@ -172,7 +172,7 @@
 									<tr>
 										<td align="left" valign="bottom">&nbsp;</td>
 										<td align="left" valign="bottom"><input type="checkbox"
-											name="checkbox2"  value="${job['PublishResumeId']}" class="marginRight5">
+											name="checkbox2"  value="${job['UploadResumeId']}" class="marginRight5">
 											<label for="checkbox2" ><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}" >${job["DesiredJobTitle"]}</a></label></td>
 										<td align="left" valign="bottom">${job["ApplicantName"]}</td>
 										<td align="left" valign="bottom">${job["Location"]}</td>
@@ -180,7 +180,7 @@
 										<td align="center">${job["EmploymentType"]}</td>
 										<td>${job["Relocate"]}</td>
 										<td>${job["posted_dt"]}</td>
-										<td align="center"><a href="#"><div class="view"></div></a><a href="#"><div class="download"></div></a><a href="#"><div class="printOrange"></div></a></td>
+										<td align="center"><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}"><div class="view"></div></a><a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${job['UploadResumeId']}"><div class="download"></div></a><a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${job['UploadResumeId']}"><div class="printOrange"></div></a></td>
 									</tr>
 							</c:forEach>
 									
