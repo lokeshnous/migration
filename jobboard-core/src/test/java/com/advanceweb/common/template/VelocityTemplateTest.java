@@ -1,17 +1,22 @@
 package com.advanceweb.common.template;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.jb.test.ServiceTest;
 
 public class VelocityTemplateTest extends ServiceTest {
+	private static final Logger LOGGER = Logger
+			.getLogger(VelocityTemplateTest.class);
+	private static final String ERROR_MSG = "The parameter %s is not replaced with %s in the velocity template";
 	@Autowired
-	AdvanceTemplate velocityTestTemplate = new VelocityTemplate(
-			"/templates/openx_ad_tag.vtl");
+	private AdvanceTemplate velocityTestTemplate;
 
 	@Test
 	public void test() {
@@ -22,7 +27,12 @@ public class VelocityTemplateTest extends ServiceTest {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("topic", "nurse");
 		params.put("vars", vars);
-	//	System.out.println(velocityTestTemplate.process(params));
+		String result = velocityTestTemplate.process(params);
+		LOGGER.debug(result);
+		assertTrue(String.format(ERROR_MSG, "topic", "nurse"),
+				result.indexOf("nurse") >= 0);
+		assertTrue(String.format(ERROR_MSG, "auid", "297453"),
+				result.indexOf("297453") >= 0);
 	}
 
 }
