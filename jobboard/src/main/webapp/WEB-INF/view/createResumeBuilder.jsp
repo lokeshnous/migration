@@ -10,21 +10,17 @@
 
 <!-- JAVASCRIPT FILES -->
 <jsp:include page="common/include.jsp" />
-<jsp:include page="common/include.jsp" />
-<link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>		
- <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
-	type="text/css"> 
-	<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
-<link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
-	type="text/css" />
+<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+<script type="text/javascript" src="../resources/js/lprogress.min.js"></script>
+<script type="text/javascript" src="../resources/js/lprogress.js"></script>
+
 <link href="../resources/css/SliderStyles.css" rel="stylesheet"
 	type="text/css">
-
 	
  <link rel="stylesheet" type="text/css" media="screen"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+
 
 <script type="text/javascript">
 function validateNumber(event) {
@@ -198,11 +194,7 @@ function validateNumber(event) {
 		    function cancelProcess(){
 		    	window.location.href = '${pageContext.request.contextPath}/jobSeeker/jobSeekerDashBoard.html';
 		    }		
-		</script>
-
-<!-- <script type="text/javascript" src="../resources/js/expandCollapse.js"></script> -->
-<script type="text/javascript" src="../resources/js/lprogress.min.js"></script>
-<script type="text/javascript" src="../resources/js/lprogress.js"></script>
+</script>
 </head>
 
 <body class="job_board">

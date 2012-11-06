@@ -56,7 +56,7 @@
 											data : $("#copyPastResume").serialize(),
 											type: "POST",
 											success : function(data) {
-												alert('Copy Past Resume created successfully!');
+												alert('Copy Paste Resume created successfully!');
 												parent.$.nmTop().close();
 												window.location.reload();
 												},
