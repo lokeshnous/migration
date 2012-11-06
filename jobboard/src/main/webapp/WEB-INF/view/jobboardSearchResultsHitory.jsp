@@ -31,7 +31,7 @@
 							
 							<c:forEach items="${latestRecentList}" var="item" >
 							 <div class="rowPadding borderBottomDotted">
-							   ${item.recDate}<br> Search by: <!-- <a href="" ></a> -->${item.keywords} / ${item.cityState}
+							    ${item.recDate}<br> Search by: <a href="" ></a>${item.keywords} / ${item.cityState} 
 							   </div>
 									
 								</c:forEach>

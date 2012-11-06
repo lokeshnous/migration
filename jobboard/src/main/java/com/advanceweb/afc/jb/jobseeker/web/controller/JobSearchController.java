@@ -573,7 +573,9 @@ public class JobSearchController extends AbstractController {
 					request)) {
 				return jsonObject;
 			}
+		
 			int userId = getUserID(session);
+			
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(jobDTO, userId);
@@ -1128,7 +1130,6 @@ public class JobSearchController extends AbstractController {
 	 * @param jobSrchJsonObj
 	 * @param currentSearchList
 	 */
-	@SuppressWarnings({ "deprecation", "unchecked" })
 	private void setSessionForGrid(HttpSession session, int page,
 			int noOfPages, int beginVal, JSONObject jobSrchJsonObj,
 			List<HashMap<String, Object>> currentSearchList) {
@@ -1173,7 +1174,7 @@ public class JobSearchController extends AbstractController {
 				.get(SearchParamDTO.RADIUS).trim() : "";
 
 		int userId = getUserID(session);
-
+				
 		HashMap<String, Object> recentMap = new HashMap<String, Object>();
 		List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
 				.getAttribute("recentSearchList");
@@ -1201,7 +1202,8 @@ public class JobSearchController extends AbstractController {
 		// Here, saving data in DB searching in JOBBOARD
 		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-		searchedJobsDTO.setUserID(getUserID(session));
+		searchedJobsDTO.setUserID(userId);
+		
 		searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
 				+ MMJBCommonConstants.EQUAL_TO
 				+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
@@ -1221,7 +1223,7 @@ public class JobSearchController extends AbstractController {
 
 		List<HashMap<String, Object>> latestRecentList = null;
 		if (recentSearchList.size() > 3) {
-			latestRecentList = recentSearchList.subList(0, 3);
+			latestRecentList = recentSearchList.subList(recentSearchList.size()-3, recentSearchList.size());
 		} else {
 			latestRecentList = recentSearchList;
 		}
@@ -1284,7 +1286,9 @@ public class JobSearchController extends AbstractController {
 					value = stringAlter.nextToken().replaceFirst("basic", " ");
 					count = 0;
 				}
+				if(key != "radius"){
 				splitURL.append(value + "     ");
+				}
 			}
 		}
 		return splitURL.toString();
@@ -2356,9 +2360,8 @@ public class JobSearchController extends AbstractController {
 				.viewMyRecentSearches(userId);
 
 		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
-
+ 
 		for (SaveSearchedJobsDTO jobsDTO : recentSearch) {
-
 			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
 					jobsDTO.getSaveSearchID(), jobsDTO.getUserID(),
 					jobsDTO.getUrl(), jobsDTO.getSearchName(),
@@ -2383,6 +2386,7 @@ public class JobSearchController extends AbstractController {
 			HttpServletRequest request) {
 
 		int userId = getUserID(session);
+				
 
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute("recentSearchList");
@@ -2397,7 +2401,7 @@ public class JobSearchController extends AbstractController {
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		int userId = getUserID(session);
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
 
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute("recentSearchList");
@@ -2410,9 +2414,90 @@ public class JobSearchController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/jobboardSearchResultsHitory")
-	public ModelAndView getTemplateshrRecentList(HttpServletResponse response,
-			HttpServletRequest request, Model model) {
+	public ModelAndView getJobboardSearchResultsHitory(HttpServletResponse response,
+			HttpServletRequest request, Model model, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
+		int userId = getUserID(session);
+		List<SaveSearchedJobsDTO> newRecentSearch = new ArrayList<SaveSearchedJobsDTO>();
+		if(userId != 0){
+		List<SaveSearchedJobsDTO> recentSearch = saveSearchService
+				.viewMyRecentSearches(userId);
+		for (int i = 0; i < 3; i++) {
+			SaveSearchedJobsDTO saveSearchedJobsDTO = recentSearch.get(i);
+			
+			newRecentSearch.add(saveSearchedJobsDTO);
+		}
+		if(recentSearch != null && recentSearch.size() > 3){
+			newRecentSearch = recentSearch.subList(recentSearch.size() - 3, recentSearch.size());
+			
+			
+			
+			
+			
+			/*HashMap<String, String> sessionMap = (HashMap<String, String>) session
+					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+
+			String keyWords = (null != sessionMap.get(SearchParamDTO.KEYWORDS)) ? sessionMap
+					.get(SearchParamDTO.KEYWORDS).trim() : "";
+			String city = (null != sessionMap.get(SearchParamDTO.CITY_STATE)) ? sessionMap
+					.get(SearchParamDTO.CITY_STATE).trim() : "";
+			String radius = (null != sessionMap.get(SearchParamDTO.RADIUS)) ? sessionMap
+					.get(SearchParamDTO.RADIUS).trim() : "";
+
+			
+					
+			HashMap<String, Object> recentMap = new HashMap<String, Object>();
+			List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
+					.getAttribute("recentSearchList");
+
+			if (recentSearchList == null) {
+				recentSearchList = new ArrayList<HashMap<String, Object>>();
+			}
+
+			if (!keyWords.isEmpty()) {
+				recentMap.put(SearchParamDTO.KEYWORDS,
+						sessionMap.get(SearchParamDTO.KEYWORDS).trim());
+			}
+
+			if (!city.isEmpty()) {
+				recentMap.put(SearchParamDTO.CITY_STATE, city);
+			}
+
+			if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
+				recentMap.put(SearchParamDTO.RADIUS, radius);
+			}
+
+			recentMap.put("recDate", new Date().toLocaleString());
+			recentSearchList.add(recentMap);
+
+			List<HashMap<String, Object>> latestRecentList = null;
+			if (recentSearchList.size() > 3) {
+				latestRecentList = recentSearchList.subList(recentSearchList.size()-3, recentSearchList.size());
+			} else {
+				latestRecentList = recentSearchList;
+			}*/
+			
+			
+			
+		}
+		
+		
+		
+		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
+ 
+		for (SaveSearchedJobsDTO jobsDTO : recentSearch) {
+			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
+					jobsDTO.getSaveSearchID(), jobsDTO.getUserID(),
+					jobsDTO.getUrl(), jobsDTO.getSearchName(),
+					jobsDTO.getEmailFrequency(), jobsDTO.getCreatedDate(),
+					jobsDTO.getModifyDate(), jobsDTO.getDeletedDate(),
+					null);
+
+			recentSplit.add(dto);
+		}
+		}
+		//session.setAttribute("latestRecentList", newRecentSearch);
+		
 		modelAndView.setViewName("jobboardSearchResultsHitory");
 		return modelAndView;
 	}

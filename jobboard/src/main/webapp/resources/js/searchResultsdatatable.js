@@ -342,7 +342,6 @@ jQuery(document).ready(function() {
 
 				
 				function getHistory(){
-					
 					$.ajax({
 						url : '../jobsearch/jobboardSearchResultsHitory.html',
 						data : ({}),
@@ -351,7 +350,7 @@ jQuery(document).ready(function() {
 							$("#jobboardSearchResultsHitoryId").html(data);
 						},
 						error : function(data) {
-							//alert('Unable to process');
+							alert('Unable to process');
 						},
 						complete : function(data) {
 							// do nothing for now.
@@ -417,9 +416,6 @@ jQuery(document).ready(function() {
 				}
 				
 				function saveThisSearch() {
-					alert("keywords"+keywords);					
-					//$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
-					//$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&saveSearchID"+saveSearchID,
 					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords,
 						success: function(data){ 
 							$.each(data, function(key, val) {
@@ -449,7 +445,7 @@ jQuery(document).ready(function() {
 				
 				function saveRecentSearch(savesearchid) {
 				
-					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
+					$.ajax({url : "../savedSearches/saveRecentSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {

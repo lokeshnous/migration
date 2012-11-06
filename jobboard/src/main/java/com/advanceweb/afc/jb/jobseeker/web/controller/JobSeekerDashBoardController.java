@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +133,7 @@ public class JobSeekerDashBoardController extends AbstractController {
 			List<AppliedJobDTO> appliedJobDTOList = jobSeekerService
 					.getAppliedJobs(nUserId);
 			appliedJobsCount = appliedJobDTOList.size();
+			
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error occured while fetching the saved or applied job details"
 					+ e);

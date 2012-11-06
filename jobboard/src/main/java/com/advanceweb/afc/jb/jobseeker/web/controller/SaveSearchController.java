@@ -167,6 +167,9 @@ public class SaveSearchController {
 			@RequestParam("keywords") String keywords) {
 
 		JSONObject jsonObject = new JSONObject();
+
+		
+
 		try {
 
 			Map<String, String> sessionMap = checkSessionMap
@@ -236,22 +239,29 @@ public class SaveSearchController {
 		return jsonObject;
 	}
 	
+	
+	
+	
+	
 	/**
-	@RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
+	 * This method is used to navigate the save this search pages to Login page
+	 * or pop up page depending upon whether the user is a ananymous user or
+	 * registered user.
+	 * 
+	 * @param saveSearchForm
+	 * @param model
+	 * @param session
+	 * @return JSonObject
+	 */
+
+	@RequestMapping(value = "/saveRecentSearch", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
+	JSONObject saveRecentSearch(@Valid SaveSearchForm saveSearchForm,
 			Map<String, SaveSearchForm> model, HttpSession session,
 			@RequestParam("keywords") String keywords,
 			@RequestParam("savesearchid") String saveSearchID) {
 
 		JSONObject jsonObject = new JSONObject();
-
-		if (!saveSearchID.isEmpty() && saveSearchID != null) {
-			System.out.println("saveSearchID : " + saveSearchID);
-			session.setAttribute("clearAllSearchId", saveSearchID);
-			saveSearchForm.setClearAllPage("true");
-		}
-
 		try {
 
 			Map<String, String> sessionMap = checkSessionMap
@@ -272,30 +282,7 @@ public class SaveSearchController {
 
 				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-				searchedJobsDTO.setSearchName(sessionMap
-						.get(MMJBCommonConstants.SAVE_SEARCH_NAME));
-				searchedJobsDTO.setSaveSearchID(Integer.parseInt(sessionMap
-						.get(MMJBCommonConstants.SAVE_SEARCH_ID)));
-				searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
-						+ MMJBCommonConstants.EQUAL_TO
-						+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
-						+ MMJBCommonConstants.SEMICOLON
-						+ SearchParamDTO.KEYWORDS
-						+ MMJBCommonConstants.EQUAL_TO
-						+ sessionMap.get(SearchParamDTO.KEYWORDS)
-						+ MMJBCommonConstants.SEMICOLON
-						+ SearchParamDTO.CITY_STATE
-						+ MMJBCommonConstants.EQUAL_TO
-						+ sessionMap.get(SearchParamDTO.CITY_STATE)
-						+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.RADIUS
-						+ MMJBCommonConstants.EQUAL_TO
-						+ sessionMap.get(SearchParamDTO.RADIUS));
-
-				searchedJobsDTO.setUserID((Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID));
-
-				saveSearchService.updateSearchDetails(searchedJobsDTO);
-
+			
 				session.removeAttribute(sessionMap
 						.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
 				session.removeAttribute(sessionMap
@@ -320,7 +307,7 @@ public class SaveSearchController {
 		}
 		return jsonObject;
 	}
-*/
+	
 
 	/**
 	 * The method is called to close the SaveThisJob popup
