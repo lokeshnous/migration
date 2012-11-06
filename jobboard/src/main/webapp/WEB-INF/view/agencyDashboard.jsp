@@ -1,3 +1,4 @@
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -153,7 +154,7 @@
 				<div class="MidContent_Wrapper floatLeft">
 					<div class="dashboardHeader">
 						<h1>
-							[<%=(String) session.getAttribute("userName")%>]Dashboard
+							[<%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%>] Dashboard
 						</h1>
 					</div>
 					<div class="MidContent_Wrapper FloatLeft">
