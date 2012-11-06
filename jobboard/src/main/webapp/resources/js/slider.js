@@ -54,7 +54,7 @@ $(document).ready(function(){
 					$("#slider1FramesId").html(data);
 					},
 					error : function(data) {
-						alert('Unable to process');
+						//alert('Unable to process');
 					},
 					complete : function(data) {
 						// do nothing for now.
@@ -62,8 +62,8 @@ $(document).ready(function(){
 				});
 			},
 			error : function(data) {
-				alert('Unable to process'+
-						data);
+				//alert('Unable to process'+
+				//		data);
 			},
 			complete : function(data) {
 				// do nothing for now.
@@ -83,7 +83,7 @@ $(document).ready(function(){
 					$("#slider1FramesId").html(data);
 					},
 					error : function(data) {
-						alert('Unable to process');
+						//alert('Unable to process');
 					},
 					complete : function(data) {
 						// do nothing for now.
@@ -91,7 +91,7 @@ $(document).ready(function(){
 				});
 			},
 			error : function(data) {
-				alert('Unable to process');
+				//alert('Unable to process');
 			},
 			complete : function(data) {
 				// do nothing for now.

@@ -52,7 +52,7 @@ function processResumePaginationReq(pageSize) {
 			$("#noOfPageLower").val(pageSize);
 		},
 		error : function(data) {
-			alert('Unable to process');
+			//alert('Unable to process');
 		},
 		complete : function(data) {
 			// do nothing for now.

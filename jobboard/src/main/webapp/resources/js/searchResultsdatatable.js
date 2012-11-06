@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 					
 				},
 				error : function(data) {
-					alert('Unable to process');
+				//	alert('Unable to process');
 				},
 				complete : function(data) {
 				}
@@ -91,7 +91,7 @@ jQuery(document).ready(function() {
 					});
 				},
 				error : function(data) {
-					alert('Unable to process');
+					//alert('Unable to process');
 				},
 				complete : function(data) {
 				}
@@ -259,7 +259,7 @@ jQuery(document).ready(function() {
 							});
 						},
 						error : function(data) {
-							alert('Unable to process');
+							//alert('Unable to process');
 						},
 						complete : function(data) {
 						}
@@ -351,7 +351,7 @@ jQuery(document).ready(function() {
 							$("#jobboardSearchResultsHitoryId").html(data);
 						},
 						error : function(data) {
-							alert('Unable to process');
+							//alert('Unable to process');
 						},
 						complete : function(data) {
 							// do nothing for now.
@@ -368,7 +368,7 @@ jQuery(document).ready(function() {
 						$("#slider1FramesId").html(data);
 						},
 						error : function(data) {
-							alert('Unable to process');
+							//alert('Unable to process');
 						},
 						complete : function(data) {
 							// do nothing for now.
@@ -383,8 +383,8 @@ jQuery(document).ready(function() {
 						$("#TotalNoRecords").html(data);
 						},
 						error : function(data) {
-							alert('Unable to process'+
-									data);
+							//alert('Unable to process'+
+							//		data);
 						},
 						complete : function(data) {
 							// do nothing for now.
@@ -496,7 +496,7 @@ jQuery(document).ready(function() {
 							});
 						},
 						error : function(data) {
-							alert('Unable to process');
+							//alert('Unable to process');
 						},
 						complete : function(data) {
 						}
@@ -533,7 +533,7 @@ jQuery(document).ready(function() {
 							});
 						},
 						error : function(data) {
-							alert('Unable to process');
+							//alert('Unable to process');
 						},
 						complete : function(data) {
 						}
