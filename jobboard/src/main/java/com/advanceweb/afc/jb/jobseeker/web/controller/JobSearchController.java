@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -2415,46 +2416,32 @@ public class JobSearchController extends AbstractController {
 
 	@RequestMapping(value = "/jobboardSearchResultsHitory")
 	public ModelAndView getJobboardSearchResultsHitory(HttpServletResponse response,
-			HttpServletRequest request, Model model, HttpSession session) {
+ HttpServletRequest request,
+			Model model, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
-		/*int userId = getUserID(session);
+		int userId = getUserID(session);
 		List<SaveSearchedJobsDTO> newRecentSearch = new ArrayList<SaveSearchedJobsDTO>();
-		if(userId != 0){
-		List<SaveSearchedJobsDTO> recentSearch = saveSearchService
-				.viewMyRecentSearches(userId);
-		for (int i = 0; i < 3; i++) {
-			SaveSearchedJobsDTO saveSearchedJobsDTO = recentSearch.get(i);
+		if (userId != 0) {
+			List<SaveSearchedJobsDTO> recentSearch = saveSearchService
+					.viewMyRecentSearches(userId);
+			for (int i = 0; i < 3; i++) {
+				SaveSearchedJobsDTO saveSearchedJobsDTO = recentSearch.get(i);
+				newRecentSearch.add(saveSearchedJobsDTO);
+			} 
 			
-			newRecentSearch.add(saveSearchedJobsDTO);
-		}
-		if(recentSearch != null && recentSearch.size() > 3){
-			newRecentSearch = recentSearch.subList(recentSearch.size() - 3, recentSearch.size());
-			
-			
-			
-			
-		
-			
-			
-			
-		}
-		
-		
-		
-		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
- 
-		for (SaveSearchedJobsDTO jobsDTO : recentSearch) {
-			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
-					jobsDTO.getSaveSearchID(), jobsDTO.getUserID(),
-					jobsDTO.getUrl(), jobsDTO.getSearchName(),
-					jobsDTO.getEmailFrequency(), jobsDTO.getCreatedDate(),
-					jobsDTO.getModifyDate(), jobsDTO.getDeletedDate(),
-					null);
+			List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
 
-			recentSplit.add(dto);
+			for (SaveSearchedJobsDTO jobsDTO : newRecentSearch) {
+				SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO();
+				String[] keyword=jobsDTO.getUrl().split(";");
+						dto.setCreatedDate(jobsDTO.getCreatedDate());
+						dto.setKeywords(keyword[1].substring(9));
+						dto.setSearchName(keyword[2].substring(10));
+
+				recentSplit.add(dto);
+			}
+			session.setAttribute("latestRecentList", recentSplit);
 		}
-		}*/
-		//session.setAttribute("latestRecentList", newRecentSearch);
 		
 		modelAndView.setViewName("jobboardSearchResultsHitory");
 		return modelAndView;

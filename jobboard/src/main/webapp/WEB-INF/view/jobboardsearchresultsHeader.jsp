@@ -9,6 +9,7 @@
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 <script>
 	$(document).ready(function() {
+		$("#seeallpopup").displaypopup("#seeallpopup", "790","370");
 		$('#submitval').click(function() {
 			parent.right_frame.location.reload();
 		});
@@ -22,7 +23,7 @@
 								.ajax({
 									url : "${pageContext.request.contextPath}/jobsearch/clearalllist.html",
 									success : function(data) {
-										//alert("Data is :::"+data);
+										
 
 									},
 								});
