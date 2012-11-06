@@ -90,6 +90,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
+			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+					infoDTO.getCustomerName());
 			redirectFacilitySystem(user, request, response, session);
 		} else {
 			boolean socalLogin = false;
