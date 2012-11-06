@@ -416,11 +416,11 @@ jQuery(document).ready(function() {
 					});
 				}
 				
-				function saveThisSearch(saveSearchID) {
-					alert("savesearchid"+savesearchid);
-					
+				function saveThisSearch() {
+					alert("keywords"+keywords);					
 					//$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
-					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&saveSearchID"+saveSearchID,
+					//$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords+"&saveSearchID"+saveSearchID,
+					$.ajax({url : "../savedSearches/saveThisSearch.html?keywords="+keywords,
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {

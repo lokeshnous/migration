@@ -91,8 +91,6 @@ public class SaveSearchController {
 			saveSearchService.deleteFirstSearch(userId);
 		}
 
-		
-
 		JSONObject jsonObject = new JSONObject();
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
@@ -139,8 +137,8 @@ public class SaveSearchController {
 						int id = Integer.parseInt((String) session
 								.getAttribute("clearAllSearchId"));
 						saveSearchService.updateSearchName(id, searchName);
-					}else{
-					saveSearchService.saveSearchedJobs(searchedJobsDTO);
+					} else {
+						saveSearchService.saveSearchedJobs(searchedJobsDTO);
 					}
 					jsonObject.put("LoggedInNavigationPath", "");
 				}
@@ -162,6 +160,83 @@ public class SaveSearchController {
 	 * @return JSonObject
 	 */
 
+	@RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
+			Map<String, SaveSearchForm> model, HttpSession session,
+			@RequestParam("keywords") String keywords) {
+
+		JSONObject jsonObject = new JSONObject();
+		try {
+
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
+
+			// Check for job seeker login
+			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+				model.put("SaveSearchForm", new SaveSearchForm());
+				jsonObject.put("LoggedInNavigationPath",
+						"../savedSearches/anonymousSaveThisSearchPopUp");
+			} else if ((sessionMap
+					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
+					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
+							&& sessionMap
+									.get(MMJBCommonConstants.SEARCH_TYPE)
+									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE) && sessionMap
+							.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)) {
+
+				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+
+				searchedJobsDTO.setSearchName(sessionMap
+						.get(MMJBCommonConstants.SAVE_SEARCH_NAME));
+				searchedJobsDTO.setSaveSearchID(Integer.parseInt(sessionMap
+						.get(MMJBCommonConstants.SAVE_SEARCH_ID)));
+				searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
+						+ MMJBCommonConstants.SEMICOLON
+						+ SearchParamDTO.KEYWORDS
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(SearchParamDTO.KEYWORDS)
+						+ MMJBCommonConstants.SEMICOLON
+						+ SearchParamDTO.CITY_STATE
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(SearchParamDTO.CITY_STATE)
+						+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.RADIUS
+						+ MMJBCommonConstants.EQUAL_TO
+						+ sessionMap.get(SearchParamDTO.RADIUS));
+
+				searchedJobsDTO.setUserID((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
+
+				saveSearchService.updateSearchDetails(searchedJobsDTO);
+
+				session.removeAttribute(sessionMap
+						.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
+				session.removeAttribute(sessionMap
+						.remove(MMJBCommonConstants.SEARCH_TYPE));
+
+				jsonObject.put("NavigationPath",
+						"../jobSeeker/jobSeekerDashBoard");
+
+			} else {
+				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
+					model.put("SaveSearchForm", new SaveSearchForm());
+					jsonObject.put("LoggedInNavigationPath",
+							"../savedSearches/displaySaveThisSearchPopup");
+				} else {
+					jsonObject.put("failure", saveThisSearchErrMsg);
+				}
+
+			}
+
+		} catch (Exception e) {
+			LOGGER.info("Save this search ERROR");
+		}
+		return jsonObject;
+	}
+	
+	/**
 	@RequestMapping(value = "/saveThisSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
@@ -245,6 +320,7 @@ public class SaveSearchController {
 		}
 		return jsonObject;
 	}
+*/
 
 	/**
 	 * The method is called to close the SaveThisJob popup
