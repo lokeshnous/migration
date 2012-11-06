@@ -42,32 +42,6 @@ public class DateUtils {
 	}
 
 	/**
-	 * Method to convert sql date to standard date format.
-	 * 
-	 * @param sqlDate
-	 * @return
-	 */
-	public static String convertSQLDateToStdDate(String sqlDate) {
-
-		String stdDate = null;
-
-		try {
-			if (null != sqlDate) {
-
-				stdDate = new SimpleDateFormat(
-						MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH)
-						.format(new SimpleDateFormat(
-								MMJBCommonConstants.SQL_DATE_PATTERN,
-								Locale.ENGLISH).parse(sqlDate));
-
-			}
-		} catch (ParseException e) {
-			LOGGER.info("convertSQLDateToStdDate Exception");
-		}
-		return stdDate;
-	}
-
-	/**
 	 * This method helps to convert SQLDate To standard Date String
 	 * 
 	 * @param sqlDate

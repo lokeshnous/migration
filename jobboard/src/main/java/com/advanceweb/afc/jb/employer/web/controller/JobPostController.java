@@ -400,7 +400,7 @@ public class JobPostController extends AbstractController{
 			if (StringUtils.isEmpty(form.getJobTitle())
 					|| StringUtils.isEmpty(form.getJobCity())
 					|| StringUtils.isEmpty(form.getJobZipCode())
-					|| MMJBCommonConstants.ZERO.equals(form.getJobTitle())
+					|| StringUtils.isEmpty(form.getJobTitle())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobCountry())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobState())
 					|| MMJBCommonConstants.ZERO

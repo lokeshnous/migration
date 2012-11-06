@@ -527,9 +527,11 @@ public class EmployerDashBoardController extends AbstractController {
 
 		row2.createCell(8).setCellValue(avaQuantity);
 
-		// FileInputStream obtains input bytes from the image file
-		InputStream inputStream = new FileInputStream(
-				"D:\\funnelchart\\chart.JPEG");
+		try {
+			// FileInputStream obtains input bytes from the image file
+			InputStream inputStream = new FileInputStream(
+					"D:\\funnelchart\\chart.JPEG");
+		
 
 		// Get the contents of an InputStream as a byte[].
 		byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -537,6 +539,7 @@ public class EmployerDashBoardController extends AbstractController {
 		int pictureIdx = workbook.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
 		// close the input stream
 		inputStream.close();
+		
 		// Drawing drawing = sheet.createDrawingPatriarch();
 		@SuppressWarnings("unused")
 		CreationHelper helper = workbook.getCreationHelper();
@@ -560,7 +563,13 @@ public class EmployerDashBoardController extends AbstractController {
 			}
 
 		}
-
+		} catch (Exception e) {
+			ModelAndView model = new ModelAndView();
+			model.addObject(EMPLOYERDASHBOARDFORM, new MetricsForm());
+			model.addObject("searchResumeForm", new SearchResumeForm());
+			model.setViewName("employerDashboard");
+			return model;
+		}
 		return new ModelAndView();
 	}
 
