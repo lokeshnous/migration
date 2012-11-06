@@ -23,7 +23,8 @@ public interface JobPostDAO {
 	boolean updateManageJob(boolean autoRenew, String brandTemplate, int jobId,
 			int userId);
 	boolean deactivateJob(int jobId, int userId);
-	boolean repostJob(int jobId, int userId);
+
+	boolean repostJob(int jobId);
 	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId, int offset, int noOfRecords);
 	
 	List<JobPostingPlanDTO> getJobPostingPlans();

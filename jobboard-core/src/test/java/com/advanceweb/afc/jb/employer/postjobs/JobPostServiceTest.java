@@ -98,7 +98,7 @@ public class JobPostServiceTest extends ServiceTest{
 	@Test
 	public void repostJobs(){
 		
-		boolean repost = employerJobPost.repostJob(13101, 1606);
+		boolean repost = employerJobPost.repostJob(13101);
 		Assert.assertTrue("Job Reposted Successfully", repost);
 	}
 	

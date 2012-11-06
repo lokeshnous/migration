@@ -56,17 +56,17 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='0'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
-	private static final String FIND_INVENTORY_DETAILS="select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 " +
-			"and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
-	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID="from AdmInventoryDetail inv  where inv.invDetailId=?)";
+	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
+			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
+	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
 	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
-	
+
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 	private HibernateTemplate hibernateTemplate;
 	private int numberOfJobRecordsByStatus;
 	@Autowired
 	private JobPostConversionHelper<?> jobPostConversionHelper;
-	
+
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -107,7 +107,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getFacilityId());
 				employerInfoDTO.setRoleId(userFacility.getFacilityPK()
 						.getRoleId());
-				employerInfoDTO.setCustomerNo(String.valueOf(facility.getNsCustomerID()));
+				employerInfoDTO.setCustomerNo(String.valueOf(facility
+						.getNsCustomerID()));
 			}
 		}
 
@@ -127,7 +128,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		try {
 			JpLocation location = null;
-			
 
 			if (!(dto.getJobId() > 0)
 					&& (MMJBCommonConstants.POST_NEW_JOB.equals(dto
@@ -146,9 +146,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 								dto.getFacilityId()))) {
 				return false;
 			}
-			
+
 			// Retrieving location Id based on the data selection while posting
-						// the new job
+			// the new job
 			Object[] inputs = { dto.getJobCountry(), dto.getJobState(),
 					dto.getJobCity(), dto.getJobZip() };
 			List<JpLocation> locationList = hibernateTemplate
@@ -180,17 +180,20 @@ public class JobPostDAOImpl implements JobPostDAO {
 			pKey.setInventoryDetailId(Integer.valueOf(dto.getJobPostingType()));
 			audit.setCreateDt(new Date());
 			audit.setId(pKey);
-			
-			AdmFacilityJpAudit auditObj =(AdmFacilityJpAudit) DataAccessUtils.uniqueResult(hibernateTemplate.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
-					audit.getId().getFacilityId(),audit.getId().getUserId(),audit.getId().getJobId()));
-			
-			if(null != auditObj){
+
+			AdmFacilityJpAudit auditObj = (AdmFacilityJpAudit) DataAccessUtils
+					.uniqueResult(hibernateTemplate
+							.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
+									audit.getId().getFacilityId(), audit
+											.getId().getUserId(), audit.getId()
+											.getJobId()));
+
+			if (null != auditObj) {
 				audit.setCreateDt(auditObj.getCreateDt());
 				hibernateTemplate.delete(auditObj);
 				hibernateTemplate.save(audit);
 				LOGGER.info("Job post updated successfully");
-			}
-			else{
+			} else {
 				hibernateTemplate.save(audit);
 			}
 			List<JpJobApply> applyJobList = jobPostConversionHelper
@@ -212,28 +215,26 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	private JpJobType getJobTypeDetails(JobPostDTO dto) {
 		List<AdmInventoryDetail> invList = hibernateTemplate.find(
-				FIND_INVENTORY_DETAILS_BY_INV_ID, Integer.valueOf(dto.getJobPostingType()));
-		JpJobType jobType=new JpJobType();
+				FIND_INVENTORY_DETAILS_BY_INV_ID,
+				Integer.valueOf(dto.getJobPostingType()));
+		JpJobType jobType = new JpJobType();
 		if (!invList.isEmpty()) {
 			AdmInventoryDetail admInventoryDetail = invList.get(0);
-			if (MMJBCommonConstants.JOB_TYPE_COMBO
-					.equals(admInventoryDetail.getProductType())) {
+			if (MMJBCommonConstants.JOB_TYPE_COMBO.equals(admInventoryDetail
+					.getProductType())) {
 				List<JpJobTypeCombo> comboList = hibernateTemplate.find(
 						"from JpJobTypeCombo combo where combo.comboId=?",
 						admInventoryDetail.getProductId());
 				if (!comboList.isEmpty()) {
 					JpJobTypeCombo combo = comboList.get(0);
 					if (null != combo.getJobType()
-							&& combo.getJobType()
-									.equalsIgnoreCase(
-											MMJBCommonConstants.STANDARD_JOB_POSTING)) {
-						jobType = hibernateTemplate
-								.load(JpJobType.class,
-										MMJBCommonConstants.JOB_POST_TYPE_POSTING_ID);
+							&& combo.getJobType().equalsIgnoreCase(
+									MMJBCommonConstants.STANDARD_JOB_POSTING)) {
+						jobType = hibernateTemplate.load(JpJobType.class,
+								MMJBCommonConstants.JOB_POST_TYPE_POSTING_ID);
 					} else if (null != combo.getJobType()
-							&& combo.getJobType()
-									.equalsIgnoreCase(
-											MMJBCommonConstants.JOB_POSTING_SLOT)) {
+							&& combo.getJobType().equalsIgnoreCase(
+									MMJBCommonConstants.JOB_POSTING_SLOT)) {
 						jobType = hibernateTemplate.load(JpJobType.class,
 								MMJBCommonConstants.JOB_POST_TYPE_SLOT_ID);
 					}
@@ -301,7 +302,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 				dto = jobPostConversionHelper.transformJpJobToJobPostDTO(job);
 				int nsCustomerID = 0;
-				List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer.valueOf(dto.getFacilityId()));
+				List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer
+						.valueOf(dto.getFacilityId()));
 				nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
 				dto.setCustomerNo(String.valueOf(nsCustomerID));
 			}
@@ -313,8 +315,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * This method is called fetch all the job type & respective addons 
-	 * @param 
+	 * This method is called fetch all the job type & respective addons
+	 * 
+	 * @param
 	 * @return JobPostingPlanDTO list
 	 */
 	@Override
@@ -408,11 +411,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 				// System should deactivate the job posting which are in
 				// “Active”
 				// status
-				Date startDt=new Date(job.getStartDt().getTime());
+				Date startDt = new Date(job.getStartDt().getTime());
 				long startDateAsTimestamp = startDt.getTime();
 				long currentTimestamp = new Date().getTime();
 				long endtDateAsTimestamp = job.getEndDt().getTime();
-				if((startDateAsTimestamp<=currentTimestamp && endtDateAsTimestamp>currentTimestamp)){
+				if ((startDateAsTimestamp <= currentTimestamp && endtDateAsTimestamp > currentTimestamp)) {
 					job.setActive(MMJBCommonConstants.INACTIVE);
 					hibernateTemplate.save(job);
 					bDeactivate = true;
@@ -434,14 +437,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean repostJob(int jobId, int userId) {
+	public boolean repostJob(int jobId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		Date startDt = new Date(job.getStartDt().getTime());
 		Date endtDt = new Date(job.getEndDt().getTime());
 		long endtDateAsTimestamp = endtDt.getTime();
 		long starttDateAsTimestamp = startDt.getTime();
 		long currentTimestamp = new Date().getTime();
-		
+
 		boolean bRepost = false;
 		try {
 			// Check credit detail for the specified job- starts
@@ -455,7 +458,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				}
 				// Check credit detail for the specified job- Ends
 				if ((job.getActive() == 1 && endtDateAsTimestamp < currentTimestamp)
-						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)){
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)) {
 					// Repost the inactive and expired job and extend the end
 					// date
 					// to one month
@@ -511,7 +514,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
-				// TODO Need to check the end date condition once the Package and plan functionality finalized
+				// TODO Need to check the end date condition once the Package
+				// and plan functionality finalized
 				query = hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
@@ -653,101 +657,119 @@ public class JobPostDAOImpl implements JobPostDAO {
 	/**
 	 * This method is called to retreive all the scheduled jobs
 	 */
-	public List<JobPostDTO> retreiveAllScheduledJobs(){
-		//Schedule Jobs			
+	public List<JobPostDTO> retreiveAllScheduledJobs() {
+		// Schedule Jobs
 		try {
-			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
-			return jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
+			List<JpJob> scheduledJobs = hibernateTemplate
+					.find(FIND_SCHEDULED_JOBS);
+			return jobPostConversionHelper
+					.transformJpJobListToJobPostDTOList(scheduledJobs);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
-		}			
-		return null;		
+		}
+		return null;
 	}
-	
-	
+
 	/**
 	 * This method is called to retreive all the expired jobs
 	 */
-	public List<JobPostDTO> retreiveAllExpiredJobs(){
-		//Schedule Jobs			
+	public List<JobPostDTO> retreiveAllExpiredJobs() {
+		// Schedule Jobs
 		try {
-			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
-			return jobPostConversionHelper.transformJpJobListToJobPostDTOList(scheduledJobs);
+			List<JpJob> scheduledJobs = hibernateTemplate.find(
+					FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
+			return jobPostConversionHelper
+					.transformJpJobListToJobPostDTOList(scheduledJobs);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
-		}			
-		return null;		
+		}
+		return null;
 	}
-	
+
 	@Override
 	public boolean executeActiveJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeActiveJobWorker()");
-		//Update Jobs as expired
+		// Update Jobs as expired
 		try {
-			
-			//Identify the expired jobs
-			List<JpJob> expiredJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS, getOneDayBeforeDate());
-			
-			for(JpJob job : expiredJobs){
+
+			// Identify the expired jobs
+			List<JpJob> expiredJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS,
+					getOneDayBeforeDate());
+
+			for (JpJob job : expiredJobs) {
 				try {
-					job.setActive((byte)0);
+					job.setActive((byte) 0);
 					hibernateTemplate.saveOrUpdate(job);
 				} catch (Exception e) {
-					LOGGER.error("Failed to mark job as expired for job Id  " +job.getJobId());
+					LOGGER.error("Failed to mark job as expired for job Id  "
+							+ job.getJobId());
 					LOGGER.error(e);
 				}
-				LOGGER.info("ActiveJobsJobWorker-> Marked Job as expired successfully....." +job.getJobId());
+				LOGGER.info("ActiveJobsJobWorker-> Marked Job as expired successfully....."
+						+ job.getJobId());
 			}
-			
+
 		} catch (DataAccessException e) {
 			LOGGER.error("Failed to retreive expired jobs  ");
 			LOGGER.error(e);
 		}
-		
-		//Schedule Jobs
+
+		// Schedule Jobs
 		try {
-			
-			//Identify the scheduled jobs
-			List<JpJob> scheduledJobs = hibernateTemplate.find(FIND_SCHEDULED_JOBS);
-			
-			for(JpJob job : scheduledJobs){						
-				
-				//Validating with net suite data to check whether the employer is featured or not 
-				//And to know, whether the employer is applicable for free job posting
-				JobPostDTO dto = validateJobPost(job, jobsList);					
-				
-				//Retreiving job posting type based on the job id
-				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());		
-				
-				if(!jpAuditList.isEmpty()){
+
+			// Identify the scheduled jobs
+			List<JpJob> scheduledJobs = hibernateTemplate
+					.find(FIND_SCHEDULED_JOBS);
+
+			for (JpJob job : scheduledJobs) {
+
+				// Validating with net suite data to check whether the employer
+				// is featured or not
+				// And to know, whether the employer is applicable for free job
+				// posting
+				JobPostDTO dto = validateJobPost(job, jobsList);
+
+				// Retreiving job posting type based on the job id
+				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find(
+						"from AdmFacilityJpAudit audit where audit.id.jobId=?",
+						job.getJobId());
+
+				if (!jpAuditList.isEmpty()) {
 					AdmFacilityJpAudit audit = jpAuditList.get(0);
-					
-					//Checking for available credits
-					if(!dto.isXmlStartEndDateEnabled() 
-							&& !validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
-						LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
-					}else{
+
+					// Checking for available credits
+					if (!dto.isXmlStartEndDateEnabled()
+							&& !validateAndDecreaseAvailableCredits(audit
+									.getId().getInventoryDetailId(), job
+									.getAdmFacility().getFacilityId())) {
+						LOGGER.error(job.getName()
+								+ " Doesn't have sufficient credits to post the job "
+								+ job.getJobId());
+					} else {
 						try {
-							job.setFeatured((byte)(dto.isbFeatured()?1:0));
+							job.setFeatured((byte) (dto.isbFeatured() ? 1 : 0));
 							job.setStartDt(new Date());
 							job.setEndDt(addDaysToCurrentDate());
-							job.setActive((byte)1);
+							job.setActive((byte) 1);
 							hibernateTemplate.saveOrUpdate(job);
 						} catch (Exception e) {
-							LOGGER.error("Failed to renew the job as Active " +job.getJobId());
+							LOGGER.error("Failed to renew the job as Active "
+									+ job.getJobId());
 							LOGGER.error(e);
 						}
-						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
+						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....."
+								+ job.getJobId());
 					}
 
-				}else{
-					LOGGER.info("There is no job type with the given Job Id: " +job.getJobId());
+				} else {
+					LOGGER.info("There is no job type with the given Job Id: "
+							+ job.getJobId());
 				}
 			}
-			
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
-		}	
+		}
 		LOGGER.info("Executed -> executeActiveJobWorker()");
 		return false;
 	}
@@ -755,113 +777,131 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean executeAutoRenewalJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeAutoRenewalJobWorker()");
-		//Schedule Jobs
+		// Schedule Jobs
 		try {
 
-			List<JpJob> autoRenewJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
-			
-			for(JpJob job : autoRenewJobs){		
-				
-				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find("from AdmFacilityJpAudit audit where audit.id.jobId=?", job.getJobId());
-				
-				JobPostDTO dto = validateJobPost(job, jobsList);	
-				
-				if(!jpAuditList.isEmpty()){
+			List<JpJob> autoRenewJobs = hibernateTemplate.find(
+					FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
+
+			for (JpJob job : autoRenewJobs) {
+
+				List<AdmFacilityJpAudit> jpAuditList = hibernateTemplate.find(
+						"from AdmFacilityJpAudit audit where audit.id.jobId=?",
+						job.getJobId());
+
+				JobPostDTO dto = validateJobPost(job, jobsList);
+
+				if (!jpAuditList.isEmpty()) {
 					AdmFacilityJpAudit audit = jpAuditList.get(0);
-					//Checking for available credits
-					if(!dto.isXmlStartEndDateEnabled() 
-							&& !validateAndDecreaseAvailableCredits(audit.getId().getInventoryDetailId(), job.getAdmFacility().getFacilityId())){
-						LOGGER.error(job.getName()+" Doesn't have sufficient credits to post the job " +job.getJobId());
-					}else{
+					// Checking for available credits
+					if (!dto.isXmlStartEndDateEnabled()
+							&& !validateAndDecreaseAvailableCredits(audit
+									.getId().getInventoryDetailId(), job
+									.getAdmFacility().getFacilityId())) {
+						LOGGER.error(job.getName()
+								+ " Doesn't have sufficient credits to post the job "
+								+ job.getJobId());
+					} else {
 						try {
-							job.setFeatured((byte)(dto.isbFeatured()?1:0));
+							job.setFeatured((byte) (dto.isbFeatured() ? 1 : 0));
 							job.setStartDt(new Date());
 							job.setEndDt(addDaysToCurrentDate());
-							job.setActive((byte)1);
+							job.setActive((byte) 1);
 							hibernateTemplate.saveOrUpdate(job);
 						} catch (Exception e) {
-							LOGGER.error("Failed to renew the job as Active " +job.getJobId());
+							LOGGER.error("Failed to renew the job as Active "
+									+ job.getJobId());
 							LOGGER.error(e);
 						}
-						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....." +job.getJobId());
+						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....."
+								+ job.getJobId());
 					}
 
-				}else{
-					LOGGER.info("There is no job type with the given Job Id: " +job.getJobId());
+				} else {
+					LOGGER.info("There is no job type with the given Job Id: "
+							+ job.getJobId());
 				}
 			}
-			
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> executeActiveJobWorker()");
 		return false;
 	}
-	
+
 	/**
-	 * This method is called to validate available credits against the job id
-	 * if the credits are not available it will return false otherwise it will 
-	 * post the job/renewal the job and will decrease the credits.
+	 * This method is called to validate available credits against the job id if
+	 * the credits are not available it will return false otherwise it will post
+	 * the job/renewal the job and will decrease the credits.
 	 * 
 	 * @param invDtlId
 	 * @param facilityId
-	 * @return boolean	
+	 * @return boolean
 	 */
-	public boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId){
-		
+	public boolean validateAndDecreaseAvailableCredits(int invDtlId,
+			int facilityId) {
+
 		LOGGER.info("Executing -> decreaseAvailableCredits()");
-		//Schedule Jobs
-		try {			
-			//Based on inventory detail id, we are retreiving product id
-			//For example if the product id is having multiple purchases, we are going to dedut form old purchases
-			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find("from AdmInventoryDetail dtl where dtl.invDetailId=?", invDtlId);			
-			if(!invDtlList.isEmpty()){				
+		// Schedule Jobs
+		try {
+			// Based on inventory detail id, we are retreiving product id
+			// For example if the product id is having multiple purchases, we
+			// are going to dedut form old purchases
+			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find(
+					"from AdmInventoryDetail dtl where dtl.invDetailId=?",
+					invDtlId);
+			if (!invDtlList.isEmpty()) {
 				AdmInventoryDetail invDtl = invDtlList.get(0);
-				Object[] inputs = {invDtl.getProductId(), facilityId};
-				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);				
-				if(!invDtls.isEmpty()){					
+				Object[] inputs = { invDtl.getProductId(), facilityId };
+				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(
+						FIND_INVENTORY_DETAILS, inputs);
+				if (!invDtls.isEmpty()) {
 					try {
-						//Deducting available quantity
+						// Deducting available quantity
 						AdmInventoryDetail dtl = invDtls.get(0);
-						dtl.setAvailableqty(dtl.getAvailableqty()-1);
+						dtl.setAvailableqty(dtl.getAvailableqty() - 1);
 						hibernateTemplate.saveOrUpdate(dtl);
 					} catch (Exception e) {
-						LOGGER.error(" Exception has been occured while the posting the job for Inventory Detail Id: " +invDtlId);
-						
-					}	
+						LOGGER.error(" Exception has been occured while the posting the job for Inventory Detail Id: "
+								+ invDtlId);
+
+					}
 					return true;
-				}else{
-					LOGGER.info("There is no job type with the given inventory Detail Id: " +invDtlId);
+				} else {
+					LOGGER.info("There is no job type with the given inventory Detail Id: "
+							+ invDtlId);
 					return false;
-				}	
+				}
 			}
-			
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> decreaseAvailableCredits()");
 		return false;
 	}
-	
-	private String getOneDayBeforeDate(){
-		
+
+	private String getOneDayBeforeDate() {
+
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
-		cal.add(Calendar.DATE, -1);	
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",
+				Locale.US);
+		cal.add(Calendar.DATE, -1);
 		return dateFormat.format(cal.getTime());
 	}
-	
-	private Date addDaysToCurrentDate(){
-		
+
+	private Date addDaysToCurrentDate() {
+
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, MMJBCommonConstants.AUTO_RENEWAL_DAYS);	
+		cal.add(Calendar.DATE, MMJBCommonConstants.AUTO_RENEWAL_DAYS);
 		return cal.getTime();
 	}
 
 	/**
 	 * @Author kartikm
-	 * @Purpose:This method is called to retrieve all posted job 
-	 * by Advanced search job id
+	 * @Purpose:This method is called to retrieve all posted job by Advanced
+	 *               search job id
 	 * @Created:10sept, 2012
 	 * @Param :advSearchId
 	 * @Return :List<JobPostDTO>
@@ -877,7 +917,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 					.getCurrentSession()
 					.createQuery(
 							"SELECT a from JpJob a where a.jobId='"
-									+ advSearchId + "' and (a.startDt is not NULL and a.endDt is not null) ");
+									+ advSearchId
+									+ "' and (a.startDt is not NULL and a.endDt is not null) ");
 			jobs = query.list();
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
@@ -886,34 +927,36 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
-	
-	
-	public boolean validateAvailableCredits(int invDtlId, int facilityId){
-		
-		LOGGER.info("Executing -> decreaseAvailableCredits()");		
-		try {			
-			//Based on inventory detail id, we are retreiving combo id 
-			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find("from AdmInventoryDetail dtl where dtl.invDetailId=?", invDtlId);			
-			if(!invDtlList.isEmpty()){				
+
+	public boolean validateAvailableCredits(int invDtlId, int facilityId) {
+
+		LOGGER.info("Executing -> decreaseAvailableCredits()");
+		try {
+			// Based on inventory detail id, we are retreiving combo id
+			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find(
+					"from AdmInventoryDetail dtl where dtl.invDetailId=?",
+					invDtlId);
+			if (!invDtlList.isEmpty()) {
 				AdmInventoryDetail invDtl = invDtlList.get(0);
-				Object[] inputs = {invDtl.getProductId(), facilityId};
-				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);				
-				if(!invDtls.isEmpty()){					
+				Object[] inputs = { invDtl.getProductId(), facilityId };
+				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(
+						FIND_INVENTORY_DETAILS, inputs);
+				if (!invDtls.isEmpty()) {
 					LOGGER.info("Having sufficient credits to post the job");
 					return true;
-				}else{
-					LOGGER.info("Do not have sufficient credits to post the job for the given inventory Detail Id: " +invDtlId);
+				} else {
+					LOGGER.info("Do not have sufficient credits to post the job for the given inventory Detail Id: "
+							+ invDtlId);
 					return false;
 				}
 			}
-			
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> decreaseAvailableCredits()");
 		return false;
 	}
-	
 
 	/**
 	 * @Author kartikm
@@ -940,7 +983,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			// startDateValue=dateConveter(startdateValue);
 			Calendar currentDate = Calendar.getInstance();
 			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MM/dd/yyyy HH:mm:ss",Locale.US);
+					"MM/dd/yyyy HH:mm:ss", Locale.US);
 			try {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
@@ -969,9 +1012,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * @author kartikm 
-	 * @Purpose:Date Conversion method name dateConveter that is for
-	 *         Converting from MM/dd/yyyy HH:mm:ss to yyyy-MM-dd HH:mm:ss
+	 * @author kartikm
+	 * @Purpose:Date Conversion method name dateConveter that is for Converting
+	 *               from MM/dd/yyyy HH:mm:ss to yyyy-MM-dd HH:mm:ss
 	 * @Created:Sept 12, 2012
 	 * @param date
 	 * @return dateValue
@@ -996,10 +1039,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	/**
-	 * @author kartikm 
-	 * @Purpose: Two date Different method name is twoDateDifferentValue
-	 *         that compare number of day start date and end date
-	 * @Created:Sept 12, 2012        
+	 * @author kartikm
+	 * @Purpose: Two date Different method name is twoDateDifferentValue that
+	 *           compare number of day start date and end date
+	 * @Created:Sept 12, 2012
 	 * @param todayDate
 	 * @param endDateValue
 	 * @return numberOfDays
@@ -1020,21 +1063,21 @@ public class JobPostDAOImpl implements JobPostDAO {
 			LOGGER.info("Info data error for date conversion");
 		}
 		return numberOfDays;
-	}	
-	
+	}
+
 	/**
 	 * 
 	 * @param job
 	 * @param jobsList
 	 * @return
 	 */
-	private JobPostDTO validateJobPost(JpJob job, List<JobPostDTO> jobsList){
-		for(JobPostDTO dto : jobsList){
-			if(dto.getJobId() == job.getJobId()){
+	private JobPostDTO validateJobPost(JpJob job, List<JobPostDTO> jobsList) {
+		for (JobPostDTO dto : jobsList) {
+			if (dto.getJobId() == job.getJobId()) {
 				return dto;
 			}
 		}
-		return new JobPostDTO();		
+		return new JobPostDTO();
 	}
 
 	@Override
@@ -1061,24 +1104,28 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return invDetailId;
 	}
+
 	/**
-	 * This method is used to get the net suite customer id based on
-	 * adm facility id.
+	 * This method is used to get the net suite customer id based on adm
+	 * facility id.
+	 * 
 	 * @param int admFacilityID
 	 * @return int NSCustomerID
 	 */
-	
+
 	public List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID) {
 
 		List<FacilityDTO> admFacilityDTOList = new ArrayList<FacilityDTO>();
 		try {
 			List<AdmFacility> admFacilityList = hibernateTemplate
-					.find(" from  AdmFacility WHERE  facilityId  = '" + admFacilityID + "'");
+					.find(" from  AdmFacility WHERE  facilityId  = '"
+							+ admFacilityID + "'");
 
 			if (admFacilityList != null) {
 				for (AdmFacility admFacilityObj : admFacilityList) {
 					FacilityDTO admFacilityDTO = new FacilityDTO();
-					admFacilityDTO.setNsCustomerID(admFacilityObj.getNsCustomerID());
+					admFacilityDTO.setNsCustomerID(admFacilityObj
+							.getNsCustomerID());
 					admFacilityDTOList.add(admFacilityDTO);
 				}
 			}
@@ -1088,5 +1135,5 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return admFacilityDTOList;
 	}
-	
+
 }

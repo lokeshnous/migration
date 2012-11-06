@@ -34,7 +34,9 @@ public interface JobPostService {
 
 	boolean deactivateJob(int jobId, int userId);
 
-	boolean repostJob(int jobId, int userId);
+	//boolean repostJob(int jobId, int userId);
+	
+	boolean repostJob(int jobId);
 
 	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int employerId,
 			int offset, int noOfRecords);

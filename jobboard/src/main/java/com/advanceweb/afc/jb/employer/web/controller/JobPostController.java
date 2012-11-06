@@ -55,7 +55,7 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping("/employer")
-public class JobPostController extends AbstractController{
+public class JobPostController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostController.class);
@@ -71,7 +71,7 @@ public class JobPostController extends AbstractController{
 
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
-	
+
 	@Autowired
 	private AdService adService;
 
@@ -181,7 +181,7 @@ public class JobPostController extends AbstractController{
 		getAdsForJobPost(request, session, model);
 		return model;
 	}
-	
+
 	/**
 	 * Get Ads for job Post page
 	 * 
@@ -207,9 +207,10 @@ public class JobPostController extends AbstractController{
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
-	
+
 	/**
 	 * Get Ads for manage job Post page
 	 * 
@@ -228,16 +229,16 @@ public class JobPostController extends AbstractController{
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			model.addObject("adPageTop", bannerString);
-			
+
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
-
 
 	/**
 	 * This method is called to save the job details
@@ -519,18 +520,20 @@ public class JobPostController extends AbstractController{
 		// Populating Job Post Type Drop down
 		List<DropDownDTO> jbPostingTypeList = populateDropDowns(session, jobId,
 				jobPostForm, model, companyList);
-		//Depending on the job status, enable or disable either whole 
-		//form or particular fields in the form 
+		// Depending on the job status, enable or disable either whole
+		// form or particular fields in the form
 		if (null != readOnly) {
-			//if the readOnly flag is true(it is view action) then make whole form readOnly
-			//if readOnly is false then its edit screen. Depending on the 
-			//job status(Active, Inactive, Scheduled, Draft, Expired) enable & disable the form fields   
+			// if the readOnly flag is true(it is view action) then make whole
+			// form readOnly
+			// if readOnly is false then its edit screen. Depending on the
+			// job status(Active, Inactive, Scheduled, Draft, Expired) enable &
+			// disable the form fields
 			if (readOnly.equalsIgnoreCase("true")) {
 				jobPostForm.setReadOnly(true);
 				model.setViewName(POST_NEW_JOBS);
 			} else if (readOnly.equalsIgnoreCase("false")) {
-				enableJobPostFormFieldsByJobStatus(jobPostForm, model, jobStatus, jobPostType,
-						jbPostingTypeList,facilityId);
+				enableJobPostFormFieldsByJobStatus(jobPostForm, model,
+						jobStatus, jobPostType, jbPostingTypeList, facilityId);
 			}
 		}
 		model.addObject(JOB_POST_FORM, jobPostForm);
@@ -538,35 +541,43 @@ public class JobPostController extends AbstractController{
 	}
 
 	/**
-	 * This method will set the flags readOnly, activeOrInactive, enableJobTitle depending 
-	 * on the status of the jobs & job posting type with which job has been posted 
+	 * This method will set the flags readOnly, activeOrInactive, enableJobTitle
+	 * depending on the status of the jobs & job posting type with which job has
+	 * been posted
+	 * 
 	 * @param jobPostForm
 	 * @param model
 	 * @param jobStatus
 	 * @param jobPostType
 	 * @param jbPostingTypeList
 	 */
-	private void enableJobPostFormFieldsByJobStatus(JobPostForm jobPostForm, ModelAndView model,
-			String jobStatus, int jobPostType,
-			List<DropDownDTO> jbPostingTypeList,int facilityId) {
-		//If the job status is Active or Inactive then set readOnly to true(disable whole form)
-		//Also set activeOrInactive to true to enable Job title & Job description for Active & Inactive jobs
-		//check if job is posted with slot posting type then set enableJobTitle to true. Job title is enabled for only slot posting
+	private void enableJobPostFormFieldsByJobStatus(JobPostForm jobPostForm,
+			ModelAndView model, String jobStatus, int jobPostType,
+			List<DropDownDTO> jbPostingTypeList, int facilityId) {
+		// If the job status is Active or Inactive then set readOnly to
+		// true(disable whole form)
+		// Also set activeOrInactive to true to enable Job title & Job
+		// description for Active & Inactive jobs
+		// check if job is posted with slot posting type then set enableJobTitle
+		// to true. Job title is enabled for only slot posting
 		if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
 				|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus)) {
 			jobPostForm.setReadOnly(true);
-			//If job status is either Active or Inactive then setting activeOrInactive to true
+			// If job status is either Active or Inactive then setting
+			// activeOrInactive to true
 			jobPostForm.setActiveOrInactive(true);
-			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService.populateJobPostingTypeDropdown(facilityId, jobPostType);
+			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
+					.populateJobPostingTypeDropdown(facilityId, jobPostType);
 			boolean flag = false;
-			//By default select the job post type with which job has been posted in the job post type drop down 
+			// By default select the job post type with which job has been
+			// posted in the job post type drop down
 			for (DropDownDTO dropDownDto : jbPostingTypeList) {
-				flag = enableJobTitleAndDefaultJobPostType(jobPostForm, jobStatus,
-						jobPostType, jobPostTypeCombo,dropDownDto);
+				flag = enableJobTitleAndDefaultJobPostType(jobPostForm,
+						jobStatus, jobPostType, jobPostTypeCombo, dropDownDto);
 			}
-			if(flag){
-				if(jobPostTypeCombo.get(0).getOptionName().contains(MMJBCommonConstants.SLOT_POSTING))
-				{
+			if (flag) {
+				if (jobPostTypeCombo.get(0).getOptionName()
+						.contains(MMJBCommonConstants.SLOT_POSTING)) {
 					jobPostForm.setEnableJobTitle(true);
 				}
 				jbPostingTypeList.add(jobPostTypeCombo.get(0));
@@ -583,8 +594,9 @@ public class JobPostController extends AbstractController{
 	}
 
 	/**
-	 * This method will check if job post is of type slot posting then enable job title
-	 * Also sets the default value for job post type drop down
+	 * This method will check if job post is of type slot posting then enable
+	 * job title Also sets the default value for job post type drop down
+	 * 
 	 * @param jobPostForm
 	 * @param jobStatus
 	 * @param jobPostType
@@ -592,16 +604,16 @@ public class JobPostController extends AbstractController{
 	 * @param dropDownDto
 	 * @return flag
 	 */
-	private boolean enableJobTitleAndDefaultJobPostType(JobPostForm jobPostForm,
-			String jobStatus, int jobPostType,
-			List<DropDownDTO> jobPostTypeCombo,
-			DropDownDTO dropDownDto) {
-		 boolean flag = false;
-		//if the job post is slot posting then enable job title 
-		if ((jobPostType == Integer.parseInt(dropDownDto.getOptionId()) ||
-				jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())) &&
-				jobPostTypeCombo.get(0).getOptionName().contains(MMJBCommonConstants.SLOT_POSTING)){
-				
+	private boolean enableJobTitleAndDefaultJobPostType(
+			JobPostForm jobPostForm, String jobStatus, int jobPostType,
+			List<DropDownDTO> jobPostTypeCombo, DropDownDTO dropDownDto) {
+		boolean flag = false;
+		// if the job post is slot posting then enable job title
+		if ((jobPostType == Integer.parseInt(dropDownDto.getOptionId()) || jobPostTypeCombo
+				.get(0).getOptionName().equals(dropDownDto.getOptionName()))
+				&& jobPostTypeCombo.get(0).getOptionName()
+						.contains(MMJBCommonConstants.SLOT_POSTING)) {
+
 			jobPostForm.setEnableJobTitle(true);
 		}
 		flag = setJobPostTypeDropDownDefaultVal(jobPostForm, jobStatus,
@@ -611,6 +623,7 @@ public class JobPostController extends AbstractController{
 
 	/**
 	 * This method sets the default value for job post type drop down
+	 * 
 	 * @param jobPostForm
 	 * @param jobStatus
 	 * @param jobPostType
@@ -620,25 +633,29 @@ public class JobPostController extends AbstractController{
 	 */
 	private boolean setJobPostTypeDropDownDefaultVal(JobPostForm jobPostForm,
 			String jobStatus, int jobPostType,
-			List<DropDownDTO> jobPostTypeCombo, DropDownDTO dropDownDto
-			) {
+			List<DropDownDTO> jobPostTypeCombo, DropDownDTO dropDownDto) {
 		boolean flag = false;
-		//if job post type id(inventory detail id) is not there in the drop down then 
-		//check if job post type name with the drop down option name
-		if(!(jobPostType == Integer.parseInt(dropDownDto.getOptionId()))){
-			if(jobPostTypeCombo.get(0).getOptionName().equals(dropDownDto.getOptionName())){
+		// if job post type id(inventory detail id) is not there in the drop
+		// down then
+		// check if job post type name with the drop down option name
+		if (!(jobPostType == Integer.parseInt(dropDownDto.getOptionId()))) {
+			if (jobPostTypeCombo.get(0).getOptionName()
+					.equals(dropDownDto.getOptionName())) {
 				if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
-						|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus) || 
-						MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)) {
-					dropDownDto.setOptionId(jobPostTypeCombo.get(0).getOptionId());	
-				}else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
-						|| MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus)) {
+						|| MMJBCommonConstants.POST_JOB_INACTIVE
+								.equals(jobStatus)
+						|| MMJBCommonConstants.POST_JOB_EXPIRED
+								.equals(jobStatus)) {
+					dropDownDto.setOptionId(jobPostTypeCombo.get(0)
+							.getOptionId());
+				} else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
+						|| MMJBCommonConstants.POST_JOB_SCHEDULED
+								.equals(jobStatus)) {
 					jobPostForm.setJobPostingType(dropDownDto.getOptionId());
 				}
-			}
-			else{
-				//if job post type name is not there in drop down then add this 
-				//job post type to drop down
+			} else {
+				// if job post type name is not there in drop down then add this
+				// job post type to drop down
 				flag = true;
 			}
 		}
@@ -816,8 +833,8 @@ public class JobPostController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
-		int userId=0;
-		int facilityId=0;
+		int userId = 0;
+		int facilityId = 0;
 		if (null != session.getAttribute(MMJBCommonConstants.USER_ID)) {
 			userId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
@@ -848,18 +865,19 @@ public class JobPostController extends AbstractController{
 		autoRenewList.add(dto);
 		autoRenewList.add(downDTO);
 		int page = 1;
-		 int displayRecordsPerPage=10;
-		 if(null!=request.getParameter("noOfPage")){
-			 displayRecordsPerPage =Integer.parseInt(request.getParameter("noOfPage"));
-			 jobPostform.setNoOfPage(displayRecordsPerPage);
-		 }
+		int displayRecordsPerPage = 10;
+		if (null != request.getParameter("noOfPage")) {
+			displayRecordsPerPage = Integer.parseInt(request
+					.getParameter("noOfPage"));
+			jobPostform.setNoOfPage(displayRecordsPerPage);
+		}
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		int recordsPerPage = 0;
 
 		int noOfRecords = 0;
-		
+
 		if (userId > 0) {
 			if (null == jobStatus || jobStatus.isEmpty()) {
 
@@ -1066,8 +1084,7 @@ public class JobPostController extends AbstractController{
 						userDTO.getFeaturedEndDate()));
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
-			JobPostDTO jobPostDTO = employerJobPost
-					.retrieveJobById(jobId);
+			JobPostDTO jobPostDTO = employerJobPost.retrieveJobById(jobId);
 			if (null != jobPostDTO) {
 				if (jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_EXPIRED
 						&& jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_INACTIVE) {
@@ -1100,9 +1117,14 @@ public class JobPostController extends AbstractController{
 				}
 			}
 			// validate and check the credit Ends
-			boolean result = employerJobPost
-					.repostJob(jobId, (Integer) session
-							.getAttribute(MMJBCommonConstants.USER_ID));
+
+			// Commented and modified for code review issue fixes
+			/*
+			 * boolean result = employerJobPost .repostJob(jobId, (Integer)
+			 * session .getAttribute(MMJBCommonConstants.USER_ID));
+			 */
+
+			boolean result = employerJobPost.repostJob(jobId);
 
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, repostFail);

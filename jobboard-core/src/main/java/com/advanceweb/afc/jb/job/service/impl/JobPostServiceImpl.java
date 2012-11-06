@@ -106,8 +106,8 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public boolean repostJob(int jobId, int userId) {
-		return employerJobPostDAO.repostJob(jobId, userId);
+	public boolean repostJob(int jobId) {
+		return employerJobPostDAO.repostJob(jobId);
 	}
 
 	@Override
