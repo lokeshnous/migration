@@ -3083,6 +3083,8 @@ input.job_seeker_Resume {
 	padding: 10px 0px 10px;
 }
 
+.rowBox #container {width:280px !important; float: right;}
+
 .LightGrayBG td {
 	border-bottom: none !important;
 }
