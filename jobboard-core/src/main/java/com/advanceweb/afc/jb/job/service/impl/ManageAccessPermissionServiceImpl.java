@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.ManageAccessPermissionDAO;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
@@ -97,17 +96,17 @@ public class ManageAccessPermissionServiceImpl implements
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public MerUser getUserListByEmail(String email) throws JobBoardServiceException{
-		MerUser merUser =null;
+	public UserDTO getUserListByEmail(String email) throws JobBoardServiceException{
+		UserDTO userDTO =null;
 		try {
-			merUser = accessPermissionDAO.getUserListByEmail(email);
+			userDTO = accessPermissionDAO.getUserListByEmail(email);
 		} catch (JobBoardDataException exc) {
 			LOGGER.debug(exc);
 			throw new JobBoardServiceException(
 					"Error while fetching the User List..." + exc);
 		}
 		
-		return merUser;
+		return userDTO;
 		
 	}
 }

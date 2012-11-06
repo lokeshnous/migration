@@ -209,16 +209,24 @@ public class JobPostConversionHelper<JobPostForm> {
 				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.US);
 		if (null != job.getStartDt()) {
 			jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
+			long millisInDay = 60 * 60 * 24 * 1000;
 			Date startDt = new Date(job.getStartDt().getTime());
-			long startDateAsTimestamp = startDt.getTime();
-			long currentTimestamp = MMUtils.getCurrentDateAndTime().getTime();
+			//Start date with out time
+			long startDate = startDt.getTime();
+			long startDateAsTimestamp = (startDate / millisInDay) * millisInDay;
+			//current date with out time
+			long dateOnly = new Date().getTime();
+			long currentTimestamp = (dateOnly / millisInDay) * millisInDay;
+
 			if (job.getActive() == 0 && startDateAsTimestamp > currentTimestamp) {
 				jobPostDTO.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 			} else if (null != job.getEndDt()) {
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-
+				//End date with out time
 				Date endtDt = new Date(job.getEndDt().getTime());
-				long endtDateAsTimestamp = endtDt.getTime();
+				long endDate = endtDt.getTime();
+				long endtDateAsTimestamp = (endDate / millisInDay)
+						* millisInDay;
 
 				if (job.getActive() == 1
 						&& endtDateAsTimestamp < currentTimestamp) {
@@ -238,7 +246,7 @@ public class JobPostConversionHelper<JobPostForm> {
 				long endtDateAsTimestamp = job.getEndDt().getTime();
 
 				if (job.getActive() == 1
-						&& endtDateAsTimestamp > currentTimestamp) {
+						&& endtDateAsTimestamp >= currentTimestamp) {
 					jobPostDTO.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 				}
 			}

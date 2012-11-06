@@ -29,6 +29,7 @@ import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 
 /**
@@ -181,16 +182,16 @@ public class ManageAccessPermissionController {
 			userDTO.setUserId(userDTOID.getUserId());
 		}
 
-		// try {
-		// MerUser merUser = manageAccessPermissionService
-		// .getUserListByEmail(manageAccessPermissionForm
-		// .getOwnerEmail());
-		// if (null != merUser && merUser.getUserId() > 0) {
-		// userDTO.setUserId(merUser.getUserId());
-		// }
-		// } catch (JobBoardServiceException ex) {
-		// LOGGER.error(ex);
-		// }
+		 try {
+		 UserDTO merUser = manageAccessPermissionService
+		 .getUserListByEmail(manageAccessPermissionForm
+		 .getOwnerEmail());
+		 if (null != merUser && merUser.getUserId() > 0) {
+		 userDTO.setUserId(merUser.getUserId());
+		 }
+		 } catch (JobBoardServiceException ex) {
+		 LOGGER.error(ex);
+		 }
 
 		empDTO.setMerUserDTO(userDTO);
 		try {

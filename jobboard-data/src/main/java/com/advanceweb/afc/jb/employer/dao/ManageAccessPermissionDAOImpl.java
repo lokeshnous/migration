@@ -447,7 +447,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	}
 
 	@Override
-	public MerUser getUserListByEmail(String email) {
+	public UserDTO getUserListByEmail(String email) {
 		MerUser user = null;
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
@@ -464,7 +464,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		} catch (Exception exception) {
 			LOGGER.error(exception);
 		}
-		return user;
+		return empHelper.transformMerUserToUserDTO(user);
 
 	}
 
