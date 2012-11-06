@@ -104,7 +104,7 @@
 								</div>
 									<span class="required">(Required)</span>
 							</div>
-								<div>
+								<div class="row">
 									<span class="lableText3"></span> <FONT color="red"> <c:if
 											test="${not empty errorMessage}">
 											<div id="errmsg" style="color: red" align="left">
