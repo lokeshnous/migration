@@ -421,7 +421,6 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 						userId);
 				mer.setFirstName(apd.getFirstName());
 				mer.setLastName(apd.getLastName());
-				mer.setEmail(apd.getEmail());
 				hibernateTemplateTracker.update(mer);
 				// update admfacilitycontact
 				AdmFacilityContact facility = hibernateTemplateCareers.get(
