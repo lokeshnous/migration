@@ -131,12 +131,12 @@ public class DateUtils {
 	 * @return Date object
 	 */
 
-	public static Date convertToDate(String date) {
+	public static java.util.Date convertToDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH);
-		Date convertedDate = null;
+		java.util.Date convertedDate = null;
 		try {
-			convertedDate = (Date) dateFormat.parse(date);
+			convertedDate = (java.util.Date) dateFormat.parse(date);
 		} catch (ParseException e) {
 			LOGGER.info(e);
 		}
