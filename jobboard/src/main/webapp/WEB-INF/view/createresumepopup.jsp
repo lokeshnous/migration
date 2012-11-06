@@ -55,7 +55,7 @@
 								} else if (data.duplicateResume != null) {
 									$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 								} else {
-									$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/saveCreateResume.html");
+									$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeBuilder.html");
 									$("form").attr("method", "GET");
 									$("#createResumeForm").submit();
 								}

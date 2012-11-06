@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -131,6 +132,13 @@ public class ResumeDaoImpl implements ResumeDao {
 		List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
 		List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resume,resumeDTO,resumeAttrib);
 		hibernateTemplate.saveOrUpdateAll(resumeProfileList);
+		
+		//update the resume title in the resume builder table
+		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("update ResBuilderResume set resumeName = :resumeName" +
+				" where resUploadResumeId = :resUploadResumeId");
+		query.setParameter("resumeName", resumeDTO.getResumeName());
+		query.setParameter("resUploadResumeId", resumeDTO.getUploadResumeId());
+		query.executeUpdate();
 		
 		return true;
 	}

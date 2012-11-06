@@ -237,10 +237,10 @@ public class ResumeController extends AbstractController{
 	 * @return model
 	 */
 	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
-	public ModelAndView editResume(CreateResume createResume,
-			@RequestParam(RESUME_ID) int resumeId) {
+	public ModelAndView editResume(@RequestParam(RESUME_ID) int resumeId) {
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-
+		
+		CreateResume createResume = new CreateResume();
 		transCreateResume.transformResumeDTOToCreateResume(createResume,
 				resumeDTO);
 		ModelAndView model = populateResumeDropDowns();		
@@ -570,10 +570,10 @@ public class ResumeController extends AbstractController{
 		ResumeDTO resumeDTO = new ResumeDTO();
 		ModelAndView model = new ModelAndView();
 		
-		resumeDTO = transCreateResume
-				.transformCreateResumeToResumeDTO(createResume);
-		resumeDTO.setUserId((Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID));
+		resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+		
+		resumeDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+		
 		resumeDTO = resumeService.createResume(resumeDTO);
 		
 		transCreateResume.transformResumeDTOToCreateResume(createResume, resumeDTO);
@@ -595,8 +595,9 @@ public class ResumeController extends AbstractController{
 
 		ModelAndView model = new ModelAndView();
 		
-		createResume.setUploadResumeId(String.valueOf(createResume
-				.getUploadResumeId()));
+		/*createResume.setUploadResumeId(String.valueOf(createResume
+				.getUploadResumeId()));*/
+		
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 		List<DropDownDTO> phoneTypeList = populateDropdownsService
@@ -679,10 +680,8 @@ public class ResumeController extends AbstractController{
 		CreateResume createResume =createResumed; 
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = new ResumeDTO();
-		createResume.setUserId((Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID));
-		String errorMessage = resumeValidator
-				.validateResumeBuilder(createResume);
+		createResume.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+		String errorMessage = resumeValidator.validateResumeBuilder(createResume);
 
 		if (!StringUtils.isEmpty(errorMessage)) {
 
@@ -695,7 +694,10 @@ public class ResumeController extends AbstractController{
 			model.setViewName(CREATE_RES_BUILDER);
 			return model;
 		}
-
+		
+		resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
+		resumeDTO = resumeService.createResume(resumeDTO);
+		
 		AddressDTO addDTO = transformJobSeekerRegistration
 				.createAddressDTO(createResume.getContactInfoForm());
 		ContactInformationDTO contactInfoDTO = transCreateResume

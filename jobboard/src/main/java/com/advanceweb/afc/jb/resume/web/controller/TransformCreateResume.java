@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.resume.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
@@ -28,11 +29,11 @@ public class TransformCreateResume {
 
 	public ResumeDTO transformCreateResumeToResumeDTO(CreateResume createResume) {
 		ResumeDTO resumeDTO = new ResumeDTO();
-		if (!("".equals(createResume.getUploadResumeId()))
-				&& createResume.getUploadResumeId() != null) {
+		if (!StringUtils.isEmpty(createResume.getUploadResumeId())) {
 			resumeDTO.setUploadResumeId(Integer.parseInt(createResume
 					.getUploadResumeId()));
 		}
+		resumeDTO.setUserId(createResume.getUserId());
 		resumeDTO.setResumeType(createResume.getResumeType());
 		resumeDTO.setResumeName(createResume.getResumeName());
 		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
@@ -284,7 +285,7 @@ public class TransformCreateResume {
 			dto.setBuilderResumeId(form.getBuilderResumeId());
 			dto.setResumeName(form.getResumeName());
 			dto.setUserId(form.getUserId());
-			dto.setUploadResumeId(Integer.valueOf(form.getUploadResumeId()));
+			//dto.setUploadResumeId(Integer.valueOf(form.getUploadResumeId()));
 		}
 
 		return dto;

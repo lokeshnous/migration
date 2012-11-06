@@ -168,7 +168,11 @@ public class ResumeValidator {
 					return "Hourly Pay Rate should contain only numeric values";
 				}
 
-				String errorMsg = validateWorkExpDt(form);
+				String errorMsg =  "Please fill the required fields"; 
+				if(!StringUtils.isEmpty(form.getStartDate()) && !StringUtils.isEmpty(form.getStartDate()))		
+				{	
+					errorMsg = validateWorkExpDt(form);
+				}
 				if(!errorMsg.isEmpty())
 				{
 					return errorMsg;
@@ -184,14 +188,15 @@ public class ResumeValidator {
 	 */
 	private String validateWorkExpDt(WorkExpForm form) {
 		String errorMsg = MMJBCommonConstants.EMPTY;
-		if (compareDates(form.getStartDate(), form.getEndDate())) {
-			errorMsg = jsWorkExpDateCompare;
-		}
 		if ((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form
 				.getStartDate()))
 				|| (!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form
 						.getEndDate()))) {
 			errorMsg = "Please enter valid date format";
+			return errorMsg;
+		}
+		if (compareDates(form.getStartDate(), form.getEndDate())) {
+			errorMsg = jsWorkExpDateCompare;
 		}
 		return errorMsg;
 	}
@@ -216,7 +221,8 @@ public class ResumeValidator {
 								.getEndDate()))) {
 					return "Please enter valid date format";
 				}
-				if (compareDates(form.getStartDate(), form.getEndDate())) {
+				if (!StringUtils.isEmpty(form.getStartDate()) && !StringUtils.isEmpty(form.getEndDate()) 
+						&& compareDates(form.getStartDate(), form.getEndDate())) {
 					return jsEducateDateCompare;
 				}
 			}
