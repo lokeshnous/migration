@@ -1252,7 +1252,7 @@ public class JobSearchController extends AbstractController {
 		int userId = 0;
 
 		if ((null != session.getAttribute(MMJBCommonConstants.USER_ID))
-				&& StringUtils.isEmpty(""
+				&& StringUtils.isNotEmpty(""
 						+ session.getAttribute(MMJBCommonConstants.USER_ID))) {
 
 			userId = (Integer) session
