@@ -16,9 +16,7 @@
 </head>
 
 <body class="job_board">
-	<div class="ad_page_top">
-	${adPageTop}
-	</div>
+	<div class="ad_page_top">${adPageTop}</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
 			<div class="main">
@@ -46,8 +44,7 @@
 							</div>
 						</div>
 						<div class="rowEvenNewSpacing">
-							<h2 class="noTopBottomBorder ">
-								${createResume.resumeName}</h2>
+							<h2 class="noTopBottomBorder ">${createResume.resumeName}</h2>
 							<br> <span>
 								<h3 class="marginTop3">
 									<c:out value="${createResume.desiredJobTitle}" />
@@ -58,6 +55,14 @@
 							<div class="clearfix"></div>
 							<span> <!--  <p class="marginTop3">Available 08/01/2012</p> -->
 							</span>
+							<div class="IconsArea">
+								<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"><div
+										class="download"></div></a>&nbsp; <a
+									href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div
+										class="printOrange"></div></a>
+							</div>
+
+
 						</div>
 						<!-- <div class="IconsArea">
 								<a href="#"><div class="download"></div></a>&nbsp; <a href="#"><div class="printOrange"></div></a>
@@ -75,9 +80,7 @@
 			<!--Start:MidContant-->
 			<div class="clearfix"></div>
 			<!-- content_wrapper -->
-			<div class="ad_wrapper">
-				${adPageBtm}
-			</div>
+			<div class="ad_wrapper">${adPageBtm}</div>
 			<!-- ad_wrapper -->
 
 		</div>
