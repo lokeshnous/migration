@@ -347,6 +347,7 @@ function validateNumber(event) {
 								%>
 								</div>
 								<span class="required">(Required)</span>
+							</div>
 								<div>
 								<span class="lableText3"></span> <FONT color="red"> <c:if
 										test="${not empty errorMessage}">
@@ -355,8 +356,7 @@ function validateNumber(event) {
 										</div>
 									</c:if>
 								</FONT>
-							</div>
-							</div>
+								</div>
 							<div>
 								<c:out value=""></c:out>
 							</div>

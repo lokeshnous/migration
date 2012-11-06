@@ -340,7 +340,8 @@
 								%>
 								</div>
 								<span class="required">(Required)</span>
-									<div>
+							</div>
+							<div>
 								<span class="lableText3"></span> <FONT color="red"> <c:if
 										test="${not empty errorMessage}">
 										<div id="errmsg" style="color: red" align="left">
@@ -348,7 +349,6 @@
 										</div>
 									</c:if>
 								</FONT>
-							</div>
 							</div>
 							<div>
 								<c:out value=""></c:out>
