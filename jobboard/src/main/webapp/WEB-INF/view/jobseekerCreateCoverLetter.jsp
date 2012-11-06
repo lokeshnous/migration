@@ -72,7 +72,7 @@
 							</div>	
 					<div class="row ">
 						<div class="rowEvenNewSpacing">
-								<span class="lableText3">
+								<span class="lableText7">
 								Cover Letter Name:
 								</span>
 								<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text"/>
@@ -82,18 +82,25 @@
 							</div>	
 											
 						<div class="rowEvenNewSpacing">
-								<span class="lableText3">
+								<span class="lableText7">
 								Body Text:
 								</span>
 								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
 								id="coverletterText"
 									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
 									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"/>
-								<p class="magrin_top0">
-								<span class="lableText3">
-								
+									<div class="required2" style="float:right; margin-right:15px;">(Required)</div>
+									</div>
+									
+								<div class="rowEvenNewSpacing magrin_top0">
+								<span class="lableText7">
+								&nbsp;
 								</span>
-								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.<div class="required2" style="float:right">(Required)</div>
+								<p class="magrin_top0">
+								<span class="lableText3 Padding0">
+								
+								
+								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.</span>
 								</p>
 							</div>						
 						<div class="rowEvenNewSpacing">
