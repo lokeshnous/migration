@@ -12,11 +12,11 @@ import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.jb.test.ServiceTest;
 
-public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
+public class ManageFeaturedEmployerProfileServiceTest extends ServiceTest {
 
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
-	private static final Logger LOGGER = Logger.getLogger(ManageFeatureEmployerProfileServiceTest.class);
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
+	private static final Logger LOGGER = Logger.getLogger(ManageFeaturedEmployerProfileServiceTest.class);
 	@Test
 	public void testSavedJobs() {
 		try {
@@ -31,7 +31,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 			companyProfileDTO.setLogoPath("Logo Path");
 
 			assertTrue("Saved Job",
-					manageFeatureEmployerProfile
+					manageFeaturedEmployerProfile
 							.saveEmployerProfile(companyProfileDTO));
 
 		} catch (Exception e) {
@@ -43,7 +43,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 	public void testGetEmployerDetails() {
 		try {
 
-			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+			CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
 					.getEmployerDetails(109);
 			assertTrue("Get Employer Details", companyProfileDTO != null);
 
@@ -56,7 +56,7 @@ public class ManageFeatureEmployerProfileServiceTest extends ServiceTest {
 	public void testGetEmployerAccountDetails() {
 		try {
 
-			List<EmployerProfileDTO> employerProfileDTO = manageFeatureEmployerProfile
+			List<EmployerProfileDTO> employerProfileDTO = manageFeaturedEmployerProfile
 					.getEmployerAccountDetails(2);
 			assertTrue("Get Employer Account Details",
 					employerProfileDTO != null);

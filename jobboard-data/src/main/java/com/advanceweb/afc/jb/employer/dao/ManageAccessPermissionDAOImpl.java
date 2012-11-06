@@ -48,7 +48,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	private EmployerRegistrationConversionHelper empHelper;
 	
 	@Autowired
-	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
+	private ManageFeaturedEmployerProfileDAO manageFeaturedEmployerProfileDAO;
 
 	private static final String VERIFY_EMAIL = "from MerUser where email = ? and deleteDt is NOT NULL";
 
@@ -140,7 +140,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				FIND_ADM_FACILITY, facilityIdP).get(0);
 
 		int nsCustomerId = 0;
-		List<FacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
+		List<FacilityDTO> admFacilityDTOList = manageFeaturedEmployerProfileDAO
 				.getNSCustomerIDFromAdmFacility(facilityIdP);
 		nsCustomerId = admFacilityDTOList.get(0).getNsCustomerID();
 		

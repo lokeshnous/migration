@@ -130,9 +130,9 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerDeleg
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerNewsFeedService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/EmployerRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/FacilityService.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerDelegate.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeaturedEmployerDelegate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ManageFeaturedEmployerProfile.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/ResumePackageService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegate.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/BrandingTemplateDelegateImpl.java -text
@@ -140,7 +140,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/Branding
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/EmployerNewsFeedServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/FacilityServiceImpl.java -text
-jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeatureEmployerDelegateImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ManageFeaturedEmployerDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/employer/service/impl/ResumePackageServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/ClickService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/event/service/impl/ClickServiceImpl.java -text
@@ -240,7 +240,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/common/email/MMEmailServiceTes
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/postjobs/JobPostServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/BrandTemplateServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/EmployerRegistrationTest.java -text
-jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeatureEmployerProfileServiceTest.java -text
+jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ManageFeaturedEmployerProfileServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/employer/service/ResumeSearchPackageTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSearchServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/job/service/JobSeekerJobDetailServiceTest.java -text
@@ -398,8 +398,8 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageAccessPermi
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageAccessPermissionDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFacilityDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFacilityDAOImpl.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAO.java -text
-jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeatureEmployerProfileDAOImpl.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeaturedEmployerProfileDAO.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageFeaturedEmployerProfileDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageJobSeekerDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ManageJobSeekerDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/ResumePackageDAO.java -text

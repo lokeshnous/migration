@@ -10,7 +10,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 
 /**
  * @author muraliananthr
@@ -27,7 +27,7 @@ public class AutoRenewalJobWorker implements JobWorker {
 	private JobPostDAO employerJobPostDAO;
 	
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeatureEmployerProfile;
 
 	@Override
 	public void executeJob() {

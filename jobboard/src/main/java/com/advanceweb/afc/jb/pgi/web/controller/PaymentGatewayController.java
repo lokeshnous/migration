@@ -25,7 +25,7 @@ import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.AddOnForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
@@ -75,7 +75,7 @@ public class PaymentGatewayController extends AbstractController{
 	private TransformPaymentMethod transformPaymentMethod;
 	
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 	
 	@Autowired
 	private PaymentGatewayValidation paymentGatewayValidation;
@@ -89,8 +89,8 @@ public class PaymentGatewayController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		int nsCustomerId = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(facilityId);
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerId);
+		int nsCustomerId = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(facilityId);
+		UserDTO userDTO = manageFeaturedEmployerProfile.getNSCustomerDetails(nsCustomerId);
 		
 		paymentGatewayForm.setNsCustomerId(nsCustomerId);
 		InvoiceForm invoiceForm = new InvoiceForm();

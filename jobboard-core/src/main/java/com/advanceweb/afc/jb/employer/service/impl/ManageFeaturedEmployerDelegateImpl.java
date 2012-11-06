@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.employer.dao.ManageFeatureEmployerProfileDAO;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerDelegate;
+import com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerDelegate;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 
@@ -23,17 +23,17 @@ import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
  * 
  */
 
-@Service("manageFeatureEmployerDelegate")
-public class ManageFeatureEmployerDelegateImpl implements
-		ManageFeatureEmployerDelegate {
+@Service("manageFeaturedEmployerDelegate")
+public class ManageFeaturedEmployerDelegateImpl implements
+		ManageFeaturedEmployerDelegate {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(ManageFeatureEmployerDelegateImpl.class);
+			.getLogger(ManageFeaturedEmployerDelegateImpl.class);
 
 	private static final String CUSTOMER_STRING = "customer"; 
 	
 	@Autowired
-	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
+	private ManageFeaturedEmployerProfileDAO manageFeaturedEmployerProfileDAO;
 
 	@Autowired
 	private NSCustomerService nsCustomerService;
@@ -48,7 +48,7 @@ public class ManageFeatureEmployerDelegateImpl implements
 
 	public int getNSCustomerIDFromAdmFacility(int admFacilityID) {
 		int nsCustomerID = 0;
-		List<FacilityDTO> admFacilityDTOList = manageFeatureEmployerProfileDAO
+		List<FacilityDTO> admFacilityDTOList = manageFeaturedEmployerProfileDAO
 				.getNSCustomerIDFromAdmFacility(admFacilityID);
 		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
 		return nsCustomerID;

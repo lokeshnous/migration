@@ -11,7 +11,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 
 /**
  * @author muraliananthr
@@ -29,7 +29,7 @@ public class ActiveJobsJobWorker implements JobWorker {
 	private JobPostDAO employerJobPostDAO;
 	
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
 
 	@Override
@@ -40,8 +40,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 		//Calling net suite to check whether the employer is featured or not 
 		//And to know, whether the employer is applicable for free job posting
 		for(JobPostDTO dto : jobsList){
-			int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(dto.getFacilityId());			
-			UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+			int nsCustomerID = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(dto.getFacilityId());			
+			UserDTO userDTO = manageFeaturedEmployerProfile.getNSCustomerDetails(nsCustomerID);
 			dto.setbFeatured(userDTO.isFeatured());
 			//Verify the employer is applicable for free posting or not
 			if(userDTO.isXmlFeedEnabled() && null != userDTO.getXmlFeedStartDate() && null != userDTO.getXmlFeedEndDate()){

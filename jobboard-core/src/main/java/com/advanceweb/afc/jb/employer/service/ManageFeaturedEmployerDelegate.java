@@ -13,7 +13,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
  * 
  */
 
-public interface ManageFeatureEmployerDelegate {
+public interface ManageFeaturedEmployerDelegate {
 	
 	/**
 	 * This method is used to get the net suite customer id based on

@@ -38,7 +38,7 @@ import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -98,7 +98,7 @@ public class JobPostController extends AbstractController{
 	private static final String FACILITY_ADMIN = "facility_admin";
 	private static final String COMPANY_LIST = "companyList";
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
 	public ModelAndView showPostJob(
@@ -261,11 +261,11 @@ public class JobPostController extends AbstractController{
 		// Should be used while posting the job
 		// Calling net suite to check whether the employer is featured or not
 		// And to know, whether the employer is applicable for free job posting
-		int nsCustomerID = manageFeatureEmployerProfile
+		int nsCustomerID = manageFeaturedEmployerProfile
 				.getNSCustomerIDFromAdmFacility((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 
-		UserDTO userDTO = manageFeatureEmployerProfile
+		UserDTO userDTO = manageFeaturedEmployerProfile
 				.getNSCustomerDetails(nsCustomerID);
 
 		form.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(
@@ -848,27 +848,29 @@ public class JobPostController extends AbstractController{
 		autoRenewList.add(dto);
 		autoRenewList.add(downDTO);
 		int page = 1;
-		String displayRecordsPerPage = jobPostform.getNoOfPage();
+		 int displayRecordsPerPage=10;
+		 if(null!=request.getParameter("noOfPage")){
+			 displayRecordsPerPage =Integer.parseInt(request.getParameter("noOfPage"));
+			 jobPostform.setNoOfPage(displayRecordsPerPage);
+		 }
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		int recordsPerPage = 0;
 
 		int noOfRecords = 0;
-		if (null == displayRecordsPerPage) {
-			displayRecordsPerPage = "20";
-		}
+		
 		if (userId > 0) {
 			if (null == jobStatus || jobStatus.isEmpty()) {
 
-				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
+				recordsPerPage = displayRecordsPerPage;
 				postedJobList = employerJobPost.retrieveAllJobPost(userId,
 						(page - 1) * recordsPerPage, recordsPerPage);
 
 				noOfRecords = employerJobPost
 						.getTotalNumberOfJobRecords(userId);
 			} else {
-				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
+				recordsPerPage = displayRecordsPerPage;
 				postedJobList = employerJobPost.retrieveAllJobByStatus(
 						jobStatus, userId, (page - 1) * recordsPerPage,
 						recordsPerPage);
@@ -1052,11 +1054,11 @@ public class JobPostController extends AbstractController{
 		int jobId = 0;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ",");
 		ModelAndView model = new ModelAndView();
-		int nsCustomerID = manageFeatureEmployerProfile
+		int nsCustomerID = manageFeaturedEmployerProfile
 				.getNSCustomerIDFromAdmFacility((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 
-		UserDTO userDTO = manageFeatureEmployerProfile
+		UserDTO userDTO = manageFeaturedEmployerProfile
 				.getNSCustomerDetails(nsCustomerID);
 		jobPostform.setXmlStartEndDateEnabled(MMUtils
 				.compareDateRangeWithCurrentDate(

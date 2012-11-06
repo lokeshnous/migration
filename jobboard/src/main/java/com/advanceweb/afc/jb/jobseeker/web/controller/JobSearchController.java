@@ -1767,9 +1767,11 @@ public class JobSearchController extends AbstractController {
 				String bodyHead2 = sendtofriendmail.getMessage();
 				String jobTitle = jobTitleHeading;
 				String companyName = cmpNameHeading;
-				String jobUrl = sendtofriendmail.getJoburl();
-				String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY
-						+ jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
+				// String jobUrl = sendtofriendmail.getJoburl();
+				/*
+				 * String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY +
+				 * jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
+				 */
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
 						+ END_TAGS);
@@ -1779,8 +1781,15 @@ public class JobSearchController extends AbstractController {
 					mesg = mesg.append("<TR><TD><B>[" + companyName + "]</B>"
 							+ jobDTO.getCompanyNameDisp() + END_TAGS);
 				}
-				mesg = mesg.append("<TR><TD>" + joburl + "</TD></TR>\n\n\n");
-				mesg = mesg.append("<TR><TD>" + jobUrl + "</TD></TR></TABLE>");
+				mesg = mesg.append("<TR><TD>");
+				mesg = mesg.append(urlLinkFirst);
+				mesg = mesg.append(MMJBCommonConstants.EMPTY);
+				mesg = mesg.append(sendtofriendmail.getJoburl());
+				mesg = mesg.append(MMJBCommonConstants.EMPTY);
+				mesg = mesg.append(urlLinkSecond);
+				mesg = mesg.append("</TD></TR>\n\n\n");
+				mesg = mesg.append("<TR><TD>" + sendtofriendmail.getJoburl()
+						+ "</TD></TR></TABLE>");
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);

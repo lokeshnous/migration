@@ -29,7 +29,7 @@ import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -51,7 +51,7 @@ public class EmployerProfileManagementController extends AbstractController{
 	private static final String STR_UNDERSCORE = "_";
 
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 	
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
@@ -77,8 +77,8 @@ public class EmployerProfileManagementController extends AbstractController{
 		boolean isDateRange = false;
 		int admFacilityId = Integer.parseInt(session.getAttribute(MMJBCommonConstants.FACILITY_ID).toString());
 		// Getting the customer ID from Adm Facility table.
-		int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
-		UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
+		int nsCustomerID = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
+		UserDTO userDTO = manageFeaturedEmployerProfile.getNSCustomerDetails(nsCustomerID);
 		
 		Date featuredStartDate = userDTO.getFeaturedStartDate();
 		Date featuredEndDate = userDTO.getFeaturedEndDate();
@@ -90,7 +90,7 @@ public class EmployerProfileManagementController extends AbstractController{
 		LOGGER.info("Is in Date Range=>"+isDateRange);
 		//kuserDTO.setFeatured(true);
 		if(userDTO.isFeatured() && isDateRange){
-			CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+			CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
 					.getEmployerDetails((Integer) session
 							.getAttribute(MMJBCommonConstants.FACILITY_ID));
 			if (null != companyProfileDTO) {
@@ -166,7 +166,7 @@ public class EmployerProfileManagementController extends AbstractController{
 			EmployerProfileManagementForm managementForm, BindingResult result,
 			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+		CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
 				.getEmployerDetails((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		//companyProfileDTO.setCompanyName(managementForm.getCompanyName());
@@ -215,7 +215,7 @@ public class EmployerProfileManagementController extends AbstractController{
 
 				}
 
-				manageFeatureEmployerProfile
+				manageFeaturedEmployerProfile
 						.saveEmployerProfile(companyProfileDTO);
 			}
 		} catch (Exception e) {

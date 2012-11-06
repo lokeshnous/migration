@@ -31,12 +31,12 @@ import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelpe
  * 
  * 
  */
-@Repository("manageFeatureEmployerProfileDAO")
-public class ManageFeatureEmployerProfileDAOImpl implements
-		ManageFeatureEmployerProfileDAO {
+@Repository("manageFeaturedEmployerProfileDAO")
+public class ManageFeaturedEmployerProfileDAOImpl implements
+		ManageFeaturedEmployerProfileDAO {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(ManageFeatureEmployerProfileDAOImpl.class);
+			.getLogger(ManageFeaturedEmployerProfileDAOImpl.class);
 	@Autowired
 	private SessionFactory sessionFactory;
 	@Autowired

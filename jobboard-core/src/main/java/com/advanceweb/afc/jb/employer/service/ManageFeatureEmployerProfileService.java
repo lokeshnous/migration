@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.employer.dao.ManageFeatureEmployerProfileDAO;
+import com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO;
 
 /**
- * <code> ManageFeatureEmployerProfileService </code> is a Service class.
+ * <code> ManageFeaturedEmployerProfileService </code> is a Service class.
  * 
  * 
  * @author sharad kumar
@@ -25,38 +25,38 @@ import com.advanceweb.afc.jb.employer.dao.ManageFeatureEmployerProfileDAO;
 @Service("manageFeatureEmployerProfile")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ManageFeatureEmployerProfileService implements
-		ManageFeatureEmployerProfile {
+		ManageFeaturedEmployerProfile {
 
 	@Autowired
-	private ManageFeatureEmployerProfileDAO manageFeatureEmployerProfileDAO;
+	private ManageFeaturedEmployerProfileDAO manageFeaturedEmployerProfileDAO;
 	
 	@Autowired
-	private ManageFeatureEmployerDelegate manageFeatureEmployerDelegate;
+	private ManageFeaturedEmployerDelegate manageFeaturedEmployerDelegate;
 
 	/**
 	 * Saving Manage Featured Employer Profile
 	 */
 	@Override
 	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
-		return manageFeatureEmployerProfileDAO.saveEmployerProfile(companyProfileDTO);
+		return manageFeaturedEmployerProfileDAO.saveEmployerProfile(companyProfileDTO);
 
 	}
 
 	@Override
 	public CompanyProfileDTO getEmployerDetails(long employerId) {
 		
-		return manageFeatureEmployerProfileDAO.getEmployerDetails(employerId);
+		return manageFeaturedEmployerProfileDAO.getEmployerDetails(employerId);
 	}
 
 	@Override
 	public List<CompanyProfileDTO> getEmployerList() {
 		
-		return manageFeatureEmployerProfileDAO.getEmployerList();
+		return manageFeaturedEmployerProfileDAO.getEmployerList();
 	}
 
 	@Override
 	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
-		return manageFeatureEmployerProfileDAO.getEmployerAccountDetails(employerId);
+		return manageFeaturedEmployerProfileDAO.getEmployerAccountDetails(employerId);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class ManageFeatureEmployerProfileService implements
 	 * @return int nsCustomerID
 	 */
 	public int getNSCustomerIDFromAdmFacility(int admFacilityID){
-		return manageFeatureEmployerDelegate.getNSCustomerIDFromAdmFacility(admFacilityID);
+		return manageFeaturedEmployerDelegate.getNSCustomerIDFromAdmFacility(admFacilityID);
 		
 	}
 	
@@ -78,7 +78,7 @@ public class ManageFeatureEmployerProfileService implements
 	 */
 	
 	public UserDTO getNSCustomerDetails(int nsCustomerID){
-		return  manageFeatureEmployerDelegate.getNSCustomerDetails(nsCustomerID);
+		return  manageFeaturedEmployerDelegate.getNSCustomerDetails(nsCustomerID);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class ManageFeatureEmployerProfileService implements
 	 */
 	@Override
 	public List<CompanyProfileDTO> getEmployerList(int startRow, int endRow) {
-		return manageFeatureEmployerProfileDAO.getEmployerList(startRow, endRow);
+		return manageFeaturedEmployerProfileDAO.getEmployerList(startRow, endRow);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class ManageFeatureEmployerProfileService implements
 	 */
 	@Override
 	public Long getEmployerListCount() {
-		Long count = manageFeatureEmployerProfileDAO.getEmployerListCount();
+		Long count = manageFeaturedEmployerProfileDAO.getEmployerListCount();
 		return count;
 	}
 	

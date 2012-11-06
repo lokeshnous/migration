@@ -42,7 +42,7 @@ import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
-import com.advanceweb.afc.jb.employer.service.ManageFeatureEmployerProfile;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
@@ -98,7 +98,7 @@ public class HomeController extends AbstractController{
 	private CheckSessionMap checkSessionMap;
 
 	@Autowired
-	private ManageFeatureEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeatureEmployerProfile;
 
 	@Autowired
 	private JobSearchService jobSearchService;

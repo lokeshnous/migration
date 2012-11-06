@@ -40,6 +40,9 @@
 	jQuery(document)
 			.ready(
 					function() {
+						 noOfPageValue=$("#noOfPage").val();
+						 $("#noOfPageId").val(noOfPageValue);
+						 $("#noOfPageLowerId").val(noOfPageValue);
 						  $("#tb_manage_job").tablesorter(); 
 						$('#deactivated').click(function() {
 							var val = [];
@@ -170,23 +173,23 @@
 													+ val);
 									$("form").submit();
 								});
-						$('#noOfPage').change(
+						$('#noOfPageId').change(
 								function() {
 									val = $(this).val();
-									$('#noOfPageLower').val(val);
+									$('#noOfPageLowerId').val(val);
 									$("form").attr(
 											"action",
-											"${pageContext.request.contextPath}/employer/manageJobPost.html?jobStatus="
+											"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
 													+ val);
 									$("form").submit();
 								});
-						$('#noOfPageLower').change(
+						$('#noOfPageLowerId').change(
 								function() {
 									val = $(this).val();
-									$('#noOfPage').val(val);
+									$('#noOfPageId').val(val);
 									$("form").attr(
 											"action",
-											"${pageContext.request.contextPath}/employer/manageJobPost.html?jobStatus="
+											"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
 													+ val);
 									$("form").submit();
 								});
@@ -201,6 +204,7 @@
 <body class="job_board">
 	<form:form action="updateJobs.html" commandName="jobPostForm">
 	<form:hidden path="beginVal"/>
+	<form:hidden path="noOfPage" />
 		<div class="ad_page_top">
 			${adPageTop }
 		</div>
@@ -225,14 +229,16 @@
 						<div class="searchResultsNavigationColumn1">
 
 							<!--Added Class "marginTop5"-->
-							<span>Results viewable:</span> <span class="Padding0"> <form:select
-									path="noOfPage" name="noOfPage" class="jb_input4 margin0">
-									<form:option value="20">20</form:option>
-									<form:option value="30">30</form:option>
-									<form:option value="40">40</form:option>
-									<form:option value="50">50</form:option>
-								</form:select>
-							</span>
+							<span>Results viewable:</span> <span class="Padding0">
+											<select id="noOfPageId" 
+												class="jb_input4 margin0">
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+											</select>
+										</span>
 							<!--Added Class "marginTop5"-->
 							<span>per page</span>
 						</div>
@@ -258,7 +264,8 @@
 									<c:otherwise>
 										<span class="active"> <c:if test="${i lt begin+10}">
 												<a
-													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
+													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}&noOfPage=${jobPostForm.noOfPage}"
+													>${i}</a>
 											</c:if></span>
 
 									</c:otherwise>
@@ -423,13 +430,16 @@
 						<div class="searchResultsNavigationColumn1">
 
 							<!--Added Class "marginTop5"-->
-							<span>Results viewable:</span> <span class="Padding0"><form:select
-									path="noOfPageLower" name="noOfPageLower" class="jb_input4 margin0">
-									<form:option value="20">20</form:option>
-									<form:option value="30">30</form:option>
-									<form:option value="40">40</form:option>
-									<form:option value="50">50</form:option>
-								</form:select> </span>
+							<span>Results viewable:</span> <span class="Padding0">
+											<select id="noOfPageLowerId" 
+												class="jb_input4 margin0">
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+											</select>
+										</span>
 							<!--Added Class "marginTop5"-->
 							<span>per page</span>
 						</div>

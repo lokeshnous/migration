@@ -13,7 +13,7 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
  * @author sharadk
  * 
  */
-public interface ManageFeatureEmployerProfileDAO {
+public interface ManageFeaturedEmployerProfileDAO {
 
 	/**
 	 * Saving Manage Featured Employer Profile

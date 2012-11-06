@@ -17,7 +17,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
  * 
  * 
  */
-public interface ManageFeatureEmployerProfile {
+public interface ManageFeaturedEmployerProfile {
 
 	/**
 	 * Saving Manage Featured Employer Profile
