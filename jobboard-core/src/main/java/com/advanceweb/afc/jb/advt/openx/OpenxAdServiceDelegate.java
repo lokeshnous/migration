@@ -50,7 +50,7 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 
 	@Resource(name = "openxConfiguration")
 	@Autowired
-	Properties openxProperties;
+	private Properties openxProperties;
 
 	@Autowired
 	private AdvanceTemplate adTagTemplate;
