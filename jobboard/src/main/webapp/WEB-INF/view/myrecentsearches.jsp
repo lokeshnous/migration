@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	function cancelProcess() {
 		parent.$.nmTop().close();
-		location.reload();
+		//location.reload();
 	}
 
 	 
@@ -21,7 +21,9 @@
 								.ajax({
 									url : "${pageContext.request.contextPath}/jobsearch/seeallclear.html",
 									success : function(data) {
-										 $("#searchdata").remove();
+										//alert("All recent search has been cleared!");
+										parent.$.nmTop().close();
+										window.location.reload();
 									},
 								});
 					});
@@ -47,7 +49,7 @@
 						<li>${item.createdDate.toLocaleString()}, Search by: <span class="jb"><a
 								href=""></a>${item.recentURL}</span> <input
 							type="button" value="Save This Search" class="white floatRight"
-							id="SaveThisSearch" onclick="saveRecentSearch(${item.saveSearchID});" />
+							id="SaveThisSearch" onclick="saveRecentSearch(${item.saveSearchID});"/>
 						</li>
 
 					</div>
@@ -59,8 +61,8 @@
 
 
 		<div class="popUpButtonRow" align="left">
-			<input type="button" value="Clear All" class="orange" id="Clear" onclick="cleanup();" />
-		    <input type="button" value="Cancel"onclick="cancelProcess();" class="orange" name="Cancel" />
+			<input type="button" value="Clear All" class="orange" id="Clear" />
+		    <input type="button" value="Cancel" onclick="cancelProcess();" class="orange" name="Cancel" />
 
 		</div>
 

@@ -15,6 +15,7 @@
 		});
 	});
 
+	
 	$("#clearMe")
 			.click(
 					function() {
@@ -23,7 +24,6 @@
 								.ajax({
 									url : "${pageContext.request.contextPath}/jobsearch/clearalllist.html",
 									success : function(data) {
-										
 
 									},
 								});

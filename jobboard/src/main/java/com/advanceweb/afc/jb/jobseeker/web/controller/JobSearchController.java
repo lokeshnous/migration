@@ -2401,9 +2401,7 @@ public class JobSearchController extends AbstractController {
 			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
 
 		ModelAndView modelAndView = new ModelAndView();
-
 		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
-
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute("recentSearchList");
 		session.removeAttribute("latestRecentList");
@@ -2424,11 +2422,12 @@ public class JobSearchController extends AbstractController {
 		if (userId != 0) {
 			List<SaveSearchedJobsDTO> recentSearch = saveSearchService
 					.viewMyRecentSearches(userId);
-			for (int i = 0; i < 3; i++) {
-				SaveSearchedJobsDTO saveSearchedJobsDTO = recentSearch.get(i);
-				newRecentSearch.add(saveSearchedJobsDTO);
-			} 
-			
+			int i=0;
+			for(SaveSearchedJobsDTO dto:recentSearch){
+				if(i>2){break;}
+				newRecentSearch.add(dto);
+				i++;
+			}
 			List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
 
 			for (SaveSearchedJobsDTO jobsDTO : newRecentSearch) {
