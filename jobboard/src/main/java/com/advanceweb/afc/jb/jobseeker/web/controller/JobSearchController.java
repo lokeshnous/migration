@@ -1422,7 +1422,9 @@ public class JobSearchController extends AbstractController {
 		try {
 			List<AppliedJobDTO> savedJobDTOList = jobSeekerJobDetailService
 					.getSavedJobs(userId);
-			savedJobsCount = savedJobDTOList.size();
+			if (null != savedJobDTOList) {
+				savedJobsCount = savedJobDTOList.size();
+			}
 			if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
 				int oldJobId = savedJobDTOList.get(0).getSaveJobId();
 				jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
