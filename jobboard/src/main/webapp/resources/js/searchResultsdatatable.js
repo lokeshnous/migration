@@ -350,7 +350,7 @@ jQuery(document).ready(function() {
 							$("#jobboardSearchResultsHitoryId").html(data);
 						},
 						error : function(data) {
-							alert('Unable to process');
+							//alert('Unable to process');
 						},
 						complete : function(data) {
 							// do nothing for now.
