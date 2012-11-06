@@ -305,7 +305,7 @@ var options = {
 						$("#count").text(data.count);
 					},
 					error : function(data) {
-						alert('Unable to process');
+						//alert('Unable to process');
 
 					}
 				});
