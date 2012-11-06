@@ -422,14 +422,10 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				mer.setFirstName(apd.getFirstName());
 				mer.setLastName(apd.getLastName());
 				hibernateTemplateTracker.update(mer);
+
 				// update admfacilitycontact
 				AdmFacilityContact facility = hibernateTemplateCareers.get(
 						AdmFacilityContact.class, admfacilityid);
-				// OpenAM code for Modify the user profile details
-				// Added by Santhosh Gampa on Sep 6 2012
-				// boolean isUdated = OpenAMEUtility.openAMUpdateEmp(apd);
-				// LOGGER.info("User Profile updated in OpenAM - "+isUdated);
-				// OpenAm code ends
 
 				facility.setFirstName(apd.getFirstName());
 				facility.setLastName(apd.getLastName());
