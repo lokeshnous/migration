@@ -125,7 +125,7 @@
                   </div>
                   </div>
                   <div class=" clearfix"></div>
-                  <span class="FloatLeft"><a title="Coming Soon" href="">View Individual Job Posting Stats</a></span>
+                  <span class="FloatLeft"><a href="">View Individual Job Posting Stats</a></span>
                   </div>
                   <div class="rowBox marginLeft25 Padding0 AutoWidth AutoHeight">
             <img src="../resources/images/EmpDimg.png" width="250" height="208" alt="img"></div>

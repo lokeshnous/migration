@@ -124,7 +124,7 @@
 			<div class="popupHeader">
 				<h2>ADD EMPLOYER</h2>
 				<a href="#"><img src="../resources/images/Close.png" width="19"
-					height="19" alt="" class="nyroModalClose"></a>
+					height="19" alt="" class="nyroModalClose cursor"></a>
 			</div>
 			<form:hidden path="facilityId" id="facilityId"/>
 
@@ -176,8 +176,8 @@
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"><input type="button"
-						style="margin-top: -4px;" id="save" value="Save" class="btn_sm orange"/>
-						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	
+						style="margin-top: -4px;" id="save" value="Save" class="btn_sm orange cursor"/>
+						<a class="nyroModalClose btn_sm orange cursor" href="#">Cancel</a>	
 						</span>
 				</div> 
 				<div class="clearfix"></div>

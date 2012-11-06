@@ -77,7 +77,7 @@ type="text/css">
 				</div>
 				<!-- ad_col_right -->
 				<div class="content_columns">
-					<div title="Coming Soon" class="column1">
+					<div class="column1">
 						<a href="">
 							<h2 class="more_link">
 								Career Tools<span>More</span>

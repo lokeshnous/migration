@@ -68,7 +68,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>ADD NEW JOB OWNER</h2>
-			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose" alt="close">
+			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose cursor" alt="close">
 		</div>
 
 		<div class="popUpContainerWrapper">
@@ -96,7 +96,7 @@
 
 					<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<a href="#" id="saveNewOwner" class="btn_sm orange">SAVE</a> 
+							<a href="#" id="saveNewOwner" class="btn_sm orange cursor">SAVE</a> 
 							<c:choose>
 									<c:when test="${manageAccessPermissionForm.setAlertPage != null}">
 										<a href="<%=request.getContextPath()%>/alerts/employer/setAlerts.html" id="accessPermissioPopUp1" class="btn_sm orange">Cancel</a>

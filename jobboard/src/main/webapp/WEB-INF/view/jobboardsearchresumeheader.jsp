@@ -130,7 +130,7 @@
 							<form:hidden path="searchtype" id="searchtype" value= "resume"/>
 							
 							<input type="button" id="submitval" onclick="searchResume();"
-								value="SEARCH" class="btn_sm orange margin0" />
+								value="SEARCH" class="btn_sm orange margin0 cursor" />
 								<!-- <a href="#" class="btn_sm orange margin0"
 									onclick="searchResume();">SEARCH</a> --><br>
 								<div class="floatRight marginTop5">

@@ -382,9 +382,9 @@ function validateNumber(event) {
 							<span> <!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
 								<input type="submit"
-								value="Save & Continue" class="orange"> 
+								value="Save & Continue" class="orange cursor"> 
 								 <c:if test="${empRegisterForm.bReadOnly == false}">
-									<input type="button" value="Cancel" onclick="cancelProcess()" class="orange" name="Cancel" />
+									<input type="button" value="Cancel" onclick="cancelProcess()" class="orange cursor" name="Cancel" />
 								</c:if> 
 								<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
 							<!-- <span class="floatLeft marginTop10">I'll set up my profile

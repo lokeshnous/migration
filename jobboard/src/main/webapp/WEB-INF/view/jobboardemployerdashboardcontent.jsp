@@ -597,7 +597,7 @@ var options = {
 									</div>
 									<div class="">
 										<input type="button" name="SHOW" id="showMertics"
-											class="orange" value="SHOW" />
+											class="orange cursor" value="SHOW" />
 										<!-- <button type="button" class="orange" onclick="myFunction()">SHOW</button> -->
 
 

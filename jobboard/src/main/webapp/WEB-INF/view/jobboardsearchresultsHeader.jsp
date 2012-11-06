@@ -90,7 +90,7 @@
 						<div class="FormErrorDisplayText" id="findSearchInfo"></div>
 						<div class="rowEvenNewSpacing">
 							<input type="button" id="submitval" onclick="findJobs();"
-								value="Find Jobs" class="orange jb_search_submit" />
+								value="Find Jobs" class="orange jb_search_submit cursor" />
 							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->
 							<%-- </form:form>     --%>
 

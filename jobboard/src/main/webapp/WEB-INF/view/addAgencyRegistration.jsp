@@ -375,10 +375,10 @@
 							<span class="floatLeft marginTop10 marginRight60"> <!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
 								<input type="submit" style="margin-top: -4px;"
-								value="Save & Continue" class="btn_sm orange"> <c:if
+								value="Save & Continue" class="btn_sm orange cursor"> <c:if
 									test="${agencyRegForm.bReadOnly == false}">
 									<input type="button" value="Cancel" onclick="cancelProcess()"
-										class="btn_sm orange" name="Cancel" />
+										class="btn_sm orange cursor" name="Cancel" />
 								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
 							<span class="floatLeft marginTop10"><!-- I'll set up my profile
 								later. <a href="#">Continue</a> to the site now. -->

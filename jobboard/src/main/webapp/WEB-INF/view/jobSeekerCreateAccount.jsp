@@ -119,10 +119,10 @@
 				
 				<div class="popUpButtonRow">
 				
-	               <input type="submit" value="Next" class="orange"  name="Next"/>
+	               <input type="submit" value="Next" class="orange cursor"  name="Next"/>
 	               <c:if test="${registerForm.bReadOnly == false}">
 		               <input type="button" value="Cancel" onclick="cancelProcess()" 
-										class="orange" name="Cancel" />
+										class="orange cursor" name="Cancel" />
 	               </c:if>
 	            </div>
 	            <div class="clearfix"></div>

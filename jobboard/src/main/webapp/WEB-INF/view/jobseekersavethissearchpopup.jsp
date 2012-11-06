@@ -90,8 +90,8 @@ function closePopup() {
 				</div>
 				<span id="ErrorMsg" class="FormErrorDisplayText"></span>
 				<div class="popUpButtonRow">
-				<input type="button" id="saveData" class="orange" value="Save"/>
-				<input type="button" onclick="closePopup();" class="orange" value="Cancel"/>					
+				<input type="button" id="saveData" class="orange cursor" value="Save"/>
+				<input type="button" onclick="closePopup();" class="orange cursor" value="Cancel"/>					
 				</div>
 				<div class="clearfix"></div>
 			</form:form>

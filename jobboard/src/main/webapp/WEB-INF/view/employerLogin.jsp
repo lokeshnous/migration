@@ -65,7 +65,7 @@
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
-				    	<input type="submit" class="orange" value="Login"/>				    
+				    	<input type="submit" class="orange cursor" value="Login"/>				    
 										
                     	<a href="forgrtPasswordLogin.html?page=employer" id="forgrtpassword">Forgot your password?</a>
 			
@@ -82,12 +82,12 @@
 		    <form action="<c:url value="/signin/facebook.html"/>" method="POST">
 		    <input type="hidden" name="pageValue" value="employer"/>
 		    <input type="hidden" name="scope" value="email">
-		     <button type="submit" class="faceBooklogin"></button>
+		     <button type="submit" class="faceBooklogin cursor"></button>
 		    </form>
 		     <form action="<c:url value="/signin/linkedin.html"/>" method="POST">
 		    <input type="hidden" name="pageValue" value="employer"/>
 		    <input type="hidden" name="scope" value="email">
-		    <button type="submit" class="linkedInLogin"></button>
+		    <button type="submit" class="linkedInLogin cursor"></button>
 		    </form>
 		    <div style="color: red" align="left" class="row">
 			${socialLoginError}

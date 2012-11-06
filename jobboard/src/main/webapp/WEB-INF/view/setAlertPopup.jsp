@@ -40,7 +40,7 @@ function cancelProcess(){
 		style="display: block">
 		<div class="popupHeader marginBottom0">
 			<h2>SET ALERTS</h2>
-			<img title="Close" class="nyroModalClose"
+			<img title="Close" class="nyroModalClose cursor"
 				src="../resources/images/Close.png" width="19" height="19"
 				title="Close" alt="cancel">
 		</div>

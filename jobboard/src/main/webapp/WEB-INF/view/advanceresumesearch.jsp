@@ -81,7 +81,7 @@
 										</select> <label for="radius">Radius</label>
 									</div>
 									<div class="input_grp3New">
-										<a href="" class="btn_sm orange jb_search_submit">Search</a>
+										<a href="" class="btn_sm orange jb_search_submit cursor">Search</a>
 									</div>
 								</div>
 							</div>
@@ -811,7 +811,7 @@
 							</div>
 							<div class="section">
 								<div class="SaveSearchButton">
-									<a href="" class="btn_sm orange">Save This Search</a>
+									<a href="" class="btn_sm orange cursor">Save This Search</a>
 								</div>
 							</div>
 						</div>
