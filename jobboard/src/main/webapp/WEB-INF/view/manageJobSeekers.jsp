@@ -176,9 +176,11 @@
 						}
 						function renameCall(folderId,folderName){
 							$("#addBtn").attr('hidden','true');
+							$(".floatRight").attr('hidden','true');
+							
 							$("#"+folderId).replaceWith("<div class='addButtonRow' >" +
-									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: checkEventRename("+folderId+");'/> "
-									+"</div>");
+									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: checkEventRename("+folderId+");'onKeydown='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
+									+ "<div class='check' title='save' name='check'> </div> </div>");
 							document.getElementById(folderId).select();
 							document.getElementById(folderId).style.borderColor="red";
 							document.getElementById(folderId).style.borderStyle="solid";

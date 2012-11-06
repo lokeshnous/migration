@@ -122,7 +122,7 @@ function validateNumber(event) {
 	jQuery(document)
 			.ready(
 					function() {
-						$('[id^=zipCodeITId]').keypress(validateNumber);
+						//$('[id^=zipCodeITId]').keypress(validateNumber);
 						$(".postingInventory").displaypopup(
 								".postingInventory", "790", "360");
 

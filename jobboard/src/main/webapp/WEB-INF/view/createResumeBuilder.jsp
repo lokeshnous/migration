@@ -189,7 +189,7 @@ function validateNumber(event) {
 				},
 			});
 		});
-		$('[id^=zipCode]').keypress(validateNumber);
+	//	$('[id^=zipCode]').keypress(validateNumber);
 	});
 	
 	//jQuery(".megamenu").megamenu();

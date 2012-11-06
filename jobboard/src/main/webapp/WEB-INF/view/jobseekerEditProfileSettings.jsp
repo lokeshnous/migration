@@ -78,7 +78,7 @@ function validateNumber(event) {
 				 },
 			});
 		}); 
- 		$('[id^=zipCode]').keypress(validateNumber);
+ 		//$('[id^=zipCode]').keypress(validateNumber);
  		
  		//Auto complete on selecting city
 		$("#cityAutoPopulation").autocomplete({

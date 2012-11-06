@@ -42,7 +42,7 @@ function validateNumber(event) {
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
-		    	$('[id^=zipCode]').keypress(validateNumber);
+		    //	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 
 		    if($("#MyProfession :selected").text() == "Others"){

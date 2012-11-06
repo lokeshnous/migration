@@ -67,7 +67,7 @@ function validateNumber(event) {
 					}				
 
 					});
-		    	$('[id^=zipCodeITId]').keypress(validateNumber);
+		    	//$('[id^=zipCodeITId]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 		});
 		</script>

@@ -23,8 +23,8 @@
 		$("#phone2").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		jQuery(".megamenu").megamenu();
 		
-		$('[id^=card_number]').keypress(validateNumber);
-		$('[id^=security_code]').keypress(validateNumber);
+		//$('[id^=card_number]').keypress(validateNumber);
+		//$('[id^=security_code]').keypress(validateNumber);
 		
 		$("#continueToNext").click(function(){
 			
@@ -34,7 +34,7 @@
 		});
 		
 		$('#firstname2').focus();
-		$('[id^=zip]').keypress(validateNumber);
+		//$('[id^=zip]').keypress(validateNumber);
 		
 		//Disable browser 'Save Password' functionality, clear out card number & security code
 		$('#billingForm').attr('autocomplete', 'off');

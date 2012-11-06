@@ -41,7 +41,7 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		$('[id^=zipCode]').keypress(validateNumber);
+		//$('[id^=zipCode]').keypress(validateNumber);
 		$("#primaryPhoneId").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		$("#secondaryPhoneId").inputmask("mask", {"mask": "(999) 999-9999"}); 
 		jQuery(".megamenu").megamenu();

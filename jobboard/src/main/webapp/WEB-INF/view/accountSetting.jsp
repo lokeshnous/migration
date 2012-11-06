@@ -97,7 +97,7 @@ function copyAccToBillingAddr(obj) {
 			});
 		});
  		
- 		$('[id^=zipCode]').keypress(validateNumber);
+ 		//$('[id^=zipCode]').keypress(validateNumber);
  		//$('[id^=zipCode2]').keypress(validateNumber); 		
 		jQuery(".megamenu").megamenu();
 	});
@@ -127,7 +127,7 @@ function copyAccToBillingAddr(obj) {
 		jQuery(".megamenu").megamenu();
 		
 		//$('[id^=zipCode]').keypress(validateNumber);
-		$('[id^=zipCode2]').keypress(validateNumber);
+	//	$('[id^=zipCode2]').keypress(validateNumber);
 
 	}); 
 </script>

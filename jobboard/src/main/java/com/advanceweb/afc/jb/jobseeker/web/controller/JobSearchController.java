@@ -1700,7 +1700,6 @@ public class JobSearchController extends AbstractController {
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
 		StringBuffer mesg = new StringBuffer();
-		StringBuffer dataString = new StringBuffer();
 		String bodyMesg = MMJBCommonConstants.EMPTY;
 		try {
 			String data = sendtofriendmail.getEmail().toString();

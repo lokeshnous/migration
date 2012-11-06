@@ -814,15 +814,27 @@ public class JobPostController extends AbstractController{
 	public ModelAndView getJobPostDetails(HttpServletRequest request,
 			HttpSession session, JobPostForm jobPostform) {
 		ModelAndView model = new ModelAndView();
-		List<DropDownDTO> templateList;
+		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
-		int facilityId = 0;
-		facilityId = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int userId=0;
+		int facilityId=0;
+		if (null != session.getAttribute(MMJBCommonConstants.USER_ID)) {
+			userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+		}
+		if (null != session.getAttribute(MMJBCommonConstants.FACILITY_ID)) {
+			facilityId = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		}
 		List<DropDownDTO> companyList = getCompanyList(facilityId);
-		String jobStatus = (null == jobPostform.getStatusValue() ? null == request
-				.getParameter("jobStatus") ? null : request
-				.getParameter("jobStatus") : jobPostform.getStatusValue());
+		String jobStatus = null;
+		if (null != jobPostform.getStatusValue()) {
+			jobStatus = jobPostform.getStatusValue();
+
+		} else if (null != request.getParameter(MMJBCommonConstants.JOB_STATUS)) {
+			jobStatus = request.getParameter(MMJBCommonConstants.JOB_STATUS);
+		}
+
 		jobPostform.setStatusValue(jobStatus);
 		DropDownDTO dto = new DropDownDTO();
 		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
@@ -846,48 +858,46 @@ public class JobPostController extends AbstractController{
 		if (null == displayRecordsPerPage) {
 			displayRecordsPerPage = "20";
 		}
-		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+		if (userId > 0) {
 			if (null == jobStatus || jobStatus.isEmpty()) {
 
 				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
-				postedJobList = employerJobPost.retrieveAllJobPost(
-						(Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID),
+				postedJobList = employerJobPost.retrieveAllJobPost(userId,
 						(page - 1) * recordsPerPage, recordsPerPage);
 
 				noOfRecords = employerJobPost
-						.getTotalNumberOfJobRecords((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
+						.getTotalNumberOfJobRecords(userId);
 			} else {
 				recordsPerPage = Integer.parseInt(displayRecordsPerPage);
 				postedJobList = employerJobPost.retrieveAllJobByStatus(
-						jobStatus, (Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID),
-						(page - 1) * recordsPerPage, recordsPerPage);
+						jobStatus, userId, (page - 1) * recordsPerPage,
+						recordsPerPage);
 				noOfRecords = employerJobPost
 						.getTotalNumberOfJobRecordsByStatus();
 			}
-		}
-		// to set the company Id
 
-		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
-				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
+			// to set the company Id
 
-		if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
-				.getFacilityId())) {
-			templateList = populateDropdownsService
-					.populateBrandingTemplateDropdown(
-							employerInfoDTO.getFacilityId(),
-							employerInfoDTO.getUserId());
-		} else {
-			templateList = new ArrayList<DropDownDTO>();
-		}
-		jobPostform.setJobPostDTOList(postedJobList);
-		for (JobPostDTO jobPostDTO : postedJobList) {
-			for (DropDownDTO dropDownDTO : companyList) {
-				if (jobPostDTO.getCompanyName().equalsIgnoreCase(
-						dropDownDTO.getOptionId())) {
-					jobPostDTO.setCompanyName(dropDownDTO.getOptionName());
+			EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
+					userId, FACILITY_ADMIN);
+
+			if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
+					.getFacilityId())) {
+				templateList = populateDropdownsService
+						.populateBrandingTemplateDropdown(
+								employerInfoDTO.getFacilityId(),
+								employerInfoDTO.getUserId());
+			} else {
+				templateList = new ArrayList<DropDownDTO>();
+			}
+
+			jobPostform.setJobPostDTOList(postedJobList);
+			for (JobPostDTO jobPostDTO : postedJobList) {
+				for (DropDownDTO dropDownDTO : companyList) {
+					if (jobPostDTO.getCompanyName().equalsIgnoreCase(
+							dropDownDTO.getOptionId())) {
+						jobPostDTO.setCompanyName(dropDownDTO.getOptionName());
+					}
 				}
 			}
 		}
@@ -975,6 +985,7 @@ public class JobPostController extends AbstractController{
 			if (jobPostDTO.getJobId() == jobId) {
 				template = jobPostDTO.getBrandTemplate();
 				autoRenew = jobPostDTO.isAutoRenew();
+				break;
 			}
 		}
 

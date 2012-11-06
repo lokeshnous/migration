@@ -51,8 +51,8 @@ function closePopup() {
 
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
-		$('[id^=nsId]').keypress(validateNumber);
-		$(".onlyNum").keypress(validateNumber);
+		//$('[id^=nsId]').keypress(validateNumber);
+		//$(".onlyNum").keypress(validateNumber);
 			var empList = $.trim($("#empList").val());
 			var nsId = $.trim($("#nsId").val());
 		

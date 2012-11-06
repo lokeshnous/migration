@@ -4,6 +4,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
+                                                  prefix="fn" %>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -96,7 +98,7 @@ jQuery(document).ready(function() {
 
 								$(".AddNewBtn").replaceWith("<div class='buttonRow' >" +
 										" <input type ='text' id='newFolder' class='addButtonRow' title='Add folder name and hit enter' value='New Folder' onClick='resetVal();' onblur='Javascript: checkevent();' onKeydown='Javascript: if (event.keyCode==13) checkevent();'/> "
-										+ "<div class='check' name='check'> </div> </div>");
+										+ "<div class='check' title='save' name='check'> </div> </div>");
 									
 								document.getElementById('newFolder').select();
 								document.getElementById('newFolder').style.borderColor="red";
@@ -158,8 +160,9 @@ jQuery(document).ready(function() {
 							<div class="buttonRow">
 								<span id="${folder.folderId}" title="${folder.folderName}"
 									class="folderdetail"
-									ondblclick="renameCall(${folder.folderId},'${folder.folderName}');" >
+									<c:if test="${!fn:contains(folder.folderName, 'Default Folder')}">ondblclick="renameCall(${folder.folderId},'${folder.folderName}');"</c:if> >
 									${folder.folderName} </span>
+									<c:if test="${!fn:contains(folder.folderName, 'Default Folder')}">
 								<div class="floatRight">
 									<a href="#"><img src="../resources/images/Edit.png"
 										width="15" height="15" alt="edit" title="Edit Folder"
@@ -168,6 +171,7 @@ jQuery(document).ready(function() {
 										id="${folder.folderName}" alt="remove" title="Delete" width="15" height="15">
 									</a>
 								</div>
+								</c:if>
 
 							</div>
 						</c:forEach>

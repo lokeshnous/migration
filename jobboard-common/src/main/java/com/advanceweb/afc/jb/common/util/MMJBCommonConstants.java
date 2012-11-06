@@ -92,6 +92,7 @@ public interface MMJBCommonConstants {
 	String JOB_GEO_1_LATLON = "jobGeo1LatLon";
 	String URL_DISPLAY = "URLDisplay";
 	String URL = "url";
+	String JOB_STATUS = "jobStatus";
 
 	// newly added field
 	String TEMPLATE_ID_STRING = "TemplateId";
