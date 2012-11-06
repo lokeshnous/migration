@@ -563,7 +563,6 @@ public class PopulateDropdownConversionHelper {
 		List<UserSubscriptionsDTO> dtos = new ArrayList<UserSubscriptionsDTO>();
 		if (null != userProfiles) {
 			for (MerUserProfile profile : userProfiles) {
-				UserSubscriptionsDTO subDTO = new UserSubscriptionsDTO();
 				if (MMJBCommonConstants.LABEL_SUSBSCRIPTION
 						.equalsIgnoreCase(profile.getMerProfileAttrib()
 								.getName())) {
@@ -572,6 +571,7 @@ public class PopulateDropdownConversionHelper {
 					StringTokenizer stringNew = new StringTokenizer(sub, ",");
 
 					while (stringNew.hasMoreElements()) {
+						UserSubscriptionsDTO subDTO = new UserSubscriptionsDTO();
 						String stringObject = (String) stringNew.nextElement();
 						subDTO.setSubscriptionId(Integer.parseInt(stringObject));
 						dtos.add(subDTO);
