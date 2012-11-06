@@ -273,7 +273,11 @@ public class JobPostController extends AbstractController {
 				userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
 
 		// If free jobs is enabled then we should not decrease credits
-		if (!form.isXmlStartEndDateEnabled()) {
+		if (form.getJobId() == 0
+				&& (MMJBCommonConstants.POST_NEW_JOB
+						.equals(form.getJobStatus()) || MMJBCommonConstants.POST_JOB_INACTIVE
+						.equals(form.getJobStatus()))
+				&& !form.isXmlStartEndDateEnabled()) {
 			// Checking for whether the employer is having credits or not
 			boolean bValidCredits = employerJobPost.validateAvailableCredits(
 					Integer.valueOf(form.getJobPostingType()),
@@ -560,15 +564,18 @@ public class JobPostController extends AbstractController {
 		// description for Active & Inactive jobs
 		// check if job is posted with slot posting type then set enableJobTitle
 		// to true. Job title is enabled for only slot posting
+
+		List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
+				.populateJobPostingTypeDropdown(facilityId, jobPostType);
+		boolean flag = false;
+
 		if (MMJBCommonConstants.POST_NEW_JOB.equals(jobStatus)
 				|| MMJBCommonConstants.POST_JOB_INACTIVE.equals(jobStatus)) {
 			jobPostForm.setReadOnly(true);
 			// If job status is either Active or Inactive then setting
 			// activeOrInactive to true
 			jobPostForm.setActiveOrInactive(true);
-			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
-					.populateJobPostingTypeDropdown(facilityId, jobPostType);
-			boolean flag = false;
+
 			// By default select the job post type with which job has been
 			// posted in the job post type drop down
 			for (DropDownDTO dropDownDto : jbPostingTypeList) {
@@ -583,12 +590,23 @@ public class JobPostController extends AbstractController {
 				jbPostingTypeList.add(jobPostTypeCombo.get(0));
 			}
 			model.setViewName(POST_NEW_JOBS);
-		} else if (MMJBCommonConstants.POST_JOB_DRAFT.equals(jobStatus)
-				|| MMJBCommonConstants.POST_JOB_SCHEDULED.equals(jobStatus)) {
+		} else {
 			jobPostForm.setReadOnly(false);
-			model.setViewName(POST_NEW_JOBS);
-		} else if (MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)) {
-			jobPostForm.setReadOnly(true);
+
+			// if expired job then make the form read only
+			if (MMJBCommonConstants.POST_JOB_EXPIRED.equals(jobStatus)) {
+				jobPostForm.setReadOnly(true);
+			}
+			// By default select the job post type with which job has been
+			// posted in the job post type drop down
+			for (DropDownDTO dropDownDto : jbPostingTypeList) {
+				flag = setJobPostTypeDropDownDefaultVal(jobPostForm, jobStatus,
+						jobPostType, jobPostTypeCombo, dropDownDto);
+			}
+			if (flag) {
+				jbPostingTypeList.add(jobPostTypeCombo.get(0));
+			}
+
 			model.setViewName(POST_NEW_JOBS);
 		}
 	}
