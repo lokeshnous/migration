@@ -395,7 +395,7 @@ function validateNumber(event) {
 										the following sent to me so I can stay up to date with the
 										latest healthcare news and information:</div>
 		
-									<div class="centerAlign" onchange="modifyMsg()">
+									<div class="centerAlign">
 										<ul>
 											<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
 												<li>
@@ -403,7 +403,7 @@ function validateNumber(event) {
 														<form:checkbox path="listProfAttribForms[${status.index}].subs"
 															label="${dropdown.optionName}"
 															value="${dropdown.optionId}"
-															cssStyle="width:20px" id="checkIt"/>
+															cssStyle="width:20px" id="checkIt" onchange="modifyMsg()"/>
 													</div>
 												</li>
 											</c:forEach>
