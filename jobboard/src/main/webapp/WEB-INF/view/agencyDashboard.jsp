@@ -132,7 +132,7 @@
 
 									<div class="lableTextDashBoard">
 										<p>
-											<a href="${msg.agencyMediaKitURL}"><em>ADVANCE</em>
+											<a target="_blank" href="${msg.agencyMediaKitURL}"><em>ADVANCE</em>
 												Recruitment Solutions Media Kit</a>
 										</p>
 									</div>

@@ -679,7 +679,7 @@ var options = {
 									<h2 class="noTopBorder">Solutions</h2>
 									<div class="lableTextDashBoard">
 										<p>
-											<a href="${msg.employerMediaKitURL}"><em>ADVANCE </em>Recruitment
+											<a target="_blank" href="${msg.employerMediaKitURL}"><em>ADVANCE </em>Recruitment
 												Solutions Media Kit</a>
 										</p>
 									</div>
