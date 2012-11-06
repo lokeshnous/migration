@@ -5,8 +5,6 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -168,11 +166,6 @@ public class ManageFacilityController {
 			return message;
 		}
 		
-		if (!StringUtils.isEmpty(facilityForm.getZipCode())
-				&& !validateNumericsPattern(facilityForm.getZipCode().trim())) {
-			message.put(FAILURE_MSG, "Please enter numeric value for zip code ");
-			return message;
-		}
 		return message;
 
 	}
@@ -265,20 +258,5 @@ public class ManageFacilityController {
 		manageFacilityDTO.setZipCode(facilityForm.getZipCode());
 		manageFacilityDTO.setTemplateId(facilityForm.getTemplateId());
 		return manageFacilityDTO;
-
 	}
-	/**
-	 * Validating Number Pattern
-	 * @param emailId
-	 * @return
-	 */
-	private boolean validateNumericsPattern(String value) {
-		Pattern pattern;
-	    Matcher matcher;
-		pattern = Pattern.compile(MMJBCommonConstants.NUMERICS_PATTERN);
-		matcher = pattern.matcher(value);
-		return matcher.matches();
-	}
-
-	
 }
