@@ -226,7 +226,6 @@ jobboard-core/src/main/java/com/advanceweb/common/client/ClientContext.java -tex
 jobboard-core/src/main/java/com/advanceweb/common/template/AdvanceTemplate.java -text
 jobboard-core/src/main/java/com/advanceweb/common/template/MvelTemplate.java -text
 jobboard-core/src/main/java/com/advanceweb/common/template/VelocityTemplate.java -text
-jobboard-core/src/main/java/com/advanceweb/jb/test/ServiceTest.java -text
 jobboard-core/src/main/resources/JbCoreSpringBeans.xml -text
 jobboard-core/src/main/resources/ads.properties -text
 jobboard-core/src/main/resources/jobboard-scheduler.properties -text
@@ -255,6 +254,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/user/UserSubscriptionsTest.jav
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
 jobboard-core/src/test/java/com/advanceweb/common/template/MvelTemplateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/common/template/VelocityTemplateTest.java -text
+jobboard-core/src/test/java/com/advanceweb/jb/test/ServiceTest.java -text
 jobboard-core/src/test/resources/applicationContext-test.xml -text
 jobboard-core/src/test/resources/templates/openx/ad_tag.tpl -text
 jobboard-core/src/test/resources/templates/openx/ad_tag.vtl -text
