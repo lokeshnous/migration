@@ -2417,7 +2417,7 @@ public class JobSearchController extends AbstractController {
 	public ModelAndView getJobboardSearchResultsHitory(HttpServletResponse response,
 			HttpServletRequest request, Model model, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
-		int userId = getUserID(session);
+		/*int userId = getUserID(session);
 		List<SaveSearchedJobsDTO> newRecentSearch = new ArrayList<SaveSearchedJobsDTO>();
 		if(userId != 0){
 		List<SaveSearchedJobsDTO> recentSearch = saveSearchService
@@ -2433,49 +2433,7 @@ public class JobSearchController extends AbstractController {
 			
 			
 			
-			
-			/*HashMap<String, String> sessionMap = (HashMap<String, String>) session
-					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
-
-			String keyWords = (null != sessionMap.get(SearchParamDTO.KEYWORDS)) ? sessionMap
-					.get(SearchParamDTO.KEYWORDS).trim() : "";
-			String city = (null != sessionMap.get(SearchParamDTO.CITY_STATE)) ? sessionMap
-					.get(SearchParamDTO.CITY_STATE).trim() : "";
-			String radius = (null != sessionMap.get(SearchParamDTO.RADIUS)) ? sessionMap
-					.get(SearchParamDTO.RADIUS).trim() : "";
-
-			
-					
-			HashMap<String, Object> recentMap = new HashMap<String, Object>();
-			List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
-					.getAttribute("recentSearchList");
-
-			if (recentSearchList == null) {
-				recentSearchList = new ArrayList<HashMap<String, Object>>();
-			}
-
-			if (!keyWords.isEmpty()) {
-				recentMap.put(SearchParamDTO.KEYWORDS,
-						sessionMap.get(SearchParamDTO.KEYWORDS).trim());
-			}
-
-			if (!city.isEmpty()) {
-				recentMap.put(SearchParamDTO.CITY_STATE, city);
-			}
-
-			if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
-				recentMap.put(SearchParamDTO.RADIUS, radius);
-			}
-
-			recentMap.put("recDate", new Date().toLocaleString());
-			recentSearchList.add(recentMap);
-
-			List<HashMap<String, Object>> latestRecentList = null;
-			if (recentSearchList.size() > 3) {
-				latestRecentList = recentSearchList.subList(recentSearchList.size()-3, recentSearchList.size());
-			} else {
-				latestRecentList = recentSearchList;
-			}*/
+		
 			
 			
 			
@@ -2495,7 +2453,7 @@ public class JobSearchController extends AbstractController {
 
 			recentSplit.add(dto);
 		}
-		}
+		}*/
 		//session.setAttribute("latestRecentList", newRecentSearch);
 		
 		modelAndView.setViewName("jobboardSearchResultsHitory");
