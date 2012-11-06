@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advanceweb.afc.jb.common.ClickEventDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.event.dao.ClickDAO;
@@ -21,17 +20,17 @@ public class ClickServiceImpl implements ClickService {
 	public ClickDAO clickDAO;
 
 	
+	/**
+	 * This method updates the click event based on the click type 
+	 * 
+	 * @param jobId
+	 * @param type
+	 * @return void
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public boolean saveClickEvent(ClickEventDTO clickEventDTO) {
-		// TODO Auto-generated method stub
-		return clickDAO.saveClickEvent( clickEventDTO);
-	}
-
-	@Override
-	public ClickEventDTO retrieveAllClicks(int jobId) {
-		// TODO Auto-generated method stub
-		return clickDAO.retrieveAllClicks(jobId);
+	public void saveClickEvent(int jobId, String type){
+		clickDAO.saveClickEvent(jobId, type);
 	}
 
 	/**

@@ -2,15 +2,19 @@ package com.advanceweb.afc.jb.event.dao;
 
 import java.util.List;
 
-import com.advanceweb.afc.jb.common.ClickEventDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 
 public interface ClickDAO {
 
-	boolean saveClickEvent(ClickEventDTO clickEventDTO);
-
-	ClickEventDTO retrieveAllClicks(int jobId);
+	/**
+	 * This method updates the click event based on the click type 
+	 * 
+	 * @param jobId
+	 * @param type
+	 * @return void
+	 */
+	void saveClickEvent(int jobId, String type);
 
 	/**
 	 * This method updates the Views whenever the job appears in job search
