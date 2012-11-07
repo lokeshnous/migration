@@ -52,15 +52,14 @@ public class ResumeDaoImpl implements ResumeDao {
 
 	private static final Logger LOGGER = Logger
 			.getLogger("ResumeDaoImpl.class");
-	
-	private static final String FIND_RES_BUILD_RESUME="from ResBuilderResume res where res.resUploadResumeId=?";
+
+	private static final String FIND_RES_BUILD_RESUME = "from ResBuilderResume res where res.resUploadResumeId=?";
 	private static final String ALL_CANDIDATES_FOLDER_NAME = "Default Folder";
-	
+
 	@Autowired
 	private ResumeConversionHelper resumeConversionHelper;
 
 	private HibernateTemplate hibernateTemplate;
-
 
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
@@ -77,8 +76,11 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public List<ResumeDTO> retrieveAllResumes(long jobSeekerId) {
 
-		List<ResUploadResume> resumes = hibernateTemplate.find("from ResUploadResume where userId = " + jobSeekerId +" and deleteDt is NULL");
-		return resumeConversionHelper.transformResUploadResumeListToResumeDTOList(resumes);
+		List<ResUploadResume> resumes = hibernateTemplate
+				.find("from ResUploadResume where userId = " + jobSeekerId
+						+ " and deleteDt is NULL");
+		return resumeConversionHelper
+				.transformResUploadResumeListToResumeDTOList(resumes);
 	}
 
 	/**
@@ -90,22 +92,30 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public ResumeDTO editResume(int resumeId) {
 		ResumeDTO dto = new ResumeDTO();
-		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,resumeId);
-		List<ResResumeProfile> resumeProfile = hibernateTemplate.find("from ResResumeProfile where resumeId = " + resumeId);
-		if(resumeProfile != null && !resumeProfile.isEmpty()) {
-			
-			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume, resumeProfile);
+		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,
+				resumeId);
+		List<ResResumeProfile> resumeProfile = hibernateTemplate
+				.find("from ResResumeProfile where resumeId = " + resumeId);
+		if (resumeProfile != null && !resumeProfile.isEmpty()) {
 
-			List<ResBuilderResume> resBuilderList = hibernateTemplate.find(FIND_RES_BUILD_RESUME, resume.getUploadResumeId());
+			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(
+					resume, resumeProfile);
+
+			List<ResBuilderResume> resBuilderList = hibernateTemplate.find(
+					FIND_RES_BUILD_RESUME, resume.getUploadResumeId());
 
 			if (resBuilderList != null && !resBuilderList.isEmpty()) {
 				ResBuilderResume resBuilder = resBuilderList.get(0);
-				dto = resumeConversionHelper.transformResBuilderResumeToResumeDTO(dto,resBuilder);
+				dto = resumeConversionHelper
+						.transformResBuilderResumeToResumeDTO(dto, resBuilder);
 				return dto;
 			}
 		}
-		if(null != resume && MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resume.getResumeType())){
-			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(resume, resumeProfile);
+		if (null != resume
+				&& MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resume
+						.getResumeType())) {
+			dto = resumeConversionHelper.transformResUploadResumeToResumeDTO(
+					resume, resumeProfile);
 			return dto;
 		}
 		return dto;
@@ -121,38 +131,52 @@ public class ResumeDaoImpl implements ResumeDao {
 	public boolean updateResume(ResumeDTO resumeDTO) {
 
 		resumeVisibilityPublicToPrivate(resumeDTO);
-		
-		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,resumeDTO.getUploadResumeId());
 
-		resume = resumeConversionHelper.transformAdvancedResumeBuilder(resume,resumeDTO);
+		ResUploadResume resume = hibernateTemplate.get(ResUploadResume.class,
+				resumeDTO.getUploadResumeId());
+
+		resume = resumeConversionHelper.transformAdvancedResumeBuilder(resume,
+				resumeDTO);
 		hibernateTemplate.update(resume);
-		
-		hibernateTemplate.deleteAll(hibernateTemplate.find("from ResResumeProfile where resumeId = " + resume.getUploadResumeId()));
-		
-		List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
-		List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resume,resumeDTO,resumeAttrib);
+
+		hibernateTemplate.deleteAll(hibernateTemplate
+				.find("from ResResumeProfile where resumeId = "
+						+ resume.getUploadResumeId()));
+
+		List<ResResumeAttrib> resumeAttrib = hibernateTemplate
+				.find("from ResResumeAttrib");
+		List<ResResumeProfile> resumeProfileList = resumeConversionHelper
+				.transformResumeDTOResResumeProfile(resume, resumeDTO,
+						resumeAttrib);
 		hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-		
-		//update the resume title in the resume builder table
-		Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("update ResBuilderResume set resumeName = :resumeName" +
-				" where resUploadResumeId = :resUploadResumeId");
+
+		// update the resume title in the resume builder table
+		Query query = hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"update ResBuilderResume set resumeName = :resumeName"
+								+ " where resUploadResumeId = :resUploadResumeId");
 		query.setParameter("resumeName", resumeDTO.getResumeName());
 		query.setParameter("resUploadResumeId", resumeDTO.getUploadResumeId());
 		query.executeUpdate();
-		
+
 		return true;
 	}
 
 	private void resumeVisibilityPublicToPrivate(ResumeDTO resumeDTO) {
-		if (MMJBCommonConstants.VISIBILITY_PUBLIC.equals(resumeDTO.getResumeVisibility())) {
-			List<ResUploadResume> resumes = hibernateTemplate.find("from ResUploadResume where userId = "
+		if (MMJBCommonConstants.VISIBILITY_PUBLIC.equals(resumeDTO
+				.getResumeVisibility())) {
+			List<ResUploadResume> resumes = hibernateTemplate
+					.find("from ResUploadResume where userId = "
 							+ resumeDTO.getUserId() + " and uploadResumeId !="
-							+ resumeDTO.getUploadResumeId()
-							+ " and active='"
+							+ resumeDTO.getUploadResumeId() + " and active='"
 							+ MMJBCommonConstants.VISIBILITY_PUBLIC + "'");
-			for(ResUploadResume resume : resumes){
-				resume.setActive(Integer.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
-				resume.setIsPublished(Integer.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
+			for (ResUploadResume resume : resumes) {
+				resume.setActive(Integer
+						.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
+				resume.setIsPublished(Integer
+						.parseInt(MMJBCommonConstants.VISIBILITY_PRIVATE));
 				hibernateTemplate.update(resume);
 			}
 		}
@@ -168,15 +192,16 @@ public class ResumeDaoImpl implements ResumeDao {
 	public boolean deleteResume(int resumeId, int userId) {
 		ResUploadResume resume = new ResUploadResume();
 		resume.setUploadResumeId(resumeId);
-		resume = hibernateTemplate.get(ResUploadResume.class,resumeId);
-		//resume.setDeleteUserId(userId);
+		resume = hibernateTemplate.get(ResUploadResume.class, resumeId);
+		// resume.setDeleteUserId(userId);
 		resume.setDeleteDt(new Timestamp(new Date().getTime()));
 		hibernateTemplate.save(resume);
-		List<ResResumeProfile> resumeProfileAttribs =hibernateTemplate.find("from ResResumeProfile where resumeId="+resumeId+" and deleteDt is NULL");
-		List<ResResumeProfile> resumeProfileList = new ArrayList<ResResumeProfile>(); 
-		Date deleteDt=new Timestamp(new Date().getTime());
-		for(ResResumeProfile resumeAttrib : resumeProfileAttribs)
-		{
+		List<ResResumeProfile> resumeProfileAttribs = hibernateTemplate
+				.find("from ResResumeProfile where resumeId=" + resumeId
+						+ " and deleteDt is NULL");
+		List<ResResumeProfile> resumeProfileList = new ArrayList<ResResumeProfile>();
+		Date deleteDt = new Timestamp(new Date().getTime());
+		for (ResResumeProfile resumeAttrib : resumeProfileAttribs) {
 			resumeAttrib.setDeleteDt(deleteDt);
 			resumeProfileList.add(resumeAttrib);
 		}
@@ -187,43 +212,52 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ResumeDTO createResume(ResumeDTO resumeDTO) {
-		//if any public resumes , make it private 
+		// if any public resumes , make it private
 		resumeVisibilityPublicToPrivate(resumeDTO);
 		ResumeDTO newResumeDTO = null;
-		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resumeDTO);
+		ResUploadResume resUploadResume = resumeConversionHelper
+				.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
 			hibernateTemplate.save(resUploadResume);
-			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
-			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
+			List<ResResumeAttrib> resumeAttrib = hibernateTemplate
+					.find("from ResResumeAttrib");
+			List<ResResumeProfile> resumeProfileList = resumeConversionHelper
+					.transformResumeDTOResResumeProfile(resUploadResume,
+							resumeDTO, resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			newResumeDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, null);
+			newResumeDTO = resumeConversionHelper
+					.transformResUploadResumeToResumeDTO(resUploadResume, null);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while Creating Resume",e);
+			LOGGER.info("Error while Creating Resume", e);
 		}
 		return newResumeDTO;
 
 	}
-	
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeCopyPaste(ResumeDTO resumeDTO) {
 		resumeVisibilityPublicToPrivate(resumeDTO);
 		Boolean result = false;
-		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resumeDTO);
+		ResUploadResume resUploadResume = resumeConversionHelper
+				.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
 			hibernateTemplate.save(resUploadResume);
-			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
-			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resumeDTO,resumeAttrib);
+			List<ResResumeAttrib> resumeAttrib = hibernateTemplate
+					.find("from ResResumeAttrib");
+			List<ResResumeProfile> resumeProfileList = resumeConversionHelper
+					.transformResumeDTOResResumeProfile(resUploadResume,
+							resumeDTO, resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			
+
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
-			LOGGER.info("Error while Copy Paste",e);
+			LOGGER.info("Error while Copy Paste", e);
 		}
 		return result;
 	}
-	
+
 	@Override
 	public boolean updateResumeCopyPaste(ResumeDTO resumeDTO) {
 		return updateResume(resumeDTO);
@@ -233,50 +267,71 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ResumeDTO createResumeUpload(ResumeDTO resumeDTO) {
 		/**
-		 *  Introduced a new variable "templateForm" to resolve PMD issue. 
+		 * Introduced a new variable "templateForm" to resolve PMD issue.
 		 */
-		ResumeDTO resDTO =resumeDTO; 
-		
+		ResumeDTO resDTO = resumeDTO;
+
 		resumeVisibilityPublicToPrivate(resDTO);
-		ResUploadResume resUploadResume = resumeConversionHelper.transformResumeDTOToResUploadResume(resDTO);
-		
+		ResUploadResume resUploadResume = resumeConversionHelper
+				.transformResumeDTOToResUploadResume(resDTO);
+
 		try {
 			hibernateTemplate.save(resUploadResume);
-			
-			resUploadResume.setFilePath(resUploadResume.getFilePath()+resUploadResume.getUploadResumeId() + "_"+ resDTO.getFileName());
-			
+
+			resUploadResume.setFilePath(resUploadResume.getFilePath()
+					+ resUploadResume.getUploadResumeId() + "_"
+					+ resDTO.getFileName());
+
 			hibernateTemplate.update(resUploadResume);
-			
-			List<ResResumeAttrib> resumeAttrib =hibernateTemplate.find("from ResResumeAttrib");
-			List<ResResumeProfile> resumeProfileList = resumeConversionHelper.transformResumeDTOResResumeProfile(resUploadResume,resDTO,resumeAttrib);
+
+			List<ResResumeAttrib> resumeAttrib = hibernateTemplate
+					.find("from ResResumeAttrib");
+			List<ResResumeProfile> resumeProfileList = resumeConversionHelper
+					.transformResumeDTOResResumeProfile(resUploadResume,
+							resDTO, resumeAttrib);
 			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			resDTO = resumeConversionHelper.transformResUploadResumeToResumeDTO(resUploadResume, resumeProfileList);
+			resDTO = resumeConversionHelper
+					.transformResUploadResumeToResumeDTO(resUploadResume,
+							resumeProfileList);
 		} catch (HibernateException e) {
 			LOGGER.info("Error while Resume Upload", e);
 		}
 		resDTO.setFilePath(resUploadResume.getFilePath());
 		return resDTO;
 	}
-	
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean updateResumeUpload(ResumeDTO resumeDTO) {
 		return updateResume(resumeDTO);
 	}
-	
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
-		ResBuilderResume builderResume = resumeConversionHelper.transformBuilderResume(resumeDTO);
-		List<ResBuilderCertification> builderCerts = resumeConversionHelper.transformBuilderCertifications(resumeDTO.getListCertDTO(),builderResume);
-		List<ResBuilderEdu> builderEducations = resumeConversionHelper.transformBuilderEducation(resumeDTO.getListEduDTO(),builderResume);
-		List<ResBuilderReference> builderRefs = resumeConversionHelper.transformBuilderReferences(resumeDTO.getListRefDTO(),builderResume);
-		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(),builderResume);
-		List<ResBuilderLanguage> builderLangList = resumeConversionHelper.transformBuilderLanguages(resumeDTO.getListLangDTO(),builderResume);	
-		List<ResBuilderPhone> builderPhoneList = resumeConversionHelper.transformBuilderPhoneDetails(resumeDTO.getListPhoneDtl(), builderResume);
-		List<ResBuilderSkill> builderSkillSet = resumeConversionHelper.transformBuilderSkills(resumeDTO,builderResume);
-		
+		ResBuilderResume builderResume = resumeConversionHelper
+				.transformBuilderResume(resumeDTO);
+		List<ResBuilderCertification> builderCerts = resumeConversionHelper
+				.transformBuilderCertifications(resumeDTO.getListCertDTO(),
+						builderResume);
+		List<ResBuilderEdu> builderEducations = resumeConversionHelper
+				.transformBuilderEducation(resumeDTO.getListEduDTO(),
+						builderResume);
+		List<ResBuilderReference> builderRefs = resumeConversionHelper
+				.transformBuilderReferences(resumeDTO.getListRefDTO(),
+						builderResume);
+		List<ResBuilderEmployment> builderWorkExp = resumeConversionHelper
+				.transformBuilderWorkExp(resumeDTO.getListWorkExpDTO(),
+						builderResume);
+		List<ResBuilderLanguage> builderLangList = resumeConversionHelper
+				.transformBuilderLanguages(resumeDTO.getListLangDTO(),
+						builderResume);
+		List<ResBuilderPhone> builderPhoneList = resumeConversionHelper
+				.transformBuilderPhoneDetails(resumeDTO.getListPhoneDtl(),
+						builderResume);
+		List<ResBuilderSkill> builderSkillSet = resumeConversionHelper
+				.transformBuilderSkills(resumeDTO, builderResume);
+
 		builderResume.setResBuilderCertifications(builderCerts);
 		builderResume.setResBuilderEdus(builderEducations);
 		builderResume.setResBuilderEmployments(builderWorkExp);
@@ -288,7 +343,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			hibernateTemplate.saveOrUpdate(builderResume);
 			return true;
 		} catch (HibernateException e) {
-			LOGGER.info("Error in create Resume Builder",e);
+			LOGGER.info("Error in create Resume Builder", e);
 		}
 		return false;
 	}
@@ -369,49 +424,70 @@ public class ResumeDaoImpl implements ResumeDao {
 	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
 		List<ResUploadResume> resumes = hibernateTemplate
 				.find("from ResUploadResume where userId = " + jobSeekerId
-						+ " AND active = " + MMJBCommonConstants.VISIBILITY_PUBLIC+ "and deleteDt is null");
-//		ResumeDTO resumeDTO = resumeConversionHelper
-//				.transformResUploadResumeToResumeDTO(resumes.get(0), null);
+						+ " AND active = "
+						+ MMJBCommonConstants.VISIBILITY_PUBLIC
+						+ "and deleteDt is null");
+		// ResumeDTO resumeDTO = resumeConversionHelper
+		// .transformResUploadResumeToResumeDTO(resumes.get(0), null);
 		ResUploadResume resUploadResume = resumes.get(0);
 		return editResume(resUploadResume.getUploadResumeId());
 	}
 
 	@Override
 	public int findResumeCount(int userId) {
-		return DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and deleteDt is NULL"));
+		return DataAccessUtils.intResult(hibernateTemplate
+				.find("select count(*) from ResUploadResume where userId ="
+						+ userId + " and deleteDt is NULL"));
 	}
 
 	@Override
-	public boolean checkDuplicateResumeName(String resumeId, String resumeName, int userId) {
+	public boolean checkDuplicateResumeName(String resumeId, String resumeName,
+			int userId) {
 		int resumePresence = 0;
-		if(!"".equals(resumeId) && resumeId != null){
-			resumePresence = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and uploadResumeId != "+resumeId+" and resumeName = '"+resumeName+"'"+" and deleteDt is NULL"));
+		if (!"".equals(resumeId) && resumeId != null) {
+			resumePresence = DataAccessUtils.intResult(hibernateTemplate
+					.find("select count(*) from ResUploadResume where userId ="
+							+ userId + " and uploadResumeId != " + resumeId
+							+ " and resumeName = '" + resumeName + "'"
+							+ " and deleteDt is NULL"));
 			return resumePresence > 0;
 		}
-		resumePresence = DataAccessUtils.intResult(hibernateTemplate.find("select count(*) from ResUploadResume where userId ="+userId+" and resumeName = '"+resumeName+"'"+" and deleteDt is NULL"));
+		resumePresence = DataAccessUtils.intResult(hibernateTemplate
+				.find("select count(*) from ResUploadResume where userId ="
+						+ userId + " and resumeName = '" + resumeName + "'"
+						+ " and deleteDt is NULL"));
 		return resumePresence > 0;
 	}
-	
+
 	/**
 	 * This method is used to move the resumes into adm_folder_resume table.
-	 * @param List<String>, int userId
+	 * 
+	 * @param List
+	 *            <String>, int userId
 	 * @return boolean
 	 */
-	
-	public boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId){
+
+	public boolean moveResumesToFolder(List<String> publishResumeIdArrList,
+			int userId) {
 		boolean status = true;
-		
-		try{
+
+		try {
 			List<AdmFolderResume> admFolderResumeList = new ArrayList<AdmFolderResume>();
 			int folderId = 0;
-			
-			//check if resumes are already moved to folder. If duplicate then return the duplicate resumes ids.
-			//List<AdmFolder> existingResumeList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
-			
-			//Check if common folder is present in adm_folder. If not insert one row with user id.
-			
-			List<AdmFolder> admFolderList = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId+" and folderName='"+ALL_CANDIDATES_FOLDER_NAME+"'");
-			if(admFolderList.size() == 0){
+
+			// check if resumes are already moved to folder. If duplicate then
+			// return the duplicate resumes ids.
+			// List<AdmFolder> existingResumeList =
+			// hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+
+			// Check if common folder is present in adm_folder. If not insert
+			// one row with user id.
+
+			List<AdmFolder> admFolderList = hibernateTemplate
+					.find("select adm from  AdmFolder adm where adm.userId="
+							+ userId + " and folderName='"
+							+ ALL_CANDIDATES_FOLDER_NAME + "'");
+			if (admFolderList.size() == 0) {
 				List<AdmFolder> admFolderSearchList = new ArrayList<AdmFolder>();
 				AdmFolder admFolder = new AdmFolder();
 				admFolder.setFolderName(ALL_CANDIDATES_FOLDER_NAME);
@@ -419,34 +495,51 @@ public class ResumeDaoImpl implements ResumeDao {
 				admFolder.setUserId(userId);
 				admFolderSearchList.add(admFolder);
 				hibernateTemplate.saveOrUpdateAll(admFolderSearchList);
-				
-				List<AdmFolder> admFolderListforFolderID = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+
+				List<AdmFolder> admFolderListforFolderID = hibernateTemplate
+						.find("select adm from  AdmFolder adm where adm.userId="
+								+ userId);
 				folderId = admFolderListforFolderID.get(0).getFolderId();
-			}else{
-				List<AdmFolder> admFolderListforFolderID = hibernateTemplate.find("select adm from  AdmFolder adm where adm.userId="+userId);
+			} else {
+				List<AdmFolder> admFolderListforFolderID = hibernateTemplate
+						.find("select adm from  AdmFolder adm where adm.userId="
+								+ userId);
 				folderId = admFolderListforFolderID.get(0).getFolderId();
 			}
-			
-			
-				
-			for(int i=0; i < publishResumeIdArrList.size(); i++){
+
+			// List<Integer> alreadyPresentIDList = new ArrayList<Integer>();
+
+			for (int i = 0; i < publishResumeIdArrList.size(); i++) {
 				AdmFolderResume admFolderResume = new AdmFolderResume();
-				admFolderResume.setPublishResumeId(Integer.parseInt(publishResumeIdArrList.get(i)));
-				admFolderResume.setFolderId(folderId);
-				admFolderResume.setCreateDt(CommonUtil.stringDateToSQLDate(publishResumeIdArrList.get(++i)));
-				admFolderResumeList.add(admFolderResume);
+				// Checking whether the resume is already moved to folder.
+				List<AdmFolderResume> isPresentList = hibernateTemplate
+						.find("select afr from  AdmFolderResume afr where afr.folderId="
+								+ folderId
+								+ " and afr.publishResumeId="
+								+ Integer.parseInt(publishResumeIdArrList
+										.get(i)));
+				if (isPresentList.size() == 0) {
+					admFolderResume.setPublishResumeId(Integer
+							.parseInt(publishResumeIdArrList.get(i)));
+					admFolderResume.setFolderId(folderId);
+					admFolderResume.setCreateDt(CommonUtil
+							.stringDateToSQLDate(publishResumeIdArrList
+									.get(++i)));
+					admFolderResumeList.add(admFolderResume);
+				} else {
+					++i;
+				}
+
 			}
-			
+
 			hibernateTemplate.saveOrUpdateAll(admFolderResumeList);
-		
-		}catch (HibernateException e) {
+
+		} catch (HibernateException e) {
 			LOGGER.info("Error occurred while saving the resume details into Adm_folder_resume table.");
 			status = false;
 		}
-		
+
 		return status;
 	}
-	
-	
-	
+
 }

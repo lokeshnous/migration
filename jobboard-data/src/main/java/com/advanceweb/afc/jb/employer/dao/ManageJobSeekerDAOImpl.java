@@ -149,9 +149,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 
 		admFolderResume = hibernateTemplate.get(AdmFolderResume.class,
 				folderResumeId);
-		admFolderResume.setUpdateDt(new Date());
-		admFolderResume.setDeleteDt(new Date());
-		hibernateTemplate.saveOrUpdate(admFolderResume);
+		//admFolderResume.setUpdateDt(new Date());
+		//admFolderResume.setDeleteDt(new Date());
+		hibernateTemplate.delete(admFolderResume);
 
 	}
 
