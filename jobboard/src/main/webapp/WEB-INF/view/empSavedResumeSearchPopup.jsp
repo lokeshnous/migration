@@ -34,7 +34,8 @@ $(document).keyup(function(event) {
 									$.ajax({url: "${pageContext.request.contextPath}/employerSearchResume/deleteSavedResume.html?saveSearchId="+saveSearchId,
 											success: function(data){ 
 											    if(data.success != null){
-											    	rowObj.remove();
+											    	$("#mySavedSearches").click();
+											    	//rowObj.remove();
 											    }
 											    if(data.failure != null){
 											    	alert(data.failure);
@@ -199,9 +200,12 @@ function viewSavedSearch(searchJobId){
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			
 			<div class="popUpButtonRow">
+			<c:if test="${not empty saveSearchedJobsDTOList}">
 				<input type="button" id="saveData" class="orange cursor" value="Save"/>
+			</c:if>	
 				<input type="button" onclick="closePopup();" class="orange cursor" value="Cancel"/>
 			</div>
+			<a id="mySavedSearches" href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html" class="nyroModal"></a>
 			</form:form>
 		</div>
 		<div class="clearfix"></div>
