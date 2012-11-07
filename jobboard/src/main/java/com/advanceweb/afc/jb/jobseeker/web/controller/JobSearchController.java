@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -361,6 +360,7 @@ public class JobSearchController extends AbstractController {
 		}
 
 		if (MMJBCommonConstants.ZERO_INT == jobDTO.getTemplateId()) {
+			modelView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 			modelView.setViewName("jobseekerJobDetails");
 			// get the Ads
 			getAdsForJobView(request, session, model);
@@ -378,6 +378,7 @@ public class JobSearchController extends AbstractController {
 			model.put("newsDTOList", newsDTOList);
 			model.put("jobDTOList", jobPostDTOList);
 			model.put("videoList", videoList);
+			modelView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 			modelView.setViewName("jobseekerJobDetailsTemplate");
 			// get the Ads
 			getAdsForPremiumJobView(request, session, model);
@@ -2018,6 +2019,7 @@ public class JobSearchController extends AbstractController {
 			HttpServletResponse response, HttpServletRequest request,
 			Model model) {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 		modelAndView.setViewName("jobboardsearchresultsBody");
 		return modelAndView;
 	}

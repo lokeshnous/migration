@@ -15,7 +15,9 @@
 		<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/slider.js"></script>
 		<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery.megamenu.js"></script> -->
 		<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/searchResultsdatatable.js"></script>
-		
+		<script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
+		<script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
+		<script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
   
   <jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
@@ -342,9 +344,11 @@
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-                    <img class="fbook" src="<%= request.getContextPath() %>/resources/images/tranBg.png" >
-                     <img class="linkedIn" src="<%= request.getContextPath() %>/resources/images/tranBg.png" >
-                     <img class="twitter" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
+                    
+                   <a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
+				   <a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
+				   <a href="https://twitter.com/share?url=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" class="twitter" data-url="${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+                    
                       </span>
                     </div>
                     <div class="ShareArea">

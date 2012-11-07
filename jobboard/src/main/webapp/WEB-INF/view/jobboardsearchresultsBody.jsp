@@ -3,9 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
                                                   prefix="fn" %>
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-<script type="text/javascript"  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
-<script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
 
 		<c:choose>
 		<c:when test="${jobTitlePage}">
@@ -341,25 +338,10 @@
 
 								<div class="ShareSearch" >
 								
-								<span class="ShareText">Share:&nbsp;</span> 
-								<span class="fbook"><!-- <a href=""> --><!-- </a> --></span>
-								<span class="linkedIn"><!-- <a href=""> --><!-- </a> --></span> 
-								<span class="twitter"><!-- <a href=""> --><!-- </a> --></span>
+								<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/viewJobDetails/${job.JobId}/${job.JobTitle}.html" target="_blank"></a>
+								<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/viewJobDetails/${job.JobId}/${job.JobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
+								<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/viewJobDetails/${job.JobId}/${job.JobTitle}.html" data-count="none" target="_blank"></a>
 								
-								
-							<!-- 	<span class="ShareText">Share:&nbsp;</span> 
-								<span >
-								<a name="fb_share" href="http://www.facebook.com/sharer.php">Share</a>
-								</span>
-								<span ><script type="IN/Share"></script>
-								</span> 
-								<span >
-								
-								<a href="https://twitter.com/share"  class="twitter-share-button" 
-								data-counturl="<%=request.getContextPath()%>/jobsearch/viewJobDetails.html?id=${job.JobId}&currentUrl=/jobboard/healthcarejobs/advanceweb.html"
-								data-text="<%=request.getContextPath()%>/jobsearch/viewJobDetails.html?id=${job.JobId}&currentUrl=/jobboard/healthcarejobs/advanceweb.html">
-								<div class="twitter"></div></a>
-								</span> -->
 							</div>
 							
 							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>

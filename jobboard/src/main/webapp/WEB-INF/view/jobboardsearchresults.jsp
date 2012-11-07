@@ -8,13 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
-
+<script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
+<script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
 <!-- JAVASCRIPT FILES -->
-<script type="text/javascript" src="../resources/js/slider.js"></script>
+<!-- <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
 <script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+	src="/media/js/jquery.js"></script> -->
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 
