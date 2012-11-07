@@ -168,7 +168,7 @@
 			 <c:if test="${empty purchaseJobPostForm.jobPostingsForm}">
 						<tr><td>
 							<br><p align="left" class="FormErrorDisplayText">No Job Postings Found</p><br><br><br><br><br>
-							<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+							<a href="#" class="nyroModalClose btn_sm orange cursor">Cancel</a>
 						</td></tr>
 			</c:if>
 			 <c:if test="${not empty purchaseJobPostForm.jobPostingsForm}">
@@ -225,7 +225,7 @@
 				</div>
 				<div class="row marginTop20 paddingBottom10">
 					<div class="AddToCartfloatRight">
-						<a id="addToCart" href="#" class="btn_sm orange">Add To Cart</a>
+						<a id="addToCart" href="#" class="btn_sm orange cursor">Add To Cart</a>
 					</div>
 				</div>
 				
@@ -315,13 +315,13 @@
 				</div>
 				<div class="row marginTop20 paddingBottom10">
 					<span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/purchaseJobPosting/proceedToCheckOut.html" id="proceedToCheckout"
-						class="btn_sm orange">Proceed to Checkout</a> 		
+						class="btn_sm orange cursor">Proceed to Checkout</a> 		
 					<c:choose>
 						<c:when test="${purchaseJobPostForm.inventoryPage != null}">
-								<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html" class="nyroModal btn_sm orange">Cancel</a>
+								<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html" class="nyroModal btn_sm orange cursor">Cancel</a>
 						</c:when>
 						<c:otherwise>
-								<a href="#" class="nyroModalClose btn_sm orange">Cancel</a>
+								<a href="#" class="nyroModalClose btn_sm orange cursor">Cancel</a>
 						</c:otherwise>
 					</c:choose>
 						</span> <span class="floatLeft marginTop10 marginLeft5"></span>
